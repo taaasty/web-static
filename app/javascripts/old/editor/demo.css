@@ -1,0 +1,32 @@
+.tedit-editor{
+  border:1px solid #000
+}
+
+.tedit-toolbar {
+  display:inline-block;
+  background:#aaa;
+}
+
+.tedit-button {
+  display: inline-block;
+  border: 1px solid black;
+  margin-right:15px;
+  cursor: pointer;
+}
+
+.tedit-button-inactive {
+  background: #bcc;
+}
+
+.tedit-button-active {
+  background: #cbc;
+}
+
+
+.tedit-button-bold{
+  font-weight:bold;
+}
+
+.tedit-button-italic{
+  font-style:italic;
+}
