@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+        <title></title>
+
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+
+        <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts.css" />
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <!-- end Fonts -->
+
+        <!-- Styles -->
+        <link rel="stylesheet" type="text/less" href="../../app/assets/stylesheets/new/tasty.less" />
+        <!-- end Styles -->
+
+        <!-- Scripts -->
+        <script src="../../app/assets/javascripts/new/libs/modernizr.min.js"></script>
+        <script src="../../app/assets/javascripts/new/jquery/jquery.min.js"></script>
+        <script src="../../app/assets/javascripts/new/jquery/jquery.ui.core.min.js"></script>
+        <script src="../../app/assets/javascripts/new/jquery/jquery.ui.widget.min.js"></script>
+        <script src="../../app/assets/javascripts/new/jquery/jquery.ui.mouse.min.js"></script>
+        <script src="../../app/assets/javascripts/new/jquery/jquery.ui.slider.min.js"></script>
+        <script src="../../app/assets/javascripts/new/jquery/jquery.ui.draggable.min.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/less-1.4.1.min.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.autosize.min.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.caretposition.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.sew.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.timeago.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.timeago.ru.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jsrender.min.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/uploaderObject.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/cookie.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/baron.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.custom-select.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/isotope.pkgd.js"></script>
+
+        <script src="../../app/assets/javascripts/new/plugins/jquery.formradio.js"></script>
+        <script src="../../app/assets/javascripts/new/plugins/jquery.dropdown.js"></script>
+        <script src="../../app/assets/javascripts/new/plugins/jquery.expander.js"></script>
+        <script src="../../app/assets/javascripts/new/plugins/jquery.togglevalue.js"></script>
+
+        <script src="../../app/assets/javascripts/new/tasty.api.js"></script>
+        <script src="../../app/assets/javascripts/new/tasty.js"></script>
+        <script src="../../app/assets/javascripts/new/tasty.utils.js"></script>
+        <script src="../../app/assets/javascripts/new/fileReceiver.js"></script>
+        <script src="../../app/assets/javascripts/new/popup.js"></script>
+        <script src="../../app/assets/javascripts/new/design.js"></script>
+        <script src="../../app/assets/javascripts/new/comments.js"></script>
+        <script src="../../app/assets/javascripts/new/hero.js"></script>
+        <script src="../../app/assets/javascripts/new/search.js"></script>
+        <script src="../../app/assets/javascripts/new/tabs.js"></script>
+        <script src="../../app/assets/javascripts/new/postEditor.js"></script>
+        <!-- end Scripts -->
+    </head>
+    <body class="layout--feed not-logged">
+        <!-- Tasty Ribbon -->
+        <div class="tasty-ribbon">
+            <a class="tasty-ribbon__link" href="#" title="тейсти">тейсти</a>
+        </div>
+        <!-- end Tasty Ribbon -->
+
+        <!-- Toolbar - Userbar -->
+        <div class="toolbar toolbar--right toolbar--userbar js-userbar">
+            <div class="toolbar__toggle js-userbar-toggle">
+                <a class="toolbar__avatar" href="#">
+                    <span class="avatar avatar--eighth">
+                        <span class="avatar__text">M</span>
+                    </span>
+                </a>
+            </div>
+            <div class="toolbar__dropdown">
+                <div class="toolbar__dropdown-i">
+                    <a class="toolbar__item state--marked" href="#" title="Написать пост">
+                        <i class="toolbar__icon">e</i>
+                    </a><a class="toolbar__item" href="#" title="Прямой эфир">
+                        <i class="toolbar__icon">G</i>
+                    </a><a class="toolbar__item js-settings-design-toggle" href="#" title="Настройки дизайна" data-popup-selector=".js-settings-design">
+                        <i class="toolbar__icon">p</i>
+                    </a><span class="toolbar__item state--disabled">
+                        <i class="toolbar__icon">b</i>
+                    </span><a class="toolbar__item js-friends-toggle" href="#" title="Друзья" data-popup-selector=".js-friends">
+                        <i class="toolbar__icon">g</i>
+                    </a><a class="toolbar__item" href="#" title="Настройки пользователя">
+                        <i class="toolbar__icon">d</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- end Toolbar - Userbar -->
+
+        <!-- Page -->
+        <div class="page js-preview-design">
+            <div class="page__inner">
+                <div class="page__paper">
+                    <!-- Page Header -->
+                    <header class="page-header">
+                        <!-- Filter Bar -->
+                        <div class="filter-bar">
+                            <!-- Filter Nav -->
+                            <nav class="filter-nav js-isotope-filter" data-target-name="bricks">
+                                <a class="filter-nav__item js-isotope-filter-item" href="api/feed/friends.html" title="Друзья">Друзья</a>
+                                <a class="filter-nav__item js-isotope-filter-item" href="api/feed/live.html" title="Прямой эфир">Прямой эфир</a>
+                                <a class="filter-nav__item js-isotope-filter-item" href="api/feed/best.html" title="Лучшее">Лучшее</a>
+                                <a class="filter-nav__item js-isotope-filter-item" href="api/feed/anonymous.html" title="Анонимки">Анонимки</a>
+                            </nav>
+                            <!-- end Filter Nav -->
+                            <!-- Filter Search -->
+                            <div class="filter-search js-filter-search">
+                                <form class="filter-search__form" action="?">
+                                    <input class="filter-search__input js-filter-search-input" type="text" placeholder="Поиск" />
+                                </form><div class="filter-search__button js-filter-search-button">
+                                    <i class="icon icon--magnifier"></i>
+                                </div>
+                            </div>
+                            <!-- end Filter Search -->
+                        </div>
+                        <!-- end Filter Bar -->
+                        <!-- Hero -->
+                        <div class="hero hero--cover" style="background-image: url(img/hero-cover.jpg);">
+                            <div class="hero__overlay"></div>
+                            <div class="layout-constrain hero__box">
+                                <div class="hero__slide">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Друзья</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 друзей</span></div>
+                                </div>
+                                <div class="hero__slide">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Прямой эфир</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 758 людей пишут в прямой эфир</span></div>
+                                </div>
+                                <div class="hero__slide">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Лучшее</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 758 людей попали в лучшее</span></div>
+                                </div>
+                                <div class="hero__slide">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Анонимки</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 людей пишут анонимки</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end Hero -->
+                    </header>
+                    <!-- end Page Header -->
+                    <!-- Page Body -->
+                    <div class="page-body">
+                        <div class="bricks-wrapper js-isotope-content" data-name="bricks">
+                            <section class="bricks js-isotope-box state--hidden">
+                                <div class="bricks__loader">
+                                    <span class="spinner spinner--24x24"><span class="spinner__icon"></span></span>
+                                </div>
+                            </section>
+                            <section class="bricks js-isotope-box state--hidden">
+                                <div class="bricks__loader">
+                                    <span class="spinner spinner--24x24"><span class="spinner__icon"></span></span>
+                                </div>
+                            </section>
+                            <section class="bricks js-isotope-box state--hidden">
+                                <div class="bricks__loader">
+                                    <span class="spinner spinner--24x24"><span class="spinner__icon"></span></span>
+                                </div>
+                            </section>
+                            <section class="bricks js-isotope-box state--hidden">
+                                <div class="bricks__loader">
+                                    <span class="spinner spinner--24x24"><span class="spinner__icon"></span></span>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="page-loader state--hidden js-page-loader">
+                            <span class="spinner spinner--24x24"><span class="spinner__icon"></span></span>
+                        </div>
+                    </div>
+                    <!-- end Page Body -->
+                </div>
+            </div>
+        </div>
+        <!-- end Page -->
+
+        <!-- Confirmation -->
+        <div class="confirmation">
+            <div class="confirmation__fader"></div>
+            <div class="confirmation__close">
+                <div class="confirmation__close-icon">h</div>
+            </div>
+            <div class="confirmation__box">
+                <div class="confirmation__text">
+                    Вы действительно хотите удалить запись?<br />Её нельзя будет восстановить.
+                </div>
+                <div class="confirmation__buttons">
+                    <span class="button button--small button--red">
+                        <span class="button__inner">
+                            <span class="button__text">Удалить запись</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- end Confirmation -->
+
+        <script>
+          (function($){
+            var scollFade = function(W, container, element){
+              var height = container.outerHeight() - element.outerHeight() / 2,
+                scrollTop = W.scrollTop();
+
+              element.css({
+                "margin-top": scrollTop,
+                "opacity": Math.max(1 - scrollTop / height, 0)
+              });
+            };
+
+            $(function(){
+              var win = $(window),
+                hero = $(".hero"),
+                heroBox = hero.find(".hero__box");
+
+              win.on("scroll", function(){scollFade($(this), hero, heroBox);})
+                .on("load", function(){$(this).trigger("scroll");})
+                .trigger("scroll");
+            })
+          })(jQuery);
+        </script>
+
+        <!-- Templates -->
+        <script id="tmpl-comments" type="text/x-jsrender">
+          <section class="comments state--hidden js-comments">
+            <div class="comments__more js-comments-more" style="{{if more == 0}}display:none{{/if}}">
+              <a class="comments__more-link js-comments-more-link" href="{{>url}}" title="{{>loadMore}}">{{>loadMore}}</a>
+            </div>
+            <div class="comments__list js-comments-list"></div>
+            <div class="comment-form">
+              <div class="comment-form__table">
+                <div class="comment-form__table-cell">
+                  <form action="">
+                    <span class="comment-form__avatar" style="background-image: url(http://a3.tcdn.ru/assets/userpic/65/00/189424_thumb128.png)"><img alt="volosojui" class="comment-form__avatar__img" src="http://a3.tcdn.ru/assets/userpic/65/00/189424_thumb128.png" /></span>
+                    <span class="comment-form__field js-toggle-value">
+                      <i class="comment-form__field-bg"></i>
+                      <label class="comment-form__field-label js-toggle-value-label" for="add-comment-{{>id}}">Прокомментировать</label>
+                      <textarea id="add-comment-{{>id}}" class="comment-form__field-textarea js-comment-textarea js-toggle-value-input js-autoresize js-sew"></textarea>
+                    </span>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+        </script>
+
+        <script id="tmpl-comment" type="text/x-jsrender">
+          <article id="comment-{{>id}}" class="comment">
+            <div class="comment__table">
+              <div class="comment__table-cell">
+                <a class="comment__user" href="{{>authorUrl}}" title="{{>authorName}}">
+                  {{:avatarHtml}}
+                  <span class="comment__username comment__username--bold">{{>authorName}}</span>
+                </a> {{>text}}&nbsp;
+                <span class="comment__meta">
+                  <span class="comment__reply js-comment-reply" data-user="{{>authorName}}">Ответить</span>
+                  <span class="comment__dot">&middot;</span>
+                  <a class="comment__date-link" href="#comment-{{>id}}" title="">
+                    <time class="comment__date js-comment-date" datetime="{{>createdAt}}">{{>createdAgo}}</time>
+                  </a>
+                  <span class="comment__dot">·</span>
+                  <span class="comment__remove">
+                    <i class="icon icon--cross"></i>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </article>
+        </script>
+
+        <script id="tmpl-comment-avatar" type="text/x-jsrender">
+          {{if authorPic && authorPic.length}}
+            <span class="comment__avatar" style="background-image: url({{>authorPic}});">
+              <img class="comment__avatar__img" src="{{>authorPic}}" alt="{{>authorName}}" />
+            </span>
+          {{else}}
+            <span class="comment__avatar avatar avatar--{{>avatarStyle}}">
+              <span class="avatar__text">{{>avatarLetter}}</span>
+            </span>
+          {{/if}}
+        </script>
+
+        <script id="tmpl-notice" type="text/x-jsrender">
+          <div class="notice notice-{{>type}}">
+            <div class="notice__inner">{{>text}}</div>
+          </div>
+        </script>
+
+        <script id="tmpl-post-video" type="text/x-jsrender">
+          <figure class="video video--big">
+              <div class="video__cover" style="background-image: url({{>cover}})">
+                <div class="video__overlay"></div>
+              </div>
+              <div class="video__embed" data-frame="{{>code}}">
+              </div>
+          </figure>
+        </script>
+
+        <script id="tmpl-popup-people" type="text/x-jsrender">
+          <div class="popup popup--dark ">
+            <div class="popup__content">
+              <div class="popup__header">
+                <div class="popup__headbox js-popup-headbox">
+                  <h3 class="popup__title">{{title}}</h3>
+                </div>
+                <div class="popup__close js-popup-close">
+                  <div class="popup__icon popup__icon--close">h</div>
+                </div>
+              </div>
+              <div class="popup__body">
+                <div class="scroller scroller--people js-scroller">
+                  <div class="scroller__pane js-scroller-pane">
+                    {{people.length == 0 }}
+                      <div class="popup__text">{{ (empty ? empty : "Тут совсем пусто") }}</div>
+                    {{ else }}
+                    <section class="people">
+                    </section>
+                    {{ end }}
+                  </div>
+                  <div class="scroller__track js-scroller-track">
+                    <div class="scroller__bar js-scroller-bar"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </script>
+
+        <script  id="tmpl-popup-people-person" type="text/x-jsrender">
+          <article class="people__item">
+            <a class="people__link" href="{{>url}}" title="{{>name}}">
+              {{if userpic && userpic.length}}
+                <span class="people__avatar" style="background-image: url({{>userpic}});">
+                </span>
+              {{else}}
+                <span class="people__avatar avatar avatar--{{>avatar.style}}">
+                  <span class="avatar__text">{{>avatar.letter}}</span>
+                </span>
+              {{/if}}
+
+              <span class="people__desc">
+                <span class="people__name">{{>username}}</span>
+              </span>
+              {{if new_items > 0}}
+                <span class="people__count">+{{>new_items}}</span>
+              {{/if}}
+            </a>
+          </article>
+        </script>
+        <!-- end Templates -->
+    </body>
+</html>

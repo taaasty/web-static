@@ -1,0 +1,58 @@
+@mode-switcher: ~".mode-switcher";
+
+@{mode-switcher} {
+  @size: 56px;
+
+  width: @size;
+  height: @size;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: #2e3133;
+  background-color: rgba(46, 49, 51, 0.7);
+  line-height: @size;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 100;
+  .border-radius(50%);
+  .transition(background-color .3s ease);
+
+  &__icon {
+    margin: -15px 0 0 -16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-style: normal;
+    font-size: 32px;
+    line-height: 1;
+    font-family: "tastyicons";
+
+    .transition(~"translate .4s ease, opacity .4s ease");
+
+    &--open-eye {
+      color: #bbb;
+      .opacity(0);
+    }
+
+    &--closed-eye {
+      margin-top: -13px; color: #fff;
+      .opacity(1);
+    }
+  }
+
+  &.state--active {
+    background-color: #fff;
+  }
+
+  &.state--active &__icon {
+    &--open-eye {
+      .opacity(1);
+    }
+
+    &--closed-eye {
+      .opacity(0);
+    }
+  }
+}

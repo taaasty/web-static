@@ -1,0 +1,31 @@
+@{alert} {
+  padding: 20px 68px 21px;
+  margin: -40px -68px 40px;
+  position: relative;
+  background-color: #ededed;
+  font-size: 15px;
+  font-family: @font-family-proxima-nova;
+  color: #797979;
+  text-align: center;
+  cursor: default;
+  .user-select(none);
+  .border-radius(6px 6px 0 0);
+
+  &__close {
+    padding: 10px;
+    position: absolute;
+    top: 16px;
+    right: 10px;
+    font-size: 12px;
+    line-height: 1;
+    font-family: "tastyicons";
+    color: #000;
+    cursor: pointer;
+    .opacity(.2);
+    .transition(~"opacity .4s ease");
+
+    &:hover {
+      .opacity(.3);
+    }
+  }
+}

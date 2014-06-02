@@ -1,0 +1,250 @@
+@settings-design: ~".settings-design";
+
+@{settings-design} {
+  position: relative;
+  .transition(background-color .3s ease);
+  .border-radius(0 0 5px 5px);
+  overflow: hidden;
+
+  /* -- drag hover -- */
+  &.state--drag-hover {
+    background: #444;
+    background-color: rgba(68, 68, 68, .95);
+  }
+
+  /* -- disabled -- */
+  &.state--disabled @{form-upload} {
+    color: inherit;
+
+    &__text {
+      border: none;
+    }
+
+    &__input {
+      cursor: default;
+    }
+  }
+
+  /* -- drop -- */
+  &__drop {
+    position: absolute;
+    display: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    .opacity(0);
+    .transition(opacity .4s ease);
+
+    &-text {
+      margin-top: -1.5em;
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      left: 15px;
+    }
+  }
+
+  /* -- drag hover drop -- */
+  &.state--drag-hover &__drop {
+    display: block;
+    z-index: 2;
+    .opacity(1);
+  }
+
+  /* -- controls -- */
+  &__controls {
+    position: relative;
+    .transition(opacity .4s ease);
+  }
+
+  /* -- drag hover controls -- */
+  &.state--drag-hover &__controls {
+    z-index: -1;
+    .opacity(0);
+  }
+
+  /* -- control -- */
+  &__control {
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+    cursor: default;
+    overflow: hidden;
+
+    &:first-child {
+      border-top: none;
+    }
+
+    &-inner {
+      height: 40px;
+      position: relative;
+    }
+  }
+
+  &__valign {
+    width: 1px;
+    height: 40px;
+    margin-left: -5px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &__text {
+    margin-right: 14px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &__state {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    color: #f8c700;
+
+    &--radiobutton {
+      margin-top: -13px;
+      padding: 4px;
+      border: 2px solid #f8c700;
+      .font-null();
+      .border-radius(50%);
+    }
+
+    &--radiobutton &-i {
+      width: 4px;
+      height: 4px;
+      border: 6px solid;
+      vertical-align: top;
+      .border-radius(50%);
+    }
+
+    &-i {
+      display: inline-block;
+    }
+
+    @{settings-design}__control--font-type & {
+      margin-top: -.6em;
+      font-size: 26px;
+      line-height: 1;
+    }
+  }
+
+  /* -- cover pixel -- */
+  &__cover-pixel {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, .05);
+    background-position: 50% 50%;
+    vertical-align: middle;
+    overflow: hidden;
+    .border-radius(50%);
+    .background-size(cover);
+
+    @{settings-design}.state--disabled &:after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #000;
+      z-index: 10;
+      .opacity(.6);
+    }
+  }
+
+  /* -- range -- */
+  @{form-range} {
+    &-value {
+      margin-top: -0.6em;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      color: #f8c700;
+    }
+
+    &--opacity {
+      margin-top: -2px;
+    }
+  }
+
+  /* -- absolute -- */
+  .absolute--left,
+  .absolute--right {
+    position: absolute;
+    top: 50%;
+  }
+
+  .absolute--left {
+    left: 0;
+  }
+
+  .absolute--right {
+    right: 0;
+  }
+
+  /* -- radio absolute -- */
+  @{form-radiogroup}--dotted-list.absolute--left,
+  @{form-radiogroup}--dotted-list.absolute--right {
+    margin-top: -.6em;
+  }
+
+  @{form-radiogroup}--radiobuttons.absolute--left,
+  @{form-radiogroup}--radiobuttons.absolute--right {
+    margin-top: -13px;
+  }
+
+  @{form-radiogroup}--type-font.absolute--left,
+  @{form-radiogroup}--type-font.absolute--right {
+    margin-top: -.6em;
+  }
+
+  /* -- text absolute -- */
+  &__text.absolute--left,
+  &__text.absolute--right {
+    margin-top: -.6em;
+  }
+
+  /* -- cover absolute -- */
+  &__cover-pixel.absolute--left,
+  &__cover-pixel.absolute--right, {
+    margin-top: -20px;
+  }
+
+  /* -- animation -- */
+  .animate--down,
+  .animate--up,
+  .animate--right {
+    .transition(all .15s ease);
+  }
+
+  .animate--down {
+    top: 50%;
+    .opacity(1);
+  }
+  &__control:hover .animate--down {
+    .opacity(0);
+    .transform(translate(0, 20px));
+  }
+
+  .animate--up {
+    .opacity(0);
+    .transform(translate(0, -20px));
+  }
+  &__control:hover .animate--up {
+    .opacity(1);
+    .transform(translate(0, 0));
+  }
+
+  .animate--right {
+    right: 0;
+    .opacity(1);
+    .transform(translate(0, 0));
+  }
+  &__control:hover .animate--right {
+    .opacity(0);
+    .transform(translate(20px, 0));
+  }
+}

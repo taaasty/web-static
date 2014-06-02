@@ -1,0 +1,49 @@
+.opacity(@value:1) {
+  -moz-opacity: @value;
+  opacity: @value;
+  @ie_value: @value * 100;
+  filter: alpha(opacity=@ie_value);
+}
+
+.inline-block() {
+  display: -moz-inline-stack;
+  display: inline-block;
+
+  .ie6 &,
+  .ie7 & {
+    display: inline;
+  }
+}
+
+.background-size(...) {
+    -webkit-background-size: @arguments;
+         -o-background-size: @arguments;
+            background-size: @arguments;
+}
+
+.background-clip(...) {
+    -webkit-background-clip: @arguments;
+         -moz-background-clip: @arguments;
+              background-clip: @arguments;
+}
+
+.text-overflow(...) {
+    -o-text-overflow: @arguments;
+       text-overflow: @arguments;
+}
+
+.animation(...) {
+    -webkit-animation: @arguments;
+       -moz-animation: @arguments;
+        -ms-animation: @arguments;
+         -o-animation: @arguments;
+            animation: @arguments;
+}
+
+.transition-delay(...) {
+    -webkit-transition-delay: @arguments;
+       -moz-transition-delay: @arguments;
+        -ms-transition-delay: @arguments;
+         -o-transition-delay: @arguments;
+            transition-delay: @arguments;
+}

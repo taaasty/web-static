@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+        <title></title>
+
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+
+        <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts.css" />
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <!-- end Fonts -->
+
+        <!-- Styles -->
+        <link rel="stylesheet" type="text/less" href="less/tasty.less" />
+        <!-- end Styles -->
+
+        <!-- Scripts -->
+        <script src="js/libs/modernizr.min.js"></script>
+        <script src="js/libs/jquery/jquery.min.js"></script>
+        <script src="js/libs/jquery/jquery.ui.core.min.js"></script>
+        <script src="js/libs/jquery/jquery.ui.widget.min.js"></script>
+        <script src="js/libs/jquery/jquery.ui.mouse.min.js"></script>
+        <script src="js/libs/jquery/jquery.ui.slider.min.js"></script>
+        <script src="js/libs/jquery/jquery.ui.draggable.min.js"></script>
+        <script src="js/libs/jquery/jquery.ui.effect.min.js"></script>
+        <script src="js/libs/jquery/jquery.ui.effect-slide.min.js"></script>
+        <script src="js/libs/less-1.4.1.min.js"></script>
+        <script src="js/libs/baron.js"></script>
+        <script src="js/libs/jquery.plugin.js"></script>
+        <script src="js/libs/jquery.maxlength.js"></script>
+
+        <script src="js/plugins/jquery.dropdown.js"></script>
+        <script src="js/plugins/jquery.collage.js"></script>
+        <script src="js/plugins/jquery.expander.js"></script>
+
+        <script src="js/modules/popup.js"></script>
+        <script src="js/modules/editableField.js"></script>
+        <!--<script src="../../app/assets/javascripts/new/libs/jquery.autosize.min.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.caretposition.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.sew.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.timeago.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.timeago.ru.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jsrender.min.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/uploaderObject.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/cookie.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/baron.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.custom-select.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.collage.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.mousewheel.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.fancybox.pack.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.autosize.input.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.plugin.js"></script>
+        <script src="../../app/assets/javascripts/new/libs/jquery.maxlength.js"></script>
+
+        <script src="../../app/assets/javascripts/new/plugins/jquery.formradio.js"></script>
+        <script src="../../app/assets/javascripts/new/plugins/jquery.dropdown.js"></script>
+        <script src="../../app/assets/javascripts/new/plugins/jquery.expander.js"></script>
+        <script src="../../app/assets/javascripts/new/plugins/jquery.togglevalue.js"></script>
+
+        <script src="../../app/assets/javascripts/new/tasty.api.js"></script>
+        <script src="../../app/assets/javascripts/new/tasty.js"></script>
+        <script src="../../app/assets/javascripts/new/tasty.utils.js"></script>
+        <script src="../../app/assets/javascripts/new/fileReceiver.js"></script>
+        <script src="../../app/assets/javascripts/new/popup.js"></script>
+        <script src="../../app/assets/javascripts/new/design.js"></script>
+        <script src="../../app/assets/javascripts/new/comments.js"></script>
+        <script src="../../app/assets/javascripts/new/hero.js"></script>
+        <script src="../../app/assets/javascripts/new/postEditor.js"></script>
+        <script src="../../app/assets/javascripts/new/shellbox.js"></script>
+        <script src="../../app/assets/javascripts/new/messages.js"></script>
+        <script src="../../app/assets/javascripts/new/editableField.js"></script>-->
+        <!-- end Scripts -->
+    </head>
+    <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white not-logged">
+        <!-- Topbar -->
+        <!--<div class="topbar">
+            <div class="topbar__inner">
+                Тейсти &mdash; это платформа для ведения блогов, объединяющая интересных людей. <a href="#" title="Заведите свой тлог">Заведите свой тлог</a> или <a href="#" title="войдите">войдите</a>.
+            </div>
+        </div>-->
+        <!-- end Topbar -->
+
+        <!-- Toolbar - Back -->
+        <a class="toolbar toolbar--back" href="#" style="display: none">
+            <div class="toolbar__toggle">
+                <i class="toolbar__icon">k</i>
+            </div>
+            <div class="toolbar__dropdown">
+                <div class="toolbar__dropdown-i">
+                    <span class="toolbar__text">Ко всем записям</span>
+                </div>
+            </div>
+        </a>
+        <!-- end Toolbar - Back -->
+
+        <!-- Toolbar - Close -->
+        <div class="toolbar toolbar--close js-hero-close">
+            <div class="toolbar__toggle">
+                <i class="toolbar__icon">h</i>
+            </div>
+        </div>
+        <!-- end Toolbar - Close -->
+
+        <!-- Toolbar - Userbar -->
+        <div class="toolbar toolbar--right toolbar--nav js-userbar-dropdown">
+            <div class="toolbar__toggle" data-element="dropdown-toggle">
+                <i class="icon icon--menu"></i>
+            </div>
+            <div class="toolbar__popup" data-element="dropdown-menu">
+                <div class="toolbar__popup-item">
+                    <a class="toolbar__popup-link state--marked" href="#"><i class="icon icon--plus"></i>Новая запись</a>
+                </div>
+                <div class="toolbar__popup-item">
+                    <a class="toolbar__popup-link" href="#"><i class="icon"></i>Мой дневник</a>
+                </div>
+                <div class="toolbar__popup-item">
+                    <a class="toolbar__popup-link" href="#"><i class="icon"></i>Профиль</a>
+                </div>
+                <div class="toolbar__popup-item">
+                    <a class="toolbar__popup-link" href="#"><i class="icon"></i>Избранное</a>
+                </div>
+                <div class="toolbar__popup-item">
+                    <a class="toolbar__popup-link" href="#"><i class="icon"></i>Скрытые записи</a>
+                </div>
+                <div class="toolbar__popup-item">
+                    <a class="toolbar__popup-link js-messages-toggle" href="#" data-popup-selector=".js-messages"><i class="icon"></i>Сообщения</a>
+                </div>
+                <div class="toolbar__popup-item">
+                    <a class="toolbar__popup-link js-friends-toggle" href="#" data-popup-selector=".js-friends"><i class="icon"></i>Друзья</a>
+                </div>
+                <div class="toolbar__popup-item">
+                    <a class="toolbar__popup-link js-settings-design-toggle" href="#" data-popup-selector=".js-settings-design"><i class="icon"></i>Дизайн дневника</a>
+                </div>
+                <div class="toolbar__popup-item">
+                    <a class="toolbar__popup-link js-settings-toggle" href="#" data-popup-selector=".js-settings"><i class="icon"></i>Настройки</a>
+                </div>
+                <div class="toolbar__popup-item">
+                    <a class="toolbar__popup-link" href="#"><i class="icon"></i>Выйти</a>
+                </div>
+            </div>
+        </div>
+        <!-- end Toolbar - Userbar -->
+
+        <!-- Toolbar - Logo -->
+        <div class="toolbar toolbar--nav">
+            <div class="toolbar__toggle">
+                <div class="tasty-ribbon">
+                    <a class="tasty-ribbon__link" href="#" title="Перейти на ленту друзей">Перейти на ленту друзей</a>
+                </div>
+            </div>
+        </div>
+        <!-- end Toolbar - Logo -->
+
+        <span class="button button--green button--auth js-auth-button">
+            <span class="button__inner">
+                <span class="button__text">войти или зарегистрироваться</span>
+            </span>
+        </span>
+
+        <script>
+            $(function(){
+                $(".js-userbar-dropdown").dropdown();
+
+                $(".js-auth-button").on("click", function(){
+                    var scrollTop = $(document).height() - $(window).height();
+
+                    $("html, body").animate({scrollTop: scrollTop}, 300);
+                });
+            });
+        </script>
+
+        <!-- Page -->
+        <div class="page js-preview-design">
+            <div class="page__inner">
+                <div class="page__paper">
+                    <!-- Page Cover -->
+                    <div class="page-cover js-cover" style="background-image:url(img/bg.jpg);"></div>
+                    <!-- end Page Cover -->
+                    <!-- Page Header -->
+                    <header class="page-header">
+                        <!-- Hero -->
+                        <div class="hero js-hero">
+                            <div class="hero__overlay"></div>
+                            <div class="hero__gradient"></div>
+                            <div class="layout-constrain hero__box js-hero-box">
+                                <div class="hero__avatar js-hero-open">
+                                    <span class="avatar avatar--eighth">
+                                        <span class="avatar__text">M</span>
+                                    </span>
+                                </div>
+                                <div class="hero__mask"></div>
+                                <div class="hero__head">
+                                    <div class="hero__title js-hero-open js-hero-title"><span>Madworld</span></div>
+                                </div>
+                                <div class="hero__text js-hero-text"><span>Прекрасная жизнь</span></div>
+                                <div class="hero__actions">
+                                    <span class="button button--small button--subscribe state--active js-subscribe">
+                                        <span class="button__inner">
+                                            <span class="button__text button__text--subscribe">Подписаться</span>
+                                            <span class="button__text button__text--subscribed">Подписан</span>
+                                            <span class="button__text button__text--unsubscribe">Отписаться</span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="hero__stats js-hero-stats">
+                                <div class="hero__stats-list">
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link js-subscribed-by-toggle" href="#" title="22 подписчика" data-popup-selector=".js-subscribed-by">
+                                            <strong>22</strong> подписчика
+                                        </a>
+                                    </div>
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link js-subscribed-to-toggle" href="#" title="103 подписан" data-popup-selector=".js-subscribed-to">
+                                            <strong>103</strong> подписан(а)
+                                        </a>
+                                    </div>
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link" href="#" title="92 в избранном">
+                                            <strong>92</strong> в избранном
+                                        </a>
+                                    </div>
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link" href="#" title="0 комментариев">
+                                            <strong>0</strong> комментариев
+                                        </a>
+                                    </div>
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link" href="#" title="22 скрытые">
+                                            <strong>22</strong> скрытые
+                                        </a>
+                                    </div>
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link js-tags-toggle" href="#" title="45 тегов" data-popup-selector=".js-tags">
+                                            <strong>45</strong> тегов
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end Hero -->
+                    </header>
+                    <!-- end Page Header -->
+                    <!-- Page Body -->
+                    <div class="page-body">
+                        <div class="layout-constrain page-body__content">
+                            <div class="page-body__bg js-page-body-bg"></div>
+                            <div class="page-body__inner">
+                                <!-- Alert -->
+                                <div class="alert js-alert">
+                                    <div class="alert__close js-alert-close">h</div>
+                                    <div class="alert__text js-alert-text">Здесь отображены ваши скрытые записи. Эта страница доступна только вам.</div>
+                                </div>
+                                <!-- end Alert -->
+                                <!-- Posts -->
+                                <section class="posts">
+                                    <article class="post post--text js-post" data-id="1">
+                                        <div class="post__content">
+                                            <span class="rating js-vote" title="Голосовать">456</span>
+                                            <p>
+                                                Я думала, наша проблема в расстоянии. Наивная дура.
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments state--visible">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link js-comments-toggle" href="entry/1/" title="2 комментария">2 комментария</a>
+                                                            <!--<span class="meta-item__dropdown meta-item__dropdown-/-subscribe">
+                                                                <a class="meta-item__dropdown-item js-post-subscribe" href="#" title="Отписаться от комментариев">Отписаться от комментариев</a>
+                                                            </span>-->
+                                                        </span>
+                                                        <span class="spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--tags">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link" href="#" title="#новости">#новости</a><span>,</span> <a class="meta-item__link" href="#" title="#туман">#туман</a>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="icon icon--cogwheel"></i>
+                                                            <span class="meta-item__dropdown meta-item__dropdown--actions js-horizontal-centering">
+                                                                <a class="meta-item__dropdown-item js-post-edit" href="#" title="Редактировать">
+                                                                    <i class="icon icon--pencil"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-link" href="#" title="Ссылка">
+                                                                    <i class="icon icon--hyperlink"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-subscribe state--subscribed" href="#" title="Подписка на комментарии">
+                                                                    <i class="icon icon--comments-subscribe"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-favorites state--faved" href="#" title="Избранное">
+                                                                    <i class="icon icon--star"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-delete" href="#" title="Удалить">
+                                                                    <i class="icon icon--basket"></i>
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <section class="comments js-comments">
+                                        <div style="display: none;" class="comments__more js-comments-more">
+                                            <a class="comments__more-link js-comments-more-link" title="Загрузить все 0 комментариев" href="">Загрузить все 0 комментариев</a>
+                                        </div>
+                                        <div class="comments__list js-comments-list">
+                                            <article class="comment">
+                                                <div class="comment__table">
+                                                    <div class="comment__table-cell">
+                                                        <a class="comment__user" href="http://hmeli-synele.mmm-tasty.ru" title="hmeli-synele">
+                                                            <span class="comment__avatar">
+                                                                <span class="avatar avatar--seventh">
+                                                                    <span class="avatar__text">H</span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="comment__username comment__username--bold">hmeli-synele</span>
+                                                        </a> Так выпьем же за это!&nbsp;
+                                                        <span class="comment__meta">
+                                                            <span class="comment__reply js-comment-reply" data-user="hmeli-synele">Ответить</span>
+                                                            <span class="comment__dot">·</span>
+                                                            <a class="comment__date-link" href="#comment-11528585" title="">
+                                                                <time class="comment__date js-comment-date" datetime="2013-05-16T22:40:03">2 месяца назад</time>
+                                                            </a>
+                                                            <span class="comment__dot">·</span>
+                                                            <!--<span class="comment__remove">
+                                                                <i class="icon icon-/-cross"></i>
+                                                            </span>-->
+                                                            <span class="comment__actions">
+                                                                <i class="icon icon--cogwheel"></i>
+                                                                <span class="comment__dropdown js-horizontal-centering">
+                                                                    <a class="comment__dropdown-item js-comment-link" href="#" title="Ссылка">
+                                                                        <i class="icon icon--hyperlink"></i>
+                                                                    </a>
+                                                                    <a class="comment__dropdown-item js-comment-complain" href="#" title="Пожаловаться">
+                                                                        <i class="icon icon--exclamation-mark"></i>
+                                                                    </a>
+                                                                    <a class="comment__dropdown-item js-comment-remove" href="#" title="Удалить">
+                                                                        <i class="icon icon--basket"></i>
+                                                                    </a>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                            <article class="comment">
+                                                <div class="comment__table">
+                                                    <div class="comment__table-cell">
+                                                        <a class="comment__user" title="GHOST-writer" href="http://GHOST-writer.mmm-tasty.ru">
+                                                            <span class="comment__avatar">
+                                                                <span class="avatar avatar--first">
+                                                                    <span class="avatar__text">G</span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="comment__username comment__username--bold">GHOST-writer</span>
+                                                        </a> hmeli-synele: &nbsp;
+                                                        <span class="comment__meta">
+                                                            <span class="comment__reply js-comment-reply" data-user="GHOST-writer">Ответить</span>
+                                                            <span class="comment__dot">·</span>
+                                                            <a class="comment__date-link" href="#comment-11528650" title="">
+                                                                <time class="comment__date js-comment-date" datetime="2013-05-16T22:40:03">2 месяца назад</time>
+                                                            </a>
+                                                            <span class="comment__dot">·</span>
+                                                            <span class="comment__actions">
+                                                                <i class="icon icon--cogwheel"></i>
+                                                                <span class="comment__dropdown js-horizontal-centering">
+                                                                    <a class="comment__dropdown-item js-comment-link" href="#" title="Ссылка">
+                                                                        <i class="icon icon--hyperlink"></i>
+                                                                    </a>
+                                                                    <a class="comment__dropdown-item js-comment-complain" href="#" title="Пожаловаться">
+                                                                        <i class="icon icon--exclamation-mark"></i>
+                                                                    </a>
+                                                                    <a class="comment__dropdown-item js-comment-remove" href="#" title="Удалить">
+                                                                        <i class="icon icon--basket"></i>
+                                                                    </a>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </div>
+                                        <div class="comment-form">
+                                            <div class="comment-form__table">
+                                                <div class="comment-form__table-cell">
+                                                    <form action="?">
+                                                        <span class="comment-form__avatar">
+                                                            <span class="avatar avatar--eighth">
+                                                                <span class="avatar__text">M</span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="comment-form__field js-toggle-value">
+                                                            <i class="comment-form__field-bg"></i>
+                                                            <label class="comment-form__field-label js-toggle-value-label" for="add-comment-10" style="display: block;">Напишите комментарий</label>
+                                                            <textarea class="comment-form__field-textarea js-comment-textarea js-toggle-value-input js-autoresize js-sew" id="add-comment-10" style="overflow: hidden; word-wrap: break-word; resize: none; height: 20px;"></textarea>
+                                                        </span>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    </article>
+                                    <article class="post post--video js-post" data-id="2">
+                                        <div class="post__content">
+                                            <figure class="video">
+                                                <div class="video__cover" style="background-image: url(img/images/image_12.jpg)">
+                                                    <div class="video__overlay"></div>
+                                                </div>
+                                                <div class="video__embed"></div>
+                                            </figure>
+                                            <span class="rating js-vote" title="Голосовать">456</span>
+                                            <p>Видео
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link js-comments-toggle" href="entry/2/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--tags">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link" href="#" title="#новости">#новости</a><span>,</span> <a class="meta-item__link" href="#" title="#туман">#туман</a>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="icon icon--cogwheel"></i>
+                                                            <span class="meta-item__dropdown meta-item__dropdown--actions js-horizontal-centering">
+                                                                <a class="meta-item__dropdown-item js-post-edit" href="#" title="Редактировать">
+                                                                    <i class="icon icon--pencil"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-link" href="#" title="Ссылка">
+                                                                    <i class="icon icon--hyperlink"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-subscribe" href="#" title="Подписка на комментарии">
+                                                                    <i class="icon icon--comments-subscribe"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-delete" href="#" title="Удалить">
+                                                                    <i class="icon icon--basket"></i>
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--image js-post" data-id="2">
+                                        <div class="post__content">
+                                            <figure class="image">
+                                                <img src="img/images/image_10.jpg" alt="Как мы ездили на дачу" />
+                                            </figure>
+                                            <span class="rating js-vote" title="Голосовать">456</span>
+                                            <p>Как мы ездили на дачу
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link js-comments-toggle" href="entry/2/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="icon icon--cogwheel"></i>
+                                                            <span class="meta-item__dropdown meta-item__dropdown--actions js-horizontal-centering">
+                                                                <a class="meta-item__dropdown-item js-post-edit" href="#" title="Редактировать">
+                                                                    <i class="icon icon--pencil"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-link" href="#" title="Ссылка">
+                                                                    <i class="icon icon--hyperlink"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-subscribe" href="#" title="Подписка на комментарии">
+                                                                    <i class="icon icon--comments-subscribe"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-delete" href="#" title="Удалить">
+                                                                    <i class="icon icon--basket"></i>
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--text js-post" data-id="3">
+                                        <div class="post__content">
+                                            <span class="rating js-vote voted" title="Вы проголосовали">457</span>
+                                            <p>
+                                                Бывают такие моменты, когда хочется, чтоб кто-то был рядом. Но никого нет.
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments state--visible">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link js-comments-toggle" href="entry/1/" title="54 комментария">54 комментария</a>
+                                                        </span>
+                                                        <span class="spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link js-post-link" href="#" title="Ссылка">
+                                                                <i class="icon icon--hyperlink"></i>
+                                                            </a>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--text js-post" data-id="4">
+                                        <div class="post__content">
+                                            <span class="rating js-vote voted" title="Вы проголосовали">457</span>
+                                            <p>
+                                                Бывают
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments state--visible">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link js-comments-toggle" href="entry/1/" title="54 комментария">54 комментария</a>
+                                                        </span>
+                                                        <span class="spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="icon icon--cogwheel"></i>
+                                                            <span class="meta-item__dropdown meta-item__dropdown--actions js-horizontal-centering">
+                                                                <a class="meta-item__dropdown-item js-post-edit" href="#" title="Редактировать">
+                                                                    <i class="icon icon--pencil"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-link" href="#" title="Ссылка">
+                                                                    <i class="icon icon--hyperlink"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-subscribe" href="#" title="Подписка на комментарии">
+                                                                    <i class="icon icon--comments-subscribe"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-delete" href="#" title="Удалить">
+                                                                    <i class="icon icon--basket"></i>
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--text js-post" data-id="5">
+                                        <span class="rating js-vote voted" title="Вы проголосовали">45</span>
+                                        <div class="post__content">
+                                            <p>
+                                                Захожу на кухню. Пахнет чаем с клубникой и мятой. Достаю из холодильника шоколад. На полке наш с тобой недопитый мартини. В раковине невымытая посуда. Повсюду следы твоей готовки. Воспоминания. Одежда на полу. Пройдет время, и станет проще. Только сейчас ничего не хочется. Может, только дождя. Сильного.
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link js-comments-toggle" href="entry/1/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="icon icon--cogwheel"></i>
+                                                            <span class="meta-item__dropdown meta-item__dropdown--actions js-horizontal-centering">
+                                                                <a class="meta-item__dropdown-item js-post-edit" href="#" title="Редактировать">
+                                                                    <i class="icon icon--pencil"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-link" href="#" title="Ссылка">
+                                                                    <i class="icon icon--hyperlink"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-subscribe state--subscribed" href="#" title="Подписка на комментарии">
+                                                                    <i class="icon icon--comments-subscribe"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-delete" href="#" title="Удалить">
+                                                                    <i class="icon icon--basket"></i>
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--quote js-post" data-id="6">
+                                        <div class="post__content">
+                                            <span class="rating js-vote" title="Вы проголосовали">6</span>
+                                            <blockquote class="blockquote">
+                                                <span class="laquo">&laquo;</span>Если вы делаете что-то прекрасное и возвышенное, а этого никто не замечает не расстраивайтесь: восход солнца это вообще самое прекрасное зрелище на свете, но большинство людей в это время ещё спит<span class="raquo">&raquo;</span>
+                                                <span class="blockquote__caption">&mdash;&nbsp;Петр Алексеев</span>
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link js-comments-toggle" href="entry/1/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="icon icon--cogwheel"></i>
+                                                            <span class="meta-item__dropdown meta-item__dropdown--actions js-horizontal-centering">
+                                                                <a class="meta-item__dropdown-item js-post-edit" href="#" title="Редактировать">
+                                                                    <i class="icon icon--pencil"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-link" href="#" title="Ссылка">
+                                                                    <i class="icon icon--hyperlink"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-subscribe state--subscribed" href="#" title="Подписка на комментарии">
+                                                                    <i class="icon icon--comments-subscribe"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-delete" href="#" title="Удалить">
+                                                                    <i class="icon icon--basket"></i>
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </blockquote>
+                                        </div>
+                                    </article>
+                                    <article class="post post--text js-post" data-id="7">
+                                        <header class="post__header">
+                                            <h1 class="post__title"><a class="post__title__link" href="#" title="Маша и Илюша. Шесть дней">Маша и Илюша. Шесть дней</a></h1>
+                                        </header>
+                                        <div class="post__content">
+                                            <span class="rating js-vote" title="Голосовать">6</span>
+                                            <p>Так странно исказилось мое восприятие времени в эти дни. Вроде столько всего происходило, но все это время слилось для меня воедино. Незаметно было, когда начинался день, когда наступала ночь.</p>
+                                            <p>Я поняла много всего. О себе. О нем. Чему-то научилась даже. Открыла что-то новое в себе. Поборола в какой-то мере стеснительность и неуверенность. Почувствовала себя красивой без косметики и прически. Некоторые вещи сделала впервые.</p>
+                                            <p>Наши завтраки, Несквик, походы в магазин, готовка, забавные подколы, фильмы, душ, ванная, пена, разговоры, раскрытые тайны, рисунки на теле маркером... Несмотря на небольшие ссоры, мою раздражительность в начале, мои слезы в день его отлета, это были чудесные шесть дней.</p>
+                                            <p>Теперь каждое мое утро снова будет начинаться без него, вторая половина кровати так и будет пустой, обнимать по ночам я буду край одеяла...</p>
+                                            <p>Никогда не думала, что отношения на расстоянии - это так тяжело.</p>
+                                            <p>
+                                                Что будет дальше, покажет время.
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link js-comments-toggle" href="entry/1/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="icon icon--cogwheel"></i>
+                                                            <span class="meta-item__dropdown meta-item__dropdown--actions js-horizontal-centering">
+                                                                <a class="meta-item__dropdown-item js-post-edit" href="#" title="Редактировать">
+                                                                    <i class="icon icon--pencil"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-link" href="#" title="Ссылка">
+                                                                    <i class="icon icon--hyperlink"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-subscribe state--subscribed" href="#" title="Подписка на комментарии">
+                                                                    <i class="icon icon--comments-subscribe"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-delete" href="#" title="Удалить">
+                                                                    <i class="icon icon--basket"></i>
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--image js-post" data-id="8">
+                                        <div class="post__content">
+                                            <div class="collage js-collage">
+                                                <a class="collage__item js-collage-item js-fancybox" href="img/images/image_18.jpg" data-fancybox-group="1" target="_blank">
+                                                    <img class="collage__item-img js-collage-item-img" src="img/images/image_18.jpg" alt="" />
+                                                </a><a class="collage__item js-collage-item js-fancybox" href="img/images/image_19.jpg" data-fancybox-group="1" target="_blank">
+                                                    <img class="collage__item-img js-collage-item-img" src="img/images/image_19.jpg" alt="" />
+                                                </a><a class="collage__item js-collage-item js-fancybox" href="img/images/image_20.jpg" data-fancybox-group="1" target="_blank">
+                                                    <img class="collage__item-img js-collage-item-img" src="img/images/image_20.jpg" alt="" />
+                                                </a><a class="collage__item js-collage-item js-fancybox" href="img/images/image_21.jpg" data-fancybox-group="1" target="_blank">
+                                                    <img class="collage__item-img js-collage-item-img" src="img/images/image_21.jpg" alt="" />
+                                                </a>
+                                            </div>
+                                            <span class="rating js-vote" title="Голосовать">456</span>
+                                            <p>
+                                                Люблю находить странные места возле работы:)
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__link js-comments-toggle" href="entry/1/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="icon icon--cogwheel"></i>
+                                                            <span class="meta-item__dropdown meta-item__dropdown--actions js-horizontal-centering">
+                                                                <a class="meta-item__dropdown-item js-post-edit" href="#" title="Редактировать">
+                                                                    <i class="icon icon--pencil"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-link" href="#" title="Ссылка">
+                                                                    <i class="icon icon--hyperlink"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-subscribe state--subscribed" href="#" title="Подписка на комментарии">
+                                                                    <i class="icon icon--comments-subscribe"></i>
+                                                                </a>
+                                                                <a class="meta-item__dropdown-item js-post-delete" href="#" title="Удалить">
+                                                                    <i class="icon icon--basket"></i>
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                </section>
+                                <!-- end Posts -->
+                                <!-- Pagination -->
+                                <div class="pagination">
+                                    <a class="pagination__item pagination__item--prev" href="#" title="Ранее">Ранее</a>
+                                    <a class="pagination__item pagination__item--next" href="#" title="Сейчас">Сейчас</a>
+                                </div>
+                                <!-- end Pagination -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end Page Body -->
+                </div>
+            </div>
+            <!-- Inviter -->
+            <div class="inviter inviter--fixed">
+                <div class="inviter__box" style="background-image: url(img/images/IMG_7355.jpg);">
+                    <div class="inviter__overlay"></div>
+                    <div class="valign">
+                        <div class="valign__middle">
+                            <!-- Tasty Ribbon -->
+                            <div class="tasty-ribbon">
+                                <a class="tasty-ribbon__link" href="#" title="тейсти">тейсти</a>
+                            </div>
+                            <!-- end Tasty Ribbon -->
+                            <div class="inviter__title">Тейсти – это дневник в который хочется писать каждый день</div>
+                            <div class="inviter__actions">
+                                <span class="button button--blue button--social button--vkontakte">
+                                    <span class="button__inner">
+                                        <span class="button__icon"></span>
+                                        <span class="button__text">зарегистриваться</span>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="inviter__spacer"></div>
+                            <div class="inviter__stats">
+                                <div class="inviter__stats-item">
+                                    <strong>14 000 000+</strong>
+                                    записей
+                                </div>
+                                <div class="inviter__stats-item">
+                                    <strong>200 000+</strong>
+                                    пользователей
+                                </div>
+                                <div class="inviter__stats-item">
+                                    <strong><span class="tilde">&#126;</span>30</strong>
+                                    секунд чтобы начать
+                                </div>
+                            </div>
+                            <div class="inviter__footer">
+                                <div class="inviter__footer-inner">
+                                    <a class="inviter__footer-item" href="#" title="У меня нет аккаунта вконтакте" data-shellbox-target="auth" data-section="reg">У меня нет аккаунта вконтакте</a> <span class="inviter__footer-sep">·</span> <a class="inviter__footer-item" href="#" title="Вы уже зарегистрированы? Войдите" data-shellbox-target="auth">Вы уже зарегистрированы? Войдите</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end Inviter -->
+        </div>
+        <!-- end Page -->
+
+        <!-- Shellbox -->
+        <div class="shellbox shellbox--auth" data-shellbox-name="auth" data-default-section="select">
+            <div class="shellbox__main">
+                <div class="shellbox__cell">
+                    <!-- Form Popup Select -->
+                    <div class="form-popup form-popup--select">
+                        <div class="form-popup__header">
+                            <h3 class="form-popup__title">Вход для зарегистрированных</h3>
+                        </div>
+                        <div class="form-popup__body">
+                            <div class="form-popup__select">
+                                <div class="form-popup__select-item is--vkontakte">
+                                    <div class="form-popup__select-item-i">
+                                        <div class="form-popup__select-pic">
+                                            <i class="icon icon--vkontakte"></i>
+                                        </div>
+                                        <div class="form-popup__select-desc">Через Вконтакте</div>
+                                    </div>
+                                </div><div class="form-popup__select-item is--email js-auth-jumper" data-section="login">
+                                    <div class="form-popup__select-item-i">
+                                        <div class="form-popup__select-pic">
+                                            <i class="icon icon--email"></i>
+                                        </div>
+                                        <div class="form-popup__select-desc">Через электронную почту</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-popup__footer">
+                            <a class="form-popup__footer-item js-auth-jumper" href="#" title="или зарегистрироваться, если вы этого не делали" data-section="reg">или зарегистрироваться, если вы этого не делали</a>
+                        </div>
+                    </div>
+                    <!-- end Form Popup Select -->
+                    <!-- Form Popup Login -->
+                    <div class="form-popup form-popup--login">
+                        <div class="form-popup__header">
+                            <h3 class="form-popup__title">Вход через емейл</h3>
+                        </div>
+                        <div class="form-popup__body">
+                            <form action="?">
+                                <div class="form-popup__item">
+                                    <div class="form-field form-field--simple">
+                                        <input class="form-field__input" type="email" value="" placeholder="Электронная почта" />
+                                        <div class="form-field__bg"></div>
+                                    </div>
+                                </div>
+                                <div class="form-popup__item">
+                                    <div class="form-field form-field--simple">
+                                        <input class="form-field__input" type="password" value="" placeholder="Пароль" />
+                                        <div class="form-field__bg"></div>
+                                    </div>
+                                </div>
+                                <div class="form-popup__submit">
+                                    <span class="button button--light-green button--large button--100p">
+                                        <input class="button__input" type="submit" value="Войти" />
+                                        <span class="button__inner">
+                                            <span class="button__text">Войти</span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form-popup__footer">
+                            <a class="form-popup__footer-item" href="#" title="Войти через Вконтакте">Войти через Вконтакте</a> <span class="form-popup__footer-sep">·</span> <a class="form-popup__footer-item js-auth-jumper" href="#" title="Я забыл пароль или почту" data-section="recovery">Я забыл пароль или почту</a>
+                        </div>
+                    </div>
+                    <!-- end Form Popup Login -->
+                    <!-- Form Popup Reg -->
+                    <div class="form-popup form-popup--reg">
+                        <div class="form-popup__header">
+                            <h3 class="form-popup__title">Регистрация нового пользователя</h3>
+                        </div>
+                        <div class="form-popup__body">
+                            <form action="?">
+                                <div class="form-popup__item">
+                                    <div class="form-field form-field--simple">
+                                        <input class="form-field__input" type="email" value="" placeholder="Электронная почта" />
+                                        <div class="form-field__bg"></div>
+                                    </div>
+                                </div>
+                                <div class="form-popup__item">
+                                    <div class="form-field form-field--simple form-field--error">
+                                        <input class="form-field__input" type="password" value="" placeholder="Пароль" />
+                                        <div class="form-field__bg"></div>
+                                    </div>
+                                </div>
+                                <div class="form-popup__item">
+                                    <div class="form-field form-field--simple form-field--binary">
+                                        <input id="tlog-address" class="form-field__input" type="text" value="" placeholder="Адрес дневника" data-js="autosize-input" /><span class="form-field__text">.mmm-tasty.ru</span>
+                                        <div class="form-field__bg"></div>
+                                    </div>
+                                </div>
+                                <div class="form-popup__submit">
+                                    <span class="button button--light-green button--large button--100p">
+                                        <input class="button__input" type="submit" value="Зарегистрироваться" />
+                                        <span class="button__inner">
+                                            <span class="button__text">Зарегистрироваться</span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form-popup__footer">
+                            <a class="form-popup__footer-item" href="#" title="У вас есть акккаунт вконтакте?">У вас есть акккаунт вконтакте?</a>
+                        </div>
+                    </div>
+                    <!-- end Form Popup Reg -->
+                    <!-- Form Popup Recovery -->
+                    <div class="form-popup form-popup--recovery">
+                        <div class="form-popup__header">
+                            <h3 class="form-popup__title">Восстановление пароля</h3>
+                        </div>
+                        <div class="form-popup__body">
+                            <form action="?">
+                                <div class="form-popup__item">
+                                    <div class="form-field form-field--simple">
+                                        <input class="form-field__input" type="text" value="" placeholder="Адрес дневника или электронная почта" />
+                                        <div class="form-field__bg"></div>
+                                    </div>
+                                </div>
+                                <div class="form-popup__submit">
+                                    <span class="button button--light-green button--large button--100p">
+                                        <input class="button__input" type="submit" value="Вспомнить все" />
+                                        <span class="button__inner">
+                                            <span class="button__text">Вспомнить все</span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form-popup__footer">
+                            <a class="form-popup__footer-item js-auth-jumper" href="#" title="Я все вспомнил, верните меня" data-section="select">Я все вспомнил, верните меня</a>
+                        </div>
+                    </div>
+                    <!-- end Form Popup Recovery -->
+                </div>
+            </div>
+        </div>
+        <!-- end Shellbox -->
+
+        <!-- Popup Settings Design -->
+        <div class="popup popup--settings-design popup--dark js-settings-design">
+            <div class="popup__content">
+                <div class="popup__header">
+                    <div class="popup__headbox js-popup-headbox">
+                        <h3 class="popup__title">Управление дизайном</h3>
+                    </div>
+                    <div class="popup__loader state--hidden js-popup-loader">
+                        <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
+                    </div>
+                    <div class="popup__close js-popup-close">
+                        <div class="popup__icon popup__icon--close">h</div>
+                    </div>
+                </div>
+                <div class="popup__body">
+                    <div class="settings-design js-drop-cover">
+                        <div class="settings-design__drop">
+                            <div class="settings-design__drop-text">Отпустите картинку и она начнет загружаться</div>
+                        </div>
+                        <div class="settings-design__controls">
+                            <div class="settings-design__control settings-design__control--cover">
+                                <div class="settings-design__control-inner">
+                                    <span class="settings-design__valign"></span>
+                                    <span class="settings-design__text absolute--left animate--down">Фон блога</span>
+                                    <span class="settings-design__text absolute--left animate--up">Перетащите или <span class="form-upload form-upload--cover"><span class="form-upload__text">загрузите</span><input id="layout-cover" class="form-upload__input js-upload-cover-input" type="file" name="layout-cover" /></span></span>
+                                    <span class="settings-design__cover-pixel absolute--right animate--right js-cover-pixel" style="background-image:url(img/bg.jpg);"></span>
+                                </div>
+                            </div>
+                            <div class="settings-design__control settings-design__control--cover-align">
+                                <div class="settings-design__control-inner">
+                                    <span class="settings-design__valign"></span>
+                                    <span class="settings-design__text absolute--left animate--down">Настройка фона</span>
+                                    <span class="settings-design__state absolute--right animate--right">
+                                        <span class="settings-design__state-i"></span>
+                                    </span>
+                                    <span class="form-radiogroup form-radiogroup--dotted-list absolute--left animate--up js-form-radiogroup">
+                                        <label class="form-radio form-radio--repeat" for="tlog-coveralign-justify">
+                                            <span class="form-radio__inner">
+                                                <span class="form-radio__text">по ширине</span>
+                                                <input id="tlog-coveralign-justify" class="form-radio__input" type="radio" name="coverAlign" value="justify" />
+                                            </span>
+                                        </label>
+                                        <label class="form-radio form-radio--repeat" for="tlog-coveralign-center">
+                                            <span class="form-radio__inner">
+                                                <span class="form-radio__text">по центру</span>
+                                                <input id="tlog-coveralign-center" class="form-radio__input" type="radio" name="coverAlign" value="center" />
+                                            </span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="settings-design__control settings-design__control--header-color">
+                                <div class="settings-design__control-inner">
+                                    <span class="settings-design__valign"></span>
+                                    <span class="settings-design__text absolute--left animate--down">Заголовок блога</span>
+                                    <span class="settings-design__state settings-design__state--radiobutton absolute--right animate--right">
+                                        <span class="settings-design__state-i"></span>
+                                    </span>
+                                    <span class="form-radiogroup form-radiogroup--radiobuttons form-radiogroup--header-color absolute--left animate--up js-form-radiogroup">
+                                        <label class="form-radio form-radio--white" for="tlog-headercolor-white">
+                                            <span class="form-radio__inner">
+                                                <span class="form-radio__text">Белый</span>
+                                                <input id="tlog-headercolor-white" class="form-radio__input" type="radio" name="headerColor" value="white" />
+                                            </span>
+                                        </label>
+                                        <label class="form-radio form-radio--black" for="tlog-headercolor-black">
+                                            <span class="form-radio__inner">
+                                                <span class="form-radio__text">Черный</span>
+                                                <input id="tlog-headercolor-black" class="form-radio__input" type="radio" name="headerColor" value="black" />
+                                            </span>
+                                        </label>
+                                        <label class="form-radio form-radio--white-on-black" for="tlog-headercolor-whiteonblack">
+                                            <span class="form-radio__inner">
+                                                <span class="form-radio__text">Белый на черном</span>
+                                                <input id="tlog-headercolor-whiteonblack" class="form-radio__input" type="radio" name="headerColor" value="whiteonblack" />
+                                            </span>
+                                        </label>
+                                        <label class="form-radio form-radio--black-on-white" for="tlog-headercolor-blackonwhite">
+                                            <span class="form-radio__inner">
+                                                <span class="form-radio__text">Черный на белом</span>
+                                                <input id="tlog-headercolor-blackonwhite" class="form-radio__input" type="radio" name="headerColor" value="blackonwhite" />
+                                            </span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="settings-design__control settings-design__control--feed-color">
+                                <div class="settings-design__control-inner">
+                                    <span class="settings-design__valign"></span>
+                                    <span class="settings-design__text absolute--left animate--down">Цвет ленты и текста</span>
+                                    <span class="settings-design__state settings-design__state--radiobutton absolute--right animate--right">
+                                        <span class="settings-design__state-i"></span>
+                                    </span>
+                                    <span class="form-radiogroup form-radiogroup--radiobuttons form-radiogroup--feed-color absolute--left animate--up js-form-radiogroup">
+                                        <label class="form-radio form-radio--white" for="tlog-feedcolor-white">
+                                            <span class="form-radio__inner">
+                                                <span class="form-radio__text">Белая</span>
+                                                <input id="tlog-feedcolor-white" class="form-radio__input" type="radio" name="feedColor" value="white" />
+                                            </span>
+                                        </label>
+                                        <label class="form-radio form-radio--black" for="tlog-feedcolor-black">
+                                            <span class="form-radio__inner">
+                                                <span class="form-radio__text">Чёрная</span>
+                                                <input id="tlog-feedcolor-black" class="form-radio__input" type="radio" name="feedColor" value="black" />
+                                            </span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="settings-design__control settings-design__control--font-type">
+                                <div class="settings-design__control-inner">
+                                    <span class="settings-design__valign"></span>
+                                    <span class="settings-design__text absolute--left animate--down">Шрифт ленты</span>
+                                    <span class="settings-design__state absolute--right animate--right">
+                                        <span class="settings-design__state-i">Аа</span>
+                                    </span>
+                                    <span class="form-radiogroup form-radiogroup--type-font absolute--left animate--up js-form-radiogroup">
+                                        <label class="form-radio form-radio--sans-serif" for="tlog-fonttype-sans">
+                                            <span class="form-radio__inner">
+                                                <span class="form-radio__text">Аа</span>
+                                                <input id="tlog-fonttype-sans" class="form-radio__input" type="radio" name="fontType" value="sans" />
+                                            </span>
+                                        </label>
+                                        <label class="form-radio form-radio--serif" for="tlog-fonttype-serif">
+                                            <span class="form-radio__inner">
+                                                <span class="form-radio__text">Аа</span>
+                                                <input id="tlog-fonttype-serif" class="form-radio__input" type="radio" name="fontType" value="serif" />
+                                            </span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="settings-design__control settings-design__control--opacity">
+                                <div class="settings-design__control-inner">
+                                    <span class="settings-design__valign"></span>
+                                    <span class="settings-design__text absolute--left animate--down">Прозрачность ленты</span>
+                                    <span class="form-range form-range--opacity form-range--yellow absolute--left animate--up js-form-range-opacity">
+                                        <input id="opacity-feed" class="form-range__input" type="text" name="feedOpacity" value="100" />
+                                    </span>
+                                    <span class="form-range-value js-form-range-value">100%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Popup Settings Design -->
+
+        <!-- Popup Subscribed By -->
+        <div class="popup popup--subscribed-by popup--dark js-subscribed-by">
+            <div class="popup__content">
+                <div class="popup__header">
+                    <div class="popup__headbox js-popup-headbox">
+                        <h3 class="popup__title">Подписчики</h3>
+                    </div>
+                    <div class="popup__loader state--hidden js-popup-loader">
+                        <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
+                    </div>
+                    <div class="popup__close js-popup-close">
+                        <div class="popup__icon popup__icon--close">h</div>
+                    </div>
+                </div>
+                <div class="popup__body">
+                    <div class="scroller scroller--people js-scroller">
+                        <div class="scroller__pane js-scroller-pane">
+                            <div class="popup__text state--hidden">На вас ещё никто не&nbsp;подписан</div>
+                            <!--<section class="people">
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Andy">
+                                        <span class="people__avatar" style="background-image: url(img/avatars/ava.jpg);"></span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Andy</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Genue">
+                                        <span class="people__avatar" style="background-image: url(img/avatars/ava.jpg);"></span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Genue</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Pavel">
+                                        <span class="people__avatar" style="background-image: url(img/avatars/ava.jpg);"></span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Pavel</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Andy">
+                                        <span class="people__avatar" style="background-image: url(img/avatars/ava.jpg);"></span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Andy</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Genue">
+                                        <span class="people__avatar" style="background-image: url(img/avatars/ava.jpg);"></span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Genue</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Pavel">
+                                        <span class="people__avatar" style="background-image: url(img/avatars/ava.jpg);"></span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Pavel</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Andy">
+                                        <span class="people__avatar" style="background-image: url(img/avatars/ava.jpg);"></span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Andy</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Genue">
+                                        <span class="people__avatar" style="background-image: url(img/avatars/ava.jpg);"></span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Genue</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Pavel">
+                                        <span class="people__avatar" style="background-image: url(img/avatars/ava.jpg);"></span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Pavel</span>
+                                        </span>
+                                    </a>
+                                </article>
+                            </section>-->
+                        </div>
+                        <div class="scroller__track js-scroller-track">
+                            <div class="scroller__bar js-scroller-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Popup Subscribed By -->
+
+        <!-- Popup Subscribed To -->
+        <div class="popup popup--subscribed-to popup--dark js-subscribed-to">
+            <div class="popup__content">
+                <div class="popup__header">
+                    <div class="popup__headbox js-popup-headbox">
+                        <h3 class="popup__title">Подписан на</h3>
+                    </div>
+                    <div class="popup__loader state--hidden js-popup-loader">
+                        <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
+                    </div>
+                    <div class="popup__close js-popup-close">
+                        <div class="popup__icon popup__icon--close">h</div>
+                    </div>
+                </div>
+                <div class="popup__body">
+                    <div class="scroller scroller--people js-scroller">
+                        <div class="scroller__pane js-scroller-pane">
+                            <section class="people">
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Andy">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--fourth">
+                                                <span class="avatar__text">A</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Andy</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Genue">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--second">
+                                                <span class="avatar__text">G</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Genue</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Pavel">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--first">
+                                                <span class="avatar__text">P</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Pavel</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Andy">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--fourth">
+                                                <span class="avatar__text">A</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Andy</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Genue">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--second">
+                                                <span class="avatar__text">G</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Genue</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Pavel">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--first">
+                                                <span class="avatar__text">P</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Pavel</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Andy">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--fourth">
+                                                <span class="avatar__text">A</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Andy</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Genue">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--second">
+                                                <span class="avatar__text">G</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Genue</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Pavel">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--first">
+                                                <span class="avatar__text">P</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Pavel</span>
+                                        </span>
+                                    </a>
+                                </article>
+                            </section>
+                        </div>
+                        <div class="scroller__track js-scroller-track">
+                            <div class="scroller__bar js-scroller-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Popup Subscribed To -->
+
+        <!-- Popup Friends -->
+        <div class="popup popup--friends popup--dark js-friends">
+            <div class="popup__content">
+                <div class="popup__header">
+                    <div class="popup__headbox js-popup-headbox">
+                        <h3 class="popup__title">Ваши друзья</h3>
+                    </div>
+                    <div class="popup__loader state--hidden js-popup-loader">
+                        <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
+                    </div>
+                    <!--<div class="popup__actions js-dropdown">
+                        <div class="popup__toggle" data-element="dropdown-toggle">
+                            <div class="popup__icon popup__icon-/-settings">d</div>
+                        </div>
+                        <div class="popup__dropdown" data-element="dropdown-menu">
+                            <a class="popup__dropdown-item" href="#" title="Отметить все как прочитанные">Отметить все как прочитанные</a>
+                            <a class="popup__dropdown-item" href="#" title="Управление списком">Управление списком</a>
+                            <a class="popup__dropdown-item" href="#" title="Настройки приватности">Настройки приватности</a>
+                        </div>
+                    </div>-->
+                    <div class="popup__close js-popup-close">
+                        <div class="popup__icon popup__icon--close">h</div>
+                    </div>
+                </div>
+                <div class="popup__body">
+                    <div class="scroller scroller--people js-scroller">
+                        <div class="scroller__pane js-scroller-pane">
+                            <section class="people">
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Deliceman">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--third">
+                                                <span class="avatar__text">D</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Deliceman</span><i class="people__online"></i>
+                                        </span>
+                                        <span class="people__count">+2</span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Belle">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--fourth">
+                                                <span class="avatar__text">B</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Belle</span><i class="people__online"></i>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Julie">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--seventh">
+                                                <span class="avatar__text">J</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Julie</span>
+                                        </span>
+                                        <span class="people__count">+8</span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Mickey Hey">
+                                        <span class="people__avatar">
+                                            <span class="avatar" style="background-image: url(img/avatars/ava_4.png);">
+                                                <img class="avatar__img" src="img/avatars/ava_4.png" alt="Mickey Hey" />
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Mickey Hey</span>
+                                        </span>
+                                        <span class="people__count">+12</span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Genue">
+                                        <span class="people__avatar">
+                                            <span class="avatar avatar--second">
+                                                <span class="avatar__text">G</span>
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Genue</span>
+                                        </span>
+                                    </a>
+                                </article>
+                                <article class="people__item">
+                                    <a class="people__link" href="#" title="Korn">
+                                        <span class="people__avatar">
+                                            <span class="avatar" style="background-image: url(img/avatars/ava_7.png);">
+                                                <img class="avatar__img" src="img/avatars/ava_7.png" alt="Korn" />
+                                            </span>
+                                        </span>
+                                        <span class="people__desc">
+                                            <span class="people__name">Korn</span>
+                                        </span>
+                                    </a>
+                                </article>
+                            </section>
+                        </div>
+                        <div class="scroller__track js-scroller-track">
+                            <div class="scroller__bar js-scroller-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Popup Friends -->
+
+        <!-- Popup Tags -->
+        <div class="popup popup--tags popup--dark js-tags">
+            <div class="popup__content">
+                <div class="popup__header">
+                    <div class="popup__headbox js-popup-headbox">
+                        <h3 class="popup__title">Теги</h3>
+                    </div>
+                    <div class="popup__loader state--hidden js-popup-loader">
+                        <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
+                    </div>
+                    <div class="popup__close js-popup-close">
+                        <div class="popup__icon popup__icon--close">h</div>
+                    </div>
+                </div>
+                <div class="popup__body">
+                    <div class="scroller scroller--tags js-scroller">
+                        <div class="scroller__pane js-scroller-pane">
+                            <section class="tags">
+                                <article class="tag">
+                                    <a class="tag__link" href="#" title="#тег">
+                                        <span class="tag__count">10</span>
+                                        <span class="tag__text">#тег</span>
+                                    </a>
+                                </article>
+                                <article class="tag">
+                                    <a class="tag__link" href="#" title="#ёжик">
+                                        <span class="tag__count">5</span>
+                                        <span class="tag__text">#ёжик</span>
+                                    </a>
+                                </article>
+                                <article class="tag">
+                                    <a class="tag__link" href="#" title="#туман">
+                                        <span class="tag__count">2</span>
+                                        <span class="tag__text">#туман</span>
+                                    </a>
+                                </article>
+                                <article class="tag">
+                                    <a class="tag__link" href="#" title="#инста">
+                                        <span class="tag__count">1</span>
+                                        <span class="tag__text">#инста</span>
+                                    </a>
+                                </article>
+                                <article class="tag">
+                                    <a class="tag__link" href="#" title="#юмор">
+                                        <span class="tag__count">5</span>
+                                        <span class="tag__text">#юмор</span>
+                                    </a>
+                                </article>
+                                <article class="tag">
+                                    <a class="tag__link" href="#" title="#новости">
+                                        <span class="tag__count">4</span>
+                                        <span class="tag__text">#новости</span>
+                                    </a>
+                                </article>
+                            </section>
+                        </div>
+                        <div class="scroller__track js-scroller-track">
+                            <div class="scroller__bar js-scroller-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Popup Tags -->
+
+        <!-- Popup Settings -->
+        <div class="popup popup--settings popup--dark js-settings">
+            <div class="popup__header">
+                <div class="popup__headbox js-popup-headbox">
+                    <h3 class="popup__title">Настройки</h3>
+                </div>
+                <div class="popup__loader state--hidden js-popup-loader">
+                    <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
+                </div>
+                <div class="popup__close js-popup-close">
+                    <div class="popup__icon popup__icon--close">h</div>
+                </div>
+            </div>
+            <div class="popup__body">
+                <div class="settings">
+                    <form action="?">
+                        <div class="settings__header">
+                            <div class="hero-simple hero-simple--settings" style="background-image: url(img/images/image_15.jpg);">
+                                <div class="hero-simple__overlay"></div>
+                                <div class="hero-simple__box">
+                                    <div class="hero-simple__avatar">
+                                        <span class="avatar avatar--eighth">
+                                            <span class="avatar__text">M</span>
+                                        </span>
+                                        <span class="hero-simple__avatar-overlay">
+                                            <span class="form-upload form-upload--icon">
+                                                <span class="form-upload__text"><i class="icon icon--pencil"></i></span><input id="user-avatar" class="form-upload__input" type="file" name="user-avatar" />
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="hero-simple__name">madworld</div>
+                                    <div class="hero-simple__text">
+                                        <div class="editable-field js-editable-field">
+                                            <div class="editable-field__control-wrap">
+                                                <textarea class="editable-field__control js-editable-field-control" maxlength="140"></textarea>
+                                            </div>
+                                            <div class="editable-field__content js-editable-field-content">
+                                                <span class="editable-field__placeholder js-editable-field-placeholder">Введите небольшое описание вашего тлога</span>
+                                                <span class="editable-field__value js-editable-field-value"></span>
+                                                <span class="editable-field__button js-editable-field-button">
+                                                    <i class="icon icon--pencil"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings__body">
+                            <div class="settings__item">
+                                <div class="settings__right">
+                                    <div class="switcher">
+                                        <input id="privacy" class="switcher__input" type="checkbox" checked />
+                                        <label class="switcher__label" for="privacy">
+                                            <span class="switcher__btn switcher__btn--on">Да</span>
+                                            <span class="switcher__btn switcher__btn--off">Нет</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="settings__left">
+                                    <h3 class="settings__title">Закрытый дневник?</h3>
+                                    <p class="settings__desc">Управление видимостью вашего дневника. Закрытый дневник виден только тем, на кого вы подписаны</p>
+                                </div>
+                            </div>
+                            <div class="settings__item">
+                                <div class="settings__right">
+                                    <span class="button button--blue button--social button--vkontakte">
+                                        <span class="button__inner">
+                                            <span class="button__icon"></span>
+                                            <span class="button__text">Привязать аккаунт</span>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="settings__left">
+                                    <h3 class="settings__title">Вконтакте</h3>
+                                    <p class="settings__desc">Привяжите свой аккаунт Вконтакте, если вы захотите можно будет включить автопубликацию ваших  записей из дневника</p>
+                                </div>
+                            </div>
+                            <div class="settings__item">
+                                <div class="settings__right">
+                                    <div class="switcher">
+                                        <input id="daylog" class="switcher__input" type="checkbox" />
+                                        <label class="switcher__label" for="daylog">
+                                            <span class="switcher__btn switcher__btn--on">Да</span>
+                                            <span class="switcher__btn switcher__btn--off">Нет</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="settings__left">
+                                    <h3 class="settings__title">Тлогодень</h3>
+                                    <p class="settings__desc">Это режим отображения, когда на странице показыватются записи только за один день.</p>
+                                </div>
+                            </div>
+                            <div class="settings__item">
+                                <div class="settings__right">
+                                    <div class="switcher">
+                                        <input id="gender" class="switcher__input" type="checkbox" checked />
+                                        <label class="switcher__label" for="gender">
+                                            <span class="switcher__btn switcher__btn--on">Да</span>
+                                            <span class="switcher__btn switcher__btn--off">Нет</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="settings__left">
+                                    <h3 class="settings__title">Вы – девушка</h3>
+                                    <p class="settings__desc">На Тейсти сложилось так, что 7 из 10 пользователей – это девушки. Поэтому по-умолчанию для всех именно такая настройка.</p>
+                                </div>
+                            </div>
+                            <div class="settings__item settings__item--full" data-expander-name="email">
+                                <div class="settings__right">
+                                    <span class="button button--outline js-expander-toggle" data-expander-target="email">
+                                        <span class="button__inner">
+                                            <span class="button__text">Изменить</span>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="settings__left">
+                                    <h3 class="settings__title">Емейл</h3>
+                                    <p class="settings__desc">genue.luben@gmail.com</p>
+                                    <p class="settings__error">Емейл не подтвержден. <a href="#" title="Отправить">Отправить</a> подтверждение снова (или проверьте в папке «Спам»)</p>
+                                </div>
+                            </div>
+                            <div class="settings__item settings__item--full state--hidden" data-expander-name="email">
+                                <div class="settings__right">
+                                    <span class="button button--yellow js-expander-toggle" data-expander-target="email">
+                                        <span class="button__inner">
+                                            <span class="button__text">Сохранить</span>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="settings__left">
+                                    <h3 class="settings__title">Емейл</h3>
+                                    <div class="form-field form-field--default">
+                                        <input class="form-field__input" type="text" value="genue.luben@gmail.com" />
+                                        <div class="form-field__bg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings__item">
+                                <div class="settings__right">
+                                    <div class="switcher">
+                                        <input id="email-notifications" class="switcher__input" type="checkbox" checked />
+                                        <label class="switcher__label" for="email-notifications">
+                                            <span class="switcher__btn switcher__btn--on">Да</span>
+                                            <span class="switcher__btn switcher__btn--off">Нет</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="settings__left">
+                                    <h3 class="settings__title">Уведомления</h3>
+                                    <p class="settings__desc">Вы хотите получать уведомления о всех новых комментариях, подписчиках и личных сообщениях?</p>
+                                </div>
+                            </div>
+                            <div class="settings__item settings__item--full" data-expander-name="password">
+                                <div class="settings__right">
+                                    <span class="button button--outline js-expander-toggle" data-expander-target="password">
+                                        <span class="button__inner">
+                                            <span class="button__text">Изменить</span>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="settings__left">
+                                    <h3 class="settings__title">Пароль</h3>
+                                    <p class="settings__desc">Отправлять мне емейл уведомления и всех новых комментариях, подписчиках и личных сообщениях?</p>
+                                </div>
+                            </div>
+                            <div class="settings__item settings__item--full state--hidden" data-expander-name="password">
+                                <div class="settings__right">
+                                    <span class="button button--yellow js-expander-toggle" data-expander-target="password">
+                                        <span class="button__inner">
+                                            <span class="button__text">Сохранить</span>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="settings__left">
+                                    <h3 class="settings__title">Пароль</h3>
+                                    <div class="form-field form-field--default">
+                                        <input class="form-field__input" type="password" value="" placeholder="Новый пароль" />
+                                        <div class="form-field__bg"></div>
+                                    </div>
+                                    <div class="form-field form-field--default">
+                                        <input class="form-field__input" type="password" value="" placeholder="Новый пароль еще раз" />
+                                        <div class="form-field__bg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings__item">
+                                <!-- Accounts -->
+                                <div class="accounts">
+                                    <div class="account state--active">
+                                        <div class="account__actions">
+                                            <span class="button button--outline">
+                                                <span class="button__inner">
+                                                    <span class="button__text">Выйти</span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="account__info">
+                                            <div class="account__avatar">
+                                                <span class="avatar avatar--fifth">
+                                                    <span class="avatar__text">G</span>
+                                                </span>
+                                            </div>
+                                            <div class="account__desc">
+                                                <div class="account__name">Genue</div>
+                                                <div class="account__status">Активный дневник</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="account">
+                                        <div class="account__actions">
+                                            <span class="button button--yellow">
+                                                <span class="button__inner">
+                                                    <span class="button__text">Переключиться</span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="account__info">
+                                            <div class="account__avatar">
+                                                <span class="avatar avatar--first">
+                                                    <span class="avatar__text">N</span>
+                                                </span>
+                                            </div>
+                                            <div class="account__desc">
+                                                <div class="account__name">News</div>
+                                                <div class="account__status">Нажмите чтобы переключиться</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end Accounts -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- end Popup Settings -->
+
+        <!-- Popup Messages -->
+        <div class="popup popup--messages popup--light js-messages">
+            <div class="popup__header">
+                <div class="popup__headbox js-popup-headbox">
+                    <h3 class="popup__title">Мои переписки</h3>
+                </div>
+                <div class="popup__loader state--hidden js-popup-loader">
+                    <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
+                </div>
+                <div class="popup__close js-popup-close">
+                    <div class="popup__icon popup__icon--close">h</div>
+                </div>
+            </div>
+            <div class="popup__body">
+                <div class="messages">
+                    <div class="messages__back js-messages-back state--hidden">
+                        <i class="icon icon--left-arrow"></i>
+                    </div>
+                    <div class="messages__section messages__section--dialogs js-messages-section" data-section="dialogs" data-title="Мои переписки">
+                        <!--<div class="messages__header">
+                            <h3 class="messages__title">Мои переписки</h3>
+                        </div>-->
+                        <div class="messages__body">
+                            <div class="scroller scroller--dark js-scroller">
+                                <div class="scroller__pane js-scroller-pane">
+                                    <div class="messages__dialogs js-messages-dialogs">
+                                        <div class="messages__dialog js-messages-dialog" data-id="1">
+                                            <div class="messages__counter">+1</div>
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar" style="background-image: url(img/avatars/ava_6.png);">
+                                                    <img class="avatar__img" src="img/avatars/ava_6.png" alt="vladaserb" />
+                                                </span>
+                                                <span class="messages__user-online"></span>
+                                            </span>
+                                            <div class="messages__dialog-text"><span class="messages__user-name">vladaserb</span> Правоспособность лица может быть поставлена под сомнение…</div>
+                                            <span class="messages__date">20 минут назад</span>
+                                        </div>
+                                        <div class="messages__dialog js-messages-dialog" data-id="2">
+                                            <div class="messages__counter">+1</div>
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar avatar--second">
+                                                    <span class="avatar__text">2</span>
+                                                </span>
+                                            </span>
+                                            <div class="messages__dialog-text"><span class="messages__user-name">2crabs</span> Еще Шпенглер в "Закате Европы" писал, что капиталистическое…</div>
+                                            <span class="messages__date">Сегодня в 18:43</span>
+                                        </div>
+                                        <div class="messages__dialog state--read js-messages-dialog" data-id="3">
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar avatar--third">
+                                                    <span class="avatar__text">N</span>
+                                                </span>
+                                            </span>
+                                            <div class="messages__dialog-text"><span class="messages__user-name">nevergreen</span> Социальная парадигма, согласно традиционным представлениям…</div>
+                                            <span class="messages__date">Вчера в 20:08</span>
+                                        </div>
+                                        <div class="messages__dialog state--read js-messages-dialog" data-id="4">
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar avatar--seventh">
+                                                    <span class="avatar__text">B</span>
+                                                </span>
+                                                <span class="messages__user-online"></span>
+                                            </span>
+                                            <div class="messages__dialog-text"><span class="messages__user-name">bloodflood</span> В спортзале какой-то бородатый мужик часа полтора бодро бегал…</div>
+                                            <span class="messages__date">Вчера в 20:08</span>
+                                        </div>
+                                        <div class="messages__dialog state--read js-messages-dialog" data-id="5">
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar avatar--seventh">
+                                                    <span class="avatar__text">B</span>
+                                                </span>
+                                                <span class="messages__user-online"></span>
+                                            </span>
+                                            <div class="messages__dialog-text"><span class="messages__user-name">bloodflood</span> В спортзале какой-то бородатый мужик часа полтора бодро бегал…</div>
+                                            <span class="messages__date">Вчера в 20:08</span>
+                                        </div>
+                                        <div class="messages__dialog state--read js-messages-dialog" data-id="6">
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar avatar--seventh">
+                                                    <span class="avatar__text">B</span>
+                                                </span>
+                                                <span class="messages__user-online"></span>
+                                            </span>
+                                            <div class="messages__dialog-text"><span class="messages__user-name">bloodflood</span> В спортзале какой-то бородатый мужик часа полтора бодро бегал…</div>
+                                            <span class="messages__date">Вчера в 20:08</span>
+                                        </div>
+                                        <div class="messages__dialog state--read js-messages-dialog" data-id="7">
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar avatar--seventh">
+                                                    <span class="avatar__text">B</span>
+                                                </span>
+                                                <span class="messages__user-online"></span>
+                                            </span>
+                                            <div class="messages__dialog-text"><span class="messages__user-name">bloodflood</span> В спортзале какой-то бородатый мужик часа полтора бодро бегал…</div>
+                                            <span class="messages__date">Вчера в 20:08</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="scroller__track js-scroller-track">
+                                    <div class="scroller__bar js-scroller-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="messages__footer">
+                            <span class="button button--green button--100p js-messages-add">
+                                <span class="button__inner">
+                                    <span class="button__text">Cоздать переписку</span>
+                                </span>
+                            </span>
+                        </footer>
+                    </div>
+
+                    <div class="messages__section messages__section--recipients js-messages-section" data-section="recipients" data-title="Cоздать переписку">
+                        <div class="messages__body">
+                            <div class="messages__box">
+                                <div class="messages__chooser js-messages-chooser">
+                                    <div class="messages__chooser-button js-messages-chooser-button">
+                                        <span class="messages__chooser-button-text">Введите имя</span>
+                                    </div>
+                                    <div class="messages__chooser-dropdown">
+                                        <input class="messages__chooser-input js-messages-chooser-input" type="text" value="" />
+                                        <div class="messages__chooser-results js-messages-chooser-results"></div>
+                                    </div>
+                                </div>
+                                <div class="messages__field">
+                                    <input class="js-messages-select-recipients" type="hidden" style="width: 100%;" data-placeholder="Введите имя" />
+                                </div>
+                                <div class="messages__hint">Начните вводить имя друга, которому хотите написать сообщение</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="messages__section messages__section--thread js-messages-section" data-section="thread">
+                        <header class="messages__header">
+                            <div class="messages__hero" style="background-image: url(img/images/1.jpg);">
+                                <div class="messages__hero-overlay"></div>
+                                <div class="messages__hero-box">
+                                    <div class="messages__hero-avatar">
+                                        <span class="avatar" style="background-image: url(img/avatars/ava_6.png);">
+                                            <img class="avatar__img" src="img/avatars/ava_6.png" alt="vladaserb" />
+                                        </span>
+                                    </div>
+                                    <div class="messages__hero-name">vladaserb</div>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="messages__body">
+                            <div class="scroller scroller--dark scroller--messages js-scroller">
+                                <div class="scroller__pane js-scroller-pane">
+                                    <div class="messages__list">
+                                        <div class="messages__list-cell js-messages-list">
+                                            <div class="messages__empty state--hidden">
+                                                <div class="messages__empty-text">Здесь будут отображаться сообщения</div>
+                                            </div>
+                                            <div class="message message--from">
+                                                <span class="messages__user-avatar">
+                                                    <span class="avatar avatar--eighth">
+                                                        <span class="avatar__text">M</span>
+                                                    </span>
+                                                </span>
+                                                <div class="messages__bubble">
+                                                    <span class="messages__user-name">madwotrld</span> Правоспособность лица может быть поставлена под сомнение, если понятие политического участия методологически…
+                                                </div>
+                                                <span class="messages__date">Вчера в 20:08</span>
+                                            </div>
+                                            <div class="message message--to">
+                                                <span class="messages__user-avatar">
+                                                    <span class="avatar" style="background-image: url(img/avatars/ava_6.png);">
+                                                        <img class="avatar__img" src="img/avatars/ava_6.png" alt="vladaserb" />
+                                                    </span>
+                                                </span>
+                                                <div class="messages__bubble">
+                                                    <span class="messages__user-name">vladaserb</span> Бред какой-то. Сама придумала?
+                                                </div>
+                                                <span class="messages__date">18 минут назад</span>
+                                            </div>
+                                            <div class="message message--from">
+                                                <span class="messages__user-avatar">
+                                                    <span class="avatar avatar--eighth">
+                                                        <span class="avatar__text">M</span>
+                                                    </span>
+                                                </span>
+                                                <div class="messages__bubble">
+                                                    <span class="messages__user-name">madwotrld</span> Нет,<br /> <a href="http://vesna.yandex.ru" title="http://vesna.yandex.ru">http://vesna.yandex.ru</a><br /> подсказал
+                                                </div>
+                                                <span class="messages__date">Только что</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="scroller__track js-scroller-track">
+                                    <div class="scroller__bar js-scroller-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="messages__footer">
+                            <div class="message-form">
+                                <span class="messages__user-avatar">
+                                    <span class="avatar avatar--eighth">
+                                        <span class="avatar__text">M</span>
+                                    </span>
+                                </span>
+                                <textarea class="message-form__textarea" placeholder="Ваше сообщение…"></textarea>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="messages__section messages__section--thread js-messages-section" data-section="empty">
+                        <header class="messages__header">
+                            <div class="messages__hero" style="background-image: url(img/images/1.jpg);">
+                                <div class="messages__hero-overlay"></div>
+                                <div class="messages__hero-box">
+                                    <div class="messages__hero-avatar">
+                                        <span class="avatar" style="background-image: url(img/avatars/ava_6.png);">
+                                            <img class="avatar__img" src="img/avatars/ava_6.png" alt="vladaserb" />
+                                        </span>
+                                    </div>
+                                    <div class="messages__hero-name">vladaserb</div>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="messages__body">
+                            <div class="scroller scroller--dark scroller--messages js-scroller">
+                                <div class="scroller__pane js-scroller-pane">
+                                    <div class="messages__list">
+                                        <div class="messages__list-cell js-messages-list">
+                                            <div class="messages__empty">
+                                                <div class="messages__empty-text">Здесь будут отображаться сообщения</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="scroller__track js-scroller-track">
+                                    <div class="scroller__bar js-scroller-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="messages__footer">
+                            <div class="message-form">
+                                <span class="messages__user-avatar">
+                                    <span class="avatar avatar--eighth">
+                                        <span class="avatar__text">M</span>
+                                    </span>
+                                </span>
+                                <textarea class="message-form__textarea" placeholder="Ваше сообщение…"></textarea>
+                            </div>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Popup Messages -->
+
+        <!-- Confirmation -->
+        <div class="confirmation">
+            <div class="confirmation__fader"></div>
+            <div class="confirmation__close">
+                <div class="confirmation__close-icon">h</div>
+            </div>
+            <div class="confirmation__box">
+                <div class="confirmation__text">
+                    Вы действительно хотите удалить запись?<br />Её нельзя будет восстановить.
+                </div>
+                <div class="confirmation__buttons">
+                    <span class="button button--small button--red">
+                        <span class="button__inner">
+                            <span class="button__text">Удалить запись</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- end Confirmation -->
+
+        <!-- Templates -->
+        <script id="tmpl-avatar" type="text/x-jsrender">
+            {{if userpic && userpic.length}}
+            <span class="avatar" style="background-image: url({{>userpic}});">
+                <img class="avatar__img" src="{{>userpic}}" alt="{{>username}}" />
+            </span>
+            {{else}}
+            <span class="avatar avatar--{{>avatar.style}}">
+                <span class="avatar__text">{{>avatar.letter}}</span>
+            </span>
+            {{/if}}
+        </script>
+
+        <script id="tmpl-comments" type="text/x-jsrender">
+          <section class="comments state--hidden js-comments">
+            <div class="comments__more js-comments-more" style="{{if more == 0}}display:none{{/if}}">
+              <a class="comments__more-link js-comments-more-link" href="{{>url}}" title="{{>loadMore}}">{{>loadMore}}</a>
+            </div>
+            <div class="comments__list js-comments-list"></div>
+            <div class="comment-form">
+              <div class="comment-form__table">
+                <div class="comment-form__table-cell">
+                  <form action="">
+                    <span class="comment-form__avatar" style="background-image: url(http://a3.tcdn.ru/assets/userpic/65/00/189424_thumb128.png)"><img alt="volosojui" class="comment-form__avatar__img" src="http://a3.tcdn.ru/assets/userpic/65/00/189424_thumb128.png" /></span>
+                    <span class="comment-form__field js-toggle-value">
+                      <i class="comment-form__field-bg"></i>
+                      <label class="comment-form__field-label js-toggle-value-label" for="add-comment-{{>id}}">Прокомментировать</label>
+                      <textarea id="add-comment-{{>id}}" class="comment-form__field-textarea js-comment-textarea js-toggle-value-input js-autoresize js-sew"></textarea>
+                    </span>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+        </script>
+
+        <script id="tmpl-comment" type="text/x-jsrender">
+          <article id="comment-{{>id}}" class="comment">
+            <div class="comment__table">
+              <div class="comment__table-cell">
+                <a class="comment__user" href="{{>authorUrl}}" title="{{>authorName}}">
+                  {{:avatarHtml}}
+                  <span class="comment__username comment__username--bold">{{>authorName}}</span>
+                </a> {{>text}}&nbsp;
+                <span class="comment__meta">
+                  <span class="comment__reply js-comment-reply" data-user="{{>authorName}}">Ответить</span>
+                  <span class="comment__dot">&middot;</span>
+                  <a class="comment__date-link" href="#comment-{{>id}}" title="">
+                    <time class="comment__date js-comment-date" datetime="{{>createdAt}}">{{>createdAgo}}</time>
+                  </a>
+                  <span class="comment__dot">·</span>
+                  <span class="comment__remove">
+                    <i class="icon icon--cross"></i>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </article>
+        </script>
+
+        <script id="tmpl-comment-avatar" type="text/x-jsrender">
+          {{if authorPic && authorPic.length}}
+            <span class="comment__avatar" style="background-image: url({{>authorPic}});">
+              <img class="comment__avatar__img" src="{{>authorPic}}" alt="{{>authorName}}" />
+            </span>
+          {{else}}
+            <span class="comment__avatar avatar avatar--{{>avatarStyle}}">
+              <span class="avatar__text">{{>avatarLetter}}</span>
+            </span>
+          {{/if}}
+        </script>
+
+        <script id="tmpl-notice" type="text/x-jsrender">
+          <div class="notice notice-{{>type}}">
+            <div class="notice__inner">{{>text}}</div>
+          </div>
+        </script>
+
+        <script id="tmpl-post-video" type="text/x-jsrender">
+          <figure class="video video--big">
+              <div class="video__cover" style="background-image: url({{>cover}})">
+                <div class="video__overlay"></div>
+              </div>
+              <div class="video__embed" data-frame="{{>code}}">
+              </div>
+          </figure>
+        </script>
+
+        <script id="tmpl-popup-people" type="text/x-jsrender">
+          <div class="popup popup--dark ">
+            <div class="popup__content">
+              <div class="popup__header">
+                <div class="popup__headbox js-popup-headbox">
+                  <h3 class="popup__title">{{title}}</h3>
+                </div>
+                <div class="popup__close js-popup-close">
+                  <div class="popup__icon popup__icon--close">h</div>
+                </div>
+              </div>
+              <div class="popup__body">
+                <div class="scroller scroller--people js-scroller">
+                  <div class="scroller__pane js-scroller-pane">
+                    {{people.length == 0 }}
+                      <div class="popup__text">{{ (empty ? empty : "Тут совсем пусто") }}</div>
+                    {{ else }}
+                    <section class="people">
+                    </section>
+                    {{ end }}
+                  </div>
+                  <div class="scroller__track js-scroller-track">
+                    <div class="scroller__bar js-scroller-bar"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </script>
+
+        <script  id="tmpl-popup-people-person" type="text/x-jsrender">
+          <article class="people__item">
+            <a class="people__link" href="{{>url}}" title="{{>name}}">
+              {{if userpic && userpic.length}}
+                <span class="people__avatar" style="background-image: url({{>userpic}});">
+                </span>
+              {{else}}
+                <span class="people__avatar avatar avatar--{{>avatar.style}}">
+                  <span class="avatar__text">{{>avatar.letter}}</span>
+                </span>
+              {{/if}}
+
+              <span class="people__desc">
+                <span class="people__name">{{>username}}</span>
+              </span>
+              {{if new_items > 0}}
+                <span class="people__count">+{{>new_items}}</span>
+              {{/if}}
+            </a>
+          </article>
+        </script>
+
+        <script id="tmpl-message-dialog" type="text/x-jsrender">
+            <div class="messages__dialog js-messages-dialog{{>reed}}" data-id="{{>id}}">
+                {{if numberNewMessages > 0}}
+                <div class="messages__counter">+{{>numberNewMessages}}</div>
+                {{/if}}
+                <span class="messages__user-avatar">
+                    {{:avatar}}
+                    {{if online}}
+                    <span class="messages__user-online"></span>
+                    {{/if}}
+                </span>
+                <div class="messages__dialog-text"><span class="messages__user-name">{{>username}}</span> {{:textMessage}}</div>
+                <span class="messages__date">{{>createdAt}}</span>
+            </div>
+        </script>
+
+        <script id="tmpl-message-from" type="text/x-jsrender">
+          <div class="message message--from">
+            <span class="messages__user-avatar">
+              <span class="avatar avatar--eighth">
+                <span class="avatar__text">M</span>
+              </span>
+            </span>
+            <div class="messages__bubble">
+              <span class="messages__user-name">Madworld</span> {{:text}}
+            </div>
+            <span class="messages__date">Только что</span>
+          </div>
+        </script>
+
+        <script id="tmpl-message-person" type="text/x-jsrender">
+            <div class="messages__person" data-id="{{>userid}}">
+                <div class="messages__person-avatar">
+                    {{:avatar}}
+                </div>
+                <div class="messages__person-name">{{>username}}</div>
+            </div>
+        </script>
+        <!-- end Templates -->
+
+        <!-- Temporary Scripts -->
+        <script>
+          $(function(){
+            // Collage
+            (function(){
+              $(".js-collage").collage({
+                margin: 0
+              });
+
+              if ($.fancybox) {
+                $(".js-fancybox").fancybox({
+                  padding: 0,
+
+                  prevEffect : "fade",
+                  nextEffect : "fade",
+
+                  tpl: {
+                    closeBtn : '<a title="Close" class="fancybox-item fancybox-close" href="javascript:;"><span></span></a>'
+                  }
+                });
+              }
+            })();
+          })
+        </script>
+        <!-- end Temporary Scripts -->
+    </body>
+</html>

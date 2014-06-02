@@ -1,0 +1,137 @@
+@color-black: #000;
+@color-white: #fff;
+
+.tlog-feedcolor-white {
+  @{page-body} {
+    color: @color-black;
+
+    &__bg {
+      background-color: @color-white;
+    }
+  }
+
+  @{settings-design}__control--feed-color @{settings-design}__state-i {
+    border-color: @color-white;
+    background-color: @color-black;
+  }
+}
+
+.tlog-feedcolor-black {
+  @{page-body} {
+    color: @color-white;
+
+    &__bg {
+      background-color: @color-black;
+    }
+  }
+
+  @{settings-design}__control--feed-color @{settings-design}__state-i {
+    border-color: @color-black;
+    background-color: @color-white;
+  }
+}
+
+.tlog-fonttype-serif {
+  @{page-body},
+  @{settings-design}__control--font-type @{settings-design}__state {
+    font-family: @font-family-pt-serif;
+  }
+}
+
+.tlog-fonttype-sans {
+  @{page-body},
+  @{settings-design}__control--font-type @{settings-design}__state {
+    font-family: @font-family-pt-sans;
+  }
+}
+
+.tlog-coveralign-justify {
+  @{page-cover} {
+    .background-size(100% auto);
+  }
+}
+.tlog-coveralign-center {
+  @{page-cover} {
+    background-position: 50% 0%;
+  }
+}
+
+.tlog-headercolor-black {
+  @{hero} {
+    color: @color-black;
+  }
+
+  @{settings-design}__control--header-color @{settings-design}__state-i {
+    border-color: @color-black;
+    background-color: @color-black;
+  }
+}
+
+.tlog-headercolor-white {
+  @{hero} {
+    color: @color-white;
+  }
+
+  @{settings-design}__control--header-color @{settings-design}__state-i {
+    border-color: @color-white;
+    background-color: @color-white;
+  }
+}
+
+
+.tlog-headercolor-blackonwhite{
+  @{hero}{
+    color: @color-black;
+
+    &__title span {
+      background: @color-white;
+    }
+    &__text span{
+      background: @color-white;
+    }
+  }
+
+  @{settings-design}__control--header-color @{settings-design}__state-i {
+    border-color: @color-white;
+    background-color: @color-black;
+  }
+}
+
+.tlog-headercolor-whiteonblack{
+  @{hero}{
+    color: @color-white;
+
+    &__title span{
+      background: @color-black;
+    }
+    &__text span{
+      background: @color-black;
+    }
+  }
+
+
+  @{settings-design}__control--header-color @{settings-design}__state-i {
+    border-color: @color-black;
+    background-color: @color-white;
+  }
+}
+
+.tlog-mode-full {}
+
+.tlog-mode-minimal {
+  @{page-cover}, @{hero} {
+    visibility: hidden;
+    .opacity(0);
+    .transition(~"opacity .3s ease, visibility 0s ease .3s");
+  }
+
+  @{page-body} {
+    color: #000 !important;
+
+    &__bg {
+      background-color: #fff !important;
+      -moz-opacity: 1 !important;
+      opacity: 1 !important;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@{menu} {
+  font-size: 15px;
+  line-height: 1.4em;
+
+  &__link {
+    margin: 13px 12px;
+    display: inline-block;
+    color: #fff;
+    vertical-align: middle;
+    white-space: nowrap;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__button {
+    margin: 5px 20px;
+    vertical-align: middle;
+    text-align: left;
+    text-shadow: none;
+
+    @{button}__inner {
+      display: block;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+  /* -- types -- */
+  &--main {
+    width: 380px;
+    margin: 0 auto;
+    font-size: 17px;
+    text-align: center;
+  }
+
+  &--auth {
+    float: right;
+    text-align: right;
+
+    @{menu}__button {
+      margin-right: 0;
+    }
+  }
+
+  /* -- media -- */
+  @media only screen and (max-width: 1040px) {
+    &--main {
+      font-size: 15px;
+    }
+
+    &--auth {
+      @{menu}__button {
+        width: 95px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+      }
+    }
+  }
+}

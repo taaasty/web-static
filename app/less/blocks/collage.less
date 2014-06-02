@@ -1,0 +1,18 @@
+@{collage} {
+  overflow: hidden;
+  zoom: 1;
+
+  &__item {
+    position: relative;
+    display: none;
+    float: left;
+    border: none !important;
+    .opacity(1) !important;
+
+    .post__content &-img {
+      width: auto;
+      border: none;
+      vertical-align: top;
+    }
+  }
+}

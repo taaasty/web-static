@@ -1,0 +1,215 @@
+@{media-box} {
+  height: 398px;
+  border: 1px solid #ededed;
+  background-color: #fff;
+  position: relative;
+  font-family: @font-family-proxima-nova;
+  text-align: center;
+  .transition(~"border .4s ease");
+
+  &.state--loaded {
+    height: auto;
+    border: none;
+
+    & @{media-box} {
+      &__form,
+      &__info {
+        display: none;
+      }
+
+      &__actions,
+      &__display {
+        display: block;
+      }
+    }
+  }
+
+  &.state--insert {
+    & @{media-box} {
+      &__actions,
+      &__form {
+        display: block;
+      }
+
+      &__info {
+        display: none;
+      }
+
+      &__action {
+        &--rotate {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .state--hidden {
+    display: none;
+  }
+
+  &.state--drag-hover {
+    border-color: #25ae7a;
+  }
+
+  &__loader {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 300;
+
+    &-fill {
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #25ae7a;
+      .opacity(.7);
+    }
+  }
+
+  &__actions {
+    margin-left: 16px;
+    position: absolute;
+    display: none;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    font-size: 25px;
+    font-family: "tastyicons";
+    color: #000;
+    .user-select(none);
+  }
+
+  &__action {
+    position: absolute;
+    cursor: pointer;
+    .opacity(.3);
+
+    &:hover {
+      .opacity(.7);
+    }
+
+    &--delete {
+      top: 0;
+      left: 0;
+      font-size: 20px;
+    }
+
+    &--rotate {
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  &__form {
+    position: absolute;
+    display: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+    cursor: text;
+    z-index: 400;
+
+    &:before {
+      content: "";
+      height: 100%;
+      margin-left: -4px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    &-close {
+      padding: 8px 14px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 8px;
+      line-height: 20px;
+      font-family: "tastyicons";
+      font-style: normal;
+      color: #a1a1a1;
+      cursor: pointer;
+      z-index: 401;
+    }
+
+    &-label {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: text;
+
+      &:before {
+        content: "";
+        height: 100%;
+        margin-left: -4px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    &-input {
+      @color-placeholder: #777;
+
+      width: 90%;
+      padding: 12px 0;
+      border: none;
+      background: #fff;
+      font: inherit;
+      color: #000;
+      text-align: center;
+      vertical-align: middle;
+      overflow: hidden;
+      .box-sizing(border-box);
+
+      &::-webkit-input-placeholder {
+         color: @color-placeholder;
+      }
+
+      &:-moz-placeholder {
+         color: @color-placeholder;
+      }
+
+      &::-moz-placeholder {
+         color: @color-placeholder;
+      }
+
+      &:-ms-input-placeholder {
+         color: @color-placeholder;
+      }
+    }
+  }
+
+  &__info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 400;
+
+    &:before {
+      content: "";
+      height: 100%;
+      margin-left: -2px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  &__text {
+    width: 500px;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    color: #000;
+  }
+
+  &__display {
+    display: none;
+    overflow: hidden;
+  }
+}

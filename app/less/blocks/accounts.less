@@ -1,0 +1,51 @@
+@{account} {
+  margin-bottom: 15px;
+
+  &__info {
+    overflow: hidden;
+    .clearfix();
+  }
+
+  &__actions {
+    min-width: 190px;
+    margin-left: 20px;
+    float: right;
+    text-align: right;
+  }
+
+  &__avatar {
+    width: 45px;
+    height: 45px;
+    margin-right: 18px;
+    float: left;
+  }
+
+  &__desc {
+    overflow: hidden;
+  }
+
+  &__name {
+    font-size: 20px;
+    line-height: 26px;
+    font-family: @font-family-proxima-nova-light;
+    .opacity(.17);
+    .transition(~"opacity .3s linear");
+  }
+
+  &__status {
+    font-size: 14px;
+    line-height: 17px;
+    .opacity(.07);
+    .transition(~"opacity .3s linear");
+  }
+
+  &.state--active {
+    @{account}__name {
+      .opacity(1);
+    }
+
+    @{account}__status {
+      .opacity(.23);
+    }
+  }
+}

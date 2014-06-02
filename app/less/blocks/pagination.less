@@ -1,0 +1,24 @@
+@{pagination} {
+  font-size: 12px;
+  line-height: normal;
+  font-family: @font-family-proxima-nova;
+  overflow: hidden;
+
+  &__item {
+    &--prev,
+    &--next {
+      padding: 10px 14px;
+      border: 1px solid;
+      .opacity(.2);
+      .border-radius(32px);
+    }
+
+    &--prev {
+      float: left;
+    }
+
+    &--next {
+      float: right;
+    }
+  }
+}

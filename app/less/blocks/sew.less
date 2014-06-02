@@ -1,0 +1,33 @@
+.-sew-list {
+  max-height: 160px;
+  overflow: auto;
+
+  &-container {
+    min-width: 180px;
+    border: 1px solid #eee;
+    background: #fff;
+    font-size: 13px;
+    line-height: 1.4;
+    overflow: hidden;
+    .border-radius(3px);
+    .box-shadow(0 0 5px rgba(0, 0, 0, .1));
+    z-index: 99;
+  }
+
+  &-item {
+    padding: 5px 10px;
+    display: block;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+
+    small {
+      color: #afafaf;
+    }
+
+    &.selected {
+      background: #4183c4;
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+}
