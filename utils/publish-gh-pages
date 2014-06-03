@@ -2,8 +2,9 @@
 
 git branch -D gh-pages
 git checkout --orphan gh-pages
-mv app/* ./
+git mv app/* ./
 git rm -rf ./app
+git rm -rf ./utils
 git clean -fd -e app
 shopt -s dotglob
 rmdir app
