@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+git branch -D gh-pages
+git checkout --orphan gh-pages
+git mv app/* ./
+git rm -rf ./app
+git rm -rf ./utils
+git clean -fd -e app
+shopt -s dotglob
+rmdir app
+git add .
+git commit -am 'build gh-pages'
+git push -u -f origin gh-pages:gh-pages
+
