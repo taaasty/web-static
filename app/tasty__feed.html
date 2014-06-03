@@ -61,40 +61,57 @@
         <!-- end Scripts -->
     </head>
     <body class="layout--feed not-logged">
-        <!-- Tasty Ribbon -->
-        <div class="tasty-ribbon">
-            <a class="tasty-ribbon__link" href="#" title="тейсти">тейсти</a>
-        </div>
-        <!-- end Tasty Ribbon -->
-
         <!-- Toolbar - Userbar -->
-        <div class="toolbar toolbar--right toolbar--userbar js-userbar">
-            <div class="toolbar__toggle js-userbar-toggle">
-                <a class="toolbar__avatar" href="#">
-                    <span class="avatar avatar--eighth">
-                        <span class="avatar__text">M</span>
-                    </span>
-                </a>
+        <div class="toolbar toolbar--right toolbar--nav js-userbar-dropdown">
+            <div class="toolbar__toggle" data-element="dropdown-toggle">
+                <i class="icons icons-menu"></i>
             </div>
-            <div class="toolbar__dropdown">
-                <div class="toolbar__dropdown-i">
-                    <a class="toolbar__item state--marked" href="#" title="Написать пост">
-                        <i class="toolbar__icon">e</i>
-                    </a><a class="toolbar__item" href="#" title="Прямой эфир">
-                        <i class="toolbar__icon">G</i>
-                    </a><a class="toolbar__item js-settings-design-toggle" href="#" title="Настройки дизайна" data-popup-selector=".js-settings-design">
-                        <i class="toolbar__icon">p</i>
-                    </a><span class="toolbar__item state--disabled">
-                        <i class="toolbar__icon">b</i>
-                    </span><a class="toolbar__item js-friends-toggle" href="#" title="Друзья" data-popup-selector=".js-friends">
-                        <i class="toolbar__icon">g</i>
-                    </a><a class="toolbar__item" href="#" title="Настройки пользователя">
-                        <i class="toolbar__icon">d</i>
-                    </a>
-                </div>
+            <div class="toolbar__popup" data-element="dropdown-menu">
+                <ul class="toolbar__popup-list">
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-plus"></i>Новая запись</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-diary"></i>Мой дневник</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-profile"></i>Профиль</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-star"></i>Избранное</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-lock"></i>Скрытые записи</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-messages-toggle" href="#" data-popup-selector=".js-messages"><i class="icons icons-messages"></i>Сообщения</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-friends-toggle" href="#" data-popup-selector=".js-friends"><i class="icons icons-friends"></i>Друзья</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-settings-design-toggle" href="#" data-popup-selector=".js-settings-design"><i class="icons icons-drawing"></i>Дизайн дневника</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-settings-toggle" href="#" data-popup-selector=".js-settings"><i class="icons icons-cogwheel"></i>Настройки</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-logout"></i>Выйти</a>
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- end Toolbar - Userbar -->
+
+        <!-- Toolbar - Logo -->
+        <div class="toolbar toolbar--nav">
+            <div class="toolbar__toggle">
+                <div class="tasty-ribbon">
+                    <a class="tasty-ribbon__link" href="#" title="Перейти на ленту друзей">Перейти на ленту друзей</a>
+                </div>
+            </div>
+        </div>
+        <!-- end Toolbar - Logo -->
 
         <!-- Page -->
         <div class="page js-preview-design">

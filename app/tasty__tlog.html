@@ -12,7 +12,7 @@
         <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="fonts/fonts.css" />
+        <!--<link rel="stylesheet" href="fonts/fonts.css" />-->
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <!-- end Fonts -->
@@ -22,6 +22,7 @@
         <!-- end Styles -->
 
         <!-- Scripts -->
+        <script src="javascripts/old/libs/less-1.4.1.min.js"></script>
         <script src="javascripts/old/libs/modernizr.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.ui.core.min.js"></script>
@@ -31,7 +32,6 @@
         <script src="javascripts/old/libs/jquery/jquery.ui.draggable.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.ui.effect.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.ui.effect-slide.min.js"></script>
-        <script src="javascripts/old/libs/less-1.4.1.min.js"></script>
         <script src="javascripts/old/libs/jquery.autosize.min.js"></script>
         <script src="javascripts/old/libs/jquery.caretposition.js"></script>
         <script src="javascripts/old/libs/jquery.sew.js"></script>
@@ -80,7 +80,7 @@
         <!-- Toolbar - Back -->
         <a class="toolbar toolbar--back" href="#" style="display: none">
             <div class="toolbar__toggle">
-                <i class="toolbar__icon">k</i>
+                <i class="icons icons-arrow-left"></i>
             </div>
             <div class="toolbar__dropdown">
                 <div class="toolbar__dropdown-i">
@@ -93,7 +93,7 @@
         <!-- Toolbar - Close -->
         <div class="toolbar toolbar--close js-hero-close">
             <div class="toolbar__toggle">
-                <i class="toolbar__icon">h</i>
+                <i class="icons icons-cross"></i>
             </div>
         </div>
         <!-- end Toolbar - Close -->
@@ -101,39 +101,41 @@
         <!-- Toolbar - Userbar -->
         <div class="toolbar toolbar--right toolbar--nav js-userbar-dropdown">
             <div class="toolbar__toggle" data-element="dropdown-toggle">
-                <i class="icon icon--menu"></i>
+                <i class="icons icons-menu"></i>
             </div>
             <div class="toolbar__popup" data-element="dropdown-menu">
-                <div class="toolbar__popup-item">
-                    <a class="toolbar__popup-link state--marked" href="#"><i class="icon icon--plus"></i>Новая запись</a>
-                </div>
-                <div class="toolbar__popup-item">
-                    <a class="toolbar__popup-link" href="#"><i class="icon"></i>Мой дневник</a>
-                </div>
-                <div class="toolbar__popup-item">
-                    <a class="toolbar__popup-link" href="#"><i class="icon"></i>Профиль</a>
-                </div>
-                <div class="toolbar__popup-item">
-                    <a class="toolbar__popup-link" href="#"><i class="icon"></i>Избранное</a>
-                </div>
-                <div class="toolbar__popup-item">
-                    <a class="toolbar__popup-link" href="#"><i class="icon"></i>Скрытые записи</a>
-                </div>
-                <div class="toolbar__popup-item">
-                    <a class="toolbar__popup-link js-messages-toggle" href="#" data-popup-selector=".js-messages"><i class="icon"></i>Сообщения</a>
-                </div>
-                <div class="toolbar__popup-item">
-                    <a class="toolbar__popup-link js-friends-toggle" href="#" data-popup-selector=".js-friends"><i class="icon"></i>Друзья</a>
-                </div>
-                <div class="toolbar__popup-item">
-                    <a class="toolbar__popup-link js-settings-design-toggle" href="#" data-popup-selector=".js-settings-design"><i class="icon"></i>Дизайн дневника</a>
-                </div>
-                <div class="toolbar__popup-item">
-                    <a class="toolbar__popup-link js-settings-toggle" href="#" data-popup-selector=".js-settings"><i class="icon"></i>Настройки</a>
-                </div>
-                <div class="toolbar__popup-item">
-                    <a class="toolbar__popup-link" href="#"><i class="icon"></i>Выйти</a>
-                </div>
+                <ul class="toolbar__popup-list">
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-plus"></i>Новая запись</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-diary"></i>Мой дневник</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-profile"></i>Профиль</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-star"></i>Избранное</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-lock"></i>Скрытые записи</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-messages-toggle" href="#" data-popup-selector=".js-messages"><i class="icons icons-messages"></i>Сообщения</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-friends-toggle" href="#" data-popup-selector=".js-friends"><i class="icons icons-friends"></i>Друзья</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-settings-design-toggle" href="#" data-popup-selector=".js-settings-design"><i class="icons icons-drawing"></i>Дизайн дневника</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-settings-toggle" href="#" data-popup-selector=".js-settings"><i class="icons icons-cogwheel"></i>Настройки</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icons icons-logout"></i>Выйти</a>
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- end Toolbar - Userbar -->
@@ -148,7 +150,7 @@
         </div>
         <!-- end Toolbar - Logo -->
 
-        <span class="button button--green button--auth js-auth-button">
+        <span class="button button--green button--auth js-auth-button" style="display: none;">
             <span class="button__inner">
                 <span class="button__text">войти или зарегистрироваться</span>
             </span>
@@ -156,7 +158,9 @@
 
         <script>
             $(function(){
-                $(".js-userbar-dropdown").dropdown();
+                if (Modernizr.touch) {
+                    $(".js-userbar-dropdown").dropdown();
+                }
 
                 $(".js-auth-button").on("click", function(){
                     var scrollTop = $(document).height() - $(window).height();

@@ -50,8 +50,11 @@
 
   function resetDropdown(){
     $(toggle).each(function(){
-      var $toggle = $(this),
-        activeClass = $toggle.data("options").activeClass,
+      var $toggle = $(this);
+
+      if (typeof $toggle.data("options") == "undefined") return;
+
+      var activeClass = $toggle.data("options").activeClass,
         autoClose = ($toggle.data("container").data("autoclose") === false) ? false : true;
 
       if (autoClose) {
