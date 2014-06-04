@@ -4,11 +4,18 @@
 
 Текущие ограничения:
 
-* Firefox 3.6+
+* Firefox >=25
 * IE10+
 * Opera 12+
-* Chrome ?
-* Safari ?
+* Chrome >=27
+* Safari >-6
+* Mobile Safair on iPhone and iPad >= 6
+
+Ограничения для приложения в целом устанавливаются согласно максимальным ограничениям компонентов.
+
+## ReactJS
+
+* IE >= 9, Chrome >= 27, Firefox >= 25, Safari >= 6 and Mobile Safari on iPhone and iPad >= 6
 
 ## jQueryFileUpload:
 
