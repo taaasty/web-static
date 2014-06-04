@@ -2,6 +2,14 @@
 Ограничение по браузерам:
 ------------------------
 
+Текущие ограничения:
+
+* Firefox 3.6+
+* IE10+
+* Opera 12+
+* Chrome ?
+* Safari ?
+
 ## jQueryFileUpload:
 
 https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support
