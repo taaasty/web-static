@@ -12,7 +12,6 @@
         <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="fonts/fonts.css" />
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <!-- end Fonts -->
@@ -21,9 +20,12 @@
         <link rel="stylesheet" type="text/less" href="stylesheets/tasty.less" />
         <!-- end Styles -->
 
+        <!-- Less (Only Frontend) -->
+        <script src="javascripts/old/libs/less-1.7.0.min.js"></script>
+        <!-- end Less (Only Frontend) -->
+
         <!-- Scripts -->
         <script src="javascripts/old/libs/jquery/jquery.min.js"></script>
-        <script src="javascripts/old/libs/less-1.4.1.min.js"></script>
 
         <script src="javascripts/old/plugins/jquery.connection.js"></script>
 
@@ -104,7 +106,7 @@
                                 <p>Представляем &laquo;Панель управления дизайном&raquo;. Ее можно открывать и закрывать с помощью шестерёнки в правом верхнем углу.</p>
                             </div>
                             <div class="guide-popup__userbar js-connection-end" data-connection-id="1">
-                                <i class="guide-popup__userbar-icon">d</i>
+                                <i class="icons icons--cogwheel"></i>
                             </div>
                         </div>
                     </div>
@@ -206,7 +208,7 @@
                                             <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
                                         </div>
                                         <div class="popup__close">
-                                            <div class="popup__icon popup__icon--close">h</div>
+                                            <div class="icons icons--cross"></div>
                                         </div>
                                     </div>
                                     <div class="popup__body">
@@ -348,12 +350,10 @@
                 </div>
             </div>
             <div class="guide-popup__footer">
-                <span class="button button--large button--yellow button--guide js-guide-popup-next">
-                    <span class="button__inner">
-                        <span class="button__text button__text--next">Дальше</span>
-                        <span class="button__text button__text--thanks">Спасибо</span>
-                    </span>
-                </span>
+                <button class="button button--large button--yellow button--guide js-guide-popup-next">
+                    <span class="button__text button__text--next">Дальше</span>
+                    <span class="button__text button__text--thanks">Спасибо</span>
+                </button>
             </div>
         </div>
         <!-- end Guide Popup -->

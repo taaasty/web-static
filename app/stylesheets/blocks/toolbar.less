@@ -28,7 +28,7 @@
   color: @color-white;
   text-align: center;
   white-space: nowrap;
-  z-index: 100;
+  z-index: @toolbar-zindex;
   .opacity(1);
   .user-select(none);
   .border-radius(@toolbar-size);
@@ -74,11 +74,11 @@
     vertical-align: middle;
     .transition(~"color .4s ease");
 
-    &-menu {
+    &--menu {
       font-size: 32px;
     }
 
-    &-cross {
+    &--cross {
       font-size: 20px;
     }
   }

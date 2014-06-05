@@ -1,24 +1,92 @@
+// Mixins
+.button-size(@height, @padding-horizontal, @font-size) {
+  height: @height;
+  padding-right: @padding-horizontal;
+  padding-left: @padding-horizontal;
+  font-size: @font-size;
+  line-height: @height + 1;
+}
+
+.button-style(@background) {
+  background-color: @background;
+
+  &:hover {
+    background-color: lighten(@background, 5%);
+  }
+
+  &:active {
+    background-color: darken(@background, 5%);
+  }
+}
+
+.button-outline(@color) {
+  color: @color !important;
+
+  &:before {
+    border: 1px solid;
+    .opacity(.1);
+  }
+
+  &:hover {
+    &:before {
+      .opacity(.3);
+    }
+  }
+
+  &:active {
+    &:before {
+      .opacity(.5);
+    }
+  }
+}
+
+.button-social() {
+  .icons {
+    height: 100%;
+    margin-right: @button-middle-padding-horizontal - 4;
+    padding-right: @button-middle-padding-horizontal - 2;
+    display: inline-block;
+    border-right: 1px solid rgba(red(@color-white), green(@color-white), blue(@color-white), .09);
+    top: auto;
+    font-size: 16px;
+    vertical-align: top;
+
+    @{button}--large& {
+      margin-right: @button-large-padding-horizontal - 4;
+      padding-right: @button-large-padding-horizontal - 2;
+    }
+  }
+}
+
+// Styles
 @{button} {
-  height: 40px;
+  width: auto;
+  margin: 0;
+  padding: 0;
   position: relative;
   display: inline-block;
-  /*border: 1px solid transparent;*/
-  font-size: 13px;
-  line-height: 41px;
-  /*font-family: @font-family-pt-sans;*/
-  font-family: @font-family-proxima-nova;
+  border: none;
+  background: none;
+  font-family: @font-family-base;
   text-transform: uppercase;
   letter-spacing: .1em;
-  text-decoration: none !important;
   cursor: pointer;
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
   overflow: hidden;
+  .button-size(@button-middle-height, @button-middle-padding-horizontal, @button-middle-font-size);
+  .box-sizing(border-box);
   .border-radius(3px);
   .user-select(none);
-  .transition(all .3s ease);
+  .transition(~"all .3s ease");
 
+  // Button Link
+  a& {
+    text-decoration: none !important;
+  }
+
+  // Border Button
   &:before {
     content: "";
     position: absolute;
@@ -31,318 +99,196 @@
     .transition(~"border .3s ease, opacity .3s");
   }
 
-  &__inner {
-    padding: 0 18px;
-    /*display: block;*/
-  }
-
-  &__input {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    border: none;
-    background: none;
-    font-size: 10em;
-    cursor: pointer;
-    z-index: 3;
-    .opacity(0);
-  }
-
   &__icon {
     position: relative;
     top: -1px;
     font-size: 23px;
-    /*line-height: 1;*/
     font-family: "tastyicons";
+    line-height: inherit;
     letter-spacing: 0;
     text-transform: none;
     vertical-align: middle;
-    /*.opacity(.7);*/
   }
 
-  &__text {}
+  // Icons
+  @{icons} {
+    position: relative;
+    top: -1px;
+    font-size: 23px;
+    line-height: inherit;
+    vertical-align: middle;
+  }
+}
 
-  /* -- sizes -- */
-  &--small {
-    font-size: 11px;
+// Sizes
+@{button}--small {
+  .button-size(@button-small-height, @button-small-padding-horizontal, @button-small-font-size);
+}
+
+@{button}--large {
+  .button-size(@button-large-height, @button-large-padding-horizontal, @button-large-font-size);
+}
+
+// Types, Themes
+/*-- red --*/
+@{button}--red {
+  color: #fff !important;
+  .button-style(#f3534b);
+}
+
+/*-- green --*/
+@{button}--green {
+  background-color: #32a16c;
+  color: #fff;
+
+  &:hover {
+    background-color: #38a973;
   }
 
-  &--large {
-    height: 48px;
-    font-size: 13px;
-    line-height: 49px;
-
-    @{button}__inner {
-      padding: 0 28px;
-    }
+  &:active {
+    background-color: #2d9965;
   }
+}
 
-  /* -- themes -- */
-  &--green {
-    background-color: #32a16c;
-    color: #fff;
+@{button}--green-light {
+  color: @color-white !important;
+  .button-style(#77b97e);
+}
 
-    &:hover {
-      background-color: #38a973;
-    }
+/*-- blue --*/
+@{button}--blue {
+  color: #fff !important;
+  .button-style(#4d75a3);
+}
 
-    &:active {
-      background-color: #2d9965;
-    }
-  }
+/*-- grey --*/
+@{button}--grey {
+  color: #fff !important;
+  .button-style(#b2b2b2);
+}
 
-  &--red {
-    background-color: #f3534b;
-    color: #fff;
+/*-- yellow --*/
+@{button}--yellow {
+  color: #000 !important;
+  .button-style(@color-yellow);
+}
 
-    &:hover {
-      background-color: #fb5e57;
-    }
+/*-- outline --*/
+@{button}--outline {
+  .button-outline(@color-white);
+}
 
-    &:active {
-      background-color: #e44941;
-    }
-  }
+// Rectangular Button
+@{button}--rectangle {
+  .border-radius(0);
+}
 
-  &--white {
-    background-color: #fff;
-    color: #7a7a7a;
+// Block Button
+@{button}--block {
+  width: 100%;
+  padding-right: 0;
+  padding-left: 0;
+  display: block;
+  .box-sizing(content-box);
+}
 
-    &:before {
-      border: 1px solid #d1d1d1;
-      border-color: rgba(0, 0, 0, .08);
-    }
+// Fixed Button
+@{button}--affixed {
+  position: fixed;
+  top: @toolbar-margin;
+  right: @toolbar-margin;
+  z-index: @toolbar-zindex;
+}
 
-    &:hover {
-      background-color: #fcfcfc;
+// Social Buttons
+@{button}--vkontakte {
+  .button-social;
+  .button-style(#4d75a3);
+}
 
-      &:before {
-        border-color: #c1c1c1;
-        border-color: rgba(0, 0, 0, .14);
-      }
-    }
 
-    &:active {
-      background-color: #fafafa;
-    }
-  }
-
-  &--grey {
-    background-color: #b2b2b2;
-    color: #fff;
-
-    &:hover {
-      background-color: #a2a2a2;
-    }
-
-    &:active {
-      background-color: #969696;
-    }
-  }
-
-  &--yellow {
-    background-color: #ffc600;
-    color: #000 !important;
-
-    &:hover {
-      background-color: #ffcd23;
-    }
-
-    &:active {
-      background-color: #f1bb00;
-    }
-  }
-
-  &--blue {
-    background-color: #4d75a3;
-    color: #fff !important;
-
-    &:hover {
-      background-color: #5d83ae;
-    }
-
-    &:active {
-      background-color: #3e6592;
-    }
-  }
-
-  &--outline {
-    color: rgba(255, 255, 255, .5);
-    color: #fff;
-
-    &:before {
-      border: 1px solid #fff;
-      .opacity(.1);
-    }
-
-    &:hover {
-      color: rgba(255, 255, 255, .85);
-      color: #fff;
-
-      &:before {
-        .opacity(.3);
-      }
-    }
-
-    &:active {
-      color: #fff;
-
-      &:before {
-        .opacity(.5);
-      }
+// Special Buttons
+/*-- guide --*/
+@{button}--guide {
+  @{button}__text {
+    &--thanks {
+      display: none;
     }
   }
 
-  &--light-green {
-    background-color: #77b97e;
-    color: #fff;
-
-    &:hover {
-      background-color: #7ec385;
-      color: #fff;
-    }
-
-    &:active {
-      background-color: #6eb476;
-    }
-  }
-
-  &--guide {
-    width: 9.231em;
-
-    @{button}__inner {
-      padding: 0;
-    }
-
+  &.state--active {
     @{button}__text {
-      &--thanks {
+      &--next {
         display: none;
       }
-    }
 
-    &.state--active {
-      @{button}__text {
-        &--next {
-          display: none;
-        }
-
-        &--thanks {
-          display: inline;
-        }
+      &--thanks {
+        display: inline;
       }
     }
   }
+}
 
-  &--publish {
-    .border-radius(3px 0 0 3px);
+/*-- publish --*/
+@{button}--publish {
+  .border-radius(3px 0 0 3px);
+}
+
+@{button}--settings {
+  background-color: #2d9161;
+  color: #fff !important;
+  .border-radius(0 3px 3px 0);
+
+  @{button}__inner {
+    padding: 0 10px;
   }
 
-  &--settings {
-    background-color: #2d9161;
-    color: #fff !important;
-    .border-radius(0 3px 3px 0);
-
-    @{button}__inner {
-      padding: 0 10px;
-    }
-
-    @{button}__icon {
-      .opacity(.7);
-    }
-
-    &:hover {
-      /*background-color: #2f9565;*/
-      background-color: #268156;
-    }
-    /*
-    &:active {
-      background-color: #29895b;
-    }*/
-
-    &.state--lock {
-      @{button}__icon:before {
-        content: "w";
-      }
-    }
-
-    &.state--unlock {
-      @{button}__icon:before {
-        content: "H";
-      }
-    }
-
-    &.state--live {
-      @{button}__icon:before {
-        content: "G";
-      }
-    }
-
-    &.state--rating {
-      @{button}__icon:before {
-        content: "I";
-      }
-    }
-  }
-
-  &--remove {
-    color: #e95a3d;
+  @{button}__icon {
     .opacity(.7);
+  }
 
-    @{button}__inner {
-      padding: 0;
-    }
+  &:hover {
+    background-color: #268156;
+  }
 
-    &:hover {
-      .opacity(.85);
-    }
-
-    &:active {
-      .opacity(1);
+  &.state--lock {
+    @{button}__icon:before {
+      content: "w";
     }
   }
 
-  &--100p {
-    display: block;
-    .border-radius(0);
-  }
-
-  &--social {
-    @{button} {
-      &__inner {
-        padding: 0;
-      }
-
-      &__icon {
-        height: 100%;
-        margin-right: -5px;
-        padding: 0 16px;
-        display: inline-block;
-        border-right: 1px solid rgba(255, 255, 255, .09);
-        top: auto;
-        font-size: 16px;
-        vertical-align: top;
-      }
-
-      &__text {
-        padding: 0 18px;
-      }
+  &.state--unlock {
+    @{button}__icon:before {
+      content: "H";
     }
   }
 
-  &--vkontakte {
-    @{button} {
-      &__icon:before {
-        content: "Q";
-      }
+  &.state--live {
+    @{button}__icon:before {
+      content: "G";
     }
   }
 
-  &--auth {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
+  &.state--rating {
+    @{button}__icon:before {
+      content: "I";
+    }
+  }
+}
+
+@{button}--remove {
+  color: #e95a3d;
+  .opacity(.7);
+
+  @{button}__inner {
+    padding: 0;
+  }
+
+  &:hover {
+    .opacity(.85);
+  }
+
+  &:active {
+    .opacity(1);
   }
 }

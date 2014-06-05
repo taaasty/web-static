@@ -12,7 +12,6 @@
         <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="fonts/fonts.css" />
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <!-- end Fonts -->
@@ -22,6 +21,7 @@
         <!-- end Styles -->
 
         <!-- Scripts -->
+        <script src="javascripts/old/libs/less-1.7.0.min.js"></script>
         <script src="javascripts/old/libs/modernizr.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.ui.core.min.js"></script>
@@ -29,7 +29,6 @@
         <script src="javascripts/old/libs/jquery/jquery.ui.mouse.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.ui.slider.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.ui.draggable.min.js"></script>
-        <script src="javascripts/old/libs/less-1.4.1.min.js"></script>
         <script src="javascripts/old/libs/jquery.autosize.min.js"></script>
         <script src="javascripts/old/libs/jquery.caretposition.js"></script>
         <script src="javascripts/old/libs/jquery.sew.js"></script>
@@ -74,19 +73,23 @@
                             </div>
                             <!-- end Logo -->
                             <!-- Menu Auth -->
-                            <nav class="menu menu--auth">
-                                <a class="menu__button button button--blue" href="#" title="Войти или зарегистрироваться" data-shellbox-target="auth">
-                                    <span class="button__inner">
-                                        <span class="button__text">Войти или зарегистрироваться</span>
-                                    </span>
-                                </a>
+                            <nav class="menu menu--right">
+                                <ul class="menu__list">
+                                    <li class="menu__item">
+                                        <button class="button button--blue" data-shellbox-target="auth">
+                                            <span class="button__text">Войти или зарегистрироваться</span>
+                                        </button>
+                                    </li>
+                                </ul>
                             </nav>
                             <!-- end Menu Auth -->
                             <!-- Menu Main -->
                             <nav class="menu menu--main">
-                                <a class="menu__link" href="#" title="Прямой эфир">Прямой эфир</a>
-                                <a class="menu__link" href="#" title="Лучшее">Лучшее</a>
-                                <a class="menu__link" href="#" title="О проекте">О проекте</a>
+                                <ul class="menu__list">
+                                    <li class="menu__item"><a class="menu__link" href="#" title="Прямой эфир">Прямой эфир</a></li>
+                                    <li class="menu__item"><a class="menu__link" href="#" title="Лучшее">Лучшее</a></li>
+                                    <li class="menu__item"><a class="menu__link" href="#" title="О проекте">О проекте</a></li>
+                                </ul>
                             </nav>
                             <!-- end Menu Main -->
                         </div>
@@ -182,12 +185,10 @@
                                     <!-- end Tasty Ribbon -->
                                     <div class="inviter__title">Тейсти – это дневник в который хочется писать каждый день</div>
                                     <div class="inviter__actions">
-                                        <span class="button button--blue button--social button--vkontakte">
-                                            <span class="button__inner">
-                                                <span class="button__icon"></span>
-                                                <span class="button__text">зарегистриваться</span>
-                                            </span>
-                                        </span>
+                                        <button class="button button--vkontakte">
+                                            <span class="icons icons--vkontakte"></span>
+                                            <span class="button__text">зарегистриваться</span>
+                                        </button>
                                     </div>
                                     <div class="inviter__spacer"></div>
                                     <div class="inviter__stats">
@@ -224,14 +225,14 @@
                                 <div class="form-popup__select-item is--vkontakte">
                                     <div class="form-popup__select-item-i">
                                         <div class="form-popup__select-pic">
-                                            <i class="icon icon--vkontakte"></i>
+                                            <i class="icons icons--vkontakte"></i>
                                         </div>
                                         <div class="form-popup__select-desc">Через Вконтакте</div>
                                     </div>
                                 </div><div class="form-popup__select-item is--email js-auth-jumper" data-section="login">
                                     <div class="form-popup__select-item-i">
                                         <div class="form-popup__select-pic">
-                                            <i class="icon icon--email"></i>
+                                            <i class="icons icons--email"></i>
                                         </div>
                                         <div class="form-popup__select-desc">Через электронную почту</div>
                                     </div>
@@ -263,12 +264,9 @@
                                     </div>
                                 </div>
                                 <div class="form-popup__submit">
-                                    <span class="button button--light-green button--large button--100p">
-                                        <input class="button__input" type="submit" value="Войти" />
-                                        <span class="button__inner">
-                                            <span class="button__text">Войти</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--large button--green-light button--block button--rectangle">
+                                        <span class="button__text">Войти</span>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -305,12 +303,9 @@
                                     </label>
                                 </div>
                                 <div class="form-popup__submit">
-                                    <span class="button button--light-green button--large button--100p">
-                                        <input class="button__input" type="submit" value="Зарегистрироваться" />
-                                        <span class="button__inner">
-                                            <span class="button__text">Зарегистрироваться</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--large button--green-light button--block button--rectangle">
+                                        <span class="button__text">Зарегистрироваться</span>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -333,12 +328,9 @@
                                     </div>
                                 </div>
                                 <div class="form-popup__submit">
-                                    <span class="button button--light-green button--large button--100p">
-                                        <input class="button__input" type="submit" value="Вспомнить все" />
-                                        <span class="button__inner">
-                                            <span class="button__text">Вспомнить все</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--large button--green-light button--block button--rectangle">
+                                        <span class="button__text">Вспомнить все</span>
+                                    </button>
                                 </div>
                             </form>
                         </div>
