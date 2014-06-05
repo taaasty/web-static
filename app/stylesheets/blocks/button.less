@@ -11,11 +11,11 @@
   background-color: @background;
 
   &:hover {
-    background-color: lighten(@background, 5%);
+    background-color: lighten(@background, 6%);
   }
 
   &:active {
-    background-color: darken(@background, 5%);
+    background-color: darken(@background, 6%);
   }
 }
 
@@ -41,7 +41,7 @@
 }
 
 .button-social() {
-  .icons {
+  @{icons} {
     height: 100%;
     margin-right: @button-middle-padding-horizontal - 4;
     padding-right: @button-middle-padding-horizontal - 2;
@@ -99,17 +99,6 @@
     .transition(~"border .3s ease, opacity .3s");
   }
 
-  &__icon {
-    position: relative;
-    top: -1px;
-    font-size: 23px;
-    font-family: "tastyicons";
-    line-height: inherit;
-    letter-spacing: 0;
-    text-transform: none;
-    vertical-align: middle;
-  }
-
   // Icons
   @{icons} {
     position: relative;
@@ -117,6 +106,70 @@
     font-size: 23px;
     line-height: inherit;
     vertical-align: middle;
+  }
+}
+
+// Button Group
+@{button}-group {
+  .button-group-style() {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .button-group-style;
+
+  > @{button} {
+    &:not(:first-of-type) {
+      margin-left: -1px; // Фикс для Chrome (во время анимации между кнопками появляется полоска в 1px)
+      .border-radius-top-left(0);
+      .border-radius-bottom-left(0);
+    }
+
+    &:not(:last-of-type) {
+      .border-radius-top-right(0);
+      .border-radius-bottom-right(0);
+    }
+
+    &:not(:first-of-type):not(:last-of-type) {
+      .border-radius(0);
+    }
+  }
+
+  &.state--expanded {
+    & > @{button} {
+      .border-radius-bottom-right(0);
+      .border-radius-bottom-left(0);
+    }
+
+    & > @{dropdown} {
+      .border-radius-top-right(0);
+      .border-radius-top-left(0);
+    }
+  }
+
+  &-dropdown {
+    .button-group-style;
+
+    &:not(:first-child) {
+      @{button} {
+        .border-radius-top-left(0);
+        .border-radius-bottom-left(0);
+      }
+    }
+
+    &:not(:last-child) {
+      @{button} {
+        .border-radius-top-right(0);
+        .border-radius-bottom-right(0);
+      }
+    }
+
+    &:not(:first-child):not(:last-child) {
+      @{button} {
+        .border-radius(0);
+      }
+    }
   }
 }
 
@@ -132,44 +185,41 @@
 // Types, Themes
 /*-- red --*/
 @{button}--red {
-  color: #fff !important;
+  color: @color-white !important;
   .button-style(#f3534b);
 }
 
 /*-- green --*/
 @{button}--green {
-  background-color: #32a16c;
-  color: #fff;
-
-  &:hover {
-    background-color: #38a973;
-  }
-
-  &:active {
-    background-color: #2d9965;
-  }
+  color: @color-white !important;
+  .button-style(@color-green);
 }
 
 @{button}--green-light {
   color: @color-white !important;
-  .button-style(#77b97e);
+  .button-style(@color-green-light);
+}
+
+@{button}--green-dark {
+  color: @color-white !important;
+  .button-style(@color-green-dark);
 }
 
 /*-- blue --*/
 @{button}--blue {
-  color: #fff !important;
+  color: @color-white !important;
   .button-style(#4d75a3);
 }
 
 /*-- grey --*/
 @{button}--grey {
-  color: #fff !important;
+  color: @color-white !important;
   .button-style(#b2b2b2);
 }
 
 /*-- yellow --*/
 @{button}--yellow {
-  color: #000 !important;
+  color: @color-black !important;
   .button-style(@color-yellow);
 }
 
@@ -204,91 +254,4 @@
 @{button}--vkontakte {
   .button-social;
   .button-style(#4d75a3);
-}
-
-
-// Special Buttons
-/*-- guide --*/
-@{button}--guide {
-  @{button}__text {
-    &--thanks {
-      display: none;
-    }
-  }
-
-  &.state--active {
-    @{button}__text {
-      &--next {
-        display: none;
-      }
-
-      &--thanks {
-        display: inline;
-      }
-    }
-  }
-}
-
-/*-- publish --*/
-@{button}--publish {
-  .border-radius(3px 0 0 3px);
-}
-
-@{button}--settings {
-  background-color: #2d9161;
-  color: #fff !important;
-  .border-radius(0 3px 3px 0);
-
-  @{button}__inner {
-    padding: 0 10px;
-  }
-
-  @{button}__icon {
-    .opacity(.7);
-  }
-
-  &:hover {
-    background-color: #268156;
-  }
-
-  &.state--lock {
-    @{button}__icon:before {
-      content: "w";
-    }
-  }
-
-  &.state--unlock {
-    @{button}__icon:before {
-      content: "H";
-    }
-  }
-
-  &.state--live {
-    @{button}__icon:before {
-      content: "G";
-    }
-  }
-
-  &.state--rating {
-    @{button}__icon:before {
-      content: "I";
-    }
-  }
-}
-
-@{button}--remove {
-  color: #e95a3d;
-  .opacity(.7);
-
-  @{button}__inner {
-    padding: 0;
-  }
-
-  &:hover {
-    .opacity(.85);
-  }
-
-  &:active {
-    .opacity(1);
-  }
 }

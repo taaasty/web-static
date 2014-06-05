@@ -50,7 +50,7 @@
         -o-transition: all .2s ease;
         transition: all .2s ease;
     }
-        .promo-popup__close-icon { width: 34px; height: 34px; font-size: 34px; line-height: 1; font-family: "tastyicons_new"; color: #fff }
+        .promo-popup__close-icon { width: 34px; height: 34px; font-size: 34px; line-height: 1; font-family: "tastyicons"; color: #fff }
         .promo-popup__close-icon:before { content: "\e603"; }
     .promo-popup__close:hover {
         -webkit-transform: rotate(360deg);

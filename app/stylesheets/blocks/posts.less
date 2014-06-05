@@ -154,17 +154,8 @@
       color: #000 !important;
     }
 
-    &.state--expanded @{post-settings} {
-      display: block;
-    }
-
-    &.state--expanded @{button} {
-      -webkit-border-bottom-right-radius: 0;
-      -webkit-border-bottom-left-radius: 0;
-      -moz-border-radius-bottomright: 0;
-      -moz-border-radius-bottomleft: 0;
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
+    @{dropdown} {
+      .transform(none);
     }
   }
 
@@ -240,56 +231,6 @@
   }
 }
 
-@{post-settings} {
-  width: 100%;
-  position: absolute;
-  display: none;
-  top: 100%;
-  left: 0;
-  background-color: #2d9161;
-  font-size: 11px;
-  line-height: 15px;
-  font-family: @font-family-proxima-nova;
-  text-align: left;
-  overflow: hidden;
-  .border-radius(0 0 3px 3px);
-
-  &__item {
-    height: 40px;
-    padding: 0 10px;
-    display: block;
-    border-top: 1px solid #3d976b;
-    line-height: 40px;
-    color: #fff !important;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    .opacity(1) !important;
-    .box-sizing(padding-box);
-
-    &:first-child {
-      border-top: none;
-    }
-
-    &:hover,
-    &.state--active {
-      background-color: #268156;
-    }
-  }
-
-  @{icon} {
-    width: 1em;
-    margin-right: 4px;
-    position: relative;
-    display: inline-block;
-    top: -1px;
-    font-size: 23px;
-    line-height: 1;
-    vertical-align: middle;
-    .opacity(.7);
-  }
-}
 
 @{video},
 @{image} {
@@ -362,5 +303,50 @@
     position: relative;
     float: left;
     .opacity(.3);
+  }
+}
+
+
+
+
+
+// Button Post Settings
+.post-settings-button {
+  @{button}& {
+    padding: 0 10px;
+  }
+
+  @{icons} {
+    .opacity(.7);
+  }
+
+  &.state--lock {
+    @{icons} {
+      .ico-lock;
+    }
+  }
+
+  &.state--unlock {
+    @{icons} {
+      .ico-unlock;
+    }
+  }
+
+  &.state--live {
+    @{icons} {
+      .ico-wave;
+    }
+  }
+
+  &.state--rating {
+    @{icons} {
+      .ico-rating;
+    }
+  }
+
+  &@{button}--green-dark {
+    &:hover {
+      background-color: darken(@color-green-dark, 5%)
+    }
   }
 }

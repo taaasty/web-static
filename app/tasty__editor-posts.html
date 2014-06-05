@@ -12,7 +12,6 @@
         <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
 
         <!-- Fonts -->
-        <!--<link rel="stylesheet" href="fonts/fonts.css" />-->
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <!-- end Fonts -->
@@ -60,7 +59,7 @@
         <!-- Toolbar - Close -->
         <div class="toolbar toolbar--close js-hero-close">
             <div class="toolbar__toggle">
-                <i class="toolbar__icon">h</i>
+                <i class="icon icon--cross"></i>
             </div>
         </div>
         <!-- end Toolbar - Close -->
@@ -141,39 +140,39 @@
                             <div class="page-body__bg js-page-body-bg"></div>
                             <div class="page-body__inner">
                                 <!-- Arrow Back -->
-                                <a class="arrow-back js-back" href="#">k</a>
+                                <a class="arrow-back js-back" href="#"><i class="icon icon--arrow-left"></i></a>
                                 <!-- end Arrow Back -->
                                 <!-- Types Posts -->
                                 <div class="types-posts">
                                     <a class="types-posts__item js-switcher-type-post" href="#" title="Текст" data-type-post="text">
                                         <div class="types-posts__content">
-                                            <div class="types-posts__icon">q</div>
+                                            <i class="icon icon--paper"></i>
                                             <div class="types-posts__text">Текст</div>
                                         </div>
                                     </a><a class="types-posts__item js-switcher-type-post" href="#" title="Цитата" data-type-post="image">
                                         <div class="types-posts__content">
-                                            <div class="types-posts__icon">r</div>
+                                            <i class="icon icon--picture"></i>
                                             <div class="types-posts__text">Картинка</div>
                                         </div>
                                     </a><a class="types-posts__item js-switcher-type-post" href="#" title="Картинка" data-type-post="video">
                                         <div class="types-posts__content">
-                                            <div class="types-posts__icon">s</div>
+                                            <i class="icon icon--video"></i>
                                             <div class="types-posts__text">Видео</div>
                                         </div>
                                     </a><!--<a class="types-posts__item js-switcher-type-post" href="#" title="Ссылка" data-type-post="link">
                                         <div class="types-posts__content">
-                                            <div class="types-posts__icon">t</div>
+                                            <i class="icon icon-/-hyperlink-square"></i>
                                             <div class="types-posts__text">Ссылка</div>
                                         </div>
                                     </a>--><a class="types-posts__item js-switcher-type-post" href="#" title="Цитата" data-type-post="quote">
                                         <div class="types-posts__content">
-                                            <div class="types-posts__icon">L</div>
+                                            <i class="icon icon--quote"></i>
                                             <div class="types-posts__text">Цитата</div>
                                         </div>
                                     </a><div class="types-posts__item state--disabled">
                                         <div class="types-posts__content">
                                             <span class="pay">П</span>
-                                            <div class="types-posts__icon">u</div>
+                                            <i class="icon icon--pictures"></i>
                                             <div class="types-posts__text">Слайд-шоу</div>
                                         </div>
                                     </div>
@@ -192,7 +191,7 @@
                                                             <div class="tasty-editor-button tasty-editor-button-link">&lt;a /&gt;</div>
                                                         </div>
                                                         <div class="tasty-editor-link">
-                                                            <i class="tasty-editor-link-x state--hidden">h</i>
+                                                            <i class="tasty-editor-link-x state--hidden"></i>
                                                             <input class="tasty-editor-link-input" type="text" placeholder="Вставьте ссылку" value="" />
                                                         </div>
                                                     </div>
@@ -211,7 +210,7 @@
                                                         <div class="tasty-editor-button tasty-editor-button-link">&lt;a /&gt;</div>
                                                     </div>
                                                     <div class="tasty-editor-link">
-                                                        <i class="tasty-editor-link-x">h</i>
+                                                        <i class="tasty-editor-link-x"></i>
                                                         <input class="tasty-editor-link-input" type="text" placeholder="Вставьте ссылку" value="http://bling.by/map" />
                                                     </div>
                                                 </div>
@@ -332,41 +331,47 @@
                                 <!-- end Posts -->
                                 <!-- Post Actions -->
                                 <div class="post-actions">
-                                    <span class="post-action post-action--loader">
+                                    <div class="post-action post-action--loader">
                                         <span class="spinner spinner--8x8">
                                             <span class="spinner__icon"></span>
                                         </span>
-                                    </span><span class="post-action post-action--button">
-                                        <span class="button button--grey js-tasty-editor-post-preview">
-                                            <span class="button__inner">
-                                                <span class="button__text">Предпросмотр</span>
-                                            </span>
-                                        </span>
-                                    </span><span class="post-action post-action--button js-dropdown">
-                                        <span class="button button--green button--publish js-tasty-editor-post-save">
-                                            <span class="button__inner">
+                                    </div><div class="post-action post-action--button">
+                                        <button class="button button--grey js-tasty-editor-post-preview">
+                                            <span class="button__text">Предпросмотр</span>
+                                        </button>
+                                    </div><div class="post-action post-action--button">
+                                        <div class="button-group js-dropdown">
+                                            <button class="button button--green js-tasty-editor-post-save">
                                                 <span class="button__text">Опубликовать</span>
-                                            </span>
-                                        </span><span class="button button--settings js-tasty-editor-post-button-settings state--unlock" data-element="dropdown-toggle">
-                                            <span class="button__inner">
-                                                <span class="button__icon"></span>
-                                            </span>
-                                        </span>
-                                        <span class="post-settings" data-element="dropdown-menu">
-                                            <a class="post-settings__item js-tasty-editor-post-option" href="#" title="Видна только мне"  data-value="lock">
-                                                <i class="icon icon--lock"></i> Видна только мне
-                                            </a>
-                                            <a class="post-settings__item js-tasty-editor-post-option state--active" href="#" title="Видна всем в моем тлоге" data-value="unlock">
-                                                <i class="icon icon--unlock"></i> Видна всем в моем тлоге
-                                            </a>
-                                            <a class="post-settings__item js-tasty-editor-post-option" href="#" title="Публичная в прямой эфир" data-value="live">
-                                                <i class="icon icon--wave"></i> Публичная в прямой эфир
-                                            </a>
-                                            <a class="post-settings__item js-tasty-editor-post-option" href="#" title="Публичная с голосованием" data-value="rating">
-                                                <i class="icon icon--rating"></i> Публичная с голосованием
-                                            </a>
-                                        </span>
-                                    </span>
+                                            </button><button class="button button--green-dark post-settings-button js-tasty-editor-post-button-settings state--unlock" data-element="dropdown-toggle">
+                                                <span class="icon"></span>
+                                            </button>
+                                            <div class="dropdown-popup dropdown-popup--green-dark" data-element="dropdown-menu">
+                                                <ul class="dropdown-popup__list">
+                                                    <li class="dropdown-popup__item">
+                                                        <a class="dropdown-popup__link js-tasty-editor-post-option" href="#" title="Видна только мне">
+                                                            <i class="icon icon--lock"></i> Видна только мне
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown-popup__item">
+                                                        <a class="dropdown-popup__link js-tasty-editor-post-option state--active" href="#" title="Видна всем в моем тлоге" data-value="unlock">
+                                                            <i class="icon icon--unlock"></i> Видна всем в моем тлоге
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown-popup__item">
+                                                        <a class="dropdown-popup__link js-tasty-editor-post-option" href="#" title="Публичная в прямой эфир" data-value="live">
+                                                            <i class="icon icon--wave"></i> Публичная в прямой эфир
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown-popup__item">
+                                                        <a class="dropdown-popup__link js-tasty-editor-post-option" href="#" title="Публичная с голосованием" data-value="rating">
+                                                            <i class="icon icon--rating"></i> Публичная с голосованием
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- end Post Actions -->
                             </div>

@@ -191,28 +191,17 @@
         background-color: lighten(@color-yellow, 10%);
         .opacity(1);
       }
-
-      /*&.state--marked {
-        background-color: @color-yellow;
-        color: #232323;
-        .opacity(.95);
-
-        &:hover {
-          background-color: lighten(@color-yellow, 10%);
-          .opacity(1);
-        }
-      }*/
     }
   }
 
   // State: expanded, hover, active
-  .touch &.state--expanded @{icons}-menu {
+  .touch &.state--expanded @{icons}--menu {
     .toolbar-active;
   }
-  &.state--active @{icons}-menu {
+  &.state--active @{icons}--menu {
     .toolbar-active;
   }
-  .no-touch &:hover @{icons}-menu {
+  .no-touch &:hover @{icons}--menu {
     .toolbar-active;
   }
   a&__item:hover @{icons} {

@@ -12,7 +12,6 @@
         <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="fonts/fonts.css" />
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <!-- end Fonts -->
@@ -22,6 +21,7 @@
         <!-- end Styles -->
 
         <!-- Scripts -->
+        <script src="javascripts/old/libs/less-1.7.0.min.js"></script>
         <script src="javascripts/old/libs/modernizr.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.ui.core.min.js"></script>
@@ -29,7 +29,6 @@
         <script src="javascripts/old/libs/jquery/jquery.ui.mouse.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.ui.slider.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.ui.draggable.min.js"></script>
-        <script src="javascripts/old/libs/less-1.4.1.min.js"></script>
         <script src="javascripts/old/libs/jquery.autosize.min.js"></script>
         <script src="javascripts/old/libs/jquery.caretposition.js"></script>
         <script src="javascripts/old/libs/jquery.sew.js"></script>
@@ -64,39 +63,39 @@
         <!-- Toolbar - Userbar -->
         <div class="toolbar toolbar--right toolbar--nav js-userbar-dropdown">
             <div class="toolbar__toggle" data-element="dropdown-toggle">
-                <i class="icons icons-menu"></i>
+                <i class="icon icon--menu"></i>
             </div>
             <div class="toolbar__popup" data-element="dropdown-menu">
                 <ul class="toolbar__popup-list">
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons-plus"></i>Новая запись</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--plus"></i>Новая запись</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons-diary"></i>Мой дневник</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--diary"></i>Мой дневник</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons-profile"></i>Профиль</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--profile"></i>Профиль</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons-star"></i>Избранное</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons-lock"></i>Скрытые записи</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--lock"></i>Скрытые записи</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-messages-toggle" href="#" data-popup-selector=".js-messages"><i class="icons icons-messages"></i>Сообщения</a>
+                        <a class="toolbar__popup-link js-messages-toggle" href="#" data-popup-selector=".js-messages"><i class="icon icon--messages"></i>Сообщения</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-friends-toggle" href="#" data-popup-selector=".js-friends"><i class="icons icons-friends"></i>Друзья</a>
+                        <a class="toolbar__popup-link js-friends-toggle" href="#" data-popup-selector=".js-friends"><i class="icon icon--friends"></i>Друзья</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-settings-design-toggle" href="#" data-popup-selector=".js-settings-design"><i class="icons icons-drawing"></i>Дизайн дневника</a>
+                        <a class="toolbar__popup-link js-settings-design-toggle" href="#" data-popup-selector=".js-settings-design"><i class="icon icon--drawing"></i>Дизайн дневника</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-settings-toggle" href="#" data-popup-selector=".js-settings"><i class="icons icons-cogwheel"></i>Настройки</a>
+                        <a class="toolbar__popup-link js-settings-toggle" href="#" data-popup-selector=".js-settings"><i class="icon icon--cogwheel"></i>Настройки</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons-logout"></i>Выйти</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--logout"></i>Выйти</a>
                     </li>
                 </ul>
             </div>
@@ -219,7 +218,7 @@
         <div class="confirmation">
             <div class="confirmation__fader"></div>
             <div class="confirmation__close">
-                <div class="confirmation__close-icon">h</div>
+                <div class="icon icon--cross"></div>
             </div>
             <div class="confirmation__box">
                 <div class="confirmation__text">
@@ -344,7 +343,7 @@
                   <h3 class="popup__title">{{title}}</h3>
                 </div>
                 <div class="popup__close js-popup-close">
-                  <div class="popup__icon popup__icon--close">h</div>
+                  <i class="icon icon--cross"></i>
                 </div>
               </div>
               <div class="popup__body">

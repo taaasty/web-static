@@ -2,6 +2,9 @@
 @color-black: #000;
 @color-white: #fff;
 @color-yellow: #f8c700;
+@color-green-dark: #2d9161;
+@color-green: #32a16c;
+@color-green-light: #77b97e;
 
 @color-base: @color-black;
 
@@ -24,13 +27,87 @@
 
 // Icons
 @icons-path: @fonts-path;
-@icons-name: 'tastyicons_new';
+@icons-name: 'tastyicons';
 
-// Classnames
-@icons: ~".icons";
-@guide-popup: ~".guide-popup";
+// Selectors
+@layout-constrain: ~".layout-constrain";
+@page: ~".page";
+@page-cover: ~".page-cover";
+@page-header: ~".page-header";
+@page-body: ~".page-body";
+@page-loader: ~".page-loader";
+@icons: ~'.icon';
+@icon: ~'.icon'; // TODO: избавиться, когда переберу все less
+@guide-popup: ~'.guide-popup';
+@logo: ~".logo";
+@text-content: ~".text-content";
+@rotate: ~".rotate";
+@pay: ~".pay";
+@follow-status: ~".follow-status";
+@tasty-ribbon: ~".tasty-ribbon";
+@scroller: ~".scroller";
+@spinner: ~".spinner";
+@viewer: ~".screen-viewer";
+@menu: ~".menu";
+@alert: ~".alert";
+@avatar: ~".avatar";
+@button: ~".button";
+@notice: ~".notice";
+@toolbar: ~".toolbar";
+@hero: ~".hero";
+@hero-simple: ~".hero-simple";
+@posts: ~".posts";
+@post: ~".post";
+@video: ~".video";
+@image: ~".image";
+@blockquote: ~".blockquote";
+@edited-post: ~".edited-post";
+@meta-item: ~".meta-item";
+@meta-bar: ~".meta-bar";
+@rating: ~".rating";
+@comments: ~".comments";
+@comment: ~".comment";
+@tasty-editor: ~".tasty-editor";
+@media-box: ~".media-box";
+@form-radiogroup: ~".form-radiogroup";
+@form-radio: ~".form-radio";
+@form-checkbox: ~".form-checkbox";
+@form-field: ~".form-field";
+@form-select: ~".form-select";
+@form-upload: ~".form-upload";
+@form-range: ~".form-range";
+@editable-field: ~".editable-field";
+@controls-list: ~".controls-list";
+@pagination: ~".pagination";
+@bricks: ~".bricks";
+@brick: ~".brick";
+@filter: ~".filter";
+@people: ~".people";
+@tags: ~".tags";
+@tag: ~".tag";
+@popup: ~".popup";
+@confirmation: ~".confirmation";
+@collage: ~".collage";
+@valign: ~".valign";
+@inviter: ~".inviter";
+@shellbox: ~".shellbox";
+@form-popup: ~".form-popup";
+@switcher: ~".switcher";
+@accounts: ~".accounts";
+@account: ~".account";
+@settings: ~".settings";
+@types-posts: ~".types-posts";
+@dropdown: ~".dropdown-popup";
 
 /*--------------------------*/
+// Layout
+@page-min-width: 765px;
+@page-body-inner-padding-vertical: 40px;
+@page-body-inner-padding-horizontal: 68px;
+
+// Guide Popup
+@guide-popup-zindex: 500;
+
 // Buttons
 @button-small-height: @button-middle-height;
 @button-middle-height: 40px;
@@ -44,8 +121,10 @@
 @button-middle-font-size: 13px;
 @button-large-font-size: @button-middle-font-size;
 
-// Guide Popup
-@guide-popup-zindex: 500;
+// Avatars
+@avatar-styles: 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth';
+@avatar-backgrounds: #eb4656, #f37420, #ffca00, #b5c31e, #44d068, #34c8bc, #3382da, #7648de;
+@avatar-colors: @color-white, @color-white, #222, @color-white, @color-white, @color-white, @color-white, @color-white;
 
 // Toolbar
 @toolbar-background: #252525;
@@ -58,3 +137,19 @@
 @menu-font-size: 17px;
 @menu-line-height: 1.4;
 @menu-margin-horizontal: 12px;
+
+// Alert
+@alert-padding-vertical: 22px;
+@alert-padding-horizontal: @page-body-inner-padding-horizontal;
+@alert-font-size: 15px;
+@alert-line-height: 1.467;
+
+@alert-color-default: #797979;
+@alert-background-default: #ededed;
+
+// Dropdown
+@dropdown-font-size: @button-small-font-size;
+@dropdown-line-height: ceil((@dropdown-font-size * 1.36)); // ~15px
+@dropdown-border-radius: 3px;
+@dropdown-height-item: 40px;
+@dropdown-zindex: 500;

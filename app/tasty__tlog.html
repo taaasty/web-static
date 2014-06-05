@@ -12,7 +12,6 @@
         <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
 
         <!-- Fonts -->
-        <!--<link rel="stylesheet" href="fonts/fonts.css" />-->
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
         <!-- end Fonts -->
@@ -69,18 +68,10 @@
         <!-- end Scripts -->
     </head>
     <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white not-logged">
-        <!-- Topbar -->
-        <!--<div class="topbar">
-            <div class="topbar__inner">
-                Тейсти &mdash; это платформа для ведения блогов, объединяющая интересных людей. <a href="#" title="Заведите свой тлог">Заведите свой тлог</a> или <a href="#" title="войдите">войдите</a>.
-            </div>
-        </div>-->
-        <!-- end Topbar -->
-
         <!-- Toolbar - Back -->
         <a class="toolbar toolbar--back" href="#" style="display: none">
             <div class="toolbar__toggle">
-                <i class="icons icons--arrow-left"></i>
+                <i class="icon icon--arrow-left"></i>
             </div>
             <div class="toolbar__dropdown">
                 <div class="toolbar__dropdown-i">
@@ -93,7 +84,7 @@
         <!-- Toolbar - Close -->
         <div class="toolbar toolbar--close js-hero-close">
             <div class="toolbar__toggle">
-                <i class="icons icons--cross"></i>
+                <i class="icon icon--cross"></i>
             </div>
         </div>
         <!-- end Toolbar - Close -->
@@ -101,39 +92,39 @@
         <!-- Toolbar - Userbar -->
         <div class="toolbar toolbar--right toolbar--nav js-userbar-dropdown">
             <div class="toolbar__toggle" data-element="dropdown-toggle">
-                <i class="icons icons--menu"></i>
+                <i class="icon icon--menu"></i>
             </div>
             <div class="toolbar__popup" data-element="dropdown-menu">
                 <ul class="toolbar__popup-list">
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons--plus"></i>Новая запись</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--plus"></i>Новая запись</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons--diary"></i>Мой дневник</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--diary"></i>Мой дневник</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons--profile"></i>Профиль</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--profile"></i>Профиль</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons--star"></i>Избранное</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons--lock"></i>Скрытые записи</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--lock"></i>Скрытые записи</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-messages-toggle" href="#" data-popup-selector=".js-messages"><i class="icons icons--messages"></i>Сообщения</a>
+                        <a class="toolbar__popup-link js-messages-toggle" href="#" data-popup-selector=".js-messages"><i class="icon icon--messages"></i>Сообщения</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-friends-toggle" href="#" data-popup-selector=".js-friends"><i class="icons icons--friends"></i>Друзья</a>
+                        <a class="toolbar__popup-link js-friends-toggle" href="#" data-popup-selector=".js-friends"><i class="icon icon--friends"></i>Друзья</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-settings-design-toggle" href="#" data-popup-selector=".js-settings-design"><i class="icons icons--drawing"></i>Дизайн дневника</a>
+                        <a class="toolbar__popup-link js-settings-design-toggle" href="#" data-popup-selector=".js-settings-design"><i class="icon icon--drawing"></i>Дизайн дневника</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-settings-toggle" href="#" data-popup-selector=".js-settings"><i class="icons icons--cogwheel"></i>Настройки</a>
+                        <a class="toolbar__popup-link js-settings-toggle" href="#" data-popup-selector=".js-settings"><i class="icon icon--cogwheel"></i>Настройки</a>
                     </li>
                     <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icons icons--logout"></i>Выйти</a>
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--logout"></i>Выйти</a>
                     </li>
                 </ul>
             </div>
@@ -141,20 +132,33 @@
         <!-- end Toolbar - Userbar -->
 
         <!-- Toolbar - Logo -->
-        <div class="toolbar toolbar--nav">
-            <div class="toolbar__toggle">
+        <div class="toolbar toolbar--nav js-userbar-dropdown">
+            <div class="toolbar__toggle" data-element="dropdown-toggle">
                 <div class="tasty-ribbon">
-                    <a class="tasty-ribbon__link" href="#" title="Перейти на ленту друзей">Перейти на ленту друзей</a>
+                    <a class="tasty-ribbon__link" href="#" title="ммм..Тейсти)">ммм..Тейсти)</a>
                 </div>
+            </div>
+            <div class="toolbar__popup" data-element="dropdown-menu">
+                <ul class="toolbar__popup-list">
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#" title="Подписки"><i class="icon icon--tick"></i>Подписки</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#" title="Прямой эфир"><i class="icon icon--wave"></i>Прямой эфир</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#" title="Лучшее"><i class="icon icon--rating"></i>Лучшее</a>
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- end Toolbar - Logo -->
 
-        <span class="button button--green button--auth js-auth-button" style="display: none;">
-            <span class="button__inner">
-                <span class="button__text">войти или зарегистрироваться</span>
-            </span>
-        </span>
+        <!-- Auth Button -->
+        <button class="button button--green button--affixed js-auth-button">
+            <span class="button__text">войти или зарегистрироваться</span>
+        </button>
+        <!-- end Auth Button -->
 
         <script>
             $(function(){
@@ -195,13 +199,11 @@
                                 </div>
                                 <div class="hero__text js-hero-text"><span>Прекрасная жизнь</span></div>
                                 <div class="hero__actions">
-                                    <span class="button button--small button--subscribe state--active js-subscribe">
-                                        <span class="button__inner">
-                                            <span class="button__text button__text--subscribe">Подписаться</span>
-                                            <span class="button__text button__text--subscribed">Подписан</span>
-                                            <span class="button__text button__text--unsubscribe">Отписаться</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--small button--subscribe state--active js-subscribe">
+                                        <span class="button__text button__text--subscribe">Подписаться</span>
+                                        <span class="button__text button__text--subscribed">Подписан</span>
+                                        <span class="button__text button__text--unsubscribe">Отписаться</span>
+                                    </button>
                                 </div>
                             </div>
                             <div class="hero__stats js-hero-stats">
@@ -249,7 +251,9 @@
                             <div class="page-body__inner">
                                 <!-- Alert -->
                                 <div class="alert js-alert">
-                                    <div class="alert__close js-alert-close">h</div>
+                                    <div class="alert__close js-alert-close">
+                                        <i class="icon icon--cross"></i>
+                                    </div>
                                     <div class="alert__text js-alert-text">Здесь отображены ваши скрытые записи. Эта страница доступна только вам.</div>
                                 </div>
                                 <!-- end Alert -->
@@ -773,12 +777,10 @@
                             <!-- end Tasty Ribbon -->
                             <div class="inviter__title">Тейсти – это дневник в который хочется писать каждый день</div>
                             <div class="inviter__actions">
-                                <span class="button button--blue button--social button--vkontakte">
-                                    <span class="button__inner">
-                                        <span class="button__icon"></span>
-                                        <span class="button__text">зарегистриваться</span>
-                                    </span>
-                                </span>
+                                <button class="button button--vkontakte">
+                                    <span class="icon icon--vkontakte"></span>
+                                    <span class="button__text">зарегистриваться</span>
+                                </button>
                             </div>
                             <div class="inviter__spacer"></div>
                             <div class="inviter__stats">
@@ -861,12 +863,9 @@
                                     </div>
                                 </div>
                                 <div class="form-popup__submit">
-                                    <span class="button button--light-green button--large button--100p">
-                                        <input class="button__input" type="submit" value="Войти" />
-                                        <span class="button__inner">
-                                            <span class="button__text">Войти</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--large button--green-light button--block button--rectangle">
+                                        <span class="button__text">Войти</span>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -901,12 +900,9 @@
                                     </div>
                                 </div>
                                 <div class="form-popup__submit">
-                                    <span class="button button--light-green button--large button--100p">
-                                        <input class="button__input" type="submit" value="Зарегистрироваться" />
-                                        <span class="button__inner">
-                                            <span class="button__text">Зарегистрироваться</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--large button--green-light button--block button--rectangle">
+                                        <span class="button__text">Зарегистрироваться</span>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -929,12 +925,9 @@
                                     </div>
                                 </div>
                                 <div class="form-popup__submit">
-                                    <span class="button button--light-green button--large button--100p">
-                                        <input class="button__input" type="submit" value="Вспомнить все" />
-                                        <span class="button__inner">
-                                            <span class="button__text">Вспомнить все</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--large button--green-light button--block button--rectangle">
+                                        <span class="button__text">Вспомнить все</span>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -959,7 +952,7 @@
                         <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
                     </div>
                     <div class="popup__close js-popup-close">
-                        <div class="popup__icon popup__icon--close">h</div>
+                        <div class="icon icon--cross"></div>
                     </div>
                 </div>
                 <div class="popup__body">
@@ -1108,7 +1101,7 @@
                         <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
                     </div>
                     <div class="popup__close js-popup-close">
-                        <div class="popup__icon popup__icon--close">h</div>
+                        <div class="icon icon--cross"></div>
                     </div>
                 </div>
                 <div class="popup__body">
@@ -1210,7 +1203,7 @@
                         <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
                     </div>
                     <div class="popup__close js-popup-close">
-                        <div class="popup__icon popup__icon--close">h</div>
+                        <div class="icon icon--cross"></div>
                     </div>
                 </div>
                 <div class="popup__body">
@@ -1348,7 +1341,7 @@
                     </div>
                     <!--<div class="popup__actions js-dropdown">
                         <div class="popup__toggle" data-element="dropdown-toggle">
-                            <div class="popup__icon popup__icon-/-settings">d</div>
+                            <div class="icon icon-/-cogwheel"></div>
                         </div>
                         <div class="popup__dropdown" data-element="dropdown-menu">
                             <a class="popup__dropdown-item" href="#" title="Отметить все как прочитанные">Отметить все как прочитанные</a>
@@ -1357,7 +1350,7 @@
                         </div>
                     </div>-->
                     <div class="popup__close js-popup-close">
-                        <div class="popup__icon popup__icon--close">h</div>
+                        <div class="icon icon--cross"></div>
                     </div>
                 </div>
                 <div class="popup__body">
@@ -1461,7 +1454,7 @@
                         <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
                     </div>
                     <div class="popup__close js-popup-close">
-                        <div class="popup__icon popup__icon--close">h</div>
+                        <div class="icon icon--cross"></div>
                     </div>
                 </div>
                 <div class="popup__body">
@@ -1525,7 +1518,7 @@
                     <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
                 </div>
                 <div class="popup__close js-popup-close">
-                    <div class="popup__icon popup__icon--close">h</div>
+                    <div class="icon icon--cross"></div>
                 </div>
             </div>
             <div class="popup__body">
@@ -1581,12 +1574,10 @@
                             </div>
                             <div class="settings__item">
                                 <div class="settings__right">
-                                    <span class="button button--blue button--social button--vkontakte">
-                                        <span class="button__inner">
-                                            <span class="button__icon"></span>
-                                            <span class="button__text">Привязать аккаунт</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--vkontakte">
+                                        <span class="icon icon--vkontakte"></span>
+                                        <span class="button__text">Привязать аккаунт</span>
+                                    </button>
                                 </div>
                                 <div class="settings__left">
                                     <h3 class="settings__title">Вконтакте</h3>
@@ -1625,11 +1616,9 @@
                             </div>
                             <div class="settings__item settings__item--full" data-expander-name="email">
                                 <div class="settings__right">
-                                    <span class="button button--outline js-expander-toggle" data-expander-target="email">
-                                        <span class="button__inner">
-                                            <span class="button__text">Изменить</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--outline js-expander-toggle" data-expander-target="email">
+                                        <span class="button__text">Изменить</span>
+                                    </button>
                                 </div>
                                 <div class="settings__left">
                                     <h3 class="settings__title">Емейл</h3>
@@ -1639,11 +1628,9 @@
                             </div>
                             <div class="settings__item settings__item--full state--hidden" data-expander-name="email">
                                 <div class="settings__right">
-                                    <span class="button button--yellow js-expander-toggle" data-expander-target="email">
-                                        <span class="button__inner">
-                                            <span class="button__text">Сохранить</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--yellow js-expander-toggle" data-expander-target="email">
+                                        <span class="button__text">Сохранить</span>
+                                    </button>
                                 </div>
                                 <div class="settings__left">
                                     <h3 class="settings__title">Емейл</h3>
@@ -1670,11 +1657,9 @@
                             </div>
                             <div class="settings__item settings__item--full" data-expander-name="password">
                                 <div class="settings__right">
-                                    <span class="button button--outline js-expander-toggle" data-expander-target="password">
-                                        <span class="button__inner">
-                                            <span class="button__text">Изменить</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--outline js-expander-toggle" data-expander-target="password">
+                                        <span class="button__text">Изменить</span>
+                                    </button>
                                 </div>
                                 <div class="settings__left">
                                     <h3 class="settings__title">Пароль</h3>
@@ -1683,11 +1668,9 @@
                             </div>
                             <div class="settings__item settings__item--full state--hidden" data-expander-name="password">
                                 <div class="settings__right">
-                                    <span class="button button--yellow js-expander-toggle" data-expander-target="password">
-                                        <span class="button__inner">
-                                            <span class="button__text">Сохранить</span>
-                                        </span>
-                                    </span>
+                                    <button class="button button--yellow js-expander-toggle" data-expander-target="password">
+                                        <span class="button__text">Сохранить</span>
+                                    </button>
                                 </div>
                                 <div class="settings__left">
                                     <h3 class="settings__title">Пароль</h3>
@@ -1706,11 +1689,9 @@
                                 <div class="accounts">
                                     <div class="account state--active">
                                         <div class="account__actions">
-                                            <span class="button button--outline">
-                                                <span class="button__inner">
-                                                    <span class="button__text">Выйти</span>
-                                                </span>
-                                            </span>
+                                            <button class="button button--outline">
+                                                <span class="button__text">Выйти</span>
+                                            </button>
                                         </div>
                                         <div class="account__info">
                                             <div class="account__avatar">
@@ -1726,11 +1707,9 @@
                                     </div>
                                     <div class="account">
                                         <div class="account__actions">
-                                            <span class="button button--yellow">
-                                                <span class="button__inner">
-                                                    <span class="button__text">Переключиться</span>
-                                                </span>
-                                            </span>
+                                            <button class="button button--yellow">
+                                                <span class="button__text">Переключиться</span>
+                                            </button>
                                         </div>
                                         <div class="account__info">
                                             <div class="account__avatar">
@@ -1764,13 +1743,13 @@
                     <span class="spinner spinner--8x8"><span class="spinner__icon"></span></span>
                 </div>
                 <div class="popup__close js-popup-close">
-                    <div class="popup__icon popup__icon--close">h</div>
+                    <div class="icon icon--cross"></div>
                 </div>
             </div>
             <div class="popup__body">
                 <div class="messages">
                     <div class="messages__back js-messages-back state--hidden">
-                        <i class="icon icon--left-arrow"></i>
+                        <i class="icon icon--arrow-left"></i>
                     </div>
                     <div class="messages__section messages__section--dialogs js-messages-section" data-section="dialogs" data-title="Мои переписки">
                         <!--<div class="messages__header">
@@ -1858,11 +1837,9 @@
                             </div>
                         </div>
                         <footer class="messages__footer">
-                            <span class="button button--green button--100p js-messages-add">
-                                <span class="button__inner">
-                                    <span class="button__text">Cоздать переписку</span>
-                                </span>
-                            </span>
+                            <button class="button button--green button--block js-messages-add">
+                                <span class="button__text">Cоздать переписку</span>
+                            </button>
                         </footer>
                     </div>
 
@@ -2011,18 +1988,16 @@
         <div class="confirmation">
             <div class="confirmation__fader"></div>
             <div class="confirmation__close">
-                <div class="confirmation__close-icon">h</div>
+                <div class="icon icon--cross"></div>
             </div>
             <div class="confirmation__box">
                 <div class="confirmation__text">
                     Вы действительно хотите удалить запись?<br />Её нельзя будет восстановить.
                 </div>
                 <div class="confirmation__buttons">
-                    <span class="button button--small button--red">
-                        <span class="button__inner">
-                            <span class="button__text">Удалить запись</span>
-                        </span>
-                    </span>
+                    <button class="button button--small button--red">
+                        <span class="button__text">Удалить запись</span>
+                    </button>
                 </div>
             </div>
         </div>

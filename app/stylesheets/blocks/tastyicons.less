@@ -25,144 +25,62 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@{icons}--menu:before {
-  content: "\e600";
+// Mixins
+.set-ico(@code) {
+  &:before { content: @code; }
 }
-@{icons}--plus:before {
-  content: "\e601";
-}
-@{icons}--arrow-left:before {
-  content: "\e602";
-}
-@{icons}--cross:before {
-  content: "\e603";
-}
-@{icons}--tick:before {
-  content: "\e604";
-}
-@{icons}--cogwheel:before {
-  content: "\e605";
-}
-@{icons}--cogwheel-bold:before {
-  content: "\e606";
-}
-@{icons}--cloud:before {
-  content: "\e607";
-}
-@{icons}--diary:before {
-  content: "\e608";
-}
-@{icons}--people:before {
-  content: "\e609";
-}
-@{icons}--friends:before {
-  content: "\e60a";
-}
-@{icons}--profile:before {
-  content: "\e60b";
-}
-@{icons}--logout:before {
-  content: "\e60c";
-}
-@{icons}--open-eye:before {
-  content: "\e60d";
-}
-@{icons}--closed-eye:before {
-  content: "\e60e";
-}
-@{icons}--eye:before {
-  content: "\e60f";
-}
-@{icons}--refresh:before {
-  content: "\e610";
-}
-@{icons}--rotate:before {
-  content: "\e611";
-}
-@{icons}--drawing:before {
-  content: "\e612";
-}
-@{icons}--pencil:before {
-  content: "\e613";
-}
-@{icons}--hyperlink-square:before {
-  content: "\e614";
-}
-@{icons}--hyperlink:before {
-  content: "\e615";
-}
-@{icons}--basket:before {
-  content: "\e616";
-}
-@{icons}--basket-square:before {
-  content: "\e617";
-}
-@{icons}--paper:before {
-  content: "\e618";
-}
-@{icons}--picture:before {
-  content: "\e619";
-}
-@{icons}--video:before {
-  content: "\e61a";
-}
-@{icons}--pictures:before {
-  content: "\e61b";
-}
-@{icons}--quote:before {
-  content: "\e61c";
-}
-@{icons}--plus-bold:before {
-  content: "\e61d";
-}
-@{icons}--arrow-down-bold:before {
-  content: "\e61e";
-}
-@{icons}--question-mark:before {
-  content: "\e61f";
-}
-@{icons}--exclamation-mark:before {
-  content: "\e620";
-}
-@{icons}--type-tlogoden:before {
-  content: "\e621";
-}
-@{icons}--type-regular:before {
-  content: "\e622";
-}
-@{icons}--wave:before {
-  content: "\e623";
-}
-@{icons}--lock:before {
-  content: "\e624";
-}
-@{icons}--unlock:before {
-  content: "\e625";
-}
-@{icons}--rating:before {
-  content: "\e626";
-}
-@{icons}--messages:before {
-  content: "\e627";
-}
-@{icons}--comments-subscribe:before {
-  content: "\e628";
-}
-@{icons}--comments-unsubscribe:before {
-  content: "\e629";
-}
-@{icons}--star:before {
-  content: "\e62a";
-}
-@{icons}--star-fill:before {
-  content: "\e62b";
-}
-@{icons}--magnifier:before {
-  content: "\e62c";
-}
-@{icons}--vkontakte:before {
-  content: "\e62d";
-}
-@{icons}--email:before {
-  content: "\e62e";
-}
+
+.ico-cross() { .set-ico("\e603"); }
+.ico-wave() { .set-ico("\e623"); }
+.ico-lock() { .set-ico("\e624"); }
+.ico-unlock() { .set-ico("\e625"); }
+.ico-rating() { .set-ico("\e626"); }
+
+// Styles
+@{icons}--menu { .set-ico("\e600"); }
+@{icons}--plus { .set-ico("\e601"); }
+@{icons}--arrow-left { .set-ico("\e602"); }
+@{icons}--cross { .ico-cross; }
+@{icons}--tick { .set-ico("\e604"); }
+@{icons}--cogwheel { .set-ico("\e605"); }
+@{icons}--cogwheel-bold { .set-ico("\e606"); }
+@{icons}--cloud { .set-ico("\e607"); }
+@{icons}--diary { .set-ico("\e608"); }
+@{icons}--people { .set-ico("\e609"); }
+@{icons}--friends { .set-ico("\e60a"); }
+@{icons}--profile { .set-ico("\e60b"); }
+@{icons}--logout { .set-ico("\e60c"); }
+@{icons}--open-eye { .set-ico("\e60d"); }
+@{icons}--closed-eye { .set-ico("\e60e"); }
+@{icons}--eye { .set-ico("\e60f"); }
+@{icons}--refresh { .set-ico("\e610"); }
+@{icons}--rotate { .set-ico("\e611"); }
+@{icons}--drawing { .set-ico("\e612"); }
+@{icons}--pencil { .set-ico("\e613"); }
+@{icons}--hyperlink-square { .set-ico("\e614"); }
+@{icons}--hyperlink { .set-ico("\e615"); }
+@{icons}--basket { .set-ico("\e616"); }
+@{icons}--basket-square { .set-ico("\e617"); }
+@{icons}--paper { .set-ico("\e618"); }
+@{icons}--picture { .set-ico("\e619"); }
+@{icons}--video { .set-ico("\e61a"); }
+@{icons}--pictures { .set-ico("\e61b"); }
+@{icons}--quote { .set-ico("\e61c"); }
+@{icons}--plus-bold { .set-ico("\e61d"); }
+@{icons}--arrow-down-bold { .set-ico("\e61e"); }
+@{icons}--question-mark { .set-ico("\e61f"); }
+@{icons}--exclamation-mark { .set-ico("\e620"); }
+@{icons}--type-tlogoden { .set-ico("\e621"); }
+@{icons}--type-regular { .set-ico("\e622"); }
+@{icons}--wave { .ico-wave; }
+@{icons}--lock { .ico-lock; }
+@{icons}--unlock { .ico-unlock; }
+@{icons}--rating { .ico-rating; }
+@{icons}--messages { .set-ico("\e627"); }
+@{icons}--comments-subscribe { .set-ico("\e628"); }
+@{icons}--comments-unsubscribe { .set-ico("\e629"); }
+@{icons}--star { .set-ico("\e62a"); }
+@{icons}--star-fill { .set-ico("\e62b"); }
+@{icons}--magnifier { .set-ico("\e62c"); }
+@{icons}--vkontakte { .set-ico("\e62d"); }
+@{icons}--email { .set-ico("\e62e"); }

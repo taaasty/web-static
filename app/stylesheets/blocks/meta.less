@@ -54,7 +54,7 @@
   &__content {
     position: relative;
 
-    > @{icon} {
+    > @{icons} {
       cursor: default;
     }
   }
@@ -118,7 +118,7 @@
         }
 
         @{meta-item}__icon,
-        @{icon} {
+        @{icons} {
           font-size: 19px;
           vertical-align: middle;
         }
@@ -136,10 +136,9 @@
   }
 
   &__icon,
-  @{icon} {
+  @{icons} {
     font-style: normal;
     font-size: 17px;
-    font-family: "tastyicons";
     vertical-align: middle;
     .user-select(none);
 

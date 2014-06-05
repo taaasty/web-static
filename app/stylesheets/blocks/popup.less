@@ -68,6 +68,21 @@
     text-align: center;
     color: #616161;
     .user-select(none);
+
+    @{icons} {
+      margin: -.5em 0 0 -.5em;
+      position: absolute;
+      display: inline-block;
+      top: 50%;
+      left: 50%;
+      font-size: 20px;
+      color: #999;
+      vertical-align: middle;
+
+      &--cross {
+        font-size: 12px;
+      }
+    }
   }
 
   &__headbox {
@@ -158,21 +173,6 @@
     vertical-align: middle;
 
     &--close {
-      font-size: 12px;
-    }
-  }
-
-  @{icons} {
-    margin: -.5em 0 0 -.5em;
-    position: absolute;
-    display: inline-block;
-    top: 50%;
-    left: 50%;
-    font-size: 20px;
-    color: #999;
-    vertical-align: middle;
-
-    &--cross {
       font-size: 12px;
     }
   }
