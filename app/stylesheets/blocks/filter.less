@@ -35,6 +35,15 @@
     .border-radius(2em);
     .transition(~"opacity .3s ease");
 
+    // Design Experiment
+    right: @toolbar-margin;
+    bottom: @toolbar-margin;
+    z-index: 2;
+
+    @{page-header} & {
+      color: #e3e3e3;
+    }
+
     &__form {
       max-width: 0;
       display: inline-block;
