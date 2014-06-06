@@ -83,6 +83,11 @@ gulp.task('fonts', function () {
 });
 
 
+gulp.task('assets', function (){
+    return gulp.src('app/api/**/*.{json,html}')
+        .pipe(gulp.dest('dist/api'));
+});
+
 
 // HTML
 gulp.task('html', function () {
@@ -116,7 +121,7 @@ gulp.task('clean', function () {
 gulp.task('styles', ['less' ]);
 
 // Bundle
-gulp.task('bundle', ['scripts', 'styles', 'bower'], $.bundle('./app/*.html'));
+gulp.task('bundle', ['assets', 'scripts', 'styles', 'bower'], $.bundle('./app/*.html'));
 
 // Build
 gulp.task('build', ['html', 'bundle', 'images']);
