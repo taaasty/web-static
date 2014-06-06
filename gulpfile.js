@@ -1,6 +1,7 @@
 'use strict';
 
 // https://github.com/thlorenz/browserify-shim
+// https://github.com/sindresorhus/gulp-template
 
 var gulp = require('gulp');
 
