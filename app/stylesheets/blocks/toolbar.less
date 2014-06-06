@@ -183,7 +183,8 @@
       .opacity(.92);
 
       &:hover,
-      @{toolbar}__toggle:hover + @{toolbar}__popup @{toolbar}__popup-item:first-child & {
+      &.state--active,
+      @{toolbar}__toggle:hover + @{toolbar}__popup &.state--single {
         .toolbar-popup-link-hover;
       }
 
