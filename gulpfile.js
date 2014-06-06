@@ -84,8 +84,8 @@ gulp.task('fonts', function () {
 
 
 gulp.task('assets', function (){
-    return gulp.src('app/api/**/*.{json,html}')
-        .pipe(gulp.dest('dist/api'));
+    return gulp.src('app/{api,javascripts}/**/*.{json,html,js}')
+        .pipe(gulp.dest('dist/'));
 });
 
 
