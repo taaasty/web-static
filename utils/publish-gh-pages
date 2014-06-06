@@ -2,12 +2,11 @@
 
 git branch -D gh-pages
 git checkout --orphan gh-pages
-git mv app/* ./
+git mv dist/* ./
 git rm -rf ./app
 git rm -rf ./utils
-git clean -fd -e app
+git clean -fd -e dist
 shopt -s dotglob
-rmdir app
 git add .
 git commit -am 'build gh-pages'
 git push -u -f origin gh-pages:gh-pages
