@@ -1,1 +1,11 @@
 bower_components/
+node_modules/
+*.swp
+.DS_Store
+npm-debug.log
+*.apk
+*.ipa
+/dist/
+www
+.tmp
+*.bak

@@ -17,13 +17,17 @@
         <!-- end Fonts -->
 
         <!-- Styles -->
-        <link rel="stylesheet" type="text/less" href="stylesheets/tasty.less" />
+        <link rel="stylesheet" type="text/less" href="stylesheets/main.css" />
         <!-- end Styles -->
 
-        <!-- Scripts -->
-        <script src="javascripts/old/libs/less-1.7.0.min.js"></script>
-        <script src="javascripts/old/libs/modernizr.min.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.min.js"></script>
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="bower_components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <!-- endbower -->
         <script src="javascripts/old/libs/jquery/jquery.ui.core.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.ui.widget.min.js"></script>
         <script src="javascripts/old/libs/jquery/jquery.ui.mouse.min.js"></script>
@@ -52,20 +56,8 @@
         <script src="javascripts/old/plugins/jquery.dropdown.js"></script>
         <script src="javascripts/old/plugins/jquery.expander.js"></script>
         <script src="javascripts/old/plugins/jquery.togglevalue.js"></script>
+        <!-- endbuild -->
 
-        <script src="javascripts/old/tasty.api.js"></script>
-        <script src="javascripts/old/tasty.js"></script>
-        <script src="javascripts/old/tasty.utils.js"></script>
-        <script src="javascripts/old/fileReceiver.js"></script>
-        <script src="javascripts/old/popup.js"></script>
-        <script src="javascripts/old/design.js"></script>
-        <script src="javascripts/old/comments.js"></script>
-        <script src="javascripts/old/hero.js"></script>
-        <script src="javascripts/old/postEditor.js"></script>
-        <script src="javascripts/old/shellbox.js"></script>
-        <script src="javascripts/old/messages.js"></script>
-        <script src="javascripts/old/editableField.js"></script>
-        <!-- end Scripts -->
     </head>
     <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white not-logged">
         <!-- Toolbar - Back -->
@@ -199,11 +191,12 @@
                                 </div>
                                 <div class="hero__text js-hero-text"><span>Прекрасная жизнь</span></div>
                                 <div class="hero__actions">
-                                    <button class="button button--small button--subscribe state--active js-subscribe">
-                                        <span class="button__text button__text--subscribe">Подписаться</span>
-                                        <span class="button__text button__text--subscribed">Подписан</span>
-                                        <span class="button__text button__text--unsubscribe">Отписаться</span>
-                                    </button>
+                                  <div data-react-class="FollowButton" data-react-props='{"followUserID":5881,"isFollow":false}'> </div>
+                                    <!--<button class="button button--small button--subscribe state--active js-subscribe">-->
+                                        <!--<span class="button__text button__text--subscribe">Подписаться</span>-->
+                                        <!--<span class="button__text button__text--subscribed">Подписан</span>-->
+                                        <!--<span class="button__text button__text--unsubscribe">Отписаться</span>-->
+                                    <!--</button>-->
                                 </div>
                             </div>
                             <div class="hero__stats js-hero-stats">
@@ -2208,5 +2201,8 @@
           })
         </script>
         <!-- end Temporary Scripts -->
+
+
+        <script src="scripts/bundle.js"></script>
     </body>
 </html>
