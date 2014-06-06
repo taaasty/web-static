@@ -15,6 +15,14 @@
 http://livereload.com/ в помощь!
 
 
+Процесс gulp
+------------
+
+1. Исходник `./scripts/main.coffee` билдится с помощью `browserify` и превращается в `./scripts/bundle.js`
+2. Стиль `./stylesheepts/main.less` собирается в `./stylesheets/main.css`
+3. Сторонние пакеты устанавливаются через bundle в `app/bower_components` и билдятся в `./scripts/vendor.js`
+
+
 Ограничение по браузерам:
 ------------------------
 

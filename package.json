@@ -6,7 +6,10 @@
     "type": "git",
     "url": "git@github.com:BrandyMint/mmm-tasty-static.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "envify": "^1.2.1",
+    "react": "^0.10.0"
+  },
   "devDependencies": {
     "gulp": "~3.7.0",
     "gulp-load-plugins": "~0.3.0",
@@ -32,7 +35,8 @@
     "gulp-less": "^1.2.3",
     "coffee-script": "^1.7.1",
     "gulp-rename": "^1.2.0",
-    "wiredep": "^1.7.3"
+    "wiredep": "^1.7.3",
+    "debowerify": "^0.7.1"
   },
   "engines": {
     "node": ">=0.10.0"

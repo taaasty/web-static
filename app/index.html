@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
-        <title>gulp browserify</title>
+        <title>mmm-tasty-static</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -18,22 +18,33 @@
         <!-- endbuild -->
         
     </head>
-    <body>
+    <body class="layout--feed not-logged" style="background-color: black">
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        
-        <div class="hero-unit">
-          <h1>'Allo, 'Allo!</h1>
-          <p>You now have</p>
-          <ul>
-            <li>HTML5 Boilerplate</li>
-            
-            <li>Modernizr</li>
-          </ul>
-        </div>
-        
+        <h1>Страницы Tasty:</h1>
+        <ol>
+            <li><a href="tasty__landing.html">Главная страница</a></li>
+            <li><a href="tasty__tlog.html">Тлог пользователя</a></li>
+            <li><a href="tasty__feed.html">Прямой эфир, лента друзей, лучшее, анонимки</a></li>
+            <li><a href="tasty__editor-posts.html">Редактор постов</a></li>
+            <li><a href="tasty__password.html">Восстановление пароля</a></li>
+            <li><a href="tasty__guide.html">Гайд по основным элементам</a></li>
+            <li><a href="tasty__guide-design.html">Гайд по настройкам дизайна</a></li>
+            <li><a href="tasty__guide-old.html">Общий гайд (старое)</a></li>
+            <li><a href="tasty__promo.html">Промо нового тейсти</a></li>
+        </ol>
+        <hr>
+        <p><a href="tasty__clear-localStorage.html">Сбросить localStorage</a></p>
+
+        <h2>Демо компонентов</h2>
+        <ol>
+          <li></li>
+        </ol>
+
+         <div data-react-class="FollowButton" data-react-props='{"followUserID":5881,"isFollow":false}'> </div>
+
 
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->

@@ -1,5 +1,7 @@
 'use strict';
 
+// https://github.com/thlorenz/browserify-shim
+
 var gulp = require('gulp');
 
 // Load plugins
@@ -23,7 +25,7 @@ gulp.task('scripts', function () {
         .pipe($.browserify({
             insertGlobals: true,
             extensions: ['.coffee', '.csjx'],
-            transform: ['coffeeify', 'reactify']
+            transform: ['coffeeify', 'reactify', 'debowerify']
         }))
         .pipe($.rename('bundle.js'))
         //.pipe($.jshint('.jshintrc'))

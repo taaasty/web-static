@@ -6,10 +6,11 @@ window.FollowButton = React.createClass
   getInitialState: (a,b,c)->
     isFollow:       @props.isFollow
     isHover:        false
+    isError:        false
 
   handleClick: (e)->
     newState = ! @state.isFollow
-    @setState isHover: false
+    @setState isHover: false, isError: false
 
     $.ajax
       url:     Routes.api.followings_url()
@@ -19,6 +20,8 @@ window.FollowButton = React.createClass
       success: =>
         @setState isFollow: newState
         $(".js-follow-status").toggleClass "state--hidden", @state.isFollow
+      error: (respond)=>
+        @setState isError: true
 
   handleHover: -> @setState isHover: true
   handleBlur:  -> @setState isHover: false
@@ -32,6 +35,8 @@ window.FollowButton = React.createClass
       rootClass  = 'state--active'
       text       = if @state.isHover then 'Отписаться' else 'Подписан'
       childClass = 'button__text--subscribe'
+
+    text = 'ошибка' if @state.isError
 
     return `<span className={"button follow-button button--small " + rootClass}
                   onClick={this.handleClick}
