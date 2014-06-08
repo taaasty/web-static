@@ -8,7 +8,7 @@
 Запуск
 ------
 
-> gulp watch
+> ./start       # gulp watch
 
 Дальше открываем браузер http://localhost:9000
 

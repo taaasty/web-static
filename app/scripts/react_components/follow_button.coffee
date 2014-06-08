@@ -2,7 +2,13 @@
 
 # Ex .js-subscribe handler
 #
-window.FollowButton = React.createClass
+module.experts = window.FollowButton = React.createClass
+  propTypes:
+    followStatusEl: React.PropTypes.object
+
+  getDefaultProps: ->
+    followStatusEl: $(".js-follow-status")
+
   getInitialState: (a,b,c)->
     isFollow:       @props.isFollow
     isHover:        false
@@ -13,13 +19,14 @@ window.FollowButton = React.createClass
     @setState isHover: false, isError: false
 
     $.ajax
+      withCredentials: true
       url:     Routes.api.followings_url()
       method:  if newState then method = 'POST' else method = 'DELETE'
       data:
         follower_id: @props.followUserID
       success: =>
         @setState isFollow: newState
-        $(".js-follow-status").toggleClass "state--hidden", @state.isFollow
+        @props.followStatusEl.toggleClass "state--hidden", @state.isFollow
       error: (respond)=>
         @setState isError: true
 
