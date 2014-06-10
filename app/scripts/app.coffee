@@ -2,6 +2,7 @@ Routers = require './react_components/routers'
 
 App = 
   start: ->
-    React.renderComponent new Routers, document.getElementById('routers')
+    routers_element = document.getElementById('routers')
+    React.renderComponent new Routers, routers_element if routers_element?
 
 module.exports = App
