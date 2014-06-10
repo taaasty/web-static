@@ -36,7 +36,8 @@
     "coffee-script": "^1.7.1",
     "gulp-rename": "^1.2.0",
     "wiredep": "^1.7.3",
-    "debowerify": "^0.7.1"
+    "debowerify": "^0.7.1",
+    "react-router-component": "^0.19.0"
   },
   "engines": {
     "node": ">=0.10.0"
