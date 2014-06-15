@@ -1,0 +1,132 @@
+<!-- Shellbox -->
+<div class="shellbox shellbox--auth" data-shellbox-name="auth" data-default-section="select">
+    <div class="shellbox__main">
+        <div class="shellbox__cell">
+            <!-- Form Popup Select -->
+            <div class="form-popup form-popup--select">
+                <div class="form-popup__header">
+                    <h3 class="form-popup__title">Вход для зарегистрированных</h3>
+                </div>
+                <div class="form-popup__body">
+                    <div class="form-popup__select">
+                        <div class="form-popup__select-item is--vkontakte">
+                            <div class="form-popup__select-item-i">
+                                <div class="form-popup__select-pic">
+                                    <i class="icon icon--vkontakte"></i>
+                                </div>
+                                <div class="form-popup__select-desc">Через Вконтакте</div>
+                            </div>
+                        </div><div class="form-popup__select-item is--email js-auth-jumper" data-section="login">
+                            <div class="form-popup__select-item-i">
+                                <div class="form-popup__select-pic">
+                                    <i class="icon icon--email"></i>
+                                </div>
+                                <div class="form-popup__select-desc">Через электронную почту</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-popup__footer">
+                    <a class="form-popup__footer-item js-auth-jumper" href="#" title="или зарегистрироваться, если вы этого не делали" data-section="reg">или зарегистрироваться, если вы этого не делали</a>
+                </div>
+            </div>
+            <!-- end Form Popup Select -->
+            <!-- Form Popup Login -->
+            <div class="form-popup form-popup--login">
+                <div class="form-popup__header">
+                    <h3 class="form-popup__title">Вход через емейл</h3>
+                </div>
+                <div class="form-popup__body">
+                    <form action="?">
+                        <div class="form-popup__item">
+                            <div class="form-field form-field--simple">
+                                <input class="form-field__input" type="email" value="" placeholder="Электронная почта" />
+                                <div class="form-field__bg"></div>
+                            </div>
+                        </div>
+                        <div class="form-popup__item">
+                            <div class="form-field form-field--simple">
+                                <input class="form-field__input" type="password" value="" placeholder="Пароль" />
+                                <div class="form-field__bg"></div>
+                            </div>
+                        </div>
+                        <div class="form-popup__submit">
+                            <button class="button button--large button--green-light button--block button--rectangle">
+                                <span class="button__text">Войти</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="form-popup__footer">
+                    <a class="form-popup__footer-item" href="#" title="Войти через Вконтакте">Войти через Вконтакте</a> <span class="form-popup__footer-sep">·</span> <a class="form-popup__footer-item js-auth-jumper" href="#" title="Я забыл пароль или почту" data-section="recovery">Я забыл пароль или почту</a>
+                </div>
+            </div>
+            <!-- end Form Popup Login -->
+            <!-- Form Popup Reg -->
+            <div class="form-popup form-popup--reg">
+                <div class="form-popup__header">
+                    <h3 class="form-popup__title">Регистрация нового пользователя</h3>
+                </div>
+                <div class="form-popup__body">
+                    <form action="?">
+                        <div class="form-popup__item">
+                            <div class="form-field form-field--simple">
+                                <input class="form-field__input" type="email" value="" placeholder="Электронная почта" />
+                                <div class="form-field__bg"></div>
+                            </div>
+                        </div>
+                        <div class="form-popup__item">
+                            <div class="form-field form-field--simple form-field--error">
+                                <input class="form-field__input" type="password" value="" placeholder="Пароль" />
+                                <div class="form-field__bg"></div>
+                            </div>
+                        </div>
+                        <div class="form-popup__item">
+                            <div class="form-field form-field--simple form-field--binary">
+                                <input id="tlog-address" class="form-field__input" type="text" value="" placeholder="Адрес дневника" data-js="autosize-input" /><span class="form-field__text">.mmm-tasty.ru</span>
+                                <div class="form-field__bg"></div>
+                            </div>
+                        </div>
+                        <div class="form-popup__submit">
+                            <button class="button button--large button--green-light button--block button--rectangle">
+                                <span class="button__text">Зарегистрироваться</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="form-popup__footer">
+                    <a class="form-popup__footer-item" href="#" title="У вас есть акккаунт вконтакте?">У вас есть акккаунт вконтакте?</a>
+                </div>
+            </div>
+            <!-- end Form Popup Reg -->
+            <!-- Form Popup Recovery -->
+            <div class="form-popup form-popup--recovery">
+                <div class="form-popup__header">
+                    <h3 class="form-popup__title">Восстановление пароля</h3>
+                </div>
+                <div class="form-popup__body">
+                    <form action="?">
+                        <div class="form-popup__item">
+                            <div class="form-field form-field--simple">
+                                <input class="form-field__input" type="text" value="" placeholder="Адрес дневника или электронная почта" />
+                                <div class="form-field__bg"></div>
+                            </div>
+                        </div>
+                        <div class="form-popup__submit">
+                            <button class="button button--large button--green-light button--block button--rectangle">
+                                <span class="button__text">Вспомнить все</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="form-popup__footer">
+                    <a class="form-popup__footer-item js-auth-jumper" href="#" title="Я все вспомнил, верните меня" data-section="select">Я все вспомнил, верните меня</a>
+                </div>
+            </div>
+            <!-- end Form Popup Recovery -->
+        </div>
+    </div>
+</div>
+<!-- end Shellbox -->
+
+

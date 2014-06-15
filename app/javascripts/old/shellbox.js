@@ -177,7 +177,7 @@ jQuery(function(){
 
     onOpen: function(obj){
       if (!initAutosizeInput) {
-        obj.shellbox.find("[data-js=\"autosize-input\"]").autosizeInput({space: 0});
+        obj.shellbox.find("[role=\"autosize-input\"]").autosizeInput({space: 0});
         initAutosizeInput = true;
       }
 
