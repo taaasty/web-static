@@ -1,0 +1,66 @@
+@calendar-height: 53px;
+
+.calendar {
+	height: @calendar-height;
+	padding: 0 16px;
+	position: fixed;
+	bottom: @toolbar-margin;
+	right: @toolbar-margin;
+	left: @toolbar-margin;
+	background: @color-black;
+	background-color: rgba(red(@color-black), green(@color-black), blue(@color-black), .5);
+	white-space: nowrap;
+	overflow: hidden;
+	z-index: @toolbar-zindex;
+	.border-radius(@calendar-height / 2);
+	.transition(~"max-width .3s ease, background .3s ease");
+}
+
+.calendar__date {
+	display: block;
+	line-height: @calendar-height - 1;
+	color: #bbb;
+}
+
+.calendar__date-day {
+	margin: 0 6px;
+	display: inline-block;
+	font-size: 50px;
+	font-family: @font-family-base-light;
+	vertical-align: middle;
+}
+
+.calendar__date-info {
+	display: inline-block;
+	font-size: 11px;
+	line-height: 12px;
+	vertical-align: middle;
+	.opacity(.69);
+}
+
+.calendar__timeline {
+	height: 100%;
+	display: none;
+	color: #fff;
+}
+
+.calendar__timeline-view {
+	height: 100%;
+}
+
+.calendar__periods {
+	width: 100%;
+	height: 100%;
+	display: table;
+}
+
+.calendar__period {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.calendar__period-date {
+	font-size: 11px;
+	line-height: 13px;
+	.opacity(.3);
+}
