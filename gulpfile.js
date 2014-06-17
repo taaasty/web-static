@@ -1,5 +1,7 @@
 'use strict';
 
+//#"gulp-imagemin": "~0.1.4",
+
 // https://github.com/thlorenz/browserify-shim
 // https://github.com/sindresorhus/gulp-template
 // http://blog.nodejitsu.com/npmawesome-9-gulp-plugins/
