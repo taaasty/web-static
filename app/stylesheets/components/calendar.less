@@ -1,0 +1,138 @@
+@calendar-height: 53px;
+
+.calendar {
+  height: @calendar-height;
+  padding: 0 16px;
+  position: fixed;
+  bottom: @toolbar-margin;
+  left: @toolbar-margin;
+  background: @black;
+  background-color: rgba(red(@black), green(@black), blue(@black), .7);
+  color: #bbb;
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: @toolbar-zindex;
+  .user-select(none);
+  .border-radius(@calendar-height / 2);
+  .transition(~"max-width .3s ease, background .3s ease");
+
+  &:hover {
+    right: @toolbar-margin;
+
+    .calendar__date {
+      display: none;
+    }
+
+    .calendar__timeline-viewport {
+      display: block;
+    }
+  }
+}
+
+.calendar__date {
+  display: block;
+  line-height: @calendar-height - 1;
+}
+
+.calendar__date-day {
+  margin: 0 6px;
+  display: inline-block;
+  font-size: 50px;
+  font-family: @font-family-base-light;
+  vertical-align: middle;
+}
+
+.calendar__date-info {
+  display: inline-block;
+  font-size: 11px;
+  line-height: 12px;
+  vertical-align: middle;
+  .opacity(.69);
+}
+
+.calendar__timeline-viewport {
+  height: 100%;
+  display: none;
+  color: @white;
+  overflow: hidden;
+}
+
+.calendar__timeline {
+  height: 100%;
+}
+
+.calendar__periods {
+  width: 100%;
+  height: 100%;
+  display: table;
+}
+
+.calendar__period {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.calendar__period-date {
+  margin: 0 4px;
+  float: left;
+  font-size: 11px;
+  line-height: 13px;
+  .opacity(.3);
+}
+
+.calendar__period-line {
+  height: 1px;
+  margin: 5px 4px 5px 36px;
+  position: relative;
+  background: #636264;
+  .font-null();
+}
+
+.calendar__period-marker {
+  width: 5px;
+  height: 5px;
+  margin: -3px 0 0 -2px;
+  position: absolute;
+  top: 50%;
+  background-color: @white;
+  .border-radius(50%);
+
+  &:before,
+  &:after {
+    width: 78px;
+    margin-left: -39px;
+    position: absolute;
+    display: none;
+    left: 50%;
+    font-size: 11px;
+    line-height: 12px;
+    font-family: @font-family-base;
+    text-align: center;
+    .opacity(.4);
+  }
+
+  &:before {
+    content: attr(data-marker-date);
+    margin-bottom: 5px;
+    bottom: 100%;
+  }
+
+  &:after {
+    content: attr(data-marker-rows);
+    margin-top: 5px;
+    top: 100%;
+  }
+
+  &:hover {
+    width: 7px;
+    height: 7px;
+    margin: -4px 0 0 -3px;
+    background-color: #fbdc44;
+    z-index: (@toolbar-zindex + 1);
+
+    &:after,
+    &:before {
+      display: block;
+    }
+  }
+}
