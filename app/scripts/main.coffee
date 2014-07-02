@@ -1,5 +1,3 @@
-require './libs'
-
 window.Routes =
   logout_path: -> Tasty.host + '/logout'
 
@@ -26,6 +24,7 @@ require './react/components/popup_spinner'
 require './react/components/popup_box'
 require './react/components/shellbox_layer'
 require './react/components/follow_button'
+require './react/tasty_notify'
 require './react/application'
 
 SomeUser = require './data/user.json'
