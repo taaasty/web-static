@@ -4,7 +4,7 @@ window.ReactUjs = require 'react_ujs'
 window._ = require 'underscore'
 window.MouseTrap = require 'mousetrap'
 window.Routes = {}
-window.Tasty = { user: null, host: '3000.vkontraste.ru' }
+window.Tasty = { user: null, host: 'http://3000.vkontraste.ru/' }
 
 require './shared/api-routes'
 require './react/mixins/shake'
