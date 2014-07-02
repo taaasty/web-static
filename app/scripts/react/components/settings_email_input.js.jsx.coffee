@@ -5,14 +5,20 @@ KEYCODE_ENTER = 13
 CANCEL_TIMEOUT = 300
 
 module.experts = window.SettingsEmailInput = React.createClass
-  getInitialState: ->
-    isEditing:        false
-    email:            @props.user.email
-    hasInput:         @props.user.email?.length>0
+  mixins: [ReactShakeMixin]
 
   propTypes:
-    user:         React.PropTypes.object.isRequired
+    email:        React.PropTypes.string.isRequired
     saveCallback: React.PropTypes.func.isRequired
+
+  getInitialState: ->
+    isEditing:        false
+    hasInput:         @props.email?.length>0
+
+  #propTypes:
+    #value
+    #user:         React.PropTypes.object.isRequired
+    #saveCallback: React.PropTypes.func.isRequired
 
   saveButtonTitle: ->
     if @state.hasInput
@@ -81,11 +87,6 @@ module.experts = window.SettingsEmailInput = React.createClass
       @show()
 
   show: ->
-    unless @props.user.is_confirmed
-      confirmation = `<p className="settings__error">Емейл не подтвержден.
-        <a href="#" title="Отправить">Отправить</a>
-        подтверждение снова (или проверьте в папке «Спам»)</p>`
-
     ` <div className="settings__item settings__item--full">
             <div className="settings__right">
                 <button onClick={this.clickChange} className="button button--outline">
@@ -94,8 +95,8 @@ module.experts = window.SettingsEmailInput = React.createClass
             </div>
             <div className="settings__left">
                 <h3 className="settings__title">Емейл</h3>
-                <p className="settings__desc">{this.state.email}</p>
-                {confirmation}
+                <p className="settings__desc">{this.props.email}</p>
+                <SettingsEmailConfirmation email={this.props.email} isConfirmed={this.props.isConfirmed} />
             </div>
         </div>
         `
@@ -115,10 +116,9 @@ module.experts = window.SettingsEmailInput = React.createClass
         <div className="settings__left">
             <h3 className="settings__title">Емейл</h3>
             <div className="form-field form-field--default">
-                <input ref='email' onChange={this.handleChange} onKeyDown={this.handleKey} onBlur={this.handleBlur} onFocus={this.handleFocus} autoFocus={true} className="form-field__input" type="email" required={true} defaultValue={this.state.email}/>
+                <input ref='email' onChange={this.handleChange} onKeyDown={this.handleKey} onBlur={this.handleBlur} onFocus={this.handleFocus} autoFocus={true} className="form-field__input" type="email" required={true} defaultValue={this.props.email}/>
                 <div className="form-field__bg"></div>
             </div>
         </div>
     </div>`
-
 

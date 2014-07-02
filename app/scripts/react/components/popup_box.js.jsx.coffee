@@ -1,8 +1,14 @@
 ###* @jsx React.DOM ###
+#= require ./popup_spinner
 
 module.experts = window.PopupBox = React.createClass
+  mixins: [React.addons.LinkedStateMixin]
   propTypes:
     title: React.PropTypes.string.isRequired
+
+  getInitialState: ->
+    title: '---'
+    spinnerActivities: 0
 
   close: -> ReactApp.closePopup()
 
@@ -13,14 +19,21 @@ module.experts = window.PopupBox = React.createClass
     Mousetrap.unbind 'esc', @close
 
   render: ->
+    showSpinner = true
+
+    linkState = @linkState 'spinnerActivities'
+    React.Children.map @props.children, (context)->
+      debugger
+      @props.spinnerLink = linkState
+
     # TODO Устнанавливать title из children-а
     `<div className='popup-container'>
       <div className='popup-container__main'>
         <div className='popup-container__cell'>
           <div className="popup popup--settings popup--dark">
              <div className="popup__header">
-                <div className="popup__headbox js-popup-headbox"><h3 className="popup__title">{this.props.title}</h3></div>
-                {this.loader()}
+                <div className="popup__headbox"><h3 className="popup__title">{this.props.title}</h3></div>
+                  <PopupSpinner activities={this.state.spinnerActivities} />
                 <div className="popup__close" onClick={this.close}><div className="icon icon--cross"></div></div>
              </div>
              <div className="popup__body">{this.props.children}</div>
@@ -28,7 +41,3 @@ module.experts = window.PopupBox = React.createClass
         </div>
       </div>
     </div>`
-
-  loader: ->
-    `<div className="popup__loader state--hidden js-popup-loader"><span className="spinner spinner--8x8"><span className="spinner__icon"></span></span></div>`
-

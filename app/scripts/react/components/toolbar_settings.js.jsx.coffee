@@ -2,15 +2,30 @@
 #= require ./settings_radio_item
 
 module.experts = window.ToolbarSettings = React.createClass
+  mixins: [ReactShakeMixin, React.addons.LinkedStateMixin]
+
+  propTypes:
+    title:       React.PropTypes.string.isRequired
+    spinnerLink: React.PropTypes.object.isRequired
+
   getInitialState: ->
     saving: false
     user:   @props.user
 
+  componentWillMount: ->
+    Mousetrap.bind 'esc', @close
+
   save: (key, value) ->
+    console.log 'save', key, value
+
+    @spinnerLink.requestChange @spinnerLink.value+1
+
+    @state.user[key] = value
+
     @setState saving: true
 
-    data = @state.user
-    debugger
+    data = {}
+    data[key] = value
 
     $.ajax
       url:      Routes.api.update_profile_url()
@@ -18,25 +33,30 @@ module.experts = window.ToolbarSettings = React.createClass
       method:   'put'
       data:     data
       success: (data) =>
-        debugger
-        @setState saving: false
-        TastyUtils.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
-        ReactApp.closeShellBox()
+        @spinnerLink.requestChange @spinnerLink.value-1
+        @setState saving: false, user: data
+        Tasty.user = data
+
+        #TastyUtils.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
+        #ReactApp.closeShellBox()
       error: (data) =>
-        debugger
+        @spinnerLink.requestChange @spinnerLink.value-1
         @setState saving: false
         @shake()
-        @refs.slug.getDOMNode().focus()
         TastyUtils.notifyErrorResponse data
 
-    console.log 'save', key, value
 
   render: ->
     saveCallback = @save
 
+    console.log 'render', @props
+
     return `<div className="settings">
               <form onSubmit={this.submit}>
-                <SettingsHeader user={this.state.user}/>
+                <SettingsHeader 
+                saveCallback={saveCallback}
+                title={this.state.user.title}
+                user={this.state.user}/>
 
                 <div className="settings__body">
 
@@ -67,7 +87,9 @@ module.experts = window.ToolbarSettings = React.createClass
 
                     <SettingsEmailInput 
                       saveCallback={saveCallback}
-                      user={this.state.user}/>
+                      email={this.state.user.email}
+                      isConfirmed={this.state.user.is_confirmed}
+                      />
 
                     <SettingsRadioItem
                       saveCallback={saveCallback}

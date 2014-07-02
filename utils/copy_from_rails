@@ -1,0 +1,2 @@
+cp -vr ../mmm-tasty/app/assets/javascripts/react app/scripts
+cp -vr ../mmm-tasty/app/assets/javascripts/shared app/scripts

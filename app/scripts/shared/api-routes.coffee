@@ -11,6 +11,8 @@ ApiRoutes =
   signup_url:                      -> Tasty.api_host + 'api/v1/users'
   update_profile_url:              -> Tasty.api_host + 'api/v1/users' # method put
   recovery_url:                    -> Tasty.api_host + 'api/v1/users/password/recovery'
+  request_confirm_url:             -> Tasty.api_host + 'api/v1/users/confirmation'
+  userpic_url:                     -> Tasty.api_host + 'api/v1/users/userpic'
 
 
 window.Routes.api = ApiRoutes

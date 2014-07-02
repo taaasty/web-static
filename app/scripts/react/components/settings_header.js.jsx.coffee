@@ -2,7 +2,11 @@
 
 module.experts = window.SettingsHeader = React.createClass
   propTypes:
-    user:     React.PropTypes.object.isRequired
+    user:         React.PropTypes.object.isRequired
+    saveCallback: React.PropTypes.func.isRequired
+
+  getInitialState: ->
+    isEditing:        false
 
   render: ->
     style = 
@@ -16,12 +20,13 @@ module.experts = window.SettingsHeader = React.createClass
             <Avatar user={this.props.user} />
             <span className="hero-simple__avatar-overlay">
               <span className="form-upload form-upload--icon">
-                <span className="form-upload__text"><i className="icon icon--pencil"></i></span><input id="user-avatar" className="form-upload__input" type="file" name="user-avatar" />
+                <span className="form-upload__text"><i className="icon icon--pencil"></i></span>
+                <SettingsAvatar user={this.props.user} />
               </span>
             </span>
           </div>
           <div className="hero-simple__name">{this.props.user.url}</div>
-          <SettingsTitle user={this.props.user} />
+          <SettingsTitle title={this.props.title} saveCallback={this.props.saveCallback} />
         </div>
       </div>
     </div>`
