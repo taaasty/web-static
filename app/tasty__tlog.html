@@ -816,12 +816,6 @@
                 if (Modernizr.touch) {
                     $(".js-dropdown").dropdown();
                 }
-
-                $(".js-auth-button").on("click", function(){
-                    var scrollTop = $(document).height() - $(window).height();
-
-                    $("html, body").animate({scrollTop: scrollTop}, 300);
-                });
             });
         </script>
 
