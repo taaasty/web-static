@@ -4,44 +4,63 @@
 #
 module.experts = window.FollowButton = React.createClass
   propTypes:
-    followStatusEl: React.PropTypes.object
+    isFollow: React.PropTypes.bool
+    tlogId:   React.PropTypes.number
+    #followStatusEl: React.PropTypes.object
 
-  getDefaultProps: ->
-    followStatusEl: $(".js-follow-status")
+  #getDefaultProps: ->
+    #followStatusEl: $(".js-follow-status")
 
   getInitialState: (a,b,c)->
     isFollow:       @props.isFollow
     isHover:        false
     isError:        false
 
+  updateFollowElement: ->
+    return unless @props.followStatusEl
+
+    @props.followStatusEl.toggleClass "state--hidden", @state.isFollow
+
+  componentWillUnmount: ->
+    @clearTimer()
+
+  clearTimer: ->
+    clearInterval @interval if @interval
+
+  setTimer: ->
+    clearError = =>
+      @setState isError: false
+    @interval = setInterval clearError, 1000
+
   handleClick: (e)->
     newState = ! @state.isFollow
-    @setState isHover: false, isError: false
+    @setState isError: false
+    @clearTimer()
 
     $.ajax
       withCredentials: true
-      url:     Routes.api.followings_url()
+      url:     Routes.api.followings_url(@props.tlogId)
       method:  if newState then method = 'POST' else method = 'DELETE'
-      data:
-        follower_id: @props.followUserID
       success: =>
         @setState isFollow: newState
-        @props.followStatusEl.toggleClass "state--hidden", @state.isFollow
+        @updateFollowElement()
+
       error: (respond)=>
         @setState isError: true
+        @setTimer()
 
   handleHover: -> @setState isHover: true
   handleBlur:  -> @setState isHover: false
-  render: ->
 
-    if !@state.isFollow
-      rootClass  = ''
-      text       = 'Подписаться'
-      childClass = 'button__text--subscribed'
-    else
+  render: ->
+    if @state.isFollow
       rootClass  = 'state--active'
       text       = if @state.isHover then 'Отписаться' else 'Подписан'
       childClass = 'button__text--subscribe'
+    else
+      rootClass  = ''
+      text       = 'Подписаться'
+      childClass = 'button__text--subscribed'
 
     text = 'ошибка' if @state.isError
 
