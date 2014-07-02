@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 #= require ./popup_spinner
 
-module.experts = window.PopupBox = React.createClass
+module.exports = window.PopupBox = React.createClass
   mixins: [React.addons.LinkedStateMixin]
   propTypes:
     title: React.PropTypes.string.isRequired
@@ -23,8 +23,7 @@ module.experts = window.PopupBox = React.createClass
 
     linkState = @linkState 'spinnerActivities'
     React.Children.map @props.children, (context)->
-      debugger
-      @props.spinnerLink = linkState
+      context.props.spinnerLink = linkState
 
     # TODO Устнанавливать title из children-а
     `<div className='popup-container'>

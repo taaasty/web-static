@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-module.experts = window.PopupSpinner = React.createClass
+module.exports = window.PopupSpinner = React.createClass
   propTypes:
     activities: React.PropTypes.number.isRequired
 

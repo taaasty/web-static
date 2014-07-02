@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "envify": "^1.2.1",
-    "react": "^0.10.0"
+    "react": "^0.10.0",
+    "blueimp-file-upload": "~9.5.8"
   },
   "devDependencies": {
     "gulp": "~3.7.0",
