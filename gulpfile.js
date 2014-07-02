@@ -28,7 +28,7 @@ gulp.task('scripts', function () {
     return gulp.src('app/scripts/main.coffee', { read: false })
         .pipe($.browserify({
             insertGlobals: true,
-            extensions: ['.coffee', '.csjx'],
+            extensions: ['.coffee', '.csjx', '.js.jsx.coffee'],
             transform: ['coffeeify', 'reactify', 'debowerify']
         }))
         .pipe($.rename('bundle.js'))
