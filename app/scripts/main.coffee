@@ -1,5 +1,5 @@
 jQuery = require 'jquery'
-window.React = require('react/addons')
+window.React = require 'react/addons'
 window.ReactUjs = require 'react_ujs'
 window._ = require 'underscore'
 window.MouseTrap = require 'mousetrap'
@@ -25,6 +25,7 @@ require './react/components/inviter_shellbox'
 require './react/components/popup_box'
 require './react/components/shellbox_layer'
 require './react/components/follow_button'
+require './react/tasty_notify'
 require './react/application'
 
 ReactApp.start()
