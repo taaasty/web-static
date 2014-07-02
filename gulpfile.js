@@ -52,8 +52,8 @@ gulp.task('scripts', function () {
 
 var path = require('path');
 gulp.task('less', function () {
-  //gulp.src('./app/styles/**/*.less')
-  gulp.src('./app/stylesheets/main.less')
+  //gulp.src('./app/styles/**/*.ess')
+  gulp.src('./app/stylesheets/main.sass')
     .pipe($.less({
       paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
