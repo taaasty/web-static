@@ -55,6 +55,7 @@ module.experts = window.ToolbarSettings = React.createClass
               <form onSubmit={this.submit}>
                 <SettingsHeader 
                 saveCallback={saveCallback}
+                spinnerLink={this.props.spinnerLink}
                 title={this.state.user.title}
                 user={this.state.user}/>
 

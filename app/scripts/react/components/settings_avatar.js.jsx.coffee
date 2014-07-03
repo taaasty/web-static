@@ -4,21 +4,30 @@ module.experts = window.SettingsAvatar = React.createClass
   mixins: [ReactShakeMixin]
   propTypes:
     user:         React.PropTypes.object.isRequired
-    #saveCallback: React.PropTypes.func.isRequired
+    spinnerLink:  React.PropTypes.object.isRequired
+
   componentDidMount: ->
     $(@getDOMNode()).fileupload 
       url: Routes.api.userpic_url()
+      replaceFileInput: false
       dataType: 'json'
-      fail: (e,data)->
+      start: =>
+        @props.spinnerLink.requestChange @props.spinnerLink.value+1
+        true
+      fail: (e,data) =>
         debugger
-        TastyUtils.notifyErrorResponse data
-      always: ->
         @shake()
+        TastyUtils.notifyErrorResponse data
+      done: (e,data)=>
+        debugger
+        console.log 'done'
+      always: =>
+        @props.spinnerLink.requestChange @props.spinnerLink.value-1
 
       progressall: (e, data) ->
         progress = parseInt(data.loaded / data.total * 100, 10)
 
-        console.log progress
+        console.log "upload progress", progress
 
 
   componentWillUnmount: ->

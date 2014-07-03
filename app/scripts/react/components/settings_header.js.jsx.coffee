@@ -3,12 +3,14 @@
 module.experts = window.SettingsHeader = React.createClass
   propTypes:
     user:         React.PropTypes.object.isRequired
+    spinnerLink:  React.PropTypes.object.isRequired
     saveCallback: React.PropTypes.func.isRequired
 
   getInitialState: ->
     isEditing:        false
 
   render: ->
+
     style = 
       'background-image': 'url(/images/popup_settings_bg.jpg)'
 
@@ -21,7 +23,7 @@ module.experts = window.SettingsHeader = React.createClass
             <span className="hero-simple__avatar-overlay">
               <span className="form-upload form-upload--icon">
                 <span className="form-upload__text"><i className="icon icon--pencil"></i></span>
-                <SettingsAvatar user={this.props.user} />
+                <SettingsAvatar user={this.props.user} spinnerLink={this.props.spinnerLink}/>
               </span>
             </span>
           </div>
