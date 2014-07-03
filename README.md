@@ -5,6 +5,16 @@
 > bower install
 
 
+Разработка
+----------
+
+В браузере:
+
+Есть залогиненный пользователь или нет
+
+> localStorage.setItem('userLogged', false/true)
+
+
 Запуск
 ------
 

@@ -40,15 +40,26 @@ window.Tasty =
   host: 'http://3000.vkontraste.ru/'
   api_host: 'http://3000.vkontraste.ru/'
 
-if localStorage.getItem('allow_user') == "true"
+console.log "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
+
+if localStorage.getItem('userLogged') == "true"
   window.Tasty.user = SomeUser
 
+  console.log "Залогинен пользователь", Tasty.user.url
   $.ajaxSetup
     xhrFields:
       withCredentials: true
       crossDomain: true
     headers: 
       "X-User-Token": Tasty.user.api_key.access_token
+
+else
+  console.log 'Без пользователя'
+  $.ajaxSetup
+    xhrFields:
+      withCredentials: true
+      crossDomain: true
+
 
 $ ->
   $(".js-dropdown").dropdown() if Modernizr.touch
