@@ -1,0 +1,75 @@
+// Передеопредяем стили из less
+
+.layout--feed
+  &.not-logged
+    .page__inner
+      padding-bottom: 466px
+    .page__paper
+      padding-bottom: 50px
+      position: relative
+      background-color: #eee
+      z-index: 2
+
+.icon--menu
+  margin-top: -2px
+
+.follow-status
+  left: 310px
+  top: 105px
+  right: none
+  left: none
+
+  transition-property: top, left
+  transition-timing-function: ease
+  transition-duration: .4s
+  transition-delay: .2s
+
+.hero-enabled .follow-status
+  left: 350px
+  top: 165px
+  right: none
+  left: none
+  transition-property: top, left
+  transition-timing-function: ease
+  transition-duration: .4s
+  transition-delay: .2s
+
+.hero-enabled
+  .hero__avatar
+    cursor: inherit
+
+
+.post__content .video
+  height: auto
+
+.post__title
+  a.post__link
+    text-decoration: underline
+
+// Мучения с shellbox
+
+//.form-popup
+  //transition: transform 1s ease, opacity 1s ease, visibility 1s ease
+  //transform: translate(20px, -35px)
+
+.shellbox-content
+  position: relative
+  top: auto
+  left: auto
+  opacity: 1
+  //transform: rotateX(0deg)
+  //transform: translate(30px, -35px)
+  transition: transform .3s ease, opacity .3s ease
+
+.voting-container
+  position: relative
+
+.notice
+  // Больше чем у shellbox
+  z-index: 100000
+
+.popup-container
+  display: block
+
+.editable-field__placeholder
+  display: auto
