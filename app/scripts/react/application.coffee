@@ -3,6 +3,7 @@
 #= require react_ujs
 #= require_tree ./mixins
 #= require_tree ./components
+#= require_tree ./controllers
 
 
 window.ReactApp = 
