@@ -37,13 +37,11 @@ UserGenue =
     access_token: 'd72fd485ca42af43d133d7367a4b4a3b'
 
 window.Tasty =
-  user: SomeUser
   host: 'http://3000.vkontraste.ru/'
   api_host: 'http://3000.vkontraste.ru/'
 
-$ ->
-  if Modernizr.touch
-    $(".js-dropdown").dropdown()
+if localStorage.getItem('allow_user') == "true"
+  window.Tasty.user = SomeUser
 
   $.ajaxSetup
     xhrFields:
@@ -51,5 +49,8 @@ $ ->
       crossDomain: true
     headers: 
       "X-User-Token": Tasty.user.api_key.access_token
+
+$ ->
+  $(".js-dropdown").dropdown() if Modernizr.touch
 
   ReactApp.start()
