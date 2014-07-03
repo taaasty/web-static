@@ -52,21 +52,25 @@ gulp.task('scripts', function () {
 //     });
 
 var path = require('path');
-gulp.task('sass', function () {
-  //gulp.src('./app/styles/**/*.ess')
-  gulp.src('./app/stylesheets/sass/main.sass')
-    .pipe(sass())
-    // .pipe($.autoprefixer('last 1 version'))
-    .pipe(gulp.dest('dist/stylesheets'))
-    .on('error', $.util.log);
-});
+// Неработает sass в gulp
+//             ^
+//             Error: source string:3: error: invalid top-level expression
+//
+//               at opts.error (/Users/danil/code/mmm-tasty-static/node_modules/gulp-sass/index.js:67:17)
+//                 at onError (/Users/danil/code/mmm-tasty-static/node_modules/node-sass/sass.js:73:16)
+//gulp.task('sass', function () {
+  ////gulp.src('./app/styles/**/*.ess')
+  //gulp.src('./app/stylesheets/sass/overrides.sass')
+    //.pipe(sass({errLogToConsole: false, sourceMap: true}))
+    //// .pipe($.autoprefixer('last 1 version'))
+    //.pipe(gulp.dest('dist/stylesheets'))
+    //.on('error', $.util.log);
+//});
 
 gulp.task('less', function () {
   //gulp.src('./app/styles/**/*.ess')
   gulp.src('./app/stylesheets/less/main.less')
-    .pipe($.less({
-      paths: [ path.join(__dirname, 'less', 'includes') ]
-    }))
+    .pipe($.less({ paths: [ path.join(__dirname, 'less', 'includes') ] }))
     // .pipe($.autoprefixer('last 1 version'))
     .pipe(gulp.dest('dist/stylesheets'))
     .on('error', $.util.log);
@@ -97,7 +101,7 @@ gulp.task('fonts', function () {
 
 
 gulp.task('assets', function (){
-    return gulp.src('app/{api,javascripts,stylesheets}/**/*.{less,sass,json,html,js}')
+    return gulp.src('app/{api,javascripts,stylesheets}/**/*.{less,css,json,html,js}')
         .pipe(gulp.dest('dist/'));
 });
 
@@ -131,7 +135,7 @@ gulp.task('clean', function () {
     //return gulp.src(['dist/styles', 'dist/scripts', 'dist/images'], {read: false}).pipe($.clean());
 });
 
-gulp.task('styles', ['less', 'sass' ]);
+gulp.task('styles', ['less' ]);
 
 // Bundle
 gulp.task('bundle', ['assets', 'scripts', 'styles', 'bower'], $.bundle('./app/*.html'));
@@ -180,7 +184,7 @@ gulp.task('watch', ['images', 'html', 'bundle', 'connect'], function () {
     //gulp.watch('app/scripts/**/*.coffee', ['coffee', 'scripts']);
     gulp.watch('app/scripts/**/*.coffee', ['scripts']);
 
-    // gulp.watch('app/styles/**/*.css', ['styles']);
+    gulp.watch('app/stylesheets/**/*.css',  ['assets']);
     gulp.watch('app/stylesheets/**/*.less', ['less']);
 
     // Watch .jsx files

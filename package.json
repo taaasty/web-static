@@ -38,7 +38,9 @@
     "gulp-rename": "^1.2.0",
     "wiredep": "^1.7.3",
     "debowerify": "^0.7.1",
-    "react-router-component": "^0.19.0"
+    "react-router-component": "^0.19.0",
+    "gulp-concat": "^2.2.0",
+    "node-sass": "^0.9.3"
   },
   "engines": {
     "node": ">=0.10.0"

@@ -18,7 +18,7 @@ module.experts = window.ToolbarSettings = React.createClass
   save: (key, value) ->
     console.log 'save', key, value
 
-    @spinnerLink.requestChange @spinnerLink.value+1
+    @props.spinnerLink.requestChange @props.spinnerLink.value+1
 
     @state.user[key] = value
 
@@ -33,14 +33,14 @@ module.experts = window.ToolbarSettings = React.createClass
       method:   'put'
       data:     data
       success: (data) =>
-        @spinnerLink.requestChange @spinnerLink.value-1
+        @props.spinnerLink.requestChange @props.spinnerLink.value-1
         @setState saving: false, user: data
         Tasty.user = data
 
         #TastyUtils.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
         #ReactApp.closeShellBox()
       error: (data) =>
-        @spinnerLink.requestChange @spinnerLink.value-1
+        @props.spinnerLink.requestChange @props.spinnerLink.value-1
         @setState saving: false
         @shake()
         TastyUtils.notifyErrorResponse data
