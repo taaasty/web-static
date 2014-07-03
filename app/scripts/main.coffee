@@ -26,7 +26,7 @@ require './react/components/popup_box'
 require './react/components/shellbox_layer'
 require './react/components/follow_button'
 require './react/components/tasty_notify'
-require './react/tasty_notify_controller'
+require './react/controllers/tasty_notify'
 require './react/application'
 
 SomeUser = require './data/user.json'
