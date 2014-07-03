@@ -17,13 +17,13 @@ module.experts = window.SettingsPasswordItem = React.createClass
   validate: (silent=false)->
     unless @refs.password.state.value?
       unless silent
-        TastyUtils.notify 'error', 'Введите пароль чтобы соохранить или нажмите ESC чтобы прекратить'
+        TastyNotifyController.notify 'error', 'Введите пароль чтобы соохранить или нажмите ESC чтобы прекратить'
         @shake()
       return false
 
     if @refs.password.state.value.length<3
       unless silent
-        TastyUtils.notify 'error', 'Пароль должен быть не менее 3-х символов в длинну'
+        TastyNotifyController.notify 'error', 'Пароль должен быть не менее 3-х символов в длинну'
         @shake()
       return false
 
@@ -31,7 +31,7 @@ module.experts = window.SettingsPasswordItem = React.createClass
       unless silent
         @refs.password.setState value: ''
         @refs.password_confirm.setState value: ''
-        TastyUtils.notify 'error', 'Пароли не совпадают'
+        TastyNotifyController.notify 'error', 'Пароли не совпадают'
         @shake()
       return false
     return true

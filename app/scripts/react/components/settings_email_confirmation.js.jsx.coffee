@@ -22,11 +22,11 @@ window.SettingsEmailConfirmation = React.createClass
       method:   'post'
       success: (data) =>
         @setState process: 2
-        TastyUtils.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
+        TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
       error: (data) =>
         @setState process: 1
         @shake()
-        TastyUtils.notifyErrorResponse data
+        TastyNotifyController.errorResponse data
 
     console.log 'click confirm'
 

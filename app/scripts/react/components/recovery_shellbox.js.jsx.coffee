@@ -19,7 +19,7 @@ module.experts = window.RecoveryShellBox = React.createClass
 
     if slug.length<1
       @shake()
-      TastyUtils.notify 'error', 'Введите Электронную Почту или адрес дневника'
+      TastyNotifyController.notify 'error', 'Введите Электронную Почту или адрес дневника'
       return
 
     @setState inProcess: true
@@ -32,13 +32,13 @@ module.experts = window.RecoveryShellBox = React.createClass
         slug_or_email: slug
       success: (data) =>
         @setState inProcess: false
-        TastyUtils.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
+        TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
         ReactApp.closeShellBox()
       error: (data) =>
         @setState inProcess: false
         @shake()
         @refs.slug.getDOMNode().focus()
-        TastyUtils.notifyErrorResponse data
+        TastyNotifyController.errorResponse data
 
   render: ->
     if @state.inProcess
