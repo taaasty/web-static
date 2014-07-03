@@ -31,7 +31,7 @@ module.experts = window.EmailSignupShellBox = React.createClass
       dataType: 'json'
       success: (data) =>
         @setState inProcess: false
-        TastyUtils.notify 'success', "Добро пожаловать, #{data.name}! Подождите, я перезагружусь.."
+        TastyNotifyController.notify 'success', "Добро пожаловать, #{data.name}! Подождите, я перезагружусь.."
         ReactApp.closeShellBox()
 
         _.defer -> window.location.href = data.tlog_url
@@ -44,7 +44,7 @@ module.experts = window.EmailSignupShellBox = React.createClass
         else
           @shake()
 
-        TastyUtils.notifyErrorResponse data
+        TastyNotifyController.errorResponse data
 
   render: ->
     footer = @renderFooter() unless @state.inProcess

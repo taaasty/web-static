@@ -30,12 +30,12 @@ module.experts = window.EmailSigninShellBox = React.createClass
 
     if data.email.length<6
       @shake()
-      TastyUtils.notify 'error', 'Введите Электронную Почту'
+      TastyNotifyController.notify 'error', 'Введите Электронную Почту'
       return
 
     if data.password.length<3
       @shake()
-      TastyUtils.notify 'error', 'Введите пароль'
+      TastyNotifyController.notify 'error', 'Введите пароль'
       return
 
     @setState inProcess: true
@@ -47,7 +47,7 @@ module.experts = window.EmailSigninShellBox = React.createClass
       dataType: 'json'
       success: (data) =>
         @setState inProcess: false
-        TastyUtils.notify 'success', "Добро пожаловать, #{data.name}! Подождите, я перезагружусь.."
+        TastyNotifyController.notify 'success', "Добро пожаловать, #{data.name}! Подождите, я перезагружусь.."
         ReactApp.closeShellBox()
         _.defer -> location.reload true
       error: (data) =>
@@ -59,7 +59,7 @@ module.experts = window.EmailSigninShellBox = React.createClass
           @setState passwordError: true if data.responseJSON.error_code == 'user_authenticator/invalid_password'
           @setState emailError: true    if data.responseJSON.error_code == 'user_authenticator/user_not_found'
 
-        TastyUtils.notifyErrorResponse data
+        TastyNotifyController.errorResponse data
 
 
   componentDidMount: ->

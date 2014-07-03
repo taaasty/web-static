@@ -37,13 +37,13 @@ module.experts = window.ToolbarSettings = React.createClass
         @setState saving: false, user: data
         Tasty.user = data
 
-        #TastyUtils.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
+        #TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
         #ReactApp.closeShellBox()
       error: (data) =>
         @props.spinnerLink.requestChange @props.spinnerLink.value-1
         @setState saving: false
         @shake()
-        TastyUtils.notifyErrorResponse data
+        TastyNotifyController.errorResponse data
 
 
   render: ->

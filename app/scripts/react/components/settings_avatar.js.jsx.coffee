@@ -17,7 +17,7 @@ module.experts = window.SettingsAvatar = React.createClass
       fail: (e,data) =>
         debugger
         @shake()
-        TastyUtils.notifyErrorResponse data
+        TastyNotifyController.errorResponse data
       done: (e,data)=>
         debugger
         console.log 'done'
