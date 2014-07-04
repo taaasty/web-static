@@ -12,7 +12,6 @@ window.ReactApp =
 
     @shellboxContainer = $('<\div>').appendTo('body').get(0)
     @popupContainer    = $('<\div>').appendTo('body').get(0)
-    @calendarContainer = document.getElementById 'js-calendar-container'
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
 
@@ -22,8 +21,8 @@ window.ReactApp =
   closePopup: ->
     _.defer => React.unmountComponentAtNode @popupContainer
 
-  showCalendar: (args) ->
-    _.defer => React.renderComponent Calendar(args), @calendarContainer
+  showCalendar: (container) ->
+    _.defer => React.renderComponent Calendar(), container
 
   #
   # InviteShellBox (vkontakte, emailSignup, selectSignin)
@@ -43,15 +42,18 @@ window.ReactApp =
       #React.renderComponent React.DOM.div(), @shellboxContainer
 
 $ ->
+  # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
+  inviterContainer  = document.getElementById 'js-static-inviter-container'
+  calendarContainer = document.querySelectorAll('[calendar-container]')[0]
+
   if Tasty.user?
     $('[toolbar-settings-click]').click -> ReactApp.showPopup    ToolbarSettings, title: 'Настройки', user: Tasty.user
   else
     $('[invite-button]').click          -> ReactApp.showShellBox InviterShellBox
-
-  # Calendar
-  ReactApp.showCalendar()
-
-  # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
-  inviterContainer  = document.getElementById 'js-static-inviter-container'
+  
+  # Inviter
   if inviterContainer?
     React.renderComponent InviterShellBox(fixed: true), inviterContainer
+
+  # Calendar
+  ReactApp.showCalendar(calendarContainer) if calendarContainer?
