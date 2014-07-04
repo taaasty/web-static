@@ -15,6 +15,7 @@ module.experts = window.FollowButton = React.createClass
     isFollow:       @props.isFollow
     isHover:        false
     isError:        false
+    isProcess:      true
 
   updateFollowElement: ->
     return unless @props.followStatusEl
@@ -34,19 +35,20 @@ module.experts = window.FollowButton = React.createClass
 
   handleClick: (e)->
     newState = ! @state.isFollow
-    @setState isError: false
+    @setState isError: false, isProcess: true
     @clearTimer()
 
     $.ajax
-      withCredentials: true
+      #withCredentials: true
       url:     Routes.api.followings_url(@props.tlogId)
       method:  if newState then method = 'POST' else method = 'DELETE'
       success: =>
-        @setState isFollow: newState
+        @setState isFollow: newState, isProcess: false
         @updateFollowElement()
 
-      error: (respond)=>
-        @setState isError: true
+      error: (data)=>
+        TastyNotifyController.errorResponse data
+        @setState isError: true, isProcess: false
         @setTimer()
 
   handleHover: -> @setState isHover: true
