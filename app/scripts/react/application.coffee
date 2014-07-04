@@ -9,8 +9,8 @@
 window.ReactApp = 
   start: ->
     console.log 'ReactApp start'
-    @shellboxContainer = document.getElementById('js-shellbox-container')
-    @popupContainer = $('[popup-container]').get 0
+    @shellboxContainer = $('<\div>').appendTo('body').get(0)
+    @popupContainer    = $('<\div>').appendTo('body').get(0)
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
 

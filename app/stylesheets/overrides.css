@@ -54,5 +54,15 @@
 .popup-container {
   display: block; }
 
+.editable-field__value {
+  display: inline; }
+
 .editable-field__placeholder {
-  display: auto; }
+  display: inline; }
+
+.editable-field__control-wrap {
+  visibility: visible;
+  opacity: 1; }
+
+.alert-container {
+  border-radius: 6px 6px 0 0; }

@@ -1,7 +1,5 @@
 ###* @jsx React.DOM ###
 
-# Ex .js-subscribe handler
-#
 module.experts = window.FollowButton = React.createClass
   propTypes:
     isFollow: React.PropTypes.bool

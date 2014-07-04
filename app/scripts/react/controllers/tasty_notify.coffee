@@ -3,13 +3,12 @@ window.TastyNotifyController =
   HIDE_EVENT: TastyNotify.HIDE_EVENT
 
   notify: (type, text, timeout = 3000) ->
-    console.log TastyNotify
-    $container = $('<\div>').appendTo('body').get(0)
+    container = $('<\div>').appendTo('body').get(0)
     React.renderComponent TastyNotify(
         type:    type
         text:    text
         timeout: timeout
-      ), $container
+      ), container
     return
 
   errorResponse: (response, timeout = 3000) ->

@@ -9,7 +9,6 @@ module.experts = window.SettingsPasswordItem = React.createClass
 
   getInitialState: ->
     isEditing: false
-    isSuccess: true
     hasInput:  false
 
   propTypes:
@@ -40,11 +39,8 @@ module.experts = window.SettingsPasswordItem = React.createClass
   save: ->
     return unless @validate()
 
-    @props.saveCallback 'password', @refs.password.state.value, @setSuccess
+    @props.saveCallback 'password', @refs.password.state.value
     @setState isEditing: false
-
-  setSuccess: ->
-    console.log 'success'
 
   clickSave: (event)->
     @clearCancelTimer()

@@ -15,7 +15,7 @@ module.experts = window.ToolbarSettings = React.createClass
   componentWillMount: ->
     Mousetrap.bind 'esc', @close
 
-  save: (key, value, successCallback) ->
+  save: (key, value) ->
     console.log 'save', key, value
 
     @props.spinnerLink.requestChange @props.spinnerLink.value+1
@@ -36,8 +36,6 @@ module.experts = window.ToolbarSettings = React.createClass
         @props.spinnerLink.requestChange @props.spinnerLink.value-1
         @setState saving: false, user: data
         Tasty.user = data
-
-        successCallbak?()
 
         #TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
         #ReactApp.closeShellBox()

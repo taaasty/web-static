@@ -1,3 +1,4 @@
 cp -vr ../mmm-tasty/app/assets/javascripts/react app/scripts
 cp -vr ../mmm-tasty/app/assets/javascripts/shared app/scripts
 cp ../mmm-tasty/app/assets/stylesheets/overrides.css.sass app/stylesheets
+sass app/stylesheets/overrides.css.sass > app/stylesheets/overrides.css
