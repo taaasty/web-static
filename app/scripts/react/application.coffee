@@ -28,3 +28,12 @@ window.ReactApp =
     if ic = document.getElementById 'js-static-inviter-container'
       React.renderComponent InviterShellBox(fixed: true), ic
 
+    # Calendar
+    calendarContainer = document.querySelectorAll('[calendar-container]')[0]
+    if calendarContainer?
+      ReactApp.showCalendar({
+        date: 
+          day:  31
+          info: 'декабря<br /> воскресенье<br /> 23:34'
+        periods: Tasty.calendar.periods
+      }, calendarContainer)
