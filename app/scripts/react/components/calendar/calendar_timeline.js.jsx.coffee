@@ -55,6 +55,4 @@ window.CalendarTimeline = CalendarTimeline = React.createClass
         </ul>
       </div>
     </div>`
-
-
 module.exports = CalendarTimeline

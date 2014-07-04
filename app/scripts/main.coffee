@@ -37,6 +37,7 @@ require './react/controllers/popup'
 require './react/application'
 
 SomeUser = require './data/user.json'
+SomeCalendar = require './data/calendar.json'
 UserGenue =
   id: 1
   email: 'genue@ya.ru'
@@ -46,6 +47,7 @@ UserGenue =
 window.Tasty =
   host: 'http://3000.vkontraste.ru/'
   api_host: 'http://3000.vkontraste.ru/'
+  calendar: SomeCalendar
 
 # Контейнер для будутех данных проекта. Сюда постепенно мигрируют
 # модели из window.Tasty по мере перехода на Cortex

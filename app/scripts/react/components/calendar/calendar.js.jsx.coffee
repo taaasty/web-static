@@ -27,7 +27,9 @@ window.Calendar = Calendar = React.createClass
                  onMouseEnter={this.onMouseEnter}
                  onMouseLeave={this.onMouseLeave}
                  className={ calendarClasses }>
-              <CalendarHeader></CalendarHeader>
+              <CalendarHeader day={ this.props.date.day }
+                              info={ this.props.date.info }>
+              </CalendarHeader>
               <CalendarTimeline></CalendarTimeline>
             </nav>`
 
