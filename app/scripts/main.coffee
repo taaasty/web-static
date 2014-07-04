@@ -35,7 +35,9 @@ require './react/controllers/tasty_notify'
 require './react/application'
 
 SomeUser = require './data/user.json'
-UserGenue = 
+SomeCalendar = require './data/calendar.json'
+
+UserGenue =
   id: 1
   email: 'genue@ya.ru'
   api_key:
@@ -44,8 +46,9 @@ UserGenue =
 window.Tasty =
   host: 'http://3000.vkontraste.ru/'
   api_host: 'http://3000.vkontraste.ru/'
+  calendar: SomeCalendar
 
-console.log "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
+console.log "Установить/Сбросить залогиненного пользователя: localStorage.setItem('userLogged', false/true)"
 
 if localStorage.getItem('userLogged') == "true"
   window.Tasty.user = SomeUser

@@ -21,8 +21,8 @@ window.ReactApp =
   closePopup: ->
     _.defer => React.unmountComponentAtNode @popupContainer
 
-  showCalendar: (container) ->
-    _.defer => React.renderComponent Calendar(), container
+  showCalendar: (args, container) ->
+    _.defer => React.renderComponent Calendar(args), container
 
   #
   # InviteShellBox (vkontakte, emailSignup, selectSignin)
@@ -56,4 +56,10 @@ $ ->
     React.renderComponent InviterShellBox(fixed: true), inviterContainer
 
   # Calendar
-  ReactApp.showCalendar(calendarContainer) if calendarContainer?
+  if calendarContainer?
+    ReactApp.showCalendar({
+      date: 
+        day:  31
+        info: 'декабря<br /> воскресенье<br /> 23:34'
+      items: Tasty.calendar
+    }, calendarContainer) 
