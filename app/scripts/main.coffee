@@ -25,8 +25,13 @@ require './react/components/popup_spinner'
 require './react/components/popup_box'
 require './react/components/shellbox_layer'
 require './react/components/follow_button'
+require './react/components/calendar/calendar'
+require './react/components/calendar/calendar_timeline'
+require './react/components/calendar/calendar_header'
+
 require './react/components/tasty_notify'
 require './react/controllers/tasty_notify'
+
 require './react/application'
 
 SomeUser = require './data/user.json'
@@ -60,8 +65,6 @@ else
       withCredentials: true
       crossDomain: true
 
-
 $ ->
   $(".js-dropdown").dropdown() if Modernizr.touch
-
   ReactApp.start()
