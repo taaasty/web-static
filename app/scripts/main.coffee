@@ -4,6 +4,7 @@ window.Routes =
 
 require './shared/api-routes'
 require './react/mixins/shake'
+require './react/mixins/grammar'
 require './react/components/avatar'
 require './react/components/email_signin_shellbox'
 require './react/components/email_signup_shellbox'
@@ -25,9 +26,12 @@ require './react/components/popup_spinner'
 require './react/components/popup_box'
 require './react/components/shellbox_layer'
 require './react/components/follow_button'
+
 require './react/components/calendar/calendar'
 require './react/components/calendar/calendar_timeline'
 require './react/components/calendar/calendar_header'
+require './react/components/calendar/calendar_period'
+require './react/components/calendar/calendar_marker'
 
 require './react/components/tasty_notify'
 require './react/controllers/tasty_notify'

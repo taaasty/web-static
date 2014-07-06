@@ -42,24 +42,23 @@ window.ReactApp =
       #React.renderComponent React.DOM.div(), @shellboxContainer
 
 $ ->
-  # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
-  inviterContainer  = document.getElementById 'js-static-inviter-container'
-  calendarContainer = document.querySelectorAll('[calendar-container]')[0]
-
   if Tasty.user?
     $('[toolbar-settings-click]').click -> ReactApp.showPopup    ToolbarSettings, title: 'Настройки', user: Tasty.user
   else
     $('[invite-button]').click          -> ReactApp.showShellBox InviterShellBox
   
   # Inviter
+  # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
+  inviterContainer = document.getElementById 'js-static-inviter-container'
   if inviterContainer?
     React.renderComponent InviterShellBox(fixed: true), inviterContainer
 
   # Calendar
+  calendarContainer = document.querySelectorAll('[calendar-container]')[0]
   if calendarContainer?
     ReactApp.showCalendar({
       date: 
         day:  31
         info: 'декабря<br /> воскресенье<br /> 23:34'
-      items: Tasty.calendar
-    }, calendarContainer) 
+      periods: Tasty.calendar.periods
+    }, calendarContainer)
