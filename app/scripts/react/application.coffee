@@ -5,49 +5,26 @@
 #= require_tree ./components
 #= require_tree ./controllers
 
-
-window.ReactApp = 
-  start: ->
+window.ReactApp =
+  start: ({user})->
     console.log 'ReactApp start'
-    @shellboxContainer = $('<\div>').appendTo('body').get(0)
-    @popupContainer    = $('<\div>').appendTo('body').get(0)
+    console.debug? "Залогинен пользователь", window.Tasty.user?.slug
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
 
-  showPopup: (react_class, args) ->
-    _.defer => React.renderComponent PopupBox(args, react_class(args)), @popupContainer
+    @shellbox = new ReactShellBox()
+    @popup    = new ReactPopup()
 
-  closePopup: ->
-    _.defer => React.unmountComponentAtNode @popupContainer
+    if user?
+      $('[toolbar-settings-click]').click =>
+        @popup.show ToolbarSettings,
+          title: 'Настройки',
+          user:   user
+    else
+      $('[invite-button]').click =>
+        @shellbox.show InviterShellBox
 
-  #
-  # InviteShellBox (vkontakte, emailSignup, selectSignin)
-  # EmailSignupShellBox (vkontakte)
-  # SelectSigninShellBox (vkontakte, emailSignin, emailSignup)
-  # EmailSigninShellBox (vkontakte, recovery)
-  # RecoveryShellBox (selectSignin)
-  #
-  showShellBox: (react_class, args) ->
-    _.defer  =>
-      React.renderComponent ShellBox(null, react_class(args)), @shellboxContainer
-
-    #window.AuthEE.trigger 'enter'
-  closeShellBox: ->
-    _.defer =>
-      React.unmountComponentAtNode @shellboxContainer
-      #React.renderComponent React.DOM.div(), @shellboxContainer
-
-
-$ ->
-  ReactApp.start()
-
-  if Tasty.user?
-    $('[toolbar-settings-click]').click -> ReactApp.showPopup    ToolbarSettings, title: 'Настройки', user: Tasty.user
-  else
-    $('[invite-button]').click          -> ReactApp.showShellBox InviterShellBox
-
-  # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
-  inviterContainer  = document.getElementById 'js-static-inviter-container'
-  if inviterContainer?
-    React.renderComponent InviterShellBox(fixed: true), inviterContainer
+    # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
+    if ic = document.getElementById 'js-static-inviter-container'
+      React.renderComponent InviterShellBox(fixed: true), ic
 

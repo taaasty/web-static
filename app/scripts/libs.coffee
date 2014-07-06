@@ -7,3 +7,6 @@ window._ = require 'underscore'
 
 require 'blueimp-file-upload/js/jquery.fileupload'
 
+# Именно так, иначе он реквайрит не то что надо
+Cortex = require 'cortexjs/build/cortex.min.js'
+

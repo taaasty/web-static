@@ -2,7 +2,7 @@
 #= require ./popup_spinner
 
 module.exports = window.PopupBox = React.createClass
-  mixins: [React.addons.LinkedStateMixin]
+  mixins: [ReactUnmountMixin, React.addons.LinkedStateMixin]
   propTypes:
     title: React.PropTypes.string.isRequired
 
@@ -10,7 +10,7 @@ module.exports = window.PopupBox = React.createClass
     title: '---'
     spinnerActivities: 0
 
-  close: -> ReactApp.closePopup()
+  close: -> @unmount()
 
   componentWillMount: ->
     Mousetrap.bind 'esc', @close

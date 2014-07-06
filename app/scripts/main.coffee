@@ -3,6 +3,7 @@ window.Routes =
   logout_path: -> Tasty.host + '/logout'
 
 require './shared/api-routes'
+require './react/mixins/unmount'
 require './react/mixins/shake'
 require './react/components/avatar'
 require './react/components/email_signin_shellbox'
@@ -27,10 +28,12 @@ require './react/components/shellbox_layer'
 require './react/components/follow_button'
 require './react/components/tasty_notify'
 require './react/controllers/tasty_notify'
+require './react/controllers/shellbox'
+require './react/controllers/popup'
 require './react/application'
 
 SomeUser = require './data/user.json'
-UserGenue = 
+UserGenue =
   id: 1
   email: 'genue@ya.ru'
   api_key:
@@ -40,17 +43,22 @@ window.Tasty =
   host: 'http://3000.vkontraste.ru/'
   api_host: 'http://3000.vkontraste.ru/'
 
-console.log "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
+# Контейнер для будутех данных проекта. Сюда постепенно мигрируют
+# модели из window.Tasty по мере перехода на Cortex
+window.TastyData = {}
 
-if localStorage.getItem('userLogged') == "true"
+console.info? "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
+
+if localStorage.getItem('userLogged')
   window.Tasty.user = SomeUser
 
-  console.log "Залогинен пользователь", Tasty.user.url
+  window.TastyData.user = new Cortex SomeUser
+
   $.ajaxSetup
     xhrFields:
       withCredentials: true
       crossDomain: true
-    headers: 
+    headers:
       "X-User-Token": Tasty.user.api_key.access_token
 
 else
@@ -64,4 +72,4 @@ else
 $ ->
   $(".js-dropdown").dropdown() if Modernizr.touch
 
-  ReactApp.start()
+  ReactApp.start user: TastyData.user

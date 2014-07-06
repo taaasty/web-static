@@ -7,12 +7,12 @@ module.experts = window.InviterShellBox = React.createClass
   gotoEmailSignup: (event)->
     event.preventDefault()
     event.stopPropagation()
-    ReactApp.showShellBox EmailSignupShellBox
+    ReactApp.shellbox.show EmailSignupShellBox
 
   gotoSelectSignin: (event)->
     event.preventDefault()
     event.stopPropagation()
-    ReactApp.showShellBox SelectSigninShellBox
+    ReactApp.shellbox.show SelectSigninShellBox
 
 
   render: ->

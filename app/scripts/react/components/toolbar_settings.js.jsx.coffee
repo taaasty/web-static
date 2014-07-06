@@ -38,7 +38,7 @@ module.experts = window.ToolbarSettings = React.createClass
         Tasty.user = data
 
         #TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
-        #ReactApp.closeShellBox()
+        #ReactApp.shellbox.close()
       error: (data) =>
         @props.spinnerLink.requestChange @props.spinnerLink.value-1
         @setState saving: false

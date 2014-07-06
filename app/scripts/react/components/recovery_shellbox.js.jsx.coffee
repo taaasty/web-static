@@ -9,7 +9,7 @@ module.experts = window.RecoveryShellBox = React.createClass
   gotoSelectSignin: ->
     event.preventDefault()
     event.stopPropagation()
-    ReactApp.showShellBox SelectSigninShellBox
+    ReactApp.shellbox.show SelectSigninShellBox
 
   submit: (event)->
     event.preventDefault()
@@ -33,7 +33,7 @@ module.experts = window.RecoveryShellBox = React.createClass
       success: (data) =>
         @setState inProcess: false
         TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
-        ReactApp.closeShellBox()
+        ReactApp.shellbox.close()
       error: (data) =>
         @setState inProcess: false
         @shake()

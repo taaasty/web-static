@@ -32,7 +32,7 @@ module.experts = window.EmailSignupShellBox = React.createClass
       success: (data) =>
         @setState inProcess: false
         TastyNotifyController.notify 'success', "Добро пожаловать, #{data.name}! Подождите, я перезагружусь.."
-        ReactApp.closeShellBox()
+        ReactApp.shellbox.close()
 
         _.defer -> window.location.href = data.tlog_url
 
@@ -40,7 +40,7 @@ module.experts = window.EmailSignupShellBox = React.createClass
         @setState inProcess: false
 
         if data.responseJSON? && data.responseJSON.error_code == "user_creator/user_exists"
-          ReactApp.showShellBox EmailSigninShellBox, email: user.email
+          ReactApp.shellbox.show EmailSigninShellBox, email: user.email
         else
           @shake()
 

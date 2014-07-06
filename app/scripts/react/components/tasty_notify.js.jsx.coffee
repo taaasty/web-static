@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 
 module.exports = window.TastyNotify = React.createClass
+  mixins: [ReactUnmountMixin]
 
   statics:
     TYPE:       'success'
@@ -18,23 +19,18 @@ module.exports = window.TastyNotify = React.createClass
     hideEvent: @constructor.HIDE_EVENT
 
   componentWillMount: ->
-    $(document).on this.props.hideEvent, @unmount
+    $(document).on this.props.hideEvent, @close
 
   componentDidMount: ->
     $node = $( @getDOMNode() )
     $node.css marginLeft: -($node.width() / 2)
-    @timeout = setTimeout @unmount, @props.timeout
+    @timeout = setTimeout @close, @props.timeout
 
   componentWillUnmount: ->
-    $(document).off this.props.hideEvent, @unmount
+    $(document).off this.props.hideEvent, @close
     clearTimeout @timeout if @timeout
 
-  unmount: ->
-    node = @getDOMNode()
-    parentNode = @getDOMNode().parentNode
-    $(node).fadeOut 'fast', ->
-      React.unmountComponentAtNode parentNode
-      parentNode.remove()
+  close: -> $(@getDOMNode()).fadeOut 'fast', @unmount
 
   render: ->
    `<div className={"notice notice--" + this.props.type} onClick={this.hide}>

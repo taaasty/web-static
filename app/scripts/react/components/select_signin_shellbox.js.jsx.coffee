@@ -4,12 +4,12 @@ module.experts = window.SelectSigninShellBox = React.createClass
   gotoEmailSignin: (event)->
     event.preventDefault()
     event.stopPropagation()
-    ReactApp.showShellBox EmailSigninShellBox
+    ReactApp.shellbox.show EmailSigninShellBox
 
   gotoEmailSignup: (event)->
     event.preventDefault()
     event.stopPropagation()
-    ReactApp.showShellBox EmailSignupShellBox
+    ReactApp.shellbox.show EmailSignupShellBox
 
   render: ->
     return `<div className="form-popup form-popup--select">

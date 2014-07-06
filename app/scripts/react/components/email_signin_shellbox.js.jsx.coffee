@@ -48,7 +48,7 @@ module.experts = window.EmailSigninShellBox = React.createClass
       success: (data) =>
         @setState inProcess: false
         TastyNotifyController.notify 'success', "Добро пожаловать, #{data.name}! Подождите, я перезагружусь.."
-        ReactApp.closeShellBox()
+        ReactApp.shellbox.close()
         _.defer -> location.reload true
       error: (data) =>
         @setState inProcess: false
@@ -68,7 +68,7 @@ module.experts = window.EmailSigninShellBox = React.createClass
   gotoRecovery: (event)->
     event.preventDefault()
     event.stopPropagation()
-    ReactApp.showShellBox RecoveryShellBox
+    ReactApp.shellbox.show RecoveryShellBox
 
   render: ->
     if @state.inProcess

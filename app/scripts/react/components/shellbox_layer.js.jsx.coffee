@@ -1,6 +1,8 @@
 ###* @jsx React.DOM ###
 
 module.experts = window.ShellBox = React.createClass
+  mixins: [ReactUnmountMixin]
+
   getDefaultProps: ->
     fadeSpeed: 1000
 
@@ -9,11 +11,8 @@ module.experts = window.ShellBox = React.createClass
       e.preventDefault()
       @unmount()
 
-  unmount: ->
-    ReactApp.closeShellBox()
-    #$node = $ @getDOMNode()
-    #React.unmountComponentAtNode $node.parent().get 0
-    #$node.remove()
+  #unmount: ->
+    #ReactApp.shellbox.close()
 
   componentWillMount: ->
     @blurScreen()
