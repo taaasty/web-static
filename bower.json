@@ -6,6 +6,7 @@
     "underscore": "~1.6",
     "mousetrap": "~1.4.6",
     "modernizr": "~2.8.2",
+    "momentjs": "~2.7.0",
     "react_ujs": "https://raw.githubusercontent.com/reactjs/react-rails/master/lib/assets/javascripts/react_ujs.js",
     "cortexjs": "*",
     "pubsub": "~1.0.0"
