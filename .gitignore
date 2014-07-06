@@ -1,4 +1,5 @@
 app/bower_components/
+*.swo
 .sass-cache
 node_modules/
 *.swp
