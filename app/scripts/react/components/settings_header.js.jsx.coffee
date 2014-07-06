@@ -10,9 +10,9 @@ module.experts = window.SettingsHeader = React.createClass
     isEditing:        false
 
   render: ->
+    console.debug 'SettingsHeader render'
 
-    style = 
-      'background-image': 'url(/images/popup_settings_bg.jpg)'
+    style = 'background-image': 'url(/images/popup_settings_bg.jpg)'
 
     `<div className="settings__header">
       <div className="hero-simple hero-simple--settings" style={style}>

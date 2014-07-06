@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-AVATAR_STYLES = [ 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth' ]
+AVATAR_TYPES = [ 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth' ]
 
 module.experts = window.Avatar = React.createClass
   propTypes:
@@ -12,42 +12,36 @@ module.experts = window.Avatar = React.createClass
     size: 'thumb128' # large, thumb16, 32, 64, 127, touch
 
   getInitialState: ->
-    userCortex: @props.userCortex
+    if @props.userCortex?
+      @getStateFromCortex @props.userCortex
+    else
+      @getStateFromUser @props.user
 
-  componentDidMount: ->
-    @state.userCortex?.on 'update', @_updateUserCortex
-
-  componentWillUnmount: ->
-    @state.userCortex?.off 'update', @_updateUserCortex
+  componentDidMount:    -> @props.userCortex?.on 'update', @_updateUserCortex
+  componentWillUnmount: -> @props.userCortex?.off 'update', @_updateUserCortex
 
   _updateUserCortex: (userCortex) ->
-    @setState userCortex: userCortex
-
-  firstChar: ->
-    if @state.userCortex?
-      @state.userCortex.name.val()[0]
-    else
-      @props.user.name[0]
-
-  number: ->
-    @firstChar().charCodeAt(0) % AVATAR_STYLES.length
-
-  style: ->
-    AVATAR_STYLES[@number()]
-
-  image_url: ->
-    key = @props.size+'_url'
-    if @state.userCortex?
-      @state.userCortex.userpic?[key]?.val()
-    else
-      @props.user.userpic[key]
+    @setState @getStateFromCortex userCortex
 
   render: ->
-    name = @state.userCortex?.name.val() || @props.user.name
+    console.debug 'render avatar', @state.name
 
-    if @image_url()?
-      style = "background-image": "url(#{@image_url()})"
-      return `<span className="avatar" style={style}><img alt={name} className="avatar__img" src={this.image_url()} /></span>`
+    if @state.avatar_url?
+      bg_style = "background-image": "url(#{this.state.avatar_url})"
+      return `<span className="avatar" style={bg_style}><img alt={this.state.name} className="avatar__img" src={this.state.avatar_url} /></span>`
     else
-      avatarClass = 'avatar ' + 'avatar--' + @style()
-      return `<span className={avatarClass}><span className="avatar__text">{this.firstChar()}</span></span>`
+      avatarClass = 'avatar ' + 'avatar--' + @getType()
+      return `<span className={avatarClass}><span className="avatar__text">{this.state.name.charAt(0)}</span></span>`
+
+  getStateFromUser: (user) ->
+    key = @props.size+'_url'
+    return avatar_url: user.userpic?[key], name: user.name
+
+  getStateFromCortex: (userCortex) ->
+    key = @props.size+'_url'
+    return avatar_url: userCortex.userpic?[key]?.val(), name: userCortex.name.val()
+
+  getType: ->
+    number =  @state.name.charCodeAt(0) % AVATAR_TYPES.length
+    AVATAR_TYPES[number]
+
