@@ -4,6 +4,7 @@ window.Routes =
 
 require './shared/api-routes'
 require './react/mixins/shake'
+require './react/mixins/grammar'
 require './react/components/avatar'
 require './react/components/email_signin_shellbox'
 require './react/components/email_signup_shellbox'
@@ -25,12 +26,22 @@ require './react/components/popup_spinner'
 require './react/components/popup_box'
 require './react/components/shellbox_layer'
 require './react/components/follow_button'
+
+require './react/components/calendar/calendar'
+require './react/components/calendar/calendar_timeline'
+require './react/components/calendar/calendar_header'
+require './react/components/calendar/calendar_period'
+require './react/components/calendar/calendar_marker'
+
 require './react/components/tasty_notify'
 require './react/controllers/tasty_notify'
+
 require './react/application'
 
 SomeUser = require './data/user.json'
-UserGenue = 
+SomeCalendar = require './data/calendar.json'
+
+UserGenue =
   id: 1
   email: 'genue@ya.ru'
   api_key:
@@ -39,8 +50,9 @@ UserGenue =
 window.Tasty =
   host: 'http://3000.vkontraste.ru/'
   api_host: 'http://3000.vkontraste.ru/'
+  calendar: SomeCalendar
 
-console.log "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
+console.log "Установить/Сбросить залогиненного пользователя: localStorage.setItem('userLogged', false/true)"
 
 if localStorage.getItem('userLogged') == "true"
   window.Tasty.user = SomeUser
@@ -60,8 +72,6 @@ else
       withCredentials: true
       crossDomain: true
 
-
 $ ->
   $(".js-dropdown").dropdown() if Modernizr.touch
-
   ReactApp.start()

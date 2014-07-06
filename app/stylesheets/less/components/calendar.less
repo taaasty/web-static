@@ -15,17 +15,17 @@
   .user-select(none);
   .border-radius(@calendar-height / 2);
   .transition(~"max-width .3s ease, background .3s ease");
+}
 
-  &:hover {
-    right: @toolbar-margin;
+.calendar--open {
+  right: @toolbar-margin;
 
-    .calendar__date {
-      display: none;
-    }
+  .calendar__date {
+    display: none;
+  }
 
-    .calendar__timeline-viewport {
-      display: block;
-    }
+  .calendar__timeline-viewport {
+    display: block;
   }
 }
 
