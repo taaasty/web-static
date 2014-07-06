@@ -6,20 +6,20 @@
 #= require_tree ./controllers
 
 window.ReactApp =
-  start: ({user})->
+  start: ({userCortex})->
     console.log 'ReactApp start'
-    console.debug? "Залогинен пользователь", window.Tasty.user?.slug
+    console.debug? "Залогинен пользователь", userCortex.slug.val() if userCortex?
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
 
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()
 
-    if user?
+    if userCortex?
       $('[toolbar-settings-click]').click =>
         @popup.show ToolbarSettings,
-          title: 'Настройки',
-          user:   user
+          title:       'Настройки',
+          userCortex:   userCortex
     else
       $('[invite-button]').click =>
         @shellbox.show InviterShellBox

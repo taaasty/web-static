@@ -5,12 +5,14 @@ module.experts = window.ToolbarSettings = React.createClass
   mixins: [ReactShakeMixin, React.addons.LinkedStateMixin]
 
   propTypes:
-    title:       React.PropTypes.string.isRequired
-    spinnerLink: React.PropTypes.object.isRequired
+    title:        React.PropTypes.string.isRequired
+    userCortex:   React.PropTypes.instanceOf(Cortex)
+    spinnerLink:  React.PropTypes.object.isRequired
 
   getInitialState: ->
-    saving: false
-    user:   @props.user
+    saving:     false
+    userCortex: @props.userCortex
+    user:       @props.userCortex.__value
 
   componentWillMount: ->
     Mousetrap.bind 'esc', @close
@@ -20,7 +22,7 @@ module.experts = window.ToolbarSettings = React.createClass
 
     @props.spinnerLink.requestChange @props.spinnerLink.value+1
 
-    @state.user[key] = value
+    @state.userCortex[key].set value
 
     @setState saving: true
 
@@ -54,10 +56,10 @@ module.experts = window.ToolbarSettings = React.createClass
     return `<div className="settings">
               <form onSubmit={this.submit}>
                 <SettingsHeader 
-                saveCallback={saveCallback}
-                spinnerLink={this.props.spinnerLink}
-                title={this.state.user.title}
-                user={this.state.user}/>
+                  saveCallback={saveCallback}
+                  spinnerLink={this.props.spinnerLink}
+                  title={this.state.userCortex.title.val()}
+                  userCortex={this.props.userCortex}/>
 
                 <div className="settings__body">
 

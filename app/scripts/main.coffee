@@ -72,4 +72,4 @@ else
 $ ->
   $(".js-dropdown").dropdown() if Modernizr.touch
 
-  ReactApp.start user: TastyData.user
+  ReactApp.start userCortex: TastyData.user
