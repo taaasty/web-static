@@ -2,7 +2,6 @@ require './libs'
 window.Routes =
   logout_path: -> Tasty.host + '/logout'
 
-require './shared/dmodel'
 require './shared/api-routes'
 require './react/mixins/unmount'
 require './react/mixins/shake'
@@ -55,7 +54,7 @@ window.Tasty =
   calendar: SomeCalendar
 
 # Контейнер для будутех данных проекта. Сюда постепенно мигрируют
-# модели из window.Tasty по мере перехода на Cortex
+# модели из window.Tasty по мере перехода на модели
 window.TastyData = {}
 
 console.info? "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
@@ -63,7 +62,7 @@ console.info? "Установить/Сбросить залогиненного 
 if localStorage.getItem('userLogged')
   window.Tasty.user = SomeUser
 
-  window.TastyData.user = new DModel Tasty.user
+  window.TastyData.user = new Backbone.Model Tasty.user
 
   $.ajaxSetup
     xhrFields:

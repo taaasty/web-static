@@ -19,7 +19,7 @@ module.experts = window.SettingsAccountsItem = React.createClass
             </a>
           </div>
           <div className="account__info">
-            <div className="account__avatar"> <Avatar user={this.props.user} /> </div>
+            <div className="account__avatar"> <Avatar userAttributes={this.props.user.attributes} /> </div>
             <div className="account__desc">
               <div className="account__name">{this.props.user.slug}</div>
               <div className="account__status">Активный дневник</div>

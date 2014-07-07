@@ -9,7 +9,7 @@ module.experts = window.SettingsRadioItem = React.createClass
     saveCallback: React.PropTypes.func.isRequired
 
   getInitialState: ->
-    checked: @props.user[@props.key]
+    checked: @props.user.get @props.key
 
   handleChange: (e)->
     @props.saveCallback @props.key, e.target.checked

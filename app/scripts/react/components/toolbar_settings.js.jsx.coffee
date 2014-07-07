@@ -59,7 +59,7 @@ module.experts = window.ToolbarSettings = React.createClass
                 <SettingsHeader 
                   saveCallback={saveCallback}
                   spinnerLink={this.props.spinnerLink}
-                  title={this.props.user.title}
+                  title={this.props.user.get('title')}
                   user={this.props.user}/>
 
                 <div className="settings__body">
@@ -102,10 +102,7 @@ module.experts = window.ToolbarSettings = React.createClass
                       title='Уведомления'
                       description='Вы хотите получать уведомления о всех новых комментариях, подписчиках и личных сообщениях?' />
 
-                    <SettingsPasswordItem 
-                      saveCallback={saveCallback}
-                      user={this.state.user}
-                    />
+                    <SettingsPasswordItem saveCallback={saveCallback} />
 
                     <SettingsAccountsItem user={this.state.user} accounts={[]}/>
                 </div>

@@ -7,9 +7,9 @@
     "url": "git@github.com:BrandyMint/mmm-tasty-static.git"
   },
   "dependencies": {
+    "blueimp-file-upload": "~9.5.8",
     "envify": "^1.2.1",
-    "react": "^0.10.0",
-    "blueimp-file-upload": "~9.5.8"
+    "react-tools": "git://github.com/facebook/react"
   },
   "devDependencies": {
     "gulp": "~3.7.0",

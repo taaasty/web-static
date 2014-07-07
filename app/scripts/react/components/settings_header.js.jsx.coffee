@@ -12,7 +12,7 @@ module.experts = window.SettingsHeader = React.createClass
   render: ->
     console.debug 'SettingsHeader render'
 
-    background_url = @props.user.design.background_url
+    background_url = @props.user.get('design').background_url
     style = 'background-image': "url(#{background_url})"
 
     `<div className="settings__header">
@@ -20,7 +20,7 @@ module.experts = window.SettingsHeader = React.createClass
         <div className="hero-simple__overlay"></div>
         <div className="hero-simple__box">
           <div className="hero-simple__avatar">
-            <Avatar user={this.props.user} />
+            <Avatar userAttributes={this.props.user.attributes} />
             <span className="hero-simple__avatar-overlay">
               <span className="form-upload form-upload--icon">
                 <span className="form-upload__text"><i className="icon icon--pencil"></i></span>
