@@ -9,10 +9,14 @@ module.experts = window.SettingsHeader = React.createClass
   getInitialState: ->
     isEditing:        false
 
+  componentDidMount:    -> @props.userCortex?.on  'update', @forceUpdate
+  componentWillUnmount: -> @props.userCortex?.off 'update', @forceUpdate
+
   render: ->
     console.debug 'SettingsHeader render'
 
-    style = 'background-image': 'url(/images/popup_settings_bg.jpg)'
+    background_url = @props.userCortex.design.background_url.val()
+    style = 'background-image': "url(#{background_url})"
 
     `<div className="settings__header">
       <div className="hero-simple hero-simple--settings" style={style}>

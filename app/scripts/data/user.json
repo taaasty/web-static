@@ -1,1 +1,39 @@
-{"id":1,"gender":"m","name":"andy","slug":"andy","title":"what inspires me","is_female":false,"is_daylog":false,"tlog_url":"http://andy.3000.vkontraste.ru/","userpic":{"large_url":"http://a0.tcdn.ru/assets/userpic/fa/58/1_large.jpg","thumb128_url":"http://a0.tcdn.ru/assets/userpic/fa/58/1_thumb128.jpg","thumb64_url":"http://a0.tcdn.ru/assets/userpic/fa/58/1_thumb64.jpg","thumb32_url":"http://a0.tcdn.ru/assets/userpic/fa/58/1_thumb32.jpg","thumb16_url":"http://a0.tcdn.ru/assets/userpic/fa/58/1_thumb16.jpg","touch_url":"http://a0.tcdn.ru/assets/userpic/fa/58/1_touch.png"},"api_key":{"access_token":"d72fd485ca42af43d133d7367a4b4a3b","user_id":1,"expires_at":"2014-12-13T11:01:57.000+04:00"},"email":"andrew.zotov@gmail.com","privacy":"open","is_confirmed":true,"available_notifications":false,"authentications":[]}
+{
+  "id": 1,
+  "name": "andy",
+  "slug": "andy",
+  "title": "what inspires me",
+  "is_female": false,
+  "is_daylog": false,
+  "tlog_url": "http://andy.3000.vkontraste.ru/",
+  "created_at": "2007-03-25 22:09:16 +0400",
+  "updated_at": "2014-07-07 13:27:16 +0400",
+  "userpic": {
+    "large_url": "http://a0.tcdn.ru/assets/userpic/84/4b/1_large.jpg",
+    "thumb128_url": "http://a0.tcdn.ru/assets/userpic/84/4b/1_thumb128.jpg",
+    "thumb64_url": "http://a0.tcdn.ru/assets/userpic/84/4b/1_thumb64.jpg",
+    "thumb32_url": "http://a0.tcdn.ru/assets/userpic/84/4b/1_thumb32.jpg",
+    "thumb16_url": "http://a0.tcdn.ru/assets/userpic/84/4b/1_thumb16.jpg",
+    "touch_url": "http://a0.tcdn.ru/assets/userpic/84/4b/1_touch.png"
+  },
+  "api_key": {
+    "access_token": "d72fd485ca42af43d133d7367a4b4a3b",
+    "user_id": 1,
+    "expires_at": "2014-12-13 11:01:57 +0400"
+  },
+  "email": null,
+  "is_privacy": true,
+  "is_confirmed": true,
+  "available_notifications": false,
+  "authentications": [
+
+  ],
+  "design": {
+    "feedColor": "white",
+    "headerColor": "whiteonblack",
+    "fontType": "sans",
+    "coverAlign": "justify",
+    "feedOpacity": 1,
+    "background_url": "http://a3.tcdn.ru/assets/backgrounds/eb/1a/1812342_1_19cd528e686bac4c3c15740e.jpg"
+  }
+}

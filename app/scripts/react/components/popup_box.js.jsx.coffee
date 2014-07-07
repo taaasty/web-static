@@ -10,6 +10,11 @@ module.exports = window.PopupBox = React.createClass
     title: '---'
     spinnerActivities: 0
 
+  handleClick: (e)->
+    if $(e.target).hasClass('popup-container__cell')
+      e.preventDefault()
+      @close()
+
   close: -> @unmount()
 
   componentWillMount: ->
@@ -28,7 +33,7 @@ module.exports = window.PopupBox = React.createClass
     # TODO Устнанавливать title из children-а
     `<div className='popup-container'>
       <div className='popup-container__main'>
-        <div className='popup-container__cell'>
+        <div className='popup-container__cell' onClick={this.handleClick}>
           <div className="popup popup--settings popup--dark">
              <div className="popup__header">
                 <div className="popup__headbox"><h3 className="popup__title">{this.props.title}</h3></div>
