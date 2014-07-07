@@ -6,7 +6,8 @@
 #= require_tree ./controllers
 
 window.ReactApp =
-  start: ({userCortex})->
+  
+  start: ({userCortex}) ->
     console.log 'ReactApp start'
     console.debug? "Залогинен пользователь", userCortex.slug.val() if userCortex?
 
@@ -28,3 +29,15 @@ window.ReactApp =
     if ic = document.getElementById 'js-static-inviter-container'
       React.renderComponent InviterShellBox(fixed: true), ic
 
+    # Calendar
+    calendarContainer = document.querySelectorAll('[calendar-container]')[0]
+    if calendarContainer?
+      ReactApp.showCalendar({
+        date: 
+          day:  31
+          info: 'декабря<br /> воскресенье<br /> 23:34'
+        periods: Tasty.calendar.periods
+      }, calendarContainer)
+
+  showCalendar: (args, container) ->
+    _.defer => React.renderComponent Calendar(args), container

@@ -1,32 +1,2874 @@
 {
-  "tlog_id": 212831,
-  "items": [
+  "tlog_id": 2,
+  "periods": [
     {
-      "id": 18971004,
-      "created_at": "2014-06-20T16:26:58.000+04:00",
-      "entry_url": "http://dapi.3000.vkontraste.ru/18971004",
-      "is_private": false,
-      "type_symbol": "quote",
-      "comments_count": 0,
-      "title_truncated": "fasdfda"
+      "title": 2014,
+      "markers": [
+        {
+          "entry_id": 19039427,
+          "created_at": "2014-05-18T17:18:15.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/19039427",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "\u041d\u0430\u0432\u0435\u0440\u043d\u043e\u0435 \u044d\u0442\u043e \u043d\u0435\u0447\u0435\u0441\u0442\u043d\u043e \u043a\u043e\u0433\u0434\u0430 \u0441\u0430\u043c \u0441\u0435\u0431\u044f \u0444\u043e\u0442\u043e\u0433\u0440\u0430\u0444\u0438\u0440\u0443\u0435\u0448\u044c"
+        },
+        {
+          "entry_id": 19039180,
+          "created_at": "2014-05-18T15:41:57.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/19039180",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 0,
+          "title_truncated": "\u041f\u043e\u0434\u0441\u0435\u043b \u043d\u0430 Cartoon Network \u0432\u043c\u0435\u0441\u0442\u0435 \u0441 \u0424\u0430\u0434\u0435\u0435\u043c"
+        },
+        {
+          "entry_id": 19023978,
+          "created_at": "2014-05-12T19:26:55.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/19023978",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u0412\u0441\u0435\u043c \u043f\u0440\u0438\u0432\u0435\u0442. \u0412\u043f\u0435\u0440\u0432\u044b\u0435 \u0432 \u0415\u0433\u0438\u043f\u0442\u0435 :)"
+        },
+        {
+          "entry_id": 19006840,
+          "created_at": "2014-05-06T16:30:04.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/19006840",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u0421\u0445\u043e\u0434\u0438\u043b\u0438 \u043d\u0430 Stay Hungry Moscow."
+        },
+        {
+          "entry_id": 18910290,
+          "created_at": "2014-03-23T09:41:00.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/18910290",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 2,
+          "title_truncated": "\u041f\u0440\u0438\u043c\u0435\u0440 CSRF \u0443\u044f\u0437\u0432\u0438\u043c\u043e\u0441\u0442\u0438"
+        },
+        {
+          "entry_id": 18909470,
+          "created_at": "2014-03-22T14:34:13.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/18909470",
+          "is_private": true,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "\u0414\u0435\u0442\u043a\u0438"
+        },
+        {
+          "entry_id": 18893104,
+          "created_at": "2014-03-18T12:34:12.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/18893104",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u041c\u0430\u043c\u0430. \u0416\u0435\u043d\u0430. \u0414\u043e\u0447\u044c"
+        },
+        {
+          "entry_id": 18892272,
+          "created_at": "2014-03-18T01:13:48.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/18892272",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u0424\u0443\u044d\u0440\u0442\u0435\u0432\u0435\u043d\u0442\u0443\u0440\u0430, 2013"
+        }
+      ]
     },
     {
-      "id": 18971003,
-      "created_at": "2014-06-20T16:26:25.000+04:00",
-      "entry_url": "http://dapi.3000.vkontraste.ru/18971003",
-      "is_private": false,
-      "type_symbol": "text",
-      "comments_count": 0,
-      "title_truncated": "tea"
+      "title": 2010,
+      "markers": [
+        {
+          "entry_id": 1563290,
+          "created_at": "2010-09-30T13:48:39.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1563290",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 21,
+          "title_truncated": " \u0423 \u043a\u043e\u0433\u043e \u0441\u0430\u043c\u044b\u0435 \u043a\u0440\u0430\u0441\u0438\u0432\u044b\u0435 \u0438 \u0438\u043d\u0435\u0442\u0440\u0435\u0441\u043d\u044b\u0435 \u0442\u043b\u043e\u0433\u0438? "
+        },
+        {
+          "entry_id": 985846,
+          "created_at": "2010-05-22T20:15:39.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/985846",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "\u041b\u0435\u0442\u0430\u043b \u043d\u0430 \u043a\u043e\u043d\u0444\u0435\u0440\u0435\u043d\u0446\u0438\u044e \u0432 \u041d\u044c\u044e-\u0419\u043e\u0440\u043a \u0432 \u0430\u043f\u0440\u0435\u043b\u0435 2010. \u0412\u043e\u0442 \u0444\u043e\u0442\u043e\u0433\u0440\u0430\u0444\u0438\u0438."
+        },
+        {
+          "entry_id": 660734,
+          "created_at": "2010-01-19T15:22:10.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/660734",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u041c\u043e\u0439 \u043d\u043e\u0432\u044b\u0439 \u0444\u0430\u0432\u043e\u0440\u0438\u0442 specialized globe san francisco 2"
+        },
+        {
+          "entry_id": 644796,
+          "created_at": "2010-01-13T17:52:08.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/644796",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u0413\u0440\u0435\u0439\u0442\u0444\u0438\u043b\u0434"
+        }
+      ]
     },
     {
-      "id": 18971002,
-      "created_at": "2014-06-20T16:26:01.000+04:00",
-      "entry_url": "http://dapi.3000.vkontraste.ru/18971002",
-      "is_private": false,
-      "type_symbol": "text",
-      "comments_count": 0,
-      "title_truncated": "tea"
+      "title": 2009,
+      "markers": [
+        {
+          "entry_id": 448226,
+          "created_at": "2009-10-19T23:15:57.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/448226",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 11,
+          "title_truncated": "\u0442\u0430\u043a \u043d\u0430\u0447\u0438\u043d\u0430\u043b\u0441\u044f \u0442\u0435\u0439\u0441\u0442\u0438"
+        },
+        {
+          "entry_id": 383524,
+          "created_at": "2009-09-08T15:24:28.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/383524",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "god bless \u043f\u0440\u0435\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0441\u043a\u0438\u0439 \u0440\u044b\u043d\u043e\u043a! =)"
+        },
+        {
+          "entry_id": 378339,
+          "created_at": "2009-09-04T14:25:44.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/378339",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "http:\/\/www.flickr.com\/photos\/genue-luben\/3885987657\/"
+        },
+        {
+          "entry_id": 362043,
+          "created_at": "2009-08-22T04:46:29.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/362043",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 2,
+          "title_truncated": "\u041d\u0430\u043a\u043e\u043d\u0435\u0446, \u044f \u0441\u0434\u0435\u043b\u0430\u043b \u0432\u0438\u0434\u0435\u043e \u0438\u0437 \u041c\u0438\u043b\u0430\u043d\u0430. \u042f \u0441\u043f\u0435\u0446\u0438\u0430\u043b\u044c\u043d\u043e \u0442\u0430\u043c \u0440\u0435\u0448\u0438\u043b \u043d\u0435 \u0444\u043e\u0442\u043e\u0433\u0440\u0430\u0444\u0438\u0440\u043e..."
+        },
+        {
+          "entry_id": 361845,
+          "created_at": "2009-08-22T00:43:38.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/361845",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 354248,
+          "created_at": "2009-08-16T03:51:19.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/354248",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "\u041a\u0440\u0443\u0437\u0435\u0440. \u0422\u0430\u043a\u043e\u0439 \u043f\u0440\u0435\u043a\u0440\u0430\u0441\u043d\u044b\u0439. \u041d\u0435\u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e \u043a\u0443\u043f\u0438\u0442\u044c. \u0418\u0445 25 \u0438 \u043e\u043d\u0438 \u0432 \u041d\u044c\u044e-\u0419\u043e\u0440\u043a\u0435. \u0410 ..."
+        },
+        {
+          "entry_id": 342519,
+          "created_at": "2009-08-04T17:49:54.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/342519",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "inspired by: make something beautiful every day"
+        },
+        {
+          "entry_id": 338617,
+          "created_at": "2009-07-31T22:44:20.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/338617",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u0424\u043e\u0442\u043a\u0438 \u0438\u0437 Lido di Jesolo. \u0415\u0449\u0435 \u043d\u0435 \u0432\u0441\u0435. "
+        },
+        {
+          "entry_id": 259921,
+          "created_at": "2009-05-22T16:05:51.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/259921",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "http:\/\/awkwardfamilyphotos.com\/"
+        },
+        {
+          "entry_id": 258083,
+          "created_at": "2009-05-20T22:06:10.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/258083",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 6,
+          "title_truncated": "\u041e \u0437\u0430\u043f\u0440\u0435\u0449\u0435\u043d\u0438\u0438 \u0440\u0435\u0430\u043b\u0438\u0437\u0430\u0446\u0438\u0438 \u043f\u0440\u043e\u0434\u0443\u043a\u0446\u0438\u0438 \u0441 \u0441\u043e\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u0435\u043c \u0448\u0430\u043b\u0444\u0435\u044f \u043f\u0440\u0435\u0434\u0441\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u0435\u0439, \u0433..."
+        },
+        {
+          "entry_id": 255323,
+          "created_at": "2009-05-18T13:09:37.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/255323",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 4,
+          "title_truncated": "\u0418\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u0435 \u0444\u043e\u043d\u0430 \u0432 \u043f\u0440\u044f\u043c\u043e\u043c \u044d\u0444\u0438\u0440\u0435 \u0442\u0435\u0439\u0441\u0442\u0438 \u043f\u043e\u0432\u043b\u0438\u044f\u043b\u043e \u043d\u0430 \u043f\u043e\u0441\u0435\u0449\u0430\u0435\u043c\u043e\u0441\u0442\u044c \u0432 \u043b\u0443\u0447\u0448\u0443\u044e \u0441..."
+        },
+        {
+          "entry_id": 236659,
+          "created_at": "2009-04-29T13:02:59.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/236659",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "\u0424\u0430\u0434\u044e\u0448\u0430 \u0441\u043f\u0440\u044f\u0442\u0430\u043b\u0441\u044f"
+        },
+        {
+          "entry_id": 235356,
+          "created_at": "2009-04-27T22:33:43.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/235356",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "Udashkin+2 (Taras3000+Poydo) Mix "
+        },
+        {
+          "entry_id": 232338,
+          "created_at": "2009-04-24T14:22:12.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/232338",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 4,
+          "title_truncated": "genue.ru (CBGB desing)"
+        },
+        {
+          "entry_id": 231283,
+          "created_at": "2009-04-23T10:06:23.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/231283",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 1,
+          "title_truncated": "Breaking Bad Remix (Seasons 3-5)"
+        },
+        {
+          "entry_id": 205209,
+          "created_at": "2009-03-26T15:40:19.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/205209",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 1,
+          "title_truncated": "\u0425\u043e\u0440\u043e\u0448\u0438\u0439 \u0434\u0430\u0440"
+        },
+        {
+          "entry_id": 205186,
+          "created_at": "2009-03-26T15:10:26.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/205186",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 6,
+          "title_truncated": "\u043f\u0435\u0440\u0435\u0435\u0445\u0430\u043b\u0438\r\nhttp:\/\/maps.google.com\/maps\/ms?ie=UTF8&hl=ru&msa=0&am..."
+        },
+        {
+          "entry_id": 184015,
+          "created_at": "2009-03-02T13:52:28.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/184015",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 6,
+          "title_truncated": "fadei"
+        },
+        {
+          "entry_id": 174697,
+          "created_at": "2009-02-17T17:28:45.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/174697",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 6,
+          "title_truncated": "New Simpsons Main Title"
+        },
+        {
+          "entry_id": 167286,
+          "created_at": "2009-02-06T13:48:19.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/167286",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 5,
+          "title_truncated": "\u041c\u043e\u0439 \u0440\u0430\u0437\u0433\u043e\u0432\u043e\u0440 \u0441 \u0411\u043e\u0440\u0438\u0441\u043e\u043c \u0411\u0443\u0440\u0434\u043e\u0439 (\u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0430\u0435\u0442\u0441\u044f) "
+        },
+        {
+          "entry_id": 167271,
+          "created_at": "2009-02-06T13:22:57.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/167271",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 9,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 164972,
+          "created_at": "2009-02-02T19:20:19.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/164972",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 0,
+          "title_truncated": "\u0444\u0430\u043d\u043a-\u0441\u0435\u043a\u0442\u0430"
+        },
+        {
+          "entry_id": 161836,
+          "created_at": "2009-01-28T18:02:21.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/161836",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 1,
+          "title_truncated": "\u0410\u0444\u0438\u0448\u0430: \u0420\u0435\u0446\u0435\u043d\u0437\u0438\u044f \u043d\u0430 \u0442\u0435\u043b\u0435\u043f\u0435\u0440\u0435\u0434\u0430\u0447\u0443 \u00ab\u0412\u0435\u0441\u0442\u0438. \u0414\u0435\u0436\u0443\u0440\u043d\u0430\u044f \u0447\u0430\u0441\u0442\u044c\u00bb  "
+        },
+        {
+          "entry_id": 161261,
+          "created_at": "2009-01-27T19:50:10.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/161261",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 13,
+          "title_truncated": "http:\/\/flickr.com\/photos\/genue-luben\/3228135655\/\r\n\r\n\u0412 \u043f\u043e\u0434\u0432\u0430\u043b\u0435.\r\n\r\n\u0412\u0441\u0435, \u043a..."
+        },
+        {
+          "entry_id": 161076,
+          "created_at": "2009-01-27T14:09:46.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/161076",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 13,
+          "title_truncated": "\u041c\u0430\u0440\u043a\u0430: \u0412\u044f\u0442\u043a\u0430 \/ \u041c\u043e\u0434\u0435\u043b\u044c: \u042d\u043b\u0435\u043a\u0442\u0440\u043e\u043d \/ \u0426\u0432\u0435\u0442: \u0413\u043e\u043b\u0443\u0431\u043e\u0439 \/ \u0413\u043e\u0434 \u0432\u044b\u043f: 1975 \/ \u0426\u0435\u043d\u0430: ..."
+        },
+        {
+          "entry_id": 154523,
+          "created_at": "2009-01-15T15:27:37.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/154523",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 3,
+          "title_truncated": "\u0446\u0438\u0442\u0430\u0442\u0430"
+        },
+        {
+          "entry_id": 153984,
+          "created_at": "2009-01-14T17:20:38.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/153984",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 0,
+          "title_truncated": "2008 Crunchies Awards Video"
+        },
+        {
+          "entry_id": 152767,
+          "created_at": "2009-01-12T18:18:37.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/152767",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 5,
+          "title_truncated": "\u0412 \u043a\u043e\u043d\u0446\u0435 \u043f\u0440\u0435\u0437\u0438\u0434\u0435\u043d\u0442 \u0433\u043e\u0432\u043e\u0440\u0438\u0442 \u0441\u043b\u043e\u0432\u043e \u00ab\u043a\u043e\u043c\u043c\u0435\u043d\u0442\u044b\u00bb "
+        },
+        {
+          "entry_id": 151647,
+          "created_at": "2009-01-10T22:45:46.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/151647",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "\u0421\u0430\u043c\u043c\u0438\u0442 \u0414\u0430\u0440\u0443-\u0434\u0430\u0440 (\u043d\u043e\u044f\u0431\u0440\u044c, 2008, \u0418\u0441\u0442\u0440\u0430)"
+        },
+        {
+          "entry_id": 150710,
+          "created_at": "2009-01-09T14:06:06.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/150710",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 0,
+          "title_truncated": "\u0421\u043a\u0430\u0437\u0430\u043d\u043d\u043e\u0435 \u0441\u043b\u043e\u0432\u043e \u2013 \u0441\u0435\u0440\u0435\u0431\u0440\u044f\u043d\u043d\u043e\u0435, \u0430 \u043d\u0435\u0441\u043a\u0430\u0437\u0430\u043d\u043d\u043e\u0435 \u2013 \u0437\u043e\u043b\u043e\u0442\u043e\u0435  "
+        }
+      ]
+    },
+    {
+      "title": 2008,
+      "markers": [
+        {
+          "entry_id": 145187,
+          "created_at": "2008-12-28T10:51:30.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/145187",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "leica d-lux 4\r\n\u0444\u0430\u043d\u0442\u0430\u0441\u0442\u0438\u0447\u0435\u0441\u043a\u0438 \u043a\u0440\u0443\u0442\u043e\u0439\r\n"
+        },
+        {
+          "entry_id": 145060,
+          "created_at": "2008-12-28T00:04:55.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/145060",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "Bernard Edwards"
+        },
+        {
+          "entry_id": 143530,
+          "created_at": "2008-12-24T17:24:58.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/143530",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 2,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 142449,
+          "created_at": "2008-12-22T17:44:04.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/142449",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 9,
+          "title_truncated": "\u0410 \u0432\u043e\u0442 \u044d\u0442\u043e \u0441\u0442\u0440\u0430\u0448\u043d\u043e (click to enlarge)"
+        },
+        {
+          "entry_id": 142445,
+          "created_at": "2008-12-22T17:37:01.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/142445",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 1,
+          "title_truncated": "\u041a \u0442\u043e\u043c\u0443 \u0436\u0435. \u042d\u0442\u043e \u0432 \u0434\u0435\u0441\u0442\u0432\u0435 \u0431\u044b\u043b \u0442\u0430\u043a\u043e\u0439 \u0444\u0438\u043b\u044c\u043c, \u0433\u0434\u0435 \u0447\u0443\u0432\u0430\u043a \u043d\u0430 \u0441\u043f\u0438\u043d\u0435 \u0441 \u0441\u043e\u043f\u043b\u0430\u043c\u0438 \u043b\u0435..."
+        },
+        {
+          "entry_id": 142444,
+          "created_at": "2008-12-22T17:36:28.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/142444",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "Swiss pilot Yves Rossy, the world's first man to fly with a jet-powered ..."
+        },
+        {
+          "entry_id": 140647,
+          "created_at": "2008-12-19T13:51:31.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/140647",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 1,
+          "title_truncated": "Account Sign-in: 8 Design Mistakes to Avoid"
+        },
+        {
+          "entry_id": 140636,
+          "created_at": "2008-12-19T13:33:56.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/140636",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 0,
+          "title_truncated": "The great enemy of clear interfaces is insincerity"
+        },
+        {
+          "entry_id": 140635,
+          "created_at": "2008-12-19T13:28:39.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/140635",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "The growing importance of Design"
+        },
+        {
+          "entry_id": 140044,
+          "created_at": "2008-12-18T16:46:45.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/140044",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u0436\u0434\u0435\u043c \u0433\u043e\u0441\u0442\u0435\u0439)"
+        },
+        {
+          "entry_id": 139359,
+          "created_at": "2008-12-17T15:48:39.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/139359",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "wtf? \r\non digg.com"
+        },
+        {
+          "entry_id": 138778,
+          "created_at": "2008-12-16T16:31:30.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/138778",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 0,
+          "title_truncated": "\u0411\u0435\u043b\u0430\u044f \u043b\u043e\u0448\u0430\u0434\u044c \u2013 \u0413\u043e\u0441\u043f\u043e\u0434\u0443 \u0432\u0438\u0434\u043d\u0435\u0439 (6:09) \r\n\u0410\u043b\u044c\u0431\u043e\u043c \u0432\u044b\u0448\u0435\u043b 3 \u0434\u0435\u043a\u0430\u0431\u0440\u044f 2008 \u0433\u043e\u0434\u0430 ..."
+        },
+        {
+          "entry_id": 127271,
+          "created_at": "2008-10-29T18:51:58.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/127271",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 1,
+          "title_truncated": "\u0417\u0430 9 \u043c\u0435\u0441\u044f\u0446\u0435\u0432 \u0441 \u043f\u043e\u043c\u043e\u0449\u044c\u044e \u0441\u0440\u0435\u0434\u0441\u0442\u0432 \u0444\u043e\u0442\u043e-\u0432\u0438\u0434\u0435\u043e\u0444\u0438\u043a\u0441\u0430\u0446\u0438\u0438 \u0432 \u041a\u0438\u0440\u043e\u0432\u0441\u043a\u043e\u0439 \u043e\u0431\u043b\u0430\u0441\u0442\u0438 \u0432\u044b..."
+        },
+        {
+          "entry_id": 118509,
+          "created_at": "2008-10-07T18:57:23.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/118509",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 1,
+          "title_truncated": "\u041a\u0438\u0440\u043e\u0432\u0447\u0430\u043d\u043a\u0430 \u043f\u043e\u0431\u0435\u0434\u0438\u043b\u0430 \u0432\u043e \u0412\u0441\u0435\u0440\u043e\u0441\u0441\u0438\u0439\u0441\u043a\u043e\u043c \u043a\u043e\u043d\u043a\u0443\u0440\u0441\u0435 \u043e\u043f\u0435\u0440\u0430\u0442\u043e\u0440\u043e\u0432 \u0438\u0441\u043a\u0443\u0441\u0441\u0442\u0432\u0435\u043d\u043d\u043e\u0433\u043e ..."
+        },
+        {
+          "entry_id": 118508,
+          "created_at": "2008-10-07T18:56:38.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/118508",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 1,
+          "title_truncated": "\u0412 \u0442\u0440\u0435\u0442\u044c\u0435\u043c \u043a\u0432\u0430\u0440\u0442\u0430\u043b\u0435 \u0432 \u0444\u0438\u043b\u0438\u0430\u043b\u0435 \"\u041a\u0438\u0440\u043e\u0432\u044d\u043d\u0435\u0440\u0433\u043e\" \u043d\u0435 \u0437\u0430\u0444\u0438\u043a\u0441\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u043d\u0438 \u043e\u0434\u043d\u043e\u0433\u043e \u0441\u043b..."
+        },
+        {
+          "entry_id": 113406,
+          "created_at": "2008-09-25T00:52:12.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/113406",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "\u0421\u0430\u043c\u043e\u0435 \u0432\u0435\u0441\u0435\u043b\u043e\u0435"
+        },
+        {
+          "entry_id": 107647,
+          "created_at": "2008-09-10T18:53:56.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/107647",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u043d\u043e\u0432\u044b\u0435 \u0444\u043e\u0442\u043a\u0438\r\nhttp:\/\/flickr.com\/photos\/genue-luben\/\r\nfriends o"
+        },
+        {
+          "entry_id": 107143,
+          "created_at": "2008-09-09T17:35:48.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/107143",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 1,
+          "title_truncated": "\u041a\u0430\u0440\u0430\u0431\u043e\u0437"
+        },
+        {
+          "entry_id": 105385,
+          "created_at": "2008-09-04T16:48:12.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/105385",
+          "is_private": true,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u0424\u0430\u0434\u0435\u0439"
+        },
+        {
+          "entry_id": 102129,
+          "created_at": "2008-08-26T21:35:38.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/102129",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u00a9lazybwoy"
+        },
+        {
+          "entry_id": 98581,
+          "created_at": "2008-08-15T13:29:21.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/98581",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u0424\u043e\u0442\u043e 2 \u0438 3."
+        },
+        {
+          "entry_id": 97963,
+          "created_at": "2008-08-13T15:58:19.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/97963",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 7,
+          "title_truncated": "\u041a\u0438\u043d\u043e\u0432\u0438\u043a\u0442\u043e\u0440\u0438\u043d\u0430-3000 \u043d\u0430 afisha.ru"
+        },
+        {
+          "entry_id": 97334,
+          "created_at": "2008-08-11T10:40:10.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/97334",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "\u041d\u0430\u0447\u0430\u043b\u043e \u0444\u043e\u0442\u043e\u043e\u0442\u0447\u0435\u0442\u0430. \u0424\u043e\u0442\u043e 1. \u0423 \u043f\u0440\u0443\u0434\u0430.\r\n(flickr, friends only)"
+        },
+        {
+          "entry_id": 95743,
+          "created_at": "2008-08-05T22:34:06.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/95743",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "\u041d\u043e\u0432\u0430\u044f \u00ab\u0410\u0444\u0438\u0448\u0430\u00bb: \u043f\u0443\u043d\u043a\u0442 \u043f\u0440\u0438\u0435\u043c\u0430 \u043a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0442\u0438\u0432\u043d\u043e\u0439 \u043a\u0440\u0438\u0442\u0438\u043a\u0438.\r\n\r\n\u041d\u043e\u0432\u044b\u0439 \u0434\u0438\u0437\u0430\u0439\u043d afis..."
+        },
+        {
+          "entry_id": 93743,
+          "created_at": "2008-07-30T16:14:03.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/93743",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u041f\u043e\u043c\u0438\u0434\u043e\u0440\u044b \u043f\u043e 30 \u0440\u0443\u0431. \u0412\u041d\u042d\u0417\u0410\u041f\u041d\u041e"
+        },
+        {
+          "entry_id": 92162,
+          "created_at": "2008-07-25T12:40:32.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/92162",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "\u041f\u0438\u043a\u043d\u0438\u043a \u0410\u0444\u0438\u0448\u0438\/ \u0428\u0430\u0442\u0435\u0440 Idle Conversation"
+        },
+        {
+          "entry_id": 91574,
+          "created_at": "2008-07-23T17:50:28.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/91574",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 0,
+          "title_truncated": "\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f"
+        },
+        {
+          "entry_id": 90225,
+          "created_at": "2008-07-19T12:02:09.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/90225",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 25,
+          "title_truncated": "\u041c\u043e\u0439 \u0441\u044b\u043d \u0424\u0430\u0434\u0435\u0439. \u041e\u043d \u0442\u043e\u043b\u044c\u043a\u043e \u0447\u0442\u043e \u0440\u043e\u0434\u0438\u043b\u0441\u044f."
+        },
+        {
+          "entry_id": 88060,
+          "created_at": "2008-07-11T18:08:16.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/88060",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 7,
+          "title_truncated": "\u0421\u0442\u0430\u0440\u0431\u0430\u043a\u0441. \u0427\u0430\u0441\u0442\u044c 2\r\n\r\n\u0420\u0435\u0434\u0430\u043a\u0446\u0438\u044f \u00ab\u0410\u0444\u0438\u0448\u0438\u00bb \u043f\u0440\u043e\u0431\u0443\u0435\u0442 \u043a\u043e\u0444\u0435 \u0438\u0437 \u00ab\u0421\u0442\u0430\u0440\u0431\u0430\u043a\u0441\u0430\u00bb, \u00ab\u041a\u043e\u0444\u0435..."
+        },
+        {
+          "entry_id": 86136,
+          "created_at": "2008-07-05T18:09:05.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/86136",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u0421\u0442\u0430\u0440\u044b\u0435 \u2014 \u0432\u044b\u043f\u0443\u0441\u043a 2"
+        },
+        {
+          "entry_id": 84850,
+          "created_at": "2008-06-30T22:24:54.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/84850",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "\u041d\u0430\u0447\u0430\u043b\u043e \u0441\u0435\u0440\u0438\u0438 \u0444\u043e\u0442\u043e\u0433\u0440\u0430\u0444\u0438\u0439 \u00ab\u0421\u0442\u0430\u0440\u044b\u0435 \u0434\u043e\u0431\u0440\u044b\u0435\u00bb"
+        },
+        {
+          "entry_id": 82668,
+          "created_at": "2008-06-22T12:48:59.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/82668",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 1,
+          "title_truncated": "  \r\n\u0420\u0435\u043f\u043e\u0440\u0442\u0430\u0436 \u043e \u0442\u043e\u043c \u0447\u0442\u043e \u0442\u0432\u043e\u0440\u0438\u043b\u043e\u0441\u044c \u0432 \u041c\u043e\u0441\u043a\u0432\u0435:\r\nhttp:\/\/beta.tvc.ru\/ShowNews...."
+        },
+        {
+          "entry_id": 79719,
+          "created_at": "2008-06-11T18:14:19.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/79719",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "\u041d\u043e\u0432\u044b\u0439 \u0436\u0430\u043d\u0440"
+        },
+        {
+          "entry_id": 77031,
+          "created_at": "2008-06-01T12:43:40.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/77031",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "\u041d\u0438\u043a\u043e\u0433\u0434\u0430 \u043d\u0435 \u0444\u0430\u043d\u0430\u0442\u0435\u043b \u043e\u0442 \u043c\u043e\u0442\u043e\u0446\u0438\u043a\u043b\u043e\u0432. Yamaha Vmax 2009"
+        },
+        {
+          "entry_id": 76800,
+          "created_at": "2008-05-31T14:00:05.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/76800",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 5,
+          "title_truncated": "\u041a\u0430\u0444\u0435 \u0432 \u043b\u0430\u0432\u043a\u0435 \u0410\u0440\u0442\u0435\u043c\u0438\u044f \u041b\u0435\u0431\u0435\u0434\u0435\u0432\u0430 \u2013 \u043c\u043e\u044f \u0440\u0435\u0446\u0435\u043d\u0437\u0438\u044f \u043d\u0430 \u00ab\u0410\u0444\u0438\u0448\u0435\u00bb"
+        },
+        {
+          "entry_id": 76795,
+          "created_at": "2008-05-31T13:32:55.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/76795",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 9,
+          "title_truncated": "\u041f\u043e\u0437\u0430\u043f\u043e\u0437\u0430\u043f\u0440\u043e\u0448\u043b\u043e\u0433\u043e\u0434\u043d\u0435\u0435 \u0432\u0438\u0434\u0435\u043e \u043e \u043f\u043e\u0435\u0437\u0434\u043a\u0435 \u0432 \u0415\u0432\u043f\u0430\u0442\u0440\u0438\u044e, \u0432\u0441\u0435-\u0442\u0430\u043a\u0438, \u0432\u044b\u043b\u043e\u0436\u0435\u043d\u043e"
+        },
+        {
+          "entry_id": 74674,
+          "created_at": "2008-05-24T11:52:52.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/74674",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u0416\u0443\u0442\u043a\u043e\u0432\u0430\u0442\u044b\u0439 \u0441\u0435\u0442  \u00ab\u0420\u0443\u0441\u0441\u043a\u043e\u0435 \u043a\u043b\u0430\u0434\u0431\u0438\u0449\u0435\u00bb"
+        },
+        {
+          "entry_id": 74503,
+          "created_at": "2008-05-23T17:22:57.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/74503",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 10,
+          "title_truncated": "Alekstos by me"
+        },
+        {
+          "entry_id": 74248,
+          "created_at": "2008-05-22T18:06:36.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/74248",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "http:\/\/www.mattstuart.com\/"
+        },
+        {
+          "entry_id": 73964,
+          "created_at": "2008-05-21T18:17:17.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/73964",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 0,
+          "title_truncated": "Nike - Cool under pressure\r\n\r\n\u0416\u0434\u0435\u043c \u043c\u0430\u0442\u0447\u0430"
+        },
+        {
+          "entry_id": 73166,
+          "created_at": "2008-05-19T12:14:31.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/73166",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u041f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0430\u044f \u043f\u043e\u0441\u0442 \u041c\u0438\u0448\u0438. \u0423\u0447\u0430\u0441\u0442\u0432\u043e\u0432\u0430\u043b \u0432 \u0441\u043e\u0440\u0435\u0432\u043d\u043e\u0432\u0430\u043d\u0438\u044f\u0445 \u0432 \u0440\u0430\u043c\u043a\u0430\u0445 \u043e\u043b\u0438\u043c\u043f\u0438\u0439\u0441\u043a\u043e\u0433\u043e ..."
+        },
+        {
+          "entry_id": 71984,
+          "created_at": "2008-05-15T12:05:24.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/71984",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 1,
+          "title_truncated": "\u0411\u044b\u043b\u043e \u0431\u044b \u0441\u0447\u0430\u0441\u0442\u044c\u0435, \u0430 \u0434\u043d\u0438 \u0432\u043f\u0435\u0440\u0435\u0434\u0438"
+        },
+        {
+          "entry_id": 70437,
+          "created_at": "2008-05-09T18:04:46.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/70437",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 1,
+          "title_truncated": "Plevitskaya\\ Russian folk song \"Kudelka\""
+        },
+        {
+          "entry_id": 69154,
+          "created_at": "2008-05-04T19:14:26.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/69154",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 7,
+          "title_truncated": "\u0421\u043f\u0438\u0441\u043e\u043a \u0438\u0437\u0432\u0435\u0441\u0442\u043d\u044b\u0445 \u043b\u044e\u0434\u0435\u0439 \u043f\u0440\u0438\u043d\u0438\u043c\u0430\u0432\u0448\u0438\u0445 \u043f\u0441\u0438\u0445\u043e\u0434\u0435\u043b\u0438\u043a\u0438"
+        },
+        {
+          "entry_id": 65831,
+          "created_at": "2008-04-20T23:42:50.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/65831",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "== \u0420\u0430\u0437\u043b\u0438\u043b\u0430\u0441\u044c =="
+        },
+        {
+          "entry_id": 63722,
+          "created_at": "2008-04-11T12:36:27.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/63722",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "\u0412 \u043e\u0431\u0449\u0435\u043c, \u044d\u0442\u043e \u0430\u043b\u044c\u0431\u043e\u043c \u0434\u0436\u0430\u0437-\u043e\u0431\u0440\u0430\u0431\u043e\u0442\u043e\u043a \u043d\u0430 \u0434\u0435\u0442\u0441\u043a\u0438\u0435 \u0441\u043e\u0432\u0435\u0442\u0441\u043a\u0438\u0435 \u043f\u0435\u0441\u043d\u0438 (\u043f\u043e\u0434\u0430\u0440\u0438\u043b\u0430 ..."
+        },
+        {
+          "entry_id": 63309,
+          "created_at": "2008-04-09T14:17:57.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/63309",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 10,
+          "title_truncated": "\u041a\u043d\u0438\u0436\u0435\u0447\u043a\u0430"
+        },
+        {
+          "entry_id": 62984,
+          "created_at": "2008-04-07T23:12:50.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/62984",
+          "is_private": true,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "alexgriffin.ru\/"
+        },
+        {
+          "entry_id": 62888,
+          "created_at": "2008-04-07T15:33:58.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/62888",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 2,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 62593,
+          "created_at": "2008-04-06T02:37:22.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/62593",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 1,
+          "title_truncated": "GroupRecipe.com"
+        },
+        {
+          "entry_id": 62544,
+          "created_at": "2008-04-05T21:25:15.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/62544",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 0,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 62297,
+          "created_at": "2008-04-04T10:35:02.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/62297",
+          "is_private": true,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u0411\u0430\u043b\u0430\u0431\u0438\u043d"
+        },
+        {
+          "entry_id": 62087,
+          "created_at": "2008-04-03T12:52:31.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/62087",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "http:\/\/flickr.com\/photos\/genue-luben\/sets\/72157604363931340\/\r\n\r\n\u0418\u0441\u043f\u043e\u043b\u043d\u0438\u043b..."
+        },
+        {
+          "entry_id": 61359,
+          "created_at": "2008-03-30T16:22:19.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/61359",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 8,
+          "title_truncated": "http:\/\/www.flickr.com\/photos\/genue-luben\/"
+        },
+        {
+          "entry_id": 61035,
+          "created_at": "2008-03-28T18:04:38.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/61035",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 6,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 60870,
+          "created_at": "2008-03-27T21:12:35.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/60870",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u043e\u043f"
+        },
+        {
+          "entry_id": 60230,
+          "created_at": "2008-03-25T00:47:40.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/60230",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u043a\u043b\u0438\u043a\u0430\u0431\u043b\u0435"
+        },
+        {
+          "entry_id": 59672,
+          "created_at": "2008-03-21T18:39:34.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/59672",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "\u041a\u0443\u043f\u0438\u043b \u0432\u043e\u0442 \u0441\u0435\u0433\u043e\u0434\u043d\u044f. \r\nNikon Nikkor MF, 28mm, f2.8 "
+        },
+        {
+          "entry_id": 59300,
+          "created_at": "2008-03-20T00:42:49.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/59300",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 0,
+          "title_truncated": "\u0424\u0430\u043d\u0442\u0430\u0441\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0441\u0430\u0439\u0442"
+        },
+        {
+          "entry_id": 59052,
+          "created_at": "2008-03-19T00:14:49.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/59052",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u043a\u043b\u0438\u043a"
+        },
+        {
+          "entry_id": 57857,
+          "created_at": "2008-03-13T20:44:47.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/57857",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 6,
+          "title_truncated": "10 \u043a\u043b\u044e\u0447\u0435\u0432\u044b\u0445 \u0441\u043b\u043e\u0432, \u043f\u043e \u043a\u043e\u0442\u043e\u0440\u044b\u043c \u043d\u0430\u0445\u043e\u0434\u044f\u0442 \u0442\u0435\u0439\u0441\u0442\u0438 (\u0432 \u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0435\u0435 \u0432\u0440\u0435\u043c\u044f) "
+        },
+        {
+          "entry_id": 57714,
+          "created_at": "2008-03-13T12:11:36.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/57714",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "\u043a\u043b\u0438\u043a\u0430\u0431\u043b\r\n\u043e\u0431\u043d\u043e\u0432\u043b\u044d"
+        },
+        {
+          "entry_id": 53031,
+          "created_at": "2008-02-18T12:06:51.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/53031",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "\u041a\u043b\u0438\u043a\u0430\u0431\u043b\u0435. \u0416\u0443\u0440\u043d\u0430\u043b \u00ab\u0412\u044f\u0437\u0430\u043d\u0438\u0435 89\u00bb."
+        },
+        {
+          "entry_id": 52403,
+          "created_at": "2008-02-15T00:36:06.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/52403",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u041a\u043b\u0438\u043a\u0430\u0431\u043b\u0435.\r\n\u041e\u0431\u043d\u043e\u0432\u0438\u043b\u0441\u044f."
+        },
+        {
+          "entry_id": 51947,
+          "created_at": "2008-02-12T22:31:19.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/51947",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "Train-museum (APL)"
+        },
+        {
+          "entry_id": 50463,
+          "created_at": "2008-02-04T22:57:09.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/50463",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 5,
+          "title_truncated": "\u041c\u0435\u043d\u044f \u0437\u043e\u0432\u0443\u0442 \u0421\u0430\u0438\u0434 \u0414\u0436\u0430\u0440\u0430 \u0438 \u043c\u043d\u0435 \u043a\u0430\u0436\u0435\u0442\u0441\u044f \u0441\u0442\u043e\u0438\u0442 \u0436\u0430\u0440\u0430"
+        },
+        {
+          "entry_id": 49877,
+          "created_at": "2008-02-01T15:32:20.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/49877",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "Exploring Eliphant (\u041a\u043b\u0438\u043a\u0430\u0431\u043b\u0435)"
+        },
+        {
+          "entry_id": 49666,
+          "created_at": "2008-01-31T17:33:44.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/49666",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 1,
+          "title_truncated": "ABC \u043e\u0444\u0438\u0446\u0438\u0430\u043b\u044c\u043d\u043e \u043e\u043f\u0443\u0431\u043b\u0438\u043a\u043e\u0432\u0430\u043b\u043e \u0440\u0430\u0441\u043f\u0438\u0441\u0430\u043d\u0438\u0435 \u043f\u0440\u0435\u043c\u044c\u0435\u0440 \u043d\u0430 \u0441\u043b\u0435\u0434\u0443\u044e\u0449\u0438\u0439 \u0433\u043e\u0434. \u041f\u0440\u0435\u043c\u044c\u0435\u0440..."
+        },
+        {
+          "entry_id": 48779,
+          "created_at": "2008-01-28T13:41:11.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/48779",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 3,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 48603,
+          "created_at": "2008-01-27T14:17:49.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/48603",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 1,
+          "title_truncated": "Dolphin play bubble rings"
+        },
+        {
+          "entry_id": 47938,
+          "created_at": "2008-01-24T12:58:32.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/47938",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "AND I MENSWEAR S\/S 08"
+        },
+        {
+          "entry_id": 46565,
+          "created_at": "2008-01-18T01:35:53.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/46565",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u041d\u043e\u0432\u043e\u0433\u043e\u0434\u043d\u0438\u0435 \u0444\u043e\u0442\u043e\u0433\u0440\u0430\u0444\u0438\u0438. \u041a\u0442\u043e \u0431\u044b\u043b \u0438 \u043d\u0435 \u043f\u043e\u043b\u0443\u0447\u0438\u043b \u043f\u0440\u0438\u0433\u043b\u0430\u0448\u0435\u043d\u0438\u0435 \u043d\u0430 \u043f\u0440\u043e\u0441\u0442\u043e\u0442\u0440 - \u043f\u0438..."
+        },
+        {
+          "entry_id": 45980,
+          "created_at": "2008-01-14T23:09:38.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/45980",
+          "is_private": true,
+          "type_symbol": "text",
+          "comments_count": 0,
+          "title_truncated": "\u0421\u0442\u0438\u0445\u043e\u0442\u0432\u043e\u0440\u0435\u043d\u0438\u044f, \u043d\u0430\u0439\u0434\u0435\u043d\u043d\u044b\u0435 \u0443 \u0431\u0430\u0431\u0443\u0448\u043a\u0438"
+        },
+        {
+          "entry_id": 45885,
+          "created_at": "2008-01-14T16:29:05.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/45885",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "Someday my prince will come.\r\n\r\nThis was at a christian music festival. ..."
+        }
+      ]
+    },
+    {
+      "title": 2007,
+      "markers": [
+        {
+          "entry_id": 43158,
+          "created_at": "2007-12-28T12:01:48.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/43158",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 11,
+          "title_truncated": "\u0421\u0435\u0433\u043e\u0434\u043d\u044f \u0432 \u043f\u0440\u043e\u0434\u0430\u0436\u0435 \u043f\u043e\u044f\u0432\u0438\u043b\u0441\u044f \u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0439 \u0432 \u044d\u0442\u043e\u043c \u0433\u043e\u0434\u0443 \u043d\u043e\u0432\u044b\u0439 \u043d\u043e\u043c\u0435\u0440 \u0436\u0443\u0440\u043d\u0430\u043b\u0430 \u00ab\u0410\u0444..."
+        },
+        {
+          "entry_id": 42978,
+          "created_at": "2007-12-27T12:34:39.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/42978",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "\u0421\u0443\u0434\u044c\u044f \u00abWorld Pie Championship\u00bb \u0414\u0436\u043e\u043d \u042f\u043d\u0433 (John Young) \u043f\u043e\u0437\u0438\u0440\u0443\u0435\u0442 \u0441 \u0434\u0432\u0443\u043c\u044f \u0448\u043e..."
+        },
+        {
+          "entry_id": 42685,
+          "created_at": "2007-12-26T10:28:16.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/42685",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 6,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 41638,
+          "created_at": "2007-12-21T11:46:34.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/41638",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 3,
+          "title_truncated": "\u041f\u0435\u0440\u0432\u044b\u0439 \u0432 \u043c\u0438\u0440\u0435 \u0434\u0438\u0437\u0430\u0439\u043d\u0435\u0440 \u043f\u0440\u0438\u0435\u0434\u0435\u0442 \u0432 \u041c\u043e\u0441\u043a\u0432\u0443"
+        },
+        {
+          "entry_id": 39360,
+          "created_at": "2007-12-11T11:24:11.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/39360",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 3,
+          "title_truncated": "medvedev-president.ru"
+        },
+        {
+          "entry_id": 39093,
+          "created_at": "2007-12-10T11:29:47.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/39093",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "\u041a\u0443\u0440\u044c\u0435\u0440\u0441\u043a\u0430\u044f \u0441\u043b\u0443\u0436\u0431\u0430 \u043f\u043e\u0442\u0435\u0440\u044f\u043b\u0430 \u0433\u0438\u0442\u0430\u0440\u0443 \u0441 \u043f\u043e\u0434\u043f\u0438\u0441\u044f\u043c\u0438 \u041f\u0435\u0439\u0434\u0436\u0430 \u0438 \u041a\u043b\u044d\u043f\u0442\u043e\u043d\u0430   "
+        },
+        {
+          "entry_id": 38725,
+          "created_at": "2007-12-07T22:58:29.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/38725",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 38602,
+          "created_at": "2007-12-07T11:57:23.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/38602",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 10,
+          "title_truncated": "\u0410\u0432\u0442\u043e\u043a\u0430\u0434\u0430\u0431\u0440\u0430. \u0414\u0435\u043d\u0438\u0441, \u0442\u043e\u043b\u044c\u043a\u043e \u043d\u0435 \u0433\u043e\u0432\u043e\u0440\u0438 \u0447\u0442\u043e \u044d\u0442\u043e\u0442 \u0441\u0430\u0439\u0442 \u0442\u043e\u0436\u0435 \u0434\u0435\u043b\u0430\u043b \u043d\u0435 \u044f ;)"
+        },
+        {
+          "entry_id": 37877,
+          "created_at": "2007-12-04T13:05:44.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/37877",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u041c\u043e\u0434\u0430 (rollingstone magazine)"
+        },
+        {
+          "entry_id": 37775,
+          "created_at": "2007-12-04T00:52:33.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/37775",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 4,
+          "title_truncated": "\u041f\u0440\u043e \u043f\u0438\u0432\u043e, \u0430 \u0445\u043e\u0440\u043e\u0448\u0430\u044f))"
+        },
+        {
+          "entry_id": 37554,
+          "created_at": "2007-12-02T23:15:10.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/37554",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 10,
+          "title_truncated": "dream"
+        },
+        {
+          "entry_id": 36877,
+          "created_at": "2007-11-28T23:51:57.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/36877",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 12,
+          "title_truncated": "\u041c\u0430\u043a\u0438 \u0431\u0435\u0441\u043f\u043e\u043c\u043e\u0449\u043d\u043e\u0435 \u0433\u043e\u0432\u043d\u043e"
+        },
+        {
+          "entry_id": 36612,
+          "created_at": "2007-11-27T21:03:27.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/36612",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 36263,
+          "created_at": "2007-11-26T12:56:11.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/36263",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 3,
+          "title_truncated": "\u0411\u0435\u0433\u0435\u043c\u043e\u0442\u044b"
+        },
+        {
+          "entry_id": 36040,
+          "created_at": "2007-11-25T13:30:35.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/36040",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "157,00 $\r\n"
+        },
+        {
+          "entry_id": 35792,
+          "created_at": "2007-11-23T20:58:27.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/35792",
+          "is_private": true,
+          "type_symbol": "song",
+          "comments_count": 0,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 35420,
+          "created_at": "2007-11-22T04:03:53.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/35420",
+          "is_private": true,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "\u041a\u0430\u043a \u0432\u044b\u0431\u0440\u0430\u0442\u044c \u0430\u0432\u0442\u043e\u043c\u043e\u0431\u0438\u043b\u044c, \u043a\u0430\u043a \u0432\u044b\u0431\u0440\u0430\u0442\u044c \u0438 \u043a\u0443\u043f\u0438\u0442\u044c \u043c\u0430\u0448\u0438\u043d\u0443"
+        },
+        {
+          "entry_id": 35410,
+          "created_at": "2007-11-22T01:30:20.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/35410",
+          "is_private": true,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "\u0421\u043b\u0430\u0439\u0434-\u043f\u0440\u043e\u0435\u043a\u0442\u043e\u0440 Kindermann Magic 1500 AFS-IR - \u041f\u0440\u043e\u0434\u0430\u0436\u0430 \u043f\u0440\u043e\u0435\u043a\u0442\u043e\u0440\u043e\u0432 Kinderm..."
+        },
+        {
+          "entry_id": 35301,
+          "created_at": "2007-11-21T16:14:41.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/35301",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "Best Photographer Dad Ever!"
+        },
+        {
+          "entry_id": 34469,
+          "created_at": "2007-11-17T14:16:45.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/34469",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 33860,
+          "created_at": "2007-11-14T18:06:33.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/33860",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 0,
+          "title_truncated": "\u041a\u043b\u0438\u043f Queen \u201cBohemian Rhapsody\u201d \u043f\u0440\u0438\u0437\u043d\u0430\u043d \u043b\u0443\u0447\u0448\u0438\u043c \u0431\u0440\u0438\u0442\u0430\u043d\u0441\u043a\u0438\u043c \u0432\u0438\u0434\u0435\u043e \u0432\u0441\u0435\u0445 \u0432\u0440\u0435\u043c..."
+        },
+        {
+          "entry_id": 33618,
+          "created_at": "2007-11-13T16:03:42.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/33618",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 32899,
+          "created_at": "2007-11-10T04:58:02.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/32899",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "\u041f\u0435\u0440\u0447\u0430\u0442\u043a\u0430 - \u0441\u043b\u0435\u043f\u043e\u043a \u0440\u0443\u043a\u0438 \u0430\u0432\u0442\u043e\u0440\u0430"
+        },
+        {
+          "entry_id": 32629,
+          "created_at": "2007-11-08T23:45:02.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/32629",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 1,
+          "title_truncated": "\u043d\u0430\u043f\u043e\u0441\u043b\u0435\u0434\u043e\u043a\r\n\r\n"
+        },
+        {
+          "entry_id": 32420,
+          "created_at": "2007-11-08T12:32:41.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/32420",
+          "is_private": false,
+          "type_symbol": "code",
+          "comments_count": 4,
+          "title_truncated": "\u0417\u0430\u043a\u0433\u0440\u0443\u0433\u043b\u0438\u0442\u044c\u0441\u044f \u0442\u0430\u043a (http:\/\/vast.mmm-tasty.ru)"
+        },
+        {
+          "entry_id": 32359,
+          "created_at": "2007-11-08T02:11:54.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/32359",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 14,
+          "title_truncated": "\u042f \u0437\u0430\u043a\u0440\u0443\u0433\u043b\u0438\u043b\u0441\u044f"
+        },
+        {
+          "entry_id": 32096,
+          "created_at": "2007-11-07T00:13:31.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/32096",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 2,
+          "title_truncated": "Nathan Fake -- The Sky Was Pink"
+        },
+        {
+          "entry_id": 32036,
+          "created_at": "2007-11-06T20:40:31.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/32036",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u041f\u0435\u0440\u0435\u0434 \u043a\u043e\u043d\u0444\u0435\u0440\u0435\u043d\u0446\u0438\u0435\u0439 Client Side 2007"
+        },
+        {
+          "entry_id": 31816,
+          "created_at": "2007-11-05T21:15:05.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/31816",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 3,
+          "title_truncated": "\u041f\u043b\u0430\u0441\u0442\u0438\u043a\u0430"
+        },
+        {
+          "entry_id": 31815,
+          "created_at": "2007-11-05T21:08:11.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/31815",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u0421\u044a\u0435\u0437\u0434\u0438\u043b\u0438 \u0432 \u041a\u0438\u0440\u043e\u0432"
+        },
+        {
+          "entry_id": 31079,
+          "created_at": "2007-11-02T18:42:13.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/31079",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 20,
+          "title_truncated": "\u043f\u0440\u0435\u0434\u043b\u0430\u0433\u0430\u044e \u0432\u044b\u0431\u0440\u0430\u0442\u044c \u043b\u043e\u0433\u043e \u0434\u043b\u044f \u0442\u0435\u0439\u0441\u0442\u0438 \u0438\u0437 \u043f\u0440\u0435\u0434\u043b\u043e\u0436\u0435\u043d\u043d\u044b\u0445"
+        },
+        {
+          "entry_id": 31031,
+          "created_at": "2007-11-02T15:25:48.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/31031",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 12,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 30714,
+          "created_at": "2007-11-01T12:39:13.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/30714",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 30562,
+          "created_at": "2007-10-31T19:30:41.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/30562",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 30561,
+          "created_at": "2007-10-31T19:30:29.000+03:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/30561",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 29495,
+          "created_at": "2007-10-28T00:55:52.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/29495",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 28695,
+          "created_at": "2007-10-25T22:45:55.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/28695",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 3,
+          "title_truncated": "\u041a\u0430\u043a \u043c\u044b \u0445\u043e\u0434\u0438\u043b\u0438 \u043d\u0430 \u043e\u0431\u0435\u0434..."
+        },
+        {
+          "entry_id": 28530,
+          "created_at": "2007-10-25T17:12:51.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/28530",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 10,
+          "title_truncated": "\u0412\u0442\u043e\u0440\u0430\u044f \u0432\u0435\u0440\u0441\u0438\u044f \u0422\u0435\u0439\u0441\u0442\u0438, \u043e\u0441\u0432\u0435\u0449\u0435\u043d\u043d\u0430\u044f \u043d\u0430 \u0425\u0430\u0431\u0440\u0435. \u0422\u043e\u043b\u044c\u043a\u043e \u0447\u0442\u043e \u0437\u0430\u043f\u043e\u0441\u0442\u0438\u043b (17:11). ..."
+        },
+        {
+          "entry_id": 27677,
+          "created_at": "2007-10-21T15:28:55.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/27677",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "\u0417\u0430\u043d\u0438\u043c\u0430\u0442\u0435\u043b\u044c\u043d\u0430\u044f \u043c\u043e\u0440\u0444\u043e\u043b\u043e\u0433\u0438\u044f"
+        },
+        {
+          "entry_id": 27148,
+          "created_at": "2007-10-18T19:22:01.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/27148",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 8,
+          "title_truncated": "\u041b\u0443\u0447\u0448\u0438\u0439"
+        },
+        {
+          "entry_id": 26564,
+          "created_at": "2007-10-16T11:18:13.000+04:00",
+          "entry_url": "http:\/\/taaasty.ru\/anonymous\/26564",
+          "is_private": true,
+          "type_symbol": "anonymous",
+          "comments_count": 0,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 26385,
+          "created_at": "2007-10-15T14:25:07.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/26385",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 6,
+          "title_truncated": "\u0415\u0441\u043b\u0438 \u043e\u0442\u0447\u0435\u0442\u043b\u0438\u0432\u043e \u0438 \u043c\u0435\u0442\u043e\u0434\u0438\u0447\u043d\u043e \u043f\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043b\u044f\u0442\u044c \u0442\u043e, \u043e \u0447\u0435\u043c \u0442\u044b \u043c\u0435\u0447\u0442\u0430\u0435\u0448\u044c, \u0442\u043e \u043c\u0435\u0447\u0442\u0430 ..."
+        },
+        {
+          "entry_id": 26334,
+          "created_at": "2007-10-15T10:40:25.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/26334",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 5,
+          "title_truncated": "\u041f\u043e\u0441\u0442 \u043d\u0430 \u0445\u0430\u0431\u0440\u0435. \u0414\u043b\u044f \u0442\u0435\u0445, \u043a\u043e\u043c\u0443 \u043d\u0435 \u0431\u0435\u0437\u0440\u0430\u0437\u043b\u0438\u0447\u0435\u043d \u0442\u0435\u0439\u0441\u0442\u0438"
+        },
+        {
+          "entry_id": 25938,
+          "created_at": "2007-10-13T14:47:42.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/25938",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 21,
+          "title_truncated": "\u042f, \u0432 \u043e\u0431\u0449\u0435\u043c, \u043d\u0430 \u043c\u0430\u043a\u0435 \u0441\u0435\u0439\u0447\u0430\u0441."
+        },
+        {
+          "entry_id": 25738,
+          "created_at": "2007-10-12T21:12:47.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/25738",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 9,
+          "title_truncated": "\u041b\u044e\u0431\u0438\u0442\u0435\u043b\u044f\u043c \u0437\u0430\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u043d\u044b\u0445 \u0443\u0433\u043e\u043b\u043a\u043e\u0432"
+        },
+        {
+          "entry_id": 25622,
+          "created_at": "2007-10-12T13:07:56.000+04:00",
+          "entry_url": "http:\/\/taaasty.ru\/anonymous\/25622",
+          "is_private": true,
+          "type_symbol": "anonymous",
+          "comments_count": 0,
+          "title_truncated": "\u0424\u0430\u043a \u044e, \u0432\u0441\u0435 \u043a\u0440\u0443\u0442\u043e"
+        },
+        {
+          "entry_id": 25592,
+          "created_at": "2007-10-12T10:32:17.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/25592",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 0,
+          "title_truncated": "\u0412\u043e\u0442 \u0437\u0434\u0435\u0441\u044c \u043c\u043e\u0436\u043d\u043e \u0438 \u043d\u0443\u0436\u043d\u043e \u0433\u043e\u0432\u043e\u0440\u0438\u0442\u044c \u043e \u0442\u043e\u043c, \u0447\u0442\u043e \u0436\u0435 \u0434\u043b\u044f \u0432\u0430\u0441 \u0442\u0435\u0439\u0441\u0442\u0438. \u0423 \u0432\u0430\u0441 \u0435\u0441\u0442..."
+        },
+        {
+          "entry_id": 25529,
+          "created_at": "2007-10-12T00:31:11.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/25529",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 4,
+          "title_truncated": "\u041d\u0443 \u043d\u0430\u043a\u043e\u043d\u0435\u0446-\u0442\u043e \u0441\u043d\u043e\u0432\u0430 \u0441 \u0432\u0430\u043c\u0438"
+        },
+        {
+          "entry_id": 22531,
+          "created_at": "2007-09-18T17:31:58.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/22531",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 10,
+          "title_truncated": "\u041e\u0431\u0449\u0430\u044f \u0444\u043e\u0442\u043e\u0433\u0440\u0430\u0444\u0438\u044f \u0444\u0443\u0442\u0443\u0440\u0438\u043a\u043e \u043f\u043e\u0441\u043b\u0435 \u043e\u0431\u0435\u0434\u0430. \u0423\u0436\u0435 \u0441 \u0411\u0430\u043a\u0441\u043b\u0438."
+        },
+        {
+          "entry_id": 20739,
+          "created_at": "2007-09-07T13:12:19.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/20739",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 8,
+          "title_truncated": "\u0421\u0435\u0441\u0442\u0440\u0430"
+        },
+        {
+          "entry_id": 20049,
+          "created_at": "2007-09-03T18:09:44.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/20049",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 0,
+          "title_truncated": "\u0421\u0442\u0430\u0432\u043a\u0438 \u0441\u0434\u0435\u043b\u0430\u043d\u044b. \u0421\u0442\u0430\u0432\u043e\u043a \u0431\u043e\u043b\u044c\u0448\u0435 \u043d\u0435\u0442"
+        },
+        {
+          "entry_id": 19167,
+          "created_at": "2007-08-29T14:42:53.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/19167",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 7,
+          "title_truncated": "\u0423 \u043a\u043e\u0433\u043e \u0435\u0441\u0442\u044c \u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0435 \u0434\u0432\u0435 \u0441\u0435\u0440\u0438\u0438 \u0442\u0440\u0435\u0442\u044c\u0435\u0433\u043e \u0441\u0435\u0437\u043e\u043d\u0430 Lost? \u041f\u043e\u043c\u043e\u0433\u0438\u0442\u0435!"
+        },
+        {
+          "entry_id": 19146,
+          "created_at": "2007-08-29T13:26:50.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/19146",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u00a9 genue"
+        },
+        {
+          "entry_id": 18315,
+          "created_at": "2007-08-24T10:54:39.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/18315",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 19,
+          "title_truncated": "\u0411\u044b\u043b\u0438 \u0432 \u041a\u0438\u0440\u043e\u0432\u0435 \u043d\u0430 \u0441\u0432\u0430\u0434\u044c\u0431\u0435 \u0443 \u041f\u0435\u0442\u0438 \u0420\u0430\u0441\u0441\u0430\u043d\u043e\u0432\u0430.\r\n\r\n\u00a9 oval"
+        },
+        {
+          "entry_id": 17441,
+          "created_at": "2007-08-17T10:33:49.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/17441",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 4,
+          "title_truncated": "\u0410\u043d\u0442\u043e\u043d \u041d\u043e\u0441\u0438\u043a \u0438\u0441\u0447\u0435\u0437 \u0438\u0437 \u0441\u043f\u0438\u0441\u043a\u0430 \u0440\u0443\u043a\u043e\u0432\u043e\u0434\u0438\u0442\u0435\u043b\u0435\u0439 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438 \"\u0421\u0443\u043f\""
+        },
+        {
+          "entry_id": 17318,
+          "created_at": "2007-08-16T11:58:00.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/17318",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 5,
+          "title_truncated": "Rage Against The Machine -- Guerrilla Radio"
+        },
+        {
+          "entry_id": 17176,
+          "created_at": "2007-08-15T11:18:11.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/17176",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "polaroid original\r\n\r\n\u00a9juks"
+        },
+        {
+          "entry_id": 17151,
+          "created_at": "2007-08-15T01:19:30.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/17151",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 9,
+          "title_truncated": "\u041d\u0430\u0448\u0435\u043b \u043a\u0432\u0430\u0440\u0442\u0438\u0440\u0443. \u0412\u0441\u0435 \u0442\u0430\u043c \u043e\u0442\u043b\u0438\u0447\u043d\u043e"
+        },
+        {
+          "entry_id": 16927,
+          "created_at": "2007-08-13T12:19:58.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/16927",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 8,
+          "title_truncated": "\u041f\u043e\u0437\u0434\u0440\u0430\u0432\u043b\u044f\u044e! \u0421\u0435\u0433\u043e\u0434\u043d\u044f \u0432\u0441\u0435\u043c\u0438\u0440\u043d\u044b\u0439 \u0434\u0435\u043d\u044c \u043b\u0435\u0432\u0448\u0435\u0439."
+        },
+        {
+          "entry_id": 16627,
+          "created_at": "2007-08-10T13:02:56.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/16627",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 23,
+          "title_truncated": "guess who?"
+        },
+        {
+          "entry_id": 16626,
+          "created_at": "2007-08-10T12:52:46.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/16626",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 16251,
+          "created_at": "2007-08-07T15:23:10.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/16251",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 16,
+          "title_truncated": "\u0441\u043e\u043a\u0440\u043e\u0432\u0438\u0449\u0435 \u0442\u0435\u043f\u0435\u0440\u044c \u043d\u0430 \u0440\u0430\u0431\u043e\u0442\u0435\r\n\r\nApple 30-inch Cinema HD"
+        },
+        {
+          "entry_id": 16226,
+          "created_at": "2007-08-07T12:15:24.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/16226",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 5,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 16101,
+          "created_at": "2007-08-06T00:20:45.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/16101",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 8,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 16025,
+          "created_at": "2007-08-05T02:33:55.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/16025",
+          "is_private": true,
+          "type_symbol": "text",
+          "comments_count": 1,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 15207,
+          "created_at": "2007-07-29T02:39:49.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/15207",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 7,
+          "title_truncated": "\u00a9genue\r\n\r\n10 \u0434\u043d\u0435\u0439 \u0431\u0435\u0437 \u043f\u043e\u0441\u0442\u0430, \u0442\u0430\u043a \u043d\u0435\u043b\u044c\u0437\u044f ;)"
+        },
+        {
+          "entry_id": 13869,
+          "created_at": "2007-07-19T12:09:29.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/13869",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 18,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 13552,
+          "created_at": "2007-07-16T14:38:16.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/13552",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 20,
+          "title_truncated": "\u0420\u0435\u0431\u044f\u0442\u0430, \u0441\u0435\u0433\u043e\u0434\u043d\u044f \u0441\u0447\u0430\u0441\u0442\u043b\u0438\u0432\u044b\u0439 \u0434\u0435\u043d\u044c - \u0412\u0438\u0442\u044f (\u043a\u043e\u043b\u043b\u0435\u0433\u0430 \u0438 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0438\u0441\u0442 \u043b\u0435\u043f\u0440\u044b) \u0441\u0435\u0433..."
+        },
+        {
+          "entry_id": 13391,
+          "created_at": "2007-07-15T00:05:19.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/13391",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 7,
+          "title_truncated": "\u0412 \u0434\u0435\u0441\u0442\u0432\u0435 \u044f \u0445\u043e\u0442\u0435\u043b \u0440\u0430\u0431\u043e\u0442\u0430\u0442\u044c \u0443\u043f\u0430\u043a\u043e\u0432\u0449\u0438\u043a\u043e\u043c \u0434\u0436\u043e\u0439\u0441\u0442\u0438\u043a\u043e\u0432 \u0434\u043b\u044f \"\u0414\u0435\u043d\u0434\u0438\""
+        },
+        {
+          "entry_id": 13134,
+          "created_at": "2007-07-12T14:16:26.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/13134",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 0,
+          "title_truncated": "I wanna kiss you -- \u0427\u0451 \u0437\u044b\u0440\u0438\u0448\u044c?\r\n\r\n \u0412\u043e\u043e\u0431\u0449\u0435 \u044d\u0442\u043e \u0433\u0440\u0443\u043f\u043f\u0430 \u043c\u043e\u0435\u0433\u043e \u043a\u043e\u043b\u043b\u0435\u0433\u0438 \u041c\u0430\u043a\u0441\u0438..."
+        },
+        {
+          "entry_id": 13080,
+          "created_at": "2007-07-12T01:27:16.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/13080",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 3,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 12851,
+          "created_at": "2007-07-10T13:20:04.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/12851",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 11,
+          "title_truncated": "loops"
+        },
+        {
+          "entry_id": 12721,
+          "created_at": "2007-07-09T16:12:05.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/12721",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 18,
+          "title_truncated": "\u00a9genue\r\n\r\n\u0422\u0435\u043f\u0435\u0440\u044c \u0431\u043e\u043b\u044c\u0448\u0435 \u043d\u0435 \u043d\u0430\u0434\u043e \u0445\u043e\u0434\u0438\u0442\u044c \u043a \u0436\u0435\u043b\u0442\u044b\u043c \u0448\u0442\u0443\u043a\u0430\u043c \u043d\u0430 \u0441\u0442\u0435\u043d\u0430\u0445 (\u043a\u043e\u0442\u043e\u0440\u044b..."
+        },
+        {
+          "entry_id": 12607,
+          "created_at": "2007-07-08T14:09:12.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/12607",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 4,
+          "title_truncated": "\u0410\u043d\u0433\u043b\u043e\u044f\u0437\u044b\u0447\u043d\u0430\u044f \u0431\u043b\u043e\u0433\u043e\u0441\u0444\u0435\u0440\u0430. \u041d\u0435\u043e\u043b\u043e\u0433\u0438\u0437\u043c\u044b."
+        },
+        {
+          "entry_id": 12558,
+          "created_at": "2007-07-07T21:58:04.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/12558",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "\u041f\u043e\u043a\u0430, \u0411\u0430\u043a\u0441\u043b\u0438.."
+        },
+        {
+          "entry_id": 12499,
+          "created_at": "2007-07-07T03:50:55.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/12499",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 10,
+          "title_truncated": "\u041e\u0436\u0438\u0434\u0430\u0435\u043c\u044b\u0439 \u0440\u043e\u043b\u0438\u043a!\r\n\r\nMarlboro MXtronica \u0438 \u043f\u043e\u0435\u0437\u0434\u043a\u0430 \u0432 \u041f\u0438\u0442\u0435\u0440 \u0432\u043e\u043e\u0431\u0449\u0435 (trentem..."
+        },
+        {
+          "entry_id": 12344,
+          "created_at": "2007-07-05T14:05:11.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/12344",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 13,
+          "title_truncated": "30.06.07 \u041e\u0442\u0435\u043b\u044c \u041e\u043b\u044c\u0433\u0438\u043d\u043e - MXTronica Live Open Air (spb, Trentemoller, Gus..."
+        },
+        {
+          "entry_id": 12312,
+          "created_at": "2007-07-05T10:55:35.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/12312",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "video is coming.."
+        },
+        {
+          "entry_id": 12211,
+          "created_at": "2007-07-04T13:58:52.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/12211",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 1,
+          "title_truncated": "Supertramp - Dreamer"
+        },
+        {
+          "entry_id": 12150,
+          "created_at": "2007-07-03T20:57:26.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/12150",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u0442\u0443\u0442 \u0434\u0430\u0436\u0435 gastro \u043d\u0435 \u043f\u043e\u043c\u043e\u0436\u0435\u0442 ;)\r\n(\u0447\u0435\u043b\u043e\u0432\u0435\u0447\u0435\u0441\u043a\u0438\u0439 \u043e\u0440\u0433\u0430\u043d\u0438\u0437\u043c \u043e\u0431\u043b\u0430\u0434\u0430\u0435\u0442 \u0431\u043e\u043b\u044c\u0448\u0438\u043d\u0441\u0442..."
+        },
+        {
+          "entry_id": 12107,
+          "created_at": "2007-07-03T16:37:34.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/12107",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 11661,
+          "created_at": "2007-06-28T03:49:28.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/11661",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 2,
+          "title_truncated": "\u0420\u043e\u0431\u0438\u043d \u0443\u0438\u043b\u044c\u044f\u043c\u0441 \u0434\u0430\u0435\u0442 \u0443\u0440\u043e\u043a\u0438 \u0440\u0443\u0441\u0441\u043a\u043e\u0433\u043e \u043c\u0430\u0442\u0440\u0435\u043d\u043e\u0433\u043e"
+        },
+        {
+          "entry_id": 11463,
+          "created_at": "2007-06-26T12:37:35.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/11463",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 20,
+          "title_truncated": "\u041a\u0430 \u044d\u0442\u043e \u043d\u0430\u0437\u044b\u0432\u0430\u0435\u0442\u0441\u044f?"
+        },
+        {
+          "entry_id": 11136,
+          "created_at": "2007-06-23T02:55:34.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/11136",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 25,
+          "title_truncated": "\u0421\u0435\u0433\u043e\u0434\u043d\u044f \u0432 \u043a\u043e\u0442\u043e\u0440\u044b\u0439 \u0440\u0430\u0437 \u043e\u0431\u0440\u0430\u0442\u0438\u043b \u0432\u043d\u0438\u043c\u0430\u043d\u0438\u0435 \u043d\u0430 \u043b\u043e\u0433\u043e\u0442\u0438\u043f, \u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u043d\u044b\u0439 \u043d\u0430 \u043a\u0430\u043d\u0430\u043b..."
+        },
+        {
+          "entry_id": 11133,
+          "created_at": "2007-06-23T01:34:03.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/11133",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 22,
+          "title_truncated": "\u00a9genue\r\n\r\n\u041c\u043e\u0438 \u0447\u0430\u0439\u043d\u044b\u0435 \u0448\u0442\u0443\u0447\u043a\u0438 (\u0444\u0440\u0430\u0433\u043c\u0435\u043d\u0442)"
+        },
+        {
+          "entry_id": 10987,
+          "created_at": "2007-06-21T19:21:13.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/10987",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 5,
+          "title_truncated": "\r\n\r\n\u041d\u0435 \u0442\u0430\u043a \u0434\u0430\u0432\u043d\u043e \u043f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u043b \u0444\u0438\u043b\u044c\u043c \"\u0418\u0433\u043b\u0430\", \u0431\u044b\u043b \u043e\u0447\u0435\u043d\u044c \u0434\u043e\u0432\u043e\u043b\u0435\u043d. \u0417\u0430\u0434\u0443\u043c\u0430\u043b\u0441\u044f \u043e ..."
+        },
+        {
+          "entry_id": 10867,
+          "created_at": "2007-06-20T23:02:53.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/10867",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "\u0412\u0441\u0435\u0433\u0434\u0430 \u0430\u043a\u0442\u0443\u0430\u043b\u044c\u043d\u043e"
+        },
+        {
+          "entry_id": 10666,
+          "created_at": "2007-06-19T15:39:33.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/10666",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 3,
+          "title_truncated": "Yes - Owner of A Lonely Heart"
+        },
+        {
+          "entry_id": 10273,
+          "created_at": "2007-06-16T15:13:45.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/10273",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 13,
+          "title_truncated": "\u041a\u0435\u0432\u0438\u043d \u0421\u043f\u0435\u0439\u0441\u0438 - \u0447\u0435\u043b\u043e\u0432\u0435\u043a \u0447\u0435\u0441\u0442\u0438, \u0432 \u0440\u0430\u043d\u043d\u0435\u043c \u0434\u0435\u0442\u0441\u0442\u0432\u0435, \u043b\u044e\u0431\u0438\u043b mmm-tasty, \u043a\u043e\u0442\u043b\u0435\u0442\u044b..."
+        },
+        {
+          "entry_id": 10190,
+          "created_at": "2007-06-15T18:26:45.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/10190",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 26,
+          "title_truncated": "\u0414\u043e \u0441\u0432\u0438\u0434\u0430\u043d\u0438\u044f, \u041a\u0435\u0432\u0438\u043d. \r\n\r\n\u0415\u0449\u0435 \u043e\u0434\u0438\u043d \u043c\u043d\u043e\u0433\u0438\u043c\u0438 \u043b\u044e\u0431\u0438\u043c\u044b\u0439 \u0430\u043a\u0442\u0435\u0440 \u0437\u0430\u044f\u0432\u0438\u043b, \u0431\u043e\u043b\u044c\u0448\u0435 \u043d\u0435..."
+        },
+        {
+          "entry_id": 10189,
+          "created_at": "2007-06-15T18:16:17.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/10189",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 21,
+          "title_truncated": "\u0425\u0430\u0431\u0440\u0430\u044e\u0437\u0435\u0440\u044b, \u0434\u043e\u0431\u0430\u0432\u044c\u0442\u0435 \u00abMmm...tasty\u00bb \u0432 \u0441\u0432\u043e\u0438 \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u0438 \u0432 \u043f\u0443\u043d\u043a\u0442 \u00ab\u041f\u043b\u0430\u0442\u0444\u043e\u0440\u043c..."
+        },
+        {
+          "entry_id": 10046,
+          "created_at": "2007-06-14T18:26:17.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/10046",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 5,
+          "title_truncated": "\u041f\u0440\u043e \u043c\u0435\u0442\u0440\u043e"
+        },
+        {
+          "entry_id": 9883,
+          "created_at": "2007-06-13T15:00:35.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/9883",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u0411\u043b\u0430\u0433\u043e\u0434\u0430\u0440\u044f \u043f\u0440\u0438\u0435\u0437\u0434\u0443 \u041b\u0430\u0432\u0440\u0435\u043d\u0442\u0438\u044f (\u041f\u0430\u0448\u0438 \u0420\u0443\u0431\u0430\u043d) \u043f\u043e\u0441\u0435\u0442\u0438\u043b \u0422\u0440\u0435\u0442\u044c\u044f\u043a\u043e\u0432\u0441\u043a\u0443\u044e \u0433\u0430\u043b\u0435\u0440\u0435\u044e "
+        },
+        {
+          "entry_id": 9731,
+          "created_at": "2007-06-12T02:33:18.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/9731",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 7,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 9624,
+          "created_at": "2007-06-10T23:27:37.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/9624",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 1,
+          "title_truncated": "\u041c\u0438\u043d\u0438\u043c\u0443\u043c, \u043a\u043e\u0442\u043e\u0440\u044b\u0439 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u0437\u043d\u0430\u0442\u044c \u043e \u043a\u0438\u0442\u0430\u0439\u0441\u043a\u043e\u0439 \u0447\u0430\u0439\u043d\u043e\u0439 \u0446\u0435\u0440\u0435\u043c\u043e\u043d\u0438\u0438"
+        },
+        {
+          "entry_id": 9592,
+          "created_at": "2007-06-10T16:23:52.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/9592",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u043a\u043b\u0438\u043a\u0430\u0431\u043b\u0435 "
+        },
+        {
+          "entry_id": 9495,
+          "created_at": "2007-06-09T17:28:21.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/9495",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 20,
+          "title_truncated": "\u0425\u043e\u0447\u0443!\r\n\r\n\u00a9genue"
+        },
+        {
+          "entry_id": 9247,
+          "created_at": "2007-06-08T01:13:47.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/9247",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 1,
+          "title_truncated": "\u0421\u043c\u0435\u0440\u0442\u044c \u2014 \u044d\u0442\u043e \u0437\u0430\u0432\u0438\u0442\u0443\u0448\u043a\u0430; \u0441\u043c\u0435\u0440\u0442\u044c \u2014 \u044d\u0442\u043e \u043b\u0438\u0446\u043e \u0441\u043e\u044e\u0437\u043d\u0438\u043a\u0430; \u0441\u043c\u0435\u0440\u0442\u044c \u2014 \u044d\u0442\u043e \u0441\u0438\u044f\u044e\u0449\u0435\u0435..."
+        },
+        {
+          "entry_id": 9192,
+          "created_at": "2007-06-07T16:41:35.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/9192",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 9,
+          "title_truncated": "\u0421\u044e\u0436\u0435\u0442 \u043f\u0440\u0438\u043c\u0435\u0440\u043d\u043e: \u0434\u0435\u0442\u0435\u043d\u044b\u0448\u0430 \u0431\u0443\u0439\u0432\u043e\u043b\u0430 \u043f\u043e\u0445\u0438\u0449\u0430\u044e\u0442 \u043b\u044c\u0432\u044b \u0438 \u043f\u044b\u0442\u0430\u044e\u0442\u0441\u044f \u0441\u044a\u0435\u0441\u0442\u044c. \u041f\u0440\u0438\u0445\u043e\u0434..."
+        },
+        {
+          "entry_id": 9025,
+          "created_at": "2007-06-06T12:50:16.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/9025",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 6,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 9008,
+          "created_at": "2007-06-06T10:13:39.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/9008",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 15,
+          "title_truncated": "\u0418\u0437 \u043d\u043e\u0432\u043e\u0439 \u00ab\u0410\u0444\u0438\u0448\u0438\u00bb (\u0432\u044b\u0434\u0435\u0440\u0436\u043a\u0438)"
+        },
+        {
+          "entry_id": 8881,
+          "created_at": "2007-06-05T00:07:02.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/8881",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 14,
+          "title_truncated": "\u0410 \u043a\u0430\u043a \u0432\u0441\u0435 \u043d\u0430\u0447\u0438\u043d\u0430\u043b\u043e\u0441\u044c...\r\n\r\n\u0421 \u0434\u043d\u0435\u043c \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u044f!"
+        },
+        {
+          "entry_id": 8819,
+          "created_at": "2007-06-04T13:58:23.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/8819",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 19,
+          "title_truncated": "\u041d\u0443 \u044d\u0442\u043e \u043f\u0440\u043e\u0441\u0442\u043e \u0436\u0435\u0441\u0442\u044c"
+        },
+        {
+          "entry_id": 8787,
+          "created_at": "2007-06-04T01:23:12.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/8787",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 10,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 8735,
+          "created_at": "2007-06-03T15:23:14.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/8735",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 0,
+          "title_truncated": "\u0411\u043b\u0430\u0433\u043e\u0434\u0430\u0440\u044f \u043c\u0435\u0442\u0440\u043e \u044f \u0441\u0442\u0430\u043b \u043c\u043d\u043e\u0433\u043e \u0447\u0438\u0442\u0430\u0442\u044c"
+        },
+        {
+          "entry_id": 8560,
+          "created_at": "2007-06-01T14:57:16.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/8560",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "\u0410 \u0432\u043e\u0442 \u0447\u0442\u043e \u0434\u0443\u043c\u0430\u044e\u0442 \u043f\u0440\u043e \u0442\u0430\u043d\u0446\u044b \u0441\u043e\u0432\u0435\u0442\u0441\u043a\u0438\u0435 \u0432\u043b\u0430\u0441\u0442\u0438"
+        },
+        {
+          "entry_id": 8559,
+          "created_at": "2007-06-01T14:41:01.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/8559",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 2,
+          "title_truncated": "\u0418\u043d\u0434\u0438\u0439\u0441\u043a\u0438\u0435 \u043c\u0443\u0436\u0447\u0438\u043d\u044b \u0432 \u0442\u0430\u043d\u0446\u0435, \u043a\u0443\u043b\u044c\u043c\u0438\u043d\u0430\u0446\u0438\u044f, \u043a\u043e\u043d\u0435\u0447\u043d\u043e \u0436\u0435, \u0432 \u043a\u043e\u043d\u0446\u0435.\r\n\r\n\u0421 \u0432\u0430\u043c\u0438 \u0431..."
+        },
+        {
+          "entry_id": 8225,
+          "created_at": "2007-05-30T02:05:45.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/8225",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 5,
+          "title_truncated": "\u041d\u043e\u0447\u044c \u043d\u0430 \u0434\u0432\u043e\u0440\u0435,"
+        },
+        {
+          "entry_id": 8224,
+          "created_at": "2007-05-30T01:59:56.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/8224",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 2,
+          "title_truncated": "\u041b\u0435\u043f\u0435\u0440\u0441"
+        },
+        {
+          "entry_id": 8223,
+          "created_at": "2007-05-30T01:58:18.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/8223",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 2,
+          "title_truncated": "\u042f \u0440\u0430\u0437\u043c\u0435\u0449\u0430\u044e \u044d\u0442\u043e \u043f\u0435\u0441\u043d\u044e \u043f\u043e \u0442\u043e\u0439 \u043f\u0440\u0438\u0447\u0438\u043d\u0435, \u0447\u0442\u043e \u043c\u043d\u0435 \u043d\u0430\u0434\u043e\u0435\u043b\u043e \u043b\u0438\u0446\u043e \u044d\u0442\u043e\u0439 \u043d\u0430\u0440\u0438\u0441\u043e\u0432\u0430\u043d..."
+        },
+        {
+          "entry_id": 7595,
+          "created_at": "2007-05-24T01:12:47.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/7595",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 11,
+          "title_truncated": "\u042d\u0442\u043e \u043d\u0435 \u0444\u043e\u0442\u043e\u0433\u0440\u0430\u0444\u0438\u044f. \u041d\u0435 \u0432\u0435\u0440\u0438\u0442\u0435? \u041a\u043b\u0438\u043a\u043d\u0443\u0442\u044c \u043f\u043e \u043a\u0430\u0440\u0442\u0438\u043d\u043a\u0435."
+        },
+        {
+          "entry_id": 7586,
+          "created_at": "2007-05-24T00:31:23.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/7586",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "\u0414\u0430, \u043a\u0430\u043a \u043d\u0438 \u0441\u0442\u0440\u0430\u043d\u043d\u043e, \u044d\u0442\u043e \u043c\u043e\u0439 \u043f\u0435\u0440\u0432\u044b\u0439 \u043b\u043e\u0433\u043e\u0442\u0438\u043f. \u0413\u043e\u0434 2003. \u041a\u043b\u0438\u043a\u0430\u0431\u0435\u043b\u044c\u043d\u043e. "
+        },
+        {
+          "entry_id": 7546,
+          "created_at": "2007-05-23T18:06:28.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/7546",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 3,
+          "title_truncated": "Tocotronic  -  Pure vernunft darf niemals siegen (superpitcher wasserman..."
+        },
+        {
+          "entry_id": 7276,
+          "created_at": "2007-05-21T13:54:51.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/7276",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u0424\u043e\u0442\u043e: \u041d\u043e\u0440\u0432\u0435\u0436\u0441\u043a\u0438\u0439 \u041b\u0435\u0441\u043d\u043e\u0439\r\n\u0422\u0432\u0435\u0440\u0441\u043a\u0430\u044f, \u043e\u0431\u044a\u044f\u0432\u043b\u0435\u043d\u0438\u0435 \u043d\u0430 \u0444\u043e\u043d\u0430\u0440\u043d\u043e\u043c \u0441\u0442\u043e\u043b\u0431\u0435."
+        },
+        {
+          "entry_id": 7252,
+          "created_at": "2007-05-21T05:56:25.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/7252",
+          "is_private": false,
+          "type_symbol": "code",
+          "comments_count": 0,
+          "title_truncated": "\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c \u043f\u043e\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u0434\u0430\u0442\u044b \u043f\u043e\u0441\u0442\u0430 (\u043d\u0435 \u0441\u0431\u043e\u043a\u0443, \u0430 \u0432\u043d\u0443\u0442\u0440\u0438 \u0442\u043b\u043e\u0433\u0430 - \u0441\u043c\u043e\u0442\u0440\u0438 \u043c\u043e\u0439)"
+        },
+        {
+          "entry_id": 7230,
+          "created_at": "2007-05-21T01:07:26.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/7230",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 22,
+          "title_truncated": "\u0412\u0442\u043e\u0440\u043e\u0433\u043e \u0438\u044e\u043d\u044f \u0432 Ikre \u043f\u0440\u043e\u0439\u0434\u0435\u0442 \u043a\u043e\u043d\u0446\u0435\u0440\u0442 \"Apparat\" \u2014 \u044d\u043a\u0441\u043f\u0435\u0440\u0438\u043c\u0435\u043d\u0442\u0430\u043b\u044c\u043d\u043e\u0439 \u044d\u043b\u0435\u043a\u0442\u0440..."
+        },
+        {
+          "entry_id": 7125,
+          "created_at": "2007-05-20T01:13:26.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/7125",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "\u0410\u0444\u0438\u0448\u0430 \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u0442  \u043a \u043f\u0440\u043e\u0441\u043c\u043e\u0442\u0440\u0443"
+        },
+        {
+          "entry_id": 6946,
+          "created_at": "2007-05-18T09:46:36.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/6946",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 4,
+          "title_truncated": "13 \u0444\u043e\u0442\u043e\u0433\u0440\u0430\u0444\u043e\u0432, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u0438\u0437\u043c\u0435\u043d\u0438\u043b\u0438 \u043c\u0438\u0440 (eng)"
+        },
+        {
+          "entry_id": 6762,
+          "created_at": "2007-05-16T19:14:52.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/6762",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 9,
+          "title_truncated": "\u044d\u0442\u043e \u043c\u043e\u0438 \u043f\u043e\u0434\u0435\u043b\u043a\u0438 \u0438\u0437 \u0445\u043b\u0435\u0431\u0430.\r\n(\u0432\u043e \u0432\u0440\u0435\u043c\u044f \u043e\u0436\u0438\u0434\u0430\u043d\u0438\u044f \u0434\u0438\u043d\u043d\u0435\u0440-\u0431\u0440\u0435\u0439\u043a\u0430)"
+        },
+        {
+          "entry_id": 6761,
+          "created_at": "2007-05-16T19:08:34.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/6761",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 17,
+          "title_truncated": "\u042f \u0440\u0435\u0448\u0438\u043b \u043e\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u043d\u0430 \u0432\u0440\u0435\u043c\u044f \u0432\u0441\u0435 \"\u043f\u0440\u0435\u043c\u0443\u0434\u0440\u043e\u0441\u0442\u0438\" \u0446\u0438\u0444\u0440\u043e\u0432\u043e\u0439 \u0441\u044a\u0435\u043c\u043a\u0438 \u0438 \u043e\u043a\u0443\u043d\u0443\u0442\u044c\u0441\u044f ..."
+        },
+        {
+          "entry_id": 6756,
+          "created_at": "2007-05-16T18:37:42.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/6756",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 0,
+          "title_truncated": "\u041a \u0442\u043e\u043c\u0443 \u0432\u0440\u0435\u043c\u0435\u043d\u0438 \u043a\u0430\u043a \u0447\u0435\u043b\u043e\u0432\u0435\u043a \u0431\u0443\u0434\u0435\u0442 \u0437\u0430\u0432\u0435\u0440\u0448\u0430\u0442\u044c \u0441\u0432\u043e\u0439 \u043f\u0443\u0442\u044c \u0443\u0447\u0435\u043d\u0438\u044f \u0438 \u043f\u043e\u0447\u0442\u0438 \u0431\u0435\u0437 ..."
+        },
+        {
+          "entry_id": 6412,
+          "created_at": "2007-05-13T22:40:10.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/6412",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 1,
+          "title_truncated": "\u0412 \u041d\u0435\u0432\u0435 \u043f\u043e\u0439\u043c\u0430\u043d\u0430 \u0430\u043a\u0443\u043b\u0430"
+        },
+        {
+          "entry_id": 6408,
+          "created_at": "2007-05-13T21:59:33.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/6408",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "\u043d\u043e\u0447\u044c \u043f\u0440\u0438\u0448\u043b\u0430"
+        },
+        {
+          "entry_id": 6406,
+          "created_at": "2007-05-13T21:21:16.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/6406",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 6405,
+          "created_at": "2007-05-13T21:20:45.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/6405",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 6219,
+          "created_at": "2007-05-11T18:34:19.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/6219",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 6218,
+          "created_at": "2007-05-11T18:21:49.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/6218",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "funniest by merdanchik"
+        },
+        {
+          "entry_id": 6166,
+          "created_at": "2007-05-11T15:47:09.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/6166",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 5759,
+          "created_at": "2007-05-08T14:18:39.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/5759",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 6,
+          "title_truncated": "birma"
+        },
+        {
+          "entry_id": 5688,
+          "created_at": "2007-05-07T23:11:21.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/5688",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 14,
+          "title_truncated": "\u0412\u043e\u0442 \u0442\u0430\u043a\u0430\u044f \u0448\u0442\u0443\u043a\u0430 (\u0442\u043e\u043b\u044c\u043a\u043e \u0431\u0435\u043b\u043e\u0433\u043e \u0446\u0432\u0435\u0442\u0430, \u043a\u043e\u0442\u043e\u0440\u044b\u0439, \u043a\u0441\u0442\u0430\u0442\u0438, \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044f \u043f\u0440\u0438 \u0444\u043b\u0443\u043e..."
+        },
+        {
+          "entry_id": 5445,
+          "created_at": "2007-05-06T12:31:45.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/5445",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 9,
+          "title_truncated": "\u041d\u043e\u0441\u0442\u0430\u043b\u044c\u0433\u0438\u044f"
+        },
+        {
+          "entry_id": 5436,
+          "created_at": "2007-05-06T11:28:09.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/5436",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 5233,
+          "created_at": "2007-05-04T23:21:23.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/5233",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 6,
+          "title_truncated": "\u043b\u0435\u0445\u0430 \u044f \u0437\u043d\u0430\u044e \u0447\u0442\u043e \u0442\u0432\u043e\u0435 \u0442\u0435\u0440\u043f\u0435\u043d\u0438\u0435 \u0441\u0435\u0439\u0447\u0430\u0441 \u0431\u0435\u0433\u0440\u0430\u043d\u0438\u0447\u043d\u043e ;) \r\n"
+        },
+        {
+          "entry_id": 4902,
+          "created_at": "2007-05-03T17:58:30.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4902",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "flickr \u043f\u043e\u043c\u043e\u0433\u0430\u0435\u0442 \u0440\u0430\u0437\u0443\u0447\u0438\u0432\u0430\u0442\u044c \u0430\u043b\u0431\u0430\u043d\u0441\u043a\u0438\u0439"
+        },
+        {
+          "entry_id": 4787,
+          "created_at": "2007-05-03T01:04:31.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4787",
+          "is_private": false,
+          "type_symbol": "code",
+          "comments_count": 4,
+          "title_truncated": "CSS-\u0445\u0430\u043a\u0438 (\u043f\u043e\u043b\u0435\u0437\u043d\u043e, \u043a\u043e\u0433\u0434\u0430 \u0445\u043e\u0447\u0435\u0442\u0441\u044f \u043f\u0440\u0438\u043c\u0435\u043d\u0438\u0442\u044c \u0441\u0432\u043e\u0439\u0441\u0442\u0432\u043e \u043b\u0438\u0448\u044c \u0434\u043b\u044f \u043e\u0434\u043d\u043e\u0433\u043e \u043d\u0435\u043f\u043e..."
+        },
+        {
+          "entry_id": 4785,
+          "created_at": "2007-05-03T01:01:50.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4785",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 6,
+          "title_truncated": "funny tasty bear in its red shoes ;) "
+        },
+        {
+          "entry_id": 4738,
+          "created_at": "2007-05-02T20:27:05.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4738",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "\u00a9 from left to right: beloglaz, alona (alisa), me "
+        },
+        {
+          "entry_id": 4443,
+          "created_at": "2007-05-01T15:09:42.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4443",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "ckick on the pic \r\nand try to make more funny faces"
+        },
+        {
+          "entry_id": 4438,
+          "created_at": "2007-05-01T14:34:42.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4438",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 2,
+          "title_truncated": "rhiter i know you wouldn't be angry "
+        },
+        {
+          "entry_id": 4373,
+          "created_at": "2007-05-01T00:37:53.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4373",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u00a9"
+        },
+        {
+          "entry_id": 4245,
+          "created_at": "2007-04-30T12:39:35.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4245",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u041c\u0435\u0441\u044f\u0446 \u0437\u0430\u0431\u044b\u0432\u0430\u043b \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c last.fm \u043d\u0430 \u043c\u0443\u0437\u044b\u043a\u0430\u043b\u044c\u043d\u043e\u0439 \u042d\u0412\u041c"
+        },
+        {
+          "entry_id": 4241,
+          "created_at": "2007-04-30T12:26:59.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4241",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "(faq)ing funny (buxley &amp; harmless)"
+        },
+        {
+          "entry_id": 4233,
+          "created_at": "2007-04-30T11:39:16.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4233",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "girls dressed by boys ;)"
+        },
+        {
+          "entry_id": 4131,
+          "created_at": "2007-04-29T19:16:20.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4131",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 12,
+          "title_truncated": "\u0412\u0430\u0440\u0438\u0430\u043d\u0442\u044b \u043f\u0440\u043e\u0438\u0437\u043d\u043e\u0448\u0435\u043d\u0438\u044f \u0441\u043b\u043e\u0432\u0430 \"\u0430\u043c\u0444\u0435\u0442\u0430\u043c\u0438\u043d\" \u043f\u043e  \u0432\u0435\u0440\u0441\u0438\u0438 \u0412\u0438\u043a\u0438\u043f\u0435\u0434\u0438\u0438 ;)"
+        },
+        {
+          "entry_id": 4034,
+          "created_at": "2007-04-29T04:55:42.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/4034",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 8,
+          "title_truncated": "\u0422\u043b\u043e\u0433 \u043d\u0430 \u0412\u0438\u043a\u0438\u043f\u0435\u0434\u0438\u0438"
+        },
+        {
+          "entry_id": 3857,
+          "created_at": "2007-04-28T12:22:32.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/3857",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 1,
+          "title_truncated": "\u041c\u044b \u0441 \u0412\u0430\u043c\u0438 \u043d\u0443\u0436\u043d\u044b \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0443, \u0433\u043e\u0441\u043f\u043e\u0434\u0438\u043d \u0444\u043e\u043d \u0414\u043e\u0440\u043d, \u0430 \u0432\u0437\u0430\u0438\u043c\u043d\u0430\u044f \u043f\u043e\u0442\u0440\u0435\u0431\u043d\u043e\u0441\u0442\u044c \u2014 ..."
+        },
+        {
+          "entry_id": 3820,
+          "created_at": "2007-04-28T09:43:29.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/3820",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 3,
+          "title_truncated": "\u0412\u0435\u0441\u0435\u043b\u0430\u044f \u043f\u0435\u0441\u0435\u043d\u043a\u0430-\u0441\u0442\u0435\u0431 \u043e\u0442 Ka4 \u043f\u0440\u043e \u0412\u0438\u043a\u0442\u043e\u0440\u0430"
+        },
+        {
+          "entry_id": 3804,
+          "created_at": "2007-04-28T08:44:11.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/3804",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 19,
+          "title_truncated": "\u042d\u0442\u043e\u0442 \u043c\u0438\u043b\u044b\u0439 \u0447\u0430\u0439\u043d\u0438\u043a \u0438\u0437 \u0438\u0441\u0438\u043d\u0441\u043a\u043e\u0439 \u0433\u043b\u0438\u043d\u044b \u0441\u0442\u043e\u0438\u0442 \u0432\u0441\u0435\u0433\u043e 51 000 \u0440\u0443\u0431."
+        },
+        {
+          "entry_id": 3428,
+          "created_at": "2007-04-26T21:58:05.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/3428",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 9,
+          "title_truncated": "\u0413\u0435\u043d\u0438\u0430\u043b\u044c\u043d\u043e, \u043f\u043e\u0445\u043e\u0436\u0435, \u044f \u0432\u043b\u044e\u0431\u0438\u043b\u0441\u044f... \u0432 \u044d\u0442\u043e\u0442 \u043f\u0440\u043e\u0435\u043a\u0442. "
+        },
+        {
+          "entry_id": 3336,
+          "created_at": "2007-04-26T18:39:15.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/3336",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 4,
+          "title_truncated": "\u0411\u043b\u044f \u044f \u0442\u0430\u043a \u043b\u044e\u0431\u043b\u044e \u0442\u044d\u0439\u0441\u0442\u0438! "
+        },
+        {
+          "entry_id": 3269,
+          "created_at": "2007-04-26T14:37:28.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/3269",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 3,
+          "title_truncated": "\u0411\u0430\u043a\u0441\u043b\u0438, \u0443 \u0442\u0435\u0431\u044f \u0440\u0430\u0441\u0442\u0443\u0442 \u0435\u0449\u0435 \u043d\u0430\u0448\u0438 \u0446\u0432\u0435\u0442\u044b? \u0410 \u044d\u0442\u043e\u0442 \u0446\u0432\u0435\u0442\u0451\u0442? \u041f\u0440\u0438\u0435\u0437\u0436\u0430\u0439 \u0445\u043e\u0442\u044c \u0438 \u0435\u0433\u043e..."
+        },
+        {
+          "entry_id": 3024,
+          "created_at": "2007-04-25T18:59:37.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/3024",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 13,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 2666,
+          "created_at": "2007-04-24T21:50:16.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2666",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 15,
+          "title_truncated": "\u0414\u043b\u044f \u0432\u0430\u0441, \u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0438\u0435 \u0442\u043b\u043e\u0433\u0433\u0435\u0440\u044b"
+        },
+        {
+          "entry_id": 2655,
+          "created_at": "2007-04-24T21:15:36.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2655",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 18,
+          "title_truncated": "\u0424\u0443\u0442\u0443\u0440\u0438\u043a\u043e \u0432 \u0447\u0438\u0441\u043b\u0430\u0445"
+        },
+        {
+          "entry_id": 2529,
+          "created_at": "2007-04-24T01:06:36.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2529",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 10,
+          "title_truncated": "The Veins of Bangkok "
+        },
+        {
+          "entry_id": 2520,
+          "created_at": "2007-04-23T23:11:22.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2520",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 0,
+          "title_truncated": "\u041d\u0435 \u043c\u043e\u0433\u0443 \u0440\u0430\u0441\u0441\u043a\u0430\u0437\u0430\u0442\u044c \u0432\u0441\u0435 \u0441\u043b\u043e\u0432\u0430\u043c\u0438. \u0422\u043e\u043b\u044c\u043a\u043e \u043f\u0435\u0441\u043d\u044f. "
+        },
+        {
+          "entry_id": 2219,
+          "created_at": "2007-04-22T13:00:15.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2219",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 12,
+          "title_truncated": "\u041c\u043c\u043c..."
+        },
+        {
+          "entry_id": 2152,
+          "created_at": "2007-04-21T18:24:31.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2152",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 13,
+          "title_truncated": "qr code (must read about it in last issue of AFISHA moscow)\r\nmeans http:..."
+        },
+        {
+          "entry_id": 2116,
+          "created_at": "2007-04-21T11:07:37.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2116",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 7,
+          "title_truncated": "\u0430\u043b\u0435\u043d\u0443\u0448\u043a\u0430"
+        },
+        {
+          "entry_id": 2115,
+          "created_at": "2007-04-21T10:59:31.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2115",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 10,
+          "title_truncated": "\u041f\u043e\u043a\u0430\u0436\u0438 \u043c\u043d\u0435 \u0441\u0432\u043e\u0439 \u0442\u043b\u043e\u0433, \u0438 \u044f \u0441\u043a\u0430\u0436\u0443 \u0442\u0435\u0431\u0435 \u043a\u0442\u043e \u0442\u044b"
+        },
+        {
+          "entry_id": 2114,
+          "created_at": "2007-04-21T10:57:43.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2114",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 2073,
+          "created_at": "2007-04-21T00:32:36.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2073",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 7,
+          "title_truncated": "\u0421 \u0434\u043d\u0435\u043c \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u044f!!#$!$#@!$%@$%@"
+        },
+        {
+          "entry_id": 2044,
+          "created_at": "2007-04-20T21:18:50.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2044",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 18,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 2018,
+          "created_at": "2007-04-20T17:53:53.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/2018",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "\u041a\u0435\u0439\u0442 \u041c\u043e\u0441\u0441 \u043d\u0430\u0437\u044b\u0432\u0430\u044e\u0442 \u043a\u0443\u043b\u044c\u0442\u0443\u0440\u043d\u043e\u0439 \u0438\u043a\u043e\u043d\u043e\u0439 \u0438 \u0441\u0430\u043c\u043e\u0439 \u0432\u043b\u0438\u044f\u0442\u0435\u043b\u044c\u043d\u043e\u0439 \u043c\u043e\u0434\u0435\u043b\u044c\u044e \u043d\u0430\u0448\u0435\u0433\u043e ..."
+        },
+        {
+          "entry_id": 1926,
+          "created_at": "2007-04-20T09:42:01.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1926",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 0,
+          "title_truncated": "\u0422\u0432\u043e\u0435 \u043b\u0438\u0446\u043e \u0437\u043d\u0430\u0435\u0442 \u0432\u0441\u0435 \u0442\u0432\u043e\u0438 \u0441\u0435\u043a\u0440\u0435\u0442\u044b"
+        },
+        {
+          "entry_id": 1925,
+          "created_at": "2007-04-20T09:28:05.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1925",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 7,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 1890,
+          "created_at": "2007-04-19T22:43:59.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1890",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "\u0412 16:20, 19-\u0433\u043e \u0430\u043f\u0440\u0435\u043b\u044f, 1943 \u0433\u043e\u0434\u0430 \u0448\u0432\u0435\u0434\u0441\u043a\u0438\u0439 \u0445\u0438\u043c\u0438\u043a \u0410\u043b\u044c\u0431\u0435\u0440\u0442 \u0425\u043e\u0444\u0444\u043c\u0430\u043d\u043d\r\n\u0441\u043e\u0437\u043d\u0430\u0442..."
+        },
+        {
+          "entry_id": 1863,
+          "created_at": "2007-04-19T19:34:52.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1863",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 9,
+          "title_truncated": "\u0417\u043d\u0430\u043c\u0435\u043d\u0438\u0442\u0430\u044f \u0444\u043e\u0442\u043e\u0433\u0440\u0430\u0444\u0438\u044f. \u0422\u0443\u0442 \u043e\u0434\u043d\u043e\u0432\u0440\u0435\u043c\u0435\u043d\u043d\u043e \u0441\u043d\u044f\u0442\u043e:  \u0441\u0430\u043b\u044e\u0442, \u043c\u043e\u043b\u043d\u0438\u044f \u0438 \u043a\u043e\u043c\u0435\u0442\u0430. ..."
+        },
+        {
+          "entry_id": 1826,
+          "created_at": "2007-04-19T17:23:23.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1826",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 5,
+          "title_truncated": "\u041c\u043e\u0434\u0435\u043b\u0438 \u0441\u043e \u0441\u0442\u0440\u0430\u043d\u043d\u044b\u043c\u0438 \u043b\u0438\u0446\u0430\u043c\u0438"
+        },
+        {
+          "entry_id": 1730,
+          "created_at": "2007-04-19T01:37:48.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1730",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 0,
+          "title_truncated": "\u0422\u044b \u0447\u0430\u0441 \u043d\u0430\u0437\u0430\u0434 \u0443\u043f\u0443\u0441\u0442\u0438\u043b \u0441\u0432\u043e\u0439 \u0448\u0430\u043d\u0441 \u0437\u0430\u043f\u043e\u0441\u0442\u0438\u0442\u044c \u0435\u0449\u0435 \u043f\u0435\u0441\u043d\u044e..."
+        },
+        {
+          "entry_id": 1701,
+          "created_at": "2007-04-18T23:44:56.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1701",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u00a9\u043a\u0442\u043e-\u0442\u043e \u0438\u0437 \u043b\u0435\u0431\u0435\u0434\u0435\u0432\u0441\u043a\u0438\u0445"
+        },
+        {
+          "entry_id": 1685,
+          "created_at": "2007-04-18T21:54:27.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1685",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "\u041f\u0430\u043d\u043e\u0440\u0430\u043c\u043d\u044b\u0435 3d \u0444\u043e\u0442\u043e\u0433\u0440\u0430\u0444\u0438\u0438"
+        },
+        {
+          "entry_id": 1669,
+          "created_at": "2007-04-18T21:04:08.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1669",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 13,
+          "title_truncated": "\u041e\u0434\u043d\u0430 \u0438\u0437 \u043f\u0435\u0440\u0432\u044b\u0445. \u0415\u0449\u0435 \u043d\u0430 \u043c\u0435\u0445\u0430\u043d\u0438\u0447\u0435\u0441\u043a\u0438\u0439 Nikon FE-2"
+        },
+        {
+          "entry_id": 1559,
+          "created_at": "2007-04-18T04:00:50.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1559",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 8,
+          "title_truncated": "\u0422\u0435\u0441\u0442\u0438\u0440\u0443\u0435\u043c \u0437\u0435\u043b\u0435\u043d\u0443\u044e \u0442\u0435\u043c\u0443"
+        },
+        {
+          "entry_id": 1481,
+          "created_at": "2007-04-17T18:19:06.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1481",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 3,
+          "title_truncated": "\u0418 \u0442\u043e\u043b\u044c\u043a\u043e \u0442\u043b\u043e\u0433 \u043c\u043d\u0435 \u0445\u043e\u0447\u0435\u0442\u0441\u044f \u0432\u0435\u0441\u0442\u0438 \u0432\u0441\u0435\u0433\u0434\u0430"
+        },
+        {
+          "entry_id": 1480,
+          "created_at": "2007-04-17T18:17:22.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1480",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 2,
+          "title_truncated": "King Crimson - One Time Lyrics\r\n\r\n(music by King Crimson, words by Adria..."
+        },
+        {
+          "entry_id": 1335,
+          "created_at": "2007-04-16T21:36:22.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1335",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 7,
+          "title_truncated": "\u0417\u0430\u043f\u043e\u0441\u0442\u0438\u043b \u0441 \u0442\u0435\u043b\u0435\u0444\u043e\u043d\u0430"
+        },
+        {
+          "entry_id": 1155,
+          "created_at": "2007-04-16T07:01:30.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1155",
+          "is_private": false,
+          "type_symbol": "code",
+          "comments_count": 9,
+          "title_truncated": "\u041f\u043e\u0435\u0437\u043d\u043e\u0435 \u0438\u043b\u0438 \u0432\u043e\u0442 \u0447\u0442\u043e \u043d\u0430\u043f\u0438\u0441\u0430\u043d\u043e  \u0443 \u043c\u0435\u043d\u044f \u043d\u0430 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435 \"\u0432\u043d\u0435\u0448\u043d\u0438\u0439 \u0432\u0438\u0434\" (\u0432 \u043d\u0430\u0441\u0442\u0440\u043e..."
+        },
+        {
+          "entry_id": 1152,
+          "created_at": "2007-04-16T06:58:34.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1152",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "\u00a9genue\r\n\u042d\u0442\u043e \u043c\u043e\u044f \u0441\u0435\u0441\u0442\u0440\u0430. \u041e\u043d\u0430 \u043c\u043b\u0430\u0434\u0448\u0435 \u043c\u0435\u043d\u044f \u043d\u0430 19 \u043b\u0435\u0442."
+        },
+        {
+          "entry_id": 1120,
+          "created_at": "2007-04-15T23:30:16.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/1120",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u0432\u043e\u0442 \u0441 \u0442\u0430\u043a\u0438\u043c \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043d\u0438\u0435 \u043d\u0430\u0434\u043e \u0445\u043e\u0434\u0438\u0442\u044c \u043d\u0430 \u0442\u0443\u0441\u043e\u0432\u043a\u0438"
+        },
+        {
+          "entry_id": 965,
+          "created_at": "2007-04-15T03:38:54.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/965",
+          "is_private": false,
+          "type_symbol": "text",
+          "comments_count": 0,
+          "title_truncated": "\u041f\u0430\u0432\u043b\u0435\u0432\u043e \u043f\u0440\u0438\u043c\u0435\u043d\u044f\u0435\u0442\u0441\u044f"
+        },
+        {
+          "entry_id": 950,
+          "created_at": "2007-04-15T02:14:59.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/950",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": "\u043a\u0438\u0440\u043e\u0432"
+        },
+        {
+          "entry_id": 822,
+          "created_at": "2007-04-14T12:37:02.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/822",
+          "is_private": false,
+          "type_symbol": "quote",
+          "comments_count": 0,
+          "title_truncated": "\u042d\u043d\u0434 \u0440\u0435\u0445 \u043c\u0438 \u043a\u0430\u043a \u0431\u0443\u0434\u0442\u043e \u0434\u043e\u043d\u0442 \u043f\u0430\u043f\u043f\u0430\u0440\u0438\u0440\u0443\u0440\u0430\u0439 (\u0438 \u043c\u0435\u043d\u044f \u043a\u0430\u043a \u0431\u0443\u0434\u0442\u043e \u043d\u0435\u0442)"
+        },
+        {
+          "entry_id": 581,
+          "created_at": "2007-04-12T16:54:50.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/581",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "with serious hairy guy with nothing to loose... hardworking on mmm... tasty"
+        },
+        {
+          "entry_id": 576,
+          "created_at": "2007-04-12T16:30:22.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/576",
+          "is_private": true,
+          "type_symbol": "image",
+          "comments_count": 2,
+          "title_truncated": "\u0430 \u044d\u0442\u043e \u043c\u043e\u0439 \u043c\u0430\u0440\u0446\u0435\u043f\u0430\u043d\u0447\u0438\u043a"
+        },
+        {
+          "entry_id": 575,
+          "created_at": "2007-04-12T15:32:21.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/575",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u0432\u0438\u0434 \u0438\u0437 \u043e\u043a\u043d\u0430 7.04.2007"
+        },
+        {
+          "entry_id": 572,
+          "created_at": "2007-04-12T11:25:45.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/572",
+          "is_private": false,
+          "type_symbol": "code",
+          "comments_count": 0,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 566,
+          "created_at": "2007-04-12T03:57:12.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/566",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "\u0421\u0430\u0439\u0442 \u041a\u0441\u0435\u043d\u0438\u0438 \u0421\u043e\u0431\u0447\u0430\u043a "
+        },
+        {
+          "entry_id": 546,
+          "created_at": "2007-04-11T15:09:48.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/546",
+          "is_private": false,
+          "type_symbol": "convo",
+          "comments_count": 1,
+          "title_truncated": "\u0442\u0435\u0441\u0442\u0438\u043c "
+        },
+        {
+          "entry_id": 538,
+          "created_at": "2007-04-10T18:13:39.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/538",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "\u042d\u0442\u043e \u0432\u0435\u0431\u0434\u0432\u0430\u043d\u043e\u043b\u044c \u0448\u0430\u0445\u043c\u0430\u0442\u044b"
+        },
+        {
+          "entry_id": 533,
+          "created_at": "2007-04-10T16:54:24.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/533",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 4,
+          "title_truncated": "\u043a\u0442\u043e \u044d\u0442\u0438 \u0440\u0435\u0431\u044f\u0442\u0430?"
+        },
+        {
+          "entry_id": 506,
+          "created_at": "2007-04-09T12:59:31.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/506",
+          "is_private": false,
+          "type_symbol": "video",
+          "comments_count": 7,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 500,
+          "created_at": "2007-04-08T16:24:38.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/500",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 1,
+          "title_truncated": "\u041a\u043e\u0433\u0434\u0430 \u0421\u0442\u0443\u0434\u0438\u044f \u041b\u0435\u0431\u0435\u0434\u0435\u0432\u0430 \u0443\u043a\u0440\u0443\u043f\u043d\u0438\u043b\u0430\u0441\u044c, \u0440\u0430\u0441\u0448\u0438\u0440\u0438\u043b\u0430\u0441\u044c \u0438 \u0440\u0430\u0441\u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0438\u043b\u0430 \u0441\u0432\u043e\u0435 \u0432\u043b\u0438..."
+        },
+        {
+          "entry_id": 499,
+          "created_at": "2007-04-08T16:19:28.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/499",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "CircleofLove"
+        },
+        {
+          "entry_id": 492,
+          "created_at": "2007-04-08T13:41:22.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/492",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 1,
+          "title_truncated": "\u0438\u0434\u0435\u044f jobsintown.de"
+        },
+        {
+          "entry_id": 486,
+          "created_at": "2007-04-08T01:43:37.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/486",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 2,
+          "title_truncated": "\u0430\u0433\u0443\u0437\u0430\u0440\u043e\u0432\u0430 - \u043c\u0430\u0440\u0438\u043d\u0430"
+        },
+        {
+          "entry_id": 465,
+          "created_at": "2007-04-06T17:43:07.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/465",
+          "is_private": false,
+          "type_symbol": "link",
+          "comments_count": 0,
+          "title_truncated": "neatorama.com"
+        },
+        {
+          "entry_id": 322,
+          "created_at": "2007-03-30T21:19:59.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/322",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 5,
+          "title_truncated": "\u0432\u043e\u0442 \u0447\u0442\u043e \u044f \u043f\u043e\u0441\u043b\u0430\u043b \u0419\u043e\u0432\u0430\u043d\u0443... \u0432\u043c\u0435\u0441\u0442\u043e \u0440\u0435\u0437\u044e\u043c\u0435 ;)"
+        },
+        {
+          "entry_id": 234,
+          "created_at": "2007-03-29T01:29:00.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/234",
+          "is_private": false,
+          "type_symbol": "image",
+          "comments_count": 0,
+          "title_truncated": ""
+        },
+        {
+          "entry_id": 111,
+          "created_at": "2007-03-26T16:58:17.000+04:00",
+          "entry_url": "http:\/\/genue.taaasty.ru\/111",
+          "is_private": false,
+          "type_symbol": "song",
+          "comments_count": 4,
+          "title_truncated": "\u0441\u0443\u043c\u0430\u0441\u0448\u0435\u0434\u0448\u0438\u0435 \u0431\u0430\u0441\u0438\u0441\u0442\u044b"
+        }
+      ]
     }
   ]
 }
