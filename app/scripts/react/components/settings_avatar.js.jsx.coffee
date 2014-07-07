@@ -18,8 +18,7 @@ module.experts = window.SettingsAvatar = React.createClass
         @shake()
         TastyNotifyController.errorResponse data
       done: (e,data)=>
-        debugger
-        @props.userCortex.userpic.set data
+        @props.userCortex.userpic.set data.response().jqXHR.responseJSON
 
       always: =>
         @props.spinnerLink.requestChange @props.spinnerLink.value-1
