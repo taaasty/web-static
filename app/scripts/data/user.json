@@ -21,7 +21,7 @@
     "user_id": 1,
     "expires_at": "2014-12-13 11:01:57 +0400"
   },
-  "email": null,
+  "email": 'andy@mail.ru',
   "is_privacy": true,
   "is_confirmed": true,
   "available_notifications": false,

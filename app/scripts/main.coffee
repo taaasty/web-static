@@ -2,6 +2,7 @@ require './libs'
 window.Routes =
   logout_path: -> Tasty.host + '/logout'
 
+require './shared/dmodel'
 require './shared/api-routes'
 require './react/mixins/unmount'
 require './react/mixins/shake'
@@ -62,7 +63,7 @@ console.info? "Установить/Сбросить залогиненного 
 if localStorage.getItem('userLogged')
   window.Tasty.user = SomeUser
 
-  window.TastyData.user = new Cortex SomeUser
+  window.TastyData.user = new DModel Tasty.user
 
   $.ajaxSetup
     xhrFields:
@@ -81,4 +82,4 @@ else
 $ ->
   $(".js-dropdown").dropdown() if Modernizr.touch
 
-  ReactApp.start userCortex: TastyData.user
+  ReactApp.start user: TastyData.user

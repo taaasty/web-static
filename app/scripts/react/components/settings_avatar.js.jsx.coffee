@@ -3,8 +3,8 @@
 module.experts = window.SettingsAvatar = React.createClass
   mixins: [ReactShakeMixin]
   propTypes:
-    userCortex:    React.PropTypes.instanceOf(Cortex)
-    spinnerLink:   React.PropTypes.object.isRequired
+    user:         React.PropTypes.object.isRequired
+    spinnerLink:  React.PropTypes.object.isRequired
 
   componentDidMount: ->
     $(@getDOMNode()).fileupload
@@ -18,7 +18,7 @@ module.experts = window.SettingsAvatar = React.createClass
         @shake()
         TastyNotifyController.errorResponse data
       done: (e,data)=>
-        @props.userCortex.userpic.set data.response().jqXHR.responseJSON
+        @props.user.set 'userpic', data.response().jqXHR.responseJSON
 
       always: =>
         @props.spinnerLink.requestChange @props.spinnerLink.value-1

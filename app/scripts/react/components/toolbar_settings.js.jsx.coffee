@@ -6,23 +6,27 @@ module.experts = window.ToolbarSettings = React.createClass
 
   propTypes:
     title:        React.PropTypes.string.isRequired
-    userCortex:   React.PropTypes.instanceOf(Cortex)
+    user:         React.PropTypes.object.isRequired
     spinnerLink:  React.PropTypes.object.isRequired
 
   getInitialState: ->
     saving:     false
-    userCortex: @props.userCortex
-    user:       @props.userCortex.__value
+    user:       @props.user
 
   componentWillMount: ->
+    @props.user.on 'change', @forceUpdate
     Mousetrap.bind 'esc', @close
+
+  componentWillUnmount: ->
+    @props.user.off 'change', @forceUpdate
 
   save: (key, value) ->
     console.log 'save', key, value
 
     @props.spinnerLink.requestChange @props.spinnerLink.value+1
 
-    @state.userCortex[key].set value
+    # Зачем?
+    #@state.user[key] = value
 
     @setState saving: true
 
@@ -36,7 +40,7 @@ module.experts = window.ToolbarSettings = React.createClass
       data:     data
       success: (data) =>
         @props.spinnerLink.requestChange @props.spinnerLink.value-1
-        @props.userCortex.set data
+        @props.user.set data
         @setState saving: false, user: data
       error: (data) =>
         @props.spinnerLink.requestChange @props.spinnerLink.value-1
@@ -55,8 +59,8 @@ module.experts = window.ToolbarSettings = React.createClass
                 <SettingsHeader 
                   saveCallback={saveCallback}
                   spinnerLink={this.props.spinnerLink}
-                  title={this.state.userCortex.title.val()}
-                  userCortex={this.props.userCortex}/>
+                  title={this.props.user.title}
+                  user={this.props.user}/>
 
                 <div className="settings__body">
 
