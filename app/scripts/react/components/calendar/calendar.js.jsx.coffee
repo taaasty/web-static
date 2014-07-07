@@ -14,10 +14,10 @@ window.Calendar = Calendar = React.createClass
       @setState(open: 'closed')
 
   onClick: ->
-    if @state.open == 'openedByClick'
-      @setState(open: 'closed')
-    else if @state.open == 'closed'
-      @setState(open: 'openedByClick')
+    switch @state.open
+      when 'closed' then @setState(open: 'openedByClick')
+      when 'openedByClick' then @setState(open: 'closed')
+      when 'openedByHover' then @setState(open: 'closed')
 
   render: ->
     calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @state.open != 'closed'
