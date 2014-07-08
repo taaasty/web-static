@@ -4,21 +4,22 @@ window.Calendar = Calendar = React.createClass
 
   getInitialState: ->
     open: 'closed'
+    calendar:
+      periods: []
 
   componentWillMount: ->
-    if @props.user?
-      @getCalendarFromServer(@props.user.id)
+    if @props.tlogId?
+      @getCalendarFromServer @props.tlogId
     else if @props.calendar?
       @setState(calendar: @props.calendar)
 
-  getCalendarFromServer: (userId) ->
+  getCalendarFromServer: (tlogId) ->
     $.ajax
-      url: 'http://api.3000.vkontraste.ru/v1/tlog/1/calendar.json'
-      type: 'GET'
-      success: =>
-        console.log arguments
+      url: Routes.api.calendar_url tlogId
+      success: (calendar) =>
+        @setState calendar: calendar
       error: (data) =>
-        console.log arguments
+        TastyNotifyController.errorResponse data
 
   onMouseEnter: ->
     if @state.open == 'closed'
@@ -42,7 +43,7 @@ window.Calendar = Calendar = React.createClass
                  onMouseLeave={this.onMouseLeave}
                  className={ calendarClasses }>
               <CalendarHeader date={ this.props.date }></CalendarHeader>
-              <CalendarTimeline periods={ this.props.periods }></CalendarTimeline>
+              <CalendarTimeline periods={ this.state.calendar.periods }></CalendarTimeline>
             </nav>`
 
 module.exports = Calendar
