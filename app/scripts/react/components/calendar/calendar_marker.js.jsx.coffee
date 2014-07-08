@@ -16,7 +16,7 @@ window.CalendarMarker = CalendarMarker = React.createClass
     createdAt = date.format 'D MMMM'
     leftIndent = @getPercentValueOfDay date.dayOfYear()
 
-    return `<a href="#"
+    return `<a href={ this.props.marker.entry_url }
                data-marker-date={ createdAt }
                data-marker-rows={ records }
                className="calendar__period-marker"

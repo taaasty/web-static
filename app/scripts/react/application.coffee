@@ -36,6 +36,6 @@ window.ReactApp =
         date:
           day:  31
           info: 'декабря<br /> воскресенье<br /> 23:34'
-        periods: Tasty.calendar.periods
+        tlogId: 3
 
       React.renderComponent calendar, calendarContainer

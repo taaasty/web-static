@@ -53,13 +53,13 @@ window.Tasty =
   api_host: 'http://3000.vkontraste.ru/'
   calendar: SomeCalendar
 
-# Контейнер для будутех данных проекта. Сюда постепенно мигрируют
+# Контейнер для будущих данных проекта. Сюда постепенно мигрируют
 # модели из window.Tasty по мере перехода на модели
 window.TastyData = {}
 
 console.info? "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
 
-if localStorage.getItem('userLogged')
+if localStorage.getItem('userLogged') == "true"
   window.Tasty.user = SomeUser
 
   window.TastyData.user = new Backbone.Model Tasty.user
