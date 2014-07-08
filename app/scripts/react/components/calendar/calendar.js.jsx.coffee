@@ -1,6 +1,9 @@
 ###* @jsx React.DOM ###
 
 window.Calendar = Calendar = React.createClass
+  propTypes:
+    calendar: React.PropTypes.object
+    tlogId:   React.PropTypes.number
 
   getInitialState: ->
     open:     'closed'
@@ -9,8 +12,10 @@ window.Calendar = Calendar = React.createClass
   componentDidMount: ->
     if @props.tlogId?
       @getCalendarFromServer @props.tlogId
+    else if @props.calendar?
+      # все хорошо
     else
-      console.log 'В Calendar не передан tlogId'
+      console.error? 'В Calendar не передан ни tlogId ни calendar'
 
   getCalendarFromServer: (tlogId) ->
     $.ajax
@@ -33,6 +38,7 @@ window.Calendar = Calendar = React.createClass
       when 'closed' then @setState(open: 'openedByClick')
       when 'openedByClick' then @setState(open: 'closed')
       when 'openedByHover' then @setState(open: 'closed')
+      else console.error? "Неизвестное состояние", @state.open
 
   render: ->
     if @state.calendar?

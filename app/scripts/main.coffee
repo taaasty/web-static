@@ -53,6 +53,8 @@ window.Tasty =
   api_host: 'http://3000.vkontraste.ru/'
   calendar: SomeCalendar
 
+window.Tasty.host = localStorage.getItem('host') if localStorage.getItem('host')?.length>0
+
 # Контейнер для будущих данных проекта. Сюда постепенно мигрируют
 # модели из window.Tasty по мере перехода на модели
 window.TastyData = {}
