@@ -8,7 +8,7 @@ window.CalendarMarker = CalendarMarker = React.createClass
     (day * parseInt(100, 10) / parseInt(365, 10)).toFixed(2) + '%'
 
   getNumberOfRecords: (number) ->
-    number + ' ' + @declension(number, ['запись', 'записи', 'записей'])
+    number + ' ' + @declension(number, ['комментарий', 'комментария', 'комментариев'])
 
   render: ->
     records = @getNumberOfRecords @props.marker.comments_count

@@ -14,6 +14,10 @@
 
 > localStorage.setItem('userLogged', false/true)
 
+Локальная смена адресов хостов:
+
+> localStorage.setItem('host', 'http://api.taaasty.ru/')
+> localStorage.setItem('api_host', 'http://api.taaasty.ru/')
 
 Запуск
 ------
