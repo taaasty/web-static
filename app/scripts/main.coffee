@@ -50,7 +50,7 @@ UserGenue =
     access_token: 'd72fd485ca42af43d133d7367a4b4a3b'
 
 window.Tasty =
-  host:     'http://3000.vkontraste.ru/api/'
+  host:     'http://3000.vkontraste.ru/' # Это не api-шный хост, это адрес для прямых ссылок
   api_host: 'http://3000.vkontraste.ru/api/'
   calendar: SomeCalendar
   entry:    SomeEntry
