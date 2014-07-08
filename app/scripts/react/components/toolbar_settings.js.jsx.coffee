@@ -55,7 +55,12 @@ module.experts = window.ToolbarSettings = React.createClass
   render: ->
     saveCallback = @save
 
-    console.log 'ToolbarSettings render', @props
+    console.debug? 'ToolbarSettings render', @props
+
+    #<SettingsVkontakteItem 
+      #user={this.state.user}
+      #/>
+
 
     return `<div className="settings">
               <form onSubmit={this.submit}>
@@ -73,10 +78,6 @@ module.experts = window.ToolbarSettings = React.createClass
                       key='is_privacy'
                       title='Закрытый дневник?'
                       description='Управление видимостью вашего дневника. Закрытый дневник виден только тем, на кого вы подписаны.' />
-
-                    <SettingsVkontakteItem 
-                      user={this.state.user}
-                      />
 
                     <SettingsRadioItem
                       saveCallback={saveCallback}
