@@ -33,9 +33,7 @@ window.ReactApp =
     calendarContainer = document.querySelectorAll('[calendar-container]')[0]
     if calendarContainer?
       calendar = Calendar
-        date:
-          day:  31
-          info: 'декабря<br /> воскресенье<br /> 23:34'
+        entry:  Tasty.entry
         tlogId: 3
 
       React.renderComponent calendar, calendarContainer

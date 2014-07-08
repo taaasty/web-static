@@ -1,7 +1,9 @@
 ###* @jsx React.DOM ###
 
 window.Calendar = Calendar = React.createClass
+
   propTypes:
+    entry:    React.PropTypes.object
     calendar: React.PropTypes.object
     tlogId:   React.PropTypes.number
 
@@ -15,7 +17,7 @@ window.Calendar = Calendar = React.createClass
     else if @props.calendar?
       # все хорошо
     else
-      console.error? 'В Calendar не передан ни tlogId ни calendar'
+      console.error? 'В Calendar не передан ни tlogId, ни calendar'
 
   getCalendarFromServer: (tlogId) ->
     $.ajax
@@ -41,6 +43,14 @@ window.Calendar = Calendar = React.createClass
       else console.error? "Неизвестное состояние", @state.open
 
   render: ->
+    if @props.entry?.created_at
+      date = moment @props.entry.created_at
+    else
+      date = moment new Date()
+    entryDate =
+      day:  date.format 'D'
+      info: date.format('D MMMM <br/> dddd<br/> LT').slice 2
+
     if @state.calendar?
       calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @state.open != 'closed'
 
@@ -48,7 +58,7 @@ window.Calendar = Calendar = React.createClass
                    onMouseEnter={this.onMouseEnter}
                    onMouseLeave={this.onMouseLeave}
                    className={ calendarClasses }>
-                <CalendarHeader date={ this.props.date }></CalendarHeader>
+                <CalendarHeader date={ entryDate }></CalendarHeader>
                 <CalendarTimeline periods={ this.state.calendar.periods }></CalendarTimeline>
               </nav>`
     else

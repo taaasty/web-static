@@ -40,8 +40,9 @@ require './react/controllers/shellbox'
 require './react/controllers/popup'
 require './react/application'
 
-SomeUser = require './data/user.json'
+SomeUser     = require './data/user.json'
 SomeCalendar = require './data/calendar.json'
+SomeEntry    = require './data/entry.json'
 UserGenue =
   id: 1
   email: 'genue@ya.ru'
@@ -49,11 +50,13 @@ UserGenue =
     access_token: 'd72fd485ca42af43d133d7367a4b4a3b'
 
 window.Tasty =
-  host: 'http://3000.vkontraste.ru/'
-  api_host: 'http://3000.vkontraste.ru/'
+  host:     'http://3000.vkontraste.ru/api/'
+  api_host: 'http://3000.vkontraste.ru/api/'
   calendar: SomeCalendar
+  entry:    SomeEntry
 
-window.Tasty.host = localStorage.getItem('host') if localStorage.getItem('host')?.length>0
+window.Tasty.host = localStorage.getItem('host') if localStorage.getItem('host')?.length > 0
+window.Tasty.api_host = localStorage.getItem('api_host') if localStorage.getItem('api_host')?.length > 0
 
 # Контейнер для будущих данных проекта. Сюда постепенно мигрируют
 # модели из window.Tasty по мере перехода на модели
