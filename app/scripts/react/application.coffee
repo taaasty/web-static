@@ -28,12 +28,3 @@ window.ReactApp =
     # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
     if ic = document.getElementById 'js-static-inviter-container'
       React.renderComponent InviterShellBox(fixed: true), ic
-
-    # Calendar
-    calendarContainer = document.querySelectorAll('[calendar-container]')[0]
-    if calendarContainer?
-      calendar = Calendar
-        entry:  Tasty.entry
-        tlogId: 3
-
-      React.renderComponent calendar, calendarContainer

@@ -49,14 +49,12 @@ UserGenue =
   api_key:
     access_token: 'd72fd485ca42af43d133d7367a4b4a3b'
 
-window.Tasty =
+window.TastySettings =
   host:     'http://3000.vkontraste.ru/' # Это не api-шный хост, это адрес для прямых ссылок
   api_host: 'http://3000.vkontraste.ru/api/'
-  calendar: SomeCalendar
-  entry:    SomeEntry
 
-window.Tasty.host = localStorage.getItem('host') if localStorage.getItem('host')?.length > 0
-window.Tasty.api_host = localStorage.getItem('api_host') if localStorage.getItem('api_host')?.length > 0
+window.TastySettings.host = localStorage.getItem('host') if localStorage.getItem('host')?.length > 0
+window.TastySettings.api_host = localStorage.getItem('api_host') if localStorage.getItem('api_host')?.length > 0
 
 # Контейнер для будущих данных проекта. Сюда постепенно мигрируют
 # модели из window.Tasty по мере перехода на модели
@@ -65,16 +63,14 @@ window.TastyData = {}
 console.info? "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
 
 if localStorage.getItem('userLogged') == "true"
-  window.Tasty.user = SomeUser
-
-  window.TastyData.user = new Backbone.Model Tasty.user
+  window.TastyData.user = new Backbone.Model SomeUser
 
   $.ajaxSetup
     xhrFields:
       withCredentials: true
       crossDomain: true
     headers:
-      "X-User-Token": Tasty.user.api_key.access_token
+      "X-User-Token": SomeUser.api_key.access_token
 
 else
   console.log 'Без пользователя'
