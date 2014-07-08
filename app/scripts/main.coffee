@@ -50,7 +50,7 @@ UserGenue =
 
 window.Tasty =
   host: 'http://3000.vkontraste.ru/'
-  api_host: 'http://3000.vkontraste.ru/'
+  api_host: 'http://api.3000.vkontraste.ru/'
   calendar: SomeCalendar
 
 # Контейнер для будутех данных проекта. Сюда постепенно мигрируют
