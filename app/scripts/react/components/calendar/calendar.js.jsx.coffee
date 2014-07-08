@@ -3,22 +3,22 @@
 window.Calendar = Calendar = React.createClass
 
   getInitialState: ->
-    open: 'closed'
+    open:     'closed'
+    calendar: @props.calendar
 
-  componentWillMount: ->
-    if @props.user?
-      @getCalendarFromServer(@props.user.id)
-    else if @props.calendar?
-      @setState(calendar: @props.calendar)
+  componentDidMount: ->
+    if @props.tlogId?
+      @getCalendarFromServer @props.tlogId
+    else
+      console.log 'В Calendar не передан tlogId'
 
-  getCalendarFromServer: (userId) ->
+  getCalendarFromServer: (tlogId) ->
     $.ajax
-      url: 'http://api.3000.vkontraste.ru/v1/tlog/1/calendar.json'
-      type: 'GET'
-      success: =>
-        console.log arguments
+      url: Routes.api.calendar_url tlogId
+      success: (calendar) =>
+        @setState calendar: calendar
       error: (data) =>
-        console.log arguments
+        TastyNotifyController.errorResponse data
 
   onMouseEnter: ->
     if @state.open == 'closed'
@@ -35,14 +35,18 @@ window.Calendar = Calendar = React.createClass
       when 'openedByHover' then @setState(open: 'closed')
 
   render: ->
-    calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @state.open != 'closed'
+    if @state.calendar?
+      calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @state.open != 'closed'
 
-    return `<nav onClick={this.onClick}
-                 onMouseEnter={this.onMouseEnter}
-                 onMouseLeave={this.onMouseLeave}
-                 className={ calendarClasses }>
-              <CalendarHeader date={ this.props.date }></CalendarHeader>
-              <CalendarTimeline periods={ this.props.periods }></CalendarTimeline>
-            </nav>`
+      return `<nav onClick={this.onClick}
+                   onMouseEnter={this.onMouseEnter}
+                   onMouseLeave={this.onMouseLeave}
+                   className={ calendarClasses }>
+                <CalendarHeader date={ this.props.date }></CalendarHeader>
+                <CalendarTimeline periods={ this.state.calendar.periods }></CalendarTimeline>
+              </nav>`
+    else
+      return `<div></div>`
 
+    
 module.exports = Calendar
