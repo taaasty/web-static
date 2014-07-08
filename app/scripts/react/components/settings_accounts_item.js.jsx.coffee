@@ -3,7 +3,7 @@
 module.experts = window.SettingsAccountsItem = React.createClass
   propTypes:
     accounts: React.PropTypes.array.isRequired
-    user:     React.PropTypes.object.isRequired
+    user:     React.PropTypes.instanceOf(Backbone.Model).isRequired
 
   render: ->
     anotherAccounts = null
@@ -19,9 +19,9 @@ module.experts = window.SettingsAccountsItem = React.createClass
             </a>
           </div>
           <div className="account__info">
-            <div className="account__avatar"> <Avatar user={this.props.user} /> </div>
+            <div className="account__avatar"> <Avatar name={this.props.user.get('name')} userpic={this.props.user.get('userpic')}/> </div>
             <div className="account__desc">
-              <div className="account__name">{this.props.user.slug}</div>
+              <div className="account__name">{this.props.user.get('name')}</div>
               <div className="account__status">Активный дневник</div>
             </div>
           </div>

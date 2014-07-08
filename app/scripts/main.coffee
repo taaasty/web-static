@@ -54,7 +54,7 @@ window.Tasty =
   calendar: SomeCalendar
 
 # Контейнер для будутех данных проекта. Сюда постепенно мигрируют
-# модели из window.Tasty по мере перехода на Cortex
+# модели из window.Tasty по мере перехода на модели
 window.TastyData = {}
 
 console.info? "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
@@ -62,7 +62,7 @@ console.info? "Установить/Сбросить залогиненного 
 if localStorage.getItem('userLogged')
   window.Tasty.user = SomeUser
 
-  window.TastyData.user = new Cortex SomeUser
+  window.TastyData.user = new Backbone.Model Tasty.user
 
   $.ajaxSetup
     xhrFields:
@@ -81,4 +81,4 @@ else
 $ ->
   $(".js-dropdown").dropdown() if Modernizr.touch
 
-  ReactApp.start userCortex: TastyData.user
+  ReactApp.start user: TastyData.user

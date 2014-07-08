@@ -11,9 +11,6 @@ module.experts = window.SettingsPasswordItem = React.createClass
     isEditing: false
     hasInput:  false
 
-  propTypes:
-    user: React.PropTypes.object.isRequired
-
   validate: (silent=false)->
     unless @refs.password.state.value?
       unless silent

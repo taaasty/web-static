@@ -7,20 +7,20 @@
 
 window.ReactApp =
   
-  start: ({userCortex}) ->
+  start: ({user}) ->
     console.log 'ReactApp start'
-    console.debug? "Залогинен пользователь", userCortex.slug.val() if userCortex?
+    console.debug? "Залогинен пользователь", user.get('slug') if user?
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
 
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()
 
-    if userCortex?
+    if user?
       $('[toolbar-settings-click]').click =>
         @popup.show ToolbarSettings,
-          title:       'Настройки',
-          userCortex:   userCortex
+          title: 'Настройки',
+          user:   user
     else
       $('[invite-button]').click =>
         @shellbox.show InviterShellBox
@@ -32,12 +32,10 @@ window.ReactApp =
     # Calendar
     calendarContainer = document.querySelectorAll('[calendar-container]')[0]
     if calendarContainer?
-      ReactApp.showCalendar({
-        date: 
+      calendar = Calendar
+        date:
           day:  31
           info: 'декабря<br /> воскресенье<br /> 23:34'
         periods: Tasty.calendar.periods
-      }, calendarContainer)
 
-  showCalendar: (args, container) ->
-    _.defer => React.renderComponent Calendar(args), container
+      React.renderComponent calendar, calendarContainer
