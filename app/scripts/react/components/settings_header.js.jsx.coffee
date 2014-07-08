@@ -2,7 +2,7 @@
 
 module.experts = window.SettingsHeader = React.createClass
   propTypes:
-    user:          React.PropTypes.object.isRequired
+    user:         React.PropTypes.instanceOf(Backbone.Model).isRequired
     spinnerLink:   React.PropTypes.object.isRequired
     saveCallback:  React.PropTypes.func.isRequired
 
@@ -10,8 +10,6 @@ module.experts = window.SettingsHeader = React.createClass
     isEditing:        false
 
   render: ->
-    console.debug 'SettingsHeader render'
-
     background_url = @props.user.get('design').background_url
     style = 'background-image': "url(#{background_url})"
 
@@ -20,7 +18,7 @@ module.experts = window.SettingsHeader = React.createClass
         <div className="hero-simple__overlay"></div>
         <div className="hero-simple__box">
           <div className="hero-simple__avatar">
-            <Avatar userAttributes={this.props.user.attributes} />
+            <Avatar name={this.props.user.get('name')} userpic={this.props.user.get('userpic')}/>
             <span className="hero-simple__avatar-overlay">
               <span className="form-upload form-upload--icon">
                 <span className="form-upload__text"><i className="icon icon--pencil"></i></span>
@@ -28,7 +26,7 @@ module.experts = window.SettingsHeader = React.createClass
               </span>
             </span>
           </div>
-          <div className="hero-simple__name">{this.props.user.name}</div>
+          <div className="hero-simple__name">{this.props.user.get('name')}</div>
           <SettingsTitle title={this.props.title} saveCallback={this.props.saveCallback} />
         </div>
       </div>

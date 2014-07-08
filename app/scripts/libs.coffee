@@ -9,6 +9,3 @@ require 'momentjs/lang/ru'
 require 'blueimp-file-upload/js/jquery.fileupload'
 
 window.Backbone = require 'backbone'
-
-# Именно так, иначе он реквайрит не то что надо
-Cortex = require 'cortexjs/build/cortex.min.js'

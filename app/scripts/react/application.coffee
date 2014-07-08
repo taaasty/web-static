@@ -9,7 +9,7 @@ window.ReactApp =
   
   start: ({user}) ->
     console.log 'ReactApp start'
-    console.debug? "Залогинен пользователь", user.slug if user?
+    console.debug? "Залогинен пользователь", user.get('slug') if user?
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
 

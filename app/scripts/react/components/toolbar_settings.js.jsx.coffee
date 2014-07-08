@@ -6,7 +6,7 @@ module.experts = window.ToolbarSettings = React.createClass
 
   propTypes:
     title:        React.PropTypes.string.isRequired
-    user:         React.PropTypes.object.isRequired
+    user:         React.PropTypes.instanceOf(Backbone.Model).isRequired
     spinnerLink:  React.PropTypes.object.isRequired
 
   getInitialState: ->
@@ -14,11 +14,14 @@ module.experts = window.ToolbarSettings = React.createClass
     user:       @props.user
 
   componentWillMount: ->
-    @props.user.on 'change', @forceUpdate
+    @props.user.on 'change', @updateStateUser
     Mousetrap.bind 'esc', @close
 
   componentWillUnmount: ->
-    @props.user.off 'change', @forceUpdate
+    @props.user.off 'change', @updateStateUser
+
+  updateStateUser: (user)->
+    @setState user: user
 
   save: (key, value) ->
     console.log 'save', key, value
@@ -26,7 +29,7 @@ module.experts = window.ToolbarSettings = React.createClass
     @props.spinnerLink.requestChange @props.spinnerLink.value+1
 
     # Зачем?
-    #@state.user[key] = value
+    #@state.set key, value
 
     @setState saving: true
 
@@ -41,7 +44,7 @@ module.experts = window.ToolbarSettings = React.createClass
       success: (data) =>
         @props.spinnerLink.requestChange @props.spinnerLink.value-1
         @props.user.set data
-        @setState saving: false, user: data
+        @setState saving: false
       error: (data) =>
         @props.spinnerLink.requestChange @props.spinnerLink.value-1
         @setState saving: false
@@ -52,15 +55,15 @@ module.experts = window.ToolbarSettings = React.createClass
   render: ->
     saveCallback = @save
 
-    console.log 'render', @props
+    console.log 'ToolbarSettings render', @props
 
     return `<div className="settings">
               <form onSubmit={this.submit}>
                 <SettingsHeader 
                   saveCallback={saveCallback}
                   spinnerLink={this.props.spinnerLink}
-                  title={this.props.user.get('title')}
-                  user={this.props.user}/>
+                  title={this.state.user.get('title')}
+                  user={this.state.user}/>
 
                 <div className="settings__body">
 
@@ -91,8 +94,8 @@ module.experts = window.ToolbarSettings = React.createClass
 
                     <SettingsEmailInput 
                       saveCallback={saveCallback}
-                      email={this.state.user.email}
-                      isConfirmed={this.state.user.is_confirmed}
+                      email={this.state.user.get('email')}
+                      isConfirmed={this.state.user.get('is_confirmed')}
                       />
 
                     <SettingsRadioItem
