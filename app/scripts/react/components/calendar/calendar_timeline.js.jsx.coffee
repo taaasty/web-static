@@ -3,11 +3,13 @@
 window.CalendarTimeline = CalendarTimeline = React.createClass
 
   propTypes:
-    periods: React.PropTypes.array
+    periods:      React.PropTypes.array.isRequired
+    currentEntry: React.PropTypes.object
 
   render: ->
+    that = @
     periodNodes = @props.periods.map (period) ->
-      `<CalendarPeriod period={ period } key={ period.title }></CalendarPeriod>`
+      `<CalendarPeriod currentEntry={ that.props.currentEntry } period={ period } key={ period.title }></CalendarPeriod>`
 
     return `<div className="calendar__timeline-viewport">
               <div className="calendar__timeline">

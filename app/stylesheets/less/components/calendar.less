@@ -18,7 +18,7 @@
 }
 
 .calendar--open {
-  right: @toolbar-margin;
+  right: @toolbar-right;
 
   .calendar__date {
     display: none;
@@ -135,5 +135,18 @@
     &:before {
       display: block;
     }
+  }
+}
+
+.calendar__period-marker--current {
+  width: 7px;
+  height: 7px;
+  margin: -4px 0 0 -3px;
+  background-color: #fbdc44;
+  z-index: (@toolbar-zindex + 1);
+
+  &:after,
+  &:before {
+    display: block;
   }
 }

@@ -49,7 +49,7 @@ window.Calendar = Calendar = React.createClass
                    onMouseLeave={this.onMouseLeave}
                    className={ calendarClasses }>
                 <CalendarHeader date={ this.state.headerDate }></CalendarHeader>
-                <CalendarTimeline periods={ this.state.calendar.periods }></CalendarTimeline>
+                <CalendarTimeline currentEntry={ this.props.entry } periods={ this.state.calendar.periods }></CalendarTimeline>
               </nav>`
     else
       # Пока календарь не загружен нет смысла скрывать заголовок

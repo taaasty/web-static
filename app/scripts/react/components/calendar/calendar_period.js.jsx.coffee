@@ -2,9 +2,14 @@
 
 window.CalendarPeriod = CalendarPeriod = React.createClass
 
+  propTypes:
+    period:       React.PropTypes.object.isRequired
+    currentEntry: React.PropTypes.object
+
   render: ->
+    that = @
     markerNodes = @props.period.markers.map (marker) ->
-      `<CalendarMarker marker={ marker } key={ marker.entry_id }></CalendarMarker>`
+      `<CalendarMarker selected={ that.props.currentEntry.id == marker.entry_id } marker={ marker } key={ marker.entry_id }></CalendarMarker>`
 
     return `<li className="calendar__period">
               <div className="calendar__period-date">{ this.props.period.title }</div>
