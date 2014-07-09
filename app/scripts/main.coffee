@@ -1,6 +1,6 @@
 require './libs'
 window.Routes =
-  logout_path: -> Tasty.host + '/logout'
+  logout_path: -> TastySettings.host + '/logout'
 
 require './shared/api-routes'
 require './react/mixins/unmount'
