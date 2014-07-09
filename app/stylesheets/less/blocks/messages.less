@@ -98,7 +98,9 @@
     border-bottom: 1px solid rgba(0, 0, 0, .05);
     background-color: #fff;
     cursor: pointer;
-    .transition(~".background-color .3s ease");
+    // Рельсовый sass этого не понимает
+    // https://www.honeybadger.io/inspector/p/36627/6074214
+    // .transition(~".background-color .3s ease");
 
     &-text {
       margin-bottom: 2px;
