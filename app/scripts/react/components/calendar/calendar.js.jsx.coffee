@@ -51,9 +51,9 @@ window.Calendar = Calendar = React.createClass
       day:  date.format 'D'
       info: date.format('D MMMM <br/> dddd<br/> LT').slice 2
 
-    if @state.calendar?
-      calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @state.open != 'closed'
+    calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @state.open != 'closed'
 
+    if @state.calendar?
       return `<nav onClick={this.onClick}
                    onMouseEnter={this.onMouseEnter}
                    onMouseLeave={this.onMouseLeave}
@@ -62,7 +62,12 @@ window.Calendar = Calendar = React.createClass
                 <CalendarTimeline periods={ this.state.calendar.periods }></CalendarTimeline>
               </nav>`
     else
-      return `<div></div>`
+      return `<nav onClick={this.onClick}
+                   onMouseEnter={this.onMouseEnter}
+                   onMouseLeave={this.onMouseLeave}
+                   className={ calendarClasses }>
+                <CalendarHeader date={ entryDate }></CalendarHeader>
+              </nav>`
 
     
 module.exports = Calendar
