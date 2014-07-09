@@ -1,0 +1,103 @@
+/ Popup Settings Design
+- editable_tlog = TlogDecorator.decorate current_user
+.popup.popup--settings-design.popup--dark(style='top: 10px; left: 10px' ng-controller='DesignSettings'){data: { tlog: editable_tlog.data }}
+  .popup__content
+    .popup__header
+      .popup__headbox.js-popup-headbox.cursor--move
+        %h3.popup__title Управление дизайном
+      .popup__loader.state--hidden.js-popup-loader
+        %span.spinner.spinner--8x8
+          %span.spinner__icon
+      .popup__close(ng-click='close()')
+        .icon.icon--cross
+    .popup__body
+      .settings-design.js-drop-cover
+        .settings-design__drop
+          .settings-design__drop-text Отпустите картинку и она начнет загружаться
+        .settings-design__controls
+          .settings-design__control.settings-design__control--cover(ng-controller='DesignSettings:BackgroundCtrl')
+            .settings-design__control-inner
+              %span.settings-design__valign
+              %span.settings-design__text.absolute--left.animate--down Фон блога
+              %span.settings-design__text.absolute--left.animate--up
+                Перетащите или
+                %span.form-upload.form-upload--cover
+                  %span.form-upload__text загрузите
+                  %input#layout-cover.form-upload__input.js-upload-cover-input{:name => "layout-cover", :type => "file"}/
+              %span.settings-design__cover-pixel.absolute--right.animate--right.js-cover-pixel{:style => editable_tlog.tlog_design.cover_style}
+          .settings-design__control.settings-design__control--cover-align(ng-controller='DesignSettings:RadioCtrl' data-key='coverAlign')
+            .settings-design__control-inner
+              %span.settings-design__valign
+              %span.settings-design__text.absolute--left.animate--down Настройка фона
+              %span.settings-design__state.absolute--right.animate--right
+                %span.settings-design__state-i
+              %span.form-radiogroup.form-radiogroup--dotted-list.absolute--left.animate--up
+                %label.form-radio.form-radio--repeat{:for => "tlog-coveralign-justify"}
+                  %span.form-radio__inner
+                    %span.form-radio__text по ширине
+                    %input#tlog-coveralign-justify.form-radio__input(name="coverAlign" type="radio" value="justify" ng-model='formData.coverAlign' ng-change='change()')/
+                %label.form-radio.form-radio--repeat{:for => "tlog-coveralign-center"}
+                  %span.form-radio__inner
+                    %span.form-radio__text по центру
+                    %input#tlog-coveralign-center.form-radio__input(name="coverAlign" type="radio" value="center" ng-model='formData.coverAlign' ng-change='change()')/
+          .settings-design__control.settings-design__control--header-color(ng-controller='DesignSettings:RadioCtrl' data-key='headerColor')
+            .settings-design__control-inner
+              %span.settings-design__valign
+              %span.settings-design__text.absolute--left.animate--down Заголовок блога
+              %span.settings-design__state.settings-design__state--radiobutton.absolute--right.animate--right
+                %span.settings-design__state-i
+              %span.form-radiogroup.form-radiogroup--radiobuttons.form-radiogroup--header-color.absolute--left.animate--up
+                %label.form-radio.form-radio--white{:for => "tlog-headercolor-white"}
+                  %span.form-radio__inner
+                    %span.form-radio__text Белый
+                    %input#tlog-headercolor-white.form-radio__input(name="headerColor" type="radio" value="white" ng-model='formData.headerColor' ng-change='change()')/
+                %label.form-radio.form-radio--black{:for => "tlog-headercolor-black"}
+                  %span.form-radio__inner
+                    %span.form-radio__text Черный
+                    %input#tlog-headercolor-black.form-radio__input(name="headerColor" type="radio" value="black" ng-model='formData.headerColor' ng-change='change()')/
+                %label.form-radio.form-radio--white-on-black{:for => "tlog-headercolor-whiteonblack"}
+                  %span.form-radio__inner
+                    %span.form-radio__text Белый на черном
+                    %input#tlog-headercolor-whiteonblack.form-radio__input(name="headerColor" type="radio" value="whiteonblack" ng-model='formData.headerColor' ng-change='change()')/
+                %label.form-radio.form-radio--black-on-white{:for => "tlog-headercolor-blackonwhite"}
+                  %span.form-radio__inner
+                    %span.form-radio__text Черный на белом
+                    %input#tlog-headercolor-blackonwhite.form-radio__input(name="headerColor" type="radio" value="blackonwhite" ng-model='formData.headerColor' ng-change='change()')/
+          .settings-design__control.settings-design__control--feed-color(ng-controller='DesignSettings:RadioCtrl' data-key='feedColor')
+            .settings-design__control-inner
+              %span.settings-design__valign
+              %span.settings-design__text.absolute--left.animate--down Цвет ленты и текста
+              %span.settings-design__state.settings-design__state--radiobutton.absolute--right.animate--right
+                %span.settings-design__state-i
+              %span.form-radiogroup.form-radiogroup--radiobuttons.form-radiogroup--feed-color.absolute--left.animate--up
+                %label.form-radio.form-radio--white{:for => "tlog-feedcolor-white"}
+                  %span.form-radio__inner
+                    %span.form-radio__text Белая
+                    %input#tlog-feedcolor-white.form-radio__input(name="feedColor" type="radio" value="white" ng-model='formData.feedColor' ng-change='change()')/
+                %label.form-radio.form-radio--black{:for => "tlog-feedcolor-black"}
+                  %span.form-radio__inner
+                    %span.form-radio__text Чёрная
+                    %input#tlog-feedcolor-black.form-radio__input(name="feedColor" type="radio" value="black" ng-model='formData.feedColor' ng-change='change()')/
+          .settings-design__control.settings-design__control--font-type(ng-controller='DesignSettings:RadioCtrl' data-key='fontType')
+            .settings-design__control-inner
+              %span.settings-design__valign
+              %span.settings-design__text.absolute--left.animate--down Шрифт ленты
+              %span.settings-design__state.absolute--right.animate--right
+                %span.settings-design__state-i Аа
+              %span.form-radiogroup.form-radiogroup--type-font.absolute--left.animate--up
+                %label.form-radio.form-radio--sans-serif{:for => "tlog-fonttype-sans"}
+                  %span.form-radio__inner
+                    %span.form-radio__text Аа
+                    %input#tlog-fonttype-sans.form-radio__input(name="fontType" type="radio" value="sans" ng-model='formData.fontType' ng-change='change()')/
+                %label.form-radio.form-radio--serif{:for => "tlog-fonttype-serif"}
+                  %span.form-radio__inner
+                    %span.form-radio__text Аа
+                    %input#tlog-fonttype-serif.form-radio__input(name="fontType" type="radio" value="serif" ng-model='formData.fontType' ng-change='change()')/
+          .settings-design__control.settings-design__control--opacity(ng-controller='DesignSettings:OpacityCtrl')
+            .settings-design__control-inner
+              %span.settings-design__valign
+              %span.settings-design__text.absolute--left.animate--down Прозрачность ленты
+              %span.form-range.form-range--opacity.form-range--yellow.absolute--left.animate--up.js-form-range-opacity
+                %input#opacity-feed.form-range__input(name= "feedOpacity" type="text" ng-model='formData.feedOpacity')/
+              %span.form-range-value {{formData.feedOpacity | opacityPercentage}}
+/ end Popup Settings Design
