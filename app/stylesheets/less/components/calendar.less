@@ -15,10 +15,11 @@
   .user-select(none);
   .border-radius(@calendar-height / 2);
   .transition(~"max-width .3s ease, background .3s ease");
+  transition: right 1s ease-in-out;
 }
 
 .calendar--open {
-  right: @toolbar-margin;
+  right: @toolbar-margin!important;
 
   .calendar__date {
     display: none;
