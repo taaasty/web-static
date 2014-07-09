@@ -4,6 +4,10 @@ window.CalendarMarker = CalendarMarker = React.createClass
 
   mixins: [ReactGrammarMixin]
 
+  propTypes:
+    marker:       React.PropTypes.object.isRequired
+    selected:     React.PropTypes.bool.isRequired
+
   getPercentValueOfDay: (day) ->
     (day * parseInt(100, 10) / parseInt(365, 10)).toFixed(2) + '%'
 
@@ -16,10 +20,12 @@ window.CalendarMarker = CalendarMarker = React.createClass
     createdAt = date.format 'D MMMM'
     leftIndent = @getPercentValueOfDay date.dayOfYear()
 
+    markerClasses = React.addons.classSet 'calendar__period-marker': true, 'calendar__period-marker--current': @props.selected
+
     return `<a href={ this.props.marker.entry_url }
                data-marker-date={ createdAt }
                data-marker-rows={ records }
-               className="calendar__period-marker"
+               className={ markerClasses }
                style={{ left: leftIndent }}></a>`
 
 module.exports = CalendarMarker
