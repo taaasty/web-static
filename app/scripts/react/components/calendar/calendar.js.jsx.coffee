@@ -1,23 +1,22 @@
 ###* @jsx React.DOM ###
 
+CALENDAR_CLOSED = 'closed'
+CALENDAR_OPENED_BY_HOVER = 'openedByHover'
+CALENDAR_OPENED_BY_CLICK = 'openedByClick'
+
 window.Calendar = Calendar = React.createClass
 
   propTypes:
     entry:    React.PropTypes.object
-    calendar: React.PropTypes.object
-    tlogId:   React.PropTypes.number
+    tlogId:   React.PropTypes.number.isRequired
 
   getInitialState: ->
-    open:     'closed'
-    calendar: @props.calendar
+    calendar:   null
+    open:       CALENDAR_CLOSED
+    headerDate: if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
 
   componentDidMount: ->
-    if @props.tlogId?
-      @getCalendarFromServer @props.tlogId
-    else if @props.calendar?
-      # все хорошо
-    else
-      console.error? 'В Calendar не передан ни tlogId, ни calendar'
+    @getCalendarFromServer @props.tlogId
 
   getCalendarFromServer: (tlogId) ->
     $.ajax
@@ -28,46 +27,40 @@ window.Calendar = Calendar = React.createClass
         TastyNotifyController.errorResponse data
 
   onMouseEnter: ->
-    if @state.open == 'closed'
-      @setState(open: 'openedByHover')
+    if @state.open == CALENDAR_CLOSED
+      @setState open: CALENDAR_OPENED_BY_HOVER
 
   onMouseLeave: ->
-    if @state.open == 'openedByHover'
-      @setState(open: 'closed')
+    if @state.open == CALENDAR_OPENED_BY_HOVER
+      @setState open: CALENDAR_CLOSED
 
   onClick: ->
     switch @state.open
-      when 'closed' then @setState(open: 'openedByClick')
-      when 'openedByClick' then @setState(open: 'closed')
-      when 'openedByHover' then @setState(open: 'closed')
-      else console.error? "Неизвестное состояние", @state.open
+      when CALENDAR_CLOSED          then @setState open: CALENDAR_OPENED_BY_CLICK
+      when CALENDAR_OPENED_BY_CLICK then @setState open: CALENDAR_CLOSED
+      when CALENDAR_OPENED_BY_HOVER then @setState open: CALENDAR_CLOSED
+      else console.error? "Unknown state.open", @state.open
 
   render: ->
-    if @props.entry?.created_at
-      date = moment @props.entry.created_at
-    else
-      date = moment new Date()
-    entryDate =
-      day:  date.format 'D'
-      info: date.format('D MMMM <br/> dddd<br/> LT').slice 2
-
-    calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @state.open != 'closed'
-
     if @state.calendar?
+      calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @isOpen()
       return `<nav onClick={this.onClick}
                    onMouseEnter={this.onMouseEnter}
                    onMouseLeave={this.onMouseLeave}
                    className={ calendarClasses }>
-                <CalendarHeader date={ entryDate }></CalendarHeader>
+                <CalendarHeader date={ this.state.headerDate }></CalendarHeader>
                 <CalendarTimeline periods={ this.state.calendar.periods }></CalendarTimeline>
               </nav>`
     else
+      # Пока календарь не загружен нет смысла скрывать заголовок
+      # TODO показывать спиннер
       return `<nav onClick={this.onClick}
                    onMouseEnter={this.onMouseEnter}
                    onMouseLeave={this.onMouseLeave}
-                   className={ calendarClasses }>
-                <CalendarHeader date={ entryDate }></CalendarHeader>
+                   className="calendar">
+                <CalendarHeader date={ this.state.headerDate }></CalendarHeader>
               </nav>`
 
-    
+  isOpen: -> @state.open != CALENDAR_CLOSED
+
 module.exports = Calendar
