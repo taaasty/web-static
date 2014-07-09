@@ -8,6 +8,9 @@
     "modernizr": "~2.8.2",
     "momentjs": "~2.7.0",
     "react_ujs": "https://raw.githubusercontent.com/reactjs/react-rails/master/lib/assets/javascripts/react_ujs.js",
-    "backbone": "~1.1.2"
+    "backbone": "~1.1.2",
+    "angular": "~1.2.19",
+    "angular-resource": "~1.2.19",
+    "angular-sanitize": "~1.2.19"
   }
 }
