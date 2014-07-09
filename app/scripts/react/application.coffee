@@ -16,14 +16,14 @@ window.ReactApp =
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()
 
-    if user?
-      $('[toolbar-settings-click]').click =>
-        @popup.show ToolbarSettings,
-          title: 'Настройки',
-          user:   user
-    else
-      $('[invite-button]').click =>
-        @shellbox.show InviterShellBox
+    # Есть только у юзеров
+    $('[toolbar-settings-click]').click =>
+      @popup.show ToolbarSettings,
+        title: 'Настройки',
+        user:   user
+
+    # Есть только у анонимов
+    $('[invite-button]').click => @shellbox.show InviterShellBox
 
     # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
     if ic = document.getElementById 'js-static-inviter-container'

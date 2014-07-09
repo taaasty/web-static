@@ -12,9 +12,9 @@
 #
 # Приложение на angular
 
-window.AApp = angular.module 'AApp', [
-  'infinite-scroll', 
-  'ngResource', 'ngSanitize', 'ng-rails-csrf']
+console.log 'Start Angular'
+
+window.AApp = angular.module 'AApp', [ 'infinite-scroll', 'ngResource', 'ngSanitize', 'ng-rails-csrf']
 
 window.AApp.config ['$sceDelegateProvider', ($sceDelegateProvider) ->
     ##$compileProvider.imgSrcSanitizationWhitelist(/^\s*(blob):/);

@@ -27,6 +27,7 @@ require './aapp/services/designSettingsDragable.js.coffee'
 require './aapp/directives/eatClick.js'
 require './aapp/directives/enter.js'
 
+
 require './react/mixins/unmount'
 require './react/mixins/shake'
 require './react/mixins/grammar'

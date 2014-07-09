@@ -12,10 +12,10 @@ window.Backbone = require 'backbone'
 
 require 'angular'
 
-require 'angular-resource/angular-resource'
-#require 'quick-ng-repeat/quick-ng-repeat'
+require 'angular-resource'
+require 'quick-ng-repeat/quick-ng-repeat'
 
-#require 'ngInfiniteScroll'
-require 'angular-sanitize/angular-sanitize'
+require 'ngInfiniteScroll'
+require 'angular-sanitize'
 
-#require 'ng-rails-csrf'
+require 'ng-rails-csrf/index'
