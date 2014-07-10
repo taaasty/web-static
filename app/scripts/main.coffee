@@ -59,6 +59,8 @@ require './react/components/calendar/calendar_header'
 require './react/components/calendar/calendar_period'
 require './react/components/calendar/calendar_marker'
 
+require './react/components/post/post_actions'
+
 require './react/components/tasty_notify'
 require './react/controllers/tasty_notify'
 require './react/controllers/shellbox'
