@@ -1,8 +1,8 @@
 Установка и настройка
 ---------------------
 
-> npm install
-> bower install
+    > npm install
+    > bower install
 
 
 Разработка
@@ -12,17 +12,17 @@
 
 Есть залогиненный пользователь или нет
 
-> localStorage.setItem('userLogged', false/true)
+    > localStorage.setItem('userLogged', false/true)
 
 Локальная смена адресов хостов:
 
-> localStorage.setItem('host', 'http://api.taaasty.ru/')
-> localStorage.setItem('api_host', 'http://api.taaasty.ru/')
+    > localStorage.setItem('host', 'http://api.taaasty.ru/')
+    > localStorage.setItem('api_host', 'http://api.taaasty.ru/')
 
 Запуск
 ------
 
-> ./start       # gulp watch
+    > ./start       # gulp watch
 
 Дальше открываем браузер http://localhost:9000
 
