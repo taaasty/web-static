@@ -1,35 +1,53 @@
 .follow-button {
-  width: 12.364em;
-  color: #fff !important;
-
-  &.state--failed {
-    color: red !important;
-    border: 1px solid red;
-    border-color: rgba(255, 155, 155, .3);
-  }
+  width: 12.364em; // При локализации тейсти, нужно убрать ширину, либо ограничивать символы трёхточием
+  color: @white !important;
 
   &:before {
-    border: 1px solid #999;
-    border-color: rgba(255, 255, 255, .3);
+    border: 1px solid @fb-border-color;
   }
 
+  // При наведении, когда ещё не подписаны
   &:hover {
     &:before {
-      border: 1px solid #fff;
-      border-color: rgba(255, 255, 255, .6);
+      border-color: @fb-hover-border-color;
     }
   }
 
+  // Подписаны
   &.state--active {
-    background-color: #36b377;
+    background-color: @fb-active-bg;
+
+    &:before {
+      border-color: transparent;
+    }
 
     &:hover {
-      background-color: #ed4545;
+      background-color: @fb-active-hover-bg;
     }
 
     &:active {
-      background-color: #ce3e3e;
+      background-color: @fb-active-click-bg;
+    }
+  }
+
+  // Кнопка Follow Button в блоке Persons
+  .persons & {
+    width: auto;
+    padding-right: 22px;
+    padding-left: 22px;
+    color: @person-fb-color !important;
+
+    &:before {
+      border-color: @person-fb-border-color;
+    }
+
+    &:hover {
+      color: @white !important;
+    }
+
+    &.state--active {
+      border-color: transparent;
+      color: @white !important;
     }
   }
 }
-

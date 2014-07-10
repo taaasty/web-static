@@ -1,38 +1,14 @@
 .persons {
   padding: 20px 0;
-
-  .follow-button {
-    @border-color: #7c7c7c;
-
-    width: auto;
-    padding-right: 22px;
-    padding-left: 22px;
-    color: rgba(red(@white), green(@white), blue(@white), .2) !important;
-
-    &:before {
-      border-color: rgba(red(@border-color), green(@border-color), blue(@border-color), .2) !important;
-    }
-
-    &:hover {
-      color: @white !important;
-    }
-
-    &.state--active {
-      border-color: transparent !important;
-      color: @white !important;
-    }
-  }
 }
 
 .person {
-  @bg-hover: #232323;
-
   padding: 10px 12px 10px 22px;
   cursor: default;
-  .transition(~"background .3s linear");
+  transition: background .3s linear;
 
   &:hover {
-    background-color: rgba(red(@bg-hover), green(@bg-hover), blue(@bg-hover), .9);
+    background-color: @person-hover-bg;
   }
 }
 
@@ -71,5 +47,5 @@
 
 .person__count {
   font-size: 12px;
-  color: #5a5a5a;
+  color: @person-gray-color;
 }

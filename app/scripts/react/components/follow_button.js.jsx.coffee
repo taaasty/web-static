@@ -56,19 +56,15 @@ module.experts = window.FollowButton = React.createClass
     if @state.isFollow
       rootClass  = 'state--active'
       text       = if @state.isHover then 'Отписаться' else 'Подписан'
-      childClass = 'button__text--subscribe'
     else
       rootClass  = ''
       text       = 'Подписаться'
-      childClass = 'button__text--subscribed'
 
     text = 'ошибка' if @state.isError
 
-    return `<span className={"button follow-button button--small " + rootClass}
+    return `<button className={"button follow-button button--small " + rootClass}
                   onClick={this.handleClick}
                   onMouseOver={this.handleHover}
                   onMouseLeave={this.handleBlur}>
-        <span className="button__inner">
-          <span className={"button__text " + childClass}>{text}</span>
-        </span>
-      </span>`
+              {text}
+            </button>`
