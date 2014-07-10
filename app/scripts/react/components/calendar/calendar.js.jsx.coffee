@@ -3,6 +3,7 @@
 CALENDAR_CLOSED = 'closed'
 CALENDAR_OPENED_BY_HOVER = 'openedByHover'
 CALENDAR_OPENED_BY_CLICK = 'openedByClick'
+RIGHT_INDENT = 'auto'
 
 window.Calendar = Calendar = React.createClass
 
@@ -11,12 +12,21 @@ window.Calendar = Calendar = React.createClass
     tlogId:   React.PropTypes.number.isRequired
 
   getInitialState: ->
-    calendar:   null
-    open:       CALENDAR_CLOSED
-    headerDate: if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
+    calendar:    null
+    open:        CALENDAR_CLOSED
+    rightIndent: RIGHT_INDENT
+    headerDate:  if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
 
   componentDidMount: ->
     @getCalendarFromServer @props.tlogId
+
+  componentDidUpdate: ->
+    @updateCalendarRightIndent() if @state.rightIndent == RIGHT_INDENT
+
+  updateCalendarRightIndent: ->
+    $calendarNode = $( @refs.calendar.getDOMNode() )
+    rightIndent = ($(window).width() - ($calendarNode.offset().left + $calendarNode.outerWidth()))
+    @setState rightIndent: rightIndent
 
   getCalendarFromServer: (tlogId) ->
     $.ajax
@@ -47,7 +57,9 @@ window.Calendar = Calendar = React.createClass
       return `<nav onClick={this.onClick}
                    onMouseEnter={this.onMouseEnter}
                    onMouseLeave={this.onMouseLeave}
-                   className={ calendarClasses }>
+                   className={ calendarClasses }
+                   style={{ right: this.state.rightIndent }}
+                   ref="calendar">
                 <CalendarHeader date={ this.state.headerDate }></CalendarHeader>
                 <CalendarTimeline currentEntry={ this.props.entry } periods={ this.state.calendar.periods }></CalendarTimeline>
               </nav>`
