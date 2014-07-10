@@ -1,71 +1,78 @@
-@{scroller} {
+// Styles
+.scroller {
   position: relative;
   overflow: hidden;
+}
 
-  &__pane {
-    width: 100%;
-    height: 100%;
-    border: none;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+.scroller__pane {
+  width: 100%;
+  height: 100%;
+  border: none;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
-    &::-webkit-scrollbar {
-      width: 0;
-    }
+  &::-webkit-scrollbar {
+    width: 0;
   }
+}
 
-  &__track {
-    width: 4px;
-    position: absolute;
-    display: none;
-    right: 4px;
-    top: 4px;
-    bottom: 4px;
-  }
+.scroller__track {
+  width: 4px;
+  position: absolute;
+  display: none;
+  right: 4px;
+  top: 4px;
+  bottom: 4px;
 
-  &__bar {
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    width: 4px;
-    background: #eee;
-    .opacity(.36);
-    .border-radius(4px);
-    .transition(~"opacity .3s ease");
-
-    &:hover {
-      .opacity(.5);
-    }
-
-    @{scroller}--dark & {
-      background: #bbb;
-
-      &:hover {
-        .opacity(.7);
-      }
-    }
-  }
-
-  &--tracked &__track {
+  .scroller--tracked & {
     display: block;
   }
+}
 
-  /* -- types -- */
-  &--people {
-    @{scroller}__pane {
-      max-height: 304px;
-    }
+.scroller__bar {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  width: 4px;
+  background: #eee;
+  .opacity(.36);
+  .border-radius(4px);
+  .transition(~"opacity .3s ease");
+
+  &:hover {
+    .opacity(.5);
   }
 
-  &--tags {
-    @{scroller}__pane {
-      max-height: 294px;
+  .scroller--dark & {
+    background: #bbb;
+
+    &:hover {
+      .opacity(.7);
     }
   }
+}
 
-  &--messages {
-    @{scroller}__pane {
-      max-height: 500px;
-    }
+// Types
+.scroller--people {
+  .scroller__pane {
+    max-height: 304px;
+  }
+}
+
+.scroller--tags {
+  .scroller__pane {
+    max-height: 294px;
+  }
+}
+
+.scroller--messages {
+  .scroller__pane {
+    max-height: 500px;
+  }
+}
+
+.scroller--persons {
+  .scroller__pane {
+    max-height: 496px;
   }
 }
