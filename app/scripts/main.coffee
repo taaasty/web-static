@@ -67,6 +67,7 @@ require './react/controllers/shellbox'
 require './react/controllers/popup'
 require './react/application'
 
+
 SomeUser     = require './data/user.json'
 SomeCalendar = require './data/calendar.json'
 SomeEntry    = require './data/entry.json'
@@ -106,7 +107,10 @@ else
       withCredentials: true
       crossDomain: true
 
+# React_ujs нужно подключать после того как все компоненты загружены
+window.ReactUjs = require 'react_ujs'
+
 $ ->
-  $(".js-dropdown").dropdown() if Modernizr.touch
+  $(".js-dropdown").dropdown()
 
   ReactApp.start user: TastyData.user

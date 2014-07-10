@@ -1,18 +1,28 @@
 ###* @jsx React.DOM ###
 #
-module.experts = window.PostActions = React.createClass
+ENTRY_PRIVACY_PRIVATE = 'private'
+ENTRY_PRIVACY_PUBLIC  = 'public'
+ENTRY_PRIVACY_LIVE    = 'live'
+PRIVACY_STATES= [ ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, ENTRY_PRIVACY_LIVE]
+
+window.PostActions = React.createClass
+  propTypes:
+    entryId:       React.PropTypes.number.isRequred
+    privacy:       React.PropTypes.string
+    isTlogPrivate: React.PropTypes.bool.isRequred
+
+  getInitialState: ->
+    privacy: @props.privacy
 
   render: ->
     `<div className="post-actions">
-      <div className="post-action post-action--loader">
-        <span className="spinner spinner--8x8">
-          <span className="spinner__icon"></span>
-        </span>
-        </div><div className="post-action post-action--button">
+      {loader()}
+        <div className="post-action post-action--button">
         <button className="button button--grey">
           <span className="button__text">Предпросмотр</span>
         </button>
-        </div><div className="post-action post-action--button">
+        </div>
+        <div className="post-action post-action--button">
         <div className="button-group js-dropdown">
           <button className="button button--green">
             <span className="button__text">Опубликовать</span>
@@ -21,30 +31,40 @@ module.experts = window.PostActions = React.createClass
           </button>
           <div className="dropdown-popup dropdown-popup--green-dark" data-element="dropdown-menu">
             <ul className="dropdown-popup__list">
-              <li className="dropdown-popup__item">
-              <a className="dropdown-popup__link" href="#" title="Видна только мне">
-                <i className="icon icon--lock"></i> Видна только мне
-              </a>
-              </li>
-              <li className="dropdown-popup__item">
-              <a className="dropdown-popup__link state--active" href="#" title="Видна всем в моем тлоге" data-value="unlock">
-                <i className="icon icon--unlock"></i> Видна всем в моем тлоге
-              </a>
-              </li>
-              <li className="dropdown-popup__item">
-              <a className="dropdown-popup__link" href="#" title="Публичная в прямой эфир" data-value="live">
-                <i className="icon icon--wave"></i> Публичная в прямой эфир
-              </a>
-              </li>
-              <li className="dropdown-popup__item">
-              <a className="dropdown-popup__link" href="#" title="Публичная с голосованием" data-value="rating">
-                <i className="icon icon--rating"></i> Публичная с голосованием
-              </a>
-              </li>
+              <PostActionItem title="Видна только мне" icon="lock" selected={this.state.privacy == ENTRY_PRIVACY_PRIVATE} />
+              <PostActionItem title={this.title_public()} icon="unlock" selected={this.state.privacy == ENTRY_PRIVACY_PUBLIC} />
+              {this.liveAction()}
             </ul>
           </div>
         </div>
       </div>
     </div>
     `
+
+  title_public: ->
+    if @props.isTlogPrivate
+      "Видна только моим друзьям"
+    else
+      "Видна всем в моем тлоге"
+
+  liveAction: ->
+    unless @props.isTlogPrivate
+      `<PostActionItem title="В прямой эфир" icon="unlock" selected={this.state.privacy == ENTRY_PRIVACY_LIVE} />`
+
+  loader: ->
+    `<div className="post-action post-action--loader"><span className="spinner spinner--8x8"><span className="spinner__icon"></span></span></div>`
+
+window.PostActionItem = React.createClass
+  propTypes:
+    title: React.PropTypes.string.isRequred
+    icon:  React.PropTypes.string.isRequred
+    selected: React.PropTypes.bool.isRequred
+
+  render: ->
+    classes = React.addons.classSet 'dropdown-popup__link': true, 'state--active': @props.selected
+    `<li className="dropdown-popup__item">
+      <a className={classes} title={this.props.title}>
+        <i className={"icon icon--" + this.props.icon}></i> {this.props.title}
+      </a>
+      </li>`
 
