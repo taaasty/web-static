@@ -17,6 +17,16 @@ window.Calendar = Calendar = React.createClass
     rightIndent: RIGHT_INDENT
     headerDate:  if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
 
+  componentWillMount: ->
+    $(window).on 'resize', @onResize
+
+  componentWillUnmount: ->
+    $(window).on 'resize', @onResize
+
+  onResize: ->
+    @setState rightIndent: RIGHT_INDENT
+    @updateCalendarRightIndent
+
   componentDidMount: ->
     @getCalendarFromServer @props.tlogId
 
