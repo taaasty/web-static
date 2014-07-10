@@ -16,8 +16,15 @@
 
 .tabs-nav__list {
   margin: 0 12px;
-  border-bottom: 1px solid @tabs-nav-border-color;
   overflow: hidden;
+}
+
+.tabs-nav__list:after {
+  content: "";
+  height: 1px;
+  display: block;
+  background: @tabs-nav-border-color;
+  .font-null();
 }
 
 // Item
@@ -26,17 +33,20 @@
 }
 
 .tabs-nav__link {
-  padding: 14px 8px;
+  padding: 14px 8px 13px;
+  margin-bottom: -1px;
   display: inline-block;
+  border-bottom: 2px solid transparent;
   color: inherit;
 
   &.state--active {
+    border-color: @yellow;
     color: @yellow !important;
   }
 }
 
 .tabs-nav__count {
-  margin-left: 6px;
+  font-size: 12px;
   color: @tabs-nav-gray-color;
   .opacity(.3);
 }
