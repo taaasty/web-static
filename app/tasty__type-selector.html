@@ -55,7 +55,7 @@
     <script src="javascripts/old/postEditor.js"></script>
     <!-- end Scripts -->
   </head>
-  <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white tlog-mode-minimal edited-post-text">
+  <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white tlog-mode-minimal no-scroll types-posts-enabled">
     <!-- Toolbar - Close -->
     <div class="toolbar toolbar--close js-hero-close">
       <div class="toolbar__toggle">
@@ -142,6 +142,42 @@
                 <!-- Arrow Back -->
                 <a class="arrow-back js-back" href="#"><i class="icon icon--arrow-left"></i></a>
                 <!-- end Arrow Back -->
+                <!-- Types Posts -->
+                <div class="types-posts">
+                  <a class="types-posts__item js-switcher-type-post" href="#" title="Текст" data-type-post="text">
+                    <div class="types-posts__content">
+                      <i class="icon icon--paper"></i>
+                      <div class="types-posts__text">Текст</div>
+                    </div>
+                    </a><a class="types-posts__item js-switcher-type-post" href="#" title="Цитата" data-type-post="image">
+                    <div class="types-posts__content">
+                      <i class="icon icon--picture"></i>
+                      <div class="types-posts__text">Картинка</div>
+                    </div>
+                    </a><a class="types-posts__item js-switcher-type-post" href="#" title="Картинка" data-type-post="video">
+                    <div class="types-posts__content">
+                      <i class="icon icon--video"></i>
+                      <div class="types-posts__text">Видео</div>
+                    </div>
+                    </a><!--<a class="types-posts__item js-switcher-type-post" href="#" title="Ссылка" data-type-post="link">
+                    <div class="types-posts__content">
+                      <i class="icon icon-/-hyperlink-square"></i>
+                      <div class="types-posts__text">Ссылка</div>
+                    </div>
+                    </a>--><a class="types-posts__item js-switcher-type-post" href="#" title="Цитата" data-type-post="quote">
+                    <div class="types-posts__content">
+                      <i class="icon icon--quote"></i>
+                      <div class="types-posts__text">Цитата</div>
+                    </div>
+                    </a><div class="types-posts__item state--disabled">
+                    <div class="types-posts__content">
+                      <span class="pay">П</span>
+                      <i class="icon icon--pictures"></i>
+                      <div class="types-posts__text">Слайд-шоу</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end Types Posts -->
                 <!-- Posts -->
                 <section class="posts posts--edit js-post-editor">
                 <!-- Post Text -->
@@ -294,7 +330,7 @@
                 </section>
                 <!-- end Posts -->
                 <!-- Post Actions -->
-                <div data-react-class="PostActions" data-react-props='{"entryId":123,"privacy":"public","isTlogPrivate":false}'></div>
+                <div data-react-class="PostActions" data-react-props='{"entryId":123,"privacy":"friends","isTlogPrivate":false}'></div>
                 <!-- end Post Actions -->
               </div>
             </div>

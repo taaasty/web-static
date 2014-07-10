@@ -12,6 +12,11 @@ var sass = require('gulp-sass');
 // Load plugins
 var $ = require('gulp-load-plugins')();
 
+function handleError(err) {
+  console.log(err.toString());
+  this.emit('end');
+}
+
 
 // CoffeeScript
 //gulp.task('coffee', function () {
@@ -31,7 +36,8 @@ gulp.task('scripts', function () {
             insertGlobals: true,
             extensions: ['.coffee', '.csjx', '.js.jsx.coffee'],
             transform: ['coffeeify', 'reactify', 'debowerify']
-        }))
+          }))
+        .on('error', handleError)
         .pipe($.rename('bundle.js'))
         //.pipe($.jshint('.jshintrc'))
         //.pipe($.jshint.reporter('default'))
