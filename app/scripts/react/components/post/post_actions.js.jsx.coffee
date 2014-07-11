@@ -86,7 +86,7 @@ window.PostActionItem = React.createClass
     icon = ICONS[@props.key]
     `<li className="dropdown-popup__item">
       <a className={classes} onClick={this.click} title={this.props.title}>
-        <i className={"icon" + icon}></i> {this.props.title}
+        <i className={"icon " + icon}></i> {this.props.title}
       </a>
       </li>`
 

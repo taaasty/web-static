@@ -18,3 +18,15 @@ require 'ngInfiniteScroll'
 require 'angular-sanitize'
 
 require 'ng-rails-csrf/index'
+
+#require "undo/undo.js"
+#require "rangy/rangy-core.js"
+#require "rangy/rangy-cssclassapplier.js"
+#require "rangy/rangy-selectionsaverestore.js"
+#require "rangy/rangy-serializer.js"
+#require "Medium.js/medium.js"
+
+#require 'undo.js'
+#require 'rangy'
+
+#require 'medium-editor' #/dist/js/medium-editor'

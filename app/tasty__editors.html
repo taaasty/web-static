@@ -56,12 +56,8 @@
     <!-- end Scripts -->
 
     <!-- Medium.js -->
-    <!--<link rel="stylesheet" href="bower_components/Medium.js/medium.css" />-->
-    <script src="bower_components/undo/undo.js"></script>
-    <script src="bower_components/rangy/rangy-core.js"></script>
-    <script src="bower_components/rangy/rangy-cssclassapplier.js"></script>
-    <script src="bower_components/rangy/rangy-selectionsaverestore.js"></script>
-    <script src="bower_components/rangy/rangy-serializer.js"></script>
+    <link rel="stylesheet" href="bower_components/Medium.js/medium.css" />
+    <script src="bower_components/Medium.js/medium.js"></script>
 
     <!-- medium-editor -->
     <link rel="stylesheet" href="bower_components/medium-editor/dist/css/medium-editor.css" />
@@ -159,8 +155,77 @@
                 <!-- end Arrow Back -->
                 <!-- Posts -->
                 <section class="posts posts--edit">
+                <article class="post post--text post--edit">
+                  <h2>Medium.js</h2>
+                  <div class="mediumjs-editor" class='mtasty-editor'>
+                    <p>Только бы не сделать его слишком <a href="http://bling.by/map" title="простым">простым</a> и от этого непонятным. <b>Чтобы этого не случилось,</b> давайте поработаем только с текстовыми постами.</p>
+                  </div>
+
+                  <hr/>
+                  <br/>
+                      <h3>placeholder</h3>
+
+                      <div class="mediumjs-editor" class='mtasty-editor'></div>
+
+                      <br/>
+                      <br/>
+                      <br/>
+
+                        <hr/>
+                    <h2>Medium-editor</h2>
+                    <div class="medium-editor" class='mtasty-editor'>
+                      <p>Только бы не сделать его слишком <a href="http://bling.by/map" title="простым">простым</a> и от этого непонятным. <b>Чтобы этого не случилось,</b> давайте поработаем только с текстовыми постами.</p>
+                    </div>
+
+                    <hr/>
+                    <br/>
+                    <h3>placeholder</h3>
+                    <div class="medium-editor" class='tasty-editor'></div>
+
+                  </article>
+
                   <!-- Post Text -->
-                  <div data-react-class="PostEditorLayout" react-props='{"entryId":123,"privacy":"public","isTlogPrivate":false}'></div>
+                  <article class="post post--text-legacy post--edit">
+                    <header class="post__header">
+                      <div class="post__title tasty-editor js-tasty-editor-text-title" data-placeholder="Место для заголовка">
+                        <div class="tasty-editor-toolbar mode--link" style="top: -2px; left: -20px;">
+                          <div class="tasty-editor-toolbar-inner">
+                            <i class="tasty-editor-arr"></i>
+                            <div class="tasty-editor-buttons">
+                              <div class="tasty-editor-button tasty-editor-button-link">&lt;a /&gt;</div>
+                            </div>
+                            <div class="tasty-editor-link">
+                              <i class="tasty-editor-link-x state--hidden"></i>
+                              <input class="tasty-editor-link-input" type="text" placeholder="Вставьте ссылку" value="" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="tasty-editor-placeholder state--hidden">Место для заголовка, <span class="form-upload form-upload--image"><span class="form-upload__text">картинки</span><input id="text-image" class="form-upload__input" type="file" name="text-image" /></span> или <span class="form-upload form-upload--video"><span class="form-upload__text">видео</span><input id="text-video" class="form-upload__input" type="file" name="text-video" /></span></div>
+                        <div class="tasty-editor-content" contenteditable="true">
+                          Да это же самый простой редактор в мире!
+                        </div>
+                      </div>
+                    </header>
+                    <div class="post__content tasty-editor js-tasty-editor-text-content" data-placeholder="Начните набирать текст поста. Можно без заголовка, без картинки или без видео.">
+                      <div class="tasty-editor-toolbar mode--link" style="top: -42px; left: 226px;">
+                        <div class="tasty-editor-toolbar-inner">
+                          <i class="tasty-editor-arr"></i>
+                          <div class="tasty-editor-buttons">
+                            <div class="tasty-editor-button tasty-editor-button-link">&lt;a /&gt;</div>
+                          </div>
+                          <div class="tasty-editor-link">
+                            <i class="tasty-editor-link-x"></i>
+                            <input class="tasty-editor-link-input" type="text" placeholder="Вставьте ссылку" value="http://bling.by/map" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tasty-editor-placeholder state--hidden">Начните набирать текст поста. Можно без заголовка, без картинки или без видео.</div>
+                      <div class="tasty-editor-content" contenteditable="true">
+                        <p>Только бы не сделать его слишком <a href="http://bling.by/map" title="простым">простым</a> и от этого непонятным. Чтобы этого не случилось, давайте поработаем только с текстовыми постами.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <!-- end Post Text -->
 
                 <!-- Post Quote -->
                 <article class="post post--quote post--edit">
@@ -285,6 +350,6 @@
       <!--<div class="notice__inner">Невозможно загрузить картинку - она очень маленькая</div>-->
     <!--</div>-->
     <!-- end Notice -->
-    <script src="scripts/bundle.js" defer></script>
+    <script src="scripts/bundle.js"></script>
   </body>
 </html>
