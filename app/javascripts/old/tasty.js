@@ -216,14 +216,6 @@
 
             this.checkBackground = $('body').hasClass('tlog-headercolor-auto');
 
-            this.design = new Design({
-                saveUrl: TastyAPI.url('user','save'),
-                onChange: function(key,val){
-                    if(key == 'layout-cover' && this.checkBackground)
-                        BackgroundCheck.refresh();
-                }
-            });
-
             var bgcolor = $('.b-page .b-cover').css('background-color');
 
             if(this.checkBackground){
@@ -293,131 +285,10 @@
                     },
                 });
 
-                $(entry).find('.js-post-report').on('click',function(e){
-                    $('.confirmation').show();
-                    $('body').addClass('confirmation-enabled');
-                    $('.confirmation .confirmation__text').html("Вы действительно хотите пожаловаться на запись?");
-                    $('.confirmation .button__text').html("Подать жалобу");
-
-                    $('.confirmation .button').off('click').on('click', function() {
-                        $('.confirmation').hide();
-                        $('body').removeClass('confirmation-enabled');
-
-                        TastyAPI.request('entry', 'report', entryId, {
-                            success: function(data) {
-                                Tasty.notify('success', 'Спасибо, роскомнадзор разберется');
-                            },
-                            error: function(error) {
-                                Tasty.notify('error', error.message);
-                            }
-                        });
-                    });
-
-                    e.preventDefault();
-                });
-
-                $(entry).find('.js-post-delete').on('click',function(e){
-                    $('.confirmation').show();
-                    $('body').addClass('confirmation-enabled');
-                    $('.confirmation .confirmation__text').html("Вы действительно хотите удалить запись?<br />Её нельзя будет восстановить.");
-                    $('.confirmation .button__text').html("Удалить запись");
-
-                    $('.confirmation .button').off('click').on('click', function() {
-                        $('.confirmation').hide();
-                        $('body').removeClass('confirmation-enabled');
-
-                        TastyAPI.request('entry', 'delete', entryId, {
-                            success: function(data) {
-                                $(entry).fadeOut(500,function(){
-                                    $(entry).slideUp(200,function(){$(this).remove();});
-                                });
-                            },
-                            error: function(error) {
-                                Tasty.notify('error', error.message);
-                            }
-                        });
-                    });
-
-                    e.preventDefault();
-                });
-
-                $(entry).find('.js-post-subscribe').on('click',function(){
-                    var control = $(this);
-                    if(control.hasClass('state--subscribed')){
-                        var method = 'unsubscribe';
-                    }else{
-                        var method = 'subscribe';
-                        control.addClass('voted');
-                    }
-                    TastyAPI.request('entry',method,entryId,{
-                        success: function(response){
-                            control.toggleClass('state--subscribed', (method == 'subscribe'));
-                            if(method == 'subscribe') {
-                                Tasty.notify('success', 'Вы были подписаны на комментарии к этой записи');
-                            } else {
-                                Tasty.notify('success', 'Вы были отписаны от комментариев к этой записи');
-                            }
-                        },
-                        error: function(response){
-                            Tasty.notify('error',response.error.message);
-                        }
-                    });
-                    return false;
-                });
-
-
-                $(entry).find('.js-vote').on('click',function(){
-                    var control = $(this);
-                    if(!control.hasClass('voted')){
-                        control.addClass('voted');
-                        TastyAPI.request('entry','vote',entryId,{
-                            success: function(response) {
-                                Tasty.notify('success', 'Спасибо за ваш голос');
-                                control.html(response.value);
-                            },
-                            error: function(response){
-                                Tasty.notify('error', response.error.message);
-                            }
-                        });
-                    }
-                });
-
                 if(isFaved !== null ) {
                     $(entry).find('.js-post-favorites').toggleClass('state--faved', isFaved);
                 }
 
-                $(entry).find('.js-post-favorites').on('click', function() {
-                    var control = $(this);
-
-                    if(control.hasClass('state--faved')){
-                        var method = 'unfave';
-                    }else{
-                        var method = 'fave';
-                    }
-
-                    control.toggleClass('state--faved', (method == 'fave'));
-
-                    TastyAPI.request('entry', method, entryId, {
-                        success: function(response){
-                            if(method == 'fave') {
-                                Tasty.notify('success', 'Запись теперь в избранном');
-                            } else {
-                                Tasty.notify('success', 'Запись удалена из избранного');
-
-                                if($('body').hasClass('tlog-mode-own-faves')){
-                                    $(entry).fadeOut(500,function() {
-                                        $(entry).slideUp(200,function(){$(this).remove();});
-                                    });
-                                }
-                            }
-                        },
-                        error: function(response) {
-                            Tasty.notify('error', response.error.message);
-                        }
-                    });
-
-                    return false;
-                });
             });
 
         },
@@ -428,7 +299,6 @@
                 var method = $(this).hasClass('state--active') ? 'unsubscribe' : 'subscribe';
                 $('.toolbar--userbar .follow-status').toggleClass('state--hidden', $(this).hasClass('state--active'));
                 $(this).toggleClass('state--active');
-                TastyAPI.request('user', method, userId);
             });
         },
 
