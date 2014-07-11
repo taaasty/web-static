@@ -30,6 +30,6 @@ require 'ng-rails-csrf/index'
 #require "Medium.js/medium.js"
 
 #require 'undo.js'
-#require 'rangy'
+require 'rangy'
 
 #require 'medium-editor' #/dist/js/medium-editor'
