@@ -11,51 +11,61 @@ ICONS[ENTRY_PRIVACY_LIVE]    = 'icon--wave'
 ICONS[ENTRY_PRIVACY_PRIVATE] = 'icon--lock'
 ICONS[ENTRY_PRIVACY_PUBLIC]  = 'icon--unlock'
 
+PREVIEW_BODY_CLASSES =  { true:  'tlog-mode-full', false: 'tlog-mode-minimal' }
+
 window.PostActions = React.createClass
   propTypes:
-    entryId:       React.PropTypes.number.isRequired
-    privacy:       React.PropTypes.string
-    isTlogPrivate: React.PropTypes.bool.isRequired
-
-  getInitialState: ->
-    privacy: @props.privacy
+    privacy:         React.PropTypes.string.isRequired
+    isTlogPrivate:   React.PropTypes.bool.isRequired
+    onChangePrivacy: React.PropTypes.func.isRequired
+    onPreview:       React.PropTypes.func.isRequired
+    previewMode:     React.PropTypes.bool.isRequired
 
   select: (key) ->
-    @setState privacy: key
+    @props.onChangePrivacy(key)
+
+  privacy: ->
+    @props.privacy
+
+  componentWillUpdate: (nextProps, nextState) ->
+    $("body").removeClass PREVIEW_BODY_CLASSES[@props.previewMode]
+    $("body").addClass    PREVIEW_BODY_CLASSES[nextProps.previewMode]
 
   render: ->
+    previewButtonClasses = React.addons.classSet button: true, 'button--grey': true, 'state--active': @props.previewMode
+
     `<div className="post-actions">
       {this.loader()}
         <div className="post-action post-action--button">
-        <button className="button button--grey">
-          <span className="button__text">Предпросмотр</span>
-        </button>
+          <button className={previewButtonClasses} onClick={this.props.onPreview}>
+            <span className="button__text">Предпросмотр</span>
+          </button>
         </div>
         <div className="post-action post-action--button">
-        <div className="button-group js-dropdown">
-          <button className="button button--green"><span className="button__text">{this.buttonTitle()}</span></button>
-          <button className="button button--green-dark post-settings-button" data-element="dropdown-toggle">{this.stateIcon()}</button>
-          <div className="dropdown-popup dropdown-popup--green-dark" data-element="dropdown-menu">
-            <ul className="dropdown-popup__list">
-              <PostActionItem title="Видна только мне"    onSelect={this.select} key={ ENTRY_PRIVACY_PRIVATE } selected={this.state.privacy == ENTRY_PRIVACY_PRIVATE} />
-              <PostActionItem title={this.title_public()} onSelect={this.select} key={ ENTRY_PRIVACY_PUBLIC } selected={this.state.privacy == ENTRY_PRIVACY_PUBLIC} />
-              {this.liveAction()}
-            </ul>
+          <div className="button-group js-dropdown">
+            <button className="button button--green"><span className="button__text">{this.buttonTitle()}</span></button>
+            <button className="button button--green-dark post-settings-button" data-element="dropdown-toggle">{this.stateIcon()}</button>
+            <div className="dropdown-popup dropdown-popup--green-dark" data-element="dropdown-menu">
+              <ul className="dropdown-popup__list">
+                <PostActionItem title="Видна только мне"    onSelect={this.select} key={ ENTRY_PRIVACY_PRIVATE } selected={this.privacy() == ENTRY_PRIVACY_PRIVATE} />
+                <PostActionItem title={this.title_public()} onSelect={this.select} key={ ENTRY_PRIVACY_PUBLIC } selected={this.privacy() == ENTRY_PRIVACY_PUBLIC} />
+                {this.liveAction()}
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-    </div>`
+      </div>`
 
   buttonTitle: ->
-    if @state.privacy == ENTRY_PRIVACY_PRIVATE
-      'Сохранить'
+    if @privacy() == ENTRY_PRIVACY_PRIVATE
+      'Сохранить в тлоге'
     else
       'Опубликовать'
 
 
   stateIcon: ->
     icons= icon: true
-    icons[ICONS[@state.privacy]] = true
+    icons[ICONS[@privacy()]] = true
     `<span className={React.addons.classSet(icons)}></span>`
 
   title_public: ->
@@ -66,7 +76,7 @@ window.PostActions = React.createClass
 
   liveAction: ->
     unless @props.isTlogPrivate
-      `<PostActionItem title="В прямой эфир" onSelect={this.select} key={ENTRY_PRIVACY_LIVE} selected={this.state.privacy == ENTRY_PRIVACY_LIVE} />`
+      `<PostActionItem title="В прямой эфир" onSelect={this.select} key={ENTRY_PRIVACY_LIVE} selected={this.privacy() == ENTRY_PRIVACY_LIVE} />`
 
   loader: ->
     `<div className="post-action post-action--loader"><span className="spinner spinner--8x8"><span className="spinner__icon"></span></span></div>`
