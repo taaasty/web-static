@@ -78,3 +78,8 @@ https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support
 ## HTML5 FileReader
 
 * Firefox 3.6+, IE10+, and Opera 12+.
+
+## TODO
+
+Подключить git@github.com:eligrey/classList.js.git для поддержки IE9 в MediumEditor
+
