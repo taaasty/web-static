@@ -61,28 +61,23 @@ window.Calendar = Calendar = React.createClass
       when CALENDAR_OPENED_BY_HOVER then @setState open: CALENDAR_CLOSED
       else console.error? "Unknown state.open", @state.open
 
-  render: ->
-    if @state.calendar?
-      calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @isOpen()
-      return `<nav onClick={this.onClick}
-                   onMouseEnter={this.onMouseEnter}
-                   onMouseLeave={this.onMouseLeave}
-                   className={ calendarClasses }
-                   style={{ right: this.state.rightIndent }}
-                   ref="calendar">
-                <CalendarHeader date={ this.state.headerDate }></CalendarHeader>
-                <CalendarTimeline currentEntry={ this.props.entry } periods={ this.state.calendar.periods }></CalendarTimeline>
-              </nav>`
-    else
-      # Пока календарь не загружен нет смысла скрывать заголовок
-      # TODO показывать спиннер
-      return `<nav onClick={this.onClick}
-                   onMouseEnter={this.onMouseEnter}
-                   onMouseLeave={this.onMouseLeave}
-                   className="calendar">
-                <CalendarHeader date={ this.state.headerDate }></CalendarHeader>
-              </nav>`
-
   isOpen: -> @state.open != CALENDAR_CLOSED
+
+  render: ->
+    calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @isOpen()
+    children = `<CalendarHeader date={ this.state.headerDate }></CalendarHeader>`
+
+    if @isOpen() && @state.calendar
+      children = `<CalendarTimeline currentEntry={ this.props.entry }
+                                    periods={ this.state.calendar.periods }></CalendarTimeline>`
+
+    return `<nav onClick={this.onClick}
+                 onMouseEnter={this.onMouseEnter}
+                 onMouseLeave={this.onMouseLeave}
+                 className={ calendarClasses }
+                 style={{ right: this.state.rightIndent }}
+                 ref="calendar">
+              { children }
+            </nav>`
 
 module.exports = Calendar
