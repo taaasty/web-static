@@ -1,3 +1,13 @@
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 100;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 100;}
+}
+
 @calendar-height: 53px;
 
 .calendar {
@@ -20,19 +30,19 @@
 
 .calendar--open {
   right: @toolbar-right!important;
+}
 
-  .calendar__date {
-    display: none;
-  }
-
-  .calendar__timeline-viewport {
-    display: block;
-  }
+.calendar__timeline-viewport--active {
+  display: block;
+  -webkit-animation: fadeIn .5s;
+  animation: fadeIn .5s;
 }
 
 .calendar__date {
   display: block;
   line-height: @calendar-height - 1;
+  -webkit-animation: fadeIn .5s;
+  animation: fadeIn .5s;
 }
 
 .calendar__date-day {
@@ -53,7 +63,6 @@
 
 .calendar__timeline-viewport {
   height: 100%;
-  display: none;
   color: @white;
   overflow: hidden;
 }

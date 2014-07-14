@@ -1,8 +1,9 @@
 ###* @jsx React.DOM ###
 
 window.CalendarHeader = CalendarHeader = React.createClass
+
   propTypes:
-    date:     React.PropTypes.object.isRequired
+    date: React.PropTypes.object.isRequired
 
   render: ->
     day  = @props.date.format 'D'
