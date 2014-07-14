@@ -8,10 +8,12 @@
 
 @black: #000;
 @white: #fff;
-
 @yellow: #f8c700;
+@green-dark: #2d9161;
+@green: #32a16c;
+@green-light: #77b97e;
 
-@color-base: @color-black;
+@color-base: @black;
 
 @background-selection: #b9c3ca;
 
@@ -98,8 +100,6 @@
 @shellbox: ~".shellbox";
 @form-popup: ~".form-popup";
 @switcher: ~".switcher";
-@accounts: ~".accounts";
-@account: ~".account";
 @settings: ~".settings";
 @types-posts: ~".types-posts";
 @dropdown: ~".dropdown-popup";
@@ -110,10 +110,22 @@
 @page-body-inner-padding-vertical: 40px;
 @page-body-inner-padding-horizontal: 68px;
 
-// Guide Popup
+// Indents
+@indent-base: 20px;
+
+// Z-indexes
+/*-- new --*/
+@zindex-affixed: 100;
+@zindex-button-affixed: @zindex-affixed;
+
+/*-- old --*/
 @guide-popup-zindex: 500;
+@toolbar-zindex: 100;
+@dropdown-zindex: 500;
 
 // Buttons
+@button-border-radius: 3px;
+
 @button-small-height: @button-middle-height;
 @button-middle-height: 40px;
 @button-large-height: 48px;
@@ -126,6 +138,8 @@
 @button-middle-font-size: 13px;
 @button-large-font-size: @button-middle-font-size;
 
+@button-affixed-indent: @indent-base;
+
 // Avatars
 @avatar-styles: 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth';
 @avatar-backgrounds: #eb4656, #f37420, #ffca00, #b5c31e, #44d068, #34c8bc, #3382da, #7648de;
@@ -137,7 +151,6 @@
 @toolbar-margin: 20px;
 @toolbar-right: 80px;
 @toolbar-opacity: .72;
-@toolbar-zindex: 100;
 
 // Menu
 @menu-font-size: 17px;
@@ -158,7 +171,6 @@
 @dropdown-line-height: ceil((@dropdown-font-size * 1.36)); // ~15px
 @dropdown-border-radius: 3px;
 @dropdown-height-item: 40px;
-@dropdown-zindex: 500;
 
 // Follow Button
 @fb-border-color: rgba(red(@white), green(@white), blue(@white), .3);
@@ -179,9 +191,8 @@
 @person-hover-bg: rgba(red(@person-hover-bg-base), green(@person-hover-bg-base), blue(@person-hover-bg-base), .9);
 @person-gray-color: #5a5a5a;
 
-/** Follow Button **/
-@person-fb-border-color-base: #7c7c7c;
-@person-fb-border-color: rgba(red(@person-fb-border-color-base), green(@person-fb-border-color-base), blue(@person-fb-border-color-base), .2);
+/*-- Follow Button --*/
+@person-fb-border-color: rgba(red(@white), green(@white), blue(@white), .1);
 @person-fb-color: rgba(red(@white), green(@white), blue(@white), .2);
 
 // Bricks
