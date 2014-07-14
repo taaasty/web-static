@@ -24,42 +24,48 @@
 
   &:before {
     border: 1px solid;
-    .opacity(.1);
+    opacity: .1;
   }
 
   &:hover {
     &:before {
-      .opacity(.3);
+      opacity: .3;
     }
   }
 
   &:active {
     &:before {
-      .opacity(.5);
+      opacity: .5;
     }
   }
 }
 
 .button-social() {
-  @{icons} {
+  .icon {
     height: 100%;
     margin-right: @button-middle-padding-horizontal - 4;
     padding-right: @button-middle-padding-horizontal - 2;
     display: inline-block;
-    border-right: 1px solid rgba(red(@color-white), green(@color-white), blue(@color-white), .09);
+    border-right: 1px solid rgba(red(@white), green(@white), blue(@white), .09);
     top: auto;
     font-size: 16px;
     vertical-align: top;
 
-    @{button}--large& {
+    .button--large& {
       margin-right: @button-large-padding-horizontal - 4;
       padding-right: @button-large-padding-horizontal - 2;
     }
   }
 }
 
+.button-group-style() {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 // Styles
-@{button} {
+.button {
   width: auto;
   margin: 0;
   padding: 0;
@@ -74,12 +80,11 @@
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
-  overflow: hidden;
   .button-size(@button-middle-height, @button-middle-padding-horizontal, @button-middle-font-size);
-  .box-sizing(border-box);
-  .border-radius(3px);
-  .user-select(none);
-  .transition(~"all .3s ease");
+  box-sizing: border-box;
+  border-radius: @button-border-radius;
+  user-select: none;
+  transition: all .3s ease;
 
   // Button Link
   a& {
@@ -95,12 +100,12 @@
     right: 0;
     bottom: 0;
     left: 0;
-    .border-radius(3px);
-    .transition(~"border .3s ease, opacity .3s");
+    border-radius: @button-border-radius;
+    transition: border .3s ease, opacity .3s ease;
   }
 
   // Icons
-  @{icons} {
+  .icon {
     position: relative;
     top: -1px;
     font-size: 23px;
@@ -108,22 +113,21 @@
     vertical-align: middle;
   }
 
+  .icon--cross {
+    font-size: 18px;
+  }
+
+  // Loader
   .spinner {
     top: -1px;
   }
 }
 
 // Button Group
-@{button}-group {
-  .button-group-style() {
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-  }
-
+.button-group {
   .button-group-style;
 
-  > @{button} {
+  > .button {
     &:not(:first-of-type) {
       margin-left: -1px; // Фикс для Chrome (во время анимации между кнопками появляется полоска в 1px)
       .border-radius-top-left(0);
@@ -141,121 +145,140 @@
   }
 
   &.state--expanded {
-    & > @{button} {
+    & > .button {
       .border-radius-bottom-right(0);
       .border-radius-bottom-left(0);
     }
 
-    & > @{dropdown} {
+    & > .dropdown-popup {
       .border-radius-top-right(0);
       .border-radius-top-left(0);
     }
   }
+}
 
-  &-dropdown {
-    .button-group-style;
+.button-group-dropdown {
+  .button-group-style;
 
-    &:not(:first-child) {
-      @{button} {
-        .border-radius-top-left(0);
-        .border-radius-bottom-left(0);
-      }
+  &:not(:first-child) {
+    .button {
+      .border-radius-top-left(0);
+      .border-radius-bottom-left(0);
     }
+  }
 
-    &:not(:last-child) {
-      @{button} {
-        .border-radius-top-right(0);
-        .border-radius-bottom-right(0);
-      }
+  &:not(:last-child) {
+    .button {
+      .border-radius-top-right(0);
+      .border-radius-bottom-right(0);
     }
+  }
 
-    &:not(:first-child):not(:last-child) {
-      @{button} {
-        .border-radius(0);
-      }
+  &:not(:first-child):not(:last-child) {
+    .button {
+      .border-radius(0);
     }
   }
 }
 
 // Sizes
-@{button}--small {
+.button--small {
   .button-size(@button-small-height, @button-small-padding-horizontal, @button-small-font-size);
 }
 
-@{button}--large {
+.button--large {
   .button-size(@button-large-height, @button-large-padding-horizontal, @button-large-font-size);
 }
 
 // Types, Themes
 /*-- red --*/
-@{button}--red {
-  color: @color-white !important;
+.button--red {
+  color: @white !important;
   .button-style(#f3534b);
 }
 
 /*-- green --*/
-@{button}--green {
-  color: @color-white !important;
-  .button-style(@color-green);
+.button--green {
+  color: @white !important;
+  .button-style(@green);
 }
 
-@{button}--green-light {
-  color: @color-white !important;
-  .button-style(@color-green-light);
+.button--green-light {
+  color: @white !important;
+  .button-style(@green-light);
 }
 
-@{button}--green-dark {
-  color: @color-white !important;
-  .button-style(@color-green-dark);
+.button--green-dark {
+  color: @white !important;
+  .button-style(@green-dark);
 }
 
 /*-- blue --*/
-@{button}--blue {
-  color: @color-white !important;
+.button--blue {
+  color: @white !important;
   .button-style(#4d75a3);
 }
 
 /*-- grey --*/
-@{button}--grey {
+.button--grey {
   color: @color-white !important;
   .button-style(#b2b2b2);
 }
 
 /*-- yellow --*/
-@{button}--yellow {
-  color: @color-black !important;
-  .button-style(@color-yellow);
+.button--yellow {
+  color: @black !important;
+  .button-style(@yellow);
 }
 
 /*-- outline --*/
-@{button}--outline {
-  .button-outline(@color-white);
+.button--outline {
+  .button-outline(@white);
+}
+
+.button--outline-light-white {
+  color: rgba(red(@white), green(@white), blue(@white), .2) !important;
+
+  &:before {
+    border: 1px solid rgba(red(@white), green(@white), blue(@white), .1);
+    opacity: 1;
+  }
+
+  &:hover {
+    color: @white !important;
+  }
 }
 
 // Rectangular Button
-@{button}--rectangle {
-  .border-radius(0);
+.button--rectangle {
+  border-radius: 0;
 }
 
 // Block Button
-@{button}--block {
+.button--block {
   width: 100%;
   padding-right: 0;
   padding-left: 0;
   display: block;
-  .box-sizing(content-box);
+  box-sizing: content-box;
 }
 
 // Fixed Button
-@{button}--affixed {
+.button--affixed {
   position: fixed;
-  top: @toolbar-margin;
-  right: @toolbar-margin;
-  z-index: @toolbar-zindex;
+  top: @button-affixed-indent;
+  right: @button-affixed-indent;
+  z-index: @zindex-button-affixed;
 }
 
 // Social Buttons
-@{button}--vkontakte {
+.button--vkontakte {
   .button-social;
   .button-style(#4d75a3);
+}
+
+// Icon Button
+.button--icon {
+  padding-right: 12px !important;
+  padding-left: 12px !important;
 }

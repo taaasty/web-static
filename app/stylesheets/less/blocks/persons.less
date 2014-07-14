@@ -1,3 +1,6 @@
+@person-btn-outline-border-color: rgba(red(@white), green(@white), blue(@white), .1);
+@person-btn-outline-color: rgba(red(@white), green(@white), blue(@white), .2);
+
 .persons {
   padding: 20px 0;
 }
@@ -9,6 +12,12 @@
 
   &:hover {
     background-color: @person-hover-bg;
+  }
+
+  .button {
+    margin-left: 5px;
+    padding-right: 22px;
+    padding-left: 22px;
   }
 }
 
@@ -38,6 +47,8 @@
 .person__actions {
   display: table-cell;
   vertical-align: middle;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .person__name {
