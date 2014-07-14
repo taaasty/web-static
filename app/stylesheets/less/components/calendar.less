@@ -1,8 +1,3 @@
-@-webkit-keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 100;}
-}
-
 @keyframes fadeIn {
     from {opacity: 0;}
     to {opacity: 100;}
@@ -26,22 +21,26 @@
   .border-radius(@calendar-height / 2);
   .transition(~"max-width .3s ease, background .3s ease");
   transition: right .3s ease-in-out;
+  transition: width .3s ease-in-out;
+}
+
+.calendar--closed {
+  width: 150px;
 }
 
 .calendar--open {
-  right: @toolbar-right!important;
+  width: 90%;
+  // right: @toolbar-right!important;
 }
 
 .calendar__timeline-viewport--active {
   display: block;
-  -webkit-animation: fadeIn .5s;
   animation: fadeIn .5s;
 }
 
 .calendar__date {
   display: block;
   line-height: @calendar-height - 1;
-  -webkit-animation: fadeIn .5s;
   animation: fadeIn .5s;
 }
 

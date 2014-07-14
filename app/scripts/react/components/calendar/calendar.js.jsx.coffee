@@ -44,7 +44,7 @@ window.Calendar = Calendar = React.createClass
   isOpen: -> @state.open != CALENDAR_CLOSED
 
   render: ->
-    calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @isOpen()
+    calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @isOpen(), 'calendar--closed': !@isOpen()
     children = `<CalendarHeader date={ this.state.headerDate }></CalendarHeader>`
 
     if @isOpen()
