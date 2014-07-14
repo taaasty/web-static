@@ -20,12 +20,13 @@
   .user-select(none);
   .border-radius(@calendar-height / 2);
   .transition(~"max-width .3s ease, background .3s ease");
-  transition: right .3s ease-in-out;
   transition: width .3s ease-in-out;
 }
 
 .calendar--closed {
-  width: 150px;
+  // Примерно ширина с двузначной датой (29)
+  // и длинным днем недели (воскресенье)
+  width: 7.5em;
 }
 
 .calendar--open {
