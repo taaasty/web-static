@@ -3,7 +3,6 @@
 CALENDAR_CLOSED = 'closed'
 CALENDAR_OPENED_BY_HOVER = 'openedByHover'
 CALENDAR_OPENED_BY_CLICK = 'openedByClick'
-RIGHT_INDENT = 'auto'
 
 window.Calendar = Calendar = React.createClass
 
@@ -14,29 +13,10 @@ window.Calendar = Calendar = React.createClass
   getInitialState: ->
     calendar:    null
     open:        CALENDAR_CLOSED
-    rightIndent: RIGHT_INDENT
     headerDate:  if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
-
-  componentWillMount: ->
-    $(window).on 'resize', @onResize
-
-  componentWillUnmount: ->
-    $(window).on 'resize', @onResize
-
-  onResize: ->
-    @setState rightIndent: RIGHT_INDENT
-    @updateCalendarRightIndent
 
   componentDidMount: ->
     @getCalendarFromServer @props.tlogId
-
-  componentDidUpdate: ->
-    @updateCalendarRightIndent() if @state.rightIndent == RIGHT_INDENT
-
-  updateCalendarRightIndent: ->
-    $calendarNode = $( @refs.calendar.getDOMNode() )
-    rightIndent = ($(window).width() - ($calendarNode.offset().left + $calendarNode.outerWidth()))
-    @setState rightIndent: rightIndent
 
   getCalendarFromServer: (tlogId) ->
     $.ajax
@@ -67,16 +47,18 @@ window.Calendar = Calendar = React.createClass
     calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @isOpen()
     children = `<CalendarHeader date={ this.state.headerDate }></CalendarHeader>`
 
-    if @isOpen() && @state.calendar
-      children = `<CalendarTimeline currentEntry={ this.props.entry }
-                                    periods={ this.state.calendar.periods }></CalendarTimeline>`
+    if @isOpen()
+      if @state.calendar
+        children = `<CalendarTimeline currentEntry={ this.props.entry }
+                                      periods={ this.state.calendar.periods }></CalendarTimeline>`
+      else
+        children = 'Loading..'
 
     return `<nav onClick={this.onClick}
                  onMouseEnter={this.onMouseEnter}
                  onMouseLeave={this.onMouseLeave}
                  className={ calendarClasses }
-                 style={{ right: this.state.rightIndent }}
-                 ref="calendar">
+                 >
               { children }
             </nav>`
 
