@@ -17,11 +17,11 @@
     "touch_url": "http://a0.tcdn.ru/assets/userpic/fa/58/1_large.jpg"
   },
   "api_key": {
-    "access_token": "d72fd485ca42af43d133d7367a4b4a3b",
+    "access_token": "7577cff44026cb654e36e0099814ba53",
     "user_id": 1,
     "expires_at": "2014-12-13 11:01:57 +0400"
   },
-  "email": 'andy@mail.ru',
+  "email": "andy@mail.ru",
   "is_privacy": true,
   "is_confirmed": true,
   "available_notifications": false,
