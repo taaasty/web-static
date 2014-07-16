@@ -2,27 +2,6 @@
 #
 rangy?.init()
 
-Highlighter = ->
-  @button = document.createElement("button")
-  @button.className = "medium-editor-action"
-  @button.innerText = "H"
-  @button.onclick = @onClick.bind(this)
-  @classApplier = rangy.createCssClassApplier("highlight",
-    elementTagName: "mark"
-    normalize: true
-  )
-  return
-Highlighter::onClick = ->
-  @classApplier.toggleSelection()
-  return
-
-Highlighter::getButton = ->
-  @button
-
-Highlighter::checkState = (node) ->
-  @button.classList.add "medium-editor-button-active"  if node.tagName is "MARK"
-  return
-
 window.PostEditor = React.createClass
 
   getDefaultProps: ->
@@ -41,14 +20,12 @@ window.PostEditor = React.createClass
     @contentEditor = new MediumEditor @refs.content.getDOMNode(),
       buttons:       ['highlight', 'bold', 'italic', 'underline', 'quote']
       anchorInputPlaceholder:   'Начните набирать текст поста. Можно без заголовка, без картинки или без видео.'
-      #allowMultiParagraphSelection: false
       firstHeader:   'h1'
       secondHeader:  'h2'
       targetBlank:   true
       cleanPastedHTML: true
       extensions:
         highlight: new Highlighter()
-      #autofocus:    false
 
     @refs.content.getDOMNode().focus?()
 
@@ -56,13 +33,8 @@ window.PostEditor = React.createClass
     @titleEditor.deactivate()
     @contentEditor.deactivate()
 
-    #@titleEditor.destroy()
-    #@contentEditor.destroy()
-
 
   render: ->
-    # placeholder = <div class="tasty-editor-placeholder state--hidden">Начните набирать текст поста. Можно без заголовка, без картинки или без видео.</div>
-    #<div class="tasty-editor-placeholder state--hidden">Место для заголовка, <span class="form-upload form-upload--image"><span class="form-upload__text">картинки</span><input id="text-image" class="form-upload__input" type="file" name="text-image" /></span> или <span class="form-upload form-upload--video"><span class="form-upload__text">видео</span><input id="text-video" class="form-upload__input" type="file" name="text-video" /></span></div>
     `<article className="post post--text post--edit">
       <header className="post__header">
         <div className="post__title tasty-editor">
@@ -90,5 +62,30 @@ window.PostEditor = React.createClass
       #mode:         Medium.richMode
       #placeholder: 'Начните набирать текст поста. Можно без заголовка, без картинки или без видео.'
       ##autofocus:    false
+  #componentWillUnmount: ->
+    #@titleEditor.destroy()
+    #@contentEditor.destroy()
+
+
+window.Highlighter = ->
+  @button = document.createElement("button")
+  @button.className = "medium-editor-action"
+  @button.innerText = "H"
+  @button.onclick = @onClick.bind(this)
+  @classApplier = rangy.createCssClassApplier("highlight",
+    elementTagName: "mark"
+    normalize: true
+  )
+  return
+Highlighter::onClick = ->
+  @classApplier.toggleSelection()
+  return
+
+Highlighter::getButton = ->
+  @button
+
+Highlighter::checkState = (node) ->
+  @button.classList.add "medium-editor-button-active"  if node.tagName is "MARK"
+  return
 
 

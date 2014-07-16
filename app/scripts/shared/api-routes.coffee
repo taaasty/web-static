@@ -15,4 +15,6 @@ ApiRoutes =
   request_confirm_url:              -> TastySettings.api_host + 'v1/users/confirmation'
   userpic_url:                      -> TastySettings.api_host + 'v1/users/userpic'
 
+  entry_url:              (entryId) -> TastySettings.api_host + 'v1/entries/' + entryId
+
 window.Routes.api = ApiRoutes
