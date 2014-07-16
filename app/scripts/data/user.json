@@ -1,39 +1,38 @@
 {
-  "id": 1,
-  "name": "andy",
-  "slug": "andy",
-  "title": "what inspires me",
+  "id": 17,
+  "name": "yagr",
+  "slug": "yagr",
+  "title": null,
   "is_female": false,
   "is_daylog": false,
-  "tlog_url": "http://andy.3000.vkontraste.ru/",
-  "created_at": "2007-03-25 22:09:16 +0400",
-  "updated_at": "2014-07-07 13:27:16 +0400",
-  "userpic": {
-    "large_url": "http://a0.tcdn.ru/assets/userpic/fa/58/1_large.jpg",
-    "thumb128_url": "http://a0.tcdn.ru/assets/userpic/fa/58/1_large.jpg",
-    "thumb64_url": "http://a0.tcdn.ru/assets/userpic/fa/58/1_large.jpg",
-    "thumb32_url": "http://a0.tcdn.ru/assets/userpic/fa/58/1_large.jpg",
-    "thumb16_url": "http://a0.tcdn.ru/assets/userpic/fa/58/1_large.jpg",
-    "touch_url": "http://a0.tcdn.ru/assets/userpic/fa/58/1_large.jpg"
-  },
-  "api_key": {
-    "access_token": "d72fd485ca42af43d133d7367a4b4a3b",
-    "user_id": 1,
-    "expires_at": "2014-12-13 11:01:57 +0400"
-  },
-  "email": 'andy@mail.ru',
-  "is_privacy": true,
+  "tlog_url": "http://yagr.3000.vkontraste.ru/",
+  "created_at": "2007-03-26T10:49:19.000+04:00",
+  "updated_at": "2014-07-14T11:22:10.000+04:00",
+  "email": "greshilov@yandex.ru",
+  "is_privacy": false,
   "is_confirmed": true,
   "available_notifications": false,
-  "authentications": [
-
-  ],
+  "authentications": [],
+  "api_key": {
+    "access_token": "3cd8350b5229f08ecc12416c89c2be39",
+    "user_id": 17,
+    "expires_at": "2015-01-10T11:22:34.000+04:00"
+  },
   "design": {
     "feedColor": "white",
-    "headerColor": "whiteonblack",
-    "fontType": "sans",
-    "coverAlign": "justify",
+    "headerColor": "black",
+    "fontType": "serif",
+    "coverAlign": "center",
     "feedOpacity": 1,
-    "background_url": "http://a3.tcdn.ru/assets/backgrounds/eb/1a/1812342_1_19cd528e686bac4c3c15740e.jpg"
+    "background_url": "images/backgrounds/3.png"
+  },
+  "userpic": {
+    "large_url": "http://3000.vkontraste.ru/assets/userpic/22/35/17_large.png",
+    "thumb128_url": "http://3000.vkontraste.ru/assets/userpic/22/35/17_thumb128.png",
+    "thumb64_url": "http://3000.vkontraste.ru/assets/userpic/22/35/17_thumb64.png",
+    "default_colors": {
+      "background": "#f37420",
+      "name": "#fff"
+    }
   }
 }

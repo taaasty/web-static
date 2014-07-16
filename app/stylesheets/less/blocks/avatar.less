@@ -1,19 +1,19 @@
 // Mixins
-.avatar-style(@i: length(@avatar-backgrounds)) when (@i > 0) {
-  @style: e(extract(@avatar-styles, @i));
-  @background: extract(@avatar-backgrounds, @i);
-  @color: extract(@avatar-colors, @i);
+/*.avatar-style(@i: length(@avatar-backgrounds)) when (@i > 0) {*/
+  /*@style: e(extract(@avatar-styles, @i));*/
+  /*@background: extract(@avatar-backgrounds, @i);*/
+  /*@color: extract(@avatar-colors, @i);*/
 
-  &--@{style} {
-    background: @background;
-    color: @color;
-  }
+  /*&--@{style} {*/
+    /*background: @background;*/
+    /*color: @color;*/
+  /*}*/
 
-  .avatar-style((@i - 1));
-};
+  /*.avatar-style((@i - 1));*/
+/*};*/
 
 // Styles
-@{avatar} {
+.avatar {
   width: 100%;
   height: 100%;
   position: relative;
@@ -22,14 +22,14 @@
   .background-size(cover);
   .border-radius(50%);
 
-  &__img {
+  .avatar__img {
     width: 100%;
     height: 100%;
     visibility: hidden;
     .border-radius(50%);
   }
 
-  &__text {
+  .avatar__text {
     width: 100%;
     margin-top: -.5em;
     position: absolute;
@@ -41,5 +41,5 @@
   }
 
   // Generate Styles
-  .avatar-style;
+  //.avatar-style;
 }

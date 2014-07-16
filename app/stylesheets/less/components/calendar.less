@@ -1,3 +1,8 @@
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 100;}
+}
+
 @calendar-height: 53px;
 
 .calendar {
@@ -15,24 +20,29 @@
   .user-select(none);
   .border-radius(@calendar-height / 2);
   .transition(~"max-width .3s ease, background .3s ease");
-  transition: right .3s ease-in-out;
+  transition: width .3s ease-in-out;
+}
+
+.calendar--closed {
+  // Примерно ширина с двузначной датой (29)
+  // и длинным днем недели (воскресенье)
+  width: 7.5em;
 }
 
 .calendar--open {
-  right: @toolbar-right!important;
+  width: 90%;
+  // right: @toolbar-right!important;
+}
 
-  .calendar__date {
-    display: none;
-  }
-
-  .calendar__timeline-viewport {
-    display: block;
-  }
+.calendar__timeline-viewport--active {
+  display: block;
+  animation: fadeIn .5s;
 }
 
 .calendar__date {
   display: block;
   line-height: @calendar-height - 1;
+  animation: fadeIn .5s;
 }
 
 .calendar__date-day {
@@ -53,7 +63,6 @@
 
 .calendar__timeline-viewport {
   height: 100%;
-  display: none;
   color: @white;
   overflow: hidden;
 }

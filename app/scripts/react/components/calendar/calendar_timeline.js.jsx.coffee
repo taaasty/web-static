@@ -8,10 +8,10 @@ window.CalendarTimeline = CalendarTimeline = React.createClass
 
   render: ->
     that = @
-    periodNodes = @props.periods.map (period) ->
-      `<CalendarPeriod currentEntry={ that.props.currentEntry } period={ period } key={ period.title }></CalendarPeriod>`
+    periodNodes = @props.periods.map (period, i) ->
+      `<CalendarPeriod currentEntry={ that.props.currentEntry } period={ period } key={ i }></CalendarPeriod>`
 
-    return `<div className="calendar__timeline-viewport">
+    return `<div className="calendar__timeline-viewport calendar__timeline-viewport--active">
               <div className="calendar__timeline">
                 <ul className="calendar__periods">{ periodNodes }</ul>
               </div>

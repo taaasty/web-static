@@ -18,6 +18,7 @@ require 'ngInfiniteScroll'
 require 'angular-sanitize'
 
 require 'ng-rails-csrf/index'
+require 'rangy'
 
 #require "undo/undo.js"
 #require "rangy/rangy-core.js"
