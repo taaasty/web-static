@@ -1,3 +1,4 @@
 window.ReactUnmountMixin =
-  unmount: -> _.defer => React.unmountComponentAtNode @getDOMNode().parentNode
 
+  unmount: ->
+    _.defer => React.unmountComponentAtNode @getDOMNode().parentNode

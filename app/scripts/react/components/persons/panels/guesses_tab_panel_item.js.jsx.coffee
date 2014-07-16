@@ -16,7 +16,7 @@ window.GuessesTabPanelItem = GuessesTabPanelItem = React.createClass
           <div className="person__count">{ this.props.person.user.count }</div>
         </div>
         <div className="person__actions">
-          <FollowButton followUserID={ this.props.person.user.id }
+          <FollowButton tlogId={ this.props.person.user.id }
                         isFollow={ !!this.props.person.status }>
           </FollowButton>
         </div>

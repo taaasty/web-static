@@ -16,7 +16,7 @@ window.FollowersTabPanelItem = FollowersTabPanelItem = React.createClass
           <div className="person__count">{ this.props.person.reader.count }</div>
         </div>
         <div className="person__actions">
-          <FollowButton followUserID={ this.props.person.reader.id }
+          <FollowButton tlogId={ this.props.person.reader.id }
                         isFollow={ !!this.props.person.status }>
           </FollowButton>
         </div>
