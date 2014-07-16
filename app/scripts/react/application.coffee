@@ -22,6 +22,9 @@ window.ReactApp =
         title: 'Настройки',
         user:   user
 
+    personsContainer = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get(0)
+    React.renderComponent PersonsPopup(), personsContainer
+
     # Есть только у анонимов
     $('[invite-button]').click => @shellbox.show InviterShellBox
 
