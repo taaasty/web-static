@@ -1,3 +1,4 @@
+
 ;(function ($, window, document, undefined) {
   var pluginName = "collage",
     defaults = {
@@ -194,7 +195,7 @@
       ratio,
       totalRatio = 0,
       i;
-    for(i=0;i<data.length;i++){
+    for(i=0;i < data.length;i++){
       item = data[i];
       ratio = item.width/item.height;
       item.ratio = ratio;
@@ -221,7 +222,7 @@
         rowHeight,
         vertWidth,
         totalVertHeight = 0;
-      for(i=1; i<data.length; i++){
+      for(i=1; i < data.length; i++){
         item = data[i];
         vertSumRatio += 1 / item.ratio;
       }
@@ -230,7 +231,7 @@
       if(vertWidth < 0.2 * rowWidth){
         buildRows(data, cntWidth, margin, lastClass);
       } else {
-        for(i=0; i<data.length; i++){
+        for(i=0; i < data.length; i++){
           item = data[i];
           if(i==0){
             item._width = rowWidth - vertWidth;
@@ -284,12 +285,12 @@
       row,
       ii,
       item;
-    for(i=0;i<rows.length;i++){
+    for(i=0;i < rows.length;i++){
       row = rows[i];
       rowWidth = cntWidth - margin * (row.length - 1) - 1;
       rowHeight = Math.round(rowWidth / row.ratio);
       rowTotalWidth = 0;
-      for(ii=0;ii<row.length;ii++){
+      for(ii=0;ii < row.length;ii++){
         item = row[ii];
         if(ii == row.length - 1){
           item.mod = lastClass;
@@ -340,3 +341,23 @@
     };
   };
 })(jQuery, window, document);
+
+/*
+[16.07.14, 10:10:26] Тейсти. Alex Volosojui (верстка тейсти): $(collageContainer).collage({
+      item: ".collage__item", // блок с картинкой
+      img: ".collage__item-img", // селектор на картинку внутри item
+
+      lastClass: "is--last", // последний в строке
+      prefix: "collage--", // выставляются классы big, когда идёт сначала большая картинка - collage--big
+
+      margin: 0, // отступы между картинками
+      preload: true // сами грузятся картинки или уже загружены на странице
+})
+[16.07.14, 10:11:14] Тейсти. Alex Volosojui (верстка тейсти): если используется data uri, тогда preload нужно выставлять в false
+[16.07.14, 10:15:03] Тейсти. Alex Volosojui (верстка тейсти): On 16.07.14, at 10:10, Alex Volosojui wrote:
+> preload: true // сами грузятся картинки или уже загружены на странице
+тут чуть по-другому нужно объяснить: если preload в true, тогда коллаж грузит картинки, перестраивает по мере загрузки и только потом их показывает, иначе коллаж считает, что картинки уже загружены на странице и просто их перестраивает
+
+вроде бы так)
+
+*/

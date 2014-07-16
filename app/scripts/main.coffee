@@ -63,6 +63,8 @@ require './react/components/post/post_actions'
 require './react/components/post/post_editor'
 require './react/components/post/post_editor_layout'
 
+require './react/components/images_collage'
+
 require './react/components/tasty_notify'
 require './react/controllers/tasty_notify'
 require './react/controllers/shellbox'

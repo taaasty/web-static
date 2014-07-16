@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 #
-rangy.init()
+rangy?.init()
 
 Highlighter = ->
   @button = document.createElement("button")
