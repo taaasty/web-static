@@ -2,36 +2,44 @@
 
 window.PostEditorLayout = React.createClass
   propTypes:
-    isTlogPrivate: React.PropTypes.bool.isRequired
-    entryId:       React.PropTypes.number
-    privacy:       React.PropTypes.string
-
-  getDefaultProps: ->
-    isTlogPrivate: false
-    privacy: 'public'
+    entryId:      React.PropTypes.number.isRequired
 
   getInitialState: ->
-    privacy: @props.privacy
+    entry:       null
     previewMode: false
 
-  changePrivacy: (value)->
-    @setState privacy: value
+  componentDidMount: ->
+    @loadEntry @props.entryId
 
-  clickBack: ->
-    window.history.back()
+  loadEntry: (entryId) ->
+    $.ajax
+      url:     Routes.api.entry_url(entryId)
+      success: (data)=> @setState entry: data
+      error:   (data)=> TastyNotifyController.errorResponse data
 
-  preview: ->
-    @setState previewMode: !@state.previewMode
+  handleHover: -> @setState isHover: true
 
   render: ->
-    `<div className='postEditorLayout'>
-      <a className="arrow-back" onClick={this.clickBack}><i className="icon icon--arrow-left"></i></a>
-      <section className="posts posts--edit">
-        <PostActions isTlogPrivate = {this.props.isTlogPrivate}
-                     privacy = {this.state.privacy}
-                     previewMode = {this.state.previewMode}
-                     onChangePrivacy = {this.changePrivacy}
-                     onPreview = {this.preview}/>
-        <PostEditor />
-      </section>
-    </div>`
+    if @state.entry?
+      `<div className='postEditorLayout'>
+        <a className="arrow-back" onClick={this.clickBack}><i className="icon icon--arrow-left"></i></a>
+        <section className="posts posts--edit">
+          <PostActions isTlogPrivate = {this.state.entry.author.is_privacy}
+                       privacy = {this.state.entry.privacy}
+                       previewMode = {this.state.previewMode}
+                       onChangePrivacy = {this.changePrivacy}
+                       onPreview = {this.preview}/>
+          <PostEditor />
+        </section>
+      </div>`
+    else
+      `<div>Loading..</div>`
+
+  changePrivacy: (value)->
+    entry = @state.entry
+    entry.privacy = value
+    @setState entry: entry
+
+  clickBack: -> window.history.back()
+  preview:   -> @setState previewMode: !@state.previewMode
+

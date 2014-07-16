@@ -31,6 +31,9 @@ window.PostActions = React.createClass
     $("body").removeClass PREVIEW_BODY_CLASSES[@props.previewMode]
     $("body").addClass    PREVIEW_BODY_CLASSES[nextProps.previewMode]
 
+  componentDidMount: ->
+    $(@refs.dropdown.getDOMNode()).dropdown()
+
   render: ->
     previewButtonClasses = React.addons.classSet button: true, 'button--grey': true, 'state--active': @props.previewMode
 
@@ -42,7 +45,7 @@ window.PostActions = React.createClass
           </button>
         </div>
         <div className="post-action post-action--button">
-          <div className="button-group js-dropdown">
+          <div className="button-group" ref="dropdown">
             <button className="button button--green"><span className="button__text">{this.buttonTitle()}</span></button>
             <button className="button button--green-dark post-settings-button" data-element="dropdown-toggle">{this.stateIcon()}</button>
             <div className="dropdown-popup dropdown-popup--green-dark" data-element="dropdown-menu">
