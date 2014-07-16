@@ -331,10 +331,10 @@ window.ImagesCollage_Legacy = React.createClass
       margin: 0                  # отступы между картинками
       preload: true              # сами грузятся картинки или уже загружены на странице
 
+  componentDidUpdate: ->
+    @$node.collage('update') if @isMounted()
 
   render: ->
-    _.defer => @$node.collage('update') if @isMounted()
-
     key = 0
     elements = @props.images.map (image) ->
       key +=1
