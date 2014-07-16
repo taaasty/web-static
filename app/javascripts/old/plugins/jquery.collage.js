@@ -1,4 +1,5 @@
-
+// Author: Alex Volosojui
+//
 ;(function ($, window, document, undefined) {
   var pluginName = "collage",
     defaults = {
@@ -343,7 +344,7 @@
 })(jQuery, window, document);
 
 /*
-[16.07.14, 10:10:26] Тейсти. Alex Volosojui (верстка тейсти): $(collageContainer).collage({
+  $(collageContainer).collage({
       item: ".collage__item", // блок с картинкой
       img: ".collage__item-img", // селектор на картинку внутри item
 
