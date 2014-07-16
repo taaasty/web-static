@@ -4,7 +4,8 @@ window.PersonsTab = PersonsTab = React.createClass
 
   propTypes:
     title:  React.PropTypes.string.isRequired
-    count:  React.PropTypes.number.isRequired
+    type:   React.PropTypes.string
+    count:  React.PropTypes.number
     active: React.PropTypes.bool
 
   handleClick: (e) ->

@@ -3,7 +3,8 @@
 window.PopupHeader = PopupHeader = React.createClass
 
   propTypes:
-    title: React.PropTypes.string.isRequired
+    title:     React.PropTypes.string.isRequired
+    isLoading: React.PropTypes.number.isRequired
 
   getDefaultProps: ->
     title: '---'
@@ -13,11 +14,7 @@ window.PopupHeader = PopupHeader = React.createClass
       <div className="popup__headbox">
         <h3 className="popup__title">{ this.props.title }</h3>
       </div>
-      <div className="popup__loader">
-        <span className="spinner spinner--8x8">
-          <span className="spinner__icon"></span>
-        </span>
-      </div>
+      <PopupSpinner activities={this.props.isLoading} />
       <div className="popup__close">
         <div className="icon icon--cross"></div>
       </div>

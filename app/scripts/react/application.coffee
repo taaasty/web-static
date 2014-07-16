@@ -25,11 +25,6 @@ window.ReactApp =
     personsContainer = document.querySelectorAll('[popup-persons-container]')[0]
     React.renderComponent Persons({
       title: 'Управление подписками'
-      tabs:  [
-        {title: 'Подписки', type: 'followings', count: 342}
-        {title: 'Подписчики', type: 'followers', count: 342}
-        {title: 'Запросы', type: 'guesses', count: 342}
-      ]
       tabsData: {
         followings: [{
           name: '88mm'
