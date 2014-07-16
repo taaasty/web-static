@@ -2,6 +2,8 @@
 
 window.PersonsPopup = PersonsPopup = React.createClass
 
+  mixins: [ReactUnmountMixin]
+
   getDefaultProps: ->
     title: 'Управление подписками'
 
@@ -15,7 +17,11 @@ window.PersonsPopup = PersonsPopup = React.createClass
     tabName: 'followings'
     activities: 2
 
+  componentWillMount: -> Mousetrap.bind 'esc', @close
+
   componentDidMount: -> @getSummaryData()
+
+  componentWillUnmount: -> Mousetrap.unbind 'esc', @close
 
   getSummaryData: (tlogId) ->
     $.ajax
@@ -30,6 +36,8 @@ window.PersonsPopup = PersonsPopup = React.createClass
 
   decrementActivities: -> @setState activities: --@state.activities
 
+  close: -> @unmount()
+
   render: ->
     switch @state.tabName
       when 'followings' then tabPanel = `<FollowingsTabPanel onReady={ this.decrementActivities }></FollowingsTabPanel>`
@@ -40,7 +48,8 @@ window.PersonsPopup = PersonsPopup = React.createClass
 
     return `<div className="popup popup--persons popup--dark" style={{ display: 'block', top: '30px', left: '36%'}}>
               <PopupHeader title={ this.props.title }
-                           activities={ this.state.activities }></PopupHeader>
+                           activities={ this.state.activities }
+                           handleClose={ this.close }></PopupHeader>
               <div className="popup__body">
                 <PersonsPopupTabs tabs={ this.state.tabs }
                                   tabName={ this.state.tabName }

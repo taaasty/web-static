@@ -3,21 +3,21 @@
 window.GuessesTabPanelItem = GuessesTabPanelItem = React.createClass
 
   propTypes:
-    person: React.PropTypes.object.isRequired
+    relationship: React.PropTypes.object.isRequired
 
   render: ->
    `<li className="person">
       <div className="person__in">
         <div className="person__avatar">
-          <Avatar name={this.props.person.user.name} userpic={this.props.person.user.userpic}/>
+          <Avatar name={this.props.relationship.user.name} userpic={this.props.relationship.user.userpic}/>
         </div>
         <div className="person__desc">
-          <p className="person__name">{ this.props.person.user.name }</p>
-          <div className="person__count">{ this.props.person.user.count }</div>
+          <p className="person__name">{ this.props.relationship.user.name }</p>
+          <div className="person__count">{ this.props.relationship.user.count }</div>
         </div>
         <div className="person__actions">
-          <FollowButton followUserID={ this.props.person.user.id }
-                        isFollow={ !!this.props.person.status }>
+          <FollowButton tlogId={ this.props.relationship.user.id }
+                        relationship={ this.props.relationship }>
           </FollowButton>
         </div>
       </div>

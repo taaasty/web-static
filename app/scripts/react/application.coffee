@@ -22,7 +22,7 @@ window.ReactApp =
         title: 'Настройки',
         user:   user
 
-    personsContainer = document.querySelectorAll('[popup-persons-container]')[0]
+    personsContainer = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get(0)
     React.renderComponent PersonsPopup(), personsContainer
 
     # Есть только у анонимов

@@ -1,9 +1,11 @@
 ###* @jsx React.DOM ###
 
+FOLLOW_STATE = 1
+
 window.FollowingsTabPanel = FollowingsTabPanel = React.createClass
 
   getInitialState: ->
-    data: []
+    relationships: null
 
   componentWillMount: -> @getPanelData()
 
@@ -17,39 +19,31 @@ window.FollowingsTabPanel = FollowingsTabPanel = React.createClass
     @xhr = $.ajax
       url: Routes.api.relationships_to_url()
       data:
-        status: 1
-      success: (persons) =>
-        sortedPersons = _.sortBy( persons, (person) ->person.position )
-        @setState data: sortedPersons
+        status: FOLLOW_STATE
+      success: (relationships) =>
+        @setState relationships: relationships
         @props.onReady()
       error: (data, type) =>
-        TastyNotifyController.errorResponse data unless type is 'abort'
+        TastyNotifyController.errorResponse data
 
   render: ->
-    if @state.data
-      persons = @state.data.map (person, i) ->
-        `<FollowingsTabPanelItem person={ person } key={ i }></FollowingsTabPanelItem>`
+    if @state.relationships
+      relationships = @state.relationships.map (relationship, i) ->
+        `<FollowingsTabPanelItem relationship={ relationship } key={ i }></FollowingsTabPanelItem>`
 
-      `<div className="tabs-panel">
-        <div className="scroller scroller--persons js-scroller">
-          <div className="scroller__pane js-scroller-pane">
-            <ul className="persons">{ persons }</ul>
-          </div>
-          <div className="scroller__track js-scroller-track">
-            <div className="scroller__bar js-scroller-bar"></div>
-          </div>
-        </div>
-      </div>`
+      panelContent = `<ul className="persons">{ relationships }</ul>`
     else
-      `<div className="tabs-panel">
-        <div className="scroller scroller--persons js-scroller">
-          <div className="scroller__pane js-scroller-pane">
-            <div className="popup__text">Пусто</div>
-          </div>
-          <div className="scroller__track js-scroller-track">
-            <div className="scroller__bar js-scroller-bar"></div>
-          </div>
-        </div>
-      </div>`
+      panelContent = `<div className="popup__text">Пусто</div>`
+
+    return `<div className="tabs-panel">
+              <div className="scroller scroller--persons js-scroller">
+                <div className="scroller__pane js-scroller-pane">
+                  { panelContent }
+                </div>
+                <div className="scroller__track js-scroller-track">
+                  <div className="scroller__bar js-scroller-bar"></div>
+                </div>
+              </div>
+            </div>`
 
 module.exports = FollowingsTabPanel
