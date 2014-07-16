@@ -1,61 +1,35 @@
 ###* @jsx React.DOM ###
 
-TYPES =
-  followings: 'Подписки'
-  followers:  'Подписчики'
-  guesses:    'Заявки'
-  blocked:    'Блокировка'
+FOLLOWINGS = 'Подписки'
+FOLLOWERS  = 'Подписчики'
+GUESSES    = 'Заявки'
+BLOCKED    = 'Блокировка'
 
-window.PersonsTabs = PersonsTabs = React.createClass
+window.PersonsPopupTabs = PersonsPopupTabs = React.createClass
 
   propTypes:
-    tabs:    React.PropTypes.array
+    tabs:    React.PropTypes.object
     tabName: React.PropTypes.string.isRequired
 
-  getInitialState: ->
-    tabs: @props.tabs ? [{title: TYPES.followings}, {title: TYPES.followers}, {title: TYPES.guesses}]
-
-  componentDidMount: ->
-    @getSummaryData() unless @props.tabs
-
-  getSummaryData: (tlogId) ->
-    $.ajax
-      url: Routes.api.relationships_summary_url()
-      success: (data) =>
-        tabs = @getFormattedData data
-        @setState tabs: tabs
-      error: (data) => TastyNotifyController.errorResponse data
-
-  getFormattedData: (data) ->
-    tabs = []
-
-    for type, count of data
-      index = type.indexOf '_count'
-      type  = type.slice 0, index
-      title = TYPES[type]
-
-      tab = {
-        type:  type
-        title: title
-        count: count
-      }
-
-      tabs.push tab
-    tabs
-
   render: ->
-    that = @
-    tabs = @state.tabs.map (tab, i) ->
-      active = that.props.tabName == tab.type
-      `<PersonsTab active={ active }
-                   title={ tab.title }
-                   count={ tab.count }
-                   type={ tab.type }
-                   onClick={ that.props.onClick }
-                   key={ i }></PersonsTab>`
+   `<nav className="tabs-nav tabs-nav--white">
+      <ul className="tabs-nav__list">
+        <PersonsPopupTab active={ this.props.tabName == "followings" }
+                         count={ this.props.tabs.followings_count }
+                         type="followings"
+                         title={ FOLLOWINGS }
+                         onClick={ this.props.onClick }></PersonsPopupTab>
+        <PersonsPopupTab active={ this.props.tabName == "followers" }
+                         count={ this.props.tabs.followers_count }
+                         type="followers"
+                         title={ FOLLOWERS }
+                         onClick={ this.props.onClick }></PersonsPopupTab>
+        <PersonsPopupTab active={ this.props.tabName == "guesses" }
+                         count={ this.props.tabs.guesses_count }
+                         type="guesses"
+                         title={ GUESSES }
+                         onClick={ this.props.onClick }></PersonsPopupTab>
+      </ul>
+    </nav>`
 
-    return `<nav className="tabs-nav tabs-nav--white">
-              <ul className="tabs-nav__list">{ tabs }</ul>
-            </nav>`
-
-module.exports = PersonsTabs
+module.exports = PersonsPopupTabs

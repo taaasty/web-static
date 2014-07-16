@@ -3,6 +3,8 @@ ApiRoutes =
 
   calendar_url:            (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/calendar'
   relationships_summary_url:        -> TastySettings.api_host + 'v1/relationships/summary'
+  relationships_to_url:             -> TastySettings.api_host + 'v1/relationships/to'
+  relationships_by_url:             -> TastySettings.api_host + 'v1/relationships/by'
   votes_url:              (entryId) -> TastySettings.api_host + 'v1/entries/' + entryId + '/votes'
   embed_url:                        -> TastySettings.api_host + 'v1/embed'
   post_url:                  (type) -> TastySettings.api_host + 'v1/entries/' + type

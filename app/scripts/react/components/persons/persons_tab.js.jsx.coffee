@@ -1,12 +1,12 @@
 ###* @jsx React.DOM ###
 
-window.PersonsTab = PersonsTab = React.createClass
+window.PersonsPopupTab = PersonsPopupTab = React.createClass
 
   propTypes:
     title:  React.PropTypes.string.isRequired
-    type:   React.PropTypes.string
-    count:  React.PropTypes.number
-    active: React.PropTypes.bool
+    type:   React.PropTypes.string.isRequired
+    count:  React.PropTypes.number.isRequired
+    active: React.PropTypes.bool.isRequired
 
   handleClick: (e) ->
     e.preventDefault()
@@ -24,4 +24,4 @@ window.PersonsTab = PersonsTab = React.createClass
               </a>
             </li>`
 
-module.exports = PersonsTabs
+module.exports = PersonsPopupTabs
