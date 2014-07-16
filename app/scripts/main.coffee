@@ -62,6 +62,7 @@ require './react/components/calendar/calendar_marker'
 require './react/components/post/post_actions'
 require './react/components/post/post_editor'
 require './react/components/post/post_editor_layout'
+require './react/components/post/post_editor_images_container'
 
 require './react/components/images_collage'
 

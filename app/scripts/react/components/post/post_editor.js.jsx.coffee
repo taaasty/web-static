@@ -3,6 +3,8 @@
 rangy?.init()
 
 window.PostEditor = React.createClass
+  propTypes:
+    entry:          React.PropTypes.object.isRequired
 
   getDefaultProps: ->
     title: 'Да это же самый простой редактор в мире!'
@@ -35,13 +37,14 @@ window.PostEditor = React.createClass
 
 
   render: ->
-    `<article className="post post--text post--edit">
+    `<article className="post post--text post--image post--edit">
       <header className="post__header">
         <div className="post__title tasty-editor">
           <div className="tasty-editor-content" ref="title" dangerouslySetInnerHTML={{ __html: this.props.title }}></div>
         </div>
       </header>
       <div className="post__content tasty-editor">
+        <PostEditor_ImagesContainer entry={this.props.entry} />
         <div className="tasty-editor-content" ref="content" dangerouslySetInnerHTML={{ __html: this.props.content }} />
       </div>
     </article>`
@@ -87,5 +90,4 @@ Highlighter::getButton = ->
 Highlighter::checkState = (node) ->
   @button.classList.add "medium-editor-button-active"  if node.tagName is "MARK"
   return
-
 
