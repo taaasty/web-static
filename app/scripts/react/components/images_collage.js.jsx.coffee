@@ -8,71 +8,68 @@ module.experts = window.ImagesCollage = React.createClass
     imageUrls: React.PropTypes.array
 
   getDefaultProps: ->
-    item: ".collage__item"    # блок с картинкой
-    img: ".collage__item-img" # селектор на картинку внутри item
+    itemClass:  ".collage__item"    # блок с картинкой
+    lastItemClass:  "is--last"      # последний в строке
 
-    lastClass: "is--last"     # последний в строке
-    prefixClass: "collage--"       # выставляются классы big, когда идёт сначала большая картинка - collage--big
+    imageClass: ".collage__item-img" # селектор на картинку внутри item
+
+    classPrefix: "collage--"    # выставляются классы big, когда идёт сначала большая картинка - collage--big
 
     margin: 0                 # отступы между картинками
     preload: true             # сами грузятся картинки или уже загружены на странице
 
-    #preload: true
+  getInitialState: ->
+    images: []
+
+  componentDidMount: ->
+    $node = $ @getDOMNode()
+    $node.width  $node.width()
+    $node.height '800px'
+    #$collage = $node.find('.collage')
+    #$collage.show()
+    @loadImages()
+
+  containerWidth: -> $(@getDOMNode()).width()
+
+  loadImages: ->
+    imageElements = @props.imageUrls.map (src) =>
+      image = new Image src: src
+      image.src = src
+      ImagesLoaded(image).on 'done', (instance) =>
+        image.ratio = image.width / image.height
+        @state.images.push image
+        @setState images: @state.images
 
   render: ->
-    imageElements = @props.imageUrls.map (url) =>
-      @renderImageItem imageUrl: url
+    key = 0
+    imageElements = @state.images.map (image) =>
+      image.key = key+=1
+      image.isLast = @state.images.length == key
+      @renderImageItem image
 
     return `<div className="collage">{imageElements}</div>`
-    #self = this
-    #options = self.options
-    #elements = self.elements
-    #margin = options.margin
-    #lastClass = options.lastClass
-    #elements.collage.width elements.collage.width()
-    #elements.item.show()
+
     #self.data.imgs = buildImgsData(imgs, elements.collage.width(), margin, lastClass)
     #self.data.type = self.data.imgs.type
     #elements.collage.addClass options.prefixClass + self.data.type  unless typeof self.data.type is "undefined"
     #i = 0
     #countImgs = self.data.imgs.length
 
-    #while i < countImgs
-      #img = self.data.imgs[i]
-      #css =
-        #width: img._width
-        #height: img._height
+  getTotalRatio: ->
+    totalRatio = 0
+    @state.images.map (image) -> totalRatio += image.ratio
+    return totalRatio
 
-      #imgs.eq(i).css css
-      #imgs.eq(i).closest(options.item).addClass(img.mod).css css
-      #i++
-    #elements.item.hide()
-    #imgs.closest(options.item).fadeIn 300
-    #return
-
-  renderImageItem: ({imageUrl, alt})->
-    `<a class="collage__item" href={imageUrl} data-fancybox-group="1" target="_blank">
-      <img class="collage__item-img" src={imageUrl} alt={alt} />
+  renderImageItem: (image)->
+    itemClasses = {}
+    itemClasses[@props.itemClass] = true
+    itemClasses[@props.lastItemClass] = image.isLast
+    `<a className={React.addons.classSet(itemClasses)} key={image.key} href={image.src} data-fancybox-group={image.key} target="_blank">
+      <img className={this.props.imageClass} src={image.src} width={image.width} height={image.height} alt={image.alt} />
     </a>`
 
   # Убрал, потому что это лопает картинки из blob: + "?" + Date.now();
   buildImgsData: (data, cntWidth, margin, lastClass) ->
-    return data  if data.length is 0
-    item = undefined
-    ratio = undefined
-    totalRatio = 0
-    i = undefined
-    i = 0
-    while i < data.length
-      item = data[i]
-      ratio = item.width / item.height
-      item.ratio = ratio
-      totalRatio += ratio
-      i++
-    iterator = [
-      data
-      0
-    ]
     if data.length is 1
       item = data[0]
       item._width = Math.min(item.width, cntWidth)

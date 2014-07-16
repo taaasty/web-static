@@ -15,7 +15,6 @@
     "angular-sanitize": "~1.2.19",
     "ng-rails-csrf": "https://raw.githubusercontent.com/xrd/ng-rails-csrf/master/vendor/assets/javascripts/ng-rails-csrf.js",
     "medium-editor": "~1.8.14",
-    "Medium.js": "git@github.com:jakiestfu/Medium.js.git",
-    "rangy": "~1.2.3"
+    "Medium.js": "git@github.com:jakiestfu/Medium.js.git"
   }
 }

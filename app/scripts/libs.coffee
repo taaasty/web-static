@@ -7,6 +7,8 @@ window.moment = require 'momentjs'
 require 'momentjs/lang/ru'
 require 'blueimp-file-upload/js/jquery.fileupload'
 
+window.ImagesLoaded = require 'imagesloaded'
+
 window.Backbone = require 'backbone'
 
 require 'angular'
@@ -18,7 +20,7 @@ require 'ngInfiniteScroll'
 require 'angular-sanitize'
 
 require 'ng-rails-csrf/index'
-require 'rangy'
+#require 'rangy'
 
 #require "undo/undo.js"
 #require "rangy/rangy-core.js"
