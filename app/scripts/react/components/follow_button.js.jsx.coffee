@@ -1,24 +1,44 @@
 ###* @jsx React.DOM ###
 
+STATE_FRIEND  = 'friend'
+STATE_NONE    = 'none'
+STATE_UNKNOWN = 'unknown'
+
 module.experts = window.FollowButton = React.createClass
   propTypes:
-    isFollow: React.PropTypes.bool
-    tlogId:   React.PropTypes.number
+    tlogId:       React.PropTypes.number.isRequired
+    relationship: React.PropTypes.object
     #followStatusEl: React.PropTypes.object
 
   #getDefaultProps: ->
     #followStatusEl: $(".js-follow-status")
 
   getInitialState: (a,b,c)->
-    isFollow:       @props.isFollow
+    relationship:   @props.relationship
     isHover:        false
     isError:        false
     isProcess:      true
 
-  updateFollowElement: ->
-    return unless @props.followStatusEl
+  isFollow: ->
+    @state.relationship.state == STATE_FRIEND
 
-    @props.followStatusEl.toggleClass "state--hidden", @state.isFollow
+  componentDidMount: ->
+
+    unless @state.relationship?
+      @setState isError: false, isProcess: true
+      $.ajax
+        url:     Routes.api.get_my_relationship_url(@props.tlogId)
+        success: (data) =>
+          @setState relationship: data, isProcess: false
+
+        error: (data)=>
+          TastyNotifyController.errorResponse data
+          @setState isError: true, isProcess: false
+          @setTimer()
+
+  componentDidUpdate: ->
+    return unless @props.followStatusEl
+    @props.followStatusEl.toggleClass "state--hidden", @isFollow()
 
   componentWillUnmount: ->
     @clearTimer()
@@ -32,17 +52,16 @@ module.experts = window.FollowButton = React.createClass
     @interval = setInterval clearError, 1000
 
   handleClick: (e)->
-    newState = ! @state.isFollow
     @setState isError: false, isProcess: true
     @clearTimer()
 
+    relationState = if @isFollow() then 'unfollow' else 'follow'
+
     $.ajax
-      #withCredentials: true
-      url:     Routes.api.followings_url(@props.tlogId)
-      method:  if newState then method = 'POST' else method = 'DELETE'
-      success: =>
-        @setState isFollow: newState, isProcess: false
-        @updateFollowElement()
+      url:     Routes.api.change_my_relationship_url(@props.tlogId, relationState)
+      method:  'POST'
+      success: (data) =>
+        @setState relationship: data, isProcess: false
 
       error: (data)=>
         TastyNotifyController.errorResponse data
@@ -53,12 +72,19 @@ module.experts = window.FollowButton = React.createClass
   handleBlur:  -> @setState isHover: false
 
   render: ->
-    if @state.isFollow
-      rootClass  = 'state--active'
-      text       = if @state.isHover then 'Отписаться' else 'Подписан'
+    if @state.relationship?
+      if @isFollow()
+        rootClass  = 'state--active'
+        text       = if @state.isHover then 'Отписаться' else 'Подписан'
+      else
+        rootClass  = ''
+        text       = 'Подписаться'
+
+      text = 'в процессе..' if @state.isProcess
     else
-      rootClass  = ''
-      text       = 'Подписаться'
+      text = 'узнаю..'
+
+
 
     text = 'ошибка' if @state.isError
 

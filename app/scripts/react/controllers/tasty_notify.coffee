@@ -12,9 +12,10 @@ window.TastyNotifyController =
     return
 
   errorResponse: (response, timeout = 3000) ->
+    console.error? 'errorResponse', response
     message = response.message if response.message?
     message ||= response.responseJSON.error if response.responseJSON?
-    message ||= response.error if response.error?
+    message ||= response.error if response.error? && response.error.length>0
     # fallback для старого API
     message ||= "Ошибка сети: #{response.statusText}"
     @notify 'error', message, timeout
