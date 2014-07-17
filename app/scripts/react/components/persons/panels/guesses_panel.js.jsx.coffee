@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
-FOLLOW_STATE = 0
-PersonsPopup_FollowersPanel
+RELATIONSHIP_STATE = 'guessed'
+
 window.PersonsPopup_GuessesPanel = PersonsPopup_GuessesPanel = React.createClass
 
   getInitialState: ->
@@ -17,9 +17,7 @@ window.PersonsPopup_GuessesPanel = PersonsPopup_GuessesPanel = React.createClass
 
   getPanelData: ->
     @xhr = $.ajax
-      url: Routes.api.relationships_to_url()
-      data:
-        status: FOLLOW_STATE
+      url: Routes.api.relationships_to_url(RELATIONSHIP_STATE)
       success: (relationships) =>
         @setState relationships: relationships
       error: (data, type) =>
