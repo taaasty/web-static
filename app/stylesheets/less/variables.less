@@ -54,7 +54,6 @@
 @tasty-ribbon: ~".tasty-ribbon";
 @scroller: ~".scroller";
 @spinner: ~".spinner";
-@viewer: ~".screen-viewer";
 @menu: ~".menu";
 @button: ~".button";
 @notice: ~".notice";
@@ -81,7 +80,6 @@
 @editable-field: ~".editable-field";
 @controls-list: ~".controls-list";
 @pagination: ~".pagination";
-@filter: ~".filter";
 @people: ~".people";
 @tags: ~".tags";
 @tag: ~".tag";
@@ -106,9 +104,14 @@
 // Z-indexes
 /*-- new --*/
 @zindex-field-control: 2;
+@zindex-screen-viewer-item: 4;
+@zindex-screen-viewer-item-active: 5;
+@zindex-screen-viewer-text: 6;
+@zindex-screen-viewer-loader: @zindex-screen-viewer-text; // 6
+@zindex-filter-search: 10;
 @zindex-dropdown: 150;
-@zindex-affixed: 200;
-@zindex-button-affixed: @zindex-affixed;
+@zindex-affixed: 200; // toolbar, auth button
+@zindex-button-affixed: @zindex-affixed; // 200
 @zindex-popup: 5000;
 
 /*-- old --*/
@@ -221,3 +224,8 @@
 
 @tasty-editor-placeholder-selection-bg: #dde3e7;
 @tasty-editor-content-selection-bg: #fec900;
+
+// Filter
+@filter-search-border-radius: 2em;
+@filter-search-indent: @indent-base;
+@filter-search-active-max-width: 154px;
