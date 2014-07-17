@@ -1,8 +1,6 @@
 ###* @jsx React.DOM ###
-
-RELATIONSHIP_STATE = 'friend'
-
-window.PersonsPopup_FollowingsPanel = React.createClass
+#
+window.PersonsPopup_PanelMixin =
   getInitialState: ->
     relationships: null
     isError:       false
@@ -16,23 +14,25 @@ window.PersonsPopup_FollowingsPanel = React.createClass
     @xhr.abort()
 
   getPanelData: ->
+    @setState isError: false
     @xhr = $.ajax
-      url: Routes.api.relationships_to_url(RELATIONSHIP_STATE)
+      url:     @relationUrl()
       success: (relationships) =>
         @setState relationships: relationships
-      error: (data, type) =>
+      error:   (data, type) =>
         @setState isError: true
         TastyNotifyController.errorResponse data
 
   render: ->
     if @state.relationships
       if @state.relationships.length>0
+        itemClass = @itemClass
         relationships = @state.relationships.map (relationship, i) ->
-          `<PersonsPopup_FollowingRelationship relationship={ relationship } key={ i } />`
+          itemClass relationship: relationship, key: i
 
         panelContent = `<ul className="persons">{ relationships }</ul>`
       else
-        panelContent = `<div className="popup__text">Вы ни с кем не дружите</div>`
+        panelContent = `<div className="popup__text">Список пуст.</div>`
     else
       if @state.isError
         panelContent = `<div className="popup__text">Ошибка загрузки.</div>`
@@ -49,5 +49,3 @@ window.PersonsPopup_FollowingsPanel = React.createClass
                 </div>
               </div>
             </div>`
-
-module.exports = PersonsPopup_FollowingsPanel

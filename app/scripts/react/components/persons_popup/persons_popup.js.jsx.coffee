@@ -40,11 +40,12 @@ window.PersonsPopup = PersonsPopup = React.createClass
   close: -> @unmount()
 
   render: ->
+    console.log 'currentTab', @state.currentTab
     switch @state.currentTab
-      when 'followings' then tabPanel = `<PersonsPopup_FollowingsPanel></PersonsPopup_FollowingsPanel>`
-      when 'followers'  then tabPanel = `<PersonsPopup_FollowersPanel></PersonsPopup_FollowersPanel>`
-      when 'guesses'    then tabPanel = `<PersonsPopup_GuessesPanel></PersonsPopup_GuessesPanel>`
-      # when 'ignored'    then tabPanel = `<BlockedTabPanel></BlockedTabPanel>`
+      when 'followings' then tabPanel = PersonsPopup_FollowingsPanel()
+      when 'followers'  then tabPanel = PersonsPopup_FollowersPanel()
+      when 'guesses'    then tabPanel = PersonsPopup_GuessesPanel()
+      when 'ignores'    then tabPanel = PersonsPopup_IgnoresPanel()
       else console.warn "Неизвестный тип отношений #{@state.currentTab}"
 
     return `<div className="popup popup--persons popup--dark" style={{ display: 'block', top: '30px', left: '36%'}}>
@@ -54,7 +55,7 @@ window.PersonsPopup = PersonsPopup = React.createClass
               <div className="popup__body">
                 <PersonsPopup_Menu items={ this.state.items }
                                    currentTab={ this.state.currentTab }
-                                   onClick={ this.selectTab }></PersonsPopup_Menu>
+                                   onSelect={ this.selectTab }></PersonsPopup_Menu>
                 { tabPanel }
               </div>
             </div>`

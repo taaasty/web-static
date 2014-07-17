@@ -5,7 +5,7 @@ window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass
   propTypes:
     title:  React.PropTypes.string.isRequired
     type:   React.PropTypes.string.isRequired
-    active: React.PropTypes.bool.isRequired
+    isActive: React.PropTypes.bool.isRequired
     count:  React.PropTypes.number
 
   handleClick: (e) ->
@@ -13,7 +13,7 @@ window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass
     @props.onClick(@props.type)
 
   render: ->
-    linkClasses = React.addons.classSet 'tabs-nav__link': true, 'state--active': @props.active
+    linkClasses = React.addons.classSet 'tabs-nav__link': true, 'state--active': @props.isActive
 
     return `<li className="tabs-nav__item">
               <a title={ this.props.title }

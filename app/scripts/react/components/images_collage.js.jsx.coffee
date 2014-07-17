@@ -26,7 +26,6 @@ module.experts = window.ImagesCollage_Images = React.createClass
       image = @adjustImageByWidth @props.images[0], @props.width
       imageElements = `<ImagesCollage_Image image={image} key={1}/>`
     else# if @props.images.length==2 or @state.totalRatio >= (FIRST_ROW_RATIO + NEXT_ROWS_RATIO)
-      debugger
       key = 0
       that = @
       imageElements = @props.images.map (image) =>
