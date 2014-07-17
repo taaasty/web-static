@@ -20,6 +20,7 @@ window.PostActions = React.createClass
     onChangePrivacy: React.PropTypes.func.isRequired
     onPreview:       React.PropTypes.func.isRequired
     previewMode:     React.PropTypes.bool.isRequired
+    isLoading:       React.PropTypes.bool.isRequired
 
   select: (key) ->
     @props.onChangePrivacy(key)
@@ -36,6 +37,8 @@ window.PostActions = React.createClass
 
   render: ->
     previewButtonClasses = React.addons.classSet button: true, 'button--grey': true, 'state--active': @props.previewMode
+
+    postActionsClasses = React.addons.classSet 'state--loading': @props.isLoading
 
     `<div className="post-actions">
       {this.loader()}

@@ -7,6 +7,7 @@ window.PostEditorLayout = React.createClass
   getInitialState: ->
     entry:       null
     previewMode: false
+    isLoading:   false
 
   componentDidMount: ->
     @loadEntry @props.entryId
@@ -28,8 +29,10 @@ window.PostEditorLayout = React.createClass
                        privacy = {this.state.entry.privacy}
                        previewMode = {this.state.previewMode}
                        onChangePrivacy = {this.changePrivacy}
-                       onPreview = {this.preview}/>
-          <PostEditor entry={this.state.entry}/>
+                       onPreview = {this.togglePreview}
+                       isLoading = {this.state.isLoading}
+                       />
+          <PostEditor entry={this.state.entry} isLoading={this.state.isLoading} setLoading={this.setLoading} />
         </section>
       </div>`
     else
@@ -40,6 +43,8 @@ window.PostEditorLayout = React.createClass
     entry.privacy = value
     @setState entry: entry
 
-  clickBack: -> window.history.back()
-  preview:   -> @setState previewMode: !@state.previewMode
+  clickBack:     -> window.history.back()
+
+  setLoading: (isLoading) -> @setState isLoading: isLoading
+  togglePreview: -> @setState previewMode: !@state.previewMode
 

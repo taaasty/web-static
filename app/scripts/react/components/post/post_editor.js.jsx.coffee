@@ -4,7 +4,9 @@ rangy?.init()
 
 window.PostEditor = React.createClass
   propTypes:
-    entry:          React.PropTypes.object.isRequired
+    entry:       React.PropTypes.object.isRequired
+    setLoading:  React.PropTypes.func.isRequired
+    isLoading:   React.PropTypes.bool.isRequired
 
   getDefaultProps: ->
     title: 'Да это же самый простой редактор в мире!'
@@ -20,14 +22,14 @@ window.PostEditor = React.createClass
       disableReturn: true
 
     @contentEditor = new MediumEditor @refs.content.getDOMNode(),
-      buttons:       ['highlight', 'bold', 'italic', 'underline', 'quote']
+      buttons:       ['header1', 'anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist', 'pre']
       anchorInputPlaceholder:   'Начните набирать текст поста. Можно без заголовка, без картинки или без видео.'
       firstHeader:   'h1'
       secondHeader:  'h2'
       targetBlank:   true
       cleanPastedHTML: true
-      extensions:
-        highlight: new Highlighter()
+      #extensions:
+        #highlight: new Highlighter()
 
     @refs.content.getDOMNode().focus?()
 
@@ -37,14 +39,15 @@ window.PostEditor = React.createClass
 
 
   render: ->
-    `<article className="post post--text post--image post--edit">
+    cx = React.addons.classSet post: true, 'post--text': true, 'post--image': true, 'post--edit': true, 'state--loading': @props.isLoading
+    `<article className={cx}>
       <header className="post__header">
         <div className="post__title tasty-editor">
           <div className="tasty-editor-content" ref="title" dangerouslySetInnerHTML={{ __html: this.props.title }}></div>
         </div>
       </header>
       <div className="post__content tasty-editor">
-        <PostEditor_ImagesContainer entry={this.props.entry} />
+        <PostEditor_ImagesContainer entry={this.props.entry} isLoading={this.props.isLoading} setLoading={this.props.setLoading} />
         <div className="tasty-editor-content" ref="content" dangerouslySetInnerHTML={{ __html: this.props.content }} />
       </div>
     </article>`

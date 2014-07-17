@@ -3,31 +3,35 @@
 DRAG_HOVER_CLASS = 'state--drag-hover'
 DRAGOFF_TIMEOUT  = 500
 
+ACCEPT_FILE_TYPES = /(\.|\/)(gif|jpe?g|png)$/i
+MAX_FILE_SIZE    = 10*1000*1000
+MAX_NUMBER_OF_FILES = 6
+
 window.PostEditor_ImagesContainer = React.createClass
   propTypes:
-    entry:          React.PropTypes.object.isRequired
+    entry:       React.PropTypes.object.isRequired
+    setLoading:  React.PropTypes.func.isRequired
+    isLoading:   React.PropTypes.bool.isRequired
 
   getInitialState: ->
     isDragging: false
-    isLoading:  false
-    loadingProgress: 0
+    progress:   0
 
   componentDidMount: ->
     $(document).on 'dragleave', @dragLeave
     $(document).on 'drop', @draggingOff
 
+    @prepareForm()
+
   componentWillUnmount: ->
     $(document).off 'dragleave', @dragLeave
     $(document).off 'drop', @draggingOff
 
-  isVisible: ->
-    @state.isDragging || @state.isLoading
+  componentDidUpdate: ->
+    @updateDropZoneClass @state.isDragging
 
   render: ->
-    $('.post-actions').toggleClass 'state--loading', @state.isDragging || @state.isLoading
-    loadingProgress = `<div className="media-box__loader">
-          <div className="media-box__loader-fill" style={{width: this.state.loadingProgress+'%'}} />
-        </div>`
+    console.log 'isVisible', @isVisible()
 
     imageActions = `<div className="media-box__actions js-tasty-editor-image-actions">
           <div className="media-box__action media-box__action--delete" title="Удалить"><span className='icon icon--cross' /></div>
@@ -45,32 +49,29 @@ window.PostEditor_ImagesContainer = React.createClass
             <span>Перетащите или </span>
             <span className="form-upload form-upload--image">
                <span className="form-upload__text">выберите</span>
-               <PostEditor_ImageForm entry={this.props.entry} onDragOver={this.dragOver} onLoading={this.updateLoading} progressUpdate={this.progressUpdate}/>
+               <input id="image" className="form-upload__input" accept="image/*" type="file" multiple={true} ref="input"/>
              </span>
             <span> картинку</span><br/><span>или вставьте ссылку на нее</span>
           </div>
         </div>`
 
-    console.log 'isVisible', @isVisible()
-    cx = React.addons.classSet "media-box": true, "state--hidden": !@isVisible(), 'state--insert': @isVisible()
-    `<figure className="image">
-      <div className={cx} ref="dropZone">
-        {loadingProgress}
-        {imageActions}
-        {postImageUrl}
 
-        {infoBox}
+    cx = React.addons.classSet 'media-box': true, 'state--hidden': !@isVisible()
+    return `<form ref='form' encType='multipart/form-data' method="POST">
+        <figure className="image">
+          <div className={cx} ref="dropZone">
+            <PostEditor_MediaLoadingProgress progress={this.state.progress} />
+            {postImageUrl}
 
-        {imagesDisplay}
-      </div>
-    </figure>`
+            {infoBox}
 
-  updateLoading: (isLoading) ->
-    @setState isLoading: isLoading
+            {imageActions}
+            {imagesDisplay}
+          </div>
+        </figure></form>`
 
-  progressUpdate: (percents) ->
-    @setState loadingProgress: percents
-    #@ui.imageLoader.css width: p + "%"
+  isVisible: ->
+    @state.isDragging || @props.isLoading
 
   dragOver:  ->
     clearTimeout @_dragLeaveTimer if @_dragLeaveTimer?
@@ -83,52 +84,39 @@ window.PostEditor_ImagesContainer = React.createClass
   draggingOff: ->
     @setState isDragging: false
 
-  componentDidUpdate: ->
-    @updateDropZoneClass @state.isDragging
-
   updateDropZoneClass: (active) ->
     $dropZone = $ @refs.dropZone.getDOMNode()
     $dropZone.toggleClass DRAG_HOVER_CLASS, active
 
-window.PostEditor_ImageForm = React.createClass
-  propTypes:
-    entry:          React.PropTypes.object.isRequired
-    onDragOver:     React.PropTypes.func.isRequired
-    progressUpdate: React.PropTypes.func.isRequired
-    onLoading:      React.PropTypes.func.isRequired
-
-  getInitialState: ->
-    isLoading: false
-
-  componentDidMount: ->
+  prepareForm: ->
     $form = $ @refs.form.getDOMNode()
 
     $form.fileupload
       url:               Routes.api.post_url 'image'
       dataType:          'json'
-      acceptFileTypes:   /(\.|\/)(gif|jpe?g|png)$/i
-      maxFileSize:       10*1000*1000
+      acceptFileTypes:   ACCEPT_FILE_TYPES
+      maxFileSize:       MAX_FILE_SIZE
+      maxNumberOfFiles:  MAX_NUMBER_OF_FILES
       multipart:         true
       fileInput:         @refs.input.getDOMNode()
-      maxNumberOfFiles:  12
-      send:              =>
-        @props.onLoading true
-        @setState isLoading: true
-      fail:     (e,data) =>
-        TastyNotifyController.errorResponse data
-      always:            =>
-        @props.onLoading false
-        @setState isLoading: false
-      dragover:          (e, data) => @props.onDragOver()
+      send:              => @setLoading true
+      always:            => @setLoading false
+      fail:     (e,data) => TastyNotifyController.errorResponse data
+      dragover:          (e, data) => @dragOver()
       progressall:       (e, data) =>
-        @props.progressUpdate parseInt(data.loaded / data.total * 100, 10)
+        percents = parseInt(data.loaded / data.total * 100, 10)
+        @setState loadingProgress: percents
           
       formData: (form)   => @props.entry
 
+
+window.PostEditor_MediaLoadingProgress = React.createClass
+  propTypes:
+    progress: React.PropTypes.number.isRequired
+
   render: ->
-    # More about input accept
-    # http://www.html5rocks.com/en/tutorials/getusermedia/intro/
-    #
-    `<form ref='form' encType='multipart/form-data' method="POST">
-      <input id="image" className="form-upload__input" accept="image/*" type="file" multiple={true} ref="input"/>
-    </form>`
+    @props.progress = Math.min @props.progress, 100
+    @props.progress = Math.max @props.progress, 0
+    `<div className="media-box__loader">
+      <div className="media-box__loader-fill" style={{width: this.props.progress+'%'}} />
+     </div>`
