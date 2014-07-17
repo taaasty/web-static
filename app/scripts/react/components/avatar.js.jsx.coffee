@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-module.experts = window.Avatar = React.createClass
+window.Avatar = React.createClass
   #mixins: [ReactComponentWithPureRenderMixin]
   propTypes:
     name:    React.PropTypes.string.isRequired
@@ -19,3 +19,11 @@ module.experts = window.Avatar = React.createClass
     else
       style = 'background-color': @props.userpic.default_colors.background, 'color': @props.userpic.default_colors.name
       return `<span className='avatar' style={style} title={this.props.name}><span className="avatar__text">{this.props.name.charAt(0)}</span></span>`
+
+window.UserAvatar = React.createClass
+  propTypes:
+    user:   React.PropTypes.object.isRequired
+    size:   React.PropTypes.string
+
+  render: ->
+    Avatar name:@props.user.name, userpic:@props.user.userpic, size:@props.size
