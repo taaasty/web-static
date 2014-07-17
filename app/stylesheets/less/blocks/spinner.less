@@ -1,35 +1,9 @@
-@{spinner} {
+// Styles
+.spinner {
   position: relative;
   display: inline-block;
-  .font-null();
   vertical-align: middle;
-
-  &__icon {
-    display: inline-block;
-    border-style: solid;
-    border-right-color: transparent;
-    border-bottom-color: transparent;
-    .border-radius(50%);
-    .animation(spinner .4s linear infinite);
-  }
-
-  &--8x8 &__icon {
-    width: 8px;
-    height: 8px;
-    border-width: 2px;
-  }
-
-  &--24x24 &__icon {
-    width: 24px;
-    height: 24px;
-    border-width: 2px;
-  }
-
-  &--70x70 &__icon {
-    width: 70px;
-    height: 70px;
-    border-width: 3px;
-  }
+  .font-null();
 
   &.state--hidden {
     position: absolute;
@@ -37,6 +11,41 @@
   }
 }
 
+.spinner__icon {
+  display: inline-block;
+  border-style: solid;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  .animation(spinner .4s linear infinite);
+}
+
+// Types
+.spinner--8x8 {
+  .spinner__icon {
+    width: 8px;
+    height: 8px;
+    border-width: 2px;
+  }
+}
+
+.spinner--24x24 {
+  .spinner__icon {
+    width: 24px;
+    height: 24px;
+    border-width: 2px;
+  }
+}
+
+.spinner--70x70 {
+  .spinner__icon {
+    width: 70px;
+    height: 70px;
+    border-width: 3px;
+  }
+}
+
+// Animation
 @-webkit-keyframes spinner {
   0%   { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }

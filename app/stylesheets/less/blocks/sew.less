@@ -1,33 +1,33 @@
-.-sew-list {
-  max-height: 160px;
-  overflow: auto;
+.-sew-list-container {
+  min-width: @sew-list-min-width;
+  border: 1px solid #eee;
+  background: @white;
+  font-size: @sew-list-font-size;
+  line-height: @sew-list-line-height;
+  overflow: hidden;
+  border-radius: @sew-list-border-radius;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+  z-index: @zindex-sew-list;
+}
 
-  &-container {
-    min-width: 180px;
-    border: 1px solid #eee;
-    background: #fff;
-    font-size: 13px;
-    line-height: 1.4;
-    overflow: hidden;
-    .border-radius(3px);
-    .box-shadow(0 0 5px rgba(0, 0, 0, .1));
-    z-index: 99;
+.-sew-list {
+  max-height: @sew-list-max-height;
+  overflow: auto;
+}
+
+.-sew-list-item {
+  padding: 5px 10px;
+  display: block;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+
+  small {
+    color: @sew-list-item-caption-color;
   }
 
-  &-item {
-    padding: 5px 10px;
-    display: block;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-
-    small {
-      color: #afafaf;
-    }
-
-    &.selected {
-      background: #4183c4;
-      color: #fff;
-      text-decoration: none;
-    }
+  &.selected {
+    background: @sew-list-item-active-bg;
+    color: @sew-list-item-active-color;
+    text-decoration: none;
   }
 }

@@ -52,8 +52,6 @@
 @pay: ~".pay";
 @follow-status: ~".follow-status";
 @tasty-ribbon: ~".tasty-ribbon";
-@scroller: ~".scroller";
-@spinner: ~".spinner";
 @menu: ~".menu";
 @button: ~".button";
 @notice: ~".notice";
@@ -81,8 +79,6 @@
 @controls-list: ~".controls-list";
 @pagination: ~".pagination";
 @people: ~".people";
-@tags: ~".tags";
-@tag: ~".tag";
 @popup: ~".popup";
 @valign: ~".valign";
 @inviter: ~".inviter";
@@ -110,6 +106,7 @@
 @zindex-screen-viewer-loader: @zindex-screen-viewer-text; // 6
 @zindex-filter-search: 10;
 @zindex-dropdown: 150;
+@zindex-sew-list: @zindex-dropdown; // 150
 @zindex-affixed: 200; // toolbar, auth button
 @zindex-button-affixed: @zindex-affixed; // 200
 @zindex-popup: 5000;
@@ -229,3 +226,18 @@
 @filter-search-border-radius: 2em;
 @filter-search-indent: @indent-base;
 @filter-search-active-max-width: 154px;
+
+// Tags
+@tag-padding: 15px;
+@tag-hover-bg-base: #010101;
+@tag-hover-bg: rgba(red(@tag-hover-bg-base), green(@tag-hover-bg-base), blue(@tag-hover-bg-base), .15);
+
+// Sew
+@sew-list-max-height: 160px;
+@sew-list-min-width: 180px;
+@sew-list-border-radius: 3px;
+@sew-list-font-size: 13px;
+@sew-list-line-height: 1.4;
+@sew-list-item-active-bg: #4183c4;
+@sew-list-item-active-color: @white;
+@sew-list-item-caption-color: #afafaf;
