@@ -126,7 +126,6 @@ window.PostEditor_ImageForm = React.createClass
       formData: (form)   => @props.entry
 
   render: ->
-    $('.post-actions').toggleClass 'state--loading', @state.isLoading
     # More about input accept
     # http://www.html5rocks.com/en/tutorials/getusermedia/intro/
     #
