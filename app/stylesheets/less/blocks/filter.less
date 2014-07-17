@@ -1,148 +1,71 @@
-@{filter} {
-  &-bar {
-    padding: 32px;
-    position: relative;
-    top: 0;
-    right: 0;
-    left: 0;
+.filter-search {
+  position: absolute;
+  display: inline-block;
+  right: @filter-search-indent;
+  bottom: @filter-search-indent;
+  border: 1px solid;
+  line-height: 1;
+  vertical-align: middle;
+  overflow: hidden;
+  opacity: .45;
+  border-radius: @filter-search-border-radius;
+  transition: opacity .3s ease;
+  z-index: @zindex-filter-search;
+
+  .page-header & {
     color: #e3e3e3;
-    text-align: center;
-    .clearfix();
-    z-index: 2;
-
-    @{button} {
-      float: right;
-    }
-
-    & + @{bricks}-wrapper {
-      margin-top: -7px;
-      padding-top: 0;
-    }
-
-    @{page-header} & {
-      position: absolute;
-    }
   }
 
-  &-search {
-    position: absolute;
-    display: inline-block;
-    border: 1px solid;
-    line-height: 1;
-    vertical-align: middle;
-    overflow: hidden;
-    .opacity(.45);
-    .border-radius(2em);
-    .transition(~"opacity .3s ease");
-
-    // Design Experiment
-    right: @toolbar-margin;
-    bottom: @toolbar-margin;
-    z-index: 2;
-
-    @{page-header} & {
-      color: #e3e3e3;
-    }
-
-    &__form {
-      max-width: 0;
-      display: inline-block;
-      vertical-align: top;
-      overflow: hidden;
-      .transition(~"max-width .3s ease");
-
-      @{filter}-search.state--active & {
-        max-width: 154px;
-      }
-    }
-
-    &__input {
-      width: 100%;
-      padding: 5px 0 5px 12px;
-      border: none;
-      background: none;
-      font-size: 13px;
-      line-height: 16px;
-      font-family: @font-family-proxima-nova;
-      color: inherit;
-      vertical-align: top;
-      .box-sizing(border-box);
-
-      &::-webkit-input-placeholder {
-        color: inherit;
-      }
-
-      &:-moz-placeholder {
-        color: inherit;
-      }
-
-      &::-moz-placeholder {
-        color: inherit;
-      }
-
-      &:-ms-input-placeholder {
-        color: inherit;
-      }
-    }
-
-    &__button {
-      width: 28px;
-      height: 28px;
-      margin: -1px;
-      display: inline-block;
-      background: transparent;
-      line-height: 27px;
-      color: inherit;
-      text-align: center;
-      vertical-align: top;
-      cursor: pointer;
-      .transition(~"background .3s ease, color .3s ease");
-
-      @{icons} {
-        font-size: 15px;
-        vertical-align: middle;
-      }
-    }
-
-    &:hover {
-      .opacity(.65);
-    }
-
-    &.state--focus {
-      .opacity(.75);
-    }
+  &:hover {
+    opacity: .65;
   }
 
-  &-nav {
-    margin: 0 5px;
-    display: inline-block;
-    font-size: 14px;
-    line-height: 20px;
-    font-family: @font-family-proxima-nova;
-    text-align: center;
+  &.state--focus {
+    opacity: .75;
+  }
+}
+
+.filter-search__form {
+  max-width: 0;
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  transition: max-width .3s ease;
+
+  .filter-search.state--active & {
+    max-width: @filter-search-active-max-width;
+  }
+}
+
+.filter-search__input {
+  width: 100%;
+  padding: 5px 0 5px 12px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  line-height: 16px;
+  font-family: @font-family-base;
+  color: inherit;
+  vertical-align: top;
+  box-sizing: border-box;
+  .placeholder(inherit);
+}
+
+.filter-search__button {
+  width: 28px;
+  height: 28px;
+  margin: -1px;
+  display: inline-block;
+  background: transparent;
+  line-height: 27px;
+  color: inherit;
+  text-align: center;
+  vertical-align: top;
+  cursor: pointer;
+  transition: background .3s ease, color .3s ease;
+
+  .icon {
+    font-size: 15px;
     vertical-align: middle;
-
-    &__item {
-      margin: 0 3px;
-      padding: 3px 14px;
-      display: inline-block;
-      border: 1px solid;
-      vertical-align: middle;
-      color: inherit;
-      .opacity(.45);
-      .border-radius(2em);
-
-      &:hover {
-        color: inherit;
-        .opacity(.65);
-      }
-
-      &.state--active {
-        border-color: transparent;
-        background: #32a16c;
-        color: #e3e3e3;
-        .opacity(1);
-      }
-    }
   }
 }

@@ -1,29 +1,29 @@
-@{alert} {
+.alert {
   padding: @alert-padding-vertical @alert-padding-horizontal;
   position: relative;
-  background-color: @alert-background-default;
+  background-color: @alert-bg-default;
   font-size: @alert-font-size;
   line-height: @alert-line-height;
   font-family: @font-family-base;
   color: @alert-color-default;
   text-align: center;
   cursor: default;
-  .user-select(none);
+  user-select: none;
+}
 
-  &__close {
-    padding: 10px;
-    position: absolute;
-    top: 16px;
-    right: 10px;
-    font-size: 12px;
-    line-height: 1;
-    color: @color-black;
-    cursor: pointer;
-    .opacity(.2);
-    .transition(~"opacity .4s ease");
+.alert__close {
+  padding: 10px;
+  position: absolute;
+  top: 16px;
+  right: 10px;
+  font-size: 12px;
+  line-height: 1;
+  color: @black;
+  cursor: pointer;
+  opacity: .2;
+  transition: opacity .4s ease;
 
-    &:hover {
-      .opacity(.3);
-    }
+  &:hover {
+    opacity: .3;
   }
 }

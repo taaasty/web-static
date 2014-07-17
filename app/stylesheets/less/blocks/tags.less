@@ -1,39 +1,35 @@
-@{tag} {
-  &__item {
-    color: #fff;
+.tag__item {
+  color: @white;
 
-    &:first-child @{people}__link {
+  &:first-child {
+    .tag__link {
       border-top: none;
     }
   }
+}
 
-  &__link {
-    padding: 15px;
-    display: block;
-    border-top: 1px solid rgba(255, 255, 255, .08);
+.tag__link {
+  padding: @tag-padding-vertical @tag-padding-horizontal;
+  display: block;
+  border-top: 1px solid rgba(red(@white), green(@white), blue(@white), .08);
+  color: @white;
+
+  &:hover {
+    background-color: @tag-hover-bg;
   }
+}
 
-  & &__link {
-    color: #fff;
+.tag__text {
+  position: relative;
+  display: block;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 
-    &:hover {
-      background: #2a2a2a;
-      background-color: rgba(1, 1, 1, .15)
-    }
-  }
-
-  &__text {
-    position: relative;
-    display: block;
-    vertical-align: middle;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  &__count {
-    width: 44px;
-    float: right;
-    text-align: right;
-  }
+.tag__count {
+  width: 44px;
+  float: right;
+  text-align: right;
 }

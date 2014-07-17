@@ -52,12 +52,7 @@
 @pay: ~".pay";
 @follow-status: ~".follow-status";
 @tasty-ribbon: ~".tasty-ribbon";
-@scroller: ~".scroller";
-@spinner: ~".spinner";
-@viewer: ~".screen-viewer";
 @menu: ~".menu";
-@alert: ~".alert";
-@avatar: ~".avatar";
 @button: ~".button";
 @notice: ~".notice";
 @toolbar: ~".toolbar";
@@ -72,9 +67,6 @@
 @meta-item: ~".meta-item";
 @meta-bar: ~".meta-bar";
 @rating: ~".rating";
-@comments: ~".comments";
-@comment: ~".comment";
-@tasty-editor: ~".tasty-editor";
 @media-box: ~".media-box";
 @form-radiogroup: ~".form-radiogroup";
 @form-radio: ~".form-radio";
@@ -86,23 +78,13 @@
 @editable-field: ~".editable-field";
 @controls-list: ~".controls-list";
 @pagination: ~".pagination";
-@bricks: ~".bricks";
-@brick: ~".brick";
-@filter: ~".filter";
-@people: ~".people";
-@tags: ~".tags";
-@tag: ~".tag";
 @popup: ~".popup";
-@confirmation: ~".confirmation";
-@collage: ~".collage";
 @valign: ~".valign";
 @inviter: ~".inviter";
 @shellbox: ~".shellbox";
 @form-popup: ~".form-popup";
-@switcher: ~".switcher";
 @settings: ~".settings";
 @types-posts: ~".types-posts";
-@dropdown: ~".dropdown-popup";
 
 /*--------------------------*/
 // Layout
@@ -115,8 +97,17 @@
 
 // Z-indexes
 /*-- new --*/
-@zindex-affixed: 100;
-@zindex-button-affixed: @zindex-affixed;
+@zindex-field-control: 2;
+@zindex-screen-viewer-item: 4;
+@zindex-screen-viewer-item-active: 5;
+@zindex-screen-viewer-text: 6;
+@zindex-screen-viewer-loader: @zindex-screen-viewer-text; // 6
+@zindex-filter-search: 10;
+@zindex-dropdown: 150;
+@zindex-sew-list: @zindex-dropdown; // 150
+@zindex-affixed: 200; // toolbar, auth button
+@zindex-button-affixed: @zindex-affixed; // 200
+@zindex-popup: 5000;
 
 /*-- old --*/
 @guide-popup-zindex: 500;
@@ -164,7 +155,7 @@
 @alert-line-height: 1.467;
 
 @alert-color-default: #797979;
-@alert-background-default: #ededed;
+@alert-bg-default: #ededed;
 
 // Dropdown
 @dropdown-font-size: @button-small-font-size;
@@ -207,3 +198,70 @@
 @brick-video-height: 200px;
 @brick-video-overlay-bg-base: #3e3e3e;
 @brick-video-overlay-bg: rgba(red(@brick-video-overlay-bg-base), green(@brick-video-overlay-bg-base), blue(@brick-video-overlay-bg-base), .5);
+
+// Comments
+@comments-font-size: 14px;
+@comments-line-height: 18px;
+
+@comment-dropdown-bg-base: #333;
+@comment-dropdown-bg: rgba(red(@comment-dropdown-bg-base), green(@comment-dropdown-bg-base), blue(@comment-dropdown-bg-base), .93);
+
+// Confirmation
+@confirmation-bg: rgba(red(@black), green(@black), blue(@black), .7);
+
+// Tasty Editor
+@tasty-editor-toolbar-width: 178px;
+@tasty-editor-toolbar-border-radius: 4px;
+@tasty-editor-toolbar-bg-base: #393c3e;
+@tasty-editor-toolbar-bg: rgba(red(@tasty-editor-toolbar-bg-base), green(@tasty-editor-toolbar-bg-base), blue(@tasty-editor-toolbar-bg-base), .9);
+
+@tasty-editor-link-input-placeholder-color: #777;
+
+@tasty-editor-placeholder-selection-bg: #dde3e7;
+@tasty-editor-content-selection-bg: #fec900;
+
+// Filter
+@filter-search-border-radius: 2em;
+@filter-search-indent: @indent-base;
+@filter-search-active-max-width: 154px;
+
+// Tags
+@tag-padding-vertical: 15px;
+@tag-padding-horizontal: @tag-padding-vertical;
+
+@tag-hover-bg-base: #010101;
+@tag-hover-bg: rgba(red(@tag-hover-bg-base), green(@tag-hover-bg-base), blue(@tag-hover-bg-base), .15);
+
+// People
+@people-padding-vertical: 10px;
+@people-padding-horizontal: 15px;
+
+@people-hover-bg-base: #010101;
+@people-hover-bg: rgba(red(@tag-hover-bg-base), green(@tag-hover-bg-base), blue(@tag-hover-bg-base), .15);
+
+@people-avatar-size: 40px;
+
+// Sew
+@sew-list-max-height: 160px;
+@sew-list-min-width: 180px;
+
+@sew-list-border-radius: 3px;
+
+@sew-list-font-size: 13px;
+@sew-list-line-height: 1.4;
+
+@sew-list-item-active-bg: #4183c4;
+@sew-list-item-active-color: @white;
+@sew-list-item-caption-color: #afafaf;
+
+// Switcher
+@switcher-width: 116px;
+@switcher-height: 40px;
+
+@switcher-bg: #282727;
+@switcher-border-radius: 3px;
+
+@switcher-btn-active-bg: #ffc70b;
+@switcher-btn-inactive-bg: #3b3b3b;
+@switcher-btn-active-color: #1e1d1d;
+@switcher-btn-inactive-color: @white;

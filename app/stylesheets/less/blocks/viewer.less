@@ -1,9 +1,9 @@
-@{viewer} {
+.screen-viewer {
   width: 100%;
   height: 100%;
   position: relative;
   font-family: @font-family-base;
-  color: @color-white;
+  color: @white;
   overflow: hidden;
 
   &:before {
@@ -13,121 +13,121 @@
     vertical-align: middle;
   }
 
-  &__box {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  &__item {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 4;
-    .opacity(0);
-    .transition(~"opacity 0s ease .6s");
-  }
-
-  &__bg {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    text-align: center;
-    .background-size(cover);
-    .scale(1.1);
-    .transition-transform(~"0s linear .8s");
-    .backface-visibility(hidden);
-
-    img {
-      max-width: 100%;
-      max-height: 100%;
-      display: none;
-      visibility: hidden;
-    }
-
-    @{viewer}__item.state--current & {
-      .scale(1);
-      .transition-duration(10s);
-      .transition-delay(0s);
-    }
-  }
-
-  &__user {
-    position: absolute;
-    right: 5%;
-    bottom: 50px;
-    font-size: 15px;
-    line-height: 1.4em;
-
-    a {
-      color: inherit;
-      .opacity(.6);
-
-      &:hover {
-        .opacity(1);
-      }
-    }
-  }
-
-  &__text {
-    width: 768px;
-    margin-left: 5%;
-    position: absolute;
-    display: inline-block;
-    bottom: 50px;
-    left: 0;
-    font-size: 62px;
-    line-height: 100%;
-    font-family: @font-family-base-light;
-    letter-spacing: -2px;
-    vertical-align: middle;
-    visibility: hidden;
-    z-index: 6;
-    .opacity(1);
-    .transform(translate(0px, 30px));
-  }
-
-  &__loader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    visibility: visible;
-    z-index: 6;
-  }
-
   &.state--ready {
-    @{viewer}__item.state--current {
-      z-index: 5;
-      .opacity(1);
-      .transition(~"opacity .6s ease 0s");
+    .screen-viewer__item.state--current {
+      z-index: @zindex-screen-viewer-item-active;
+      opacity: 1;
+      transition: opacity .6s ease 0s;
     }
 
-    @{viewer}__loader {
+    .screen-viewer__loader {
       visibility: hidden;
-      .opacity(0);
-      .transition(~"opacity .4s ease, visibility 0s ease .4s");
+      opacity: 0;
+      transition: opacity .4s ease, visibility 0s ease .4s;
     }
 
-    @{viewer}__text {
+    .screen-viewer__text {
       visibility: visible;
-      .opacity(1);
-      .transform(translate(0px, 0px));
-      .transition-transform(~"1s ease, opacity 1s ease");
+      opacity: 1;
+      transform: translate(0px, 0px);
+      transition: transform 1s ease, opacity 1s ease;
     }
   }
+}
 
-  // Media Queries
-  @media (max-width: 1050px) {
-    &__text {
-      width: 60%;
+.screen-viewer__box {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.screen-viewer__item {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: @zindex-screen-viewer-item;
+  opacity: 0;
+  transition: opacity 0s ease .6s;
+}
+
+.screen-viewer__bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  text-align: center;
+  background-size: cover;
+  .scale(1.1);
+  transition: transform 0s linear .8s;
+  backface-visibility: hidden;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+    visibility: hidden;
+  }
+
+  .screen-viewer__item.state--current & {
+    .scale(1);
+    transition-duration: 10s;
+    transition-delay: 0s;
+  }
+}
+
+.screen-viewer__user {
+  position: absolute;
+  right: 5%;
+  bottom: 50px;
+  font-size: 15px;
+  line-height: 1.4em;
+
+  a {
+    color: inherit;
+    opacity: .6;
+
+    &:hover {
+      opacity: 1;
     }
+  }
+}
+
+.screen-viewer__text {
+  width: 768px;
+  margin-left: 5%;
+  position: absolute;
+  display: inline-block;
+  bottom: 50px;
+  left: 0;
+  font-size: 62px;
+  line-height: 100%;
+  font-family: @font-family-base-light;
+  letter-spacing: -2px;
+  vertical-align: middle;
+  visibility: hidden;
+  z-index: @zindex-screen-viewer-text;
+  opacity: 1;
+  transform: translate(0px, 30px);
+}
+
+.screen-viewer__loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  visibility: visible;
+  z-index: @zindex-screen-viewer-loader;
+}
+
+// Media Queries
+@media (max-width: 1050px) {
+  .screen-viewer__text {
+    width: 60%;
   }
 }

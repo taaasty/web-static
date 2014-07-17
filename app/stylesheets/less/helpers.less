@@ -241,10 +241,17 @@
           perspective-origin: @perspective;
 }
 
-.backface-visibility(@visibility){
+.backface-visibility(@visibility) {
   -webkit-backface-visibility: @visibility;
      -moz-backface-visibility: @visibility;
           backface-visibility: @visibility;
+}
+
+// Placeholder text
+.placeholder(@color) {
+  &::-moz-placeholder           { color: @color; opacity: 1; }
+  &:-ms-input-placeholder       { color: @color; }
+  &::-webkit-input-placeholder  { color: @color; }
 }
 
 // For HQ Screen (bootstrap)
