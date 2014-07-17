@@ -11,6 +11,8 @@ window.ImagesLoaded = require 'imagesloaded'
 
 window.Backbone = require 'backbone'
 
+window.SuperAgent = require 'superagent'
+
 require 'angular'
 
 require 'angular-resource'

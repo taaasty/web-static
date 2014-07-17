@@ -58,7 +58,7 @@ module.experts = window.RelationshipFollowingButton = React.createClass
         TastyNotifyController.errorResponse data
         @startErrorTimer()
 
-    xhr.always ->
+    xhr.always =>
       @setState isProcess: false
 
   handleHover: -> @setState isHover: true
