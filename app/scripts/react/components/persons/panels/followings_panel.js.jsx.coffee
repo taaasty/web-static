@@ -2,7 +2,7 @@
 
 FOLLOW_STATE = 1
 
-window.FollowersTabPanel = FollowersTabPanel = React.createClass
+window.PersonsPopup_FollowingsPanel = PersonsPopup_FollowingsPanel = React.createClass
 
   getInitialState: ->
     relationships: null
@@ -17,7 +17,7 @@ window.FollowersTabPanel = FollowersTabPanel = React.createClass
 
   getPanelData: ->
     @xhr = $.ajax
-      url: Routes.api.relationships_by_url()
+      url: Routes.api.relationships_to_url()
       data:
         status: FOLLOW_STATE
       success: (relationships) =>
@@ -29,7 +29,8 @@ window.FollowersTabPanel = FollowersTabPanel = React.createClass
   render: ->
     if @state.relationships
       relationships = @state.relationships.map (relationship, i) ->
-        `<FollowersTabPanelItem relationship={ relationship } key={ i }></FollowersTabPanelItem>`
+        `<PersonsPopup_FollowingRelationship relationship={ relationship }
+                                             key={ i }></PersonsPopup_FollowingRelationship>`
 
       panelContent = `<ul className="persons">{ relationships }</ul>`
     else
@@ -46,4 +47,4 @@ window.FollowersTabPanel = FollowersTabPanel = React.createClass
               </div>
             </div>`
 
-module.exports = FollowersTabPanel
+module.exports = PersonsPopup_FollowingsPanel

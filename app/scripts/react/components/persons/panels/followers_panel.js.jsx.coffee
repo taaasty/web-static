@@ -1,8 +1,8 @@
 ###* @jsx React.DOM ###
 
-FOLLOW_STATE = 0
+FOLLOW_STATE = 1
 
-window.GuessesTabPanel = GuessesTabPanel = React.createClass
+window.PersonsPopup_FollowersPanel = PersonsPopup_FollowersPanel = React.createClass
 
   getInitialState: ->
     relationships: null
@@ -17,7 +17,7 @@ window.GuessesTabPanel = GuessesTabPanel = React.createClass
 
   getPanelData: ->
     @xhr = $.ajax
-      url: Routes.api.relationships_to_url()
+      url: Routes.api.relationships_by_url()
       data:
         status: FOLLOW_STATE
       success: (relationships) =>
@@ -29,7 +29,8 @@ window.GuessesTabPanel = GuessesTabPanel = React.createClass
   render: ->
     if @state.relationships
       relationships = @state.relationships.map (relationship, i) ->
-        `<GuessesTabPanelItem relationship={ relationship } key={ i }></GuessesTabPanelItem>`
+        `<PersonsPopup_FollowerRelationship relationship={ relationship }
+                                            key={ i }></PersonsPopup_FollowerRelationship>`
 
       panelContent = `<ul className="persons">{ relationships }</ul>`
     else
@@ -46,4 +47,4 @@ window.GuessesTabPanel = GuessesTabPanel = React.createClass
               </div>
             </div>`
 
-module.exports = GuessesTabPanel
+module.exports = PersonsPopup_FollowersPanel

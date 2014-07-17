@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.PersonsPopupTab = PersonsPopupTab = React.createClass
+window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass
 
   propTypes:
     title:  React.PropTypes.string.isRequired
@@ -24,4 +24,4 @@ window.PersonsPopupTab = PersonsPopupTab = React.createClass
               </a>
             </li>`
 
-module.exports = PersonsPopupTabs
+module.exports = PersonsPopup_MenuItem

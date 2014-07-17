@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.FollowersTabPanelItem = FollowersTabPanelItem = React.createClass
+window.PersonsPopup_FollowerRelationship = PersonsPopup_FollowerRelationship = React.createClass
 
   propTypes:
     relationship: React.PropTypes.object.isRequired
@@ -23,4 +23,4 @@ window.FollowersTabPanelItem = FollowersTabPanelItem = React.createClass
       </div>
     </li>`
 
-module.exports = FollowersTabPanelItem
+module.exports = PersonsPopup_FollowerRelationship

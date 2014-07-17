@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.GuessesTabPanelItem = GuessesTabPanelItem = React.createClass
+window.PersonsPopup_GuessRelationship = PersonsPopup_GuessRelationship = React.createClass
 
   propTypes:
     relationship: React.PropTypes.object.isRequired
@@ -23,4 +23,4 @@ window.GuessesTabPanelItem = GuessesTabPanelItem = React.createClass
       </div>
     </li>`
 
-module.exports = GuessesTabPanelItem
+module.exports = PersonsPopup_GuessRelationship

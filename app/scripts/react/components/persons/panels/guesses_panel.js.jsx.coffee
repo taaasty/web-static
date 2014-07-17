@@ -1,8 +1,8 @@
 ###* @jsx React.DOM ###
 
-FOLLOW_STATE = 1
-
-window.FollowingsTabPanel = FollowingsTabPanel = React.createClass
+FOLLOW_STATE = 0
+PersonsPopup_FollowersPanel
+window.PersonsPopup_GuessesPanel = PersonsPopup_GuessesPanel = React.createClass
 
   getInitialState: ->
     relationships: null
@@ -29,7 +29,8 @@ window.FollowingsTabPanel = FollowingsTabPanel = React.createClass
   render: ->
     if @state.relationships
       relationships = @state.relationships.map (relationship, i) ->
-        `<FollowingsTabPanelItem relationship={ relationship } key={ i }></FollowingsTabPanelItem>`
+        `<PersonsPopup_GuessRelationship relationship={ relationship }
+                                         key={ i }></PersonsPopup_GuessRelationship>`
 
       panelContent = `<ul className="persons">{ relationships }</ul>`
     else
@@ -46,4 +47,4 @@ window.FollowingsTabPanel = FollowingsTabPanel = React.createClass
               </div>
             </div>`
 
-module.exports = FollowingsTabPanel
+module.exports = PersonsPopup_GuessesPanel
