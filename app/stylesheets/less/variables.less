@@ -70,8 +70,6 @@
 @meta-item: ~".meta-item";
 @meta-bar: ~".meta-bar";
 @rating: ~".rating";
-@comments: ~".comments";
-@comment: ~".comment";
 @tasty-editor: ~".tasty-editor";
 @media-box: ~".media-box";
 @form-radiogroup: ~".form-radiogroup";
@@ -110,7 +108,9 @@
 
 // Z-indexes
 /*-- new --*/
-@zindex-affixed: 100;
+@zindex-field-control: 2;
+@zindex-dropdown: 100;
+@zindex-affixed: 200;
 @zindex-button-affixed: @zindex-affixed;
 
 /*-- old --*/
@@ -202,3 +202,10 @@
 @brick-video-height: 200px;
 @brick-video-overlay-bg-base: #3e3e3e;
 @brick-video-overlay-bg: rgba(red(@brick-video-overlay-bg-base), green(@brick-video-overlay-bg-base), blue(@brick-video-overlay-bg-base), .5);
+
+// Comments
+@comments-font-size: 14px;
+@comments-line-height: 18px;
+
+@comment-dropdown-bg-base: #333;
+@comment-dropdown-bg: rgba(red(@comment-dropdown-bg-base), green(@comment-dropdown-bg-base), blue(@comment-dropdown-bg-base), .93);
