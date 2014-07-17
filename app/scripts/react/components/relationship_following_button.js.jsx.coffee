@@ -49,18 +49,17 @@ module.experts = window.RelationshipFollowingButton = React.createClass
 
     relationState = if @isFollow() then 'unfollow' else 'follow'
 
-    $.ajax
+    xhr = $.ajax
       url:     Routes.api.change_my_relationship_url(@props.relationship.user_id, relationState)
       method:  'POST'
       success: (data) =>
         @setState relationship: data
       error: (data)=>
-        debugger
         TastyNotifyController.errorResponse data
         @startErrorTimer()
-      done: =>
-        debugger
-        @setState isProcess: false
+
+    xhr.always ->
+      @setState isProcess: false
 
   handleHover: -> @setState isHover: true
   handleBlur:  -> @setState isHover: false

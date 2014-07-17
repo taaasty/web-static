@@ -1,14 +1,12 @@
 ###* @jsx React.DOM ###
 
 window.PersonsPopup = PersonsPopup = React.createClass
-
   mixins: [ReactUnmountMixin]
 
   getDefaultProps: ->
     title: 'Управление подписками'
 
   getInitialState: ->
-    # TODO Каждый счетчкик перечислить в стейте
     items: {
             followings_count: null
             followers_count:  null
@@ -26,17 +24,13 @@ window.PersonsPopup = PersonsPopup = React.createClass
 
   getSummaryData: (tlogId) ->
     @incrementActivities()
-    $.ajax
+    xhr = $.ajax
       url: Routes.api.relationships_summary_url()
       success: (data) => @setState items: data
-      error:   (data) =>
-        debugger
+      error:   (data) ->
         TastyNotifyController.errorResponse data
-      always: =>
-        debugger
-      done:  =>
-        debugger
-        @decrementActivities()
+
+    xhr.always @decrementActivities
 
   selectTab: (type) -> @setState currentTab: type
 
@@ -47,10 +41,10 @@ window.PersonsPopup = PersonsPopup = React.createClass
 
   render: ->
     switch @state.currentTab
-      when 'followings' then tabPanel = `<PersonsPopup_FollowingsPanel onReady={ this.decrementActivities }></PersonsPopup_FollowingsPanel>`
-      when 'followers'  then tabPanel = `<PersonsPopup_FollowersPanel onReady={ this.decrementActivities }></PersonsPopup_FollowersPanel>`
-      when 'guesses'    then tabPanel = `<PersonsPopup_GuessesPanel onReady={ this.decrementActivities }></PersonsPopup_GuessesPanel>`
-      # when 'ignored'    then tabPanel = `<BlockedTabPanel onReady={ this.decrementActivities }></BlockedTabPanel>`
+      when 'followings' then tabPanel = `<PersonsPopup_FollowingsPanel></PersonsPopup_FollowingsPanel>`
+      when 'followers'  then tabPanel = `<PersonsPopup_FollowersPanel></PersonsPopup_FollowersPanel>`
+      when 'guesses'    then tabPanel = `<PersonsPopup_GuessesPanel></PersonsPopup_GuessesPanel>`
+      # when 'ignored'    then tabPanel = `<BlockedTabPanel></BlockedTabPanel>`
       else console.warn "Неизвестный тип отношений #{@state.currentTab}"
 
     return `<div className="popup popup--persons popup--dark" style={{ display: 'block', top: '30px', left: '36%'}}>
