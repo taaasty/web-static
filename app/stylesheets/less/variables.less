@@ -87,7 +87,6 @@
 @tags: ~".tags";
 @tag: ~".tag";
 @popup: ~".popup";
-@confirmation: ~".confirmation";
 @valign: ~".valign";
 @inviter: ~".inviter";
 @shellbox: ~".shellbox";
@@ -112,6 +111,7 @@
 @zindex-dropdown: 100;
 @zindex-affixed: 200;
 @zindex-button-affixed: @zindex-affixed;
+@zindex-popup: 5000;
 
 /*-- old --*/
 @guide-popup-zindex: 500;
@@ -209,3 +209,6 @@
 
 @comment-dropdown-bg-base: #333;
 @comment-dropdown-bg: rgba(red(@comment-dropdown-bg-base), green(@comment-dropdown-bg-base), blue(@comment-dropdown-bg-base), .93);
+
+// Confirmation
+@confirmation-bg: rgba(red(@black), green(@black), blue(@black), .7);
