@@ -10,6 +10,7 @@ window.ReactApp =
   start: ({user}) ->
     console.log 'ReactApp start'
     console.debug? "Залогинен пользователь", user.get('slug') if user?
+    personsContainer = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get(0)
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
 
@@ -22,8 +23,8 @@ window.ReactApp =
         title: 'Настройки',
         user:   user
 
-    personsContainer = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get(0)
-    React.renderComponent PersonsPopup(), personsContainer
+    $('[toolbar-friends-click]').click =>
+      React.renderComponent PersonsPopup(), personsContainer
 
     # Есть только у анонимов
     $('[invite-button]').click => @shellbox.show InviterShellBox
