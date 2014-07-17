@@ -1,159 +1,109 @@
-@{tasty-editor} {
+.tasty-editor {
   position: relative;
 
   .state--hidden {
     display: none;
   }
+}
 
-  /* toolbar */
-  &-toolbar {
-    width: 178px;
-    position: absolute;
-    background: #393c3e;
-    background-color: rgba(51, 53, 55, 0.9);
-    z-index: 400;
-    .border-radius(4px);
+.tasty-editor-toolbar {
+  width: @tasty-editor-toolbar-width;
+  position: absolute;
+  background-color: @tasty-editor-toolbar-bg;
+  z-index: @zindex-dropdown;
+  border-radius: @tasty-editor-toolbar-border-radius;
 
-    &-inner {
-      padding: 10px 12px;
-      position: relative;
+  &.mode--link {
+    .tasty-editor-buttons {
+      visibility: hidden;
     }
 
-    &.mode--link {
-      @{tasty-editor}-buttons {
-        visibility: hidden;
-      }
-
-      @{tasty-editor}-link {
-        display: block;
-      }
+    .tasty-editor-link {
+      display: block;
     }
   }
+}
 
-  &-arr {
-    margin-left: -8px;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    border-width: 7px 8px 0 8px;
-    border-style: solid;
-    border-top-color: #393c3e;
-    border-color: rgba(51, 53, 55, 0.9) transparent transparent transparent;
+.tasty-editor-toolbar-inner {
+  padding: 10px 12px;
+  position: relative;
+}
+
+.tasty-editor-arr {
+  margin-left: -8px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border-width: 7px 8px 0 8px;
+  border-style: solid;
+  border-color: @tasty-editor-toolbar-bg transparent transparent transparent;
+}
+
+.tasty-editor-buttons {
+  overflow: hidden;
+}
+
+.tasty-editor-button {
+  padding: 0 6px;
+  float: left;
+  font-size: 13px;
+  line-height: 20px;
+  font-family: @font-family-base;
+  color: @white;
+  cursor: pointer;
+
+  &:hover,
+  &.state--active {
+    color: @yellow;
   }
+}
 
-  &-buttons {
-    overflow: hidden;
-  }
+.tasty-editor-link {
+  padding-right: 34px;
+  position: absolute;
+  display: none;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
 
-  &-button {
-    padding: 0 6px;
-    float: left;
-    font-size: 13px;
-    line-height: 20px;
-    font-family: @font-family-proxima-nova;
-    color: #fff;
-    cursor: pointer;
+.tasty-editor-link-x {
+  padding: 10px 12px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 8px;
+  line-height: 20px;
+  font-style: normal;
+  color: @white;
+  cursor: pointer;
+  font-family: @icons-name;
+  .ico-cross;
+}
 
-    &:hover,
-    &.state--active {
-      color: #f8c700;
-    }
-  }
+.tasty-editor-link-input {
+  width: 100%;
+  padding: 12px 0 12px 16px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  line-height: 18px;
+  font-family: @font-family-base;
+  color: @white;
+  vertical-align: top;
+  overflow: hidden;
+  box-sizing: border-box;
+  .placeholder(@tasty-editor-link-input-placeholder-color);
+}
 
-  &-link {
-    padding-right: 34px;
-    position: absolute;
-    display: none;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    overflow: hidden;
+.tasty-editor-placeholder {
+  opacity: .3;
+  .selection(@tasty-editor-placeholder-selection-bg);
+}
 
-    &-x {
-      padding: 10px 12px;
-      position: absolute;
-      top: 0;
-      right: 0;
-      font-size: 8px;
-      line-height: 20px;
-      font-style: normal;
-      color: #fff;
-      cursor: pointer;
-      font-family: @icons-name;
-      .ico-cross;
-    }
-
-    &-input {
-      @color-placeholder: #777;
-
-      width: 100%;
-      padding: 12px 0 12px 16px;
-      border: none;
-      background: none;
-      font-size: 13px;
-      line-height: 18px;
-      font-family: @font-family-proxima-nova;
-      color: #fff;
-      vertical-align: top;
-      overflow: hidden;
-      .box-sizing(border-box);
-
-      &::-webkit-input-placeholder {
-         color: @color-placeholder;
-      }
-
-      &:-moz-placeholder {
-         color: @color-placeholder;
-      }
-
-      &::-moz-placeholder {
-         color: @color-placeholder;
-      }
-
-      &:-ms-input-placeholder {
-         color: @color-placeholder;
-      }
-    }
-  }
-
-  /* placeholder */
-  &-placeholder {
-    @background-color-selection: #dde3e7;
-
-    .opacity(.3);
-
-    &::-moz-selection,
-    *::-moz-selection {
-      background-color: @background-color-selection;
-    }
-    &::-webkit-selection,
-    *::-webkit-selection {
-      background-color: @background-color-selection;
-    }
-    &::selection,
-    *::selection {
-      background-color: @background-color-selection;
-    }
-  }
-
-  /* content */
-  &-content {
-    min-height: 1em;
-
-    @background-color-selection: #fec900;
-
-    &::-moz-selection,
-    *::-moz-selection {
-      background-color: @background-color-selection;
-    }
-    &::-webkit-selection,
-    *::-webkit-selection {
-      background-color: @background-color-selection;
-    }
-    &::selection
-    *::selection {
-      background-color: @background-color-selection;
-    }
-  }
+.tasty-editor-content {
+  min-height: 1em;
+  .selection(@tasty-editor-content-selection-bg);
 }
