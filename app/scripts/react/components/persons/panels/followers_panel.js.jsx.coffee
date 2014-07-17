@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-FOLLOWER_STATE = 1
+RELATIONSHIP_STATE = 'friend'
 
 window.PersonsPopup_FollowersPanel = React.createClass
 
@@ -17,9 +17,7 @@ window.PersonsPopup_FollowersPanel = React.createClass
 
   getPanelData: ->
     @xhr = $.ajax
-      url: Routes.api.relationships_by_url()
-      data:
-        status: FOLLOWER_STATE
+      url: Routes.api.relationships_by_url(RELATIONSHIP_STATE)
       success: (relationships) =>
         @setState relationships: relationships
       error: (data, type) =>

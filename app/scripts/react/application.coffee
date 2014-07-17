@@ -10,21 +10,16 @@ window.ReactApp =
   start: ({user}) ->
     console.log 'ReactApp start'
     console.debug? "Залогинен пользователь", user.get('slug') if user?
-    personsContainer = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get(0)
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
 
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()
 
-    # Есть только у юзеров
-    $('[toolbar-settings-click]').click =>
-      @popup.show ToolbarSettings,
-        title: 'Настройки',
-        user:   user
-
-    $('[toolbar-friends-click]').click =>
-      React.renderComponent PersonsPopup(), personsContainer
+    # User Toolbar
+    userToolbarContainer = document.querySelectorAll('[user-toolbar-container]')[0]
+    if userToolbarContainer?
+      React.renderComponent UserToolbar({user: user}), userToolbarContainer
 
     # Есть только у анонимов
     $('[invite-button]').click => @shellbox.show InviterShellBox

@@ -27,7 +27,6 @@ require './aapp/services/designSettingsDragable.js.coffee'
 require './aapp/directives/eatClick.js'
 require './aapp/directives/enter.js'
 
-
 require './react/mixins/unmount'
 require './react/mixins/shake'
 require './react/mixins/grammar'
@@ -46,7 +45,8 @@ require './react/components/settings_header'
 require './react/components/settings_password_input'
 require './react/components/settings_radio_item'
 require './react/components/settings_vkontakte'
-require './react/components/toolbar_settings'
+require './react/components/images_collage'
+
 require './react/components/voting'
 require './react/components/inviter_shellbox'
 require './react/components/shellbox_layer'
@@ -56,6 +56,10 @@ require './react/components/relationship_following_button'
 require './react/components/popup_spinner'
 require './react/components/popup_box'
 require './react/components/popup/header'
+
+require './react/components/toolbar_settings'
+require './react/components/toolbars/user'
+require './react/components/toolbars/toolbar_item'
 
 require './react/components/calendar/calendar'
 require './react/components/calendar/calendar_timeline'
@@ -78,14 +82,11 @@ require './react/components/post/post_editor'
 require './react/components/post/post_editor_layout'
 require './react/components/post/post_editor_images_container'
 
-require './react/components/images_collage'
-
 require './react/components/tasty_notify'
 require './react/controllers/tasty_notify'
 require './react/controllers/shellbox'
 require './react/controllers/popup'
 require './react/application'
-
 
 require './editors'
 
