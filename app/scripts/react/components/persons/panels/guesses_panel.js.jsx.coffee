@@ -22,7 +22,6 @@ window.PersonsPopup_GuessesPanel = PersonsPopup_GuessesPanel = React.createClass
         status: FOLLOW_STATE
       success: (relationships) =>
         @setState relationships: relationships
-        @props.onReady()
       error: (data, type) =>
         TastyNotifyController.errorResponse data
 

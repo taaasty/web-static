@@ -22,7 +22,6 @@ window.PersonsPopup_FollowersPanel = React.createClass
         status: FOLLOWER_STATE
       success: (relationships) =>
         @setState relationships: relationships
-        @props.onReady()
       error: (data, type) =>
         TastyNotifyController.errorResponse data
 

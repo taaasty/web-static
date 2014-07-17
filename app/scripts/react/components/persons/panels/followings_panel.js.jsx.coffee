@@ -3,9 +3,6 @@
 RELATIONSHIP_STATE = 'friend'
 
 window.PersonsPopup_FollowingsPanel = React.createClass
-  propTypes:
-    onReady: React.PropTypes.func.isRequired
-
   getInitialState: ->
     relationships: null
     isError:       false
@@ -23,7 +20,6 @@ window.PersonsPopup_FollowingsPanel = React.createClass
       url: Routes.api.relationships_to_url(RELATIONSHIP_STATE)
       success: (relationships) =>
         @setState relationships: relationships
-        @props.onReady()
       error: (data, type) =>
         @setState isError: true
         TastyNotifyController.errorResponse data
