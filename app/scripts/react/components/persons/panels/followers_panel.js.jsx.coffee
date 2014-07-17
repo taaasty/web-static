@@ -1,8 +1,8 @@
 ###* @jsx React.DOM ###
 
-FOLLOW_STATE = 1
+FOLLOWER_STATE = 1
 
-window.PersonsPopup_FollowersPanel = PersonsPopup_FollowersPanel = React.createClass
+window.PersonsPopup_FollowersPanel = React.createClass
 
   getInitialState: ->
     relationships: null
@@ -19,7 +19,7 @@ window.PersonsPopup_FollowersPanel = PersonsPopup_FollowersPanel = React.createC
     @xhr = $.ajax
       url: Routes.api.relationships_by_url()
       data:
-        status: FOLLOW_STATE
+        status: FOLLOWER_STATE
       success: (relationships) =>
         @setState relationships: relationships
         @props.onReady()
@@ -28,13 +28,18 @@ window.PersonsPopup_FollowersPanel = PersonsPopup_FollowersPanel = React.createC
 
   render: ->
     if @state.relationships
-      relationships = @state.relationships.map (relationship, i) ->
-        `<PersonsPopup_FollowerRelationship relationship={ relationship }
-                                            key={ i }></PersonsPopup_FollowerRelationship>`
 
-      panelContent = `<ul className="persons">{ relationships }</ul>`
+      if @state.relationships.length>0
+        relationships = @state.relationships.map (relationship, i) ->
+          `<PersonsPopup_FollowerRelationship relationship={ relationship }
+                                              key={ i }></PersonsPopup_FollowerRelationship>`
+
+        panelContent = `<ul className="persons">{ relationships }</ul>`
+      else
+      panelContent = `<div className="popup__text">Вы ни за кем не следите</div>`
+
     else
-      panelContent = `<div className="popup__text">Пусто</div>`
+      panelContent = `<div className="popup__text">Загружаю..</div>`
 
     return `<div className="tabs-panel">
               <div className="scroller scroller--persons js-scroller">

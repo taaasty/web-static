@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.PersonsPopup_FollowingRelationship = PersonsPopup_FollowingRelationship = React.createClass
+window.PersonsPopup_FollowingRelationship = React.createClass
 
   propTypes:
     relationship: React.PropTypes.object.isRequired
@@ -16,9 +16,7 @@ window.PersonsPopup_FollowingRelationship = PersonsPopup_FollowingRelationship =
           <div className="person__count">{ this.props.relationship.user.count }</div>
         </div>
         <div className="person__actions">
-          <FollowButton tlogId={ this.props.relationship.user.id }
-                        relationship={ this.props.relationship }>
-          </FollowButton>
+          <RelationshipFollowingButton relationship={ this.props.relationship } />
         </div>
       </div>
     </li>`

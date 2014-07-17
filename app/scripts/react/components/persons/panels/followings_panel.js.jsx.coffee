@@ -1,11 +1,14 @@
 ###* @jsx React.DOM ###
 
-FOLLOW_STATE = 1
+RELATIONSHIP_STATE = 'friend'
 
-window.PersonsPopup_FollowingsPanel = PersonsPopup_FollowingsPanel = React.createClass
+window.PersonsPopup_FollowingsPanel = React.createClass
+  propTypes:
+    onReady: React.PropTypes.func.isRequired
 
   getInitialState: ->
     relationships: null
+    isError:       false
 
   componentWillMount: -> @getPanelData()
 
@@ -17,24 +20,28 @@ window.PersonsPopup_FollowingsPanel = PersonsPopup_FollowingsPanel = React.creat
 
   getPanelData: ->
     @xhr = $.ajax
-      url: Routes.api.relationships_to_url()
-      data:
-        status: FOLLOW_STATE
+      url: Routes.api.relationships_to_url(RELATIONSHIP_STATE)
       success: (relationships) =>
         @setState relationships: relationships
         @props.onReady()
       error: (data, type) =>
+        @setState isError: true
         TastyNotifyController.errorResponse data
 
   render: ->
     if @state.relationships
-      relationships = @state.relationships.map (relationship, i) ->
-        `<PersonsPopup_FollowingRelationship relationship={ relationship }
-                                             key={ i }></PersonsPopup_FollowingRelationship>`
+      if @state.relationships.length>0
+        relationships = @state.relationships.map (relationship, i) ->
+          `<PersonsPopup_FollowingRelationship relationship={ relationship } key={ i } />`
 
-      panelContent = `<ul className="persons">{ relationships }</ul>`
+        panelContent = `<ul className="persons">{ relationships }</ul>`
+      else
+        panelContent = `<div className="popup__text">Вы ни с кем не дружите</div>`
     else
-      panelContent = `<div className="popup__text">Пусто</div>`
+      if @state.isError
+        panelContent = `<div className="popup__text">Ошибка загрузки.</div>`
+      else
+        panelContent = `<div className="popup__text">Загружаю..</div>`
 
     return `<div className="tabs-panel">
               <div className="scroller scroller--persons js-scroller">

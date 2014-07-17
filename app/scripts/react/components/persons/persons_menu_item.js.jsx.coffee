@@ -5,8 +5,8 @@ window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass
   propTypes:
     title:  React.PropTypes.string.isRequired
     type:   React.PropTypes.string.isRequired
-    count:  React.PropTypes.number.isRequired
     active: React.PropTypes.bool.isRequired
+    count:  React.PropTypes.number
 
   handleClick: (e) ->
     e.preventDefault()

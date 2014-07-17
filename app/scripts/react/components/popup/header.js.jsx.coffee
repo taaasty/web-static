@@ -4,8 +4,11 @@ window.PopupHeader = PopupHeader = React.createClass
 
   propTypes:
     title:       React.PropTypes.string.isRequired
-    activities:  React.PropTypes.number.isRequired
     handleClose: React.PropTypes.func.isRequired
+    activities:  React.PropTypes.number
+
+  getDefaultProps: ->
+    activities: 0
 
   render: ->
    `<div className="popup__header">

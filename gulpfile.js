@@ -74,7 +74,6 @@ var path = require('path');
 //});
 
 gulp.task('less', function () {
-  //gulp.src('./app/styles/**/*.ess')
   gulp.src('./app/stylesheets/less/main.less')
     .pipe($.less({ paths: [ path.join(__dirname, 'less', 'includes') ] }))
     // .pipe($.autoprefixer('last 1 version'))

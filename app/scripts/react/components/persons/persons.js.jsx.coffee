@@ -8,14 +8,15 @@ window.PersonsPopup = PersonsPopup = React.createClass
     title: 'Управление подписками'
 
   getInitialState: ->
+    # TODO Каждый счетчкик перечислить в стейте
     items: {
-            followings_count: 0
-            followers_count: 0
-            guesses_count: 0
-            blocked_count: 0
+            followings_count: null
+            followers_count:  null
+            guesses_count:    null
+            blocked_count:    null
           }
-    tabName: 'followings'
-    activities: 2
+    currentTab: 'followings'
+    activities: 0
 
   componentWillMount: -> Mousetrap.bind 'esc', @close
 
@@ -24,27 +25,33 @@ window.PersonsPopup = PersonsPopup = React.createClass
   componentWillUnmount: -> Mousetrap.unbind 'esc', @close
 
   getSummaryData: (tlogId) ->
+    @incrementActivities()
     $.ajax
       url: Routes.api.relationships_summary_url()
-      success: (data) =>
-        @setState items: data, activities: --@state.activities
-      error: (data) =>
-        @setState(activities: --@state.activities)
+      success: (data) => @setState items: data
+      error:   (data) =>
+        debugger
         TastyNotifyController.errorResponse data
+      always: =>
+        debugger
+      done:  =>
+        debugger
+        @decrementActivities()
 
-  updateTabName: (type) -> @setState tabName: type
+  selectTab: (type) -> @setState currentTab: type
 
-  decrementActivities: -> @setState activities: --@state.activities
+  incrementActivities: -> @setState activities: @state.activities+=1
+  decrementActivities: -> @setState activities: @state.activities-=1
 
   close: -> @unmount()
 
   render: ->
-    switch @state.tabName
+    switch @state.currentTab
       when 'followings' then tabPanel = `<PersonsPopup_FollowingsPanel onReady={ this.decrementActivities }></PersonsPopup_FollowingsPanel>`
       when 'followers'  then tabPanel = `<PersonsPopup_FollowersPanel onReady={ this.decrementActivities }></PersonsPopup_FollowersPanel>`
       when 'guesses'    then tabPanel = `<PersonsPopup_GuessesPanel onReady={ this.decrementActivities }></PersonsPopup_GuessesPanel>`
-      # when 'blocked'    then tabPanel = `<BlockedTabPanel onReady={ this.decrementActivities }></BlockedTabPanel>`
-      else console.warn "Неизвестный тип отношений #{@state.tabName}"
+      # when 'ignored'    then tabPanel = `<BlockedTabPanel onReady={ this.decrementActivities }></BlockedTabPanel>`
+      else console.warn "Неизвестный тип отношений #{@state.currentTab}"
 
     return `<div className="popup popup--persons popup--dark" style={{ display: 'block', top: '30px', left: '36%'}}>
               <PopupHeader title={ this.props.title }
@@ -52,8 +59,8 @@ window.PersonsPopup = PersonsPopup = React.createClass
                            handleClose={ this.close }></PopupHeader>
               <div className="popup__body">
                 <PersonsPopup_Menu items={ this.state.items }
-                                   tabName={ this.state.tabName }
-                                   onClick={ this.updateTabName }></PersonsPopup_Menu>
+                                   currentTab={ this.state.currentTab }
+                                   onClick={ this.selectTab }></PersonsPopup_Menu>
                 { tabPanel }
               </div>
             </div>`
