@@ -1,69 +1,67 @@
-@{people} {
-  &__item {
-    color: #fff;
+.people {
+  .people__link {
+    color: @white;
 
-    &:first-child @{people}__link {
+    &:hover {
+      background-color: @people-hover-bg;
+    }
+  }
+}
+
+.people__item {
+  color: @white;
+
+  &:first-child {
+    .people__link {
       border-top: none;
     }
   }
+}
 
-  &__link {
-    padding: 10px 15px;
-    display: block;
-    border-top: 1px solid rgba(255, 255, 255, .08);
-  }
+.people__link {
+  padding: @people-padding-vertical @people-padding-horizontal;
+  display: block;
+  border-top: 1px solid rgba(red(@white), green(@white), blue(@white), .08);
+}
 
-  & &__link {
-    color: #fff;
+.people__avatar {
+  width: @people-avatar-size;
+  height: @people-avatar-size;
+  margin-right: 14px;
+  display: inline-block;
+  background-color: rgba(27, 27, 27, .4);
+  vertical-align: middle;
+  border-radius: 50%;
+  background-size: cover;
+}
 
-    &:hover {
-      background: #2a2a2a;
-      background-color: rgba(1, 1, 1, .15)
-    }
-  }
+.people__desc {
+  max-width: 114px;
+  position: relative;
+  vertical-align: middle;
+  white-space: nowrap;
+}
 
-  &__avatar {
-    @size: 40px;
+.people__name {
+  max-width: 102px;
+  margin-right: 6px;
+  display: inline-block;
+  vertical-align: middle;
+  .text-overflow();
+}
 
-    width: @size;
-    height: @size;
-    margin-right: 14px;
-    display: inline-block;
-    background-color: rgba(27, 27, 27, .4);
-    vertical-align: middle;
-    .border-radius(50%);
-    .background-size(cover);
-  }
+.people__count {
+  width: 44px;
+  margin-top: 12px;
+  float: right;
+  text-align: right;
+}
 
-  &__desc {
-    max-width: 114px;
-    position: relative;
-    vertical-align: middle;
-    white-space: nowrap;
-  }
-
-  &__name {
-    max-width: 102px;
-    margin-right: 6px;
-    display: inline-block;
-    vertical-align: middle;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  &__count {
-    width: 44px;
-    margin-top: 12px;
-    float: right;
-    text-align: right;
-  }
-
-  &__online {
-    width: 6px;
-    height: 6px;
-    display: inline-block;
-    background-color: #f9c800;
-    vertical-align: middle;
-    .border-radius(50%);
-  }
+.people__online {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  background-color: @yellow;
+  vertical-align: middle;
+  border-radius: 50%;
 }
