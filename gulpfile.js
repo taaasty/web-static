@@ -175,7 +175,7 @@ gulp.task('json', function() {
 
 
 // Watch
-gulp.task('watch', ['images', 'html', 'bundle', 'connect'], function () {
+gulp.task('watch', ['images', 'assets', 'html', 'bundle', 'connect'], function () {
 
     // Watch .json files
     //gulp.watch('app/scripts/**/*.json', ['json']);

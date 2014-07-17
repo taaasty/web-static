@@ -29,7 +29,7 @@ window.PostEditorLayout = React.createClass
                        previewMode = {this.state.previewMode}
                        onChangePrivacy = {this.changePrivacy}
                        onPreview = {this.preview}/>
-          <PostEditor />
+          <PostEditor entry={this.state.entry}/>
         </section>
       </div>`
     else

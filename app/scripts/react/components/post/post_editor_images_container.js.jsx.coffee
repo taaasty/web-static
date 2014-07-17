@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 
 DRAG_HOVER_CLASS = 'state--drag-hover'
+DRAGOFF_TIMEOUT  = 500
 
 window.PostEditor_ImagesContainer = React.createClass
   propTypes:
@@ -8,22 +9,29 @@ window.PostEditor_ImagesContainer = React.createClass
 
   getInitialState: ->
     isDragging: false
+    isLoading:  false
     loadingProgress: 0
 
   componentDidMount: ->
-    $(window).on 'dragleave', @dragLeave
+    $(document).on 'dragleave', @dragLeave
+    $(document).on 'drop', @draggingOff
 
   componentWillUnmount: ->
-    $(window).off 'dragleave', @dragLeave
+    $(document).off 'dragleave', @dragLeave
+    $(document).off 'drop', @draggingOff
+
+  isVisible: ->
+    @state.isDragging || @state.isLoading
 
   render: ->
+    $('.post-actions').toggleClass 'state--loading', @state.isDragging || @state.isLoading
     loadingProgress = `<div className="media-box__loader">
           <div className="media-box__loader-fill" style={{width: this.state.loadingProgress+'%'}} />
         </div>`
 
     imageActions = `<div className="media-box__actions js-tasty-editor-image-actions">
-          <div className="media-box__action media-box__action--delete js-tasty-editor-image-delete" title="Удалить">h</div>
-          <div className="media-box__action media-box__action--rotate js-tasty-editor-image-rotate" title="Повернуть">l</div>
+          <div className="media-box__action media-box__action--delete" title="Удалить"><span className='icon icon--cross' /></div>
+          <div className="media-box__action media-box__action--rotate" title="Повернуть"><span className='icon icon--rotate' /></div>
         </div>`
 
     postImageUrl = `<label className="media-box__form js-tasty-editor-image-form" htmlFor="media-box-image-url">
@@ -37,13 +45,14 @@ window.PostEditor_ImagesContainer = React.createClass
             <span>Перетащите или </span>
             <span className="form-upload form-upload--image">
                <span className="form-upload__text">выберите</span>
-               <PostEditor_ImageForm entry={this.props.entry} onDragOver={this.dragOver} progressUpdate={this.progressUpdate}/>
+               <PostEditor_ImageForm entry={this.props.entry} onDragOver={this.dragOver} onLoading={this.updateLoading} progressUpdate={this.progressUpdate}/>
              </span>
             <span> картинку</span><br/><span>или вставьте ссылку на нее</span>
           </div>
         </div>`
 
-    cx = React.addons.classSet "media-box": true, "state--hidden": !@state.isDragging
+    console.log 'isVisible', @isVisible()
+    cx = React.addons.classSet "media-box": true, "state--hidden": !@isVisible(), 'state--insert': @isVisible()
     `<figure className="image">
       <div className={cx} ref="dropZone">
         {loadingProgress}
@@ -56,6 +65,9 @@ window.PostEditor_ImagesContainer = React.createClass
       </div>
     </figure>`
 
+  updateLoading: (isLoading) ->
+    @setState isLoading: isLoading
+
   progressUpdate: (percents) ->
     @setState loadingProgress: percents
     #@ui.imageLoader.css width: p + "%"
@@ -66,7 +78,7 @@ window.PostEditor_ImagesContainer = React.createClass
 
   dragLeave: ->
     clearTimeout @_dragLeaveTimer if @_dragLeaveTimer?
-    @_dragLeaveTimer = setTimeout @draggingOff, 1000
+    @_dragLeaveTimer = setTimeout @draggingOff, DRAGOFF_TIMEOUT
 
   draggingOff: ->
     @setState isDragging: false
@@ -83,6 +95,10 @@ window.PostEditor_ImageForm = React.createClass
     entry:          React.PropTypes.object.isRequired
     onDragOver:     React.PropTypes.func.isRequired
     progressUpdate: React.PropTypes.func.isRequired
+    onLoading:      React.PropTypes.func.isRequired
+
+  getInitialState: ->
+    isLoading: false
 
   componentDidMount: ->
     $form = $ @refs.form.getDOMNode()
@@ -95,13 +111,22 @@ window.PostEditor_ImageForm = React.createClass
       multipart:         true
       fileInput:         @refs.input.getDOMNode()
       maxNumberOfFiles:  12
+      send:              =>
+        @props.onLoading true
+        @setState isLoading: true
+      fail:     (e,data) =>
+        TastyNotifyController.errorResponse data
+      always:            =>
+        @props.onLoading false
+        @setState isLoading: false
       dragover:          (e, data) => @props.onDragOver()
-      progressall: (e, data) ->
+      progressall:       (e, data) =>
         @props.progressUpdate parseInt(data.loaded / data.total * 100, 10)
           
-      formData: (form) -> @props.entry
+      formData: (form)   => @props.entry
 
   render: ->
+    $('.post-actions').toggleClass 'state--loading', @state.isLoading
     # More about input accept
     # http://www.html5rocks.com/en/tutorials/getusermedia/intro/
     #
