@@ -1,3 +1,5 @@
+@persons-popup-width: 424px;
+
 @{popup} {
   position: fixed;
   display: none;
@@ -294,7 +296,15 @@
   }
 
   &--persons {
-    width: 424px;
+    width: @persons-popup-width;
     position: absolute;
+  }
+
+  &--center {
+    display: block;
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    margin-left: -@persons-popup-width / 2;
   }
 }

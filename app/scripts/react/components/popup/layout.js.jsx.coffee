@@ -1,5 +1,5 @@
 ###* @jsx React.DOM ###
-#
+
 module.exports = window.PopupLayout = React.createClass
   mixins: [ReactUnmountMixin]
 
@@ -18,11 +18,10 @@ module.exports = window.PopupLayout = React.createClass
       @unmount()
 
   render: ->
-    return `<div className='popup-container'>
+   `<div className='popup-container'>
       <div className='popup-container__main'>
         <div className='popup-container__cell' onClick={this.handleClick}>
           {this.props.children}
         </div>
       </div>
     </div>`
-

@@ -26,7 +26,11 @@ window.PersonsPopup = React.createClass
                 #{ this.currentPanel() }
                 #</Popup>
               #</PopupLayout>`
-    return `<Popup title={PERSON_POPUP_TITLE} className='popup--persons' activities={this.state.activities} onClose={this.unmount}>
+    return `<Popup title={ PERSON_POPUP_TITLE }
+                   draggable={ true }
+                   activities={ this.state.activities }
+                   className='popup--persons'
+                   onClose={ this.unmount }>
               <PersonsPopup_Menu items={ this.state.items } currentTab={ this.state.currentTab } onSelect={ this.selectTab } />
               { this.currentPanel() }
              </Popup>`
