@@ -1,8 +1,9 @@
 ###* @jsx React.DOM ###
 
 PERSON_POPUP_TITLE = 'Управление подписками'
+
 window.PersonsPopup = React.createClass
-  mixins: [ReactUnmountMixin, ReactActivitiesMixin]
+  mixins: [ReactUnmountMixin, ReactActivitiesMixin, RequesterMixin]
 
   getInitialState: ->
     items: {
@@ -16,6 +17,9 @@ window.PersonsPopup = React.createClass
 
   componentDidMount: ->
     @loadSummaryData()
+
+  componentWillUnmount: ->
+    @abortActiveRequests()
 
   render: ->
     #return `<PopupLayout onClose={ this.unmount }>
@@ -39,6 +43,7 @@ window.PersonsPopup = React.createClass
       else console.error "Неизвестный тип отношений #{@state.currentTab}"
 
   loadSummaryData: ->
+<<<<<<< HEAD
     @activitiesHandler().increment()
     xhr = $.ajax
       url: Routes.api.relationships_summary_url()
@@ -48,6 +53,16 @@ window.PersonsPopup = React.createClass
         TastyNotifyController.errorResponse data
 
     xhr.always @activitiesHandler().decrement()
+=======
+    @incrementActivities()
+
+    @createRequest(
+      url:     Routes.api.relationships_summary_url()
+      success: (data) => @setState items: data
+      error:   (data) -> TastyNotifyController.errorResponse data
+      ).done ->
+        @decrementActivities
+>>>>>>> Requester mixin #115
 
   selectTab: (type) -> @setState currentTab: type
 

@@ -33,6 +33,8 @@ require './react/mixins/shake'
 require './react/mixins/grammar'
 require './react/mixins/error_timer'
 require './react/mixins/activities'
+require './react/mixins/requester'
+
 require './react/components/avatar'
 require './react/components/email_signin_shellbox'
 require './react/components/email_signup_shellbox'
