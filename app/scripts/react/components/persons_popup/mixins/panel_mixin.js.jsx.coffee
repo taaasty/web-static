@@ -6,19 +6,19 @@ window.PersonsPopup_PanelMixin =
     relationships: null
     isError:       false
 
-  componentWillMount: -> @getPanelData()
-
   componentDidMount: ->
-    $scroller = $ @refs.scroller.getDOMNode()
+    @$scroller = $ @refs.scroller.getDOMNode()
 
-    @scroller = $scroller.baron
+    @scroller = @$scroller.baron
       scroller: ".js-scroller-pane"
       bar:      ".js-scroller-bar"
       track:    ".js-scroller-track"
       barOnCls: "scroller--tracked"
       pause: 0
 
-    $scroller.trigger("sizeChange").trigger('sizeChange') # Специально вызывается два раза, один раз иногда не срабатывает
+    @$scroller.trigger("sizeChange").trigger('sizeChange') # Специально вызывается два раза, один раз иногда не срабатывает
+
+    @getPanelData()
 
   componentWillUnmount: ->
     # Отменяем xhr запрос если пользователь не дождался загрузки данных и
@@ -37,7 +37,12 @@ window.PersonsPopup_PanelMixin =
         @setState isError: true
         TastyNotifyController.errorResponse data
 
-    @xhr.always @props.activitiesHandler.decrement()
+    @xhr.always @props.activitiesHandler.decrement
+
+  componentDidUpdate: ->
+    console.log 'did update panel'
+    @scroller.update()
+    @$scroller.trigger("sizeChange").trigger('sizeChange')
 
   render: ->
     if @state.relationships

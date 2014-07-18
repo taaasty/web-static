@@ -15,8 +15,13 @@ window.Popup = React.createClass
   getDefaultProps: ->
     isDark: true
 
-  componentWillMount:   -> Mousetrap.bind 'esc',   @close
-  componentWillUnmount: -> Mousetrap.unbind 'esc', @close
+  componentDidMount:   ->
+    $('body').addClass 'no-scroll'
+    Mousetrap.bind 'esc',   @close
+
+  componentWillUnmount: ->
+    $('body').removeClass 'no-scroll'
+    Mousetrap.unbind 'esc', @close
 
   close: ->
     if @props.onClose?
