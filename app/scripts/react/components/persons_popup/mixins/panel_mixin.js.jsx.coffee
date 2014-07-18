@@ -8,6 +8,18 @@ window.PersonsPopup_PanelMixin =
 
   componentWillMount: -> @getPanelData()
 
+  componentDidMount: ->
+    $scroller = $ @refs.scroller.getDOMNode()
+
+    @scroller = $scroller.baron
+      scroller: ".js-scroller-pane"
+      bar:      ".js-scroller-bar"
+      track:    ".js-scroller-track"
+      barOnCls: "scroller--tracked"
+      pause: 0
+
+    $scroller.trigger("sizeChange").trigger('sizeChange') # Специально вызывается два раза, один раз иногда не срабатывает
+
   componentWillUnmount: ->
     # Отменяем xhr запрос если пользователь не дождался загрузки данных и
     # переключился на другую вкладку
@@ -44,7 +56,7 @@ window.PersonsPopup_PanelMixin =
         panelContent = `<div className="popup__text">Загружаю..</div>`
 
     return `<div className="tabs-panel">
-              <div className="scroller scroller--persons js-scroller">
+              <div className="scroller scroller--persons" ref="scroller">
                 <div className="scroller__pane js-scroller-pane">
                   { panelContent }
                 </div>
