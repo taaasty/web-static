@@ -6,7 +6,7 @@ window.PersonsPopup_FollowerRelationship = PersonsPopup_FollowerRelationship = R
     relationship: React.PropTypes.object.isRequired
 
   render: ->
-   `<PersonsPopup_PersonItem user={this.props.relationship.user}>
+   `<PersonsPopup_PersonItem user={this.props.relationship.reader}>
       <RelationshipFollowingButton relationship={ this.props.relationship } />
     </PersonsPopup_PersonItem>`
 
