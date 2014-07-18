@@ -2,7 +2,7 @@
 
 PERSON_POPUP_TITLE = 'Управление подписками'
 window.PersonsPopup = React.createClass
-  mixins: [ReactUnmountMixin]
+  mixins: [ReactUnmountMixin, ReactActivitiesMixin]
 
   getInitialState: ->
     items: {
@@ -32,28 +32,23 @@ window.PersonsPopup = React.createClass
   currentPanel: ->
     console.log 'currentTab', @state.currentTab
     switch @state.currentTab
-      when 'followings' then return PersonsPopup_FollowingsPanel()
-      when 'followers'  then return PersonsPopup_FollowersPanel()
-      when 'guesses'    then return PersonsPopup_GuessesPanel()
-      when 'ignores'    then return PersonsPopup_IgnoresPanel()
+      when 'followings' then return PersonsPopup_FollowingsPanel(activitiesHandler: @activitiesHandler())
+      when 'followers'  then return PersonsPopup_FollowersPanel(activitiesHandler: @activitiesHandler())
+      when 'guesses'    then return PersonsPopup_GuessesPanel(activitiesHandler: @activitiesHandler())
+      when 'ignores'    then return PersonsPopup_IgnoresPanel(activitiesHandler: @activitiesHandler())
       else console.error "Неизвестный тип отношений #{@state.currentTab}"
 
-
   loadSummaryData: ->
-    @incrementActivities()
+    @activitiesHandler().increment()
     xhr = $.ajax
       url: Routes.api.relationships_summary_url()
       success: (data) =>
-        debugger
         @setState items: data
       error:   (data) ->
         TastyNotifyController.errorResponse data
 
-    xhr.always @decrementActivities
+    xhr.always @activitiesHandler().decrement()
 
   selectTab: (type) -> @setState currentTab: type
-
-  incrementActivities: -> @setState activities: @state.activities+=1
-  decrementActivities: -> @setState activities: @state.activities-=1
 
 module.exports = PersonsPopup
