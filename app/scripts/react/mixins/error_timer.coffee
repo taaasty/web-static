@@ -1,6 +1,6 @@
 ERROR_TIMEOUT = 1000
 
-window.ErrorTimer =
+window.ErrorTimerMixin =
   clearErrorTimer: ->
     clearInterval @errorTimer if @errorTimer
 

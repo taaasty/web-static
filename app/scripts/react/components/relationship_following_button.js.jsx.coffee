@@ -5,7 +5,7 @@ STATE_NONE    = 'none'
 STATE_UNKNOWN = 'unknown'
 
 module.experts = window.RelationshipFollowingButton = React.createClass
-  mixins:        [ErrorTimer]
+  mixins:        [ErrorTimerMixin]
   propTypes:
     relationship: React.PropTypes.object
     #followStatusEl: React.PropTypes.object
