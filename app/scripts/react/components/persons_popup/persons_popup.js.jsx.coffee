@@ -14,7 +14,8 @@ window.PersonsPopup = React.createClass
     currentTab: 'followings'
     activities: 0
 
-  componentDidMount: @getSummaryData
+  componentDidMount: ->
+    @loadSummaryData()
 
   render: ->
     #return `<PopupLayout onClose={ this.unmount }>
@@ -38,11 +39,13 @@ window.PersonsPopup = React.createClass
       else console.error "Неизвестный тип отношений #{@state.currentTab}"
 
 
-  getSummaryData: (tlogId) ->
+  loadSummaryData: ->
     @incrementActivities()
     xhr = $.ajax
       url: Routes.api.relationships_summary_url()
-      success: (data) => @setState items: data
+      success: (data) =>
+        debugger
+        @setState items: data
       error:   (data) ->
         TastyNotifyController.errorResponse data
 
