@@ -7,7 +7,7 @@ window.PersonsPopup_IgnoredRelationship = PersonsPopup_IgnoredRelationship = Rea
 
   render: ->
    `<PersonsPopup_PersonItem user={this.props.relationship.user}>
-      <RelationshipFollowingButton relationship={ this.props.relationship } />
+      <RelationshipIgnoreButton relationship={ this.props.relationship } />
     </PersonsPopup_PersonItem>`
 
 module.exports = PersonsPopup_IgnoredRelationship

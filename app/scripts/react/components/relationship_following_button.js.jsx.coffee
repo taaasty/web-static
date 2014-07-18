@@ -7,10 +7,13 @@ STATE_UNKNOWN = 'unknown'
 module.experts = window.RelationshipFollowingButton = React.createClass
   mixins:        [ErrorTimerMixin]
   propTypes:
-    relationship: React.PropTypes.object
-    #followStatusEl: React.PropTypes.object
+    relationship: React.PropTypes.object.isRequired
+    ignoringOnly: React.PropTypes.bool
 
-  #getDefaultProps: ->
+
+  getDefaultProps: ->
+    ignoringOnly: false
+
     #followStatusEl: $(".js-follow-status")
 
   getInitialState: (a,b,c)->
@@ -38,6 +41,27 @@ module.experts = window.RelationshipFollowingButton = React.createClass
     return 'ошибка' if @state.isError
     return 'в процессе..' if @state.isProcess
 
+    if @props.ignoringOnly
+      @titleIgnoring()
+    else
+      @titleFollowing()
+
+  titleIgnoring: ->
+    if @state.isHover
+      return switch @state.relationship.state
+        when 'ignored'
+          'Разблокировать'
+        else
+          'Заблокировать'
+    else
+      return switch @state.relationship.state
+        when 'ignored'
+          'Заблокирован'
+        else
+          'Заблокировать'
+
+  titleFollowing: ->
+
     if @state.isHover
       return switch @state.relationship.state
         when 'friend'
@@ -45,7 +69,7 @@ module.experts = window.RelationshipFollowingButton = React.createClass
         when 'guessed'
           'Отменить запрос'
         when 'ignored'
-          'Разболкировать'
+          'Разблокировать'
         else
           'Подписаться'
     else
@@ -68,13 +92,20 @@ module.experts = window.RelationshipFollowingButton = React.createClass
 
     @setState isProcess: true
 
-    switch @state.relationship.state
-      when 'friend'
-        action = 'unfollow'
-      when 'guessed'
-        action = 'cancel'
-      else
-        action = 'follow'
+    if @props.ignoringOnly
+      switch @state.relationship.state
+        when 'ignored'
+          action = 'cancel'
+        else
+          action = 'ignore'
+    else
+      switch @state.relationship.state
+        when 'friend'
+          action = 'unfollow'
+        when 'guessed'
+          action = 'cancel'
+        else
+          action = 'follow'
 
     xhr = $.ajax
       url:     Routes.api.change_my_relationship_url(@props.relationship.user_id, action)
@@ -91,4 +122,11 @@ module.experts = window.RelationshipFollowingButton = React.createClass
   handleHover: -> @setState isHover: true
   handleBlur:  -> @setState isHover: false
 
+
+module.experts = window.RelationshipIgnoreButton = React.createClass
+  propTypes:
+    relationship: React.PropTypes.object.isRequired
+
+  render: ->
+    RelationshipFollowingButton relationship: @props.relationship, ignoringOnly: true
 
