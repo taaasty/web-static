@@ -15,11 +15,9 @@ window.PersonsPopup = React.createClass
     currentTab: 'followings'
     activities: 0
 
-  componentDidMount: ->
-    @loadSummaryData()
+  componentDidMount: -> @loadSummaryData()
 
-  componentWillUnmount: ->
-    @abortActiveRequests()
+  componentWillUnmount: -> @abortActiveRequests()
 
   render: ->
     #return `<PopupLayout onClose={ this.unmount }>
