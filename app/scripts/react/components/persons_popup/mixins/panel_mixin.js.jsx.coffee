@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
-#
+
 window.PersonsPopup_PanelMixin =
+
   getInitialState: ->
     relationships: null
     isError:       false
@@ -14,6 +15,7 @@ window.PersonsPopup_PanelMixin =
     @xhr.abort()
 
   getPanelData: ->
+    @props.activitiesHandler.increment()
     @setState isError: false
     @xhr = $.ajax
       url:     @relationUrl()
@@ -22,6 +24,8 @@ window.PersonsPopup_PanelMixin =
       error:   (data, type) =>
         @setState isError: true
         TastyNotifyController.errorResponse data
+
+    @xhr.always @props.activitiesHandler.decrement()
 
   render: ->
     if @state.relationships

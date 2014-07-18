@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.PersonsPopup_PersonItem = React.createClass
+window.PersonsPopup_PersonItem = PersonsPopup_PersonItem = React.createClass
 
   propTypes:
     user: React.PropTypes.object.isRequired
@@ -18,3 +18,4 @@ window.PersonsPopup_PersonItem = React.createClass
       </div>
     </li>`
 
+module.exports = PersonsPopup_PersonItem
