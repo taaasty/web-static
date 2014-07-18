@@ -13,18 +13,12 @@ module.exports = window.PopupBox = React.createClass
   handleClick: (e)->
     if $(e.target).hasClass('popup-container__cell')
       e.preventDefault()
-      @close()
+      @unmount()
 
-  close: -> @unmount()
-
-  componentWillMount: ->
-    Mousetrap.bind 'esc', @close
-
-  componentWillUnmount: ->
-    Mousetrap.unbind 'esc', @close
+  componentWillMount:   -> Mousetrap.bind 'esc', @unmount
+  componentWillUnmount: -> Mousetrap.unbind 'esc', @unmount
 
   render: ->
-    showSpinner = true
 
     linkState = @linkState 'spinnerActivities'
     React.Children.map @props.children, (context)->

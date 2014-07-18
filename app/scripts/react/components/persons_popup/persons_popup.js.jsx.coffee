@@ -1,10 +1,8 @@
 ###* @jsx React.DOM ###
 
-window.PersonsPopup = PersonsPopup = React.createClass
+PERSON_POPUP_TITLE = 'Управление подписками'
+window.PersonsPopup = React.createClass
   mixins: [ReactUnmountMixin]
-
-  getDefaultProps: ->
-    title: 'Управление подписками'
 
   getInitialState: ->
     items: {
@@ -16,11 +14,29 @@ window.PersonsPopup = PersonsPopup = React.createClass
     currentTab: 'followings'
     activities: 0
 
-  componentWillMount: -> Mousetrap.bind 'esc', @close
+  componentDidMount: @getSummaryData
 
-  componentDidMount: -> @getSummaryData()
+  render: ->
+    #return `<PopupLayout onClose={ this.unmount }>
+              #<Popup title={this.props.title} className='popup--persons' activities={this.state.activities} onClose={this.unmount}>
+                #<PersonsPopup_Menu items={ this.state.items } currentTab={ this.state.currentTab } onSelect={ this.selectTab } />
+                #{ this.currentPanel() }
+                #</Popup>
+              #</PopupLayout>`
+    return `<Popup title={PERSON_POPUP_TITLE} className='popup--persons' activities={this.state.activities} onClose={this.unmount}>
+              <PersonsPopup_Menu items={ this.state.items } currentTab={ this.state.currentTab } onSelect={ this.selectTab } />
+              { this.currentPanel() }
+             </Popup>`
 
-  componentWillUnmount: -> Mousetrap.unbind 'esc', @close
+  currentPanel: ->
+    console.log 'currentTab', @state.currentTab
+    switch @state.currentTab
+      when 'followings' then return PersonsPopup_FollowingsPanel()
+      when 'followers'  then return PersonsPopup_FollowersPanel()
+      when 'guesses'    then return PersonsPopup_GuessesPanel()
+      when 'ignores'    then return PersonsPopup_IgnoresPanel()
+      else console.error "Неизвестный тип отношений #{@state.currentTab}"
+
 
   getSummaryData: (tlogId) ->
     @incrementActivities()
@@ -36,28 +52,5 @@ window.PersonsPopup = PersonsPopup = React.createClass
 
   incrementActivities: -> @setState activities: @state.activities+=1
   decrementActivities: -> @setState activities: @state.activities-=1
-
-  close: -> @unmount()
-
-  render: ->
-    console.log 'currentTab', @state.currentTab
-    switch @state.currentTab
-      when 'followings' then tabPanel = PersonsPopup_FollowingsPanel()
-      when 'followers'  then tabPanel = PersonsPopup_FollowersPanel()
-      when 'guesses'    then tabPanel = PersonsPopup_GuessesPanel()
-      when 'ignores'    then tabPanel = PersonsPopup_IgnoresPanel()
-      else console.warn "Неизвестный тип отношений #{@state.currentTab}"
-
-    return `<div className="popup popup--persons popup--dark" style={{ display: 'block', top: '30px', left: '36%'}}>
-              <PopupHeader title={ this.props.title }
-                           activities={ this.state.activities }
-                           handleClose={ this.close }></PopupHeader>
-              <div className="popup__body">
-                <PersonsPopup_Menu items={ this.state.items }
-                                   currentTab={ this.state.currentTab }
-                                   onSelect={ this.selectTab }></PersonsPopup_Menu>
-                { tabPanel }
-              </div>
-            </div>`
 
 module.exports = PersonsPopup

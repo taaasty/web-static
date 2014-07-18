@@ -53,8 +53,10 @@ require './react/components/shellbox_layer'
 require './react/components/follow_button'
 require './react/components/relationship_following_button'
 
-require './react/components/popup_spinner'
 require './react/components/popup_box'
+require './react/components/popup/popup'
+require './react/components/popup/layout'
+require './react/components/popup/spinner'
 require './react/components/popup/header'
 
 require './react/components/calendar/calendar'
