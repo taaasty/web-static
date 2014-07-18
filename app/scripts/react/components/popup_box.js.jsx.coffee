@@ -1,5 +1,5 @@
 ###* @jsx React.DOM ###
-#= require ./popup_spinner
+#= require ./popup/spinner
 
 module.exports = window.PopupBox = React.createClass
   mixins: [ReactUnmountMixin, React.addons.LinkedStateMixin]
