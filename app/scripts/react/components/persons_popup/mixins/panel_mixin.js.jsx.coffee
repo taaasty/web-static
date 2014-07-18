@@ -14,26 +14,34 @@ window.PersonsPopup_PanelMixin =
       bar:      ".js-scroller-bar"
       track:    ".js-scroller-track"
       barOnCls: "scroller--tracked"
-      pause: 0
+      pause:    0
 
-    @$scroller.trigger("sizeChange").trigger('sizeChange') # Специально вызывается два раза, один раз иногда не срабатывает
+    # TODO Специально вызывается два раза, один раз иногда не срабатывает
+    @$scroller.trigger("sizeChange").trigger('sizeChange')
 
     @getPanelData()
 
   componentWillUnmount: ->
+    console.log 'will unmount'
     # Отменяем xhr запрос если пользователь не дождался загрузки данных и
     # переключился на другую вкладку
     # http://stackoverflow.com/a/446626/3800881
     @xhr.abort()
 
   getPanelData: ->
+    console.error 'getPanelData when xhr' if @xhr?
     @props.activitiesHandler.increment()
     @setState isError: false
     @xhr = $.ajax
       url:     @relationUrl()
       success: (relationships) =>
+        console.log 'lifeCycleState', @._lifeCycleState
+        console.log 'composite', @._compositeLifeCycleState
+        console.log 'success when unmounted', @ unless @isMounted()
         @setState relationships: relationships
       error:   (data, type) =>
+        return if @._compositeLifeCycleState  == 'UNMOUNTING'
+        return if data.state() == 'rejected'
         @setState isError: true
         TastyNotifyController.errorResponse data
 

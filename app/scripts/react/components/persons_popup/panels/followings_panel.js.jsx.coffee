@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.PersonsPopup_FollowingsPanel = PersonsPopup_FollowingsPanel = React.createClass
+window.PersonsPopup_FollowingsPanel = React.createClass
 
   mixins:       [PersonsPopup_PanelMixin]
   relationUrl:  -> Routes.api.relationships_to_url 'friend'

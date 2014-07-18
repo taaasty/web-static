@@ -11,16 +11,21 @@ window.RequesterMixin =
     return @_activeRequests || []
 
   addActiveRequest: (xhr) ->
+    console.log 'addActiveRequest', xhr
     @_activeRequests =[] unless @_activeRequests?
     @_activeRequests << xhr
 
   removeActiveRequest: (xhr) ->
+    console.log 'removeActiveRequest', xhr
     return unless @_activeRequests? && @_activeRequests.length>0
     index = @_activeRequests.indexOf xhr
     @_activeRequests.splice index, 1
 
   abortActiveRequests: ->
-    @_activeRequests.map (xhr) -> xhr.abort()
+    @_activeRequests.map (xhr) ->
+      console.log 'abortRequest', xhr
+      xhr.abort()
+    @_activeRequests = []
 
 
 # Варианты ajax-ных либок:
