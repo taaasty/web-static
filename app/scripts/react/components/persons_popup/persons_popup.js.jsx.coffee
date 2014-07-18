@@ -32,7 +32,6 @@ window.PersonsPopup = React.createClass
              </Popup>`
 
   currentPanel: ->
-    console.log 'currentTab', @state.currentTab
     switch @state.currentTab
       when 'followings' then return PersonsPopup_FollowingsPanel(activitiesHandler: @activitiesHandler())
       when 'followers'  then return PersonsPopup_FollowersPanel(activitiesHandler: @activitiesHandler())

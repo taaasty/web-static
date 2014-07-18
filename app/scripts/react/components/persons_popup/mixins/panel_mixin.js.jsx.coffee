@@ -40,7 +40,6 @@ window.PersonsPopup_PanelMixin =
     @xhr.always @props.activitiesHandler.decrement
 
   componentDidUpdate: ->
-    console.log 'did update panel'
     @scroller.update()
     @$scroller.trigger("sizeChange").trigger('sizeChange')
 

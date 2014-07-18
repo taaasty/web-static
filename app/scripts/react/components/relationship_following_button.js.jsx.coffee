@@ -22,35 +22,62 @@ module.experts = window.RelationshipFollowingButton = React.createClass
   componentWillUnmount: -> @clearErrorTimer()
 
   render: ->
-    if @isFollow()
+    if @isFollow() && !@state.isError && !@state.isProcess
       rootClass  = 'state--active'
-      text       = if @state.isHover then 'Отписаться' else 'Подписан'
     else
       rootClass  = ''
-      text       = 'Подписаться'
-
-    text = 'в процессе..' if @state.isProcess
-
-    text = 'ошибка' if @state.isError
 
     return `<button className={"button follow-button button--small " + rootClass}
                   onClick={this.handleClick}
                   onMouseOver={this.handleHover}
                   onMouseLeave={this.handleBlur}>
-              {text}
+              {this.title()}
             </button>`
+
+  title: ->
+    return 'ошибка' if @state.isError
+    return 'в процессе..' if @state.isProcess
+
+    if @state.isHover
+      return switch @state.relationship.state
+        when 'friend'
+          'Отписаться'
+        when 'guessed'
+          'Отменить запрос'
+        when 'ignored'
+          'Разболкировать'
+        else
+          'Подписаться'
+    else
+      return switch @state.relationship.state
+        when 'friend'
+          'Подписан'
+        when 'guessed'
+          'Ждем одобрения'
+        when 'ignored'
+          'Заблокирован'
+        else
+          'Подписаться'
 
   isFollow: ->
     @state.relationship.state == STATE_FRIEND
 
   handleClick: (e)->
     @closeError()
+    return unless @state.relationship?
+
     @setState isProcess: true
 
-    relationState = if @isFollow() then 'unfollow' else 'follow'
+    switch @state.relationship.state
+      when 'friend'
+        action = 'unfollow'
+      when 'guessed'
+        action = 'cancel'
+      else
+        action = 'follow'
 
     xhr = $.ajax
-      url:     Routes.api.change_my_relationship_url(@props.relationship.user_id, relationState)
+      url:     Routes.api.change_my_relationship_url(@props.relationship.user_id, action)
       method:  'POST'
       success: (data) =>
         @setState relationship: data
