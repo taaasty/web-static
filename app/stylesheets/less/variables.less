@@ -97,6 +97,7 @@
 
 // Z-indexes
 /*-- new --*/
+@zindex-types-posts: 1;
 @zindex-field-control: 2;
 @zindex-screen-viewer-item: 4;
 @zindex-screen-viewer-item-active: 5;
@@ -107,6 +108,8 @@
 @zindex-sew-list: @zindex-dropdown; // 150
 @zindex-affixed: 200; // toolbar, auth button
 @zindex-button-affixed: @zindex-affixed; // 200
+@zindex-button-back: @zindex-affixed; // 200
+@zindex-nav-types: @zindex-affixed; // 200
 @zindex-popup: 5000;
 
 /*-- old --*/
@@ -128,6 +131,8 @@
 @button-small-font-size: 11px;
 @button-middle-font-size: 13px;
 @button-large-font-size: @button-middle-font-size;
+
+@button-circle-size: 46px;
 
 @button-affixed-indent: @indent-base;
 
@@ -265,3 +270,6 @@
 @switcher-btn-inactive-bg: #3b3b3b;
 @switcher-btn-active-color: #1e1d1d;
 @switcher-btn-inactive-color: @white;
+
+// Nav Types
+@nav-types-indent: @indent-base;
