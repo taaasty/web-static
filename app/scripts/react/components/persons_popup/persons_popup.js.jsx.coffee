@@ -43,26 +43,12 @@ window.PersonsPopup = React.createClass
       else console.error "Неизвестный тип отношений #{@state.currentTab}"
 
   loadSummaryData: ->
-<<<<<<< HEAD
     @activitiesHandler().increment()
-    xhr = $.ajax
-      url: Routes.api.relationships_summary_url()
-      success: (data) =>
-        @setState items: data
-      error:   (data) ->
-        TastyNotifyController.errorResponse data
-
-    xhr.always @activitiesHandler().decrement()
-=======
-    @incrementActivities()
-
     @createRequest(
       url:     Routes.api.relationships_summary_url()
       success: (data) => @setState items: data
       error:   (data) -> TastyNotifyController.errorResponse data
-      ).done ->
-        @decrementActivities
->>>>>>> Requester mixin #115
+      ).done => @activitiesHandler().decrement()
 
   selectTab: (type) -> @setState currentTab: type
 
