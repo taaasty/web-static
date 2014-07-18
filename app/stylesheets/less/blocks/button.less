@@ -283,6 +283,29 @@
   padding-left: 12px !important;
 }
 
+// Circle Button
+.button--circle {
+  width: @button-circle-size;
+  height: @button-circle-size;
+  padding: 0;
+  background-color: @white;
+  line-height: @button-circle-size;
+  color: #b7b7b7;
+  letter-spacing: 0;
+  border-radius: 50%;
+
+  .icon {
+    margin: 2px;
+    font-size: 38px;
+  }
+
+  &:hover,
+  &.state--active {
+    background-color: @green;
+    color: @white;
+  }
+}
+
 // Approve Button
 .approve-button {
   &:extend(.button all, .button--small all, .button--outline-light-white all);
@@ -291,4 +314,22 @@
 // Disapprove Button
 .disapprove-button {
   &:extend(.button all, .button--small all, .button--outline-light-white all, .button--icon all);
+}
+
+// Back Button
+.back-button {
+  padding: @indent-base;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: @white;
+  font-weight: bold;
+  font-size: 20px;
+  color: @black !important;
+  opacity: .3;
+  z-index: @zindex-button-back;
+  border-radius: 0;
+  transition: all .3s ease;
+  &:extend(.icon);
+  .ico-cross();
 }

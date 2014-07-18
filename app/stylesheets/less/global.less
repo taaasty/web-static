@@ -476,4 +476,19 @@ html .state--faved {
 .tlog-mode-full @{arrow-back} {
   display: none;
 }
+
+.tlog-mode-full {
+  .back-button {
+    top: @indent-base;
+    left: @indent-base;
+    opacity: 1;
+    color: #bbb !important;
+    border-radius: 50%;
+
+    &:hover {
+      color: @black !important;
+      opacity: 1;
+    }
+  }
+}
 /* -- end Common -- */
