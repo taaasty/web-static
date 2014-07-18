@@ -23,22 +23,22 @@ window.PersonsPopup_Menu = React.createClass
                 <PersonsPopup_MenuItem isActive={ this.props.currentTab == "followings" }
                                        count={ this.props.items.followings_count }
                                        title={ FOLLOWINGS }
-                                       onClick={ onSelect.bind('followings') } />
+                                       onClick={ onSelect.bind(this, 'followings') } />
 
                 <PersonsPopup_MenuItem isActive={ this.props.currentTab == "followers" }
                                        count={ this.props.items.followers_count }
                                        title={ FOLLOWERS }
-                                       onClick={ onSelect.bind('followers') } />
+                                       onClick={ onSelect.bind(this, 'followers') } />
 
                 <PersonsPopup_MenuItem isActive={ this.props.currentTab == "guesses" }
                                        count={ this.props.items.guesses_count }
                                        title={ GUESSES }
-                                       onClick={ onSelect.bind('guesses') } />
+                                       onClick={ onSelect.bind(this, 'guesses') } />
 
                 <PersonsPopup_MenuItem isActive={ this.props.currentTab == "ignores" }
                                        count={ this.props.items.blocked_count }
                                        title={ IGNORES }
-                                       onClick={ onSelect.bind('ignores') } />
+                                       onClick={ onSelect.bind(this, 'ignores') } />
               </ul>
             </nav>`
 
