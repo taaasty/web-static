@@ -6,21 +6,8 @@ window.PersonsPopup_FollowerRelationship = PersonsPopup_FollowerRelationship = R
     relationship: React.PropTypes.object.isRequired
 
   render: ->
-   `<li className="person">
-      <div className="person__in">
-        <div className="person__avatar">
-          <Avatar name={this.props.relationship.reader.name} userpic={this.props.relationship.reader.userpic}/>
-        </div>
-        <div className="person__desc">
-          <p className="person__name">{ this.props.relationship.reader.name }</p>
-          <div className="person__count">{ this.props.relationship.reader.count }</div>
-        </div>
-        <div className="person__actions">
-          <FollowButton tlogId={ this.props.relationship.reader.id }
-                        relationship={ this.props.relationship }>
-          </FollowButton>
-        </div>
-      </div>
-    </li>`
+   `<PersonsPopup_PersonItem user={this.props.relationship.user}>
+      <RelationshipFollowingButton relationship={ this.props.relationship } />
+    </PersonsPopup_PersonItem>`
 
 module.exports = PersonsPopup_FollowerRelationship

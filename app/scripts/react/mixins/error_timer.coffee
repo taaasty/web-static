@@ -1,6 +1,7 @@
 ERROR_TIMEOUT = 1000
 
 window.ErrorTimerMixin =
+
   clearErrorTimer: ->
     clearInterval @errorTimer if @errorTimer
 
@@ -10,4 +11,3 @@ window.ErrorTimerMixin =
 
   closeError: ->
     @setState isError: false
-
