@@ -11,7 +11,7 @@ window.ImagesLoaded = require 'imagesloaded'
 
 window.Backbone = require 'backbone'
 
-window.Superagent = require 'superagent'
+window.Request = require 'superagent'
 
 require 'angular'
 

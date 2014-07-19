@@ -22,7 +22,6 @@ window.PersonsPopup_PanelMixin =
     @getPanelData()
 
   componentWillUnmount: ->
-    console.log 'will unmount'
     # Отменяем xhr запрос если пользователь не дождался загрузки данных и
     # переключился на другую вкладку
     # http://stackoverflow.com/a/446626/3800881
@@ -35,9 +34,7 @@ window.PersonsPopup_PanelMixin =
     @xhr = $.ajax
       url:     @relationUrl()
       success: (relationships) =>
-        console.log 'lifeCycleState', @._lifeCycleState
-        console.log 'composite', @._compositeLifeCycleState
-        console.log 'success when unmounted', @ unless @isMounted()
+        console.error? 'success when unmounted', @ unless @isMounted()
         @setState relationships: relationships
       error:   (data, type) =>
         return if @._compositeLifeCycleState  == 'UNMOUNTING'
