@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Icons</title>
+
+    <link rel="import" href="includes/icons.html">
+
+    <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
+
+    <!-- Fonts -->
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+    <!-- end Fonts -->
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="stylesheets/main.css" />
+    <!-- end Styles -->
+
+  </head>
+  <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white not-logged" >
+    <h2>Иконки</h2>
+    <script>
+      var link = document.querySelector('link[rel="import"]');
+      var content = link.import;
+
+      var template = link.import.querySelector('template');
+      var clone = document.importNode(template.content, true);
+      //var el = content.querySelector('#icons');
+      // var el = content.body;
+      // document.body.appendChild(el.cloneNode(true));
+      document.body.appendChild(clone);
+    </script>
+  </body>
+</html>
+

@@ -83,7 +83,7 @@ gulp.task "fonts", ->
 
 gulp.task "assets", ->
   gulp
-    .src("app/{api,javascripts,stylesheets}/**/*.{less,css,json,html,js}")
+    .src("app/{api,javascripts,stylesheets,includes}/**/*.{less,css,json,html,js}")
     .pipe gulp.dest("dist/")
 
 
