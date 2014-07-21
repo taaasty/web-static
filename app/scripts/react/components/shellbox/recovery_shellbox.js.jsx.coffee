@@ -29,10 +29,11 @@ module.experts = window.RecoveryShellBox = React.createClass
       dataType: 'json'
       method:   'post'
       data:
+        location:      window.location.href
         slug_or_email: slug
       success: (data) =>
         @setState inProcess: false
-        TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
+        TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля", 10000
         ReactApp.shellbox.close()
       error: (data) =>
         @setState inProcess: false

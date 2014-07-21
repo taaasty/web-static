@@ -97,7 +97,7 @@ module.experts = window.EmailSigninShellBox = React.createClass
                 <form onSubmit={this.submit}>
                   <div className="form-popup__item">
                     <div className={"form-field form-field--simple " + emailErrorClass}>
-                      <input ref='email' autoFocus={true} value={this.props.email} disabled={this.state.inProcess} className="form-field__input" required="required" type="email" placeholder="Электронная почта" />
+                      <input ref='email' autoFocus={true} value={this.props.email} disabled={this.state.inProcess} className="form-field__input" required="required" placeholder="Электронная почта или имя" />
                       <div className="form-field__bg"></div>
                     </div>
                   </div>
