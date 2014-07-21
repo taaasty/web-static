@@ -13,6 +13,7 @@ window.TastyNotifyController =
 
   errorResponse: (response, timeout = 3000) ->
     return if response.statusText is 'abort'
+    return if response.state?() == 'rejected'
 
     console.error? 'errorResponse', response
     message = response.message if response.message?
