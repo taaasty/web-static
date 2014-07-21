@@ -1,21 +1,29 @@
 ###* @jsx React.DOM ###
 
 window.PersonsPopup_PersonItem = PersonsPopup_PersonItem = React.createClass
+  mixins: [ReactGrammarMixin]
 
   propTypes:
-    user: React.PropTypes.object.isRequired
-    children: React.PropTypes.component.isRequired
+    user:        React.PropTypes.object.isRequired
+    children:    React.PropTypes.component.isRequired
 
   render: ->
-   `<li className="person">
-      <div className="person__in">
-        <div className="person__avatar"> <UserAvatar user={this.props.user}/> </div>
-        <div className="person__desc">
-          <p className="person__name">{ this.props.user.name }</p>
-          <div className="person__count">{ this.props.user.entries_count }</div>
-        </div>
-        <div className="person__actions">{this.props.children}</div>
-      </div>
-    </li>`
+    entriesCount = @getNumberOfEntries @props.user.entries_count
+
+    return `<li className="person">
+              <div className="person__in">
+                <div className="person__avatar">
+                  <a href={this.props.user.tlog_url}><UserAvatar user={ this.props.user }/></a>
+                </div>
+                <div className="person__desc">
+                  <a href={this.props.user.tlog_url}><p className="person__name">{ this.props.user.name }</p></a>
+                  <div className="person__count">{ entriesCount }</div>
+                </div>
+                <div className="person__actions">{this.props.children}</div>
+              </div>
+            </li>`
+
+  getNumberOfEntries: (number) ->
+    number + ' ' + @declension(number, ['запись', 'записи', 'записей'])
 
 module.exports = PersonsPopup_PersonItem
