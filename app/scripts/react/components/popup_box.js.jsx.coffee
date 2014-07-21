@@ -32,7 +32,7 @@ module.exports = window.PopupBox = React.createClass
              <div className="popup__header">
                 <div className="popup__headbox"><h3 className="popup__title">{this.props.title}</h3></div>
                   <PopupSpinner activities={this.state.spinnerActivities} />
-                <div className="popup__close" onClick={this.close}><div className="icon icon--cross"></div></div>
+                <div className="popup__close" onClick={this.unmount}><div className="icon icon--cross"></div></div>
              </div>
              <div className="popup__body">{this.props.children}</div>
           </div>
