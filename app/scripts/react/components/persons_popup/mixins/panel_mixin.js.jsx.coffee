@@ -32,7 +32,7 @@ window.PersonsPopup_PanelMixin =
     @props.activitiesHandler.increment()
     @setState isError: false
     @xhr = $.ajax
-      url:     @relationUrl()
+      url: @relationUrl()
       success: (relationships) =>
         console.error? 'success when unmounted', @ unless @isMounted()
         @setState relationships: relationships
@@ -48,12 +48,17 @@ window.PersonsPopup_PanelMixin =
     @scroller.update()
     @$scroller.trigger("sizeChange").trigger('sizeChange')
 
+  removeRelationshipByIndex: (index) ->
+    newRelationships = this.state.relationships
+    newRelationships.splice index, 1
+    @setState relationships: newRelationships
+
   render: ->
     if @state.relationships
-      if @state.relationships.length>0
+      if @state.relationships.length > 0
         itemClass = @itemClass
-        relationships = @state.relationships.map (relationship, i) ->
-          itemClass relationship: relationship, key: i
+        relationships = @state.relationships.map (relationship, i) =>
+          itemClass relationship: relationship, key: i, onRequestEnd: @removeRelationshipByIndex
 
         panelContent = `<ul className="persons">{ relationships }</ul>`
       else

@@ -58,6 +58,7 @@ require './react/components/voting'
 require './react/components/shellbox_layer'
 require './react/components/follow_button'
 require './react/components/relationship_following_button'
+require './react/components/relationship_guess_button'
 
 require './react/components/popup_box'
 require './react/components/popup/popup'
