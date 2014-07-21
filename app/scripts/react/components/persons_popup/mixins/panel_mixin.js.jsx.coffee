@@ -1,5 +1,5 @@
 ###* @jsx React.DOM ###
-
+#
 window.PersonsPopup_PanelMixin =
 
   getInitialState: ->
@@ -22,27 +22,22 @@ window.PersonsPopup_PanelMixin =
     @getPanelData()
 
   componentWillUnmount: ->
-    # Отменяем xhr запрос если пользователь не дождался загрузки данных и
-    # переключился на другую вкладку
-    # http://stackoverflow.com/a/446626/3800881
-    @xhr.abort()
+    @abortActiveRequests()
 
   getPanelData: ->
     console.error 'getPanelData when xhr' if @xhr?
     @props.activitiesHandler.increment()
     @setState isError: false
-    @xhr = $.ajax
-      url: @relationUrl()
+    req = @createRequest
+      url:     @relationUrl()
       success: (relationships) =>
-        console.error? 'success when unmounted', @ unless @isMounted()
         @setState relationships: relationships
-      error:   (data, type) =>
-        return if @._compositeLifeCycleState  == 'UNMOUNTING'
-        return if data.state() == 'rejected'
-        @setState isError: true
+      error:   (data) =>
         TastyNotifyController.errorResponse data
 
-    @xhr.always @props.activitiesHandler.decrement
+        @safeUpdateState data, -> @setState isError: true
+
+    req.always @props.activitiesHandler.decrement
 
   componentDidUpdate: ->
     @scroller.update()
@@ -78,4 +73,11 @@ window.PersonsPopup_PanelMixin =
                   <div className="scroller__bar js-scroller-bar"></div>
                 </div>
               </div>
+<<<<<<< HEAD
             </div>`
+=======
+            </div>`
+
+# TODO Use react-mixin-manager
+_.extend window.PersonsPopup_PanelMixin, window.RequesterMixin
+>>>>>>> Сохранение поста

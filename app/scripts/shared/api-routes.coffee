@@ -4,7 +4,6 @@ ApiRoutes =
   calendar_url:                         (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/calendar'
   votes_url:                           (entryId) -> TastySettings.api_host + 'v1/entries/' + entryId + '/votes'
   embed_url:                                     -> TastySettings.api_host + 'v1/embed'
-  post_url:                               (type) -> TastySettings.api_host + 'v1/entries/' + type
   design_settings_url:                    (slug) -> TastySettings.api_host + 'v1/design_settings/' + slug
   design_settings_cover_url:              (slug) -> TastySettings.api_host + 'v1/design_settings/' + slug + '/cover'
   signin_url:                                    -> TastySettings.api_host + 'v1/sessions'
@@ -13,6 +12,9 @@ ApiRoutes =
   recovery_url:                                  -> TastySettings.api_host + 'v1/users/password/recovery'
   request_confirm_url:                           -> TastySettings.api_host + 'v1/users/confirmation'
   userpic_url:                                   -> TastySettings.api_host + 'v1/users/userpic'
+
+  create_entry_url:                       (type) -> TastySettings.api_host + 'v1/entries/' + type
+  update_entry_url:                      (entry) -> TastySettings.api_host + 'v1/entries/' + entry.type + '/' +entry.id
 
   entry_url:                           (entryId) -> TastySettings.api_host + 'v1/entries/' + entryId
 

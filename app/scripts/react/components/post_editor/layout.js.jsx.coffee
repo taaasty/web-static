@@ -27,11 +27,11 @@ window.PostEditor_Layout = React.createClass
     @loadEntry entryId #@props.entryId
 
   loadEntry: (entryId) ->
-    @setState entry: null
+    @setState entry: null, isLoading: true
     $.ajax
       url:     Routes.api.entry_url(entryId)
       success: (data) =>
-        @setState entry: data, type: data.type
+        @setState entry: data, type: data.type, isLoading: false
       error:   (data) =>
         TastyNotifyController.errorResponse data
 
@@ -41,13 +41,13 @@ window.PostEditor_Layout = React.createClass
     if @state.entry?
       switch @state.entry.type
         when 'text'
-          editor = PostEditor_TextEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading
+          editor = PostEditor_TextEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading, ref: 'editor'
         when 'image'
-          editor = PostEditor_ImageEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading
+          editor = PostEditor_ImageEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading, ref: 'editor'
         when 'video'
-          editor = PostEditor_VideoEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading
+          editor = PostEditor_VideoEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading, ref: 'editor'
         when 'quote'
-          editor = PostEditor_QuoteEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading
+          editor = PostEditor_QuoteEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading, ref: 'editor'
         else
           console.error "Unknown entry type: #{@state.entry.type}"
       actions = PostActions
@@ -57,6 +57,7 @@ window.PostEditor_Layout = React.createClass
         onChangePrivacy: @changePrivacy
         onPreview: @togglePreview
         isLoading: @state.isLoading
+        onSave:    @saveEntry
     else
       editor = `<div>Loading</div>`
       actions = PostActions
@@ -65,6 +66,7 @@ window.PostEditor_Layout = React.createClass
         previewMode: @state.previewMode
         onChangePrivacy: @changePrivacy
         onPreview: @togglePreview
+        onSave:    @saveEntry
         isLoading: true
 
     `<div className='postEditorLayout'>
@@ -75,6 +77,10 @@ window.PostEditor_Layout = React.createClass
         <PostEditorChoicer currentType={this.state.type} onChangeType={this.changeType}/>
       </section>
     </div>`
+
+  saveEntry: ->
+    return unless @state.entry? && @refs.editor?
+    @refs.editor.saveEntry()
 
   changeType: (type) ->
     @loadEntry IDS[type]

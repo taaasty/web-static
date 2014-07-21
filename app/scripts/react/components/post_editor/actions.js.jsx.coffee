@@ -19,6 +19,7 @@ window.PostActions = React.createClass
     isTlogPrivate:   React.PropTypes.bool.isRequired
     onChangePrivacy: React.PropTypes.func.isRequired
     onPreview:       React.PropTypes.func.isRequired
+    onSave:          React.PropTypes.func.isRequired
     previewMode:     React.PropTypes.bool.isRequired
     isLoading:       React.PropTypes.bool.isRequired
 
@@ -38,9 +39,9 @@ window.PostActions = React.createClass
   render: ->
     previewButtonClasses = React.addons.classSet button: true, 'button--grey': true, 'state--active': @props.previewMode
 
-    postActionsClasses = React.addons.classSet 'state--loading': @props.isLoading
+    postActionsClasses = React.addons.classSet 'post-actions': true, 'state--loading': @props.isLoading
 
-    `<div className="post-actions">
+    `<div className={postActionsClasses}>
       {this.loader()}
         <div className="post-action post-action--button">
           <button className={previewButtonClasses} onClick={this.props.onPreview}>
@@ -49,7 +50,7 @@ window.PostActions = React.createClass
         </div>
         <div className="post-action post-action--button">
           <div className="button-group" ref="dropdown">
-            <button className="button button--green"><span className="button__text">{this.buttonTitle()}</span></button>
+            <button className="button button--green" onClick={this.props.onSave}><span className="button__text">{this.buttonTitle()}</span></button>
             <button className="button button--green-dark post-settings-button" data-element="dropdown-toggle">{this.stateIcon()}</button>
             <div className="dropdown-popup dropdown-popup--green-dark" data-element="dropdown-menu">
               <ul className="dropdown-popup__list">
