@@ -8,39 +8,33 @@ window.Popup = React.createClass
     activities:  React.PropTypes.number
     onClose:     React.PropTypes.func
     isDark:      React.PropTypes.bool
+    isDraggable: React.PropTypes.bool
 
     # например popup--settings, popup--persons
     className:   React.PropTypes.string
 
   getDefaultProps: ->
-    isDark: true
+    isDark:      true
+    isDraggable: false
 
-  componentDidMount:   ->
+  componentDidMount: ->
     $('body').addClass 'no-scroll'
-    Mousetrap.bind 'esc',   @close
+    Mousetrap.bind 'esc', @close
+    @makeDraggable() if @props.isDraggable
 
   componentWillUnmount: ->
     $('body').removeClass 'no-scroll'
     Mousetrap.unbind 'esc', @close
 
-  close: ->
-    if @props.onClose?
-      @props.onClose()
-    else
-      @unmount()
-
   render: ->
-
-    # TODO block вынести в class
     # TODO координаты сохранять в localStorage
-    style = { display: 'block', top: '30px', left: '36%'}
-
-    classes = popup: true, 'popup--dark': @props.isDark
+    classes = popup: true, 'popup--dark': @props.isDark, 'popup--center': true
     classes[@props.className] = true if @props.className?
     cx = React.addons.classSet classes
 
-    return `<div className={cx} style={style}>
-              <PopupHeader title={ this.props.title }
+    return `<div className={cx}>
+              <PopupHeader title={ this.props.title } ref="header"
+                           isDraggable= { this.props.isDraggable }
                            activities={ this.props.activities }
                            onClickClose={ this.close }></PopupHeader>
               <div className="popup__body">
@@ -48,3 +42,12 @@ window.Popup = React.createClass
               </div>
             </div>`
 
+  makeDraggable: ->
+    $popupNode = $(@getDOMNode())
+    $headboxNode = @refs.header.getDOMNode()
+
+    $popupNode.draggable
+      handle: $headboxNode
+
+  close: ->
+    if @props.onClose? then @props.onClose() else @unmount()
