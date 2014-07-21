@@ -6,6 +6,8 @@ CANCEL_TIMEOUT = 500
 
 module.experts = window.SettingsPasswordItem = React.createClass
   mixins: [ReactShakeMixin]
+  propTypes:
+    saveCallback: React.PropTypes.func.isRequired
 
   getInitialState: ->
     isEditing: false
