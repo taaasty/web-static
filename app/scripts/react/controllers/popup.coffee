@@ -1,4 +1,5 @@
 class window.ReactPopup
+
   constructor: ->
     @popupContainer    = $('<\div>').appendTo('body').get(0)
 
@@ -7,4 +8,3 @@ class window.ReactPopup
 
   close: ->
     _.defer => React.unmountComponentAtNode @popupContainer
-
