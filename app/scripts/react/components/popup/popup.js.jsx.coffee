@@ -1,5 +1,9 @@
 ###* @jsx React.DOM ###
 
+HANDLE_CLASS        = '.js-popup-headbox'
+NO_TRANSITION_CLASS = 'no--transition'
+CONTAINMENT         = '.page'
+
 window.Popup = React.createClass
   mixins: [ReactUnmountMixin]
 
@@ -8,6 +12,7 @@ window.Popup = React.createClass
     activities:  React.PropTypes.number
     onClose:     React.PropTypes.func
     isDark:      React.PropTypes.bool
+    isDraggable: React.PropTypes.bool
 
     # например popup--settings, popup--persons
     className:   React.PropTypes.string
@@ -15,32 +20,27 @@ window.Popup = React.createClass
   getDefaultProps: ->
     isDark: true
 
-  componentDidMount:   ->
+  getInitialState: ->
+    isDragging: false
+
+  componentDidMount: ->
+    @makeDraggable() if @props.isDraggable
     $('body').addClass 'no-scroll'
-    Mousetrap.bind 'esc',   @close
+    Mousetrap.bind 'esc', @close
 
   componentWillUnmount: ->
     $('body').removeClass 'no-scroll'
     Mousetrap.unbind 'esc', @close
 
-  close: ->
-    if @props.onClose?
-      @props.onClose()
-    else
-      @unmount()
-
   render: ->
-
-    # TODO block вынести в class
     # TODO координаты сохранять в localStorage
-    style = { display: 'block', top: '30px', left: '36%'}
-
-    classes = popup: true, 'popup--dark': @props.isDark
+    classes = popup: true, 'popup--dark': @props.isDark, 'popup--center': true
     classes[@props.className] = true if @props.className?
     cx = React.addons.classSet classes
 
-    return `<div className={cx} style={style}>
+    return `<div className={cx} ref="popupPersons">
               <PopupHeader title={ this.props.title }
+                           isDraggable= { this.props.isDraggable }
                            activities={ this.props.activities }
                            onClickClose={ this.close }></PopupHeader>
               <div className="popup__body">
@@ -48,3 +48,14 @@ window.Popup = React.createClass
               </div>
             </div>`
 
+  close: ->
+    if @props.onClose? then @props.onClose() else @unmount()
+
+  makeDraggable: ->
+    $node = $(@refs.popupPersons.getDOMNode())
+
+    $node.draggable
+      handle:      HANDLE_CLASS
+      containment: CONTAINMENT
+      drag: -> $node.addClass NO_TRANSITION_CLASS
+      stop: -> $node.removeClass NO_TRANSITION_CLASS
