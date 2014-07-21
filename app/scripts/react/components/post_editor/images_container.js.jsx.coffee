@@ -12,6 +12,7 @@ window.PostEditor_ImagesContainer = React.createClass
     entry:       React.PropTypes.object.isRequired
     setLoading:  React.PropTypes.func.isRequired
     isLoading:   React.PropTypes.bool.isRequired
+    isVisible:   React.PropTypes.bool
 
   getInitialState: ->
     isDragging: false
@@ -71,7 +72,7 @@ window.PostEditor_ImagesContainer = React.createClass
         </figure></form>`
 
   isVisible: ->
-    @state.isDragging || @props.isLoading
+    @props.isVisible || @state.isDragging || @props.isLoading
 
   dragOver:  ->
     clearTimeout @_dragLeaveTimer if @_dragLeaveTimer?

@@ -1,18 +1,10 @@
 "use strict"
 
 # Load plugins
-handleError = (err) -> @emit "end"
+handleError = (err) ->
+  console.warn err
+  @emit "end"
 gulp = require("gulp")
-#less = require("less")
-
-#less.tree.functions["image-url"] = ->
-  #uri = 'teeeesty'
-  #console.warn 'aaaa'
-  #return new(tree.URL)(new(tree.Anonymous)(uri))
-
-#less.tree.functions["aaa"] = (arg)->
-  #console.warn 'bbb'
-  #"testyyy"
 
 path = require("path")
 
