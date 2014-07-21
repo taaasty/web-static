@@ -1,9 +1,5 @@
 ###* @jsx React.DOM ###
 
-HANDLE_CLASS        = '.js-popup-headbox'
-NO_TRANSITION_CLASS = 'no--transition'
-CONTAINMENT         = '.page'
-
 window.Popup = React.createClass
   mixins: [ReactUnmountMixin]
 
@@ -18,15 +14,13 @@ window.Popup = React.createClass
     className:   React.PropTypes.string
 
   getDefaultProps: ->
-    isDark: true
-
-  getInitialState: ->
-    isDragging: false
+    isDark:      true
+    isDraggable: false
 
   componentDidMount: ->
-    @makeDraggable() if @props.isDraggable
     $('body').addClass 'no-scroll'
     Mousetrap.bind 'esc', @close
+    @makeDraggable() if @props.isDraggable
 
   componentWillUnmount: ->
     $('body').removeClass 'no-scroll'
@@ -38,8 +32,8 @@ window.Popup = React.createClass
     classes[@props.className] = true if @props.className?
     cx = React.addons.classSet classes
 
-    return `<div className={cx} ref="popupPersons">
-              <PopupHeader title={ this.props.title }
+    return `<div className={cx}>
+              <PopupHeader title={ this.props.title } ref="header"
                            isDraggable= { this.props.isDraggable }
                            activities={ this.props.activities }
                            onClickClose={ this.close }></PopupHeader>
@@ -48,14 +42,12 @@ window.Popup = React.createClass
               </div>
             </div>`
 
+  makeDraggable: ->
+    $popupNode = $(@getDOMNode())
+    $headboxNode = @refs.header.getDOMNode()
+
+    $popupNode.draggable
+      handle: $headboxNode
+
   close: ->
     if @props.onClose? then @props.onClose() else @unmount()
-
-  makeDraggable: ->
-    $node = $(@refs.popupPersons.getDOMNode())
-
-    $node.draggable
-      handle:      HANDLE_CLASS
-      containment: CONTAINMENT
-      drag: -> $node.addClass NO_TRANSITION_CLASS
-      stop: -> $node.removeClass NO_TRANSITION_CLASS
