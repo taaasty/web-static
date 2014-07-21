@@ -73,11 +73,7 @@ window.PersonsPopup_PanelMixin =
                   <div className="scroller__bar js-scroller-bar"></div>
                 </div>
               </div>
-<<<<<<< HEAD
-            </div>`
-=======
             </div>`
 
 # TODO Use react-mixin-manager
 _.extend window.PersonsPopup_PanelMixin, window.RequesterMixin
->>>>>>> Сохранение поста
