@@ -21,23 +21,21 @@ window.PersonsPopup_PanelMixin =
 
     @getPanelData()
 
-  componentWillUnmount: ->
-    @abortActiveRequests()
+  componentWillUnmount: -> @abortActiveRequests()
 
   getPanelData: ->
     console.error 'getPanelData when xhr' if @xhr?
     @props.activitiesHandler.increment()
     @setState isError: false
     req = @createRequest
-      url:     @relationUrl()
-      success: (relationships) =>
-        @setState relationships: relationships
+      url: @relationUrl()
+      success: (relationships, status, data) =>
+        @safeUpdateState data, => @setState relationships: relationships
       error:   (data) =>
         TastyNotifyController.errorResponse data
-
-        @safeUpdateState data, -> @setState isError: true
-
-    req.always @props.activitiesHandler.decrement
+        @safeUpdateState data, => @setState isError: true
+      complete: =>
+        @props.activitiesHandler.decrement()
 
   componentDidUpdate: ->
     @scroller.update()
