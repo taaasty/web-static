@@ -1,26 +1,24 @@
 window.RequesterMixin =
-  createRequest: (settings) ->
-    xhr = $.ajax settings
-    xhr.always =>
-      @removeActiveRequest xhr
-    @addActiveRequest xhr
 
-    return xhr
+  createRequest: (settings) ->
+    jqXHR = $.ajax settings
+    jqXHR.always => @removeActiveRequest jqXHR
+    @addActiveRequest jqXHR
+    jqXHR
 
   activeRequests: ->
-    return @_activeRequests || []
+    @_activeRequests ? []
 
-  addActiveRequest: (xhr) ->
-    @_activeRequests =[] unless @_activeRequests?
-    @_activeRequests << xhr
+  addActiveRequest: (jqXHR) ->
+    @_activeRequests = @_activeRequests ? []
+    @_activeRequests.push jqXHR
 
-  removeActiveRequest: (xhr) ->
-    return unless @_activeRequests? && @_activeRequests.length>0
-    index = @_activeRequests.indexOf xhr
-    @_activeRequests.splice index, 1
+  removeActiveRequest: (jqXHR) ->
+    index = @_activeRequests.indexOf jqXHR
+    @_activeRequests.splice index, 1 if index > -1
 
   abortActiveRequests: ->
-    @_activeRequests.map (xhr) -> xhr.abort()
+    @_activeRequests.map (jqXHR) -> jqXHR.abort()
     @_activeRequests = []
 
   safeUpdateState: (data, func) ->
