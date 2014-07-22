@@ -2,9 +2,13 @@
 #
 window.PersonsPopup_PanelMixin =
 
+  propTypes:
+    isActive:      React.PropTypes.bool.isRequired
+    onLoad:        React.PropTypes.func.isRequired
+
   getInitialState: ->
-    relationships: null
-    isError:       false
+    isError:   false
+    isLoading: false
 
   componentDidMount: ->
     @$scroller = $ @refs.scroller.getDOMNode()
@@ -26,15 +30,17 @@ window.PersonsPopup_PanelMixin =
   getPanelData: ->
     console.error 'getPanelData when xhr' if @xhr?
     @props.activitiesHandler.increment()
-    @setState isError: false
+    @setState isError: false, isLoading: true
     req = @createRequest
       url: @relationUrl()
       success: (relationships, status, data) =>
-        @safeUpdateState data, => @setState relationships: relationships
+        @safeUpdateState data, => @props.onLoad(relationships)
       error:   (data) =>
-        TastyNotifyController.errorResponse data
         @safeUpdateState data, => @setState isError: true
+        TastyNotifyController.errorResponse data
+
       complete: =>
+        @setState isLoading: false
         @props.activitiesHandler.decrement()
 
   componentDidUpdate: ->
@@ -42,27 +48,29 @@ window.PersonsPopup_PanelMixin =
     @$scroller.trigger("sizeChange").trigger('sizeChange')
 
   removeRelationshipByIndex: (index) ->
-    newRelationships = this.state.relationships
+    newRelationships = @props.relationships.slice()
     newRelationships.splice index, 1
-    @setState relationships: newRelationships
+    @props.onLoad(newRelationships)
 
   render: ->
-    if @state.relationships
-      if @state.relationships.length > 0
+    panelClasses = React.addons.classSet 'tabs-panel': true, 'state--hidden': !@props.isActive
+
+    if @props.relationships
+      if @props.relationships.length > 0
         itemClass = @itemClass
-        relationships = @state.relationships.map (relationship, i) =>
+        relationships = @props.relationships.map (relationship, i) =>
           itemClass relationship: relationship, key: i, onRequestEnd: @removeRelationshipByIndex
 
         panelContent = `<ul className="persons">{ relationships }</ul>`
-      else
-        panelContent = `<div className="popup__text">Список пуст.</div>`
     else
       if @state.isError
         panelContent = `<div className="popup__text">Ошибка загрузки.</div>`
-      else
+      else if @state.isLoading
         panelContent = `<div className="popup__text">Загружаю..</div>`
+      else
+        panelContent = `<div className="popup__text">Список пуст.</div>`
 
-    return `<div className="tabs-panel">
+    return `<div className={ panelClasses }>
               <div className="scroller scroller--persons" ref="scroller">
                 <div className="scroller__pane js-scroller-pane">
                   { panelContent }

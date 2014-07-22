@@ -6,51 +6,54 @@ window.PersonsPopup = React.createClass
   mixins: [ReactUnmountMixin, ReactActivitiesMixin, RequesterMixin]
 
   getInitialState: ->
-    items: {
-            followings_count: null
-            followers_count:  null
-            guesses_count:    null
-            blocked_count:    null
-          }
+    relationships: {
+      followings: null
+      followers:  null
+      guesses:    null
+      ignores:    null
+    }
     currentTab: 'followings'
     activities: 0
 
-  componentDidMount: -> @loadSummaryData()
-
-  componentWillUnmount: -> @abortActiveRequests()
-
   render: ->
-    #return `<PopupLayout onClose={ this.unmount }>
-              #<Popup title={this.props.title} className='popup--persons' activities={this.state.activities} onClose={this.unmount}>
-                #<PersonsPopup_Menu items={ this.state.items } currentTab={ this.state.currentTab } onSelect={ this.selectTab } />
-                #{ this.currentPanel() }
-                #</Popup>
-              #</PopupLayout>`
+    onLoad = -> @updateRelationships.apply @, arguments
+
     return `<Popup activities={this.state.activities}
                    title={PERSON_POPUP_TITLE}
                    isDraggable={ true }
                    onClose={this.unmount}
-                   className='popup--persons' >
-              <PersonsPopup_Menu items={ this.state.items } currentTab={ this.state.currentTab } onSelect={ this.selectTab } />
-              { this.currentPanel() }
-             </Popup>`
+                   className='popup--persons'>
 
-  currentPanel: ->
-    switch @state.currentTab
-      when 'followings' then return PersonsPopup_FollowingsPanel(activitiesHandler: @activitiesHandler())
-      when 'followers'  then return PersonsPopup_FollowersPanel(activitiesHandler: @activitiesHandler())
-      when 'guesses'    then return PersonsPopup_GuessesPanel(activitiesHandler: @activitiesHandler())
-      when 'ignores'    then return PersonsPopup_IgnoresPanel(activitiesHandler: @activitiesHandler())
-      else console.error "Неизвестный тип отношений #{@state.currentTab}"
+      <PersonsPopup_Menu relationships={ this.state.relationships }
+                         currentTab={ this.state.currentTab }
+                         onSelect={ this.selectTab }/>
 
-  loadSummaryData: ->
-    @activitiesHandler().increment()
-    @createRequest(
-      url:     Routes.api.relationships_summary_url()
-      success: (data) => @setState items: data
-      error:   (data) -> TastyNotifyController.errorResponse data
-      ).done => @activitiesHandler().decrement()
+      <PersonsPopup_FollowingsPanel isActive={ this.state.currentTab == 'followings' }
+                                    relationships={ this.state.relationships.followings }
+                                    activitiesHandler={ this.activitiesHandler() }
+                                    onLoad={ onLoad.bind(this, 'followings') } />
+
+      <PersonsPopup_FollowersPanel isActive={ this.state.currentTab == 'followers' }
+                                   relationships={ this.state.relationships.followers }
+                                   activitiesHandler={ this.activitiesHandler() }
+                                   onLoad={ onLoad.bind(this, 'followers') } />
+
+      <PersonsPopup_GuessesPanel isActive={ this.state.currentTab == 'guesses' }
+                                 relationships={ this.state.relationships.guesses }
+                                 activitiesHandler={ this.activitiesHandler() }
+                                 onLoad={ onLoad.bind(this, 'guesses') } />
+
+      <PersonsPopup_IgnoresPanel isActive={ this.state.currentTab == 'ignores' }
+                                 relationships={ this.state.relationships.ignores }
+                                 activitiesHandler={ this.activitiesHandler() }
+                                 onLoad={ onLoad.bind(this, 'ignores') } />
+    </Popup>`
 
   selectTab: (type) -> @setState currentTab: type
+
+  updateRelationships: (type, relationships) ->
+    newRelationships = this.state.relationships
+    newRelationships[type] = relationships
+    @setState relationships: newRelationships
 
 module.exports = PersonsPopup
