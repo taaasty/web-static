@@ -1,136 +1,78 @@
-@{shellbox} {
+// Mixins
+.shellbox-auth-activator() {
+  position: relative;
+  top: auto;
+  left: auto;
+  opacity: 1;
+  .transform(rotateX(0deg));
+  .transition-transform(~".3s ease, opacity .3s ease");
+}
+
+// Styles
+.shellbox {
   width: 100%;
   height: 100%;
   position: fixed;
-  /*display: none;*/
   display: block !important;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, .7);
+  background-color: @shellbox-overlay-bg;
   overflow: auto;
-  z-index: 99999;
+  z-index: @zindex-shellbox;
   visibility: hidden;
-  .opacity(0);
-  .transition(~"visibility 0s ease .4s, opacity .4s ease 0s");
-
-  &__main {
-    width: 100%;
-    height: 100%;
-    display: table;
-  }
-
-  &__cell {
-    display: table-cell;
-    vertical-align: middle;
-  }
-
-  &-enabled {
-    background-color: #000;
-    overflow: hidden;
-
-    @{page},
-    @{toolbar}/*,
-    @{popup}*/ {
-      -webkit-filter: blur(10px);
-      -moz-filter: blur(10px);
-      -ms-filter: blur(10px);
-      -o-filter: blur(10px);
-      filter: blur(10px);
-      filter: url("@{images-path}blur10px.svg#blur");
-    }
-
-    @{shellbox} {
-      visibility: visible;
-      .opacity(1);
-      .transition(~"visibility 0s ease 0s, opacity .4s ease 0s");
-    }
-  }
-
-  /* -- themes, types -- */
-  &--auth {
-    /*-webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-perspective: 1000px;
-    -moz-perspective: 1000px;
-    perspective: 1000px;*/
-
-    @{inviter},
-    @{form-popup} {
-      position: absolute;
-      top: -99999px;
-      left: -99999px;
-      .opacity(0);
-    }
-
-    @{inviter} {
-      /*-webkit-transform: rotateX(-80deg);
-      -moz-transform: rotateX(-80deg);
-      -ms-transform: rotateX(-80deg);
-      transform: rotateX(-80deg);*/
-      .transform(translate(0, -35px));
-    }
-
-    @{form-popup} {
-      .transform(translate(0, -35px));
-    }
-
-    .activator() {
-      position: relative;
-      top: auto;
-      left: auto;
-      .opacity(1);
-      .transform(rotateX(0deg));
-      -webkit-transition: -webkit-transform .3s ease, opacity .3s ease;
-      -moz-transition: -moz-transform .3s ease, opacity .3s ease;
-      -ms-transition: -ms-transform .3s ease, opacity .3s ease;
-      transition: transform .3s ease, opacity .3s ease;
-    }
-
-    &.is--inviter {
-      @{inviter} {
-        .activator();
-      }
-    }
-
-    &.is--select {
-      @{form-popup} {
-        &--select {
-          .activator();
-        }
-      }
-    }
-
-    &.is--login {
-      @{form-popup} {
-        &--login {
-          .activator();
-        }
-      }
-    }
-
-    &.is--reg {
-      @{form-popup} {
-        &--reg {
-          .activator();
-        }
-      }
-    }
-
-    &.is--recovery {
-      @{form-popup} {
-        &--recovery {
-          .activator();
-        }
-      }
-    }
-  }
+  opacity: 0;
+  transition: visibility 0s ease .4s, opacity .4s ease 0s;
 }
 
-body {
-  -webkit-transition: -webkit-filter .4s ease, background-color .4s ease;
-  -moz-transition: -moz-filter .4s ease, background-color .4s ease;
-  -ms-transition: -ms-filter .4s ease, background-color .4s ease;
-  -o-transition: -o-filter .4s ease, background-color .4s ease;
-  transition: filter .4s ease, background-color .4s ease;
+.shellbox__main {
+  width: 100%;
+  height: 100%;
+  display: table;
+}
+
+.shellbox__cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+// Types
+.shellbox--auth {
+  .inviter,
+  .form-popup {
+    position: absolute;
+    top: -99999px;
+    left: -99999px;
+    opacity: 0;
+    .transform(translate(0, -35px));
+  }
+
+  &.is--inviter {
+    .inviter {
+      .shellbox-auth-activator();
+    }
+  }
+
+  &.is--select {
+    .form-popup--select {
+      .shellbox-auth-activator();
+    }
+  }
+
+  &.is--login {
+    .form-popup--login {
+      .shellbox-auth-activator();
+    }
+  }
+
+  &.is--reg {
+    .form-popup--reg {
+      .shellbox-auth-activator();
+    }
+  }
+
+  &.is--recovery {
+    .form-popup--recovery {
+      .shellbox-auth-activator();
+    }
+  }
 }

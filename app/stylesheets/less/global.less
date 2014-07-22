@@ -1,3 +1,11 @@
+body {
+  -webkit-transition: -webkit-filter .4s ease, background-color .4s ease;
+  -moz-transition: -moz-filter .4s ease, background-color .4s ease;
+  -ms-transition: -ms-filter .4s ease, background-color .4s ease;
+  -o-transition: -o-filter .4s ease, background-color .4s ease;
+  transition: filter .4s ease, background-color .4s ease;
+}
+
 /* -- Helpers -- */
 .no-scroll {
   overflow: hidden;
@@ -271,7 +279,7 @@
     right: 0;
     background-color: @color-white;
     z-index: 2;
-    .border-radius(6px);
+    border-radius: @page-body-border-radius;
   }
 
   a {
@@ -283,16 +291,16 @@
   }
 
   &__inner {
-    padding: @page-body-inner-padding-vertical @page-body-inner-padding-horizontal;
+    padding: @page-body-padding-vertical @page-body-padding-horizontal;
     position: relative;
     z-index: 3;
 
     .alert {
-      margin: 0 -@page-body-inner-padding-horizontal @page-body-inner-padding-vertical;
+      margin: 0 -@page-body-padding-horizontal @page-body-padding-vertical;
 
       &:first-child {
-        margin-top: -@page-body-inner-padding-vertical;
-        .border-radius(6px 6px 0 0);
+        margin-top: -@page-body-padding-vertical;
+        border-radius: @page-body-border-radius @page-body-border-radius 0 0;
       }
     }
   }
@@ -300,81 +308,6 @@
 
 @{page-loader} {
   text-align: center;
-}
-
-@{text-content} {
-  font-size: 18px;
-  line-height: 1.389em;
-
-  h1, h2, h3 {
-    font-weight: normal;
-  }
-
-  h1 {
-    margin-bottom: .571em;
-    font-size: 1.944em;
-    line-height: 1.086em;
-  }
-
-  blockquote {
-    margin-bottom: .769em;
-    font-size: 1.444em;
-    line-height: 1.269em;
-  }
-
-  h2 {
-    margin-bottom: .6em;
-    font-size: 1.765em;
-    line-height: 1.133em;
-  }
-
-  h3 {
-    margin-bottom: .692em;
-    font-size: 1.529em;
-    line-height: 1.154em;
-  }
-
-  h4 {
-    margin-bottom: .818em;
-    font-size: 1.294em;
-    line-height: 1.273em;
-  }
-
-  h6 {
-    margin-bottom: 1.071em;
-    font-size: .778em;
-    line-height: 1.429em;
-  }
-
-  h5, p, ol, ul {
-    margin-bottom: .833em;
-    font-size: 1em;
-    line-height: 1.389em;
-  }
-
-  ul, ol {
-    padding: 0 0 0 40px;
-  }
-
-  ul {
-    list-style-type: square;
-  }
-
-  ol {
-    list-style-type: decimal;
-  }
-
-  li {
-    margin: .4em 0;
-  }
-
-  a {
-    border-bottom: 1px solid;
-
-    &:hover {
-      border-bottom-color: transparent;
-    }
-  }
 }
 
 @{logo} {

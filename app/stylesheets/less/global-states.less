@@ -1,0 +1,69 @@
+// Когда развёрнут профиль пользователя
+.hero-enabled {
+  .calendar {
+    display: none;
+  }
+}
+
+// Когда активен выбор типов поста, при написании в редакторе
+.types-posts-enabled {
+  .post-actions {
+    opacity: 0;
+  }
+
+  .page-cover,
+  .page-body__bg {
+    display: none;
+  }
+
+  .page-header {
+    visibility: hidden;
+  }
+
+  .types-posts {
+    visibility: visible;
+    z-index: @zindex-types-posts-active;
+    opacity: 1;
+    transition: visibility 0s ease, opacity .3s ease;
+  }
+}
+
+// Когда выбран определенный тип поста в редакторе
+.edited-post-text .post--text.post--edit,
+.edited-post-quote .post--quote.post--edit,
+.edited-post-image .post--image.post--edit,
+.edited-post-video .post--video.post--edit {
+  position: relative;
+  visibility: visible;
+  z-index: @zindex-post-edit-active;
+  opacity: 1;
+  transition: visibility 0s ease, opacity .3s ease;
+}
+
+// Когда активен попап shellbox
+.shellbox-enabled {
+  background-color: @black;
+  overflow: hidden;
+
+  .shellbox {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s ease 0s, opacity .4s ease 0s;
+  }
+}
+
+// Когда активен попап гайда
+.guide-popup-enabled {
+  overflow: hidden;
+
+  .toolbar,
+  .uv-icon {
+    display: none;
+  }
+}
+
+// Активно окно подтверждения
+.confirmation-enabled {
+  background-color: @black;
+  overflow: hidden;
+}

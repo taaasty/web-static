@@ -1,24 +1,23 @@
-@{pagination} {
+.pagination {
   font-size: 12px;
   line-height: normal;
-  font-family: @font-family-proxima-nova;
+  font-family: @font-family-base;
   overflow: hidden;
+}
 
-  &__item {
-    &--prev,
-    &--next {
-      padding: 10px 14px;
-      border: 1px solid;
-      .opacity(.2);
-      .border-radius(32px);
-    }
+.pagination__item {
+  padding: 10px 14px;
+  display: inline-block;
+  border: 1px solid;
+  vertical-align: middle;
+  opacity: .2;
+  border-radius: @pagination-border-radius;
+}
 
-    &--prev {
-      float: left;
-    }
+.pagination__item--prev {
+  float: left;
+}
 
-    &--next {
-      float: right;
-    }
-  }
+.pagination__item--next {
+  float: right;
 }

@@ -14,8 +14,9 @@
 @green-light: #77b97e;
 
 @color-base: @black;
+@color-placeholder: #777;
 
-@background-selection: #b9c3ca;
+@bg-selection: #b9c3ca;
 
 // Fonts
 @fonts-path: 'fonts/';
@@ -42,77 +43,63 @@
 @page-loader: ~".page-loader";
 @icons: ~'.icon';
 @icon: ~'.icon'; // TODO: избавиться, когда переберу все less
-@guide-popup: ~'.guide-popup';
 @logo: ~".logo";
-@text-content: ~".text-content";
 @rotate: ~".rotate";
 @pay: ~".pay";
 @follow-status: ~".follow-status";
 @tasty-ribbon: ~".tasty-ribbon";
-@menu: ~".menu";
-@button: ~".button";
-@notice: ~".notice";
-@toolbar: ~".toolbar";
 @hero: ~".hero";
 @hero-simple: ~".hero-simple";
-@posts: ~".posts";
-@post: ~".post";
-@video: ~".video";
-@image: ~".image";
-@blockquote: ~".blockquote";
-@edited-post: ~".edited-post";
-@meta-item: ~".meta-item";
-@meta-bar: ~".meta-bar";
-@rating: ~".rating";
-@media-box: ~".media-box";
 @form-radiogroup: ~".form-radiogroup";
 @form-radio: ~".form-radio";
 @form-checkbox: ~".form-checkbox";
 @form-field: ~".form-field";
 @form-select: ~".form-select";
-@form-upload: ~".form-upload";
-@form-range: ~".form-range";
-@editable-field: ~".editable-field";
-@controls-list: ~".controls-list";
-@pagination: ~".pagination";
 @popup: ~".popup";
 @valign: ~".valign";
-@inviter: ~".inviter";
-@shellbox: ~".shellbox";
-@form-popup: ~".form-popup";
-@settings: ~".settings";
-@types-posts: ~".types-posts";
 
 /*--------------------------*/
 // Layout
 @page-min-width: 765px;
-@page-body-inner-padding-vertical: 40px;
-@page-body-inner-padding-horizontal: 68px;
+
+@page-body-padding-vertical: 40px;
+@page-body-padding-horizontal: 68px;
+
+@page-body-border-radius: 6px;
 
 // Indents
 @indent-base: 20px;
 
 // Z-indexes
-/*-- new --*/
 @zindex-types-posts: 1;
+@zindex-inviter-fixed: 1;
 @zindex-field-control: 2;
+@zindex-rating: 2;
+@zindex-post-edit: 2;
+@zindex-post-edit-active: 3;
 @zindex-screen-viewer-item: 4;
 @zindex-screen-viewer-item-active: 5;
 @zindex-screen-viewer-text: 6;
 @zindex-screen-viewer-loader: @zindex-screen-viewer-text; // 6
 @zindex-filter-search: 10;
+@zindex-post-actions: 20;
+@zindex-media-box-loader: 100;
 @zindex-dropdown: 150;
+@zindex-popover: @zindex-dropdown; // 150
 @zindex-sew-list: @zindex-dropdown; // 150
+@zindex-media-box-form: 150;
+@zindex-media-box-form-close: 151;
 @zindex-affixed: 200; // toolbar, auth button
 @zindex-button-affixed: @zindex-affixed; // 200
 @zindex-button-back: @zindex-affixed; // 200
 @zindex-nav-types: @zindex-affixed; // 200
+@zindex-types-posts-active: @zindex-affixed; // 200
+@zindex-toolbar: @zindex-affixed; // 200
+@zindex-calendar: @zindex-affixed; // 200
 @zindex-popup: 5000;
-
-/*-- old --*/
-@guide-popup-zindex: 500;
-@toolbar-zindex: 100;
-@dropdown-zindex: 500;
+@zindex-shellbox: 5000;
+@zindex-guide-popup: 5000;
+@zindex-notice: 6000;
 
 // Buttons
 @button-border-radius: 3px;
@@ -139,11 +126,15 @@
 /*@avatar-colors: @color-white, @color-white, #222, @color-white, @color-white, @color-white, @color-white, @color-white;*/
 
 // Toolbar
-@toolbar-background: #252525;
 @toolbar-size: 56px;
-@toolbar-margin: 20px;
-@toolbar-right: 80px;
-@toolbar-opacity: .72;
+@toolbar-indent: @indent-base;
+
+@toolbar-bg-base: #252525;
+@toolbar-bg: rgba(red(@toolbar-bg-base), green(@toolbar-bg-base), blue(@toolbar-bg-base), .72);
+
+@toolbar-dropdown-max-width: 600px;
+
+@toolbar-item-highlight-bg: #f5f5f5;
 
 // Menu
 @menu-font-size: 17px;
@@ -152,7 +143,7 @@
 
 // Alert
 @alert-padding-vertical: 22px;
-@alert-padding-horizontal: @page-body-inner-padding-horizontal;
+@alert-padding-horizontal: @page-body-padding-horizontal;
 @alert-font-size: 15px;
 @alert-line-height: 1.467;
 
@@ -205,11 +196,8 @@
 @comments-font-size: 14px;
 @comments-line-height: 18px;
 
-@comment-dropdown-bg-base: #333;
-@comment-dropdown-bg: rgba(red(@comment-dropdown-bg-base), green(@comment-dropdown-bg-base), blue(@comment-dropdown-bg-base), .93);
-
 // Confirmation
-@confirmation-bg: rgba(red(@black), green(@black), blue(@black), .7);
+@confirmation-overlay-bg: @popup-overlay-bg;
 
 // Tasty Editor
 @tasty-editor-toolbar-width: 178px;
@@ -217,7 +205,7 @@
 @tasty-editor-toolbar-bg-base: #393c3e;
 @tasty-editor-toolbar-bg: rgba(red(@tasty-editor-toolbar-bg-base), green(@tasty-editor-toolbar-bg-base), blue(@tasty-editor-toolbar-bg-base), .9);
 
-@tasty-editor-link-input-placeholder-color: #777;
+@tasty-editor-link-input-placeholder-color: @color-placeholder;
 
 @tasty-editor-placeholder-selection-bg: #dde3e7;
 @tasty-editor-content-selection-bg: #fec900;
@@ -270,3 +258,78 @@
 
 // Nav Types
 @nav-types-indent: @indent-base;
+
+// Calendar
+@calendar-height: 53px;
+@calendar-indent: @indent-base;
+
+@calendar-bg-base: @black;
+@calendar-bg: rgba(red(@calendar-bg-base), green(@calendar-bg-base), blue(@calendar-bg-base), .7);
+
+// Shellbox
+@shellbox-overlay-bg: @popup-overlay-bg;
+
+// Pagination
+@pagination-border-radius: 32px;
+
+// Notice
+@notice-border-radius: 5px;
+
+@notice-error-bg: #c00f19;
+@notice-success-bg: #37a048;
+
+// Video
+@video-height: 400px;
+
+// Inviter
+@inviter-width: 712px;
+@inviter-height: 466px;
+
+@inviter-box-bg: #383838;
+@inviter-footer-bg: #2d2d2d;
+
+// Media Box
+@media-box-height: 398px;
+
+@media-box-border-color: #ededed;
+@media-box-drag-hover-color: #25ae7a;
+@media-box-bg: @white;
+
+@media-box-input-placeholder-color: @color-placeholder;
+
+// Rating
+@rating-border-radius: 14px;
+
+@rating-font-size: 12px;
+@rating-line-height: 15px;
+
+// Popover
+@popover-width: 230px;
+@popover-border-radius: 4px;
+
+@popover-bg-base: #333;
+@popover-bg: rgba(red(@popover-bg-base), green(@popover-bg-base), blue(@popover-bg-base), .93);
+
+@popover-font-size: 12px;
+@popover-line-height: ceil((@popover-font-size * 1.36)); // ~15px
+
+// Form Popup
+@form-popop-width: 495px;
+
+@form-popup-header-bg: #ececec;
+@form-popup-body-bg: @white;
+
+@form-popup-select-vkontakte-bg: #4d75a3;
+@form-popup-select-vkontakte-color: @white;
+@form-popup-select-email-bg: @white;
+@form-popup-select-email-color: #3f3f3f;
+
+
+
+
+// Popup
+@popup-overlay-bg-base: @black;
+@popup-overlay-bg: rgba(red(@popup-overlay-bg-base), green(@popup-overlay-bg-base), blue(@popup-overlay-bg-base), .92);
+
+// Design
+@design-popup-width: 250px;

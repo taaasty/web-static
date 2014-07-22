@@ -1,256 +1,290 @@
 // Mixins
-.toolbar-active(@color: @color-yellow) {
+.toolbar-active(@color: @yellow) {
   color: @color;
 }
 
 .toolbar-popup-link-hover() {
-  background-color: @color-yellow;
+  background-color: @yellow;
   color: #232323;
   .opacity(.95);
 }
 
-.toolbar-icons-dark(@color: @color-black) {
-  .icons {
+.toolbar-icons-dark(@color: @black) {
+  .icon {
     color: @color !important;
   }
 }
 
+.toolbar-transition-all() {
+  transition: all .4s ease;
+}
+
 // Styles
-@{toolbar} {
+.toolbar {
   height: @toolbar-size;
   padding-left: @toolbar-size;
   position: fixed;
-  top: @toolbar-margin;
-  left: @toolbar-margin;
-  background: @toolbar-background;
-  background-color: rgba(red(@toolbar-background), green(@toolbar-background), blue(@toolbar-background), @toolbar-opacity);
+  top: @toolbar-indent;
+  left: @toolbar-indent;
+  background: @toolbar-bg-base;
+  background-color: @toolbar-bg;
   line-height: @toolbar-size;
-  color: @color-white;
+  color: @white;
   text-align: center;
   white-space: nowrap;
-  z-index: @toolbar-zindex;
-  .opacity(1);
-  .user-select(none);
-  .border-radius(@toolbar-size);
-  .transition(~"all .4s ease");
+  z-index: @zindex-toolbar;
+  opacity: 1;
+  user-select: none;
+  border-radius: @toolbar-size;
+  .toolbar-transition-all;
 
-  // Activator (hover, click/touch)
-  &__toggle {
-    width: @toolbar-size;
-    height: @toolbar-size;
-    position: absolute;
-    top: 0;
-    left: 0;
-    cursor: pointer;
-    .border-radius(50%);
-
-    @{tasty-ribbon} {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      .background-size(65% auto);
-      .border-radius(50%);
-    }
-  }
-
-  // Aside dropdown
-  &__dropdown {
-    max-width: 0;
-    display: inline-block;
-    float: left;
-    list-style-type: none;
-    overflow: hidden;
-    .transition(~"all .4s ease");
-
-    &-i {
-      float: right;
-    }
-  }
-
-  // Toolbar icons
-  @{icons} {
+  .icon {
     display: inline-block;
     font-size: @toolbar-size / 2 - 2;
     vertical-align: middle;
-    .transition(~"color .4s ease");
-
-    &--menu {
-      font-size: 32px;
-    }
-
-    &--cross {
-      font-size: 20px;
-    }
+    transition: color .4s ease;
   }
 
-  // Text aside dropdown
-  &__text {
-    margin-right: 15px;
-    font-size: 16px;
+  .icon--menu {
+    font-size: 32px;
   }
 
-  // Item aside dropdown
-  &__item {
-    @highlight-background: #f5f5f5;
+  .icon--cross {
+    font-size: 20px;
+  }
 
-    width: @toolbar-size;
-    height: @toolbar-size;
-    position: relative;
-    display: inline-block;
-    color: @color-white;
-    vertical-align: top;
-    .opacity(.6);
+  // States
+  &.state--expanded {
+    .touch & {
+      .icon--menu {
+        .toolbar-active;
+      }
 
-    // Disabled item (for unrealized)
-    &.state--disabled {
-      color: @color-white !important;
-      cursor: default;
-      .opacity(.2) !important;
-
-      @{icons} {
-        color: @color-white !important;
+      .toolbar__popup {
+        visibility: visible;
+        opacity: 1;
+        .transform(translate(0, 0));
+        .transition-transform(~".3s ease, visibility 0s ease 0s, opacity .3s ease");
       }
     }
+  }
 
-    // Separate item
-    &.state--marked {
-      background-color: @highlight-background;
-      .opacity(1) !important;
-      .border-radius(50%);
+  &.state--active {
+    .toolbar-transition-all;
+
+    .icon--menu {
+      .toolbar-active;
+    }
+
+    .toolbar__dropdown {
+      max-width: @toolbar-dropdown-max-width;
+      .toolbar-transition-all;
+    }
+  }
+
+  &:hover {
+    .no-touch & {
+      .toolbar-transition-all;
+
+      .icon--menu {
+        .toolbar-active;
+      }
+
+      .toolbar__dropdown {
+        max-width: @toolbar-dropdown-max-width;
+        .toolbar-transition-all;
+      }
+
+      .toolbar__popup {
+        visibility: visible;
+        opacity: 1;
+        .transform(translate(0, 0));
+        .transition-transform(~".3s ease, visibility 0s ease 0s, opacity .3s ease");
+      }
+    }
+  }
+}
+
+// Activator (hover, click/touch)
+.toolbar__toggle {
+  width: @toolbar-size;
+  height: @toolbar-size;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  border-radius: 50%;
+
+  .tasty-ribbon {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-size: 65% auto;
+    border-radius: 50%;
+  }
+}
+
+// Aside dropdown
+.toolbar__dropdown {
+  max-width: 0;
+  display: inline-block;
+  float: left;
+  list-style-type: none;
+  overflow: hidden;
+  .toolbar-transition-all;
+}
+
+.toolbar__dropdown-i {
+  float: right;
+}
+
+// Text aside dropdown
+.toolbar__text {
+  margin-right: 15px;
+  font-size: 16px;
+}
+
+// Item aside dropdown
+.toolbar__item {
+  width: @toolbar-size;
+  height: @toolbar-size;
+  position: relative;
+  display: inline-block;
+  color: @white;
+  vertical-align: top;
+  opacity: .6;
+
+  // States
+  // Disabled item (for unrealized)
+  &.state--disabled {
+    color: @white !important;
+    cursor: default;
+    opacity: .2 !important;
+
+    .icon {
+      color: @white !important;
+    }
+  }
+
+  // Separate item
+  &.state--marked {
+    background-color: @toolbar-item-highlight-bg;
+    opacity: 1 !important;
+    border-radius: 50%;
+
+    .toolbar-icons-dark;
+
+    &:hover,
+    &.state--active {
+      background-color: @yellow;
 
       .toolbar-icons-dark;
-
-      &:hover,
-      &.state--active {
-        background-color: @color-yellow;
-
-        .toolbar-icons-dark;
-      }
-    }
-
-    &.state--active {
-      .opacity(1);
     }
   }
 
-  a&__item {
-    &:hover {
-      .opacity(1);
-    }
-  }
-
-  &__avatar {
-    width: @toolbar-size;
-    height: @toolbar-size;
-    position: relative;
-    display: inline-block;
-    vertical-align: top;
-    .border-radius(50%);
-  }
-
-  // Popup appears below
-  &__popup {
-    margin-top: 14px;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: @toolbar-background;
-    background-color: rgba(red(@toolbar-background), green(@toolbar-background), blue(@toolbar-background), .7);
-    font-size: 16px;
-    line-height: 22px;
-    text-align: left;
-    visibility: hidden;
-    overflow: hidden;
-    .opacity(0);
-    .border-radius(3px);
-    .transform(translate(0, -10px));
-    .transition-transform(~".3s ease .1s, visibility 0s ease .4s, opacity .3s ease .1s");
-
-    &-item {
-      white-space: nowrap;
-
-      @{icons} {
-        width: 1em;
-        margin-right: .6em;
-        .transition(none);
-      }
-    }
-
-    &-link {
-      padding: 10px 20px 9px;
-      display: block;
-      color: #bbb;
-      .opacity(.92);
-
-      &:hover,
-      &.state--active,
-      @{toolbar}__toggle:hover + @{toolbar}__popup &.state--single {
-        .toolbar-popup-link-hover;
-      }
-
-      &:active {
-        background-color: lighten(@color-yellow, 10%);
-        .opacity(1);
-      }
-    }
-  }
-
-  // State: expanded, hover, active
-  .touch &.state--expanded @{icons}--menu {
-    .toolbar-active;
-  }
-  &.state--active @{icons}--menu {
-    .toolbar-active;
-  }
-  .no-touch &:hover @{icons}--menu {
-    .toolbar-active;
-  }
-  a&__item:hover @{icons} {
-    .toolbar-active;
-  }
-  &__item.state--active @{icons} {
-    .toolbar-active;
-  }
-
-  .no-touch &:hover,
   &.state--active {
-    .transition(~"all .4s ease");
+    opacity: 1;
+
+    .icon {
+      .toolbar-active;
+    }
   }
 
-  .no-touch &:hover &__dropdown,
-  &.state--active &__dropdown {
-    max-width: 600px;
-    .transition(~"all .4s ease");
+  a& {
+    &:hover {
+      opacity: 1;
+
+      .icon {
+        .toolbar-active;
+      }
+    }
+  }
+}
+
+.toolbar__avatar {
+  width: @toolbar-size;
+  height: @toolbar-size;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 50%;
+}
+
+// Popup appears below
+.toolbar__popup {
+  margin-top: 14px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: @toolbar-bg-base;
+  background-color: rgba(red(@toolbar-bg-base), green(@toolbar-bg-base), blue(@toolbar-bg-base), .7);
+  font-size: 16px;
+  line-height: 22px;
+  text-align: left;
+  visibility: hidden;
+  overflow: hidden;
+  opacity: 0;
+  border-radius: 3px;
+  .transform(translate(0, -10px));
+  .transition-transform(~".3s ease .1s, visibility 0s ease .4s, opacity .3s ease .1s");
+}
+
+.toolbar__popup-item {
+  white-space: nowrap;
+
+  .icon {
+    width: 1em;
+    margin-right: .6em;
+    transition: none;
+  }
+}
+
+.toolbar__popup-link {
+  padding: 10px 20px 9px;
+  display: block;
+  color: #bbb;
+  opacity: .92;
+
+  // States
+  &:hover {
+    .toolbar-popup-link-hover;
   }
 
-  .no-touch &:hover &__popup,
-  .touch &.state--expanded &__popup {
-    visibility: visible;
-    .opacity(1);
-    .transform(translate(0, 0));
-    .transition-transform(~".3s ease, visibility 0s ease 0s, opacity .3s ease");
+  &.state--active {
+    .toolbar-popup-link-hover;
   }
 
-  // Types
-  &--right {
-    padding-left: 0;
-    padding-right: @toolbar-size;
-    right: @toolbar-margin;
+  &.state--single {
+    .toolbar__toggle:hover + .toolbar__popup & {
+      .toolbar-popup-link-hover;
+    }
+  }
+
+  &:active {
+    background-color: lighten(@yellow, 10%);
+    opacity: 1;
+  }
+}
+
+// Types
+.toolbar--right {
+  padding-left: 0;
+  padding-right: @toolbar-size;
+  right: @toolbar-indent;
+  left: auto;
+
+  .toolbar__toggle,
+  .toolbar__popup {
+    right: 0;
     left: auto;
-
-    @{toolbar}__toggle,
-    @{toolbar}__popup {
-      right: 0;
-      left: auto;
-    }
-
-    @{toolbar}__dropdown-i {
-      float: left;
-    }
   }
 
-  &--close {
-    left: -85px;
-    .opacity(0);
+  .toolbar__dropdown-i {
+    float: left;
   }
+}
+
+.toolbar--close {
+  left: -85px;
+  opacity: 0;
 }
