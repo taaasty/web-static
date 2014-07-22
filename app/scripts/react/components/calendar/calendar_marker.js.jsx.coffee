@@ -22,10 +22,11 @@ window.CalendarMarker = CalendarMarker = React.createClass
 
     markerClasses = React.addons.classSet 'calendar__period-marker': true, 'calendar__period-marker--current': @props.selected
 
-    return `<a href={ this.props.marker.entry_url }
-               data-marker-date={ createdAt }
-               data-marker-rows={ records }
-               className={ markerClasses }
-               style={{ left: leftIndent }}></a>`
+    return `<li><a href={ this.props.marker.entry_url }
+                   data-target={ "#entry-" + this.props.marker.entry_id }
+                   data-marker-date={ createdAt }
+                   data-marker-rows={ records }
+                   className={ markerClasses }
+                   style={{ left: leftIndent }}></a></li>`
 
 module.exports = CalendarMarker

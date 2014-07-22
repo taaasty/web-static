@@ -22,6 +22,8 @@ require 'ngInfiniteScroll'
 require 'angular-sanitize'
 
 require 'ng-rails-csrf/index'
+
+require 'bootstrap/js/scrollspy'
 #require 'rangy'
 
 #require "undo/undo.js"

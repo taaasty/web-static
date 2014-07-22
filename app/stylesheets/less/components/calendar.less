@@ -23,6 +23,19 @@
   transition: width .3s ease-in-out;
 }
 
+li.active > a {
+  width: 7px;
+  height: 7px;
+  margin: -4px 0 0 -3px;
+  background-color: #fbdc44;
+  z-index: (@toolbar-zindex + 1);
+
+  &:after,
+  &:before {
+    display: block;
+  }
+}
+
 .calendar--closed {
   // Примерно ширина с двузначной датой (29)
   // и длинным днем недели (воскресенье)
