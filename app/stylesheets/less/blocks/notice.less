@@ -1,22 +1,23 @@
-@{notice} {
+.notice {
   position: fixed;
   bottom: 0;
   left: 50%;
   font-size: 14px;
   line-height: 1.429em;
-  color: #fff;
-  z-index: 100;
-  .border-radius(5px 5px 0 0);
+  color: @white;
+  z-index: @zindex-notice;
+  border-radius: @notice-border-radius @notice-border-radius 0 0;
+}
 
-  &__inner {
-    padding: 12px 20px 11px;
-  }
+.notice__inner {
+  padding: 12px 20px 11px;
+}
 
-  &--error {
-    background-color: #c00f19;
-  }
+// Types
+.notice--error {
+  background-color: @notice-error-bg;
+}
 
-  &--success {
-    background-color: #37a048;
-  }
+.notice--success {
+  background-color: @notice-success-bg;
 }

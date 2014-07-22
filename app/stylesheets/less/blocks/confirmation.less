@@ -5,7 +5,7 @@
   display: none;
   top: 0;
   left: 0;
-  background-color: @confirmation-bg;
+  background-color: @confirmation-overlay-bg;
   text-align: center;
   z-index: @zindex-popup;
 
@@ -58,20 +58,4 @@
 
 .confirmation__text {
   margin-bottom: 20px;
-}
-
-.confirmation-enabled {
-  background-color: @black;
-  overflow: hidden;
-
-  .page,
-  .toolbar,
-  .popup {
-    -webkit-filter: blur(3px);
-    -moz-filter: blur(3px);
-    -ms-filter: blur(3px);
-    -o-filter: blur(3px);
-    filter: blur(3px);
-    filter: url("@{images-path}blur3px.svg#blur");
-  }
 }

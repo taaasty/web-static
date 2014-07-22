@@ -101,56 +101,33 @@
 
 // Media Queries
 @media (min-width: 1000px) {
-  &__item {
+  .types-posts__item {
     width: 160px;
     height: 160px;
     margin: 10px;
 
-    @{icons} {
+    .icon {
       font-size: 46px;
     }
   }
 
-  &__text {
+  .types-posts__text {
     font-size: 14px;
   }
 }
 
 @media (min-width: 1300px) {
-  &__item {
+  .types-posts__item {
     width: 240px;
     height: 240px;
 
-    @{icons} {
+    .icon {
       margin-bottom: 20px;
       font-size: 54px;
     }
   }
 
-  &__text {
+  .types-posts__text {
     font-size: 15px;
-  }
-}
-
-// States
-.types-posts-enabled {
-  @{post}-actions {
-    .opacity(0);
-  }
-
-  @{page-cover},
-  @{page-body}__bg {
-    display: none;
-  }
-
-  @{page-header} {
-    visibility: hidden;
-  }
-
-  @{types-posts} {
-    visibility: visible;
-    z-index: 200;
-    .opacity(1);
-    .transition(~"visibility 0s ease, opacity .3s ease");
   }
 }

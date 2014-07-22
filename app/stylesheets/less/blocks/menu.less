@@ -1,51 +1,53 @@
-@{menu} {
+.menu {
   margin-left: -@menu-margin-horizontal;
   font-size: @menu-font-size;
   line-height: @menu-line-height;
 
-  &__item {
-    display: inline-block;
-    vertical-align: middle;
-    white-space: nowrap;
-  }
-
-  &__link {
-    margin: 13px @menu-margin-horizontal;
-    display: inline-block;
-    color: @color-white;
-    vertical-align: middle;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  @{button} {
+  .button {
     margin: 5px @menu-margin-horizontal;
     text-align: left;
     text-shadow: none;
     vertical-align: middle;
     .text-overflow;
   }
+}
 
-  // Types
-  &--main {
-    width: 380px;
-    margin: 0 auto;
-    text-align: center;
+.menu__item {
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.menu__link {
+  margin: 13px @menu-margin-horizontal;
+  display: inline-block;
+  color: @white;
+  vertical-align: middle;
+
+  &:hover {
+    text-decoration: underline;
   }
+}
 
-  &--right {
-    margin-right: -@menu-margin-horizontal;
-    text-align: right;
-    .float--right;
-  }
+// Types
+.menu--main {
+  width: 380px;
+  margin: 0 auto;
+  text-align: center;
+}
 
-  // Media Queries
-  @media (max-width: 1040px) {
+.menu--right {
+  margin-right: -@menu-margin-horizontal;
+  text-align: right;
+  .float--right;
+}
+
+// Media Queries
+@media (max-width: 1040px) {
+  .menu {
     font-size: 15px;
 
-    @{button} {
+    .button {
       width: 100px;
       margin-top: 3px;
       margin-bottom: 3px;

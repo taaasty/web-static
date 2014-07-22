@@ -1,25 +1,22 @@
 @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 100;}
+  from {opacity: 0;}
+  to {opacity: 100;}
 }
-
-@calendar-height: 53px;
 
 .calendar {
   height: @calendar-height;
   padding: 0 16px;
   position: fixed;
-  bottom: @toolbar-margin;
-  left: @toolbar-margin;
-  background: @black;
-  background-color: rgba(red(@black), green(@black), blue(@black), .7);
+  bottom: @calendar-indent;
+  left: @calendar-indent;
+  background: @calendar-bg-base;
+  background-color: @calendar-bg;
   color: #bbb;
   white-space: nowrap;
   overflow: hidden;
-  z-index: @toolbar-zindex;
-  .user-select(none);
-  .border-radius(@calendar-height / 2);
-  .transition(~"max-width .3s ease, background .3s ease");
+  z-index: @zindex-calendar;
+  user-select: none;
+  border-radius: (@calendar-height / 2);
   transition: width .3s ease-in-out;
 }
 
@@ -31,7 +28,6 @@
 
 .calendar--open {
   width: 90%;
-  // right: @toolbar-right!important;
 }
 
 .calendar__timeline-viewport--active {
@@ -58,7 +54,7 @@
   font-size: 11px;
   line-height: 12px;
   vertical-align: middle;
-  .opacity(.69);
+  opacity: .69;
 }
 
 .calendar__timeline-viewport {
@@ -87,7 +83,7 @@
   float: left;
   font-size: 11px;
   line-height: 13px;
-  .opacity(.3);
+  opacity: .3;
 }
 
 .calendar__period-line {
@@ -105,7 +101,7 @@
   position: absolute;
   top: 50%;
   background-color: @white;
-  .border-radius(50%);
+  border-radius: 50%;
 
   &:before,
   &:after {
@@ -119,7 +115,7 @@
     font-family: @font-family-base;
     color: @white;
     text-align: center;
-    .opacity(.4);
+    opacity: .4;
   }
 
   &:before {
@@ -139,7 +135,7 @@
     height: 7px;
     margin: -4px 0 0 -3px;
     background-color: #fbdc44;
-    z-index: (@toolbar-zindex + 1);
+    z-index: @zindex-calendar;
 
     &:after,
     &:before {
@@ -153,14 +149,10 @@
   height: 7px;
   margin: -4px 0 0 -3px;
   background-color: #fbdc44;
-  z-index: (@toolbar-zindex + 1);
+  z-index: @zindex-calendar;
 
   &:after,
   &:before {
     display: block;
   }
-}
-
-.hero-enabled .calendar {
-  display: none;
 }
