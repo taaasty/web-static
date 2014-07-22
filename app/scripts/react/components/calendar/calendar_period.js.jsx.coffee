@@ -14,7 +14,7 @@ window.CalendarPeriod = CalendarPeriod = React.createClass
 
     return `<li className="calendar__period">
               <div className="calendar__period-date">{ this.props.period.title }</div>
-              <div className="calendar__period-line">{ markerNodes }</div>
+              <ul className="calendar__period-line">{ markerNodes }</ul>
             </li>`
 
 module.exports = CalendarPeriod
