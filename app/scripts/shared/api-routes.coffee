@@ -18,6 +18,8 @@ ApiRoutes =
 
   entry_url:                           (entryId) -> TastySettings.api_host + 'v1/entries/' + entryId
 
+  iframely_url:                                  -> TastySettings.api_host + 'v1/embeding/iframely.json'
+
   # Relationships
   relationships_summary_url:                     -> TastySettings.api_host + 'v1/relationships/summary'
   relationships_to_url:                  (state) -> TastySettings.api_host + 'v1/relationships/to/' + state

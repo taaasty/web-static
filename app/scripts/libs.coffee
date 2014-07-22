@@ -31,7 +31,7 @@ require 'bootstrap/js/scrollspy'
 #require "rangy/rangy-cssclassapplier.js"
 #require "rangy/rangy-selectionsaverestore.js"
 #require "rangy/rangy-serializer.js"
-#require "Medium.js/medium.js"
+# window.Medium = require "Medium.js/medium.js"
 
 #require 'undo.js'
 #require 'rangy'

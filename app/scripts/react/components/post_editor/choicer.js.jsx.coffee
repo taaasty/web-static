@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 POST_TYPE_VIDEO='video'
-POST_TYPE_QUOTE='quite'
+POST_TYPE_QUOTE='quote'
 POST_TYPE_IMAGE='image'
 POST_TYPE_TEXT='text'
 

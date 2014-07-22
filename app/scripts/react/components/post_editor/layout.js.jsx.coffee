@@ -10,9 +10,10 @@ window.PostEditor_Layout = React.createClass
   propTypes:
     entryId:      React.PropTypes.number.isRequired
     defaultType:  React.PropTypes.string
+    backUrl:      React.PropTypes.string
 
   getDefaultProps: ->
-    defaultType: 'text'
+    defaultType:    'text'
     defaultPrivacy: 'public'
 
   getInitialState: ->
@@ -31,9 +32,11 @@ window.PostEditor_Layout = React.createClass
     $.ajax
       url:     Routes.api.entry_url(entryId)
       success: (data) =>
-        @setState entry: data, type: data.type, isLoading: false
+        @setState entry: data, type: data.type , isLoading: false
       error:   (data) =>
         TastyNotifyController.errorResponse data
+      complete: =>
+        @setState isLoading: false
 
   handleHover: -> @setState isHover: true
 
@@ -41,7 +44,7 @@ window.PostEditor_Layout = React.createClass
     if @state.entry?
       switch @state.entry.type
         when 'text'
-          editor = PostEditor_TextEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading, ref: 'editor'
+          editor = PostEditor_TextEditor  entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading, ref: 'editor'
         when 'image'
           editor = PostEditor_ImageEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading, ref: 'editor'
         when 'video'
@@ -51,23 +54,23 @@ window.PostEditor_Layout = React.createClass
         else
           console.error "Unknown entry type: #{@state.entry.type}"
       actions = PostActions
-        privacy: @state.entry.privacy
-        isTlogPrivate: @props.isTlogPrivate
-        previewMode: false
+        privacy:         @state.entry.privacy
+        isTlogPrivate:   @props.isTlogPrivate
+        previewMode:     @state.previewMode
         onChangePrivacy: @changePrivacy
-        onPreview: @togglePreview
-        isLoading: @state.isLoading
-        onSave:    @saveEntry
+        onPreview:       @togglePreview
+        isLoading:       @state.isLoading
+        onSave:          @saveEntry
     else
-      editor = `<div>Loading</div>`
+      editor = `<div>Loading..</div>`
       actions = PostActions
-        privacy:       @props.defaultPrivacy
-        isTlogPrivate: @props.isTlogPrivate
-        previewMode: @state.previewMode
+        privacy:         @props.defaultPrivacy
+        isTlogPrivate:   @props.isTlogPrivate
+        previewMode:     false
         onChangePrivacy: @changePrivacy
-        onPreview: @togglePreview
-        onSave:    @saveEntry
-        isLoading: true
+        onPreview:       @togglePreview
+        onSave:          @saveEntry
+        isLoading:       true
 
     `<div className='postEditorLayout'>
       <a className="back-button" onClick={this.clickBack}></a>
@@ -90,8 +93,14 @@ window.PostEditor_Layout = React.createClass
     entry.privacy = value
     @setState entry: entry
 
-  clickBack:     -> window.history.back()
+  clickBack:     ->
+    if @props.backUrl
+      window.location.href = @props.backUrl
+    else
+      window.history.back()
 
   setLoading: (isLoading) -> @setState isLoading: isLoading
-  togglePreview: -> @setState previewMode: !@state.previewMode
+  togglePreview: ->
+    console.log 'preview toggle', !@state.previewMode
+    @setState previewMode: !@state.previewMode
 

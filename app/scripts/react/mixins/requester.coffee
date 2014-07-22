@@ -28,7 +28,7 @@ window.RequesterMixin =
        @._lifeCycleState == 'UNMOUNTED'
       return
 
-    func(data)
+    func()
 
 # Варианты ajax-ных либок:
 #  https://github.com/ded/reqwest
