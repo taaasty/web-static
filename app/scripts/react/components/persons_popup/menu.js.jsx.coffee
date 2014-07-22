@@ -9,37 +9,41 @@ IGNORES    = 'Блокировка'
 window.PersonsPopup_Menu = React.createClass
 
   propTypes:
-    items:      React.PropTypes.object.isRequired
-    currentTab: React.PropTypes.string.isRequired
-    onSelect:   React.PropTypes.func.isRequired
+    relationships: React.PropTypes.object.isRequired
+    currentTab:    React.PropTypes.string.isRequired
+    onSelect:      React.PropTypes.func.isRequired
 
   # TODO Избавиться от совместной передаци type и onClick. Сразу передавать
   # binded onSelect
+
   render: ->
     onSelect = (type) -> @props.onSelect(type)
 
     return `<nav className="tabs-nav tabs-nav--white">
               <ul className="tabs-nav__list">
                 <PersonsPopup_MenuItem isActive={ this.props.currentTab == "followings" }
-                                       count={ this.props.items.followings_count }
+                                       count={ this.getCount(this.props.relationships.followings) }
                                        title={ FOLLOWINGS }
                                        onClick={ onSelect.bind(this, 'followings') } />
 
                 <PersonsPopup_MenuItem isActive={ this.props.currentTab == "followers" }
-                                       count={ this.props.items.followers_count }
+                                       count={ this.getCount(this.props.relationships.followers) }
                                        title={ FOLLOWERS }
                                        onClick={ onSelect.bind(this, 'followers') } />
 
                 <PersonsPopup_MenuItem isActive={ this.props.currentTab == "guesses" }
-                                       count={ this.props.items.guesses_count }
+                                       count={ this.getCount(this.props.relationships.guesses) }
                                        title={ GUESSES }
                                        onClick={ onSelect.bind(this, 'guesses') } />
 
                 <PersonsPopup_MenuItem isActive={ this.props.currentTab == "ignores" }
-                                       count={ this.props.items.blocked_count }
+                                       count={ this.getCount(this.props.relationships.ignores) }
                                        title={ IGNORES }
                                        onClick={ onSelect.bind(this, 'ignores') } />
               </ul>
             </nav>`
+
+  getCount: (value) ->
+    if value? then value.length else ''
 
 module.exports = PersonsPopup_Menu

@@ -25,8 +25,7 @@ window.RequesterMixin =
     if @._compositeLifeCycleState == 'UNMOUNTING' ||
        @._compositeLifeCycleState == 'UNMOUNTED'  ||
        @._lifeCycleState == 'UNMOUNTING'          ||
-       @._lifeCycleState == 'UNMOUNTED'           ||
-       data.state() == 'rejected'
+       @._lifeCycleState == 'UNMOUNTED'
       return
 
     func(data)
