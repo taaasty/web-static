@@ -13,7 +13,11 @@ window.TastyNotifyController =
 
   errorResponse: (response, timeout = 3000) ->
     return if response.statusText is 'abort'
-    return if response.state?() == 'rejected'
+
+    # Непонятно почему не rejected не должно показывать
+    # например 500-ая ошибка при встевке url-а в video пост 
+    # генерирует именно rejected
+    # return if response.state?() == 'rejected'
 
     console.error? 'errorResponse', response
     message = response.message if response.message?

@@ -34,11 +34,6 @@ window.PostEditor_ImagesContainer = React.createClass
   render: ->
     console.log 'isVisible', @isVisible()
 
-    imageActions = `<div className="media-box__actions js-tasty-editor-image-actions">
-          <div className="media-box__action media-box__action--delete" title="Удалить"><span className='icon icon--cross' /></div>
-          <div className="media-box__action media-box__action--rotate" title="Повернуть"><span className='icon icon--rotate' /></div>
-        </div>`
-
     postImageUrl = `<label className="media-box__form js-tasty-editor-image-form" htmlFor="media-box-image-url">
           <input id="media-box-image-url" className="media-box__form-input js-tasty-editor-image-form-url" type="text" />
         </label>`
@@ -61,12 +56,12 @@ window.PostEditor_ImagesContainer = React.createClass
     return `<form ref='form' encType='multipart/form-data' method="POST">
         <figure className="image">
           <div className={cx} ref="dropZone">
-            <PostEditor_MediaLoadingProgress progress={this.state.progress} />
+            <Mediabox_LoadingProgress progress={this.state.progress} />
             {postImageUrl}
 
             {infoBox}
 
-            {imageActions}
+            <Mediabox_Actions onRotate={this.actionRotate} onDelete={this.actionDelete}/>
             {imagesDisplay}
           </div>
         </figure></form>`
@@ -111,13 +106,3 @@ window.PostEditor_ImagesContainer = React.createClass
       formData: (form)   => @props.entry
 
 
-window.PostEditor_MediaLoadingProgress = React.createClass
-  propTypes:
-    progress: React.PropTypes.number.isRequired
-
-  render: ->
-    @props.progress = Math.min @props.progress, 100
-    @props.progress = Math.max @props.progress, 0
-    `<div className="media-box__loader">
-      <div className="media-box__loader-fill" style={{width: this.props.progress+'%'}} />
-     </div>`

@@ -88,7 +88,17 @@ require './react/components/persons_popup/panels/followers_panel'
 require './react/components/persons_popup/panels/guesses_panel'
 require './react/components/persons_popup/panels/ignores_panel'
 
+require './react/components/post_editor/video_mediabox/video_mediabox'
+require './react/components/post_editor/video_mediabox/loading'
+require './react/components/post_editor/video_mediabox/insert'
+require './react/components/post_editor/video_mediabox/embeded'
+require './react/components/post_editor/video_mediabox/welcome'
+require './react/components/post_editor/mediabox/actions'
+require './react/components/post_editor/mediabox/layout'
+require './react/components/post_editor/mediabox/loading_progress'
 require './react/components/post_editor/actions'
+require './react/components/post_editor/tasty_editor'
+require './react/components/post_editor/mixins/persistence'
 require './react/components/post_editor/post_editor'
 require './react/components/post_editor/text_editor'
 require './react/components/post_editor/image_editor'
@@ -118,6 +128,7 @@ UserGenue =
   api_key:
     access_token: 'd72fd485ca42af43d133d7367a4b4a3b'
 
+window.TASTY_ENV = 'development'
 window.TastySettings =
   host:     'http://3000.vkontraste.ru/' # Это не api-шный хост, это адрес для прямых ссылок
   api_host: 'http://3000.vkontraste.ru/api/'
