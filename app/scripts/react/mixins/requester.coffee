@@ -24,12 +24,14 @@ window.RequesterMixin =
     @_activeRequests = []
 
   safeUpdateState: (data, func) ->
-    return if @._compositeLifeCycleState  == 'UNMOUNTING'
-    return if data.state() == 'rejected'
+    if @._compositeLifeCycleState == 'UNMOUNTING' ||
+       @._compositeLifeCycleState == 'UNMOUNTED'  ||
+       @._lifeCycleState == 'UNMOUNTING'          ||
+       @._lifeCycleState == 'UNMOUNTED'           ||
+       data.state() == 'rejected'
+      return
 
     func(data)
-
-
 
 # Варианты ajax-ных либок:
 #  https://github.com/ded/reqwest
