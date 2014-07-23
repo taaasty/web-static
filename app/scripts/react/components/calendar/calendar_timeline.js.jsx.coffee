@@ -5,11 +5,15 @@ window.CalendarTimeline = CalendarTimeline = React.createClass
   propTypes:
     periods:      React.PropTypes.array.isRequired
     currentEntry: React.PropTypes.object
+    activePost:   React.PropTypes.number
 
   render: ->
     that = @
     periodNodes = @props.periods.map (period, i) ->
-      `<CalendarPeriod currentEntry={ that.props.currentEntry } period={ period } key={ i }></CalendarPeriod>`
+      `<CalendarPeriod activePost={ that.props.activePost }
+                       currentEntry={ that.props.currentEntry }
+                       period={ period }
+                       key={ i } />`
 
     return `<div className="calendar__timeline-viewport calendar__timeline-viewport--active">
               <div className="calendar__timeline" ref="timeline">

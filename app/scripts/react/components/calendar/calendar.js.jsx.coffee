@@ -15,7 +15,7 @@ window.Calendar = Calendar = React.createClass
     calendar:   null
     open:       CALENDAR_CLOSED
     headerDate: if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
-    activePost: null
+    activePost: @props.entry?.id ? null
 
   componentDidMount: ->
     @getCalendarFromServer @props.tlogId
@@ -25,11 +25,12 @@ window.Calendar = Calendar = React.createClass
 
   render: ->
     calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @isOpen(), 'calendar--closed': !@isOpen()
-    children = `<CalendarHeader date={ this.state.headerDate }></CalendarHeader>`
+    children = `<CalendarHeader date={ this.state.headerDate } />`
 
     if @isOpen()
       if @state.calendar
-        children = `<CalendarTimeline currentEntry={ this.props.entry }
+        children = `<CalendarTimeline activePost={ this.state.activePost }
+                                      currentEntry={ this.props.entry }
                                       periods={ this.state.calendar.periods }></CalendarTimeline>`
       else
         children = 'Loading..'
@@ -37,8 +38,7 @@ window.Calendar = Calendar = React.createClass
     return `<nav onClick={this.onClick}
                  onMouseEnter={this.onMouseEnter}
                  onMouseLeave={this.onMouseLeave}
-                 className={ calendarClasses }
-                 >
+                 className={ calendarClasses }>
               { children }
             </nav>`
 
@@ -74,9 +74,13 @@ window.Calendar = Calendar = React.createClass
           that.updateCurrentPost $prevEl.data('id'), $prevEl.data('time')
 
   updateCurrentPost: (id, time) ->
-    date = moment time
-    
-    @setState headerDate: date, activePost: id
+    date = moment(time)
+
+    # Если на странице один пост, то стейт не будет обновляться, так как этот
+    # пост стоит по-умолчанию
+    unless @state.headerDate.toString() == date.toString() &&
+           @state.activePost == id
+      @setState headerDate: date, activePost: id
 
   dettachScrollSpy: ->
     $post = $(TARGET_POST_CLASS)
