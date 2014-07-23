@@ -1,0 +1,58 @@
+.form-checkbox {
+  position: relative;
+  font-size: @form-checkbox-font-size;
+}
+
+.form-checkbox__input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+
+  &:checked {
+    & + .form-checkbox__label {
+      .form-checkbox__icon {
+        opacity: 1;
+      }
+    }
+  }
+
+  &:disabled {
+    & + .form-checkbox__label {
+      opacity: .5;
+
+      .form-checkbox__box {
+        background-color: @form-checkbox-disabled-bg;
+        opacity: .7;
+      }
+    }
+  }
+}
+
+.form-checkbox__box {
+  width: @form-checkbox-size;
+  height: @form-checkbox-size;
+  margin: -2px 6px 0 0;
+  display: inline-block;
+  background-color: @form-checkbox-bg;
+  line-height: @form-checkbox-size;
+  text-align: center;
+  vertical-align: middle;
+  text-align: right;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.form-checkbox__icon {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 1;
+  font-family: @icons-name;
+  color: @black;
+  opacity: 0;
+  transition: opacity .4s ease;
+
+  &:before  {
+    content: "D"; // TODO: Когда будем использовать, нужно поправить на правильную иконку
+  }
+}

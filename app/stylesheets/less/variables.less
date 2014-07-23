@@ -1,11 +1,4 @@
 // Colors
-@color-black: #000;
-@color-white: #fff;
-@color-yellow: #f8c700;
-@color-green-dark: #2d9161;
-@color-green: #32a16c;
-@color-green-light: #77b97e;
-
 @black: #000;
 @white: #fff;
 @yellow: #f8c700;
@@ -34,32 +27,10 @@
 @icons-path: @fonts-path;
 @icons-name: 'tastyicons';
 
-// Selectors - TODO: Избавиться от переменных селекторов, чтобы было проще наследоваться
-@layout-constrain: ~".layout-constrain";
-@page: ~".page";
-@page-cover: ~".page-cover";
-@page-header: ~".page-header";
-@page-body: ~".page-body";
-@page-loader: ~".page-loader";
-@icons: ~'.icon';
-@icon: ~'.icon'; // TODO: избавиться, когда переберу все less
-@logo: ~".logo";
-@rotate: ~".rotate";
-@pay: ~".pay";
-@follow-status: ~".follow-status";
-@tasty-ribbon: ~".tasty-ribbon";
-@hero: ~".hero";
-@hero-simple: ~".hero-simple";
-@form-radiogroup: ~".form-radiogroup";
-@form-radio: ~".form-radio";
-@form-checkbox: ~".form-checkbox";
-@form-field: ~".form-field";
-@form-select: ~".form-select";
-@popup: ~".popup";
-@valign: ~".valign";
-
 /*--------------------------*/
 // Layout
+@layout-constrain-width: 712px;
+
 @page-min-width: 765px;
 
 @page-body-padding-vertical: 40px;
@@ -71,19 +42,28 @@
 @indent-base: 20px;
 
 // Z-indexes
+@zindex-page-cover: 1;
+@zindex-page-body: 1;
 @zindex-types-posts: 1;
 @zindex-inviter-fixed: 1;
+@zindex-hero: 1;
+@zindex-page-body-bg: 2;
 @zindex-field-control: 2;
 @zindex-rating: 2;
 @zindex-post-edit: 2;
+@zindex-page-body-inner: 3;
 @zindex-post-edit-active: 3;
 @zindex-screen-viewer-item: 4;
 @zindex-screen-viewer-item-active: 5;
 @zindex-screen-viewer-text: 6;
 @zindex-screen-viewer-loader: @zindex-screen-viewer-text; // 6
 @zindex-filter-search: 10;
+@zindex-landing-page-header: 10;
+@zindex-form-field: 12;
 @zindex-post-actions: 20;
 @zindex-media-box-loader: 100;
+@zindex-tasty-ribbon: 150;
+@zindex-follow-status: 150;
 @zindex-dropdown: 150;
 @zindex-popover: @zindex-dropdown; // 150
 @zindex-sew-list: @zindex-dropdown; // 150
@@ -99,6 +79,8 @@
 @zindex-popup: 5000;
 @zindex-shellbox: 5000;
 @zindex-guide-popup: 5000;
+@zindex-messages: @zindex-popup;
+@zindex-form-select: 5500;
 @zindex-notice: 6000;
 
 // Buttons
@@ -171,6 +153,8 @@
 @tabs-nav-border-color: rgba(red(@white), green(@white), blue(@white), .2);
 
 // Persons
+@persons-popup-width: 424px;
+
 @person-hover-bg-base: #232323;
 @person-hover-bg: rgba(red(@person-hover-bg-base), green(@person-hover-bg-base), blue(@person-hover-bg-base), .9);
 @person-gray-color: #5a5a5a;
@@ -313,6 +297,19 @@
 @popover-font-size: 12px;
 @popover-line-height: ceil((@popover-font-size * 1.36)); // ~15px
 
+// Form Checkbox
+@form-checkbox-disabled-bg: #e1e1e1;
+@form-checkbox-bg: #ffc600;
+
+@form-checkbox-size: 15px;
+@form-checkbox-font-size: 14px;
+
+// Form Field
+@form-field-font-size: 16px;
+@form-field-line-height: 22px;
+
+@form-field-error-color: #f00;
+
 // Form Popup
 @form-popop-width: 495px;
 
@@ -324,12 +321,67 @@
 @form-popup-select-email-bg: @white;
 @form-popup-select-email-color: #3f3f3f;
 
+// Form Select
+@form-select-height: 40px;
+@form-select-border-radius: 5px;
 
+@form-select-dropdown-bg-base: #464646;
+@form-select-dropdown-bg: rgba(red(@form-select-dropdown-bg-base), green(@form-select-dropdown-bg-base), blue(@form-select-dropdown-bg-base), .95);
 
+@form-select-font-size: 16px;
 
 // Popup
 @popup-overlay-bg-base: @black;
 @popup-overlay-bg: rgba(red(@popup-overlay-bg-base), green(@popup-overlay-bg-base), blue(@popup-overlay-bg-base), .92);
 
+@popup-header-bg: #f5f5f5;
+@popup-header-color: #616161;
+
+@popup-body-bg-base: #333;
+@popup-body-bg: rgba(red(@popup-body-bg-base), green(@popup-body-bg-base), blue(@popup-body-bg-base), .93);
+
+@popup-dropdown-bg-base: #1b1b1b;
+@popup-dropdown-bg: rgba(red(@popup-dropdown-bg-base), green(@popup-dropdown-bg-base), blue(@popup-dropdown-bg-base), .95);
+
+@popup-width: 250px;
+
+@popup-border-radius: 5px;
+
+@popup-font-size: 15px;
+@popup-line-height: 18px;
+
+// Messages
+@messages-popup-width: 340px;
+
+@messages-height: 586px;
+
+@messages-border-radius: @popup-border-radius;
+
+@messages-chooser-dropdown-bg: @popover-bg;
+
 // Design
 @design-popup-width: 250px;
+
+@design-border-radius: @popup-border-radius;
+
+@design-drag-hover-bg-base: #444;
+@design-drag-hover-bg: rgba(red(@design-drag-hover-bg-base), green(@design-drag-hover-bg-base), blue(@design-drag-hover-bg-base), .95);
+
+// Hero
+@hero-overlay-bg: #202020;
+
+@hero-cover-height: 450px;
+
+// Settings
+@settings-popup-width: 600px;
+
+@settings-bg-base: #333;
+@settings-bg: rgba(red(@settings-bg-base), green(@settings-bg-base), blue(@settings-bg-base), .97);
+
+// Follow Status
+@follow-status-bg: #38a870;
+@follow-status-color: @white;
+
+// Pay
+@pay-bg: #ffca00;
+@pay-color: @black;

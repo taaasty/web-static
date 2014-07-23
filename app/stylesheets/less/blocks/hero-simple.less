@@ -1,0 +1,128 @@
+// TODO: Нужно бы придумать нормальное название, чтобы не путать с основным hero
+.hero-simple {
+  position: relative;
+  color: @white;
+  font-size: 0;
+  text-align: center;
+  overflow: hidden;
+  background-size: cover;
+  transition: height .2s ease;
+
+  &:after {
+    content: "";
+    height: 266px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .form-field__textarea {
+    height: 1.375em;
+    padding: 0 !important;
+    text-align: center;
+    opacity: .6;
+
+    &:focus {
+      opacity: .6 !important;
+    }
+  }
+
+  .form-field__bg {
+    display: none;
+  }
+}
+
+.hero-simple__overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #151515;
+  opacity: .67;
+}
+
+.hero-simple__box {
+  width: 80%;
+  padding: 20px 0;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.hero-simple__avatar {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 16px;
+  position: relative;
+
+  .form-upload {
+    margin: -.5em 0 0 -.5em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 42px;
+    opacity: .6;
+    transition: opacity .3s ease;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+
+  &:hover {
+    .hero-simple__avatar-overlay {
+      opacity: .8;
+    }
+  }
+}
+
+.hero-simple__avatar-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: @black;
+  opacity: 0;
+  border-radius: 50%;
+  transition: opacity .3s ease;
+}
+
+.hero-simple__name {
+  font-size: 30px;
+  line-height: 34px;
+}
+
+.hero-simple__text {
+  margin: 0 25px;
+  position: relative;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.hero-simple__edit-button {
+  padding: 3px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  visibility: visible;
+  opacity: .24;
+  transition: visibility 0s ease, opacity .3s ease;
+
+  .icon {
+    vertical-align: top;
+  }
+
+  &:hover {
+    opacity: .5;
+  }
+
+  &.state--disabled {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s ease .3s, opacity .3s ease;
+  }
+}
