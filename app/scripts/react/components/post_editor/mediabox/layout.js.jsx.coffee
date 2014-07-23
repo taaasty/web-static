@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 #
 window.MediaBox_Layout = React.createClass
+  mixins: [React.addons.PureRenderMixin]
   propTypes:
     children: React.PropTypes.renderable.isRequired
 
@@ -18,4 +19,4 @@ window.MediaBox_Layout = React.createClass
 
     cx = React.addons.classSet classes
 
-    `<figure className={this.props.type}><div className={cx}>{this.props.children}</div></figure>`
+    `<figure className={this.props.type}><div className={cx} ref='dropZone'>{this.props.children}</div></figure>`

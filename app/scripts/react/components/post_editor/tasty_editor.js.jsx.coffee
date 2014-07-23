@@ -8,6 +8,7 @@ window.TastyEditor = React.createClass
     mode:        React.PropTypes.string
 
   getDefaultProps: ->
+    className: 'tasty-editor-default'
     mode: 'inline' # 'rich'
 
   getInitialState: ->
@@ -25,7 +26,7 @@ window.TastyEditor = React.createClass
       element: @refs.content.getDOMNode()
       placeholder: @props.placeholder
 
-    console.log 'Medium mode', @editor.behavior()
+    console.warn? 'Medium mode', @editor.behavior() unless @editor.behavior() == 'domesticated'
 
   componentWillUnmount: ->
     @editor.destroy?()    # Medium.JS

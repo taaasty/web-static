@@ -1,5 +1,7 @@
 ERROR_TIMEOUT = 1000
 
+# TODO React.PropsTypes.activitiesHandler
+#
 window.ReactActivitiesMixin =
 
   activitiesHandler: ->
