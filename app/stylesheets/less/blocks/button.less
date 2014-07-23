@@ -333,3 +333,20 @@
   &:extend(.icon);
   .ico-cross();
 }
+
+// Button Post Settings
+.post-settings-button {
+  &.button {
+    padding: 0 10px;
+  }
+
+  .icon {
+    opacity: .7;
+  }
+
+  &.button--green-dark {
+    &:hover {
+      background-color: darken(@color-green-dark, 5%)
+    }
+  }
+}

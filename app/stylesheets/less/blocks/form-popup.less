@@ -1,0 +1,119 @@
+.form-popup {
+  width: @form-popop-width;
+  margin: 0 auto;
+  position: relative;
+  font-family: @font-family-base;
+  text-align: center;
+
+  .button--block {
+    padding: 6px 0;
+  }
+}
+
+.form-popup__header {
+  background-color: @form-popup-header-bg;
+}
+
+.form-popup__title {
+  padding: 15px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #2a2a2a;
+  .text-overflow();
+}
+
+.form-popup__body {
+  background-color: @form-popup-body-bg;
+}
+
+.form-popup__footer {
+  width: 100%;
+  padding: 18px 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  font-size: 15px;
+  line-height: 1.2;
+  color: @white;
+}
+
+.form-popup__footer-sep,
+.form-popup__footer-item {
+  opacity: .7;
+}
+
+.form-popup__footer-item {
+  margin: 0 10px;
+  color: inherit;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.form-popup__select {
+  width: 100%;
+  display: table;
+}
+
+.form-popup__select-item {
+  width: 50%;
+  height: 190px;
+  display: table-cell;
+  line-height: 1.2;
+  vertical-align: bottom;
+  color: #3f3f3f;
+  cursor: pointer;
+  transition: background-color .3s ease, color .3s ease;
+
+  &.is--vkontakte {
+    background-color: @form-popup-select-vkontakte-bg;
+    color: @form-popup-select-vkontakte-color;
+
+    &:hover {
+      background-color: lighten(@form-popup-select-vkontakte-bg, 7%); //#5e87b6;
+    }
+  }
+
+  &.is--email {
+    background-color: @form-popup-select-email-bg;
+    color: @form-popup-select-email-color;
+
+    &:hover {
+      background-color: darken(@form-popup-select-email-bg, 4.5%);
+    }
+  }
+
+  .spinner {
+    margin-bottom: 5px;
+  }
+}
+
+.form-popup__select-item-i {
+  padding: 20px 15px;
+}
+
+.form-popup__select-pic {
+  margin: 20px 0 30px;
+
+  .icon {
+    display: inline-block;
+    font-size: 82px;
+    vertical-align: top;
+  }
+}
+
+.form-popup__select-desc {
+  font-size: 15px;
+}
+
+.form-popup__item {
+  border-top: 1px solid rgba(76, 76, 76, .1);
+
+  &:first-child {
+    border-top: none;
+  }
+}

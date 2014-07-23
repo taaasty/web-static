@@ -1,0 +1,52 @@
+.form-upload {
+  display: inline-block;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: top;
+  overflow: hidden;
+
+  &:hover {
+    .form-upload__text {
+      border-bottom-color: transparent;
+    }
+  }
+}
+
+.form-upload__text {
+  display: inline-block;
+  border-bottom: 1px solid;
+  transition: all .4s ease;
+}
+
+.form-upload__input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 70px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+// Types
+.form-upload--cover {
+  vertical-align: top;
+  color: @yellow;
+
+  .form-upload__text {
+    border-bottom-color: transparent;
+  }
+
+  &:hover {
+    .form-upload__text {
+      border-bottom-color: inherit;
+    }
+  }
+}
+
+.form-upload--icon {
+  line-height: 1;
+
+  .form-upload__text {
+    border: none !important;
+  }
+}

@@ -1,400 +1,354 @@
 // Styles
-@{guide-popup}-enabled {
-  overflow: hidden;
-
-  @{toolbar},
-  .uv-icon {
-    display: none;
-  }
-}
-
-@{guide-popup} {
+.guide-popup {
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background: @color-black;
-  background-color: rgba(red(@color-black), green(@color-black), blue(@color-black), .91);
+  background: @black;
+  background-color: rgba(red(@black), green(@black), blue(@black), .91);
   font-family: @font-family-base;
-  z-index: @guide-popup-zindex;
+  z-index: @zindex-guide-popup;
 
-  @{toolbar} {
+  .toolbar {
     position: absolute;
     display: block;
   }
-
-  // Points
-  &__nav {
-    width: 100%;
-    position: absolute;
-    top: 34px;
-    left: 0;
-    text-align: center;
-    z-index: @guide-popup-zindex + 10;
-    .font-null();
-
-    &-item {
-      margin: 3px;
-      padding: 3px;
-      display: inline-block;
-      border: 2px solid transparent;
-      vertical-align: top;
-      cursor: pointer;
-      .border-radius(50%);
-      .transition(border-color .4s ease);
-
-      &-i {
-        width: 3px;
-        height: 3px;
-        display: inline-block;
-        background-color: #888;
-        text-indent: -9999px;
-        vertical-align: top;
-        .border-radius(50%);
-        .transition(background-color .4s ease);
-      }
-
-      &.state--active {
-        border-color: @color-white;
-        cursor: default;
-      }
-
-      &.state--active &-i {
-        background-color: @color-white;
-      }
-    }
-  }
-
-  // All Pages Of Guide
-  &__pages {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: @guide-popup-zindex;
-  }
-
-  &__page {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: @guide-popup-zindex;
-    .opacity(0);
-    .transition(~"opacity .6s ease, left .3s ease");
-
-    &.state--active {
-      z-index: @guide-popup-zindex + 2;
-      .opacity(1);
-
-      @{guide-popup}__footnote {
-        .opacity(1);
-        .transform(translate(0, 0));
-      }
-    }
-
-    @{toolbar} {
-      @{toolbar}__item,
-      @{toolbar}__item.state--disabled {
-        .opacity(0) !important;
-        .transition(~"opacity .3s ease .3s");
-      }
-    }
-
-    &.state--active {
-      @{toolbar} {
-        @{toolbar}__item {
-          &.state--active {
-            .opacity(1) !important;
-          }
-        }
-      }
-    }
-
-    &[data-media-id="1"] {
-      right: 0 !important;
-      left: 0 !important;
-
-      &.state--active @{guide-popup}__footnote {
-        .transition-delay(.3s);
-      }
-    }
-
-    &.is--before {
-      left: -100%;
-    }
-
-    &.is--after {
-      left: 100%;
-    }
-
-    &-table {
-      width: 100%;
-      height: 100%;
-      display: table;
-      text-align: center;
-
-      &-cell {
-        display: table-cell;
-        vertical-align: middle;
-      }
-    }
-  }
-
-  // Main Text
-  &__text {
-    width: 560px;
-    display: inline-block;
-
-    p {
-      margin: 1em 0;
-      font-size: 26px;
-      line-height: 30px;
-      color: @color-white;
-      .opacity(.7);
-    }
-
-    a {
-      border-bottom: 1px solid;
-      text-decoration: none;
-      color: @color-white;
-      .transition(~"border-color .4s ease, color .4s ease");
-
-      &:hover {
-        border-bottom-color: transparent;
-        text-decoration: none;
-      }
-    }
-  }
-
-  &__connection-line {
-    width: 30px;
-    height: 1px;
-    position: absolute;
-    display: block;
-    overflow: hidden;
-    .font-null();
-    .transform-origin(0 0);
-
-    &-i {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background-color: @color-white;
-      .opacity(.3);
-    }
-  }
-
-    &__footnote {
-        position: absolute;
-        font-size: 15px;
-        line-height: 20px;
-        color: #fff;
-        .opacity(0);
-        -webkit-transition-property: opacity, -webkit-transform;
-        -webkit-transition-duration: .3s;
-        -webkit-transition-timing-function: ease;
-        -webkit-transition-delay: 0;
-        -moz-transition-property: opacity, -moz-transform;
-        -moz-transition-duration: .3s;
-        -moz-transition-timing-function: ease;
-        -moz-transition-delay: 0;
-        -o-transition-property: opacity, -o-transform;
-        -o-transition-duration: .3s;
-        -o-transition-timing-function: ease;
-        -o-transition-delay: 0;
-        transition-property: opacity, transform;
-        transition-duration: .3s;
-        transition-timing-function: ease;
-        transition-delay: 0;
-
-        &-line {
-            position: absolute;
-            display: block;
-            background-color: @color-white;
-            overflow: hidden;
-            .opacity(.3);
-        }
-
-        /* types */
-        &--cover { top: 48px }
-        &--cover-align { top: 118px }
-        &--header-color { top: 189px }
-        &--feed-color { top: 261px }
-        &--font-type { top: 332px }
-        &--opacity { top: 402px }
-    }
-
-    &__setting-design {
-        width: 250px;
-        height: 469px;
-        margin: 0 auto;
-        position: relative;
-
-        @{guide-popup}__footnote {
-            width: 232px;
-
-            &--left {
-                padding-right: 76px;
-                right: 100%;
-                text-align: right;
-                .transform(translate(-40px, 0));
-
-                @{guide-popup}__footnote-line { right: -6px }
-            }
-
-            &--right {
-                padding-left: 76px;
-                left: 100%;
-                text-align: left;
-                .transform(translate(40px, 0));
-
-                @{guide-popup}__footnote-line { left: -6px }
-            }
-
-            &-line {
-                width: 56px;
-                height: 1px;
-                top: 30px;
-            }
-        }
-    }
-
-    &__userbar {
-        width: 56px;
-        height: 56px;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: #2e3133;
-        background-color: rgba(46, 49, 51, 0.7);
-        font-size: 26px;
-        line-height: 55px;
-        text-align: center;
-        color: #fff;
-        .border-radius(50%);
-
-        @{icons} {
-            display: inline-block;
-            font-size: 26px;
-            vertical-align: middle;
-        }
-    }
-
-    &__feedback {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        .font-null();
-    }
-
-
-    &__media {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 499;
-
-        &-item {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 501;
-            .opacity(0);
-            .transition(~"opacity .6s ease, left .3s ease");
-
-            &.state--active {
-                z-index: 502;
-                .opacity(1);
-            }
-
-            &.is--before { left: -100% }
-            &.is--after { left: 100% }
-
-            &-table {
-                width: 100%;
-                height: 100%;
-                display: table;
-                text-align: center;
-
-                &-cell {
-                    display: table-cell;
-                    vertical-align: middle;
-                }
-            }
-        }
-
-        @{popup} {
-            width: 250px;
-            margin: 0 auto;
-            position: relative;
-            display: block;
-        }
-    }
-
-    &__footer {
-        width: 100%;
-        position: absolute;
-        left: 0;
-        bottom: 36px;
-        text-align: center;
-        z-index: 510;
-    }
-
-
-    &__button {
-        padding: 16px 28px 14px;
-        position: relative;
-        display: inline-block;
-        background-color: #ffc600;
-        font-size: 13px;
-        line-height: normal;
-        font-family: @font-family-pt-sans;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        text-decoration: none !important;
-        vertical-align: top;
-        outline: none;
-        color: #000 !important;
-        .border-radius(3px);
-        .transition(all .4s ease);
-
-        &:hover { background-color: #ffd237 }
-
-        &-text--next {}
-        &-text--thanks { display: none }
-
-        &.state--active &-text--next { display: none }
-        &.state--active &-text--thanks { display: inline }
-    }
 }
 
-// Button Next for Guide
-.guide-next-button {
-  @{button}__text {
-    &--thanks {
-      display: none;
+// Points
+.guide-popup__nav {
+  width: 100%;
+  position: absolute;
+  top: 34px;
+  left: 0;
+  text-align: center;
+  z-index: @zindex-guide-popup + 10;
+  .font-null();
+}
+
+.guide-popup__nav-item {
+  margin: 3px;
+  padding: 3px;
+  display: inline-block;
+  border: 2px solid transparent;
+  vertical-align: top;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: border-color .4s ease;
+
+  &.state--active {
+    border-color: @white;
+    cursor: default;
+
+    .guide-popup__nav-item-i {
+      background-color: @white;
+    }
+  }
+}
+
+.guide-popup__nav-item-i {
+  width: 3px;
+  height: 3px;
+  display: inline-block;
+  background-color: #888;
+  text-indent: -9999px;
+  vertical-align: top;
+  border-radius: 50%;
+  transition: background-color .4s ease;
+}
+
+// All Pages Of Guide
+.guide-popup__pages {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: @zindex-guide-popup;
+}
+
+.guide-popup__page {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: @zindex-guide-popup;
+  opacity: 0;
+  transition: opacity .6s ease, left .3s ease;
+
+  &.state--active {
+    z-index: @zindex-guide-popup + 2;
+    opacity: 1;
+
+    .guide-popup__footnote {
+      opacity: 1;
+      .transform(translate(0, 0));
+    }
+  }
+
+  .toolbar {
+    .toolbar__item {
+      &,
+      &.state--disabled {
+        opacity: 0 !important;
+        transition: opacity .3s ease .3s;
+      }
     }
   }
 
   &.state--active {
-    @{button}__text {
-      &--next {
-        display: none;
+    .toolbar {
+      .toolbar__item {
+        &.state--active {
+          opacity: 1 !important;
+        }
       }
+    }
+  }
 
-      &--thanks {
-        display: inline;
+  &[data-media-id="1"] {
+    right: 0 !important;
+    left: 0 !important;
+
+    &.state--active {
+      .guide-popup__footnote {
+        .transition-delay(.3s);
       }
+    }
+  }
+
+  &.is--before {
+    left: -100%;
+  }
+
+  &.is--after {
+    left: 100%;
+  }
+}
+
+.guide-popup__page-table {
+  width: 100%;
+  height: 100%;
+  display: table;
+  text-align: center;
+}
+
+.guide-popup__page-table-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+// Main Text
+.guide-popup__text {
+  width: 560px;
+  display: inline-block;
+
+  p {
+    margin: 1em 0;
+    font-size: 26px;
+    line-height: 30px;
+    color: @white;
+    opacity: .7;
+  }
+
+  a {
+    border-bottom: 1px solid;
+    text-decoration: none;
+    color: @white;
+    transition: border-color .4s ease, color .4s ease;
+
+    &:hover {
+      border-bottom-color: transparent;
+      text-decoration: none;
+    }
+  }
+}
+
+// Связи между описанием и описываемым элементом
+.guide-popup__connection-line {
+  width: 30px;
+  height: 1px;
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  .font-null();
+  .transform-origin(0 0);
+}
+
+.guide-popup__connection-line-i {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: @white;
+  opacity: .3;
+}
+
+// Сноски
+.guide-popup__footnote {
+  position: absolute;
+  font-size: 15px;
+  line-height: 20px;
+  color: @white;
+  opacity: 0;
+  .transition-transform(~".3s ease 0s, opacity .3s ease 0");
+
+  .guide-popup__footnote-line {
+    position: absolute;
+    display: block;
+    background-color: @white;
+    overflow: hidden;
+    opacity: .3;
+  }
+}
+.guide-popup__footnote--cover { top: 48px; }
+.guide-popup__footnote--cover-align { top: 118px; }
+.guide-popup__footnote--header-color { top: 189px; }
+.guide-popup__footnote--feed-color { top: 261px; }
+.guide-popup__footnote--font-type { top: 332px; }
+.guide-popup__footnote--opacity { top: 402px; }
+
+// Настройки дизайна (фейковый элемент - для распорки)
+.guide-popup__setting-design {
+  width: @design-popup-width;
+  height: 469px;
+  margin: 0 auto;
+  position: relative;
+
+  .guide-popup__footnote {
+    width: 232px;
+  }
+
+  .guide-popup__footnote-line {
+    width: 56px;
+    height: 1px;
+    top: 30px;
+  }
+
+  .guide-popup__footnote--left {
+    padding-right: 76px;
+    right: 100%;
+    text-align: right;
+    .transform(translate(-40px, 0));
+
+    .guide-popup__footnote-line { right: -6px; }
+  }
+
+  .guide-popup__footnote--right {
+    padding-left: 76px;
+    left: 100%;
+    text-align: left;
+    .transform(translate(40px, 0));
+
+    .guide-popup__footnote-line { left: -6px; }
+  }
+}
+
+// Toolbar
+.guide-popup__userbar {
+  width: @toolbar-size;
+  height: @toolbar-size;
+  position: absolute;
+  top: @toolbar-indent;
+  right: @toolbar-indent;
+  background: @toolbar-bg-base;
+  background-color: @toolbar-bg;
+  line-height: @toolbar-size;
+  text-align: center;
+  color: @white;
+  border-radius: @toolbar-size;
+
+  .icon {
+    display: inline-block;
+    font-size: @toolbar-size / 2 - 2;
+    vertical-align: middle;
+  }
+}
+
+// Feedback
+.guide-popup__feedback {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  .font-null();
+}
+
+// В этих элементах распологаются штуки,
+// которые должны оставаться на месте (не улетал влево или вправо),
+// при переходе на след. слайд
+.guide-popup__media {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: (@zindex-guide-popup - 1);
+
+  .popup {
+    width: @design-popup-width;
+    margin: 0 auto;
+    position: relative;
+    display: block;
+  }
+}
+
+.guide-popup__media-item {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: (@zindex-guide-popup + 1);
+  opacity: 0;
+  transition: opacity .6s ease, left .3s ease;
+
+  &.state--active {
+    z-index: (@zindex-guide-popup + 2);
+    opacity: 1;
+  }
+
+  &.is--before { left: -100%; }
+  &.is--after { left: 100%; }
+}
+
+.guide-popup__media-item-table {
+  width: 100%;
+  height: 100%;
+  display: table;
+  text-align: center;
+
+  .guide-popup__media-item-table-cell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+// Низ гайда
+.guide-popup__footer {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 36px;
+  text-align: center;
+  z-index: (@zindex-guide-popup + 10);
+}
+
+// Button Next for Guide
+.guide-next-button {
+  .button__text--thanks {
+    display: none;
+  }
+
+  &.state--active {
+    .button__text--next {
+      display: none;
+    }
+
+    .button__text--thanks {
+      display: inline;
     }
   }
 }
