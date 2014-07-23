@@ -1,0 +1,193 @@
+.form-field {
+  position: relative;
+}
+
+.form-field__input {
+  width: 100%;
+  position: relative;
+  font-size: @form-field-font-size;
+  line-height: @form-field-line-height;
+  font-family: @font-family-base;
+  vertical-align: top;
+  color: inherit;
+  z-index: @zindex-form-field;
+  opacity: 1;
+  box-sizing: border-box;
+  box-shadow: none;
+  transition: opacity .4s ease;
+}
+
+.form-field__textarea {
+  &:extend(.form-field__input);
+}
+
+.form-field__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: 1px solid;
+  z-index: @zindex-form-field - 2;
+  opacity: .1;
+}
+
+.form-field-label {
+  cursor: text;
+}
+
+// Types
+.form-field--textarea {
+  .form-field__textarea {
+    height: 70px;
+  }
+}
+
+.form-field--default {
+  .form-field__input,
+  .form-field__textarea {
+    padding: 10px;
+    border: none;
+    background: none;
+    border-radius: 5px;
+  }
+
+  .form-field__bg {
+    border-radius: 5px;
+    transition: border-color .4s ease, opacity .4s ease;
+  }
+
+  .form-field__input::-webkit-input-placeholder,
+  .form-field__textarea::-webkit-input-placeholder {
+    color: inherit;
+    opacity: .2 !important;
+  }
+  .form-field__input:-moz-placeholder,
+  .form-field__textarea:-moz-placeholder {
+    color: inherit;
+    opacity: .2 !important;
+  }
+  .form-field__input::-moz-placeholder,
+  .form-field__textarea::-moz-placeholder {
+    color: inherit;
+    opacity: .2 !important;
+  }
+  .form-field__input:-ms-input-placeholder,
+  .form-field__textarea:-ms-input-placeholder {
+    color: inherit;
+    opacity: .2 !important;
+  }
+
+  .form-field__input:disabled,
+  .form-field__textarea:disabled {
+    opacity: .5;
+  }
+
+  .form-field__input:focus,
+  .form-field__textarea:focus {
+    opacity: 1;
+  }
+
+  .form-field__input:focus + .form-field__bg,
+  .form-field__textarea:focus + .form-field__bg {
+    opacity: .2;
+  }
+}
+
+.form-field--simple {
+  text-align: left;
+
+  .form-field__input,
+  .form-field__textarea {
+    padding: 15px 26px;
+    border: none;
+    background: @white;
+    font-size: @form-field-font-size;
+    line-height: @form-field-line-height;
+  }
+
+  .form-field__bg {
+    display: none !important;
+  }
+
+  .form-field__input::-webkit-input-placeholder,
+  .form-field__textarea::-webkit-input-placeholder {
+    color: inherit;
+    opacity: .5 !important;
+  }
+  .form-field__input:-moz-placeholder,
+  .form-field__textarea:-moz-placeholder {
+    color: inherit;
+    opacity: .5 !important;
+  }
+  .form-field__input::-moz-placeholder,
+  .form-field__textarea::-moz-placeholder {
+    color: inherit;
+    opacity: .5 !important;
+  }
+  .form-field__input:-ms-input-placeholder,
+  .form-field__textarea:-ms-input-placeholder {
+    color: inherit;
+    opacity: .5 !important;
+  }
+
+  .form-field__input:disabled,
+  .form-field__textarea:disabled {
+    opacity: .3;
+  }
+
+  .form-field__input:focus,
+  .form-field__textarea:focus {
+    opacity: 1;
+  }
+
+  &.form-field--error {
+    .form-field__input::-webkit-input-placeholder,
+    .form-field__textarea::-webkit-input-placeholder {
+      color: @form-field-error-color;
+      opacity: 1 !important;
+    }
+    .form-field__input:-moz-placeholder,
+    .form-field__textarea:-moz-placeholder {
+      color: @form-field-error-color;
+      opacity: 1 !important;
+    }
+    .form-field__input::-moz-placeholder,
+    .form-field__textarea::-moz-placeholder {
+      color: @form-field-error-color;
+      opacity: 1 !important;
+    }
+    .form-field__input:-ms-input-placeholder,
+    .form-field__textarea:-ms-input-placeholder {
+      color: @form-field-error-color;
+      opacity: 1 !important;
+    }
+  }
+
+  &.form-field--binary {
+    cursor: text;
+
+    .form-field__input {
+      max-width: 360px;
+      padding-right: 0;
+    }
+
+    .form-field__text {
+      padding: 15px 0 15px 26px;
+      display: inline-block;
+      font-size: @form-field-font-size;
+      line-height: @form-field-line-height;
+      opacity: .5;
+    }
+
+    .form-field__input + .form-field__text {
+      padding-right: 26px;
+      padding-left: 0;
+    }
+
+    .form-field__text + .form-field__input {
+      padding-right: 26px;
+      padding-left: 0;
+    }
+  }
+}

@@ -1,0 +1,60 @@
+html {
+  .state--faved {
+    color: @yellow !important;
+    opacity: 1 !important;
+  }
+}
+
+body {
+  -webkit-transition: -webkit-filter .4s ease, background-color .4s ease;
+  -moz-transition: -moz-filter .4s ease, background-color .4s ease;
+  -ms-transition: -ms-filter .4s ease, background-color .4s ease;
+  -o-transition: -o-filter .4s ease, background-color .4s ease;
+  transition: filter .4s ease, background-color .4s ease;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.state--hidden {
+  display: none !important;
+}
+
+.no--transition {
+  transition: none !important;
+}
+
+.cursor--move {
+  cursor: move;
+}
+
+.float--right {
+  float: right;
+}
+
+.float--left {
+  float: right;
+}
+
+.background--none {
+  background: none !important;
+}
+
+.rotate--0 {
+  .transform(rotate(0deg));
+}
+
+.rotate--90 {
+  .transform(rotate(90deg));
+  .transform-origin(0 0);
+}
+
+.rotate--180 {
+  .transform(rotate(180deg));
+}
+
+.rotate--270 {
+  .transform(rotate(270deg));
+  .transform-origin(0 0);
+}
