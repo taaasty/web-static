@@ -7,10 +7,22 @@ window.PersonsPopup = React.createClass
 
   getInitialState: ->
     relationships: {
-      followings: null
-      followers:  null
-      guesses:    null
-      ignores:    null
+      followings: {
+        items:       null
+        total_count: null
+      }
+      followers: {
+        items:       null
+        total_count: null
+      }
+      guesses: {
+        items:       null
+        total_count: null
+      }
+      ignores: {
+        items:       null
+        total_count: null
+      }
     }
     currentTab: 'followings'
 
@@ -28,22 +40,22 @@ window.PersonsPopup = React.createClass
                          onSelect={ this.selectTab }/>
 
       <PersonsPopup_FollowingsPanel isActive={ this.state.currentTab == 'followings' }
-                                    relationships={ this.state.relationships.followings }
+                                    relationships={ this.state.relationships.followings.items }
                                     activitiesHandler={ this.activitiesHandler }
                                     onLoad={ onLoad.bind(this, 'followings') } />
 
       <PersonsPopup_FollowersPanel isActive={ this.state.currentTab == 'followers' }
-                                   relationships={ this.state.relationships.followers }
+                                   relationships={ this.state.relationships.followers.items }
                                    activitiesHandler={ this.activitiesHandler }
                                    onLoad={ onLoad.bind(this, 'followers') } />
 
       <PersonsPopup_GuessesPanel isActive={ this.state.currentTab == 'guesses' }
-                                 relationships={ this.state.relationships.guesses }
+                                 relationships={ this.state.relationships.guesses.items }
                                  activitiesHandler={ this.activitiesHandler }
                                  onLoad={ onLoad.bind(this, 'guesses') } />
 
       <PersonsPopup_IgnoresPanel isActive={ this.state.currentTab == 'ignores' }
-                                 relationships={ this.state.relationships.ignores }
+                                 relationships={ this.state.relationships.ignores.items }
                                  activitiesHandler={ this.activitiesHandler }
                                  onLoad={ onLoad.bind(this, 'ignores') } />
     </Popup>`

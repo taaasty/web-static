@@ -43,7 +43,6 @@ window.PersonsPopup_Menu = React.createClass
               </ul>
             </nav>`
 
-  getCount: (value) ->
-    if value? then value.length else ''
+  getCount: (value) -> value.total_count
 
 module.exports = PersonsPopup_Menu

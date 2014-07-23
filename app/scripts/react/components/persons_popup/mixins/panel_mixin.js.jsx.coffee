@@ -33,8 +33,8 @@ window.PersonsPopup_PanelMixin =
     @setState isError: false, isLoading: true
     req = @createRequest
       url: @relationUrl()
-      success: (relationships, status, data) =>
-        @safeUpdateState => @props.onLoad(relationships)
+      success: (data) =>
+        @safeUpdateState => @props.onLoad(total_count: data.total_count, items: data.relationships)
       error:   (data) =>
         @safeUpdateState => @setState isError: true
         TastyNotifyController.errorResponse data
