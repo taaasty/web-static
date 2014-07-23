@@ -30,6 +30,12 @@ window.ImagesCollage = React.createClass
     images:     []
     initialId:  0
 
+  shouldComponentUpdate: (nextProps, nextState) ->
+    not (
+      ReactUtils.isImagesEqual( nextState.images, @state.images) &&
+      ReactUtils.isImagesEqual( nextProps.images, @props.images)
+    )
+
   componentWillReceiveProps: (nextProps) ->
     @loadImages nextProps.images
 
@@ -54,14 +60,12 @@ window.ImagesCollage = React.createClass
       ImagesLoaded(image).on 'done', (instance) =>
         return unless @isMounted()
         if currentInitialId == @state.initialId
-          @state.images.push image
-          @setState images: @state.images
+          @setState images: React.addons.update @state.images, {$push: [image]}
         else
           console.debug? 'later image loaded', currentInitialId, @state.initialId
 
   render: ->
     if @shouldRenderCollage()
-      #return `<ImagesCollage_Images images={this.state.images} width={this.state.width}/>`
       return `<ImagesCollage_Legacy images={this.state.images} width={this.state.width}/>`
     else
       return `<div className='collage-empty-loading' />`
@@ -80,10 +84,7 @@ window.ImagesCollage_Legacy = React.createClass
     images: React.PropTypes.array.isRequired
 
   shouldComponentUpdate: (nextProps, nextState) ->
-    return true unless nextProps.images.length==@props.images.length
-    currentUrls = @props.images.map (i) -> i.src
-    nextUrls = nextProps.images.map (i) -> i.src
-    return currentUrls != nextUrls
+    not ReactUtils.isImagesEqual nextProps.images, @props.images
 
   componentDidMount: ->
     @$node = $ @getDOMNode()

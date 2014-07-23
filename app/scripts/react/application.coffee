@@ -32,3 +32,15 @@ window.ReactApp =
     # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
     if ic = document.getElementById 'js-static-inviter-container'
       React.renderComponent InviterShellBox(fixed: true), ic
+
+
+
+window.ReactUtils=
+  isImagesEqual: (nextImages, currentImages) ->
+
+    return false unless  nextImages.length == currentImages.length
+
+    currentUrls = currentImages.map (i) -> i.src
+    nextUrls    = nextImages.map (i) -> i.src
+
+    return  _.isEqual currentUrls, nextUrls

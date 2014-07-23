@@ -10,10 +10,13 @@ window.PostEditor_ImagesForm=
     @prepareForm()
 
   saveEntry: ->
-    @fileUploader.submit()
+    if @fileUploader
+      @fileUploader.submit()
+    else
+      # TODO Сохранять через обычный запрос
+      alert "Картинки не меняли, сохранять нечего"
 
   prepareForm: ->
-    console.log 'prepare image form'
     $form = $ @refs.form.getDOMNode()
 
     @fileUploader = null

@@ -36,15 +36,15 @@ window.PostEditor_ImageEditor = React.createClass
 
     mediaBoxContent = []
 
-    if mediaBoxState == 'loaded'
-      mediaBoxContent.push ImagesMediaBox_Loaded images: @state.images, onDelete: @clearImages, key: 'images'
+    #if mediaBoxState == 'loaded'
+    onDelete = @clearImages
 
     `<article className={cx}>
       <div className="post__content">
         <form ref='form' encType='multipart/form-data' method="POST">
           <MediaBox_Layout type='image' state={mediaBoxState} ref='layout'>
             <ImagesMediaBox_Welcome ref='welcome' isDragging={this.state.isDragging}/>
-            {mediaBoxContent}
+            <ImagesMediaBox_Loaded images={this.state.images} onDelete={onDelete} key='images' />
             <MediaBox_LoadingProgress progress={this.state.uploadingProgress} />
           </MediaBox_Layout>
 
