@@ -21,7 +21,7 @@ window.RequesterMixin =
     @_activeRequests.map (jqXHR) -> jqXHR.abort()
     @_activeRequests = []
 
-  safeUpdateState: (data, func) ->
+  safeUpdateState: (func) ->
     if @._compositeLifeCycleState == 'UNMOUNTING' ||
        @._compositeLifeCycleState == 'UNMOUNTED'  ||
        @._lifeCycleState == 'UNMOUNTING'          ||
