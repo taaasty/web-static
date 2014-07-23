@@ -1,5 +1,7 @@
 ###* @jsx React.DOM ###
 
+TAERGET_POST_CLASS='.post'
+
 window.CalendarTimeline = CalendarTimeline = React.createClass
 
   propTypes:
@@ -7,7 +9,7 @@ window.CalendarTimeline = CalendarTimeline = React.createClass
     currentEntry: React.PropTypes.object
 
   componentDidMount: ->
-    @$post = $('.post')
+    @$post = $ TARGET_POST_CLASS
     @$periodsList = $( @refs.periodsList.getDOMNode() )
     @attachScrollSpy @$post, @$periodsList
 
