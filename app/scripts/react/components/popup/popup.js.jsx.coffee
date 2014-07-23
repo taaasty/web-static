@@ -5,7 +5,7 @@ window.Popup = React.createClass
 
   propTypes:
     title:       React.PropTypes.string.isRequired
-    activities:  React.PropTypes.number
+    hasActivities:  React.PropTypes.bool
     onClose:     React.PropTypes.func
     isDark:      React.PropTypes.bool
     isDraggable: React.PropTypes.bool
@@ -14,8 +14,9 @@ window.Popup = React.createClass
     className:   React.PropTypes.string
 
   getDefaultProps: ->
-    isDark:      true
-    isDraggable: false
+    hasActivities: false
+    isDark:        true
+    isDraggable:   false
 
   componentDidMount: ->
     $('body').addClass 'no-scroll'
@@ -35,7 +36,7 @@ window.Popup = React.createClass
     return `<div className={cx}>
               <PopupHeader title={ this.props.title } ref="header"
                            isDraggable= { this.props.isDraggable }
-                           activities={ this.props.activities }
+                           hasActivities={ this.props.hasActivities }
                            onClickClose={ this.close }></PopupHeader>
               <div className="popup__body">
                 { this.props.children }

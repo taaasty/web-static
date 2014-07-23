@@ -17,7 +17,7 @@ window.PostEditor_PersistenceMixin =
       'POST'
 
   saveEntry: ->
-    @incrementAcitivities()
+    @incrementActivities()
     $.ajax
       url:     @savingUrl()
       method:  @savingMethod()
@@ -30,5 +30,5 @@ window.PostEditor_PersistenceMixin =
         TastyNotifyController.errorResponse data
       complete: =>
         console.log 'complete'
-        @decrementAcitivities()
+        @decrementActivities()
 

@@ -3,6 +3,18 @@
 FIRST_ROW_RATIO = 2.5
 NEXT_ROWS_RATIO = 4
 
+window.ImagesCollageUrl = React.createClass
+  propTypes:
+    imageUrls:     React.PropTypes.array.isRequired
+
+  render: ->
+    images = @props.imageUrls.map (url) ->
+      image = new Image()
+      image.src = url
+      image
+
+    ImagesCollage images: images
+
 window.ImagesCollage = React.createClass
   #mixins: [React.addons.PureRenderMixin]
   propTypes:

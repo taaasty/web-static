@@ -29,7 +29,7 @@ window.PersonsPopup_PanelMixin =
 
   getPanelData: ->
     console.error 'getPanelData when xhr' if @xhr?
-    @props.activitiesHandler.increment()
+    @incrementActivities()
     @setState isError: false, isLoading: true
     req = @createRequest
       url: @relationUrl()
@@ -40,7 +40,7 @@ window.PersonsPopup_PanelMixin =
         TastyNotifyController.errorResponse data
       complete: =>
         @safeUpdateState => @setState isLoading: false
-        @props.activitiesHandler.decrement()
+        @decrementActivities()
 
   componentDidUpdate: ->
     @scroller.update()

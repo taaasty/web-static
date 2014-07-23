@@ -30,9 +30,9 @@ window.PostEditor_ImagesForm=
       replaceFileInput:  false
       fileInput:             @refs.welcome.refs.input.getDOMNode()
       start: =>
-        @incrementAcitivities()
+        @incrementActivities()
       stop: =>
-        @decrementAcitivities()
+        @decrementActivities()
         @setState uploadingProgress: 0
       
       fail:        (e, data) => TastyNotifyController.errorResponse data

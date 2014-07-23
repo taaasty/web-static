@@ -4,8 +4,8 @@ BaseMixin =
   setActivitiesHandler: (handler) ->
     @activitiesHandler    = handler
     @hasActivities        = handler.hasActivities
-    @incrementAcitivities = handler.increment
-    @decrementAcitivities = handler.decrement
+    @incrementActivities = handler.increment
+    @decrementActivities = handler.decrement
 
 
 # TODO React.PropsTypes.activitiesHandler
@@ -17,8 +17,8 @@ ram =
   getInitialState: ->
     activities: 0
 
-  incrementAcitivities: -> @activitiesHandler.incrementAcitivities
-  decrementAcitivities: -> @activitiesHandler.decrementAcitivities
+  incrementActivities: -> @activitiesHandler.incrementActivities
+  decrementActivities: -> @activitiesHandler.decrementActivities
 
   createActivitiesHandler: ->
     increment = (-> _.defer => @setState activities: ++@state.activities).bind @

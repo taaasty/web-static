@@ -28,7 +28,7 @@ window.PostEditor_Layout = React.createClass
     @loadEntry entryId #@props.entryId
 
   loadEntry: (entryId) ->
-    @incrementAcitivities()
+    @incrementActivities()
     @setState entry: null
     $.ajax
       url:     Routes.api.entry_url(entryId)
@@ -37,7 +37,7 @@ window.PostEditor_Layout = React.createClass
       error:   (data) =>
         TastyNotifyController.errorResponse data
       complete: =>
-        @decrementAcitivities()
+        @decrementActivities()
 
   handleHover: -> @setState isHover: true
 

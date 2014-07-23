@@ -13,12 +13,11 @@ window.PersonsPopup = React.createClass
       ignores:    null
     }
     currentTab: 'followings'
-    activities: 0
 
   render: ->
     onLoad = -> @updateRelationships.apply @, arguments
 
-    return `<Popup activities={this.state.activities}
+    return `<Popup hasActivities={this.hasActivities()}
                    title={PERSON_POPUP_TITLE}
                    isDraggable={ true }
                    onClose={this.unmount}
@@ -30,22 +29,22 @@ window.PersonsPopup = React.createClass
 
       <PersonsPopup_FollowingsPanel isActive={ this.state.currentTab == 'followings' }
                                     relationships={ this.state.relationships.followings }
-                                    activitiesHandler={ this.activitiesHandler() }
+                                    activitiesHandler={ this.activitiesHandler }
                                     onLoad={ onLoad.bind(this, 'followings') } />
 
       <PersonsPopup_FollowersPanel isActive={ this.state.currentTab == 'followers' }
                                    relationships={ this.state.relationships.followers }
-                                   activitiesHandler={ this.activitiesHandler() }
+                                   activitiesHandler={ this.activitiesHandler }
                                    onLoad={ onLoad.bind(this, 'followers') } />
 
       <PersonsPopup_GuessesPanel isActive={ this.state.currentTab == 'guesses' }
                                  relationships={ this.state.relationships.guesses }
-                                 activitiesHandler={ this.activitiesHandler() }
+                                 activitiesHandler={ this.activitiesHandler }
                                  onLoad={ onLoad.bind(this, 'guesses') } />
 
       <PersonsPopup_IgnoresPanel isActive={ this.state.currentTab == 'ignores' }
                                  relationships={ this.state.relationships.ignores }
-                                 activitiesHandler={ this.activitiesHandler() }
+                                 activitiesHandler={ this.activitiesHandler }
                                  onLoad={ onLoad.bind(this, 'ignores') } />
     </Popup>`
 
