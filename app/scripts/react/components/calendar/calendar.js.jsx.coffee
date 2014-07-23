@@ -3,6 +3,7 @@
 CALENDAR_CLOSED = 'closed'
 CALENDAR_OPENED_BY_HOVER = 'openedByHover'
 CALENDAR_OPENED_BY_CLICK = 'openedByClick'
+TARGET_POST_CLASS = '.post'
 
 window.Calendar = Calendar = React.createClass
 
@@ -11,37 +12,16 @@ window.Calendar = Calendar = React.createClass
     tlogId:   React.PropTypes.number.isRequired
 
   getInitialState: ->
-    calendar:    null
-    open:        CALENDAR_CLOSED
-    headerDate:  if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
+    calendar:   null
+    open:       CALENDAR_CLOSED
+    headerDate: if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
+    activePost: null
 
   componentDidMount: ->
     @getCalendarFromServer @props.tlogId
+    @attachScrollSpy()
 
-  getCalendarFromServer: (tlogId) ->
-    $.ajax
-      url: Routes.api.calendar_url tlogId
-      success: (calendar) =>
-        @setState calendar: calendar
-      error: (data) =>
-        TastyNotifyController.errorResponse data
-
-  onMouseEnter: ->
-    if @state.open == CALENDAR_CLOSED
-      @setState open: CALENDAR_OPENED_BY_HOVER
-
-  onMouseLeave: ->
-    if @state.open == CALENDAR_OPENED_BY_HOVER
-      @setState open: CALENDAR_CLOSED
-
-  onClick: ->
-    switch @state.open
-      when CALENDAR_CLOSED          then @setState open: CALENDAR_OPENED_BY_CLICK
-      when CALENDAR_OPENED_BY_CLICK then @setState open: CALENDAR_CLOSED
-      when CALENDAR_OPENED_BY_HOVER then @setState open: CALENDAR_CLOSED
-      else console.error? "Unknown state.open", @state.open
-
-  isOpen: -> @state.open != CALENDAR_CLOSED
+  componentWillUnmount: -> @dettachScrollSpy()
 
   render: ->
     calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @isOpen(), 'calendar--closed': !@isOpen()
@@ -61,5 +41,62 @@ window.Calendar = Calendar = React.createClass
                  >
               { children }
             </nav>`
+
+  getCalendarFromServer: (tlogId) ->
+    $.ajax
+      url: Routes.api.calendar_url tlogId
+      success: (calendar) =>
+        @setState calendar: calendar
+      error: (data) =>
+        TastyNotifyController.errorResponse data
+
+  attachScrollSpy: ->
+    that = @
+    $post = $(TARGET_POST_CLASS)
+
+    $post.waypoint (direction) ->
+      scrollTop = $(document).scrollTop()
+      $el = $(@)
+      $elTop = $el.offset().top
+      $elTopWithHeight = $elTop + $el.outerHeight(true)
+
+      if $elTopWithHeight >= scrollTop >= $elTop
+        # Активируется пост
+        that.updateCurrentPost $el.data('id'), $el.data('time')
+
+      if direction is 'up' && $el.waypoint('prev').length > 0
+        $prevEl = $( $el.waypoint('prev') )
+        $prevElTop = $prevEl.offset().top
+        $prevElTopWithHeight = $prevElTop + $prevEl.outerHeight(true)
+
+        if $prevElTopWithHeight >= scrollTop >= $prevElTop
+          # Активируется предыдущий пост
+          that.updateCurrentPost $prevEl.data('id'), $prevEl.data('time')
+
+  updateCurrentPost: (id, time) ->
+    date = moment time
+    
+    @setState headerDate: date, activePost: id
+
+  dettachScrollSpy: ->
+    $post = $(TARGET_POST_CLASS)
+    $post.waypoint 'destroy'
+
+  onMouseEnter: ->
+    if @state.open == CALENDAR_CLOSED
+      @setState open: CALENDAR_OPENED_BY_HOVER
+
+  onMouseLeave: ->
+    if @state.open == CALENDAR_OPENED_BY_HOVER
+      @setState open: CALENDAR_CLOSED
+
+  onClick: ->
+    switch @state.open
+      when CALENDAR_CLOSED          then @setState open: CALENDAR_OPENED_BY_CLICK
+      when CALENDAR_OPENED_BY_CLICK then @setState open: CALENDAR_CLOSED
+      when CALENDAR_OPENED_BY_HOVER then @setState open: CALENDAR_CLOSED
+      else console.error? "Unknown state.open", @state.open
+
+  isOpen: -> @state.open != CALENDAR_CLOSED
 
 module.exports = Calendar
