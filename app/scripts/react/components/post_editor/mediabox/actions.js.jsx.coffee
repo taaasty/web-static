@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 #
-window.Mediabox_Actions = React.createClass
+window.MediaBox_Actions = React.createClass
   propTypes:
     onRotate: React.PropTypes.func
     onDelete: React.PropTypes.func

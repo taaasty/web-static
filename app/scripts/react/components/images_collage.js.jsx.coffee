@@ -3,6 +3,33 @@
 FIRST_ROW_RATIO = 2.5
 NEXT_ROWS_RATIO = 4
 
+window.ImagesCollage = React.createClass
+  propTypes:
+    imageUrls: React.PropTypes.array.isRequired
+
+  getInitialState: ->
+    width:  null
+    images: []
+
+  componentDidMount: ->
+    @setState width: $(@getDOMNode()).width()
+    @loadImages()
+
+  loadImages: ->
+    imageElements = @props.imageUrls.map (src) =>
+      image = new Image src: src
+      image.src = src
+      ImagesLoaded(image).on 'done', (instance) =>
+        @state.images.push image
+        @setState images: @state.images
+
+  render: ->
+    if this.state.width>0 && this.state.images.length>0 #==@props.imageUrls.length
+      #return `<ImagesCollage_Images images={this.state.images} width={this.state.width}/>`
+      return `<ImagesCollage_Legacy images={this.state.images} width={this.state.width}/>`
+    else
+      return `<div className='collage-empty-loading' />`
+
 module.experts = window.ImagesCollage_Images = React.createClass
   propTypes:
     images: React.PropTypes.array.isRequired #Of(Image)
@@ -344,29 +371,3 @@ window.ImagesCollage_Legacy = React.createClass
     `<div className="collage">{elements}</div>`
 
 
-window.ImagesCollage = React.createClass
-  propTypes:
-    imageUrls: React.PropTypes.array.isRequired
-
-  getInitialState: ->
-    width:  null
-    images: []
-
-  componentDidMount: ->
-    @setState width: $(@getDOMNode()).width()
-    @loadImages()
-
-  loadImages: ->
-    imageElements = @props.imageUrls.map (src) =>
-      image = new Image src: src
-      image.src = src
-      ImagesLoaded(image).on 'done', (instance) =>
-        @state.images.push image
-        @setState images: @state.images
-
-  render: ->
-    if this.state.width>0 && this.state.images.length>0 #==@props.imageUrls.length
-      #return `<ImagesCollage_Images images={this.state.images} width={this.state.width}/>`
-      return `<ImagesCollage_Legacy images={this.state.images} width={this.state.width}/>`
-    else
-      return `<div className='collage-empty-loading' />`

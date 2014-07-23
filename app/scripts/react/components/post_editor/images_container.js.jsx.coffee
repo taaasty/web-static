@@ -32,13 +32,10 @@ window.PostEditor_ImagesContainer = React.createClass
     @updateDropZoneClass @state.isDragging
 
   render: ->
-    console.log 'isVisible', @isVisible()
-
-    postImageUrl = `<label className="media-box__form js-tasty-editor-image-form" htmlFor="media-box-image-url">
-          <input id="media-box-image-url" className="media-box__form-input js-tasty-editor-image-form-url" type="text" />
+    postImageUrl = `<label className="media-box__form" htmlFor="media-box-image-url">
+          <input id="media-box-image-url" className="media-box__form-input" type="text" />
         </label>`
 
-    imagesDisplay = `<div className="media-box__display js-tasty-editor-image-display" />`
 
     infoBox = `<div className="media-box__info">
           <div className="media-box__text">
@@ -51,20 +48,24 @@ window.PostEditor_ImagesContainer = React.createClass
           </div>
         </div>`
 
+    mediaboxState = null
+    if @props.entry.images.length>0
+      unless @state.isDragging
+        mediaboxState = 'loaded'
+        imagesDisplay = MediaBox_Collage imageAttachments: @props.entry.images
+
+    mediaboxState = 'drag-hover' if @state.isDragging
 
     cx = React.addons.classSet 'media-box': true, 'state--hidden': !@isVisible()
     return `<form ref='form' encType='multipart/form-data' method="POST">
-        <figure className="image">
-          <div className={cx} ref="dropZone">
-            <Mediabox_LoadingProgress progress={this.state.progress} />
-            {postImageUrl}
-
-            {infoBox}
-
-            <Mediabox_Actions onRotate={this.actionRotate} onDelete={this.actionDelete}/>
-            {imagesDisplay}
-          </div>
-        </figure></form>`
+              <MediaBox_Layout type='image' state={mediaboxState} ref="dropZone">
+                <MediaBox_LoadingProgress progress={this.state.progress} />
+                {postImageUrl}
+                {infoBox}
+                <MediaBox_Actions onDelete={this.actionDelete} />
+                {imagesDisplay}
+              </MediaBox_Layout>
+            </form>`
 
   isVisible: ->
     @props.isVisible || @state.isDragging || @props.isLoading
@@ -88,21 +89,29 @@ window.PostEditor_ImagesContainer = React.createClass
     $form = $ @refs.form.getDOMNode()
 
     $form.fileupload
-      url:               Routes.api.post_url 'image'
+      url:               @savingUrl()
       dataType:          'json'
       acceptFileTypes:   ACCEPT_FILE_TYPES
       maxFileSize:       MAX_FILE_SIZE
       maxNumberOfFiles:  MAX_NUMBER_OF_FILES
       multipart:         true
+
       fileInput:         @refs.input.getDOMNode()
-      send:              => @setLoading true
-      always:            => @setLoading false
+      send:              => @props.setLoading true
+      always:            => @props.setLoading false
       fail:     (e,data) => TastyNotifyController.errorResponse data
       dragover:          (e, data) => @dragOver()
       progressall:       (e, data) =>
         percents = parseInt(data.loaded / data.total * 100, 10)
         @setState loadingProgress: percents
           
-      formData: (form)   => @props.entry
+      formData: (form)   =>
+        return {} # @props.entry
 
 
+  # Всегда POST запросы
+  savingUrl: ->
+    if @props.entry.id?
+      Routes.api.update_images_url @props.entry.id
+    else
+      Routes.api.create_entry_url 'image'

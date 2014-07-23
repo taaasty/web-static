@@ -15,6 +15,7 @@ ApiRoutes =
 
   create_entry_url:                       (type) -> TastySettings.api_host + 'v1/entries/' + type
   update_entry_url:                      (entry) -> TastySettings.api_host + 'v1/entries/' + entry.type + '/' +entry.id
+  update_images_url:                   (entryId) -> TastySettings.api_host + 'v1/entries/image/' +entryId+ '/images'
 
   entry_url:                           (entryId) -> TastySettings.api_host + 'v1/entries/' + entryId
 

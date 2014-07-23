@@ -94,6 +94,7 @@ require './react/components/post_editor/video_mediabox/insert'
 require './react/components/post_editor/video_mediabox/embeded'
 require './react/components/post_editor/video_mediabox/welcome'
 require './react/components/post_editor/mediabox/actions'
+require './react/components/post_editor/mediabox/collage'
 require './react/components/post_editor/mediabox/layout'
 require './react/components/post_editor/mediabox/loading_progress'
 require './react/components/post_editor/actions'
@@ -116,6 +117,7 @@ require './react/controllers/shellbox'
 require './react/controllers/popup'
 require './react/application'
 
+require './plugins/jquery.collage'
 
 require './editors'
 

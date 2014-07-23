@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 #
-window.Mediabox_LoadingProgress = React.createClass
+window.MediaBox_LoadingProgress = React.createClass
   propTypes:
     progress: React.PropTypes.number.isRequired
 
