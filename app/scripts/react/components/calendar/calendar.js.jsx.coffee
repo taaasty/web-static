@@ -16,6 +16,7 @@ window.Calendar = Calendar = React.createClass
     headerDate:  if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
 
   componentDidMount: ->
+    @activePostEvent = PubSub.subscribe 'active_post:changed', (msg, momentDate) => @setState headerDate: momentDate
     @getCalendarFromServer @props.tlogId
 
   getCalendarFromServer: (tlogId) ->

@@ -23,7 +23,7 @@ window.CalendarMarker = CalendarMarker = React.createClass
     markerClasses = React.addons.classSet 'calendar__period-marker': true, 'calendar__period-marker--current': @props.selected
 
     return `<li><a href={ this.props.marker.entry_url }
-                   data-target={ "#entry-" + this.props.marker.entry_id }
+                   data-target={ '#' + this.props.marker.entry_id }
                    data-marker-date={ createdAt }
                    data-marker-rows={ records }
                    className={ markerClasses }

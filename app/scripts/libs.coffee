@@ -3,6 +3,7 @@ window.MouseTrap = require 'mousetrap'
 window.React = require 'react/addons'
 window._ = require 'underscore'
 window.moment = require 'momentjs'
+window.PubSub = require 'pubsub-js/src/pubsub'
 
 require 'momentjs/lang/ru'
 require 'blueimp-file-upload/js/jquery.fileupload'
