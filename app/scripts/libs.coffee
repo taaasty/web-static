@@ -23,7 +23,7 @@ require 'angular-sanitize'
 
 require 'ng-rails-csrf/index'
 
-require 'bootstrap/js/scrollspy'
+require 'jquery-waypoints'
 #require 'rangy'
 
 #require "undo/undo.js"

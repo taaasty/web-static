@@ -31,6 +31,10 @@ gulp.task "scripts", ->
         "reactify"
         "debowerify"
       ]
+      shim:
+        'jquery-waypoints':
+          path: 'app/bower_components/jquery-waypoints/waypoints.js'
+          exports: null
     ))
     .on("error", handleError)
     .pipe($.rename("bundle.js"))
