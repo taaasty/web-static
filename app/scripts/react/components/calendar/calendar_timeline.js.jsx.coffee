@@ -42,7 +42,7 @@ window.CalendarTimeline = CalendarTimeline = React.createClass
 
         if $elOffsetTopHeight >= scrollTop >= $elOffsetTop
           # Активируется пост
-          activate(@id)
+          activate($el.data('id'))
 
         if direction is 'up' && $el.waypoint('prev').length > 0
           $prevEl = $( $el.waypoint('prev') )
@@ -51,7 +51,7 @@ window.CalendarTimeline = CalendarTimeline = React.createClass
 
           if $prevElOffsetTopAndHeight >= scrollTop >= $prevElOffsetTop
             # Активируется предыдущий пост
-            activate($prevEl.attr('id'))
+            activate($prevEl.data('id'))
 
   dettachScrollSpy: -> @$post.waypoint 'destroy'
 
