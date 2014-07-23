@@ -18,7 +18,7 @@ window.VideoMediaBox_Insert = React.createClass
                 type="url" ref="input" onPaste={this.onPaste} onKeyUp={this.onKeyUp}
                 defaultValue={this.props.embedUrl} />
        </label>
-       <Mediabox_Actions onDelete={this.props.onClean}/>
+       <MediaBox_Actions onDelete={this.props.onClean}/>
      </MediaBox_Layout>`
 
   #onKeyUp: (event) ->

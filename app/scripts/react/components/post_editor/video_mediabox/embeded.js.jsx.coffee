@@ -8,5 +8,5 @@ window.VideoMediaBox_Embeded = React.createClass
   render: ->
     `<MediaBox_Layout type='video' state='loaded'>
        <div className="media-box__display" dangerouslySetInnerHTML={{ __html: this.props.embedHtml }} />
-       <Mediabox_Actions onDelete={this.props.onDelete}/>
+       <MediaBox_Actions onDelete={this.props.onDelete}/>
      </MediaBox_Layout>`

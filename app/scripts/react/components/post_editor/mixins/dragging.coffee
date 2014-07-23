@@ -2,6 +2,17 @@ DRAG_HOVER_CLASS = 'state--drag-hover'
 DRAGOFF_TIMEOUT  = 500
 
 window.PostEditor_Dragging =
+  getInitialState: ->
+    isDragging: false
+
+  componentDidMount: ->
+    @bindDragging()
+
+  componentWillUnmount: ->
+    @unbindDragging()
+
+  componentDidUpdate: ->
+    @updateDropZoneClass @state.isDragging
   dragOver:  ->
     clearTimeout @_dragLeaveTimer if @_dragLeaveTimer?
     @draggingOn()

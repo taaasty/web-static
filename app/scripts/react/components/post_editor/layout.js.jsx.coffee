@@ -7,6 +7,7 @@ IDS=
   quote: 18971004
 
 window.PostEditor_Layout = React.createClass
+  mixins:         [ReactActivitiesMixin]
   propTypes:
     entryId:      React.PropTypes.number.isRequired
     defaultType:  React.PropTypes.string
@@ -21,36 +22,47 @@ window.PostEditor_Layout = React.createClass
     entry:       null
     type:        @props.defaultType
     previewMode: false
-    isLoading:   false
 
   componentDidMount: ->
     entryId = IDS[@state.type]
     @loadEntry entryId #@props.entryId
 
   loadEntry: (entryId) ->
-    @setState entry: null, isLoading: true
+    @incrementAcitivities()
+    @setState entry: null
     $.ajax
       url:     Routes.api.entry_url(entryId)
       success: (data) =>
-        @setState entry: data, type: data.type , isLoading: false
+        @setState entry: data, type: data.type
       error:   (data) =>
         TastyNotifyController.errorResponse data
       complete: =>
-        @setState isLoading: false
+        @decrementAcitivities()
 
   handleHover: -> @setState isHover: true
 
+  goToEntryPage: (newEntry) ->
+    if window.TASTY_ENV=='development'
+      alert "Статья успешно сохранена"
+      window.location.reload()
+    else
+      _.defer =>
+        console.log 'goto', newEntry.entry_url
+        window.location.href = newEntry.entry_url
+
   render: ->
+
     if @state.entry?
+      opts =  ref: 'editor', entry: @state.entry, activitiesHandler: @activitiesHandler, doneCallback: @goToEntryPage
       switch @state.entry.type
         when 'text'
-          editor = PostEditor_TextEditor  entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading, ref: 'editor'
+          editor = PostEditor_TextEditor  opts
         when 'image'
-          editor = PostEditor_ImageEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading, ref: 'editor'
+          editor = PostEditor_ImageEditor opts
         when 'video'
-          editor = PostEditor_VideoEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading, ref: 'editor'
+          editor = PostEditor_VideoEditor opts
         when 'quote'
-          editor = PostEditor_QuoteEditor entry: @state.entry, isLoading: @state.isLoading, setLoading: @setLoading, ref: 'editor'
+          editor = PostEditor_QuoteEditor opts
         else
           console.error "Unknown entry type: #{@state.entry.type}"
       actions = PostActions
@@ -59,7 +71,7 @@ window.PostEditor_Layout = React.createClass
         previewMode:     @state.previewMode
         onChangePrivacy: @changePrivacy
         onPreview:       @togglePreview
-        isLoading:       @state.isLoading
+        isLoading:       @hasActivities()
         onSave:          @saveEntry
     else
       editor = `<div>Loading..</div>`
@@ -99,7 +111,6 @@ window.PostEditor_Layout = React.createClass
     else
       window.history.back()
 
-  setLoading: (isLoading) -> @setState isLoading: isLoading
   togglePreview: ->
     console.log 'preview toggle', !@state.previewMode
     @setState previewMode: !@state.previewMode

@@ -1,10 +1,10 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_TextEditor = React.createClass
-  mixins:    [PostEditor_PersistenceMixin]
+  mixins:    [PostEditor_PersistenceMixin, ReactActivitiesUser]
 
   render: ->
-    cx = React.addons.classSet post: true, 'post--text': true, 'post--edit': true, 'state--loading': @props.isLoading
+    cx = React.addons.classSet post: true, 'post--text': true, 'post--edit': true, 'state--loading': @hasActivities()
     `<article className={cx}>
       <header className="post__header">
         <TastyEditor placeholder="Заголовок (199 символов)"

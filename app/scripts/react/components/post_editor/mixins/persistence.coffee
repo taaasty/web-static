@@ -1,8 +1,8 @@
 window.PostEditor_PersistenceMixin =
   propTypes:
-    entry:       React.PropTypes.object.isRequired
-    setLoading:  React.PropTypes.func.isRequired
-    isLoading:   React.PropTypes.bool.isRequired
+    entry:             React.PropTypes.object.isRequired
+    activitiesHandler: React.PropTypes.object.isRequired
+    doneCallback:      React.PropTypes.func.isRequired
 
   savingUrl: ->
     if @props.entry.id?
@@ -17,19 +17,18 @@ window.PostEditor_PersistenceMixin =
       'POST'
 
   saveEntry: ->
-    @props.setLoading true
+    @incrementAcitivities()
     $.ajax
       url:     @savingUrl()
       method:  @savingMethod()
       data:    @data()
       success: (data) =>
-        @props.setLoading false
         @setState entry: data, type: data.type
-        _.defer =>
-          console.log 'goto', data.entry_url
-          window.location.href = data.entry_url unless window.TASTY_ENV=='development'
+        @props.doneCallback data
       error:   (data) =>
-        @props.setLoading false
+        console.log 'error'
         TastyNotifyController.errorResponse data
-
+      complete: =>
+        console.log 'complete'
+        @decrementAcitivities()
 

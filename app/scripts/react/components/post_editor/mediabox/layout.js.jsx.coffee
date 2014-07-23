@@ -5,7 +5,24 @@ window.MediaBox_Layout = React.createClass
   propTypes:
     children: React.PropTypes.renderable.isRequired
 
-    # null, insert, loaded, hidden, drag-hover
+    # loaded: - когда есть картинки
+    # - form, info: hidden
+    # - actions, display: show
+    #
+    # insert: - режим с формой для вставки
+    # - actions, form: show
+    # - info, action_rotate: hidden
+    #
+    # hidden: - все скрыто (не используется)
+    # - all hidden
+    #
+    # drag-hover
+    # - special border color
+    #
+    # null - по -умолчанию
+    # - display, actions: hidden
+    # - form, info: show
+    #
     state:    React.PropTypes.string
     type:     React.PropTypes.string.isRequired
 

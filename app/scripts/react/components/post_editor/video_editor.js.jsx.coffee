@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_VideoEditor = React.createClass
-  mixins:    [PostEditor_PersistenceMixin]
+  mixins:    [PostEditor_PersistenceMixin, ReactActivitiesUser]
 
   getInitialState: ->
     embedUrl:  @props.entry.video_url
@@ -9,7 +9,7 @@ window.PostEditor_VideoEditor = React.createClass
     title:     @props.entry.title
 
   render: ->
-    cx = React.addons.classSet post: true, 'post--video': true, 'post--edit': true, 'state--loading': @props.isLoading
+    cx = React.addons.classSet post: true, 'post--video': true, 'post--edit': true, 'state--loading': @hasActivities()
     `<article className={cx}>
       <div className="post__content">
         <VideoMediaBox onSuccessLoad={this.successLoaded}
@@ -28,4 +28,5 @@ window.PostEditor_VideoEditor = React.createClass
       title:     iframely.meta.description || iframely.meta.title
 
   data: ->
-    title: @refs.titleEditor.content()
+    title:     @refs.titleEditor.content()
+    video_url: @state.embedUrl
