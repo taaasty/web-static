@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-TARGET_POST_CLASS='.post'
+TARGET_POST_CLASS = '.post'
 
 window.CalendarTimeline = CalendarTimeline = React.createClass
 
@@ -9,7 +9,7 @@ window.CalendarTimeline = CalendarTimeline = React.createClass
     currentEntry: React.PropTypes.object
 
   componentDidMount: ->
-    @$post = $ TARGET_POST_CLASS
+    @$post = $(TARGET_POST_CLASS)
     @$periodsList = $( @refs.periodsList.getDOMNode() )
     @attachScrollSpy @$post, @$periodsList
 
@@ -29,10 +29,14 @@ window.CalendarTimeline = CalendarTimeline = React.createClass
   attachScrollSpy: ($post, $periodList) ->
     $post.waypoint
       handler: (direction) ->
-        activate = (target) ->
-          selector = 'a[data-target="' + '#' + target + '"]'
+        activate = ($target) ->
+          id = $target.data 'id'
+          selector = 'a[data-target="' + '#' + id + '"]'
+          momentDate = moment( $target.data('time') )
+
           $periodList.find('.active').removeClass 'active'
           $(selector).parent().addClass 'active'
+          PubSub.publish 'active_post:changed', momentDate
 
         # Обрабатываем только текущий пост, а не все, которые выше текщего scrollTop
         $el = $(@)
@@ -42,7 +46,7 @@ window.CalendarTimeline = CalendarTimeline = React.createClass
 
         if $elOffsetTopHeight >= scrollTop >= $elOffsetTop
           # Активируется пост
-          activate(@id)
+          activate($el)
 
         if direction is 'up' && $el.waypoint('prev').length > 0
           $prevEl = $( $el.waypoint('prev') )
@@ -51,7 +55,7 @@ window.CalendarTimeline = CalendarTimeline = React.createClass
 
           if $prevElOffsetTopAndHeight >= scrollTop >= $prevElOffsetTop
             # Активируется предыдущий пост
-            activate($prevEl.attr('id'))
+            activate($prevEl)
 
   dettachScrollSpy: -> @$post.waypoint 'destroy'
 
