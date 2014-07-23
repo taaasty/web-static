@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-TAERGET_POST_CLASS='.post'
+TARGET_POST_CLASS='.post'
 
 window.CalendarTimeline = CalendarTimeline = React.createClass
 
