@@ -112,6 +112,5 @@ window.PostEditor_Layout = React.createClass
       window.history.back()
 
   togglePreview: ->
-    console.log 'preview toggle', !@state.previewMode
     @setState previewMode: !@state.previewMode
 
