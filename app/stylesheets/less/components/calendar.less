@@ -18,18 +18,20 @@
   user-select: none;
   border-radius: (@calendar-height / 2);
   transition: width .3s ease-in-out;
-}
 
-.calendar li.active > a {
-  width: 7px;
-  height: 7px;
-  margin: -4px 0 0 -3px;
-  background-color: @calendar-active-marker;
-  z-index: @zindex-calendar;
+  li.active {
+    & > .calendar__period-marker {
+      width: 7px;
+      height: 7px;
+      margin: -4px 0 0 -3px;
+      background-color: @calendar-active-marker;
+      z-index: @zindex-calendar;
 
-  &:after,
-  &:before {
-    display: block;
+      &:after,
+      &:before {
+        display: block;
+      }
+    }
   }
 }
 

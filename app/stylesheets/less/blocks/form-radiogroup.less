@@ -1,0 +1,218 @@
+.form-radiogroup {
+  display: inline-block;
+  vertical-align: middle;
+  user-select: none;
+}
+
+// Types
+/** Dotted List **/
+.form-radiogroup--dotted-list {
+  .form-radio {
+    margin-left: 14px;
+    float: left;
+
+    &:first-child {
+      margin-left: 0;
+
+      &:before {
+        display: none;
+      }
+    }
+
+    &:before {
+      content: "\b7"; // Разделительная точка
+      margin-top: -.75em;
+      position: absolute;
+      top: 50%;
+      left: -9px;
+      font-size: 12px;
+      color: #888;
+      cursor: default;
+      pointer-events: none;
+
+    }
+  }
+
+  .form-radio--active {
+    color: @yellow;
+  }
+}
+
+/** Radiobuttons **/
+.form-radiogroup--radiobuttons {
+  .font-null();
+
+  .form-radio {
+    margin-right: 8px;
+    padding: 4px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+  }
+
+  .form-radio__inner {
+    border: 6px solid;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+  }
+
+  .form-radio__text {
+    display: none;
+  }
+
+  .form-radio--active {
+    border-color: @yellow;
+  }
+}
+
+/** Header Color **/
+.form-radiogroup--header-color {
+  .form-radio--black {
+    .form-radio__inner {
+      border-color: @black;
+      background-color: @black;
+    }
+  }
+
+  .form-radio--white {
+    .form-radio__inner {
+      border-color: @white;
+      background-color: @white;
+    }
+  }
+
+  .form-radio--black-on-white {
+    .form-radio__inner {
+      border-color: @white;
+      background-color: @black;
+    }
+  }
+
+  .form-radio--white-on-black {
+    .form-radio__inner {
+      border-color: @black;
+      background-color: @white;
+    }
+  }
+}
+
+/** Feed Color **/
+.form-radiogroup--feed-color {
+  .form-radio--white {
+    .form-radio__inner {
+      border-color: @white;
+      background-color: @black;
+    }
+  }
+
+  .form-radio--black {
+    .form-radio__inner {
+      border-color: @black;
+      background-color: @white;
+    }
+  }
+}
+
+/** Type Font **/
+.form-radiogroup--type-font {
+  font-size: 26px;
+  line-height: 1;
+  color: @white;
+
+  .form-radio {
+    margin-right: 20px;
+  }
+
+  .form-radio--active {
+    color: @yellow;
+  }
+
+  .form-radio--sans-serif {
+    font-family: @font-family-sans-serif;
+  }
+
+  .form-radio--serif {
+    font-family: @font-family-sans-serif;
+  }
+}
+
+/** Buttons **/
+.form-radiogroup--buttons {
+  font-size: 16px;
+
+  .form-radio {
+    height: 40px;
+    margin-left: 10px;
+    line-height: 41px;
+    border-radius: 4px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border: 1px solid;
+      opacity: .1;
+      border-radius: 4px;
+      transition: border-color .4s ease, opacity .4s ease;
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .form-radio:hover,
+  .form-radio--active {
+    color: @yellow;
+
+    &:before {
+      border: 1px solid @yellow;
+      opacity: .5;
+    }
+
+    .form-radio__box,
+    .form-radio__text {
+      opacity: 1;
+    }
+  }
+
+  .form-radio__inner {
+    padding: 0 12px;
+    display: inline;
+  }
+
+  .form-radio__box {
+    margin-right: 4px;
+    position: relative;
+    top: -2px;
+    line-height: 1;
+    font-family: @icons-name;
+    vertical-align: middle;
+    opacity: .5;
+    transition: opacity .4s ease;
+  }
+
+  .form-radio__text {
+    opacity: .5;
+    transition: opacity .4s ease;
+  }
+
+  .form-radio--regular {
+    .form-radio__box {
+      &:before {
+        content: "B"; // TODO: Когда будем использовать, нужно поправить на правильную иконку
+      }
+    }
+  }
+
+  .form-radio--tlogoday {
+    .form-radio__box {
+      &:before {
+        content: "F"; // TODO: Когда будем использовать, нужно поправить на правильную иконку
+      }
+    }
+  }
+}

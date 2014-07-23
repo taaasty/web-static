@@ -1,0 +1,89 @@
+// Constrain
+.layout-constrain {
+  width: @layout-constrain-width;
+  margin: 0 auto;
+}
+
+// Page
+.page {
+  min-width: @page-min-width;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  padding-top: 0;
+  position: relative;
+  .transition(~"padding-top .4s ease");
+}
+
+.page__inner {
+  padding: 0 0 34px;
+}
+
+// Page Cover
+.page-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-repeat: repeat;
+  background-position: 0 0;
+  background-attachment: fixed;
+  z-index: @zindex-page-cover;
+  transition: opacity .3s ease, visibility 0s ease;
+}
+
+// Page Header
+.page-header {
+  position: relative;
+}
+
+// Page Body
+.page-body {
+  position: relative;
+  font-family: @font-family-serif;
+  z-index: @zindex-page-body;
+
+  a {
+    color: inherit;
+
+    &:hover {
+      opacity: .7;
+    }
+  }
+}
+
+.page-body__content {
+  position: relative;
+}
+
+.page-body__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: @white;
+  z-index: @zindex-page-body-bg;
+  border-radius: @page-body-border-radius;
+}
+
+.page-body__inner {
+  padding: @page-body-padding-vertical @page-body-padding-horizontal;
+  position: relative;
+  z-index: @zindex-page-body-inner;
+
+  .alert {
+    margin: 0 -@page-body-padding-horizontal @page-body-padding-vertical;
+
+    &:first-child {
+      margin-top: -@page-body-padding-vertical;
+      border-radius: @page-body-border-radius @page-body-border-radius 0 0;
+    }
+  }
+}
+
+// Page Loader
+.page-loader {
+  text-align: center;
+}
