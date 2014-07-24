@@ -68,9 +68,10 @@ window.Calendar = Calendar = React.createClass
         scrollTop = $(document).scrollTop()
         $el = $(@)
         $elTop = $el.offset().top
-        $elTopWithHeight = $elTop + $el.outerHeight(true)
+        $elTopWithHeight = $elTop + $el.outerHeight()
 
         console.info "Пост с id = #{$el.data('id')}, движение #{direction}"
+        console.log $elTopWithHeight, scrollTop, $elTop, "движение #{direction}"
 
         if $elTopWithHeight >= scrollTop >= $elTop
           # Активируется пост
@@ -81,6 +82,7 @@ window.Calendar = Calendar = React.createClass
           $prevElTop = $prevEl.offset().top
           $prevElTopWithHeight = $prevElTop + $prevEl.outerHeight(true)
 
+          console.log $prevElTopWithHeight, scrollTop, $prevElTop, "движение #{direction}"
           if $prevElTopWithHeight >= scrollTop >= $prevElTop
             # Активируется предыдущий пост
             that.updateSelectedEntry $prevEl.data('id'), $prevEl.data('time')
