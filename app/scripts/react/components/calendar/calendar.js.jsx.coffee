@@ -13,14 +13,16 @@ window.Calendar = Calendar = React.createClass
     tlogId:   React.PropTypes.number.isRequired
 
   getInitialState: ->
-    calendar:   null
-    open:       CALENDAR_CLOSED
-    headerDate: if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
-    activePost: @props.entry?.id ? null
+    calendar:       null
+    open:           CALENDAR_CLOSED
+    headerDate:     if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
+    activePost:     @props.entry?.id ? null
+    visibleMarkers: null
 
   componentDidMount: ->
     @getCalendarFromServer @props.tlogId
     @attachScrollSpy()
+    @setVisibleMarkers()
 
   componentWillUnmount: -> @dettachScrollSpy()
 
@@ -30,9 +32,10 @@ window.Calendar = Calendar = React.createClass
 
     if @isOpen()
       if @state.calendar
-        children = `<CalendarTimeline activePost={ this.state.activePost }
+        children = `<CalendarTimeline visibleMarkers={ this.state.visibleMarkers }
+                                      activePost={ this.state.activePost }
                                       currentEntry={ this.props.entry }
-                                      periods={ this.state.calendar.periods }></CalendarTimeline>`
+                                      periods={ this.state.calendar.periods } />`
       else
         children = 'Loading..'
 
@@ -78,15 +81,21 @@ window.Calendar = Calendar = React.createClass
             # Активируется предыдущий пост
             that.updateCurrentPost $prevEl.data('id'), $prevEl.data('time')
 
+  dettachScrollSpy: ->
+    $post = $(TARGET_POST_CLASS)
+    $post.waypoint 'destroy'
+
   updateCurrentPost: (id, time) ->
     date = moment(time)
     console.info "Активируется пост с id = #{id}, и time = #{time}"
 
     @setState headerDate: date, activePost: id
 
-  dettachScrollSpy: ->
-    $post = $(TARGET_POST_CLASS)
-    $post.waypoint 'destroy'
+  setVisibleMarkers: ->
+    $post   = $(TARGET_POST_CLASS)
+    markers = []
+    $post.each -> markers.push parseInt(@dataset.id)
+    @setState visibleMarkers: markers
 
   onMouseEnter: ->
     if @state.open == CALENDAR_CLOSED
