@@ -27,7 +27,12 @@ window.Calendar = Calendar = React.createClass
   componentWillUnmount: -> @dettachScrollSpy()
 
   render: ->
-    calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @isOpen(), 'calendar--closed': !@isOpen()
+    calendarClasses = React.addons.classSet {
+      calendar: true
+      'calendar--open': @isOpen()
+      'calendar--closed': !@isOpen()
+      'calendar--opened-by-click': @isOpenedByClick()
+    }
     children = `<CalendarHeader date={ this.state.headerDate } />`
 
     if @isOpen()
@@ -113,5 +118,7 @@ window.Calendar = Calendar = React.createClass
       else console.error? "Unknown state.open", @state.open
 
   isOpen: -> @state.open != CALENDAR_CLOSED
+
+  isOpenedByClick: -> @state.open == CALENDAR_OPENED_BY_CLICK
 
 module.exports = Calendar
