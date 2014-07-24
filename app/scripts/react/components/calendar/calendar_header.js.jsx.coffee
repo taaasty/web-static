@@ -9,6 +9,9 @@ window.CalendarHeader = CalendarHeader = React.createClass
     day  = @props.date.format 'D'
     info = @props.date.format('D MMMM <br/> dddd<br/> LT').slice 2
 
+    if moment().year() != @props.date.year()
+      info = @props.date.format('D MMMM YYYY<br/> dddd<br/> LT').slice 2
+
     return `<div className="calendar__date">
               <div className="calendar__date-day">{ day }</div>
               <div className="calendar__date-info"

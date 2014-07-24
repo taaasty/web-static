@@ -13,9 +13,11 @@ window.Calendar = Calendar = React.createClass
     tlogId:   React.PropTypes.number.isRequired
 
   getInitialState: ->
+    firstPostDate = parseInt($(TARGET_POST_CLASS).get(0).dataset.time)
+
     calendar:        null
     currentState:    CALENDAR_CLOSED
-    headerDate:      if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
+    headerDate:      moment( if @props.entry?.created_at then @props.entry.created_at else firstPostDate )
     selectedEntryId: @props.entry?.id ? null
     visibleMarkers:  null
 
@@ -44,12 +46,15 @@ window.Calendar = Calendar = React.createClass
       else
         children = 'Loading..'
 
-    return `<nav onClick={this.onClick}
-                 onMouseEnter={this.onMouseEnter}
-                 onMouseLeave={this.onMouseLeave}
-                 className={ calendarClasses }>
-              { children }
-            </nav>`
+    if @state.calendar?.periods.length > 0
+      return `<nav onClick={this.onClick}
+                   onMouseEnter={this.onMouseEnter}
+                   onMouseLeave={this.onMouseLeave}
+                   className={ calendarClasses }>
+                { children }
+              </nav>`
+    else
+      return `<div></div>`
 
   getCalendarFromServer: (tlogId) ->
     $.ajax
