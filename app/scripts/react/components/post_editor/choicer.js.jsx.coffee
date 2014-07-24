@@ -28,20 +28,24 @@ window.PostEditorChoicer = React.createClass
     onChangeType: React.PropTypes.func
 
   render: ->
-    onSelect = (type) => @props.onChangeType type
     cx = React.addons.classSet 'nav-types': true, 'state--loading': !@props.currentType?
 
-    items = CHOICER_TYPES.map (type) =>
-      c = CHOICER_ITEMS[type]
-      PostEditorChoicerItem
-        key:      type
-        title:    c.title
-        icon:     c.icon
-        onClick:  onSelect.bind(@,type)
-        isActive: @props.currentType==type
+    if @props.onChangeType?
+      items = CHOICER_TYPES.map (type) => @getItemForType type
+    else
+      items = @getItemForType(@props.currentType)
 
     `<nav className={cx}>{items}</nav>`
 
+  getItemForType: (type) ->
+    onSelect = (type) => @props.onChangeType? type
+    c = CHOICER_ITEMS[type]
+    PostEditorChoicerItem
+      key:      type
+      title:    c.title
+      icon:     c.icon
+      onClick:  onSelect.bind(@,type)
+      isActive: @props.currentType==type
 
 
 window.PostEditorChoicerItem = React.createClass

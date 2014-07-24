@@ -17,5 +17,3 @@ window.PostEditor_EditPost = React.createClass
     entryPrivacy: props.entry?.privacy || 'public'
     entryType:    props.entry?.type || 'text'
     entry:        props.entry
-
-  #changeType:     (type) -> alert "Can't change type of existen entry'
