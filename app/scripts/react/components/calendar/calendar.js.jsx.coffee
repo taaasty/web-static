@@ -13,7 +13,7 @@ window.Calendar = Calendar = React.createClass
     tlogId:   React.PropTypes.number.isRequired
 
   getInitialState: ->
-    firstPostDate = parseInt($(TARGET_POST_CLASS).get(0).dataset.time)
+    firstPostDate = $(TARGET_POST_CLASS).get(0).dataset.time
 
     calendar:        null
     currentState:    CALENDAR_CLOSED
