@@ -4,6 +4,28 @@
   .state--hidden {
     display: none;
   }
+
+  blockquote {
+    border-left: 2px solid black;
+    padding-left: 10px;
+  }
+
+  ul {
+    li {
+      list-style-type: disc;
+    }
+  }
+
+  ol {
+    li {
+      list-style-type: decimal;
+    }
+  }
+
+  & > .image {
+    margin-left: 0px;
+    margin-right: -136px;
+  }
 }
 
 .tasty-editor-toolbar {
@@ -106,4 +128,10 @@
 .tasty-editor-content {
   min-height: 1em;
   .selection(@tasty-editor-content-selection-bg);
+}
+
+.mtasty-editor {
+  a {
+    text-decoration: underline;
+  }
 }

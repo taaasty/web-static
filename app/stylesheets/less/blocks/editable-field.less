@@ -30,6 +30,9 @@
   line-height: 23px;
   opacity: 0;
   transition: visibility 0s ease .3s, opacity .3s ease;
+
+  visibility: visible; // overrides
+  opacity: 1; // overrides
 }
 
 .editable-field__control {
@@ -61,6 +64,8 @@
 .editable-field__placeholder {
   display: none;
   opacity: .3;
+
+  display: inline; // overrides
 }
 
 .editable-field__value {
@@ -68,6 +73,8 @@
   white-space: pre-wrap;
   word-wrap: break-word;
   opacity: .6;
+
+  display: inline; // overrides
 }
 
 .editable-field__button {

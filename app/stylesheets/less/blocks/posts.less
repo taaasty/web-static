@@ -24,6 +24,10 @@
     &:hover {
       opacity: .7;
     }
+
+    &.post__link {
+      text-decoration: underline
+    }
   }
 }
 
@@ -76,7 +80,7 @@
 
   // Видео в посте
   .video {
-    height: @video-height;
+    height: auto;
     margin-right: -@page-body-padding-horizontal;
     margin-left: -@page-body-padding-horizontal;
   }
@@ -219,6 +223,8 @@
 
 // Блок с картинкой
 .image {
+  text-align: center;
+
   img {
     width: 100%;
     height: auto;
