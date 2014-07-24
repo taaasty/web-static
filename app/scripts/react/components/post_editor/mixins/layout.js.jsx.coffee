@@ -17,6 +17,14 @@ window.PostEditor_LayoutMixin =
   onChanging: ->
     @setState isChanged: true
 
+  getChangeTypeCallback: ->
+    if @props.onChangeType?
+      return @props.onChangeType
+    else if @changeType?
+      return @changeType
+    else
+      return null
+
   render: ->
     `<PostEditor_Layout backUrl={this.props.backUrl}>
       <PostActions entryPrivacy={this.state.entryPrivacy}
@@ -33,10 +41,13 @@ window.PostEditor_LayoutMixin =
 
         <PostEditor_EditorContainer ref='editorContainer'
                                     entry={this.state.entry}
+                                    entryType={this.state.entryType}
                                     onChanging={this.onChanging}
                                     activitiesHandler={this.activitiesHandler} />
 
-        <PostEditorChoicer currentType={this.state.entryType} onChangeType={this.changeType} />
+        <PostEditorChoicer currentType={this.state.entryType} onChangeType={this.getChangeTypeCallback()} />
 
      </PostEditor_Layout>`
+
+
 

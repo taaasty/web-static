@@ -8,8 +8,14 @@ window.PostEditor_EditPost = React.createClass
     onChangeType: React.PropTypes.func
 
   getInitialState: ->
-    entryPrivacy: @props.entry.privacy
-    entryType:    @props.entry.type
-    entry:        @props.entry
+    @stateFromProps @props
+
+  componentWillReceiveProps: (nextProps) ->
+    @setState @stateFromProps(nextProps)
+
+  stateFromProps: (props) ->
+    entryPrivacy: props.entry?.privacy || 'public'
+    entryType:    props.entry?.type || 'text'
+    entry:        props.entry
 
   #changeType:     (type) -> alert "Can't change type of existen entry'

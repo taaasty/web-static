@@ -36,11 +36,28 @@ window.PostEditor_Demo = React.createClass
     @setState entryType: type
     @loadEntry DEMO_IDS[type]
 
+  fallback: ->
+    console.log 'fallback'
+
   render: ->
+    console.log 'demo', @state.entry
     if @state.entry?
       `<PostEditor_EditPost backUrl={this.props.backUrl} entry={this.state.entry} onChangeType={this.changeType}/>`
     else
       `<PostEditor_Layout backUrl={this.props.backUrl}>
-          <div>Loading demo posts..</div>
-       </PostEditor_Layout>`
+          <PostActions entryPrivacy='public'
+                     onChangePrivacy={this.fallback}
+
+                     isTlogPrivate={false}
+
+                     previewMode={false}
+                     onPreview={this.fallback}
+
+                     isLoading={false}
+
+                     onSave={this.fallback} />
+                     <div>Loading demo posts..</div>
+
+          <PostEditorChoicer currentType={this.state.entryType} onChangeType={this.changeType} />
+        </PostEditor_Layout>`
 

@@ -4,10 +4,14 @@ window.PostEditor_EditorContainer = React.createClass
   mixins:         [ReactActivitiesUser]
   propTypes:
     entry:         React.PropTypes.object.isRequired
+    entryType:     React.PropTypes.string.isRequired
     onChanging:    React.PropTypes.func.isRequired
 
   render: ->
-    `<section className="posts posts--edit">{this.editorComponent()}</section>`
+    if @props.entry?
+      `<section className="posts posts--edit">{this.editorComponent()}</section>`
+    else
+      `<div>No entry to edit</div>`
 
   editorComponent: ->
     opts =
@@ -17,7 +21,7 @@ window.PostEditor_EditorContainer = React.createClass
       doneCallback:      @goToEntryPage
       onChanging:        @props.onChanging
 
-    switch @props.entry.type
+    switch @props.entryType
       when 'text'
         editor = PostEditor_TextEditor  opts
       when 'image'
@@ -27,7 +31,7 @@ window.PostEditor_EditorContainer = React.createClass
       when 'quote'
         editor = PostEditor_QuoteEditor opts
       else
-        console.error "Unknown entry type: #{@props.entry.type}"
+        console.error "Unknown entry type: #{@props.entryType}"
 
   saveEntry: -> @refs.editor.saveEntry()
 
