@@ -109,7 +109,7 @@ window.Calendar = Calendar = React.createClass
     switch @state.open
       when CALENDAR_CLOSED          then @setState open: CALENDAR_OPENED_BY_CLICK
       when CALENDAR_OPENED_BY_CLICK then @setState open: CALENDAR_CLOSED
-      when CALENDAR_OPENED_BY_HOVER then @setState open: CALENDAR_CLOSED
+      when CALENDAR_OPENED_BY_HOVER then @setState open: CALENDAR_OPENED_BY_CLICK
       else console.error? "Unknown state.open", @state.open
 
   isOpen: -> @state.open != CALENDAR_CLOSED
