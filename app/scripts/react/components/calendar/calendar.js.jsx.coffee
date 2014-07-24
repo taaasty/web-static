@@ -60,6 +60,8 @@ window.Calendar = Calendar = React.createClass
       $elTop = $el.offset().top
       $elTopWithHeight = $elTop + $el.outerHeight(true)
 
+      console.info "Пост с id = #{$el.data('id')}, движение #{direction}"
+
       if $elTopWithHeight >= scrollTop >= $elTop
         # Активируется пост
         that.updateCurrentPost $el.data('id'), $el.data('time')
@@ -75,7 +77,7 @@ window.Calendar = Calendar = React.createClass
 
   updateCurrentPost: (id, time) ->
     date = moment(time)
-
+    console.info "Активируется пост с id = #{id}, и time = #{time}"
     # Если на странице один пост, то стейт не будет обновляться, так как этот
     # пост стоит по-умолчанию
     unless @state.headerDate.toString() == date.toString() &&
