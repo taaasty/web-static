@@ -9,11 +9,9 @@ window.CalendarMarker = CalendarMarker = React.createClass
     selected:    React.PropTypes.bool.isRequired
     highlighted: React.PropTypes.bool.isRequired
 
-  getPercentValueOfDay: (day) ->
-    (day * parseInt(100, 10) / parseInt(365, 10)).toFixed(2) + '%'
-
-  getNumberOfRecords: (number) ->
-    number + ' ' + @declension(number, ['комментарий', 'комментария', 'комментариев'])
+  shouldComponentUpdate: (nextProps) ->
+    nextProps.selected != @props.selected ||
+    nextProps.marker.entry_id != @props.marker.entry_id
 
   render: ->
     records = @getNumberOfRecords @props.marker.comments_count
@@ -33,5 +31,11 @@ window.CalendarMarker = CalendarMarker = React.createClass
                    data-marker-rows={ records }
                    className={ markerClasses }
                    style={{ left: leftIndent }}></a></li>`
+
+  getPercentValueOfDay: (day) ->
+    (day * parseInt(100, 10) / parseInt(365, 10)).toFixed(2) + '%'
+
+  getNumberOfRecords: (number) ->
+    number + ' ' + @declension(number, ['комментарий', 'комментария', 'комментариев'])
 
 module.exports = CalendarMarker
