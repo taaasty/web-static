@@ -74,7 +74,7 @@ window.Calendar = Calendar = React.createClass
         scrollTop = $(document).scrollTop()
         $el = $(@)
         $elTop = $el.offset().top
-        $elTopWithHeight = $elTop + $el.outerHeight()
+        $elTopWithHeight = $elTop + $el.outerHeight(true)
 
         console.info "Пост с id = #{$el.data('id')}, движение #{direction}"
         console.log $elTopWithHeight, scrollTop, $elTop, "движение #{direction}"
