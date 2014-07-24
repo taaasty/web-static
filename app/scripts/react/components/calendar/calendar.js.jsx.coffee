@@ -46,12 +46,15 @@ window.Calendar = Calendar = React.createClass
       else
         children = 'Loading..'
 
-    return `<nav onClick={this.onClick}
-                 onMouseEnter={this.onMouseEnter}
-                 onMouseLeave={this.onMouseLeave}
-                 className={ calendarClasses }>
-              { children }
-            </nav>`
+    if @state.calendar?.periods.length > 0
+      return `<nav onClick={this.onClick}
+                   onMouseEnter={this.onMouseEnter}
+                   onMouseLeave={this.onMouseLeave}
+                   className={ calendarClasses }>
+                { children }
+              </nav>`
+    else
+      return `<div></div>`
 
   getCalendarFromServer: (tlogId) ->
     $.ajax
