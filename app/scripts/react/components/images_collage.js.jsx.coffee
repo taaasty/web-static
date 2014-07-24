@@ -43,6 +43,9 @@ window.ImagesCollage = React.createClass
     @setState width: $(@getDOMNode()).width()
     @loadImages @props.images
 
+  componentDidUpdate: ->
+    @setState width: $(@getDOMNode()).width()
+
   #loadImagesByUrl: ->
     #imageElements = @props.imageUrls.map (src) =>
       #image = new Image src: src

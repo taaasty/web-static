@@ -30,7 +30,7 @@ module.experts = window.RelationshipFollowingButton = React.createClass
     else
       rootClass  = ''
 
-    return `<button className={"button follow-button button--small " + rootClass}
+    return `<button className={"follow-button " + rootClass}
                   onClick={this.handleClick}
                   onMouseOver={this.handleHover}
                   onMouseLeave={this.handleBlur}>

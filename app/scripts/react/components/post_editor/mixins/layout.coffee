@@ -1,39 +1,39 @@
+###* @jsx React.DOM ###
+
 window.PostEditor_LayoutMixin =
-  goToEntryPage: (newEntry) ->
-    if window.TASTY_ENV=='development'
-      alert "Статья успешно сохранена"
-      window.location.reload()
-    else
-      @setState isGoing: true
-      _.defer =>
-        TastyNotifyController.notifySuccess 'Опубликовано! Переходим на страницу поста..'
-        console.log 'goto', newEntry.entry_url
-        window.location.href = newEntry.entry_url
+  propTypes:
+    isTlogPrivate: React.PropTypes.bool
 
-  editorComponent: ->
-    opts =
-      ref:               'editor'
-      entry:             @state.entry
-      activitiesHandler: @activitiesHandler
-      doneCallback:      @goToEntryPage
+  getDefaultProps: ->
+    isTlogPrivate:  false
 
-    switch @state.entry.type
-      when 'text'
-        editor = PostEditor_TextEditor  opts
-      when 'image'
-        editor = PostEditor_ImageEditor opts
-      when 'video'
-        editor = PostEditor_VideoEditor opts
-      when 'quote'
-        editor = PostEditor_QuoteEditor opts
-      else
-        console.error "Unknown entry type: #{@state.entry.type}"
+  getInitialState: ->
+    previewMode:  false
 
-  changePrivacy: (value)->
-    entry = @state.entry
-    entry.privacy = value
-    @setState entry: entry
+  togglePreview: -> @setState previewMode: !@state.previewMode
+  saveEntry:     -> @refs.editorContainer.saveEntry entryPrivacy: @state.entryPrivacy
+  changePrivacy: (value) -> @setState entryPrivacy: value
 
-  togglePreview: ->
-    @setState previewMode: !@state.previewMode
+  render: ->
+    console.log @hasActivities()
+    `<PostEditor_Layout backUrl={this.props.backUrl}>
+      <PostActions entryPrivacy={this.state.entryPrivacy}
+                   onChangePrivacy={this.changePrivacy}
+
+                   isTlogPrivate={this.props.isTlogPrivate}
+
+                   previewMode={this.state.previewMode}
+                   onPreview={this.togglePreview}
+
+                   isLoading={this.hasActivities()}
+
+                   onSave={this.saveEntry} />
+
+        <PostEditor_EditorContainer ref='editorContainer'
+                                    entry={this.state.entry}
+                                    activitiesHandler={this.activitiesHandler} />
+
+        <PostEditorChoicer currentType={this.state.entryType} onChangeType={this.changeType} />
+
+     </PostEditor_Layout>`
 

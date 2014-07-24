@@ -6,7 +6,7 @@ STATE_INSERT  = 'insert'
 STATE_LOADING  = 'loading'
 
 window.VideoMediaBox = React.createClass
-  mixins: [RequesterMixin]
+  mixins: [ReactActivitiesUser, RequesterMixin]
 
   propTypes:
     onSuccessLoad: React.PropTypes.func.isRequired
@@ -17,9 +17,6 @@ window.VideoMediaBox = React.createClass
     embedUrl:  @props.embedUrl
     embedHtml: @props.embedHtml
     current:   @_defaultState()
-
-  componendWillUnmount: ->
-    @abortActiveRequests()
 
   render: ->
     switch @state.current
@@ -37,6 +34,8 @@ window.VideoMediaBox = React.createClass
   loadEmbed: (embedUrl) ->
     @setState embedUrl: embedUrl, embedHtml: null, current: STATE_LOADING
 
+    @incrementActivities()
+
     @createRequest
       url: Routes.api.iframely_url()
       method: 'POST'
@@ -49,6 +48,8 @@ window.VideoMediaBox = React.createClass
       error: (response) =>
         TastyNotifyController.errorResponse response
         @safeUpdateState => @setState @getInitialState()
+      complete: =>
+        @decrementActivities()
 
 
   cleanEmbed: ->
@@ -58,8 +59,7 @@ window.VideoMediaBox = React.createClass
     @setState current: STATE_WELCOME
 
   _defaultState: ->
-    if @props.videoUrl?
-      STATE_WELCOME
-    else
+    if @props.embedHtml?
       STATE_EMBEDED
-
+    else
+      STATE_WELCOME

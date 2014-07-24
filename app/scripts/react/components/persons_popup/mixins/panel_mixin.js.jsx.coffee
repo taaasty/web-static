@@ -25,8 +25,6 @@ window.PersonsPopup_PanelMixin =
 
     @getPanelData()
 
-  componentWillUnmount: -> @abortActiveRequests()
-
   getPanelData: ->
     console.error 'getPanelData when xhr' if @xhr?
     @incrementActivities()

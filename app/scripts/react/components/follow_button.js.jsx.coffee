@@ -21,7 +21,7 @@ module.experts = window.FollowButton = React.createClass
     if @state.relationship?
       `<RelationshipFollowingButton relationship={this.state.relationship} />`
     else
-      `<button className="button follow-button button--small">{this.title()}</button>`
+      `<button className="follow-button">{this.title()}</button>`
 
   title: ->
     if @state.isError

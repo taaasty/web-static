@@ -9,6 +9,14 @@ window.PostEditor_ImagesForm=
   componentDidMount: ->
     @prepareForm()
 
+  # Похоже fileupload криво дестроится
+  # и потом не привязывается и input не ловит файлы/
+  #
+  #componentWillUnmount: ->
+    #console.log 'images form will unmount'
+    #$form = $ @refs.form.getDOMNode()
+    #$form.fileupload 'destory'
+
   saveEntry: ->
     if @fileUploader
       @fileUploader.submit()
@@ -18,6 +26,8 @@ window.PostEditor_ImagesForm=
 
   prepareForm: ->
     $form = $ @refs.form.getDOMNode()
+
+    #fileInput = @refs.welcome.refs.input.getDOMNode()
 
     @fileUploader = null
 
@@ -31,10 +41,12 @@ window.PostEditor_ImagesForm=
       singleFileUploads: false
       autoUpload:        false
       replaceFileInput:  false
-      fileInput:             @refs.welcome.refs.input.getDOMNode()
+      #fileInput:         fileInput
       start: =>
+        console.log 'start'
         @incrementActivities()
       stop: =>
+        console.log 'stop'
         @decrementActivities()
         @setState uploadingProgress: 0
       

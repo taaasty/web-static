@@ -1,5 +1,7 @@
 ###* @jsx React.DOM ###
-#
+
+window.PostEditor_NewDemo = window.PostEditor_NewPost
+
 DEMO_IDS=
   text:  18971012
   video: 18970969
@@ -9,17 +11,13 @@ DEMO_IDS=
 window.PostEditor_Demo = React.createClass
   mixins:         [ReactActivitiesMixin]
 
-  getDefaultProps: ->
-    isTlogPrivate:  false
-    #defaultPrivacy: 'public'
-
   getInitialState: ->
-    entryType: 'text'
-    entry: null
+    entryPrivacy: 'public'
+    entryType:    'text'
+    entry:        null
 
   componentDidMount: ->
-    entryId = DEMO_IDS[@state.entryType]
-    @loadEntry entryId
+    @loadEntry DEMO_IDS[@state.entryType]
 
   loadEntry: (entryId) ->
     @incrementActivities()
@@ -27,7 +25,7 @@ window.PostEditor_Demo = React.createClass
     $.ajax
       url:     Routes.api.entry_url(entryId)
       success: (data) =>
-        @setState entry: data, type: data.type
+        @setState entry: data, entryType: data.type, entryPrivacy: data.privacy
       error:   (data) =>
         TastyNotifyController.errorResponse data
       complete: =>
@@ -40,16 +38,9 @@ window.PostEditor_Demo = React.createClass
 
   render: ->
     if @state.entry?
-      `<PostEditor_Layout backUrl={this.props.backUrl} showChoicer={true} entryType={this.state.entryType} onChangeType={this.changeType}>
-          <PostEditor_EditorContainer entry={this.state.entry} isTlogPrivate={this.props.isTlogPrivate} />
-       </PostEditor_Layout>`
+      `<PostEditor_EditPost backUrl={this.props.backUrl} entry={this.state.entry} onChangeType={this.changeType}/>`
     else
-      `<div>Loading demo posts..</div>`
-    #actions = PostActions
-      #privacy:         @props.entry.privacy
-      #isTlogPrivate:   @props.isTlogPrivate
-      #previewMode:     false
-      #onChangePrivacy: @changePrivacy
-      #onPreview:       @togglePreview
-      #onSave:          @saveEntry
-      #isLoading:       true
+      `<PostEditor_Layout backUrl={this.props.backUrl}>
+          <div>Loading demo posts..</div>
+       </PostEditor_Layout>`
+

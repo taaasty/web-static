@@ -5,7 +5,7 @@ window.PostEditor_VideoEditor = React.createClass
 
   getInitialState: ->
     embedUrl:  @props.entry.video_url
-    embedHtml: @props.entry.iframely.html
+    embedHtml: @props.entry.iframely?.html
     title:     @props.entry.title
 
   render: ->
@@ -13,6 +13,7 @@ window.PostEditor_VideoEditor = React.createClass
     `<article className={cx}>
       <div className="post__content">
         <VideoMediaBox onSuccessLoad={this.successLoaded}
+                       activitiesHandler={this.activitiesHandler}
                        embedUrl={this.state.embedUrl}
                        embedHtml={this.state.embedHtml}/>
         <TastyEditor placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"

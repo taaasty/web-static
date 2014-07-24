@@ -36,6 +36,10 @@ window.PostEditor_ImageEditor = React.createClass
 
     mediaBoxContent = []
 
+    #console.log 'image editor activities:', @hasActivities()
+    #console.log 'image editor state:', mediaBoxState
+    #console.log 'image editor images:', this.state.images
+
     #if mediaBoxState == 'loaded'
     onDelete = @clearImages
 

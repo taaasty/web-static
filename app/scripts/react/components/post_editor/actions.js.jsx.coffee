@@ -15,7 +15,7 @@ PREVIEW_BODY_CLASSES =  { true:  'tlog-mode-full', false: 'tlog-mode-minimal' }
 
 window.PostActions = React.createClass
   propTypes:
-    privacy:         React.PropTypes.string.isRequired
+    entryPrivacy:    React.PropTypes.string.isRequired
     isTlogPrivate:   React.PropTypes.bool.isRequired
     onChangePrivacy: React.PropTypes.func.isRequired
     onPreview:       React.PropTypes.func.isRequired
@@ -27,7 +27,7 @@ window.PostActions = React.createClass
     @props.onChangePrivacy(key)
 
   privacy: ->
-    @props.privacy
+    @props.entryPrivacy
 
   componentWillUpdate: (nextProps, nextState) ->
     $("body").removeClass PREVIEW_BODY_CLASSES[@props.previewMode]

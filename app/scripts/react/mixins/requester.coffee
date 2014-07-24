@@ -18,6 +18,7 @@ window.RequesterMixin =
     @_activeRequests.splice index, 1 if index > -1
 
   abortActiveRequests: ->
+    return unless @_activeRequests
     @_activeRequests.map (jqXHR) -> jqXHR.abort()
     @_activeRequests = []
 
@@ -29,6 +30,9 @@ window.RequesterMixin =
       return
 
     func()
+
+
+  componentWillUnmount: -> @abortActiveRequests()
 
 # Варианты ajax-ных либок:
 #  https://github.com/ded/reqwest

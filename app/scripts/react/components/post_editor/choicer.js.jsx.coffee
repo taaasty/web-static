@@ -5,32 +5,42 @@ POST_TYPE_QUOTE='quote'
 POST_TYPE_IMAGE='image'
 POST_TYPE_TEXT='text'
 
+CHOICER_TYPES=['text','image','video','quote']
+CHOICER_ITEMS =
+  text:
+    title: 'Текст'
+    icon:  'icon--text-circle'
+  image:
+    title: 'Картинка'
+    icon:  'icon--image-circle'
+  video:
+    title: 'Видео'
+    icon:  'icon--video-circle'
+  quote:
+    title: 'Цитата'
+    icon:  'icon--quote-circle'
+
+  
+
 window.PostEditorChoicer = React.createClass
   propTypes:
     currentType:  React.PropTypes.string.isRequired
-    onChangeType: React.PropTypes.func.isRequired
+    onChangeType: React.PropTypes.func
 
   render: ->
     onSelect = (type) => @props.onChangeType type
     cx = React.addons.classSet 'nav-types': true, 'state--loading': !@props.currentType?
 
-    `<nav className={cx}>
-      <PostEditorChoicerItem title="Текст" icon='icon--text-circle'     
-          onClick={onSelect.bind(this,POST_TYPE_TEXT)}
-          isActive={this.props.currentType==POST_TYPE_TEXT} />
+    items = CHOICER_TYPES.map (type) =>
+      c = CHOICER_ITEMS[type]
+      PostEditorChoicerItem
+        key:      type
+        title:    c.title
+        icon:     c.icon
+        onClick:  onSelect.bind(@,type)
+        isActive: @props.currentType==type
 
-      <PostEditorChoicerItem title="Картинка" icon='icon--image-circle' 
-          onClick={onSelect.bind(this,POST_TYPE_IMAGE)}
-          isActive={this.props.currentType==POST_TYPE_IMAGE} />
-
-      <PostEditorChoicerItem title="Видео" icon='icon--video-circle'    
-          onClick={onSelect.bind(this,POST_TYPE_VIDEO)}
-          isActive={this.props.currentType==POST_TYPE_VIDEO} />
-
-      <PostEditorChoicerItem title="Цитата" icon='icon--quote-circle'
-          onClick={onSelect.bind(this,POST_TYPE_QUOTE)}
-          isActive={this.props.currentType==POST_TYPE_QUOTE} />
-    </nav>`
+    `<nav className={cx}>{items}</nav>`
 
 
 

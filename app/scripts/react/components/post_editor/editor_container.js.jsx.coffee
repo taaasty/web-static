@@ -1,35 +1,44 @@
 ###* @jsx React.DOM ###
 #
 window.PostEditor_EditorContainer = React.createClass
-  mixins:         [PostEditor_LayoutMixin, ReactActivitiesMixin]
+  mixins:         [ReactActivitiesUser]
   propTypes:
-    backUrl:       React.PropTypes.string
-    isTlogPrivate: React.PropTypes.bool.isRequired
     entry:         React.PropTypes.object.isRequired
 
-  getInitialState: ->
-    entry:         @props.entry
-    previewMode:   false
-    isGoing:       false
-
   render: ->
-    `<section className="posts posts--edit">
-      <PostActions privacy={this.state.entry.privacy}
-                   onChangePrivacy={this.changePrivacy}
+    `<section className="posts posts--edit">{this.editorComponent()}</section>`
 
-                   isTlogPrivate={this.props.isTlogPrivate}
+  editorComponent: ->
+    opts =
+      ref:               'editor'
+      activitiesHandler: @activitiesHandler
+      entry:             @props.entry
+      doneCallback:      @goToEntryPage
 
-                   previewMode={this.state.previewMode}
-                   onPreview={this.togglePreview}
+    switch @props.entry.type
+      when 'text'
+        editor = PostEditor_TextEditor  opts
+      when 'image'
+        editor = PostEditor_ImageEditor opts
+      when 'video'
+        editor = PostEditor_VideoEditor opts
+      when 'quote'
+        editor = PostEditor_QuoteEditor opts
+      else
+        console.error "Unknown entry type: #{@props.entry.type}"
 
-                   isLoading={this.hasActivities() || this.state.isGoing}
+  saveEntry: -> @refs.editor.saveEntry()
 
-                   onSave={this.saveEntry} />
-     {this.editorComponent()}
-    </section>`
-
-  saveEntry: ->
-    return unless @state.entry? && @refs.editor?
-    @refs.editor.saveEntry()
-
+  goToEntryPage: (newEntry) ->
+    #@setState isGoing: true
+    if window.TASTY_ENV=='development'
+      alert "Статья успешно сохранена"
+      window.location.reload()
+    else
+      #@setState isGoing: true
+      _.defer =>
+        # TODO Выводить модалку
+        TastyNotifyController.notifySuccess 'Опубликовано! Переходим на страницу поста..'
+        console.log 'goto', newEntry.entry_url
+        window.location.href = newEntry.entry_url
 

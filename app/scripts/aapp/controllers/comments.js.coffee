@@ -91,8 +91,11 @@ AApp.controller 'Comments', ['$scope', '$element', '$resource',
         $scope.$parent.loading = false
 
         # Делаю так, потому что незнаю как повеситься на окончание рендера
-        trigger = -> $(document).trigger 'domChanged', $element
-        setTimeout 200, trigger
+        trigger = ->
+          console.log 'trigger domChanges', $element
+          $(document).trigger 'domChanged'
+          $(document).trigger 'domChanged', element: $element
+        setTimeout 500, trigger
 
         return data.comments
 
