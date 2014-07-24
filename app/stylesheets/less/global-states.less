@@ -1,3 +1,289 @@
+// Настройки дизайна тлога
+// TODO: переделать на design-...
+.tlog-feedcolor-white {
+  .page-body {
+    color: @black;
+  }
+
+  .page-body__bg {
+    background-color: @white;
+  }
+
+  .settings-design__control--feed-color {
+    .settings-design__state-i {
+      border-color: @white;
+      background-color: @black;
+    }
+  }
+}
+
+.tlog-feedcolor-black {
+  .page-body {
+    color: @white;
+  }
+
+  .page-body__bg {
+    background-color: @black;
+  }
+
+  .settings-design__control--feed-color {
+    .settings-design__state-i {
+      border-color: @black;
+      background-color: @white;
+    }
+  }
+}
+
+.tlog-fonttype-serif {
+  .page-body,
+  .settings-design__control--font-type .settings-design__state {
+    font-family: @font-family-serif;
+  }
+}
+
+.tlog-fonttype-sans {
+  .page-body,
+  .settings-design__control--font-type .settings-design__state {
+    font-family: @font-family-sans-serif;
+  }
+}
+
+.tlog-coveralign-justify {
+  .page-cover {
+    background-size: 100% auto;
+  }
+}
+.tlog-coveralign-center {
+  .page-cover {
+    background-position: 50% 0%;
+  }
+}
+
+.tlog-headercolor-black {
+  .hero {
+    color: @black;
+  }
+
+  .settings-design__control--header-color {
+    .settings-design__state-i {
+      border-color: @black;
+      background-color: @black;
+    }
+  }
+}
+
+.tlog-headercolor-white {
+  .hero {
+    color: @white;
+  }
+
+  .settings-design__control--header-color {
+    .settings-design__state-i {
+      border-color: @white;
+      background-color: @white;
+    }
+  }
+}
+
+.tlog-headercolor-blackonwhite {
+  .hero {
+    color: @black;
+  }
+
+  .hero__title {
+    span {
+      background: @white;
+    }
+  }
+
+  .hero__text {
+    span {
+      background: @white;
+    }
+  }
+
+  .settings-design__control--header-color {
+    .settings-design__state-i {
+      border-color: @white;
+      background-color: @black;
+    }
+  }
+}
+
+.tlog-headercolor-whiteonblack {
+  .hero {
+    color: @white;
+  }
+
+  .hero__title {
+    span {
+      background: @black;
+    }
+  }
+
+  .hero__text {
+    span {
+      background: @black;
+    }
+  }
+
+  .settings-design__control--header-color {
+    .settings-design__state-i {
+      border-color: @black;
+      background-color: @white;
+    }
+  }
+}
+
+// Шаблон фида
+.layout--feed {
+  background-color: #eee;
+
+  .hero__slide {
+    width: 100%;
+    display: none;
+    .transform(translate(0, 0));
+
+    &.state--current {
+      display: block;
+    }
+
+    &.animate--in {
+      position: absolute;
+      left: 0;
+      top: 50%;
+    }
+
+    &.animate--out {
+      .transform(translate(0, -35px));
+      .transition-transform(~".3s ease");
+    }
+  }
+
+  .hero__title,
+  .hero__text {
+    .transition(none) !important;
+    .animation(none) !important;
+  }
+}
+
+// Шаблоны тлогов
+.layout--tlog {
+  /*&.not-logged {
+    .page__inner {
+      padding-bottom: 466px;
+    }
+
+    .page__paper {
+      padding-bottom: 50px;
+      position: relative;
+      background-color: @white;
+      z-index: @zindex-page-paper-not-logged;
+    }
+  }*/
+}
+
+// Посадочный шаблон
+.layout--landing {
+  background-color: #5d5d5d;
+
+  .layout-constrain {
+    width: auto;
+    padding: 50px 5%;
+    .clearfix();
+  }
+
+  .logo {
+    margin-right: 20px;
+    float: left;
+  }
+
+  .page {
+    height: 100% !important;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+  }
+
+  .page__inner {
+    height: 100%;
+    padding: 0;
+  }
+
+  .page__paper {
+    height: 100%;
+    padding: 0;
+  }
+
+  .page-header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: @zindex-landing-page-header;
+  }
+
+  .page-body {
+    height: 100%;
+  }
+
+  .auth-button {
+    position: relative;
+    top: auto;
+    right: auto;
+  }
+
+  @media only screen and (max-height: 500px) {
+    height: 500px;
+  }
+}
+
+// Шаблоны только с определённым контентом (восстановление пароля)
+.layout--single {
+  text-align: center;
+
+  .page {
+    height: 100% !important;
+  }
+
+  .page__inner {
+    height: 100%;
+    padding: 0;
+  }
+
+  .page__paper {
+    height: 100%;
+    padding: 0;
+  }
+
+  .tasty-ribbon {
+    margin: -105px auto 80px;
+    display: block;
+  }
+
+  .page-cover {
+    background-position: 50% 50%;
+    background-size: cover;
+
+    &:before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #2d2d2d;
+      opacity: .57;
+    }
+  }
+
+  .page-body {
+    height: 100%;
+  }
+
+  @media only screen and (max-height: 500px) {
+    height: 500px;
+  }
+}
+
 // Когда развёрнут профиль пользователя
 .hero-enabled {
   .calendar,
@@ -21,7 +307,7 @@
 
   .hero {
     margin-bottom: 40px;
-    color: @white;
+    color: @white !important;
     overflow: hidden;
     transition: height .4s ease, color .4s ease;
   }
@@ -203,143 +489,6 @@
   overflow: hidden;
 }
 
-// Настройки дизайна тлога
-// TODO: переделать на design-...
-.tlog-feedcolor-white {
-  .page-body {
-    color: @black;
-  }
-
-  .page-body__bg {
-    background-color: @white;
-  }
-
-  .settings-design__control--feed-color {
-    .settings-design__state-i {
-      border-color: @white;
-      background-color: @black;
-    }
-  }
-}
-
-.tlog-feedcolor-black {
-  .page-body {
-    color: @white;
-  }
-
-  .page-body__bg {
-    background-color: @black;
-  }
-
-  .settings-design__control--feed-color {
-    .settings-design__state-i {
-      border-color: @black;
-      background-color: @white;
-    }
-  }
-}
-
-.tlog-fonttype-serif {
-  .page-body,
-  .settings-design__control--font-type .settings-design__state {
-    font-family: @font-family-serif;
-  }
-}
-
-.tlog-fonttype-sans {
-  .page-body,
-  .settings-design__control--font-type .settings-design__state {
-    font-family: @font-family-sans-serif;
-  }
-}
-
-.tlog-coveralign-justify {
-  .page-cover {
-    background-size: 100% auto;
-  }
-}
-.tlog-coveralign-center {
-  .page-cover {
-    background-position: 50% 0%;
-  }
-}
-
-.tlog-headercolor-black {
-  .hero {
-    color: @black;
-  }
-
-  .settings-design__control--header-color {
-    .settings-design__state-i {
-      border-color: @black;
-      background-color: @black;
-    }
-  }
-}
-
-.tlog-headercolor-white {
-  .hero {
-    color: @white;
-  }
-
-  .settings-design__control--header-color {
-    .settings-design__state-i {
-      border-color: @white;
-      background-color: @white;
-    }
-  }
-}
-
-.tlog-headercolor-blackonwhite {
-  .hero {
-    color: @black;
-  }
-
-  .hero__title {
-    span {
-      background: @white;
-    }
-  }
-
-  .hero__text {
-    span {
-      background: @white;
-    }
-  }
-
-  .settings-design__control--header-color {
-    .settings-design__state-i {
-      border-color: @white;
-      background-color: @black;
-    }
-  }
-}
-
-.tlog-headercolor-whiteonblack {
-  .hero {
-    color: @white;
-  }
-
-  .hero__title {
-    span {
-      background: @black;
-    }
-  }
-
-  .hero__text {
-    span {
-      background: @black;
-    }
-  }
-
-  .settings-design__control--header-color {
-    .settings-design__state-i {
-      border-color: @black;
-      background-color: @white;
-    }
-  }
-}
-
 // Режим предпросмотра, когда можно посмотреть, как это будет выглядить в тлоге
 .tlog-mode-full {
   .back-button {
@@ -372,154 +521,5 @@
   .page-body__bg {
     background-color: @white !important;
     opacity: 1 !important;
-  }
-}
-
-// Шаблон фида
-.layout--feed {
-  background-color: #eee;
-
-  .hero__slide {
-    width: 100%;
-    display: none;
-    .transform(translate(0, 0));
-
-    &.state--current {
-      display: block;
-    }
-
-    &.animate--in {
-      position: absolute;
-      left: 0;
-      top: 50%;
-    }
-
-    &.animate--out {
-      .transform(translate(0, -35px));
-      .transition-transform(~".3s ease");
-    }
-  }
-
-  .hero__title,
-  .hero__text {
-    .transition(none) !important;
-    .animation(none) !important;
-  }
-}
-
-// Шаблоны тлогов
-.layout--tlog {
-  /*&.not-logged {
-    .page__inner {
-      padding-bottom: 466px;
-    }
-
-    .page__paper {
-      padding-bottom: 50px;
-      position: relative;
-      background-color: @white;
-      z-index: @zindex-page-paper-not-logged;
-    }
-  }*/
-}
-
-// Посадочный шаблон
-.layout--landing {
-  background-color: #5d5d5d;
-
-  .layout-constrain {
-    width: auto;
-    padding: 50px 5%;
-    .clearfix();
-  }
-
-  .logo {
-    margin-right: 20px;
-    float: left;
-  }
-
-  .page {
-    height: 100% !important;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
-  }
-
-  .page__inner {
-    height: 100%;
-    padding: 0;
-  }
-
-  .page__paper {
-    height: 100%;
-    padding: 0;
-  }
-
-  .page-header {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: @zindex-landing-page-header;
-  }
-
-  .page-body {
-    height: 100%;
-  }
-
-  .auth-button {
-    position: relative;
-    top: auto;
-    right: auto;
-  }
-
-  @media only screen and (max-height: 500px) {
-    height: 500px;
-  }
-}
-
-// Шаблоны только с определённым контентом (восстановление пароля)
-.layout--single {
-  text-align: center;
-
-  .page {
-    height: 100% !important;
-  }
-
-  .page__inner {
-    height: 100%;
-    padding: 0;
-  }
-
-  .page__paper {
-    height: 100%;
-    padding: 0;
-  }
-
-  .tasty-ribbon {
-    margin: -105px auto 80px;
-    display: block;
-  }
-
-  .page-cover {
-    background-position: 50% 50%;
-    background-size: cover;
-
-    &:before {
-      content: "";
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      background-color: #2d2d2d;
-      opacity: .57;
-    }
-  }
-
-  .page-body {
-    height: 100%;
-  }
-
-  @media only screen and (max-height: 500px) {
-    height: 500px;
   }
 }
