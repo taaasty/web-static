@@ -13,11 +13,11 @@ window.Calendar = Calendar = React.createClass
     tlogId:   React.PropTypes.number.isRequired
 
   getInitialState: ->
-    calendar:       null
-    open:           CALENDAR_CLOSED
-    headerDate:     if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
-    activePost:     @props.entry?.id ? null
-    visibleMarkers: null
+    calendar:        null
+    currentState:    CALENDAR_CLOSED
+    headerDate:      if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
+    selectedEntryId: @props.entry?.id ? null
+    visibleMarkers:  null
 
   componentDidMount: ->
     @getCalendarFromServer @props.tlogId
@@ -27,14 +27,18 @@ window.Calendar = Calendar = React.createClass
   componentWillUnmount: -> @dettachScrollSpy()
 
   render: ->
-    calendarClasses = React.addons.classSet calendar: true, 'calendar--open': @isOpen(), 'calendar--closed': !@isOpen()
+    calendarClasses = React.addons.classSet {
+      calendar: true
+      'calendar--open': @isOpen()
+      'calendar--closed': !@isOpen()
+      'calendar--opened-by-click': @isOpenedByClick()
+    }
     children = `<CalendarHeader date={ this.state.headerDate } />`
 
     if @isOpen()
       if @state.calendar
         children = `<CalendarTimeline visibleMarkers={ this.state.visibleMarkers }
-                                      activePost={ this.state.activePost }
-                                      currentEntry={ this.props.entry }
+                                      selectedEntryId={ this.state.selectedEntryId }
                                       periods={ this.state.calendar.periods } />`
       else
         children = 'Loading..'
@@ -70,7 +74,7 @@ window.Calendar = Calendar = React.createClass
 
         if $elTopWithHeight >= scrollTop >= $elTop
           # Активируется пост
-          that.updateCurrentPost $el.data('id'), $el.data('time')
+          that.updateSelectedEntry $el.data('id'), $el.data('time')
 
         if direction is 'up' && $el.waypoint('prev').length > 0
           $prevEl = $( $el.waypoint('prev') )
@@ -79,17 +83,17 @@ window.Calendar = Calendar = React.createClass
 
           if $prevElTopWithHeight >= scrollTop >= $prevElTop
             # Активируется предыдущий пост
-            that.updateCurrentPost $prevEl.data('id'), $prevEl.data('time')
+            that.updateSelectedEntry $prevEl.data('id'), $prevEl.data('time')
 
   dettachScrollSpy: ->
     $post = $(TARGET_POST_CLASS)
     $post.waypoint 'destroy'
 
-  updateCurrentPost: (id, time) ->
+  updateSelectedEntry: (id, time) ->
     date = moment(time)
     console.info "Активируется пост с id = #{id}, и time = #{time}"
 
-    @setState headerDate: date, activePost: id
+    @setState headerDate: date, selectedEntryId: id
 
   setVisibleMarkers: ->
     $post   = $(TARGET_POST_CLASS)
@@ -98,20 +102,22 @@ window.Calendar = Calendar = React.createClass
     @setState visibleMarkers: markers
 
   onMouseEnter: ->
-    if @state.open == CALENDAR_CLOSED
-      @setState open: CALENDAR_OPENED_BY_HOVER
+    if @state.currentState == CALENDAR_CLOSED
+      @setState currentState: CALENDAR_OPENED_BY_HOVER
 
   onMouseLeave: ->
-    if @state.open == CALENDAR_OPENED_BY_HOVER
-      @setState open: CALENDAR_CLOSED
+    if @state.currentState == CALENDAR_OPENED_BY_HOVER
+      @setState currentState: CALENDAR_CLOSED
 
   onClick: ->
-    switch @state.open
-      when CALENDAR_CLOSED          then @setState open: CALENDAR_OPENED_BY_CLICK
-      when CALENDAR_OPENED_BY_CLICK then @setState open: CALENDAR_CLOSED
-      when CALENDAR_OPENED_BY_HOVER then @setState open: CALENDAR_CLOSED
-      else console.error? "Unknown state.open", @state.open
+    switch @state.currentState
+      when CALENDAR_CLOSED          then @setState currentState: CALENDAR_OPENED_BY_CLICK
+      when CALENDAR_OPENED_BY_CLICK then @setState currentState: CALENDAR_CLOSED
+      when CALENDAR_OPENED_BY_HOVER then @setState currentState: CALENDAR_OPENED_BY_CLICK
+      else console.error? "Unknown state.currentState", @state.currentState
 
-  isOpen: -> @state.open != CALENDAR_CLOSED
+  isOpen: -> @state.currentState != CALENDAR_CLOSED
+
+  isOpenedByClick: -> @state.currentState == CALENDAR_OPENED_BY_CLICK
 
 module.exports = Calendar

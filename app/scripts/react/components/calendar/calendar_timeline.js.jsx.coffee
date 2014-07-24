@@ -3,17 +3,16 @@
 window.CalendarTimeline = CalendarTimeline = React.createClass
 
   propTypes:
-    periods:        React.PropTypes.array.isRequired
-    currentEntry:   React.PropTypes.object
-    activePost:     React.PropTypes.number
-    visibleMarkers: React.PropTypes.array
+    periods:         React.PropTypes.array.isRequired
+    selectedEntryId: React.PropTypes.number
+    visibleMarkers:  React.PropTypes.array
 
   render: ->
     that = @
     periodNodes = @props.periods.map (period, i) ->
       `<CalendarPeriod period={ period }
                        activePost={ that.props.activePost }
-                       currentEntry={ that.props.currentEntry }
+                       selectedEntryId={ that.props.selectedEntryId }
                        visibleMarkers={ that.props.visibleMarkers }
                        key={ i } />`
 
