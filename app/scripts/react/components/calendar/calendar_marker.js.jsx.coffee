@@ -8,7 +8,9 @@ window.CalendarMarker = CalendarMarker = React.createClass
     marker:       React.PropTypes.object.isRequired
     selected:     React.PropTypes.bool.isRequired
 
-  shouldComponentUpdate: (nextProps) -> nextProps.selected != @props.selected
+  shouldComponentUpdate: (nextProps) ->
+    nextProps.selected != @props.selected ||
+    nextProps.marker.entry_id != @props.marker.entry_id
 
   render: ->
     records = @getNumberOfRecords @props.marker.comments_count
