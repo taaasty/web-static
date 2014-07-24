@@ -1,12 +1,89 @@
 ###* @jsx React.DOM ###
 
+window.PostEditor_LayoutEdit = React.createClass
+  mixins:         [ReactActivitiesMixin]
+  propTypes:
+    isTlogPrivate: React.PropTypes.bool.isRequired
+    entry:         React.PropTypes.object
+    backUrl:       React.PropTypes.string
+
+  getInitialState: ->
+    entry:         @props.entry
+    previewMode:   false
+    isGoing:       false
+
+  goToEntryPage: (newEntry) ->
+    if window.TASTY_ENV=='development'
+      alert "Статья успешно сохранена"
+      window.location.reload()
+    else
+      @setState isGoing: true
+      _.defer =>
+        TastyNotifyController.notifySuccess 'Опубликовано! Переходим на страницу поста..'
+        console.log 'goto', newEntry.entry_url
+        window.location.href = newEntry.entry_url
+
+  render: ->
+    opts =  ref: 'editor', entry: @state.entry, activitiesHandler: @activitiesHandler, doneCallback: @goToEntryPage
+    switch @state.entry.type
+      when 'text'
+        editor = PostEditor_TextEditor  opts
+      when 'image'
+        editor = PostEditor_ImageEditor opts
+      when 'video'
+        editor = PostEditor_VideoEditor opts
+      when 'quote'
+        editor = PostEditor_QuoteEditor opts
+      else
+        console.error "Unknown entry type: #{@state.entry.type}"
+
+    `<div className='postEditorLayout'>
+      <a className="back-button" onClick={this.clickBack}></a>
+      <section className="posts posts--edit">
+        <PostActions privacy={this.state.entry.privacy}
+                     isTlogPrivate={this.props.isTlogPrivate}
+                     previewMode={this.state.previewMode}
+                     onChangePrivacy={this.changePrivacy}
+                     onPreview={this.togglePreview}
+                     isLoading={this.hasActivities() || this.state.isGoing}
+                     onSave={this.saveEntry}
+        />
+        {editor}
+      </section>
+    </div>`
+
+    # <PostEditorChoicer currentType={this.state.entry.type} onChangeType={this.changeType}/>
+    # 
+
+  saveEntry: ->
+    return unless @state.entry? && @refs.editor?
+    @refs.editor.saveEntry()
+
+  changeType: (type) ->
+    console.log 'change type'
+    #@loadEntry IDS[type]
+
+  changePrivacy: (value)->
+    entry = @state.entry
+    entry.privacy = value
+    @setState entry: entry
+
+  clickBack:     ->
+    if @props.backUrl
+      window.location.href = @props.backUrl
+    else
+      window.history.back()
+
+  togglePreview: ->
+    @setState previewMode: !@state.previewMode
+
 DEMO_IDS=
   text:  18971012
   video: 18970969
   image: 18971001
   quote: 18971004
 
-window.PostEditor_Layout = React.createClass
+window.PostEditor_LayoutLoading = React.createClass
   mixins:         [ReactActivitiesMixin]
   propTypes:
     entryId:    React.PropTypes.number.isRequired
@@ -16,12 +93,6 @@ window.PostEditor_Layout = React.createClass
   getDefaultProps: ->
     entryType:    'text'
     defaultPrivacy: 'public'
-
-  getInitialState: ->
-    isTlogPrivate:  false # <PostActions isTlogPrivate = {this.state.entry.author.is_privacy}
-    entry:       null
-    type:        @props.entryType
-    previewMode: false
 
   componentDidMount: ->
     if window.TASTY_ENV=='development'
@@ -42,78 +113,17 @@ window.PostEditor_Layout = React.createClass
       complete: =>
         @decrementActivities()
 
-  handleHover: -> @setState isHover: true
-
-  goToEntryPage: (newEntry) ->
-    if window.TASTY_ENV=='development'
-      alert "Статья успешно сохранена"
-      window.location.reload()
-    else
-      _.defer =>
-        console.log 'goto', newEntry.entry_url
-        window.location.href = newEntry.entry_url
 
   render: ->
+    editor = `<div>Loading..</div>`
+    actions = PostActions
+      privacy:         @props.entry.privacy
+      isTlogPrivate:   @props.isTlogPrivate
+      previewMode:     false
+      onChangePrivacy: @changePrivacy
+      onPreview:       @togglePreview
+      onSave:          @saveEntry
+      isLoading:       true
 
-    if @state.entry?
-      opts =  ref: 'editor', entry: @state.entry, activitiesHandler: @activitiesHandler, doneCallback: @goToEntryPage
-      switch @state.entry.type
-        when 'text'
-          editor = PostEditor_TextEditor  opts
-        when 'image'
-          editor = PostEditor_ImageEditor opts
-        when 'video'
-          editor = PostEditor_VideoEditor opts
-        when 'quote'
-          editor = PostEditor_QuoteEditor opts
-        else
-          console.error "Unknown entry type: #{@state.entry.type}"
-      actions = PostActions
-        privacy:         @state.entry.privacy
-        isTlogPrivate:   @props.isTlogPrivate
-        previewMode:     @state.previewMode
-        onChangePrivacy: @changePrivacy
-        onPreview:       @togglePreview
-        isLoading:       @hasActivities()
-        onSave:          @saveEntry
-    else
-      editor = `<div>Loading..</div>`
-      actions = PostActions
-        privacy:         @props.defaultPrivacy
-        isTlogPrivate:   @props.isTlogPrivate
-        previewMode:     false
-        onChangePrivacy: @changePrivacy
-        onPreview:       @togglePreview
-        onSave:          @saveEntry
-        isLoading:       true
 
-    `<div className='postEditorLayout'>
-      <a className="back-button" onClick={this.clickBack}></a>
-      <section className="posts posts--edit">
-        {actions}
-        {editor}
-        <PostEditorChoicer currentType={this.state.type} onChangeType={this.changeType}/>
-      </section>
-    </div>`
-
-  saveEntry: ->
-    return unless @state.entry? && @refs.editor?
-    @refs.editor.saveEntry()
-
-  changeType: (type) ->
-    @loadEntry IDS[type]
-
-  changePrivacy: (value)->
-    entry = @state.entry
-    entry.privacy = value
-    @setState entry: entry
-
-  clickBack:     ->
-    if @props.backUrl
-      window.location.href = @props.backUrl
-    else
-      window.history.back()
-
-  togglePreview: ->
-    @setState previewMode: !@state.previewMode
 

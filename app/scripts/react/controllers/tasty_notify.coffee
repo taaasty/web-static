@@ -2,7 +2,7 @@ window.TastyNotifyController =
 
   HIDE_EVENT: TastyNotify.HIDE_EVENT
 
-  notify: (type, text, timeout = 3000) ->
+  notify: (type, text, timeout = 5000) ->
     container = $('<\div>').appendTo('body').get(0)
     React.renderComponent TastyNotify(
         type:    type
@@ -11,7 +11,10 @@ window.TastyNotifyController =
       ), container
     return
 
-  errorResponse: (response, timeout = 3000) ->
+  notifySuccess: (text, timeout = 5000) ->
+    @notify 'success', text, timeout
+
+  errorResponse: (response, timeout = 5000) ->
     return if response.statusText is 'abort'
 
     # Непонятно почему не rejected не должно показывать
