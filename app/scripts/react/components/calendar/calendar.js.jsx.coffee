@@ -14,7 +14,7 @@ window.Calendar = Calendar = React.createClass
 
   getInitialState: ->
     calendar:        null
-    open:            CALENDAR_CLOSED
+    currentState:    CALENDAR_CLOSED
     headerDate:      if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
     selectedEntryId: @props.entry?.id ? null
     visibleMarkers:  null
@@ -102,22 +102,22 @@ window.Calendar = Calendar = React.createClass
     @setState visibleMarkers: markers
 
   onMouseEnter: ->
-    if @state.open == CALENDAR_CLOSED
-      @setState open: CALENDAR_OPENED_BY_HOVER
+    if @state.currentState == CALENDAR_CLOSED
+      @setState currentState: CALENDAR_OPENED_BY_HOVER
 
   onMouseLeave: ->
-    if @state.open == CALENDAR_OPENED_BY_HOVER
-      @setState open: CALENDAR_CLOSED
+    if @state.currentState == CALENDAR_OPENED_BY_HOVER
+      @setState currentState: CALENDAR_CLOSED
 
   onClick: ->
-    switch @state.open
-      when CALENDAR_CLOSED          then @setState open: CALENDAR_OPENED_BY_CLICK
-      when CALENDAR_OPENED_BY_CLICK then @setState open: CALENDAR_CLOSED
-      when CALENDAR_OPENED_BY_HOVER then @setState open: CALENDAR_OPENED_BY_CLICK
-      else console.error? "Unknown state.open", @state.open
+    switch @state.currentState
+      when CALENDAR_CLOSED          then @setState currentState: CALENDAR_OPENED_BY_CLICK
+      when CALENDAR_OPENED_BY_CLICK then @setState currentState: CALENDAR_CLOSED
+      when CALENDAR_OPENED_BY_HOVER then @setState currentState: CALENDAR_OPENED_BY_CLICK
+      else console.error? "Unknown state.currentState", @state.currentState
 
-  isOpen: -> @state.open != CALENDAR_CLOSED
+  isOpen: -> @state.currentState != CALENDAR_CLOSED
 
-  isOpenedByClick: -> @state.open == CALENDAR_OPENED_BY_CLICK
+  isOpenedByClick: -> @state.currentState == CALENDAR_OPENED_BY_CLICK
 
 module.exports = Calendar
