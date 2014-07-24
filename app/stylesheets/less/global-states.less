@@ -9,8 +9,8 @@
   .toolbar--nav,
   .post-actions,
   .back-button {
-    top: -85px;
-    opacity: 0;
+    top: -85px !important;
+    opacity: 0 !important;
   }
 
   .toolbar--close {
@@ -38,7 +38,7 @@
   .hero__avatar {
     width: 200px;
     height: 200px;
-    cursor: default;
+    cursor: inherit;
     opacity: 1;
     transition: width .4s ease, height .4s ease, opacity .4s ease .2s;
 
@@ -86,6 +86,13 @@
     .transition(~"max-height .4s ease, padding .4s ease, visibility 0s ease, opacity .4s ease .2s");
   }
 
+  .hero {
+    .follow-status {
+      left: 350px;
+      top: 165px;
+    }
+  }
+
   @media only screen and (max-height: 520px) {
     .hero__avatar {
       width: 100px;
@@ -98,6 +105,13 @@
 
     .hero__title {
       font-size: 50px;
+    }
+
+    .hero {
+      .follow-status {
+        left: 300px;
+        top: 100px;
+      }
     }
   }
 
@@ -115,6 +129,13 @@
 
     .hero__text {
       font-size: 16px;
+    }
+
+    .hero {
+      .follow-status {
+        left: 370px;
+        top: 38px;
+      }
     }
   }
 }
@@ -397,7 +418,7 @@
       padding-bottom: 50px;
       position: relative;
       background-color: @white;
-      z-index: 2;
+      z-index: @zindex-page-paper-not-logged;
     }
   }*/
 }
