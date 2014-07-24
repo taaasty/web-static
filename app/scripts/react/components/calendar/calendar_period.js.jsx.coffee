@@ -3,15 +3,14 @@
 window.CalendarPeriod = CalendarPeriod = React.createClass
 
   propTypes:
-    period:         React.PropTypes.object.isRequired
-    currentEntry:   React.PropTypes.object
-    activePost:     React.PropTypes.number
-    visibleMarkers: React.PropTypes.array
+    period:          React.PropTypes.object.isRequired
+    selectedEntryId: React.PropTypes.number
+    visibleMarkers:  React.PropTypes.array
 
   render: ->
     that = @
     markerNodes = @props.period.markers.map (marker, i) ->
-      selected    = that.props.activePost == marker.entry_id || that.props.currentEntry?.id == marker.entry_id
+      selected    = that.props.selectedEntryId == marker.entry_id
       highlighted = (_.indexOf that.props.visibleMarkers, marker.entry_id) > -1
 
       `<CalendarMarker selected={ selected }

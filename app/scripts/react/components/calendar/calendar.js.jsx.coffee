@@ -13,11 +13,11 @@ window.Calendar = Calendar = React.createClass
     tlogId:   React.PropTypes.number.isRequired
 
   getInitialState: ->
-    calendar:       null
-    open:           CALENDAR_CLOSED
-    headerDate:     if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
-    activePost:     @props.entry?.id ? null
-    visibleMarkers: null
+    calendar:        null
+    open:            CALENDAR_CLOSED
+    headerDate:      if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
+    selectedEntryId: @props.entry?.id ? null
+    visibleMarkers:  null
 
   componentDidMount: ->
     @getCalendarFromServer @props.tlogId
@@ -38,8 +38,7 @@ window.Calendar = Calendar = React.createClass
     if @isOpen()
       if @state.calendar
         children = `<CalendarTimeline visibleMarkers={ this.state.visibleMarkers }
-                                      activePost={ this.state.activePost }
-                                      currentEntry={ this.props.entry }
+                                      selectedEntryId={ this.state.selectedEntryId }
                                       periods={ this.state.calendar.periods } />`
       else
         children = 'Loading..'
@@ -75,7 +74,7 @@ window.Calendar = Calendar = React.createClass
 
         if $elTopWithHeight >= scrollTop >= $elTop
           # Активируется пост
-          that.updateCurrentPost $el.data('id'), $el.data('time')
+          that.updateSelectedEntry $el.data('id'), $el.data('time')
 
         if direction is 'up' && $el.waypoint('prev').length > 0
           $prevEl = $( $el.waypoint('prev') )
@@ -84,17 +83,17 @@ window.Calendar = Calendar = React.createClass
 
           if $prevElTopWithHeight >= scrollTop >= $prevElTop
             # Активируется предыдущий пост
-            that.updateCurrentPost $prevEl.data('id'), $prevEl.data('time')
+            that.updateSelectedEntry $prevEl.data('id'), $prevEl.data('time')
 
   dettachScrollSpy: ->
     $post = $(TARGET_POST_CLASS)
     $post.waypoint 'destroy'
 
-  updateCurrentPost: (id, time) ->
+  updateSelectedEntry: (id, time) ->
     date = moment(time)
     console.info "Активируется пост с id = #{id}, и time = #{time}"
 
-    @setState headerDate: date, activePost: id
+    @setState headerDate: date, selectedEntryId: id
 
   setVisibleMarkers: ->
     $post   = $(TARGET_POST_CLASS)
