@@ -12,5 +12,4 @@ window.PostEditor_EditPost = React.createClass
     entryType:    @props.entry.type
     entry:        @props.entry
 
-
   #changeType:     (type) -> alert "Can't change type of existen entry'

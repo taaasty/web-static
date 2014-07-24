@@ -4,6 +4,7 @@ window.PostEditor_EditorContainer = React.createClass
   mixins:         [ReactActivitiesUser]
   propTypes:
     entry:         React.PropTypes.object.isRequired
+    onChanging:    React.PropTypes.func.isRequired
 
   render: ->
     `<section className="posts posts--edit">{this.editorComponent()}</section>`
@@ -14,6 +15,7 @@ window.PostEditor_EditorContainer = React.createClass
       activitiesHandler: @activitiesHandler
       entry:             @props.entry
       doneCallback:      @goToEntryPage
+      onChanging:        @props.onChanging
 
     switch @props.entry.type
       when 'text'

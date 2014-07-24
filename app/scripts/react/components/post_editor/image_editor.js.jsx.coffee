@@ -5,6 +5,7 @@ window.PostEditor_ImageEditor = React.createClass
   propTypes:
     entry:             React.PropTypes.object.isRequired
     doneCallback:      React.PropTypes.func.isRequired
+    onChanging:        React.PropTypes.func.isRequired
 
   getInitialState: ->
     images:     @getInitialImages()
@@ -53,6 +54,7 @@ window.PostEditor_ImageEditor = React.createClass
           </MediaBox_Layout>
 
           <TastyEditor placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
+                       onChange={this.getChangeCallback('title')}
                        ref="titleEditor"
                        mode="rich"
                        content={this.props.entry.title}/>

@@ -6,31 +6,44 @@ window.TastyEditor = React.createClass
     placeholder: React.PropTypes.string
     content:     React.PropTypes.string
     mode:        React.PropTypes.string
+    onChange:    React.PropTypes.func.isRequired
 
   getDefaultProps: ->
     className: 'tasty-editor-default'
-    mode: 'inline' # 'rich'
+    mode:      'inline' # 'rich'
 
   getInitialState: ->
     isEditing: false
 
   componentDidMount: ->
-    if @props.mode=='inline'
-      mode = Medium.inlineMode
-    else
-      mode = Medium.richMode
+    switch @props.mode
+      when 'rich'
+        mode = Medium.richMode
+      when 'partial'
+        mode = Medium.partialMode
+      else # inline
+        mode = Medium.inlineMode
+
+    element = @refs.content.getDOMNode()
+
+    $(element).on 'input', @onInput
 
     @editor = new Medium
       mode:  mode
       debug: true
-      element: @refs.content.getDOMNode()
+      element: element
       placeholder: @props.placeholder
 
     console.warn? 'Medium mode', @editor.behavior() unless @editor.behavior() == 'domesticated'
 
   componentWillUnmount: ->
+    element = @refs.content.getDOMNode()
+    $(element).off 'input', @onInput if element?
     @editor.destroy?()    # Medium.JS
     @editor.deactivate?() # Medium-Editor
+
+  onInput: (event) ->
+    @props.onChange? @content()
 
   componentDidUpdate: ->
     #$editor = $ @refs.content.getDOMNode()

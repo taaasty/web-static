@@ -3,6 +3,13 @@ window.PostEditor_PersistenceMixin =
     entry:             React.PropTypes.object.isRequired
     activitiesHandler: React.PropTypes.object.isRequired
     doneCallback:      React.PropTypes.func.isRequired
+    onChanging:        React.PropTypes.func.isRequired
+
+  getChangeCallback: (field) ->
+    changed = (field, content) ->
+      @props.entry[field] = content
+
+    return changed.bind @, field
 
   savingUrl: ->
     if @props.entry.id?

@@ -8,7 +8,7 @@ window.PostEditor_NewPost = React.createClass
     entryType:    DEFAULT_POST_TYPE
     entry:        DEFAULT_ENTRIES[DEFAULT_POST_TYPE]
 
-  changeType:     (type) -> @setState entryType: type, entry: DEFAULT_ENTRIES[type]
+  changeType:    (type) -> @setState entryType: type, entry: DEFAULT_ENTRIES[type]
 
 
 DEFAULT_POST_TYPE = 'text'

@@ -14,10 +14,13 @@ window.PostEditor_VideoEditor = React.createClass
       <div className="post__content">
         <VideoMediaBox onSuccessLoad={this.successLoaded}
                        activitiesHandler={this.activitiesHandler}
+                       onChange={this.getChangeCallback('video_url')}
                        embedUrl={this.state.embedUrl}
                        embedHtml={this.state.embedHtml}/>
         <TastyEditor placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
+                     onChange={this.getChangeCallback('title')}
                      ref="titleEditor"
+                     mode="partial"
                      content={this.state.title}/>
       </div>
     </article>`

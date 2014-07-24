@@ -17,6 +17,12 @@ window.PostEditor_ImagesForm=
     #$form = $ @refs.form.getDOMNode()
     #$form.fileupload 'destory'
 
+  getChangeCallback: (field) ->
+    changed = (field, content) ->
+      @props.entry[field] = content
+
+    return changed.bind @, field
+
   saveEntry: ->
     if @fileUploader
       @fileUploader.submit()
@@ -76,6 +82,9 @@ window.PostEditor_ImagesForm=
       image = new Image()
       image.src = window.URL.createObjectURL file
       image
+
+
+    @getChangeCallback 'images', images
 
     @setState images: images
 

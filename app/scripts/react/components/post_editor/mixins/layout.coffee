@@ -14,8 +14,10 @@ window.PostEditor_LayoutMixin =
   saveEntry:     -> @refs.editorContainer.saveEntry entryPrivacy: @state.entryPrivacy
   changePrivacy: (value) -> @setState entryPrivacy: value
 
+  onChanging: ->
+    @setState isChanged: true
+
   render: ->
-    console.log @hasActivities()
     `<PostEditor_Layout backUrl={this.props.backUrl}>
       <PostActions entryPrivacy={this.state.entryPrivacy}
                    onChangePrivacy={this.changePrivacy}
@@ -31,6 +33,7 @@ window.PostEditor_LayoutMixin =
 
         <PostEditor_EditorContainer ref='editorContainer'
                                     entry={this.state.entry}
+                                    onChanging={this.onChanging}
                                     activitiesHandler={this.activitiesHandler} />
 
         <PostEditorChoicer currentType={this.state.entryType} onChangeType={this.changeType} />

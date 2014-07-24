@@ -12,6 +12,7 @@ window.VideoMediaBox = React.createClass
     onSuccessLoad: React.PropTypes.func.isRequired
     embedUrl:  React.PropTypes.string
     embedHtml: React.PropTypes.string
+    onChange:  React.PropTypes.func.isRequired
 
   getInitialState: ->
     embedUrl:  @props.embedUrl
@@ -32,6 +33,7 @@ window.VideoMediaBox = React.createClass
         console.error? "Unknown state:", @state.current
 
   loadEmbed: (embedUrl) ->
+    @props.onChange embedUrl
     @setState embedUrl: embedUrl, embedHtml: null, current: STATE_LOADING
 
     @incrementActivities()
@@ -50,7 +52,6 @@ window.VideoMediaBox = React.createClass
         @safeUpdateState => @setState @getInitialState()
       complete: =>
         @decrementActivities()
-
 
   cleanEmbed: ->
     @setState current: STATE_WELCOME, embedUrl: null, embedHtml: null
