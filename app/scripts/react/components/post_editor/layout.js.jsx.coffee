@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-IDS=
+DEMO_IDS=
   text:  18971012
   video: 18970969
   image: 18971001
@@ -9,22 +9,25 @@ IDS=
 window.PostEditor_Layout = React.createClass
   mixins:         [ReactActivitiesMixin]
   propTypes:
-    entryId:      React.PropTypes.number.isRequired
-    defaultType:  React.PropTypes.string
-    backUrl:      React.PropTypes.string
+    entryId:    React.PropTypes.number.isRequired
+    entryType:  React.PropTypes.string
+    backUrl:    React.PropTypes.string
 
   getDefaultProps: ->
-    defaultType:    'text'
+    entryType:    'text'
     defaultPrivacy: 'public'
 
   getInitialState: ->
     isTlogPrivate:  false # <PostActions isTlogPrivate = {this.state.entry.author.is_privacy}
     entry:       null
-    type:        @props.defaultType
+    type:        @props.entryType
     previewMode: false
 
   componentDidMount: ->
-    entryId = IDS[@state.type]
+    if window.TASTY_ENV=='development'
+      entryId = DEMO_IDS[@state.type]
+    else
+      entryId = @props.entryId
     @loadEntry entryId #@props.entryId
 
   loadEntry: (entryId) ->

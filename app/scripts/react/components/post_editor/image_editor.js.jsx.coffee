@@ -50,6 +50,7 @@ window.PostEditor_ImageEditor = React.createClass
 
           <TastyEditor placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
                        ref="titleEditor"
+                       mode="rich"
                        content={this.props.entry.title}/>
         </form>
       </div>
