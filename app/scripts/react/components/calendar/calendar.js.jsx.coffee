@@ -25,7 +25,8 @@ window.Calendar = Calendar = React.createClass
     @getCalendarFromServer @props.tlogId
     @attachScrollSpy()
     @setVisibleMarkers()
-    $(document).bind 'domChanged', @reattachScrollSpy
+    # $(document).bind 'domChanged', @reattachScrollSpy
+    $(document).bind 'DOMSubtreeModified', @reattachScrollSpy
 
   componentWillUnmount: -> @dettachScrollSpy()
 
