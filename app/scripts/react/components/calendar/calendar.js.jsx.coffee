@@ -3,7 +3,8 @@
 CALENDAR_CLOSED = 'closed'
 CALENDAR_OPENED_BY_HOVER = 'openedByHover'
 CALENDAR_OPENED_BY_CLICK = 'openedByClick'
-TARGET_POST_CLASS = '.post'
+TARGET_POST_CLASS =        '.post'
+TARGET_POST_PARENT_CLASS = '.posts'
 
 window.Calendar = Calendar = React.createClass
 
@@ -12,14 +13,16 @@ window.Calendar = Calendar = React.createClass
     tlogId:   React.PropTypes.number.isRequired
 
   getInitialState: ->
-    calendar:   null
-    open:       CALENDAR_CLOSED
-    headerDate: if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
-    activePost: @props.entry?.id ? null
+    calendar:       null
+    open:           CALENDAR_CLOSED
+    headerDate:     if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
+    activePost:     @props.entry?.id ? null
+    visibleMarkers: null
 
   componentDidMount: ->
     @getCalendarFromServer @props.tlogId
     @attachScrollSpy()
+    @setVisibleMarkers()
 
   componentWillUnmount: -> @dettachScrollSpy()
 
@@ -29,9 +32,10 @@ window.Calendar = Calendar = React.createClass
 
     if @isOpen()
       if @state.calendar
-        children = `<CalendarTimeline activePost={ this.state.activePost }
+        children = `<CalendarTimeline visibleMarkers={ this.state.visibleMarkers }
+                                      activePost={ this.state.activePost }
                                       currentEntry={ this.props.entry }
-                                      periods={ this.state.calendar.periods }></CalendarTimeline>`
+                                      periods={ this.state.calendar.periods } />`
       else
         children = 'Loading..'
 
@@ -54,39 +58,44 @@ window.Calendar = Calendar = React.createClass
     that = @
     $post = $(TARGET_POST_CLASS)
 
-    $post.waypoint (direction) ->
-      scrollTop = $(document).scrollTop()
-      $el = $(@)
-      $elTop = $el.offset().top
-      $elTopWithHeight = $elTop + $el.outerHeight(true)
-      console.info "Пост с id = #{$el.data('id')}, движение #{direction}"
+    # Следим за скроллингом, только если находимся на странице списка постов
+    if $post.closest(TARGET_POST_PARENT_CLASS)
+      $post.waypoint (direction) ->
+        scrollTop = $(document).scrollTop()
+        $el = $(@)
+        $elTop = $el.offset().top
+        $elTopWithHeight = $elTop + $el.outerHeight(true)
 
-      if $elTopWithHeight >= scrollTop >= $elTop
-        # Активируется пост
-        that.updateCurrentPost $el.data('id'), $el.data('time')
+        console.info "Пост с id = #{$el.data('id')}, движение #{direction}"
 
-      if direction is 'up' && $el.waypoint('prev').length > 0
-        $prevEl = $( $el.waypoint('prev') )
-        $prevElTop = $prevEl.offset().top
-        $prevElTopWithHeight = $prevElTop + $prevEl.outerHeight(true)
+        if $elTopWithHeight >= scrollTop >= $elTop
+          # Активируется пост
+          that.updateCurrentPost $el.data('id'), $el.data('time')
 
-        if $prevElTopWithHeight >= scrollTop >= $prevElTop
-          # Активируется предыдущий пост
-          that.updateCurrentPost $prevEl.data('id'), $prevEl.data('time')
+        if direction is 'up' && $el.waypoint('prev').length > 0
+          $prevEl = $( $el.waypoint('prev') )
+          $prevElTop = $prevEl.offset().top
+          $prevElTopWithHeight = $prevElTop + $prevEl.outerHeight(true)
+
+          if $prevElTopWithHeight >= scrollTop >= $prevElTop
+            # Активируется предыдущий пост
+            that.updateCurrentPost $prevEl.data('id'), $prevEl.data('time')
+
+  dettachScrollSpy: ->
+    $post = $(TARGET_POST_CLASS)
+    $post.waypoint 'destroy'
 
   updateCurrentPost: (id, time) ->
     date = moment(time)
     console.info "Активируется пост с id = #{id}, и time = #{time}"
 
-    # Если на странице один пост, то стейт не будет обновляться, так как этот
-    # пост стоит по-умолчанию
-    unless @state.headerDate.toString() == date.toString() &&
-           @state.activePost == id
-      @setState headerDate: date, activePost: id
+    @setState headerDate: date, activePost: id
 
-  dettachScrollSpy: ->
-    $post = $(TARGET_POST_CLASS)
-    $post.waypoint 'destroy'
+  setVisibleMarkers: ->
+    $post   = $(TARGET_POST_CLASS)
+    markers = []
+    $post.each -> markers.push parseInt(@dataset.id)
+    @setState visibleMarkers: markers
 
   onMouseEnter: ->
     if @state.open == CALENDAR_CLOSED

@@ -31,6 +31,10 @@
       display: block;
     }
   }
+
+  & .calendar__period-marker--highlighted {
+    opacity: 1;
+  }
 }
 
 .calendar--closed {
@@ -115,6 +119,7 @@
   top: 50%;
   background-color: @white;
   border-radius: 50%;
+  opacity: .3;
 
   &:before,
   &:after {
