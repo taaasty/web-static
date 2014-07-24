@@ -13,6 +13,7 @@ window.VideoMediaBox = React.createClass
     embedUrl:  React.PropTypes.string
     embedHtml: React.PropTypes.string
     onChange:  React.PropTypes.func.isRequired
+    onClean:   React.PropTypes.func.isRequired
 
   getInitialState: ->
     embedUrl:  @props.embedUrl
@@ -55,6 +56,7 @@ window.VideoMediaBox = React.createClass
 
   cleanEmbed: ->
     @setState current: STATE_WELCOME, embedUrl: null, embedHtml: null
+    @props.onClean()
 
   exitFromInserting: ->
     @setState current: STATE_WELCOME

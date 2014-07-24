@@ -21,9 +21,6 @@ window.VideoMediaBox_Insert = React.createClass
        <MediaBox_Actions onDelete={this.props.onClean}/>
      </MediaBox_Layout>`
 
-  #onKeyUp: (event) ->
-    #debugger
-
   onPaste: (event) ->
     @props.onInsert  event.nativeEvent.clipboardData.getData('text/plain')
 

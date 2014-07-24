@@ -15,6 +15,7 @@ window.PostEditor_VideoEditor = React.createClass
         <VideoMediaBox onSuccessLoad={this.successLoaded}
                        activitiesHandler={this.activitiesHandler}
                        onChange={this.getChangeCallback('video_url')}
+                       onClean={this.cleanTitle}
                        embedUrl={this.state.embedUrl}
                        embedHtml={this.state.embedHtml}/>
         <TastyEditor placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
@@ -24,6 +25,9 @@ window.PostEditor_VideoEditor = React.createClass
                      content={this.state.title}/>
       </div>
     </article>`
+
+  cleanTitle: ->
+    @setState title: ''
 
   successLoaded: (iframely) ->
     @setState

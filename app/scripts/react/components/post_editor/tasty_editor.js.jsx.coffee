@@ -34,6 +34,8 @@ window.TastyEditor = React.createClass
       element: element
       placeholder: @props.placeholder
 
+    @editor.value @props.content
+
     console.warn? 'Medium mode', @editor.behavior() unless @editor.behavior() == 'domesticated'
 
   componentWillUnmount: ->
@@ -46,6 +48,7 @@ window.TastyEditor = React.createClass
     @props.onChange? @content()
 
   componentDidUpdate: ->
+    @editor.html.placeholders()
     #$editor = $ @refs.content.getDOMNode()
     #if @state.isEditing _.defer => $editor.focus()
 
@@ -55,7 +58,7 @@ window.TastyEditor = React.createClass
 
   render: ->
     `<div className={"tasty-editor " + this.props.className}>
-        <div className='tasty-editor-content' ref="content" dangerouslySetInnerHTML={{ __html: this.props.content }} />
+      <div className='tasty-editor-content' ref="content" dangerouslySetInnerHTML={{ __html: this.props.content }} />
       </div>`
 
   #placeholderClick: ->
