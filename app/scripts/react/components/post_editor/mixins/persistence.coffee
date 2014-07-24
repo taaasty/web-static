@@ -23,12 +23,14 @@ window.PostEditor_PersistenceMixin =
     else
       'POST'
 
-  saveEntry: ->
+  saveEntry: ({entryPrivacy}) ->
     @incrementActivities()
+    data = @data()
+    data.privacy = entryPrivacy
     $.ajax
       url:     @savingUrl()
       method:  @savingMethod()
-      data:    @data()
+      data:    data
       success: (data) =>
         @setState entry: data, type: data.type
         @props.doneCallback data

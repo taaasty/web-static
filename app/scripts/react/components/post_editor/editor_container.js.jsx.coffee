@@ -33,7 +33,7 @@ window.PostEditor_EditorContainer = React.createClass
       else
         console.error "Unknown entry type: #{@props.entryType}"
 
-  saveEntry: -> @refs.editor.saveEntry()
+  saveEntry: ({entryPrivacy}) -> @refs.editor.saveEntry entryPrivacy: entryPrivacy
 
   goToEntryPage: (newEntry) ->
     #@setState isGoing: true
