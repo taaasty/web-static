@@ -23,6 +23,7 @@ window.Calendar = Calendar = React.createClass
     @getCalendarFromServer @props.tlogId
     @attachScrollSpy()
     @setVisibleMarkers()
+    $(document).bind 'domChanged', @reattachScrollSpy
 
   componentWillUnmount: -> @dettachScrollSpy()
 
@@ -86,6 +87,8 @@ window.Calendar = Calendar = React.createClass
           if $prevElTopWithHeight >= scrollTop >= $prevElTop
             # Активируется предыдущий пост
             that.updateSelectedEntry $prevEl.data('id'), $prevEl.data('time')
+
+  reattachScrollSpy: -> $.waypoints 'refresh'
 
   dettachScrollSpy: ->
     $post = $(TARGET_POST_CLASS)
