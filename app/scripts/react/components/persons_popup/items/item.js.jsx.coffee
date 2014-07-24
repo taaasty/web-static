@@ -8,7 +8,7 @@ window.PersonsPopup_PersonItem = PersonsPopup_PersonItem = React.createClass
     children:    React.PropTypes.component.isRequired
 
   render: ->
-    entriesCount = @getNumberOfEntries @props.user.entries_count
+    entriesCount = @getNumberOfEntries @props.user.public_entries_count
 
     return `<li className="person">
               <div className="person__in">
