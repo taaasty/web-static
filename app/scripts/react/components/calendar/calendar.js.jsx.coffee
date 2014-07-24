@@ -13,9 +13,11 @@ window.Calendar = Calendar = React.createClass
     tlogId:   React.PropTypes.number.isRequired
 
   getInitialState: ->
+    firstPostDate = parseInt($(TARGET_POST_CLASS).get(0).dataset.time)
+
     calendar:        null
     currentState:    CALENDAR_CLOSED
-    headerDate:      if @props.entry?.created_at then moment( @props.entry.created_at ) else moment()
+    headerDate:      moment( if @props.entry?.created_at then @props.entry.created_at else firstPostDate )
     selectedEntryId: @props.entry?.id ? null
     visibleMarkers:  null
 
