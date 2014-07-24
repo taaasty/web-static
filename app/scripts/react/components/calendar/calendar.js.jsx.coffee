@@ -3,7 +3,8 @@
 CALENDAR_CLOSED = 'closed'
 CALENDAR_OPENED_BY_HOVER = 'openedByHover'
 CALENDAR_OPENED_BY_CLICK = 'openedByClick'
-TARGET_POST_CLASS = '.post'
+TARGET_POST_CLASS =        '.post'
+TARGET_POST_PARENT_CLASS = '.posts'
 
 window.Calendar = Calendar = React.createClass
 
@@ -54,35 +55,34 @@ window.Calendar = Calendar = React.createClass
     that = @
     $post = $(TARGET_POST_CLASS)
 
-    $post.waypoint (direction) ->
-      scrollTop = $(document).scrollTop()
-      $el = $(@)
-      $elTop = $el.offset().top
-      $elTopWithHeight = $elTop + $el.outerHeight(true)
-      console.info "Пост с id = #{$el.data('id')}, движение #{direction}"
+    # Следим за скроллингом, только если находимся на странице списка постов
+    if $post.closest(TARGET_POST_PARENT_CLASS)
+      $post.waypoint (direction) ->
+        scrollTop = $(document).scrollTop()
+        $el = $(@)
+        $elTop = $el.offset().top
+        $elTopWithHeight = $elTop + $el.outerHeight(true)
 
-      if $elTopWithHeight >= scrollTop >= $elTop
-        # Активируется пост
-        that.updateCurrentPost $el.data('id'), $el.data('time')
+        console.info "Пост с id = #{$el.data('id')}, движение #{direction}"
 
-      if direction is 'up' && $el.waypoint('prev').length > 0
-        $prevEl = $( $el.waypoint('prev') )
-        $prevElTop = $prevEl.offset().top
-        $prevElTopWithHeight = $prevElTop + $prevEl.outerHeight(true)
+        if $elTopWithHeight >= scrollTop >= $elTop
+          # Активируется пост
+          that.updateCurrentPost $el.data('id'), $el.data('time')
 
-        if $prevElTopWithHeight >= scrollTop >= $prevElTop
-          # Активируется предыдущий пост
-          that.updateCurrentPost $prevEl.data('id'), $prevEl.data('time')
+        if direction is 'up' && $el.waypoint('prev').length > 0
+          $prevEl = $( $el.waypoint('prev') )
+          $prevElTop = $prevEl.offset().top
+          $prevElTopWithHeight = $prevElTop + $prevEl.outerHeight(true)
+
+          if $prevElTopWithHeight >= scrollTop >= $prevElTop
+            # Активируется предыдущий пост
+            that.updateCurrentPost $prevEl.data('id'), $prevEl.data('time')
 
   updateCurrentPost: (id, time) ->
     date = moment(time)
     console.info "Активируется пост с id = #{id}, и time = #{time}"
 
-    # Если на странице один пост, то стейт не будет обновляться, так как этот
-    # пост стоит по-умолчанию
-    unless @state.headerDate.toString() == date.toString() &&
-           @state.activePost == id
-      @setState headerDate: date, activePost: id
+    @setState headerDate: date, activePost: id
 
   dettachScrollSpy: ->
     $post = $(TARGET_POST_CLASS)
