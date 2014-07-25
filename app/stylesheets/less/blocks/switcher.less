@@ -9,6 +9,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-align: center;
+  white-space: nowrap;
   overflow: hidden;
   border-radius: @switcher-border-radius;
   user-select: none;
@@ -45,27 +46,30 @@
 .switcher__btn {
   width: 50%;
   height: 100%;
-  position: absolute;
-  top: 0;
+  display: inline-block;
   cursor: pointer;
+
+  &:first-child {
+    border-radius: @switcher-border-radius 0 0 @switcher-border-radius;
+  }
+
+  &:last-child {
+    border-radius: 0 @switcher-border-radius @switcher-border-radius 0;
+  }
 }
 
 .switcher__btn--on {
-  left: 0;
   background-color: @switcher-btn-active-bg;
   color: @switcher-btn-active-color;
   visibility: hidden;
   opacity: 0;
-  border-radius: @switcher-border-radius 0 0 @switcher-border-radius;
   transition: visibility 0s ease .3s, opacity .3s ease;
 }
 
 .switcher__btn--off {
-  left: 50%;
   background-color: @switcher-btn-inactive-bg;
   color: @switcher-btn-inactive-color;
   visibility: visible;
   opacity: 1;
-  border-radius: 0 @switcher-border-radius @switcher-border-radius 0;
   transition: visibility 0s ease, opacity .3s ease;
 }
