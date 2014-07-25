@@ -85,14 +85,12 @@ window.PostActions = React.createClass
     icons[ICONS[@privacy()]] = true
     `<span className={React.addons.classSet(icons)}></span>`
 
-  title_public: ->
-
   menuItems: ->
     items = []
 
     return if @props.tlogType == 'anonymous'
 
-    public_title = PUBLIC_TITLE[@props.tlogType]
+    title_public = PUBLIC_TITLE[@props.tlogType]
     items << `<PostActionItem title="Видна только мне"    onSelect={this.select} key={ ENTRY_PRIVACY_PRIVATE } selected={this.privacy() == ENTRY_PRIVACY_PRIVATE} />`
     items << `<PostActionItem title={title_public} onSelect={this.select} key={ ENTRY_PRIVACY_PUBLIC } selected={this.privacy() == ENTRY_PRIVACY_PUBLIC} />`
 
