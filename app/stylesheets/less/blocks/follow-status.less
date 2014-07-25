@@ -4,7 +4,7 @@
   position: absolute;
   right: -4px;
   bottom: -4px;
-  background-color: @follow-status-bg;
+  background-color: @follow-status-default-bg;
   line-height: 22px;
   color: @follow-status-color;
   text-align: center;
@@ -29,5 +29,17 @@
     transition-timing-function: ease;
     transition-duration: 0.4s;
     transition-delay: 0.2s;
+  }
+
+  &.state--friend {
+    background-color: @follow-status-friend-bg;
+  }
+
+  &.state--ignored {
+    background-color: @follow-status-ignored-bg;
+  }
+
+  &.state--guessed {
+    background-color: @follow-status-guessed-bg;
   }
 }
