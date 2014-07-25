@@ -41,30 +41,41 @@ window.PersonsPopup = React.createClass
 
       <PersonsPopup_FollowingsPanel isActive={ this.state.currentTab == 'followings' }
                                     relationships={ this.state.relationships.followings.items }
+                                    total_count={ this.state.relationships.followings.total_count }
                                     activitiesHandler={ this.activitiesHandler }
                                     onLoad={ onLoad.bind(this, 'followings') } />
 
       <PersonsPopup_FollowersPanel isActive={ this.state.currentTab == 'followers' }
                                    relationships={ this.state.relationships.followers.items }
+                                   total_count={ this.state.relationships.followers.total_count }
                                    activitiesHandler={ this.activitiesHandler }
                                    onLoad={ onLoad.bind(this, 'followers') } />
 
       <PersonsPopup_GuessesPanel isActive={ this.state.currentTab == 'guesses' }
                                  relationships={ this.state.relationships.guesses.items }
+                                 total_count={ this.state.relationships.guesses.total_count }
                                  activitiesHandler={ this.activitiesHandler }
                                  onLoad={ onLoad.bind(this, 'guesses') } />
 
       <PersonsPopup_IgnoresPanel isActive={ this.state.currentTab == 'ignores' }
                                  relationships={ this.state.relationships.ignores.items }
+                                 total_count={ this.state.relationships.ignores.total_count }
                                  activitiesHandler={ this.activitiesHandler }
                                  onLoad={ onLoad.bind(this, 'ignores') } />
     </Popup>`
 
   selectTab: (type) -> @setState currentTab: type
 
-  updateRelationships: (type, relationships) ->
-    newRelationships = this.state.relationships
-    newRelationships[type] = relationships
+  updateRelationships: (type, action, relationships) ->
+    newRelationships = @state.relationships
+    newRelationships[type].items ||= []
+
+    if action is 'update'
+      newRelationships[type] = relationships
+    else if action is 'add'
+      relationships.items = newRelationships[type].items.concat relationships.items
+      newRelationships[type] = relationships
+
     @setState relationships: newRelationships
 
 module.exports = PersonsPopup

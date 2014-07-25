@@ -3,12 +3,13 @@
 window.PersonsPopup_PanelMixin =
 
   propTypes:
-    isActive:      React.PropTypes.bool.isRequired
-    onLoad:        React.PropTypes.func.isRequired
+    isActive:    React.PropTypes.bool.isRequired
+    onLoad:      React.PropTypes.func.isRequired
+    total_count: React.PropTypes.number
 
   getInitialState: ->
-    isError:   false
-    isLoading: false
+    isError:       false
+    isLoading:     false
 
   componentDidMount: ->
     @$scroller = $ @refs.scroller.getDOMNode()
@@ -25,29 +26,9 @@ window.PersonsPopup_PanelMixin =
 
     @getPanelData()
 
-  getPanelData: ->
-    console.error 'getPanelData when xhr' if @xhr?
-    @incrementActivities()
-    @setState isError: false, isLoading: true
-    req = @createRequest
-      url: @relationUrl()
-      success: (data) =>
-        @safeUpdateState => @props.onLoad(total_count: data.total_count, items: data.relationships)
-      error:   (data) =>
-        @safeUpdateState => @setState isError: true
-        TastyNotifyController.errorResponse data
-      complete: =>
-        @safeUpdateState => @setState isLoading: false
-        @decrementActivities()
-
   componentDidUpdate: ->
     @scroller.update()
     @$scroller.trigger("sizeChange").trigger('sizeChange')
-
-  removeRelationshipByIndex: (index) ->
-    newRelationships = @props.relationships.slice()
-    newRelationships.splice index, 1
-    @props.onLoad(newRelationships)
 
   render: ->
     panelClasses = React.addons.classSet 'tabs-panel': true, 'state--hidden': !@props.isActive
@@ -67,6 +48,9 @@ window.PersonsPopup_PanelMixin =
       else
         panelContent = `<div className="popup__text">Список пуст.</div>`
 
+    if @props.relationships?.length < @props.total_count
+      panelContent = `<div>{ panelContent }<LoadMoreButton onClick={ this.loadMoreData } /></div>`
+
     return `<div className={ panelClasses }>
               <div className="scroller scroller--persons" ref="scroller">
                 <div className="scroller__pane js-scroller-pane">
@@ -77,6 +61,32 @@ window.PersonsPopup_PanelMixin =
                 </div>
               </div>
             </div>`
+
+  getPanelData: (sincePosition) ->
+    console.error 'getPanelData when xhr' if @xhr?
+    @incrementActivities()
+    @setState isError: false, isLoading: true
+    req = @createRequest
+      url: @relationUrl()
+      data:
+        since_position: sincePosition
+      success: (data) =>
+        @safeUpdateState => @props.onLoad('add', total_count: data.total_count, items: data.relationships)
+      error:   (data) =>
+        @safeUpdateState => @setState isError: true
+        TastyNotifyController.errorResponse data
+      complete: =>
+        @safeUpdateState => @setState isLoading: false
+        @decrementActivities()
+
+  loadMoreData: ->
+    lastLoadedPosition = @props.relationships[ @props.relationships.length - 1].position
+    @getPanelData lastLoadedPosition
+
+  removeRelationshipByIndex: (index) ->
+    newRelationships = @props.relationships.slice()
+    newRelationships.splice index, 1
+    @props.onLoad('update', total_count: @props.total_count - 1, items: newRelationships)
 
 # TODO Use react-mixin-manager
 _.extend window.PersonsPopup_PanelMixin, window.RequesterMixin
