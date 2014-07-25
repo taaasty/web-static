@@ -4,12 +4,14 @@
 ENTRY_PRIVACY_PRIVATE = 'private'
 ENTRY_PRIVACY_PUBLIC  = 'public'
 ENTRY_PRIVACY_LIVE    = 'live'
+ENTRY_PRIVACY_ANONYMOUS    = 'anonymous'
 PRIVACY_STATES= [ ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, ENTRY_PRIVACY_LIVE]
 
 ICONS = {}
 ICONS[ENTRY_PRIVACY_LIVE]    = 'icon--wave'
 ICONS[ENTRY_PRIVACY_PRIVATE] = 'icon--lock'
 ICONS[ENTRY_PRIVACY_PUBLIC]  = 'icon--unlock'
+ICONS[ENTRY_PRIVACY_ANONYMOUS]  = 'icon--anonymous'
 
 PREVIEW_BODY_CLASSES =  { true:  'tlog-mode-full', false: 'tlog-mode-minimal' }
 
@@ -36,6 +38,7 @@ window.PostActions = React.createClass
     @props.onChangePrivacy(key)
 
   privacy: ->
+    return ENTRY_PRIVACY_ANONYMOUS if @props.tlogType == ENTRY_PRIVACY_ANONYMOUS
     @props.entryPrivacy
 
   componentWillUpdate: (nextProps, nextState) ->
