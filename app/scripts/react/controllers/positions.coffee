@@ -1,5 +1,8 @@
 window.PositionsController =
 
+  OFFSET_X = 50
+  OFFSEX_Y = 50
+
   storage: window.localStorage
 
   savePosition: (name, offset) ->
@@ -24,16 +27,16 @@ window.PositionsController =
 
     persistedPositions[index].offset if index?
 
-  smartRestorePosition: (name, $el) ->
+  smartRestorePosition: (name) ->
     offset = @restorePosition name
     newOffset = _.clone offset
     windowWidth = $(window).width()
     windowHeight = $(window).height()
 
     if offset.top > windowHeight
-      newOffset.top = windowHeight - 50
+      newOffset.top = windowHeight - OFFSET_Y
     if offset.left > windowWidth
-      newOffset.left = windowWidth - 50 + ($el.width() / 2)
+      newOffset.left = windowWidth - OFFSET_X
 
     newOffset
 

@@ -46,7 +46,7 @@ window.Popup = React.createClass
   makeDraggable: ->
     $popupNode = $(@getDOMNode())
     $headboxNode = @refs.header.getDOMNode()
-    popupPosition = ( PositionsController.smartRestorePosition(@props.title, $popupNode) ) || @props.offset
+    popupPosition = ( PositionsController.smartRestorePosition(@props.title) ) || @props.offset
     $popupNode.css popupPosition if popupPosition?
 
     $popupNode.draggable
