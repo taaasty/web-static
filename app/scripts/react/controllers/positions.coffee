@@ -1,5 +1,5 @@
-OFFSET_X = 50
-OFFSET_Y = 50
+OFFSET_X = 100
+OFFSET_Y = 100
 
 window.PositionsController =
 
