@@ -27,8 +27,10 @@ require './aapp/services/designSettingsDragable.js.coffee'
 require './aapp/directives/eatClick.js'
 require './aapp/directives/enter.js'
 
+require './react/services/positions'
 
 require './react/mixins/unmount'
+require './react/mixins/positions'
 require './react/mixins/shake'
 require './react/mixins/grammar'
 require './react/mixins/error_timer'
@@ -129,7 +131,6 @@ require './react/components/tasty_notify'
 require './react/controllers/tasty_notify'
 require './react/controllers/tasty_notify'
 require './react/controllers/shellbox'
-require './react/controllers/positions'
 require './react/controllers/popup'
 require './react/application'
 

@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.Popup = React.createClass
-  mixins: [ReactUnmountMixin]
+  mixins: [ReactUnmountMixin, ReactPositionsMixin]
 
   propTypes:
     title:         React.PropTypes.string.isRequired
@@ -9,7 +9,7 @@ window.Popup = React.createClass
     onClose:       React.PropTypes.func
     isDark:        React.PropTypes.bool
     isDraggable:   React.PropTypes.bool
-    offset:        React.PropTypes.object
+    position:      React.PropTypes.object
 
     # например popup--settings, popup--persons
     className:   React.PropTypes.string
@@ -23,19 +23,18 @@ window.Popup = React.createClass
     $('body').addClass 'no-scroll'
     Mousetrap.bind 'esc', @close
     @makeDraggable() if @props.isDraggable
-    $(window).on 'resize', @updateOffset
 
   componentWillUnmount: ->
     $('body').removeClass 'no-scroll'
     Mousetrap.unbind 'esc', @close
-    $(window).off 'resize', @updateOffset
+    $(window).off 'resize', @onResize
 
   render: ->
     classes = popup: true, 'popup--dark': @props.isDark, 'popup--center': true
     classes[@props.className] = true if @props.className?
     cx = React.addons.classSet classes
 
-    return `<div className={cx}>
+    return `<div className={cx} style={this.initialPositionStyle()}>
               <PopupHeader title={ this.props.title } ref="header"
                            isDraggable= { this.props.isDraggable }
                            hasActivities={ this.props.hasActivities }
@@ -45,26 +44,14 @@ window.Popup = React.createClass
               </div>
             </div>`
 
-  updateOffset: ->
-    $popupNode = $(@getDOMNode())
-    popupPosition = PositionsController.smartRestorePosition @props.title
-    $popupNode.css popupPosition if popupPosition?
-    
-    # TODO Сделать анимацию подстраивания попапа в пределах экрана
-    # clearTimeout @resizeTimeout if @resizeTimeout?
-    # @resizeTimeout = setTimeout (->
-
-    # ), 1000
 
   makeDraggable: ->
     $popupNode = $(@getDOMNode())
-    $headboxNode = @refs.header.getDOMNode()
-    popupPosition = ( PositionsController.smartRestorePosition(@props.title) ) || @props.offset
-    $popupNode.css popupPosition if popupPosition?
+    headboxNode = @refs.header.getDOMNode()
 
     $popupNode.draggable
-      handle: $headboxNode
-      stop: (event, ui) => PositionsController.savePosition @props.title, ui.offset
+      handle: headboxNode
+      stop: (event, ui) => @savePosition ui.offset
 
   close: ->
     if @props.onClose? then @props.onClose() else @unmount()

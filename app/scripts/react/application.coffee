@@ -1,5 +1,6 @@
 #= require react
 #= require react_ujs
+#= require_tree ./services
 #= require_tree ./mixins
 #= require_tree ./components/post_editor/mixins
 #= require_tree ./components
