@@ -91,11 +91,11 @@ window.PostActions = React.createClass
     return if @props.tlogType == 'anonymous'
 
     title_public = PUBLIC_TITLE[@props.tlogType]
-    items << `<PostActionItem title="Видна только мне"    onSelect={this.select} key={ ENTRY_PRIVACY_PRIVATE } selected={this.privacy() == ENTRY_PRIVACY_PRIVATE} />`
-    items << `<PostActionItem title={title_public} onSelect={this.select} key={ ENTRY_PRIVACY_PUBLIC } selected={this.privacy() == ENTRY_PRIVACY_PUBLIC} />`
+    items.push `<PostActionItem title="Видна только мне"    onSelect={this.select} key={ ENTRY_PRIVACY_PRIVATE } selected={this.privacy() == ENTRY_PRIVACY_PRIVATE} />`
+    items.push `<PostActionItem title={title_public} onSelect={this.select} key={ ENTRY_PRIVACY_PUBLIC } selected={this.privacy() == ENTRY_PRIVACY_PUBLIC} />`
 
-    unless @props.tlogType == 'public'
-      items << `<PostActionItem title="В прямой эфир" onSelect={this.select} key={ENTRY_PRIVACY_LIVE} selected={this.privacy() == ENTRY_PRIVACY_LIVE} />`
+    if @props.tlogType == 'public'
+      items.push `<PostActionItem title="В прямой эфир" onSelect={this.select} key={ENTRY_PRIVACY_LIVE} selected={this.privacy() == ENTRY_PRIVACY_LIVE} />`
 
     return items
 
