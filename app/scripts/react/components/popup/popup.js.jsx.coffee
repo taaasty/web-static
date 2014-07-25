@@ -4,11 +4,12 @@ window.Popup = React.createClass
   mixins: [ReactUnmountMixin]
 
   propTypes:
-    title:       React.PropTypes.string.isRequired
-    hasActivities:  React.PropTypes.bool
-    onClose:     React.PropTypes.func
-    isDark:      React.PropTypes.bool
-    isDraggable: React.PropTypes.bool
+    title:         React.PropTypes.string.isRequired
+    hasActivities: React.PropTypes.bool
+    onClose:       React.PropTypes.func
+    isDark:        React.PropTypes.bool
+    isDraggable:   React.PropTypes.bool
+    offset:        React.PropTypes.object
 
     # например popup--settings, popup--persons
     className:   React.PropTypes.string
@@ -46,9 +47,12 @@ window.Popup = React.createClass
   makeDraggable: ->
     $popupNode = $(@getDOMNode())
     $headboxNode = @refs.header.getDOMNode()
+    popupPosition = (PositionsController.restorePosition @props.title) || @props.offset
+    $popupNode.css popupPosition if popupPosition?
 
     $popupNode.draggable
       handle: $headboxNode
+      stop: (event, ui) => PositionsController.savePosition @props.title, ui.offset
 
   close: ->
     if @props.onClose? then @props.onClose() else @unmount()

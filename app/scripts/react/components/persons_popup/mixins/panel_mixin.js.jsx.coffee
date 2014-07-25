@@ -41,11 +41,12 @@ window.PersonsPopup_PanelMixin =
       panelContent = `<ul className="persons">{ relationships }</ul>`
     else
       if @state.isError
-        panelContent = `<div className="popup__text">Ошибка загрузки.</div>`
+        message = `<div className="popup__text">Ошибка загрузки.</div>`
       else if @state.isLoading
-        panelContent = `<div className="popup__text">Загружаю..</div>`
+        message = `<div className="popup__text">Загружаю..</div>`
       else
-        panelContent = `<div className="popup__text">Список пуст.</div>`
+        message = `<div className="popup__text">Список пуст.</div>`
+      panelContent = `<div className="valign"><div className="valign__middle">{ message }</div></div>`
 
     if @props.relationships?.length < @props.total_count
       panelContent = `<div>{ panelContent }<LoadMoreButton onClick={ this.loadMoreData } /></div>`
