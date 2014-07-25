@@ -40,7 +40,7 @@ window.PostEditor_EditorContainer = React.createClass
   goToEntryPage: (newEntry) ->
     #@setState isGoing: true
     if window.TASTY_ENV=='development'
-      alert "Статья успешно сохранена"
+      alert "Статья #{newEntry.id} успешно сохранена"
       window.location.reload()
     else
       #@setState isGoing: true

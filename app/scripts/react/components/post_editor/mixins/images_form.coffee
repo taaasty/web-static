@@ -49,14 +49,13 @@ window.PostEditor_ImagesForm=
       replaceFileInput:  false
       #fileInput:         fileInput
       start: =>
-        console.log 'start'
         @incrementActivities()
       stop: =>
-        console.log 'stop'
         @decrementActivities()
         @setState uploadingProgress: 0
       
       fail:        (e, data) => TastyNotifyController.errorResponse data
+      done:        (e, data) => @props.doneCallback JSON.parse data.xhr().response
 
       dragover:    (e, data) => @dragOver()
       progressall: (e, data) =>
