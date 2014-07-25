@@ -11,7 +11,7 @@ window.VideoMediaBox_Welcome = React.createClass
           <a onClick={this.props.onClick} title="Вставьте">Вставьте</a>
           <span> ссылку на видео.</span>
           <br />
-          <span> Мы поддерживаем YouTube, Coub, SoundCloud и другие.</span>
+          <span> Мы поддерживаем YouTube, Instagam, Coub и другие.</span>
         </div>
       </div>
      </MediaBox_Layout>`
