@@ -1,11 +1,11 @@
 .follow-status {
-  width: 22px;
-  height: 22px;
+  width: @follow-status-size;
+  height: @follow-status-size;
   position: absolute;
   right: -4px;
   bottom: -4px;
   background-color: @follow-status-default-bg;
-  line-height: 22px;
+  line-height: @follow-status-size;
   color: @follow-status-color;
   text-align: center;
   cursor: default;
@@ -18,6 +18,8 @@
     font-size: 10px;
     line-height: 1;
     vertical-align: middle;
+
+    .ico-plus;
   }
 
   .hero & {
@@ -33,13 +35,25 @@
 
   &.state--friend {
     background-color: @follow-status-friend-bg;
+
+    .icon {
+      .ico-tick;
+    }
   }
 
   &.state--ignored {
     background-color: @follow-status-ignored-bg;
+
+    .icon {
+      .ico-minus;
+    }
   }
 
   &.state--guessed {
     background-color: @follow-status-guessed-bg;
+
+    .icon {
+      .ico-plus;
+    }
   }
 }

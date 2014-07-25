@@ -30,18 +30,21 @@
   &:before { content: @code; }
 }
 
+.ico-plus() { .set-ico("\e601"); }
 .ico-cross() { .set-ico("\e603"); }
+.ico-tick() { .set-ico("\e604"); }
 .ico-wave() { .set-ico("\e623"); }
 .ico-lock() { .set-ico("\e624"); }
 .ico-unlock() { .set-ico("\e625"); }
 .ico-rating() { .set-ico("\e626"); }
+.ico-minus() { .set-ico("-"); }
 
 // Styles
 .icon--menu { .set-ico("\e600"); }
-.icon--plus { .set-ico("\e601"); }
+.icon--plus { .ico-plus; }
 .icon--arrow-left { .set-ico("\e602"); }
 .icon--cross { .ico-cross; }
-.icon--tick { .set-ico("\e604"); }
+.icon--tick { .ico-tick; }
 .icon--cogwheel { .set-ico("\e605"); }
 .icon--cogwheel-bold { .set-ico("\e606"); }
 .icon--cloud { .set-ico("\e607"); }
@@ -90,6 +93,7 @@
 .icon--image-circle { .set-ico("\e632"); }
 .icon--video-circle { .set-ico("\e633"); }
 .icon--quote-circle { .set-ico("\e634"); }
+.icon--minus { .ico-minus; }
 
 .icon--menu {
   margin-top: -2px;
