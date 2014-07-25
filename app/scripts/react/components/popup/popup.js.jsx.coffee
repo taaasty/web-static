@@ -49,6 +49,7 @@ window.Popup = React.createClass
 
     $popupNode.draggable
       handle: $headboxNode
+      stop:   (event, ui) => PositionsController.savePosition @props.title, ui.offset
 
   close: ->
     if @props.onClose? then @props.onClose() else @unmount()
