@@ -127,7 +127,9 @@ require './react/components/images_collage'
 
 require './react/components/tasty_notify'
 require './react/controllers/tasty_notify'
+require './react/controllers/tasty_notify'
 require './react/controllers/shellbox'
+require './react/controllers/positions'
 require './react/controllers/popup'
 require './react/application'
 
