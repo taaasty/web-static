@@ -24,12 +24,25 @@ window.PositionsController =
 
     persistedPositions[index].offset if index?
 
+  smartRestorePosition: (name, $el) ->
+    offset = @restorePosition name
+    newOffset = _.clone offset
+    windowWidth = $(window).width()
+    windowHeight = $(window).height()
+
+    if offset.top > windowHeight
+      newOffset.top = windowHeight - 50
+    if offset.left > windowWidth
+      newOffset.left = windowWidth - 50 + ($el.width() / 2)
+
+    newOffset
+
   removePosition: (name) ->
     persistedPositions = JSON.parse( @storage.getItem 'positions' )
     index = @_getPositionIndex name, persistedPositions    
 
     if index?
-      persistedPositions.splice index, 1 
+      persistedPositions.splice index, 1
       @storage.setItem 'positions', JSON.stringify( persistedPositions )
 
   removeAllPositions: ->

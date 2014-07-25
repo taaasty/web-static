@@ -29,7 +29,6 @@ window.Popup = React.createClass
     Mousetrap.unbind 'esc', @close
 
   render: ->
-    # TODO координаты сохранять в localStorage
     classes = popup: true, 'popup--dark': @props.isDark, 'popup--center': true
     classes[@props.className] = true if @props.className?
     cx = React.addons.classSet classes
@@ -47,7 +46,7 @@ window.Popup = React.createClass
   makeDraggable: ->
     $popupNode = $(@getDOMNode())
     $headboxNode = @refs.header.getDOMNode()
-    popupPosition = (PositionsController.restorePosition @props.title) || @props.offset
+    popupPosition = ( PositionsController.smartRestorePosition(@props.title, $popupNode) ) || @props.offset
     $popupNode.css popupPosition if popupPosition?
 
     $popupNode.draggable
