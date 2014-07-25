@@ -5,6 +5,7 @@
   position: relative;
   font-family: @font-family-base;
   text-align: center;
+  box-sizing: border-box;
   transition: border .4s ease;
 
   // States
@@ -186,8 +187,11 @@
   width: 500px;
   position: relative;
   display: inline-block;
+  font-size: 24px;
+  line-height: 1.4;
+  font-family: @font-family-base-light;
   vertical-align: middle;
-  color: @black;
+  color: @media-box-text-color;
 }
 
 .media-box__display {
