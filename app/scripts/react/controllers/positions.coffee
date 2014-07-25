@@ -18,12 +18,11 @@ window.PositionsController =
       positions.push newPosition
       @storage.setItem 'positions', JSON.stringify( positions )
 
-  restorePosition: (name, $el) ->
+  restorePosition: (name) ->
     persistedPositions = JSON.parse( @storage.getItem 'positions' )
     index = @_getPositionIndex name, persistedPositions
 
-    if index? && $el?
-      $el.css persistedPositions[index].offset
+    persistedPositions[index].offset if index?
 
   removePosition: (name) ->
     persistedPositions = JSON.parse( @storage.getItem 'positions' )
@@ -33,6 +32,11 @@ window.PositionsController =
       persistedPositions.splice index, 1 
       @storage.setItem 'positions', JSON.stringify( persistedPositions )
 
+  removeAllPositions: ->
+    @storage.removeItem 'positions'
+
   _getPositionIndex: (name, list) ->
+    return unless list?
+
     for position, i in list
       return i if position.name == name
