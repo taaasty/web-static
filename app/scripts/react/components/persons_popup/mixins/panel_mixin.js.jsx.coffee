@@ -33,13 +33,12 @@ window.PersonsPopup_PanelMixin =
   render: ->
     panelClasses = React.addons.classSet 'tabs-panel': true, 'state--hidden': !@props.isActive
 
-    if @props.relationships
-      if @props.relationships.length > 0
-        itemClass = @itemClass
-        relationships = @props.relationships.map (relationship, i) =>
-          itemClass relationship: relationship, key: i, onRequestEnd: @removeRelationshipByIndex
+    if @props.relationships?.length > 0
+      itemClass = @itemClass
+      relationships = @props.relationships.map (relationship, i) =>
+        itemClass relationship: relationship, key: i, onRequestEnd: @removeRelationshipByIndex
 
-        panelContent = `<ul className="persons">{ relationships }</ul>`
+      panelContent = `<ul className="persons">{ relationships }</ul>`
     else
       if @state.isError
         panelContent = `<div className="popup__text">Ошибка загрузки.</div>`
@@ -80,6 +79,7 @@ window.PersonsPopup_PanelMixin =
         @decrementActivities()
 
   loadMoreData: ->
+    return if @state.isLoading
     lastLoadedPosition = @props.relationships[ @props.relationships.length - 1].position
     @getPanelData lastLoadedPosition
 
