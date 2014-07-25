@@ -33,9 +33,9 @@ window.PositionsController =
     windowWidth = $(window).width()
     windowHeight = $(window).height()
 
-    if offset.top > windowHeight
+    if offset.top + OFFSET_Y > windowHeight
       newOffset.top = windowHeight - OFFSET_Y
-    if offset.left > windowWidth
+    if offset.left + OFFSET_X > windowWidth
       newOffset.left = windowWidth - OFFSET_X
 
     newOffset

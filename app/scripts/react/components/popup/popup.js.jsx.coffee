@@ -23,10 +23,12 @@ window.Popup = React.createClass
     $('body').addClass 'no-scroll'
     Mousetrap.bind 'esc', @close
     @makeDraggable() if @props.isDraggable
+    $(window).on 'resize', @updateOffset
 
   componentWillUnmount: ->
     $('body').removeClass 'no-scroll'
     Mousetrap.unbind 'esc', @close
+    $(window).off 'resize', @updateOffset
 
   render: ->
     classes = popup: true, 'popup--dark': @props.isDark, 'popup--center': true
@@ -42,6 +44,17 @@ window.Popup = React.createClass
                 { this.props.children }
               </div>
             </div>`
+
+  updateOffset: ->
+    $popupNode = $(@getDOMNode())
+    popupPosition = PositionsController.smartRestorePosition @props.title
+    $popupNode.css popupPosition if popupPosition?
+    
+    # TODO Сделать анимацию подстраивания попапа в пределах экрана
+    # clearTimeout @resizeTimeout if @resizeTimeout?
+    # @resizeTimeout = setTimeout (->
+
+    # ), 1000
 
   makeDraggable: ->
     $popupNode = $(@getDOMNode())
