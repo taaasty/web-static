@@ -1,7 +1,7 @@
-window.PositionsController =
+OFFSET_X = 50
+OFFSEX_Y = 50
 
-  OFFSET_X = 50
-  OFFSEX_Y = 50
+window.PositionsController =
 
   storage: window.localStorage
 
