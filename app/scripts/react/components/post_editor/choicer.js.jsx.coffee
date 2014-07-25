@@ -19,6 +19,9 @@ CHOICER_ITEMS =
   quote:
     title: 'Цитата'
     icon:  'icon--quote-circle'
+  anonymous:
+    title: 'Анонимка'
+    icon:  'icon--text-circle'
 
   
 

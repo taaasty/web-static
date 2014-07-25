@@ -48,7 +48,7 @@ window.PostEditor_Demo = React.createClass
           <PostActions entryPrivacy='public'
                      onChangePrivacy={this.fallback}
 
-                     isTlogPrivate={false}
+                     tlogType='public'
 
                      previewMode={false}
                      onPreview={this.fallback}

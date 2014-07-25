@@ -1,11 +1,10 @@
 ###* @jsx React.DOM ###
 
+window.TLOG_TYPES = ['public', 'private', 'anonymous']
+
 window.PostEditor_LayoutMixin =
   propTypes:
-    isTlogPrivate: React.PropTypes.bool
-
-  getDefaultProps: ->
-    isTlogPrivate:  false
+    tlogType:  React.PropTypes.oneOf(TLOG_TYPES).isRequired
 
   getInitialState: ->
     previewMode:  false
@@ -30,7 +29,7 @@ window.PostEditor_LayoutMixin =
       <PostActions entryPrivacy={this.state.entryPrivacy}
                    onChangePrivacy={this.changePrivacy}
 
-                   isTlogPrivate={this.props.isTlogPrivate}
+                   tlogType={this.props.tlogType}
 
                    previewMode={this.state.previewMode}
                    onPreview={this.togglePreview}

@@ -21,10 +21,13 @@ window.TastyNotifyController =
     # например 500-ая ошибка при встевке url-а в video пост 
     # генерирует именно rejected
     # return if response.state?() == 'rejected'
+    #
+    
+    response = response.responseJSON if response.responseJSON?
 
     console.error? 'errorResponse', response
     message = response.message if response.message?
-    message ||= response.responseJSON.error if response.responseJSON?
+    message = response.long_message if response.long_message?
     message ||= response.error if response.error? && response.error.length>0
     # fallback для старого API
     message ||= "Ошибка сети: #{response.statusText}"

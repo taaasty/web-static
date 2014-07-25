@@ -4,7 +4,7 @@ window.PostEditor_NewPost = React.createClass
   mixins:         [PostEditor_LayoutMixin, ReactActivitiesMixin]
 
   getInitialState: ->
-    entryPrivacy: DEFAULT_POST_PRIVACY[@props.isTlogPrivate]
+    entryPrivacy: @props.tlogType
     entryType:    DEFAULT_POST_TYPE
     entry:        DEFAULT_ENTRIES[DEFAULT_POST_TYPE]
 
@@ -12,9 +12,6 @@ window.PostEditor_NewPost = React.createClass
 
 
 DEFAULT_POST_TYPE = 'text'
-DEFAULT_POST_PRIVACY =
-  false: 'public'
-  true:  'private'
 
 DEFAULT_ENTRIES =
   text:

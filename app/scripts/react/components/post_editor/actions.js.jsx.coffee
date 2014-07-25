@@ -13,10 +13,19 @@ ICONS[ENTRY_PRIVACY_PUBLIC]  = 'icon--unlock'
 
 PREVIEW_BODY_CLASSES =  { true:  'tlog-mode-full', false: 'tlog-mode-minimal' }
 
+PUBLIC_TITLE=
+  private:
+    "Видна только моим друзьям"
+  public:
+    "Видна всем в моем тлоге"
+  anonymous:
+    "Анонимка"
+
 window.PostActions = React.createClass
   propTypes:
     entryPrivacy:    React.PropTypes.string.isRequired
-    isTlogPrivate:   React.PropTypes.bool.isRequired
+    # public, private, anonymous
+    tlogType:        React.PropTypes.oneOf(TLOG_TYPES).isRequired
     onChangePrivacy: React.PropTypes.func.isRequired
     onPreview:       React.PropTypes.func.isRequired
     onSave:          React.PropTypes.func.isRequired
@@ -54,9 +63,7 @@ window.PostActions = React.createClass
             <button className="button button--green-dark post-settings-button" data-element="dropdown-toggle">{this.stateIcon()}</button>
             <div className="dropdown-popup dropdown-popup--green-dark" data-element="dropdown-menu">
               <ul className="dropdown-popup__list">
-                <PostActionItem title="Видна только мне"    onSelect={this.select} key={ ENTRY_PRIVACY_PRIVATE } selected={this.privacy() == ENTRY_PRIVACY_PRIVATE} />
-                <PostActionItem title={this.title_public()} onSelect={this.select} key={ ENTRY_PRIVACY_PUBLIC } selected={this.privacy() == ENTRY_PRIVACY_PUBLIC} />
-                {this.liveAction()}
+                {this.menuItems()}
               </ul>
             </div>
           </div>
@@ -76,14 +83,20 @@ window.PostActions = React.createClass
     `<span className={React.addons.classSet(icons)}></span>`
 
   title_public: ->
-    if @props.isTlogPrivate
-      "Видна только моим друзьям"
-    else
-      "Видна всем в моем тлоге"
 
-  liveAction: ->
-    unless @props.isTlogPrivate
-      `<PostActionItem title="В прямой эфир" onSelect={this.select} key={ENTRY_PRIVACY_LIVE} selected={this.privacy() == ENTRY_PRIVACY_LIVE} />`
+  menuItems: ->
+    items = []
+
+    return if @props.tlogType == 'anonymous'
+
+    public_title = PUBLIC_TITLE[@props.tlogType]
+    items << `<PostActionItem title="Видна только мне"    onSelect={this.select} key={ ENTRY_PRIVACY_PRIVATE } selected={this.privacy() == ENTRY_PRIVACY_PRIVATE} />`
+    items << `<PostActionItem title={title_public} onSelect={this.select} key={ ENTRY_PRIVACY_PUBLIC } selected={this.privacy() == ENTRY_PRIVACY_PUBLIC} />`
+
+    unless @props.tlogType == 'public'
+      items << `<PostActionItem title="В прямой эфир" onSelect={this.select} key={ENTRY_PRIVACY_LIVE} selected={this.privacy() == ENTRY_PRIVACY_LIVE} />`
+
+    return items
 
   loader: ->
     `<div className="post-action post-action--loader"><span className="spinner spinner--8x8"><span className="spinner__icon"></span></span></div>`

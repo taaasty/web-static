@@ -22,6 +22,8 @@ window.PostEditor_EditorContainer = React.createClass
       onChanging:        @props.onChanging
 
     switch @props.entryType
+      when 'anonymous'
+        editor = PostEditor_TextEditor  opts
       when 'text'
         editor = PostEditor_TextEditor  opts
       when 'image'
