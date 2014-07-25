@@ -60,7 +60,7 @@ window.ImagesCollage = React.createClass
     @setState images: [], initialId: currentInitialId
 
     imagesToLoad.map (image) =>
-      ImagesLoaded(image).on 'done', (instance) =>
+      imagesLoaded(image).on 'done', (instance) =>
         return unless @isMounted()
         if currentInitialId == @state.initialId
           @setState images: React.addons.update @state.images, {$push: [image]}

@@ -7,7 +7,7 @@ window.moment = require 'momentjs'
 require 'momentjs/lang/ru'
 require 'blueimp-file-upload/js/jquery.fileupload'
 
-window.ImagesLoaded = require 'imagesloaded'
+window.imagesLoaded = require 'imagesloaded'
 
 window.Backbone = require 'backbone'
 
