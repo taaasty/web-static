@@ -53,6 +53,16 @@
     font-size: 20px;
   }
 
+  .state--disabled {
+    color: @white !important;
+    cursor: default;
+    opacity: .2 !important;
+
+    .icon {
+      color: @white !important;
+    }
+  }
+
   // States
   &.state--expanded {
     .touch & {
@@ -155,17 +165,6 @@
   opacity: .6;
 
   // States
-  // Disabled item (for unrealized)
-  &.state--disabled {
-    color: @white !important;
-    cursor: default;
-    opacity: .2 !important;
-
-    .icon {
-      color: @white !important;
-    }
-  }
-
   // Separate item
   &.state--marked {
     background-color: @toolbar-item-highlight-bg;
@@ -225,6 +224,7 @@
   overflow: hidden;
   opacity: 0;
   border-radius: 3px;
+  user-select: none;
   .transform(translate(0, -10px));
   .transition-transform(~".3s ease .1s, visibility 0s ease .4s, opacity .3s ease .1s");
 }
@@ -237,6 +237,21 @@
     margin-right: .6em;
     transition: none;
   }
+
+  // States
+  &.state--active {
+    .toolbar__popup-link {
+      .toolbar-popup-link-hover;
+    }
+  }
+
+  &:first-child {
+    .toolbar__toggle:hover + .toolbar__popup & {
+      .toolbar__popup-link {
+        .toolbar-popup-link-hover;
+      }
+    }
+  }
 }
 
 .toolbar__popup-link {
@@ -245,24 +260,15 @@
   color: #bbb;
   opacity: .92;
 
-  // States
-  &:hover {
-    .toolbar-popup-link-hover;
-  }
-
-  &.state--active {
-    .toolbar-popup-link-hover;
-  }
-
-  &.state--single {
-    .toolbar__toggle:hover + .toolbar__popup & {
+  a& {
+    &:hover {
       .toolbar-popup-link-hover;
     }
-  }
 
-  &:active {
-    background-color: lighten(@yellow, 10%);
-    opacity: 1;
+    &:active {
+      background-color: lighten(@yellow, 10%);
+      opacity: 1;
+    }
   }
 }
 
