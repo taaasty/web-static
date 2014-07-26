@@ -132,7 +132,7 @@ window.Calendar = Calendar = React.createClass
   isOpenedByClick: -> @state.currentState == CALENDAR_OPENED_BY_CLICK
 
   headerDate: ->
-    moment( if @props.entryCreatedAt? then @props.entryCreatedAt else firstPostDate() )
+    moment( if @props.entryCreatedAt? then @props.entryCreatedAt else @firstPostDate() )
 
   firstPostDate: ->
     try
