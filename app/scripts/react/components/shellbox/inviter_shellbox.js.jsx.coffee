@@ -19,7 +19,7 @@ module.experts = window.InviterShellBox = React.createClass
     classes = React.addons.classSet
       'inviter':        true
       'inviter--fixed': @props.fixed
-    boxStyle = 'background-image': "url(/images/inviter_bg.jpg)"
+    boxStyle = 'background-image': "url(http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg)"
 
     return `<div className={classes}>
               <div className="inviter__box" style={boxStyle}>
