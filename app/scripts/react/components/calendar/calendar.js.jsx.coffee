@@ -9,16 +9,16 @@ TARGET_POST_PARENT_CLASS = '.posts'
 window.Calendar = Calendar = React.createClass
 
   propTypes:
-    entry:    React.PropTypes.object
-    tlogId:   React.PropTypes.number.isRequired
+    entryId:         React.PropTypes.number
+    entryCreatedAt:  React.PropTypes.string
+    tlogId:          React.PropTypes.number.isRequired
 
   getInitialState: ->
-    firstPostDate = $(TARGET_POST_CLASS).get(0).dataset.time
 
     calendar:        null
     currentState:    CALENDAR_CLOSED
-    headerDate:      moment( if @props.entry?.created_at then @props.entry.created_at else firstPostDate )
-    selectedEntryId: @props.entry?.id ? null
+    headerDate:      @headerDate()
+    selectedEntryId: @props.entryId
     visibleMarkers:  null
 
   componentDidMount: ->
@@ -130,5 +130,14 @@ window.Calendar = Calendar = React.createClass
   isOpen: -> @state.currentState != CALENDAR_CLOSED
 
   isOpenedByClick: -> @state.currentState == CALENDAR_OPENED_BY_CLICK
+
+  headerDate: ->
+    moment( if @props.entryCreatedAt? then @props.entryCreatedAt else firstPostDate() )
+
+  firstPostDate: ->
+    try
+      $(TARGET_POST_CLASS).get(0).dataset.time
+    catch error
+      console.error? error
 
 module.exports = Calendar
