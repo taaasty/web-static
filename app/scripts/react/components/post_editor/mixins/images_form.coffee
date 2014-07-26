@@ -55,7 +55,7 @@ window.PostEditor_ImagesForm=
         @setState uploadingProgress: 0
       
       fail:        (e, data) => TastyNotifyController.errorResponse data
-      done:        (e, data) => @props.doneCallback JSON.parse data.xhr().response
+      done:        (e, data) => @props.doneCallback data.jqXHR.responseJSON
 
       dragover:    (e, data) => @dragOver()
       progressall: (e, data) =>
