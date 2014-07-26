@@ -25,7 +25,7 @@ window.ReactPositionsMixin =
       @_repositionTimeout = setTimeout reposition, REPOSITION_TIMEOUT
     
   currentPosition: -> $(@getDOMNode()).position()
-  defaultPosition: -> @props.position || {top: 100, left: $(window).width()-COMPONENT_WIDTH/2 }
+  defaultPosition: -> @props.position || {top: 100, left: Math.round($(window).width()/2-COMPONENT_WIDTH/2) }
 
   restorePosition: ->
     @setPosition @initialPosition()
