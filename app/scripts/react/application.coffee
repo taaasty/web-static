@@ -24,6 +24,10 @@ window.ReactApp =
         title: 'Настройки',
         user:   user
 
+    $('[toolbar-design-settings-click]').click =>
+      # Hello Angular
+      $(document).trigger 'SHOW_DESIGN_SETTINGS'
+
     $('[toolbar-friends-click]').click =>
       React.renderComponent PersonsPopup(), personsContainer
 
