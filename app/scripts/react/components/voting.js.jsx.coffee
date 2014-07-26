@@ -2,26 +2,24 @@
 
 window.Voting = React.createClass
   propTypes:
-    isVoteable: React.PropTypes.bool
-    isVoted:    React.PropTypes.bool
-    votes:      React.PropTypes.number
-    rating:     React.PropTypes.number
-    entryId:    React.PropTypes.number
+    isVoteable: React.PropTypes.bool.isRequired
+    isVoted:    React.PropTypes.bool.isRequired
+    votes:      React.PropTypes.number.isRequired
+    rating:     React.PropTypes.number.isRequired
+    entryId:    React.PropTypes.number.isRequired
 
-  getInitialState: (a,b,c)->
-    return {
-      isVoteable: @props.isVoteable
-      isVoted:    @props.isVoted
-      votes:      @props.votes
-      rating:     @props.rating
-      process:    false
-    }
+  getInitialState: ->
+    isVoteable: @props.isVoteable
+    isVoted:    @props.isVoted
+    votes:      @props.votes
+    rating:     @props.rating
+    process:    false
 
   # Почему-то React.addons не доступен
   #mixins: [React.addons.ReactComponentWithPureRenderMixin]
 
   handleClick: (e)->
-    return if @state.isVoted
+    return if @state.isVoted || !@state.isVoteable
 
     @setState process: true
     $.ajax
