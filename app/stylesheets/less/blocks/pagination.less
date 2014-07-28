@@ -1,17 +1,23 @@
 .pagination {
-  font-size: 12px;
+  font-size: 14px;
   line-height: normal;
   font-family: @font-family-base;
+  text-align: center;
   overflow: hidden;
 }
 
 .pagination__item {
-  padding: 10px 14px;
+  padding: 12px 22px;
   display: inline-block;
   border: 1px solid;
   vertical-align: middle;
-  opacity: .2;
+  color: @pagination-color !important;
+  opacity: .5 !important;
   border-radius: @pagination-border-radius;
+
+  &:hover {
+    opacity: 1 !important;
+  }
 }
 
 .pagination__item--prev {
