@@ -2,12 +2,11 @@
 #= require ./settings_radio_item
 
 module.experts = window.ToolbarSettings = React.createClass
-  mixins: [ReactShakeMixin, React.addons.LinkedStateMixin]
+  mixins: [ReactShakeMixin, React.addons.LinkedStateMixin, ReactActivitiesUser]
 
   propTypes:
     title:        React.PropTypes.string.isRequired
     user:         React.PropTypes.instanceOf(Backbone.Model).isRequired
-    spinnerLink:  React.PropTypes.object.isRequired
 
   getInitialState: ->
     saving:     false
@@ -25,8 +24,7 @@ module.experts = window.ToolbarSettings = React.createClass
 
   save: (key, value) ->
     console.log 'save', key, value
-
-    @props.spinnerLink.requestChange @props.spinnerLink.value+1
+    @incrementActivities()
 
     # Зачем?
     #@state.set key, value
@@ -42,15 +40,13 @@ module.experts = window.ToolbarSettings = React.createClass
       method:   'put'
       data:     data
       success: (data) =>
-        @props.spinnerLink.requestChange @props.spinnerLink.value-1
         @props.user.set data
         @setState saving: false
       error: (data) =>
-        @props.spinnerLink.requestChange @props.spinnerLink.value-1
         @setState saving: false
         @shake()
         TastyNotifyController.errorResponse data
-
+      complete: => @decrementActivities()
 
   render: ->
     saveCallback = @save
@@ -63,12 +59,11 @@ module.experts = window.ToolbarSettings = React.createClass
 
 
     return `<div className="settings">
-              <form onSubmit={this.submit}>
-                <SettingsHeader 
-                  saveCallback={saveCallback}
-                  spinnerLink={this.props.spinnerLink}
-                  title={this.state.user.get('title')}
-                  user={this.state.user}/>
+              <form onSubmit={ this.submit }>
+                <SettingsHeader saveCallback={ saveCallback }
+                                activitiesHandler={ this.props.activitiesHandler }
+                                title={ this.state.user.get('title') }
+                                user={ this.state.user } />
 
                 <div className="settings__body">
 
