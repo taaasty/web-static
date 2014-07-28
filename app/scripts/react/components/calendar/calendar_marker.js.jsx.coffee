@@ -36,6 +36,9 @@ window.CalendarMarker = CalendarMarker = React.createClass
     (day * parseInt(100, 10) / parseInt(365, 10)).toFixed(2) + '%'
 
   getNumberOfRecords: (number) ->
-    number + ' ' + @declension(number, ['комментарий', 'комментария', 'комментариев'])
+    if number > 0
+      number + ' ' + @declension(number, ['запись', 'записи', 'записей'])
+    else
+      'ни одной записи'
 
 module.exports = CalendarMarker
