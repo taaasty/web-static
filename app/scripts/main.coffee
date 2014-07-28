@@ -125,6 +125,10 @@ require './react/components/post_editor/editor_container'
 require './react/components/post_editor/demo'
 # require './react/components/post_editor/images_container'
 
+require './v2/hero'
+require './v2/tasty'
+require './v2/tasty.utils'
+
 require './react/components/images_collage'
 
 require './react/components/tasty_notify'
