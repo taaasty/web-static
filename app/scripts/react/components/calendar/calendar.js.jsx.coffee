@@ -14,7 +14,6 @@ window.Calendar = Calendar = React.createClass
     tlogId:          React.PropTypes.number.isRequired
 
   getInitialState: ->
-
     calendar:        null
     currentState:    CALENDAR_CLOSED
     headerDate:      @headerDate()
@@ -26,7 +25,6 @@ window.Calendar = Calendar = React.createClass
     @attachScrollSpy()
     @setVisibleMarkers()
     $(document).bind 'domChanged', @reattachScrollSpy
-    # $(document).bind 'DOMSubtreeModified', @reattachScrollSpy
 
   componentWillUnmount: -> @dettachScrollSpy()
 
@@ -40,22 +38,26 @@ window.Calendar = Calendar = React.createClass
     children = `<CalendarHeader date={ this.state.headerDate } />`
 
     if @isOpen()
-      if @state.calendar
+      if @state.calendar?.periods?.length > 0
         children = `<CalendarTimeline visibleMarkers={ this.state.visibleMarkers }
                                       selectedEntryId={ this.state.selectedEntryId }
                                       periods={ this.state.calendar.periods } />`
       else
-        children = 'Loading..'
+        if @state.calendar?.periods?.length == 0
+          message = `<div>Нет записей</div>`
+        else
+          message = `<span className="spinner spinner--24x24"><span className="spinner__icon"></span></span>`
 
-    if @state.calendar?.periods.length > 0
-      return `<nav onClick={this.onClick}
-                   onMouseEnter={this.onMouseEnter}
-                   onMouseLeave={this.onMouseLeave}
-                   className={ calendarClasses }>
-                { children }
-              </nav>`
-    else
-      return `<div></div>`
+        children = `<div className="valign text--center">
+                      <div className="valign__middle">{ message }</div>
+                    </div>`
+
+    return `<nav onClick={this.onClick}
+                 onMouseEnter={this.onMouseEnter}
+                 onMouseLeave={this.onMouseLeave}
+                 className={ calendarClasses }>
+              { children }
+            </nav>`
 
   getCalendarFromServer: (tlogId) ->
     $.ajax
