@@ -18,6 +18,9 @@ window.ReactApp =
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()
 
+    Tasty.setupFeedHeaderScrolls()
+    Hero.start()
+
     # Есть только у юзеров
     $('[toolbar-settings-click]').click =>
       @popup.show ToolbarSettings,
@@ -37,8 +40,6 @@ window.ReactApp =
     # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
     if ic = document.getElementById 'js-static-inviter-container'
       React.renderComponent InviterShellBox(fixed: true), ic
-
-
 
 window.ReactUtils=
   isImagesEqual: (nextImages, currentImages) ->

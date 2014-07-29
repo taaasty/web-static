@@ -77,8 +77,8 @@ window.Calendar = Calendar = React.createClass
         $elTop = $el.offset().top
         $elTopWithHeight = $elTop + $el.outerHeight(true)
 
-        console.info "Пост с id = #{$el.data('id')}, движение #{direction}"
-        console.log $elTopWithHeight, scrollTop, $elTop, "движение #{direction}"
+        # console.info "Пост с id = #{$el.data('id')}, движение #{direction}"
+        # console.log $elTopWithHeight, scrollTop, $elTop, "движение #{direction}"
 
         if $elTopWithHeight >= scrollTop >= $elTop
           # Активируется пост
@@ -89,7 +89,7 @@ window.Calendar = Calendar = React.createClass
           $prevElTop = $prevEl.offset().top
           $prevElTopWithHeight = $prevElTop + $prevEl.outerHeight(true)
 
-          console.log $prevElTopWithHeight, scrollTop, $prevElTop, "движение #{direction}"
+          # console.log $prevElTopWithHeight, scrollTop, $prevElTop, "движение #{direction}"
           if $prevElTopWithHeight >= scrollTop >= $prevElTop
             # Активируется предыдущий пост
             that.updateSelectedEntry $prevEl.data('id'), $prevEl.data('time')
@@ -102,7 +102,7 @@ window.Calendar = Calendar = React.createClass
 
   updateSelectedEntry: (id, time) ->
     date = moment(time)
-    console.info "Активируется пост с id = #{id}, и time = #{time}"
+    # console.info "Активируется пост с id = #{id}, и time = #{time}"
 
     @setState headerDate: date, selectedEntryId: id
 
@@ -132,11 +132,11 @@ window.Calendar = Calendar = React.createClass
   isOpenedByClick: -> @state.currentState == CALENDAR_OPENED_BY_CLICK
 
   headerDate: ->
-    moment( if @props.entryCreatedAt? then @props.entryCreatedAt else @firstPostDate() )
+    moment( @props.entryCreatedAt ? @firstPostDate() )
 
   firstPostDate: ->
     try
-      $(TARGET_POST_CLASS).get(0).dataset.time
+      parseInt $(TARGET_POST_CLASS).get(0).dataset.time
     catch error
       console.error? error
 
