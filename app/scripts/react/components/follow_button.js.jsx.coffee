@@ -1,6 +1,8 @@
 ###* @jsx React.DOM ###
 
 module.experts = window.FollowButton = React.createClass
+  mixins: [RequesterMixin]
+
   propTypes:
     tlogId:       React.PropTypes.number.isRequired
 
@@ -9,13 +11,13 @@ module.experts = window.FollowButton = React.createClass
     isError:        false
 
   componentDidMount: ->
-    $.ajax
-      url:     Routes.api.get_my_relationship_url(@props.tlogId)
+    @createRequest
+      url: Routes.api.get_my_relationship_url(@props.tlogId)
       success: (data) =>
-        @setState relationship: data
-      error: (data)=>
+        @safeUpdateState => @setState relationship: data
+      error: (data) =>
+        @safeUpdateState => @setState isError: true
         TastyNotifyController.errorResponse data
-        @setState isError: true
 
   render: ->
     if @state.relationship?

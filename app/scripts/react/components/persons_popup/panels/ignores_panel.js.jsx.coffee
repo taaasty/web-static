@@ -1,8 +1,8 @@
 ###* @jsx React.DOM ###
 
 window.PersonsPopup_IgnoresPanel = PersonsPopup_IgnoresPanel = React.createClass
+  mixins: ['PersonsPopup_PanelMixin']
 
-  mixins:       [PersonsPopup_PanelMixin, ReactActivitiesUser]
   relationUrl:  -> Routes.api.relationships_to_url 'ignored'
   itemClass:    PersonsPopup_IgnoredRelationship
 

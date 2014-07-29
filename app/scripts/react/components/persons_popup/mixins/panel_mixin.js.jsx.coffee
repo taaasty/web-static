@@ -89,5 +89,4 @@ window.PersonsPopup_PanelMixin =
     newRelationships.splice index, 1
     @props.onLoad('update', total_count: @props.total_count - 1, items: newRelationships)
 
-# TODO Use react-mixin-manager
-_.extend window.PersonsPopup_PanelMixin, window.RequesterMixin
+React.mixins.add 'PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser']

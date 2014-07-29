@@ -9,7 +9,7 @@ DEMO_IDS=
   quote: 18971004
 
 window.PostEditor_Demo = React.createClass
-  mixins:         [ReactActivitiesMixin]
+  mixins: ['ReactActivitiesMixin', RequesterMixin]
 
   getInitialState: ->
     entryPrivacy: 'public'
@@ -22,14 +22,14 @@ window.PostEditor_Demo = React.createClass
   loadEntry: (entryId) ->
     @incrementActivities()
     @setState entry: null
-    $.ajax
-      url:     Routes.api.entry_url(entryId)
+
+    @createRequest
+      url: Routes.api.entry_url(entryId)
       success: (data) =>
-        @setState entry: data, entryType: data.type, entryPrivacy: data.privacy
-      error:   (data) =>
+        @safeUpdateState => @setState entry: data, entryType: data.type, entryPrivacy: data.privacy
+      error: (data) =>
         TastyNotifyController.errorResponse data
-      complete: =>
-        @decrementActivities()
+      complete: => @decrementActivities()
 
   changeType: (type) ->
     console.log 'change type', type

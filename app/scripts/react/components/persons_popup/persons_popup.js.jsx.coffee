@@ -3,7 +3,7 @@
 PERSON_POPUP_TITLE = 'Управление подписками'
 
 window.PersonsPopup = React.createClass
-  mixins: [ReactUnmountMixin, ReactActivitiesMixin, RequesterMixin]
+  mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
 
   getInitialState: ->
     relationships: {

@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 module.experts = window.SettingsAvatar = React.createClass
-  mixins: [ReactShakeMixin, ReactActivitiesUser]
+  mixins: [ReactShakeMixin, 'ReactActivitiesUser']
 
   propTypes:
     user:         React.PropTypes.object.isRequired

@@ -1,4 +1,6 @@
 window.PostEditor_PersistenceMixin =
+  mixins: [RequesterMixin]
+
   propTypes:
     entry:             React.PropTypes.object.isRequired
     activitiesHandler: React.PropTypes.object.isRequired
@@ -27,17 +29,15 @@ window.PostEditor_PersistenceMixin =
     @incrementActivities()
     data = @data()
     data.privacy = entryPrivacy
-    $.ajax
-      url:     @savingUrl()
-      method:  @savingMethod()
-      data:    data
+
+    @createRequest
+      url: @savingUrl()
       success: (data) =>
-        @setState entry: data, type: data.type
+        @safeUpdateState => @setState entry: data, type: data.type
         @props.doneCallback data
-      error:   (data) =>
+      error: (data) =>
         console.log 'error'
         TastyNotifyController.errorResponse data
       complete: =>
         console.log 'complete'
         @decrementActivities()
-

@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 module.experts = window.RecoveryShellBox = React.createClass
-  mixins: [ReactShakeMixin]
+  mixins: [ReactShakeMixin, RequesterMixin]
 
   getInitialState: ->
     inProcess: false
@@ -24,22 +24,22 @@ module.experts = window.RecoveryShellBox = React.createClass
 
     @setState inProcess: true
 
-    $.ajax
+    @createRequest
       url:      Routes.api.recovery_url()
-      dataType: 'json'
-      method:   'post'
       data:
         location:      window.location.href
         slug_or_email: slug
+      method:   'POST'
+      dataType: 'JSON'
       success: (data) =>
-        @setState inProcess: false
         TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля", 10000
         ReactApp.shellbox.close()
-      error: (data) =>
-        @setState inProcess: false
+      error:   (data) =>
         @shake()
         @refs.slug.getDOMNode().focus()
         TastyNotifyController.errorResponse data
+      complete: =>
+        @safeUpdateState => @setState inProcess: false
 
   render: ->
     if @state.inProcess

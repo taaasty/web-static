@@ -6,7 +6,7 @@ STATE_INSERT  = 'insert'
 STATE_LOADING  = 'loading'
 
 window.VideoMediaBox = React.createClass
-  mixins: [ReactActivitiesUser, RequesterMixin]
+  mixins: ['ReactActivitiesUser', RequesterMixin]
 
   propTypes:
     onSuccessLoad: React.PropTypes.func.isRequired

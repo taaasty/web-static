@@ -3,7 +3,7 @@
 # Ex .js-subscribe handler
 #
 module.experts = window.EmailSignupShellBox = React.createClass
-  mixins: [ReactShakeMixin]
+  mixins: [ReactShakeMixin, RequesterMixin]
 
   getInitialState: ->
     inProcess: false
@@ -24,27 +24,24 @@ module.experts = window.EmailSignupShellBox = React.createClass
 
     @setState inProcess: true
 
-    $.ajax
-      url:      Routes.api.signup_url()
-      method:   'post'
-      data:     user
-      dataType: 'json'
+    @createRequest
+      url:  Routes.api.signup_url()
+      data: user
+      method:   'POST'
+      dataType: 'JSON'
       success: (data) =>
-        @setState inProcess: false
         TastyNotifyController.notify 'success', "Добро пожаловать, #{data.name}! Подождите, я перезагружусь.."
         ReactApp.shellbox.close()
-
         _.defer -> window.location.href = data.tlog_url
-
       error: (data) =>
-        @setState inProcess: false
-
         if data.responseJSON? && data.responseJSON.error_code == "user_creator/user_exists"
           ReactApp.shellbox.show EmailSigninShellBox, email: user.email
         else
           @shake()
 
         TastyNotifyController.errorResponse data
+      complete: =>
+        @safeUpdateState => @setState inProcess: false
 
   render: ->
     footer = @renderFooter() unless @state.inProcess

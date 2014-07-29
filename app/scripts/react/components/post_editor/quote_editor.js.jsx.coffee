@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_QuoteEditor = React.createClass
-  mixins:    [PostEditor_PersistenceMixin, ReactActivitiesUser]
+  mixins:    [PostEditor_PersistenceMixin, 'ReactActivitiesUser']
 
   render: ->
     `<article className="post post--quote post--edit">

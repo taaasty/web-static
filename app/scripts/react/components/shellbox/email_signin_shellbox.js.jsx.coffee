@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 module.experts = window.EmailSigninShellBox = React.createClass
-  mixins: [ReactShakeMixin]
+  mixins: [ReactShakeMixin, RequesterMixin]
 
   propTypes:
     email: React.PropTypes.string
@@ -40,19 +40,16 @@ module.experts = window.EmailSigninShellBox = React.createClass
 
     @setState inProcess: true
 
-    $.ajax
-      url:      Routes.api.signin_url()
-      method:   'post'
-      data:     data
-      dataType: 'json'
+    @createRequest
+      url:  Routes.api.signin_url()
+      data: data
+      method:   'POST'
+      dataType: 'JSON'
       success: (data) =>
-        @setState inProcess: false
         TastyNotifyController.notify 'success', "Добро пожаловать, #{data.name}! Подождите, я перезагружусь.."
         ReactApp.shellbox.close()
         _.defer -> location.reload true
-      error: (data) =>
-        @setState inProcess: false
-
+      error:   (data) =>
         @shake()
 
         if data.responseJSON?
@@ -60,7 +57,8 @@ module.experts = window.EmailSigninShellBox = React.createClass
           @setState emailError: true    if data.responseJSON.error_code == 'user_authenticator/user_not_found'
 
         TastyNotifyController.errorResponse data
-
+      complete: =>
+        @safeUpdateState => @setState inProcess: false
 
   componentDidMount: ->
     @shake() if @props.email?

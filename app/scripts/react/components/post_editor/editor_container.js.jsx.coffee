@@ -1,7 +1,8 @@
 ###* @jsx React.DOM ###
 #
 window.PostEditor_EditorContainer = React.createClass
-  mixins:         [ReactActivitiesUser]
+  mixins: ['ReactActivitiesUser']
+
   propTypes:
     entry:         React.PropTypes.object.isRequired
     entryType:     React.PropTypes.string.isRequired
