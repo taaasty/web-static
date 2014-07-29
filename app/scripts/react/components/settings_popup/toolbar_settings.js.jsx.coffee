@@ -2,7 +2,7 @@
 #= require ./settings_radio_item
 
 module.experts = window.ToolbarSettings = React.createClass
-  mixins: [ReactShakeMixin, React.addons.LinkedStateMixin, ReactActivitiesUser, RequesterMixin]
+  mixins: [ReactShakeMixin, React.addons.LinkedStateMixin, 'ReactActivitiesUser', RequesterMixin]
 
   propTypes:
     title:        React.PropTypes.string.isRequired
@@ -42,19 +42,11 @@ module.experts = window.ToolbarSettings = React.createClass
       success: (data) =>
         @props.user.set data
       error: (data) =>
-<<<<<<< HEAD
-        @setState saving: false
-        @shake()
-        TastyNotifyController.errorResponse data
-      complete: => @decrementActivities()
-=======
-        @props.spinnerLink.requestChange @props.spinnerLink.value-1
         @shake()
         TastyNotifyController.errorResponse data
       complete: =>
         @safeUpdateState => @setState saving: false
         @decrementActivities()
->>>>>>> Переход на RequesterMixin [resolve #138]
 
   render: ->
     saveCallback = @save

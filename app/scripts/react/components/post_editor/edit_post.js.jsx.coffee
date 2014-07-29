@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_EditPost = React.createClass
-  mixins:         [PostEditor_LayoutMixin, ReactActivitiesMixin]
+  mixins:         [PostEditor_LayoutMixin, 'ReactActivitiesMixin']
 
   propTypes:
     entry:        React.PropTypes.object.isRequired

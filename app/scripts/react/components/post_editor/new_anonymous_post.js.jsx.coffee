@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_NewAnonymousPost = React.createClass
-  mixins:         [PostEditor_LayoutMixin, ReactActivitiesMixin]
+  mixins: [PostEditor_LayoutMixin, 'ReactActivitiesMixin']
 
   getDefaultProps: ->
     tlogType:  'anonymous'

@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_VideoEditor = React.createClass
-  mixins:    [PostEditor_PersistenceMixin, ReactActivitiesUser]
+  mixins:    [PostEditor_PersistenceMixin, 'ReactActivitiesUser']
 
   getInitialState: ->
     embedUrl:  @props.entry.video_url

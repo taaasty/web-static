@@ -9,7 +9,7 @@ DEMO_IDS=
   quote: 18971004
 
 window.PostEditor_Demo = React.createClass
-  mixins: [ReactActivitiesMixin, RequesterMixin]
+  mixins: ['ReactActivitiesMixin', RequesterMixin]
 
   getInitialState: ->
     entryPrivacy: 'public'

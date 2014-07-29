@@ -6,6 +6,7 @@ window.moment = require 'momentjs'
 
 require 'momentjs/lang/ru'
 require 'blueimp-file-upload/js/jquery.fileupload'
+require('react-mixin-manager')(window.React)
 
 window.imagesLoaded = require 'imagesloaded'
 

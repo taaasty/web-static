@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_NewPost = React.createClass
-  mixins:         [PostEditor_LayoutMixin, ReactActivitiesMixin]
+  mixins: [PostEditor_LayoutMixin, 'ReactActivitiesMixin']
 
   getInitialState: ->
     entryPrivacy: @props.tlogType

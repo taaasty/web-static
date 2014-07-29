@@ -28,8 +28,6 @@ ram =
 
     { increment, decrement, hasActivities, activities }
 
-window.ReactActivitiesMixin = _.extend ram, BaseMixin
-
 # Добавляется тому, кто активитисы принимает
 rau =
   propTypes:
@@ -41,5 +39,5 @@ rau =
   componentWillReceiveProps: (nextProps) ->
     @setActivitiesHandler nextProps.activitiesHandler
 
-window.ReactActivitiesUser = _.extend rau, BaseMixin
-
+React.mixins.add 'ReactActivitiesMixin', [ram, BaseMixin]
+React.mixins.add 'ReactActivitiesUser', [rau, BaseMixin]
