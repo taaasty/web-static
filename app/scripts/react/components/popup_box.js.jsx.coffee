@@ -2,40 +2,36 @@
 #= require ./popup/spinner
 
 module.exports = window.PopupBox = React.createClass
-  mixins: [ReactUnmountMixin, React.addons.LinkedStateMixin]
+  mixins: [ReactUnmountMixin, React.addons.LinkedStateMixin, ReactActivitiesMixin]
+
   propTypes:
     title: React.PropTypes.string.isRequired
-
-  getInitialState: ->
-    title: '---'
-    spinnerActivities: 0
-
-  handleClick: (e)->
-    if $(e.target).hasClass('popup-container__cell')
-      e.preventDefault()
-      @unmount()
 
   componentWillMount:   -> Mousetrap.bind 'esc', @unmount
   componentWillUnmount: -> Mousetrap.unbind 'esc', @unmount
 
   render: ->
-
-    linkState = @linkState 'spinnerActivities'
-    React.Children.map @props.children, (context)->
-      context.props.spinnerLink = linkState
+    React.Children.map @props.children, (context) =>
+      context.props.activitiesHandler = @activitiesHandler
 
     # TODO Устнанавливать title из children-а
     `<div className='popup-container'>
       <div className='popup-container__main'>
         <div className='popup-container__cell' onClick={this.handleClick}>
           <div className="popup popup--settings popup--dark">
-             <div className="popup__header">
-                <div className="popup__headbox"><h3 className="popup__title">{this.props.title}</h3></div>
-                  <PopupSpinner activities={this.state.spinnerActivities} />
-                <div className="popup__close" onClick={this.unmount}><div className="icon icon--cross"></div></div>
-             </div>
-             <div className="popup__body">{this.props.children}</div>
+            <PopupHeader title={ this.props.title }
+                         hasActivities={ this.hasActivities() }
+                         onClickClose={ this.close } />
+             <div className="popup__body">{ this.props.children }</div>
           </div>
         </div>
       </div>
     </div>`
+
+  handleClick: (e) ->
+    if $(e.target).hasClass('popup-container__cell')
+      e.preventDefault()
+      @close()
+
+  close: ->
+    if @props.onClose? then @props.onClose() else @unmount()

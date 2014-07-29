@@ -2,12 +2,12 @@
 
 module.experts = window.SettingsHeader = React.createClass
   propTypes:
-    user:         React.PropTypes.instanceOf(Backbone.Model).isRequired
-    spinnerLink:   React.PropTypes.object.isRequired
-    saveCallback:  React.PropTypes.func.isRequired
+    user:              React.PropTypes.instanceOf(Backbone.Model).isRequired
+    saveCallback:      React.PropTypes.func.isRequired
+    activitiesHandler: React.PropTypes.object.isRequired
 
   getInitialState: ->
-    isEditing:        false
+    isEditing: false
 
   render: ->
     background_url = @props.user.get('design').background_url
@@ -22,7 +22,7 @@ module.experts = window.SettingsHeader = React.createClass
             <span className="hero-simple__avatar-overlay">
               <span className="form-upload form-upload--icon">
                 <span className="form-upload__text"><i className="icon icon--pencil"></i></span>
-                <SettingsAvatar user={this.props.user} spinnerLink={this.props.spinnerLink}/>
+                <SettingsAvatar user={this.props.user} activitiesHandler={ this.props.activitiesHandler }/>
               </span>
             </span>
           </div>

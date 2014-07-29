@@ -18,7 +18,7 @@ window.PopupHeader = PopupHeader = React.createClass
       'cursor--move': @props.isDraggable
     }
 
-    return `<div className="popup__header" >
+    return `<div className="popup__header">
               <div className={ headBoxClasses }>
                 <h3 className="popup__title">{ this.props.title }</h3>
               </div>
