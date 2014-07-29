@@ -6,7 +6,7 @@ module.experts = window.ShellBox = React.createClass
   getDefaultProps: ->
     fadeSpeed: 1000
 
-  handleClick: (e)->
+  handleClick: (e) ->
     if $(e.target).hasClass('shellbox__cell')
       e.preventDefault()
       @unmount()
@@ -16,7 +16,9 @@ module.experts = window.ShellBox = React.createClass
 
   componentWillMount: ->
     @blurScreen()
-    window.addEventListener 'scroll', @unmount
+    # При фокусе на инпуте, тачдевайсы триггерят скролл, и форма будет закрываться
+    # не давая авторизоваться
+    # window.addEventListener 'scroll', @unmount
     Mousetrap.bind 'esc', @unmount
 
   componentDidMount: ->
@@ -25,7 +27,7 @@ module.experts = window.ShellBox = React.createClass
 
   componentWillUnmount: ->
     @unblurScreen()
-    window.removeEventListener 'scroll', @unmount
+    # window.removeEventListener 'scroll', @unmount
     Mousetrap.unbind 'esc', @unmount
 
   render: ->
