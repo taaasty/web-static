@@ -207,22 +207,29 @@
 }
 
 .comment-form__field-label {
-  padding: 7px 10px 6px;
+  padding: 8px 10px 7px;
   position: absolute;
   display: none;
-  opacity: .4;
+  line-height: 20px;
+  color: @comment-textarea-placeholder-color;
+  opacity: @comment-textarea-placeholder-opacity;
 }
 
 .comment-form__field-textarea {
   width: 100%;
   max-height: 200px;
   height: 20px;
-  padding: 7px 10px 6px;
+  padding: 8px 10px 7px;
   position: relative;
   border: none;
   background: none;
   font: inherit;
+  line-height: 20px;
   vertical-align: top;
   z-index: @zindex-field-control;
   transition: all .2s ease;
+
+  &::-moz-placeholder           { color: @comment-textarea-placeholder-color; opacity: @comment-textarea-placeholder-opacity; }
+  &:-ms-input-placeholder       { color: @comment-textarea-placeholder-color; opacity: @comment-textarea-placeholder-opacity; }
+  &::-webkit-input-placeholder  { color: @comment-textarea-placeholder-color; opacity: @comment-textarea-placeholder-opacity; }
 }
