@@ -77,6 +77,12 @@
                     <li class="toolbar__popup-item">
                         <a class="toolbar__popup-link js-isotope-filter-item" href="api/feed/best.html" title="Лучшее"><i class="icon icon--rating"></i>Лучшее</a>
                     </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-isotope-filter-item" href="api/feed/anonymous.html" title="Лучшее"><i class="icon icon--anonymous"></i>Анонимки</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-isotope-filter-item" href="api/feed/people.html" title="Лучшее"><i class="icon icon--friends"></i>Люди</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -146,10 +152,10 @@
                                 <div class="hero__slide">
                                     <div class="hero__head">
                                         <div class="hero__title">
-                                            <span>Друзья</span>
+                                            <span>Люди</span>
                                         </div>
                                     </div>
-                                    <div class="hero__text"><span>25 друзей</span></div>
+                                    <div class="hero__text"><span>25 758 зарегистрированы на тейсти</span></div>
                                 </div>
                                 <div class="hero__slide">
                                     <div class="hero__head">
@@ -183,28 +189,141 @@
                     <!-- Page Body -->
                     <div class="page-body">
                         <div class="page-body__wide-content">
-                            <div class="bricks-wrapper js-isotope-content" data-name="bricks">
-                                <section class="bricks js-isotope-box state--hidden">
-                                    <div class="bricks__loader">
-                                        <span class="spinner spinner--24x24"><span class="spinner__icon"></span></span>
+                            <!-- Filter Nav -->
+                            <nav class="filter-nav">
+                                <ul class="filter-nav__list">
+                                    <li class="filter-nav__item state--active">
+                                        <a class="filter-nav__link" href="#" title="Больше всего пишут">Больше всего пишут</a>
+                                    </li><li class="filter-nav__item">
+                                        <a class="filter-nav__link" href="#" title="Новые">Новые</a>
+                                    </li><li class="filter-nav__item">
+                                        <a class="filter-nav__link" href="#" title="Много комментируют">Много комментируют</a>
+                                    </li><li class="filter-nav__item">
+                                        <a class="filter-nav__link" href="#" title="Интересные">Интересные</a>
+                                    </li><li class="filter-nav__item">
+                                        <a class="filter-nav__link" href="#" title="Плохо себя вели">Плохо себя вели</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!-- end Filter Nav -->
+                            <!-- People -->
+                            <section class="people">
+                                <article class="people-item">
+                                    <div class="people-item__inner">
+                                        <a class="people-item__link" href="#">
+                                            <div class="people-item__avatar">
+                                                <span class="avatar" style="background-image: url(images/avatars/ava_10.png);">
+                                                    <img class="avatar__img" src="images/avatars/ava_10.png" alt="still-got-tonight" />
+                                                </span>
+                                            </div>
+                                            <h3 class="people-item__name">still-got-tonight</h3>
+                                        </a>
                                     </div>
-                                </section>
-                                <section class="bricks js-isotope-box state--hidden">
-                                    <div class="bricks__loader">
-                                        <span class="spinner spinner--24x24"><span class="spinner__icon"></span></span>
+                                </article>
+                                <article class="people-item">
+                                    <div class="people-item__inner">
+                                        <a class="people-item__link" href="#">
+                                            <div class="people-item__avatar">
+                                                <span class="avatar" style="background-image: url(images/avatars/ava_9.png);">
+                                                    <img class="avatar__img" src="images/avatars/ava_9.png" alt="tuylenparanoik" />
+                                                </span>
+                                            </div>
+                                            <h3 class="people-item__name">tuylenparanoik</h3>
+                                            <p class="people-item__desc">Все началось тогда, когда белая медведица повстречала бурую</p>
+                                        </a>
                                     </div>
-                                </section>
-                                <section class="bricks js-isotope-box state--hidden">
-                                    <div class="bricks__loader">
-                                        <span class="spinner spinner--24x24"><span class="spinner__icon"></span></span>
+                                </article>
+                                <article class="people-item">
+                                    <div class="people-item__inner">
+                                        <a class="people-item__link" href="#">
+                                            <div class="people-item__avatar">
+                                                <span class="avatar" style="background-image: url(images/avatars/ava_8.png);">
+                                                    <img class="avatar__img" src="images/avatars/ava_8.png" alt="alkogolYana" />
+                                                </span>
+                                            </div>
+                                            <h3 class="people-item__name">alkogolYana</h3>
+                                            <p class="people-item__desc">Вечнохудеющий алкоголик, ищущий того единственного, но "закоренелый холостяк"</p>
+                                        </a>
                                     </div>
-                                </section>
-                                <section class="bricks js-isotope-box state--hidden">
-                                    <div class="bricks__loader">
-                                        <span class="spinner spinner--24x24"><span class="spinner__icon"></span></span>
+                                </article>
+                                <article class="people-item">
+                                    <div class="people-item__inner">
+                                        <a class="people-item__link" href="#">
+                                            <div class="people-item__avatar">
+                                                <span class="avatar" style="background-image: url(images/avatars/ava_10.png);">
+                                                    <img class="avatar__img" src="images/avatars/ava_10.png" alt="still-got-tonight" />
+                                                </span>
+                                            </div>
+                                            <h3 class="people-item__name">still-got-tonight</h3>
+                                        </a>
                                     </div>
-                                </section>
-                            </div>
+                                </article>
+                                <article class="people-item">
+                                    <div class="people-item__inner">
+                                        <a class="people-item__link" href="#">
+                                            <div class="people-item__avatar">
+                                                <span class="avatar" style="background-image: url(images/avatars/ava_9.png);">
+                                                    <img class="avatar__img" src="images/avatars/ava_9.png" alt="tuylenparanoik" />
+                                                </span>
+                                            </div>
+                                            <h3 class="people-item__name">tuylenparanoik</h3>
+                                            <p class="people-item__desc">Все началось тогда, когда белая медведица повстречала бурую</p>
+                                        </a>
+                                    </div>
+                                </article>
+                                <article class="people-item">
+                                    <div class="people-item__inner">
+                                        <a class="people-item__link" href="#">
+                                            <div class="people-item__avatar">
+                                                <span class="avatar" style="background-image: url(images/avatars/ava_8.png);">
+                                                    <img class="avatar__img" src="images/avatars/ava_8.png" alt="alkogolYana" />
+                                                </span>
+                                            </div>
+                                            <h3 class="people-item__name">alkogolYana</h3>
+                                            <p class="people-item__desc">Вечнохудеющий алкоголик, ищущий того единственного, но "закоренелый холостяк"</p>
+                                        </a>
+                                    </div>
+                                </article>
+                                <article class="people-item">
+                                    <div class="people-item__inner">
+                                        <a class="people-item__link" href="#">
+                                            <div class="people-item__avatar">
+                                                <span class="avatar" style="background-image: url(images/avatars/ava_10.png);">
+                                                    <img class="avatar__img" src="images/avatars/ava_10.png" alt="still-got-tonight" />
+                                                </span>
+                                            </div>
+                                            <h3 class="people-item__name">still-got-tonight</h3>
+                                        </a>
+                                    </div>
+                                </article>
+                                <article class="people-item">
+                                    <div class="people-item__inner">
+                                        <a class="people-item__link" href="#">
+                                            <div class="people-item__avatar">
+                                                <span class="avatar" style="background-image: url(images/avatars/ava_9.png);">
+                                                    <img class="avatar__img" src="images/avatars/ava_9.png" alt="tuylenparanoik" />
+                                                </span>
+                                            </div>
+                                            <h3 class="people-item__name">tuylenparanoik</h3>
+                                            <p class="people-item__desc">Все началось тогда, когда белая медведица повстречала бурую</p>
+                                        </a>
+                                    </div>
+                                </article>
+                                <article class="people-item">
+                                    <div class="people-item__inner">
+                                        <a class="people-item__link" href="#">
+                                            <div class="people-item__avatar">
+                                                <span class="avatar" style="background-image: url(images/avatars/ava_8.png);">
+                                                    <img class="avatar__img" src="images/avatars/ava_8.png" alt="alkogolYana" />
+                                                </span>
+                                            </div>
+                                            <h3 class="people-item__name">alkogolYana</h3>
+                                            <p class="people-item__desc">Вечнохудеющий алкоголик, ищущий того единственного, но "закоренелый холостяк"</p>
+                                        </a>
+                                    </div>
+                                </article>
+                            </section>
+                            <!-- end People -->
                             <div class="page-loader state--hidden js-page-loader">
                                 <span class="spinner spinner--24x24"><span class="spinner__icon"></span></span>
                             </div>
