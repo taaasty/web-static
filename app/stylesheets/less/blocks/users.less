@@ -1,0 +1,67 @@
+.users {
+  .user__link {
+    color: @white;
+
+    &:hover {
+      background-color: @user-hover-bg;
+    }
+  }
+}
+
+.user__item {
+  color: @white;
+
+  &:first-child {
+    .user__link {
+      border-top: none;
+    }
+  }
+}
+
+.user__link {
+  padding: @user-padding-vertical @user-padding-horizontal;
+  display: block;
+  border-top: 1px solid rgba(red(@white), green(@white), blue(@white), .08);
+}
+
+.user__avatar {
+  width: @user-avatar-size;
+  height: @user-avatar-size;
+  margin-right: 14px;
+  display: inline-block;
+  background-color: rgba(27, 27, 27, .4);
+  vertical-align: middle;
+  border-radius: 50%;
+  background-size: cover;
+}
+
+.user__desc {
+  max-width: 114px;
+  position: relative;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.user__name {
+  max-width: 102px;
+  margin-right: 6px;
+  display: inline-block;
+  vertical-align: middle;
+  .text-overflow();
+}
+
+.user__count {
+  width: 44px;
+  margin-top: 12px;
+  float: right;
+  text-align: right;
+}
+
+.user__online {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  background-color: @yellow;
+  vertical-align: middle;
+  border-radius: 50%;
+}

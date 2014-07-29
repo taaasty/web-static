@@ -1,16 +1,16 @@
-.filter-search {
+.search {
   position: absolute;
   display: inline-block;
-  right: @filter-search-indent;
-  bottom: @filter-search-indent;
+  right: @search-indent;
+  bottom: @search-indent;
   border: 1px solid;
   line-height: 1;
   vertical-align: middle;
   overflow: hidden;
   opacity: .45;
-  border-radius: @filter-search-border-radius;
+  border-radius: @search-border-radius;
   transition: opacity .3s ease;
-  z-index: @zindex-filter-search;
+  z-index: @zindex-search;
 
   .page-header & {
     color: #e3e3e3;
@@ -25,19 +25,19 @@
   }
 }
 
-.filter-search__form {
+.search__form {
   max-width: 0;
   display: inline-block;
   vertical-align: top;
   overflow: hidden;
   transition: max-width .3s ease;
 
-  .filter-search.state--active & {
-    max-width: @filter-search-active-max-width;
+  .search.state--active & {
+    max-width: @search-active-max-width;
   }
 }
 
-.filter-search__input {
+.search__input {
   width: 100%;
   padding: 5px 0 5px 12px;
   border: none;
@@ -51,7 +51,7 @@
   .placeholder(inherit);
 }
 
-.filter-search__button {
+.search__button {
   width: 28px;
   height: 28px;
   margin: -1px;
