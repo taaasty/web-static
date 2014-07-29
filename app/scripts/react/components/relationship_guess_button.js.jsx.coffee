@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.RelationshipGuessButton = React.createClass
-  mixins: [ErrorTimerMixin]
+  mixins: [ErrorTimerMixin, RequesterMixin]
 
   propTypes:
     relationship: React.PropTypes.object.isRequired
@@ -35,23 +35,21 @@ window.RelationshipGuessButton = React.createClass
   handleApproveClick: ->
     @setState isProcess: true
 
-    xhr = $.ajax
+    @createRequest
       url: Routes.api.relationships_by_tlog_approve_url(@props.relationship.user.id)
       method: 'POST'
-      success: (data) =>
-        console.log 'Контакт одобрен', data
-      error: (data) =>
+      success: (data) => console.log 'Контакт одобрен', data
+      error:   (data) =>
         TastyNotifyController.errorResponse data
         @startErrorTimer()
-
-    xhr.always =>
-      @setState isProcess: false
-      @props.onRequestEnd(@props.key)
+      complete: =>
+        @safeUpdateState => @setState isProcess: false
+        @props.onRequestEnd(@props.key)
 
   handleDisapproveClick: ->
     @setState isProcess: true
 
-    xhr = $.ajax
+    @createRequest
       url: Routes.api.relationships_by_tlog_disapprove_url(@props.relationship.user.id)
       method: 'POST'
       success: (data) =>
@@ -60,7 +58,6 @@ window.RelationshipGuessButton = React.createClass
       error: (data) =>
         TastyNotifyController.errorResponse data
         @startErrorTimer()
-
-    xhr.always =>
-      @setState isProcess: false
-      @props.onRequestEnd(@props.key)
+      complete: =>
+        @safeUpdateState => @setState isProcess: false
+        @props.onRequestEnd(@props.key)

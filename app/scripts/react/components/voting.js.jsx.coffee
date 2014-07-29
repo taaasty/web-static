@@ -1,6 +1,8 @@
 ###* @jsx React.DOM ###
 
 window.Voting = React.createClass
+  mixins: [RequesterMixin]
+
   propTypes:
     isVoteable: React.PropTypes.bool.isRequired
     isVoted:    React.PropTypes.bool.isRequired
@@ -22,18 +24,18 @@ window.Voting = React.createClass
     return if @state.isVoted || !@state.isVoteable
 
     @setState process: true
-    $.ajax
-      url:     Routes.api.votes_url(@props.entryId)
-      method:  @ajaxMethod()
-      success: (data)=>
-        @setState
-          isVoted:    data.is_voted
-          isVoteable: data.is_voteable
-          votes:      data.votes
-          rating:     data.votes
-
+    @createRequest
+      url: Routes.api.votes_url(@props.entryId)
+      method: @ajaxMethod()
+      success: (data) =>
+        @safeUpdateState =>
+          @setState
+            isVoted:    data.is_voted
+            isVoteable: data.is_voteable
+            votes:      data.votes
+            rating:     data.votes
       complete: =>
-        @setState process: false
+        @safeUpdateState => @setState process: false
 
   shouldComponentUpdate: (nextProps, nextState) ->
     res = !_.isEqual(nextProps, @props) || !_.isEqual(nextState, @state)

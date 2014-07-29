@@ -5,7 +5,8 @@ STATE_NONE    = 'none'
 STATE_UNKNOWN = 'unknown'
 
 module.experts = window.RelationshipFollowingButton = React.createClass
-  mixins:        [ErrorTimerMixin]
+  mixins:        [ErrorTimerMixin, RequesterMixin]
+
   propTypes:
     relationship: React.PropTypes.object.isRequired
     ignoringOnly: React.PropTypes.bool
@@ -107,17 +108,16 @@ module.experts = window.RelationshipFollowingButton = React.createClass
         else
           action = 'follow'
 
-    xhr = $.ajax
-      url:     Routes.api.change_my_relationship_url(@props.relationship.user_id, action)
-      method:  'POST'
+    @createRequest
+      url: Routes.api.change_my_relationship_url(@props.relationship.user_id, action)
+      method: 'POST'
       success: (data) =>
-        @setState relationship: data
-      error: (data)=>
+        @safeUpdateState => @setState relationship: data
+      error: (data) =>
+        @safeUpdateState => @setState isError: true
         TastyNotifyController.errorResponse data
-        @startErrorTimer()
-
-    xhr.always =>
-      @setState isProcess: false
+      complete: =>
+        @safeUpdateState => @setState isProcess: false
 
   handleHover: -> @setState isHover: true
   handleBlur:  -> @setState isHover: false

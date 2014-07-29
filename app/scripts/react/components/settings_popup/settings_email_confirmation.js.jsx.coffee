@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 #
 window.SettingsEmailConfirmation = React.createClass
-  mixins: [ReactShakeMixin]
+  mixins: [ReactShakeMixin, RequesterMixin]
 
   propTypes:
     isConfirmed:  React.PropTypes.bool.isRequired
@@ -16,15 +16,15 @@ window.SettingsEmailConfirmation = React.createClass
   clickConfirm: ->
     @setState process: 1
 
-    $.ajax
-      url:      Routes.api.request_confirm_url()
-      dataType: 'json'
-      method:   'post'
+    @createRequest
+      url: Routes.api.request_confirm_url()
+      dataType: 'JSON'
+      method:   'POST'
       success: (data) =>
-        @setState process: 2
+        @safeUpdateState => @setState process: 2
         TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
       error: (data) =>
-        @setState process: 1
+        @safeUpdateState => @setState process: 1
         @shake()
         TastyNotifyController.errorResponse data
 

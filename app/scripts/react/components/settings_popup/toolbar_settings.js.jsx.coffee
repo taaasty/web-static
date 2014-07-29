@@ -2,7 +2,7 @@
 #= require ./settings_radio_item
 
 module.experts = window.ToolbarSettings = React.createClass
-  mixins: [ReactShakeMixin, React.addons.LinkedStateMixin, ReactActivitiesUser]
+  mixins: [ReactShakeMixin, React.addons.LinkedStateMixin, ReactActivitiesUser, RequesterMixin]
 
   propTypes:
     title:        React.PropTypes.string.isRequired
@@ -34,19 +34,27 @@ module.experts = window.ToolbarSettings = React.createClass
     data = {}
     data[key] = value
 
-    $.ajax
-      url:      Routes.api.update_profile_url()
-      dataType: 'json'
-      method:   'put'
-      data:     data
+    @createRequest
+      url:  Routes.api.update_profile_url()
+      data: data
+      dataType: 'JSON'
+      method:   'PUT'
       success: (data) =>
         @props.user.set data
-        @setState saving: false
       error: (data) =>
+<<<<<<< HEAD
         @setState saving: false
         @shake()
         TastyNotifyController.errorResponse data
       complete: => @decrementActivities()
+=======
+        @props.spinnerLink.requestChange @props.spinnerLink.value-1
+        @shake()
+        TastyNotifyController.errorResponse data
+      complete: =>
+        @safeUpdateState => @setState saving: false
+        @decrementActivities()
+>>>>>>> Переход на RequesterMixin [resolve #138]
 
   render: ->
     saveCallback = @save
