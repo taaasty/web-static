@@ -1,4 +1,5 @@
 #= require react
+#= require react-mixin-manager
 #= require react_ujs
 #= require_tree ./services
 #= require_tree ./mixins
