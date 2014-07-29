@@ -55,8 +55,11 @@
 
   .state--disabled {
     color: @white !important;
-    cursor: default;
     opacity: .2 !important;
+
+    a {
+      cursor: default;
+    }
 
     .icon {
       color: @white !important;
@@ -245,13 +248,6 @@
     }
   }
 
-  &:first-child {
-    .toolbar__toggle:hover + .toolbar__popup & {
-      .toolbar__popup-link {
-        .toolbar-popup-link-hover;
-      }
-    }
-  }
 }
 
 .toolbar__popup-link {

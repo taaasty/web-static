@@ -21,18 +21,10 @@ window.ReactApp =
     Tasty.setupFeedHeaderScrolls()
     Hero.start()
 
-    # Есть только у юзеров
-    $('[toolbar-settings-click]').click =>
-      @popup.show ToolbarSettings,
-        title: 'Настройки',
-        user:   user
-
-    $('[toolbar-design-settings-click]').click =>
-      # Hello Angular
-      $(document).trigger 'SHOW_DESIGN_SETTINGS'
-
-    $('[toolbar-friends-click]').click =>
-      React.renderComponent PersonsPopup(), personsContainer
+    # User Toolbar
+    userToolbarContainer = document.querySelectorAll('[user-toolbar-container]')[0]
+    if userToolbarContainer?
+      React.renderComponent UserToolbar({ user }), userToolbarContainer
 
     # Есть только у анонимов
     $('[invite-button]').click => @shellbox.show InviterShellBox

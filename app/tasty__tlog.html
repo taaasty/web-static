@@ -108,45 +108,7 @@
         <!-- end Toolbar - Logo -->
 
         <!-- Toolbar - Userbar -->
-        <nav class="toolbar toolbar--right toolbar--nav js-dropdown" ng-controller="UserToolbar">
-            <div class="toolbar__toggle" data-element="dropdown-toggle">
-                <i class="icon icon--menu"></i>
-            </div>
-            <div class="toolbar__popup" data-element="dropdown-menu">
-                <ul class="toolbar__popup-list">
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icon icon--plus"></i>Новая запись</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icon icon--diary"></i>Мой дневник</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icon icon--profile"></i>Профиль</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icon icon--lock"></i>Скрытые записи</a>
-                    </li>
-                    <li class="toolbar__popup-item state--disabled">
-                        <span class="toolbar__popup-link"><i class="icon icon--messages"></i>Сообщения</span>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#" toolbar-friends-click><i class="icon icon--friends"></i>Друзья</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#" click="showDesignSettings()" toolbar-design-settings-click><i class="icon icon--drawing"></i>Дизайн дневника</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-settings-toggle" href="#" toolbar-settings-click><i class="icon icon--cogwheel"></i>Настройки</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icon icon--logout"></i>Выйти</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <div user-toolbar-container></div>
         <!-- end Toolbar - Userbar -->
 
         <!-- Auth Button -->

@@ -56,6 +56,9 @@ require './react/components/settings_popup/settings_radio_item'
 require './react/components/settings_popup/settings_vkontakte'
 require './react/components/settings_popup/toolbar_settings'
 
+require './react/components/toolbars/user'
+require './react/components/toolbars/toolbar_item'
+
 require './react/components/voting'
 require './react/components/shellbox_layer'
 require './react/components/buttons/load_more'
