@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.MetabarDropdownMenuWatchItem = React.createClass
+  mixins: [RequesterMixin]
 
   propTypes:
     entryId:    React.PropTypes.number.isRequired
@@ -29,11 +30,34 @@ window.MetabarDropdownMenuWatchItem = React.createClass
     e.stopPropagation()
     e.preventDefault()
 
-    @setState isWatching: !@state.isWatching
-    if !@state.isWatching
-      console.info "Оформлена подписка на комментарии поста #{@props.entryId}"
+    if @state.isWatching
+      @removeFromWatching()
     else
-      console.info "Отменена подписка на комментарии поста #{@props.entryId}"
+      @addToWatching()
+
+  addToWatching: ->
+    @createRequest
+      url: Routes.api.watching_url()
+      method: 'POST'
+      data:
+        entry_id: @props.entryId
+      success: =>
+        @safeUpdateState => @setState isWatching: true
+        console.info "Оформлена подписка на комментарии поста #{@props.entryId}"
+      error: (data) ->
+        TastyNotifyController.errorResponse data
+
+  removeFromWatching: ->
+    @createRequest
+      url: Routes.api.watching_url()
+      method: 'DELETE'
+      data:
+        entry_id: @props.entryId
+      success: =>
+        @safeUpdateState => @setState isWatching: false
+        console.info "Отменена подписка на комментарии поста #{@props.entryId}"
+      error: (data) ->
+        TastyNotifyController.errorResponse data
 
   onMouseEnter: -> @setState isHover: true
   onMouseLeave: -> @setState isHover: false
