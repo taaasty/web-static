@@ -24,5 +24,5 @@ window.MetabarDropdownMenuReportItem = React.createClass
     @createRequest
       url: Routes.api.report_url @props.entryId
       method: 'POST'
-      success: => TastyNotifyController.notify 'Жалоба на пост успешно отправлена'
+      success: => TastyNotifyController.notify 'success', 'Жалоба на пост успешно отправлена'
       error:   (data) -> TastyNotifyController.errorResponse data
