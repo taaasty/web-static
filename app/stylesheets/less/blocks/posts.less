@@ -164,12 +164,14 @@
   min-height: 300px;
   height: auto !important;
   height: 300px;
-  position: absolute;
+  position: relative;
+  z-index: @zindex-post-edit-active;
+  /*position: absolute; // Смотреть global-state.less 456
   top: 0;
-  /*visibility: hidden;
-  opacity: 0;*/
+  visibility: hidden;
+  opacity: 0;
   transition: visibility 0s ease .3s, opacity .3s ease;
-  z-index: @zindex-post-edit;
+  z-index: @zindex-post-edit;*/
 }
 
 // Плашка справа сверху с кнопками на странице редактора
