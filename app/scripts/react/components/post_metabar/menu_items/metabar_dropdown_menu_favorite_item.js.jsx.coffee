@@ -1,14 +1,14 @@
 ###* @jsx React.DOM ###
 
 window.MetabarDropdownMenuFavoriteItem = React.createClass
+  mixins: [RequesterMixin]
 
   propTypes:
     isFavorited: React.PropTypes.bool.isRequired
     entryId:     React.PropTypes.number.isRequired
-    title:       React.PropTypes.string.isRequired
 
   getInitialState: ->
-    isFavorited: @props.isFavorited ? false
+    isFavorited: @props.isFavorited
     isHover:     false
 
   render: ->
@@ -36,11 +36,34 @@ window.MetabarDropdownMenuFavoriteItem = React.createClass
     e.stopPropagation()
     e.preventDefault()
 
-    @setState isFavorited: !@state.isFavorited
-    if !@state.isFavorited
-      console.info "Пост #{@props.entryId} добавлен в избранное"
+    if @state.isFavorited
+      @removeFromFavorites()
     else
-      console.info "Пост #{@props.entryId} удалён из избранного"
+      @addToFavorites()
+
+  addToFavorites: ->
+    @createRequest
+      url: Routes.api.favorites_url()
+      method: 'POST'
+      data:
+        entry_id: @props.entryId
+      success: =>
+        @safeUpdateState => @setState isFavorited: true
+        console.info "Пост #{@props.entryId} добавлен в избранное"
+      error: (data) ->
+        TastyNotifyController.errorResponse data
+
+  removeFromFavorites: ->
+    @createRequest
+      url: Routes.api.favorites_url()
+      method: 'DELETE'
+      data:
+        entry_id: @props.entryId
+      success: =>
+        @safeUpdateState => @setState isFavorited: false
+        console.info "Пост #{@props.entryId} удалён из избранного"
+      error: (data) ->
+        TastyNotifyController.errorResponse data
 
   onMouseEnter: -> @setState isHover: true
   onMouseLeave: -> @setState isHover: false

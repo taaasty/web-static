@@ -5,10 +5,9 @@ window.MetabarDropdownMenuWatchItem = React.createClass
   propTypes:
     entryId:    React.PropTypes.number.isRequired
     isWatching: React.PropTypes.bool.isRequired
-    title:      React.PropTypes.string.isRequired
 
   getInitialState: ->
-    isWatching: @props.isWatching ? false
+    isWatching: @props.isWatching
     isHover:    false
 
   render: ->
@@ -24,7 +23,7 @@ window.MetabarDropdownMenuWatchItem = React.createClass
     if @state.isWatching
       if @state.isHover then 'Отписаться' else 'Подписан'
     else
-      'Подписаться'
+      'Подписаться на комментарии'
 
   onClick: (e) ->
     e.stopPropagation()

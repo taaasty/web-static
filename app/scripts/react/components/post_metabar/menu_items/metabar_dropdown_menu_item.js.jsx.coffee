@@ -10,6 +10,6 @@ window.MetabarDropdownMenuItem = React.createClass
   render: ->
     `<a href={ this.props.href }
        className="meta-item__dropdown-item">
-      <i className={ "icon icon--" + this.props.icon }></i>
+      <i className={ "icon " + this.props.icon }></i>
       { this.props.title }
     </a>`

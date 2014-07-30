@@ -5,18 +5,20 @@ DROPDOWN_OPENED_BY_HOVER = 'openedByHover'
 DROPDOWN_OPENED_BY_CLICK = 'openedByClick'
 
 window.MetabarDropdownMenu = React.createClass
+  mixins: [ReactUnmountMixin]
 
   propTypes:
-    entryId:     React.PropTypes.number.isRequired
-    isFavorited: React.PropTypes.bool.isRequired
-    isWatching:  React.PropTypes.bool.isRequired
-    entryUrl:    React.PropTypes.string.isRequired
-    editUrl:     React.PropTypes.string.isRequired
-    canEdit:     React.PropTypes.bool
-    canFavorite: React.PropTypes.bool
-    canWatch:    React.PropTypes.bool
-    canReport:   React.PropTypes.bool
-    canDelete:   React.PropTypes.bool
+    entryId:          React.PropTypes.number.isRequired
+    isFavorited:      React.PropTypes.bool.isRequired
+    isWatching:       React.PropTypes.bool.isRequired
+    entryUrl:         React.PropTypes.string.isRequired
+    editUrl:          React.PropTypes.string.isRequired
+    successDeleteUrl: React.PropTypes.string.isRequired
+    canEdit:          React.PropTypes.bool.isRequired
+    canFavorite:      React.PropTypes.bool.isRequired
+    canWatch:         React.PropTypes.bool.isRequired
+    canReport:        React.PropTypes.bool.isRequired
+    canDelete:        React.PropTypes.bool.isRequired
 
   getInitialState: ->
     currentState: DROPDOWN_CLOSED
@@ -30,30 +32,28 @@ window.MetabarDropdownMenu = React.createClass
 
     if @props.canEdit
       actionList.push `<MetabarDropdownMenuItem title="Редактировать"
-                                                icon="pencil"
+                                                icon="icon--pencil"
                                                 href={ this.props.editUrl }
                                                 key="edit" />`
     actionList.push `<MetabarDropdownMenuItem title="Ссылка на запись"
-                                              icon="hyperlink"
+                                              icon="icon--hyperlink"
                                               href={ this.props.entryUrl }
                                               key="link" />`
     if @props.canFavorite
       actionList.push `<MetabarDropdownMenuFavoriteItem entryId={ this.props.entryId }
                                                         isFavorited={ this.props.isFavorited }
-                                                        title="Добавить в избранное"
                                                         key="favorite" />`
     if @props.canWatch
       actionList.push `<MetabarDropdownMenuWatchItem entryId={ this.props.entryId }
                                                      isWatching={ this.props.isWatching }
-                                                     title="Подписаться на комментарии"
                                                      key="watch" />`
     if @props.canReport
       actionList.push `<MetabarDropdownMenuReportItem entryId={ this.props.entryId }
-                                                      title="Пожаловаться"
                                                       key="report" />`
     if @props.canDelete
       actionList.push `<MetabarDropdownMenuDeleteItem entryId={ this.props.entryId }
-                                                      title="Удалить"
+                                                      successDeleteUrl={ this.props.successDeleteUrl }
+                                                      onDelete={ this.onDelete }
                                                       key="delete" />`
 
     return `<span onClick={ this.onClick }
@@ -78,5 +78,7 @@ window.MetabarDropdownMenu = React.createClass
   onMouseLeave: ->
     if @state.currentState == DROPDOWN_OPENED_BY_HOVER
       @setState currentState: DROPDOWN_CLOSED
+
+  onDelete: -> @unmount() if @isMounted()
 
   isOpen: -> @state.currentState != DROPDOWN_CLOSED
