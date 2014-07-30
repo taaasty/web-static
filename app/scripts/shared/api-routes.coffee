@@ -18,6 +18,7 @@ ApiRoutes =
   update_images_url:                   (entryId) -> TastySettings.api_host + 'v1/entries/image/' +entryId+ '/images'
 
   entry_url:                           (entryId) -> TastySettings.api_host + 'v1/entries/' + entryId
+  favorites_url:                                 -> TastySettings.api_host + 'v1/favorites'
 
   iframely_url:                                  -> TastySettings.api_host + 'v1/embeding/iframely.json'
 
