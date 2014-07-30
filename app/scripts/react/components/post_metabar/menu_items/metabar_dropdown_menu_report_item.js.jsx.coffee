@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.MetabarDropdownMenuReportItem = React.createClass
+  mixins: [RequesterMixin]
 
   propTypes:
     entryId: React.PropTypes.number.isRequired
@@ -16,4 +17,12 @@ window.MetabarDropdownMenuReportItem = React.createClass
     e.stopPropagation()
     e.preventDefault()
 
-    console.info "Принимаем жалобу пользователя на пост #{@props.entryId}"
+    @createReport() if confirm 'Вы действительно хотите пожаловаться на пост?'
+
+  createReport: ->
+
+    @createRequest
+      url: Routes.api.report_url @props.entryId
+      method: 'POST'
+      success: => TastyNotifyController.notify 'Жалоба на пост успешно отправлена'
+      error:   (data) -> TastyNotifyController.errorResponse data
