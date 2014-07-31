@@ -1,4 +1,4 @@
-TastyUtils =
+window.TastyUtils =
   centerHorizontally: (element) ->
     $(element).each ->
       e = $(this)
