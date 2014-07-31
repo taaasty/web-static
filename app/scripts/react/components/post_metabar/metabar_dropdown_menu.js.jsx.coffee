@@ -12,9 +12,8 @@ window.MetabarDropdownMenu = React.createClass
     isFavorited:      React.PropTypes.bool.isRequired
     isWatching:       React.PropTypes.bool.isRequired
     entryUrl:         React.PropTypes.string.isRequired
-    editUrl:          React.PropTypes.string.isRequired
-    successDeleteUrl: React.PropTypes.string.isRequired
-    canEdit:          React.PropTypes.bool.isRequired
+    successDeleteUrl: React.PropTypes.string
+    editUrl:          React.PropTypes.string
     canFavorite:      React.PropTypes.bool.isRequired
     canWatch:         React.PropTypes.bool.isRequired
     canReport:        React.PropTypes.bool.isRequired
@@ -30,7 +29,7 @@ window.MetabarDropdownMenu = React.createClass
       'state--open': @isOpen()
     }
 
-    if @props.canEdit
+    if @props.editUrl
       actionList.push `<MetabarDropdownMenuItem title="Редактировать"
                                                 icon="icon--pencil"
                                                 href={ this.props.editUrl }
