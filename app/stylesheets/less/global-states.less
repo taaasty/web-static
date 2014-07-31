@@ -28,6 +28,12 @@
     .transition(none) !important;
     .animation(none) !important;
   }
+
+  @media screen and (max-width: 1024px) { // Убираем фикс для обложки hero, чтобы правильно тянулось на планшетах и телефонах
+    .hero--cover {
+      background-attachment: scroll;
+    }
+  }
 }
 
 // Шаблоны тлогов
