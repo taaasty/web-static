@@ -125,9 +125,10 @@ window.UserToolbar = UserToolbar = React.createClass
     $(document).trigger 'SHOW_DESIGN_SETTINGS'
 
   handleSettingsSelect: ->
+    user = new Backbone.Model @props.user
     ReactApp.popup.show ToolbarSettings, {
-      title:  'Настройки',
-      user:   @props.user
+      title: 'Настройки',
+      user:  user
     }
 
   isOpen: -> @state.currentState != TOOLBAR_CLOSED

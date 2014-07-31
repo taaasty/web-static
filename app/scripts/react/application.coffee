@@ -22,10 +22,10 @@ window.ReactApp =
     Tasty.setupFeedHeaderScrolls()
     Hero.start()
 
-    # User Toolbar
-    userToolbarContainer = document.querySelectorAll('[user-toolbar-container]')[0]
-    if userToolbarContainer?
-      React.renderComponent UserToolbar({ user }), userToolbarContainer
+    # # User Toolbar
+    # userToolbarContainer = document.querySelectorAll('[user-toolbar-container]')[0]
+    # if userToolbarContainer?
+    #   React.renderComponent UserToolbar({ user }), userToolbarContainer
 
     # Есть только у анонимов
     $('[invite-button]').click => @shellbox.show InviterShellBox
