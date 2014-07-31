@@ -21,7 +21,9 @@ window.PositionsService =
     windowHeight = $(window).height()
 
     position.top  = windowHeight - MOVE_OFFSET if position.top  > (windowHeight - MIN_OFFSET)
+    position.top  = 0 if position.top < 0
     position.left = windowWidth  - MOVE_OFFSET if position.left > (windowWidth  - MIN_OFFSET)
+    position.left = 0 if position.left < 0
 
     position
 

@@ -27,7 +27,6 @@ window.Popup = React.createClass
   componentWillUnmount: ->
     $('body').removeClass 'no-scroll'
     Mousetrap.unbind 'esc', @close
-    $(window).off 'resize', @onResize
 
   render: ->
     classes = popup: true, 'popup--dark': @props.isDark, 'popup--center': true
@@ -51,7 +50,9 @@ window.Popup = React.createClass
 
     $popupNode.draggable
       handle: headboxNode
-      stop: (event, ui) => @savePosition ui.offset
+      stop: (event, ui) =>
+        @checkPosition()
+        @savePosition ui.position
 
   close: ->
     if @props.onClose? then @props.onClose() else @unmount()
