@@ -58,10 +58,7 @@
     opacity: .2 !important;
 
     a {
-      background: none !important;
-      color: #bbb;
       cursor: default;
-      opacity: .92;
     }
 
     .icon {
@@ -273,6 +270,14 @@
     .toolbar__popup-link {
       background: @toolbar-item-highlight-bg !important;
       color: #232323;
+    }
+  }
+
+  &.state--disabled {
+    .toolbar__popup-link {
+      background: none !important;
+      color: #bbb;
+      opacity: .92;
     }
   }
 }
