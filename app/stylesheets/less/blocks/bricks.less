@@ -134,6 +134,18 @@
   .comment__avatar {
     top: 0;
   }
+
+  @media screen and (max-width: 1024px) { // Делаем три столбика кирпичиков на айпаде и адаптируем картинки под новую ширину
+    width: 285px;
+    margin: 7px;
+
+    .brick__media {
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
 }
 
 .brick__media {
