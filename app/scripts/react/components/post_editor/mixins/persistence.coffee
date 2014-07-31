@@ -31,6 +31,8 @@ window.PostEditor_PersistenceMixin =
 
     @createRequest
       url: @savingUrl()
+      data: data
+      method: @savingMethod()
       success: (data) =>
         @safeUpdateState => @setState entry: data, type: data.type
         @props.doneCallback data

@@ -5,7 +5,7 @@ STATE_NONE    = 'none'
 STATE_UNKNOWN = 'unknown'
 
 module.experts = window.RelationshipFollowingButton = React.createClass
-  mixins:        [ErrorTimerMixin, RequesterMixin]
+  mixins: [ErrorTimerMixin, RequesterMixin]
 
   propTypes:
     relationship: React.PropTypes.object.isRequired
@@ -116,6 +116,7 @@ module.experts = window.RelationshipFollowingButton = React.createClass
       error: (data) =>
         @safeUpdateState => @setState isError: true
         TastyNotifyController.errorResponse data
+        @startErrorTimer()
       complete: =>
         @safeUpdateState => @setState isProcess: false
 
