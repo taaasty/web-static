@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_TextEditor = React.createClass
-  mixins:    [PostEditor_PersistenceMixin, 'ReactActivitiesUser']
+  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser']
 
   render: ->
 

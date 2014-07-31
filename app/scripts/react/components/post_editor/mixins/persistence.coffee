@@ -1,5 +1,4 @@
 window.PostEditor_PersistenceMixin =
-  mixins: [RequesterMixin]
 
   propTypes:
     entry:             React.PropTypes.object.isRequired
@@ -41,3 +40,5 @@ window.PostEditor_PersistenceMixin =
       complete: =>
         console.log 'complete'
         @decrementActivities()
+
+React.mixins.add 'PostEditor_PersistenceMixin', [window.PostEditor_PersistenceMixin, window.RequesterMixin]
