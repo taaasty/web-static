@@ -106,6 +106,7 @@ require './react/components/post_editor/video_mediabox/embeded'
 require './react/components/post_editor/video_mediabox/welcome'
 
 require './react/components/post_editor/images_mediabox/loaded'
+require './react/components/post_editor/images_mediabox/url_insert'
 require './react/components/post_editor/images_mediabox/welcome'
 
 require './react/components/post_editor/mediabox/actions'

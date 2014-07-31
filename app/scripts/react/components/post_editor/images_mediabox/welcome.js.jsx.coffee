@@ -4,7 +4,8 @@ window.ImagesMediaBox_Welcome = React.createClass
   mixins:       [React.addons.PureRenderMixin]
 
   propTypes:
-    isDragging: React.PropTypes.bool.isRequired
+    isDragging:       React.PropTypes.bool.isRequired
+    onClickUrlInsert: React.PropTypes.func.isRequired
 
   render: ->
 
@@ -23,9 +24,8 @@ window.ImagesMediaBox_Welcome = React.createClass
            <span className="form-upload__text">выберите</span>
            <input id="image" className="form-upload__input" accept="image/*" type="file" multiple={true} ref="input"/>
          </span>
-        <span> картинку</span>
+        <span> картинку или</span><br />
+        <a onClick={this.props.onClickUrlInsert} title="вставьте">вставьте</a>
+        <span> ссылку на нее</span>
       </div>
     </div>`
-
-
-    # <br/><span>или вставьте ссылку на нее</span>

@@ -13,6 +13,7 @@ window.PostEditor_Dragging =
 
   componentDidUpdate: ->
     @updateDropZoneClass @state.isDragging
+
   dragOver:  ->
     clearTimeout @_dragLeaveTimer if @_dragLeaveTimer?
     @draggingOn()
@@ -22,10 +23,10 @@ window.PostEditor_Dragging =
     @_dragLeaveTimer = setTimeout @draggingOff, DRAGOFF_TIMEOUT
 
   draggingOn: ->
-    @setState isDragging: true
+    @setState isDragging: true, isInserting: false
 
   draggingOff: ->
-    @setState isDragging: false
+    @setState isDragging: false, isInserting: false
 
   updateDropZoneClass: (active) ->
     $dropZone = $ @dropZoneNode()

@@ -50,6 +50,7 @@ window.PostEditor_ImagesForm=
       #fileInput:         fileInput
       start: =>
         @incrementActivities()
+        @setState isInserting: false, imageUrl: null
       stop: =>
         @decrementActivities()
         @setState uploadingProgress: 0
@@ -76,7 +77,7 @@ window.PostEditor_ImagesForm=
     # это событие, но без файлов
     return if data.files.length==0
     # @post.unset 'image_url'
-    
+  
     images = data.files.map (file) ->
       image = new Image()
       image.src = window.URL.createObjectURL file
@@ -85,7 +86,7 @@ window.PostEditor_ImagesForm=
 
     @getChangeCallback 'images', images
 
-    @setState images: images
+    @setState images: images, isInserting: false, imageUrl: null
 
       #@
       #image.onload = =>

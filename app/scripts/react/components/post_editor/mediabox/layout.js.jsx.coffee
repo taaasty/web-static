@@ -34,6 +34,8 @@ window.MediaBox_Layout = React.createClass
 
     classes["state--#{@props.state}"]=true if @props.state?
 
+    console.log 'layout state', classes
+
     cx = React.addons.classSet classes
 
     `<figure className={this.props.type}><div className={cx} ref='dropZone'>{this.props.children}</div></figure>`
