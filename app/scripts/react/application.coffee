@@ -19,9 +19,6 @@ window.ReactApp =
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()
 
-    Tasty.setupFeedHeaderScrolls()
-    Hero.start()
-
     # # User Toolbar
     # userToolbarContainer = document.querySelectorAll('[user-toolbar-container]')[0]
     # if userToolbarContainer?
