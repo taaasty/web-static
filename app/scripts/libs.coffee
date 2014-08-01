@@ -4,6 +4,8 @@ window.React = require 'react/addons'
 window._ = require 'underscore'
 window.moment = require 'momentjs'
 
+require '../javascripts/old/libs/jquery.autosize.input.js'
+
 require 'momentjs/lang/ru'
 require 'blueimp-file-upload/js/jquery.fileupload'
 require('react-mixin-manager')(window.React)

@@ -1,6 +1,7 @@
 #= require react
 #= require react-mixin-manager
 #= require react_ujs
+#= require ./utils
 #= require_tree ./services
 #= require_tree ./mixins
 #= require_tree ./components/post_editor/mixins
@@ -9,9 +10,8 @@
 
 window.ReactApp =
   
-  start: ({user}) ->
+  start: ->
     console.log 'ReactApp start'
-    console.debug? "Залогинен пользователь", user.get('slug') if user?
     personsContainer = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get(0)
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
@@ -25,16 +25,6 @@ window.ReactApp =
     # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
     if ic = document.getElementById 'js-static-inviter-container'
       React.renderComponent InviterShellBox(fixed: true), ic
-
-window.ReactUtils =
-  isImagesEqual: (nextImages, currentImages) ->
-
-    return false unless  nextImages.length == currentImages.length
-
-    currentUrls = currentImages.map (i) -> i.src
-    nextUrls    = nextImages.map (i) -> i.src
-
-    return  _.isEqual currentUrls, nextUrls
 
 window.isMobile = ->
     userAgent = navigator.userAgent || navigator.vendor || window.opera;

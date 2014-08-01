@@ -138,6 +138,8 @@ require './react/components/post_editor/demo'
 # require './react/components/post_editor/images_container'
 
 require './shared/hero'
+require './shared/utils'
+require './shared/tasty'
 
 require './react/components/images_collage'
 
@@ -148,56 +150,17 @@ require './react/controllers/tasty_confirm'
 require './react/controllers/tasty_notify'
 require './react/controllers/shellbox'
 require './react/controllers/popup'
+require './react/utils'
 require './react/application'
 
 require './plugins/jquery.collage'
 
 require './editors'
 
-SomeUser     = require './data/user.json'
-SomeCalendar = require './data/calendar.json'
-SomeEntry    = require './data/entry.json'
-UserGenue =
-  id: 1
-  email: 'genue@ya.ru'
-  api_key:
-    access_token: 'd72fd485ca42af43d133d7367a4b4a3b'
-
-window.TASTY_ENV = 'development'
-window.TastySettings =
-  host:     'http://3000.vkontraste.ru/' # Это не api-шный хост, это адрес для прямых ссылок
-  api_host: 'http://3000.vkontraste.ru/api/'
-
-window.TastySettings.host = localStorage.getItem('host') if localStorage.getItem('host')?.length > 0
-window.TastySettings.api_host = localStorage.getItem('api_host') if localStorage.getItem('api_host')?.length > 0
-
-# Контейнер для будущих данных проекта. Сюда постепенно мигрируют
-# модели из window.Tasty по мере перехода на модели
-window.TastyData = {}
-
-console.info? "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
-
-if localStorage.getItem('userLogged') == "true"
-  window.TastyData.user = new Backbone.Model SomeUser
-
-  $.ajaxSetup
-    xhrFields:
-      withCredentials: true
-      crossDomain: true
-    headers:
-      "X-User-Token": SomeUser.api_key.access_token
-
-else
-  console.log 'Без пользователя'
-  $.ajaxSetup
-    xhrFields:
-      withCredentials: true
-      crossDomain: true
+require './settings'
 
 # React_ujs нужно подключать после того как все компоненты загружены
 window.ReactUjs = require 'react_ujs'
 
 $ ->
-  $(".js-dropdown").dropdown()
-
-  ReactApp.start user: TastyData.user
+  window.Tasty.start access_token: window.tastyUser?.api_key?.access_token
