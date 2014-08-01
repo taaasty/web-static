@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.MetabarDropdownMenuWatchItem = React.createClass
+window.EntryMetabarDropdownMenuWatchItem = React.createClass
   mixins: [RequesterMixin]
 
   propTypes:

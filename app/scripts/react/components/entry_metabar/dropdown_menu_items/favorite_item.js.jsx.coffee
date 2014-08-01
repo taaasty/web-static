@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.MetabarDropdownMenuFavoriteItem = React.createClass
+window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
   mixins: [RequesterMixin]
 
   propTypes:

@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.MetabarDropdownMenuItem = React.createClass
+window.EntryMetabarDropdownMenuItem = React.createClass
 
   propTypes:
     href:  React.PropTypes.string.isRequired
