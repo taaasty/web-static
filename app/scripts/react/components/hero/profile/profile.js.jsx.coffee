@@ -1,60 +1,102 @@
 ###* @jsx React.DOM ###
 
-window.Hero = React.createClass
+HERO_CLOSED = 'closed'
+HERO_OPENED = 'opened'
+HERO_OPENED_CLASS = 'hero-enabled'
+
+window.HeroProfile = React.createClass
+
+  getInitialState: ->
+    currentState: HERO_CLOSED
+
+  componentDidMount: ->
+    @$win = $(window)
+    @$htmlbody = $("html, body")
+    @$body = $("body")
+    @$hero = $(".js-hero")
+    @$box = $(".js-hero-box")
+    @$title = $(".js-hero-title")
+    @$text = $(".js-hero-text")
+    @$stats = $(".js-hero-stats")
+    @$open = $(".js-hero-open")
+    @$close = $(".js-hero-close")
+    @noTransitionClass = "no--transition"
+
+    # @$open.on "click", @open
+    # @$close.on "click", @close
+    $(window).on 'resize', @onResize
+    # @load()
 
   render: ->
-    `<div class="hero js-hero">
-      <div class="hero__overlay"></div>
-      <div class="hero__gradient"></div>
-      <div class="layout-constrain hero__box js-hero-box">
-        <div class="hero__avatar js-hero-open">
-          <span class="avatar" style="background-image: url(http://thumbor0.tasty0.ru/unsafe/200x200/userpic/1d/f8/2_large.jpg);"></span>
-        </div>
-        <span class="follow-status"><i class="icon"></i></span>
-        <div class="hero__mask"></div>
-        <div class="hero__head">
-          <div class="hero__title js-hero-open js-hero-title"><span>Madworld</span></div>
-        </div>
-        <div class="hero__text js-hero-text"><span>Прекрасная жизнь</span></div>
-        <div class="hero__actions">
-          <div data-react-class="FollowButton" data-react-props="{&quot;tlogId&quot;:5881}"><button class="follow-button" data-reactid=".2">ошибка</button></div>
-        </div>
-      </div>
-      <div class="hero__stats js-hero-stats">
-        <div class="hero__stats-list">
-          <div class="hero__stats-item">
-            <a class="hero__stats-link js-subscribed-by-toggle" href="#" title="22 подписчика" data-popup-selector=".js-subscribed-by">
-              <strong>22</strong> подписчика
-            </a>
-          </div>
-          <div class="hero__stats-item">
-            <a class="hero__stats-link js-subscribed-to-toggle" href="#" title="103 подписан" data-popup-selector=".js-subscribed-to">
-              <strong>103</strong> подписан(а)
-            </a>
-          </div>
-          <div class="hero__stats-item">
-            <a class="hero__stats-link" href="#" title="92 в избранном">
-              <strong>92</strong> в избранном
-            </a>
-          </div>
-          <div class="hero__stats-item">
-            <a class="hero__stats-link" href="#" title="0 комментариев">
-              <strong>0</strong> комментариев
-            </a>
-          </div>
-          <div class="hero__stats-item">
-            <a class="hero__stats-link" href="#" title="22 скрытые">
-              <strong>22</strong> скрытые
-            </a>
-          </div>
-          <div class="hero__stats-item">
-            <a class="hero__stats-link js-tags-toggle" href="#" title="45 тегов" data-popup-selector=".js-tags">
-              <strong>45</strong> тегов
-            </a>
-          </div>
-        </div>
-      </div>
-  </div>`
+    heroClasses = React.addons.classSet {
+      hero: true
+      'js-hero': true
+      'hero-enabled': @isOpen()
+    }
+
+    return `<div className={ heroClasses }>
+              <CloseToolbar onClick={ this.close } />
+              <div className="hero__overlay"></div>
+              <div className="hero__gradient"></div>
+              <div className="layout-constrain hero__box js-hero-box">
+                <HeroProfileAvatar href="http://taaasty.ru/@lazy-cat"
+                                   onClick={ this.open } />
+                <span className="follow-status state--none"><i className="icon"></i></span>
+                <HeroProfileHead />
+                <HeroProfileActions />
+              </div>
+              <HeroProfileStats />
+            </div>`
+
+  open: (e) ->
+    transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend'
+
+    unless @isOpen()
+      e.preventDefault()
+      Mousetrap.bind 'esc', @close
+
+      @heightBox = @getHeightBox()
+      @$htmlbody.scrollTop 0
+      @$body.addClass HERO_OPENED_CLASS
+      @setHeightWindowHero()
+      @$stats.on transitionEnd, =>
+        @setState currentState: HERO_OPENED
+        @$stats.off transitionEnd
+        @$win.on "scroll.hero", @close
+        return
+
+  close: (e) ->
+    if @isOpen()
+      Mousetrap.unbind 'esc', @close
+      @$body.removeClass HERO_OPENED_CLASS
+      @$hero.css "height", @heightBox
+      @$win.off "scroll.hero"
+      @setState currentState: HERO_CLOSED
+      # @settings.onClose()
+
+    e.preventDefault()
+    return
+
+  onResize: -> @setHeightWindowHero() if @isOpen()
+
+  # load: ->
+  #   unless @opened
+  #     @heightBox = @getHeightBox()
+  #     @$hero.addClass(@noTransitionClass).css "height", @heightBox
+  #     setTimeout (->
+  #       @$hero.removeClass @noTransitionClass
+  #       return
+  #     ).bind(this), 0
+  #   return
+
+  getHeightBox: ->
+    @$box.outerHeight()
+
+  setHeightWindowHero: ->
+    $node = $( @getDOMNode() )
+    $node.css 'height', $(window).height()
+
+  isOpen: -> @state.currentState != HERO_CLOSED
 
 # class window.Hero
 #   # Elements
