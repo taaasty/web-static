@@ -19,6 +19,13 @@ window.ReactApp =
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()
 
+    $ ->
+      Hero.start()
+      hero = $(".hero")
+      heroBox = hero.find(".hero__box")
+      if hero.length>0 && heroBox.length>0
+        $(window).on 'scroll', -> TastyUtils.scrollFade hero, heroBox
+
     # Есть только у анонимов
     $('[invite-button]').click => @shellbox.show InviterShellBox
 
