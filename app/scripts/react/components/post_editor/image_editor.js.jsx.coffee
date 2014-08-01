@@ -1,7 +1,13 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_ImageEditor = React.createClass
-  mixins: [React.addons.PureRenderMixin, PostEditor_Dragging, 'ReactActivitiesUser', PostEditor_ImagesForm]
+  mixins: [
+    React.addons.PureRenderMixin,
+    PostEditor_Dragging,
+    'ReactActivitiesUser',
+    PostEditor_ImagesForm,
+    RequesterMixin
+  ]
 
   propTypes:
     entry:             React.PropTypes.object.isRequired

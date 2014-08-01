@@ -11,7 +11,6 @@ window.ImagesMediaBox_Loaded = React.createClass
     not ReactUtils.isImagesEqual nextProps.images, @props.images
 
   render: ->
-    console.debug? 'images loaded', @props.images
     `<div className="media-box__display">
        <ImagesCollage images={this.props.images} activitiesHandler={this.props.activitiesHandler} />
        <MediaBox_Actions onDelete={this.props.onDelete} />

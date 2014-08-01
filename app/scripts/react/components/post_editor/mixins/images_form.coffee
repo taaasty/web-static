@@ -3,6 +3,7 @@ MAX_FILE_SIZE    = 10*1000*1000
 MAX_NUMBER_OF_FILES = 6
 
 window.PostEditor_ImagesForm=
+
   getInitialState: ->
     uploadingProgress: 0
 
@@ -23,12 +24,34 @@ window.PostEditor_ImagesForm=
 
     return changed.bind @, field
 
-  saveEntry: ->
-    if @fileUploader
-      @fileUploader.submit()
+  saveEntry: ({entryPrivacy}) ->
+    if @state.imageUrl?
+      @saveAsAjax entryPrivacy: entryPrivacy
     else
-      # TODO Сохранять через обычный запрос
-      alert "Картинки не меняли, сохранять нечего"
+      if @fileUploader
+        @fileUploader.submit()
+      else
+        @saveAsAjax entryPrivacy: entryPrivacy
+
+  saveAsAjax: ({entryPrivacy}) ->
+    @incrementActivities()
+    data = @data()
+    data.privacy = entryPrivacy
+
+    @createRequest
+      url:    @savingUrl()
+      method: @savingMethod()
+      data:   data
+      success: (data) =>
+        @safeUpdateState => @setState entry: data, type: data.type
+        @props.doneCallback data
+      error: (data) =>
+        TastyNotifyController.errorResponse data
+      complete: =>
+        @decrementActivities()
+
+    # TODO Сохранять через обычный запрос
+    #alert "Картинки не меняли, сохранять нечего"
 
   prepareForm: ->
     $form = $ @refs.form.getDOMNode()
@@ -47,6 +70,7 @@ window.PostEditor_ImagesForm=
       singleFileUploads: false
       autoUpload:        false
       replaceFileInput:  false
+      pasteZone:         null
       #fileInput:         fileInput
       start: =>
         @incrementActivities()
@@ -78,7 +102,7 @@ window.PostEditor_ImagesForm=
     return if data.files.length==0
     # @post.unset 'image_url'
   
-    images = data.files.map (file) ->
+    data.files.map (file) ->
       image = new Image()
       image.src = window.URL.createObjectURL file
       image
@@ -100,4 +124,10 @@ window.PostEditor_ImagesForm=
       Routes.api.update_entry_url @props.entry
     else
       Routes.api.create_entry_url 'image'
+
+  savingMethod: ->
+    if @props.entry.id?
+      'PUT'
+    else
+      'POST'
 

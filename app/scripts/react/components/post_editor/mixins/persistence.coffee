@@ -37,10 +37,8 @@ window.PostEditor_PersistenceMixin =
         @safeUpdateState => @setState entry: data, type: data.type
         @props.doneCallback data
       error: (data) =>
-        console.log 'error'
         TastyNotifyController.errorResponse data
       complete: =>
-        console.log 'complete'
         @decrementActivities()
 
 React.mixins.add 'PostEditor_PersistenceMixin', [window.PostEditor_PersistenceMixin, window.RequesterMixin]
