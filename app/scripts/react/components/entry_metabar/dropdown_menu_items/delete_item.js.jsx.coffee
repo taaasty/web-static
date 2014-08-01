@@ -1,9 +1,7 @@
 ###* @jsx React.DOM ###
 
-POST_DELETE_ANIMATION_SPEED = 300
-
 window.EntryMetabarDropdownMenuDeleteItem = React.createClass
-  mixins: [RequesterMixin, 'ReactActivitiesUser']
+  mixins: [RequesterMixin, 'ReactActivitiesUser', DOMManipulationsMixin]
 
   propTypes:
     entryId:          React.PropTypes.number.isRequired
@@ -46,16 +44,8 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass
         if @props.successDeleteUrl?
           window.location = @props.successDeleteUrl
         else
-          @removeEntryFromDOM()
+          @removeEntryFromDOM @props.entryId
       error: (data) => TastyNotifyController.errorResponse data
       complete: =>
         @setState isProcess: false
         @decrementActivities()
-
-  removeEntryFromDOM: ->
-    $postNode = $("[data-id='#{@props.entryId}'")
-
-    $postNode.slideUp(POST_DELETE_ANIMATION_SPEED, =>
-      @props.onDelete() if @props.onDelete?
-      $postNode.remove()
-    )

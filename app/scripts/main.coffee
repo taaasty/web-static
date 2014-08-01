@@ -36,6 +36,7 @@ require './react/mixins/grammar'
 require './react/mixins/error_timer'
 require './react/mixins/activities'
 require './react/mixins/requester'
+require './react/mixins/dom_manipulations'
 
 require './react/components/avatar'
 

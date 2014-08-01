@@ -8,17 +8,18 @@ window.EntryMetabarDropdownMenu = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin']
 
   propTypes:
-    entryId:          React.PropTypes.number.isRequired
-    isFavorited:      React.PropTypes.bool.isRequired
-    isWatching:       React.PropTypes.bool.isRequired
-    entryUrl:         React.PropTypes.string.isRequired
-    editUrl:          React.PropTypes.string.isRequired
-    successDeleteUrl: React.PropTypes.string
-    canEdit:          React.PropTypes.bool.isRequired
-    canFavorite:      React.PropTypes.bool.isRequired
-    canWatch:         React.PropTypes.bool.isRequired
-    canReport:        React.PropTypes.bool.isRequired
-    canDelete:        React.PropTypes.bool.isRequired
+    entryId:                  React.PropTypes.number.isRequired
+    isFavorited:              React.PropTypes.bool.isRequired
+    isWatching:               React.PropTypes.bool.isRequired
+    shouldRemoveFavoriteNode: React.PropTypes.bool
+    entryUrl:                 React.PropTypes.string.isRequired
+    editUrl:                  React.PropTypes.string.isRequired
+    successDeleteUrl:         React.PropTypes.string
+    canEdit:                  React.PropTypes.bool.isRequired
+    canFavorite:              React.PropTypes.bool.isRequired
+    canWatch:                 React.PropTypes.bool.isRequired
+    canReport:                React.PropTypes.bool.isRequired
+    canDelete:                React.PropTypes.bool.isRequired
 
   getInitialState: ->
     currentState: DROPDOWN_CLOSED
@@ -42,6 +43,7 @@ window.EntryMetabarDropdownMenu = React.createClass
     if @props.canFavorite
       actionList.push `<EntryMetabarDropdownMenuFavoriteItem entryId={ this.props.entryId }
                                                              isFavorited={ this.props.isFavorited }
+                                                             shouldRemoveFavoriteNode={ this.props.shouldRemoveFavoriteNode }
                                                              key="favorite" />`
     if @props.canWatch
       actionList.push `<EntryMetabarDropdownMenuWatchItem entryId={ this.props.entryId }

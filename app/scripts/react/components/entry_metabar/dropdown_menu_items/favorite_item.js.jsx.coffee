@@ -1,11 +1,12 @@
 ###* @jsx React.DOM ###
 
 window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
-  mixins: [RequesterMixin]
+  mixins: [RequesterMixin, DOMManipulationsMixin]
 
   propTypes:
-    isFavorited: React.PropTypes.bool.isRequired
-    entryId:     React.PropTypes.number.isRequired
+    isFavorited:              React.PropTypes.bool.isRequired
+    entryId:                  React.PropTypes.number.isRequired
+    shouldRemoveFavoriteNode: React.PropTypes.bool
 
   getInitialState: ->
     isFavorited: @props.isFavorited
@@ -60,7 +61,10 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
       data:
         entry_id: @props.entryId
       success: =>
-        @safeUpdateState => @setState isFavorited: false
+        if @props.shouldRemoveFavoriteNode?
+          @removeEntryFromDOM @props.entryId
+        else
+          @safeUpdateState => @setState isFavorited: false
         console.info "Пост #{@props.entryId} удалён из избранного"
       error: (data) ->
         TastyNotifyController.errorResponse data
