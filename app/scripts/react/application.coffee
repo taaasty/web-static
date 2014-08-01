@@ -19,11 +19,6 @@ window.ReactApp =
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()
 
-    # # User Toolbar
-    # userToolbarContainer = document.querySelectorAll('[user-toolbar-container]')[0]
-    # if userToolbarContainer?
-    #   React.renderComponent UserToolbar({ user }), userToolbarContainer
-
     # Есть только у анонимов
     $('[invite-button]').click => @shellbox.show InviterShellBox
 
@@ -31,7 +26,7 @@ window.ReactApp =
     if ic = document.getElementById 'js-static-inviter-container'
       React.renderComponent InviterShellBox(fixed: true), ic
 
-window.ReactUtils=
+window.ReactUtils =
   isImagesEqual: (nextImages, currentImages) ->
 
     return false unless  nextImages.length == currentImages.length
@@ -40,3 +35,7 @@ window.ReactUtils=
     nextUrls    = nextImages.map (i) -> i.src
 
     return  _.isEqual currentUrls, nextUrls
+
+window.isMobile = ->
+    userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    (/iPhone|iPod|iPad|Android|BlackBerry|Opera Mini|IEMobile/).test(userAgent);

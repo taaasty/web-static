@@ -21,8 +21,11 @@ window.MetabarDropdownMenuDeleteItem = React.createClass
     e.stopPropagation()
     e.preventDefault()
 
-    @deleteEntry() if confirm 'Вы действительно хотите удалить данный пост?'
-      
+    TastyConfirmController.show
+      message:          "Вы действительно хотите удалить запись?<br />Её нельзя будет восстановить."
+      acceptButtonText: "Удалить запись"
+      onAccept:         @deleteEntry
+
   deleteEntry: ->
     @createRequest
       url: Routes.api.entry_url @props.entryId
