@@ -7,7 +7,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass
 
   propTypes:
     entryId:          React.PropTypes.number.isRequired
-    successDeleteUrl: React.PropTypes.string.isRequired
+    successDeleteUrl: React.PropTypes.string
     onDelete:         React.PropTypes.func
 
   getInitialState: ->
