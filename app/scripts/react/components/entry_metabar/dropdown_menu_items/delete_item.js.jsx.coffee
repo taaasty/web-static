@@ -3,17 +3,27 @@
 POST_DELETE_ANIMATION_SPEED = 300
 
 window.EntryMetabarDropdownMenuDeleteItem = React.createClass
-  mixins: [RequesterMixin]
+  mixins: [RequesterMixin, 'ReactActivitiesUser']
 
   propTypes:
     entryId:          React.PropTypes.number.isRequired
     successDeleteUrl: React.PropTypes.string.isRequired
     onDelete:         React.PropTypes.func
 
+  getInitialState: ->
+    isProcess: false
+
   render: ->
+    if @state.isProcess
+      icon = `<span className="spinner spinner--15x15">
+                <span className="spinner__icon"></span>
+              </span>`
+    else
+      icon = `<i className="icon icon--basket"></i>`
+
     `<a onClick={ this.onClick }
         className="meta-item__dropdown-item">
-      <i className="icon icon--basket"></i>
+      { icon }
       Удалить
     </a>`
 
@@ -27,6 +37,8 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass
       onAccept:         @deleteEntry
 
   deleteEntry: ->
+    @setState isProcess: true
+    @incrementActivities()
     @createRequest
       url: Routes.api.entry_url @props.entryId
       method: 'DELETE'
@@ -36,6 +48,9 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass
         else
           @removeEntryFromDOM()
       error: (data) => TastyNotifyController.errorResponse data
+      complete: =>
+        @setState isProcess: false
+        @decrementActivities()
 
   removeEntryFromDOM: ->
     $postNode = $("[data-id='#{@props.entryId}'")

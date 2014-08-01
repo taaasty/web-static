@@ -5,7 +5,7 @@ DROPDOWN_OPENED_BY_HOVER = 'openedByHover'
 DROPDOWN_OPENED_BY_CLICK = 'openedByClick'
 
 window.EntryMetabarDropdownMenu = React.createClass
-  mixins: [ReactUnmountMixin]
+  mixins: [ReactUnmountMixin, 'ReactActivitiesMixin']
 
   propTypes:
     entryId:          React.PropTypes.number.isRequired
@@ -27,35 +27,35 @@ window.EntryMetabarDropdownMenu = React.createClass
     actionList = []
     menuClasses = React.addons.classSet {
       'meta-item__dropdown': true
-      'state--open': @isOpen()
+      'state--open': @isOpen() || @hasActivities()
     }
 
     if @props.canEdit
       actionList.push `<EntryMetabarDropdownMenuItem title="Редактировать"
-                                                icon="icon--pencil"
-                                                href={ this.props.editUrl }
-                                                key="edit" />`
+                                                     icon="icon--pencil"
+                                                     href={ this.props.editUrl }
+                                                     key="edit" />`
     actionList.push `<EntryMetabarDropdownMenuItem title="Ссылка на запись"
-                                              icon="icon--hyperlink"
-                                              href={ this.props.entryUrl }
-                                              key="link" />`
+                                                   icon="icon--hyperlink"
+                                                   href={ this.props.entryUrl }
+                                                   key="link" />`
     if @props.canFavorite
       actionList.push `<EntryMetabarDropdownMenuFavoriteItem entryId={ this.props.entryId }
-                                                        isFavorited={ this.props.isFavorited }
-                                                        key="favorite" />`
+                                                             isFavorited={ this.props.isFavorited }
+                                                             key="favorite" />`
     if @props.canWatch
       actionList.push `<EntryMetabarDropdownMenuWatchItem entryId={ this.props.entryId }
-                                                     isWatching={ this.props.isWatching }
-                                                     key="watch" />`
+                                                          isWatching={ this.props.isWatching }
+                                                          key="watch" />`
     if @props.canReport
       actionList.push `<EntryMetabarDropdownMenuReportItem entryId={ this.props.entryId }
-                                                      key="report" />`
+                                                           key="report" />`
     if @props.canDelete
       actionList.push `<EntryMetabarDropdownMenuDeleteItem entryId={ this.props.entryId }
-                                                      successDeleteUrl={ this.props.successDeleteUrl }
-                                                      onDelete={ this.onDelete }
-                                                      key="delete" />`
-
+                                                           successDeleteUrl={ this.props.successDeleteUrl }
+                                                           onDelete={ this.onDelete }
+                                                           activitiesHandler={ this.activitiesHandler }
+                                                           key="delete" />`
     return `<span onClick={ this.onClick }
                   onMouseEnter={ this.onMouseEnter }
                   onMouseLeave={ this.onMouseLeave }

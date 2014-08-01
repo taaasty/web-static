@@ -7,7 +7,6 @@ BaseMixin =
     @incrementActivities = handler.increment
     @decrementActivities = handler.decrement
 
-
 # TODO React.PropsTypes.activitiesHandler
 # TODO Создавать объект типа ActivitiesHandler один раз и в следующий раз отдавать кешированый
 ram =
