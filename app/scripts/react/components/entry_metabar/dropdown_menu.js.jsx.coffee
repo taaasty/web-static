@@ -4,7 +4,7 @@ DROPDOWN_CLOSED = 'closed'
 DROPDOWN_OPENED_BY_HOVER = 'openedByHover'
 DROPDOWN_OPENED_BY_CLICK = 'openedByClick'
 
-window.MetabarDropdownMenu = React.createClass
+window.EntryMetabarDropdownMenu = React.createClass
   mixins: [ReactUnmountMixin]
 
   propTypes:
@@ -31,27 +31,27 @@ window.MetabarDropdownMenu = React.createClass
     }
 
     if @props.canEdit
-      actionList.push `<MetabarDropdownMenuItem title="Редактировать"
+      actionList.push `<EntryMetabarDropdownMenuItem title="Редактировать"
                                                 icon="icon--pencil"
                                                 href={ this.props.editUrl }
                                                 key="edit" />`
-    actionList.push `<MetabarDropdownMenuItem title="Ссылка на запись"
+    actionList.push `<EntryMetabarDropdownMenuItem title="Ссылка на запись"
                                               icon="icon--hyperlink"
                                               href={ this.props.entryUrl }
                                               key="link" />`
     if @props.canFavorite
-      actionList.push `<MetabarDropdownMenuFavoriteItem entryId={ this.props.entryId }
+      actionList.push `<EntryMetabarDropdownMenuFavoriteItem entryId={ this.props.entryId }
                                                         isFavorited={ this.props.isFavorited }
                                                         key="favorite" />`
     if @props.canWatch
-      actionList.push `<MetabarDropdownMenuWatchItem entryId={ this.props.entryId }
+      actionList.push `<EntryMetabarDropdownMenuWatchItem entryId={ this.props.entryId }
                                                      isWatching={ this.props.isWatching }
                                                      key="watch" />`
     if @props.canReport
-      actionList.push `<MetabarDropdownMenuReportItem entryId={ this.props.entryId }
+      actionList.push `<EntryMetabarDropdownMenuReportItem entryId={ this.props.entryId }
                                                       key="report" />`
     if @props.canDelete
-      actionList.push `<MetabarDropdownMenuDeleteItem entryId={ this.props.entryId }
+      actionList.push `<EntryMetabarDropdownMenuDeleteItem entryId={ this.props.entryId }
                                                       successDeleteUrl={ this.props.successDeleteUrl }
                                                       onDelete={ this.onDelete }
                                                       key="delete" />`

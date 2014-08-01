@@ -2,7 +2,7 @@
 
 POST_DELETE_ANIMATION_SPEED = 300
 
-window.MetabarDropdownMenuDeleteItem = React.createClass
+window.EntryMetabarDropdownMenuDeleteItem = React.createClass
   mixins: [RequesterMixin]
 
   propTypes:
