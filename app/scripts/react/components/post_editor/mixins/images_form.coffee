@@ -102,7 +102,7 @@ window.PostEditor_ImagesForm=
     return if data.files.length==0
     # @post.unset 'image_url'
   
-    data.files.map (file) ->
+    images = data.files.map (file) ->
       image = new Image()
       image.src = window.URL.createObjectURL file
       image
