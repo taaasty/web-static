@@ -139,7 +139,7 @@ window.Calendar = Calendar = React.createClass
 
   firstPostDate: ->
     try
-      parseInt $(TARGET_POST_CLASS).get(0).dataset.time
+      $(TARGET_POST_CLASS).get(0).dataset.time
     catch error
       console.error? error
 
