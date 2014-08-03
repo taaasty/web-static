@@ -3,9 +3,10 @@
 TOOLBAR_CLOSED = 'closed'
 TOOLBAR_OPENED_BY_HOVER = 'openedByHover'
 TOOLBAR_OPENED_BY_CLICK = 'openedByClick'
-HIDE_ON_BLUR_TIMEOUT = 500
+HIDE_ON_BLUR_TIMEOUT = 100
 
 window.UserToolbar = UserToolbar = React.createClass
+  mixins: [TouchMixin]
 
   propTypes:
     user:              React.PropTypes.object.isRequired
@@ -57,37 +58,37 @@ window.UserToolbar = UserToolbar = React.createClass
                 <ul className="toolbar__popup-list">
                   <ToolbarItem active={ this.state.activeItem == 'newEntry' }
                                href={ this.props.newEntryUrl }
-                               icon="plus"
+                               icon="icon--plus"
                                title="Новая запись" />
                   <ToolbarItem href={ this.props.myTlogUrl }
-                               icon="diary"
+                               icon="icon--diary"
                                title="Мой дневник" />
                   <ToolbarItem href={ this.props.profileUrl }
-                               icon="profile"
+                               icon="icon--profile"
                                title="Профиль" />
                   <ToolbarItem href={ this.props.favoritesUrl }
-                               icon="star"
+                               icon="icon--star"
                                title="Избранное" />
                   <ToolbarItem href={ this.props.privateEntriesUrl }
-                               icon="lock"
+                               icon="icon--lock"
                                title="Скрытые записи" />
                   <ToolbarItem disabled={ true }
-                               icon="messages"
+                               icon="icon--messages"
                                title="Сообщения" />
                   <ToolbarItem active={ this.state.activeItem == 'friends' }
                                onSelect={ onSelect.bind(this, 'friends') }
-                               icon="friends"
+                               icon="icon--friends"
                                title="Друзья" />
                   <ToolbarItem active={ this.state.activeItem == 'design' }
                                onSelect={ onSelect.bind(this, 'design') }
-                               icon="drawing"
+                               icon="icon--drawing"
                                title="Дизайн дневника" />
                   <ToolbarItem active={ this.state.activeItem == 'settings' }
                                onSelect={ onSelect.bind(this, 'settings') }
-                               icon="cogwheel"
+                               icon="icon--cogwheel"
                                title="Настройки" />
                   <ToolbarItem href={ this.props.logoutUrl }
-                               icon="logout"
+                               icon="icon--logout"
                                title="Выйти" />
                 </ul>
               </div>
@@ -97,7 +98,7 @@ window.UserToolbar = UserToolbar = React.createClass
     switch @state.currentState
       when TOOLBAR_CLOSED          then @setState currentState: TOOLBAR_OPENED_BY_CLICK
       when TOOLBAR_OPENED_BY_CLICK then @setState currentState: TOOLBAR_CLOSED
-      when TOOLBAR_OPENED_BY_HOVER then @setState currentState: TOOLBAR_OPENED_BY_CLICK
+      when TOOLBAR_OPENED_BY_HOVER then @setState currentState: TOOLBAR_CLOSED
       else console.error? "Unknown state.currentState", @state.currentState
 
   onMouseEnter: ->

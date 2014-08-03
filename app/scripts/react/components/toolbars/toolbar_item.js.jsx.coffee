@@ -25,7 +25,7 @@ window.ToolbarItem = ToolbarItem = React.createClass
               <a href={ this.props.href }
                  onClick={ this.handleSelect }
                  className="toolbar__popup-link">
-                <i className={"icon icon--" + this.props.icon}></i>
+                <i className={ "icon " + this.props.icon }></i>
                 { this.props.title }
               </a>
             </li>`
@@ -36,7 +36,6 @@ window.ToolbarItem = ToolbarItem = React.createClass
       @props.onSelect @props.icon
 
   isActive: -> @props.active
-
   isDisabled: -> @props.disabled
 
 module.exports = ToolbarItem
