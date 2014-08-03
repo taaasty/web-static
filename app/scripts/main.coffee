@@ -37,6 +37,7 @@ require './react/mixins/error_timer'
 require './react/mixins/activities'
 require './react/mixins/requester'
 require './react/mixins/dom_manipulations'
+require './react/mixins/touch'
 
 require './react/components/avatar'
 
@@ -57,7 +58,8 @@ require './react/components/settings_popup/settings_radio_item'
 require './react/components/settings_popup/settings_vkontakte'
 require './react/components/settings_popup/toolbar_settings'
 
-require './react/components/toolbars/user'
+require './react/components/toolbars/user/user'
+require './react/components/toolbars/feed/feed'
 require './react/components/toolbars/toolbar_item'
 
 require './react/components/voting'
