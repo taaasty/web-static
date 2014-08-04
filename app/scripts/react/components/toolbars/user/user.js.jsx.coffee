@@ -9,22 +9,14 @@ window.UserToolbar = UserToolbar = React.createClass
   mixins: [TouchMixin]
 
   propTypes:
-    user:              React.PropTypes.object.isRequired
-    newEntryUrl:       React.PropTypes.string
-    myTlogUrl:         React.PropTypes.string.isRequired
-    profileUrl:        React.PropTypes.string
-    favoritesUrl:      React.PropTypes.string
-    privateEntriesUrl: React.PropTypes.string
-    logoutUrl:         React.PropTypes.string
-
-  getDefaultProps: ->
-    # TODO Всегда получать урлы из свойств
-    newEntryUrl:       '@sergeylaptev/new'
-    myTlogUrl:         '@sergeylaptev'
-    profileUrl:        '@sergeylaptev'
-    favoritesUrl:      '@sergeylaptev/favorites'
-    privateEntriesUrl: '@sergeylaptev/privates'
-    logoutUrl:         'logout'
+    user:                 React.PropTypes.object.isRequired
+    newEntryUrl:          React.PropTypes.string
+    myTlogUrl:            React.PropTypes.string.isRequired
+    newAnonymousEntryUrl: React.PropTypes.string
+    profileUrl:           React.PropTypes.string
+    favoritesUrl:         React.PropTypes.string
+    privateEntriesUrl:    React.PropTypes.string
+    logoutUrl:            React.PropTypes.string
 
   getInitialState: ->
     activeItem:  'newEntry'
@@ -68,12 +60,16 @@ window.UserToolbar = UserToolbar = React.createClass
                   <ToolbarItem href={ this.props.myTlogUrl }
                                icon="icon--diary"
                                title="Мой дневник" />
-                  <ToolbarItem href={ this.props.profileUrl }
+                  <ToolbarItem disabled={ true }
+                               href={ this.props.profileUrl }
                                icon="icon--profile"
                                title="Профиль" />
                   <ToolbarItem href={ this.props.favoritesUrl }
                                icon="icon--star"
                                title="Избранное" />
+                  <ToolbarItem href={ this.props.newAnonymousEntryUrl }
+                               icon="icon--anonymous"
+                               title="Новая анонимка" />
                   <ToolbarItem href={ this.props.privateEntriesUrl }
                                icon="icon--lock"
                                title="Скрытые записи" />
