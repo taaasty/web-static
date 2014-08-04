@@ -57,13 +57,13 @@ window.PersonsPopup = React.createClass
                                  activitiesHandler={ this.activitiesHandler }
                                  onLoad={ onLoad.bind(this, 'guesses') } />
 
+      <PersonsPopup_IgnoresPanel isActive={ this.state.currentTab == 'ignores' }
+                                 relationships={ this.state.relationships.ignores.items }
+                                 total_count={ this.state.relationships.ignores.total_count }
+                                 activitiesHandler={ this.activitiesHandler }
+                                 onLoad={ onLoad.bind(this, 'ignores') } />
+
     </Popup>`
-    # Временно закрыли эту плашку
-    #<PersonsPopup_IgnoresPanel isActive={ this.state.currentTab == 'ignores' }
-                               #relationships={ this.state.relationships.ignores.items }
-                               #total_count={ this.state.relationships.ignores.total_count }
-                               #activitiesHandler={ this.activitiesHandler }
-                               #onLoad={ onLoad.bind(this, 'ignores') } />
 
   selectTab: (type) -> @setState currentTab: type
 
