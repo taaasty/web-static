@@ -9,11 +9,11 @@ AApp.service 'DesignSettingsService', [ '$rootScope', ($rootScope)->
   @hideLoader = ->
     loader.toggleClass "state--hidden", true
 
-  @showDesignSettings = ->
-    $rootScope.$emit SHOW_DESIGN_SETTINGS
+  #@showDesignSettings = ->
+    #$rootScope.$emit SHOW_DESIGN_SETTINGS
 
   @setDesignSettingsCallback = (callback) ->
-    $rootScope.$on SHOW_DESIGN_SETTINGS, callback
+    $(document).on SHOW_DESIGN_SETTINGS, callback
 
   return @
 ]

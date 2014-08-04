@@ -7,13 +7,14 @@ AApp.controller 'DesignSettings:BackgroundCtrl', ['$scope', '$element', 'DesignS
 
     $('.js-upload-cover-input').fileupload
       paramName: 'file'
+      autoUpload: true
       url:   Routes.api.design_settings_cover_url($scope.$parent.tlog_data.slug)
       send:  files: [file]
-      done:  -> 
-        BackgroundCheck.refresh()
-        TastyUtils.notify 'success', 'Настройки сохранены', 2000
+      done:  ->
+        BackgroundCheck?.refresh()
+        TastyNotifyController.notify 'success', 'Настройки сохранены', 2000
       fail: (e,data) ->
-        TastyUtils.notifyErrorResponse data.response().jqXHR
+        TastyNotifyController.errorResponse data.response().jqXHR
       always: ->
         DesignSettingsService.hideLoader()
 
@@ -39,7 +40,7 @@ AApp.controller 'DesignSettings:BackgroundCtrl', ['$scope', '$element', 'DesignS
       cover:      ".js-cover"
       dropables:  [".js-drop-cover"]
       inputs:     [".js-upload-cover-input"]
-      onReady:    (file) -> sendCover file
+      onReady:      (file) -> sendCover file
       onReaderLoad: (url) -> setFormCover url
 
   DesignSettingsService.setDesignSettingsCallback $scope.open

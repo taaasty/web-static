@@ -1,6 +1,6 @@
 window.TastyConfirmController =
 
-  show: ({message, acceptButtonText, rejectButtonText, onAccept}) ->
+  show: ({message, acceptButtonText, rejectButtonText, acceptButtonColor, onAccept}) ->
     if isMobile()
       regex = /<br\s*[\/]?>/gi
       messageWithoutBR = message.replace regex, '\n'
@@ -12,5 +12,5 @@ window.TastyConfirmController =
       unless container
         container = $('<\div>', {'tasty-confirm-container': ''}).appendTo('body')[0]
       React.renderComponent TastyConfirm(
-        {message, acceptButtonText, rejectButtonText, onAccept}
+        {message, acceptButtonText, rejectButtonText, acceptButtonColor, onAccept}
       ), container

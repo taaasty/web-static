@@ -11,7 +11,7 @@ window.UserToolbar = UserToolbar = React.createClass
   propTypes:
     user:              React.PropTypes.object.isRequired
     newEntryUrl:       React.PropTypes.string
-    myTlogUrl:         React.PropTypes.string
+    myTlogUrl:         React.PropTypes.string.isRequired
     profileUrl:        React.PropTypes.string
     favoritesUrl:      React.PropTypes.string
     privateEntriesUrl: React.PropTypes.string
@@ -30,13 +30,18 @@ window.UserToolbar = UserToolbar = React.createClass
     activeItem:  'newEntry'
     currentState: TOOLBAR_CLOSED
 
+  componentDidMount: ->
+    if localStorage.getItem 'displayDesignSettings'
+      @showDesignSettings()
+      localStorage.removeItem 'displayDesignSettings'
+
   render: ->
     onSelect = (type) ->
       @setState activeItem: type
 
       switch type
         when 'friends'  then @handleFriendsSelect()
-        when 'design'   then @handleDesignSelect()
+        when 'design'   then @showDesignSettings()
         when 'settings' then @handleSettingsSelect()
         else console.log 'Неизвестный пункт тулбара пользователя'
 
@@ -121,9 +126,18 @@ window.UserToolbar = UserToolbar = React.createClass
 
     React.renderComponent PersonsPopup(), container
 
-  handleDesignSelect: ->
-    # Hello Angular
-    $(document).trigger 'SHOW_DESIGN_SETTINGS'
+  showDesignSettings: ->
+    url = window.location.origin + window.location.pathname
+
+    if url isnt @props.myTlogUrl
+      TastyConfirmController.show
+        message:           'Для изменения дизайна вашего дневника, необходимо перейти в профиль'
+        acceptButtonText:  'Перейти в профиль'
+        acceptButtonColor: 'green'
+        rejectButtonText:  'Остаться на странице'
+        onAccept:          @redirectToProfile
+    else
+      $(document).trigger 'SHOW_DESIGN_SETTINGS'
 
   handleSettingsSelect: ->
     user = new Backbone.Model @props.user
@@ -131,6 +145,10 @@ window.UserToolbar = UserToolbar = React.createClass
       title: 'Настройки',
       user:  user
     }
+
+  redirectToProfile: ->
+    localStorage.setItem 'displayDesignSettings', true
+    window.location = @props.myTlogUrl
 
   isOpen: -> @state.currentState != TOOLBAR_CLOSED
 
