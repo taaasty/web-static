@@ -4,14 +4,16 @@ window.TastyConfirm = React.createClass
   mixins: [ReactUnmountMixin]
 
   propTypes:
-    message:          React.PropTypes.string.isRequired
-    onAccept:         React.PropTypes.func.isRequired
-    acceptButtonText: React.PropTypes.string
-    rejectButtonText: React.PropTypes.string
+    message:           React.PropTypes.string.isRequired
+    onAccept:          React.PropTypes.func.isRequired
+    acceptButtonText:  React.PropTypes.string
+    rejectButtonText:  React.PropTypes.string
+    acceptButtonColor: React.PropTypes.string
 
   getDefaultProps: ->
-    acceptButtonText: 'OK'
-    rejectButtonText: 'Отмена'
+    acceptButtonText:  'OK'
+    rejectButtonText:  'Отмена'
+    acceptButtonColor: 'red'
 
   componentDidMount: ->
     $('body').addClass 'no-scroll confirmation-enabled'
@@ -31,7 +33,8 @@ window.TastyConfirm = React.createClass
         <div dangerouslySetInnerHTML={{ __html: this.props.message }} className="confirmation__text"></div>
         <div className="confirmation__buttons">
           <button onClick={ this.onAccept }
-                  className="button button--red button--small">{ this.props.acceptButtonText }</button>
+                  className={ "button button--" + this.props.acceptButtonColor + " button--small" }>
+            { this.props.acceptButtonText }</button>
           <button onClick={ this.close }
                   className="button button--outline button--small">{ this.props.rejectButtonText }</button>
         </div>

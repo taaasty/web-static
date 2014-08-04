@@ -16,8 +16,8 @@ AApp.factory 'DesignSettingsSaver', [ '$timeout', '$http', 'DesignSettingsServic
       DesignSettingsService.showLoader()
 
       $http(options).
-        success( -> TastyUtils.notify 'success', 'Настройки сохранены', 2000 ).
-        error( (data, status) -> TastyUtils.notifyErrorResponse data ).
+        success( -> TastyNotifyController.notify 'success', 'Настройки сохранены', 2000 ).
+        error( (data, status) -> TastyNotifyController.errorResponse data ).
         finally( -> DesignSettingsService.hideLoader() )
 
     debounceUpdate:  (newVal, oldVal) =>
