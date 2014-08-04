@@ -9,7 +9,7 @@ window.FeedToolbar = React.createClass
   mixins: [TouchMixin]
 
   propTypes:
-    friendsUrl:   React.PropTypes.string.isRequired
+    friendsUrl:   React.PropTypes.string
     liveUrl:      React.PropTypes.string.isRequired
     bestUrl:      React.PropTypes.string.isRequired
     anonymousUrl: React.PropTypes.string.isRequired
@@ -18,11 +18,30 @@ window.FeedToolbar = React.createClass
     currentState: TOOLBAR_CLOSED
 
   render: ->
+    feedList = []
     toolbarClasses = React.addons.classSet {
       'toolbar':      true
       'toolbar--nav': true
       'state--open':  @isOpen()
     }
+
+    if @props.friendsUrl
+      feedList.push `<ToolbarItem href={ this.props.friendsUrl }
+                                  icon="icon--friends"
+                                  title="Подписки"
+                                  key="friends" />`
+    feedList.push `<ToolbarItem href={ this.props.liveUrl }
+                                icon="icon--wave"
+                                title="Прямой эфир"
+                                key="live" />`
+    feedList.push `<ToolbarItem href={ this.props.bestUrl }
+                                icon="icon--rating"
+                                title="Лучшее"
+                                key="best" />`
+    feedList.push `<ToolbarItem href={ this.props.anonymousUrl }
+                                icon="icon--anonymous"
+                                title="Анонимки"
+                                key="anonymous" />`
 
     return `<nav onClick={ this.onClick }
                  onMouseEnter={ this.onMouseEnter }
@@ -34,20 +53,7 @@ window.FeedToolbar = React.createClass
                 </div>
               </div>
               <div className="toolbar__popup" data-element="dropdown-menu">
-                <ul className="toolbar__popup-list">
-                  <ToolbarItem href={ this.props.friendsUrl }
-                               icon="icon--friends"
-                               title="Подписки" />
-                  <ToolbarItem href={ this.props.liveUrl }
-                               icon="icon--wave"
-                               title="Прямой эфир" />
-                  <ToolbarItem href={ this.props.bestUrl }
-                               icon="icon--rating"
-                               title="Лучшее" />
-                  <ToolbarItem href={ this.props.anonymousUrl }
-                               icon="icon--anonymous"
-                               title="Анонимки" />
-                </ul>
+                <ul className="toolbar__popup-list">{ feedList }</ul>
               </div>
             </nav>`
 
