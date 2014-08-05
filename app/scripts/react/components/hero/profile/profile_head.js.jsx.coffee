@@ -12,6 +12,6 @@ window.HeroProfileHead = React.createClass
         <span><a href={ this.props.user.tlog_url }>{ this.props.user.name }</a></span>
       </div>
       <div className="hero__text">
-        <span>{ this.props.user.title_truncated } </span>
+        <span dangerouslySetInnerHTML={{ __html: this.props.user.title_truncated }} />
       </div>
     </div>`
