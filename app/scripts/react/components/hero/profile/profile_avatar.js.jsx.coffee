@@ -3,8 +3,8 @@
 window.HeroProfileAvatar = React.createClass
 
   propTypes:
-    onClick: React.PropTypes.func.isRequired
     href:    React.PropTypes.string.isRequired
+    onClick: React.PropTypes.func.isRequired
 
   render: ->
    `<a href={ this.props.href }
