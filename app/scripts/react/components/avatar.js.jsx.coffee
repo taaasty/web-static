@@ -6,15 +6,23 @@ window.Avatar = React.createClass
   propTypes:
     name:     React.PropTypes.string.isRequired
     userpic:  React.PropTypes.object.isRequired
-    size:     React.PropTypes.string
+    size:     React.PropTypes.number
+
+  # Известные размеры аватаров:
+  #
+  # settings: 110
+  # comment:  35
+  # hero:     220 
+  # brick:    35 
 
   getDefaultProps: ->
-    size: 'thumb128' # hero(?), large, 64, 129
+    size: 220 # Этого размера картинки хватает на все аватары
 
   render: ->
-    avatar_url = @props.userpic?[@props.size+'_url']
+    avatar_url = @props.userpic?['original_url'] || @props.userpic?['large_url']
 
     if avatar_url?
+      avatar_url = ThumborService.image_url avatar_url, '220x220'
       avatarStyles = "background-image": "url(#{avatar_url})"
 
       return `<span className="avatar"
