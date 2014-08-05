@@ -6,11 +6,14 @@ window.EditableField = React.createClass
   propTypes:
     maxLength: React.PropTypes.number
     defaultValue: React.PropTypes.string
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string.isRequired
+
+  getDefaultProps: ->
+    maxLength: 140
 
   getInitialState: ->
-    empty: @props.defaultValue.trim() == ""
-    focus: false
+    isEmpty: @props.defaultValue.trim() == ""
+    isFocus: false
 
   componentDidMount: ->
     $textarea = $(@refs.textarea.getDOMNode())
@@ -20,16 +23,17 @@ window.EditableField = React.createClass
       $textarea.autosize()
 
     # require jquery.maxlength.js
-    $textarea.maxlength({
-      max: $textarea.attr("maxlength") || 140,
-      showFeedback: false
-    });
+    if $.fn.maxlength
+      $textarea.maxlength({
+        max: $textarea.attr("maxlength"),
+        showFeedback: false
+      });
 
   render: ->
     editableFieldClasses = React.addons.classSet {
       "editable-field": true
-      "state--empty": @isEmpty()
-      "state--focus": @isFocus()
+      "state--empty": @state.isEmpty
+      "state--focus": @state.isFocus
     }
 
     return `<div className={ editableFieldClasses }>
@@ -44,7 +48,7 @@ window.EditableField = React.createClass
                           ref="textarea"></textarea>
               </div>
               <div className="editable-field__content">
-                <span className="editable-field__placeholder" ref="placeholder">{ this.props.placeholder }</span>
+                <span className="editable-field__placeholder">{ this.props.placeholder }</span>
                 <span className="editable-field__value" ref="value">{ this.props.defaultValue }</span>
                 <span className="editable-field__button"
                       onClick={ this.onFocus }>
@@ -54,41 +58,29 @@ window.EditableField = React.createClass
             </div>`
 
   onFocus: ->
-    that = @
+    @setState isFocus: true
 
-    @setState focus: true
-
-    _.defer ->
-      value = that.refs.textarea.getDOMNode().value
-      $(that.refs.textarea.getDOMNode()).val("").focus().val value
+    _.defer =>
+      value = @refs.textarea.getDOMNode().value
+      $(@refs.textarea.getDOMNode()).val("").focus().val value
       return
 
   onBlur: ->
-    @setState focus: false
+    @setState isFocus: false
 
   onChange: (e) ->
-    that = @
-
+    # По нажатию на enter выходим из редактирования (либо организуем сохранение на сервер)
     if e.which == 13
       $(e.target).trigger "blur";
       return false;
 
-    _.defer ->
-      textarea = that.refs.textarea.getDOMNode()
-      value = that.refs.value.getDOMNode()
+    _.defer =>
+      textarea = @refs.textarea.getDOMNode()
+      value = @refs.value.getDOMNode()
 
       textarea.value = textarea.value.replace /\n/g, ""
       $(value).text(textarea.value)
       $(textarea).trigger "autosize.resize"
 
-      that.setState empty: (if (textarea.value.trim() is "") then true else false)
-
+      @setState isEmpty: textarea.value.trim() is ""
       return
-
-  isEmpty: ->
-    @state.empty
-
-  isFocus: ->
-    @state.focus
-
-module.exports = window.EditableField
