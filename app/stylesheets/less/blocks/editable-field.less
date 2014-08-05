@@ -1,6 +1,8 @@
 .editable-field {
+  position: relative;
   font-size: 16px;
   line-height: 22px;
+  text-align: center;
 
   &.state--empty {
     .editable-field__placeholder {
@@ -9,7 +11,8 @@
     }
   }
 
-  &.state--editing {
+  &.state--editing,
+  &.state--focus {
     .editable-field__control-wrap {
       visibility: visible;
       opacity: 1;
@@ -17,6 +20,7 @@
     }
 
     .editable-field__content {
+      display: none;
       visibility: hidden;
       opacity: 0;
       transition: visibility 0s ease, opacity 0s ease;
@@ -26,13 +30,13 @@
 
 .editable-field__control-wrap {
   padding-top: 1px;
-  visibility: hidden;
   line-height: 23px;
+  visibility: hidden;
   opacity: 0;
   transition: visibility 0s ease .3s, opacity .3s ease;
 
-  visibility: visible; // overrides
-  opacity: 1; // overrides
+  // visibility: visible; // overrides
+  // opacity: 1; // overrides
 }
 
 .editable-field__control {
@@ -65,7 +69,7 @@
   display: none;
   opacity: .3;
 
-  display: inline; // overrides
+  // display: inline; // overrides
 }
 
 .editable-field__value {
@@ -74,7 +78,7 @@
   word-wrap: break-word;
   opacity: .6;
 
-  display: inline; // overrides
+  // display: inline; // overrides
 }
 
 .editable-field__button {

@@ -18,6 +18,7 @@
     "medium-editor": "~1.8.14",
     "Medium.js": "git@github.com:jakiestfu/Medium.js.git",
     "undo": "https://github.com/jzaefferer/undo/archive/master.zip",
-    "rangy-1.3alpha.804": "https://rangy.googlecode.com/files/rangy-1.3alpha.804.zip"
+    "rangy-1.3alpha.804": "https://rangy.googlecode.com/files/rangy-1.3alpha.804.zip",
+    "jquery-autosize": "~1.18.9"
   }
 }

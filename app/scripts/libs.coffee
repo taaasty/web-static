@@ -27,6 +27,8 @@ require 'angular-sanitize'
 require 'ng-rails-csrf/index'
 
 require 'jquery-waypoints'
+
+require 'jquery-autosize'
 #require 'rangy'
 
 #require "undo/undo.js"
