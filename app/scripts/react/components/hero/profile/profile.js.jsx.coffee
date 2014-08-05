@@ -31,7 +31,7 @@ window.HeroProfile = React.createClass
     $(window).off 'scroll', @scrollFade
 
   render: ->
-    if props.relationship?
+    if @props.relationship?
         actions = `<div className="hero__actions">
           <FollowButton tlogId={ this.props.user.id }
                         relationship={ this.props.relationship } />
