@@ -1,5 +1,8 @@
 ###* @jsx React.DOM ###
 
+# Вызывается из 
+# - SettingsHeader
+#
 window.Avatar = React.createClass
   #mixins: [ReactComponentWithPureRenderMixin]
 
@@ -40,6 +43,11 @@ window.Avatar = React.createClass
                 <span className="avatar__text">{ this.props.name.charAt(0) }</span>
               </span>`
 
+
+# Вызывается из:
+# hero profile
+# persos popup items
+#
 window.UserAvatar = React.createClass
 
   propTypes:
