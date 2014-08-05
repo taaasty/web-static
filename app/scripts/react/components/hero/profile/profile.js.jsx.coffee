@@ -8,8 +8,8 @@ window.HeroProfile = React.createClass
 
   propTypes:
     user:         React.PropTypes.object.isRequired
-    relationship: React.PropTypes.object.isRequired
     stats:        React.PropTypes.object.isRequired
+    relationship: React.PropTypes.object
 
   getInitialState: ->
     currentState: HERO_CLOSED
@@ -31,6 +31,12 @@ window.HeroProfile = React.createClass
     $(window).off 'scroll', @scrollFade
 
   render: ->
+    if props.relationship?
+        actions = `<div className="hero__actions">
+          <FollowButton tlogId={ this.props.user.id }
+                        relationship={ this.props.relationship } />
+        </div>`
+
     `<div className="hero hero-profile">
       <CloseToolbar onClick={ this.close } />
       <div className="hero__overlay"></div>
@@ -40,10 +46,7 @@ window.HeroProfile = React.createClass
                            onClick={ this.open } />
         <span className="follow-status state--none"><i className="icon"></i></span>
         <HeroProfileHead user={ this.props.user } />
-        <div className="hero__actions">
-          <FollowButton tlogId={ this.props.user.id }
-                        relationship={ this.props.relationship } />
-        </div>
+        {actions}
       </div>
       <HeroProfileStats stats={ this.props.stats } />
     </div>`

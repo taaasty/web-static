@@ -52,7 +52,7 @@ window.UserAvatar = React.createClass
 
   propTypes:
     user: React.PropTypes.object.isRequired
-    size: React.PropTypes.string
+    size: React.PropTypes.number
 
   render: ->
     Avatar {
