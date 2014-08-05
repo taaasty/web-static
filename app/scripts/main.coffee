@@ -60,6 +60,7 @@ require './react/components/settings_popup/toolbar_settings'
 
 require './react/components/toolbars/user/user'
 require './react/components/toolbars/feed/feed'
+require './react/components/toolbars/close/close'
 require './react/components/toolbars/toolbar_item'
 
 require './react/components/voting'
@@ -139,7 +140,12 @@ require './react/components/post_editor/editor_container'
 require './react/components/post_editor/demo'
 # require './react/components/post_editor/images_container'
 
-require './shared/hero'
+require './react/components/hero/profile/profile'
+require './react/components/hero/profile/profile_avatar'
+require './react/components/hero/profile/profile_head'
+require './react/components/hero/profile/profile_stats'
+require './react/components/hero/profile/profile_stats_item'
+
 require './shared/utils'
 require './shared/tasty'
 
