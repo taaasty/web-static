@@ -20,7 +20,9 @@ window.EditableField = React.createClass
 
     # require jquery.autosize.min.js
     if $.fn.autosize
-      $textarea.autosize()
+      $textarea.autosize({
+        append: "" # По-умолчания в конец строки добавляет \n. Отключаем, чтобы при инициализации правильно высчитывалась высота
+      })
 
     # require jquery.maxlength.js
     if $.fn.maxlength
