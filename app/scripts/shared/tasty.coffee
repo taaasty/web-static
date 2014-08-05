@@ -18,12 +18,12 @@ $ ->
   TastyUtils.centerHorizontally ".js-horizontal-centering"
 
   # setupFeedHeaderScrolls
-  hero = $(".hero")
-  heroBox = hero.find(".hero__box")
-  if hero.length>0 && heroBox.length>0
-    $(window).on 'scroll', -> TastyUtils.scrollFade hero, heroBox
+  # hero = $(".hero")
+  # heroBox = hero.find(".hero__box")
+  # if hero.length>0 && heroBox.length>0
+  #   $(window).on 'scroll', -> TastyUtils.scrollFade hero, heroBox
 
-  Hero.start()
+  # Hero.start()
 
   # wiselinks подгружает native.history которая вместо hash меняет url. Это хорошо
   # но backbone такого обращния не понимает
