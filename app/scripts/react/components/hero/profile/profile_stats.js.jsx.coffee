@@ -1,39 +1,35 @@
 ###* @jsx React.DOM ###
 
 window.HeroProfileStats = React.createClass
+  mixins: [ReactGrammarMixin]
+
+  propTypes:
+    stats: React.PropTypes.object.isRequired
 
   render: ->
-   `<div className="hero__stats js-hero-stats">
+    `<div className="hero__stats">
       <div className="hero__stats-list">
-        <div className="hero__stats-item">
-          <a className="hero__stats-link js-subscribed-by-toggle" href="#" title="34 подписчиков" data-popup-selector=".js-subscribed-by" data-user-id="37623">
-            <strong>34</strong> подписчиков
-          </a>
-        </div>
-        <div className="hero__stats-item">
-          <a className="hero__stats-link js-subscribed-to-toggle" href="#" title="33 подписана" data-popup-selector=".js-subscribed-to" data-user-id="37623">
-            <strong>33</strong> подписана
-          </a>
-        </div>
-        <div className="hero__stats-item">
-          <a className="hero__stats-link " href="#" title="956 в избранном" data-popup-selector="" data-user-id="37623">
-            <strong>956</strong> в избранном
-          </a>
-        </div>
-        <div className="hero__stats-item">
-          <a className="hero__stats-link " href="#" title="1249 постов" data-popup-selector="" data-user-id="37623">
-            <strong>1249</strong> постов
-          </a>
-        </div>
-        <div className="hero__stats-item">
-          <a className="hero__stats-link " href="#" title="2841 комментариев" data-popup-selector="" data-user-id="37623">
-            <strong>2841</strong> комментариев
-          </a>
-        </div>
-        <div className="hero__stats-item">
-          <a className="hero__stats-link " href="#" title="1251 дней на тейсти" data-popup-selector="" data-user-id="37623">
-            <strong>1251</strong> дней на тейсти
-          </a>
-        </div>
+        <HeroProfileStatsItem count={ this.props.stats.followers_count }
+                              title={ this.getTitle('followers') } />
+        <HeroProfileStatsItem count={ this.props.stats.followings_count }
+                              title={ this.getTitle('followings') } />
+        <HeroProfileStatsItem count={ this.props.stats.favorites_count }
+                              title={ this.getTitle('favorites') } />
+        <HeroProfileStatsItem count={ this.props.stats.entries_count }
+                              title={ this.getTitle('entries') } />
+        <HeroProfileStatsItem count={ this.props.stats.comments_count }
+                              title={ this.getTitle('comments') } />
+        <HeroProfileStatsItem count={ this.props.stats.days_count }
+                              title={ this.getTitle('days') } />
       </div>
     </div>`
+
+  getTitle: (type) ->
+    switch type
+      when 'followers'  then @declension( @props.stats.followers_count, ['подписчик', 'подписчика', 'подписчиков'] )
+      when 'followings' then @declension( @props.stats.followings_count, ['подписка', 'подписки', 'подписок'] )
+      when 'favorites'  then 'в избранном'
+      when 'entries'    then @declension( @props.stats.entries_count, ['пост', 'поста', 'постов'] )
+      when 'comments'   then @declension( @props.stats.comments_count, ['комментарий', 'комментария', 'комментариев'] )
+      when 'days'       then @declension( @props.stats.days_count, ['день', 'дня', 'дней'] ) + ' на тейсти'
+      else console.log "Неизвестный тип статистики профиля #{type}"

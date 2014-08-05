@@ -1,18 +1,18 @@
 ###* @jsx React.DOM ###
 
+HERO_AVATAR_SIZE = 220
+
 window.HeroProfileAvatar = React.createClass
 
   propTypes:
+    user:    React.PropTypes.object.isRequired
     onClick: React.PropTypes.func.isRequired
-    href:    React.PropTypes.string.isRequired
 
   render: ->
-   `<a href={ this.props.href }
+   `<a href={ this.props.user.tlog_url }
        onClick={ this.props.onClick }>
       <div className="hero__avatar">
-        <span className="avatar"
-              style={{ 'background-image': 'url(http://thumbor0.tasty0.ru/S4cMlHCscI_9mCpQrtWABaYUxyY=/220x220/userpic/e6/55/37623_original.jpg)' }}>
-          <img alt="lazy-cat" className="avatar__img" src="http://thumbor0.tasty0.ru/S4cMlHCscI_9mCpQrtWABaYUxyY=/220x220/userpic/e6/55/37623_original.jpg" />
-        </span>
+        <UserAvatar user={ this.props.user }
+                    size={ HERO_AVATAR_SIZE } />
       </div>
     </a>`
