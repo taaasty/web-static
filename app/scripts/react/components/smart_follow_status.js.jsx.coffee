@@ -10,10 +10,10 @@ window.SmartFollowStatus = React.createClass
     status: @props.status
 
   componentDidMount: ->
-    TastyEvents.on "follow_status:#{ @props.tlogId }:changed", @updateFollowStatus
+    TastyEvents.on TastyEvents.keys.follow_status_changed(@props.tlogId), @updateFollowStatus
 
   componentWillUnmount: ->
-    TastyEvents.off "follow_status:#{ @props.tlogId }:changed", @updateFollowStatus
+    TastyEvents.off TastyEvents.keys.follow_status_changed(@props.tlogId), @updateFollowStatus
 
   render: -> `<FollowStatus status={ this.state.status } />`
 

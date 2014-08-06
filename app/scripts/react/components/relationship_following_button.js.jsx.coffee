@@ -113,7 +113,7 @@ module.experts = window.RelationshipFollowingButton = React.createClass
       method: 'POST'
       success: (data) =>
         @safeUpdateState => @setState relationship: data
-        TastyEvents.trigger "follow_status:#{ data.user_id }:changed", [data.state]
+        TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
       error: (data) =>
         @safeUpdateState => @setState isError: true
         TastyNotifyController.errorResponse data
