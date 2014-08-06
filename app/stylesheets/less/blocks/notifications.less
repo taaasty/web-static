@@ -1,0 +1,49 @@
+.notifications {
+  padding: 15px 0;
+}
+
+.notification {
+  padding: @notification-vertical-padding @notification-horizontal-padding;
+  position: relative;
+  .clearfix();
+}
+
+.notification__desc {
+  overflow: hidden;
+}
+
+.notification__image {
+  width: 88px;
+  margin-left: 15px;
+  float: right;
+
+  img {
+    width: 100%;
+  }
+}
+
+.notification__text {
+  color: @notification-text-color;
+}
+
+.notification__user {
+  font-weight: bold;
+}
+
+.notification__user-online {
+  width: 6px;
+  height: 6px;
+  margin: 14px -100% 0 0;
+  position: relative;
+  float: left;
+  left: -12px;
+  background-color: #64c467;
+  border-radius: 50%;
+}
+
+.notification__user-avatar {
+  width: 35px;
+  height: 35px;
+  margin-right: 6px;
+  float: left;
+}
