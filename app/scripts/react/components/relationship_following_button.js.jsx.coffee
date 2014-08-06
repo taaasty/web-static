@@ -67,7 +67,7 @@ module.experts = window.RelationshipFollowingButton = React.createClass
       return switch @state.relationship.state
         when 'friend'
           'Отписаться'
-        when 'guessed'
+        when 'requested'
           'Отменить запрос'
         when 'ignored'
           'Разблокировать'
@@ -77,7 +77,7 @@ module.experts = window.RelationshipFollowingButton = React.createClass
       return switch @state.relationship.state
         when 'friend'
           'Подписан'
-        when 'guessed'
+        when 'requested'
           'Ждем одобрения'
         when 'ignored'
           'Заблокирован'
@@ -103,7 +103,7 @@ module.experts = window.RelationshipFollowingButton = React.createClass
       switch @state.relationship.state
         when 'friend'
           action = 'unfollow'
-        when 'guessed'
+        when 'requested'
           action = 'cancel'
         else
           action = 'follow'

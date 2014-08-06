@@ -15,7 +15,7 @@ window.PersonsPopup = React.createClass
         items:       null
         total_count: null
       }
-      guesses: {
+      requests: {
         items:       null
         total_count: null
       }
@@ -51,11 +51,11 @@ window.PersonsPopup = React.createClass
                                    activitiesHandler={ this.activitiesHandler }
                                    onLoad={ onLoad.bind(this, 'followers') } />
 
-      <PersonsPopup_GuessesPanel isActive={ this.state.currentTab == 'guesses' }
-                                 relationships={ this.state.relationships.guesses.items }
-                                 total_count={ this.state.relationships.guesses.total_count }
-                                 activitiesHandler={ this.activitiesHandler }
-                                 onLoad={ onLoad.bind(this, 'guesses') } />
+      <PersonsPopup_RequestsPanel isActive={ this.state.currentTab == 'requests' }
+                                  relationships={ this.state.relationships.requests.items }
+                                  total_count={ this.state.relationships.requests.total_count }
+                                  activitiesHandler={ this.activitiesHandler }
+                                  onLoad={ onLoad.bind(this, 'requests') } />
 
       <PersonsPopup_IgnoresPanel isActive={ this.state.currentTab == 'ignores' }
                                  relationships={ this.state.relationships.ignores.items }

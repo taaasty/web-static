@@ -2,7 +2,7 @@
 
 FOLLOWINGS = 'Подписки'
 FOLLOWERS  = 'Подписчики'
-GUESSES    = 'Заявки'
+REQUESTS   = 'Заявки'
 IGNORES    = 'Блокировка'
 
 # TODO Вынести состояния в константы, а текста в i18n
@@ -31,10 +31,10 @@ window.PersonsPopup_Menu = React.createClass
                                        title={ FOLLOWERS }
                                        onClick={ onSelect.bind(this, 'followers') } />
 
-                <PersonsPopup_MenuItem isActive={ this.props.currentTab == "guesses" }
-                                       count={ this.getCount(this.props.relationships.guesses) }
-                                       title={ GUESSES }
-                                       onClick={ onSelect.bind(this, 'guesses') } />
+                <PersonsPopup_MenuItem isActive={ this.props.currentTab == "requests" }
+                                       count={ this.getCount(this.props.relationships.requests) }
+                                       title={ REQUESTS }
+                                       onClick={ onSelect.bind(this, 'requests') } />
                 <PersonsPopup_MenuItem isActive={ this.props.currentTab == "ignores" }
                                        count={ this.getCount(this.props.relationships.ignores) }
                                        title={ IGNORES }

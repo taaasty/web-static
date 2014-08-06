@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.RelationshipGuessButton = React.createClass
+window.RelationshipRequestButton = React.createClass
   mixins: [ErrorTimerMixin, RequesterMixin]
 
   propTypes:
