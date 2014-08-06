@@ -50,7 +50,8 @@ window.HeroProfile = React.createClass
         <HeroProfileHead user={ this.props.user } />
         { actions }
       </div>
-      <HeroProfileStats stats={ this.props.stats } />
+      <HeroProfileStats tlogId={ this.props.user.id }
+                        stats={ this.props.stats } />
     </div>`
 
   open: (e) ->
@@ -76,6 +77,7 @@ window.HeroProfile = React.createClass
 
       @restoreInitialHeroHeight()
       $('body').removeClass HERO_OPENED_CLASS
+      TastyEvents.trigger TastyEvents.keys.hero_closed()
 
   setInitialHeroHeight: ->
     transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' +

@@ -30,6 +30,10 @@ ApiRoutes =
   relationships_by_url:                  (state) -> TastySettings.api_host + 'v1/relationships/by/' + state
   relationships_by_tlog_approve_url:    (tlogId) -> TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/approve'
   relationships_by_tlog_disapprove_url: (tlogId) -> TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/disapprove'
+
+  tlog_followers:                       (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/followers'
+  tlog_followings:                      (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/followings'
+  tlog_tags:                            (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/tags'
   get_my_relationship_url:              (tlogId) -> TastySettings.api_host + 'v1/relationships/to/tlog/'+tlogId
   # follow, ignore, unfollow, cancel
   change_my_relationship_url:    (tlogId, state) ->

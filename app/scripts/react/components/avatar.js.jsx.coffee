@@ -25,7 +25,7 @@ window.Avatar = React.createClass
     avatar_url = @props.userpic?['original_url'] || @props.userpic?['large_url']
 
     if avatar_url?
-      avatar_url = ThumborService.image_url avatar_url, '220x220'
+      avatar_url = ThumborService.image_url avatar_url, @props.size + 'x' + @props.size
       avatarStyles = "background-image": "url(#{avatar_url})"
 
       return `<span className="avatar"
