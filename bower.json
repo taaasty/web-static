@@ -10,6 +10,7 @@
     "momentjs": "~2.7.0",
     "react_ujs": "https://raw.githubusercontent.com/reactjs/react-rails/master/lib/assets/javascripts/react_ujs.js",
     "backbone": "~1.1.2",
+    "eventEmitter": "~4.2.7",
     "ngInfiniteScroll": "~1.1.2",
     "quick-ng-repeat": "~0.0.1",
     "angular-resource": "~1.2.19",

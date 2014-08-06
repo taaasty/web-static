@@ -1,0 +1,1 @@
+window.TastyEvents = new EventEmitter()

@@ -9,7 +9,7 @@
 #= require_tree ./controllers
 
 window.ReactApp =
-  
+
   start: ->
     console.log 'ReactApp start'
     personsContainer = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get(0)
