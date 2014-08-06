@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+        <title></title>
+
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+
+        <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
+
+        <!-- Fonts -->
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <!-- end Fonts -->
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="stylesheets/main.css" />
+        <!-- end Styles -->
+
+        <!-- Scripts -->
+        <script src="javascripts/old/libs/modernizr.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.core.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.widget.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.mouse.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.slider.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.draggable.min.js"></script>
+        <script src="javascripts/old/libs/jquery.autosize.min.js"></script>
+        <script src="javascripts/old/libs/jquery.caretposition.js"></script>
+        <script src="javascripts/old/libs/jquery.sew.js"></script>
+        <script src="javascripts/old/libs/jquery.timeago.js"></script>
+        <script src="javascripts/old/libs/jquery.timeago.ru.js"></script>
+        <script src="javascripts/old/libs/jsrender.min.js"></script>
+        <script src="javascripts/old/libs/uploaderObject.js"></script>
+        <script src="javascripts/old/libs/cookie.js"></script>
+        <script src="javascripts/old/libs/baron.js"></script>
+        <script src="javascripts/old/libs/jquery.custom-select.js"></script>
+        <script src="javascripts/old/libs/isotope.pkgd.js"></script>
+
+        <script src="javascripts/old/plugins/jquery.formradio.js"></script>
+        <script src="javascripts/old/plugins/jquery.dropdown.js"></script>
+        <script src="javascripts/old/plugins/jquery.expander.js"></script>
+        <script src="javascripts/old/plugins/jquery.togglevalue.js"></script>
+
+        <script src="javascripts/old/tasty.api.js"></script>
+        <script src="javascripts/old/tasty.js"></script>
+        <script src="javascripts/old/tasty.utils.js"></script>
+        <script src="javascripts/old/fileReceiver.js"></script>
+        <script src="javascripts/old/popup.js"></script>
+        <script src="javascripts/old/design.js"></script>
+        <script src="javascripts/old/comments.js"></script>
+        <script src="javascripts/old/hero.js"></script>
+        <script src="javascripts/old/search.js"></script>
+        <script src="javascripts/old/tabs.js"></script>
+        <script src="javascripts/old/postEditor.js"></script>
+        <!-- end Scripts -->
+    </head>
+    <body class="layout--feed not-logged">
+        <!-- Toolbar - Logo -->
+        <div class="toolbar toolbar--nav js-userbar-dropdown">
+            <div class="toolbar__toggle" data-element="dropdown-toggle">
+                <div class="tasty-ribbon">
+                    <a class="tasty-ribbon__link" href="/" title="ммм..Тейсти)">ммм..Тейсти)</a>
+                </div>
+            </div>
+            <div class="toolbar__popup js-isotope-filter" data-element="dropdown-menu" data-target-name="bricks">
+                <ul class="toolbar__popup-list">
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-isotope-filter-item" href="api/feed/friends.html" title="Подписки"><i class="icon icon--friends"></i>Подписки</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-isotope-filter-item" href="api/feed/live.html" title="Прямой эфир"><i class="icon icon--wave"></i>Прямой эфир</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-isotope-filter-item" href="api/feed/best.html" title="Лучшее"><i class="icon icon--rating"></i>Лучшее</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- end Toolbar - Logo -->
+
+        <!-- Toolbar - Userbar -->
+        <div class="toolbar toolbar--right toolbar--nav js-userbar-dropdown">
+            <div class="toolbar__toggle" data-element="dropdown-toggle">
+                <i class="icon icon--menu"></i>
+            </div>
+            <div class="toolbar__popup" data-element="dropdown-menu">
+                <ul class="toolbar__popup-list">
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link state--single" href="#"><i class="icon icon--plus"></i>Новая запись</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--diary"></i>Мой дневник</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--profile"></i>Профиль</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--lock"></i>Скрытые записи</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-messages-toggle" href="#" data-popup-selector=".js-messages"><i class="icon icon--messages"></i>Сообщения</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-friends-toggle" href="#" data-popup-selector=".js-friends"><i class="icon icon--friends"></i>Друзья</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-settings-design-toggle" href="#" data-popup-selector=".js-settings-design"><i class="icon icon--drawing"></i>Дизайн дневника</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link js-settings-toggle" href="#" data-popup-selector=".js-settings"><i class="icon icon--cogwheel"></i>Настройки</a>
+                    </li>
+                    <li class="toolbar__popup-item">
+                        <a class="toolbar__popup-link" href="#"><i class="icon icon--logout"></i>Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- end Toolbar - Userbar -->
+
+        <!-- Page -->
+        <div class="page js-preview-design">
+            <div class="page__inner">
+                <div class="page__paper">
+                    <!-- Page Header -->
+                    <header class="page-header">
+                        <!-- Search -->
+                        <div class="search js-search">
+                            <form class="search__form" action="?">
+                                <input class="search__input js-search-input" type="text" placeholder="Поиск" />
+                            </form><div class="search__button js-search-button">
+                                <i class="icon icon--magnifier"></i>
+                            </div>
+                        </div>
+                        <!-- end Search -->
+                        <!-- Hero -->
+                        <div class="hero hero--cover" style="background-image: url(images/hero-cover.jpg);">
+                            <div class="hero__overlay"></div>
+                            <div class="layout-constrain hero__box">
+                                <div class="hero__slide">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Друзья</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 друзей</span></div>
+                                </div>
+                                <div class="hero__slide">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Прямой эфир</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 758 людей пишут в прямой эфир</span></div>
+                                </div>
+                                <div class="hero__slide">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Лучшее</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 758 людей попали в лучшее</span></div>
+                                </div>
+                                <div class="hero__slide">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Анонимки</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 людей пишут анонимки</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end Hero -->
+                    </header>
+                    <!-- end Page Header -->
+                    <!-- Page Body -->
+                    <div class="page-body">
+                        <div class="page-body__wide-content">
+                            <!-- Nav View Mode -->
+                            <nav class="nav-view-mode">
+                                <ul class="nav-view-mode__list">
+                                    <li class="nav-view-mode__item">
+                                        <a class="nav-view-mode__link" href="#" title="Показать кирпичиками">
+                                            <span class="view-mode-tiles"> <!-- Заменим потом на иконку -->
+                                                <span class="view-mode-tiles__tile"></span>
+                                                <span class="view-mode-tiles__tile"></span>
+                                                <span class="view-mode-tiles__tile"></span>
+                                                <span class="view-mode-tiles__tile"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-view-mode__item state--active">
+                                        <a class="nav-view-mode__link" href="#" title="Показать списком">
+                                            <i class="icon icon--menu"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!-- end Nav View Mode -->
+                            <div class="layout-constrain page-body__content">
+                                <div class="page-body__bg"></div>
+                                <div class="page-body__inner">
+                                    <!-- Posts -->
+                                    <section class="posts">
+                                        <article class="post post--text" data-id="19188650" data-time="2014-07-16T21:24:02+04:00" data-type="text" id="entry-19003612">
+                                            <div class="post__content">
+                                                <p class="null" id="null">Моё настроение скачет как сумасшедшее в последние дни. Временами мне охуеть как нравится всё, что происходит вокруг, но тут же может накатить непонятная апатия и грусть.
+                                                <br>Еще 20 минут назад мне хотелось на стенку лезть от обиды и скуки, а сейчас: на часах 2:30, за окном метель, сугробы, -3 градуса, а я собираюсь в магазин за печеньками. Даже не знаю, норма это или нет. </p>
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--user state--visible">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link" href="#" title="marina-s-fantasy">
+                                                                <span class="meta-item__ava">
+                                                                    <span class="avatar" style="background-image: url(images/avatars/ava_4.png);">
+                                                                        <img class="avatar__img" src="images/avatars/ava_4.png" alt="marina-s-fantasy" />
+                                                                    </span>
+                                                                </span> marina-s-fantasy
+                                                            </a>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/2/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--tags">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link" href="#" title="#новости">#новости</a><span class="meta-item__common">,</span> <a class="meta-item__common meta-item__link" href="#" title="#туман">#туман</a>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions" data-react-class="EntryMetabarDropdownMenu" data-react-props='{"entryId": 19188650, "entryUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta", "editUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta/edit", "successDeleteUrl": "http://taaasty.ru/@lazy-cat", "isFavorited": true, "isWatching": true, "canEdit": true, "canFavorite": true, "canWatch": true, "canReport": true, "canDelete": true}'></span>
+                                                </span>
+                                            </div>
+                                        </article>
+                                        <article class="post post--text js-post" data-id="19179371" data-time="2014-07-12T21:27:06+04:00">
+                                            <div class="post__content">
+                                                <span class="rating js-vote" title="Голосовать">456</span>
+                                                <p>
+                                                    Я думала, наша проблема в расстоянии. Наивная дура.
+                                                    <span class="meta-bar">
+                                                        <span class="meta-item meta-item--user state--visible">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link" href="#" title="marina-s-fantasy">
+                                                                    <span class="meta-item__ava">
+                                                                        <span class="avatar" style="background-image: url(images/avatars/ava_4.png);">
+                                                                            <img class="avatar__img" src="images/avatars/ava_4.png" alt="marina-s-fantasy" />
+                                                                        </span>
+                                                                    </span> marina-s-fantasy
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--comments state--visible">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="2 комментария">2 комментария</a>
+                                                            </span>
+                                                            <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--date">
+                                                            <span class="meta-item__content">
+                                                                <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--tags">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link" href="#" title="#новости">#новости</a><span class="meta-item__common">,</span> <a class="meta-item__common meta-item__link" href="#" title="#туман">#туман</a>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--actions" data-react-class="EntryMetabarDropdownMenu" data-react-props='{"entryId": 19188650, "entryUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta", "editUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta/edit", "successDeleteUrl": "http://taaasty.ru/@lazy-cat", "isFavorited": false, "isWatching": true, "canEdit": true, "canFavorite": true, "canWatch": true, "canReport": true, "canDelete": true}'></span>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <section class="comments js-comments">
+                                                <div style="display: none;" class="comments__more js-comments-more">
+                                                    <a class="comments__more-link js-comments-more-link" title="Загрузить все 0 комментариев" href="">Загрузить все 0 комментариев</a>
+                                                </div>
+                                                <div class="comments__list js-comments-list">
+                                                    <article class="comment">
+                                                        <div class="comment__table">
+                                                            <div class="comment__table-cell">
+                                                                <a class="comment__user" href="http://hmeli-synele.mmm-tasty.ru" title="hmeli-synele">
+                                                                    <span class="comment__avatar">
+                                                                        <span class="avatar avatar--seventh">
+                                                                            <span class="avatar__text">H</span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="comment__username comment__username--bold">hmeli-synele</span>
+                                                                </a> Так выпьем же за это!&nbsp;
+                                                                <span class="comment__meta">
+                                                                    <span class="comment__reply js-comment-reply" data-user="hmeli-synele">Ответить</span>
+                                                                    <span class="comment__dot">·</span>
+                                                                    <a class="comment__date-link" href="#comment-11528585" title="">
+                                                                        <time class="comment__date js-comment-date" datetime="2013-05-16T22:40:03">2 месяца назад</time>
+                                                                    </a>
+                                                                    <span class="comment__dot">·</span>
+                                                                    <span class="comment__actions">
+                                                                        <i class="icon icon--dots"></i>
+                                                                        <span class="comment__dropdown">
+                                                                            <a class="comment__dropdown-item js-comment-link" href="#" title="Ссылка на комментарий"><i class="icon icon--hyperlink"></i>Ссылка на комментарий</a>
+                                                                            <a class="comment__dropdown-item js-comment-complain" href="#" title="Пожаловаться"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                            <a class="comment__dropdown-item js-comment-remove" href="#" title="Удалить комментарий"><i class="icon icon--basket"></i>Удалить комментарий</a>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                    <article class="comment">
+                                                        <div class="comment__table">
+                                                            <div class="comment__table-cell">
+                                                                <a class="comment__user" title="GHOST-writer" href="http://GHOST-writer.mmm-tasty.ru">
+                                                                    <span class="comment__avatar">
+                                                                        <span class="avatar avatar--first">
+                                                                            <span class="avatar__text">G</span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="comment__username comment__username--bold">GHOST-writer</span>
+                                                                </a> hmeli-synele: &nbsp;
+                                                                <span class="comment__meta">
+                                                                    <span class="comment__reply js-comment-reply" data-user="GHOST-writer">Ответить</span>
+                                                                    <span class="comment__dot">·</span>
+                                                                    <a class="comment__date-link" href="#comment-11528650" title="">
+                                                                        <time class="comment__date js-comment-date" datetime="2013-05-16T22:40:03">2 месяца назад</time>
+                                                                    </a>
+                                                                    <span class="comment__dot">·</span>
+                                                                    <span class="comment__actions">
+                                                                        <i class="icon icon--dots"></i>
+                                                                        <span class="comment__dropdown">
+                                                                            <a class="comment__dropdown-item js-comment-link" href="#" title="Ссылка на комментарий"><i class="icon icon--hyperlink"></i>Ссылка на комментарий</a>
+                                                                            <a class="comment__dropdown-item js-comment-complain" href="#" title="Пожаловаться"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                            <a class="comment__dropdown-item js-comment-remove" href="#" title="Удалить комментарий"><i class="icon icon--basket"></i>Удалить комментарий</a>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                                <div class="comment-form">
+                                                    <div class="comment-form__table">
+                                                        <div class="comment-form__table-cell">
+                                                            <form action="?">
+                                                                <span class="comment-form__avatar">
+                                                                    <span class="avatar avatar--eighth">
+                                                                        <span class="avatar__text">M</span>
+                                                                    </span>
+                                                                </span>
+                                                                <span class="comment-form__field js-toggle-value">
+                                                                    <i class="comment-form__field-bg"></i>
+                                                                    <label class="comment-form__field-label js-toggle-value-label" for="add-comment-10" style="display: block;">Напишите комментарий</label>
+                                                                    <textarea class="comment-form__field-textarea js-comment-textarea js-toggle-value-input js-autoresize js-sew" id="add-comment-10" style="overflow: hidden; word-wrap: break-word; resize: none; height: 20px;"></textarea>
+                                                                </span>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </article>
+                                        <article class="post post--image js-post" data-id="19122313" data-time="2014-06-18T01:21:54+04:00">
+                                            <div class="post__content">
+                                                <figure class="image">
+                                                    <img src="images/images/image_10.jpg" alt="Как мы ездили на дачу" />
+                                                </figure>
+                                                <span class="rating js-vote" title="Голосовать">456</span>
+                                                <p>Как мы ездили на дачу
+                                                    <span class="meta-bar">
+                                                        <span class="meta-item meta-item--user state--visible">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link" href="#" title="marina-s-fantasy">
+                                                                    <span class="meta-item__ava">
+                                                                        <span class="avatar" style="background-image: url(images/avatars/ava_4.png);">
+                                                                            <img class="avatar__img" src="images/avatars/ava_4.png" alt="marina-s-fantasy" />
+                                                                        </span>
+                                                                    </span> marina-s-fantasy
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--comments">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/2/" title="Комментировать">Комментировать</a>
+                                                            </span>
+                                                            <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--date">
+                                                            <span class="meta-item__content">
+                                                                <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--actions">
+                                                            <span class="meta-item__content">
+                                                                <i class="meta-item__common icon icon--dots"></i>
+                                                                <span class="meta-item__dropdown">
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </article>
+                                        <article class="post post--text js-post" data-id="19066457" data-time="2014-05-28T17:54:47+04:00">
+                                            <div class="post__content">
+                                                <span class="rating js-vote voted" title="Вы проголосовали">457</span>
+                                                <p>
+                                                    Бывают такие моменты, когда хочется, чтоб кто-то был рядом. Но никого нет.
+                                                    <span class="meta-bar">
+                                                        <span class="meta-item meta-item--user state--visible">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link" href="#" title="marina-s-fantasy">
+                                                                    <span class="meta-item__ava">
+                                                                        <span class="avatar" style="background-image: url(images/avatars/ava_4.png);">
+                                                                            <img class="avatar__img" src="images/avatars/ava_4.png" alt="marina-s-fantasy" />
+                                                                        </span>
+                                                                    </span> marina-s-fantasy
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--comments state--visible">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="54 комментария">54 комментария</a>
+                                                            </span>
+                                                            <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--date">
+                                                            <span class="meta-item__content">
+                                                                <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--actions">
+                                                            <span class="meta-item__content">
+                                                                <i class="meta-item__common icon icon--dots"></i>
+                                                                <span class="meta-item__dropdown">
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </article>
+                                        <article class="post post--text js-post" data-id="19063698" data-time="2014-05-27T18:58:48+04:00">
+                                            <div class="post__content">
+                                                <span class="rating js-vote voted" title="Вы проголосовали">457</span>
+                                                <p>
+                                                    Бывают
+                                                    <span class="meta-bar">
+                                                        <span class="meta-item meta-item--user state--visible">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link" href="#" title="marina-s-fantasy">
+                                                                    <span class="meta-item__ava">
+                                                                        <span class="avatar" style="background-image: url(images/avatars/ava_4.png);">
+                                                                            <img class="avatar__img" src="images/avatars/ava_4.png" alt="marina-s-fantasy" />
+                                                                        </span>
+                                                                    </span> marina-s-fantasy
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--comments state--visible">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="54 комментария">54 комментария</a>
+                                                            </span>
+                                                            <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--date">
+                                                            <span class="meta-item__content">
+                                                                <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--actions">
+                                                            <span class="meta-item__content">
+                                                                <i class="meta-item__common icon icon--dots"></i>
+                                                                <span class="meta-item__dropdown">
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </article>
+                                        <article class="post post--text js-post" data-id="19062111" data-time="2014-05-27T00:38:25+04:00">
+                                            <span class="rating js-vote voted" title="Вы проголосовали">45</span>
+                                            <div class="post__content">
+                                                <p>
+                                                    Захожу на кухню. Пахнет чаем с клубникой и мятой. Достаю из холодильника шоколад. На полке наш с тобой недопитый мартини. В раковине невымытая посуда. Повсюду следы твоей готовки. Воспоминания. Одежда на полу. Пройдет время, и станет проще. Только сейчас ничего не хочется. Может, только дождя. Сильного.
+                                                    <span class="meta-bar">
+                                                        <span class="meta-item meta-item--user state--visible">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link" href="#" title="marina-s-fantasy">
+                                                                    <span class="meta-item__ava">
+                                                                        <span class="avatar" style="background-image: url(images/avatars/ava_4.png);">
+                                                                            <img class="avatar__img" src="images/avatars/ava_4.png" alt="marina-s-fantasy" />
+                                                                        </span>
+                                                                    </span> marina-s-fantasy
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--comments">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="Комментировать">Комментировать</a>
+                                                            </span>
+                                                            <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--date">
+                                                            <span class="meta-item__content">
+                                                                <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--actions">
+                                                            <span class="meta-item__content">
+                                                                <i class="meta-item__common icon icon--dots"></i>
+                                                                <span class="meta-item__dropdown">
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </article>
+                                        <article class="post post--quote js-post" data-id="19057338" data-time="2014-05-25T15:19:50+04:00">
+                                            <div class="post__content">
+                                                <span class="rating js-vote" title="Вы проголосовали">6</span>
+                                                <blockquote class="blockquote">
+                                                    <span class="laquo">&laquo;</span>Если вы делаете что-то прекрасное и возвышенное, а этого никто не замечает не расстраивайтесь: восход солнца это вообще самое прекрасное зрелище на свете, но большинство людей в это время ещё спит<span class="raquo">&raquo;</span>
+                                                    <span class="blockquote__caption">&mdash;&nbsp;Петр Алексеев</span>
+                                                    <span class="meta-bar">
+                                                        <span class="meta-item meta-item--user state--visible">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link" href="#" title="marina-s-fantasy">
+                                                                    <span class="meta-item__ava">
+                                                                        <span class="avatar" style="background-image: url(images/avatars/ava_4.png);">
+                                                                            <img class="avatar__img" src="images/avatars/ava_4.png" alt="marina-s-fantasy" />
+                                                                        </span>
+                                                                    </span> marina-s-fantasy
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--comments">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="Комментировать">Комментировать</a>
+                                                            </span>
+                                                            <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--date">
+                                                            <span class="meta-item__content">
+                                                                <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--actions">
+                                                            <span class="meta-item__content">
+                                                                <i class="meta-item__common icon icon--dots"></i>
+                                                                <span class="meta-item__dropdown">
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </blockquote>
+                                            </div>
+                                        </article>
+                                        <article class="post post--text js-post" data-id="18989180" data-time="2014-05-05T18:11:14+04:00">
+                                            <header class="post__header">
+                                                <h1 class="post__title"><a class="post__title__link" href="#" title="Маша и Илюша. Шесть дней">Маша и Илюша. Шесть дней</a></h1>
+                                            </header>
+                                            <div class="post__content">
+                                                <span class="rating js-vote" title="Голосовать">6</span>
+                                                <p>Так странно исказилось мое восприятие времени в эти дни. Вроде столько всего происходило, но все это время слилось для меня воедино. Незаметно было, когда начинался день, когда наступала ночь.</p>
+                                                <p>Я поняла много всего. О себе. О нем. Чему-то научилась даже. Открыла что-то новое в себе. Поборола в какой-то мере стеснительность и неуверенность. Почувствовала себя красивой без косметики и прически. Некоторые вещи сделала впервые.</p>
+                                                <p>Наши завтраки, Несквик, походы в магазин, готовка, забавные подколы, фильмы, душ, ванная, пена, разговоры, раскрытые тайны, рисунки на теле маркером... Несмотря на небольшие ссоры, мою раздражительность в начале, мои слезы в день его отлета, это были чудесные шесть дней.</p>
+                                                <p>Теперь каждое мое утро снова будет начинаться без него, вторая половина кровати так и будет пустой, обнимать по ночам я буду край одеяла...</p>
+                                                <p>Никогда не думала, что отношения на расстоянии - это так тяжело.</p>
+                                                <p>
+                                                    Что будет дальше, покажет время.
+                                                    <span class="meta-bar">
+                                                        <span class="meta-item meta-item--user state--visible">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link" href="#" title="marina-s-fantasy">
+                                                                    <span class="meta-item__ava">
+                                                                        <span class="avatar" style="background-image: url(images/avatars/ava_4.png);">
+                                                                            <img class="avatar__img" src="images/avatars/ava_4.png" alt="marina-s-fantasy" />
+                                                                        </span>
+                                                                    </span> marina-s-fantasy
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--comments">
+                                                            <span class="meta-item__content">
+                                                                <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="Комментировать">Комментировать</a>
+                                                            </span>
+                                                            <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--date">
+                                                            <span class="meta-item__content">
+                                                                <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                            </span>
+                                                        </span>
+                                                        <span class="meta-item meta-item--actions">
+                                                            <span class="meta-item__content">
+                                                                <i class="meta-item__common icon icon--dots"></i>
+                                                                <span class="meta-item__dropdown">
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                    <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </article>
+                                    </section>
+                                <!-- end Posts -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end Page Body -->
+                </div>
+            </div>
+        </div>
+        <!-- end Page -->
+
+        <script>
+          (function($){
+            var scollFade = function(W, container, element){
+              var height = container.outerHeight() - element.outerHeight() / 2,
+                scrollTop = W.scrollTop();
+
+              element.css({
+                "margin-top": scrollTop,
+                "opacity": Math.max(1 - scrollTop / height, 0)
+              });
+            };
+
+            $(function(){
+              var win = $(window),
+                hero = $(".hero"),
+                heroBox = hero.find(".hero__box");
+
+              win.on("scroll", function(){scollFade($(this), hero, heroBox);})
+                .on("load", function(){$(this).trigger("scroll");})
+                .trigger("scroll");
+            })
+          })(jQuery);
+        </script>
+
+        <!-- Templates -->
+        <script id="tmpl-comments" type="text/x-jsrender">
+          <section class="comments state--hidden js-comments">
+            <div class="comments__more js-comments-more" style="{{if more == 0}}display:none{{/if}}">
+              <a class="comments__more-link js-comments-more-link" href="{{>url}}" title="{{>loadMore}}">{{>loadMore}}</a>
+            </div>
+            <div class="comments__list js-comments-list"></div>
+            <div class="comment-form">
+              <div class="comment-form__table">
+                <div class="comment-form__table-cell">
+                  <form action="">
+                    <span class="comment-form__avatar" style="background-image: url(http://a3.tcdn.ru/assets/userpic/65/00/189424_thumb128.png)"><img alt="volosojui" class="comment-form__avatar__img" src="http://a3.tcdn.ru/assets/userpic/65/00/189424_thumb128.png" /></span>
+                    <span class="comment-form__field js-toggle-value">
+                      <i class="comment-form__field-bg"></i>
+                      <label class="comment-form__field-label js-toggle-value-label" for="add-comment-{{>id}}">Прокомментировать</label>
+                      <textarea id="add-comment-{{>id}}" class="comment-form__field-textarea js-comment-textarea js-toggle-value-input js-autoresize js-sew"></textarea>
+                    </span>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+        </script>
+
+        <script id="tmpl-comment" type="text/x-jsrender">
+          <article id="comment-{{>id}}" class="comment">
+            <div class="comment__table">
+              <div class="comment__table-cell">
+                <a class="comment__user" href="{{>authorUrl}}" title="{{>authorName}}">
+                  {{:avatarHtml}}
+                  <span class="comment__username comment__username--bold">{{>authorName}}</span>
+                </a> {{>text}}&nbsp;
+                <span class="comment__meta">
+                  <span class="comment__reply js-comment-reply" data-user="{{>authorName}}">Ответить</span>
+                  <span class="comment__dot">&middot;</span>
+                  <a class="comment__date-link" href="#comment-{{>id}}" title="">
+                    <time class="comment__date js-comment-date" datetime="{{>createdAt}}">{{>createdAgo}}</time>
+                  </a>
+                  <span class="comment__dot">·</span>
+                  <span class="comment__remove">
+                    <i class="icon icon--cross"></i>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </article>
+        </script>
+
+        <script id="tmpl-comment-avatar" type="text/x-jsrender">
+          {{if authorPic && authorPic.length}}
+            <span class="comment__avatar" style="background-image: url({{>authorPic}});">
+              <img class="comment__avatar__img" src="{{>authorPic}}" alt="{{>authorName}}" />
+            </span>
+          {{else}}
+            <span class="comment__avatar avatar avatar--{{>avatarStyle}}">
+              <span class="avatar__text">{{>avatarLetter}}</span>
+            </span>
+          {{/if}}
+        </script>
+
+        <script id="tmpl-notice" type="text/x-jsrender">
+          <div class="notice notice-{{>type}}">
+            <div class="notice__inner">{{>text}}</div>
+          </div>
+        </script>
+
+        <script id="tmpl-post-video" type="text/x-jsrender">
+          <figure class="video video--big">
+              <div class="video__cover" style="background-image: url({{>cover}})">
+                <div class="video__overlay"></div>
+              </div>
+              <div class="video__embed" data-frame="{{>code}}">
+              </div>
+          </figure>
+        </script>
+
+        <script id="tmpl-popup-people" type="text/x-jsrender">
+          <div class="popup popup--dark ">
+            <div class="popup__content">
+              <div class="popup__header">
+                <div class="popup__headbox js-popup-headbox">
+                  <h3 class="popup__title">{{title}}</h3>
+                </div>
+                <div class="popup__close js-popup-close">
+                  <i class="icon icon--cross"></i>
+                </div>
+              </div>
+              <div class="popup__body">
+                <div class="scroller scroller--people js-scroller">
+                  <div class="scroller__pane js-scroller-pane">
+                    {{people.length == 0 }}
+                      <div class="popup__text">{{ (empty ? empty : "Тут совсем пусто") }}</div>
+                    {{ else }}
+                    <section class="people">
+                    </section>
+                    {{ end }}
+                  </div>
+                  <div class="scroller__track js-scroller-track">
+                    <div class="scroller__bar js-scroller-bar"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </script>
+
+        <script  id="tmpl-popup-people-person" type="text/x-jsrender">
+          <article class="people__item">
+            <a class="people__link" href="{{>url}}" title="{{>name}}">
+              {{if userpic && userpic.length}}
+                <span class="people__avatar" style="background-image: url({{>userpic}});">
+                </span>
+              {{else}}
+                <span class="people__avatar avatar avatar--{{>avatar.style}}">
+                  <span class="avatar__text">{{>avatar.letter}}</span>
+                </span>
+              {{/if}}
+
+              <span class="people__desc">
+                <span class="people__name">{{>username}}</span>
+              </span>
+              {{if new_items > 0}}
+                <span class="people__count">+{{>new_items}}</span>
+              {{/if}}
+            </a>
+          </article>
+        </script>
+        <!-- end Templates -->
+        <script src="scripts/bundle.js"></script>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+.nav-view-mode {
+  margin-bottom: 16px;
+  font-size: @nav-view-mode-font-size;
+  line-height: @nav-view-mode-line-height;
+  text-align: center;
+}
+
+.nav-view-mode__list {
+  .clearfix();
+}
+
+.nav-view-mode__item {
+  margin: 0 2px;
+  display: inline-block;
+
+  &.state--active {
+    .nav-view-mode__link {
+      border-color: rgba(red(@black), green(@black), blue(@black), .15);
+    }
+  }
+}
+
+.nav-view-mode__link {
+  width: 1em;
+  height: 1em;
+  padding: 4px;
+  display: inline-block;
+  border: 1px solid transparent;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+// TODO: переделать на шрифтовую иконку
+.view-mode-tiles {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  .clearfix();
+}
+
+.view-mode-tiles__tile {
+  height: 6px;
+  border-left: 6px solid;
+  display: block;
+  float: left;
+
+  &:nth-child(1) {
+    margin-right: 3px;
+    margin-bottom: 3px;
+  }
+
+  &:nth-child(2) {
+    margin-bottom: 3px;
+  }
+
+  &:nth-child(3) {
+    margin-right: 3px;
+  }
+}
