@@ -32,10 +32,12 @@ window.HeroProfile = React.createClass
 
   render: ->
     if @props.relationship?
-        actions = `<div className="hero__actions">
-          <FollowButton tlogId={ this.props.user.id }
-                        relationship={ this.props.relationship } />
-        </div>`
+      actions = `<div className="hero__actions">
+                   <FollowButton tlogId={ this.props.user.id }
+                                 relationship={ this.props.relationship } />
+                 </div>`
+      follow_status = `<SmartFollowStatus tlogId={ this.props.user.id }
+                                          status={ this.props.relationship.state } />`
 
     `<div className="hero hero-profile">
       <CloseToolbar onClick={ this.close } />
@@ -44,9 +46,9 @@ window.HeroProfile = React.createClass
       <div className="layout-constrain hero__box" ref="heroBox">
         <HeroProfileAvatar user={ this.props.user }
                            onClick={ this.open } />
-        <span className="follow-status state--none"><i className="icon"></i></span>
+        { follow_status }
         <HeroProfileHead user={ this.props.user } />
-        {actions}
+        { actions }
       </div>
       <HeroProfileStats stats={ this.props.stats } />
     </div>`

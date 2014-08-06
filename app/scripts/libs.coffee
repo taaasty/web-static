@@ -3,6 +3,7 @@ window.MouseTrap = require 'mousetrap'
 window.React = require 'react/addons'
 window._ = require 'underscore'
 window.moment = require 'momentjs'
+window.EventEmitter = require 'eventEmitter'
 
 require '../javascripts/old/libs/jquery.autosize.input.js'
 
