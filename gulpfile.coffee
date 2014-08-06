@@ -35,6 +35,9 @@ gulp.task "scripts", ->
         'jquery-waypoints':
           path: 'app/bower_components/jquery-waypoints/waypoints.js'
           exports: null
+        'eventEmitter':
+          path: 'app/bower_components/eventEmitter/EventEmitter.js'
+          exports: null
     ))
     .on("error", handleError)
     .pipe($.rename("bundle.js"))
