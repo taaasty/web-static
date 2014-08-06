@@ -17,7 +17,7 @@ module.experts = window.RelationshipFollowingButton = React.createClass
 
     #followStatusEl: $(".js-follow-status")
 
-  getInitialState: (a,b,c)->
+  getInitialState: ->
     relationship:   @props.relationship
     isHover:        false
     isError:        false
@@ -87,7 +87,7 @@ module.experts = window.RelationshipFollowingButton = React.createClass
   isFollow: ->
     @state.relationship.state == STATE_FRIEND
 
-  handleClick: (e)->
+  handleClick: (e) ->
     @closeError()
     return unless @state.relationship?
 

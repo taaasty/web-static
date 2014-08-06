@@ -36,7 +36,7 @@ window.RelationshipRequestButton = React.createClass
     @setState isProcess: true
 
     @createRequest
-      url: Routes.api.relationships_by_tlog_approve_url(@props.relationship.user.id)
+      url: Routes.api.relationships_by_tlog_approve_url(@props.relationship.reader.id)
       method: 'POST'
       success: (data) => console.log 'Контакт одобрен', data
       error:   (data) =>
@@ -50,7 +50,7 @@ window.RelationshipRequestButton = React.createClass
     @setState isProcess: true
 
     @createRequest
-      url: Routes.api.relationships_by_tlog_disapprove_url(@props.relationship.user.id)
+      url: Routes.api.relationships_by_tlog_disapprove_url(@props.relationship.reader.id)
       method: 'POST'
       success: (data) =>
         @props.onRequestEnd(@props.key)

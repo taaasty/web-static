@@ -6,8 +6,10 @@ window.PersonsPopup_RequestRelationship = PersonsPopup_RequestRelationship = Rea
     relationship: React.PropTypes.object.isRequired
 
   render: ->
-    `<PersonsPopup_PersonItem user={this.props.relationship.user}>
-      <RelationshipRequestButton key={this.props.key} onRequestEnd={ this.props.onRequestEnd } relationship={ this.props.relationship } />
+   `<PersonsPopup_PersonItem user={ this.props.relationship.reader }>
+      <RelationshipRequestButton relationship={ this.props.relationship }
+                                 onRequestEnd={ this.props.onRequestEnd }
+                                 key={ this.props.key } />
     </PersonsPopup_PersonItem>`
 
 module.exports = PersonsPopup_RequestRelationship
