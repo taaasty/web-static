@@ -5,6 +5,7 @@ module.experts = window.FollowButton = React.createClass
 
   propTypes:
     tlogId:       React.PropTypes.number.isRequired
+    relationship: React.PropTypes.object.isRequired
 
   getInitialState: (a,b,c)->
     relationship:   @props.relationship
