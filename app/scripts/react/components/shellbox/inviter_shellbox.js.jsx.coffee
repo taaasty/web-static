@@ -26,8 +26,8 @@ module.experts = window.InviterShellBox = React.createClass
                   <div className="inviter__overlay"></div>
                     <div className="valign">
                         <div className="valign__middle">
-                            <div className="tasty-ribbon">
-                                <a className="tasty-ribbon__link" href="#" title="тейсти">тейсти</a>
+                            <div className="inviter__logo">
+                                <i className="icon icon--ribbon"></i>
                             </div>
                             <div className="inviter__title">Тейсти – это дневник в который хочется писать каждый день</div>
                             <div className="inviter__actions">

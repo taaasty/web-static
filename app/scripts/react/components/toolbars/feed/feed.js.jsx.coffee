@@ -48,9 +48,7 @@ window.FeedToolbar = React.createClass
                  onMouseLeave={ this.onMouseLeave }
                  className={ toolbarClasses }>
               <div className="toolbar__toggle">
-                <div className="tasty-ribbon">
-                  <i className="tasty-ribbon__link"></i>
-                </div>
+                <i className="icon icon--ribbon"></i>
               </div>
               <div className="toolbar__popup" data-element="dropdown-menu">
                 <ul className="toolbar__popup-list">{ feedList }</ul>
