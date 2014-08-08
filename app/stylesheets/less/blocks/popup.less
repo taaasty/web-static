@@ -53,7 +53,7 @@
 .popup__arrow--down {
   top: 100%;
   border-width: 12px 12px 0;
-  border-color: @popup-overlay-bg transparent transparent;
+  border-color: @popup-body-bg transparent transparent;
 }
 
 .popup__header {
@@ -292,4 +292,30 @@
 
 .popup--notifications {
   width: @notifications-popup-width;
+
+  .popup__arrow {
+    left: auto;
+    right: 82px;
+  }
+
+  .popup__arrow--up {
+    border-color: transparent transparent @popup-body-bg;
+  }
+
+  .popup__body {
+    .border-radius-top-left(@popup-border-radius);
+    .border-radius-top-right(@popup-border-radius);
+  }
+}
+
+.popup--notifications-banner {
+  width: @notifications-banner-popup-width;
+  margin-left: -(@notifications-banner-popup-width / 2);
+  bottom: @indent-base;
+  left: 50%;
+
+  .popup__body {
+    .border-radius-top-left(@popup-border-radius);
+    .border-radius-top-right(@popup-border-radius);
+  }
 }

@@ -421,8 +421,16 @@
 
 // Notifications
 @notifications-popup-width: 414px;
+@notifications-banner-popup-width: @notifications-popup-width;
 
 @notification-vertical-padding: 10px;
 @notification-horizontal-padding: 20px;
 
+@notification-hover-bg-base: #232323;
+@notification-hover-bg: rgba(red(@person-hover-bg-base), green(@person-hover-bg-base), blue(@person-hover-bg-base), .9);
+
 @notification-text-color: #ddd;
+
+// Badge
+@badge-font-size: 12px;
+@badge-line-height: ceil((@badge-font-size * 1.36)); // 15px
