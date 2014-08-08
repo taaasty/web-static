@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 
-module.experts = window.SettingsHeader = React.createClass
+window.SettingsHeader = React.createClass
+
   propTypes:
     user:              React.PropTypes.instanceOf(Backbone.Model).isRequired
     saveCallback:      React.PropTypes.func.isRequired
@@ -18,17 +19,20 @@ module.experts = window.SettingsHeader = React.createClass
         <div className="hero-simple__overlay"></div>
         <div className="hero-simple__box">
           <div className="hero-simple__avatar">
-            <Avatar name={this.props.user.get('name')} userpic={this.props.user.get('userpic')}/>
+            <Avatar userpic={ this.props.user.get('userpic') }
+                    name={ this.props.user.get('name') } />
             <span className="hero-simple__avatar-overlay">
               <span className="form-upload form-upload--icon">
                 <span className="form-upload__text"><i className="icon icon--pencil"></i></span>
-                <SettingsAvatar user={this.props.user} activitiesHandler={ this.props.activitiesHandler }/>
+                <SettingsAvatar user={this.props.user}
+                                activitiesHandler={ this.props.activitiesHandler } />
               </span>
             </span>
           </div>
-          <div className="hero-simple__name">{this.props.user.get('name')}</div>
-          <SettingsTitle title={this.props.title} saveCallback={this.props.saveCallback} />
+          <SettingsName name={ this.props.user.get('name') }
+                        saveCallback={ this.props.saveCallback } />
+          <SettingsTitle title={ this.props.user.get('title') }
+                         saveCallback={ this.props.saveCallback } />
         </div>
       </div>
     </div>`
-
