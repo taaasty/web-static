@@ -17,10 +17,12 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass
     e.stopPropagation()
     e.preventDefault()
 
-    @createReport() if confirm 'Вы действительно хотите пожаловаться на пост?'
+    TastyConfirmController.show
+      message:          'Вы действительно хотите пожаловаться на пост?'
+      acceptButtonText: 'Пожаловаться'
+      onAccept:         @createReport
 
   createReport: ->
-
     @createRequest
       url: Routes.api.report_url @props.entryId
       method: 'POST'
