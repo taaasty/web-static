@@ -81,9 +81,16 @@
         <!-- end Toolbar - Logo -->
 
         <!-- Toolbar - Userbar -->
-        <div class="toolbar toolbar--right toolbar--nav js-userbar-dropdown">
+        <div class="toolbar toolbar--right toolbar--nav state--show-indicators"> <!-- Для плавной анимации индикаторов добавляем класс state--animation. Когда анимация закончилась, state--animation удаляем -->
             <div class="toolbar__toggle" data-element="dropdown-toggle">
                 <i class="icon icon--menu"></i>
+            </div>
+            <div class="toolbar__indicators">
+                <div class="toolbar__indicator">
+                    <span class="messages-badge">4</span>
+                </div><div class="toolbar__indicator">
+                    <span class="notifications-badge">13</span>
+                </div>
             </div>
             <div class="toolbar__popup" data-element="dropdown-menu">
                 <ul class="toolbar__popup-list">
@@ -214,26 +221,144 @@
         </div>
         <!-- end Page -->
 
-        <!-- Confirmation -->
-        <div class="confirmation">
-            <div class="confirmation__fader"></div>
-            <div class="confirmation__close">
-                <div class="icon icon--cross"></div>
-            </div>
-            <div class="confirmation__box">
-                <div class="confirmation__text">
-                    Вы действительно хотите удалить запись?<br />Её нельзя будет восстановить.
-                </div>
-                <div class="confirmation__buttons">
-                    <span class="button button--small button--red">
-                        <span class="button__inner">
-                            <span class="button__text">Удалить запись</span>
-                        </span>
-                    </span>
+        <!-- Popup Notifications -->
+        <div class="popup popup--notifications popup--dark" style="top: 94px; right: 20px; display: block;">
+            <div class="popup__arrow popup__arrow--up"></div>
+            <div class="popup__content">
+                <div class="popup__body">
+                    <div class="scroller scroller--notifications js-scroller">
+                        <div class="scroller__pane js-scroller-pane">
+                            <!-- Notifications -->
+                            <div class="notifications">
+                                <ul class="notifications__list">
+                                    <li class="notification">
+                                        <a class="notification__link" href="#">
+                                            <div class="notification__inner">
+                                                <div class="notification__user-online"></div>
+                                                <div class="notification__user-avatar">
+                                                    <span class="avatar" style="background-image: url(images/avatars/ava_1.jpg);">
+                                                        <img class="avatar__img" src="images/avatars/ava_1.jpg" alt="pianohat" />
+                                                    </span>
+                                                </div>
+                                                <div class="notification__desc">
+                                                    <span class="notification__user">pianohat</span> ответила на ваш комментарий: <span class="notification__text">Ох как я согласна.</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="notification">
+                                        <a class="notification__link" href="#">
+                                            <div class="notification__inner">
+                                                <div class="notification__user-online"></div>
+                                                <div class="notification__user-avatar">
+                                                    <span class="avatar" style="background-image: url(images/avatars/ava_2.jpg);">
+                                                        <img class="avatar__img" src="images/avatars/ava_2.jpg" alt="headstone" />
+                                                    </span>
+                                                </div>
+                                                <figure class="notification__image">
+                                                    <img src="images/images/image_22.jpg" alt="" />
+                                                </figure>
+                                                <div class="notification__desc">
+                                                    <span class="notification__user">headstone</span> прокомментировала вашу запись &raquo;Как вы думаете, что мн...&raquo;: <span class="notification__text">Most instances of neuroplasticity-based changes in the brain are much more...</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="notification">
+                                        <a class="notification__link" href="#">
+                                            <div class="notification__inner">
+                                                <div class="notification__user-avatar">
+                                                    <span class="avatar" style="background-image: url(images/avatars/ava_3.png);">
+                                                        <img class="avatar__img" src="images/avatars/ava_3.png" alt="Dr-Watson" />
+                                                    </span>
+                                                </div>
+                                                <div class="notification__desc">
+                                                    <span class="notification__user">Dr-Watson</span> упомянул вас в комментарии: <span class="notification__text">@madworld присоединяйся)</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end Notifications -->
+                        </div>
+                        <div class="scroller__track js-scroller-track">
+                            <div class="scroller__bar js-scroller-bar"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- end Confirmation -->
+        <!-- end Popup Notifications -->
+
+        <!-- Popup Notifications Banner -->
+        <div class="popup popup--notifications-banner popup--dark" style="display: block;">
+            <div class="popup__content">
+                <div class="popup__body">
+                    <div class="scroller scroller--notifications js-scroller">
+                        <div class="scroller__pane js-scroller-pane">
+                            <!-- Notifications -->
+                            <div class="notifications">
+                                <ul class="notifications__list">
+                                    <li class="notification">
+                                        <a class="notification__link" href="#">
+                                            <div class="notification__inner">
+                                                <div class="notification__user-online"></div>
+                                                <div class="notification__user-avatar">
+                                                    <span class="avatar" style="background-image: url(images/avatars/ava_1.jpg);">
+                                                        <img class="avatar__img" src="images/avatars/ava_1.jpg" alt="pianohat" />
+                                                    </span>
+                                                </div>
+                                                <div class="notification__desc">
+                                                    <span class="notification__user">pianohat</span> ответила на ваш комментарий: <span class="notification__text">Ох как я согласна.</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="notification">
+                                        <a class="notification__link" href="#">
+                                            <div class="notification__inner">
+                                                <div class="notification__user-online"></div>
+                                                <div class="notification__user-avatar">
+                                                    <span class="avatar" style="background-image: url(images/avatars/ava_2.jpg);">
+                                                        <img class="avatar__img" src="images/avatars/ava_2.jpg" alt="headstone" />
+                                                    </span>
+                                                </div>
+                                                <figure class="notification__image">
+                                                    <img src="images/images/image_22.jpg" alt="" />
+                                                </figure>
+                                                <div class="notification__desc">
+                                                    <span class="notification__user">headstone</span> прокомментировала вашу запись &raquo;Как вы думаете, что мн...&raquo;: <span class="notification__text">Most instances of neuroplasticity-based changes in the brain are much more...</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="notification">
+                                        <a class="notification__link" href="#">
+                                            <div class="notification__inner">
+                                                <div class="notification__user-avatar">
+                                                    <span class="avatar" style="background-image: url(images/avatars/ava_3.png);">
+                                                        <img class="avatar__img" src="images/avatars/ava_3.png" alt="Dr-Watson" />
+                                                    </span>
+                                                </div>
+                                                <div class="notification__desc">
+                                                    <span class="notification__user">Dr-Watson</span> упомянул вас в комментарии: <span class="notification__text">@madworld присоединяйся)</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end Notifications -->
+                        </div>
+                        <div class="scroller__track js-scroller-track">
+                            <div class="scroller__bar js-scroller-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Popup Notifications Banner  -->
 
         <script>
           (function($){
@@ -386,6 +511,7 @@
             </a>
           </article>
         </script>
+
         <!-- end Templates -->
         <script src="scripts/bundle.js"></script>
     </body>

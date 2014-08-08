@@ -3,9 +3,21 @@
 }
 
 .notification {
-  padding: @notification-vertical-padding @notification-horizontal-padding;
   position: relative;
+}
+
+.notification__inner {
+  padding: @notification-vertical-padding @notification-horizontal-padding;
   .clearfix();
+}
+
+.notification__link {
+  display: block;
+
+  &:hover {
+    background-color: @notification-hover-bg;
+    color: inherit !important;
+  }
 }
 
 .notification__desc {
