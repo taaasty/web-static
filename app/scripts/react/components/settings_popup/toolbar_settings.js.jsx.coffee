@@ -51,7 +51,7 @@ module.experts = window.ToolbarSettings = React.createClass
   render: ->
     saveCallback = @save
 
-    console.debug? 'ToolbarSettings render', @props
+    # console.debug? 'ToolbarSettings render', @props
 
     #<SettingsVkontakteItem 
       #user={this.state.user}
