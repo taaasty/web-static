@@ -8,10 +8,14 @@ window.HeroProfileStatsItem = React.createClass
     onClick: React.PropTypes.func
 
   render: ->
-   `<div className="hero__stats-item">
+   `<div onClick={ this.handleClick }
+         className="hero__stats-item">
       <a title={ this.props.count + ' ' + this.props.title }
-         onClick={ this.props.onClick } 
          className="hero__stats-link">
         <strong>{ this.props.count }</strong> {this.props.title}
       </a>
     </div>`
+
+  handleClick: (e) ->
+    e.preventDefault()
+    @props.onClick $(e.currentTarget) if @props.onClick?

@@ -8,14 +8,16 @@
   }
 }
 
-.tag__link {
-  padding: @tag-padding-vertical @tag-padding-horizontal;
-  display: block;
-  border-top: 1px solid rgba(red(@white), green(@white), blue(@white), .08);
-  color: @white;
+.tag {
+  .tag__link {
+    padding: @tag-padding-vertical @tag-padding-horizontal;
+    display: block;
+    border-top: 1px solid rgba(red(@white), green(@white), blue(@white), .08);
+    color: @white;
 
-  &:hover {
-    background-color: @tag-hover-bg;
+    &:hover {
+      background-color: @tag-hover-bg;
+    }
   }
 }
 
