@@ -1,5 +1,7 @@
 ###* @jsx React.DOM ###
 
+FADE_DURATION = 300
+
 window.TastyConfirm = React.createClass
   mixins: [ReactUnmountMixin]
 
@@ -16,6 +18,8 @@ window.TastyConfirm = React.createClass
     acceptButtonColor: 'red'
 
   componentDidMount: ->
+    @open()
+
     $('body').addClass 'no-scroll confirmation-enabled'
     Mousetrap.bind 'esc', @close
 
@@ -41,7 +45,9 @@ window.TastyConfirm = React.createClass
       </div>
     </div>`
 
-  close: -> $(@getDOMNode()).fadeOut 'fast', @unmount
+  open: -> $(@getDOMNode()).css('display', 'none').fadeIn FADE_DURATION
+
+  close: -> $(@getDOMNode()).fadeOut FADE_DURATION, @unmount
 
   onAccept: ->
     @close()
