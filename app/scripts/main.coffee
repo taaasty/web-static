@@ -50,6 +50,7 @@ require './react/components/shellbox/select_signin_shellbox'
 require './react/components/shellbox/inviter_shellbox'
 
 require './react/components/settings_popup/settings_avatar'
+require './react/components/settings_popup/settings_name'
 require './react/components/settings_popup/settings_title'
 require './react/components/settings_popup/settings_accounts_item'
 require './react/components/settings_popup/settings_email_input'

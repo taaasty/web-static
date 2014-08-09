@@ -2,15 +2,15 @@
 #= require ./settings_radio_item
 
 module.experts = window.ToolbarSettings = React.createClass
-  mixins: [ReactShakeMixin, React.addons.LinkedStateMixin, 'ReactActivitiesUser', RequesterMixin]
+  mixins: ['ReactActivitiesUser', ReactShakeMixin, React.addons.LinkedStateMixin, RequesterMixin]
 
   propTypes:
-    title:        React.PropTypes.string.isRequired
-    user:         React.PropTypes.instanceOf(Backbone.Model).isRequired
+    title: React.PropTypes.string.isRequired
+    user:  React.PropTypes.instanceOf(Backbone.Model).isRequired
 
   getInitialState: ->
-    saving:     false
-    user:       @props.user
+    saving: false
+    user:   @props.user
 
   componentWillMount: ->
     @props.user.on 'change', @updateStateUser
@@ -60,50 +60,43 @@ module.experts = window.ToolbarSettings = React.createClass
 
     return `<div className="settings">
               <form onSubmit={ this.submit }>
-                <SettingsHeader saveCallback={ saveCallback }
+                <SettingsHeader user={ this.state.user }
                                 activitiesHandler={ this.props.activitiesHandler }
-                                title={ this.state.user.get('title') }
-                                user={ this.state.user } />
+                                saveCallback={ saveCallback } />
 
                 <div className="settings__body">
+                  <SettingsRadioItem title="Закрытый дневник?"
+                                     description="Управление видимостью вашего дневника. Закрытый дневник виден только тем, на кого вы подписаны."
+                                     user={ this.state.user }
+                                     saveCallback={ saveCallback }
+                                     key="is_privacy" />
 
-                    <SettingsRadioItem
-                      saveCallback={saveCallback}
-                      user={this.state.user}
-                      key='is_privacy'
-                      title='Закрытый дневник?'
-                      description='Управление видимостью вашего дневника. Закрытый дневник виден только тем, на кого вы подписаны.' />
+                  <SettingsRadioItem title="Тлогодень"
+                                     description="Это режим отображения, когда на странице показываются записи только за один день."
+                                     user={ this.state.user }
+                                     saveCallback={ saveCallback }
+                                     key="is_daylog" />
 
-                    <SettingsRadioItem
-                      saveCallback={saveCallback}
-                      user={this.state.user}
-                      key='is_daylog'
-                      title='Тлогодень'
-                      description='Это режим отображения, когда на странице показыватются записи только за один день.' />
+                  <SettingsRadioItem title="Вы - девушка"
+                                     description="На Тейсти сложилось так, что 7 из 10 пользователей – это девушки. Поэтому по-умолчанию для всех именно такая настройка."
+                                     user={ this.state.user }
+                                     saveCallback={ saveCallback }
+                                     key="is_female" />
 
-                    <SettingsRadioItem
-                      saveCallback={saveCallback}
-                      user={this.state.user}
-                      key='is_female'
-                      title='Вы - девушка'
-                      description='На Тейсти сложилось так, что 7 из 10 пользователей – это девушки. Поэтому по-умолчанию для всех именно такая настройка.' />
+                  <SettingsEmailInput email={ this.state.user.get('email') }
+                                      isConfirmed={ this.state.user.get('is_confirmed') }
+                                      saveCallback={ saveCallback } />
 
-                    <SettingsEmailInput 
-                      saveCallback={saveCallback}
-                      email={this.state.user.get('email')}
-                      isConfirmed={this.state.user.get('is_confirmed')}
-                      />
+                  <SettingsRadioItem title="Уведомления"
+                                     description="Вы хотите получать уведомления о всех новых комментариях, подписчиках и личных сообщениях?"
+                                     user={ this.state.user }
+                                     saveCallback={ saveCallback }
+                                     key="available_notifications"/>
 
-                    <SettingsRadioItem
-                      saveCallback={saveCallback}
-                      user={this.state.user}
-                      key='available_notifications'
-                      title='Уведомления'
-                      description='Вы хотите получать уведомления о всех новых комментариях, подписчиках и личных сообщениях?' />
+                  <SettingsPasswordItem saveCallback={ saveCallback } />
 
-                    <SettingsPasswordItem saveCallback={saveCallback} />
-
-                    <SettingsAccountsItem user={this.state.user} accounts={[]}/>
+                  <SettingsAccountsItem accounts={ [] }
+                                        user={ this.state.user } />
                 </div>
               </form>
             </div>`
