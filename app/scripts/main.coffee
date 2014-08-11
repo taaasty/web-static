@@ -1,8 +1,5 @@
 require './libs'
-window.Routes =
-  logout_path:                -> TastySettings.host + '/logout'
-  tlog_favorite_entries_path: -> TastySettings.host + '@' + slug + '/favorites'
-
+require './routes'
 require './shared/api-routes'
 
 require './aapp/application'

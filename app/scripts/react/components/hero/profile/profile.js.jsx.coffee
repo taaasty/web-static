@@ -50,7 +50,7 @@ window.HeroProfile = React.createClass
         <HeroProfileHead user={ this.props.user } />
         { actions }
       </div>
-      <HeroProfileStats tlogId={ this.props.user.id }
+      <HeroProfileStats user={ this.props.user }
                         stats={ this.props.stats } />
     </div>`
 
