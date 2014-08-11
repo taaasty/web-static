@@ -58,11 +58,13 @@ window.EntryMetabarDropdownMenu = React.createClass
                                                            onDelete={ this.onDelete }
                                                            activitiesHandler={ this.activitiesHandler }
                                                            key="delete" />`
-    return `<span onMouseEnter={ this.onMouseEnter }
-                  onMouseLeave={ this.onMouseLeave }
-                  className="meta-item__content">
-              <i className="meta-item__common icon icon--dots"></i>
-              <span className={ menuClasses }>{ actionList }</span>
+    return `<span className="meta-item meta-item--actions">
+              <span onMouseEnter={ this.onMouseEnter }
+                    onMouseLeave={ this.onMouseLeave }
+                    className="meta-item__content">
+                <i className="meta-item__common icon icon--dots" />
+                <span className={ menuClasses }>{ actionList }</span>
+              </span>
             </span>`
 
   # onClick: ->
