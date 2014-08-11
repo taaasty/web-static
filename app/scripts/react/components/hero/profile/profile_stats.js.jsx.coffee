@@ -21,26 +21,42 @@ window.HeroProfileStats = React.createClass
         when 'tags'       then @handleTagsClick $el
         else console.log "Неизвестный тип статистики профиля #{type}"
 
+    heroStats = []
+
+    if @props.stats.followers_count?
+      heroStats.push `<HeroProfileStatsItem count={ this.props.stats.followers_count }
+                                            title={ this.getTitle('followers') }
+                                            onClick={ onClick.bind(this, 'followers') }
+                                            key="followers" />`
+    if @props.stats.followings_count?
+      heroStats.push `<HeroProfileStatsItem count={ this.props.stats.followings_count }
+                                            title={ this.getTitle('followings') }
+                                            onClick={ onClick.bind(this, 'followings') }
+                                            key="followings" />`
+    if @props.stats.favorites_count?
+      heroStats.push `<HeroProfileStatsItem count={ this.props.stats.favorites_count }
+                                            title={ this.getTitle('favorites') }
+                                            key="favorites" />`
+    if @props.stats.entries_count?
+      heroStats.push `<HeroProfileStatsItem count={ this.props.stats.entries_count }
+                                            title={ this.getTitle('entries') }
+                                            key="entries" />`
+    if @props.stats.comments_count?
+      heroStats.push `<HeroProfileStatsItem count={ this.props.stats.comments_count }
+                                            title={ this.getTitle('comments') }
+                                            key="comments" />`
+    if @props.stats.days_count?
+      heroStats.push `<HeroProfileStatsItem count={ this.props.stats.days_count }
+                                            title={ this.getTitle('days') }
+                                            key="days" />`
+    if @props.stats.tags_count?
+      heroStats.push `<HeroProfileStatsItem count={ this.props.stats.tags_count }
+                                            title={ this.getTitle('tags') }
+                                            onClick={ onClick.bind(this, 'tags') }
+                                            key="tags" />`
+
     `<div className="hero__stats">
-      <div className="hero__stats-list">
-        <HeroProfileStatsItem count={ this.props.stats.followers_count }
-                              title={ this.getTitle('followers') }
-                              onClick={ onClick.bind(this, 'followers') } />
-        <HeroProfileStatsItem count={ this.props.stats.followings_count }
-                              title={ this.getTitle('followings') }
-                              onClick={ onClick.bind(this, 'followings') } />
-        <HeroProfileStatsItem count={ this.props.stats.favorites_count }
-                              title={ this.getTitle('favorites') } />
-        <HeroProfileStatsItem count={ this.props.stats.entries_count }
-                              title={ this.getTitle('entries') } />
-        <HeroProfileStatsItem count={ this.props.stats.comments_count }
-                              title={ this.getTitle('comments') } />
-        <HeroProfileStatsItem count={ this.props.stats.days_count }
-                              title={ this.getTitle('days') } />
-        <HeroProfileStatsItem count={ this.props.stats.tags_count }
-                              title={ this.getTitle('tags') }
-                              onClick={ onClick.bind(this, 'tags') } />
-      </div>
+      <div className="hero__stats-list">{ heroStats }</div>
     </div>`
 
   getTitle: (type) ->
