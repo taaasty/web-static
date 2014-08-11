@@ -1,0 +1,9 @@
+git clone git@github.com:BrandyMint/mmm-tasty.git rails
+cd rails
+
+./script/preapre_tests
+
+RAILS_ENV=test bundle exec rake db:drop db:create db:migrate
+./script/fix_schema
+
+RAILS_ENV=production bundle exec rake assets:precompile --trace
