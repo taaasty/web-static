@@ -1,6 +1,7 @@
 require './libs'
 window.Routes =
-  logout_path: -> TastySettings.host + '/logout'
+  logout_path:                -> TastySettings.host + '/logout'
+  tlog_favorite_entries_path: -> TastySettings.host + '@' + slug + '/favorites'
 
 require './shared/api-routes'
 
