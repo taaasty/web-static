@@ -1,0 +1,29 @@
+// Mixins
+.badge-style(@background; @color) {
+  background-color: @background;
+  color: @color;
+}
+
+// Styles
+.badge {
+  padding: .2em .5em;
+  font-size: @badge-font-size;
+  line-height: @badge-line-height;
+  border-radius: 1em;
+}
+
+.badge--green {
+  .badge-style(#61cc67, @white);
+}
+
+.badge--yellow {
+  .badge-style(#fff627,  @black);
+}
+
+.notifications-badge {
+  &:extend(.badge all, .badge--green all);
+}
+
+.messages-badge {
+  &:extend(.badge all, .badge--yellow all);
+}
