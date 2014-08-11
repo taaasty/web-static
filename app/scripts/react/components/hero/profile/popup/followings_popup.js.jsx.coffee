@@ -12,7 +12,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass
     isError:       false
     isLoading:     false
 
-  componentDidMount: -> @getStatsData()
+  componentDidMount: -> @loadFollowings()
 
   render: ->
     if @state.relationships?.length > 0
@@ -37,7 +37,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass
               </div>
             </div>`
 
-  getStatsData: ->
+  loadFollowings: ->
     @incrementActivities()
     @setState isError: false, isLoading: true
     @createRequest

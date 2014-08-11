@@ -12,7 +12,7 @@ window.HeroProfileStats_TagsPopup = React.createClass
     isError:   false
     isLoading: false
 
-  componentDidMount: -> @getStatsData()
+  componentDidMount: -> @loadTags()
 
   render: ->
     if @state.tags?.length > 0
@@ -36,7 +36,7 @@ window.HeroProfileStats_TagsPopup = React.createClass
               </div>
             </div>`
 
-  getStatsData: ->
+  loadTags: ->
     @incrementActivities()
     @setState isError: false, isLoading: true
     @createRequest

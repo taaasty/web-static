@@ -19,8 +19,7 @@ module.experts = window.ToolbarSettings = React.createClass
   componentWillUnmount: ->
     @props.user.off 'change', @updateStateUser
 
-  updateStateUser: (user)->
-    @setState user: user
+  updateStateUser: (user) -> @setState user: user
 
   save: (key, value) ->
     console.log 'save', key, value

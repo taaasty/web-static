@@ -11,11 +11,12 @@ window.SettingsName = React.createClass
 
   render: ->
     `<div className="hero-simple__name">
-      <EditableField defaultValue={ this.props.name }
+      <EditableField defaultValue={ this.state.name }
+                     placeholder="Введите ваш псевдоним"
                      onEditEnd={ this.onEditEnd } />
     </div>`
 
   onEditEnd: (name) ->
     if name isnt @state.name
       @setState name: name
-      @props.saveCallback 'slug', name 
+      @props.saveCallback 'slug', name

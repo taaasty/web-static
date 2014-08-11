@@ -18,18 +18,18 @@ window.EditableField = React.createClass
     isFocus: false
 
   componentDidMount: ->
-    $textarea = $( @refs.textarea.getDOMNode() )
+    @$textarea = $( @refs.textarea.getDOMNode() )
 
     # require jquery.autosize.min.js
     if $.fn.autosize
-      $textarea.autosize({
+      @$textarea.autosize {
         append: '' # По-умолчанию в конец строки добавляет \n. Отключаем, чтобы при инициализации правильно высчитывалась высота
-      })
+      }
 
     # require jquery.maxlength.js
     if $.fn.maxlength
-      $textarea.maxlength {
-        max: $textarea.attr 'maxlength'
+      @$textarea.maxlength {
+        max: @$textarea.attr 'maxlength'
         showFeedback: false
       }
 
@@ -67,17 +67,12 @@ window.EditableField = React.createClass
     @setState isFocus: true
 
     _.defer =>
-      textarea = @refs.textarea.getDOMNode()
-      textareaValue = textarea.value.replace /\n/g, ''
+      textareaValue = @getValue()
 
-      $(textarea).val('').focus().val textareaValue
-      return
+      @$textarea.val('').focus().val textareaValue
 
   onBlur: ->
-    textarea = @refs.textarea.getDOMNode()
-    textareaValue = textarea.value.replace /\n/g, ''
-
-    @props.onEditEnd textareaValue
+    @props.onEditEnd @getValue()
     @setState isFocus: false
 
   onChange: (e) ->
@@ -87,17 +82,17 @@ window.EditableField = React.createClass
       return false
 
     _.defer =>
-      textarea = @refs.textarea.getDOMNode()
-      textareaValue = textarea.value.replace /\n/g, ''
       value = @refs.value.getDOMNode()
 
-      $(value).text(textarea.value)
-      $(textarea).trigger 'autosize.resize'
-
-      return
+      $(value).text @getValue()
+      @$textarea.trigger 'autosize.resize'
 
   isEmpty: ->
     # При сохранении данных в настройках, обновляется моделька user,
     # если isEmpty будем стейтом, то не смотря на то, что defaultValue обновится
     # стейт останется изначальным. Выделяем проверку в метод.
     @props.defaultValue.trim() == ''
+
+  getValue: ->
+    textarea = @refs.textarea.getDOMNode()
+    textarea.value.replace /\n/g, ''
