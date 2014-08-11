@@ -3,21 +3,26 @@
 FOLLOWINGS = 'Подписки'
 FOLLOWERS  = 'Подписчики'
 REQUESTS   = 'Заявки'
+GUESSES    = 'Рекомендации'
 IGNORES    = 'Блокировка'
 
 # TODO Вынести состояния в константы, а текста в i18n
 window.PersonsPopup_Menu = React.createClass
 
   propTypes:
+    user:          React.PropTypes.object.isRequired
     relationships: React.PropTypes.object.isRequired
     currentTab:    React.PropTypes.string.isRequired
     onSelect:      React.PropTypes.func.isRequired
 
-  # TODO Избавиться от совместной передаци type и onClick. Сразу передавать
-  # binded onSelect
-
   render: ->
     onSelect = (type) -> @props.onSelect(type)
+
+    if @_isProfilePrivate()
+      requestsMenuItem = `<PersonsPopup_MenuItem isActive={ this.props.currentTab == "requests" }
+                                                 count={ this.getCount(this.props.relationships.requests) }
+                                                 title={ REQUESTS }
+                                                 onClick={ onSelect.bind(this, 'requests') } />`
 
     return `<nav className="tabs-nav tabs-nav--white">
               <ul className="tabs-nav__list">
@@ -31,10 +36,13 @@ window.PersonsPopup_Menu = React.createClass
                                        title={ FOLLOWERS }
                                        onClick={ onSelect.bind(this, 'followers') } />
 
-                <PersonsPopup_MenuItem isActive={ this.props.currentTab == "requests" }
-                                       count={ this.getCount(this.props.relationships.requests) }
-                                       title={ REQUESTS }
-                                       onClick={ onSelect.bind(this, 'requests') } />
+                <PersonsPopup_MenuItem isActive={ this.props.currentTab == "guesses" }
+                                       count={ this.getCount(this.props.relationships.guesses) }
+                                       title={ GUESSES }
+                                       onClick={ onSelect.bind(this, 'guesses') } />
+
+                { requestsMenuItem }
+
                 <PersonsPopup_MenuItem isActive={ this.props.currentTab == "ignores" }
                                        count={ this.getCount(this.props.relationships.ignores) }
                                        title={ IGNORES }
@@ -42,6 +50,7 @@ window.PersonsPopup_Menu = React.createClass
 
               </ul>
             </nav>`
+
   getCount: (value) -> value.total_count
 
-module.exports = PersonsPopup_Menu
+  _isProfilePrivate: -> @props.user.is_privacy

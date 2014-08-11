@@ -120,7 +120,7 @@ window.UserToolbar = UserToolbar = React.createClass
     unless container
       container = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get 0
 
-    React.renderComponent PersonsPopup(), container
+    React.renderComponent PersonsPopup(user: @props.user), container
 
   showDesignSettings: ->
     url = window.location.origin + window.location.pathname
