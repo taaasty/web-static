@@ -41,7 +41,7 @@ window.HeroProfileStats = React.createClass
                                             title={ this.getTitle('favorites') }
                                             key="favorites" />`
     if @props.stats.entries_count?
-      url = Routes.tlog_path @props.user.slug unless @_isPrivate()
+      url = @props.user.tlog_url unless @_isPrivate()
 
       heroStats.push `<HeroProfileStatsItem href={ url }
                                             count={ this.props.stats.entries_count }
