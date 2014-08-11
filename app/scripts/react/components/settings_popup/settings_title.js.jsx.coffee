@@ -11,7 +11,7 @@ window.SettingsTitle = React.createClass
 
   render: ->
    `<div className="hero-simple__text">
-      <EditableField defaultValue={ this.props.title }
+      <EditableField defaultValue={ this.state.title }
                      placeholder="Введите небольшое описание вашего тлога"
                      onEditEnd={ this.onEditEnd } />
     </div>`
