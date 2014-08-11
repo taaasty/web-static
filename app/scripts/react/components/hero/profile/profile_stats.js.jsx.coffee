@@ -4,8 +4,8 @@ window.HeroProfileStats = React.createClass
   mixins: [ReactGrammarMixin]
 
   propTypes:
-    tlogId: React.PropTypes.number.isRequired
-    stats:  React.PropTypes.object.isRequired
+    stats: React.PropTypes.object.isRequired
+    user:  React.PropTypes.object.isRequired
 
   componentDidMount: ->
     @container = document.querySelectorAll('[popup-hero-stats-container]')[0]
@@ -34,11 +34,17 @@ window.HeroProfileStats = React.createClass
                                             onClick={ onClick.bind(this, 'followings') }
                                             key="followings" />`
     if @props.stats.favorites_count?
-      heroStats.push `<HeroProfileStatsItem count={ this.props.stats.favorites_count }
+      url = Routes.tlog_favorite_entries_path @props.user.slug unless @_isPrivate()
+
+      heroStats.push `<HeroProfileStatsItem href={ url }
+                                            count={ this.props.stats.favorites_count }
                                             title={ this.getTitle('favorites') }
                                             key="favorites" />`
     if @props.stats.entries_count?
-      heroStats.push `<HeroProfileStatsItem count={ this.props.stats.entries_count }
+      url = Routes.tlog_path @props.user.slug unless @_isPrivate()
+
+      heroStats.push `<HeroProfileStatsItem href={ url }
+                                            count={ this.props.stats.entries_count }
                                             title={ this.getTitle('entries') }
                                             key="entries" />`
     if @props.stats.comments_count?
@@ -55,9 +61,9 @@ window.HeroProfileStats = React.createClass
                                             onClick={ onClick.bind(this, 'tags') }
                                             key="tags" />`
 
-    `<div className="hero__stats">
-      <div className="hero__stats-list">{ heroStats }</div>
-    </div>`
+    return `<div className="hero__stats">
+              <div className="hero__stats-list">{ heroStats }</div>
+            </div>`
 
   getTitle: (type) ->
     switch type
@@ -74,7 +80,7 @@ window.HeroProfileStats = React.createClass
     React.renderComponent (
      `<HeroProfileStats_Popup title="Подписчики"
                               toggle={ $el }>
-        <HeroProfileStats_FollowersPopup tlogId={ this.props.tlogId } />
+        <HeroProfileStats_FollowersPopup tlogId={ this.props.user.id } />
       </HeroProfileStats_Popup>`
     ), @container
 
@@ -82,7 +88,7 @@ window.HeroProfileStats = React.createClass
     React.renderComponent (
      `<HeroProfileStats_Popup title="Подписки"
                               toggle={ $el }>
-        <HeroProfileStats_FollowingsPopup tlogId={ this.props.tlogId } />
+        <HeroProfileStats_FollowingsPopup tlogId={ this.props.user.id } />
       </HeroProfileStats_Popup>`
     ), @container
 
@@ -90,6 +96,8 @@ window.HeroProfileStats = React.createClass
     React.renderComponent (
      `<HeroProfileStats_Popup title="Теги"
                               toggle={ $el }>
-        <HeroProfileStats_TagsPopup tlogId={ this.props.tlogId } />
+        <HeroProfileStats_TagsPopup tlogId={ this.props.user.id } />
       </HeroProfileStats_Popup>`
     ), @container
+
+  _isPrivate: -> @props.user.is_privacy
