@@ -7,6 +7,7 @@ window.EntryMetabarTag = React.createClass
 
   render: ->
    `<a href={ Routes.tag_path(this.props.tag) }
+       target="_blank"
        title={ '#' + this.props.tag }
        className="meta-item__common meta-item__link">
       { '#' + this.props.tag }

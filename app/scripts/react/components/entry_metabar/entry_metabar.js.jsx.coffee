@@ -21,8 +21,9 @@ window.EntryMetabar = React.createClass
 
   render: ->
    `<span className="meta-bar">
-      <EntryMetabarComment />
-      <EntryMetabarDate time={ this.props.createdAt } />
+      <EntryMetabarComment entryCommentsUrl={ this.props.entryCommentsUrl } />
+      <EntryMetabarDate time={ this.props.createdAt }
+                        entryUrl={ this.props.entryUrl } />
       <EntryMetabarTags tags={ this.props.tags } />
       <EntryMetabarDropdownMenu entryId={ this.props.entryId }
                                 isFavorited={ this.props.isFavorited}

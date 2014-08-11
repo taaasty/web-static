@@ -2,6 +2,9 @@
 
 window.EntryMetabarComment = React.createClass
 
+  propTypes:
+    entryCommentsUrl: React.PropTypes.string.isRequired
+
   render: ->
    `<span className="meta-item meta-item_comments">
       <span className="meta__content">

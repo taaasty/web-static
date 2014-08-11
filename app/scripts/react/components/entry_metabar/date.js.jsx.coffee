@@ -3,7 +3,8 @@
 window.EntryMetabarDate = React.createClass
 
   propTypes:
-    time: React.PropTypes.string.isRequired
+    time:     React.PropTypes.string.isRequired
+    entryUrl: React.PropTypes.string.isRequired
 
   render: ->
     now = moment()
@@ -19,6 +20,8 @@ window.EntryMetabarDate = React.createClass
 
     return `<span className="meta-item meta-item--date">
               <span className="meta-item__content">
-                <span className="meta-item__common">{ date }</span>
+                <a href={ this.props.entryUrl }>
+                  <span className="meta-item__common">{ date }</span>
+                </a>
               </span>
             </span>`
