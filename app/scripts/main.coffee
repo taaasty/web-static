@@ -138,6 +138,12 @@ require './react/components/entry_metabar/dropdown_menu_items/watch_item'
 require './react/components/entry_metabar/dropdown_menu_items/report_item'
 require './react/components/entry_metabar/dropdown_menu_items/delete_item'
 
+require './react/components/entry_comment_box/entry_comment_box'
+require './react/components/entry_comment_box/comment_list'
+require './react/components/entry_comment_box/comment'
+require './react/components/entry_comment_box/comment_metabar'
+require './react/components/entry_comment_box/comment_form'
+
 require './react/components/post_editor/actions'
 require './react/components/post_editor/tasty_editor'
 require './react/components/post_editor/post_editor'
