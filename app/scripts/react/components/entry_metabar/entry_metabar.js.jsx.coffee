@@ -19,6 +19,9 @@ window.EntryMetabar = React.createClass
     createdAt:                React.PropTypes.string.isRequired
     entryCommentsUrl:         React.PropTypes.string.isRequired
 
+  getDefaultProps: ->
+    tags: []
+
   render: ->
    `<span className="meta-bar">
       <EntryMetabarComment entryCommentsUrl={ this.props.entryCommentsUrl } />
