@@ -10,7 +10,7 @@ window.EntryMetabarDate = React.createClass
     now = moment()
     createdAt = moment(@props.time)
 
-    if now.diff(createdAt, 'days') <= 1
+    if now.diff(createdAt, 'days') < 1
       date = createdAt.calendar()
     else
       if now.year() != createdAt.year()

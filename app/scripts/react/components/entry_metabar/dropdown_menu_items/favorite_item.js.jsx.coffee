@@ -61,7 +61,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
       data:
         entry_id: @props.entryId
       success: =>
-        if @props.shouldRemoveFavoriteNode?
+        if @props.shouldRemoveFavoriteNode
           @removeEntryFromDOM @props.entryId
         else
           @safeUpdateState => @setState isFavorited: false
