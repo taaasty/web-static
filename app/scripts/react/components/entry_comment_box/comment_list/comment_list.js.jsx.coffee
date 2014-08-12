@@ -11,10 +11,10 @@ window.EntryCommentBox_CommentList = React.createClass
     onLoad:   React.PropTypes.func.isRequired
 
   getInitialState: ->
-    total_count:     0
-    last_comment_id: null
-    isError:         false
-    isLoading:       false
+    sinceCommentId: null
+    totalCount:     null
+    isError:        false
+    isLoading:      false
 
   componentDidMount: -> @loadCommentList()
 
@@ -23,6 +23,11 @@ window.EntryCommentBox_CommentList = React.createClass
       commentList = @props.comments.map (comment, i) ->
         `<EntryCommentBox_Comment comment={ comment }
                                   key={ i } />`
+
+      if @state.totalCount > @props.comments.length
+        loadMoreButton = `<EntryCommentBox_LoadMore totalCount={ this.state.totalCount }
+                                                    loadedCount={ this.props.comments.length }
+                                                    onClick={ this.loadMoreComments } />`
     else
       if @state.isError
         commentList = `<div>Ошибка загрузки.</div>`
@@ -31,24 +36,35 @@ window.EntryCommentBox_CommentList = React.createClass
       else
         commentList = `<div>Комментариев нет</div>`
 
-    return `<div className="comments__list">{ commentList}</div>`
+    return `<div className="comments__list">
+              { loadMoreButton }
+              { commentList }
+            </div>`
 
-  loadCommentList: ->
+  loadCommentList: (more) ->
     @setState isError: false, isLoading: true
+
+    if more
+      data = { entry_id: @props.entryId, limit: MORE_COMMENTS_LIMIT, since_comment_id: @state.sinceCommentId }
+      action = 'more'
+    else
+      data = { entry_id: @props.entryId }
+      action = 'update'
 
     @createRequest
       url: Routes.api.comments_url()
-      data:
-        entry_id: @props.entryId
-        limit:    100
+      data: data
       success: (data) =>
-        @safeUpdateState => @props.onLoad 'update', {
-          comments:        data.comments
-          total_count:     data.total_count
-          last_comment_id: data.last_comment_id
-        }
+        @safeUpdateState =>
+          @setState {
+            totalCount: data.total_count
+            sinceCommentId: data.comments[0]?.id
+          }
+          @props.onLoad action, comments: data.comments
       error: (data) =>
         @safeUpdateState => @setState isError: true
         TastyNotifyController.errorResponse data
       complete: =>
         @safeUpdateState => @setState isLoading: false
+
+  loadMoreComments: -> @loadCommentList true
