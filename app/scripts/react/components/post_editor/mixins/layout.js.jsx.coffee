@@ -41,6 +41,7 @@ window.PostEditor_LayoutMixin =
         <PostEditor_EditorContainer ref='editorContainer'
                                     entry={this.state.entry}
                                     entryType={this.state.entryType}
+                                    entryPrivacy={this.state.entryPrivacy}
                                     onChanging={this.onChanging}
                                     activitiesHandler={this.activitiesHandler} />
 

@@ -22,15 +22,17 @@ window.TastyNotifyController =
     # генерирует именно rejected
     # return if response.state?() == 'rejected'
     #
-    
-    response = response.responseJSON if response.responseJSON?
 
-    console.error? 'errorResponse', response
-    message = response.message if response.message?
-    message = response.long_message if response.long_message?
-    message ||= response.error if response.error? && response.error.length>0
-    # fallback для старого API
-    message ||= "Ошибка сети: #{response.statusText}"
+    if response.responseJSON?
+      json = response.responseJSON
+
+      console.error? 'errorResponse JSON', json
+      message = json.message if json.message?
+      message = json.long_message if json.long_message?
+      message ||= json.error if json.error? && json.error.length>0
+    else
+      message = "Ошибка сети: #{response.statusText}"
+
     @notify 'error', message, timeout
 
   hideAll: ->

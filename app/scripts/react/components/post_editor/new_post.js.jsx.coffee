@@ -4,7 +4,8 @@ window.PostEditor_NewPost = React.createClass
   mixins: [PostEditor_LayoutMixin, 'ReactActivitiesMixin']
 
   getInitialState: ->
-    entryPrivacy: @props.tlogType
+    # Может сделать зависимость от @props.tlogType ?
+    entryPrivacy: 'public'
     entryType:    DEFAULT_POST_TYPE
     entry:        DEFAULT_ENTRIES[DEFAULT_POST_TYPE]
 

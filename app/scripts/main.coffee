@@ -74,7 +74,8 @@ require './react/components/relationship_following_button'
 require './react/components/relationship_request_button'
 require './react/components/relationship_guess_button'
 
-require './shared/jquery.maxlength'
+# Не работает на странице редактирования постов
+# require './shared/jquery.maxlength'
 require './react/components/editable_field'
 
 require './react/components/popup_box'

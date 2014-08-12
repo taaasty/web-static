@@ -6,6 +6,7 @@ window.PostEditor_Layout = React.createClass
     children:    React.PropTypes.renderable.isRequired
     #entryType:   React.PropTypes.string
     #onChangeType: React.PropTypes.func
+    #
 
   render: ->
     `<div className='postEditorLayout'>

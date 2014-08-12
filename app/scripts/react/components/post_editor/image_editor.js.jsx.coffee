@@ -11,6 +11,7 @@ window.PostEditor_ImageEditor = React.createClass
 
   propTypes:
     entry:             React.PropTypes.object.isRequired
+    entryPrivacy:      React.PropTypes.string.isRequired
     doneCallback:      React.PropTypes.func.isRequired
     onChanging:        React.PropTypes.func.isRequired
 
@@ -39,6 +40,7 @@ window.PostEditor_ImageEditor = React.createClass
   data: ->
     title:     @refs.titleEditor.content()
     image_url: @state.imageUrl
+    privacy:   @props.entryPrivacy
 
   getMediaBoxState: ->
     # TODO Непонятно кто и как устанавливает этот state

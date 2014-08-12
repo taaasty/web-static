@@ -24,31 +24,28 @@ window.PostEditor_ImagesForm=
 
     return changed.bind @, field
 
-  saveEntry: ({entryPrivacy}) ->
+  saveEntry: ->
     if @state.imageUrl?
-      @saveAsAjax entryPrivacy: entryPrivacy
+      @saveAsAjax()
     else
       if @fileUploader
         @fileUploader.submit()
       else
-        @saveAsAjax entryPrivacy: entryPrivacy
+        @saveAsAjax()
 
-  saveAsAjax: ({entryPrivacy}) ->
+  saveAsAjax: ->
     @incrementActivities()
-    data = @data()
-    data.privacy = entryPrivacy
-
     @createRequest
-      url:    @savingUrl()
-      method: @savingMethod()
-      data:   data
+      url:     @savingUrl()
+      method:  @savingMethod()
+      data:    @data()
+
       success: (data) =>
         @safeUpdateState => @setState entry: data, type: data.type
         @props.doneCallback data
-      error: (data) =>
-        TastyNotifyController.errorResponse data
-      complete: =>
-        @decrementActivities()
+
+      error:   (data) => TastyNotifyController.errorResponse data
+      complete: => @decrementActivities()
 
     # TODO Сохранять через обычный запрос
     #alert "Картинки не меняли, сохранять нечего"
