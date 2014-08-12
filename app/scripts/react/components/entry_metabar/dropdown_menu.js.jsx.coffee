@@ -67,13 +67,6 @@ window.EntryMetabarDropdownMenu = React.createClass
               </span>
             </span>`
 
-  # onClick: ->
-  #   switch @state.currentState
-  #     when DROPDOWN_CLOSED          then @setState currentState: DROPDOWN_OPENED_BY_CLICK
-  #     when DROPDOWN_OPENED_BY_CLICK then @setState currentState: DROPDOWN_CLOSED
-  #     when DROPDOWN_OPENED_BY_HOVER then @setState currentState: DROPDOWN_CLOSED
-  #     else console.error? "Unknown state.currentState", @state.currentState
-
   onMouseEnter: ->
     if @state.currentState == DROPDOWN_CLOSED
       @setState currentState: DROPDOWN_OPENED_BY_HOVER
