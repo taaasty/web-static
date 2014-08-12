@@ -4,17 +4,16 @@ window.EntryCommentBox_CommentForm = React.createClass
   mixins: [RequesterMixin]
 
   propTypes:
-    user:   React.PropTypes.object.isRequired
-    onLoad: React.PropTypes.func.isRequired
+    user:     React.PropTypes.object.isRequired
+    disabled: React.PropTypes.bool
+    onSubmit: React.PropTypes.func.isRequired
 
-  getInitialState: ->
-    isError:    false
-    isLoading:  false
-    isDisabled: false
+  getDefaultProps: ->
+    disabled: false
 
   componentDidMount: ->
     @$commentFormField = $( @refs.commentFormField.getDOMNode() )
-    @$commentFormField.autosize append:''
+    @$commentFormField.autosize append: ''
 
   componentWillUnmount: ->
     @$commentFormField.trigger 'autosize.destroy'
@@ -32,8 +31,8 @@ window.EntryCommentBox_CommentForm = React.createClass
               <i className="comment-form__field-bg" />
               <textarea ref="commentFormField"
                         placeholder="Комментарий. SHIFT + ENTER новая строка"
+                        disabled={ this.props.disabled }
                         className="comment-form__field-textarea"
-                        disabled={ this.state.isDisabled ? 'disabled' : '' }
                         onKeyDown={ this.onKeyDown } />
             </span>
           </form>
@@ -42,26 +41,8 @@ window.EntryCommentBox_CommentForm = React.createClass
     </div>`
 
   onKeyDown: (e) ->
-    if e.which == 13 && !e.shiftKey
+    # Нажат Enter, введёный текст содержит какие-то символы, без Shift, Ctrl и Alt
+    if e.which == 13 && e.target.value.match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey
       e.preventDefault()
-      @addComment()
-
-  addComment: ->
-    @setState isDisabled: true
-
-    @createRequest
-      url: Routes.api.comments_url()
-      method: 'POST'
-      data:
-        entry_id: @props.entryId
-        text:     @getValue()
-      success: (comment) =>
-        @safeUpdateState => @props.onLoad 'add', comment
-        @$commentFormField.val('').trigger('blur').trigger 'autosize.resize'
-      error: (data) =>
-        @safeUpdateState => @setState isError: true
-        TastyNotifyController.errorResponse data
-      complete: =>
-        @safeUpdateState => @setState isLoading: false, isDisabled: false
-
-  getValue: -> @$commentFormField.val().replace /\n/g, ''
+      @props.onSubmit @$commentFormField.val()
+      @$commentFormField.val('').trigger('blur').trigger 'autosize.resize'

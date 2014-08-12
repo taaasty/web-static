@@ -1,43 +1,42 @@
 ###* @jsx React.DOM ###
 
+MORE_COMMENTS_LIMIT = 50
+
 window.EntryCommentBox = React.createClass
+  mixins: ['CommentsMixin']
 
   propTypes:
-    entryId:  React.PropTypes.number.isRequired
-    user:     React.PropTypes.object.isRequired
+    entryId: React.PropTypes.number.isRequired
+    user:    React.PropTypes.object.isRequired
+    limit:   React.PropTypes.number
 
-  getInitialState: ->
-    comments:        []
-    total_count:     null
-    last_comment_id: null
+  getDefaultProps: ->
+    limit: MORE_COMMENTS_LIMIT
 
   render: ->
-   `<section className="comments">
-      <div style={{ display: 'none' }} className="comments__more">
-        <a className="comments__more-link" title="Загрузить все 0 комментариев" href="">Загрузить все 0 комментариев</a>
-      </div>
-      <EntryCommentBox_CommentList comments={ this.state.comments }
-                                   entryId={ this.props.entryId }
-                                   onLoad={ this.updateComments } />
-      <EntryCommentBox_CommentForm entryId={ this.props.entryId }
-                                   user={ this.props.user }
-                                   onLoad={ this.updateComments } />
-    </section>`
+    if @props.user
+      commentForm = `<EntryCommentBox_CommentForm user={ this.props.user }
+                                                  disabled={ this.state.isPostLoading }
+                                                  onSubmit={ this.postComment } />`
 
-  updateComments: (action, data) ->
-    switch action
-      when 'add'
-        state = {
-          comments:        @state.comments.concat data
-          total_count:     @state.total_count + 1
-          last_comment_id: data.id
-        }
-      when 'update'
-        state = {
-          comments:        data.comments
-          total_count:     data.total_count
-          last_comment_id: data.last_comment_id
-        }
-      else console.warn 'Неизвестное действие для работы с комментариями'
+    if @state.comments.length > 0
+      commentList = `<EntryCommentBox_CommentList comments={ this.state.comments } />`
 
-    @setState state
+      if @state.totalCount > @state.comments.length
+        loadMoreButton = `<EntryCommentBox_LoadMore totalCount={ this.state.totalCount }
+                                                    loadedCount={ this.state.comments.length }
+                                                    limit={ this.props.limit }
+                                                    onClick={ this.loadMoreComments } />`
+    else
+      if @state.isLoadError || @state.isLoadMoreError || @state.isPostError
+        commentList = `<div>Ошибка загрузки.</div>`
+      else if @state.isLoading
+        commentList = `<div>Загружается список комментариев</div>`
+      else
+        commentList = `<div>Комментариев нет</div>`
+
+    return `<section className="comments">
+              { loadMoreButton }
+              { commentList }
+              { commentForm }
+            </section>`
