@@ -43,6 +43,11 @@ window.FeedToolbar = React.createClass
                                 title="Анонимки"
                                 key="anonymous" />`
 
+    feedList.push `<ToolbarItem href={ Routes.people_path() }
+                                icon="icon--people"
+                                title="Люди"
+                                key="people" />`
+
     return `<nav onClick={ this.onClick }
                  onMouseEnter={ this.onMouseEnter }
                  onMouseLeave={ this.onMouseLeave }
