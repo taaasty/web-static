@@ -17,10 +17,12 @@ window.EntryCommentBox = React.createClass
     if @props.user
       commentForm = `<EntryCommentBox_CommentForm user={ this.props.user }
                                                   disabled={ this.state.isPostLoading }
+                                                  entryId={ this.props.entryId }
                                                   onSubmit={ this.postComment } />`
 
     if @state.comments.length > 0
-      commentList = `<EntryCommentBox_CommentList comments={ this.state.comments } />`
+      commentList = `<EntryCommentBox_CommentList comments={ this.state.comments }
+                                                  entryId={ this.props.entryId } />`
 
       if @state.totalCount > @state.comments.length
         loadMoreButton = `<EntryCommentBox_LoadMore totalCount={ this.state.totalCount }
