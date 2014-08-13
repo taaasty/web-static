@@ -66,7 +66,11 @@ CommentsMixin =
         entry_id: @props.entryId
         text:     text
       success: (comment) =>
-        @safeUpdateState => @setState comments: @state.comments.concat comment
+        @safeUpdateState =>
+          @setState {
+            comments:   @state.comments.concat comment
+            totalCount: @state.totalCount + 1
+          }
       error: (data) =>
         @safeUpdateState => @setState isPostError: true
         TastyNotifyController.errorResponse data
