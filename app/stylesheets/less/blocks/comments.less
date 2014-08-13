@@ -155,6 +155,12 @@
 
 .comment__dropdown {
   .make-popover();
+
+  &.state--open {
+    visibility: visible;
+    opacity: 1;
+    transition: transform .3s ease, visibility 0s ease .0s, opacity .3s ease;
+  }
 }
 
 // Block Comment Form
