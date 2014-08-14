@@ -3,14 +3,14 @@
 window.EntryMetabarComment = React.createClass
 
   propTypes:
-    entryCommentsUrl: React.PropTypes.string.isRequired
+    entryId: React.PropTypes.number.isRequired
 
   render: ->
    `<span className="meta-item meta-item_comments">
       <span className="meta__content">
-        <a href={ this.props.entryCommentsUrl }
-           className="meta-item__common meta__link"
-           title="Комментировать">
+        <a className="meta-item__common meta__link"
+           title="Комментировать"
+           onClick={ this.onClick }>
           Комментировать
         </a>
       </span>
@@ -18,3 +18,6 @@ window.EntryMetabarComment = React.createClass
         <span className="spinner__icon"></span>
       </span>
     </span>`
+
+  onClick: ->
+    TastyEvents.trigger TastyEvents.keys.open_comment_form(@props.entryId)

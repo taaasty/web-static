@@ -14,8 +14,6 @@ window.EntryCommentBox_CommentList = React.createClass
     commentList = @props.comments.map (comment) ->
       `<EntryCommentBox_Comment comment={ comment }
                                 entryId={ that.props.entryId }
-                                canDelete={ that.props.user.id == comment.user.id }
-                                canReport={ that.props.user.id != comment.user.id }
                                 onDelete={ onDelete.bind(this, comment) }
                                 key={ comment.id } />`
 
