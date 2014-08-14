@@ -61,7 +61,7 @@ window.Voting = React.createClass
       i18n.t 'votes.vote'
 
   votableClass: ->
-    votableClass = 'rating'
+    votableClass = 'voting'
     votableClass += ' votable' if @state.isVoteable
     votableClass += ' voted'   if @state.isVoted
 
