@@ -28,8 +28,8 @@ window.HeroProfileStats_FollowingsPopup = React.createClass
         message = `<div className="popup__text">Загружаю..</div>`
       else
         message = `<div className="popup__text">Список пуст.</div>`
-      followingList = `<div className="valign"><div className="valign__middle">{ message }</div></div>`
-    
+      followingList = `<div className="grid-full"><div className="grid-full__middle">{ message }</div></div>`
+
     return `<div className="scroller scroller--users" ref="scroller">
               <div className="scroller__pane js-scroller-pane">{ followingList }</div>
               <div className="scroller__track js-scroller-track">

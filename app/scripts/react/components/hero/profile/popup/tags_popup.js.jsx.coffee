@@ -27,7 +27,7 @@ window.HeroProfileStats_TagsPopup = React.createClass
         message = `<div className="popup__text">Загружаю..</div>`
       else
         message = `<div className="popup__text">Список пуст.</div>`
-      tagList = `<div className="valign"><div className="valign__middle">{ message }</div></div>`
+      tagList = `<div className="grid-full"><div className="grid-full__middle">{ message }</div></div>`
 
     return `<div className="scroller scroller--tags" ref="scroller">
               <div className="scroller__pane js-scroller-pane">{ tagList }</div>
