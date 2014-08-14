@@ -3,8 +3,11 @@
 window.EntryCommentBox_Comment = React.createClass
 
   propTypes:
-    comment: React.PropTypes.object.isRequired
-    entryId: React.PropTypes.number.isRequired
+    comment:   React.PropTypes.object.isRequired
+    entryId:   React.PropTypes.number.isRequired
+    canReport: React.PropTypes.bool
+    canDelete: React.PropTypes.bool
+    onDelete:  React.PropTypes.func
 
   render: ->
    `<article className="comment">
@@ -19,7 +22,10 @@ window.EntryCommentBox_Comment = React.createClass
           </a>
           <span dangerouslySetInnerHTML={{ __html: this.props.comment.comment_html }} />
           <EntryCommentBox_CommentMetaBar comment={ this.props.comment }
-                                          entryId={ this.props.entryId } />
+                                          entryId={ this.props.entryId }
+                                          canReport={ this.props.canReport }
+                                          canDelete={ this.props.canDelete }
+                                          onDelete={ this.props.onDelete } />
         </div>
       </div>
     </article>`

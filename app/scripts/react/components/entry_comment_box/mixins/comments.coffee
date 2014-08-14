@@ -24,6 +24,7 @@ CommentsMixin =
             comments:    data.comments
             totalCount:  data.total_count
           }
+          $(document).trigger 'domChanged'
       error: (data) =>
         @safeUpdateState => @setState isLoadError: true
         TastyNotifyController.errorResponse data
@@ -47,6 +48,7 @@ CommentsMixin =
             comments:    newComments
             totalCount:  data.total_count
           }
+          $(document).trigger 'domChanged'
       error: (data) =>
         @safeUpdateState => @setState isLoadMoreError: true
         TastyNotifyController.errorResponse data
@@ -68,10 +70,15 @@ CommentsMixin =
             comments:   @state.comments.concat comment
             totalCount: @state.totalCount + 1
           }
+          $(document).trigger 'domChanged'
       error: (data) =>
         @safeUpdateState => @setState isPostError: true
         TastyNotifyController.errorResponse data
       complete: =>
         @safeUpdateState => @setState isPostLoading: false
+
+  removeComment: (comment) ->
+    newComments = _.without @state.comments, comment
+    @setState comments: newComments, totalCount: @state.totalCount - 1
 
 React.mixins.add 'CommentsMixin', [CommentsMixin, RequesterMixin]

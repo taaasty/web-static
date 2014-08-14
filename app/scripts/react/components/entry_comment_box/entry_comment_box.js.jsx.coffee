@@ -22,7 +22,9 @@ window.EntryCommentBox = React.createClass
 
     if @state.comments.length > 0
       commentList = `<EntryCommentBox_CommentList comments={ this.state.comments }
-                                                  entryId={ this.props.entryId } />`
+                                                  entryId={ this.props.entryId }
+                                                  user={ this.props.user }
+                                                  onDelete={ this.removeComment } />`
 
       if @state.totalCount > @state.comments.length
         loadMoreButton = `<EntryCommentBox_LoadMore totalCount={ this.state.totalCount }
