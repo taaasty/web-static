@@ -109,7 +109,7 @@
 }
 
 // Шаблоны только с определённым контентом (восстановление пароля)
-.layout--single {
+.layout--tech {
   text-align: center;
 
   .page {
@@ -126,7 +126,7 @@
     padding: 0;
   }
 
-  .tasty-ribbon {
+  .logo-ribbon {
     margin: -105px auto 80px;
     display: block;
   }
@@ -144,6 +144,12 @@
       left: 0;
       background-color: #2d2d2d;
       opacity: .57;
+    }
+
+    & + .page-body {
+      .connection-line-i {
+        background-color: @white;
+      }
     }
   }
 
