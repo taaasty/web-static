@@ -17,7 +17,10 @@ CommentsMixin =
 
     @createRequest
       url: Routes.api.comments_url()
-      data: { entry_id: @props.entryId }
+      data: {
+        entry_id: @props.entryId
+        limit:    @_getFirstLoadLimit()
+      }
       success: (data) =>
         @safeUpdateState =>
           @setState {
@@ -80,5 +83,8 @@ CommentsMixin =
   removeComment: (comment) ->
     newComments = _.without @state.comments, comment
     @setState comments: newComments, totalCount: @state.totalCount - 1
+
+  _getFirstLoadLimit: ->
+    if @props.totalCommentsCount > 5 then 3 else @props.totalCommentsCount
 
 React.mixins.add 'CommentsMixin', [CommentsMixin, RequesterMixin]
