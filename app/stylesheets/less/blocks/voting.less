@@ -1,0 +1,65 @@
+.voting-container {
+  position: relative;
+}
+
+.voting {
+  min-width: 21px;
+  margin-right: 10px;
+  padding: 6px 6px 5px;
+  position: absolute;
+  display: inline-block;
+  float: left;
+  top: .05em;
+  left: -60px;
+  background-color: rgba(red(@white), green(@white), blue(@white), .5);
+  font-size: @voting-font-size;
+  line-height: @voting-line-height;
+  font-family: @font-family-base;
+  color: rgba(red(@black), green(@black), blue(@black), .7);
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  z-index: @zindex-voting;
+  border-radius: @voting-border-radius;
+  user-select: none;
+  transition: background .4s ease, opacity .4s ease, color .4s ease;
+
+  &:before {
+    .icon;
+    margin: -5px 0 -3px;
+    display: inline-block;
+    font-size: 20px;
+    vertical-align: middle;
+    transition: color .4s ease;
+  }
+
+  .ico-fire; // :before - иконка огня
+
+  &:hover,
+  &.voted {
+    &:before {
+      color: @yellow;
+    }
+
+    .ico-fire-fill; // :before - иконка заполненного огня
+  }
+
+  /** Types **/
+  .post--image & {
+    top: 1.5em;
+  }
+
+  .post--video & {
+    position: relative;
+    float: right;
+    right: 100%;
+  }
+
+  .post--quote & {
+    top: .5em;
+  }
+
+  .post__header + .post__content & {
+    top: .833em;
+  }
+}
