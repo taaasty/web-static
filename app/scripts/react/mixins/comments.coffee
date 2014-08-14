@@ -3,7 +3,6 @@ CommentsMixin =
   getInitialState: ->
     comments:          []
     totalCount:        null
-    toCommentId:       null
     isPostError:       false
     isLoadError:       false
     isLoadMoreError:   false
@@ -24,7 +23,6 @@ CommentsMixin =
           @setState {
             comments:    data.comments
             totalCount:  data.total_count
-            toCommentId: data.comments[0]?.id
           }
       error: (data) =>
         @safeUpdateState => @setState isLoadError: true
@@ -40,7 +38,7 @@ CommentsMixin =
       data:
         entry_id:      @props.entryId
         limit:         @props.limit
-        to_comment_id: @state.toCommentId
+        to_comment_id: @state.comments[0].id
       success: (data) =>
         @safeUpdateState =>
           newComments = data.comments.concat @state.comments
@@ -48,7 +46,6 @@ CommentsMixin =
           @setState {
             comments:    newComments
             totalCount:  data.total_count
-            toCommentId: data.comments[0]?.id
           }
       error: (data) =>
         @safeUpdateState => @setState isLoadMoreError: true

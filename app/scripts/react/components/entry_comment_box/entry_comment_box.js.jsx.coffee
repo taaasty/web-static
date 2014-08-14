@@ -7,7 +7,7 @@ window.EntryCommentBox = React.createClass
 
   propTypes:
     entryId: React.PropTypes.number.isRequired
-    user:    React.PropTypes.object.isRequired
+    user:    React.PropTypes.object
     limit:   React.PropTypes.number
 
   getDefaultProps: ->
