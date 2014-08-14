@@ -150,7 +150,8 @@ require './react/components/entry_comment_box/comment_metabar/dropdown_menu_item
 require './react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item'
 require './react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item'
 require './react/components/entry_comment_box/comment_metabar/reply'
-require './react/components/entry_comment_box/comment_form'
+require './react/components/entry_comment_box/comment_form/comment_form'
+require './react/components/entry_comment_box/comment_form/comment_form_manager'
 require './react/components/entry_comment_box/load_more'
 
 require './react/components/post_editor/actions'

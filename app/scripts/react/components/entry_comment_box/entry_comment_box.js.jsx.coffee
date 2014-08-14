@@ -6,19 +6,23 @@ window.EntryCommentBox = React.createClass
   mixins: ['CommentsMixin']
 
   propTypes:
-    entryId: React.PropTypes.number.isRequired
-    user:    React.PropTypes.object
-    limit:   React.PropTypes.number
+    entryId:            React.PropTypes.number.isRequired
+    user:               React.PropTypes.object
+    limit:              React.PropTypes.number
+    isEntryPage:        React.PropTypes.bool.isRequired
+    totalCommentsCount: React.PropTypes.number.isRequired
 
   getDefaultProps: ->
     limit: MORE_COMMENTS_LIMIT
 
   render: ->
     if @props.user
-      commentForm = `<EntryCommentBox_CommentForm user={ this.props.user }
-                                                  disabled={ this.state.isPostLoading }
-                                                  entryId={ this.props.entryId }
-                                                  onSubmit={ this.postComment } />`
+      commentForm = `<EntryCommentBox_CommentFormManager user={ this.props.user }
+                                                         isEntryPage={ this.props.isEntryPage }
+                                                         totalCommentsCount={ this.props.totalCommentsCount }
+                                                         disabled={ this.state.isPostLoading }
+                                                         entryId={ this.props.entryId }
+                                                         onSubmit={ this.postComment } />`
 
     if @state.comments.length > 0
       commentList = `<EntryCommentBox_CommentList comments={ this.state.comments }
@@ -34,10 +38,8 @@ window.EntryCommentBox = React.createClass
     else
       if @state.isLoadError || @state.isLoadMoreError || @state.isPostError
         commentList = `<div>Ошибка загрузки.</div>`
-      else if @state.isLoading
+      else if @state.isLoadLoading || @state.isLoadMoreLoading
         commentList = `<div>Загружается список комментариев</div>`
-      else
-        commentList = `<div>Комментариев нет</div>`
 
     return `<section className="comments">
               { loadMoreButton }
