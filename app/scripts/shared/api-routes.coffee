@@ -38,6 +38,8 @@ ApiRoutes =
 
   # Comments
   comments_url:                        (entryId) -> TastySettings.api_host + 'v1/comments'
+  comments_edit_delete_url:          (commentId) -> TastySettings.api_host + 'v1/comments/' + commentId
+  comments_report_url:               (commentId) -> TastySettings.api_host + 'v1/comments/' + commentId + '/report'
 
   # follow, ignore, unfollow, cancel
   change_my_relationship_url:    (tlogId, state) ->

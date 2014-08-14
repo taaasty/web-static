@@ -1,13 +1,49 @@
 ###* @jsx React.DOM ###
 
+DROPDOWN_CLOSED = 'closed'
+DROPDOWN_OPENED_BY_HOVER = 'openedByHover'
+
 window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass
 
+  propTypes:
+    comment:   React.PropTypes.object.isRequired
+    canReport: React.PropTypes.bool
+    canDelete: React.PropTypes.bool
+    onDelete:  React.PropTypes.func.isRequired
+
+  getInitialState: ->
+    currentState: DROPDOWN_CLOSED
+
   render: ->
-    `<span className="comment__actions">
-        <i className="icon icon--dots"></i>
-        <span className="comment__dropdown">
-          <a className="comment__dropdown-item" href="#" title="Ссылка на комментарий"><i className="icon icon--hyperlink"></i>Ссылка на комментарий</a>
-          <a className="comment__dropdown-item" href="#" title="Пожаловаться"><i className="icon icon--exclamation-mark"></i>Пожаловаться</a>
-          <a className="comment__dropdown-item" href="#" title="Удалить комментарий"><i className="icon icon--basket"></i>Удалить комментарий</a>
-        </span>
-      </span>`
+    actionList = []
+    menuClasses = React.addons.classSet {
+      'comment__dropdown': true
+      'state--open': @isOpen()
+    }
+
+    actionList.push `<EntryCommentBox_CommentMetaBarDropdownMenuLinkItem commentId={ this.props.comment.id }
+                                                                         key="link" />`
+    if @props.canReport
+      actionList.push `<EntryCommentBox_CommentMetaBarDropdownMenuReportItem commentId={ this.props.comment.id }
+                                                                             key="report" />`
+    if @props.canDelete
+      actionList.push `<EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem commentId={ this.props.comment.id }
+                                                                             onDelete={ this.props.onDelete }
+                                                                             key="delete" />`
+
+    return `<span onMouseEnter={ this.onMouseEnter }
+                  onMouseLeave={ this.onMouseLeave }
+                  className="comment__actions">
+              <i className="icon icon--dots" />
+              <span className={ menuClasses }>{ actionList }</span>
+            </span>`
+
+  onMouseEnter: ->
+    if @state.currentState == DROPDOWN_CLOSED
+      @setState currentState: DROPDOWN_OPENED_BY_HOVER
+
+  onMouseLeave: ->
+    if @state.currentState == DROPDOWN_OPENED_BY_HOVER
+      @setState currentState: DROPDOWN_CLOSED
+
+  isOpen: -> @state.currentState != DROPDOWN_CLOSED
