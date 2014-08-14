@@ -49,8 +49,8 @@ window.Calendar = Calendar = React.createClass
         else
           message = `<span className="spinner spinner--24x24"><span className="spinner__icon"></span></span>`
 
-        children = `<div className="valign text--center">
-                      <div className="valign__middle">{ message }</div>
+        children = `<div className="grid-full text--center">
+                      <div className="grid-full__middle">{ message }</div>
                     </div>`
 
     return `<nav onClick={this.onClick}

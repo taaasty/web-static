@@ -46,7 +46,7 @@ window.PersonsPopup_PanelMixin =
         message = `<div className="popup__text">Загружаю..</div>`
       else
         message = `<div className="popup__text">Список пуст.</div>`
-      panelContent = `<div className="valign"><div className="valign__middle">{ message }</div></div>`
+      panelContent = `<div className="grid-full"><div className="grid-full__middle">{ message }</div></div>`
 
     if @props.relationships?.length < @props.total_count
       panelContent = `<div>{ panelContent }<LoadMoreButton onClick={ this.loadMoreData } /></div>`

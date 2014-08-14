@@ -24,8 +24,8 @@ module.experts = window.InviterShellBox = React.createClass
     return `<div className={classes}>
               <div className="inviter__box" style={boxStyle}>
                   <div className="inviter__overlay"></div>
-                    <div className="valign">
-                        <div className="valign__middle">
+                    <div className="grid-full">
+                        <div className="grid-full__middle">
                             <div className="inviter__logo">
                                 <i className="icon icon--ribbon"></i>
                             </div>
