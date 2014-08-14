@@ -17,12 +17,12 @@ window.EntryCommentBox = React.createClass
 
   render: ->
     if @props.user
-      commentForm = `<EntryCommentBox_CommentForm user={ this.props.user }
-                                                  opened={ this.props.isEntryPage }
-                                                  totalCommentsCount={ this.props.totalCommentsCount }
-                                                  disabled={ this.state.isPostLoading }
-                                                  entryId={ this.props.entryId }
-                                                  onSubmit={ this.postComment } />`
+      commentForm = `<EntryCommentBox_CommentFormManager user={ this.props.user }
+                                                         isEntryPage={ this.props.isEntryPage }
+                                                         totalCommentsCount={ this.props.totalCommentsCount }
+                                                         disabled={ this.state.isPostLoading }
+                                                         entryId={ this.props.entryId }
+                                                         onSubmit={ this.postComment } />`
 
     if @state.comments.length > 0
       commentList = `<EntryCommentBox_CommentList comments={ this.state.comments }

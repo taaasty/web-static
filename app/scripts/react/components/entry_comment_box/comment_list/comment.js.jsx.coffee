@@ -22,7 +22,11 @@ window.EntryCommentBox_Comment = React.createClass
             <span className="comment__username comment__username--bold">{ this.props.comment.user.name } </span>
           </a>
           <span dangerouslySetInnerHTML={{ __html: this.props.comment.comment_html }} />
-          <EntryCommentBox_CommentMetaBar comment={ this.props.comment }
+          <EntryCommentBox_CommentMetaBar name={ this.props.comment.user.name }
+                                          commentId={ this.props.comment.id }
+                                          commentCreatedAt={ this.props.comment.created_at }
+                                          canReport={ this.props.comment.can_report }
+                                          canDelete={ this.props.comment.can_delete }
                                           entryId={ this.props.entryId }
                                           onDelete={ this.props.onDelete } />
         </div>
