@@ -44,7 +44,7 @@ window.FeedToolbar = React.createClass
                                 key="anonymous" />`
 
     feedList.push `<ToolbarItem href={ Routes.people_path() }
-                                icon="icon--people"
+                                icon="icon--friends"
                                 title="Люди"
                                 key="people" />`
 
