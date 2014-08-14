@@ -38,7 +38,6 @@ require './react/mixins/requester'
 require './react/mixins/dom_manipulations'
 require './react/mixins/scroller'
 require './react/mixins/touch'
-require './react/mixins/comments'
 
 require './react/components/avatar'
 
@@ -140,6 +139,7 @@ require './react/components/entry_metabar/dropdown_menu_items/watch_item'
 require './react/components/entry_metabar/dropdown_menu_items/report_item'
 require './react/components/entry_metabar/dropdown_menu_items/delete_item'
 
+require './react/components/entry_comment_box/mixins/comments'
 require './react/components/entry_comment_box/entry_comment_box'
 require './react/components/entry_comment_box/comment_list/comment_list'
 require './react/components/entry_comment_box/comment_list/comment'
