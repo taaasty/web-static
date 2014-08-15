@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.PersonsPopup_PersonItem = PersonsPopup_PersonItem = React.createClass
+window.PersonsPopup_PersonItem = React.createClass
   mixins: [ReactGrammarMixin]
 
   propTypes:
@@ -25,5 +25,3 @@ window.PersonsPopup_PersonItem = PersonsPopup_PersonItem = React.createClass
 
   getNumberOfEntries: (number) ->
     number + ' ' + @declension(number, ['запись', 'записи', 'записей'])
-
-module.exports = PersonsPopup_PersonItem

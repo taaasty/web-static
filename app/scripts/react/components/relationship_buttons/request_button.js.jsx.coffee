@@ -1,24 +1,23 @@
 ###* @jsx React.DOM ###
 
+STATE_REQUESTED = 'requested'
+
 window.RelationshipRequestButton = React.createClass
-  mixins: [ErrorTimerMixin, RequesterMixin]
+  mixins: ['RelationshipMixin']
 
   propTypes:
     relationship: React.PropTypes.object.isRequired
     onRequestEnd: React.PropTypes.func
 
   getInitialState: ->
-    relationship:   @props.relationship
-    isError:        false
-    isProcess:      false
-
-  componentWillUnmount: -> @clearErrorTimer()
+    isError:   false
+    isProcess: false
 
   render: ->
    `<div>
       <button onClick={ this.handleApproveClick }
               className="button button--small button--outline-light-white">
-        { this.getTitle() }
+        { this._getTitle() }
       </button>
       <button onClick={ this.handleDisapproveClick }
               className="button button--small button--outline-light-white button--icon">
@@ -26,38 +25,16 @@ window.RelationshipRequestButton = React.createClass
       </button>
     </div>`
 
-  getTitle: ->
-    return 'ошибка'       if @state.isError
-    return 'в процессе..' if @state.isProcess
-    # TODO Одобрено/Одобрить по @state.relationship.state
-    return 'Одобрить'
+  isRequested: -> @props.relationship.state is STATE_REQUESTED
 
   handleApproveClick: ->
-    @setState isProcess: true
-
-    @createRequest
-      url: Routes.api.relationships_by_tlog_approve_url(@props.relationship.reader.id)
-      method: 'POST'
-      success: (data) => console.log 'Контакт одобрен', data
-      error:   (data) =>
-        TastyNotifyController.errorResponse data
-        @startErrorTimer()
-      complete: =>
-        @safeUpdateState => @setState isProcess: false
-        @props.onRequestEnd(@props.key)
+    @approve( success: => @props.onRequestEnd(@props.relationship) )
 
   handleDisapproveClick: ->
-    @setState isProcess: true
+    @disapprove( success: => @props.onRequestEnd(@props.relationship) )
 
-    @createRequest
-      url: Routes.api.relationships_by_tlog_disapprove_url(@props.relationship.reader.id)
-      method: 'POST'
-      success: (data) =>
-        @props.onRequestEnd(@props.key)
-        console.log 'Контакту отказано', data
-      error: (data) =>
-        TastyNotifyController.errorResponse data
-        @startErrorTimer()
-      complete: =>
-        @safeUpdateState => @setState isProcess: false
-        @props.onRequestEnd(@props.key)
+  _getTitle: ->
+    return 'ошибка'       if @state.isError
+    return 'в процессе..' if @state.isProcess
+
+    'Одобрить' if @isRequested()
