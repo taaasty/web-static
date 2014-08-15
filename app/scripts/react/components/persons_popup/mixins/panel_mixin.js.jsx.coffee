@@ -70,6 +70,7 @@ window.PersonsPopup_PanelMixin =
       url: @relationUrl()
       data:
         since_position: sincePosition
+        expose_reverse: 1
       success: (data) =>
         @safeUpdateState => @props.onLoad('add', total_count: data.total_count, items: data.relationships)
       error:   (data) =>

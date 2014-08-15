@@ -70,9 +70,12 @@ require './react/components/buttons/load_more'
 require './react/components/follow_status'
 require './react/components/smart_follow_status'
 require './react/components/follow_button'
-require './react/components/relationship_following_button'
-require './react/components/relationship_request_button'
-require './react/components/relationship_guess_button'
+
+require './react/components/relationship_buttons/mixins/relationship'
+require './react/components/relationship_buttons/following_button'
+require './react/components/relationship_buttons/follower_button'
+require './react/components/relationship_buttons/request_button'
+require './react/components/relationship_buttons/guess_button'
 
 # Не работает на странице редактирования постов
 # require './shared/jquery.maxlength'
