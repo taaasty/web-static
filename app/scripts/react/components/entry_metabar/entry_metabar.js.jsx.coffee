@@ -18,26 +18,40 @@ window.EntryMetabar = React.createClass
     tags:                     React.PropTypes.array.isRequired
     createdAt:                React.PropTypes.string.isRequired
     entryCommentsUrl:         React.PropTypes.string.isRequired
+    totalCommentsCount:       React.PropTypes.number.isRequired
+    isLogged:                 React.PropTypes.bool.isRequired
+    isEntryPage:              React.PropTypes.bool.isRequired
 
   getDefaultProps: ->
     tags: []
 
   render: ->
-   `<span className="meta-bar">
-      <EntryMetabarComment entryId={ this.props.entryId } />
-      <EntryMetabarDate time={ this.props.createdAt }
-                        entryUrl={ this.props.entryUrl } />
-      <EntryMetabarTags tags={ this.props.tags } />
-      <EntryMetabarDropdownMenu entryId={ this.props.entryId }
-                                isFavorited={ this.props.isFavorited}
-                                isWatching={ this.props.isWatching }
-                                shouldRemoveFavoriteNode={ this.props.shouldRemoveFavoriteNode }
-                                entryUrl={ this.props.entryUrl}
-                                editUrl={ this.props.editUrl}
-                                successDeleteUrl={ this.props.successDeleteUrl }
-                                canEdit={ this.props.canEdit }
-                                canFavorite={ this.props.canFavorite }
-                                canWatch={ this.props.canWatch }
-                                canReport={ this.props.canReport }
-                                canDelete={ this.props.canDelete } />
-    </span>`
+    unless @props.totalCommentsCount == 0 && @props.isLogged is false ||
+           @props.isEntryPage is true
+
+      entryComment = `<EntryMetabarComment entryId={ this.props.entryId }
+                           isLogged={ this.props.isLogged }
+                           entryUrl={ this.props.entryUrl }
+                           totalCommentsCount={ this.props.totalCommentsCount } />`
+
+    return `<span className="meta-bar">
+              { entryComment }
+
+              <EntryMetabarDate time={ this.props.createdAt }
+                                entryUrl={ this.props.entryUrl } />
+
+              <EntryMetabarTags tags={ this.props.tags } />
+
+              <EntryMetabarDropdownMenu entryId={ this.props.entryId }
+                                        isFavorited={ this.props.isFavorited}
+                                        isWatching={ this.props.isWatching }
+                                        shouldRemoveFavoriteNode={ this.props.shouldRemoveFavoriteNode }
+                                        entryUrl={ this.props.entryUrl}
+                                        editUrl={ this.props.editUrl}
+                                        successDeleteUrl={ this.props.successDeleteUrl }
+                                        canEdit={ this.props.canEdit }
+                                        canFavorite={ this.props.canFavorite }
+                                        canWatch={ this.props.canWatch }
+                                        canReport={ this.props.canReport }
+                                        canDelete={ this.props.canDelete } />
+            </span>`
