@@ -7,7 +7,7 @@ window.PersonsPopup_FollowerRelationship = PersonsPopup_FollowerRelationship = R
 
   render: ->
    `<PersonsPopup_PersonItem user={ this.props.relationship.reader }>
-      <FollowButton tlogId={ this.props.relationship.reader.id } />
+      <RelationshipFollowerButton relationship={ this.props.relationship.reverse_relationship } />
     </PersonsPopup_PersonItem>`
 
 module.exports = PersonsPopup_FollowerRelationship
