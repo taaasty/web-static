@@ -35,8 +35,8 @@ window.PersonsPopup_PanelMixin =
 
     if @props.relationships?.length > 0
       itemClass = @itemClass
-      relationships = @props.relationships.map (relationship, i) =>
-        itemClass relationship: relationship, key: i, onRequestEnd: @removeRelationshipByIndex
+      relationships = @props.relationships.map (relationship) =>
+        itemClass relationship: relationship, key: relationship.id, onRequestEnd: @removeRelationship
 
       panelContent = `<ul className="persons">{ relationships }</ul>`
     else
@@ -85,9 +85,8 @@ window.PersonsPopup_PanelMixin =
     lastLoadedPosition = @props.relationships[ @props.relationships.length - 1].position
     @getPanelData lastLoadedPosition
 
-  removeRelationshipByIndex: (index) ->
-    newRelationships = @props.relationships.slice()
-    newRelationships.splice index, 1
+  removeRelationship: (relationship) ->
+    newRelationships = _.without @props.relationships, relationship
     @props.onLoad('update', total_count: @props.total_count - 1, items: newRelationships)
 
 React.mixins.add 'PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser']

@@ -1,5 +1,7 @@
 window.RelationshipMixin =
 
+  componentWillUnmount: -> @clearErrorTimer()
+
   follow: ->
     @closeError()
     @setState isProcess: true
@@ -30,15 +32,14 @@ window.RelationshipMixin =
       complete: =>
         @safeUpdateState => @setState isProcess: false
 
-  cancel: ->
+  cancel: ({ success }) ->
     @closeError()
     @setState isProcess: true
 
     @createRequest
       url: Routes.api.change_my_relationship_url @state.relationship.user_id, 'cancel'
       method: 'POST'
-      success: (data) =>
-        @safeUpdateState => @setState relationship: data
+      success: (data) => success() if success?
       error: (data) =>
         @startErrorTimer()
         TastyNotifyController.errorResponse data
@@ -54,6 +55,34 @@ window.RelationshipMixin =
       method: 'POST'
       success: (data) =>
         @safeUpdateState => @setState relationship: data
+      error: (data) =>
+        @startErrorTimer()
+        TastyNotifyController.errorResponse data
+      complete: =>
+        @safeUpdateState => @setState isProcess: false
+
+  approve: ({ success }) ->
+    @closeError()
+    @setState isProcess: true
+
+    @createRequest
+      url: Routes.api.relationships_by_tlog_approve_url(@props.relationship.reader.id)
+      method: 'POST'
+      success: (data) => success() if success?
+      error:   (data) =>
+        @startErrorTimer()
+        TastyNotifyController.errorResponse data
+      complete: =>
+        @safeUpdateState => @setState isProcess: false
+
+  disapprove: ({ success }) ->
+    @closeError()
+    @setState isProcess: true
+
+    @createRequest
+      url: Routes.api.relationships_by_tlog_disapprove_url(@props.relationship.reader.id)
+      method: 'POST'
+      success: (data) => success() if success?
       error: (data) =>
         @startErrorTimer()
         TastyNotifyController.errorResponse data

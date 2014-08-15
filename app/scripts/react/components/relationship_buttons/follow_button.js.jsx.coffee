@@ -2,17 +2,17 @@
 
 STATE_FRIEND = 'friend'
 
-window.RelationshipFollowerButton = React.createClass
+window.FollowButton = React.createClass
   mixins: ['RelationshipMixin']
 
   propTypes:
     relationship: React.PropTypes.object.isRequired
 
   getInitialState: ->
-    relationship:   @props.relationship
-    isHover:        false
-    isError:        false
-    isProcess:      false
+    relationship: @props.relationship
+    isHover:      false
+    isError:      false
+    isProcess:    false
 
   render: ->
     if @isFollow() && !@state.isError && !@state.isProcess
@@ -27,15 +27,10 @@ window.RelationshipFollowerButton = React.createClass
 
   isFollow: -> @state.relationship.state == STATE_FRIEND
 
-  onClick: (e) ->
-    switch @state.relationship.state
-      when 'friend'    then @unfollow()
-      when 'requested' then @cancel()
-      when 'ignored'   then @cancel()
-      else @follow()
+  onClick: -> if @isFollow() then @unfollow() else @follow()
 
-  onMouseOver:   -> @setState isHover: true
-  onMouseLeave:  -> @setState isHover: false
+  onMouseOver:  -> @setState isHover: true
+  onMouseLeave: -> @setState isHover: false
 
   _getTitle: ->
     return 'ошибка'       if @state.isError

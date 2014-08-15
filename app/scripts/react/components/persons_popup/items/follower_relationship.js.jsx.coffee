@@ -1,13 +1,15 @@
 ###* @jsx React.DOM ###
 
-window.PersonsPopup_FollowerRelationship = PersonsPopup_FollowerRelationship = React.createClass
+window.PersonsPopup_FollowerRelationship = React.createClass
 
   propTypes:
     relationship: React.PropTypes.object.isRequired
 
+  shouldComponentUpdate: (nextProps) ->
+    true if @props.relationship.state != nextProps.relationship.state
+    false
+
   render: ->
    `<PersonsPopup_PersonItem user={ this.props.relationship.reader }>
-      <RelationshipFollowerButton relationship={ this.props.relationship.reverse_relationship } />
+      <FollowButton relationship={ this.props.relationship.reverse_relationship } />
     </PersonsPopup_PersonItem>`
-
-module.exports = PersonsPopup_FollowerRelationship
