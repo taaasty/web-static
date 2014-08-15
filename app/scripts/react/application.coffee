@@ -6,6 +6,7 @@
 #= require_tree ./mixins
 #= require_tree ./components/post_editor/mixins
 #= require_tree ./components/entry_comment_box/mixins
+#= require_tree ./components/relationship_buttons/mixins
 #= require_tree ./components
 #= require_tree ./controllers
 
