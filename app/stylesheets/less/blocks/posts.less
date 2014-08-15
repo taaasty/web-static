@@ -72,8 +72,8 @@
 
   // Картинка в посте
   .image {
-    margin-right: -@page-body-padding-horizontal;
-    margin-left: -@page-body-padding-horizontal;
+    margin-right: -@content-area-padding-horizontal;
+    margin-left: -@content-area-padding-horizontal;
 
     > a {
       border-bottom: none;
@@ -94,8 +94,8 @@
   // Видео в посте
   .video {
     height: auto;
-    margin-right: -@page-body-padding-horizontal;
-    margin-left: -@page-body-padding-horizontal;
+    margin-right: -@content-area-padding-horizontal;
+    margin-left: -@content-area-padding-horizontal;
   }
 
   // Цитата в посте
@@ -117,7 +117,7 @@
 
   // Коллаж
   .collage {
-    margin: 0 -@page-body-padding-horizontal 32px;
+    margin: 0 -@content-area-padding-horizontal 32px;
   }
 }
 
@@ -127,7 +127,7 @@
     margin-top: -40px;
 
     .image {
-      border-radius: @page-body-border-radius @page-body-border-radius 0 0;
+      border-radius: @content-area-border-radius @content-area-border-radius 0 0;
       overflow: hidden;
 
       .alert + .posts & {
@@ -152,7 +152,7 @@
     margin-top: -40px;
 
     .video {
-      border-radius: @page-body-border-radius @page-body-border-radius 0 0;
+      border-radius: @content-area-border-radius @content-area-border-radius 0 0;
       overflow: hidden;
 
       .alert + .posts & {
