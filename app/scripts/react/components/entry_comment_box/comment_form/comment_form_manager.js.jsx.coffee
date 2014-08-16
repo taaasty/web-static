@@ -69,7 +69,7 @@ window.EntryCommentBox_CommentFormManager = React.createClass
 
     @openForm() unless @isOpen()
 
-    newText = @_removeLastReply() if replies.length >= REPLIES_LIMIT
+    newText = @_removeLastReply() if replies.length > REPLIES_LIMIT
     newText = name + postfix + newText unless RegExp(name).exec newText
 
     @setState text: newText
@@ -85,6 +85,6 @@ window.EntryCommentBox_CommentFormManager = React.createClass
 
   _removeLastReply: ->
     text   = @state.text
-    regExp = /, @[^,]{1,} /g
+    regExp = /, @\w+(?=\s)/g
 
-    text.replace regExp, ' '
+    text.replace regExp, ''
