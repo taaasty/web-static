@@ -1,6 +1,74 @@
 ###* @jsx React.DOM ###
-#
+
+EDITOR_MODES= ['inline', 'partial', 'rich']
+
+EDITOR_OPTIONS =
+  inline:
+    disableToolbar:         true
+    disableReturn:          true
+    disableDoubleReturn:    true
+    cleanPastedHTML:        true
+
+  rich:
+    buttons:                ['header1', 'anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist', 'pre']
+    disableToolbar:         false
+    disableReturn:          false
+    disableDoubleReturn:    false
+    cleanPastedHTML:        true
+    targetBlank:            true
+
+# Video title
+EDITOR_OPTIONS['partial'] = EDITOR_OPTIONS['rich']
+
+
+# Medium-Editor
 window.TastyEditor = React.createClass
+  propTypes:
+    className:   React.PropTypes.string
+    placeholder: React.PropTypes.string
+    content:     React.PropTypes.string
+    mode:        React.PropTypes.string
+    onChange:    React.PropTypes.func.isRequired
+
+  getDefaultProps: ->
+    className: 'tasty-editor-default'
+    mode:      'inline' # 'rich'
+
+  getInitialState: ->
+    isEditing: false
+
+  componentDidMount: ->
+    options = placeholder: @placeholder()
+
+    @editor = new MediumEditor @refs.content.getDOMNode(), _.extend(options, EDITOR_OPTIONS[@props.mode])
+
+  componentWillUnmount: ->
+    element = @refs.content.getDOMNode()
+    $(element).off 'input', @onInput if element?
+    @editor.deactivate?() # Medium-Editor
+
+  onInput: (event) ->
+    @props.onChange? @content()
+
+  componentDidUpdate: ->
+    #@editor.html.placeholders()
+    #$editor = $ @refs.content.getDOMNode()
+    #if @state.isEditing _.defer => $editor.focus()
+
+  placeholder: ->
+    @props.placeholder.replace '<br>', "\r\n"
+
+  content: ->
+    @refs.content.getDOMNode().innerHTML
+
+  render: ->
+    `<div className={"tasty-editor " + this.props.className}>
+      <div className='tasty-editor-content' ref="content" dangerouslySetInnerHTML={{ __html: this.props.content }} />
+      </div>`
+
+
+
+window.TastyEditor_MediumJS = React.createClass
   propTypes:
     className:   React.PropTypes.string
     placeholder: React.PropTypes.string
@@ -82,27 +150,3 @@ window.TastyEditor = React.createClass
       #</div>`
 
 #componentDidMount: ->
-  #@editor = new MediumEditor @refs.content.getDOMNode(),
-    ## Неработает
-    ##placeholder:            'aaaa'
-    #buttons:                []
-    #cleanPastedHTML:        true
-    #disableReturn:          true
-    #disableToolbar:         true
-  #@contentEditor = new MediumEditor @refs.content.getDOMNode(),
-    #buttons:                ['header1', 'anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist', 'pre']
-    #firstHeader:     'h1'
-    #secondHeader:    'h2'
-    #targetBlank:     true
-    #cleanPastedHTML: true
-
-  #@$editor = $ @refs.content.getDOMNode()
-
-  #@$editor.focus => @setState isEditing: true
-  #@$editor.blur  => @setState isEditing: false
-
-  #console.log 'init editor', @editor
-
-  ##@$editor.focus() unless @isPlaceholderVisible()
-
-
