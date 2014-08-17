@@ -42,7 +42,7 @@ window.HeroProfile = React.createClass
       <CloseToolbar onClick={ this.close } />
       <div className="hero__overlay"></div>
       <div className="hero__gradient"></div>
-      <div className="layout-constrain hero__box" ref="heroBox">
+      <div className="hero__box" ref="heroBox">
         <HeroProfileAvatar user={ this.props.user }
                            onClick={ this.open } />
         { follow_status }

@@ -1,0 +1,30 @@
+.content-area {
+  position: relative;
+  &:extend(.layout-constrain);
+}
+
+.content-area__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: @white;
+  z-index: @zindex-content-area-bg;
+  border-radius: @content-area-border-radius;
+}
+
+.content-area__inner {
+  padding: @content-area-padding-vertical @content-area-padding-horizontal;
+  position: relative;
+  z-index: @zindex-content-area-inner;
+
+  .alert {
+    margin: 0 -@content-area-padding-horizontal @content-area-padding-vertical;
+
+    &:first-child {
+      margin-top: -@content-area-padding-vertical;
+      border-radius: @content-area-border-radius @content-area-border-radius 0 0;
+    }
+  }
+}

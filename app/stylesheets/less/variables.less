@@ -33,11 +33,6 @@
 
 @page-min-width: 765px;
 
-@page-body-padding-vertical: 40px;
-@page-body-padding-horizontal: 68px;
-
-@page-body-border-radius: 6px;
-
 // Indents
 @indent-base: 20px;
 
@@ -47,12 +42,12 @@
 @zindex-types-posts: 1;
 @zindex-inviter-fixed: 1;
 @zindex-hero: 1;
-@zindex-page-body-bg: 2;
+@zindex-content-area-bg: 2;
 @zindex-page-paper-not-logged: 2;
 @zindex-field-control: 2;
 @zindex-voting: 2;
 @zindex-post-edit: 2;
-@zindex-page-body-inner: 3;
+@zindex-content-area-inner: 3;
 @zindex-post-edit-active: 3;
 @zindex-screen-viewer-item: 4;
 @zindex-screen-viewer-item-active: 5;
@@ -126,7 +121,7 @@
 
 // Alert
 @alert-padding-vertical: 22px;
-@alert-padding-horizontal: @page-body-padding-horizontal;
+@alert-padding-horizontal: @content-area-padding-horizontal;
 @alert-font-size: 15px;
 @alert-line-height: 1.467;
 
@@ -176,6 +171,12 @@
 @brick-video-height: 200px;
 @brick-video-overlay-bg-base: #3e3e3e;
 @brick-video-overlay-bg: rgba(red(@brick-video-overlay-bg-base), green(@brick-video-overlay-bg-base), blue(@brick-video-overlay-bg-base), .5);
+
+// Content Area
+@content-area-padding-vertical: 40px;
+@content-area-padding-horizontal: 68px;
+
+@content-area-border-radius: 6px;
 
 // Comments
 @comments-font-size: 14px;
