@@ -4,6 +4,7 @@ window.EntryMetabar = React.createClass
 
   propTypes:
     entryId:                  React.PropTypes.number.isRequired
+    author:                   React.PropTypes.object
     isFavorited:              React.PropTypes.bool.isRequired
     isWatching:               React.PropTypes.bool.isRequired
     shouldRemoveFavoriteNode: React.PropTypes.bool
@@ -26,6 +27,9 @@ window.EntryMetabar = React.createClass
     tags: []
 
   render: ->
+    if @props.author
+      entryAuthor = `<EntryMetabarAuthor user={ this.props.author } />`
+
     unless @props.totalCommentsCount == 0 && @props.isLogged is false ||
            @props.isEntryPage is true
 
@@ -35,6 +39,7 @@ window.EntryMetabar = React.createClass
                            totalCommentsCount={ this.props.totalCommentsCount } />`
 
     return `<span className="meta-bar">
+              { entryAuthor }
               { entryComment }
 
               <EntryMetabarDate time={ this.props.createdAt }

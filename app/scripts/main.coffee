@@ -130,6 +130,7 @@ require './react/components/post_editor/mediabox/layout'
 require './react/components/post_editor/mediabox/loading_progress'
 
 require './react/components/entry_metabar/entry_metabar'
+require './react/components/entry_metabar/author'
 require './react/components/entry_metabar/comment'
 require './react/components/entry_metabar/date'
 require './react/components/entry_metabar/tags'
