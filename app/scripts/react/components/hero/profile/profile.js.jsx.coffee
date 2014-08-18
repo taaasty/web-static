@@ -33,7 +33,7 @@ window.HeroProfile = React.createClass
   render: ->
     if @props.relationship?
       actions = `<div className="hero__actions">
-                   <FollowButton tlogId={ this.props.user.id } />
+                   <FollowButton relationship={ this.props.relationship } />
                  </div>`
       follow_status = `<SmartFollowStatus tlogId={ this.props.user.id }
                                           status={ this.props.relationship.state } />`
