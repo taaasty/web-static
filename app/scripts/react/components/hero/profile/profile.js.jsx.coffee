@@ -33,25 +33,25 @@ window.HeroProfile = React.createClass
   render: ->
     if @props.relationship?
       actions = `<div className="hero__actions">
-                   <FollowButton relationship={ this.props.relationship } />
+                   <FollowButton tlogId={ this.props.user.id } />
                  </div>`
       follow_status = `<SmartFollowStatus tlogId={ this.props.user.id }
                                           status={ this.props.relationship.state } />`
 
-    `<div className="hero hero-profile">
-      <CloseToolbar onClick={ this.close } />
-      <div className="hero__overlay"></div>
-      <div className="hero__gradient"></div>
-      <div className="hero__box" ref="heroBox">
-        <HeroProfileAvatar user={ this.props.user }
-                           onClick={ this.open } />
-        { follow_status }
-        <HeroProfileHead user={ this.props.user } />
-        { actions }
-      </div>
-      <HeroProfileStats user={ this.props.user }
-                        stats={ this.props.stats } />
-    </div>`
+    return `<div className="hero hero-profile">
+              <CloseToolbar onClick={ this.close } />
+              <div className="hero__overlay"></div>
+              <div className="hero__gradient"></div>
+              <div className="hero__box" ref="heroBox">
+                <HeroProfileAvatar user={ this.props.user }
+                                   onClick={ this.open } />
+                { follow_status }
+                <HeroProfileHead user={ this.props.user } />
+                { actions }
+              </div>
+              <HeroProfileStats user={ this.props.user }
+                                stats={ this.props.stats } />
+            </div>`
 
   open: (e) ->
     transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' +

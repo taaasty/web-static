@@ -25,12 +25,12 @@ if localStorage.getItem('userLogged') == "true"
   window.tastyUser = SomeUser
   console.log 'Залогинен пользователь:', window.tastyUser.slug
 
-  #$.ajaxSetup
-    #xhrFields:
-      #withCredentials: true
-      #crossDomain: true
-    #headers:
-      #"X-User-Token": SomeUser.api_key.access_token
+  $.ajaxSetup
+    xhrFields:
+      withCredentials: true
+      crossDomain: true
+    headers:
+      "X-User-Token": SomeUser.api_key.access_token
 
 else
   console.log 'Без пользователя'
