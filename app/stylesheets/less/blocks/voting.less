@@ -15,7 +15,7 @@
   font-size: @voting-font-size;
   line-height: @voting-line-height;
   font-family: @font-family-base;
-  color: rgba(red(@black), green(@black), blue(@black), .7);
+  color: rgba(red(@black), green(@black), blue(@black), .55);
   text-align: center;
   cursor: pointer;
   white-space: nowrap;
@@ -31,9 +31,10 @@
     font-size: 20px;
     vertical-align: middle;
     transition: color .4s ease;
+    opacity: .9;
   }
 
-  .ico-fire; // :before - иконка огня
+  .ico-fire-reg; // :before - иконка огня
 
   &:hover,
   &.voted {
@@ -41,7 +42,7 @@
       color: @yellow;
     }
 
-    .ico-fire-fill; // :before - иконка заполненного огня
+    .ico-fire-fill-reg; // :before - иконка заполненного огня
   }
 
   /** Types **/
