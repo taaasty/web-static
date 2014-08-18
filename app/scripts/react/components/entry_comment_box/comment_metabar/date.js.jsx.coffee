@@ -5,6 +5,7 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass
   propTypes:
     time:      React.PropTypes.string.isRequired
     commentId: React.PropTypes.number.isRequired
+    entryUrl:  React.PropTypes.string.isRequired
 
   render: ->
     now = moment()
@@ -28,6 +29,8 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass
         # Если комментарий оставлен в этом году, то вид: "9 августа"
         date = createdAt.format 'D MMMM'
 
-    return `<a className="comment__date-link" href={ '#comment-' + this.props.commentId }>
+    return `<a className="comment__date-link" href={ this._getCommentUrl() }>
               <span className="comment__date">{ date }</span>
             </a>`
+
+  _getCommentUrl: -> @props.entryUrl + '#comment-' + @props.commentId
