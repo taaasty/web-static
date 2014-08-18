@@ -15,6 +15,10 @@
 
 .comments__list {
   margin-bottom: 10px;
+
+  .comment-form {
+    border-top: 0;
+  }
 }
 
 .comments__more {
@@ -22,8 +26,6 @@
 }
 
 .comments__more-link {
-  font-size: 12px;
-  line-height: 15px;
   opacity: .4;
 
   &:hover {
@@ -110,8 +112,6 @@
   position: absolute;
   top: 10px;
   right: 0;
-  font-size: 12px;
-  line-height: 18px;
   white-space: nowrap;
 
   > * {
@@ -132,7 +132,7 @@
 }
 
 .comment__dot {
-  margin: 0 2px;
+  margin: 0 .5em;
 }
 
 .comment__reply {
@@ -163,9 +163,15 @@
   }
 }
 
+.comment__dropdown-item {
+  font-size: @comments-font-size;
+  line-height: @comments-line-height;
+}
+
 // Block Comment Form
 .comment-form {
   &:extend(.comment);
+  border-top: 10px solid transparent;
 }
 
 .comment-form__table {
@@ -174,6 +180,7 @@
 
 .comment-form__table-cell {
   &:extend(.comment__table-cell);
+  padding-top: 0;
 }
 
 .comment-form__user {
@@ -182,7 +189,7 @@
 
 .comment-form__avatar {
   &:extend(.comment__avatar);
-  top: 9px;
+  /*top: 9px;*/
 }
 
 .comment-form__placeholder {
