@@ -31,18 +31,19 @@ window.EntryCommentBox_CommentFormManager = React.createClass
     else
       @setState currentState: LINK_STATE
 
-    TastyEvents.on TastyEvents.keys.open_comment_form(@props.entryId), @openForm
+    TastyEvents.on TastyEvents.keys.comment_form_toggled(), @toggleForm
     TastyEvents.on TastyEvents.keys.comment_replied(@props.entryId), @onCommentReplied
 
   componentWillUnmount: ->
-    TastyEvents.off TastyEvents.keys.open_comment_form(@props.entryId), @openForm
+    TastyEvents.off TastyEvents.keys.comment_form_toggled(), @toggleForm
     TastyEvents.off TastyEvents.keys.comment_replied(@props.entryId), @onCommentReplied
 
   render: ->
     textState = @linkState 'text'
 
     switch @state.currentState
-      when FORM_STATE   then form = `<EntryCommentBox_CommentForm user={ this.props.user }
+      when FORM_STATE   then form = `<EntryCommentBox_CommentForm ref="commentForm"
+                                                                  user={ this.props.user }
                                                                   disabled={ this.props.disabled }
                                                                   valueLink={ textState }
                                                                   onSubmit={ this.onSubmit } />`
@@ -55,7 +56,23 @@ window.EntryCommentBox_CommentFormManager = React.createClass
 
     form
 
-  openForm: -> @setState currentState: FORM_STATE
+  openForm: ->
+    @setState currentState: FORM_STATE
+    @refs.commentForm?.refs.commentFormField.getDOMNode().focus()
+
+  closeForm: ->
+    if @props.totalCommentsCount == 0
+      @setState currentState: HIDDEN_STATE
+    else
+      @setState currentState: LINK_STATE
+
+  toggleForm: (entryId) ->
+    # Если переключена текущая форма, то просто делаем переключение
+    # Если переключена форма другого поста, то скрывам текущую форму
+    if entryId == @props.entryId
+      if @isOpen() then @closeForm() else @openForm()
+    else
+      @closeForm()
 
   onSubmit: ->
     @props.onSubmit @state.text
@@ -67,7 +84,7 @@ window.EntryCommentBox_CommentFormManager = React.createClass
     newText = @state.text
     replies = @_getReplies()
 
-    @openForm() unless @isOpen()
+    @openForm()
 
     newText = @_removeLastReply() if replies.length > REPLIES_LIMIT
     newText = name + postfix + newText unless RegExp(name).exec newText
