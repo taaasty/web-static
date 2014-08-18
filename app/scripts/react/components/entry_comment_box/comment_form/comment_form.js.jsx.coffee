@@ -11,7 +11,9 @@ window.EntryCommentBox_CommentForm = React.createClass
   getDefaultProps: ->
     disabled: false
 
-  componentDidMount: -> @_initAutosize()
+  componentDidMount: ->
+    @_initAutosize()
+    @refs.commentFormField.getDOMNode().focus()
 
   componentDidUpdate: -> @$commentFormField.trigger 'autosize.resize'
 
@@ -33,12 +35,22 @@ window.EntryCommentBox_CommentForm = React.createClass
                         valueLink={ this.props.valueLink }
                         disabled={ this.props.disabled }
                         className="comment-form__field-textarea"
+                        onFocus={ this.onFocus }
                         onKeyDown={ this.onKeyDown } />
             </span>
           </form>
         </div>
       </div>
     </div>`
+
+  onFocus: (e) ->
+    # После фокуса, переводим курсор в конец строки
+    valueLength = e.target.value.length
+
+    if e.target.setSelectionRange != undefined
+      e.target.setSelectionRange valueLength, valueLength
+    else
+      @$commentFormField.val @$commentFormField.val()
 
   onKeyDown: (e) ->
     # Нажат Enter, введёный текст содержит какие-то символы, без Shift, Ctrl и Alt
