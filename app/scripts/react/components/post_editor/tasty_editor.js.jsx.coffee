@@ -10,7 +10,7 @@ EDITOR_OPTIONS =
     cleanPastedHTML:        true
 
   rich:
-    buttons:                ['header1', 'anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist', 'pre']
+    buttons:                ['anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist'] #'pre
     disableToolbar:         false
     disableReturn:          false
     disableDoubleReturn:    false
