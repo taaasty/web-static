@@ -1,9 +1,10 @@
 ###* @jsx React.DOM ###
 
-STATE_NONE      = 'none'
 STATE_FRIEND    = 'friend'
 STATE_REQUESTED = 'requested'
 STATE_IGNORED   = 'ignored'
+STATE_GUESSED   = 'guessed'
+STATE_NONE      = 'none'
 
 window.FollowButton = React.createClass
   mixins: ['RelationshipMixin']
@@ -35,7 +36,9 @@ window.FollowButton = React.createClass
       when STATE_FRIEND    then @unfollow()
       when STATE_REQUESTED then @cancel()
       when STATE_IGNORED   then @cancel()
-      else @follow()
+      when STATE_GUESSED   then @follow()
+      when STATE_NONE      then @follow()
+      else console.warn 'Неизвестный статус', @state.relationship.state
 
   onMouseOver:  -> @setState isHover: true
   onMouseLeave: -> @setState isHover: false
@@ -49,12 +52,22 @@ window.FollowButton = React.createClass
         when STATE_FRIEND    then 'Отписаться'
         when STATE_REQUESTED then 'Отменить запрос'
         when STATE_IGNORED   then 'Разблокировать'
+        when STATE_GUESSED
+          if @state.relationship.user.is_privacy then 'Отправить запрос' else 'Подписаться'
         when STATE_NONE
           if @state.relationship.user.is_privacy then 'Отправить запрос' else 'Подписаться'
+        else
+          console.log 'Неизвестный статус', @state.relationship.state
+          'Неизвестный статус'
     else
       switch @state.relationship.state
         when STATE_FRIEND    then 'Подписан'
         when STATE_REQUESTED then 'Ждём одобрения'
         when STATE_IGNORED   then 'Заблокирован'
+        when STATE_GUESSED
+          if @state.relationship.user.is_privacy then 'Отправить запрос' else 'Подписаться'
         when STATE_NONE
           if @state.relationship.user.is_privacy then 'Отправить запрос' else 'Подписаться'
+        else
+          console.log 'Неизвестный статус', @state.relationship.state
+          'Неизвестный статус'
