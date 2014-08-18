@@ -9,8 +9,7 @@ window.FollowButton = React.createClass
   mixins: ['RelationshipMixin']
 
   propTypes:
-    tlogId:       React.PropTypes.number
-    relationship: React.PropTypes.object
+    relationship: React.PropTypes.object.isRequired
 
   getInitialState: ->
     relationship: @props.relationship
@@ -18,26 +17,18 @@ window.FollowButton = React.createClass
     isError:      false
     isProcess:    false
 
-  componentDidMount: ->
-    @_loadRelationship() if @props.tlogId && !@props.relationship
-
   render: ->
-    if @state.relationship?
-      title = @_getTitle()
-
-      if @isFollow() && !@state.isError && !@state.isProcess
-        rootClass = 'state--active'
-    else
-      title = 'в процессе..'
+    if @isFollow() && !@state.isError && !@state.isProcess
+      rootClass = 'state--active'
 
     return `<button className={ 'follow-button ' + rootClass }
                     onClick={ this.onClick }
                     onMouseOver={ this.onMouseOver }
                     onMouseLeave={ this.onMouseLeave }>
-              { title }
+              { this._getTitle() }
             </button>`
 
-  isFollow:  -> @state.relationship.state == STATE_FRIEND
+  isFollow: -> @state.relationship.state == STATE_FRIEND
 
   onClick: ->
     switch @state.relationship.state
