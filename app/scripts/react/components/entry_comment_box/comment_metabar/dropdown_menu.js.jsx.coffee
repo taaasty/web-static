@@ -7,6 +7,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass
 
   propTypes:
     commentId: React.PropTypes.number.isRequired
+    entryUrl:  React.PropTypes.string.isRequired
     canReport: React.PropTypes.bool
     canDelete: React.PropTypes.bool
     onDelete:  React.PropTypes.func.isRequired
@@ -22,6 +23,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass
     }
 
     actionList.push `<EntryCommentBox_CommentMetaBarDropdownMenuLinkItem commentId={ this.props.commentId }
+                                                                         entryUrl={ this.props.entryUrl }
                                                                          key="link" />`
     if @props.canReport
       actionList.push `<EntryCommentBox_CommentMetaBarDropdownMenuReportItem commentId={ this.props.commentId }

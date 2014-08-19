@@ -44,12 +44,12 @@ window.EntryCommentBox_Comment = React.createClass
             </article>`
 
   _scrollToComment: ->
+    $comment = $( @getDOMNode() )
+
     # Предотвращаем запоминание положения scrollTop в Chrome и Safari
     $(window).one 'load', => TastyUtils.scrollToElement @getDOMNode()
 
-    # $comment = $( @getDOMNode() )
-
     # Принудительно скроллим к зашаренному комменту, если загрузка страницы
     # закончилась раньше чем мы зарегистрировали callback
-    # if $(window).scrollTop() != $comment.offset().top
-    #   TastyUtils.scrollToElement @getDOMNode()
+    if $(window).scrollTop() != $comment.offset().top
+      TastyUtils.scrollToElement @getDOMNode()
