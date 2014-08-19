@@ -9,6 +9,7 @@ window.EntryCommentBox_CommentMetaBar = React.createClass
     canReport:        React.PropTypes.bool
     canDelete:        React.PropTypes.bool
     entryId:          React.PropTypes.number.isRequired
+    entryUrl:         React.PropTypes.string.isRequired
     onDelete:         React.PropTypes.func
 
   render: ->
@@ -16,7 +17,8 @@ window.EntryCommentBox_CommentMetaBar = React.createClass
       <EntryCommentBox_CommentMetaBarReply name={ this.props.name }
                                            entryId={ this.props.entryId } />
       <span className="comment__dot">·</span>
-      <EntryCommentBox_CommentMetaBarDate commentId={ this.props.commentId }
+      <EntryCommentBox_CommentMetaBarDate entryUrl={ this.props.entryUrl }
+                                          commentId={ this.props.commentId }
                                           time={ this.props.commentCreatedAt } />
       <span className="comment__dot">·</span>
       <EntryCommentBox_CommentMetaBarDropdownMenu commentId={ this.props.commentId }

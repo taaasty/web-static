@@ -7,6 +7,7 @@ window.EntryCommentBox = React.createClass
 
   propTypes:
     entryId:            React.PropTypes.number.isRequired
+    entryUrl:           React.PropTypes.string.isRequired
     user:               React.PropTypes.object
     limit:              React.PropTypes.number
     isEntryPage:        React.PropTypes.bool.isRequired
@@ -27,6 +28,8 @@ window.EntryCommentBox = React.createClass
     if @state.comments.length > 0
       commentList = `<EntryCommentBox_CommentList comments={ this.state.comments }
                                                   entryId={ this.props.entryId }
+                                                  entryUrl={ this.props.entryUrl }
+                                                  sharedCommentId={ this.state.sharedCommentId }
                                                   user={ this.props.user }
                                                   onDelete={ this.removeComment } />`
 

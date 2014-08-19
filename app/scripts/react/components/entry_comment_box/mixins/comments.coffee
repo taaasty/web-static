@@ -3,6 +3,7 @@ CommentsMixin =
   getInitialState: ->
     comments:          []
     totalCount:        null
+    sharedCommentId:   null
     isPostError:       false
     isLoadError:       false
     isLoadMoreError:   false
@@ -10,7 +11,11 @@ CommentsMixin =
     isLoadLoading:     false
     isLoadMoreLoading: false
 
-  componentDidMount: -> @loadCommentList()
+  componentDidMount: ->
+    if fromId = @_getCommentIdFromHash()
+      @loadCommentListFromCommentId fromId
+    else
+      @loadCommentList()
 
   loadCommentList: ->
     @setState isLoadError: false, isLoadLoading: true
@@ -26,6 +31,30 @@ CommentsMixin =
           @setState {
             comments:    data.comments
             totalCount:  data.total_count
+          }
+          $(document).trigger 'domChanged'
+      error: (data) =>
+        @safeUpdateState => @setState isLoadError: true
+        TastyNotifyController.errorResponse data
+      complete: =>
+        @safeUpdateState => @setState isLoadLoading: false
+
+  loadCommentListFromCommentId: (id) ->
+    @setState isLoadError: false, isLoadLoading: true
+
+    @createRequest
+      url: Routes.api.comments_url()
+      data: {
+        entry_id:        @props.entryId
+        from_comment_id: id - 1
+        limit:           999
+      }
+      success: (data) =>
+        @safeUpdateState =>
+          @setState {
+            comments:        data.comments
+            totalCount:      data.total_count
+            sharedCommentId: id
           }
           $(document).trigger 'domChanged'
       error: (data) =>
@@ -85,6 +114,13 @@ CommentsMixin =
     @setState comments: newComments, totalCount: @state.totalCount - 1
 
   _getFirstLoadLimit: ->
-    if @props.totalCommentsCount > 5 then 3 else @props.totalCommentsCount
+    unless @props.isEntryPage
+      if @props.totalCommentsCount > 5 then 3 else @props.totalCommentsCount
+    else
+      50
+
+  _getCommentIdFromHash: ->
+    hash = window.location.hash
+    parseInt hash.match(/^#comment-(\d+)/)[1]
 
 React.mixins.add 'CommentsMixin', [CommentsMixin, RequesterMixin]
