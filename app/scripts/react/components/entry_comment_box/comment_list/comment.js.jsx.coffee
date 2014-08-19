@@ -1,7 +1,5 @@
 ###* @jsx React.DOM ###
 
-HIGHLIGHTING_HIDE_TIMEOUT = 5000
-
 window.EntryCommentBox_Comment = React.createClass
 
   propTypes:
@@ -11,19 +9,12 @@ window.EntryCommentBox_Comment = React.createClass
     isShared: React.PropTypes.bool
     onDelete: React.PropTypes.func
 
-  getInitialState: ->
-    isHighlited: false
-
-  componentDidMount: ->
-    if @props.isShared
-      @_scrollToComment()
-      @_highlightComment()
+  componentDidMount: -> @_scrollToComment() if @props.isShared
 
   render: ->
     commentClasses = React.addons.classSet {
       comment: true
-      'state--shared': @props.isShared
-      'state--highlited': @state.isHighlited
+      'state--highlighted': @props.isShared
     }
 
     return `<article className={ commentClasses }>
@@ -52,23 +43,13 @@ window.EntryCommentBox_Comment = React.createClass
               </div>
             </article>`
 
-  _highlightComment: ->
-    @setState isHighlited: true
-
-    setTimeout (=>
-      @setState isHighlited: false
-    ), HIGHLIGHTING_HIDE_TIMEOUT
-
   _scrollToComment: ->
-    $comment = $( @getDOMNode() )
-
     # Предотвращаем запоминание положения scrollTop в Chrome и Safari
-    $(window).on 'load', ->
-      setTimeout (->
-        scrollTo(0, $comment.offset().top)
-      ), 0
+    $(window).one 'load', => TastyUtils.scrollToElement @getDOMNode()
+
+    # $comment = $( @getDOMNode() )
 
     # Принудительно скроллим к зашаренному комменту, если загрузка страницы
     # закончилась раньше чем мы зарегистрировали callback
-    if $(window).scrollTop() != $comment.offset().top
-      scrollTo(0, $comment.offset().top)
+    # if $(window).scrollTop() != $comment.offset().top
+    #   TastyUtils.scrollToElement @getDOMNode()

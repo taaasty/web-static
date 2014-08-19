@@ -1,4 +1,5 @@
 window.TastyUtils =
+
   centerHorizontally: (element) ->
     $(element).each ->
       e = $(this)
@@ -19,3 +20,8 @@ window.TastyUtils =
     e.stopPropagation()
     e.preventDefault()  if (@scrollTop is (@scrollHeight - @offsetHeight) and d < 0) or (@scrollTop is 0 and d > 0)
     return
+
+  scrollToElement: (el) ->
+    setTimeout (->
+      scrollTo(0, $(el).offset().top)
+    ), 0

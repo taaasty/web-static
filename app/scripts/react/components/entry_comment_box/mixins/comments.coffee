@@ -121,6 +121,6 @@ CommentsMixin =
 
   _getCommentIdFromHash: ->
     hash = window.location.hash
-    parseInt hash.match(/^#comment-(\d+)/)[1]
+    parseInt hash.match(/^#comment-(\d+)/)?[1]
 
 React.mixins.add 'CommentsMixin', [CommentsMixin, RequesterMixin]
