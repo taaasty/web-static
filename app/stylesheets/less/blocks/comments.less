@@ -1,9 +1,9 @@
 // Block Comments
 .comments {
-  width: 530px;
+  width: 550px;
   margin-top: -11px;
   margin-bottom: 40px;
-  padding-left: 90px;
+  padding-left: 70px;
   font-size: @comments-font-size;
   line-height: @comments-line-height;
   font-family: @font-family-base;
@@ -35,10 +35,14 @@
 
 // Block Comment
 .comment {
-  margin-bottom: 18px;
-  padding-right: 180px;
-  padding-left: 45px;
+  margin-bottom: 6px;
+  padding: 6px;
+  //padding-right: 180px;
+  //padding-left: 45px;
   position: relative;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  transition: border .3s ease;
 
   &:hover {
     .comment__meta {
@@ -51,19 +55,27 @@
       }
     }
   }
+
+  &.state--highlighted {
+    border: 1px solid @comment-highlighted-border-color;
+  }
 }
 
 .comment__table {
-  width: 100%;
-  height: 36px;
-  display: table;
+  //width: 100%;
+  min-height: @comments-line-height * 2;
+  padding-right: 210px;
+  padding-left: 45px;
+  position: relative;
+  //height: 36px;
+  //display: table;
 }
 
 .comment__table-cell {
-  width: 100%;
-  display: table-cell;
+  //width: 100%;
+  //display: table-cell;
   word-wrap: break-word;
-  vertical-align: top;
+  //vertical-align: top;
   padding-top: 10px;
 }
 
@@ -213,10 +225,8 @@
   right: 0;
   bottom: 0;
   left: 0;
-  border: 1px solid;
-  opacity: .15;
+  border: 1px solid @comment-textarea-border-color;
   border-radius: 5px;
-  transition: opacity .4s ease;
 }
 
 .comment-form__field-label {

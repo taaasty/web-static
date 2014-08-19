@@ -30,7 +30,7 @@
 // Meta Item
 .meta-item {
   white-space: nowrap;
-  font-size: 13px;
+  font-size: @meta-font-size;;
   font-family: @font-family-base;
 
   &,
@@ -88,6 +88,11 @@
     opacity: 1;
     .transition-transform(~".3s ease, visibility 0s ease 0s, opacity .3s ease");
   }
+}
+
+.meta-item__dropdown-item {
+  font-size: @meta-font-size;
+  line-height: @meta-line-height;
 }
 
 // Meta Avatar
