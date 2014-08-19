@@ -1,5 +1,5 @@
 $ ->
-  if Modernizr.touch
+  if Modernizr?.touch
     $(".js-dropdown").dropdown()
 
   $(".js-alert-close").click -> $(".js-alert").hide()
