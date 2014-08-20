@@ -1,19 +1,20 @@
 ###* @jsx React.DOM ###
 
+REPLIES_LIMIT = 5
+
 window.EntryCommentBox_CommentForm = React.createClass
 
   propTypes:
-    user:      React.PropTypes.object.isRequired
-    valueLink: React.PropTypes.object.isRequired
-    disabled:  React.PropTypes.bool
-    onSubmit:  React.PropTypes.func.isRequired
+    user:     React.PropTypes.object.isRequired
+    entryId:  React.PropTypes.number.isRequired
+    disabled: React.PropTypes.bool
+    onSubmit: React.PropTypes.func.isRequired
+    onCancel: React.PropTypes.func.isRequired
 
   getDefaultProps: ->
     disabled: false
 
-  componentDidMount: ->
-    @_initAutosize()
-    @refs.commentFormField.getDOMNode().focus()
+  componentDidMount: -> @_initAutosize()
 
   componentDidUpdate: -> @$commentFormField.trigger 'autosize.resize'
 
@@ -32,7 +33,6 @@ window.EntryCommentBox_CommentForm = React.createClass
               <i className="comment-form__field-bg" />
               <textarea ref="commentFormField"
                         placeholder="Комментарий. SHIFT + ENTER новая строка"
-                        valueLink={ this.props.valueLink }
                         disabled={ this.props.disabled }
                         className="comment-form__field-textarea"
                         onFocus={ this.onFocus }
@@ -43,21 +43,47 @@ window.EntryCommentBox_CommentForm = React.createClass
       </div>
     </div>`
 
-  onFocus: (e) ->
-    # После фокуса, переводим курсор в конец строки
-    valueLength = e.target.value.length
+  addReply: (name) ->
+    name    = '@' + name
+    postfix = if /^@/.exec @$commentFormField.val() then ', ' else ' '
+    newText = @$commentFormField.val()
+    replies = @_getReplies()
 
-    if e.target.setSelectionRange != undefined
-      e.target.setSelectionRange valueLength, valueLength
+    newText = @_removeLastReply() if replies.length > REPLIES_LIMIT
+    newText = name + postfix + newText unless RegExp(name).exec newText
+
+    @$commentFormField.val(newText).focus()
+
+  _getReplies: ->
+    replies = []
+    text    = @$commentFormField.val()
+    regExp  = /@[^, ]{1,}/g
+
+    replies = ( found[0] while found = regExp.exec(text) )
+
+  _removeLastReply: ->
+    text   = @$commentFormField.val()
+    regExp = /, @\w+(?=\s)/g
+
+    text.replace regExp, ''
+
+  onFocus: ->
+    # После фокуса, переводим курсор в конец строки
+    valueLength = @$commentFormField.val().length
+
+    if @$commentFormField.get(0).setSelectionRange != undefined
+      @$commentFormField.get(0).setSelectionRange valueLength, valueLength
     else
       @$commentFormField.val @$commentFormField.val()
 
   onKeyDown: (e) ->
     # Нажат Enter, введёный текст содержит какие-то символы, без Shift, Ctrl и Alt
-    if e.which == 13 && e.target.value.match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey
+    if e.which == 13 && @$commentFormField.val().match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey
       e.preventDefault()
+      @props.onSubmit @$commentFormField.val()
 
-      @props.onSubmit()
+    # Нажат Esc
+    @props.onCancel() if e.which == 27
 
   _initAutosize: ->
     @$commentFormField = $( @refs.commentFormField.getDOMNode() )

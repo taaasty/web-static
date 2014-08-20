@@ -154,7 +154,7 @@ require './react/components/entry_comment_box/comment_metabar/dropdown_menu_item
 require './react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item'
 require './react/components/entry_comment_box/comment_metabar/reply'
 require './react/components/entry_comment_box/comment_form/comment_form'
-require './react/components/entry_comment_box/comment_form/comment_form_manager'
+require './react/components/entry_comment_box/comment_form/comment_create_form_manager'
 require './react/components/entry_comment_box/load_more'
 
 require './react/components/post_editor/actions'
@@ -200,6 +200,9 @@ require './react/controllers/tasty_confirm'
 require './react/controllers/tasty_notify'
 require './react/controllers/shellbox'
 require './react/controllers/popup'
+
+require './react/mediators/comments'
+
 require './react/utils'
 require './react/application'
 
