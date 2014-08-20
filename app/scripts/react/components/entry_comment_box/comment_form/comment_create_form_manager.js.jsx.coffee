@@ -19,7 +19,8 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
     disabled: false
 
   getInitialState: ->
-    currentState: HIDDEN_STATE
+    currentState:  HIDDEN_STATE
+    isPostLoading: false
 
   componentDidMount: ->
     window.commentsMediator.registerForm @
@@ -36,10 +37,9 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
   render: ->
     switch @state.currentState
       when FORM_STATE   then form = `<EntryCommentBox_CommentForm ref="commentForm"
-                                                                  entryId={ this.props.entryId }
                                                                   user={ this.props.user }
                                                                   disabled={ this.props.disabled }
-                                                                  isPostLoading={ this.state.isPostLoading }
+                                                                  isLoading={ this.state.isPostLoading }
                                                                   onSubmit={ this.onSubmit }
                                                                   onCancel={ this.onCancel } />`
       when HIDDEN_STATE then form = `<div></div>`
@@ -91,4 +91,4 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
       complete: =>
         @safeUpdateState => @setState isPostLoading: false
 
-  onCancel: -> window.commentsMediator.doFormClosed @    
+  onCancel: -> window.commentsMediator.doFormClosed()

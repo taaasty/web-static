@@ -6,11 +6,11 @@ window.EntryCommentBox_CommentForm = React.createClass
 
   propTypes:
     user:          React.PropTypes.object.isRequired
-    entryId:       React.PropTypes.number.isRequired
+    text:          React.PropTypes.string
     disabled:      React.PropTypes.bool
     onSubmit:      React.PropTypes.func.isRequired
     onCancel:      React.PropTypes.func.isRequired
-    isPostLoading: React.PropTypes.bool
+    isLoading:     React.PropTypes.bool
 
   getDefaultProps: ->
     disabled: false
@@ -22,7 +22,7 @@ window.EntryCommentBox_CommentForm = React.createClass
   componentWillUnmount: -> @$commentFormField.trigger 'autosize.destroy'
 
   render: ->
-    if @props.isPostLoading
+    if @props.isLoading
       avatar = `<span className="spinner spinner--31x31"><span className="spinner__icon"></span></span>`
     else
       avatar = `<UserAvatar user={ this.props.user } size={ 64 } />`
@@ -36,6 +36,7 @@ window.EntryCommentBox_CommentForm = React.createClass
                       <i className="comment-form__field-bg" />
                       <textarea ref="commentFormField"
                                 placeholder="Комментарий. SHIFT + ENTER новая строка"
+                                defaultValue={ this.props.text }
                                 disabled={ this.props.disabled }
                                 className="comment-form__field-textarea"
                                 onFocus={ this.onFocus }

@@ -3,11 +3,11 @@
 window.EntryCommentBox_Comment = React.createClass
 
   propTypes:
-    comment:  React.PropTypes.object.isRequired
-    entryId:  React.PropTypes.number.isRequired
-    entryUrl: React.PropTypes.string.isRequired
-    isShared: React.PropTypes.bool
-    onDelete: React.PropTypes.func
+    comment:     React.PropTypes.object.isRequired
+    entryId:     React.PropTypes.number.isRequired
+    entryUrl:    React.PropTypes.string.isRequired
+    isShared:    React.PropTypes.bool
+    onDelete:    React.PropTypes.func
 
   componentDidMount: -> @_scrollToComment() if @props.isShared
 
@@ -36,6 +36,7 @@ window.EntryCommentBox_Comment = React.createClass
                                                   commentCreatedAt={ this.props.comment.created_at }
                                                   canReport={ this.props.comment.can_report }
                                                   canDelete={ this.props.comment.can_delete }
+                                                  canEdit={ this.props.comment.can_edit }
                                                   entryId={ this.props.entryId }
                                                   entryUrl={ this.props.entryUrl }
                                                   onDelete={ this.props.onDelete } />
