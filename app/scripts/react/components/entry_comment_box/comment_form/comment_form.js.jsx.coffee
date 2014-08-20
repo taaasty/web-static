@@ -5,11 +5,12 @@ REPLIES_LIMIT = 5
 window.EntryCommentBox_CommentForm = React.createClass
 
   propTypes:
-    user:     React.PropTypes.object.isRequired
-    entryId:  React.PropTypes.number.isRequired
-    disabled: React.PropTypes.bool
-    onSubmit: React.PropTypes.func.isRequired
-    onCancel: React.PropTypes.func.isRequired
+    user:          React.PropTypes.object.isRequired
+    entryId:       React.PropTypes.number.isRequired
+    disabled:      React.PropTypes.bool
+    onSubmit:      React.PropTypes.func.isRequired
+    onCancel:      React.PropTypes.func.isRequired
+    isPostLoading: React.PropTypes.bool
 
   getDefaultProps: ->
     disabled: false
@@ -21,27 +22,29 @@ window.EntryCommentBox_CommentForm = React.createClass
   componentWillUnmount: -> @$commentFormField.trigger 'autosize.destroy'
 
   render: ->
-   `<div className="comment-form">
-      <div className="comment-form__table">
-        <div className="comment-form__table-cell">
-          <form>
-            <span className="comment-form__avatar">
-              <UserAvatar user={ this.props.user }
-                          size={ 64 } />
-            </span>
-            <span className="comment-form__field">
-              <i className="comment-form__field-bg" />
-              <textarea ref="commentFormField"
-                        placeholder="Комментарий. SHIFT + ENTER новая строка"
-                        disabled={ this.props.disabled }
-                        className="comment-form__field-textarea"
-                        onFocus={ this.onFocus }
-                        onKeyDown={ this.onKeyDown } />
-            </span>
-          </form>
-        </div>
-      </div>
-    </div>`
+    if @props.isPostLoading
+      avatar = `<span className="spinner spinner--31x31"><span className="spinner__icon"></span></span>`
+    else
+      avatar = `<UserAvatar user={ this.props.user } size={ 64 } />`
+
+    return `<div className="comment-form">
+              <div className="comment-form__table">
+                <div className="comment-form__table-cell">
+                  <form>
+                    <span className="comment-form__avatar">{ avatar }</span>
+                    <span className="comment-form__field">
+                      <i className="comment-form__field-bg" />
+                      <textarea ref="commentFormField"
+                                placeholder="Комментарий. SHIFT + ENTER новая строка"
+                                disabled={ this.props.disabled }
+                                className="comment-form__field-textarea"
+                                onFocus={ this.onFocus }
+                                onKeyDown={ this.onKeyDown } />
+                    </span>
+                  </form>
+                </div>
+              </div>
+            </div>`
 
   addReply: (name) ->
     name    = '@' + name
@@ -81,6 +84,7 @@ window.EntryCommentBox_CommentForm = React.createClass
     if e.which == 13 && @$commentFormField.val().match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey
       e.preventDefault()
       @props.onSubmit @$commentFormField.val()
+      @$commentFormField.val ''
 
     # Нажат Esc
     @props.onCancel() if e.which == 27

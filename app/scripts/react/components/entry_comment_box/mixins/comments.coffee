@@ -87,28 +87,6 @@ CommentsMixin =
       complete: =>
         @safeUpdateState => @setState isLoadMoreLoading: false
 
-  postComment: (text) ->
-    @setState isPostError: false, isPostLoading: true
-
-    @createRequest
-      url: Routes.api.comments_url()
-      method: 'POST'
-      data:
-        entry_id: @props.entryId
-        text:     text
-      success: (comment) =>
-        @safeUpdateState =>
-          @setState {
-            comments:   @state.comments.concat comment
-            totalCount: @state.totalCount + 1
-          }
-          $(document).trigger 'domChanged'
-      error: (data) =>
-        @safeUpdateState => @setState isPostError: true
-        TastyNotifyController.errorResponse data
-      complete: =>
-        @safeUpdateState => @setState isPostLoading: false
-
   removeComment: (comment) ->
     newComments = _.without @state.comments, comment
     @setState comments: newComments, totalCount: @state.totalCount - 1

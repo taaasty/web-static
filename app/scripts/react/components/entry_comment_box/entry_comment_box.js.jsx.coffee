@@ -23,7 +23,7 @@ window.EntryCommentBox = React.createClass
                                                                totalCommentsCount={ this.props.totalCommentsCount }
                                                                disabled={ this.state.isPostLoading }
                                                                entryId={ this.props.entryId }
-                                                               onSubmit={ this.postComment } />`
+                                                               onCommentAdded={ this.onCommentAdded } />`
 
     if @state.comments.length > 0
       commentList = `<EntryCommentBox_CommentList comments={ this.state.comments }
@@ -49,3 +49,11 @@ window.EntryCommentBox = React.createClass
               { commentList }
               { commentForm }
             </section>`
+
+  onCommentAdded: (comment) ->
+    @safeUpdateState =>
+      @setState {
+        comments:   @state.comments.concat comment
+        totalCount: @state.totalCount + 1
+      }
+      $(document).trigger 'domChanged'

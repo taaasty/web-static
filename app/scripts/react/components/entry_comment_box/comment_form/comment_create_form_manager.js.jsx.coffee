@@ -5,6 +5,7 @@ FORM_STATE   = 'form'
 LINK_STATE   = 'link'
 
 window.EntryCommentBox_CommentCreateFormManager = React.createClass
+  mixins: [RequesterMixin]
 
   propTypes:
     entryId:            React.PropTypes.number.isRequired
@@ -12,7 +13,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
     isEntryPage:        React.PropTypes.bool
     disabled:           React.PropTypes.bool
     totalCommentsCount: React.PropTypes.number.isRequired
-    onSubmit:           React.PropTypes.func.isRequired
+    onCommentAdded:     React.PropTypes.func.isRequired
 
   getDefaultProps: ->
     disabled: false
@@ -38,6 +39,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
                                                                   entryId={ this.props.entryId }
                                                                   user={ this.props.user }
                                                                   disabled={ this.props.disabled }
+                                                                  isPostLoading={ this.state.isPostLoading }
                                                                   onSubmit={ this.onSubmit }
                                                                   onCancel={ this.onCancel } />`
       when HIDDEN_STATE then form = `<div></div>`
@@ -71,7 +73,22 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
     window.commentsMediator.doCommentClicked @props.entryId
 
   onSubmit: (text) ->
-    @props.onSubmit text
-    window.commentsMediator.doFormClosed @
+    @setState isPostError: false, isPostLoading: true
+
+    @createRequest
+      url: Routes.api.comments_url()
+      method: 'POST'
+      data:
+        entry_id: @props.entryId
+        text:     text
+      success: (comment) =>
+        @props.onCommentAdded comment
+        unless @isCurrentlyOpen()
+          window.commentsMediator.doFormClosed @
+      error: (data) =>
+        @safeUpdateState => @setState isPostError: true
+        TastyNotifyController.errorResponse data
+      complete: =>
+        @safeUpdateState => @setState isPostLoading: false
 
   onCancel: -> window.commentsMediator.doFormClosed @    
