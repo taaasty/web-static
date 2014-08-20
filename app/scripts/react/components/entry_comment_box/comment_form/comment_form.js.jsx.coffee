@@ -1,17 +1,22 @@
 ###* @jsx React.DOM ###
 
+REPLIES_LIMIT = 5
+
 window.EntryCommentBox_CommentForm = React.createClass
 
   propTypes:
     user:      React.PropTypes.object.isRequired
-    valueLink: React.PropTypes.object.isRequired
+    entryId:   React.PropTypes.number.isRequired
+    text:      React.PropTypes.string
     disabled:  React.PropTypes.bool
     onSubmit:  React.PropTypes.func.isRequired
 
   getDefaultProps: ->
     disabled: false
+    text:     ''
 
   componentDidMount: ->
+    TastyEvents.on "mediator_comments:#{ @props.entryId }:reply", @addReply
     @_initAutosize()
     @refs.commentFormField.getDOMNode().focus()
 
@@ -32,7 +37,7 @@ window.EntryCommentBox_CommentForm = React.createClass
               <i className="comment-form__field-bg" />
               <textarea ref="commentFormField"
                         placeholder="Комментарий. SHIFT + ENTER новая строка"
-                        valueLink={ this.props.valueLink }
+                        defaultValue={ this.props.text }
                         disabled={ this.props.disabled }
                         className="comment-form__field-textarea"
                         onFocus={ this.onFocus }
@@ -42,6 +47,30 @@ window.EntryCommentBox_CommentForm = React.createClass
         </div>
       </div>
     </div>`
+
+  addReply: (name) ->
+    name    = '@' + name
+    postfix = if /^@/.exec @$commentFormField.val() then ', ' else ' '
+    newText = @$commentFormField.val()
+    replies = @_getReplies()
+
+    newText = @_removeLastReply() if replies.length > REPLIES_LIMIT
+    newText = name + postfix + newText unless RegExp(name).exec newText
+
+    @$commentFormField.val newText
+
+  _getReplies: ->
+    replies = []
+    text    = @$commentFormField.val()
+    regExp  = /@[^, ]{1,}/g
+
+    replies = ( found[0] while found = regExp.exec(text) )
+
+  _removeLastReply: ->
+    text   = @$commentFormField.val()
+    regExp = /, @\w+(?=\s)/g
+
+    text.replace regExp, ''
 
   onFocus: (e) ->
     # После фокуса, переводим курсор в конец строки

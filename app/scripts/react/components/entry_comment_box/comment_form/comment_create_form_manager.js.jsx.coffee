@@ -1,12 +1,10 @@
 ###* @jsx React.DOM ###
 
-REPLIES_LIMIT = 5
 HIDDEN_STATE  = 'hidden'
 FORM_STATE    = 'form'
 LINK_STATE    = 'link'
 
-window.EntryCommentBox_CommentFormManager = React.createClass
-  mixins: [RequesterMixin, React.addons.LinkedStateMixin]
+window.EntryCommentBox_CommentCreateFormManager = React.createClass
 
   propTypes:
     entryId:            React.PropTypes.number.isRequired
@@ -20,32 +18,28 @@ window.EntryCommentBox_CommentFormManager = React.createClass
     disabled: false
 
   getInitialState: ->
-    text:         ''
     currentState: HIDDEN_STATE
 
   componentDidMount: ->
+    window.commentsMediator.registerCreateForm @props.entryId
+
     if @props.isEntryPage
       @setState currentState: FORM_STATE
+      window.commentsMediator.openCreateForm @props.entryId
     else if @props.totalCommentsCount == 0
       @setState currentState: HIDDEN_STATE
     else
       @setState currentState: LINK_STATE
 
-    TastyEvents.on TastyEvents.keys.comment_form_toggled(), @toggleForm
-    TastyEvents.on TastyEvents.keys.comment_replied(@props.entryId), @onCommentReplied
-
-  componentWillUnmount: ->
-    TastyEvents.off TastyEvents.keys.comment_form_toggled(), @toggleForm
-    TastyEvents.off TastyEvents.keys.comment_replied(@props.entryId), @onCommentReplied
+    TastyEvents.on "mediator_comments:#{ @props.entryId }:close", @closeForm
+    TastyEvents.on "mediator_comments:#{ @props.entryId }:open", @openForm
 
   render: ->
-    textState = @linkState 'text'
-
     switch @state.currentState
       when FORM_STATE   then form = `<EntryCommentBox_CommentForm ref="commentForm"
+                                                                  entryId={ this.props.entryId }
                                                                   user={ this.props.user }
                                                                   disabled={ this.props.disabled }
-                                                                  valueLink={ textState }
                                                                   onSubmit={ this.onSubmit } />`
       when HIDDEN_STATE then form = `<div></div>`
       when LINK_STATE   then form = `<div className="comments_more">
@@ -57,6 +51,7 @@ window.EntryCommentBox_CommentFormManager = React.createClass
     form
 
   openForm: ->
+    console.log 'open'
     @setState currentState: FORM_STATE
     @refs.commentForm?.refs.commentFormField.getDOMNode().focus()
 
@@ -66,42 +61,6 @@ window.EntryCommentBox_CommentFormManager = React.createClass
     else
       @setState currentState: LINK_STATE
 
-  toggleForm: (entryId) ->
-    # Если переключена текущая форма, то просто делаем переключение
-    # Если переключена форма другого поста, то скрывам текущую форму
-    if entryId == @props.entryId
-      if @isOpen() then @closeForm() else @openForm()
-    else
-      @closeForm()
-
   onSubmit: ->
-    @props.onSubmit @state.text
-    @setState text: ''
-
-  onCommentReplied: (name) ->
-    name    = '@' + name
-    postfix = if /^@/.exec @state.text then ', ' else ' '
-    newText = @state.text
-    replies = @_getReplies()
-
-    @openForm()
-
-    newText = @_removeLastReply() if replies.length > REPLIES_LIMIT
-    newText = name + postfix + newText unless RegExp(name).exec newText
-
-    @setState text: newText
-
-  isOpen: -> @state.currentState == FORM_STATE
-
-  _getReplies: ->
-    replies = []
-    text    = @state.text
-    regExp  = /@[^, ]{1,}/g
-
-    replies = ( found[0] while found = regExp.exec(text) )
-
-  _removeLastReply: ->
-    text   = @state.text
-    regExp = /, @\w+(?=\s)/g
-
-    text.replace regExp, ''
+    # @props.onSubmit @state.text
+    console.log 'создаём коммент'
