@@ -1,0 +1,54 @@
+.video {
+  height: @video-height;
+  position: relative;
+
+  .page & {
+    // Центруем groovsharks
+    // http://taaasty.ru/@genue/19210594-stream-drunk-on-love-by-rihanna-on-talk-that-talk-for-free-on-grooveshark
+    text-align: center;
+  }
+}
+
+.video__embed {
+  position: absolute;
+  display: none;
+  z-index: 2;
+  top: 0;
+
+  iframe {
+    display:block;
+  }
+}
+
+.video__cover {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 100% auto;
+}
+
+.video__overlay {
+  width: 100%;
+  height: 100%;
+  background: url("@{images-path}video-pattern.png");
+  cursor: pointer;
+  background-size: 2px 2px;
+
+  &:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: block;
+    background-image: url("@{images-path}video-play.png");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 150px auto;
+  }
+}
+
+.video-without-cover {
+  // В ленте постов embed-ы выходят за рамки, а
+  // контейнер не сдвигают
+  overflow: hidden;
+}
