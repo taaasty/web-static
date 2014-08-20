@@ -28,7 +28,7 @@ window.EntryMetabarComment = React.createClass
             </span>`
 
   onClick: ->
-    TastyEvents.trigger TastyEvents.keys.comment_form_toggled(), [@props.entryId]
+    window.commentsMediator.doCommentClicked @props.entryId
 
   _getNumberOfComments: ->
     if @props.totalCommentsCount > 0

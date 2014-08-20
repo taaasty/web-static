@@ -18,12 +18,12 @@ window.EntryCommentBox = React.createClass
 
   render: ->
     if @props.user
-      commentForm = `<EntryCommentBox_CommentFormManager user={ this.props.user }
-                                                         isEntryPage={ this.props.isEntryPage }
-                                                         totalCommentsCount={ this.props.totalCommentsCount }
-                                                         disabled={ this.state.isPostLoading }
-                                                         entryId={ this.props.entryId }
-                                                         onSubmit={ this.postComment } />`
+      commentForm = `<EntryCommentBox_CommentCreateFormManager user={ this.props.user }
+                                                               isEntryPage={ this.props.isEntryPage }
+                                                               totalCommentsCount={ this.props.totalCommentsCount }
+                                                               disabled={ this.state.isPostLoading }
+                                                               entryId={ this.props.entryId }
+                                                               onCommentAdded={ this.onCommentAdded } />`
 
     if @state.comments.length > 0
       commentList = `<EntryCommentBox_CommentList comments={ this.state.comments }
@@ -49,3 +49,11 @@ window.EntryCommentBox = React.createClass
               { commentList }
               { commentForm }
             </section>`
+
+  onCommentAdded: (comment) ->
+    @safeUpdateState =>
+      @setState {
+        comments:   @state.comments.concat comment
+        totalCount: @state.totalCount + 1
+      }
+      $(document).trigger 'domChanged'
