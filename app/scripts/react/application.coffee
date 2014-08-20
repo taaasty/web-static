@@ -9,6 +9,7 @@
 #= require_tree ./components/relationship_buttons/mixins
 #= require_tree ./components
 #= require_tree ./controllers
+#= require_tree ./mediators
 
 window.ReactApp =
 
