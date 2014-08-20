@@ -179,12 +179,15 @@
 @content-area-border-radius: 6px;
 
 // Meta
-@meta-font-size: 13px;
+@meta-font-size: 12px;
 @meta-line-height: 18px;
 
 // Comments
-@comments-font-size: 13px;
+@comments-font-size: 14px;
 @comments-line-height: 18px;
+
+@comment-meta-font-size: @meta-font-size;
+@comment-meta-line-height: @meta-line-height;
 
 @comment-textarea-placeholder-color: #858585;
 @comment-textarea-placeholder-opacity: .5;
@@ -309,14 +312,14 @@
 @voting-line-height: 15px;
 
 // Popover
-@popover-width: 230px;
+@popover-width: 244px; // 230px;
 @popover-border-radius: 4px;
 
 @popover-bg-base: #333;
 @popover-bg: rgba(red(@popover-bg-base), green(@popover-bg-base), blue(@popover-bg-base), .93);
 
 @popover-font-size: 12px;
-@popover-line-height: ceil((@popover-font-size * 1.36)); // ~15px
+@popover-line-height: ceil((@popover-font-size * 1.5)); // ~18px
 
 // Form Checkbox
 @form-checkbox-disabled-bg: #e1e1e1;
