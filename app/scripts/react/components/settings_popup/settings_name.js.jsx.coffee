@@ -10,7 +10,7 @@ window.SettingsName = React.createClass
     name: @props.name
 
   render: ->
-    `<div className="hero-simple__name">
+    `<div className="settings__hero__name">
       <EditableField defaultValue={ this.state.name }
                      placeholder="Введите ваш псевдоним"
                      onEditEnd={ this.onEditEnd } />

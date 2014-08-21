@@ -15,13 +15,13 @@ window.SettingsHeader = React.createClass
     style = 'background-image': "url(#{background_url})"
 
     `<div className="settings__header">
-      <div className="hero-simple hero-simple--settings" style={style}>
-        <div className="hero-simple__overlay"></div>
-        <div className="hero-simple__box">
-          <div className="hero-simple__avatar">
+      <div className="settings__hero" style={style}>
+        <div className="settings__hero__overlay"></div>
+        <div className="settings__hero__box">
+          <div className="settings__hero__avatar">
             <Avatar userpic={ this.props.user.get('userpic') }
                     name={ this.props.user.get('name') } />
-            <span className="hero-simple__avatar-overlay">
+            <span className="settings__hero__avatar-overlay">
               <span className="form-upload form-upload--icon">
                 <span className="form-upload__text"><i className="icon icon--pencil"></i></span>
                 <SettingsAvatar user={this.props.user}
