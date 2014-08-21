@@ -57,7 +57,19 @@
   }
 
   &.state--highlighted {
-    border: 1px solid @comment-highlighted-border-color;
+    background-color: @comment-highlighted-background-color;
+    background: @comment-highlighted-background-color;
+
+    .comment__meta {
+      & > * {
+        opacity: .4;
+      }
+
+      & > .comment__actions {
+        opacity: 1;
+      }
+    }
+
   }
 }
 
