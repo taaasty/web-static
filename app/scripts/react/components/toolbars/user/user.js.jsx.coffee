@@ -125,7 +125,7 @@ window.UserToolbar = UserToolbar = React.createClass
   showDesignSettings: ->
     url = window.location.origin + window.location.pathname
 
-    if url isnt @props.myTlogUrl
+    if url.indexOf(@props.myTlogUrl) == -1
       TastyConfirmController.show
         message:           'Для изменения дизайна вашего дневника, необходимо перейти в профиль'
         acceptButtonText:  'Перейти в профиль'
