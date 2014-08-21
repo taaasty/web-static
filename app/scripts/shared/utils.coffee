@@ -1,5 +1,9 @@
 window.TastyUtils =
 
+  showFlashes: (flashes=[]) ->
+    _.each flashes, (flash) ->
+      TastyNotifyController.notify flash[0], flash[1]
+
   centerHorizontally: (element) ->
     $(element).each ->
       e = $(this)

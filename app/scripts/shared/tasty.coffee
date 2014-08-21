@@ -37,6 +37,8 @@ window.Tasty =
     headers = {}
     headers['X-User-Token'] = options.access_token if options.access_token?
 
+    TastyUtils.showFlashes options.flashes
+
     $.ajaxSetup
       headers: headers
       cache:   true
