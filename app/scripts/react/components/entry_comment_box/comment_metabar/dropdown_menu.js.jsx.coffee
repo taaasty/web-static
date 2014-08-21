@@ -6,11 +6,14 @@ DROPDOWN_OPENED_BY_HOVER = 'openedByHover'
 window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass
 
   propTypes:
-    commentId: React.PropTypes.number.isRequired
-    entryUrl:  React.PropTypes.string.isRequired
-    canReport: React.PropTypes.bool
-    canDelete: React.PropTypes.bool
-    onDelete:  React.PropTypes.func.isRequired
+    commentId:   React.PropTypes.number.isRequired
+    entryId:     React.PropTypes.number.isRequired
+    entryUrl:    React.PropTypes.string.isRequired
+    canReport:   React.PropTypes.bool
+    canDelete:   React.PropTypes.bool
+    canEdit:     React.PropTypes.bool
+    onEditStart: React.PropTypes.func
+    onDelete:    React.PropTypes.func.isRequired
 
   getInitialState: ->
     currentState: DROPDOWN_CLOSED
@@ -28,6 +31,12 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass
     if @props.canReport
       actionList.push `<EntryCommentBox_CommentMetaBarDropdownMenuReportItem commentId={ this.props.commentId }
                                                                              key="report" />`
+    
+    if @props.canEdit
+      actionList.push `<EntryCommentBox_CommentMetaBarDropdownMenuEditItem entryId={ this.props.entryId }
+                                                                           commentId={ this.props.commentId }
+                                                                           key="report" />`
+
     if @props.canDelete
       actionList.push `<EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem commentId={ this.props.commentId }
                                                                              onDelete={ this.props.onDelete }

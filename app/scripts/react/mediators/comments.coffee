@@ -12,7 +12,7 @@ class window.CommentsMediator
 
   registerForm: (component) ->
     unless @_isFormRegistered component
-      @setState(component) if component.isCurrentlyOpen()
+      @setState(component) if component.isCurrentlyOpen?()
 
       @_forms.push component
 
@@ -24,8 +24,8 @@ class window.CommentsMediator
     form.openAndReply name
     @setState form
 
-  openForm: (entryId) ->
-    form = @_getForm entryId
+  openForm: (entryId, commentId) ->
+    form = @_getForm entryId, commentId
     form.openForm()
     @setState form
 
@@ -34,33 +34,46 @@ class window.CommentsMediator
     @setState CLOSED_STATE
 
   doCommentClicked: (entryId) ->
-    @closeCurrentForm() unless @_isFormOpened entryId  
+    @closeCurrentForm() unless @_isFormOpened entryId
     @openForm entryId
 
   doReplyClicked: (entryId, name) ->
     @closeCurrentForm() unless @_isFormOpened entryId
     @openAndReply entryId, name  
 
-  doEdit: ->
+  doEdit: (entryId, commentId) ->
+    @closeCurrentForm() unless @_isFormOpened entryId, commentId
+    @openForm entryId, commentId
 
-  doFormClosed: (component) ->
-    component.closeForm()
+  doFormClosed: ->
+    @closeCurrentForm()
     @setState CLOSED_STATE
 
-  _getForm: (entryId) ->
-    result = @_forms.filter (form) =>
-      form.props.entryId == entryId
+  _getForm: (entryId, commentId) ->
+    if commentId?
+      result = @_forms.filter (form) =>
+        form.props.commentId == commentId
+    else
+      result = @_forms.filter (form) =>
+        form.props.entryId == entryId
 
     result[0]
 
   _isFormRegistered: (component) ->
-    result = @_forms.filter (form) =>
-      form.props.entryId == component.props.entryId
+    if component.props.commentId?
+      result = @_forms.filter (form) =>
+        form.props.commentId == component.props.commentId
+    else
+      result = @_forms.filter (form) =>
+        form.props.entryId == component.props.entryId
 
     result.length > 0
 
-  _isFormOpened: (entryId) ->
-    if @_isClosed() then false else @_state.props.entryId == entryId
+  _isFormOpened: (entryId, commentId) ->
+    unless @_isClosed()
+      @_state.props.entryId == entryId && @_state.props.commentId == commentId
+    else
+      false
 
   _isClosed: -> @_state == CLOSED_STATE
 

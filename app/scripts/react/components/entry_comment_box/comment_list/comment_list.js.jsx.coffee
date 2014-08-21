@@ -19,12 +19,13 @@ window.EntryCommentBox_CommentList = React.createClass
     onDelete = => @props.onDelete.apply @, arguments
 
     commentList = @props.comments.map (comment) ->
-      `<EntryCommentBox_Comment comment={ comment }
-                                entryId={ that.props.entryId }
-                                entryUrl={ that.props.entryUrl }
-                                isShared={ that.props.sharedCommentId == comment.id }
-                                onDelete={ onDelete.bind(this, comment) }
-                                key={ comment.id } />`
+      `<EntryCommentBox_CommentManager comment={ comment }
+                                       commentId={ comment.id }
+                                       entryId={ that.props.entryId }
+                                       entryUrl={ that.props.entryUrl }
+                                       isShared={ that.props.sharedCommentId == comment.id }
+                                       onDelete={ onDelete.bind(this, comment) }
+                                       key={ comment.id } />`
 
     return `<div className="comments__list">{ commentList } </div>`
 
