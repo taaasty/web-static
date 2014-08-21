@@ -29,18 +29,22 @@ window.TastyConfirm = React.createClass
 
   render: ->
    `<div className="confirmation">
-      <div className="confirmation__fader"></div>
-      <div className="confirmation__close">
-        <div className="icon icon--cross"></div>
-      </div>
-      <div className="confirmation__box">
-        <div dangerouslySetInnerHTML={{ __html: this.props.message }} className="confirmation__text"></div>
-        <div className="confirmation__buttons">
-          <button onClick={ this.onAccept }
-                  className={ "button button--" + this.props.acceptButtonColor + " button--small" }>
-            { this.props.acceptButtonText }</button>
-          <button onClick={ this.close }
-                  className="button button--outline button--small">{ this.props.rejectButtonText }</button>
+      <div className="confirmation__main">
+        <div className="confirmation__cell">
+          <div onClick={ this.close }
+               className="confirmation__close">
+            <i className="icon icon--cross"></i>
+          </div>
+          <div className="confirmation__box">
+            <div dangerouslySetInnerHTML={{ __html: this.props.message }} className="confirmation__text"></div>
+            <div className="confirmation__buttons">
+              <button onClick={ this.onAccept }
+                      className={ "button button--" + this.props.acceptButtonColor + " button--small" }>
+                { this.props.acceptButtonText }</button>
+              <button onClick={ this.close }
+                      className="button button--outline button--small">{ this.props.rejectButtonText }</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>`
