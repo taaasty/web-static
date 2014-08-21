@@ -15,5 +15,5 @@ module.experts = window.TlogAlert = React.createClass
   render: ->
     `<div className="alert">
       <div className="alert__close" onClick={this.close}><i className="icon icon--cross"></i></div>
-      <div className="alert__text">{this.props.text}</div>
+      <div className="alert__text" dangerouslySetInnerHTML={{ __html: this.props.text }} />
     </div>`
