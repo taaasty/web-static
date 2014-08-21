@@ -1,0 +1,30 @@
+
+.video-without-cover {
+  // В ленте постов embed-ы выходят за рамки, а
+  // контейнер не сдвигают
+  overflow: hidden;
+}
+
+.collage {
+  overflow: hidden;
+}
+
+.collage__item-img {
+  // Отключил потому что это приводит к растягиванию картинок в коллаже
+  //max-width: 712px;
+}
+
+.post__content {
+  img {
+    // Чтобы картинки в постах не вылезали, как тут:
+    // http://taaasty.ru/@PolinochkaToy/page/5
+
+    width: 100%;
+  }
+}
+
+.video {
+  // Центруем groovsharks 
+  // http://taaasty.ru/@genue/19210594-stream-drunk-on-love-by-rihanna-on-talk-that-talk-for-free-on-grooveshark
+  text-align: center;
+}
