@@ -1,7 +1,6 @@
 ###* @jsx React.DOM ###
 
 window.EntryCommentBox_CommentManager = React.createClass
-  mixins: [RequesterMixin]
 
   propTypes:
     comment:   React.PropTypes.object.isRequired
@@ -26,8 +25,6 @@ window.EntryCommentBox_CommentManager = React.createClass
       comment = `<EntryCommentBox_CommentEditFormManager comment={ this.state.comment }
                                                          user={ this.state.comment.user }
                                                          onEditEnd={ this.onEditEnd }
-                                                         onSubmit={ this.onSubmit }
-                                                         isLoading={ this.state.isEditLoading }
                                                          onCancel={ this.onCancel } />`
     else
       commentClasses = React.addons.classSet {
@@ -47,21 +44,8 @@ window.EntryCommentBox_CommentManager = React.createClass
   openForm:  -> @setState isEdit: true
   closeForm: -> @setState isEdit: false
 
-  onCancel: -> window.commentsMediator.doFormClosed @
+  onEditEnd: (comment) ->
+    @setState comment: comment
+    window.commentsMediator.doFormClosed()
 
-  onSubmit: (text) ->
-    @setState isEditError: false, isEditLoading: true
-
-    @createRequest
-      url: Routes.api.comments_edit_delete_url @props.commentId
-      method: 'PUT'
-      data:
-        text: text
-      success: (comment) =>
-        @safeUpdateState => @setState comment: comment
-        window.commentsMediator.doFormClosed @
-      error: (data) =>
-        @safeUpdateState => @setState isEditError: true
-        TastyNotifyController.errorResponse data
-      complete: =>
-        @safeUpdateState => @setState isEditLoading: false
+  onCancel: -> window.commentsMediator.doFormClosed()
