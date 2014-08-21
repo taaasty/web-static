@@ -31,7 +31,7 @@ window.TastyConfirm = React.createClass
    `<div className="confirmation">
       <div className="confirmation__fader"></div>
       <div className="confirmation__close">
-        <div className="confirmation__close-icon">h</div>
+        <div className="icon icon--cross"></div>
       </div>
       <div className="confirmation__box">
         <div dangerouslySetInnerHTML={{ __html: this.props.message }} className="confirmation__text"></div>
