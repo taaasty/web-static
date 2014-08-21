@@ -1,15 +1,16 @@
 ###* @jsx React.DOM ###
 #= require ./settings_radio_item
 
-module.experts = window.ToolbarSettings = React.createClass
+window.ToolbarSettings = React.createClass
   mixins: ['ReactActivitiesUser', ReactShakeMixin, React.addons.LinkedStateMixin, RequesterMixin]
 
   propTypes:
-    title: React.PropTypes.string.isRequired
-    user:  React.PropTypes.instanceOf(Backbone.Model).isRequired
+    title:         React.PropTypes.string.isRequired
+    user:          React.PropTypes.instanceOf(Backbone.Model).isRequired
+    onUserChanged: React.PropTypes.func.isRequired
 
   getInitialState: ->
-    saving: false
+    isProcess: false
     user:   @props.user
 
   componentWillMount: ->
@@ -19,16 +20,13 @@ module.experts = window.ToolbarSettings = React.createClass
   componentWillUnmount: ->
     @props.user.off 'change', @updateStateUser
 
-  updateStateUser: (user) -> @setState user: user
+  updateStateUser: (user) -> @props.onUserChanged user
 
   save: (key, value) ->
     console.log 'save', key, value
     @incrementActivities()
 
-    # Зачем?
-    #@state.set key, value
-
-    @setState saving: true
+    @setState isProcess: true
 
     data = {}
     data[key] = value
@@ -44,21 +42,14 @@ module.experts = window.ToolbarSettings = React.createClass
         @shake()
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState saving: false
+        @safeUpdateState => @setState isProcess: false
         @decrementActivities()
 
   render: ->
     saveCallback = @save
 
-    # console.debug? 'ToolbarSettings render', @props
-
-    #<SettingsVkontakteItem 
-      #user={this.state.user}
-      #/>
-
-
     return `<div className="settings">
-              <form onSubmit={ this.submit }>
+              <form>
                 <SettingsHeader user={ this.state.user }
                                 activitiesHandler={ this.props.activitiesHandler }
                                 saveCallback={ saveCallback } />

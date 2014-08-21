@@ -19,7 +19,8 @@ window.UserToolbar = UserToolbar = React.createClass
     logoutUrl:            React.PropTypes.string
 
   getInitialState: ->
-    activeItem:  'newEntry'
+    user:         @props.user
+    activeItem:   'newEntry'
     currentState: TOOLBAR_CLOSED
 
   componentDidMount: ->
@@ -120,7 +121,7 @@ window.UserToolbar = UserToolbar = React.createClass
     unless container
       container = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get 0
 
-    React.renderComponent PersonsPopup(user: @props.user), container
+    React.renderComponent PersonsPopup(user: @state.user), container
 
   showDesignSettings: ->
     url = window.location.origin + window.location.pathname
@@ -136,10 +137,15 @@ window.UserToolbar = UserToolbar = React.createClass
       $(document).trigger 'SHOW_DESIGN_SETTINGS'
 
   handleSettingsSelect: ->
-    user = new Backbone.Model @props.user
+    if @state.user instanceof Backbone.Model
+      user = @state.user
+    else
+      user = new Backbone.Model @state.user
+
     ReactApp.popup.show ToolbarSettings, {
-      title: 'Настройки',
-      user:  user
+      title:         'Настройки',
+      user:          user
+      onUserChanged: @onUserChanged
     }
 
   redirectToProfile: ->
@@ -147,5 +153,7 @@ window.UserToolbar = UserToolbar = React.createClass
     window.location = @props.myTlogUrl
 
   isOpen: -> @state.currentState != TOOLBAR_CLOSED
+
+  onUserChanged: (user) -> @setState user: user
 
 module.exports = UserToolbar
