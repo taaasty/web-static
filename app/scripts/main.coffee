@@ -39,7 +39,8 @@ require './react/mixins/dom_manipulations'
 require './react/mixins/scroller'
 require './react/mixins/touch'
 
-require './react/components/avatar'
+require './react/components/avatars/avatar'
+require './react/components/avatars/user_avatar'
 
 require './react/components/shellbox/authorization/authorization'
 require './react/components/shellbox/authorization/vk'
