@@ -43,12 +43,34 @@ window.Avatar = React.createClass
                 <span className="avatar__text">{ this.props.name.charAt(0) }</span>
               </span>`
 
-
-# Вызывается из:
-# hero profile
-# persos popup items
-#
 window.UserAvatar = React.createClass
+
+  propTypes:
+    user: React.PropTypes.object.isRequired
+    size: React.PropTypes.number
+
+  getInitialState: ->
+    user: @props.user
+
+  componentDidMount: ->
+    TastyEvents.on "settings:avatar:changed", @_updateAvatar
+
+  componentWillUnmount: ->
+    TastyEvents.off "settings:avatar:changed", @_updateAvatar
+
+  render: ->
+    UserAvatarStatic {
+      user: @state.user
+      size: @props.size
+    }
+
+  _updateAvatar: (userpic) ->
+    newUser = @state.user
+    newUser.userpic = userpic
+
+    @setState user: newUser
+
+window.UserAvatarStatic = React.createClass
 
   propTypes:
     user: React.PropTypes.object.isRequired

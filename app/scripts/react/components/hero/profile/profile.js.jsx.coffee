@@ -46,7 +46,9 @@ window.HeroProfile = React.createClass
                 <HeroProfileAvatar user={ this.props.user }
                                    onClick={ this.open } />
                 { follow_status }
-                <HeroProfileHead user={ this.props.user } />
+                <HeroProfileHead slug={ this.props.user.slug }
+                                 title={ this.props.user.title }
+                                 tlogUrl={ this.props.user.tlog_url } />
                 { actions }
               </div>
               <HeroProfileStats user={ this.props.user }

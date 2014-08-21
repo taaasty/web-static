@@ -39,6 +39,12 @@ module.experts = window.ToolbarSettings = React.createClass
       dataType: 'JSON'
       method:   'PUT'
       success: (data) =>
+        TastyEvents.trigger "settings:#{key}:changed", [value]
+        if key is 'slug'
+          TastyNotifyController.notifySuccess 'Внимание! Сейчас будет произведён переход по новому адресу вашего тлога', 3000
+          setTimeout (->
+            window.location = data.tlog_url
+          ), 3000
         @props.user.set data
       error: (data) =>
         @shake()

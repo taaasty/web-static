@@ -4,7 +4,7 @@ module.experts = window.SettingsAvatar = React.createClass
   mixins: [ReactShakeMixin, 'ReactActivitiesUser']
 
   propTypes:
-    user:         React.PropTypes.object.isRequired
+    user: React.PropTypes.object.isRequired
 
   componentDidMount: ->
     $(@getDOMNode()).fileupload
@@ -19,6 +19,7 @@ module.experts = window.SettingsAvatar = React.createClass
         TastyNotifyController.errorResponse data
       done: (e,data) =>
         @props.user.set 'userpic', data.response().jqXHR.responseJSON
+        TastyEvents.trigger "settings:avatar:changed", [data.response().jqXHR.responseJSON]
       always: => @decrementActivities()
       progressall: (e, data) ->
         progress = parseInt(data.loaded / data.total * 100, 10)
