@@ -3,10 +3,10 @@
 window.InviterShellBox = React.createClass
 
   propTypes:
-    fixed: React.PropTypes.bool
-
-  getInitialState: ->
-    isButtonsHidden: false
+    fixed:          React.PropTypes.bool
+    isDisabled:     React.PropTypes.bool
+    onProcessStart: React.PropTypes.func.isRequired
+    onProcessEnd:   React.PropTypes.func.isRequired
 
   render: ->
     inviterClasses = React.addons.classSet
@@ -15,7 +15,7 @@ window.InviterShellBox = React.createClass
 
     boxStyle = 'background-image': "url(http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg)"
 
-    unless @state.isButtonsHidden
+    unless @props.isDisabled
       footer = `<div className="inviter__footer">
                   <div className="inviter__footer-inner">
                     <a title="У меня нет аккаунта вконтакте"
@@ -42,7 +42,8 @@ window.InviterShellBox = React.createClass
                     </div>
                     <div className="inviter__title">Тейсти – это дневник в который хочется писать каждый день</div>
                     <div className="inviter__actions">
-                      <Shellbox_VkontakteAuthButton onProcess={ this._hideButtons } />
+                      <Shellbox_VkontakteAuthButton onProcessStart={ this.props.onProcessStart }
+                                                    onProcessEnd={ this.props.onProcessEnd } />
                     </div>
                     <div className="inviter__spacer" />
                     <div className="inviter__stats">
@@ -74,5 +75,3 @@ window.InviterShellBox = React.createClass
     event.preventDefault()
     event.stopPropagation()
     ReactApp.shellbox.show SelectSigninShellBox
-
-  _hideButtons: -> @setState isButtonsHidden: true
