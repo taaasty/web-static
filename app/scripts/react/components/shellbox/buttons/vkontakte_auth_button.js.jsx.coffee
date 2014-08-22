@@ -1,12 +1,17 @@
 ###* @jsx React.DOM ###
 
+AUTH_TIMEOUT = 30000
+
 window.Shellbox_VkontakteAuthButton = React.createClass
 
   propTypes:
-    onProcess: React.PropTypes.func
+    onProcessStart: React.PropTypes.func
+    onProcessEnd:   React.PropTypes.func
 
   getInitialState: ->
     isProcess: false
+
+  componentWillUnmount: -> clearTimeout @timeout if @timeout?
 
   render: ->
     if @state.isProcess
@@ -28,10 +33,15 @@ window.Shellbox_VkontakteAuthButton = React.createClass
     e.preventDefault()
 
     @setState isProcess: true
+    @props.onProcessStart() if @props.onProcessStart?
 
-    @props.onProcess() if @props.onProcess?
-
+    @timeout = setTimeout @_cancelAuth, AUTH_TIMEOUT
     _.defer -> window.location = Routes.api.omniauth_url 'vkontakte'
 
   _getTitle: ->
     if @state.isProcess then 'Авторизовываюсь..' else 'Зарегистрироваться'
+
+  _cancelAuth: ->
+    window.stop()
+    @setState isProcess: false
+    @props.onProcessEnd() if @props.onProcessEnd?
