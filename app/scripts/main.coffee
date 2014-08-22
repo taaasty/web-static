@@ -41,6 +41,7 @@ require './react/mixins/touch'
 
 require './react/components/avatar'
 
+require './react/components/shellbox/buttons/vkontakte_auth_button'
 require './react/components/shellbox/email_signin_shellbox'
 require './react/components/shellbox/email_signup_shellbox'
 require './react/components/shellbox/recovery_shellbox'
@@ -195,6 +196,7 @@ require './shared/tasty'
 
 require './react/components/images_collage'
 
+require './react/components/spinner'
 require './react/components/tasty_notify'
 require './react/components/tasty_confirm'
 require './react/controllers/tasty_notify'

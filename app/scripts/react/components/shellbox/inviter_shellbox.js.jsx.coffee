@@ -1,27 +1,28 @@
 ###* @jsx React.DOM ###
 
-module.experts = window.InviterShellBox = React.createClass
+window.InviterShellBox = React.createClass
+
   propTypes:
     fixed: React.PropTypes.bool
 
-  gotoEmailSignup: (event)->
+  gotoEmailSignup: (event) ->
     event.preventDefault()
     event.stopPropagation()
     ReactApp.shellbox.show EmailSignupShellBox
 
-  gotoSelectSignin: (event)->
+  gotoSelectSignin: (event) ->
     event.preventDefault()
     event.stopPropagation()
     ReactApp.shellbox.show SelectSigninShellBox
 
-
   render: ->
-    classes = React.addons.classSet
+    inviterClasses = React.addons.classSet
       'inviter':        true
       'inviter--fixed': @props.fixed
+
     boxStyle = 'background-image': "url(http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg)"
 
-    return `<div className={classes}>
+    return `<div className={ inviterClasses }>
               <div className="inviter__box" style={boxStyle}>
                   <div className="inviter__overlay"></div>
                     <div className="grid-full">
@@ -31,12 +32,7 @@ module.experts = window.InviterShellBox = React.createClass
                             </div>
                             <div className="inviter__title">Тейсти – это дневник в который хочется писать каждый день</div>
                             <div className="inviter__actions">
-                            <a href={Routes.api.omniauth_url('vkontakte')}>
-                                <button className="button button--vkontakte">
-                                    <span className="icon icon--vkontakte"></span>
-                                    <span className="button__text">зарегистрироваться</span>
-                                </button>
-                                </a>
+                                <Shellbox_VkontakteAuthButton />
                             </div>
                             <div className="inviter__spacer"></div>
                             <div className="inviter__stats">
