@@ -2,6 +2,9 @@
 
 window.Shellbox_VkontakteAuthButton = React.createClass
 
+  propTypes:
+    onProcess: React.PropTypes.func
+
   getInitialState: ->
     isProcess: false
 
@@ -25,7 +28,10 @@ window.Shellbox_VkontakteAuthButton = React.createClass
     e.preventDefault()
 
     @setState isProcess: true
-    window.location = Routes.api.omniauth_url 'vkontakte'
+
+    @props.onProcess() if @props.onProcess?
+
+    _.defer -> window.location = Routes.api.omniauth_url 'vkontakte'
 
   _getTitle: ->
     if @state.isProcess then 'Авторизовываюсь..' else 'Зарегистрироваться'
