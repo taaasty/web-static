@@ -43,7 +43,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
                                                                   onSubmit={ this.onSubmit }
                                                                   onCancel={ this.onCancel } />`
       when HIDDEN_STATE then form = `<div></div>`
-      when LINK_STATE   then form = `<div className="comments_more">
+      when LINK_STATE   then form = `<div className="comments__more">
                                        <a onClick={ this.onClick }
                                           className="comments__more-link">Прокомментировать</a>
                                      </div>`
