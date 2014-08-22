@@ -6,6 +6,7 @@ $ ->
 
   $('textarea[tastyAutosize]').autosize append:''
   $('input[tastyAutosize]').autosizeInput space: 0
+  $('[collage]').collage margin: 0
 
   # TODO Разобраться с onMousewheel
   #$(".js-scroller-pane").on "mousewheel", TastyUtils.onMousewheel
