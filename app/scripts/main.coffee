@@ -191,6 +191,9 @@ require './react/components/hero/profile/popup/items/follower_item'
 require './react/components/hero/profile/popup/items/following_item'
 require './react/components/hero/profile/popup/items/tag_item'
 
+require './react/components/screen_viewer/viewer'
+require './react/components/screen_viewer/item'
+
 require './shared/utils'
 require './shared/tasty'
 
