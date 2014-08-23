@@ -19,12 +19,17 @@
   position: relative;
   z-index: @zindex-content-area-inner;
 
-  .alert {
+  .alert,
+  .flex-container {
     margin: 0 -@content-area-padding-horizontal @content-area-padding-vertical;
 
     &:first-child {
       margin-top: -@content-area-padding-vertical;
       border-radius: @content-area-border-radius @content-area-border-radius 0 0;
+
+      .button--rectangle {
+        border-radius: @content-area-border-radius @content-area-border-radius 0 0;
+      }
     }
   }
 }
