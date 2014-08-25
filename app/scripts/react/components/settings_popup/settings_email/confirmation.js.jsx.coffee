@@ -1,11 +1,12 @@
 ###* @jsx React.DOM ###
-#
+
 window.SettingsEmailConfirmation = React.createClass
   mixins: [ReactShakeMixin, RequesterMixin]
 
   propTypes:
-    isConfirmed:  React.PropTypes.bool.isRequired
-    email:        React.PropTypes.string.isRequired
+    email:             React.PropTypes.string.isRequired
+    confirmationEmail: React.PropTypes.any.isRequired
+    isConfirmed:       React.PropTypes.bool.isRequired
 
   getInitialState: ->
     # 0 - не отправлено

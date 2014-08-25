@@ -73,9 +73,10 @@ window.ToolbarSettings = React.createClass
                                      saveCallback={ saveCallback }
                                      key="is_female" />
 
-                  <SettingsEmailInput email={ this.state.user.get('email') }
-                                      isConfirmed={ this.state.user.get('is_confirmed') }
-                                      saveCallback={ saveCallback } />
+                  <SettingsEmail email={ this.state.user.get('email') }
+                                 confirmationEmail={ this.state.user.get('confirmation_email') }
+                                 isConfirmed={ this.state.user.get('is_confirmed') }
+                                 saveCallback={ saveCallback } />
 
                   <SettingsRadioItem title="Уведомления"
                                      description="Вы хотите получать уведомления о всех новых комментариях, подписчиках и личных сообщениях?"
