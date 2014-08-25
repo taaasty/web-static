@@ -89,7 +89,15 @@ module.experts = window.EmailSignupShellBox = React.createClass
 
   renderFooter: ->
     return `<div className="form-popup__footer">
-            <a className="form-popup__footer-item" href={Routes.api.omniauth_url('vkontakte')} title="У вас есть аккаунт вконтакте?">У вас есть акккаунт вконтакте?</a>
+              <a href={Routes.api.omniauth_url('vkontakte')}
+                 title="У вас есть аккаунт вконтакте?"
+                 className="form-popup__footer-item"
+                 onClick={ this.onVkAuthClick }>
+                У вас есть акккаунт вконтакте?
+              </a>
             </div>`
 
+  onVkAuthClick: (e) ->
+    e.preventDefault()
 
+    ReactApp.shellbox.show VkAuthorizationShellBox

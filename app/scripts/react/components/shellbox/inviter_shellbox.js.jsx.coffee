@@ -3,10 +3,7 @@
 window.InviterShellBox = React.createClass
 
   propTypes:
-    fixed:          React.PropTypes.bool
-    isDisabled:     React.PropTypes.bool
-    onProcessStart: React.PropTypes.func.isRequired
-    onProcessEnd:   React.PropTypes.func.isRequired
+    fixed: React.PropTypes.bool
 
   render: ->
     inviterClasses = React.addons.classSet
@@ -14,23 +11,6 @@ window.InviterShellBox = React.createClass
       'inviter--fixed': @props.fixed
 
     boxStyle = 'background-image': "url(http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg)"
-
-    unless @props.isDisabled
-      footer = `<div className="inviter__footer">
-                  <div className="inviter__footer-inner">
-                    <a title="У меня нет аккаунта вконтакте"
-                       className="inviter__footer-item"
-                       onClick={ this.gotoEmailSignup }>
-                      У меня нет аккаунта вконтакте
-                    </a>
-                    <span className="inviter__footer-sep">·</span>
-                    <a title="Вы уже зарегистрированы? Войдите"
-                       className="inviter__footer-item"
-                       onClick={ this.gotoSelectSignin }>
-                      Вы уже зарегистрированы? Войдите
-                    </a>
-                  </div>
-                </div>`
 
     return `<div className={ inviterClasses }>
               <div className="inviter__box" style={ boxStyle }>
@@ -42,8 +22,7 @@ window.InviterShellBox = React.createClass
                     </div>
                     <div className="inviter__title">Тейсти – это дневник в который хочется писать каждый день</div>
                     <div className="inviter__actions">
-                      <Shellbox_VkontakteAuthButton onProcessStart={ this.props.onProcessStart }
-                                                    onProcessEnd={ this.props.onProcessEnd } />
+                      <Shellbox_VkAuthButton onClick={ this.onVkAuthClick } />
                     </div>
                     <div className="inviter__spacer" />
                     <div className="inviter__stats">
@@ -60,11 +39,28 @@ window.InviterShellBox = React.createClass
                         секунд чтобы начать
                       </div>
                     </div>
-                    { footer }
+                    <div className="inviter__footer">
+                      <div className="inviter__footer-inner">
+                        <a title="У меня нет аккаунта вконтакте"
+                           className="inviter__footer-item"
+                           onClick={ this.gotoEmailSignup }>
+                          У меня нет аккаунта вконтакте
+                        </a>
+                        <span className="inviter__footer-sep">·</span>
+                        <a title="Вы уже зарегистрированы? Войдите"
+                           className="inviter__footer-item"
+                           onClick={ this.gotoSelectSignin }>
+                          Вы уже зарегистрированы? Войдите
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>`
+
+  onVkAuthClick: ->
+    ReactApp.shellbox.show VkAuthorizationShellBox
 
   gotoEmailSignup: (event) ->
     event.preventDefault()

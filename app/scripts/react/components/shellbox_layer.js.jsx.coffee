@@ -33,9 +33,9 @@ window.ShellBox = React.createClass
 
   render: ->
     React.Children.map @props.children, (context) =>
-      context.props.isDisabled     = @state.isDisabled
-      context.props.onProcessStart = @onProcessStart
-      context.props.onProcessEnd   = @onProcessEnd
+      context.props.disableShellbox = @disableShellbox
+      context.props.enableShellbox  = @enableShellbox
+
 
     return `<div className="shellbox">
               <div className="shellbox__main">
@@ -55,5 +55,5 @@ window.ShellBox = React.createClass
 
   onClose: -> @unmount() unless @state.isDisabled
 
-  onProcessStart: -> @setState isDisabled: true
-  onProcessEnd:   -> @setState isDisabled: false
+  disableShellbox: -> @setState isDisabled: true
+  enableShellbox:  -> @setState isDisabled: false
