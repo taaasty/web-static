@@ -48,12 +48,16 @@ require './react/components/shellbox/recovery_shellbox'
 require './react/components/shellbox/select_signin_shellbox'
 require './react/components/shellbox/inviter_shellbox'
 
+
+require './react/components/settings_popup/settings_email/settings_email'
+require './react/components/settings_popup/settings_email/edit'
+require './react/components/settings_popup/settings_email/show'
+require './react/components/settings_popup/settings_email/confirmation'
+
 require './react/components/settings_popup/settings_avatar'
 require './react/components/settings_popup/settings_name'
 require './react/components/settings_popup/settings_title'
 require './react/components/settings_popup/settings_accounts_item'
-require './react/components/settings_popup/settings_email_input'
-require './react/components/settings_popup/settings_email_confirmation'
 require './react/components/settings_popup/settings_header'
 require './react/components/settings_popup/settings_password_input'
 require './react/components/settings_popup/settings_radio_item'
