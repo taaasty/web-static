@@ -40,6 +40,8 @@ window.Tasty =
 
     TastyUtils.showFlashes options.flashes
 
+    Honeybadger?.setContext user_id: options.user?.id
+
     $.ajaxSetup
       headers: headers
       cache:   true
