@@ -3,22 +3,20 @@
 ENTER_KEYCODE = 13
 ESC_KEYCODE   = 27
 
-window.SettingsEmailEdit = React.createClass
+window.SettingsEmailEstablishEdit = React.createClass
 
   propTypes:
-    email:        React.PropTypes.any.isRequired
-    onCancelEdit: React.PropTypes.func.isRequired
-    onSubmitEdit: React.PropTypes.func.isRequired
-    onBlurEdit:   React.PropTypes.func.isRequired
-
-  componentDidMount: ->
-    @$saveButton = $( @refs.saveButton.getDOMNode() )
-    @$emailField = $( @refs.email.getDOMNode() )
-
-    @$emailField.focus()
+    onSubmitEstablish: React.PropTypes.func.isRequired
+    onCancelEstablish: React.PropTypes.func.isRequired
 
   getInitialState: ->
-    hasInput: @props.email?.length >= 5
+    hasInput: false
+
+  componentDidMount: ->
+    @$establishButton = $( @refs.establishButton.getDOMNode() )
+    @$emailField      = $( @refs.email.getDOMNode() )
+
+    @$emailField.focus()
 
   render: ->
     buttonClasses = React.addons.classSet
@@ -26,19 +24,18 @@ window.SettingsEmailEdit = React.createClass
       'button--yellow':  @state.hasInput
       'button--outline': !@state.hasInput
 
-    return `<div className="settings__item settings__item--full" >
+    return `<div className="settings__item settings__item--full">
               <div className="settings__right">
-                <button ref="saveButton"
+                <button ref="establishButton"
                         className={ buttonClasses }
-                        onClick={ this.onClickSave }>
-                  <span className="button__text">{ this.getSaveButtonTitle() }</span>
+                        onClick={ this.onClickEstablish }>
+                  <span className="button__text">{ this.getEstablishButtonTitle() }</span>
                 </button>
               </div>
               <div className="settings__left">
                 <h3 className="settings__title">Емейл</h3>
                 <div className="form-field form-field--default">
                   <input ref="email"
-                         defaultValue={ this.props.email }
                          onChange={ this.onChange }
                          onKeyDown={ this.onKeyDown }
                          onFocus={ this.onFocus }
@@ -49,14 +46,14 @@ window.SettingsEmailEdit = React.createClass
               </div>
             </div>`
 
-  getSaveButtonTitle: -> if @state.hasInput then 'сохранить' else 'отмена'
+  getEstablishButtonTitle: -> if @state.hasInput then 'установить' else 'отмена'
 
-  onClickSave: (e) ->
+  onClickEstablish: (e) ->
     e.preventDefault()
 
-    newEmail = @$emailField.val()
+    email = @$emailField.val()
 
-    if @state.hasInput then @props.onSubmitEdit(newEmail) else @props.onCancelEdit()
+    if @state.hasInput then @props.onSubmitEstablish(email) else @props.onCancelEstablish()
 
   onChange: ->
     newEmail = @$emailField.val()
@@ -70,10 +67,10 @@ window.SettingsEmailEdit = React.createClass
     switch e.which
       when ESC_KEYCODE
         e.preventDefault()
-        @props.onCancelEdit()
+        @props.onCancelEstablish()
       when ENTER_KEYCODE
         e.preventDefault()
-        @props.onSubmitEdit newEmail
+        @props.onSubmitEstablish newEmail
 
   onFocus: ->
     # После фокуса, переводим курсор в конец строки
@@ -85,7 +82,7 @@ window.SettingsEmailEdit = React.createClass
       @$emailField.val @$emailField.val()
 
   onBlur: (e) ->
-    if e.relatedTarget is @$saveButton.get 0
+    if e.relatedTarget is @$establishButton.get 0
       e.preventDefault()
     else
-      @props.onCancelEdit()
+      @props.onCancelEstablish()

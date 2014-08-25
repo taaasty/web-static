@@ -54,6 +54,10 @@ require './react/components/settings_popup/settings_email/edit'
 require './react/components/settings_popup/settings_email/show'
 require './react/components/settings_popup/settings_email/confirmation'
 
+require './react/components/settings_popup/settings_email/establish/establish'
+require './react/components/settings_popup/settings_email/establish/edit'
+require './react/components/settings_popup/settings_email/establish/show'
+
 require './react/components/settings_popup/settings_avatar'
 require './react/components/settings_popup/settings_name'
 require './react/components/settings_popup/settings_title'

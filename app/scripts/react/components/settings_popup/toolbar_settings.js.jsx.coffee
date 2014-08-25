@@ -11,11 +11,10 @@ window.ToolbarSettings = React.createClass
 
   getInitialState: ->
     isProcess: false
-    user:   @props.user
+    user:      @props.user
 
   componentWillMount: ->
     @props.user.on 'change', @updateStateUser
-    Mousetrap.bind 'esc', @close
 
   componentWillUnmount: ->
     @props.user.off 'change', @updateStateUser
