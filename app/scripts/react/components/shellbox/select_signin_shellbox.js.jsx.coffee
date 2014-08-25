@@ -1,15 +1,6 @@
 ###* @jsx React.DOM ###
 
-module.experts = window.SelectSigninShellBox = React.createClass
-  gotoEmailSignin: (event)->
-    event.preventDefault()
-    event.stopPropagation()
-    ReactApp.shellbox.show EmailSigninShellBox
-
-  gotoEmailSignup: (event)->
-    event.preventDefault()
-    event.stopPropagation()
-    ReactApp.shellbox.show EmailSignupShellBox
+window.SelectSigninShellBox = React.createClass
 
   render: ->
     return `<div className="form-popup form-popup--select">
@@ -18,7 +9,9 @@ module.experts = window.SelectSigninShellBox = React.createClass
               </div>
               <div className="form-popup__body">
                   <div className="form-popup__select">
-                      <a className="form-popup__select-item is--vkontakte" href={Routes.api.omniauth_url('vkontakte')}>
+                      <a href={ Routes.api.omniauth_url('vkontakte') }
+                         className="form-popup__select-item is--vkontakte"
+                         onClick={ this.onVkAuthClick }>
                           <div className="form-popup__select-item-i">
                               <div className="form-popup__select-pic">
                                   <i className="icon icon--vkontakte"></i>
@@ -41,4 +34,17 @@ module.experts = window.SelectSigninShellBox = React.createClass
               </div>
           </div>`
 
+  gotoEmailSignin: (event) ->
+    event.preventDefault()
+    event.stopPropagation()
+    ReactApp.shellbox.show EmailSigninShellBox
 
+  gotoEmailSignup: (event) ->
+    event.preventDefault()
+    event.stopPropagation()
+    ReactApp.shellbox.show EmailSignupShellBox
+
+  onVkAuthClick: (e) ->
+    e.preventDefault()
+
+    ReactApp.shellbox.show VkAuthorizationShellBox

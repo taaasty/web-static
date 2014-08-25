@@ -41,7 +41,11 @@ require './react/mixins/touch'
 
 require './react/components/avatar'
 
-require './react/components/shellbox/buttons/vkontakte_auth_button'
+require './react/components/shellbox/authorization/authorization'
+require './react/components/shellbox/authorization/vk'
+
+require './react/components/shellbox/buttons/vk_auth_button'
+
 require './react/components/shellbox/email_signin_shellbox'
 require './react/components/shellbox/email_signup_shellbox'
 require './react/components/shellbox/recovery_shellbox'
