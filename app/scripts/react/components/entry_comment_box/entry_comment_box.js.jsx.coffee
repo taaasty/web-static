@@ -21,7 +21,6 @@ window.EntryCommentBox = React.createClass
       commentForm = `<EntryCommentBox_CommentCreateFormManager user={ this.props.user }
                                                                isEntryPage={ this.props.isEntryPage }
                                                                totalCommentsCount={ this.props.totalCommentsCount }
-                                                               disabled={ this.state.isPostLoading }
                                                                entryId={ this.props.entryId }
                                                                onCommentAdded={ this.onCommentAdded } />`
 

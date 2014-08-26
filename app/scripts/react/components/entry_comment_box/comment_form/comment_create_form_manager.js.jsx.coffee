@@ -11,12 +11,8 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
     entryId:            React.PropTypes.number.isRequired
     user:               React.PropTypes.object.isRequired
     isEntryPage:        React.PropTypes.bool
-    disabled:           React.PropTypes.bool
     totalCommentsCount: React.PropTypes.number.isRequired
     onCommentAdded:     React.PropTypes.func.isRequired
-
-  getDefaultProps: ->
-    disabled: false
 
   getInitialState: ->
     currentState:  HIDDEN_STATE
@@ -38,7 +34,6 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
     switch @state.currentState
       when FORM_STATE   then form = `<EntryCommentBox_CommentForm ref="commentForm"
                                                                   user={ this.props.user }
-                                                                  disabled={ this.props.disabled }
                                                                   isLoading={ this.state.isPostLoading }
                                                                   onSubmit={ this.onSubmit }
                                                                   onCancel={ this.onCancel } />`

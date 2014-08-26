@@ -7,7 +7,6 @@ window.EntryCommentBox_CommentForm = React.createClass
   propTypes:
     user:          React.PropTypes.object.isRequired
     text:          React.PropTypes.string
-    disabled:      React.PropTypes.bool
     onSubmit:      React.PropTypes.func.isRequired
     onCancel:      React.PropTypes.func.isRequired
     isLoading:     React.PropTypes.bool
@@ -37,7 +36,7 @@ window.EntryCommentBox_CommentForm = React.createClass
                       <textarea ref="commentFormField"
                                 placeholder="Комментарий. SHIFT + ENTER новая строка"
                                 defaultValue={ this.props.text }
-                                disabled={ this.props.disabled }
+                                disabled={ this.props.isLoading }
                                 className="comment-form__field-textarea"
                                 onFocus={ this.onFocus }
                                 onKeyDown={ this.onKeyDown } />
@@ -85,7 +84,6 @@ window.EntryCommentBox_CommentForm = React.createClass
     if e.which == 13 && @$commentFormField.val().match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey
       e.preventDefault()
       @props.onSubmit @$commentFormField.val()
-      @$commentFormField.val ''
 
     # Нажат Esc
     @props.onCancel() if e.which == 27
