@@ -6,7 +6,6 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass
   propTypes:
     comment:   React.PropTypes.object.isRequired
     user:      React.PropTypes.object.isRequired
-    disabled:  React.PropTypes.bool
     onEditEnd: React.PropTypes.func.isRequired
     onCancel:  React.PropTypes.func.isRequired
 
@@ -18,7 +17,6 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass
     `<EntryCommentBox_CommentForm ref="commentForm"
                                   text={ this.props.comment.comment_html }
                                   user={ this.props.user }
-                                  disabled={ this.props.disabled }
                                   isLoading={ this.state.isEditLoading }
                                   onSubmit={ this.onSubmit }
                                   onCancel={ this.props.onCancel } />`
