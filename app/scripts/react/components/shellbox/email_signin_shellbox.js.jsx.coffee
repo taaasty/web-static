@@ -1,55 +1,107 @@
 ###* @jsx React.DOM ###
 
-module.experts = window.EmailSigninShellBox = React.createClass
+window.EmailSigninShellBox = React.createClass
   mixins: [ReactShakeMixin, RequesterMixin]
 
   propTypes:
     email: React.PropTypes.string
 
   getInitialState: ->
-    #email:         @props.email
-    inProcess:     false
-    emailError:    false
-    passwordError: false
+    inProcess:       false
+    isEmailError:    false
+    isPasswordError: false
 
-  handleChange: (field, event) ->
-    states = 
-      passwordError: false
-      emailError: false
-    states[field] = event.target.value
-    @setState states
+  componentDidMount: ->
+    @$emailField    = $( @refs.email.getDOMNode() )
+    @$passwordField = $( @refs.password.getDOMNode() )
 
-  submit: (event)->
-    event.preventDefault()
-    return if @state.inProcess
-    @setState passwordError: false, emailError: false
+    @shake() if @props.email?
 
-    data=
-      email:    @refs.email.state.value
-      password: @refs.password.state.value
+  render: ->
+    emailFieldClasses = React.addons.classSet
+      'form-field':         true
+      'form-field--simple': true
+      'form-field--error':  @state.isEmailError
 
-    if data.email.length<6
-      @shake()
-      TastyNotifyController.notify 'error', 'Введите Электронную Почту'
-      return
+    passwordFieldClasses = React.addons.classSet
+      'form-field':         true
+      'form-field--simple': true
+      'form-field--error':  @state.isPasswordError
 
-    if data.password.length<3
-      @shake()
-      TastyNotifyController.notify 'error', 'Введите пароль'
-      return
+    footer = @renderFooter() unless @state.inProcess
 
+    return `<div className="form-popup form-popup--login">
+              <div className="form-popup__header">
+                <h3 className="form-popup__title">Вход через емейл</h3>
+              </div>
+              <div className="form-popup__body">
+                <form>
+                  <div className="form-popup__item">
+                    <div className={ emailFieldClasses }>
+                      <input ref="email"
+                             placeholder="Электронная почта или имя"
+                             autoFocus={ true }
+                             value={ this.props.email }
+                             required="required"
+                             disabled={ this.state.inProcess }
+                             className="form-field__input" />
+                      <div className="form-field__bg" />
+                    </div>
+                  </div>
+                  <div className="form-popup__item">
+                    <div className={ passwordFieldClasses }>
+                      <input ref="password"
+                             type="password"
+                             placeholder="Пароль"
+                             required="required"
+                             disabled={ this.state.inProcess }
+                             className="form-field__input" />
+                      <div className="form-field__bg" />
+                    </div>
+                  </div>
+                  <div className="form-popup__submit">
+                    <button onClick={ this.onSigninClick }
+                            disabled={ this.state.inProcess }
+                            className="button button--large button--green-light button--block button--rectangle">
+                      <span className="button__text">{ this._getButtonTitle() }</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+              { footer }
+            </div>`
+
+  renderFooter: ->
+   `<div className="form-popup__footer">
+      <a href={ Routes.api.omniauth_url('vkontakte') }
+         title="Войти через Вконтакте"
+         className="form-popup__footer-item"
+         onClick={ this.onVkAuthClick }>
+        Войти через Вконтакте
+      </a>
+      <span className="form-popup__footer-sep">·</span>
+      <a title="Я забыл пароль или почту"
+         className="form-popup__footer-item"
+         onClick={ this.gotoRecovery }>
+        Я забыл пароль или почту
+      </a>
+    </div>`
+
+  login: ->
     @setState inProcess: true
 
     @createRequest
-      url:  Routes.api.signin_url()
-      data: data
-      method:   'POST'
+      url: Routes.api.signin_url()
+      data:
+        email:    @$emailField.val()
+        password: @$passwordField.val()
+      method: 'POST'
       dataType: 'JSON'
       success: (data) =>
-        TastyNotifyController.notify 'success', "Добро пожаловать, #{data.name}! Подождите, я перезагружусь.."
+        TastyNotifyController.notifySuccess "Добро пожаловать, #{ data.name }! Подождите, я перезагружусь.."
         ReactApp.shellbox.close()
         _.defer -> location.reload true
-      error:   (data) =>
+      error: (data) =>
         @shake()
 
         if data.responseJSON?
@@ -60,66 +112,34 @@ module.experts = window.EmailSigninShellBox = React.createClass
       complete: =>
         @safeUpdateState => @setState inProcess: false
 
-  componentDidMount: ->
-    @shake() if @props.email?
+  _getButtonTitle: -> if @state.inProcess then 'Вхожу..' else 'Войти'
 
-  gotoRecovery: (event)->
-    event.preventDefault()
-    event.stopPropagation()
+  onSigninClick: (e) ->
+    e.preventDefault()
+
+    emailLength    = @$emailField.val().length
+    passwordLength = @$passwordField.val().length
+
+    @setState passwordError: false, emailError: false
+
+    if emailLength < 6
+      @shake()
+      TastyNotifyController.notify 'error', 'Введите Электронную Почту'
+      return
+
+    if passwordLength < 3
+      @shake()
+      TastyNotifyController.notify 'error', 'Введите пароль'
+      return
+
+    @login()
+
+  onVkAuthClick: (e) ->
+    e.preventDefault()
+    
+    ReactApp.shellbox.show VkAuthorizationShellBox
+
+  gotoRecovery: (e) ->
+    e.preventDefault()
+
     ReactApp.shellbox.show RecoveryShellBox
-
-  render: ->
-    if @state.inProcess
-      button_title = 'Вхожу..'
-    else
-      button_title = 'Войти'
-
-    if @state.emailError
-      emailErrorClass = 'form-field--error'
-    else
-      emailErrorClass = ''
-
-    if @state.passwordError
-      passwordErrorClass = 'form-field--error'
-    else
-      passwordErrorClass = ''
-
-
-    footer = @renderFooter() unless @state.emailError || @state.passwordError || @state.inProcess
-
-    return `<div className="form-popup form-popup--login">
-              <div className="form-popup__header">
-                <h3 className="form-popup__title">Вход через емейл</h3>
-              </div>
-              <div className="form-popup__body">
-                <form onSubmit={this.submit}>
-                  <div className="form-popup__item">
-                    <div className={"form-field form-field--simple " + emailErrorClass}>
-                      <input ref='email' autoFocus={true} value={this.props.email} disabled={this.state.inProcess} className="form-field__input" required="required" placeholder="Электронная почта или имя" />
-                      <div className="form-field__bg"></div>
-                    </div>
-                  </div>
-                  <div className="form-popup__item">
-                    <div className={"form-field form-field--simple " + passwordErrorClass}>
-                      <input ref='password' disabled={this.state.inProcess} className="form-field__input" required="required" type="password" placeholder="Пароль" />
-                      <div className="form-field__bg"></div>
-                    </div>
-                  </div>
-                  <div className="form-popup__submit">
-                    <button disabled={this.state.inProcess} className="button button--large button--green-light button--block button--rectangle">
-                      <span className="button__text">{button_title}</span>
-                    </button>
-                  </div>
-                </form>
-              </div>
-              {footer}
-          </div>`
-
-
-  renderFooter: ->
-    return `<div className="form-popup__footer">
-                  <a className="form-popup__footer-item" href={Routes.api.omniauth_url('vkontakte')} title="Войти через Вконтакте" onClick={this.gotoVkontakte}>Войти через Вконтакте</a>
-                   <span className="form-popup__footer-sep">·</span>
-                  <a className="form-popup__footer-item" href="#recovery_password" title="Я забыл пароль или почту" onClick={this.gotoRecovery}>Я забыл пароль или почту</a>
-                </div>`
-
