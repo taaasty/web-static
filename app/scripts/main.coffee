@@ -209,12 +209,18 @@ require './shared/tasty'
 require './react/components/images_collage'
 
 require './react/components/spinner'
-require './react/components/tasty_notify'
-require './react/components/tasty_confirm'
-require './react/controllers/tasty_notify'
+
+require './react/components/notifications/tasty_notify'
+require './react/components/notifications/tasty_confirm'
+require './react/components/notifications/tasty_alert'
+require './react/components/notifications/tasty_locking_alert'
+
 require './react/controllers/tasty_events'
-require './react/controllers/tasty_confirm'
 require './react/controllers/tasty_notify'
+require './react/controllers/tasty_confirm'
+require './react/controllers/tasty_alert'
+require './react/controllers/tasty_locking_alert'
+
 require './react/controllers/shellbox'
 require './react/controllers/popup'
 

@@ -41,8 +41,6 @@ window.TastyConfirm = React.createClass
               <button onClick={ this.onAccept }
                       className={ "button button--" + this.props.acceptButtonColor + " button--small" }>
                 { this.props.acceptButtonText }</button>
-              <button onClick={ this.close }
-                      className="button button--outline button--small">{ this.props.rejectButtonText }</button>
             </div>
           </div>
         </div>
