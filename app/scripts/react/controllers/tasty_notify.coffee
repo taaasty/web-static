@@ -15,7 +15,6 @@ window.TastyNotifyController =
     @notify 'success', text, timeout
 
   errorResponse: (response, timeout = 5000) ->
-    console.log response
     return if response.statusText is 'abort'
 
     # Непонятно почему не rejected не должно показывать
@@ -30,11 +29,18 @@ window.TastyNotifyController =
       console.error? 'errorResponse JSON', json
       message = json.message if json.message?
       message = json.long_message if json.long_message?
-      message ||= json.error if json.error? && json.error.length>0
+      message ||= json.error if json.error? && json.error.length > 0
     else
       message = "Ошибка сети: #{response.statusText}"
 
-    @notify 'error', message, timeout
+    unless @_isPageLoadingCanceled response
+      @notify 'error', message, timeout
 
   hideAll: ->
     $(document).trigger @HIDE_EVENT
+
+  _isPageLoadingCanceled: (response) ->
+    # Вернет true, если во время запроса пользователь:
+    # - Остановил загрузку страницы
+    # - Перешёл на другую страницу
+    response.statusText is 'error' && response.status == 0 && response.readyState == 0
