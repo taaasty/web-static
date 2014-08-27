@@ -36,6 +36,14 @@ window.ToolbarSettings = React.createClass
       dataType: 'JSON'
       method:   'PUT'
       success: (data) =>
+        TastyEvents.trigger TastyEvents.keys.user_property_changed( key, @props.user.id ), [value]
+
+        if key is 'slug'
+          TastyLockingAlertController.show
+            title:   'Внимание!'
+            message: "Сейчас будет произведён переход по новому адресу вашего тлога (#{ data.tlog_url })"
+            action:  -> window.location = data.tlog_url
+
         @props.user.set data
       error: (data) =>
         @shake()
