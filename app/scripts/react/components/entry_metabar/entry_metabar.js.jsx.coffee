@@ -11,11 +11,11 @@ window.EntryMetabar = React.createClass
     entryUrl:                 React.PropTypes.string.isRequired
     editUrl:                  React.PropTypes.string.isRequired
     successDeleteUrl:         React.PropTypes.string
-    canEdit:                  React.PropTypes.bool.isRequired
-    canFavorite:              React.PropTypes.bool.isRequired
-    canWatch:                 React.PropTypes.bool.isRequired
-    canReport:                React.PropTypes.bool.isRequired
-    canDelete:                React.PropTypes.bool.isRequired
+    canEdit:                  React.PropTypes.bool
+    canFavorite:              React.PropTypes.bool
+    canWatch:                 React.PropTypes.bool
+    canReport:                React.PropTypes.bool
+    canDelete:                React.PropTypes.bool
     tags:                     React.PropTypes.array.isRequired
     createdAt:                React.PropTypes.string.isRequired
     entryCommentsUrl:         React.PropTypes.string.isRequired

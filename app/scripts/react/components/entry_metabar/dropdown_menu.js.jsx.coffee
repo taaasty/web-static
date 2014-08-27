@@ -3,6 +3,7 @@
 DROPDOWN_CLOSED = 'closed'
 DROPDOWN_OPENED_BY_HOVER = 'openedByHover'
 DROPDOWN_OPENED_BY_CLICK = 'openedByClick'
+MARGIN_BETWEEN_TOGGLER_AND_MENU = 20
 
 window.EntryMetabarDropdownMenu = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin']
@@ -15,21 +16,27 @@ window.EntryMetabarDropdownMenu = React.createClass
     entryUrl:                 React.PropTypes.string.isRequired
     editUrl:                  React.PropTypes.string.isRequired
     successDeleteUrl:         React.PropTypes.string
-    canEdit:                  React.PropTypes.bool.isRequired
-    canFavorite:              React.PropTypes.bool.isRequired
-    canWatch:                 React.PropTypes.bool.isRequired
-    canReport:                React.PropTypes.bool.isRequired
-    canDelete:                React.PropTypes.bool.isRequired
+    canEdit:                  React.PropTypes.bool
+    canFavorite:              React.PropTypes.bool
+    canWatch:                 React.PropTypes.bool
+    canReport:                React.PropTypes.bool
+    canDelete:                React.PropTypes.bool
 
   getInitialState: ->
     currentState: DROPDOWN_CLOSED
+
+  componentDidMount: ->
+    @$dropdownMenu = $( @refs.dropdownMenu.getDOMNode() )
 
   render: ->
     actionList = []
     menuClasses = React.addons.classSet {
       'meta-item__dropdown': true
-      'state--open': @isOpen() || @hasActivities()
+      'state--open'        : @isOpen() || @hasActivities()
+      'position-top'       : @isPositionTop()
     }
+
+    menuStyles = 'margin-top': @_getTopPosition()
 
     if @props.canEdit
       actionList.push `<EntryMetabarDropdownMenuItem title="Редактировать"
@@ -58,14 +65,38 @@ window.EntryMetabarDropdownMenu = React.createClass
                                                            onDelete={ this.onDelete }
                                                            activitiesHandler={ this.activitiesHandler }
                                                            key="delete" />`
+
     return `<span className="meta-item meta-item--actions">
               <span onMouseEnter={ this.onMouseEnter }
                     onMouseLeave={ this.onMouseLeave }
                     className="meta-item__content">
                 <i className="meta-item__common icon icon--dots" />
-                <span className={ menuClasses }>{ actionList }</span>
+                <span ref="dropdownMenu"
+                      className={ menuClasses }
+                      style={ menuStyles }>
+                  { actionList }
+                </span>
               </span>
             </span>`
+
+  isOpen: -> @state.currentState != DROPDOWN_CLOSED
+
+  isPositionTop: -> @_getTopPosition()?
+
+  _getTopPosition: ->
+    return unless @$dropdownMenu
+
+    windowHeight        = $(window).height()
+    windowScrollTop     = $(window).scrollTop()
+    menuHeight          = @$dropdownMenu.innerHeight()
+    menuOffset          = @$dropdownMenu.offset()
+    menuScrollTopWindow = menuOffset.top - windowScrollTop
+    menuMarginTop       = parseInt( @$dropdownMenu.css 'margin-top' )
+
+    menuScrollTopWindow -= menuMarginTop if menuMarginTop
+
+    if (menuScrollTopWindow + menuHeight) > windowHeight
+      (menuHeight + MARGIN_BETWEEN_TOGGLER_AND_MENU) * -1
 
   onMouseEnter: ->
     if @state.currentState == DROPDOWN_CLOSED
@@ -76,5 +107,3 @@ window.EntryMetabarDropdownMenu = React.createClass
       @setState currentState: DROPDOWN_CLOSED
 
   onDelete: -> @unmount() if @isMounted()
-
-  isOpen: -> @state.currentState != DROPDOWN_CLOSED
