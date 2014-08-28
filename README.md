@@ -1,5 +1,10 @@
 [![Stories in Ready](https://badge.waffle.io/BrandyMint/mmm-tasty-static.png?label=ready&title=Ready)](http://waffle.io/BrandyMint/mmm-tasty-static)
 
+Старая верстка
+--------------
+
+* http://test.genue.ru/tlogs/!/app/
+
 Установка и настройка
 ---------------------
 
