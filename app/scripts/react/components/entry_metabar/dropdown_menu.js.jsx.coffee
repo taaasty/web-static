@@ -1,12 +1,13 @@
 ###* @jsx React.DOM ###
 
+MOUSE_LEAVE_TIMEOUT = 300
 DROPDOWN_CLOSED = 'closed'
 DROPDOWN_OPENED_BY_HOVER = 'openedByHover'
 DROPDOWN_OPENED_BY_CLICK = 'openedByClick'
 MARGIN_BETWEEN_TOGGLER_AND_MENU = 20
 
 window.EntryMetabarDropdownMenu = React.createClass
-  mixins: [ReactUnmountMixin, 'ReactActivitiesMixin']
+  mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', ComponentManipulationsMixin]
 
   propTypes:
     entryId:                  React.PropTypes.number.isRequired
@@ -27,6 +28,9 @@ window.EntryMetabarDropdownMenu = React.createClass
 
   componentDidMount: ->
     @$dropdownMenu = $( @refs.dropdownMenu.getDOMNode() )
+
+  componentWillUnmount: ->
+    clearTimeout @timeout if @timeout
 
   render: ->
     actionList = []
@@ -99,11 +103,15 @@ window.EntryMetabarDropdownMenu = React.createClass
       (menuHeight + MARGIN_BETWEEN_TOGGLER_AND_MENU) * -1
 
   onMouseEnter: ->
+    clearTimeout @timeout if @timeout
+
     if @state.currentState == DROPDOWN_CLOSED
       @setState currentState: DROPDOWN_OPENED_BY_HOVER
 
   onMouseLeave: ->
     if @state.currentState == DROPDOWN_OPENED_BY_HOVER
-      @setState currentState: DROPDOWN_CLOSED
+      @timeout = setTimeout ( =>
+        @safeUpdateState currentState: DROPDOWN_CLOSED
+      ), MOUSE_LEAVE_TIMEOUT
 
   onDelete: -> @unmount() if @isMounted()

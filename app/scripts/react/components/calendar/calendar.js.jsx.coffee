@@ -1,5 +1,6 @@
 ###* @jsx React.DOM ###
 
+MOUSE_LEAVE_TIMEOUT = 300
 CALENDAR_CLOSED = 'closed'
 CALENDAR_OPENED_BY_HOVER = 'openedByHover'
 CALENDAR_OPENED_BY_CLICK = 'openedByClick'
@@ -27,7 +28,10 @@ window.Calendar = Calendar = React.createClass
     @setVisibleMarkers()
     $(document).bind 'domChanged', @reattachScrollSpy
 
-  componentWillUnmount: -> @dettachScrollSpy()
+  componentWillUnmount: ->
+    clearTimeout @timeout if @timeout
+
+    @dettachScrollSpy()
 
   render: ->
     calendarClasses = React.addons.classSet {
@@ -53,9 +57,9 @@ window.Calendar = Calendar = React.createClass
                       <div className="grid-full__middle">{ message }</div>
                     </div>`
 
-    return `<nav onClick={this.onClick}
-                 onMouseEnter={this.onMouseEnter}
-                 onMouseLeave={this.onMouseLeave}
+    return `<nav onClick={ this.onClick }
+                 onMouseEnter={ this.onMouseEnter }
+                 onMouseLeave={ this.onMouseLeave }
                  className={ calendarClasses }>
               { children }
             </nav>`
@@ -116,12 +120,16 @@ window.Calendar = Calendar = React.createClass
     @setState visibleMarkers: markers
 
   onMouseEnter: ->
+    clearTimeout @timeout if @timeout
+
     if @state.currentState == CALENDAR_CLOSED
       @setState currentState: CALENDAR_OPENED_BY_HOVER
 
   onMouseLeave: ->
     if @state.currentState == CALENDAR_OPENED_BY_HOVER
-      @setState currentState: CALENDAR_CLOSED
+      @timeout = setTimeout ( =>
+        @safeUpdateState currentState: CALENDAR_CLOSED
+      ), MOUSE_LEAVE_TIMEOUT
 
   onClick: ->
     switch @state.currentState

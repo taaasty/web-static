@@ -1,9 +1,11 @@
 ###* @jsx React.DOM ###
 
+MOUSE_LEAVE_TIMEOUT = 300
 DROPDOWN_CLOSED = 'closed'
 DROPDOWN_OPENED_BY_HOVER = 'openedByHover'
 
 window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass
+  mixins: [ComponentManipulationsMixin]
 
   propTypes:
     commentId:   React.PropTypes.number.isRequired
@@ -17,6 +19,9 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass
 
   getInitialState: ->
     currentState: DROPDOWN_CLOSED
+
+  componentWillUnmount: ->
+    clearTimeout @timeout if @timeout
 
   render: ->
     actionList = []
@@ -50,11 +55,15 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass
             </span>`
 
   onMouseEnter: ->
+    clearTimeout @timeout if @timeout
+
     if @state.currentState == DROPDOWN_CLOSED
       @setState currentState: DROPDOWN_OPENED_BY_HOVER
 
   onMouseLeave: ->
     if @state.currentState == DROPDOWN_OPENED_BY_HOVER
-      @setState currentState: DROPDOWN_CLOSED
+      @timeout = setTimeout ( =>
+        @safeUpdateState currentState: DROPDOWN_CLOSED
+      ), MOUSE_LEAVE_TIMEOUT
 
   isOpen: -> @state.currentState != DROPDOWN_CLOSED

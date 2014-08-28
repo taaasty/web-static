@@ -1,12 +1,12 @@
 ###* @jsx React.DOM ###
 
+MOUSE_LEAVE_TIMEOUT = 300
 TOOLBAR_CLOSED = 'closed'
 TOOLBAR_OPENED_BY_HOVER = 'openedByHover'
 TOOLBAR_OPENED_BY_CLICK = 'openedByClick'
-HIDE_ON_BLUR_TIMEOUT = 100
 
 window.UserToolbar = UserToolbar = React.createClass
-  mixins: [TouchMixin]
+  mixins: [TouchMixin, ComponentManipulationsMixin]
 
   propTypes:
     user:                 React.PropTypes.object.isRequired
@@ -27,6 +27,9 @@ window.UserToolbar = UserToolbar = React.createClass
     if localStorage.getItem 'displayDesignSettings'
       @showDesignSettings()
       localStorage.removeItem 'displayDesignSettings'
+
+  componentWillUnmount: ->
+    clearTimeout @timeout if @timeout
 
   render: ->
     onSelect = (type) ->
@@ -112,8 +115,8 @@ window.UserToolbar = UserToolbar = React.createClass
   onMouseLeave: ->
     if @state.currentState == TOOLBAR_OPENED_BY_HOVER
       @timeout = setTimeout (=>
-        @setState currentState: TOOLBAR_CLOSED
-      ), HIDE_ON_BLUR_TIMEOUT
+        @safeUpdateState currentState: TOOLBAR_CLOSED
+      ), MOUSE_LEAVE_TIMEOUT
 
   handleFriendsSelect: ->
     container = document.querySelectorAll('[popup-persons-container]')[0]
