@@ -2,7 +2,8 @@ ACCEPT_FILE_TYPES = /(\.|\/)(gif|jpe?g|png)$/i
 MAX_FILE_SIZE    = 10*1000*1000
 MAX_NUMBER_OF_FILES = 6
 
-window.PostEditor_ImagesForm=
+window.PostEditor_ImagesForm =
+  mixins: [ComponentManipulationsMixin]
 
   getInitialState: ->
     uploadingProgress: 0
@@ -41,7 +42,10 @@ window.PostEditor_ImagesForm=
       data:    @data()
 
       success: (data) =>
-        @safeUpdateState => @setState entry: data, type: data.type
+        @safeUpdateState {
+          entry: data
+          type:  data.type
+        }
         @props.doneCallback data
 
       error:   (data) => TastyNotifyController.errorResponse data
@@ -127,4 +131,3 @@ window.PostEditor_ImagesForm=
       'PUT'
     else
       'POST'
-

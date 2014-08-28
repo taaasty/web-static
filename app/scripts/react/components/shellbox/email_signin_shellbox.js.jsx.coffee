@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.EmailSigninShellBox = React.createClass
-  mixins: [ReactShakeMixin, RequesterMixin]
+  mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:
     email: React.PropTypes.string
@@ -105,12 +105,12 @@ window.EmailSigninShellBox = React.createClass
         @shake()
 
         if data.responseJSON?
-          @setState passwordError: true if data.responseJSON.error_code == 'user_authenticator/invalid_password'
-          @setState emailError: true    if data.responseJSON.error_code == 'user_authenticator/user_not_found'
+          @safeUpdateState passwordError: true if data.responseJSON.error_code == 'user_authenticator/invalid_password'
+          @safeUpdateState emailError: true    if data.responseJSON.error_code == 'user_authenticator/user_not_found'
 
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState inProcess: false
+        @safeUpdateState inProcess: false
 
   _getButtonTitle: -> if @state.inProcess then 'Вхожу..' else 'Войти'
 

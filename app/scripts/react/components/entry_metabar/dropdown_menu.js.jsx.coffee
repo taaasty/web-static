@@ -14,7 +14,7 @@ window.EntryMetabarDropdownMenu = React.createClass
     isWatching:               React.PropTypes.bool.isRequired
     shouldRemoveFavoriteNode: React.PropTypes.bool
     entryUrl:                 React.PropTypes.string.isRequired
-    editUrl:                  React.PropTypes.string.isRequired
+    editUrl:                  React.PropTypes.string
     successDeleteUrl:         React.PropTypes.string
     canEdit:                  React.PropTypes.bool
     canFavorite:              React.PropTypes.bool

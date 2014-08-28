@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.EntryCommentBox_CommentEditFormManager = React.createClass
-  mixins: [RequesterMixin]
+  mixins: [RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:
     comment:   React.PropTypes.object.isRequired
@@ -32,7 +32,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass
       success: (comment) =>
         @props.onEditEnd comment
       error: (data) =>
-        @safeUpdateState => @setState isEditError: true
+        @safeUpdateState isEditError: true
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isEditLoading: false
+        @safeUpdateState isEditLoading: false

@@ -27,17 +27,17 @@ CommentsMixin =
         limit:    @_getFirstLoadLimit()
       }
       success: (data) =>
-        @safeUpdateState =>
+        @safeUpdate =>
           @setState {
             comments:    data.comments
             totalCount:  data.total_count
           }
           $(document).trigger 'domChanged'
       error: (data) =>
-        @safeUpdateState => @setState isLoadError: true
+        @safeUpdateState isLoadError: true
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isLoadLoading: false
+        @safeUpdateState isLoadLoading: false
 
   loadCommentListFromCommentId: (id) ->
     @setState isLoadError: false, isLoadLoading: true
@@ -50,7 +50,7 @@ CommentsMixin =
         limit:           999
       }
       success: (data) =>
-        @safeUpdateState =>
+        @safeUpdate =>
           @setState {
             comments:        data.comments
             totalCount:      data.total_count
@@ -58,10 +58,10 @@ CommentsMixin =
           }
           $(document).trigger 'domChanged'
       error: (data) =>
-        @safeUpdateState => @setState isLoadError: true
+        @safeUpdateState isLoadError: true
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isLoadLoading: false
+        @safeUpdateState isLoadLoading: false
 
   loadMoreComments: ->
     @setState isLoadMoreError: false, isLoadMoreLoading: true
@@ -73,7 +73,7 @@ CommentsMixin =
         limit:         @props.limit
         to_comment_id: @state.comments[0].id
       success: (data) =>
-        @safeUpdateState =>
+        @safeUpdate =>
           newComments = data.comments.concat @state.comments
 
           @setState {
@@ -82,10 +82,10 @@ CommentsMixin =
           }
           $(document).trigger 'domChanged'
       error: (data) =>
-        @safeUpdateState => @setState isLoadMoreError: true
+        @safeUpdateState isLoadMoreError: true
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isLoadMoreLoading: false
+        @safeUpdateState isLoadMoreLoading: false
 
   removeComment: (comment) ->
     newComments = _.without @state.comments, comment
@@ -101,4 +101,4 @@ CommentsMixin =
     hash = window.location.hash
     parseInt hash.match(/^#comment-(\d+)/)?[1]
 
-React.mixins.add 'CommentsMixin', [CommentsMixin, RequesterMixin]
+React.mixins.add 'CommentsMixin', [CommentsMixin, RequesterMixin, ComponentManipulationsMixin]

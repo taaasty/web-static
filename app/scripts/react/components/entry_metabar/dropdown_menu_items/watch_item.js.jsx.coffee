@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.EntryMetabarDropdownMenuWatchItem = React.createClass
-  mixins: [RequesterMixin]
+  mixins: [RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:
     entryId:    React.PropTypes.number.isRequired
@@ -42,7 +42,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass
       data:
         entry_id: @props.entryId
       success: =>
-        @safeUpdateState => @setState isWatching: true
+        @safeUpdateState isWatching: true
         console.info "Оформлена подписка на комментарии поста #{@props.entryId}"
       error: (data) ->
         TastyNotifyController.errorResponse data
@@ -54,7 +54,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass
       data:
         entry_id: @props.entryId
       success: =>
-        @safeUpdateState => @setState isWatching: false
+        @safeUpdateState isWatching: false
         console.info "Отменена подписка на комментарии поста #{@props.entryId}"
       error: (data) ->
         TastyNotifyController.errorResponse data

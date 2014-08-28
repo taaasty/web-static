@@ -5,7 +5,7 @@ FORM_STATE   = 'form'
 LINK_STATE   = 'link'
 
 window.EntryCommentBox_CommentCreateFormManager = React.createClass
-  mixins: [RequesterMixin]
+  mixins: [RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:
     entryId:            React.PropTypes.number.isRequired
@@ -81,9 +81,9 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
         unless @isCurrentlyOpen()
           window.commentsMediator.doFormClosed @
       error: (data) =>
-        @safeUpdateState => @setState isPostError: true
+        @safeUpdateState isPostError: true
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isPostLoading: false
+        @safeUpdateState isPostLoading: false
 
   onCancel: -> window.commentsMediator.doFormClosed()

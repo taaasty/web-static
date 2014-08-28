@@ -9,7 +9,7 @@ DEMO_IDS=
   quote: 11 # 18971004
 
 window.PostEditor_Demo = React.createClass
-  mixins: ['ReactActivitiesMixin', RequesterMixin]
+  mixins: ['ReactActivitiesMixin', RequesterMixin, ComponentManipulationsMixin]
 
   getInitialState: ->
     entryPrivacy: 'public'
@@ -26,7 +26,11 @@ window.PostEditor_Demo = React.createClass
     @createRequest
       url: Routes.api.entry_url(entryId)
       success: (data) =>
-        @safeUpdateState => @setState entry: data, entryType: data.type, entryPrivacy: data.privacy
+        @safeUpdateState {
+          entry:        data
+          entryType:    data.type
+          entryPrivacy: data.privacy
+        }
       error: (data) =>
         TastyNotifyController.errorResponse data
       complete: => @decrementActivities()

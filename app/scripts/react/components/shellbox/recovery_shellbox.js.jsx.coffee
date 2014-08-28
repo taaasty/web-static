@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 module.experts = window.RecoveryShellBox = React.createClass
-  mixins: [ReactShakeMixin, RequesterMixin]
+  mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin]
 
   getInitialState: ->
     inProcess: false
@@ -13,11 +13,12 @@ module.experts = window.RecoveryShellBox = React.createClass
 
   submit: (event)->
     event.preventDefault()
+
     return if @state.inProcess
 
     slug = @refs.slug.getDOMNode().value
 
-    if slug.length<1
+    if slug.length < 1
       @shake()
       TastyNotifyController.notify 'error', 'Введите Электронную Почту или адрес дневника'
       return
@@ -34,12 +35,11 @@ module.experts = window.RecoveryShellBox = React.createClass
       success: (data) =>
         TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля", 10000
         ReactApp.shellbox.close()
-      error:   (data) =>
+      error: (data) =>
         @shake()
         @refs.slug.getDOMNode().focus()
         TastyNotifyController.errorResponse data
-      complete: =>
-        @safeUpdateState => @setState inProcess: false
+      complete: => @safeUpdateState inProcess: false
 
   render: ->
     if @state.inProcess
@@ -49,24 +49,23 @@ module.experts = window.RecoveryShellBox = React.createClass
       button_title = 'Вспомнить все'
 
     return `<div className='form-popup shellbox-content'>
-        <div className='form-popup__header'><h3 className='form-popup__title'>Восстановление пароля</h3></div>
-        <div className='form-popup__body'>
-          <form onSubmit={this.submit}>
-            <div className='form-popup__item'>
-              <div className='form-field form-field--simple'>
-                <input ref='slug' autoFocus={true} disabled={this.state.inProcess} className='form-field__input' placeholder='Адрес дневника или электронная почта' type='text' /><
-                div className='form-field__bg' /></div> 
-            </div> 
-            <div className='form-popup__submit'>
-              <button disabled={this.state.inProcess} className='button button--large button--green-light button--block button--rectangle'><span className='button__text'>{button_title}</span></button> 
-            </div>
-          </form>
-          </div>
-          {footer}
-      </div>`
+              <div className='form-popup__header'><h3 className='form-popup__title'>Восстановление пароля</h3></div>
+              <div className='form-popup__body'>
+                <form onSubmit={this.submit}>
+                  <div className='form-popup__item'>
+                    <div className='form-field form-field--simple'>
+                      <input ref='slug' autoFocus={true} disabled={this.state.inProcess} className='form-field__input' placeholder='Адрес дневника или электронная почта' type='text' /><
+                      div className='form-field__bg' /></div> 
+                  </div> 
+                  <div className='form-popup__submit'>
+                    <button disabled={this.state.inProcess} className='button button--large button--green-light button--block button--rectangle'><span className='button__text'>{button_title}</span></button> 
+                  </div>
+                </form>
+                </div>
+              { footer }
+            </div>`
 
   renderFooter: ->
-        `<div className='form-popup__footer'>
-          <a className='form-popup__footer-item' title='Я все вспомнил, верните меня' onClick={this.gotoSelectSignin}>Я все вспомнил, верните меня</a>
-        </div>`
-
+   `<div className='form-popup__footer'>
+      <a className='form-popup__footer-item' title='Я все вспомнил, верните меня' onClick={this.gotoSelectSignin}>Я все вспомнил, верните меня</a>
+    </div>`
