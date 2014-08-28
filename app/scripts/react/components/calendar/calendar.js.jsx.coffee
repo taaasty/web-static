@@ -7,7 +7,7 @@ TARGET_POST_CLASS =        '.post'
 TARGET_POST_PARENT_CLASS = '.posts'
 
 window.Calendar = Calendar = React.createClass
-  mixins: [RequesterMixin]
+  mixins: [RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:
     entryId:         React.PropTypes.number
@@ -64,7 +64,7 @@ window.Calendar = Calendar = React.createClass
     @createRequest
       url: Routes.api.calendar_url tlogId
       success: (calendar) =>
-        @safeUpdateState => @setState calendar: calendar
+        @safeUpdateState calendar: calendar
       error: (data) =>
         TastyNotifyController.errorResponse data
 

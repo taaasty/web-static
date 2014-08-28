@@ -1,7 +1,8 @@
 ###* @jsx React.DOM ###
 
 window.HeroProfileStats_TagsPopup = React.createClass
-  mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin]
+  mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin
+           ScrollerMixin, ComponentManipulationsMixin]
 
   propTypes:
     tlogId:  React.PropTypes.number.isRequired
@@ -37,15 +38,15 @@ window.HeroProfileStats_TagsPopup = React.createClass
             </div>`
 
   loadTags: ->
-    @incrementActivities()
+    @safeUpdate => @incrementActivities()
     @setState isError: false, isLoading: true
     @createRequest
       url: Routes.api.tlog_tags(@props.tlogId)
       success: (data) =>
-        @safeUpdateState => @setState tags: data
+        @safeUpdateState tags: data
       error:   (data) =>
-        @safeUpdateState => @setState isError: true
+        @safeUpdateState isError: true
         TastyNotifyController.errorResponse data
       complete: =>
-        @decrementActivities()
-        @safeUpdateState => @setState isLoading: false
+        @safeUpdate => @decrementActivities()
+        @safeUpdateState isLoading: false

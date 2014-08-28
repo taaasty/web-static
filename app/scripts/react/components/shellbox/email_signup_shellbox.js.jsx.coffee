@@ -3,7 +3,7 @@
 # Ex .js-subscribe handler
 #
 module.experts = window.EmailSignupShellBox = React.createClass
-  mixins: [ReactShakeMixin, RequesterMixin]
+  mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin]
 
   getInitialState: ->
     inProcess: false
@@ -11,16 +11,17 @@ module.experts = window.EmailSignupShellBox = React.createClass
     password:  ''
     slug:      ''
 
-  submit: (event)->
+  submit: (event) ->
     event.preventDefault()
+
     return if @state.inProcess
+
     @setState passwordError: false, emailError: false
 
-    user=
+    user =
       email:    @refs.email.getDOMNode().value
       password: @refs.password.getDOMNode().value
       slug:     @refs.slug.getDOMNode().value
-
 
     @setState inProcess: true
 
@@ -40,8 +41,7 @@ module.experts = window.EmailSignupShellBox = React.createClass
           @shake()
 
         TastyNotifyController.errorResponse data
-      complete: =>
-        @safeUpdateState => @setState inProcess: false
+      complete: => @safeUpdateState inProcess: false
 
   render: ->
     footer = @renderFooter() unless @state.inProcess

@@ -64,21 +64,22 @@ window.PersonsPopup_PanelMixin =
 
   getPanelData: (sincePosition) ->
     console.error 'getPanelData when xhr' if @xhr?
-    @incrementActivities()
+    @safeUpdate => @incrementActivities()
     @setState isError: false, isLoading: true
-    req = @createRequest
+
+    @createRequest
       url: @relationUrl()
       data:
         since_position: sincePosition
         expose_reverse: 1
       success: (data) =>
-        @safeUpdateState => @props.onLoad('add', total_count: data.total_count, items: data.relationships)
+        @safeUpdate => @props.onLoad('add', total_count: data.total_count, items: data.relationships)
       error:   (data) =>
-        @safeUpdateState => @setState isError: true
+        @safeUpdateState isError: true
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isLoading: false
-        @decrementActivities()
+        @safeUpdateState isLoading: false
+        @safeUpdate => @decrementActivities()
 
   loadMoreData: ->
     return if @state.isLoading
@@ -89,4 +90,7 @@ window.PersonsPopup_PanelMixin =
     newRelationships = _.without @props.relationships, relationship
     @props.onLoad('update', total_count: @props.total_count - 1, items: newRelationships)
 
-React.mixins.add 'PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser']
+React.mixins.add 'PersonsPopup_PanelMixin', [
+  window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser'
+  ComponentManipulationsMixin
+]

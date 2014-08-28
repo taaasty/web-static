@@ -2,7 +2,10 @@
 #= require ./settings_radio_item
 
 window.ToolbarSettings = React.createClass
-  mixins: ['ReactActivitiesUser', ReactShakeMixin, React.addons.LinkedStateMixin, RequesterMixin]
+  mixins: [
+    'ReactActivitiesUser', ReactShakeMixin, React.addons.LinkedStateMixin
+    RequesterMixin, ComponentManipulationsMixin
+  ]
 
   propTypes:
     title:         React.PropTypes.string.isRequired
@@ -49,7 +52,7 @@ window.ToolbarSettings = React.createClass
         @shake()
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isProcess: false
+        @safeUpdateState isProcess: false
         @decrementActivities()
 
   render: ->

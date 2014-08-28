@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.Voting = React.createClass
-  mixins: [RequesterMixin]
+  mixins: [RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:
     isVoteable: React.PropTypes.bool.isRequired
@@ -28,22 +28,24 @@ window.Voting = React.createClass
       url: Routes.api.votes_url(@props.entryId)
       method: @ajaxMethod()
       success: (data) =>
-        @safeUpdateState =>
-          @setState
-            isVoted:    data.is_voted
-            isVoteable: data.is_voteable
-            votes:      data.votes
-            rating:     data.votes
+        @safeUpdateState {
+          isVoted:    data.is_voted
+          isVoteable: data.is_voteable
+          votes:      data.votes
+          rating:     data.votes
+        }
       complete: =>
-        @safeUpdateState => @setState process: false
+        @safeUpdateState process: false
 
   shouldComponentUpdate: (nextProps, nextState) ->
     res = !_.isEqual(nextProps, @props) || !_.isEqual(nextState, @state)
 
   render: ->
-    return `<span className={this.votableClass()}
-                  onClick={this.handleClick}
-                  title={this.title()}>{this.ratingValue()}</span>`
+    return `<span className={ this.votableClass() }
+                  onClick={ this.handleClick }
+                  title={ this.title() }>
+              { this.ratingValue() }
+            </span>`
 
   ajaxMethod: ->
       if @state.isVoted then method = 'DELETE' else method = 'POST'

@@ -1,7 +1,8 @@
 ###* @jsx React.DOM ###
 
 window.HeroProfileStats_FollowersPopup = React.createClass
-  mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin]
+  mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin
+            ComponentManipulationsMixin]
 
   propTypes:
     tlogId:  React.PropTypes.number.isRequired
@@ -38,15 +39,15 @@ window.HeroProfileStats_FollowersPopup = React.createClass
             </div>`
 
   loadFollowers: ->
-    @incrementActivities()
+    @safeUpdate => @incrementActivities()
     @setState isError: false, isLoading: true
     @createRequest
       url: Routes.api.tlog_followers(@props.tlogId)
       success: (data) =>
-        @safeUpdateState => @setState relationships: data.relationships
+        @safeUpdateState relationships: data.relationships
       error:   (data) =>
-        @safeUpdateState => @setState isError: true
+        @safeUpdateState isError: true
         TastyNotifyController.errorResponse data
       complete: =>
-        @decrementActivities()
-        @safeUpdateState => @setState isLoading: false
+        @safeUpdate => @decrementActivities()
+        @safeUpdateState isLoading: false

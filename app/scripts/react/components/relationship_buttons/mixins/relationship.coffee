@@ -10,13 +10,13 @@ window.RelationshipMixin =
       url: Routes.api.change_my_relationship_url @state.relationship.user_id, 'follow'
       method: 'POST'
       success: (data) =>
-        @safeUpdateState => @setState relationship: data
+        @safeUpdateState relationship: data
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
       error: (data) =>
         @startErrorTimer()
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isProcess: false
+        @safeUpdateState isProcess: false
 
   unfollow: ->
     @closeError()
@@ -26,13 +26,13 @@ window.RelationshipMixin =
       url: Routes.api.change_my_relationship_url @state.relationship.user_id, 'unfollow'
       method: 'POST'
       success: (data) =>
-        @safeUpdateState => @setState relationship: data
+        @safeUpdateState relationship: data
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
       error: (data) =>
         @startErrorTimer()
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isProcess: false
+        @safeUpdateState isProcess: false
 
   cancel: (options) ->
     @closeError()
@@ -42,14 +42,16 @@ window.RelationshipMixin =
       url: Routes.api.change_my_relationship_url @state.relationship.user_id, 'cancel'
       method: 'POST'
       success: (data) =>
-        @safeUpdateState => @setState relationship: data
+        @safeUpdateState relationship: data
+
         options?.success() if options?.success
+
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
       error: (data) =>
         @startErrorTimer()
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isProcess: false
+        @safeUpdateState isProcess: false
 
   ignore: ->
     @closeError()
@@ -59,13 +61,13 @@ window.RelationshipMixin =
       url: Routes.api.change_my_relationship_url @state.relationship.user_id, 'ignore'
       method: 'POST'
       success: (data) =>
-        @safeUpdateState => @setState relationship: data
+        @safeUpdateState relationship: data
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
       error: (data) =>
         @startErrorTimer()
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isProcess: false
+        @safeUpdateState isProcess: false
 
   approve: (options) ->
     @closeError()
@@ -79,7 +81,7 @@ window.RelationshipMixin =
         @startErrorTimer()
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isProcess: false
+        @safeUpdateState isProcess: false
 
   disapprove: (options) ->
     @closeError()
@@ -93,16 +95,19 @@ window.RelationshipMixin =
         @startErrorTimer()
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState => @setState isProcess: false
+        @safeUpdateState isProcess: false
 
   _loadRelationship: ->
     @createRequest
       url: Routes.api.get_my_relationship_url(@props.tlogId)
       success: (data) =>
-        @safeUpdateState => @setState relationship: data
+        @safeUpdateState relationship: data
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
       error: (data) =>
-        @safeUpdateState => @setState isError: true
+        @safeUpdateState isError: true
         TastyNotifyController.errorResponse data
 
-React.mixins.add 'RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, RequesterMixin]
+React.mixins.add 'RelationshipMixin', [
+  RelationshipMixin, ErrorTimerMixin, RequesterMixin
+  ComponentManipulationsMixin
+]

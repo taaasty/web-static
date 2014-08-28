@@ -2,8 +2,8 @@ ERROR_TIMEOUT = 1000
 
 BaseMixin =
   setActivitiesHandler: (handler) ->
-    @activitiesHandler    = handler
-    @hasActivities        = handler.hasActivities
+    @activitiesHandler   = handler
+    @hasActivities       = handler.hasActivities
     @incrementActivities = handler.increment
     @decrementActivities = handler.decrement
 

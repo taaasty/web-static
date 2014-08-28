@@ -1,7 +1,10 @@
 ###* @jsx React.DOM ###
 
 window.SettingsEmailConfirmation = React.createClass
-  mixins: [ReactShakeMixin, RequesterMixin, ErrorTimerMixin]
+  mixins: [
+    ReactShakeMixin, RequesterMixin, ErrorTimerMixin
+    ComponentManipulationsMixin
+  ]
 
   propTypes:
     email:             React.PropTypes.any.isRequired
@@ -34,13 +37,13 @@ window.SettingsEmailConfirmation = React.createClass
 
     @createRequest
       url: Routes.api.request_confirm_url()
+      method: 'POST'
       dataType: 'JSON'
-      method:   'POST'
       success: (data) =>
-        @safeUpdateState => @setState isSent: true
+        @safeUpdateState isSent: true
         TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
       error: (data) =>
         @startErrorTimer()
         @shake()
         TastyNotifyController.errorResponse data
-      complete: => @setState isProcess: false
+      complete: => @safeUpdateState isProcess: false

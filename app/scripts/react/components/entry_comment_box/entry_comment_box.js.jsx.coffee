@@ -50,7 +50,7 @@ window.EntryCommentBox = React.createClass
             </section>`
 
   onCommentAdded: (comment) ->
-    @safeUpdateState =>
+    @safeUpdate =>
       @setState {
         comments:   @state.comments.concat comment
         totalCount: @state.totalCount + 1

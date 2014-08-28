@@ -4,7 +4,7 @@ MARGIN = 10
 FADE_DURATION = 300
 
 window.HeroProfileStats_Popup = React.createClass
-  mixins: ['ReactActivitiesMixin', ReactUnmountMixin]
+  mixins: ['ReactActivitiesMixin', ReactUnmountMixin, ComponentManipulationsMixin]
 
   propTypes:
     title:   React.PropTypes.string.isRequired
@@ -61,4 +61,4 @@ window.HeroProfileStats_Popup = React.createClass
     @$popup.css('display', 'none').fadeIn FADE_DURATION
 
   close: ->
-    @$popup.fadeOut FADE_DURATION, @unmount
+    @safeUpdate => @$popup.fadeOut FADE_DURATION, @unmount
