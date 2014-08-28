@@ -124,13 +124,12 @@
                     <!-- Page Header -->
                     <header class="page-header">
                         <!-- Search -->
-                        <div class="search js-search">
-                            <form class="search__form" action="?">
-                                <input class="search__input js-search-input" type="text" placeholder="Поиск" />
-                            </form><div class="search__button js-search-button">
-                                <i class="icon icon--magnifier"></i>
+                            <div data-react-class="Search" data-react-props='
+                                {
+                                    "searchUrl": "http://google.ru/",
+                                    "text": "My awesome query"
+                                }'>
                             </div>
-                        </div>
                         <!-- end Search -->
                         <!-- Hero -->
                         <div class="hero hero--cover" style="background-image: url(images/hero-cover.jpg);">
