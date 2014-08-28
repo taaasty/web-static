@@ -14,7 +14,7 @@ CommentsMixin =
   componentDidMount: ->
     if fromId = @_getCommentIdFromHash()
       @loadCommentListFromCommentId fromId
-    else
+    else if @_getFirstLoadLimit() > 0
       @loadCommentList()
 
   loadCommentList: ->
