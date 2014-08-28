@@ -125,6 +125,8 @@ require './react/components/persons_popup/panels/guesses_panel'
 require './react/components/persons_popup/panels/requests_panel'
 require './react/components/persons_popup/panels/ignores_panel'
 
+require './react/components/people/item'
+
 require './react/components/post_editor/mixins/dragging'
 require './react/components/post_editor/mixins/persistence'
 require './react/components/post_editor/mixins/images_form'
