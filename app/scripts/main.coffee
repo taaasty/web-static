@@ -107,6 +107,10 @@ require './react/components/calendar/calendar_header'
 require './react/components/calendar/calendar_period'
 require './react/components/calendar/calendar_marker'
 
+require './react/components/search/search'
+require './react/components/search/button'
+require './react/components/search/field'
+
 require './react/components/persons_popup/mixins/panel_mixin'
 require './react/components/persons_popup/persons_popup'
 require './react/components/persons_popup/menu'
