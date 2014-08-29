@@ -111,6 +111,15 @@ require './react/components/search/search'
 require './react/components/search/button'
 require './react/components/search/field'
 
+require './react/components/design_settings_popup/design_settings_popup'
+require './react/components/design_settings_popup/controls'
+require './react/components/design_settings_popup/controls_items/background_item'
+require './react/components/design_settings_popup/controls_items/align_item'
+require './react/components/design_settings_popup/controls_items/header_color_item'
+require './react/components/design_settings_popup/controls_items/feed_color_item'
+require './react/components/design_settings_popup/controls_items/font_type_item'
+require './react/components/design_settings_popup/controls_items/opacity_item'
+
 require './react/components/persons_popup/mixins/panel_mixin'
 require './react/components/persons_popup/persons_popup'
 require './react/components/persons_popup/menu'
@@ -212,6 +221,7 @@ require './react/components/hero/profile/popup/items/following_item'
 require './react/components/hero/profile/popup/items/tag_item'
 
 require './shared/utils'
+require './shared/fileReceiver'
 require './shared/tasty'
 
 require './react/components/images_collage'

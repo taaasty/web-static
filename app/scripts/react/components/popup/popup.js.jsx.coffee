@@ -1,5 +1,7 @@
 ###* @jsx React.DOM ###
 
+NO_TRANSITION_CLASS = "no--transition"
+
 window.Popup = React.createClass
   mixins: [ReactUnmountMixin, ReactPositionsMixin]
 
@@ -43,16 +45,17 @@ window.Popup = React.createClass
               </div>
             </div>`
 
-
   makeDraggable: ->
     $popupNode = $(@getDOMNode())
     headboxNode = @refs.header.getDOMNode()
 
     $popupNode.draggable
       handle: headboxNode
+      drag: -> $popupNode.addClass NO_TRANSITION_CLASS
       stop: (event, ui) =>
         @checkPosition()
         @savePosition ui.position
+        $popupNode.removeClass NO_TRANSITION_CLASS
 
   close: ->
     if @props.onClose? then @props.onClose() else @unmount()
