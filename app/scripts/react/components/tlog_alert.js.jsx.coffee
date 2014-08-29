@@ -5,10 +5,8 @@ module.experts = window.TlogAlert = React.createClass
   propTypes:
     text:        React.PropTypes.string
     canClose:    React.PropTypes.bool
-    #tlogDayLog:  React.PropTypes.bool.isRequired
-    #tlogPrivate: React.PropTypes.bool.isRequired
-    #
-  getDefaultProps:
+
+  getDefaultProps: ->
     canClose: false
 
   close: ->
