@@ -64,6 +64,9 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
     else
       @setState currentState: LINK_STATE
 
+  clearForm: ->
+    @refs.commentForm.refs.commentFormField.getDOMNode().value = ''
+
   onClick: ->
     window.commentsMediator.doCommentClicked @props.entryId
 
@@ -78,7 +81,10 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
         text:     text
       success: (comment) =>
         @props.onCommentAdded comment
-        unless @isCurrentlyOpen()
+
+        if @isCurrentlyOpen()
+          @clearForm()
+        else
           window.commentsMediator.doFormClosed @
       error: (data) =>
         @safeUpdateState isPostError: true
