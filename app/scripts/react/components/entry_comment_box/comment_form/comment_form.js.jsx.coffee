@@ -5,11 +5,11 @@ REPLIES_LIMIT = 5
 window.EntryCommentBox_CommentForm = React.createClass
 
   propTypes:
-    user:          React.PropTypes.object.isRequired
-    text:          React.PropTypes.string
-    onSubmit:      React.PropTypes.func.isRequired
-    onCancel:      React.PropTypes.func.isRequired
-    isLoading:     React.PropTypes.bool
+    user:      React.PropTypes.object.isRequired
+    text:      React.PropTypes.string
+    onSubmit:  React.PropTypes.func.isRequired
+    onCancel:  React.PropTypes.func.isRequired
+    isLoading: React.PropTypes.bool
 
   getDefaultProps: ->
     disabled: false
