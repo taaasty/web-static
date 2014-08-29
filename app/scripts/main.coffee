@@ -241,6 +241,8 @@ require './plugins/jquery.collage'
 
 require './editors'
 
+require './gon'
+
 require './settings'
 
 # React_ujs нужно подключать после того как все компоненты загружены

@@ -29,3 +29,11 @@ window.TastyUtils =
     setTimeout (->
       scrollTo(0, $(el).offset().top)
     ), 0
+
+  formatNumber: (rawNumber, round, delimiter = " ") ->
+    number = parseInt rawNumber
+
+    if round?
+      number = Math.ceil( number / round ) * round
+
+    number.toString().replace /\B(?=(\d{3})+(?!\d))/g, delimiter
