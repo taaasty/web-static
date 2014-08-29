@@ -4,8 +4,12 @@ FADE_SPEED = 300
 module.experts = window.TlogAlert = React.createClass
   propTypes:
     text:        React.PropTypes.string
+    canClose:    React.PropTypes.bool
     #tlogDayLog:  React.PropTypes.bool.isRequired
     #tlogPrivate: React.PropTypes.bool.isRequired
+    #
+  getDefaultProps:
+    canClose: false
 
   close: ->
     $(@getDOMNode()).fadeOut FADE_SPEED, ->
@@ -13,9 +17,11 @@ module.experts = window.TlogAlert = React.createClass
 
   render: ->
     if @props.text? && @props.text.length>0
+      if @props.canClose
+        closeElement = `<div className="alert__close" onClick={this.close}><i className="icon icon--cross"></i></div>`
       `<div className="alert">
-        <div className="alert__close" onClick={this.close}><i className="icon icon--cross"></i></div>
         <div className="alert__text" dangerouslySetInnerHTML={{ __html: this.props.text }} />
+        { closeElement }
       </div>`
     else
-      `<div />`
+      null
