@@ -122,9 +122,9 @@ window.EmailSigninShellBox = React.createClass
 
     @setState passwordError: false, emailError: false
 
-    if emailLength < 6
+    if emailLength < 3
       @shake()
-      TastyNotifyController.notify 'error', 'Введите Электронную Почту'
+      TastyNotifyController.notify 'error', 'Введите Электронную Почту или свой ник на сайте'
       return
 
     if passwordLength < 3
