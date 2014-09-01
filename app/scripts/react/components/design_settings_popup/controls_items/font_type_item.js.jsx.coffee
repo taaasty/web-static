@@ -2,6 +2,14 @@
 
 window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass
 
+  # Известные варианты шрифтов
+  # - sans
+  # - serif
+
+  propTypes:
+    fontType:     React.PropTypes.string.isRequired
+    saveCallback: React.PropTypes.func.isRequired
+
   render: ->
    `<div className="settings-design__control settings-design__control--font-type" data-key="fontType">
       <div className="settings-design__control-inner">
@@ -11,18 +19,21 @@ window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass
           <span className="settings-design__state-i">Аа</span>
         </span>
         <span className="form-radiogroup form-radiogroup--type-font absolute--left animate--up">
-          <label className="form-radio form-radio--sans-serif form-radio--active" htmlFor="tlog-fonttype-sans">
-            <span className="form-radio__inner">
-              <span className="form-radio__text">Аа</span>
-              <input className="form-radio__input" id="tlog-fonttype-sans" name="fontType" type="radio" value="sans" />
-            </span>
-          </label>
-          <label className="form-radio form-radio--serif" htmlFor="tlog-fonttype-serif">
-            <span className="form-radio__inner">
-              <span className="form-radio__text">Аа</span>
-              <input className="form-radio__input" id="tlog-fonttype-serif" name="fontType" type="radio" value="serif" />
-            </span>
-          </label>
+          <DesignSettingsPopup_ControlsRadioButton value="sans"
+                                                   settingId="fontType"
+                                                   isActive={ this.props.fontType == "sans" }
+                                                   text="Аа"
+                                                   className="sans-serif"
+                                                   onChange={ this.onChange } />
+
+          <DesignSettingsPopup_ControlsRadioButton value="serif"
+                                                   settingId="fontType"
+                                                   isActive={ this.props.fontType == "serif" }
+                                                   text="Аа"
+                                                   onChange={ this.onChange } />
         </span>
       </div>
     </div>`
+
+  onChange: (value) ->
+    @props.saveCallback(value) if @props.fontType isnt value

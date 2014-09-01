@@ -3,20 +3,25 @@
 DESIGN_SETTINGS_POPUP_TITLE = 'Управление дизайном'
 
 window.DesignSettingsPopup = React.createClass
-  mixins: ['ReactActivitiesMixin']
+  mixins: ['ReactActivitiesMixin', RequesterMixin, ReactShakeMixin]
 
   propTypes:
-    slug:   React.PropTypes.string.isRequired
-    design: React.PropTypes.object.isRequired
+    user:          React.PropTypes.object.isRequired
+    onUserChanged: React.PropTypes.func.isRequired
 
   componentDidMount: ->
-    new FileReceiver # инициализируем загрузку ковера в настройках дизайна
-      hoverClass: "state--drag-hover"
-      cover:      ".js-cover"
-      dropables:  [".js-drop-cover"]
-      inputs:     [".js-upload-cover-input"]
-      onReady:      (file) -> sendCover file
-      onReaderLoad: (url) -> setFormCover url
+    # new FileReceiver # инициализируем загрузку ковера в настройках дизайна
+    #   hoverClass: "state--drag-hover"
+    #   cover:      ".js-cover"
+    #   dropables:  [".js-drop-cover"]
+    #   inputs:     [".js-upload-cover-input"]
+    #   onReady:      (file) -> sendCover file
+    #   onReaderLoad: (url) -> setFormCover url
+
+    @props.user.on 'change', @updateStateUser
+
+  componentWillUnmount: ->
+    @props.user.off 'change', @updateStateUser
 
   render: ->
    `<Popup hasActivities={ this.hasActivities() }
@@ -31,11 +36,37 @@ window.DesignSettingsPopup = React.createClass
           <div className="settings-design__drop-text">Отпустите картинку и она начнет загружаться</div>
         </div>
 
-        <DesignSettingsPopup_Controls />
+        <DesignSettingsPopup_Controls design={ this.props.user.get('design') }
+                                      slug={ this.props.user.get('slug') }
+                                      activitiesHandler={ this.activitiesHandler }
+                                      saveCallback={ this.save } />
       </div>
 
     </Popup>`
 
+  updateStateUser: (user) -> @props.onUserChanged user
+
+  save: (key, value) ->
+    data      = {}
+    data[key] = value
+
+    console.log 'save design', key, value
+    @incrementActivities()
+
+    @createRequest
+      url: Routes.api.design_settings_url @props.user.get('slug')
+      data: data
+      method: 'PUT'
+      success: (design) =>
+        newUser = @props.user
+        newUser.design = design
+
+        @props.user.set newUser
+      error: (data) =>
+        @shake()
+        TastyNotifyController.errorResponse data
+      complete: =>
+        @decrementActivities()
 
    # `<div className="popup popup--settings-design popup--dark ui-draggable" style={{ top: '34px', left: '99px', display: 'block' }}>
    #    <div className="popup__content">

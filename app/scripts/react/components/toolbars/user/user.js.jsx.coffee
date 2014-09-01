@@ -19,7 +19,7 @@ window.UserToolbar = UserToolbar = React.createClass
     logoutUrl:            React.PropTypes.string
 
   getInitialState: ->
-    user:         @props.user
+    user:         new Backbone.Model @props.user
     activeItem:   'newEntry'
     currentState: TOOLBAR_CLOSED
 
@@ -133,9 +133,10 @@ window.UserToolbar = UserToolbar = React.createClass
       container = $('<\div>', {'popup-design-settings-container': ''}).appendTo('body').get 0
 
     React.renderComponent DesignSettingsPopup({
-      slug: @state.user.slug
-      design: @state.user.design
+      user: @state.user
+      onUserChanged: @onUserChanged
     }), container
+
     # url = window.location.origin + window.location.pathname
 
     # if url.indexOf(@props.myTlogUrl) == -1
