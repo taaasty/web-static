@@ -14,9 +14,10 @@ window.DesignSettingsPopup_Controls = React.createClass
   render: ->
     saveCallback = -> @props.saveCallback.apply @, arguments
 
-    console.log @props.design
     return `<div className="settings-design__controls">
-              <DesignSettingsPopup_ControlsBackgroundItem />
+              <DesignSettingsPopup_ControlsBackgroundItem slug={ this.props.slug }
+                                                          backgroundUrl={ this.props.design.background_url }
+                                                          activitiesHandler={ this.props.activitiesHandler } />
 
               <DesignSettingsPopup_ControlsAlignItem coverAlign={ this.props.design.coverAlign }
                                                      saveCallback={ saveCallback.bind(this, 'coverAlign') } />
@@ -33,33 +34,3 @@ window.DesignSettingsPopup_Controls = React.createClass
               <DesignSettingsPopup_ControlsOpacityItem feedOpacity={ this.props.design.feedOpacity }
                                                        saveCallback={ saveCallback.bind(this, 'feedOpacity') } />
             </div>`
-
-#   save: (key, value) ->
-#     @createRequest
-#       url: Routes.api.design_settings_url(@scope.tlog_data.slug)
-#       data:
-#       success: (calendar) =>
-#         @safeUpdateState calendar: calendar
-#       error: (data) =>
-#         TastyNotifyController.errorResponse data
-
-
-#     options=
-#       method: 'PUT'
-#       data:   @scope.formData
-#       withCredentials: true
-#       url:    Routes.api.design_settings_url(@scope.tlog_data.slug)
-
-#     DesignSettingsService.showLoader()
-
-#     $http(options).
-#       success( -> TastyNotifyController.notify 'success', 'Настройки сохранены', 2000 ).
-#       error( (data, status) -> TastyNotifyController.errorResponse data ).
-#       finally( -> DesignSettingsService.hideLoader() )
-
-#   debounceUpdate:  (newVal, oldVal) =>
-#     if newVal != oldVal
-#       $timeout.cancel @timeout if @timeout
-#       @timeout = $timeout(@saveChanges, secondsToWaitBeforeSave * 1000 )
-
-# ]
