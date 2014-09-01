@@ -19,7 +19,7 @@ window.UserToolbar = UserToolbar = React.createClass
     logoutUrl:            React.PropTypes.string
 
   getInitialState: ->
-    user:         @props.user
+    user:         new Backbone.Model @props.user
     activeItem:   'newEntry'
     currentState: TOOLBAR_CLOSED
 
@@ -127,17 +127,27 @@ window.UserToolbar = UserToolbar = React.createClass
     React.renderComponent PersonsPopup(user: @state.user), container
 
   showDesignSettings: ->
-    url = window.location.origin + window.location.pathname
+    container = document.querySelectorAll('[popup-design-settings-container')[0]
 
-    if url.indexOf(@props.myTlogUrl) == -1
-      TastyConfirmController.show
-        message:           'Для изменения дизайна вашего дневника, необходимо перейти в профиль'
-        acceptButtonText:  'Перейти в профиль'
-        acceptButtonColor: 'green'
-        rejectButtonText:  'Остаться на странице'
-        onAccept:          @redirectToProfile
-    else
-      $(document).trigger 'SHOW_DESIGN_SETTINGS'
+    unless container
+      container = $('<\div>', {'popup-design-settings-container': ''}).appendTo('body').get 0
+
+    React.renderComponent DesignSettingsPopup({
+      user: @state.user
+      onUserChanged: @onUserChanged
+    }), container
+
+    # url = window.location.origin + window.location.pathname
+
+    # if url.indexOf(@props.myTlogUrl) == -1
+    #   TastyConfirmController.show
+    #     message:           'Для изменения дизайна вашего дневника, необходимо перейти в профиль'
+    #     acceptButtonText:  'Перейти в профиль'
+    #     acceptButtonColor: 'green'
+    #     rejectButtonText:  'Остаться на странице'
+    #     onAccept:          @redirectToProfile
+    # else
+    #   $(document).trigger 'SHOW_DESIGN_SETTINGS'
 
   handleSettingsSelect: ->
     if @state.user instanceof Backbone.Model

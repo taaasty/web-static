@@ -38,6 +38,9 @@ gulp.task "scripts", ->
         'eventEmitter':
           path: 'app/bower_components/eventEmitter/EventEmitter.js'
           exports: null
+        'jquery-ui-slider':
+          path: 'app/bower_components/jquery-ui/ui/slider.js'
+          exports: null
     ))
     .on("error", handleError)
     .pipe($.rename("bundle.js"))

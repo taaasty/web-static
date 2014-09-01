@@ -107,5 +107,3 @@ class window.FileReceiver
       return
 
     return
-
-return
