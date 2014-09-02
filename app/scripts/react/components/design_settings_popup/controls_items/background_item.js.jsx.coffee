@@ -4,14 +4,16 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
   mixins: ['ReactActivitiesUser', ComponentManipulationsMixin]
 
   propTypes:
-    slug:              React.PropTypes.string.isRequired
-    backgroundUrl:     React.PropTypes.string.isRequired
-    activitiesHandler: React.PropTypes.object.isRequired
+    slug:                React.PropTypes.string.isRequired
+    backgroundUrl:       React.PropTypes.string.isRequired
+    activitiesHandler:   React.PropTypes.object.isRequired
+    onBackgroundChanged: React.PropTypes.func.isRequired
 
   getInitialState: ->
     backgroundUrl: @props.backgroundUrl
 
-  componentDidMount: -> @_initCoverUpload()
+  componentDidMount:    -> @_bindCoverUpload()
+  componentWillUnmount: -> @_unbindCoverUpload()
 
   render: ->
     backgroundStyles = 'background-image': 'url(' + @state.backgroundUrl + ')'
@@ -36,24 +38,41 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
               </div>
             </div>`
 
-  _initCoverUpload: ->
-    $uploadCoverInput = $( @refs.uploadCoverInput.getDOMNode() )
+  _bindCoverUpload: ->
+    @$uploadCoverInput = $( @refs.uploadCoverInput.getDOMNode() )
 
-    $uploadCoverInput.fileupload
+    @$uploadCoverInput.fileupload
       url: Routes.api.design_settings_cover_url @props.slug
       paramName: 'file'
       autoUpload: true
       replaceFileInput: false
+      add: (e, data) =>
+        @_readFile data.files[0]
+
+        data.process().done ->
+          data.submit()
       start: =>
         @incrementActivities()
       done: (e, data) =>
-        @_setBodyBackgroundImage data.jqXHR.responseJSON.background_url
+        @props.onBackgroundChanged data.jqXHR.responseJSON
 
         TastyNotifyController.notifySuccess 'Настройки сохранены', 2000
       fail: (e, data) ->
         TastyNotifyController.errorResponse data.response().jqXHR
       always: =>
         @decrementActivities()
+
+  _readFile: (file) ->
+    fileReader = new FileReader()
+
+    fileReader.onload = (e) =>
+      url = e.target.result
+      @_setBodyBackgroundImage url
+
+    fileReader.readAsDataURL file
+
+  _unbindCoverUpload: ->
+    @$uploadCoverInput.fileupload 'destroy'
 
   _setBodyBackgroundImage: (url) ->
     $coverBackground = $('.page-cover')

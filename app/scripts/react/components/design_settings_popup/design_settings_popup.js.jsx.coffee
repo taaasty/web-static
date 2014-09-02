@@ -50,7 +50,8 @@ window.DesignSettingsPopup = React.createClass
                 <DesignSettingsPopup_Controls design={ this.props.user.get('design') }
                                               slug={ this.props.user.get('slug') }
                                               activitiesHandler={ this.activitiesHandler }
-                                              saveCallback={ this.save } />
+                                              saveCallback={ this.save }
+                                              onBackgroundChanged={ this._updateUserDesign } />
               </div>
 
             </Popup>`
@@ -68,11 +69,8 @@ window.DesignSettingsPopup = React.createClass
       url: Routes.api.design_settings_url @props.user.get('slug')
       data: data
       method: 'PUT'
-      success: (design) =>
-        newUser = @props.user
-        newUser.design = design
-
-        @props.user.set newUser
+      success: (newDesign) =>
+        @_updateUserDesign newDesign
 
         TastyNotifyController.notifySuccess 'Настройки сохранены', 2000
       error: (data) =>
@@ -81,10 +79,6 @@ window.DesignSettingsPopup = React.createClass
       complete: =>
         @decrementActivities()
 
-  onPageClose: (e) ->
-    if @hasActivities()
-      'Некоторые настройки ещё не успели сохраниться. Вы уверены, что хотите выйти?'
-
   close: ->
     if @hasActivities()
       TastyAlertController.show
@@ -92,6 +86,12 @@ window.DesignSettingsPopup = React.createClass
         buttonText: 'Я подожду'
     else
       @unmount()
+
+  _updateUserDesign: (design) ->
+    newUser = @props.user
+    newUser.design = design
+
+    @props.user.set newUser
 
   onDragEnter: ->
     @setState isDragged: true unless @state.isDragged
@@ -102,3 +102,7 @@ window.DesignSettingsPopup = React.createClass
 
   onDrop: ->
     @setState isDragged: false
+
+  onPageClose: (e) ->
+    if @hasActivities()
+      'Некоторые настройки ещё не успели сохраниться. Вы уверены, что хотите выйти?'
