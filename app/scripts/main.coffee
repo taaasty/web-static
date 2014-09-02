@@ -120,6 +120,7 @@ require './react/components/design_settings_popup/controls_items/feed_color_item
 require './react/components/design_settings_popup/controls_items/font_type_item'
 require './react/components/design_settings_popup/controls_items/opacity_item'
 require './react/components/design_settings_popup/controls_items/_radiobutton'
+require './react/components/design_settings_popup/controls_items/_progressbar'
 
 require './react/components/persons_popup/mixins/panel_mixin'
 require './react/components/persons_popup/persons_popup'
