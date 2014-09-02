@@ -15,14 +15,12 @@ window.DesignSettingsPopup = React.createClass
   componentDidMount: ->
     @$designSettings = $( @refs.designSettings.getDOMNode() )
 
-    @props.user.on 'change',     @updateStateUser
+    @props.user.on 'change', @updateStateUser
     $(window).on 'beforeunload', @onPageClose
-    Mousetrap.bind 'esc',        @unmount
 
   componentWillUnmount: ->
-    @props.user.off 'change',     @updateStateUser
+    @props.user.off 'change', @updateStateUser
     $(window).off 'beforeunload', @onPageClose
-    Mousetrap.unbind 'esc',       @unmount
 
   render: ->
     designSettingsClasses = React.addons.classSet {
@@ -34,7 +32,8 @@ window.DesignSettingsPopup = React.createClass
                    title={ DESIGN_SETTINGS_POPUP_TITLE }
                    isDraggable={ true }
                    position={{ top: 30, left: 30 }}
-                   className="popup--settings-design">
+                   className="popup--settings-design"
+                   onClose={ this.close }>
 
               <div ref="designSettings"
                    className={ designSettingsClasses }
@@ -84,12 +83,15 @@ window.DesignSettingsPopup = React.createClass
 
   onPageClose: (e) ->
     if @hasActivities()
-      if e.type is 'beforeunload'
-        'Некоторые настройки ещё не успели сохраниться. Вы уверены, что хотите выйти?'
-      else
-        TastyAlertController.show
-          message:    'Некоторые настройки ещё не успели сохраниться.'
-          buttonText: 'Я подожду'
+      'Некоторые настройки ещё не успели сохраниться. Вы уверены, что хотите выйти?'
+
+  close: ->
+    if @hasActivities()
+      TastyAlertController.show
+        message:    'Некоторые настройки ещё не успели сохраниться.'
+        buttonText: 'Я подожду'
+    else
+      @unmount()
 
   onDragEnter: ->
     @setState isDragged: true unless @state.isDragged

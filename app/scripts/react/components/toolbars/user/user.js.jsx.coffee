@@ -136,7 +136,7 @@ window.UserToolbar = UserToolbar = React.createClass
     if url.indexOf( @props.myTlogUrl ) == -1
       TastyConfirmController.show
         message:           'Для изменения дизайна вашего дневника, необходимо перейти в профиль'
-        acceptButtonText:  'Перейти в профиль'
+        acceptButtonText:  'Перейти в тлог'
         acceptButtonColor: 'green'
         onAccept:          @redirectToProfile
     else

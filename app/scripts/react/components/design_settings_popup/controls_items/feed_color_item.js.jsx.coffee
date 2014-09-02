@@ -10,6 +10,9 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass
     feedColor:    React.PropTypes.string.isRequired
     saveCallback: React.PropTypes.func.isRequired
 
+  getInitialState: ->
+    active: @props.feedColor
+
   render: ->
    `<div className="settings-design__control settings-design__control--feed-color" data-key="feedColor">
       <div className="settings-design__control-inner">
@@ -21,15 +24,20 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass
         <span className="form-radiogroup form-radiogroup--radiobuttons form-radiogroup--feed-color absolute--left animate--up">
           <DesignSettingsPopup_ControlsRadioButton value="white"
                                                    settingId="feedColor"
-                                                   isActive={ this.props.feedColor == "white" }
+                                                   isActive={ this.state.active == "white" }
                                                    text="Белый"
-                                                   onChange={ this.props.saveCallback } />
+                                                   onChange={ this.onChange } />
 
           <DesignSettingsPopup_ControlsRadioButton value="black"
                                                    settingId="feedColor"
-                                                   isActive={ this.props.feedColor == "black" }
+                                                   isActive={ this.state.active == "black" }
                                                    text="Чёрный"
-                                                   onChange={ this.props.saveCallback } />
+                                                   onChange={ this.onChange } />
         </span>
       </div>
     </div>`
+
+  onChange: (value) ->
+    unless @state.active is value
+      @setState active: value
+      @props.saveCallback value
