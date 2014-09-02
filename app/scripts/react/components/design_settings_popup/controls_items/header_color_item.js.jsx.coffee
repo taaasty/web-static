@@ -26,30 +26,27 @@ window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass
                                                    settingId="headerColor"
                                                    isActive={ this.props.headerColor == "white" }
                                                    text="Белый"
-                                                   onChange={ this.onChange } />
+                                                   onChange={ this.props.saveCallback } />
 
           <DesignSettingsPopup_ControlsRadioButton value="black"
                                                    settingId="headerColor"
                                                    isActive={ this.props.headerColor == "black" }
                                                    text="Чёрный"
-                                                   onChange={ this.onChange } />
+                                                   onChange={ this.props.saveCallback } />
 
           <DesignSettingsPopup_ControlsRadioButton value="whiteonblack"
                                                    settingId="headerColor"
                                                    isActive={ this.props.headerColor == "whiteonblack" }
                                                    text="Белый на чёрном"
                                                    className="white-on-black"
-                                                   onChange={ this.onChange } />
+                                                   onChange={ this.props.saveCallback } />
 
           <DesignSettingsPopup_ControlsRadioButton value="blackonwhite"
                                                    settingId="headerColor"
                                                    isActive={ this.props.headerColor == "blackonwhite" }
                                                    text="Чёрный на белом"
                                                    className="black-on-white"
-                                                   onChange={ this.onChange } />
+                                                   onChange={ this.props.saveCallback } />
         </span>
       </div>
     </div>`
-
-  onChange: (value) ->
-    @props.saveCallback(value) if @props.headerColor isnt value

@@ -59,30 +59,3 @@ window.DesignSettingsPopup_ControlsRadioButton = React.createClass
   onChange: ->
     @props.onChange @props.value
     @_setBodyClass()
-
-
-
-
-  # $scope.clearAll = ->
-  #   elements.each (index, radioElement) ->
-  #     $(radioElement).removeClass activeClass
-
-  # prefix = 'tlog-'+key.toLowerCase()+'-'
-
-  # $scope.select = (value) ->
-  #   $scope.clearAll()
-
-  #   $scope.setBodyClass value
-
-  # $scope.setBodyClass = (value) ->
-  #   # КОгда подключаетя этот контроллер он портит body
-
-  #   elementsHash[value].addClass activeClass
-
-  #   return unless $scope.$parent.isOpen
-
-  #   values = Object.keys elementsHash
-
-  #   # Привязать это через какой-то скоуп или контроллер
-  #   classes = values.map((value) -> prefix+value).join ' '
-  #   body.removeClass(classes).addClass prefix+value

@@ -26,16 +26,13 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass
                                                    settingId="coverAlign"
                                                    isActive={ this.props.coverAlign == "justify" }
                                                    text="по ширине"
-                                                   onChange={ this.onChange } />
+                                                   onChange={ this.props.saveCallback } />
 
           <DesignSettingsPopup_ControlsRadioButton value="center"
                                                    settingId="coverAlign"
                                                    isActive={ this.props.coverAlign == "center" }
                                                    text="по центру"
-                                                   onChange={ this.onChange } />
+                                                   onChange={ this.props.saveCallback } />
         </span>
       </div>
     </div>`
-
-  onChange: (value) ->
-    @props.saveCallback(value) if @props.coverAlign isnt value

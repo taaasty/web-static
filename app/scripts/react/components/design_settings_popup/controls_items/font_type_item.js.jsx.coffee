@@ -24,16 +24,13 @@ window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass
                                                    isActive={ this.props.fontType == "sans" }
                                                    text="Аа"
                                                    className="sans-serif"
-                                                   onChange={ this.onChange } />
+                                                   onChange={ this.props.saveCallback } />
 
           <DesignSettingsPopup_ControlsRadioButton value="serif"
                                                    settingId="fontType"
                                                    isActive={ this.props.fontType == "serif" }
                                                    text="Аа"
-                                                   onChange={ this.onChange } />
+                                                   onChange={ this.props.saveCallback } />
         </span>
       </div>
     </div>`
-
-  onChange: (value) ->
-    @props.saveCallback(value) if @props.fontType isnt value

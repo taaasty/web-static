@@ -128,7 +128,7 @@ window.UserToolbar = UserToolbar = React.createClass
 
   showDesignSettings: ->
     url = window.location.origin + window.location.pathname
-    container = document.querySelectorAll('[popup-design-settings-container')[0]
+    container = document.querySelectorAll('[popup-design-settings-container]')[0]
 
     unless container
       container = $('<\div>', {'popup-design-settings-container': ''}).appendTo('body').get 0
