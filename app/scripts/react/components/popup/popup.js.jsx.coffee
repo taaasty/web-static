@@ -22,12 +22,11 @@ window.Popup = React.createClass
     isDraggable:   false
 
   componentDidMount: ->
-    $('body').addClass 'no-scroll'
-    Mousetrap.bind 'esc', @close
     @makeDraggable() if @props.isDraggable
 
+    Mousetrap.bind 'esc', @close
+
   componentWillUnmount: ->
-    $('body').removeClass 'no-scroll'
     Mousetrap.unbind 'esc', @close
 
   render: ->

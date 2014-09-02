@@ -4,16 +4,14 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
   mixins: ['ReactActivitiesUser', ComponentManipulationsMixin]
 
   propTypes:
-    slug:          React.PropTypes.string.isRequired
-    backgroundUrl: React.PropTypes.string.isRequired
+    slug:              React.PropTypes.string.isRequired
+    backgroundUrl:     React.PropTypes.string.isRequired
+    activitiesHandler: React.PropTypes.object.isRequired
 
   getInitialState: ->
     backgroundUrl: @props.backgroundUrl
 
   componentDidMount: -> @_initCoverUpload()
-
-  componentWillUnmount: ->
-    $(window).off 'beforeunload', @onPageClose
 
   render: ->
     backgroundStyles = 'background-image': 'url(' + @state.backgroundUrl + ')'
@@ -38,9 +36,6 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
               </div>
             </div>`
 
-  onPageClose: ->
-    'Настройки фона ещё не успели примениться. Вы уверены, что хотите выйти?'
-
   _initCoverUpload: ->
     $uploadCoverInput = $( @refs.uploadCoverInput.getDOMNode() )
 
@@ -51,8 +46,6 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
       replaceFileInput: false
       start: =>
         @incrementActivities()
-
-        $(window).on 'beforeunload', @onPageClose
       done: (e, data) =>
         @_setBodyBackgroundImage data.jqXHR.responseJSON.background_url
 
@@ -61,8 +54,6 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
         TastyNotifyController.errorResponse data.response().jqXHR
       always: =>
         @decrementActivities()
-
-        $(window).off 'beforeunload', @onPageClose
 
   _setBodyBackgroundImage: (url) ->
     $coverBackground = $('.page-cover')

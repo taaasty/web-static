@@ -13,6 +13,9 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass
     coverAlign:   React.PropTypes.string.isRequired
     saveCallback: React.PropTypes.func.isRequired
 
+  getInitialState: ->
+    active: @props.coverAlign
+
   render: ->
    `<div className="settings-design__control settings-design__control--cover-align">
       <div className="settings-design__control-inner">
@@ -24,15 +27,20 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass
         <span className="form-radiogroup form-radiogroup--dotted-list absolute--left animate--up">
           <DesignSettingsPopup_ControlsRadioButton value="justify"
                                                    settingId="coverAlign"
-                                                   isActive={ this.props.coverAlign == "justify" }
+                                                   isActive={ this.state.active == "justify" }
                                                    text="по ширине"
-                                                   onChange={ this.props.saveCallback } />
+                                                   onChange={ this.onChange } />
 
           <DesignSettingsPopup_ControlsRadioButton value="center"
                                                    settingId="coverAlign"
-                                                   isActive={ this.props.coverAlign == "center" }
+                                                   isActive={ this.state.active == "center" }
                                                    text="по центру"
-                                                   onChange={ this.props.saveCallback } />
+                                                   onChange={ this.onChange } />
         </span>
       </div>
     </div>`
+
+  onChange: (value) ->
+    unless @state.active is value
+      @setState active: value
+      @props.saveCallback value
