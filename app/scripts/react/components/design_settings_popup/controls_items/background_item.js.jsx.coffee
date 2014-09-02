@@ -11,6 +11,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
 
   getInitialState: ->
     backgroundUrl: @props.backgroundUrl
+    progress:      0
 
   componentDidMount:    -> @_bindCoverUpload()
   componentWillUnmount: -> @_unbindCoverUpload()
@@ -19,6 +20,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
     backgroundStyles = 'background-image': 'url(' + @state.backgroundUrl + ')'
 
     return `<div className="settings-design__control settings-design__control--cover">
+              <DesignSettingsPopup_ControlsProgressbar progress={ this.state.progress } />
               <div className="settings-design__control-inner">
                 <span className="settings-design__valign"></span>
                 <span className="settings-design__text absolute--left animate--down">Фон блога</span>
@@ -48,11 +50,12 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
       replaceFileInput: false
       add: (e, data) =>
         @_readFile data.files[0]
+        data.process().done -> data.submit()
+      start: => @incrementActivities()
+      progress: (e, data) =>
+        progress = parseInt(data.loaded / data.total * 100, 10)
 
-        data.process().done ->
-          data.submit()
-      start: =>
-        @incrementActivities()
+        @safeUpdateState { progress }
       done: (e, data) =>
         @props.onBackgroundChanged data.jqXHR.responseJSON
 
@@ -61,6 +64,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
         TastyNotifyController.errorResponse data.response().jqXHR
       always: =>
         @decrementActivities()
+        @safeUpdateState(progress: 0)
 
   _readFile: (file) ->
     fileReader = new FileReader()
