@@ -10,24 +10,10 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
   getInitialState: ->
     backgroundUrl: @props.backgroundUrl
 
-  componentDidMount: ->
-    $uploadCoverInput = $( @refs.uploadCoverInput.getDOMNode() )
+  componentDidMount: -> @_initCoverUpload()
 
-    $uploadCoverInput.fileupload
-      url: Routes.api.design_settings_cover_url @props.slug
-      paramName: 'file'
-      autoUpload: true
-      replaceFileInput: false
-      start: =>
-        @incrementActivities()
-      done: (e, data) =>
-        @_setBodyBackgroundImage data.jqXHR.responseJSON.background_url
-
-        TastyNotifyController.notifySuccess 'Настройки сохранены', 2000
-      fail: (e, data) ->
-        TastyNotifyController.errorResponse data.response().jqXHR
-      always: =>
-        @decrementActivities()
+  componentWillUnmount: ->
+    $(window).off 'beforeunload', @onPageClose
 
   render: ->
     backgroundStyles = 'background-image': 'url(' + @state.backgroundUrl + ')'
@@ -51,6 +37,32 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
                       style={ backgroundStyles }></span>
               </div>
             </div>`
+
+  onPageClose: ->
+    'Настройки фона ещё не успели примениться. Вы уверены, что хотите выйти?'
+
+  _initCoverUpload: ->
+    $uploadCoverInput = $( @refs.uploadCoverInput.getDOMNode() )
+
+    $uploadCoverInput.fileupload
+      url: Routes.api.design_settings_cover_url @props.slug
+      paramName: 'file'
+      autoUpload: true
+      replaceFileInput: false
+      start: =>
+        @incrementActivities()
+
+        $(window).on 'beforeunload', @onPageClose
+      done: (e, data) =>
+        @_setBodyBackgroundImage data.jqXHR.responseJSON.background_url
+
+        TastyNotifyController.notifySuccess 'Настройки сохранены', 2000
+      fail: (e, data) ->
+        TastyNotifyController.errorResponse data.response().jqXHR
+      always: =>
+        @decrementActivities()
+
+        $(window).off 'beforeunload', @onPageClose
 
   _setBodyBackgroundImage: (url) ->
     $coverBackground = $('.page-cover')

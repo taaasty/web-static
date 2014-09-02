@@ -23,16 +23,13 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass
                                                    settingId="feedColor"
                                                    isActive={ this.props.feedColor == "white" }
                                                    text="Белый"
-                                                   onChange={ this.onChange } />
+                                                   onChange={ this.props.saveCallback } />
 
           <DesignSettingsPopup_ControlsRadioButton value="black"
                                                    settingId="feedColor"
                                                    isActive={ this.props.feedColor == "black" }
                                                    text="Чёрный"
-                                                   onChange={ this.onChange } />
+                                                   onChange={ this.props.saveCallback } />
         </span>
       </div>
     </div>`
-
-  onChange: (value) ->
-    @props.saveCallback(value) if @props.feedColor isnt value

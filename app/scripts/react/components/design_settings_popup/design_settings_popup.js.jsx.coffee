@@ -3,7 +3,7 @@
 DESIGN_SETTINGS_POPUP_TITLE = 'Управление дизайном'
 
 window.DesignSettingsPopup = React.createClass
-  mixins: ['ReactActivitiesMixin', RequesterMixin, ReactShakeMixin]
+  mixins: ['ReactActivitiesMixin', RequesterMixin, ReactShakeMixin, ReactUnmountMixin]
 
   propTypes:
     user:          React.PropTypes.object.isRequired
@@ -13,11 +13,16 @@ window.DesignSettingsPopup = React.createClass
     isDragged: false
 
   componentDidMount: ->
-    @props.user.on 'change', @updateStateUser
     @$designSettings = $( @refs.designSettings.getDOMNode() )
 
+    @props.user.on 'change',     @updateStateUser
+    $(window).on 'beforeunload', @onPageClose
+    Mousetrap.bind 'esc',        @unmount
+
   componentWillUnmount: ->
-    @props.user.off 'change', @updateStateUser
+    @props.user.off 'change',     @updateStateUser
+    $(window).off 'beforeunload', @onPageClose
+    Mousetrap.unbind 'esc',       @unmount
 
   render: ->
     designSettingsClasses = React.addons.classSet {
@@ -25,42 +30,31 @@ window.DesignSettingsPopup = React.createClass
       'state--drag-hover': @state.isDragged
     }
 
-    `<Popup hasActivities={ this.hasActivities() }
-            title={ DESIGN_SETTINGS_POPUP_TITLE }
-            isDraggable={ true }
-            position={{ top: 30, left: 30 }}
-            className="popup--settings-design"
-            onClose={ this.unmount }>
+    return `<Popup hasActivities={ this.hasActivities() }
+                   title={ DESIGN_SETTINGS_POPUP_TITLE }
+                   isDraggable={ true }
+                   position={{ top: 30, left: 30 }}
+                   className="popup--settings-design">
 
-      <div ref="designSettings"
-           className={ designSettingsClasses }
-           onDragEnter={ this.onDragEnter }>
+              <div ref="designSettings"
+                   className={ designSettingsClasses }
+                   onDragEnter={ this.onDragEnter }>
 
-        <div className="settings-design__drop"
-             onDragLeave={ this.onDragLeave }
-             onDrop={ this.onDrop }>
-           <div className="settings-design__drop-text">
-             Отпустите картинку и она начнет загружаться
-           </div>
-         </div>
+                <div className="settings-design__drop"
+                     onDragLeave={ this.onDragLeave }
+                     onDrop={ this.onDrop }>
+                  <div className="settings-design__drop-text">
+                    Отпустите картинку и она начнет загружаться
+                  </div>
+                </div>
 
-         <DesignSettingsPopup_Controls design={ this.props.user.get('design') }
-                                       slug={ this.props.user.get('slug') }
-                                       activitiesHandler={ this.activitiesHandler }
-                                       saveCallback={ this.save } />
-      </div>
+                <DesignSettingsPopup_Controls design={ this.props.user.get('design') }
+                                              slug={ this.props.user.get('slug') }
+                                              activitiesHandler={ this.activitiesHandler }
+                                              saveCallback={ this.save } />
+              </div>
 
-    </Popup>`
-
-  onDragEnter: ->
-    @setState isDragged: true unless @state.isDragged
-
-  onDragLeave: (e) ->
-    if e.target.className is e.currentTarget.className
-      @setState isDragged: false
-
-  onDrop: ->
-    @setState isDragged: false
+            </Popup>`
 
   updateStateUser: (user) -> @props.onUserChanged user
 
@@ -87,3 +81,22 @@ window.DesignSettingsPopup = React.createClass
         TastyNotifyController.errorResponse data
       complete: =>
         @decrementActivities()
+
+  onPageClose: (e) ->
+    if @hasActivities()
+      if e.type is 'beforeunload'
+        'Некоторые настройки ещё не успели сохраниться. Вы уверены, что хотите выйти?'
+      else
+        TastyAlertController.show
+          message:    'Некоторые настройки ещё не успели сохраниться.'
+          buttonText: 'Я подожду'
+
+  onDragEnter: ->
+    @setState isDragged: true unless @state.isDragged
+
+  onDragLeave: (e) ->
+    if e.target.className is e.currentTarget.className
+      @setState isDragged: false
+
+  onDrop: ->
+    @setState isDragged: false
