@@ -8,21 +8,12 @@ window.ToolbarSettings = React.createClass
   ]
 
   propTypes:
-    title:         React.PropTypes.string.isRequired
-    user:          React.PropTypes.instanceOf(Backbone.Model).isRequired
-    onUserChanged: React.PropTypes.func.isRequired
+    title: React.PropTypes.string.isRequired
+    user:  React.PropTypes.instanceOf(Backbone.Model).isRequired
 
   getInitialState: ->
     isProcess: false
     user:      @props.user
-
-  componentWillMount: ->
-    @props.user.on 'change', @updateStateUser
-
-  componentWillUnmount: ->
-    @props.user.off 'change', @updateStateUser
-
-  updateStateUser: (user) -> @props.onUserChanged user
 
   save: (key, value) ->
     console.log 'save', key, value
