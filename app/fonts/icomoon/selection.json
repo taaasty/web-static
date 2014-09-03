@@ -831,7 +831,7 @@
 				"id": 72,
 				"prevSize": 32,
 				"code": 58946,
-				"name": "lock-2",
+				"name": "unlock-2",
 				"ligatures": ""
 			},
 			"setIdx": 0,
