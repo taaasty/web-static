@@ -1,11 +1,11 @@
 ###* @jsx React.DOM ###
 
 MOUSE_LEAVE_TIMEOUT = 300
-TOOLBAR_CLOSED = 'closed'
+TOOLBAR_CLOSED          = 'closed'
 TOOLBAR_OPENED_BY_HOVER = 'openedByHover'
 TOOLBAR_OPENED_BY_CLICK = 'openedByClick'
 
-window.UserToolbar = UserToolbar = React.createClass
+window.UserToolbar = React.createClass
   mixins: [TouchMixin, ComponentManipulationsMixin]
 
   propTypes:
@@ -20,7 +20,6 @@ window.UserToolbar = UserToolbar = React.createClass
 
   getInitialState: ->
     user:         new Backbone.Model @props.user
-    activeItem:   'newEntry'
     currentState: TOOLBAR_CLOSED
 
   componentDidMount: ->
@@ -28,19 +27,14 @@ window.UserToolbar = UserToolbar = React.createClass
       @showDesignSettings()
       localStorage.removeItem 'displayDesignSettings'
 
+    @state.user.on 'change', @updateStateUser
+
   componentWillUnmount: ->
     clearTimeout @timeout if @timeout
 
+    @state.user.off 'change', @updateStateUser
+
   render: ->
-    onSelect = (type) ->
-      @setState activeItem: type
-
-      switch type
-        when 'friends'  then @handleFriendsSelect()
-        when 'design'   then @showDesignSettings()
-        when 'settings' then @handleSettingsSelect()
-        else console.log 'Неизвестный пункт тулбара пользователя'
-
     toolbarClasses = React.addons.classSet {
       'toolbar':        true
       'toolbar--right': true
@@ -53,12 +47,11 @@ window.UserToolbar = UserToolbar = React.createClass
                  onMouseLeave={ this.onMouseLeave }
                  className={ toolbarClasses }>
               <div className="toolbar__toggle">
-                <i className="icon icon--menu"></i>
+                <i className="icon icon--menu" />
               </div>
               <div className="toolbar__popup">
                 <ul className="toolbar__popup-list">
-                  <ToolbarItem active={ this.state.activeItem == 'newEntry' }
-                               href={ this.props.newEntryUrl }
+                  <ToolbarItem href={ this.props.newEntryUrl }
                                icon="icon--plus"
                                title="Новая запись" />
                   <ToolbarItem href={ this.props.myTlogUrl }
@@ -80,16 +73,13 @@ window.UserToolbar = UserToolbar = React.createClass
                   <ToolbarItem disabled={ true }
                                icon="icon--messages"
                                title="Сообщения" />
-                  <ToolbarItem active={ this.state.activeItem == 'friends' }
-                               onSelect={ onSelect.bind(this, 'friends') }
+                  <ToolbarItem onSelect={ this.handleFriendsSelect }
                                icon="icon--friends"
                                title="Друзья" />
-                  <ToolbarItem active={ this.state.activeItem == 'design' }
-                               onSelect={ onSelect.bind(this, 'design') }
+                  <ToolbarItem onSelect={ this.showDesignSettings }
                                icon="icon--drawing"
                                title="Дизайн дневника" />
-                  <ToolbarItem active={ this.state.activeItem == 'settings' }
-                               onSelect={ onSelect.bind(this, 'settings') }
+                  <ToolbarItem onSelect={ this.handleSettingsSelect }
                                icon="icon--cogwheel"
                                title="Настройки" />
                   <ToolbarItem href={ this.props.logoutUrl }
@@ -98,25 +88,6 @@ window.UserToolbar = UserToolbar = React.createClass
                 </ul>
               </div>
             </nav>`
-
-  onClick: ->
-    switch @state.currentState
-      when TOOLBAR_CLOSED          then @setState currentState: TOOLBAR_OPENED_BY_CLICK
-      when TOOLBAR_OPENED_BY_CLICK then @setState currentState: TOOLBAR_CLOSED
-      when TOOLBAR_OPENED_BY_HOVER then @setState currentState: TOOLBAR_CLOSED
-      else console.error? "Unknown state.currentState", @state.currentState
-
-  onMouseEnter: ->
-    clearTimeout @timeout if @timeout?
-
-    if @state.currentState == TOOLBAR_CLOSED
-      @setState currentState: TOOLBAR_OPENED_BY_HOVER
-
-  onMouseLeave: ->
-    if @state.currentState == TOOLBAR_OPENED_BY_HOVER
-      @timeout = setTimeout (=>
-        @safeUpdateState currentState: TOOLBAR_CLOSED
-      ), MOUSE_LEAVE_TIMEOUT
 
   handleFriendsSelect: ->
     container = document.querySelectorAll('[popup-persons-container]')[0]
@@ -135,26 +106,17 @@ window.UserToolbar = UserToolbar = React.createClass
 
     if url.indexOf( @props.myTlogUrl ) == -1
       TastyConfirmController.show
-        message:           'Для изменения дизайна вашего дневника, необходимо перейти в профиль'
+        message:           'Для изменения дизайна вашего дневника, необходимо перейти в тлог'
         acceptButtonText:  'Перейти в тлог'
         acceptButtonColor: 'green'
         onAccept:          @redirectToProfile
     else
-      React.renderComponent DesignSettingsPopup({
-        user: @state.user
-        onUserChanged: @onUserChanged
-      }), container
+      React.renderComponent DesignSettingsPopup(user: @state.user), container
 
   handleSettingsSelect: ->
-    if @state.user instanceof Backbone.Model
-      user = @state.user
-    else
-      user = new Backbone.Model @state.user
-
     ReactApp.popup.show ToolbarSettings, {
-      title:         'Настройки',
-      user:          user
-      onUserChanged: @onUserChanged
+      title: 'Настройки'
+      user:  @state.user
     }
 
   redirectToProfile: ->
@@ -163,6 +125,23 @@ window.UserToolbar = UserToolbar = React.createClass
 
   isOpen: -> @state.currentState != TOOLBAR_CLOSED
 
-  onUserChanged: (user) -> @setState user: user
+  updateStateUser: (user) -> @setState { user }
 
-module.exports = UserToolbar
+  onClick: ->
+    switch @state.currentState
+      when TOOLBAR_CLOSED          then @setState currentState: TOOLBAR_OPENED_BY_CLICK
+      when TOOLBAR_OPENED_BY_CLICK then @setState currentState: TOOLBAR_CLOSED
+      when TOOLBAR_OPENED_BY_HOVER then @setState currentState: TOOLBAR_CLOSED
+      else console.error? 'Unknown state.currentState', @state.currentState
+
+  onMouseEnter: ->
+    clearTimeout @timeout if @timeout?
+
+    if @state.currentState == TOOLBAR_CLOSED
+      @setState currentState: TOOLBAR_OPENED_BY_HOVER
+
+  onMouseLeave: ->
+    if @state.currentState == TOOLBAR_OPENED_BY_HOVER
+      @timeout = setTimeout (=>
+        @safeUpdateState currentState: TOOLBAR_CLOSED
+      ), MOUSE_LEAVE_TIMEOUT

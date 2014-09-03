@@ -6,8 +6,7 @@ window.DesignSettingsPopup = React.createClass
   mixins: ['ReactActivitiesMixin', RequesterMixin, ReactShakeMixin, ReactUnmountMixin]
 
   propTypes:
-    user:          React.PropTypes.object.isRequired
-    onUserChanged: React.PropTypes.func.isRequired
+    user: React.PropTypes.object.isRequired
 
   getInitialState: ->
     isDragged: false
@@ -15,11 +14,9 @@ window.DesignSettingsPopup = React.createClass
   componentDidMount: ->
     @$designSettings = $( @refs.designSettings.getDOMNode() )
 
-    @props.user.on 'change', @updateStateUser
     $(window).on 'beforeunload', @onPageClose
 
   componentWillUnmount: ->
-    @props.user.off 'change', @updateStateUser
     $(window).off 'beforeunload', @onPageClose
 
   render: ->
@@ -55,8 +52,6 @@ window.DesignSettingsPopup = React.createClass
               </div>
 
             </Popup>`
-
-  updateStateUser: (user) -> @props.onUserChanged user
 
   save: (key, value) ->
     data      = {}
