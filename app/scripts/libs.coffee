@@ -20,6 +20,8 @@ window.Backbone = require 'backbone'
 
 window.Request = require 'superagent'
 
+require 'bootstrap/js/tooltip'
+
 require 'angular'
 
 require 'angular-resource'

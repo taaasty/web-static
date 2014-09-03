@@ -49,7 +49,7 @@ gulp.task "scripts", ->
     .pipe $.connect.reload()
 
 
-less_pipe = $.less(paths: [path.join(__dirname, "less", "includes")])
+less_pipe = $.less(paths: [path.join(__dirname, "less", "includes"), 'app/bower_components/'])
 
 
 gulp.task "less", ->
