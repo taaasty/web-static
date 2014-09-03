@@ -349,6 +349,32 @@
       background-color: darken(@green-dark, 5%)
     }
   }
+
+  &.button--outline-grey {
+    border: 1px solid #b2b2b2;
+    color: #b2b2b2;
+
+    .icon {
+      opacity: 1;
+    }
+  }
+
+  .post-settings-voting {
+    .ico-fire-reg; // :before - иконка огня
+
+    &:before {
+      transition: color .4s ease;
+    }
+
+    &.post-settings-voted,
+    &:hover {
+      &:before {
+        color: @yellow;
+      }
+
+      .ico-fire-fill-reg; // :before - иконка заполненного огня
+    }
+  }
 }
 
 // Auth Button
