@@ -43,13 +43,14 @@ window.PersonsPopup_Menu = React.createClass
 
                 { requestsMenuItem }
 
-                <PersonsPopup_MenuItem isActive={ this.props.currentTab == "ignores" }
-                                       count={ this.getCount(this.props.relationships.ignores) }
-                                       title={ IGNORES }
-                                       onClick={ onSelect.bind(this, 'ignores') } />
-
               </ul>
             </nav>`
+
+# Временно убираем блокировки
+# <PersonsPopup_MenuItem isActive={ this.props.currentTab == "ignores" }
+#                        count={ this.getCount(this.props.relationships.ignores) }
+#                        title={ IGNORES }
+#                        onClick={ onSelect.bind(this, 'ignores') } />
 
   getCount: (value) -> value.total_count
 

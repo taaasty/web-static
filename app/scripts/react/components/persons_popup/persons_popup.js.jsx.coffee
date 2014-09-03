@@ -74,13 +74,14 @@ window.PersonsPopup = React.createClass
 
               {requestsPanel}
 
-              <PersonsPopup_IgnoresPanel isActive={ this.state.currentTab == 'ignores' }
-                                         relationships={ this.state.relationships.ignores.items }
-                                         total_count={ this.state.relationships.ignores.total_count }
-                                         activitiesHandler={ this.activitiesHandler }
-                                         onLoad={ onLoad.bind(this, 'ignores') } />
-
           </Popup>`
+
+# Временно убираем блокировки
+# <PersonsPopup_IgnoresPanel isActive={ this.state.currentTab == 'ignores' }
+#                            relationships={ this.state.relationships.ignores.items }
+#                            total_count={ this.state.relationships.ignores.total_count }
+#                            activitiesHandler={ this.activitiesHandler }
+#                            onLoad={ onLoad.bind(this, 'ignores') } />
 
   selectTab: (type) -> @setState currentTab: type
 
