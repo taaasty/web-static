@@ -6,11 +6,12 @@ OPENED = 'opened'
 window.Search = React.createClass
 
   propTypes:
-    searchUrl: React.PropTypes.string.isRequired
-    text:      React.PropTypes.string
+    searchUrl: React.PropTypes.string
+    query:     React.PropTypes.string
 
   getInitialState: ->
-    currentState: if @props.text then OPENED else CLOSED
+    searchUrl:    @props.searchUrl || window.location
+    currentState: if @props.query then OPENED else CLOSED
 
   render: ->
     searchClasses = React.addons.classSet
@@ -19,7 +20,7 @@ window.Search = React.createClass
 
     return `<div className={ searchClasses }>
               <SearchField ref="searchField"
-                           text={ this.props.text }
+                           query={ this.props.query }
                            onCancel={ this.closeSearch }
                            onSubmit={ this.submit } />
               <SearchButton onClick={ this.onButtonClick } />
@@ -30,16 +31,19 @@ window.Search = React.createClass
 
   submit: ->
     query = @refs.searchField.refs.searchField.getDOMNode().value
+    return if query.length == 0
+
     url   = @_prepareSearchUrl query
 
-    return if query.length == 0
+    # TODO Рисовать какой-то спиннер или прогресс, например полоску наверху
+    #
 
     window.location = url
 
   isOpen: -> @state.currentState != CLOSED
 
   _prepareSearchUrl: (query) ->
-    @props.searchUrl + '?q=' + query
+    @state.searchUrl + '?q=' + query
 
   onButtonClick: ->
     if @isOpen() then @submit() else @openSearch()

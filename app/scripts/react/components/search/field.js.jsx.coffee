@@ -6,7 +6,7 @@ ESC_KEYCODE   = 27
 window.SearchField = React.createClass
 
   propTypes:
-    text:     React.PropTypes.string
+    query:    React.PropTypes.string
     onCancel: React.PropTypes.func.isRequired
     onSubmit: React.PropTypes.func.isRequired
 
@@ -15,7 +15,7 @@ window.SearchField = React.createClass
       <input ref="searchField"
              type="text"
              placeholder="Поиск"
-             defaultValue={ this.props.text }
+             defaultValue={ this.props.query }
              className="search__input"
              onKeyDown={ this.onKeyDown } />
     </form>`
