@@ -1,37 +1,34 @@
 ###* @jsx React.DOM ###
 
-window.PostEditor_NewPost = React.createClass
-  mixins: [PostEditor_LayoutMixin, 'ReactActivitiesMixin']
-
-  getInitialState: ->
-    # Может сделать зависимость от @props.tlogType ?
-    entryPrivacy: 'public'
-    entryType:    DEFAULT_POST_TYPE
-    entry:        DEFAULT_ENTRIES[DEFAULT_POST_TYPE]
-
-  changeType:    (type) -> @setState entryType: type, entry: DEFAULT_ENTRIES[type]
-
-
 DEFAULT_POST_TYPE = 'text'
 
 DEFAULT_ENTRIES =
   text:
     type: 'text'
     title: null
-    text:  null
+    text: null
   image:
-    type: 'text'
-    type:             'image'
-    title:             null
-    image_url:         null
+    type: 'image'
+    title: null
+    image_url: null
     image_attachments: []
   video:
-    type: 'text'
-    type:     'video'
-    title:     null
+    type: 'video'
+    title: null
     video_url: null
   quote:
-    type: 'text'
-    type:  'quote'
-    text:   null
+    type: 'quote'
+    text: null
     source: null
+
+window.PostEditor_NewPost = React.createClass
+  mixins: [PostEditor_LayoutMixin, 'ReactActivitiesMixin']
+
+  getInitialState: ->
+    # Может сделать зависимость от @props.tlogType ?
+    entry:        DEFAULT_ENTRIES[DEFAULT_POST_TYPE]
+    entryType:    DEFAULT_POST_TYPE
+    entryPrivacy: 'public'
+
+  changeType: (type) ->
+    @setState entry: DEFAULT_ENTRIES[type], entryType: type

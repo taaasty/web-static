@@ -20,6 +20,7 @@
 @font-family-base-light: 'Proxima Nova Light', Arial, 'Helvetica Neue', Helvetica, sans-serif;
 
 @font-size-base: 18px;
+@font-size-small: ceil((@font-size-base * 0.65)); // ~14px
 
 @line-height-base: 25px;
 
@@ -78,6 +79,12 @@
 @zindex-messages: @zindex-popup;
 @zindex-form-select: 5500;
 @zindex-notice: 6000;
+@zindex-tooltip: 1070;
+
+// Components
+@border-radius-base:  4px;
+@border-radius-large: 6px;
+@border-radius-small: 3px;
 
 // Buttons
 @button-border-radius: 3px;
@@ -457,3 +464,13 @@
 // Badge
 @badge-font-size: 12px;
 @badge-line-height: ceil((@badge-font-size * 1.36)); // 15px
+
+// Tooltip
+
+@tooltip-max-width: 200px;
+@tooltip-color: #fff;
+@tooltip-bg: #000;
+@tooltip-opacity: .9;
+
+@tooltip-arrow-width: 5px;
+@tooltip-arrow-color: @tooltip-bg;
