@@ -54,4 +54,4 @@ window.PersonsPopup_Menu = React.createClass
 
   getCount: (value) -> value.total_count
 
-  _isProfilePrivate: -> @props.user.is_privacy
+  _isProfilePrivate: -> @props.user.get 'is_privacy'

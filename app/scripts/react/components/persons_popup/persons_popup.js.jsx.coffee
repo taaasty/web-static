@@ -97,6 +97,6 @@ window.PersonsPopup = React.createClass
 
     @setState relationships: newRelationships
 
-  _isProfilePrivate: -> @props.user.is_privacy
+  _isProfilePrivate: -> @props.user.get 'is_privacy'
 
 module.exports = PersonsPopup
