@@ -7,8 +7,16 @@
   transition: opacity .3s ease;
 
   &.state--loading {
-    opacity: 0.3;
-    transition: opacity .3s ease;
+
+    .button {
+      opacity: 0.3;
+      transition: opacity .3s ease;
+    }
+
+    .button.state--active {
+      opacity: 1;
+    }
+
   }
 
   .button {

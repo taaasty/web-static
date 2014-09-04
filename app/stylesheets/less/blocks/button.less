@@ -293,6 +293,7 @@
   color: #b7b7b7;
   letter-spacing: 0;
   border-radius: 50%;
+  transition: background .3s ease;
 
   .icon {
     margin: 2px;
@@ -302,6 +303,11 @@
   &:hover,
   &.state--active {
     background-color: @green;
+    color: @white;
+  }
+
+  &.state--disable {
+    background-color: @grey;
     color: @white;
   }
 }

@@ -32,40 +32,60 @@ CHOICER_ITEMS =
     icon:  'icon--text-circle'
 
 window.PostEditorChoicer = React.createClass
+
   propTypes:
     currentType:  React.PropTypes.string.isRequired
+    isLoading:    React.PropTypes.bool.isRequired
     onChangeType: React.PropTypes.func
 
   render: ->
-    cx = React.addons.classSet 'nav-types': true, 'state--loading': !@props.currentType?
+    choicerClasses = React.addons.classSet {
+      'nav-types': true
+      'state--loading': @props.isLoading
+    }
 
     if @props.onChangeType?
       items = CHOICER_TYPES.map (type) => @getItemForType type
     else
       items = @getItemForType(@props.currentType)
 
-    `<nav className={cx}>{items}</nav>`
+    return `<nav className={ choicerClasses }>{ items }</nav>`
 
   getItemForType: (type) ->
-    onSelect = (type) => @props.onChangeType? type
+    onSelect = (type) => @props.onChangeType?(type)
 
-    c = CHOICER_ITEMS[type]
+    choicerItemData = CHOICER_ITEMS[type]
+
     PostEditorChoicerItem
-      key:      type
-      title:    c.title
-      icon:     c.icon
-      onClick:  onSelect.bind(@,type)
-      isActive: @props.currentType==type
+      title:     choicerItemData.title
+      icon:      choicerItemData.icon
+      isActive:  @props.currentType == type
+      isLoading: @props.isLoading
+      onClick:   onSelect.bind(@, type)
+      key:       type
 
 window.PostEditorChoicerItem = React.createClass
+
   propTypes:
-    title:    React.PropTypes.string.isRequired
-    icon:     React.PropTypes.string.isRequired
-    onClick:  React.PropTypes.func.isRequired
-    isActive: React.PropTypes.bool
+    title:     React.PropTypes.string.isRequired
+    icon:      React.PropTypes.string.isRequired
+    isActive:  React.PropTypes.bool
+    isLoading: React.PropTypes.bool.isRequired
+    onClick:   React.PropTypes.func.isRequired
 
   render: ->
-    cx = React.addons.classSet button: true, 'button--circle': true, 'state--active': @props.isActive
-    `<button onClick={this.props.onClick} className={cx} title={this.props.title}>
-        <i className={"icon " + this.props.icon}></i>
-      </button>`
+    choicerItemClasses = React.addons.classSet {
+      'button': true
+      'button--circle': true
+      'state--disable': @props.isLoading
+      'state--active': @props.isActive
+    }
+
+    return `<button title={ this.props.title }
+                    className={ choicerItemClasses }
+                    onClick={ this.onClick }>
+              <i className={ "icon " + this.props.icon } />
+            </button>`
+
+  onClick: ->
+    @props.onClick() unless @props.isLoading
