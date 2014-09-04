@@ -4,9 +4,10 @@ POST_TYPE_MUSIC = 'music'
 POST_TYPE_VIDEO = 'video'
 POST_TYPE_QUOTE = 'quote'
 POST_TYPE_IMAGE = 'image'
+POST_TYPE_IMAGE = 'instagram'
 POST_TYPE_TEXT  = 'text'
 
-CHOICER_TYPES = ['text', 'image', 'music', 'video','quote']
+CHOICER_TYPES = ['text', 'image', 'instagram', 'music', 'video','quote']
 CHOICER_ITEMS =
   text:
     title: 'Текст'
@@ -14,6 +15,9 @@ CHOICER_ITEMS =
   image:
     title: 'Картинка'
     icon:  'icon--image-circle'
+  instagram:
+    title: 'Instagram'
+    icon:  'icon--instagram-circle'
   music:
     title: 'Музыка'
     icon:  'icon--music-circle'
