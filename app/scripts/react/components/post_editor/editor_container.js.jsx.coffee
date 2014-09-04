@@ -31,6 +31,8 @@ window.PostEditor_EditorContainer = React.createClass
         editor = PostEditor_TextEditor  opts
       when 'image'
         editor = PostEditor_ImageEditor opts
+      when 'music'
+        editor = PostEditor_MusicEditor opts
       when 'video'
         editor = PostEditor_VideoEditor opts
       when 'quote'

@@ -12,12 +12,14 @@ window.PostEditor_VideoEditor = React.createClass
     cx = React.addons.classSet post: true, 'post--video': true, 'post--edit': true, 'state--loading': @hasActivities()
     `<article className={cx}>
       <div className="post__content">
-        <VideoMediaBox onSuccessLoad={this.successLoaded}
-                       activitiesHandler={this.activitiesHandler}
+        <VideoMediaBox activitiesHandler={this.activitiesHandler}
+                       embedUrl={this.state.embedUrl}
+                       embedHtml={this.state.embedHtml}
                        onChange={this.getChangeCallback('video_url')}
                        onClean={this.cleanTitle}
-                       embedUrl={this.state.embedUrl}
-                       embedHtml={this.state.embedHtml}/>
+                       onSuccessLoad={this.successLoaded}>
+          <MediaBox_VideoWelcome />
+        </VideoMediaBox>
         <TastyEditor placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
                      onChange={this.getChangeCallback('title')}
                      ref="titleEditor"

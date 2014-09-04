@@ -23,7 +23,12 @@ window.VideoMediaBox = React.createClass
   render: ->
     switch @state.current
       when STATE_WELCOME
-        return VideoMediaBox_Welcome onClick: => @setState current: STATE_INSERT
+        children = React.Children.map @props.children, (child) =>
+          React.addons.cloneWithProps child, {
+            onClick: => @setState current: STATE_INSERT
+          }
+
+        return `<div>{ children }</div>`
       when STATE_EMBEDED
         return VideoMediaBox_Embeded embedHtml: @state.embedHtml, onDelete: @cleanEmbed
       when STATE_INSERT

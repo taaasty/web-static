@@ -12,6 +12,10 @@ DEFAULT_ENTRIES =
     title: null
     image_url: null
     image_attachments: []
+  music:
+    type: 'music'
+    title: null
+    music_url: null
   video:
     type: 'video'
     title: null
