@@ -26,11 +26,12 @@ window.PostEditor_MusicEditor = React.createClass
                                onSuccessLoad={ this.successLoaded }>
                   <MediaBox_MusicWelcome />
                 </VideoMediaBox>
-                <TastyEditor placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
-                             onChange={ this.getChangeCallback('title') }
-                             ref="titleEditor"
+                <TastyEditor ref="titleEditor"
                              mode="partial"
-                             content={ this.state.title }/>
+                             placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
+                             content={ this.state.title }
+                             isLoading={ this.hasActivities() }
+                             onChange={ this.getChangeCallback('title') } />
               </div>
             </article>`
 

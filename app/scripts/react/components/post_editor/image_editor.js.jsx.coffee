@@ -86,33 +86,34 @@ window.PostEditor_ImageEditor = React.createClass
 
     mediaElements = []
 
-    mediaElements.push `<ImagesMediaBox_Welcome ref='welcome' key='welcome'
-                                    onClickUrlInsert={this.clickInsertUrl}
-                                    isDragging={this.state.isDragging}/>`
+    mediaElements.push `<ImagesMediaBox_Welcome ref="welcome"
+                                                onClickUrlInsert={this.clickInsertUrl}
+                                                isDragging={this.state.isDragging}
+                                                key="welcome" />`
 
     mediaElements.push `<ImagesMediaBox_Loaded images={this.state.images} onDelete={onDelete} key='images'/>`
 
     if @state.isInserting
-      mediaElements.push `<ImagesMediaBox_UrlInsert
-                        imageUrl={this.state.imageUrl}
-                        onExit={this.exitFromInserting}
-                        onChangeImageUrl={this.onChangeImageUrl}
-                        key='insert' ref='insert'/>`
+      mediaElements.push `<ImagesMediaBox_UrlInsert ref='insert'
+                                                    imageUrl={this.state.imageUrl}
+                                                    onExit={this.exitFromInserting}
+                                                    onChangeImageUrl={this.onChangeImageUrl}
+                                                    key='insert' />`
 
-    `<article className={cx}>
-      <div className="post__content">
-        <form ref='form' encType='multipart/form-data' method="POST">
-          <MediaBox_Layout type='image' state={mediaBoxState} ref='layout'>
-            {mediaElements}
-            <MediaBox_LoadingProgress progress={this.state.uploadingProgress} />
-          </MediaBox_Layout>
+    return `<article className={cx}>
+              <div className="post__content">
+                <form ref='form' encType='multipart/form-data' method="POST">
+                  <MediaBox_Layout type='image' state={mediaBoxState} ref='layout'>
+                    { mediaElements }
+                    <MediaBox_LoadingProgress progress={this.state.uploadingProgress} />
+                  </MediaBox_Layout>
 
-          <TastyEditor placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
-                       onChange={this.getChangeCallback('title')}
-                       ref="titleEditor"
-                       mode="rich"
-                       content={this.props.entry.title}/>
-        </form>
-      </div>
-    </article>`
-
+                  <TastyEditor ref="titleEditor"
+                               mode="rich"
+                               placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
+                               content={ this.props.entry.title }
+                               isLoading={ this.hasActivities() }
+                               onChange={ this.getChangeCallback('title') } />
+                </form>
+              </div>
+            </article>`

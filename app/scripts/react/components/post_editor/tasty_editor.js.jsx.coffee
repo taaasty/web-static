@@ -1,38 +1,39 @@
 ###* @jsx React.DOM ###
 
-EDITOR_MODES= ['inline', 'partial', 'rich']
+EDITOR_MODES = ['inline', 'partial', 'rich']
 
 EDITOR_OPTIONS =
   inline:
-    disableToolbar:         true
-    disableReturn:          true
-    disableDoubleReturn:    true
-    cleanPastedHTML:        true
+    disableToolbar:      true
+    disableReturn:       true
+    disableDoubleReturn: true
+    cleanPastedHTML:     true
 
   rich:
-    buttons:                ['anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist'] #'pre
-    disableToolbar:         false
-    disableReturn:          false
-    disableDoubleReturn:    false
-    cleanPastedHTML:        true
-    targetBlank:            true
+    buttons:             ['anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist'] #'pre
+    disableToolbar:      false
+    disableReturn:       false
+    disableDoubleReturn: false
+    cleanPastedHTML:     true
+    targetBlank:         true
 
 # Video title
 EDITOR_OPTIONS['partial'] = EDITOR_OPTIONS['rich']
 
-
 # Medium-Editor
 window.TastyEditor = React.createClass
+
   propTypes:
-    className:   React.PropTypes.string
     placeholder: React.PropTypes.string
     content:     React.PropTypes.string
     mode:        React.PropTypes.string
+    isLoading:   React.PropTypes.bool
+    className:   React.PropTypes.string
     onChange:    React.PropTypes.func.isRequired
 
   getDefaultProps: ->
-    className: 'tasty-editor-default'
     mode:      'inline' # 'rich'
+    className: 'tasty-editor-default'
 
   getInitialState: ->
     isEditing: false
@@ -42,18 +43,22 @@ window.TastyEditor = React.createClass
 
     @editor = new MediumEditor @refs.content.getDOMNode(), _.extend(options, EDITOR_OPTIONS[@props.mode])
 
+  componentDidUpdate: ->
+    if @props.isLoading then @editor.deactivate?() else @editor.activate?()
+
+    #@editor.html.placeholders()
+    #$editor = $ @refs.content.getDOMNode()
+    #if @state.isEditing _.defer => $editor.focus()
+
   componentWillUnmount: ->
     element = @refs.content.getDOMNode()
     $(element).off 'input', @onInput if element?
     @editor.deactivate?() # Medium-Editor
 
-  onInput: (event) ->
-    @props.onChange? @content()
-
-  componentDidUpdate: ->
-    #@editor.html.placeholders()
-    #$editor = $ @refs.content.getDOMNode()
-    #if @state.isEditing _.defer => $editor.focus()
+  render: ->
+   `<div className={"tasty-editor " + this.props.className}>
+      <div className='tasty-editor-content' ref="content" dangerouslySetInnerHTML={{ __html: this.props.content }} />
+    </div>`
 
   placeholder: ->
     @props.placeholder.replace '<br>', "\r\n"
@@ -61,12 +66,8 @@ window.TastyEditor = React.createClass
   content: ->
     @refs.content.getDOMNode().innerHTML
 
-  render: ->
-    `<div className={"tasty-editor " + this.props.className}>
-      <div className='tasty-editor-content' ref="content" dangerouslySetInnerHTML={{ __html: this.props.content }} />
-      </div>`
-
-
+  onInput: (event) ->
+    @props.onChange? @content()
 
 window.TastyEditor_MediumJS = React.createClass
   propTypes:

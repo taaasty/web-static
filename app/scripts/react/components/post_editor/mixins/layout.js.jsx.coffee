@@ -12,7 +12,8 @@ window.PostEditor_LayoutMixin =
     previewMode: false
 
   render: ->
-   `<PostEditor_Layout backUrl={ this.props.backUrl }>
+   `<PostEditor_Layout backUrl={ this.props.backUrl }
+                       isLoading={ this.hasActivities() }>
 
       <PostActions entryPrivacy={ this.state.entryPrivacy }
                    tlogType={ this.props.tlogType }

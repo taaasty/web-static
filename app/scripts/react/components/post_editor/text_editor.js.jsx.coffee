@@ -4,24 +4,30 @@ window.PostEditor_TextEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser']
 
   render: ->
+    textEditorClasses = React.addons.classSet {
+      'post':           true
+      'post--text':     true
+      'post--edit':     true
+      'state--loading': @hasActivities()
+    }
 
-    cx = React.addons.classSet post: true, 'post--text': true, 'post--edit': true, 'state--loading': @hasActivities()
-    `<article className={cx}>
-      <header className="post__header">
-        <TastyEditor placeholder="Заголовок (199 символов)"
-                     onChange={this.getChangeCallback('title')}
-                     className='post__title'
-                     ref="titleEditor"
-                     content={this.props.entry.title}/>
-      </header>
-      <TastyEditor placeholder="Начните набирать текст поста.<br>Можно без заголовка, без картинки или без видео."
-                   onChange={this.getChangeCallback('text')}
-                   className='post__content'
-                   ref="textEditor"
-                   content={this.props.entry.text}
-                   mode="rich"/>
-    </article>`
-
+    return `<article className={ textEditorClasses }>
+              <header className="post__header">
+                <TastyEditor ref="titleEditor"
+                             content={ this.props.entry.title }
+                             placeholder="Заголовок (199 символов)"
+                             isLoading={ this.hasActivities() }
+                             className="post__title"
+                             onChange={ this.getChangeCallback('title') } />
+              </header>
+              <TastyEditor ref="textEditor"
+                           mode="rich"
+                           content={ this.props.entry.text }
+                           placeholder="Начните набирать текст поста.<br>Можно без заголовка, без картинки или без видео."
+                           isLoading={ this.hasActivities() }
+                           className="post__content"
+                           onChange={ this.getChangeCallback('text') } />
+            </article>`
 
   data: ->
     title: @refs.titleEditor.content()

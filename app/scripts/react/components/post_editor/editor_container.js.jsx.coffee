@@ -56,4 +56,3 @@ window.PostEditor_EditorContainer = React.createClass
         TastyNotifyController.notifySuccess 'Опубликовано! Переходим на страницу поста..'
         console.log 'goto', newEntry.entry_url
         window.location.href = newEntry.entry_url
-
