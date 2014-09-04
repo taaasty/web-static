@@ -7,21 +7,24 @@ window.PostEditor_QuoteEditor = React.createClass
     `<article className="post post--quote post--edit">
       <div className="post__content">
         <blockquote className="blockquote">
-          <TastyEditor placeholder="Текст цитаты (499 символов)"
-                       onChange={this.getChangeCallback('text')}
-                       ref="textEditor"
-                       content={this.props.entry.text}/>
+          <TastyEditor ref="textEditor"
+                       placeholder="Текст цитаты (499 символов)"
+                       content={this.props.entry.text}
+                       isLoading={ this.hasActivities() }
+                       onChange={this.getChangeCallback('text')} />
+
           <div className="blockquote__caption">
             <span className="blockquote__dash">—</span>
-            <TastyEditor placeholder="Автор (не обязательно)"
-                   onChange={this.getChangeCallback('source')}
-                   ref="sourceEditor"
-                   content={this.props.entry.source}/>
+            <TastyEditor ref="sourceEditor"
+                         placeholder="Автор (не обязательно)"
+                         content={ this.props.entry.source }
+                         isLoading={ this.hasActivities() }
+                         onChange={this.getChangeCallback('source')} />
           </div>
         </blockquote>
       </div>
     </article>`
 
   data: ->
-    text:    @refs.textEditor.content()
-    source:  @refs.sourceEditor.content()
+    text:   @refs.textEditor.content()
+    source: @refs.sourceEditor.content()

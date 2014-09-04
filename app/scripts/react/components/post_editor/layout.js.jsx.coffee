@@ -3,16 +3,21 @@
 window.PostEditor_Layout = React.createClass
 
   propTypes:
-    backUrl:     React.PropTypes.string
-    children:    React.PropTypes.renderable.isRequired
+    backUrl:   React.PropTypes.string
+    isLoading: React.PropTypes.bool.isRequired
+    children:  React.PropTypes.renderable.isRequired
     #entryType:   React.PropTypes.string
     #onChangeType: React.PropTypes.func
 
   render: ->
-    `<div className='postEditorLayout'>
-        <a className="back-button" onClick={this.clickBack}></a>
-        {this.props.children}
-    </div>`
+    unless @props.isLoading
+      backButton = `<a className="back-button"
+                       onClick={ this.clickBack } />`
+
+    return `<div className="postEditorLayout">
+              { backButton }
+              { this.props.children }
+            </div>`
 
   clickBack: ->
     if @props.backUrl

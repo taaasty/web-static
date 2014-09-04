@@ -26,11 +26,12 @@ window.PostEditor_InstagramEditor = React.createClass
                                onSuccessLoad={ this.successLoaded }>
                   <MediaBox_InstagramWelcome />
                 </VideoMediaBox>
-                <TastyEditor placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
-                             onChange={ this.getChangeCallback('title') }
-                             ref="titleEditor"
+                <TastyEditor ref="titleEditor"
+                             placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
                              mode="partial"
-                             content={ this.state.title }/>
+                             content={ this.state.title }
+                             isLoading={ this.hasActivities() }
+                             onChange={ this.getChangeCallback('title') } />
               </div>
             </article>`
 
