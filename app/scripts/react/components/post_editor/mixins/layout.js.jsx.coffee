@@ -31,6 +31,7 @@ window.PostEditor_LayoutMixin =
                                     onChanging={ this.onChanging } />
 
         <PostEditorChoicer currentType={ this.state.entryType }
+                           isLoading={ this.hasActivities() }
                            onChangeType={ this.getChangeTypeCallback() } />
 
      </PostEditor_Layout>`
