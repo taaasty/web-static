@@ -1,11 +1,12 @@
 ###* @jsx React.DOM ###
 
-POST_TYPE_VIDEO='video'
-POST_TYPE_QUOTE='quote'
-POST_TYPE_IMAGE='image'
-POST_TYPE_TEXT='text'
+POST_TYPE_MUSIC = 'music'
+POST_TYPE_VIDEO = 'video'
+POST_TYPE_QUOTE = 'quote'
+POST_TYPE_IMAGE = 'image'
+POST_TYPE_TEXT  = 'text'
 
-CHOICER_TYPES=['text','image','video','quote']
+CHOICER_TYPES = ['text', 'image', 'music', 'video','quote']
 CHOICER_ITEMS =
   text:
     title: 'Текст'
@@ -13,6 +14,9 @@ CHOICER_ITEMS =
   image:
     title: 'Картинка'
     icon:  'icon--image-circle'
+  music:
+    title: 'Музыка'
+    icon:  'icon--music-circle'
   video:
     title: 'Видео'
     icon:  'icon--video-circle'
@@ -22,8 +26,6 @@ CHOICER_ITEMS =
   anonymous:
     title: 'Анонимка'
     icon:  'icon--text-circle'
-
-  
 
 window.PostEditorChoicer = React.createClass
   propTypes:
@@ -42,6 +44,7 @@ window.PostEditorChoicer = React.createClass
 
   getItemForType: (type) ->
     onSelect = (type) => @props.onChangeType? type
+
     c = CHOICER_ITEMS[type]
     PostEditorChoicerItem
       key:      type
@@ -49,7 +52,6 @@ window.PostEditorChoicer = React.createClass
       icon:     c.icon
       onClick:  onSelect.bind(@,type)
       isActive: @props.currentType==type
-
 
 window.PostEditorChoicerItem = React.createClass
   propTypes:
