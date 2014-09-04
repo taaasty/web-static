@@ -13,11 +13,11 @@ DEFAULT_ENTRIES =
     image_url: null
     image_attachments: []
   instagram:
-    type: 'instagram'
+    type: 'video'
     title: null
     instagram_url: null
   music:
-    type: 'music'
+    type: 'video'
     title: null
     music_url: null
   video:
