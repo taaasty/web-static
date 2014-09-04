@@ -56,7 +56,7 @@ window.PostActions = React.createClass
                   <Spinner size={ 8 } />
                 </div>`
 
-    unless @isPostPrivate()
+    unless @isPostPrivate() || @isTlogPrivate()
       voteButton = `<div className="post-action post-action--button">
                       <PostActions_VoteButton enabled={ this.isPostLive() }
                                               onChange={ this.onVoteChanged } />
@@ -95,6 +95,7 @@ window.PostActions = React.createClass
 
   isTlogAnonymous: -> @props.tlogType == ENTRY_PRIVACY_ANONYMOUS
   isTlogPublic:    -> @props.tlogType == 'public'
+  isTlogPrivate:   -> @props.tlogType == 'private'
 
   privacy: ->
     return ENTRY_PRIVACY_ANONYMOUS if @isTlogAnonymous()
