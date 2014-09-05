@@ -34,7 +34,7 @@ window.PostEditor_NewPost = React.createClass
     # Может сделать зависимость от @props.tlogType ?
     entry:        DEFAULT_ENTRIES[DEFAULT_POST_TYPE]
     entryType:    DEFAULT_POST_TYPE
-    entryPrivacy: 'live'
+    entryPrivacy: if @props.tlogType is 'public' then 'live' else 'public'
 
   changeType: (type) ->
     @setState {
