@@ -1,25 +1,20 @@
 ###* @jsx React.DOM ###
 
-module.exports = window.TastyNotify = React.createClass
+DEFAULT_TYPE    = 'success'
+DEFAULT_TIMEOUT = 3000
+
+window.TastyNotify = React.createClass
   mixins: [ReactUnmountMixin]
 
-  statics:
-    TYPE:       'success'
-    TIMEOUT:    3000
-    HIDE_EVENT: 'notifications:hide'
-
   propTypes:
-    type:    React.PropTypes.string
     text:    React.PropTypes.string.isRequired
+    type:    React.PropTypes.string
     timeout: React.PropTypes.number
+    onClose: React.PropTypes.func.isRequired
 
   getDefaultProps: ->
-    type:      @constructor.TYPE
-    timeout:   @constructor.TIMEOUT
-    hideEvent: @constructor.HIDE_EVENT
-
-  componentWillMount: ->
-    $(document).on this.props.hideEvent, @close
+    type:    DEFAULT_TYPE
+    timeout: DEFAULT_TIMEOUT
 
   componentDidMount: ->
     $node = $( @getDOMNode() )
@@ -27,12 +22,14 @@ module.exports = window.TastyNotify = React.createClass
     @timeout = setTimeout @close, @props.timeout
 
   componentWillUnmount: ->
-    $(document).off this.props.hideEvent, @close
     clearTimeout @timeout if @timeout
+
+    @props.onClose @
 
   close: -> $(@getDOMNode()).fadeOut 'fast', @unmount
 
   render: ->
-   `<div className={"notice notice--" + this.props.type} onClick={this.hide}>
-      <div className="notice__inner">{this.props.text}</div>
+   `<div className={ "notice notice--" + this.props.type }
+         onClick={ this.close }>
+      <div className="notice__inner">{ this.props.text }</div>
     </div>`
