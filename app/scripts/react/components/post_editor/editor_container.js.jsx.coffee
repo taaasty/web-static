@@ -6,7 +6,6 @@ window.PostEditor_EditorContainer = React.createClass
   propTypes:
     entry:         React.PropTypes.object.isRequired
     entryType:     React.PropTypes.string.isRequired
-    onChanging:    React.PropTypes.func.isRequired
     entryPrivacy:  React.PropTypes.string.isRequired
 
   render: ->
@@ -21,7 +20,6 @@ window.PostEditor_EditorContainer = React.createClass
       activitiesHandler: @activitiesHandler
       entry:             @props.entry
       doneCallback:      @goToEntryPage
-      onChanging:        @props.onChanging
       entryPrivacy:      @props.entryPrivacy
 
     switch @props.entryType
