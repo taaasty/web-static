@@ -110,7 +110,7 @@ window.PostEditor_ImageEditor = React.createClass
 
                   <TastyEditor ref="titleEditor"
                                mode="rich"
-                               placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
+                               placeholder="Придумайте подпись"
                                content={ this.props.entry.title }
                                isLoading={ this.hasActivities() }
                                onChange={ this.getChangeCallback('title') } />

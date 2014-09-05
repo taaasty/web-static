@@ -27,7 +27,7 @@ window.PostEditor_InstagramEditor = React.createClass
                   <MediaBox_InstagramWelcome />
                 </VideoMediaBox>
                 <TastyEditor ref="titleEditor"
-                             placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
+                             placeholder="Придумайте подпись"
                              mode="partial"
                              content={ this.state.title }
                              isLoading={ this.hasActivities() }
