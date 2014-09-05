@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.PostEditor_InstagramEditor = React.createClass
+window.PostEditor_MusicEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser']
 
   getInitialState: ->
@@ -9,14 +9,14 @@ window.PostEditor_InstagramEditor = React.createClass
     title:     @props.entry.title
 
   render: ->
-    instagramEditorClasses = React.addons.classSet {
+    musicEditorClasses = React.addons.classSet {
       'post':           true
       'post--video':    true
       'post--edit':     true
       'state--loading': @hasActivities()
     }
 
-    return `<article className={ instagramEditorClasses }>
+    return `<article className={ musicEditorClasses }>
               <div className="post__content">
                 <VideoMediaBox activitiesHandler={ this.activitiesHandler }
                                embedUrl={ this.state.embedUrl }
@@ -24,11 +24,11 @@ window.PostEditor_InstagramEditor = React.createClass
                                onChange={ this.getChangeCallback('video_url') }
                                onClean={ this.cleanTitle }
                                onSuccessLoad={ this.successLoaded }>
-                  <MediaBox_InstagramWelcome />
+                  <MediaBox_MusicWelcome />
                 </VideoMediaBox>
                 <TastyEditor ref="titleEditor"
-                             placeholder="Придумайте подпись"
                              mode="partial"
+                             placeholder="Придумайте подпись"
                              content={ this.state.title }
                              isLoading={ this.hasActivities() }
                              onChange={ this.getChangeCallback('title') } />
@@ -44,6 +44,6 @@ window.PostEditor_InstagramEditor = React.createClass
       embedHtml: iframely.html
       title:     iframely.meta.description || iframely.meta.title
 
-  data: ->
+  _getEditorData: ->
     title:     @refs.titleEditor.content()
     video_url: @state.embedUrl

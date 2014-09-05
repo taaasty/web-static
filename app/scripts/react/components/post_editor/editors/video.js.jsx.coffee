@@ -38,6 +38,6 @@ window.PostEditor_VideoEditor = React.createClass
       embedHtml: iframely.html
       title:     iframely.meta.description || iframely.meta.title
 
-  data: ->
+  _getEditorData: ->
     title:     @refs.titleEditor.content()
     video_url: @state.embedUrl

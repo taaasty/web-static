@@ -36,7 +36,7 @@ window.PostEditor_ImageEditor = React.createClass
   clickInsertUrl: ->
     @setState isInserting: true
 
-  data: ->
+  _getEditorData: ->
     title:     @refs.titleEditor.content()
     image_url: @state.imageUrl
     privacy:   @props.entryPrivacy

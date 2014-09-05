@@ -39,7 +39,7 @@ window.PostEditor_ImagesForm =
     @createRequest
       url:     @savingUrl()
       method:  @savingMethod()
-      data:    @data()
+      data:    @_getEditorData()
 
       success: (data) =>
         @safeUpdateState {
@@ -80,7 +80,7 @@ window.PostEditor_ImagesForm =
         @decrementActivities()
         @setState uploadingProgress: 0
       
-      fail:        (e, data) => TastyNotifyController.errorResponse data
+      fail:        (e, data) => TastyNotifyController.errorResponse data.jqXHR
       done:        (e, data) => @props.doneCallback data.jqXHR.responseJSON
 
       dragover:    (e, data) => @dragOver()
@@ -90,7 +90,7 @@ window.PostEditor_ImagesForm =
 
       add:                   @addFileToForm
 
-      formData: (form)       => @serializeArray @data()
+      formData: (form)       => @serializeArray @_getEditorData()
 
   serializeArray: (data) ->
     return _.keys(data).map (key) ->  name: key,  value: data[key]
