@@ -6,27 +6,25 @@ DEFAULT_ENTRIES =
   text:
     type: 'text'
     title: null
-    text: null
+    text:  null
   image:
     type: 'image'
-    title: null
+    title:     null
     image_url: null
     image_attachments: []
   instagram:
     type: 'video'
     title: null
-    instagram_url: null
   music:
     type: 'video'
     title: null
-    music_url: null
   video:
     type: 'video'
-    title: null
+    title:     null
     video_url: null
   quote:
     type: 'quote'
-    text: null
+    text:   null
     source: null
 
 window.PostEditor_NewPost = React.createClass
@@ -36,7 +34,13 @@ window.PostEditor_NewPost = React.createClass
     # Может сделать зависимость от @props.tlogType ?
     entry:        DEFAULT_ENTRIES[DEFAULT_POST_TYPE]
     entryType:    DEFAULT_POST_TYPE
-    entryPrivacy: 'public'
+    entryPrivacy: 'live'
 
   changeType: (type) ->
-    @setState entry: DEFAULT_ENTRIES[type], entryType: type
+    @setState {
+      entry:     DEFAULT_ENTRIES[type]
+      entryType: type
+    }
+
+  changePrivacy: (privacy) ->
+    @setState entryPrivacy: privacy

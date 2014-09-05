@@ -1,33 +1,19 @@
 ###* @jsx React.DOM ###
 
-ENTRY_PRIVACY_PRIVATE   = 'private'
-ENTRY_PRIVACY_PUBLIC    = 'public'
+ENTRY_PRIVACY_PRIVATE   = TLOG_TYPE_PRIVATE   = 'private'
+ENTRY_PRIVACY_PUBLIC    = TLOG_TYPE_PUBLIC    = 'public'
+ENTRY_PRIVACY_ANONYMOUS = TLOG_TYPE_ANONYMOUS = 'anonymous'
 ENTRY_PRIVACY_LIVE      = 'live'
-ENTRY_PRIVACY_ANONYMOUS = 'anonymous'
-PRIVACY_STATES = [ ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, ENTRY_PRIVACY_LIVE]
-
-ICONS = {}
-ICONS[ENTRY_PRIVACY_LIVE]      = 'icon--wave'
-ICONS[ENTRY_PRIVACY_PRIVATE]   = 'icon--lock'
-ICONS[ENTRY_PRIVACY_PUBLIC]    = 'icon--unlock-2'
-ICONS[ENTRY_PRIVACY_ANONYMOUS] = 'icon--anonymous'
 
 PREVIEW_BODY_CLASSES = {
   true:  'tlog-mode-full'
   false: 'tlog-mode-minimal'
 }
 
-PUBLIC_TITLE = {
-  private:   'Видна только моим друзьям'
-  public:    'Видна всем в моем тлоге'
-  anonymous: 'Анонимка'
-}
-
 window.PostActions = React.createClass
 
   propTypes:
     entryPrivacy:    React.PropTypes.string.isRequired
-    # public, private, anonymous
     tlogType:        React.PropTypes.oneOf(TLOG_TYPES).isRequired
     previewMode:     React.PropTypes.bool.isRequired
     isLoading:       React.PropTypes.bool.isRequired
@@ -35,9 +21,9 @@ window.PostActions = React.createClass
     onPreview:       React.PropTypes.func.isRequired
     onSave:          React.PropTypes.func.isRequired
 
-  componentWillUpdate: (nextProps, nextState) ->
+  componentWillUpdate: (nextProps) ->
     $("body").removeClass PREVIEW_BODY_CLASSES[@props.previewMode]
-    $("body").addClass    PREVIEW_BODY_CLASSES[nextProps.previewMode]
+             .addClass    PREVIEW_BODY_CLASSES[nextProps.previewMode]
 
   render: ->
     previewButtonClasses = React.addons.classSet {
@@ -77,84 +63,36 @@ window.PostActions = React.createClass
                 </button>
               </div>
               <div className="post-action post-action--button">
-                <div className="button-group" ref="dropdown">
+                <div ref="dropdown"
+                     className="button-group">
                   <button className="button button--green"
                           onClick={ this.props.onSave }>
-                    <span className="button__text">{ this.buttonTitle() }</span>
+                    <span className="button__text">
+                      { this._getSaveButtonText() }
+                    </span>
                   </button>
                 </div>
               </div>
             </div>`
 
-  select: (key) ->
-    @props.onChangePrivacy(key)
+  isPostPublic:    -> @props.entryPrivacy is ENTRY_PRIVACY_PUBLIC
+  isPostPrivate:   -> @props.entryPrivacy is ENTRY_PRIVACY_PRIVATE
+  isPostLive:      -> @props.entryPrivacy is ENTRY_PRIVACY_LIVE
+  isPostAnonymous: -> @props.entryPrivacy is ENTRY_PRIVACY_ANONYMOUS
 
-  isPostPublic:  -> @privacy() is ENTRY_PRIVACY_PUBLIC
-  isPostPrivate: -> @privacy() is ENTRY_PRIVACY_PRIVATE
-  isPostLive:    -> @privacy() is ENTRY_PRIVACY_LIVE
+  isTlogAnonymous: -> @props.tlogType is TLOG_TYPE_ANONYMOUS
+  isTlogPublic:    -> @props.tlogType is TLOG_TYPE_PUBLIC
+  isTlogPrivate:   -> @props.tlogType is TLOG_TYPE_PRIVATE
 
-  isTlogAnonymous: -> @props.tlogType == ENTRY_PRIVACY_ANONYMOUS
-  isTlogPublic:    -> @props.tlogType == 'public'
-  isTlogPrivate:   -> @props.tlogType == 'private'
-
-  privacy: ->
-    return ENTRY_PRIVACY_ANONYMOUS if @isTlogAnonymous()
-
-    @props.entryPrivacy
-
-  buttonTitle: ->
-    if @privacy() == ENTRY_PRIVACY_PRIVATE then 'Сохранить в тлоге' else 'Опубликовать'
-
-  _getMenuItems: ->
-    items = []
-
-    return if @isTlogAnonymous()
-
-    title_public = PUBLIC_TITLE[@props.tlogType]
-    items.push `<PostActionItem title="Видна только мне"
-                                selected={ this.privacy() == ENTRY_PRIVACY_PRIVATE }
-                                onSelect={ this.select }
-                                key={ ENTRY_PRIVACY_PRIVATE } />`
-
-    items.push `<PostActionItem title={ title_public }
-                                selected={ this.privacy() == ENTRY_PRIVACY_PUBLIC }
-                                onSelect={ this.select }
-                                key={ ENTRY_PRIVACY_PUBLIC } />`
-
-    if @isTlogPublic()
-      items.push `<PostActionItem title="В прямой эфир"
-                                  selected={ this.privacy() == ENTRY_PRIVACY_LIVE }
-                                  onSelect={ this.select }
-                                  key={ ENTRY_PRIVACY_LIVE } />`
-
-    items
+  _getSaveButtonText: ->
+    if @isPostPrivate() then 'Сохранить в тлоге' else 'Опубликовать'
 
   onVoteChanged: (value) ->
-    if value then @select(ENTRY_PRIVACY_LIVE) else @select(ENTRY_PRIVACY_PUBLIC)
+    newEntryPrivacy = if value then ENTRY_PRIVACY_LIVE else ENTRY_PRIVACY_PUBLIC
+
+    @props.onChangePrivacy newEntryPrivacy
 
   onPrivacyChanged: (value) ->
-    if value then @select(ENTRY_PRIVACY_PRIVATE) else @select(ENTRY_PRIVACY_PUBLIC)    
+    newEntryPrivacy = if value then ENTRY_PRIVACY_PRIVATE else ENTRY_PRIVACY_PUBLIC
 
-window.PostActionItem = React.createClass
-
-  propTypes:
-    title:    React.PropTypes.string.isRequired
-    key:      React.PropTypes.string.isRequired
-    selected: React.PropTypes.bool.isRequired
-    onSelect: React.PropTypes.func.isRequired
-
-  render: ->
-    classes = React.addons.classSet 'dropdown-popup__link': true, 'state--active': @props.selected
-    icon = ICONS[@props.key]
-    
-    return `<li className="dropdown-popup__item">
-              <a title={ this.props.title }
-                 className={ classes }
-                 onClick={ this.click }>
-                <i className={ "icon " + icon } />
-                { this.props.title }
-              </a>
-            </li>`
-
-  click: ->
-    @props.onSelect @props.key
+    @props.onChangePrivacy newEntryPrivacy

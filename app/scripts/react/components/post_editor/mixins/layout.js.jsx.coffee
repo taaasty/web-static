@@ -21,37 +21,28 @@ window.PostEditor_LayoutMixin =
                    isLoading={ this.hasActivities() }
                    onSave={ this.saveEntry }
                    onChangePrivacy={ this.changePrivacy }
-                   onPreview={ this.togglePreview } />
+                   onPreview={ this.togglePreviewMode } />
 
         <PostEditor_EditorContainer ref="editorContainer"
                                     entry={ this.state.entry }
                                     entryType={ this.state.entryType }
                                     entryPrivacy={ this.state.entryPrivacy }
-                                    activitiesHandler={ this.activitiesHandler }
-                                    onChanging={ this.onChanging } />
+                                    activitiesHandler={ this.activitiesHandler } />
 
-        <PostEditorChoicer currentType={ this.state.entryType }
-                           isLoading={ this.hasActivities() }
-                           onChangeType={ this.getChangeTypeCallback() } />
+        <PostEditor_Choicer currentType={ this.state.entryType }
+                            isLoading={ this.hasActivities() }
+                            onChangeType={ this.getChangeTypeCallback() } />
 
      </PostEditor_Layout>`
 
   saveEntry: ->
     @refs.editorContainer.saveEntry entryPrivacy: @state.entryPrivacy
 
-  togglePreview: ->
+  togglePreviewMode: ->
     @setState previewMode: !@state.previewMode
 
-  changePrivacy: (value) ->
-    @setState entryPrivacy: value
-
   getChangeTypeCallback: ->
-    if @props.onChangeType?
-      @props.onChangeType
-    else if @changeType?
-      @changeType
-    else
-      null
+    return @props.onChangeType if @props.onChangeType?
+    return @changeType if @changeType?
 
-  onChanging: ->
-    @setState isChanged: true
+    null

@@ -13,7 +13,6 @@ window.PostEditor_ImageEditor = React.createClass
     entry:             React.PropTypes.object.isRequired
     entryPrivacy:      React.PropTypes.string.isRequired
     doneCallback:      React.PropTypes.func.isRequired
-    onChanging:        React.PropTypes.func.isRequired
 
   getInitialState: ->
     images:      @getInitialImages()

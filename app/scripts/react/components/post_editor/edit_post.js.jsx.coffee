@@ -15,5 +15,5 @@ window.PostEditor_EditPost = React.createClass
 
   stateFromProps: (props) ->
     entryPrivacy: props.entry?.privacy || 'public'
-    entryType:    props.entry?.type || 'text'
+    entryType:    props.entry?.type    || 'text'
     entry:        props.entry

@@ -62,6 +62,6 @@ window.PostEditor_Demo = React.createClass
                      onSave={this.fallback} />
                      <div>Loading demo posts..</div>
 
-          <PostEditorChoicer currentType={this.state.entryType} onChangeType={this.changeType} />
+          <PostEditor_Choicer currentType={this.state.entryType} onChangeType={this.changeType} />
         </PostEditor_Layout>`
 
