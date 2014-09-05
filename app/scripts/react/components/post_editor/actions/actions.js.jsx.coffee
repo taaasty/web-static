@@ -67,7 +67,9 @@ window.PostActions = React.createClass
                      className="button-group">
                   <button className="button button--green"
                           onClick={ this.props.onSave }>
-                    <span className="button__text">{ this._getSaveButtonText() }</span>
+                    <span className="button__text">
+                      { this._getSaveButtonText() }
+                    </span>
                   </button>
                 </div>
               </div>

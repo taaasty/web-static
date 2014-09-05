@@ -1,26 +1,44 @@
 ###* @jsx React.DOM ###
-#
+
 window.PostEditor_EditorContainer = React.createClass
   mixins: ['ReactActivitiesUser']
 
   propTypes:
-    entry:         React.PropTypes.object.isRequired
-    entryType:     React.PropTypes.string.isRequired
-    entryPrivacy:  React.PropTypes.string.isRequired
+    entry:        React.PropTypes.object.isRequired
+    entryType:    React.PropTypes.string.isRequired
+    entryPrivacy: React.PropTypes.string.isRequired
 
   render: ->
     if @props.entry?
-      `<section className="posts posts--edit">{this.editorComponent()}</section>`
+      editorContainer = `<section className="posts posts--edit">
+                           { this._getEditorComponent() }
+                         </section>`
     else
-      `<div>No entry to edit</div>`
+      editorContainer = `<div>No entry to edit</div>`
 
-  editorComponent: ->
+    editorContainer
+
+  saveEntry: ({ entryPrivacy }) ->
+    @refs.editor.saveEntry entryPrivacy: entryPrivacy
+
+  goToEntryPage: (newEntry) ->
+    if window.TASTY_ENV == 'development'
+      alert "Статья #{ newEntry.id } успешно сохранена"
+      window.location.reload()
+    else
+      _.defer =>
+        # TODO Выводить модалку
+        TastyNotifyController.notifySuccess 'Опубликовано! Переходим на страницу поста..'
+        console.log 'goto', newEntry.entry_url
+        window.location.href = newEntry.entry_url
+
+  _getEditorComponent: ->
     opts =
       ref:               'editor'
-      activitiesHandler: @activitiesHandler
       entry:             @props.entry
-      doneCallback:      @goToEntryPage
       entryPrivacy:      @props.entryPrivacy
+      activitiesHandler: @activitiesHandler
+      doneCallback:      @goToEntryPage
 
     switch @props.entryType
       when 'anonymous'
@@ -39,18 +57,3 @@ window.PostEditor_EditorContainer = React.createClass
         editor = PostEditor_QuoteEditor opts
       else
         console.error "Unknown entry type: #{@props.entryType}"
-
-  saveEntry: ({entryPrivacy}) -> @refs.editor.saveEntry entryPrivacy: entryPrivacy
-
-  goToEntryPage: (newEntry) ->
-    #@setState isGoing: true
-    if window.TASTY_ENV=='development'
-      alert "Статья #{newEntry.id} успешно сохранена"
-      window.location.reload()
-    else
-      #@setState isGoing: true
-      _.defer =>
-        # TODO Выводить модалку
-        TastyNotifyController.notifySuccess 'Опубликовано! Переходим на страницу поста..'
-        console.log 'goto', newEntry.entry_url
-        window.location.href = newEntry.entry_url
