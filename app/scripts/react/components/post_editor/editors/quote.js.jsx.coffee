@@ -25,6 +25,6 @@ window.PostEditor_QuoteEditor = React.createClass
       </div>
     </article>`
 
-  data: ->
+  _getEditorData: ->
     text:   @refs.textEditor.content()
     source: @refs.sourceEditor.content()

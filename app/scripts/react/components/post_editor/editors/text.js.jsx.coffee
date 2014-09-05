@@ -29,6 +29,6 @@ window.PostEditor_TextEditor = React.createClass
                            onChange={ this.getChangeCallback('text') } />
             </article>`
 
-  data: ->
+  _getEditorData: ->
     title: @refs.titleEditor.content()
     text:  @refs.textEditor.content()

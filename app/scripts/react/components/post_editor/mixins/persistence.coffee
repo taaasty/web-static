@@ -1,9 +1,18 @@
 window.PostEditor_PersistenceMixin =
 
+# activitiesHandler: Object
+# doneCallback: function () {
+# entry: {
+#   text: null
+#   title: null
+#   type: "text"
+# }
+# entryPrivacy: "live"
+# ref: "editor"
+
   propTypes:
-    entry:             React.PropTypes.object.isRequired
-    activitiesHandler: React.PropTypes.object.isRequired
-    doneCallback:      React.PropTypes.func.isRequired
+    entry:        React.PropTypes.object.isRequired
+    doneCallback: React.PropTypes.func.isRequired
 
   getChangeCallback: (field) ->
     changed = (field, content) ->
@@ -18,26 +27,26 @@ window.PostEditor_PersistenceMixin =
       Routes.api.create_entry_url @props.entry.type
 
   savingMethod: ->
-    if @props.entry.id?
-      'PUT'
-    else
-      'POST'
+    if @props.entry.id? then 'PUT' else 'POST'
 
-  saveEntry: ({entryPrivacy}) ->
+  saveEntry: ({ entryPrivacy }) ->
     @incrementActivities()
-    data = @data()
-    data.privacy = entryPrivacy
+
+    editorData         = @_getEditorData()
+    editorData.privacy = entryPrivacy
 
     @createRequest
       url: @savingUrl()
-      data: data
+      data: editorData
       method: @savingMethod()
-      success: (data) =>
+      success: (newEntry) =>
+        console.log newEntry
+
         @safeUpdateState {
-          entry: data
-          type:  data.type
+          entry: newEntry
+          type:  newEntry.type
         }
-        @props.doneCallback data
+        @props.doneCallback newEntry
       error: (data) =>
         TastyNotifyController.errorResponse data
       complete: =>
