@@ -1,15 +1,18 @@
 window.TastyNotifyController =
 
-  HIDE_EVENT: TastyNotify.HIDE_EVENT
+  _notificationList: []
 
   notify: (type, text, timeout = 5000) ->
     container = $('<\div>').appendTo('body').get(0)
-    React.renderComponent TastyNotify(
-        type:    type
-        text:    text
-        timeout: timeout
-      ), container
-    return
+
+    notification = React.renderComponent TastyNotify(
+      type:    type
+      text:    text
+      timeout: timeout
+      onClose: @_removeNotification.bind @
+    ), container
+
+    @_notificationList.push notification
 
   notifySuccess: (text, timeout = 5000) ->
     @notify 'success', text, timeout
@@ -18,10 +21,9 @@ window.TastyNotifyController =
     return if response.statusText is 'abort'
 
     # Непонятно почему не rejected не должно показывать
-    # например 500-ая ошибка при встевке url-а в video пост 
+    # например 500-ая ошибка при вставке url-а в video пост
     # генерирует именно rejected
     # return if response.state?() == 'rejected'
-    #
 
     if response.responseJSON?
       json = response.responseJSON
@@ -37,10 +39,20 @@ window.TastyNotifyController =
       @notify 'error', message, timeout
 
   hideAll: ->
-    $(document).trigger @HIDE_EVENT
+    @_notificationList.forEach (notification) -> notification.close()
+
+  _removeNotification: (notification) ->
+    @_notificationList = _.without @_notificationList, notification
 
   _isPageLoadingCanceled: (response) ->
     # Вернет true, если во время запроса пользователь:
     # - Остановил загрузку страницы
     # - Перешёл на другую страницу
     response.statusText is 'error' && response.status == 0 && response.readyState == 0
+
+#*==========  Глобальные команды  ==========*#
+
+TastyEvents.on TastyEvents.keys.command_current_notification_hide(), ->
+  TastyNotifyController.hideAll()
+
+#*-----  End of Глобальные команды  ------*#

@@ -52,7 +52,10 @@ window.PostEditorChoicer = React.createClass
     return `<nav className={ choicerClasses }>{ items }</nav>`
 
   getItemForType: (type) ->
-    onSelect = (type) => @props.onChangeType?(type)
+    onSelect = (type) =>
+      TastyEvents.trigger TastyEvents.keys.command_current_notification_hide()
+
+      @props.onChangeType?(type)
 
     choicerItemData = CHOICER_ITEMS[type]
 
