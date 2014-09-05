@@ -28,7 +28,7 @@ window.PostEditor_MusicEditor = React.createClass
                 </VideoMediaBox>
                 <TastyEditor ref="titleEditor"
                              mode="partial"
-                             placeholder="Придумайте подпись, примерно 280 символов (не обязательно)"
+                             placeholder="Придумайте подпись"
                              content={ this.state.title }
                              isLoading={ this.hasActivities() }
                              onChange={ this.getChangeCallback('title') } />
