@@ -1,12 +1,5 @@
 ###* @jsx React.DOM ###
 
-POST_TYPE_MUSIC = 'music'
-POST_TYPE_VIDEO = 'video'
-POST_TYPE_QUOTE = 'quote'
-POST_TYPE_IMAGE = 'image'
-POST_TYPE_IMAGE = 'instagram'
-POST_TYPE_TEXT  = 'text'
-
 CHOICER_TYPES = ['text', 'image', 'instagram', 'music', 'video','quote']
 CHOICER_ITEMS =
   text:
@@ -31,7 +24,7 @@ CHOICER_ITEMS =
     title: 'Анонимка'
     icon:  'icon--text-circle'
 
-window.PostEditorChoicer = React.createClass
+window.PostEditor_Choicer = React.createClass
 
   propTypes:
     currentType:  React.PropTypes.string.isRequired
@@ -45,11 +38,11 @@ window.PostEditorChoicer = React.createClass
     }
 
     if @props.onChangeType?
-      items = CHOICER_TYPES.map (type) => @getItemForType type
+      choicesItems = CHOICER_TYPES.map (type) => @getItemForType type
     else
-      items = @getItemForType(@props.currentType)
+      choicesItems = @getItemForType @props.currentType
 
-    return `<nav className={ choicerClasses }>{ items }</nav>`
+    return `<nav className={ choicerClasses }>{ choicesItems }</nav>`
 
   getItemForType: (type) ->
     onSelect = (type) =>
@@ -59,7 +52,7 @@ window.PostEditorChoicer = React.createClass
 
     choicerItemData = CHOICER_ITEMS[type]
 
-    PostEditorChoicerItem
+    PostEditor_ChoicerItem
       title:     choicerItemData.title
       icon:      choicerItemData.icon
       isActive:  @props.currentType == type
@@ -67,7 +60,7 @@ window.PostEditorChoicer = React.createClass
       onClick:   onSelect.bind(@, type)
       key:       type
 
-window.PostEditorChoicerItem = React.createClass
+window.PostEditor_ChoicerItem = React.createClass
 
   propTypes:
     title:     React.PropTypes.string.isRequired
@@ -81,7 +74,7 @@ window.PostEditorChoicerItem = React.createClass
       'button': true
       'button--circle': true
       'state--disable': @props.isLoading
-      'state--active': @props.isActive
+      'state--active' : @props.isActive
     }
 
     return `<button title={ this.props.title }
