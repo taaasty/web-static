@@ -9,6 +9,12 @@ EDITOR_OPTIONS =
     disableDoubleReturn: true
     cleanPastedHTML:     true
 
+  partial:
+    disableToolbar:      true
+    disableReturn:       false
+    disableDoubleReturn: true
+    cleanPastedHTML:     true
+
   rich:
     buttons:             ['anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist'] #'pre
     disableToolbar:      false
@@ -16,9 +22,6 @@ EDITOR_OPTIONS =
     disableDoubleReturn: false
     cleanPastedHTML:     true
     targetBlank:         true
-
-# Video title
-EDITOR_OPTIONS['partial'] = EDITOR_OPTIONS['rich']
 
 # Medium-Editor
 window.TastyEditor = React.createClass

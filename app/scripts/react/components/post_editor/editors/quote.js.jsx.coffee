@@ -9,6 +9,7 @@ window.PostEditor_QuoteEditor = React.createClass
         <blockquote className="blockquote">
           <TastyEditor ref="textEditor"
                        placeholder="Текст цитаты (499 символов)"
+                       mode="partial"
                        content={this.props.entry.text}
                        isLoading={ this.hasActivities() }
                        onChange={this.getChangeCallback('text')} />
