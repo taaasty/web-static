@@ -2,6 +2,7 @@ DRAG_HOVER_CLASS = 'state--drag-hover'
 DRAGOFF_TIMEOUT  = 500
 
 window.PostEditor_Dragging =
+
   getInitialState: ->
     isDragging: false
 
@@ -33,10 +34,12 @@ window.PostEditor_Dragging =
     $dropZone.toggleClass DRAG_HOVER_CLASS, active
 
   bindDragging: ->
+    $(document).on 'dragover', @dragOver
     $(document).on 'dragleave', @dragLeave
     $(document).on 'drop', @draggingOff
 
   unbindDragging: ->
+    $(document).off 'dragover', @dragOver
     $(document).off 'dragleave', @dragLeave
     $(document).off 'drop', @draggingOff
 

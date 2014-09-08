@@ -10,16 +10,14 @@ window.PostEditor_QuoteEditor = React.createClass
           <TastyEditor ref="textEditor"
                        placeholder="Текст цитаты (499 символов)"
                        content={this.props.entry.text}
-                       isLoading={ this.hasActivities() }
-                       onChange={this.getChangeCallback('text')} />
+                       isLoading={ this.hasActivities() } />
 
           <div className="blockquote__caption">
             <span className="blockquote__dash">—</span>
             <TastyEditor ref="sourceEditor"
                          placeholder="Автор (не обязательно)"
                          content={ this.props.entry.source }
-                         isLoading={ this.hasActivities() }
-                         onChange={this.getChangeCallback('source')} />
+                         isLoading={ this.hasActivities() } />
           </div>
         </blockquote>
       </div>

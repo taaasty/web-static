@@ -15,17 +15,15 @@ window.PostEditor_VideoEditor = React.createClass
         <VideoMediaBox activitiesHandler={this.activitiesHandler}
                        embedUrl={this.state.embedUrl}
                        embedHtml={this.state.embedHtml}
-                       onChange={this.getChangeCallback('video_url')}
                        onClean={this.cleanTitle}
                        onSuccessLoad={this.successLoaded}>
           <MediaBox_VideoWelcome />
         </VideoMediaBox>
         <TastyEditor ref="titleEditor"
                      placeholder="Придумайте подпись"
-                     mode="partial"
+                     mode="rich"
                      content={this.state.title}
-                     isLoading={ this.hasActivities() }
-                     onChange={this.getChangeCallback('title')} />
+                     isLoading={ this.hasActivities() } />
       </div>
     </article>`
 

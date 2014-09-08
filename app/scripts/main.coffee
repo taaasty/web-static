@@ -148,6 +148,7 @@ require './react/components/post_editor/mixins/images_form'
 require './react/components/post_editor/mixins/layout'
 
 require './react/components/post_editor/welcome_messages/instagram'
+require './react/components/post_editor/welcome_messages/image'
 require './react/components/post_editor/welcome_messages/music'
 require './react/components/post_editor/welcome_messages/video'
 
@@ -158,7 +159,6 @@ require './react/components/post_editor/video_mediabox/embeded'
 
 require './react/components/post_editor/images_mediabox/loaded'
 require './react/components/post_editor/images_mediabox/url_insert'
-require './react/components/post_editor/images_mediabox/welcome'
 
 require './react/components/post_editor/mediabox/actions'
 require './react/components/post_editor/mediabox/layout'

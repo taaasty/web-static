@@ -11,7 +11,6 @@ window.VideoMediaBox = React.createClass
   propTypes:
     embedUrl:      React.PropTypes.string
     embedHtml:     React.PropTypes.string
-    onChange:      React.PropTypes.func.isRequired
     onClean:       React.PropTypes.func.isRequired
     onSuccessLoad: React.PropTypes.func.isRequired
 
@@ -39,7 +38,6 @@ window.VideoMediaBox = React.createClass
         console.error? "Unknown state:", @state.current
 
   loadEmbed: (embedUrl) ->
-    @props.onChange embedUrl
     @setState embedUrl: embedUrl, embedHtml: null, current: STATE_LOADING
 
     @incrementActivities()

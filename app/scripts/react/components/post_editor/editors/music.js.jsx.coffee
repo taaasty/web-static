@@ -21,7 +21,6 @@ window.PostEditor_MusicEditor = React.createClass
                 <VideoMediaBox activitiesHandler={ this.activitiesHandler }
                                embedUrl={ this.state.embedUrl }
                                embedHtml={ this.state.embedHtml }
-                               onChange={ this.getChangeCallback('video_url') }
                                onClean={ this.cleanTitle }
                                onSuccessLoad={ this.successLoaded }>
                   <MediaBox_MusicWelcome />
@@ -30,8 +29,7 @@ window.PostEditor_MusicEditor = React.createClass
                              mode="partial"
                              placeholder="Придумайте подпись"
                              content={ this.state.title }
-                             isLoading={ this.hasActivities() }
-                             onChange={ this.getChangeCallback('title') } />
+                             isLoading={ this.hasActivities() } />
               </div>
             </article>`
 

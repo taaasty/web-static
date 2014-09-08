@@ -1,118 +1,122 @@
 ###* @jsx React.DOM ###
 
+WELCOME_MODE = 'welcome'
+LOADED_MODE  = 'loaded'
+INSERT_MODE  = 'insert'
+
 window.PostEditor_ImageEditor = React.createClass
-  mixins: [
-    React.addons.PureRenderMixin,
-    PostEditor_Dragging,
-    'ReactActivitiesUser',
-    PostEditor_ImagesForm,
-    RequesterMixin
-  ]
+  mixins: ['ReactActivitiesUser', PostEditor_ImagesForm, PostEditor_Dragging
+            RequesterMixin, React.addons.PureRenderMixin]
 
   propTypes:
-    entry:             React.PropTypes.object.isRequired
-    entryPrivacy:      React.PropTypes.string.isRequired
-    doneCallback:      React.PropTypes.func.isRequired
+    entryPrivacy:          React.PropTypes.string.isRequired
+    entryTitle:            React.PropTypes.string
+    entryImageUrl:         React.PropTypes.string
+    entryImageAttachments: React.PropTypes.array
 
   getInitialState: ->
-    images:      @getInitialImages()
-    imageUrl:    @props.entry.image_url
-    isInserting: false
-    isChanged:   false
+    currentState: @_getInitialCurrentState()
+    images:       @_getInitialImages()
+    imageUrl:     @props.entryImageUrl
 
-  getInitialImages: ->
-    if @props.entry.image_url?
-      image = new Image()
-      image.src = @props.entry.image_url
+  render: ->
+    imageEditorClasses = React.addons.classSet {
+      'post':        true
+      'post--image': true
+      'post--edit':  true
+      'state--loading': @hasActivities()
+      'state--insert':  @isInsertMode()
+    }
+
+    switch @state.currentState
+      when WELCOME_MODE
+        imageEditor = `<MediaBox_ImageWelcome ref="welcome"
+                                              onClick={ this.activateInsertMode } />`
+      when INSERT_MODE
+        imageEditor = `<ImagesMediaBox_UrlInsert ref="insert"
+                                                 imageUrl={ this.state.imageUrl }
+                                                 onExit={ this.activateWelcomeMode }
+                                                 onChange={ this.handleChangeImageUrl } />`
+      when LOADED_MODE
+        imageEditor = `<ImagesMediaBox_Loaded images={ this.state.images }
+                                              onDelete={ this.handleDeleteLoadedImages } />`
+      else console.error 'Неизвестный тип currentState', @state.currentState
+
+    return `<article className={ imageEditorClasses }>
+              <div className="post__content">
+                <form ref="form"
+                      encType="multipart/form-data">
+
+                  <MediaBox_Layout ref="layout"
+                                   state={ this._getMediaBoxState() }
+                                   type="image">
+                    { imageEditor }
+                    <MediaBox_LoadingProgress progress={ this.state.uploadingProgress } />
+                  </MediaBox_Layout>
+
+                  <TastyEditor ref="titleEditor"
+                               mode="rich"
+                               placeholder="Придумайте подпись"
+                               content={ this.props.entryTitle }
+                               isLoading={ this.hasActivities() } />
+                </form>
+              </div>
+            </article>`
+
+  activateWelcomeMode: -> @setState currentState: WELCOME_MODE
+  activateLoadedMode:  -> @setState currentState: LOADED_MODE
+  activateInsertMode:  -> @setState currentState: INSERT_MODE
+
+  isWelcomeMode: -> @state.currentState is WELCOME_MODE
+  isLoadedMode:  -> @state.currentState is LOADED_MODE
+  isInsertMode:  -> @state.currentState is INSERT_MODE
+
+  _getInitialCurrentState: ->
+    # Возможные варианты currentState: welcome, loaded, insert
+
+    if @props.entryImageUrl || @props.entryImageAttachments.length > 0
+      LOADED_MODE
+    else
+      WELCOME_MODE
+
+  _getInitialImages: ->
+    if @props.entryImageUrl?
+      image     = new Image()
+      image.src = @props.entryImageUrl
+
       [image]
     else
-      @props.entry.image_attachments.map (imageAttachment) ->
-        image = new Image()
+      @props.entryImageAttachments.map (imageAttachment) ->
+        image     = new Image()
         image.src = imageAttachment.image.url
+
         image
 
-  clearImages: -> @setState images: [], progress: 0, isChanged: true
-
-  clickInsertUrl: ->
-    @setState isInserting: true
+  _getMediaBoxState: ->
+    return 'drag-hover' if @state.isDragging
+    return 'insert'     if @isInsertMode()
+    return 'loaded'     if @state.images.length > 0
 
   _getEditorData: ->
     title:     @refs.titleEditor.content()
     image_url: @state.imageUrl
     privacy:   @props.entryPrivacy
 
-  getMediaBoxState: ->
-    # TODO Непонятно кто и как устанавливает этот state
-    return 'drag-hover' if @state.isDragging
+  handleDeleteLoadedImages: ->
+    @setState {
+      images:   []
+      imageUrl: null
+    }
+    @activateWelcomeMode()
 
-    return 'insert' if @state.isInserting
+  handleChangeImageUrl: (imageUrl) ->
+    image  = new Image()
+    images = [image]
 
-    if @state.images.length > 0
-      'loaded'
-    else
-      null
+    image.onload = =>
+      @activateLoadedMode()
+      @setState { imageUrl, images }
+    image.onerror = =>
+      TastyNotifyController.notify 'error', "Изображения #{ imageUrl } не существует."
 
-  onChangeImageUrl: (imageUrl) ->
-
-    images = []
-    if imageUrl?
-      image = new Image()
-      image.src = imageUrl
-      images = [image]
-
-    @setState imageUrl: imageUrl, images: images, isInserting: false
-
-  exitFromInserting: ->
-    @setState isInserting: false
-
-  render: ->
-    cx = React.addons.classSet post: true,
-        'post--image': true,
-        'post--edit': true,
-        'state--loading': @hasActivities(),
-        'state--insert':  @state.isInserting
-
-    mediaBoxState = @getMediaBoxState()
-
-    mediaBoxContent = []
-
-    #console.log 'image editor activities:', @hasActivities()
-    #console.log 'image editor state:', mediaBoxState
-    #console.log 'image editor images:', this.state.images
-
-    #if mediaBoxState == 'loaded'
-    onDelete = @clearImages
-
-    mediaElements = []
-
-    mediaElements.push `<ImagesMediaBox_Welcome ref="welcome"
-                                                onClickUrlInsert={this.clickInsertUrl}
-                                                isDragging={this.state.isDragging}
-                                                key="welcome" />`
-
-    mediaElements.push `<ImagesMediaBox_Loaded images={this.state.images} onDelete={onDelete} key='images'/>`
-
-    if @state.isInserting
-      mediaElements.push `<ImagesMediaBox_UrlInsert ref='insert'
-                                                    imageUrl={this.state.imageUrl}
-                                                    onExit={this.exitFromInserting}
-                                                    onChangeImageUrl={this.onChangeImageUrl}
-                                                    key='insert' />`
-
-    return `<article className={cx}>
-              <div className="post__content">
-                <form ref='form' encType='multipart/form-data' method="POST">
-                  <MediaBox_Layout type='image' state={mediaBoxState} ref='layout'>
-                    { mediaElements }
-                    <MediaBox_LoadingProgress progress={this.state.uploadingProgress} />
-                  </MediaBox_Layout>
-
-                  <TastyEditor ref="titleEditor"
-                               mode="rich"
-                               placeholder="Придумайте подпись"
-                               content={ this.props.entry.title }
-                               isLoading={ this.hasActivities() }
-                               onChange={ this.getChangeCallback('title') } />
-                </form>
-              </div>
-            </article>`
+    image.src = imageUrl
