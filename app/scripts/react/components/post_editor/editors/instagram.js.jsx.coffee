@@ -21,7 +21,6 @@ window.PostEditor_InstagramEditor = React.createClass
                 <VideoMediaBox activitiesHandler={ this.activitiesHandler }
                                embedUrl={ this.state.embedUrl }
                                embedHtml={ this.state.embedHtml }
-                               onChange={ this.getChangeCallback('video_url') }
                                onClean={ this.cleanTitle }
                                onSuccessLoad={ this.successLoaded }>
                   <MediaBox_InstagramWelcome />
@@ -30,8 +29,7 @@ window.PostEditor_InstagramEditor = React.createClass
                              placeholder="Придумайте подпись"
                              mode="partial"
                              content={ this.state.title }
-                             isLoading={ this.hasActivities() }
-                             onChange={ this.getChangeCallback('title') } />
+                             isLoading={ this.hasActivities() } />
               </div>
             </article>`
 

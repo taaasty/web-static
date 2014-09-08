@@ -19,34 +19,35 @@ window.PostEditor_EditorContainer = React.createClass
     editorContainer
 
   saveEntry: ({ entryPrivacy }) ->
-    @refs.editor.saveEntry entryPrivacy: entryPrivacy
+    @refs.editor.saveEntry { entryPrivacy }
 
-  goToEntryPage: (newEntry) ->
+  redirectToEntryPage: (entry) ->
     if window.TASTY_ENV == 'development'
-      alert "Статья #{ newEntry.id } успешно сохранена"
+      alert "Статья #{ entry.id } успешно сохранена"
       window.location.reload()
     else
       _.defer =>
         # TODO Выводить модалку
         TastyNotifyController.notifySuccess 'Опубликовано! Переходим на страницу поста..'
-        console.log 'goto', newEntry.entry_url
-        window.location.href = newEntry.entry_url
+        console.log 'goto', entry.entry_url
+        window.location.href = entry.entry_url
 
   _getEditorComponent: ->
     opts =
       ref:               'editor'
       entry:             @props.entry
+      entryType:         @props.entry.type
       entryPrivacy:      @props.entryPrivacy
       activitiesHandler: @activitiesHandler
-      doneCallback:      @goToEntryPage
+      doneCallback:      @redirectToEntryPage
 
     switch @props.entryType
       when 'anonymous'
-        editor = PostEditor_TextEditor  opts
+        editor = @_getTextEditor()
       when 'text'
-        editor = PostEditor_TextEditor  opts
+        editor = @_getTextEditor()
       when 'image'
-        editor = PostEditor_ImageEditor opts
+        editor = @_getImageEditor()
       when 'instagram'
         editor = PostEditor_InstagramEditor opts
       when 'music'
@@ -57,3 +58,25 @@ window.PostEditor_EditorContainer = React.createClass
         editor = PostEditor_QuoteEditor opts
       else
         console.error "Unknown entry type: #{@props.entryType}"
+
+    editor
+
+  _getTextEditor: ->
+    `<PostEditor_TextEditor ref="editor"
+                            entryId={ this.props.entry.id }
+                            entryType={ this.props.entryType }
+                            entryTitle={ this.props.entry.title }
+                            entryText={ this.props.entry.text }
+                            activitiesHandler={ this.activitiesHandler }
+                            doneCallback={ this.redirectToEntryPage } />`
+
+  _getImageEditor: ->
+    `<PostEditor_ImageEditor ref="editor"
+                             entryId={ this.props.entry.id }
+                             entryType={ this.props.entryType }
+                             entryTitle={ this.props.entry.title }
+                             entryImageUrl={ this.props.entry.image_url }
+                             entryImageAttachments={ this.props.entry.image_attachments }
+                             entryPrivacy={ this.props.entryPrivacy }
+                             activitiesHandler={ this.activitiesHandler }
+                             doneCallback={ this.redirectToEntryPage } />`

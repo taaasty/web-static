@@ -16,7 +16,7 @@ EDITOR_OPTIONS =
     cleanPastedHTML:     true
 
   rich:
-    buttons:             ['anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist'] #'pre
+    buttons:             ['anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist']
     disableToolbar:      false
     disableReturn:       false
     disableDoubleReturn: false
@@ -27,15 +27,14 @@ EDITOR_OPTIONS =
 window.TastyEditor = React.createClass
 
   propTypes:
-    placeholder: React.PropTypes.string
     content:     React.PropTypes.string
     mode:        React.PropTypes.string
+    placeholder: React.PropTypes.string
     isLoading:   React.PropTypes.bool
     className:   React.PropTypes.string
-    onChange:    React.PropTypes.func.isRequired
 
   getDefaultProps: ->
-    mode:      'inline' # 'rich'
+    mode:      'inline'
     className: 'tasty-editor-default'
 
   getInitialState: ->

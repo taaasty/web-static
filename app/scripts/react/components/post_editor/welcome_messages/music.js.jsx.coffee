@@ -1,12 +1,12 @@
 ###* @jsx React.DOM ###
-#
+
 window.MediaBox_MusicWelcome = React.createClass
 
   propTypes:
     onClick: React.PropTypes.func.isRequired
 
   render: ->
-   `<MediaBox_Layout type='video'>
+   `<MediaBox_Layout type="video">
       <div className="media-box__info">
         <div className="media-box__text">
           <a title="Вставьте"
