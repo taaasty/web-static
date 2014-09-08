@@ -3,7 +3,6 @@ MAX_FILE_SIZE       = 10*1000*1000
 MAX_NUMBER_OF_FILES = 6
 
 window.PostEditor_ImagesForm =
-  mixins: [ComponentManipulationsMixin]
 
   getInitialState: ->
     uploadingProgress: 0
@@ -24,7 +23,7 @@ window.PostEditor_ImagesForm =
       url:    @_getSaveUrl()
       method: @_getSaveMethod()
       data:   @_getEditorData()
-      success: (newEntry) ->
+      success: (newEntry) =>
         @safeUpdateState {
           entry: newEntry
           type:  newEntry.type

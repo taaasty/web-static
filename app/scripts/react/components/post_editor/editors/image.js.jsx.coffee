@@ -6,7 +6,7 @@ INSERT_MODE  = 'insert'
 
 window.PostEditor_ImageEditor = React.createClass
   mixins: ['ReactActivitiesUser', PostEditor_ImagesForm, PostEditor_Dragging
-            RequesterMixin, React.addons.PureRenderMixin]
+            RequesterMixin, React.addons.PureRenderMixin, ComponentManipulationsMixin]
 
   propTypes:
     entryPrivacy:          React.PropTypes.string.isRequired
