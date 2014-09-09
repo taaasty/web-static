@@ -3,38 +3,54 @@
 window.PostEditor_VideoEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser']
 
+  propTypes:
+    embedUrl:   React.PropTypes.string
+    embedHtml:  React.PropTypes.string
+    entryTitle: React.PropTypes.string
+
   getInitialState: ->
-    embedUrl:  @props.entry.video_url
-    embedHtml: @props.entry.iframely?.html
-    title:     @props.entry.title
+    embedUrl:  @props.embedUrl
+    embedHtml: @props.embedHtml
+    title:     @props.entryTitle
 
   render: ->
-    cx = React.addons.classSet post: true, 'post--video': true, 'post--edit': true, 'state--loading': @hasActivities()
-    `<article className={cx}>
-      <div className="post__content">
-        <VideoMediaBox activitiesHandler={this.activitiesHandler}
-                       embedUrl={this.state.embedUrl}
-                       embedHtml={this.state.embedHtml}
-                       onClean={this.cleanTitle}
-                       onSuccessLoad={this.successLoaded}>
-          <MediaBox_VideoWelcome />
-        </VideoMediaBox>
-        <TastyEditor ref="titleEditor"
-                     placeholder="Придумайте подпись"
-                     mode="rich"
-                     content={this.state.title}
-                     isLoading={ this.hasActivities() } />
-      </div>
-    </article>`
+    videoEditorClasses = React.addons.classSet {
+      'post':        true
+      'post--video': true
+      'post--edit':  true
+      'state--loading': @hasActivities()
+    }
 
-  cleanTitle: ->
-    @setState title: ''
+    return `<article className={ videoEditorClasses }>
+              <div className="post__content">
+                <VideoMediaBox embedUrl={ this.state.embedUrl }
+                               embedHtml={ this.state.embedHtml }
+                               activitiesHandler={ this.activitiesHandler }
+                               onDeleteEmbeded={ this.handleDeleteEmbeded }
+                               onSuccessLoad={ this.successLoaded }>
+                  <MediaBox_VideoWelcome />
+                </VideoMediaBox>
+                <TastyEditor ref="titleEditor"
+                             placeholder="Придумайте подпись"
+                             mode="partial"
+                             content={ this.state.title }
+                             isLoading={ this.hasActivities() } />
+              </div>
+            </article>`
 
   successLoaded: (iframely) ->
-    @setState
+    @setState {
       embedUrl:  iframely.url
       embedHtml: iframely.html
       title:     iframely.meta.description || iframely.meta.title
+    }
+
+  handleDeleteEmbeded: ->
+    @setState {
+      embedUrl:  null
+      embedHtml: null
+      title:     ''
+    }
 
   _getEditorData: ->
     title:     @refs.titleEditor.content()

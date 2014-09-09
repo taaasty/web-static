@@ -154,7 +154,7 @@ require './react/components/post_editor/welcome_messages/video'
 
 require './react/components/post_editor/video_mediabox/video_mediabox'
 require './react/components/post_editor/video_mediabox/loading'
-require './react/components/post_editor/video_mediabox/insert'
+require './react/components/post_editor/video_mediabox/url_insert'
 require './react/components/post_editor/video_mediabox/embeded'
 
 require './react/components/post_editor/images_mediabox/loaded'
