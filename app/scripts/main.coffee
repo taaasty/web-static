@@ -154,7 +154,7 @@ require './react/components/post_editor/welcome_messages/video'
 
 require './react/components/post_editor/video_mediabox/video_mediabox'
 require './react/components/post_editor/video_mediabox/loading'
-require './react/components/post_editor/video_mediabox/insert'
+require './react/components/post_editor/video_mediabox/url_insert'
 require './react/components/post_editor/video_mediabox/embeded'
 
 require './react/components/post_editor/images_mediabox/loaded'
@@ -207,7 +207,6 @@ require './react/components/post_editor/editors/music'
 require './react/components/post_editor/editors/video'
 require './react/components/post_editor/editors/quote'
 
-require './react/components/post_editor/post_editor'
 require './react/components/post_editor/choicer'
 require './react/components/post_editor/layout'
 require './react/components/post_editor/new_post'

@@ -49,13 +49,13 @@ window.PostEditor_EditorContainer = React.createClass
       when 'image'
         editor = @_getImageEditor()
       when 'instagram'
-        editor = PostEditor_InstagramEditor opts
+        editor = @_getInstagramEditor()
       when 'music'
-        editor = PostEditor_MusicEditor opts
+        editor = @_getMusicEditor()
       when 'video'
-        editor = PostEditor_VideoEditor opts
+        editor = @_getVideoEditor()
       when 'quote'
-        editor = PostEditor_QuoteEditor opts
+        editor = @_getQuoteEditor()
       else
         console.error "Unknown entry type: #{@props.entryType}"
 
@@ -78,5 +78,50 @@ window.PostEditor_EditorContainer = React.createClass
                              entryImageUrl={ this.props.entry.image_url }
                              entryImageAttachments={ this.props.entry.image_attachments }
                              entryPrivacy={ this.props.entryPrivacy }
+                             activitiesHandler={ this.activitiesHandler }
+                             doneCallback={ this.redirectToEntryPage } />`
+
+  _getInstagramEditor: ->
+    embedHtml = @props.entry.iframely?.html
+
+    return `<PostEditor_InstagramEditor ref="editor"
+                                        entryId={ this.props.entry.id }
+                                        entryType="video"
+                                        entryTitle={ this.props.entry.title }
+                                        embedUrl={ this.props.entry.video_url }
+                                        embedHtml={ embedHtml }
+                                        activitiesHandler={ this.activitiesHandler }
+                                        doneCallback={ this.redirectToEntryPage } />`
+
+  _getMusicEditor: ->
+    embedHtml = @props.entry.iframely?.html
+
+    return `<PostEditor_MusicEditor ref="editor"
+                                    entryId={ this.props.entry.id }
+                                    entryType="video"
+                                    entryTitle={ this.props.entry.title }
+                                    embedUrl={ this.props.entry.video_url }
+                                    embedHtml={ embedHtml }
+                                    activitiesHandler={ this.activitiesHandler }
+                                    doneCallback={ this.redirectToEntryPage } />`
+
+  _getVideoEditor: ->
+    embedHtml = @props.entry.iframely?.html
+
+    return `<PostEditor_VideoEditor ref="editor"
+                                    entryId={ this.props.entry.id }
+                                    entryType="video"
+                                    entryTitle={ this.props.entry.title }
+                                    embedUrl={ this.props.entry.video_url }
+                                    embedHtml={ embedHtml }
+                                    activitiesHandler={ this.activitiesHandler }
+                                    doneCallback={ this.redirectToEntryPage } />`
+
+  _getQuoteEditor: ->
+    `<PostEditor_QuoteEditor ref="editor"
+                             entryId={ this.props.entry.id }
+                             entryType={ this.props.entryType }
+                             entryText={ this.props.entry.text }
+                             entrySource={ this.props.entry.source }
                              activitiesHandler={ this.activitiesHandler }
                              doneCallback={ this.redirectToEntryPage } />`
