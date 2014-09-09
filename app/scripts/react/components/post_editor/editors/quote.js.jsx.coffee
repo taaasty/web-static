@@ -28,6 +28,22 @@ window.PostEditor_QuoteEditor = React.createClass
       </div>
     </article>`
 
+  storeEntry: ->
+    EntryStoreService.storeEntry @_getNormalizedData()
+
+  _getNormalizedData: ->
+    # Используется при сохранении данных в EntryStoreService
+    return {
+      type:   'quote'
+      text:   @refs.textEditor.content()
+      source: @refs.sourceEditor.content()
+    }
+
   _getEditorData: ->
-    text:   @refs.textEditor.content()
-    source: @refs.sourceEditor.content()
+    # Используется в ключе data, ajax-запроса
+    return {
+      text:   @refs.textEditor.content()
+      source: @refs.sourceEditor.content()
+    }
+
+  handleChange: -> @storeEntry()

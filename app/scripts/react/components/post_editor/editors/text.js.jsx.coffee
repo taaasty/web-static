@@ -26,11 +26,27 @@ window.PostEditor_TextEditor = React.createClass
               <TastyEditor ref="textEditor"
                            mode="rich"
                            content={ this.props.entryText }
-                           placeholder="Начните набирать текст поста.<br>SHIFT + ENTER новая строка, Enter – новый абзац"
+                           placeholder="Начните набирать текст поста.<br>Shift + Enter новая строка, Enter – новый абзац"
                            isLoading={ this.hasActivities() }
                            className="post__content" />
             </article>`
 
+  storeEntry: ->
+    EntryStoreService.storeEntry @_getNormalizedData()
+
+  _getNormalizedData: ->
+    # Используется при сохранении данных в EntryStoreService
+    return {
+      type:  'text'
+      title: @refs.titleEditor.content()
+      text:  @refs.textEditor.content()
+    }
+
   _getEditorData: ->
-    title: @refs.titleEditor.content()
-    text:  @refs.textEditor.content()
+    # Используется в ключе data, ajax-запроса
+    return {
+      title: @refs.titleEditor.content()
+      text:  @refs.textEditor.content()
+    }
+
+  handleChange: -> @storeEntry()

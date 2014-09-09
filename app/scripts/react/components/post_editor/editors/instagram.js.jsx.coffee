@@ -45,6 +45,25 @@ window.PostEditor_InstagramEditor = React.createClass
       title:     iframely.meta.description || iframely.meta.title
     }
 
+  storeEntry: ->
+    EntryStoreService.storeEntry @_getNormalizedData()
+
+  _getNormalizedData: ->
+    # Используется при сохранении данных в EntryStoreService
+    return {
+      type:      'instagram'
+      title:     @refs.titleEditor.content()
+      embedHtml: @state.embedHtml
+      video_url: @state.embedUrl
+    }
+
+  _getEditorData: ->
+    # Используется в ключе data, ajax-запроса
+    return {
+      title:     @refs.titleEditor.content()
+      video_url: @state.embedUrl
+    }
+
   handleDeleteEmbeded: ->
     @setState {
       embedUrl:  null
@@ -52,6 +71,4 @@ window.PostEditor_InstagramEditor = React.createClass
       title:     ''
     }
 
-  _getEditorData: ->
-    title:     @refs.titleEditor.content()
-    video_url: @state.embedUrl
+  handleChange: -> @storeEntry()

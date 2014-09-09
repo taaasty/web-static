@@ -63,6 +63,9 @@ window.PostEditor_ImageEditor = React.createClass
               </div>
             </article>`
 
+  storeEntry: ->
+    EntryStoreService.storeEntry @_getNormalizedData()
+
   activateWelcomeMode: -> @setState currentState: WELCOME_MODE
   activateLoadedMode:  -> @setState currentState: LOADED_MODE
   activateInsertMode:  -> @setState currentState: INSERT_MODE
@@ -85,6 +88,8 @@ window.PostEditor_ImageEditor = React.createClass
       image.src = @props.entryImageUrl
 
       [image]
+    else if @props.entryImageAttachments[0] instanceof HTMLImageElement
+      @props.entryImageAttachments
     else
       @props.entryImageAttachments.map (imageAttachment) ->
         image     = new Image()
@@ -97,10 +102,22 @@ window.PostEditor_ImageEditor = React.createClass
     return 'insert'     if @isInsertMode()
     return 'loaded'     if @state.images.length > 0
 
+  _getNormalizedData: ->
+    # Используется при сохранении данных в EntryStoreService
+    return {
+      type:              'image'
+      title:             @refs.titleEditor.content()
+      image_url:         @state.imageUrl
+      image_attachments: @state.images
+    }
+
   _getEditorData: ->
-    title:     @refs.titleEditor.content()
-    image_url: @state.imageUrl
-    privacy:   @props.entryPrivacy
+    # Используется в ключе data, ajax-запроса
+    return {
+      title:     @refs.titleEditor.content()
+      image_url: @state.imageUrl
+      privacy:   @props.entryPrivacy
+    }
 
   handleDeleteLoadedImages: ->
     @setState {
@@ -120,3 +137,5 @@ window.PostEditor_ImageEditor = React.createClass
       TastyNotifyController.notify 'error', "Изображения #{ imageUrl } не существует."
 
     image.src = imageUrl
+
+  handleChange: -> @storeEntry()

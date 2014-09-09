@@ -9,9 +9,7 @@ window.PostEditor_ImagesForm =
 
   componentDidMount:    -> @_bindImageUpload()
   componentDidUpdate:   -> @_rebindImageUpload()
-  componentWillUnmount: ->
-    @fileUploader = null if @fileUploader?
-    @_unbindImageUpload()
+  componentWillUnmount: -> @_unbindImageUpload()
 
   saveEntry: ->
     if @state.imageUrl? then @saveAsAjax() else @fileUploader.submit()

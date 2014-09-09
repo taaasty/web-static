@@ -26,6 +26,7 @@ require './aapp/directives/eatClick.js'
 require './aapp/directives/enter.js'
 
 require './react/services/positions'
+require './react/services/entry_store'
 require './react/services/thumbor'
 
 require './react/mixins/unmount'
