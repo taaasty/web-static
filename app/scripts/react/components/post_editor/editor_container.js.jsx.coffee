@@ -55,7 +55,7 @@ window.PostEditor_EditorContainer = React.createClass
       when 'video'
         editor = @_getVideoEditor()
       when 'quote'
-        editor = PostEditor_QuoteEditor opts
+        editor = @_getQuoteEditor()
       else
         console.error "Unknown entry type: #{@props.entryType}"
 
@@ -116,3 +116,12 @@ window.PostEditor_EditorContainer = React.createClass
                                     embedHtml={ embedHtml }
                                     activitiesHandler={ this.activitiesHandler }
                                     doneCallback={ this.redirectToEntryPage } />`
+
+  _getQuoteEditor: ->
+    `<PostEditor_QuoteEditor ref="editor"
+                             entryId={ this.props.entry.id }
+                             entryType={ this.props.entryType }
+                             entryText={ this.props.entry.text }
+                             entrySource={ this.props.entry.source }
+                             activitiesHandler={ this.activitiesHandler }
+                             doneCallback={ this.redirectToEntryPage } />`

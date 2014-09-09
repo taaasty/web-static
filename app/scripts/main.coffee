@@ -207,7 +207,6 @@ require './react/components/post_editor/editors/music'
 require './react/components/post_editor/editors/video'
 require './react/components/post_editor/editors/quote'
 
-require './react/components/post_editor/post_editor'
 require './react/components/post_editor/choicer'
 require './react/components/post_editor/layout'
 require './react/components/post_editor/new_post'
