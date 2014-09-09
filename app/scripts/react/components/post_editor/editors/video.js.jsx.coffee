@@ -38,11 +38,30 @@ window.PostEditor_VideoEditor = React.createClass
               </div>
             </article>`
 
+  storeEntry: ->
+    EntryStoreService.storeEntry @_getNormalizedData()
+
   successLoaded: (iframely) ->
     @setState {
       embedUrl:  iframely.url
       embedHtml: iframely.html
       title:     iframely.meta.description || iframely.meta.title
+    }
+
+  _getNormalizedData: ->
+    # Используется при сохранении данных в EntryStoreService
+    return {
+      type:      'video'
+      title:     @refs.titleEditor.content()
+      embedHtml: @state.embedHtml
+      video_url: @state.embedUrl
+    }
+
+  _getEditorData: ->
+    # Используется в ключе data, ajax-запроса
+    return {
+      title:     @refs.titleEditor.content()
+      video_url: @state.embedUrl
     }
 
   handleDeleteEmbeded: ->
@@ -52,6 +71,4 @@ window.PostEditor_VideoEditor = React.createClass
       title:     ''
     }
 
-  _getEditorData: ->
-    title:     @refs.titleEditor.content()
-    video_url: @state.embedUrl
+  handleChange: -> @storeEntry()

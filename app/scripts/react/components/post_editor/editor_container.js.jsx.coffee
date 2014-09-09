@@ -33,14 +33,6 @@ window.PostEditor_EditorContainer = React.createClass
         window.location.href = entry.entry_url
 
   _getEditorComponent: ->
-    opts =
-      ref:               'editor'
-      entry:             @props.entry
-      entryType:         @props.entry.type
-      entryPrivacy:      @props.entryPrivacy
-      activitiesHandler: @activitiesHandler
-      doneCallback:      @redirectToEntryPage
-
     switch @props.entryType
       when 'anonymous'
         editor = @_getTextEditor()
@@ -82,7 +74,7 @@ window.PostEditor_EditorContainer = React.createClass
                              doneCallback={ this.redirectToEntryPage } />`
 
   _getInstagramEditor: ->
-    embedHtml = @props.entry.iframely?.html
+    embedHtml = @props.entry.embedHtml
 
     return `<PostEditor_InstagramEditor ref="editor"
                                         entryId={ this.props.entry.id }
@@ -94,7 +86,7 @@ window.PostEditor_EditorContainer = React.createClass
                                         doneCallback={ this.redirectToEntryPage } />`
 
   _getMusicEditor: ->
-    embedHtml = @props.entry.iframely?.html
+    embedHtml = @props.entry.embedHtml
 
     return `<PostEditor_MusicEditor ref="editor"
                                     entryId={ this.props.entry.id }
@@ -106,7 +98,7 @@ window.PostEditor_EditorContainer = React.createClass
                                     doneCallback={ this.redirectToEntryPage } />`
 
   _getVideoEditor: ->
-    embedHtml = @props.entry.iframely?.html
+    embedHtml = @props.entry.embedHtml
 
     return `<PostEditor_VideoEditor ref="editor"
                                     entryId={ this.props.entry.id }

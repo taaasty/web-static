@@ -10,6 +10,6 @@ window.PostEditor_NewAnonymousPost = React.createClass
     entryPrivacy: 'public'
     entryType:    'anonymous'
     entry:
-      type: 'anonymous'
+      type:  'anonymous'
       title: null
-      text: null
+      text:  null
