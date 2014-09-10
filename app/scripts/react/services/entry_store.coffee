@@ -58,7 +58,7 @@ window.EntryStoreService =
       else
         console.error 'Невозможно сохранить пост, неивестный тип поста', entry.type
 
-    @storage.setItem @_positionKey(entry.id, entry.updated_at), JSON.stringify(entryData)
+    @storage.setItem @_positionKey(entry), JSON.stringify(entryData)
 
   restoreEntry: (type, entry) ->
     entryData = @_getEntryData entry
@@ -114,17 +114,20 @@ window.EntryStoreService =
     entryData
 
   removeEntry: (entry) ->
-    @storage.removeItem @_positionKey(entry.id, entry.updated_at)
+    @storage.removeItem @_positionKey(entry)
 
   _getEntryData: (entry) ->
-    entryId        = entry.id
-    entryUpdatedAt = new Date(entry.updated_at).getTime()
+    key = @_positionKey entry
 
-    JSON.parse( @storage.getItem(@_positionKey(entryId, entryUpdatedAt)) ) || entry
+    @_getItem(key) || entry
 
-  _positionKey: (entryId, entryUpdatedAt) ->
-    if entryId? && entryUpdatedAt
-      STORAGE_PREFIX + ':' + entryId + ':' + entryUpdatedAt
+  _getItem: (key) ->
+    JSON.parse  @storage.getItem key
+
+  _positionKey: (entry) ->
+    if entry?
+      entryUpdatedAt = new Date(entry.updated_at).getTime()
+      STORAGE_PREFIX + ':' + entry.id + ':' + entryUpdatedAt
     else
       STORAGE_PREFIX + ':' + 'new'
 
