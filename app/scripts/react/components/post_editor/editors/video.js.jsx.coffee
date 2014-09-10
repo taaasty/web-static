@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_VideoEditor = React.createClass
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser']
+  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin]
 
   propTypes:
     embedUrl:   React.PropTypes.string
@@ -34,7 +34,8 @@ window.PostEditor_VideoEditor = React.createClass
                              placeholder="Придумайте подпись"
                              mode="partial"
                              content={ this.state.title }
-                             isLoading={ this.hasActivities() } />
+                             isLoading={ this.hasActivities() }
+                             onChange={ this.startAutosave } />
               </div>
             </article>`
 
