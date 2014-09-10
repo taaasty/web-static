@@ -43,7 +43,7 @@ window.PostEditor_LayoutMixin =
 
   handleChangeType: (type) ->
     @refs.editorContainer.refs.editor.storeEntry()
-    @getChangeTypeCallback()(type)
+    @getChangeTypeCallback()?(type)
 
   getChangeTypeCallback: ->
     return @props.onChangeType if @props.onChangeType?

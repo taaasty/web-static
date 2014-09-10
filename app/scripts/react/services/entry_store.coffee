@@ -23,77 +23,106 @@ DEFAULT_ENTRIES =
     text:   null
     source: null
 
+STORAGE_PREFIX = 'storeEntries'
+
 window.EntryStoreService =
-  storage: {}
+  storage: window.localStorage
 
   storeEntry: (data) ->
+    entryData = @_getEntryData()
+
     switch data.type
       when 'text'
-        @storage.title = data.title
-        @storage.text  = data.text
+        entryData.title = data.title
+        entryData.text  = data.text
       when 'image'
-        @storage.text              = data.title
-        @storage.image_url         = data.image_url
-        @storage.image_attachments = data.image_attachments
+        entryData.text              = data.title
+        entryData.image_url         = data.image_url
+        # entryData.image_attachments = @_encodeImageAttachments(data.image_attachments)
       when 'instagram'
-        @storage.text      = data.title
-        @storage.embedHtml = data.embedHtml
-        @storage.video_url = data.video_url
+        entryData.text      = data.title
+        entryData.embedHtml = data.embedHtml
+        entryData.video_url = data.video_url
       when 'music'
-        @storage.text      = data.title
-        @storage.embedHtml = data.embedHtml
-        @storage.video_url = data.video_url
+        entryData.text      = data.title
+        entryData.embedHtml = data.embedHtml
+        entryData.video_url = data.video_url
       when 'video'
-        @storage.text      = data.title
-        @storage.embedHtml = data.embedHtml
-        @storage.video_url = data.video_url
+        entryData.text      = data.title
+        entryData.embedHtml = data.embedHtml
+        entryData.video_url = data.video_url
       when 'quote'
-        @storage.title = data.text
-        @storage.text  = data.source
+        entryData.title = data.text
+        entryData.text  = data.source
       else
         console.error 'Невозможно сохранить пост, неивестный тип поста', data.type
 
+    @storage.setItem @_positionKey(), JSON.stringify(entryData)
+
   restoreEntry: (type) ->
+    entryData = @_getEntryData()
+
     switch type
       when 'text'
-        entry = {
+        entryData = {
           type:  'text'
-          title: @storage.title
-          text:  @storage.text
+          title: entryData.title
+          text:  entryData.text
         }
       when 'image'
-        entry = {
+        entryData = {
           type:              'image'
-          title:             @storage.text
-          image_url:         @storage.image_url
-          image_attachments: @storage.image_attachments || []
+          title:             entryData.text
+          image_url:         entryData.image_url
+          image_attachments: []
+          # image_attachments: @_decodeImageAttachments(entryData.image_attachments || [])
         }
       when 'instagram'
-        entry = {
+        entryData = {
           type:      'instagram'
-          title:     @storage.text
-          embedHtml: @storage.embedHtml
-          video_url: @storage.video_url
+          title:     entryData.text
+          embedHtml: entryData.embedHtml
+          video_url: entryData.video_url
         }
       when 'music'
-        entry = {
+        entryData = {
           type:      'music'
-          title:     @storage.text
-          embedHtml: @storage.embedHtml
-          video_url: @storage.video_url
+          title:     entryData.text
+          embedHtml: entryData.embedHtml
+          video_url: entryData.video_url
         }
       when 'video'
-        entry = {
+        entryData = {
           type:      'video'
-          title:     @storage.text
-          embedHtml: @storage.embedHtml
-          video_url: @storage.video_url
+          title:     entryData.text
+          embedHtml: entryData.embedHtml
+          video_url: entryData.video_url
         }
       when 'quote'
-        entry = {
+        entryData = {
           type:   'quote'
-          text:   @storage.text
-          source: @storage.title
+          text:   entryData.text
+          source: entryData.title
         }
       else
         console.error 'Невозможно восстановить пост, неивестный тип поста', data.type
+
+    entryData
+
+  removeEntry: ->
+    @storage.removeItem @_positionKey()
+
+  _getEntryData: (type) ->
+    JSON.parse( @storage.getItem(@_positionKey()) ) || {}
+
+  _positionKey: -> STORAGE_PREFIX + '::' + 'new'
+
+  _encodeImageAttachments: (imageAttachments) ->
+    imageAttachments.map (imageAttachment) -> imageAttachment.src
+
+  _decodeImageAttachments: (imageAttachments) ->
+    imageAttachments.map (imageAttachment) ->
+      image     = new Image()
+      image.src = imageAttachment
+
+      image

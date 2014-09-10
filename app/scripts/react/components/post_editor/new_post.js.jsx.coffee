@@ -12,8 +12,6 @@ window.PostEditor_NewPost = React.createClass
     entryPrivacy: if @props.tlogType is 'public' then 'live' else 'public'
 
   changeType: (type) ->
-    console.log 'меняем тип поста', type
-    console.log EntryStoreService.restoreEntry(type)
     @setState {
       entry:     EntryStoreService.restoreEntry(type)
       entryType: type
