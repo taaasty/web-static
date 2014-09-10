@@ -1,11 +1,19 @@
 ###* @jsx React.DOM ###
 
+AUTOSAVE_TIME = 10000
+
 window.PostEditor_TextEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser']
 
   propTypes:
     entryTitle: React.PropTypes.string
     entryText:  React.PropTypes.string
+
+  componentDidMount: ->
+    @autoSaveTimer = setInterval @storeEntry, AUTOSAVE_TIME
+
+  componentWillUnmount: ->
+    clearInterval(@autoSaveTimer) if @autoSaveTimer?
 
   render: ->
     textEditorClasses = React.addons.classSet {
@@ -32,7 +40,7 @@ window.PostEditor_TextEditor = React.createClass
             </article>`
 
   storeEntry: ->
-    EntryStoreService.storeEntry @_getNormalizedData()
+    EntryStoreService.storeEntry @_getNormalizedData(), @props.entryId
 
   _getNormalizedData: ->
     # Используется при сохранении данных в EntryStoreService

@@ -30,7 +30,7 @@ window.PostEditor_PersistenceMixin =
           entry: newEntry
           type:  newEntry.type
         }
-        EntryStoreService.removeEntry()
+        EntryStoreService.removeEntry(@props.entryId)
         @props.doneCallback newEntry
       error: (data) =>
         TastyNotifyController.errorResponse data
