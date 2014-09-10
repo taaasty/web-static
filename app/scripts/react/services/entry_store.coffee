@@ -61,7 +61,7 @@ window.EntryStoreService =
     @storage.setItem @_positionKey(entry), JSON.stringify(entryData)
 
   restoreEntry: (type, entry) ->
-    entryData = @_getEntryData entry
+    entryData = @_getEntryData( entry ) || DEFAULT_ENTRIES[type]
 
     switch type
       when 'text'
@@ -108,8 +108,8 @@ window.EntryStoreService =
       else
         console.error 'Невозможно восстановить пост, неивестный тип поста', data.type
 
-    entryData.id         = entry.id
-    entryData.updated_at = new Date(entry.updated_at).getTime()
+    #entryData.id         = entry.id
+    #entryData.updated_at = new Date(entry.updated_at).getTime()
 
     entryData
 
