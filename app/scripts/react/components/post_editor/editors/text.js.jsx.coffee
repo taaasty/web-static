@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_TextEditor = React.createClass
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser']
+  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin]
 
   propTypes:
     entryTitle: React.PropTypes.string
@@ -21,14 +21,16 @@ window.PostEditor_TextEditor = React.createClass
                              content={ this.props.entryTitle }
                              placeholder="Заголовок (199 символов)"
                              isLoading={ this.hasActivities() }
-                             className="post__title" />
+                             className="post__title"
+                             onChange={ this.startAutosave } />
               </header>
               <TastyEditor ref="textEditor"
                            mode="rich"
                            content={ this.props.entryText }
                            placeholder="Начните набирать текст поста.<br>Shift + Enter новая строка, Enter – новый абзац"
                            isLoading={ this.hasActivities() }
-                           className="post__content" />
+                           className="post__content"
+                           onChange={ this.startAutosave } />
             </article>`
 
   storeEntry: ->

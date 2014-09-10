@@ -200,6 +200,7 @@ require './react/components/post_editor/actions/actions'
 require './react/components/post_editor/actions/buttons/vote'
 require './react/components/post_editor/actions/buttons/privacy'
 
+require './react/components/post_editor/editors/mixins/autosave'
 require './react/components/post_editor/editors/_tasty'
 require './react/components/post_editor/editors/text'
 require './react/components/post_editor/editors/image'
