@@ -52,10 +52,12 @@ window.PostEditor_InstagramEditor = React.createClass
   _getNormalizedData: ->
     # Используется при сохранении данных в EntryStoreService
     return {
-      type:      'instagram'
-      title:     @refs.titleEditor.content()
-      embedHtml: @state.embedHtml
-      video_url: @state.embedUrl
+      id:         @props.entryId
+      updated_at: @props.entryUpdatedAt
+      type:       'instagram'
+      title:      @refs.titleEditor.content()
+      embedHtml:  @state.embedHtml
+      video_url:  @state.embedUrl
     }
 
   _getEditorData: ->

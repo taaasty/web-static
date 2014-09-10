@@ -52,10 +52,12 @@ window.PostEditor_VideoEditor = React.createClass
   _getNormalizedData: ->
     # Используется при сохранении данных в EntryStoreService
     return {
-      type:      'video'
-      title:     @refs.titleEditor.content()
-      embedHtml: @state.embedHtml
-      video_url: @state.embedUrl
+      id:         @props.entryId
+      updated_at: @props.entryUpdatedAt
+      type:       'video'
+      title:      @refs.titleEditor.content()
+      embedHtml:  @state.embedHtml
+      video_url:  @state.embedUrl
     }
 
   _getEditorData: ->

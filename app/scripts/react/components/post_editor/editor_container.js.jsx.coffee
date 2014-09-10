@@ -56,6 +56,7 @@ window.PostEditor_EditorContainer = React.createClass
   _getTextEditor: ->
     `<PostEditor_TextEditor ref="editor"
                             entryId={ this.props.entry.id }
+                            entryUpdatedAt={ this.props.entry.updated_at }
                             entryType={ this.props.entryType }
                             entryTitle={ this.props.entry.title }
                             entryText={ this.props.entry.text }
@@ -65,6 +66,7 @@ window.PostEditor_EditorContainer = React.createClass
   _getImageEditor: ->
     `<PostEditor_ImageEditor ref="editor"
                              entryId={ this.props.entry.id }
+                             entryUpdatedAt={ this.props.entry.updated_at }
                              entryType={ this.props.entryType }
                              entryTitle={ this.props.entry.title }
                              entryImageUrl={ this.props.entry.image_url }
@@ -78,6 +80,7 @@ window.PostEditor_EditorContainer = React.createClass
 
     return `<PostEditor_InstagramEditor ref="editor"
                                         entryId={ this.props.entry.id }
+                                        entryUpdatedAt={ this.props.entry.updated_at }
                                         entryType="video"
                                         entryTitle={ this.props.entry.title }
                                         embedUrl={ this.props.entry.video_url }
@@ -90,6 +93,7 @@ window.PostEditor_EditorContainer = React.createClass
 
     return `<PostEditor_MusicEditor ref="editor"
                                     entryId={ this.props.entry.id }
+                                    entryUpdatedAt={ this.props.entry.updated_at }
                                     entryType="video"
                                     entryTitle={ this.props.entry.title }
                                     embedUrl={ this.props.entry.video_url }
@@ -102,6 +106,7 @@ window.PostEditor_EditorContainer = React.createClass
 
     return `<PostEditor_VideoEditor ref="editor"
                                     entryId={ this.props.entry.id }
+                                    entryUpdatedAt={ this.props.entry.updated_at }
                                     entryType="video"
                                     entryTitle={ this.props.entry.title }
                                     embedUrl={ this.props.entry.video_url }
@@ -112,6 +117,7 @@ window.PostEditor_EditorContainer = React.createClass
   _getQuoteEditor: ->
     `<PostEditor_QuoteEditor ref="editor"
                              entryId={ this.props.entry.id }
+                             entryUpdatedAt={ this.props.entry.updated_at }
                              entryType={ this.props.entryType }
                              entryText={ this.props.entry.text }
                              entrySource={ this.props.entry.source }

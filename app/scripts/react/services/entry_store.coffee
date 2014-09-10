@@ -28,39 +28,40 @@ STORAGE_PREFIX = 'storeEntries'
 window.EntryStoreService =
   storage: window.localStorage
 
-  storeEntry: (data) ->
-    entryData = @_getEntryData()
+  storeEntry: (entry) ->
+    entryData = @_getEntryData entry
 
-    switch data.type
+    switch entry.type
       when 'text'
-        entryData.title = data.title
-        entryData.text  = data.text
+        entryData.title = entry.title
+        entryData.text  = entry.text
       when 'image'
-        entryData.text              = data.title
-        entryData.image_url         = data.image_url
-        # entryData.image_attachments = @_encodeImageAttachments(data.image_attachments)
+        entryData.text              = entry.title
+        entryData.image_url         = entry.image_url
+        entryData.image_attachments = []
+        # entryData.image_attachments = @_encodeImageAttachments(entry.image_attachments)
       when 'instagram'
-        entryData.text      = data.title
-        entryData.embedHtml = data.embedHtml
-        entryData.video_url = data.video_url
+        entryData.text      = entry.title
+        entryData.embedHtml = entry.embedHtml
+        entryData.video_url = entry.video_url
       when 'music'
-        entryData.text      = data.title
-        entryData.embedHtml = data.embedHtml
-        entryData.video_url = data.video_url
+        entryData.text      = entry.title
+        entryData.embedHtml = entry.embedHtml
+        entryData.video_url = entry.video_url
       when 'video'
-        entryData.text      = data.title
-        entryData.embedHtml = data.embedHtml
-        entryData.video_url = data.video_url
+        entryData.text      = entry.title
+        entryData.embedHtml = entry.embedHtml
+        entryData.video_url = entry.video_url
       when 'quote'
-        entryData.title = data.source
-        entryData.text  = data.text
+        entryData.title = entry.source
+        entryData.text  = entry.text
       else
-        console.error 'Невозможно сохранить пост, неивестный тип поста', data.type
+        console.error 'Невозможно сохранить пост, неивестный тип поста', entry.type
 
-    @storage.setItem @_positionKey(), JSON.stringify(entryData)
+    @storage.setItem @_positionKey(entry.id, entry.updated_at), JSON.stringify(entryData)
 
-  restoreEntry: (type) ->
-    entryData = @_getEntryData()
+  restoreEntry: (type, entry) ->
+    entryData = @_getEntryData entry
 
     switch type
       when 'text'
@@ -74,7 +75,7 @@ window.EntryStoreService =
           type:              'image'
           title:             entryData.text
           image_url:         entryData.image_url
-          image_attachments: []
+          image_attachments: entry.image_attachments
           # image_attachments: @_decodeImageAttachments(entryData.image_attachments || [])
         }
       when 'instagram'
@@ -107,15 +108,25 @@ window.EntryStoreService =
       else
         console.error 'Невозможно восстановить пост, неивестный тип поста', data.type
 
+    entryData.id         = entry.id
+    entryData.updated_at = new Date(entry.updated_at).getTime()
+
     entryData
 
-  removeEntry: ->
-    @storage.removeItem @_positionKey()
+  removeEntry: (entry) ->
+    @storage.removeItem @_positionKey(entry.id, entry.updated_at)
 
-  _getEntryData: (type) ->
-    JSON.parse( @storage.getItem(@_positionKey()) ) || {}
+  _getEntryData: (entry) ->
+    entryId        = entry.id
+    entryUpdatedAt = new Date(entry.updated_at).getTime()
 
-  _positionKey: -> STORAGE_PREFIX + ':' + 'new'
+    JSON.parse( @storage.getItem(@_positionKey(entryId, entryUpdatedAt)) ) || entry
+
+  _positionKey: (entryId, entryUpdatedAt) ->
+    if entryId? && entryUpdatedAt
+      STORAGE_PREFIX + ':' + entryId + ':' + entryUpdatedAt
+    else
+      STORAGE_PREFIX + ':' + 'new'
 
   _encodeImageAttachments: (imageAttachments) ->
     imageAttachments.map (imageAttachment) -> imageAttachment.src

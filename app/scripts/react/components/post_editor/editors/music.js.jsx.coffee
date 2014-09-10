@@ -52,10 +52,12 @@ window.PostEditor_MusicEditor = React.createClass
   _getNormalizedData: ->
     # Используется при сохранения данных в EntryStoreService
     return {
-      type:      'music'
-      title:     @refs.titleEditor.content()
-      embedHtml: @state.embedHtml
-      video_url: @state.embedUrl
+      id:         @props.entryId
+      updated_at: @props.entryUpdatedAt
+      type:       'music'
+      title:      @refs.titleEditor.content()
+      embedHtml:  @state.embedHtml
+      video_url:  @state.embedUrl
     }
 
   _getEditorData: ->
