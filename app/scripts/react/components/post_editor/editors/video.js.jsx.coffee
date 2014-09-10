@@ -47,7 +47,7 @@ window.PostEditor_VideoEditor = React.createClass
             </article>`
 
   storeEntry: ->
-    EntryStoreService.storeEntry @_getNormalizedData()
+    EntryStoreService.storeEntry @_getNormalizedData(), @props.entryId
 
   successLoaded: (iframely) ->
     @setState {

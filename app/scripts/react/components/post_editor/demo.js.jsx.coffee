@@ -3,7 +3,7 @@
 window.PostEditor_NewDemo = window.PostEditor_NewPost
 
 DEMO_IDS =
-  text:  19294088 # 18971012
+  text:  19298001 # 18971012
   video: 12 # 18970969
   image: 19294084 # 18971001
   quote: 11 # 18971004
@@ -47,8 +47,7 @@ window.PostEditor_Demo = React.createClass
     console.log 'demo', @state.entry
     if @state.entry?
       `<PostEditor_EditPost entry={ this.state.entry }
-                            backUrl={ this.props.backUrl }
-                            onChangeType={ this.changeType } />`
+                            backUrl={ this.props.backUrl } />`
     else
       `<PostEditor_Layout backUrl={this.props.backUrl}>
           <PostActions entryPrivacy='public'

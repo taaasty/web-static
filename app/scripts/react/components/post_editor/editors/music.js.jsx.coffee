@@ -54,7 +54,7 @@ window.PostEditor_MusicEditor = React.createClass
     }
 
   storeEntry: ->
-    EntryStoreService.storeEntry @_getNormalizedData()
+    EntryStoreService.storeEntry @_getNormalizedData(), @props.entryId
 
   _getNormalizedData: ->
     # Используется при сохранения данных в EntryStoreService

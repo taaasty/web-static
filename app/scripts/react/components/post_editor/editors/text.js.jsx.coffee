@@ -40,7 +40,7 @@ window.PostEditor_TextEditor = React.createClass
             </article>`
 
   storeEntry: ->
-    EntryStoreService.storeEntry @_getNormalizedData()
+    EntryStoreService.storeEntry @_getNormalizedData(), @props.entryId
 
   _getNormalizedData: ->
     # Используется при сохранении данных в EntryStoreService

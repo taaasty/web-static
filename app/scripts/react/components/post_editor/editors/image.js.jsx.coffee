@@ -71,7 +71,7 @@ window.PostEditor_ImageEditor = React.createClass
             </article>`
 
   storeEntry: ->
-    EntryStoreService.storeEntry @_getNormalizedData()
+    EntryStoreService.storeEntry @_getNormalizedData(), @props.entryId
 
   activateWelcomeMode: -> @setState currentState: WELCOME_MODE
   activateLoadedMode:  -> @setState currentState: LOADED_MODE

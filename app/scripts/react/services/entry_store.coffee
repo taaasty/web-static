@@ -1,43 +1,18 @@
-DEFAULT_ENTRIES =
-  text:
-    type: 'text'
-    title: null
-    text:  null
-  image:
-    type: 'image'
-    title:     null
-    image_url: null
-    image_attachments: []
-  instagram:
-    type: 'video'
-    title: null
-  music:
-    type: 'video'
-    title: null
-  video:
-    type: 'video'
-    title:     null
-    video_url: null
-  quote:
-    type: 'quote'
-    text:   null
-    source: null
-
 STORAGE_PREFIX = 'storeEntries'
 
 window.EntryStoreService =
   storage: window.localStorage
 
-  storeEntry: (data) ->
-    entryData = @_getEntryData()
+  storeEntry: (data, entryId) ->
+    entryData = @_getEntryData({ id: entryId })
 
     switch data.type
       when 'text'
         entryData.title = data.title
         entryData.text  = data.text
       when 'image'
-        entryData.text              = data.title
-        entryData.image_url         = data.image_url
+        entryData.text      = data.title
+        entryData.image_url = data.image_url
         # entryData.image_attachments = @_encodeImageAttachments(data.image_attachments)
       when 'instagram'
         entryData.text      = data.title
@@ -57,20 +32,22 @@ window.EntryStoreService =
       else
         console.error 'Невозможно сохранить пост, неивестный тип поста', data.type
 
-    @storage.setItem @_positionKey(), JSON.stringify(entryData)
+    @storage.setItem @_positionKey({ id: entryId }), JSON.stringify(entryData)
 
-  restoreEntry: (type) ->
-    entryData = @_getEntryData()
+  restoreEntry: (type, entry) ->
+    entryData = @_getEntryData(entry)
 
     switch type
       when 'text'
         entryData = {
+          id:    entryData.id
           type:  'text'
           title: entryData.title
           text:  entryData.text
         }
       when 'image'
         entryData = {
+          id:                entryData.id
           type:              'image'
           title:             entryData.text
           image_url:         entryData.image_url
@@ -79,6 +56,7 @@ window.EntryStoreService =
         }
       when 'instagram'
         entryData = {
+          id:        entryData.id
           type:      'instagram'
           title:     entryData.text
           embedHtml: entryData.embedHtml
@@ -86,6 +64,7 @@ window.EntryStoreService =
         }
       when 'music'
         entryData = {
+          id:        entryData.id
           type:      'music'
           title:     entryData.text
           embedHtml: entryData.embedHtml
@@ -93,6 +72,7 @@ window.EntryStoreService =
         }
       when 'video'
         entryData = {
+          id:        entryData.id
           type:      'video'
           title:     entryData.text
           embedHtml: entryData.embedHtml
@@ -100,22 +80,27 @@ window.EntryStoreService =
         }
       when 'quote'
         entryData = {
+          id:     entryData.id
           type:   'quote'
           text:   entryData.text
           source: entryData.title
         }
       else
-        console.error 'Невозможно восстановить пост, неивестный тип поста', data.type
+        console.error 'Невозможно восстановить пост, неивестный тип поста', type
 
     entryData
 
-  removeEntry: ->
-    @storage.removeItem @_positionKey()
+  removeEntry: (entryId) ->
+    @storage.removeItem @_positionKey({ id: entryId })
 
-  _getEntryData: (type) ->
-    JSON.parse( @storage.getItem(@_positionKey()) ) || {}
+  _getEntryData: (entry) ->
+    JSON.parse( @storage.getItem(@_positionKey(entry)) ) || entry
 
-  _positionKey: -> STORAGE_PREFIX + '::' + 'new'
+  _positionKey: (entry) ->
+    if entry?.id
+      STORAGE_PREFIX + ':' + entry.id
+    else
+      STORAGE_PREFIX + ':' + 'new'
 
   _encodeImageAttachments: (imageAttachments) ->
     imageAttachments.map (imageAttachment) -> imageAttachment.src
