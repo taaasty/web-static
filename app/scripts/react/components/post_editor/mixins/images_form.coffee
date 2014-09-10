@@ -12,7 +12,10 @@ window.PostEditor_ImagesForm =
   componentWillUnmount: -> @_unbindImageUpload()
 
   saveEntry: ->
-    if @state.imageUrl? then @saveAsAjax() else @fileUploader.submit()
+    return @saveAsAjax()          if @state.imageUrl?
+    return @fileUploader.submit() if @fileUploader?
+
+    TastyNotifyController.notify 'error', 'Вы не загрузили изображения'
 
   saveAsAjax: ->
     @incrementActivities()
@@ -26,6 +29,7 @@ window.PostEditor_ImagesForm =
           entry: newEntry
           type:  newEntry.type
         }
+        EntryStoreService.removeEntry()
         @props.doneCallback newEntry
       error: (data) =>
         TastyNotifyController.errorResponse data
@@ -90,6 +94,7 @@ window.PostEditor_ImagesForm =
       fail: (e, data) =>
         TastyNotifyController.errorResponse data.jqXHR
       done: (e, data) =>
+        EntryStoreService.removeEntry()
         @props.doneCallback data.jqXHR.responseJSON
 
   _unbindImageUpload: -> @$uploadForm.fileupload 'destroy'
