@@ -32,6 +32,7 @@ window.TastyEditor = React.createClass
     placeholder: React.PropTypes.string
     isLoading:   React.PropTypes.bool
     className:   React.PropTypes.string
+    onChange:    React.PropTypes.func.isRequired
 
   getDefaultProps: ->
     mode:      'inline'
@@ -65,6 +66,8 @@ window.TastyEditor = React.createClass
     @props.placeholder.replace '<br>', "\r\n"
 
   _managePlaceholder: ->
+    @props.onChange()
+
     if @$editor.html() != ''
       @$editor.removeClass 'medium-editor-placeholder'
     else

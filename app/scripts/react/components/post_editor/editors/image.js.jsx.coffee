@@ -1,12 +1,13 @@
 ###* @jsx React.DOM ###
 
-WELCOME_MODE = 'welcome'
-LOADED_MODE  = 'loaded'
-INSERT_MODE  = 'insert'
+WELCOME_MODE  = 'welcome'
+LOADED_MODE   = 'loaded'
+INSERT_MODE   = 'insert'
 
 window.PostEditor_ImageEditor = React.createClass
   mixins: ['ReactActivitiesUser', PostEditor_ImagesForm, PostEditor_Dragging
-            RequesterMixin, React.addons.PureRenderMixin, ComponentManipulationsMixin]
+            PostEditor_AutosaveMixin, RequesterMixin, React.addons.PureRenderMixin
+            ComponentManipulationsMixin]
 
   propTypes:
     entryPrivacy:          React.PropTypes.string.isRequired
@@ -58,7 +59,8 @@ window.PostEditor_ImageEditor = React.createClass
                                mode="rich"
                                placeholder="Придумайте подпись"
                                content={ this.props.entryTitle }
-                               isLoading={ this.hasActivities() } />
+                               isLoading={ this.hasActivities() }
+                               onChange={ this.startAutosave } />
                 </form>
               </div>
             </article>`
