@@ -94,7 +94,7 @@ window.PostEditor_ImagesForm =
       fail: (e, data) =>
         TastyNotifyController.errorResponse data.jqXHR
       done: (e, data) =>
-        EntryStoreService.removeEntry()
+        EntryStoreService.removeEntry(@props.entryId, @props.entryUpdatedAt)
         @props.doneCallback data.jqXHR.responseJSON
 
   _unbindImageUpload: -> @$uploadForm.fileupload 'destroy'

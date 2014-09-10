@@ -107,6 +107,8 @@ window.PostEditor_ImageEditor = React.createClass
   _getNormalizedData: ->
     # Используется при сохранении данных в EntryStoreService
     return {
+      id:                @props.entryId
+      updated_at:        @props.entryUpdatedAt
       type:              'image'
       title:             @refs.titleEditor.content()
       image_url:         @state.imageUrl

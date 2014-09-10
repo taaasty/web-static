@@ -39,9 +39,11 @@ window.PostEditor_TextEditor = React.createClass
   _getNormalizedData: ->
     # Используется при сохранении данных в EntryStoreService
     return {
-      type:  'text'
-      title: @refs.titleEditor.content()
-      text:  @refs.textEditor.content()
+      id:         @props.entryId
+      updated_at: @props.entryUpdatedAt
+      type:       'text'
+      title:      @refs.titleEditor.content()
+      text:       @refs.textEditor.content()
     }
 
   _getEditorData: ->
