@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_QuoteEditor = React.createClass
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser']
+  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin]
 
   propTypes:
     entryText:   React.PropTypes.string
@@ -15,14 +15,16 @@ window.PostEditor_QuoteEditor = React.createClass
                        placeholder="Текст цитаты (499 символов)"
                        mode="partial"
                        content={ this.props.entryText }
-                       isLoading={ this.hasActivities() } />
+                       isLoading={ this.hasActivities() }
+                       onChange={ this.startAutosave } />
 
           <div className="blockquote__caption">
             <span className="blockquote__dash">—</span>
             <TastyEditor ref="sourceEditor"
                          placeholder="Автор (не обязательно)"
                          content={ this.props.entrySource }
-                         isLoading={ this.hasActivities() } />
+                         isLoading={ this.hasActivities() }
+                         onChange={ this.startAutosave } />
           </div>
         </blockquote>
       </div>
