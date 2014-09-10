@@ -1,5 +1,7 @@
 ###* @jsx React.DOM ###
 
+AUTOSAVE_TIME = 10000
+
 window.PostEditor_InstagramEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser']
 
@@ -12,6 +14,12 @@ window.PostEditor_InstagramEditor = React.createClass
     embedUrl:  @props.embedUrl
     embedHtml: @props.embedHtml
     title:     @props.entryTitle
+
+  componentDidMount: ->
+    @autoSaveTimer = setInterval @storeEntry, AUTOSAVE_TIME
+
+  componentWillUnmount: ->
+    clearInterval(@autoSaveTimer) if @autoSaveTimer?
 
   render: ->
     instagramEditorClasses = React.addons.classSet {

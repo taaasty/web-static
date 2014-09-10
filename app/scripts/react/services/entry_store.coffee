@@ -52,8 +52,8 @@ window.EntryStoreService =
         entryData.embedHtml = data.embedHtml
         entryData.video_url = data.video_url
       when 'quote'
-        entryData.title = data.text
-        entryData.text  = data.source
+        entryData.title = data.source
+        entryData.text  = data.text
       else
         console.error 'Невозможно сохранить пост, неивестный тип поста', data.type
 

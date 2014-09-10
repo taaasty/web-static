@@ -1,8 +1,9 @@
 ###* @jsx React.DOM ###
 
-WELCOME_MODE = 'welcome'
-LOADED_MODE  = 'loaded'
-INSERT_MODE  = 'insert'
+AUTOSAVE_TIME = 10000
+WELCOME_MODE  = 'welcome'
+LOADED_MODE   = 'loaded'
+INSERT_MODE   = 'insert'
 
 window.PostEditor_ImageEditor = React.createClass
   mixins: ['ReactActivitiesUser', PostEditor_ImagesForm, PostEditor_Dragging
@@ -18,6 +19,12 @@ window.PostEditor_ImageEditor = React.createClass
     currentState: @_getInitialCurrentState()
     images:       @_getInitialImages()
     imageUrl:     @props.entryImageUrl
+
+  componentDidMount: ->
+    @autoSaveTimer = setInterval @storeEntry, AUTOSAVE_TIME
+
+  componentWillUnmount: ->
+    clearInterval(@autoSaveTimer) if @autoSaveTimer?
 
   render: ->
     imageEditorClasses = React.addons.classSet {
