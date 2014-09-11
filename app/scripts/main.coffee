@@ -149,6 +149,7 @@ require './react/components/post_editor/mixins/dragging'
 require './react/components/post_editor/mixins/persistence'
 require './react/components/post_editor/mixins/images_form'
 require './react/components/post_editor/mixins/layout'
+require './react/components/post_editor/mixins/video'
 
 require './react/components/post_editor/welcome_messages/instagram'
 require './react/components/post_editor/welcome_messages/image'

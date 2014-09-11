@@ -3,10 +3,6 @@
 window.PostEditor_QuoteEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin]
 
-  propTypes:
-    entryText:   React.PropTypes.string
-    entrySource: React.PropTypes.string
-
   render: ->
    `<article className="post post--quote post--edit">
       <div className="post__content">
@@ -14,7 +10,7 @@ window.PostEditor_QuoteEditor = React.createClass
           <TastyEditor ref="textEditor"
                        placeholder="Текст цитаты (499 символов)"
                        mode="partial"
-                       content={ this.props.entryText }
+                       content={ this.entryText() }
                        isLoading={ this.hasActivities() }
                        onChange={ this.startAutosave } />
 
@@ -22,7 +18,7 @@ window.PostEditor_QuoteEditor = React.createClass
             <span className="blockquote__dash">—</span>
             <TastyEditor ref="sourceEditor"
                          placeholder="Автор (не обязательно)"
-                         content={ this.props.entrySource }
+                         content={ this.entrySource() }
                          isLoading={ this.hasActivities() }
                          onChange={ this.startAutosave } />
           </div>
@@ -30,21 +26,14 @@ window.PostEditor_QuoteEditor = React.createClass
       </div>
     </article>`
 
-  storeEntry: ->
-    EntryStore.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
+  entryText:   -> @props.normalizedEntry.data2
+  entrySource: -> @props.normalizedEntry.data1
 
   _getNormalizedData: ->
-    # Используется при сохранении данных в EntryStore
-    return {
-      text:  @refs.textEditor.content()
-      title: @refs.sourceEditor.content()
-    }
+    data2: @refs.textEditor.content()
+    data1: @refs.sourceEditor.content()
 
+  # Используется в ключе data, ajax-запроса
   _getEditorData: ->
-    # Используется в ключе data, ajax-запроса
-    return {
-      text:   @refs.textEditor.content()
-      source: @refs.sourceEditor.content()
-    }
-
-  handleChange: -> @storeEntry()
+    text:   @refs.textEditor.content()
+    source: @refs.sourceEditor.content()

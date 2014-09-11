@@ -1,17 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_MusicEditor = React.createClass
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin]
-
-  propTypes:
-    embedUrl:   React.PropTypes.string
-    embedHtml:  React.PropTypes.string
-    entryTitle: React.PropTypes.string
-
-  getInitialState: ->
-    embedUrl:  @props.embedUrl
-    embedHtml: @props.embedHtml
-    title:     @props.entryTitle
+  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin, PostEditor_VideoMixin]
 
   render: ->
     musicEditorClasses = React.addons.classSet {
@@ -38,37 +28,3 @@ window.PostEditor_MusicEditor = React.createClass
                              onChange={ this.startAutosave } />
               </div>
             </article>`
-
-  successLoaded: (iframely) ->
-    @setState {
-      embedUrl:  iframely.url
-      embedHtml: iframely.html
-      title:     iframely.meta.description || iframely.meta.title
-    }
-
-  storeEntry: ->
-    EntryStore.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
-
-  _getNormalizedData: ->
-    # Используется при сохранения данных в EntryStore
-    return {
-      title:     @refs.titleEditor.content()
-      embedHtml: @state.embedHtml
-      videoUrl:  @state.embedUrl
-    }
-
-  _getEditorData: ->
-    # Используется в ключе data, ajax-запроса
-    return {
-      title:     @refs.titleEditor.content()
-      video_url: @state.embedUrl
-    }
-
-  handleDeleteEmbeded: ->
-    @setState {
-      embedUrl:  null
-      embedHtml: null
-      title:     ''
-    }
-
-  handleChange: -> @storeEntry()

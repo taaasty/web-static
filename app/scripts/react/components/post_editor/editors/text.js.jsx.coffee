@@ -5,8 +5,6 @@ window.PostEditor_TextEditor = React.createClass
 
   propTypes:
     normalizedEntry:       React.PropTypes.instanceOf(NormalizedEntry).isRequired
-    #entryTitle: React.PropTypes.string
-    #entryText:  React.PropTypes.string
     
   entryType: -> 'text'
 
@@ -39,15 +37,9 @@ window.PostEditor_TextEditor = React.createClass
   entryTitle: -> @props.normalizedEntry.data1
   entryText:  -> @props.normalizedEntry.data2
 
-  storeEntry: ->
-    EntryStore.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
-
   _getNormalizedData: ->
-    # Используется при сохранении данных в EntryStore
-    return _.extend @props.normalizedEntry, {
-      data1: @refs.titleEditor.content()
-      data2: @refs.textEditor.content()
-    }
+    data1: @refs.titleEditor.content()
+    data2: @refs.textEditor.content()
 
   _getEditorData: ->
     # Используется в ключе data, ajax-запроса
@@ -56,4 +48,3 @@ window.PostEditor_TextEditor = React.createClass
       text:  @refs.textEditor.content()
     }
 
-  handleChange: -> @storeEntry()

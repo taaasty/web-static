@@ -16,7 +16,7 @@ window.PostEditor_ImageEditor = React.createClass
   getInitialState: ->
     currentState: @_getInitialCurrentState()
     images:       @_getInitialImages()
-    imageUrl:     @props.normalizedEntry.embedUrl
+    imageUrl:     @entryImageUrl()
 
   render: ->
     imageEditorClasses = React.addons.classSet {
@@ -63,11 +63,8 @@ window.PostEditor_ImageEditor = React.createClass
               </div>
             </article>`
 
-  storeEntry: ->
-    EntryStore.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
-
   imageAttachments: ->
-    @props.normalizedEntry.imageAttachments
+    @props.normalizedEntry.imageAttachments || []
 
   activateWelcomeMode: -> @setState currentState: WELCOME_MODE
   activateLoadedMode:  -> @setState currentState: LOADED_MODE
@@ -80,15 +77,17 @@ window.PostEditor_ImageEditor = React.createClass
   _getInitialCurrentState: ->
     # Возможные варианты currentState: welcome, loaded, insert
 
-    if @props.entryImageUrl || @imageAttachments().length > 0
+    if @entryImageUrl() || @imageAttachments().length > 0
       LOADED_MODE
     else
       WELCOME_MODE
 
+  entryImageUrl: -> @props.normalizedEntry.embedUrl
+
   _getInitialImages: ->
-    if @props.entryImageUrl?
+    if @entryImageUrl()?
       image     = new Image()
-      image.src = @props.entryImageUrl
+      image.src = @entryImageUrl()
 
       [image]
     else if @imageAttachments()[0] instanceof HTMLImageElement
@@ -109,12 +108,9 @@ window.PostEditor_ImageEditor = React.createClass
     @props.normalizedEntry.data2 
 
   _getNormalizedData: ->
-    # Используется при сохранении данных в EntryStore
-    return _.extend @props.normalizedEntry, {
-      data2:    @refs.titleEditor.content()
-      embedUrl: @state.imageUrl
-      # imageAttachments: @state.images
-    }
+    data2:    @refs.titleEditor.content()
+    embedUrl: @state.imageUrl
+    # imageAttachments: @state.images
 
   _getEditorData: ->
     # Используется в ключе data, ajax-запроса
@@ -143,4 +139,3 @@ window.PostEditor_ImageEditor = React.createClass
 
     image.src = imageUrl
 
-  handleChange: -> @storeEntry()

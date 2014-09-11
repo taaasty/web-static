@@ -11,29 +11,40 @@ window.EntryStore =
     #  * @param {String} entryUpdatedAt - дата обновления Entry
     # */
 
-  restoreEntry: (entryType, entryId, entryUpdatedAt) ->
-    if entryId && entryUpdatedAt
-      @restore @key(entryId, entryUpdatedAt)
-    else
-      @restore @keyNew()
+  restoreExistenEntry: (entryId, entryUpdatedAt) ->
+    @restore @keyExisten(entryId, entryUpdatedAt)
 
-  storeEntry: (entryId, entryUpdatedAt, normalizedEntry) ->
-    if entryId && entryUpdatedAt
-      @store @key(entryId, entryUpdatedAt), normalizedEntry
-    else
-      @store @keyNew(), normalizedEntry
+  restoreNewEntry: ->
+    @restore @keyNew()
 
-  removeEntry: (entry) ->
-    @storage.removeItem @_positionKey(entry)
+  storeEntry: (normalizedEntry) ->
+    @store @key(normalizedEntry), normalizedEntry
+
+  removeNormalizedEntry: (normalizedEntry) ->
+    if normalizedEntry.id?
+      key = @keyExisten normalizedEntry.id, normalizedEntry.updated_at
+    else
+      key = @keyNew()
+    @storage.removeItem key
 
   store: (key, data) ->
     data.store_at = new Date()
     @storage.setItem key, JSON.stringify(data)
 
   restore: (key) ->
-    JSON.parse @storage.getItem key
+    data = JSON.parse @storage.getItem key
+    if data?
+      new NormalizedEntry(data)
+    else
+      null
 
-  key: (entryId, entryUpdatedAt) ->
+  key: (entry) ->
+    if entry.id?
+      @keyExisten entry.id, entry.updated_at
+    else
+      @keyNew()
+
+  keyExisten: (entryId, entryUpdatedAt) ->
     entryUpdatedAt = new Date(entryUpdatedAt).getTime()
     STORAGE_PREFIX + ':' + entryId + ':' + entryUpdatedAt
 
