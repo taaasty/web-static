@@ -1,4 +1,4 @@
-STORAGE_PREFIX = 'storeEntries'
+STORAGE_PREFIX = 'entries'
 
 window.EntryRepositoryService =
   storage: window.localStorage
@@ -14,7 +14,7 @@ window.EntryRepositoryService =
     # check noramlizedEntry
     @_set @_key(), normalizedEntry
 
-  restoreNewNormalizedEntry: -> 
+  restoreNewNormalizedEntry: ->
     @_get @_key()
 
   _set: (key, data) ->

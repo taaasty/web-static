@@ -14,8 +14,8 @@ window.PostEditor_EditPost = React.createClass
     @setState @stateFromProps(nextProps)
 
   stateFromProps: (props) ->
-    normalizedEntry:        
-      EntryStoreService.restoreEntry( props.entry.type, props.entry.id, props.entry.updated_at ) || 
+    normalizedEntry:
+      EntryStore.restoreEntry( props.entry.type, props.entry.id, props.entry.updated_at ) ||
       EntryNormalizator.normalize( props.entry )
     entryType:    props.entry?.type    || 'text'
     entryPrivacy: props.entry?.privacy || 'public'
