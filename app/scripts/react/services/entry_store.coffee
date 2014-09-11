@@ -25,7 +25,7 @@ DEFAULT_ENTRIES =
 
 window.EntryStoreService =
 
-  restoreEntry: (entryType, entry, entryId, entryUpdatedAt) ->
+  restoreEntry: (entryType, entryId, entryUpdatedAt) ->
     # /**
     #  * Получение нормализованных данных Entry
     #  *
@@ -37,24 +37,17 @@ window.EntryStoreService =
 
     if entryId && entryUpdatedAt
       normalizedEntry = EntryRepositoryService.restoreNormalizedEntry(entryId, entryUpdatedAt)
-
-      unless normalizeEntry?
-        denormalizedEntry = EntryNormalizationService.denormalize(entry, entryType)
     else
       normalizedEntry = EntryRepositoryService.restoreNewNormalizedEntry()
 
-      unless normalizeEntry?
-        denormalizedEntry = EntryNormalizationService.denormalize(DEFAULT_ENTRIES[entryType], entryType)
-
     if normalizedEntry?
-      denormalizedEntry = EntryNormalizationService.denormalize(normalizedEntry, entryType)
+      return EntryNormalizationService.denormalize(normalizedEntry, entryType)
+    else
+      return null
 
-    denormalizedEntry.id         = entryId
-    denormalizedEntry.updated_at = entryUpdatedAt
+  storeEntry: (entryId, entryUpdatedAt, entry, entryType) ->
 
-    denormalizedEntry
-
-  storeEntry: (entryId, entryUpdatedAt, normalizedEntry) ->
+    normalizedEntry = normalize entry, entryType
     if entryId && entryUpdatedAt
       EntryRepositoryService.storeNormalizedEntry(entryId, entryUpdatedAt, normalizedEntry)
     else

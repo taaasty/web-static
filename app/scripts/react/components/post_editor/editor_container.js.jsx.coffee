@@ -4,7 +4,7 @@ window.PostEditor_EditorContainer = React.createClass
   mixins: ['ReactActivitiesUser']
 
   propTypes:
-    entry:        React.PropTypes.object.isRequired
+    normalizedEntry:        React.PropTypes.object.isRequired
     entryType:    React.PropTypes.string.isRequired
     entryPrivacy: React.PropTypes.string.isRequired
 
@@ -55,22 +55,23 @@ window.PostEditor_EditorContainer = React.createClass
 
   _getTextEditor: ->
     `<PostEditor_TextEditor ref="editor"
-                            entryId={ this.props.entry.id }
-                            entryUpdatedAt={ this.props.entry.updated_at }
+                            entryId={ this.props.normalizedEntry.id }
+                            entryUpdatedAt={ this.props.normalizedEntry.updated_at }
                             entryType={ this.props.entryType }
-                            entryTitle={ this.props.entry.title }
-                            entryText={ this.props.entry.text }
+                            entryTitle={ this.props.normalizedEntry.data1 }
+                            entryText={ this.props.normalizedEntry.data2 }
                             activitiesHandler={ this.activitiesHandler }
                             doneCallback={ this.redirectToEntryPage } />`
 
   _getImageEditor: ->
     `<PostEditor_ImageEditor ref="editor"
-                             entryId={ this.props.entry.id }
-                             entryUpdatedAt={ this.props.entry.updated_at }
-                             entryType={ this.props.entryType }
-                             entryTitle={ this.props.entry.title }
-                             entryImageUrl={ this.props.entry.image_url }
-                             entryImageAttachments={ this.props.entry.image_attachments }
+                             normalizedEntry = { this.props.normalizedEntry }
+                             # entryId={ this.props.entry.id }
+                             # entryUpdatedAt={ this.props.entry.updated_at }
+                             # entryType={ this.props.entryType }
+                             # entryTitle={ this.props.entry.data2 }
+                             # entryImageUrl={ this.props.entry.image_url }
+                             # entryImageAttachments={ this.props.entry.image_attachments }
                              entryPrivacy={ this.props.entryPrivacy }
                              activitiesHandler={ this.activitiesHandler }
                              doneCallback={ this.redirectToEntryPage } />`

@@ -1,47 +1,61 @@
+window.NormalizedEntry=
+  # data1
+  # data2
+  # data3
+  # embedHtml
+  # embedUrl
+  # attachments
+
 window.EntryNormalizationService =
 
+  # entyData - не нормалозованная entry
   normalize: (entryData, entryType) ->
+
     switch entryType
       when 'text'
         normalizedEntry = {
-          title: entryData.title
-          text:  entryData.text
+          data1:    entryData.title
+          data2:    entryData.text
         }
       when 'image'
         normalizedEntry = {
-          title:     entryData.text
-          image_url: entryData.image_url
+          data2:     entryData.text
+          embedUrl:  entryData.image_url
           # image_attachments: entry.image_attachments
           # image_attachments: @_decodeImageAttachments(entryData.image_attachments || [])
         }
       when 'instagram'
         normalizedEntry = {
-          title:     entryData.text
+          data1:     entryData.text
           embedHtml: entryData.embedHtml
-          videoUrl:  entryData.video_url
+          embedUrl:  entryData.video_url
         }
       when 'music'
         normalizedEntry = {
-          title:     entryData.text
+          data1:     entryData.text
           embedHtml: entryData.embedHtml
-          videoUrl:  entryData.video_url
+          embedUrl:  entryData.video_url
         }
       when 'video'
         normalizedEntry = {
-          title:     entryData.text
+          data1:     entryData.text
           embedHtml: entryData.embedHtml
-          videoUrl:  entryData.video_url
+          embedUrl:  entryData.video_url
         }
       when 'quote'
-        normalizedEntry = {
-          text:   entryData.text
-          source: entryData.title
+        attr = {
+          data1:     entryData.text
+          data2:     entryData.title
         }
       else
 
-    normalizedEntry
+    attr.id         = entryData.id
+    attr.updated_at = entryData.updated_at
 
-  denormalize: (entryData, entryType) ->
+    new NormalizedEntry(attr)
+
+  denormalize: (normalizedEntry, entryType) ->
+    # check normalizedentry if type NormalizedEntry
     switch entryType
       when 'text'
         denormalizedEntry = {

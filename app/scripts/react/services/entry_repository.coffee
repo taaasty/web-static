@@ -4,28 +4,30 @@ window.EntryRepositoryService =
   storage: window.localStorage
 
   storeNormalizedEntry: (entryId, entryUpdatedAt, normalizedEntry) ->
-    @storage.setItem @_getEntryStorageKey(entryId, entryUpdatedAt), JSON.stringify(normalizedEntry)
+    # checkt instance of NormalizedEntry
+    @_set @_key(entryId, entryUpdatedAt), JSON.stringify(normalizedEntry)
 
   restoreNormalizedEntry: (entryId, entryUpdatedAt) ->
-    entryUpdatedAt = new Date(entryUpdatedAt).getTime()
-
-    @_getEntryData( entryId, entryUpdatedAt )
+    @_get @_key(entryId, entryUpdatedAt)
 
   storeNewNormalizedEntry: (normalizedEntry) ->
-    @storage.setItem @_getEntryStorageKey(), JSON.stringify(normalizedEntry)
+    # check noramlizedEntry
+    @_set @_key(), normalizedEntry
 
-  restoreNewNormalizedEntry: -> @_getEntryData()
+  restoreNewNormalizedEntry: -> 
+    @_get @_key()
 
-  _getEntryData: (entryId, entryUpdatedAt) ->
-    entryStorageKey = @_getEntryStorageKey entryId, entryUpdatedAt
+  _set: (key, data) ->
+    data.store_at = new Date()
+    @storage.setItem key, JSON.stringify(data)
 
-    @_getEntryDataByStorageKey entryStorageKey
+  _get: (key) ->
+    JSON.parse @storage.getItem key
 
-  _getEntryDataByStorageKey: (entryStorageKey) ->
-    JSON.parse @storage.getItem entryStorageKey
-
-  _getEntryStorageKey: (entryId, entryUpdatedAt) ->
+  _key: (entryId, entryUpdatedAt) ->
     if entryId && entryUpdatedAt
+      entryUpdatedAt = new Date(entryUpdatedAt).getTime()
+
       STORAGE_PREFIX + ':' + entryId + ':' + entryUpdatedAt
     else
       STORAGE_PREFIX + ':' + 'new'
