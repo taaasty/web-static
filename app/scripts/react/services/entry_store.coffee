@@ -1,29 +1,6 @@
-#DEFAULT_ENTRIES =
-  #text:
-    #type: 'text'
-    #title: null
-    #text:  null
-  #image:
-    #type: 'image'
-    #title:     null
-    #image_url: null
-    #image_attachments: []
-  #instagram:
-    #type: 'video'
-    #title: null
-  #music:
-    #type: 'video'
-    #title: null
-  #video:
-    #type: 'video'
-    #title: null
-    #video_url: null
-  #quote:
-    #type: 'quote'
-    #text: null
-    #source: null
-
+STORAGE_PREFIX = 'entries'
 window.EntryStore =
+  storage: window.localStorage
 
     # /**
     #  * Получение нормализованных данных Entry
@@ -36,15 +13,29 @@ window.EntryStore =
 
   restoreEntry: (entryType, entryId, entryUpdatedAt) ->
     if entryId && entryUpdatedAt
-      EntryRepositoryService.restoreNormalizedEntry(entryId, entryUpdatedAt)
+      @restore @key(entryId, entryUpdatedAt)
     else
-      EntryRepositoryService.restoreNewNormalizedEntry()
+      @restore @keyNew()
 
   storeEntry: (entryId, entryUpdatedAt, normalizedEntry) ->
     if entryId && entryUpdatedAt
-      EntryRepositoryService.storeNormalizedEntry(entryId, entryUpdatedAt, normalizedEntry)
+      @store @key(entryId, entryUpdatedAt), normalizedEntry
     else
-      EntryRepositoryService.storeNewNormalizedEntry(normalizedEntry)
+      @store @keyNew(), normalizedEntry
 
   removeEntry: (entry) ->
     @storage.removeItem @_positionKey(entry)
+
+  store: (key, data) ->
+    data.store_at = new Date()
+    @storage.setItem key, JSON.stringify(data)
+
+  restore: (key) ->
+    JSON.parse @storage.getItem key
+
+  key: (entryId, entryUpdatedAt) ->
+    entryUpdatedAt = new Date(entryUpdatedAt).getTime()
+    STORAGE_PREFIX + ':' + entryId + ':' + entryUpdatedAt
+
+  keyNew: ->
+    STORAGE_PREFIX + ':' + 'new'

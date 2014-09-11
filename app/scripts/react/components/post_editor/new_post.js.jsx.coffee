@@ -7,13 +7,13 @@ window.PostEditor_NewPost = React.createClass
 
   getInitialState: ->
     # Может сделать зависимость от @props.tlogType ?
-    normalizedEntry:  EntryStore.restoreEntry(DEFAULT_POST_TYPE) || {type: DEFAULT_POST_TYPE}
+    normalizedEntry:  EntryStore.restoreEntry(DEFAULT_POST_TYPE) || new NormalizedEntry()
     entryType:        DEFAULT_POST_TYPE
     entryPrivacy:     if @props.tlogType is 'public' then 'live' else 'public'
 
   changeType: (type) ->
     @setState {
-      normalizedEntry:     EntryStoreService.restoreEntry(type)
+      normalizedEntry:     EntryStore.restoreEntry(type)
       entryType: type
     }
 

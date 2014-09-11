@@ -1,6 +1,6 @@
 STORAGE_PREFIX = 'entries'
 
-window.EntryRepositoryService =
+window.EntryRepository =
   storage: window.localStorage
 
   storeNormalizedEntry: (entryId, entryUpdatedAt, normalizedEntry) ->

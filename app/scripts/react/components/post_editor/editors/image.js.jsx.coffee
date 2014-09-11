@@ -10,7 +10,7 @@ window.PostEditor_ImageEditor = React.createClass
             ComponentManipulationsMixin]
 
   propTypes:
-    normalizedEntry:       React.PropTypes.instaneof(NormalizedEntry).isRequired
+    normalizedEntry:       React.PropTypes.instanceOf(NormalizedEntry).isRequired
     entryPrivacy:          React.PropTypes.string.isRequired
 
   getInitialState: ->
@@ -64,7 +64,7 @@ window.PostEditor_ImageEditor = React.createClass
             </article>`
 
   storeEntry: ->
-    EntryStoreService.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
+    EntryStore.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
 
   imageAttachments: ->
     @props.normalizedEntry.imageAttachments
@@ -109,7 +109,7 @@ window.PostEditor_ImageEditor = React.createClass
     @props.normalizedEntry.data2 
 
   _getNormalizedData: ->
-    # Используется при сохранении данных в EntryStoreService
+    # Используется при сохранении данных в EntryStore
     return _.extend @props.normalizedEntry, {
       data2:    @refs.titleEditor.content()
       embedUrl: @state.imageUrl

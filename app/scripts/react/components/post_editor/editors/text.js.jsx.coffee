@@ -4,9 +4,11 @@ window.PostEditor_TextEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin]
 
   propTypes:
-    normalizedEntry:       React.PropTypes.instaneof(NormalizedEntry).isRequired
+    normalizedEntry:       React.PropTypes.instanceOf(NormalizedEntry).isRequired
     #entryTitle: React.PropTypes.string
     #entryText:  React.PropTypes.string
+    
+  entryType: -> 'text'
 
   render: ->
     textEditorClasses = React.addons.classSet {
@@ -38,10 +40,10 @@ window.PostEditor_TextEditor = React.createClass
   entryText:  -> @props.normalizedEntry.data2
 
   storeEntry: ->
-    EntryStoreService.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
+    EntryStore.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
 
   _getNormalizedData: ->
-    # Используется при сохранении данных в EntryStoreService
+    # Используется при сохранении данных в EntryStore
     return _.extend @props.normalizedEntry, {
       data1: @refs.titleEditor.content()
       data2: @refs.textEditor.content()

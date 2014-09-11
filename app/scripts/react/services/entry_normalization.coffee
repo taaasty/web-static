@@ -1,4 +1,4 @@
-window.NormalizedEntry=
+class window.NormalizedEntry
   # data1
   # data2
   # data3

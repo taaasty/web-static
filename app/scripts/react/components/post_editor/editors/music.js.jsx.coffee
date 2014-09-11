@@ -47,10 +47,10 @@ window.PostEditor_MusicEditor = React.createClass
     }
 
   storeEntry: ->
-    EntryStoreService.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
+    EntryStore.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
 
   _getNormalizedData: ->
-    # Используется при сохранения данных в EntryStoreService
+    # Используется при сохранения данных в EntryStore
     return {
       title:     @refs.titleEditor.content()
       embedHtml: @state.embedHtml

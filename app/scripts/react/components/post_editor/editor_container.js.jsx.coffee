@@ -9,7 +9,7 @@ window.PostEditor_EditorContainer = React.createClass
     entryPrivacy: React.PropTypes.string.isRequired
 
   render: ->
-    if @props.entry?
+    if @props.normalizedEntry?
       editorContainer = `<section className="posts posts--edit">
                            { this._getEditorComponent() }
                          </section>`
@@ -54,24 +54,24 @@ window.PostEditor_EditorContainer = React.createClass
     editor
 
   _getTextEditor: ->
+                            #entryId={ this.props.normalizedEntry.id }
+                            #entryUpdatedAt={ this.props.normalizedEntry.updated_at }
+                            #entryTitle={ this.props.normalizedEntry.data1 }
+                            #entryText={ this.props.normalizedEntry.data2 }
     `<PostEditor_TextEditor ref="editor"
-                            entryId={ this.props.normalizedEntry.id }
-                            entryUpdatedAt={ this.props.normalizedEntry.updated_at }
-                            entryType={ this.props.entryType }
-                            entryTitle={ this.props.normalizedEntry.data1 }
-                            entryText={ this.props.normalizedEntry.data2 }
+                            normalizedEntry = { this.props.normalizedEntry }
                             activitiesHandler={ this.activitiesHandler }
                             doneCallback={ this.redirectToEntryPage } />`
 
   _getImageEditor: ->
-    `<PostEditor_ImageEditor ref="editor"
-                             normalizedEntry = { this.props.normalizedEntry }
                              # entryId={ this.props.entry.id }
                              # entryUpdatedAt={ this.props.entry.updated_at }
                              # entryType={ this.props.entryType }
                              # entryTitle={ this.props.entry.data2 }
                              # entryImageUrl={ this.props.entry.image_url }
                              # entryImageAttachments={ this.props.entry.image_attachments }
+    `<PostEditor_ImageEditor ref="editor"
+                             normalizedEntry = { this.props.normalizedEntry }
                              entryPrivacy={ this.props.entryPrivacy }
                              activitiesHandler={ this.activitiesHandler }
                              doneCallback={ this.redirectToEntryPage } />`
