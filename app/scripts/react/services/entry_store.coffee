@@ -28,73 +28,45 @@ STORAGE_PREFIX = 'storeEntries'
 window.EntryStoreService =
   storage: window.localStorage
 
-  # /*==========  New entry  ==========*/
-
-  restoreNewEntry: (entryType) ->
-    # Возвращает normalizedEntry
-
-  storeNewEntry: (normalizedEntry) ->
-
-
-  # /*==========  Edit entry  ==========*/
-
-  restoreExistingEntry: (entryId, entryUpdatedAt) ->
-    # Возвращает normalizedEntry
-
-  storeExistingEntry: (entryId, entryUpdatedAt, normalizedEntry) ->
-
-  restoreEntry: (entryType, entryData, entryId, entryUpdatedAt) ->
-    # /**
-    #  * Получение данных сохранённого Entry
-    #  *
-    #  * @method restoreEntry
-    #  * @param {String} entryType - тип Entry
-    #  * @param {Object} entryData - содержит список уже существующих свойств Entry
-    #  * @param {Number} entryId - идентификатор Entry
-    #  * @param {String} entryUpdatedAt - дата обновления Entry
-    # */
-
-
-    entryData = @_getEntryData( entry ) || DEFAULT_ENTRIES[type]
-
-    switch type
+  getNormalizedEntryFromType: (entryType, entryData) ->
+    switch entryType
       when 'text'
-        entryData = {
+        normalizedEntry = {
           type:  'text'
           title: entryData.title
           text:  entryData.text
         }
       when 'image'
-        entryData = {
-          type:              'image'
-          title:             entryData.text
-          image_url:         entryData.image_url
-          image_attachments: entry.image_attachments
+        normalizedEntry = {
+          type:      'image'
+          title:     entryData.text
+          image_url: entryData.image_url
+          # image_attachments: entry.image_attachments
           # image_attachments: @_decodeImageAttachments(entryData.image_attachments || [])
         }
       when 'instagram'
-        entryData = {
+        normalizedEntry = {
           type:      'instagram'
           title:     entryData.text
           embedHtml: entryData.embedHtml
           video_url: entryData.video_url
         }
       when 'music'
-        entryData = {
+        normalizedEntry = {
           type:      'music'
           title:     entryData.text
           embedHtml: entryData.embedHtml
           video_url: entryData.video_url
         }
       when 'video'
-        entryData = {
+        normalizedEntry = {
           type:      'video'
           title:     entryData.text
           embedHtml: entryData.embedHtml
           video_url: entryData.video_url
         }
       when 'quote'
-        entryData = {
+        normalizedEntry = {
           type:   'quote'
           text:   entryData.text
           source: entryData.title
@@ -102,10 +74,44 @@ window.EntryStoreService =
       else
         console.error 'Невозможно восстановить пост, неивестный тип поста', data.type
 
-    #entryData.id         = entry.id
-    #entryData.updated_at = new Date(entry.updated_at).getTime()
+    normalizedEntry.id         = entryData.id
+    normalizedEntry.updated_at = new Date(entryData.updated_at).getTime()
 
-    entryData
+    normalizedEntry
+
+  restoreNewEntry: (entryType) ->
+    entryData       = @getEntryData() || DEFAULT_ENTRIES[entryType]
+    normalizedEntry = @getNormalizedEntryFromType entryType, entryData
+
+    normalizedEntry
+
+  storeNewEntry: (normalizedEntry) ->
+
+  restoreExistingEntry: (entryType, entry, entryId, entryUpdatedAt) ->
+    entryData       = @getEntryData( entryId, entryUpdatedAt ) || entry
+    normalizedEntry = @getNormalizedEntryFromType entryType, entryData
+
+    normalizedEntry
+
+  storeExistingEntry: (entryId, entryUpdatedAt, normalizedEntry) ->
+
+  restoreEntry: (entryType, entry, entryId, entryUpdatedAt) ->
+    # /**
+    #  * Получение нормализованных данных Entry
+    #  *
+    #  * @param {String} entryType - тип Entry
+    #  * @param {Object} entry - содержит список уже существующих свойств Entry
+    #  * @param {Number} entryId - идентификатор Entry
+    #  * @param {String} entryUpdatedAt - дата обновления Entry
+    # */
+
+    if entryId && entryUpdatedAt
+      entryUpdatedAt  = new Date(entryUpdatedAt).getTime()
+      normalizedEntry = @restoreExistingEntry entryType, entry, entryId, entryUpdatedAt
+    else
+      normalizedEntry = @restoreNewEntry entryType
+
+    normalizedEntry
 
   storeEntry: (entryType, normalizedEntry, entryId, entryUpdatedAt) ->
     entryData = @_getEntryData entry
@@ -142,27 +148,41 @@ window.EntryStoreService =
   removeEntry: (entry) ->
     @storage.removeItem @_positionKey(entry)
 
-  _getEntryData: (entry) ->
-    key = @_positionKey entry
+  getEntryData: (entryId, entryUpdatedAt) ->
+    entryStorageKey = @_getEntryStorageKey entryId, entryUpdatedAt
 
-    @_getItem(key) || entry
+    @getEntryDataByStorageKey entryStorageKey
 
-  _getItem: (key) ->
-    JSON.parse  @storage.getItem key
+  getEntryDataByStorageKey: (entryStorageKey) ->
+    JSON.parse @storage.getItem entryStorageKey
 
-  _positionKey: (entry) ->
-    if entry?
-      entryUpdatedAt = new Date(entry.updated_at).getTime()
-      STORAGE_PREFIX + ':' + entry.id + ':' + entryUpdatedAt
+  _getEntryStorageKey: (entryId, entryUpdatedAt) ->
+    if entryId && entryUpdatedAt
+      STORAGE_PREFIX + ':' + entryId + ':' + entryUpdatedAt
     else
       STORAGE_PREFIX + ':' + 'new'
 
-  _encodeImageAttachments: (imageAttachments) ->
-    imageAttachments.map (imageAttachment) -> imageAttachment.src
+  # _getEntryData: (entry) ->
+  #   key = @_positionKey entry
 
-  _decodeImageAttachments: (imageAttachments) ->
-    imageAttachments.map (imageAttachment) ->
-      image     = new Image()
-      image.src = imageAttachment
+  #   @_getItem(key) || entry
 
-      image
+  # _getItem: (key) ->
+  #   JSON.parse  @storage.getItem key
+
+  # _positionKey: (entry) ->
+  #   if entry?
+  #     entryUpdatedAt = new Date(entry.updated_at).getTime()
+  #     STORAGE_PREFIX + ':' + entry.id + ':' + entryUpdatedAt
+  #   else
+  #     STORAGE_PREFIX + ':' + 'new'
+
+  # _encodeImageAttachments: (imageAttachments) ->
+  #   imageAttachments.map (imageAttachment) -> imageAttachment.src
+
+  # _decodeImageAttachments: (imageAttachments) ->
+  #   imageAttachments.map (imageAttachment) ->
+  #     image     = new Image()
+  #     image.src = imageAttachment
+
+  #     image

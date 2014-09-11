@@ -13,7 +13,7 @@ window.PostEditor_NewPost = React.createClass
 
   changeType: (type) ->
     @setState {
-      entry:     EntryStoreService.restoreNewEntry(type)
+      entry:     EntryStoreService.restoreEntry(type)
       entryType: type
     }
 

@@ -14,7 +14,7 @@ window.PostEditor_EditPost = React.createClass
     @setState @stateFromProps(nextProps)
 
   stateFromProps: (props) ->
-    entry:        EntryStoreService.restoreEntry @props.entry.type, @props.entry
+    entry:        EntryStoreService.restoreEntry props.entry.type, props.entry, props.entry.id, props.entry.updated_at
     entryType:    props.entry?.type    || 'text'
     entryPrivacy: props.entry?.privacy || 'public'
 
