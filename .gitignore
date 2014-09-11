@@ -1,6 +1,9 @@
 app/bower_components/
+/TAGS
 /secret
 /rails
+/gems.tags
+/tags
 *.swo
 .sass-cache
 node_modules/

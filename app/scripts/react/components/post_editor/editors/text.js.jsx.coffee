@@ -4,8 +4,9 @@ window.PostEditor_TextEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin]
 
   propTypes:
-    entryTitle: React.PropTypes.string
-    entryText:  React.PropTypes.string
+    normalizedEntry:       React.PropTypes.instanceOf(NormalizedEntry).isRequired
+    
+  entryType: -> 'text'
 
   render: ->
     textEditorClasses = React.addons.classSet {
@@ -18,7 +19,7 @@ window.PostEditor_TextEditor = React.createClass
     return `<article className={ textEditorClasses }>
               <header className="post__header">
                 <TastyEditor ref="titleEditor"
-                             content={ this.props.entryTitle }
+                             content={ this.entryTitle() }
                              placeholder="Заголовок (199 символов)"
                              isLoading={ this.hasActivities() }
                              className="post__title"
@@ -26,25 +27,19 @@ window.PostEditor_TextEditor = React.createClass
               </header>
               <TastyEditor ref="textEditor"
                            mode="rich"
-                           content={ this.props.entryText }
+                           content={ this.entryText() }
                            placeholder="Начните набирать текст поста.<br>Shift + Enter новая строка, Enter – новый абзац"
                            isLoading={ this.hasActivities() }
                            className="post__content"
                            onChange={ this.startAutosave } />
             </article>`
 
-  storeEntry: ->
-    EntryStoreService.storeEntry @_getNormalizedData()
+  entryTitle: -> @props.normalizedEntry.data1
+  entryText:  -> @props.normalizedEntry.data2
 
   _getNormalizedData: ->
-    # Используется при сохранении данных в EntryStoreService
-    return {
-      id:         @props.entryId
-      updated_at: @props.entryUpdatedAt
-      type:       'text'
-      title:      @refs.titleEditor.content()
-      text:       @refs.textEditor.content()
-    }
+    data1: @refs.titleEditor.content()
+    data2: @refs.textEditor.content()
 
   _getEditorData: ->
     # Используется в ключе data, ajax-запроса
@@ -53,4 +48,3 @@ window.PostEditor_TextEditor = React.createClass
       text:  @refs.textEditor.content()
     }
 
-  handleChange: -> @storeEntry()

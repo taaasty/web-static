@@ -24,7 +24,7 @@ window.PostEditor_LayoutMixin =
                    onPreview={ this.togglePreviewMode } />
 
       <PostEditor_EditorContainer ref="editorContainer"
-                                  entry={ this.state.entry }
+                                  normalizedEntry={ this.state.normalizedEntry }
                                   entryType={ this.state.entryType }
                                   entryPrivacy={ this.state.entryPrivacy }
                                   activitiesHandler={ this.activitiesHandler } />

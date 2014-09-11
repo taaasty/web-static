@@ -10,15 +10,13 @@ window.PostEditor_ImageEditor = React.createClass
             ComponentManipulationsMixin]
 
   propTypes:
+    normalizedEntry:       React.PropTypes.instanceOf(NormalizedEntry).isRequired
     entryPrivacy:          React.PropTypes.string.isRequired
-    entryTitle:            React.PropTypes.string
-    entryImageUrl:         React.PropTypes.string
-    entryImageAttachments: React.PropTypes.array
 
   getInitialState: ->
     currentState: @_getInitialCurrentState()
     images:       @_getInitialImages()
-    imageUrl:     @props.entryImageUrl
+    imageUrl:     @entryImageUrl()
 
   render: ->
     imageEditorClasses = React.addons.classSet {
@@ -58,15 +56,15 @@ window.PostEditor_ImageEditor = React.createClass
                   <TastyEditor ref="titleEditor"
                                mode="rich"
                                placeholder="Придумайте подпись"
-                               content={ this.props.entryTitle }
+                               content={ this._getTitle() }
                                isLoading={ this.hasActivities() }
                                onChange={ this.startAutosave } />
                 </form>
               </div>
             </article>`
 
-  storeEntry: ->
-    EntryStoreService.storeEntry @_getNormalizedData()
+  imageAttachments: ->
+    @props.normalizedEntry.imageAttachments || []
 
   activateWelcomeMode: -> @setState currentState: WELCOME_MODE
   activateLoadedMode:  -> @setState currentState: LOADED_MODE
@@ -79,21 +77,23 @@ window.PostEditor_ImageEditor = React.createClass
   _getInitialCurrentState: ->
     # Возможные варианты currentState: welcome, loaded, insert
 
-    if @props.entryImageUrl || @props.entryImageAttachments.length > 0
+    if @entryImageUrl() || @imageAttachments().length > 0
       LOADED_MODE
     else
       WELCOME_MODE
 
+  entryImageUrl: -> @props.normalizedEntry.embedUrl
+
   _getInitialImages: ->
-    if @props.entryImageUrl?
+    if @entryImageUrl()?
       image     = new Image()
-      image.src = @props.entryImageUrl
+      image.src = @entryImageUrl()
 
       [image]
-    else if @props.entryImageAttachments[0] instanceof HTMLImageElement
-      @props.entryImageAttachments
+    else if @imageAttachments()[0] instanceof HTMLImageElement
+      @imageAttachments()
     else
-      @props.entryImageAttachments.map (imageAttachment) ->
+      @imageAttachments().map (imageAttachment) ->
         image     = new Image()
         image.src = imageAttachment.image.url
 
@@ -104,16 +104,13 @@ window.PostEditor_ImageEditor = React.createClass
     return 'insert'     if @isInsertMode()
     return 'loaded'     if @state.images.length > 0
 
+  _getTitle: -> 
+    @props.normalizedEntry.data2 
+
   _getNormalizedData: ->
-    # Используется при сохранении данных в EntryStoreService
-    return {
-      id:                @props.entryId
-      updated_at:        @props.entryUpdatedAt
-      type:              'image'
-      title:             @refs.titleEditor.content()
-      image_url:         @state.imageUrl
-      image_attachments: @state.images
-    }
+    data2:    @refs.titleEditor.content()
+    embedUrl: @state.imageUrl
+    # imageAttachments: @state.images
 
   _getEditorData: ->
     # Используется в ключе data, ajax-запроса
@@ -142,4 +139,3 @@ window.PostEditor_ImageEditor = React.createClass
 
     image.src = imageUrl
 
-  handleChange: -> @storeEntry()
