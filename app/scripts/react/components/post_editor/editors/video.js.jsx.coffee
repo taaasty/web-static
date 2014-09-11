@@ -40,7 +40,7 @@ window.PostEditor_VideoEditor = React.createClass
             </article>`
 
   storeEntry: ->
-    EntryStoreService.storeEntry @_getNormalizedData()
+    EntryStoreService.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
 
   successLoaded: (iframely) ->
     @setState {
@@ -52,12 +52,9 @@ window.PostEditor_VideoEditor = React.createClass
   _getNormalizedData: ->
     # Используется при сохранении данных в EntryStoreService
     return {
-      id:         @props.entryId
-      updated_at: @props.entryUpdatedAt
-      type:       'video'
-      title:      @refs.titleEditor.content()
-      embedHtml:  @state.embedHtml
-      video_url:  @state.embedUrl
+      title:     @refs.titleEditor.content()
+      embedHtml: @state.embedHtml
+      videoUrl:  @state.embedUrl
     }
 
   _getEditorData: ->

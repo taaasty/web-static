@@ -31,16 +31,13 @@ window.PostEditor_QuoteEditor = React.createClass
     </article>`
 
   storeEntry: ->
-    EntryStoreService.storeEntry @_getNormalizedData()
+    EntryStoreService.storeEntry @props.entryId, @props.entryUpdatedAt, @_getNormalizedData()
 
   _getNormalizedData: ->
     # Используется при сохранении данных в EntryStoreService
     return {
-      id:         @props.entryId
-      updated_at: @props.entryUpdatedAt
-      type:       'quote'
-      text:       @refs.textEditor.content()
-      source:     @refs.sourceEditor.content()
+      text:  @refs.textEditor.content()
+      title: @refs.sourceEditor.content()
     }
 
   _getEditorData: ->

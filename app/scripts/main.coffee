@@ -27,6 +27,8 @@ require './aapp/directives/enter.js'
 
 require './react/services/positions'
 require './react/services/entry_store'
+require './react/services/entry_normalization'
+require './react/services/entry_repository'
 require './react/services/thumbor'
 
 require './react/mixins/unmount'
