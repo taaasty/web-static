@@ -28,39 +28,33 @@ STORAGE_PREFIX = 'storeEntries'
 window.EntryStoreService =
   storage: window.localStorage
 
-  storeEntry: (entry) ->
-    entryData = @_getEntryData entry
+  # /*==========  New entry  ==========*/
 
-    switch entry.type
-      when 'text'
-        entryData.title = entry.title
-        entryData.text  = entry.text
-      when 'image'
-        entryData.text              = entry.title
-        entryData.image_url         = entry.image_url
-        entryData.image_attachments = []
-        # entryData.image_attachments = @_encodeImageAttachments(entry.image_attachments)
-      when 'instagram'
-        entryData.text      = entry.title
-        entryData.embedHtml = entry.embedHtml
-        entryData.video_url = entry.video_url
-      when 'music'
-        entryData.text      = entry.title
-        entryData.embedHtml = entry.embedHtml
-        entryData.video_url = entry.video_url
-      when 'video'
-        entryData.text      = entry.title
-        entryData.embedHtml = entry.embedHtml
-        entryData.video_url = entry.video_url
-      when 'quote'
-        entryData.title = entry.source
-        entryData.text  = entry.text
-      else
-        console.error 'Невозможно сохранить пост, неивестный тип поста', entry.type
+  restoreNewEntry: (entryType) ->
+    # Возвращает normalizedEntry
 
-    @storage.setItem @_positionKey(entry), JSON.stringify(entryData)
+  storeNewEntry: (normalizedEntry) ->
 
-  restoreEntry: (type, entry) ->
+
+  # /*==========  Edit entry  ==========*/
+
+  restoreExistingEntry: (entryId, entryUpdatedAt) ->
+    # Возвращает normalizedEntry
+
+  storeExistingEntry: (entryId, entryUpdatedAt, normalizedEntry) ->
+
+  restoreEntry: (entryType, entryData, entryId, entryUpdatedAt) ->
+    # /**
+    #  * Получение данных сохранённого Entry
+    #  *
+    #  * @method restoreEntry
+    #  * @param {String} entryType - тип Entry
+    #  * @param {Object} entryData - содержит список уже существующих свойств Entry
+    #  * @param {Number} entryId - идентификатор Entry
+    #  * @param {String} entryUpdatedAt - дата обновления Entry
+    # */
+
+
     entryData = @_getEntryData( entry ) || DEFAULT_ENTRIES[type]
 
     switch type
@@ -112,6 +106,38 @@ window.EntryStoreService =
     #entryData.updated_at = new Date(entry.updated_at).getTime()
 
     entryData
+
+  storeEntry: (entryType, normalizedEntry, entryId, entryUpdatedAt) ->
+    entryData = @_getEntryData entry
+
+    switch entry.type
+      when 'text'
+        entryData.title = entry.title
+        entryData.text  = entry.text
+      when 'image'
+        entryData.text              = entry.title
+        entryData.image_url         = entry.image_url
+        entryData.image_attachments = []
+        # entryData.image_attachments = @_encodeImageAttachments(entry.image_attachments)
+      when 'instagram'
+        entryData.text      = entry.title
+        entryData.embedHtml = entry.embedHtml
+        entryData.video_url = entry.video_url
+      when 'music'
+        entryData.text      = entry.title
+        entryData.embedHtml = entry.embedHtml
+        entryData.video_url = entry.video_url
+      when 'video'
+        entryData.text      = entry.title
+        entryData.embedHtml = entry.embedHtml
+        entryData.video_url = entry.video_url
+      when 'quote'
+        entryData.title = entry.source
+        entryData.text  = entry.text
+      else
+        console.error 'Невозможно сохранить пост, неивестный тип поста', entry.type
+
+    @storage.setItem @_positionKey(entry), JSON.stringify(entryData)
 
   removeEntry: (entry) ->
     @storage.removeItem @_positionKey(entry)
