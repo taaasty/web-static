@@ -12,7 +12,8 @@ window.PostEditor_NewPost = React.createClass
     entryPrivacy:    if @props.tlogType is 'public' then 'live' else 'public'
 
   changeType: (type) ->
-    @setState entryType: type
+    @refs.editorContainer.refs.editor.storeEntry()
+    @setState(entryType: type)
 
   changePrivacy: (privacy) ->
     @setState entryPrivacy: privacy

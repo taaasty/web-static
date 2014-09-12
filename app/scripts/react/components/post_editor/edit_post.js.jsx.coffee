@@ -4,8 +4,7 @@ window.PostEditor_EditPost = React.createClass
   mixins: ['ReactActivitiesMixin', PostEditor_LayoutMixin]
 
   propTypes:
-    entry:         React.PropTypes.object.isRequired
-    onChangeType:  React.PropTypes.func
+    entry: React.PropTypes.object.isRequired
 
   getInitialState: ->
     @stateFromProps @props

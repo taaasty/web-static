@@ -11,6 +11,10 @@ window.PostEditor_ImagesForm =
   componentDidUpdate:   -> @_rebindImageUpload()
   componentWillUnmount: -> @_unbindImageUpload()
 
+  entryId:        -> @props.normalizedEntry.id
+  entryType:      -> 'image'
+  entryUpdatedAt: -> @props.normalizedEntry.updatedAt
+
   saveEntry: ->
     return @saveAsAjax()          if @state.imageUrl?
     return @fileUploader.submit() if @fileUploader?
@@ -29,7 +33,7 @@ window.PostEditor_ImagesForm =
           entry: newEntry
           type:  newEntry.type
         }
-        EntryStore.removeEntry()
+        EntryStore.removeNormalizedEntry @props.normalizedEntry
         @props.doneCallback newEntry
       error: (data) =>
         TastyNotifyController.errorResponse data
@@ -94,16 +98,16 @@ window.PostEditor_ImagesForm =
       fail: (e, data) =>
         TastyNotifyController.errorResponse data.jqXHR
       done: (e, data) =>
-        EntryStore.removeEntry(@props.entryId, @props.entryUpdatedAt)
+        EntryStore.removeNormalizedEntry @props.normalizedEntry
         @props.doneCallback data.jqXHR.responseJSON
 
   _unbindImageUpload: -> @$uploadForm.fileupload 'destroy'
 
   _getSaveUrl: ->
-    if @props.entryId?
-      Routes.api.update_entry_url @props.entryId, @props.entryType
+    if @entryId()?
+      Routes.api.update_entry_url @entryId(), @entryType()
     else
-      Routes.api.create_entry_url @props.entryType
+      Routes.api.create_entry_url @entryType()
 
   _getSaveMethod: ->
-    if @props.entryId? then 'PUT' else 'POST'
+    if @entryId()? then 'PUT' else 'POST'

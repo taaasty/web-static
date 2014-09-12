@@ -5,9 +5,7 @@ window.PostEditor_AutosaveMixin =
   propTypes:
     storeCallback: React.PropTypes.func.isRequired
 
-  componentWillUnmount: ->
-    @storeEntry() if @autoSaveTimer?
-    @stopAutosave()
+  componentWillUnmount: -> @stopAutosave()
 
   startAutosave: ->
     @stopAutosave() if @autoSaveTimer?
@@ -15,7 +13,7 @@ window.PostEditor_AutosaveMixin =
     @autoSaveTimer = setTimeout @storeEntry, AUTOSAVE_TIME
 
   _getNormalizedEntry: ->
-    _.extend {}, @props.normalizedEntry, @_getNormalizedData()
+    _.extend @props.normalizedEntry, @_getNormalizedData()
 
   storeEntry: ->
     @props.storeCallback @_getNormalizedEntry()

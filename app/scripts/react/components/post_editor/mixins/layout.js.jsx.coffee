@@ -31,7 +31,7 @@ window.PostEditor_LayoutMixin =
 
       <PostEditor_Choicer currentType={ this.state.entryType }
                           isLoading={ this.hasActivities() }
-                          onChangeType={ this.handleChangeType } />
+                          onChangeType={ this.changeType } />
 
     </PostEditor_Layout>`
 
@@ -40,13 +40,3 @@ window.PostEditor_LayoutMixin =
 
   togglePreviewMode: ->
     @setState previewMode: !@state.previewMode
-
-  handleChangeType: (type) ->
-    @refs.editorContainer.refs.editor.storeEntry()
-    @getChangeTypeCallback()?(type)
-
-  getChangeTypeCallback: ->
-    return @props.onChangeType if @props.onChangeType?
-    return @changeType if @changeType?
-
-    null
