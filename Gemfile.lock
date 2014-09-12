@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    CoffeeTags (0.5.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     coderay (1.1.0)
@@ -17,6 +18,8 @@ GEM
       guard (~> 2.2)
     guard-ctags-bundler (1.1.0)
       guard (~> 2.0)
+    guard-shell (0.6.1)
+      guard (>= 1.1.0)
     hitimes (1.2.2)
     listen (2.7.9)
       celluloid (>= 0.15.2)
@@ -40,6 +43,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  CoffeeTags
   guard
   guard-bundler
   guard-ctags-bundler
+  guard-shell

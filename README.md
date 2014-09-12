@@ -26,6 +26,17 @@
     > localStorage.setItem('host', 'http://api.taaasty.ru/')
     > localStorage.setItem('api_host', 'http://api.taaasty.ru/')
 
+Теги
+----
+
+Создание тегов
+
+    > coffeetags -R -f tags
+
+Обновление тегов в реальном времени
+
+    > bundle exec guard
+
 Запуск
 ------
 
