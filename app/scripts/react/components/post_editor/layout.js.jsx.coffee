@@ -5,7 +5,6 @@ window.PostEditor_Layout = React.createClass
   propTypes:
     backUrl:   React.PropTypes.string
     isLoading: React.PropTypes.bool.isRequired
-    children:  React.PropTypes.renderable.isRequired
 
   render: ->
     unless @props.isLoading

@@ -12,28 +12,31 @@ window.PostEditor_LayoutMixin =
     previewMode: false
 
   render: ->
-   `<PostEditor_Layout backUrl={ this.props.backUrl }
-                       isLoading={ this.hasActivities() }>
+    unless @props.tlogType is 'anonymous'
+      choicer = `<PostEditor_Choicer currentType={ this.state.entryType }
+                                     isLoading={ this.hasActivities() }
+                                     onChangeType={ this.changeType } />`
 
-      <PostActions entryPrivacy={ this.state.entryPrivacy }
-                   tlogType={ this.props.tlogType }
-                   previewMode={ this.state.previewMode }
-                   isLoading={ this.hasActivities() }
-                   onSave={ this.saveEntry }
-                   onChangePrivacy={ this.changePrivacy }
-                   onPreview={ this.togglePreviewMode } />
+    return `<PostEditor_Layout backUrl={ this.props.backUrl }
+                               isLoading={ this.hasActivities() }>
 
-      <PostEditor_EditorContainer ref="editorContainer"
-                                  normalizedEntry={ this.state.normalizedEntry }
-                                  entryType={ this.state.entryType }
-                                  entryPrivacy={ this.state.entryPrivacy }
-                                  activitiesHandler={ this.activitiesHandler } />
+              <PostActions entryPrivacy={ this.state.entryPrivacy }
+                           tlogType={ this.props.tlogType }
+                           previewMode={ this.state.previewMode }
+                           isLoading={ this.hasActivities() }
+                           onSave={ this.saveEntry }
+                           onChangePrivacy={ this.changePrivacy }
+                           onPreview={ this.togglePreviewMode } />
 
-      <PostEditor_Choicer currentType={ this.state.entryType }
-                          isLoading={ this.hasActivities() }
-                          onChangeType={ this.changeType } />
+              <PostEditor_EditorContainer ref="editorContainer"
+                                          normalizedEntry={ this.state.normalizedEntry }
+                                          entryType={ this.state.entryType }
+                                          entryPrivacy={ this.state.entryPrivacy }
+                                          activitiesHandler={ this.activitiesHandler } />
 
-    </PostEditor_Layout>`
+              { choicer }
+
+            </PostEditor_Layout>`
 
   saveEntry: ->
     @refs.editorContainer.saveEntry entryPrivacy: @state.entryPrivacy

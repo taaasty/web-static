@@ -19,7 +19,7 @@ window.PostEditor_PersistenceMixin =
     @incrementActivities()
 
     editorData         = @_getEditorData()
-    editorData.privacy = entryPrivacy
+    editorData.privacy = entryPrivacy unless entryPrivacy is 'anonymous'
 
     @createRequest
       url: @savingUrl()
