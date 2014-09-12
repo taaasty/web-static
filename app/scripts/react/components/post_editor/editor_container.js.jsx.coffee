@@ -21,6 +21,9 @@ window.PostEditor_EditorContainer = React.createClass
   saveEntry: ({ entryPrivacy }) ->
     @refs.editor.saveEntry { entryPrivacy }
 
+  storeCallback: (normalizedEntry) ->
+    EntryStore.storeEntry normalizedEntry
+
   redirectToEntryPage: (entry) ->
     if window.TASTY_ENV == 'development'
       alert "Статья #{ entry.id } успешно сохранена"
@@ -53,21 +56,19 @@ window.PostEditor_EditorContainer = React.createClass
 
     editor
 
-  storeCallback: (normalizedEntry) -> EntryStore.storeEntry normalizedEntry
-
   _getTextEditor: ->
     `<PostEditor_TextEditor ref="editor"
-                            storeCallback={ this.storeCallback }
                             normalizedEntry = { this.props.normalizedEntry }
                             activitiesHandler={ this.activitiesHandler }
+                            storeCallback={ this.storeCallback }
                             doneCallback={ this.redirectToEntryPage } />`
 
   _getImageEditor: ->
     `<PostEditor_ImageEditor ref="editor"
                              normalizedEntry = { this.props.normalizedEntry }
                              entryPrivacy={ this.props.entryPrivacy }
-                             storeCallback={ this.storeCallback }
                              activitiesHandler={ this.activitiesHandler }
+                             storeCallback={ this.storeCallback }
                              doneCallback={ this.redirectToEntryPage } />`
 
   _getInstagramEditor: ->

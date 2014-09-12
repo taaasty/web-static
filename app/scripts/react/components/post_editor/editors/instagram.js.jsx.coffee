@@ -1,7 +1,8 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_InstagramEditor = React.createClass
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin, PostEditor_VideoMixin]
+  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin
+            PostEditor_VideoMixin]
 
   render: ->
     instagramEditorClasses = React.addons.classSet {

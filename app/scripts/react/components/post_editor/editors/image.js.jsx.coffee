@@ -10,8 +10,8 @@ window.PostEditor_ImageEditor = React.createClass
             ComponentManipulationsMixin]
 
   propTypes:
-    normalizedEntry:       React.PropTypes.instanceOf(NormalizedEntry).isRequired
-    entryPrivacy:          React.PropTypes.string.isRequired
+    normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
+    entryPrivacy:    React.PropTypes.string.isRequired
 
   getInitialState: ->
     currentState: @_getInitialCurrentState()
@@ -63,8 +63,9 @@ window.PostEditor_ImageEditor = React.createClass
               </div>
             </article>`
 
-  imageAttachments: ->
-    @props.normalizedEntry.imageAttachments || []
+  imageAttachments: -> @props.normalizedEntry.imageAttachments || []
+
+  entryImageUrl: -> @props.normalizedEntry.embedUrl
 
   activateWelcomeMode: -> @setState currentState: WELCOME_MODE
   activateLoadedMode:  -> @setState currentState: LOADED_MODE
@@ -81,8 +82,6 @@ window.PostEditor_ImageEditor = React.createClass
       LOADED_MODE
     else
       WELCOME_MODE
-
-  entryImageUrl: -> @props.normalizedEntry.embedUrl
 
   _getInitialImages: ->
     if @entryImageUrl()?
@@ -104,8 +103,7 @@ window.PostEditor_ImageEditor = React.createClass
     return 'insert'     if @isInsertMode()
     return 'loaded'     if @state.images.length > 0
 
-  _getTitle: -> 
-    @props.normalizedEntry.data2 
+  _getTitle: -> @props.normalizedEntry.data2
 
   _getNormalizedData: ->
     data2:    @refs.titleEditor.content()
@@ -138,4 +136,3 @@ window.PostEditor_ImageEditor = React.createClass
       TastyNotifyController.notify 'error', "Изображения #{ imageUrl } не существует."
 
     image.src = imageUrl
-

@@ -4,14 +4,13 @@ window.PostEditor_PersistenceMixin =
     activitiesHandler: React.PropTypes.object.isRequired
     doneCallback:      React.PropTypes.func.isRequired
 
+  entryId: -> @props.normalizedEntry.id
+
   savingUrl: ->
     if @entryId()?
       Routes.api.update_entry_url @entryId(), @entryType()
     else
       Routes.api.create_entry_url @entryType()
-
-  entryId:  ->
-    @props.normalizedEntry.id
 
   savingMethod: ->
     if @entryId()? then 'PUT' else 'POST'

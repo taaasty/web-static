@@ -21,14 +21,17 @@ window.EntryStore =
     @store @key(normalizedEntry), normalizedEntry
 
   removeNormalizedEntry: (normalizedEntry) ->
+    console.log 'удаляем нормализованный Entry', normalizedEntry
     if normalizedEntry.id?
       key = @keyExisten normalizedEntry.id, normalizedEntry.updated_at
     else
       key = @keyNew()
+
     @storage.removeItem key
 
   store: (key, data) ->
     data.store_at = new Date()
+
     @storage.setItem key, JSON.stringify(data)
 
   restore: (key) ->
