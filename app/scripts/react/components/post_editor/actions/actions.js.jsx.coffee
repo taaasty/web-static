@@ -17,7 +17,7 @@ window.PostActions = React.createClass
     tlogType:        React.PropTypes.oneOf(TLOG_TYPES).isRequired
     previewMode:     React.PropTypes.bool.isRequired
     isLoading:       React.PropTypes.bool.isRequired
-    onChangePrivacy: React.PropTypes.func.isRequired
+    onChangePrivacy: React.PropTypes.func
     onPreview:       React.PropTypes.func.isRequired
     onSave:          React.PropTypes.func.isRequired
 
@@ -37,6 +37,12 @@ window.PostActions = React.createClass
       'state--loading': @props.isLoading
     }
 
+    privacyButton = `<div className="post-action post-action--button">
+                        <PostActions_PrivacyButton isVoteEnabled={ this.isPostLive() }
+                                                   private={ this.isPostPrivate() }
+                                                   onChange={ this.onPrivacyChanged } />
+                    </div>`
+
     if @props.isLoading
       loader = `<div className="post-action post-action--loader">
                   <Spinner size={ 8 } />
@@ -48,14 +54,12 @@ window.PostActions = React.createClass
                                               onChange={ this.onVoteChanged } />
                     </div>`
 
+    voteButton = privacyButton = null if @isTlogAnonymous()
+
     return `<div className={ postActionsClasses }>
               { loader }
               { voteButton }
-              <div className="post-action post-action--button">
-                <PostActions_PrivacyButton isVoteEnabled={ this.isPostLive() }
-                                           private={ this.isPostPrivate() }
-                                           onChange={ this.onPrivacyChanged } />
-              </div>
+              { privacyButton }
               <div className="post-action post-action--button">
                 <button className={ previewButtonClasses }
                         onClick={ this.props.onPreview }>

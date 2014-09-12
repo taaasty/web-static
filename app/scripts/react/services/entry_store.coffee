@@ -17,12 +17,17 @@ window.EntryStore =
   restoreNewEntry: ->
     @restore @keyNew()
 
+  restoreAnonymousEntry: ->
+    @restore @keyAnonymous()
+
   storeEntry: (normalizedEntry) ->
     @store @key(normalizedEntry), normalizedEntry
 
   removeNormalizedEntry: (normalizedEntry) ->
     if normalizedEntry.id?
       key = @keyExisten normalizedEntry.id, normalizedEntry.updatedAt
+    else if normalizedEntry.tlogType? && normalizedEntry.tlogType is 'anonymous'
+      key = @keyAnonymous()
     else
       key = @keyNew()
 
@@ -41,6 +46,8 @@ window.EntryStore =
   key: (entry) ->
     if entry.id?
       @keyExisten entry.id, entry.updatedAt
+    else if entry.tlogType? && entry.tlogType is 'anonymous'
+      @keyAnonymous()
     else
       @keyNew()
 
@@ -50,3 +57,6 @@ window.EntryStore =
 
   keyNew: ->
     STORAGE_PREFIX + ':' + 'new'
+
+  keyAnonymous: ->
+    STORAGE_PREFIX + ':' + 'anonymous'

@@ -7,9 +7,6 @@ window.PostEditor_NewAnonymousPost = React.createClass
     tlogType:  'anonymous'
 
   getInitialState: ->
-    entryPrivacy: 'public'
-    entryType:    'anonymous'
-    entry:
-      type:  'anonymous'
-      title: null
-      text:  null
+    normalizedEntry: EntryStore.restoreAnonymousEntry() || new NormalizedEntry({tlogType: 'anonymous'})
+    entryType:       'anonymous'
+    entryPrivacy:    'anonymous'

@@ -38,7 +38,7 @@ window.PostEditor_EditorContainer = React.createClass
   _getEditorComponent: ->
     switch @props.entryType
       when 'anonymous'
-        editor = @_getTextEditor()
+        editor = @_getAnonymousEditor()
       when 'text'
         editor = @_getTextEditor()
       when 'image'
@@ -56,9 +56,16 @@ window.PostEditor_EditorContainer = React.createClass
 
     editor
 
+  _getAnonymousEditor: ->
+    `<PostEditor_AnonymousEditor ref="editor"
+                                 normalizedEntry={ this.props.normalizedEntry }
+                                 activitiesHandler={ this.activitiesHandler }
+                                 storeCallback={ this.storeCallback }
+                                 doneCallback={ this.redirectToEntryPage } />`
+
   _getTextEditor: ->
     `<PostEditor_TextEditor ref="editor"
-                            normalizedEntry = { this.props.normalizedEntry }
+                            normalizedEntry={ this.props.normalizedEntry }
                             activitiesHandler={ this.activitiesHandler }
                             storeCallback={ this.storeCallback }
                             doneCallback={ this.redirectToEntryPage } />`
