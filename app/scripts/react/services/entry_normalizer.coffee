@@ -1,13 +1,3 @@
-class window.NormalizedEntry
-  # data1
-  # data2
-  # data3
-  # embedHtml
-  # embedUrl
-  # imageAttachments
-  constructor: (data) ->
-    _.extend @, data
-
 window.EntryNormalizer =
 
   # entyData - не нормалозованная entry
@@ -31,9 +21,9 @@ window.EntryNormalizer =
           data1:     entryData.text
           data2:     entryData.source
         else
-          console.error? "Unknown entry type #{entryData.type}"
+          console.error? "Unknown entry type #{ entryData.type }"
 
-    attr.id         = entryData.id
-    attr.updated_at = entryData.updated_at
+    attr.id        = entryData.id
+    attr.updatedAt = new Date(entryData.updated_at).getTime()
 
     new NormalizedEntry(attr)

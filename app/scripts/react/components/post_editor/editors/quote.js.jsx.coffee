@@ -28,6 +28,7 @@ window.PostEditor_QuoteEditor = React.createClass
 
   entryText:   -> @props.normalizedEntry.data2
   entrySource: -> @props.normalizedEntry.data1
+  entryType:   -> 'quote'
 
   _getNormalizedData: ->
     data2: @refs.textEditor.content()

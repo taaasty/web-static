@@ -1,6 +1,7 @@
 window.PostEditor_VideoMixin =
+
   propTypes:
-    normalizedEntry:   React.PropTypes.instanceOf(NormalizedEntry).isRequired
+    normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
 
   getInitialState: ->
     embedUrl:  @props.normalizedEntry.embedUrl

@@ -25,9 +25,11 @@ require './aapp/services/designSettingsDragable.js.coffee'
 require './aapp/directives/eatClick.js'
 require './aapp/directives/enter.js'
 
+require './react/entities/normalized_entry'
+
 require './react/services/positions'
 require './react/services/entry_store'
-require './react/services/entry_normalization'
+require './react/services/entry_normalizer'
 require './react/services/thumbor'
 
 require './react/mixins/unmount'

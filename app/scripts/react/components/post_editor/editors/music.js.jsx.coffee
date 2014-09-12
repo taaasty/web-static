@@ -1,7 +1,8 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_MusicEditor = React.createClass
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin, PostEditor_VideoMixin]
+  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin
+            PostEditor_VideoMixin]
 
   render: ->
     musicEditorClasses = React.addons.classSet {

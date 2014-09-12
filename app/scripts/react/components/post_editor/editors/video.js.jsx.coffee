@@ -1,7 +1,8 @@
 ###* @jsx React.DOM ###
 
 window.PostEditor_VideoEditor = React.createClass
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin, PostEditor_VideoMixin]
+  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin
+            PostEditor_VideoMixin]
 
   render: ->
     videoEditorClasses = React.addons.classSet {

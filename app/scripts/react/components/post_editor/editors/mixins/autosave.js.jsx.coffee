@@ -1,14 +1,11 @@
 AUTOSAVE_TIME = 10000
 
 window.PostEditor_AutosaveMixin =
+
   propTypes:
-    storeCallback:         React.PropTypes.func.isRequired
+    storeCallback: React.PropTypes.func.isRequired
 
-  componentWillUnmount: ->
-    @storeEntry() if @autoSaveTimer?
-    @stopAutosave()
-
-  handleChange: -> @storeEntry()
+  componentWillUnmount: -> @stopAutosave()
 
   startAutosave: ->
     @stopAutosave() if @autoSaveTimer?

@@ -58,7 +58,7 @@ window.TastyEditor = React.createClass
    `<div className={"tasty-editor " + this.props.className}>
       <div ref="content"
            className="tasty-editor-content"
-           onInput={ this._managePlaceholder }
+           onInput={ this.props.onChange }
            dangerouslySetInnerHTML={{ __html: this.props.content }} />
     </div>`
 
@@ -66,8 +66,6 @@ window.TastyEditor = React.createClass
     @props.placeholder.replace '<br>', "\r\n"
 
   _managePlaceholder: ->
-    @props.onChange()
-
     if @$editor.html() != ''
       @$editor.removeClass 'medium-editor-placeholder'
     else

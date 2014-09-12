@@ -4,9 +4,7 @@ window.PostEditor_TextEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin]
 
   propTypes:
-    normalizedEntry:       React.PropTypes.instanceOf(NormalizedEntry).isRequired
-    
-  entryType: -> 'text'
+    normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
 
   render: ->
     textEditorClasses = React.addons.classSet {
@@ -36,6 +34,7 @@ window.PostEditor_TextEditor = React.createClass
 
   entryTitle: -> @props.normalizedEntry.data1
   entryText:  -> @props.normalizedEntry.data2
+  entryType:  -> 'text'
 
   _getNormalizedData: ->
     data1: @refs.titleEditor.content()
@@ -47,4 +46,3 @@ window.PostEditor_TextEditor = React.createClass
       title: @refs.titleEditor.content()
       text:  @refs.textEditor.content()
     }
-

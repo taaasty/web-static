@@ -2,6 +2,7 @@
 #= require react-mixin-manager
 #= require react_ujs
 #= require ./utils
+#= require_tree ./entities
 #= require_tree ./services
 #= require_tree ./mixins
 #= require_tree ./components/post_editor/mixins/
