@@ -74,6 +74,9 @@ window.PostEditor_ChoicerItem = React.createClass
 
     @$button.tooltip()
 
+  componentWillUnmount: ->
+    @$button.tooltip 'destroy'
+
   render: ->
     choicerItemClasses = React.addons.classSet {
       'button': true
