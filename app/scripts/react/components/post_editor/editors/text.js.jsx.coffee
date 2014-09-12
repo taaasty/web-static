@@ -21,6 +21,7 @@ window.PostEditor_TextEditor = React.createClass
                              placeholder="Заголовок (199 символов)"
                              isLoading={ this.hasActivities() }
                              className="post__title"
+                             autofocus={ true }
                              onChange={ this.startAutosave } />
               </header>
               <TastyEditor ref="textEditor"

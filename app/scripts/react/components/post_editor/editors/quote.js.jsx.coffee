@@ -11,6 +11,7 @@ window.PostEditor_QuoteEditor = React.createClass
                        placeholder="Текст цитаты (499 символов)"
                        mode="partial"
                        content={ this.entryText() }
+                       autofocus={ true }
                        isLoading={ this.hasActivities() }
                        onChange={ this.startAutosave } />
 
