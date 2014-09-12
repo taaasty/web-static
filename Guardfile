@@ -16,7 +16,7 @@ guard :bundler do
   # watch(/^.+\.gemspec/)
 end
 
-guard :shell do
+guard :shell, :all_on_start => true do
   watch(/^(app)\/.*\.coffee$/) { |m| `coffeetags -f tags #{m[0]}` }
 end
 
