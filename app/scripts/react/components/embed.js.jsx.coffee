@@ -1,7 +1,41 @@
 ###* @jsx React.DOM ###
 
 window.EmbedComponent = React.createClass
+  propTypes:
+    autoplay:       React.PropTypes.bool.isRequired
+    coverImageUrl:  React.PropTypes.string
+    frameWidth:     React.PropTypes.number.isRequired
+    frameHeight:    React.PropTypes.number.isRequired
+    embedHtml:      React.PropTypes.string.isRequired
 
+  render: ->
+    if @props.coverImageUrl? && !@props.autoplay
+      @transferPropsTo new EmbedComponentWithCover
+    else
+      @transferPropsTo new EmbedComponentNoCover
+
+window.EmbedComponentNoCover = React.createClass
+  propTypes:
+    frameWidth:     React.PropTypes.number.isRequired
+    frameHeight:    React.PropTypes.number.isRequired
+    embedHtml:      React.PropTypes.string.isRequired
+
+  render: ->
+    figureStyle = width: @props.frameWidth, height: @props.frameHeight
+
+    `<figure className="video video-without-cover" ref='container'
+             dangerouslySetInnerHTML={{__html: this.props.embedHtml }}
+             style={figureStyle} />`
+
+  componentDidMount: ->
+    $container = $ @refs.container.getDOMNode()
+
+    $iframe = $container.find "iframe"
+
+    $container.height $iframe.height()
+
+
+window.EmbedComponentWithCover = React.createClass
   propTypes:
     coverImageUrl:  React.PropTypes.string.isRequired
     frameWidth:     React.PropTypes.number.isRequired
