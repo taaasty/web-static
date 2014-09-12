@@ -44,21 +44,22 @@ window.PostEditor_ImagesForm =
     # alert "Картинки не меняли, сохранять нечего"
 
   addFilesToForm: (e, data) ->
+    imageFiles = data.files.filter (file) => file.type.match ACCEPT_FILE_TYPES
+
+    if imageFiles.length == 0
+      return TastyNotifyController.notify 'error', 'Среди указанных вами файлов нет ни одного изображения'
+
     @fileUploader = data
 
-    images = data.files.map (file, i) =>
+    images = imageFiles.map (file) =>
       image     = new Image()
       image.src = window.URL.createObjectURL file
-
-      progress = parseInt((i + 1) / data.files.length * 100, 10)
-      @setState uploadingProgress: progress
 
       image
 
     @setState {
-      images: images
+      images:   images
       imageUrl: null
-      uploadingProgress: 0
     }
 
     @activateLoadedMode()
