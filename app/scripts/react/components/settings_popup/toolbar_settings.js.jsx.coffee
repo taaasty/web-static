@@ -57,7 +57,7 @@ window.ToolbarSettings = React.createClass
 
                 <div className="settings__body">
                   <SettingsRadioItem title="Закрытый дневник?"
-                                     description="Управление видимостью вашего дневника. Закрытый дневник виден только тем, на кого вы подписаны."
+                                     description="Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам конечно."
                                      user={ this.state.user }
                                      saveCallback={ saveCallback }
                                      key="is_privacy" />
