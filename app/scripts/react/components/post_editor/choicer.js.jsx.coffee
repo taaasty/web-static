@@ -69,6 +69,11 @@ window.PostEditor_ChoicerItem = React.createClass
     isLoading: React.PropTypes.bool.isRequired
     onClick:   React.PropTypes.func.isRequired
 
+  componentDidMount: ->
+    @$button = $( @getDOMNode() )
+
+    @$button.tooltip()
+
   render: ->
     choicerItemClasses = React.addons.classSet {
       'button': true
@@ -77,11 +82,11 @@ window.PostEditor_ChoicerItem = React.createClass
       'state--active' : @props.isActive
     }
 
-    return `<button title={ this.props.title }
+    return `<button data-original-title={ this.props.title }
                     className={ choicerItemClasses }
-                    onClick={ this.onClick }>
+                    onClick={ this.handleClick }>
               <i className={ "icon " + this.props.icon } />
             </button>`
 
-  onClick: ->
+  handleClick: ->
     @props.onClick() unless @props.isLoading
