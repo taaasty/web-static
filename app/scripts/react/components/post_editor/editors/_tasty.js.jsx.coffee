@@ -32,10 +32,12 @@ window.TastyEditor = React.createClass
     placeholder: React.PropTypes.string
     isLoading:   React.PropTypes.bool
     className:   React.PropTypes.string
+    autofocus:   React.PropTypes.bool
     onChange:    React.PropTypes.func.isRequired
 
   getDefaultProps: ->
     mode:      'inline'
+    autofocus: false
     className: 'tasty-editor-default'
 
   getInitialState: ->
@@ -45,6 +47,8 @@ window.TastyEditor = React.createClass
     options = placeholder: @placeholder()
     @$editor = $( @refs.content.getDOMNode() )
     @mediumEditor = new MediumEditor @$editor.get(0), _.extend(options, EDITOR_OPTIONS[@props.mode])
+
+    @focus() if @props.autofocus
 
   componentDidUpdate: ->
     if @props.isLoading then @mediumEditor.deactivate?() else @mediumEditor.activate?()
@@ -73,3 +77,23 @@ window.TastyEditor = React.createClass
 
   content: ->
     @refs.content.getDOMNode().innerHTML
+
+  focus: ->
+    el = @$editor.get(0)
+
+    el.focus()
+
+    if typeof window.getSelection != 'undefined' &&
+       typeof document.createRange != 'undefined'
+
+        range = document.createRange()
+        range.selectNodeContents el
+        range.collapse false
+        sel = window.getSelection()
+        sel.removeAllRanges()
+        sel.addRange(range)
+    else if typeof document.body.createTextRange != 'undefined'
+        textRange = document.body.createTextRange()
+        textRange.moveToElementText el
+        textRange.collapse false
+        textRange.select()
