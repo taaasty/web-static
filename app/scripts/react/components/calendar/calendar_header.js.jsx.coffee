@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.CalendarHeader = CalendarHeader = React.createClass
+window.CalendarHeader = React.createClass
 
   propTypes:
     date: React.PropTypes.object.isRequired
@@ -18,5 +18,3 @@ window.CalendarHeader = CalendarHeader = React.createClass
                    dangerouslySetInnerHTML={{ __html: info }}>
               </div>
             </div>`
-
-module.exports = CalendarHeader

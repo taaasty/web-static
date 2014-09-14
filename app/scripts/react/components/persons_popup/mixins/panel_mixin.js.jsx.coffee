@@ -30,6 +30,10 @@ window.PersonsPopup_PanelMixin =
     @scroller.update()
     @$scroller.trigger("sizeChange").trigger('sizeChange')
 
+  componentWillUnmount: ->
+    @scroller.dispose()
+    @$scroller = @scroller = null
+
   render: ->
     panelClasses = React.addons.classSet 'tabs-panel': true, 'state--hidden': !@props.isActive
 

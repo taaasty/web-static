@@ -74,7 +74,7 @@ window.PersonsPopup = React.createClass
 
               {requestsPanel}
 
-          </Popup>`
+            </Popup>`
 
 # Временно убираем блокировки
 # <PersonsPopup_IgnoresPanel isActive={ this.state.currentTab == 'ignores' }
@@ -98,5 +98,3 @@ window.PersonsPopup = React.createClass
     @setState relationships: newRelationships
 
   _isProfilePrivate: -> @props.user.get 'is_privacy'
-
-module.exports = PersonsPopup

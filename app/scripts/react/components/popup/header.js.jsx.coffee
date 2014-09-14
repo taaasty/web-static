@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.PopupHeader = PopupHeader = React.createClass
+window.PopupHeader = React.createClass
 
   propTypes:
     title:         React.PropTypes.string.isRequired
@@ -27,5 +27,3 @@ window.PopupHeader = PopupHeader = React.createClass
                 <div className="icon icon--cross"></div>
               </div>
             </div>`
-
-module.exports = PopupHeader

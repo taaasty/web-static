@@ -1,7 +1,7 @@
 ###* @jsx React.DOM ###
 #= require ./popup/spinner
 
-module.exports = window.PopupBox = React.createClass
+window.PopupBox = React.createClass
   mixins: [ReactUnmountMixin, React.addons.LinkedStateMixin, 'ReactActivitiesMixin']
 
   propTypes:

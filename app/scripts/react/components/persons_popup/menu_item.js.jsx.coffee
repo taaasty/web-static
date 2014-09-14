@@ -17,5 +17,3 @@ window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass
                 <span className="tabs-nav__count"> { this.props.count }</span>
               </a>
             </li>`
-
-module.exports = PersonsPopup_MenuItem

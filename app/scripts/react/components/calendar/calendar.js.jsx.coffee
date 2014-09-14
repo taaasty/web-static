@@ -7,7 +7,7 @@ CALENDAR_OPENED_BY_CLICK = 'openedByClick'
 TARGET_POST_CLASS =        '.post'
 TARGET_POST_PARENT_CLASS = '.posts'
 
-window.Calendar = Calendar = React.createClass
+window.Calendar = React.createClass
   mixins: [RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:
@@ -150,5 +150,3 @@ window.Calendar = Calendar = React.createClass
       $(TARGET_POST_CLASS).get(0).dataset.time
     catch error
       console.error? error
-
-module.exports = Calendar
