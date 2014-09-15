@@ -130,6 +130,7 @@ require './react/components/design_settings_popup/controls_items/_progressbar'
 
 require './react/components/messages_popup/messages_popup'
 require './react/components/messages_popup/dialog_list/dialog_list'
+require './react/components/messages_popup/dialog_list/dialog_list_item'
 require './react/components/messages_popup/recipient_list/recipient_list'
 require './react/components/messages_popup/thread/thread'
 require './react/components/messages_popup/thread/thread_list/thread_list'
