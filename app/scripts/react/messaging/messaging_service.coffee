@@ -35,7 +35,6 @@ class window.MessagingService
 
   # Мессенджер подписывается на все новые сообщения, чтобы
   addListenerToFreshMessagesCount: (callback) ->
-    asda
 
   addListenerToNewMessageInConversationArrived: (conversationId, callback) ->
 
