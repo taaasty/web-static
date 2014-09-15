@@ -1,7 +1,6 @@
 class window.MessagingService
   routeNewMessage:  ({conversationId, messageId}) -> "#{conversationId}/message/#{messageId}"
   routeReadMessage: ({conversationId, messageId}) -> "#{conversationId}/read/#{messageId}"
-  routeMetaInfo:    () -> '/metaInfo'
   routeStatus:      () -> '/status'
   routeConversationStatus: ({conversationId})    -> "#{converastionId}/status"
   routeConversationPayloaded: ({conversationId}) -> "#{conversationId}/payload"
@@ -13,17 +12,18 @@ class window.MessagingService
   constructor: ({@debug, @user}) ->
     _.extent @, EventEmitter
 
-    @requester = new MessagingRequester
+    @requester = new MessagingRequester access_token: user.access_token
 
     if @debug
       @addListener @routeNewMessage('*','*'),  (message)  -> console.debug? "New message", message
       @addListener @routeReadMessage('*','*'), (message)  -> console.debug? "Read message", message
-      @addListener @routeMetaInfo(),           (metaInto) -> console.debug? "MetaInfo: ", metaINfo
 
   # Запрашиваем MessagingMetaInfo асинхронно
-  requestMetaInfo: (callback) ->
-    @addListener routeMetaInfo(), callback
-    @requester.makeMetaInfoRequest()
+  connect: ({success, error}) ->
+    @requester.makeConnect
+      error: error
+      success: (data) ->
+        success()
 
   requestConversation: (conversationId, callback, messagesLimit) ->
     @addListener @routeConversation(conversationId), callback

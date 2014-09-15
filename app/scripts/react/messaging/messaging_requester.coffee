@@ -1,5 +1,5 @@
 class window.MessagingRequester
-  metaInfoUrl:               -> '/metaInfo'
+  connectUrl:                -> '/connect'
   conversationUrl:  (convId) -> "/conversation/:#{convId}"
   newConversationUrl: (slug) -> "/conversation/new/#{slug}"
   postMessageUrl:   (convId) -> "/conversation/:#{convId}/messages/"
@@ -8,8 +8,13 @@ class window.MessagingRequester
 
   conversationMessagesUrl: (convId) -> "/conversation/#{convId}/messages"
 
-  makeMetaInfoRequest:     ->
-    $.ajax metaInfoUrl(), method: 'POST'
+  constructor: ({@access_token}) ->
+
+  makeConnect:   ({success, error})->
+    $.ajax connectUrl(),
+      method: 'POST'
+      success: success
+      error:   error
 
   # messagesLimit - сколько последних сообщений отдать
   mekeConversationRequest: (convId, messagesLimit) ->

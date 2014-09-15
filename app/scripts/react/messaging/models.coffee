@@ -39,7 +39,7 @@ class window.MessagingStatus extends DModel
 
 class window.MessagingMetaInfo extends DModel
   # messagingStatus = <MessagingStatus>
-  # conversations = [<Conversation>,..] - список действующих бесед. Может быть nil
+  # activeConversations = [<Conversation>,..] - список действующих бесед
 
 class window.Conversation extends DModel
   # id
