@@ -18,7 +18,6 @@ window.ReactApp =
 
   start: ->
     console.log 'ReactApp start'
-    personsContainer = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get(0)
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
 
@@ -31,6 +30,12 @@ window.ReactApp =
     # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent InviterShellBox(fixed: true)
     if ic = document.getElementById 'js-static-inviter-container'
       React.renderComponent InviterShellBox(fixed: true), ic
+
+    if localStorage.getItem 'displayMessages'
+      messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body').get(0)
+
+      if messagesContainer
+        React.renderComponent MessagesPopup(), messagesContainer
 
 window.isMobile = ->
   userAgent = navigator.userAgent || navigator.vendor || window.opera;

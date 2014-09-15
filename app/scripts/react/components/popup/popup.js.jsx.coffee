@@ -9,7 +9,7 @@ window.Popup = React.createClass
     title:         React.PropTypes.string.isRequired
     hasActivities: React.PropTypes.bool
     onClose:       React.PropTypes.func
-    isDark:        React.PropTypes.bool
+    colorScheme:   React.PropTypes.oneOf(['dark', 'light'])
     isDraggable:   React.PropTypes.bool
     position:      React.PropTypes.object
 
@@ -18,7 +18,8 @@ window.Popup = React.createClass
 
   getDefaultProps: ->
     hasActivities: false
-    isDark:        true
+    isDark:        false
+    isLight:       false
     isDraggable:   false
 
   componentDidMount: ->
@@ -30,11 +31,19 @@ window.Popup = React.createClass
     Mousetrap.unbind 'esc', @close
 
   render: ->
-    classes = popup: true, 'popup--dark': @props.isDark, 'popup--center': true
-    classes[@props.className] = true if @props.className?
-    cx = React.addons.classSet classes
+    classes = {
+      'popup':         true
+      'popup--dark':   @props.colorScheme is 'dark'
+      'popup--light':  @props.colorScheme is 'light'
+      'popup--center': true
+    }
 
-    return `<div className={cx} style={this.initialPositionStyle()}>
+    classes[@props.className] = true if @props.className?
+
+    popupClasses = React.addons.classSet classes
+
+    return `<div className={ popupClasses }
+                 style={ this.initialPositionStyle() }>
               <PopupHeader title={ this.props.title } ref="header"
                            isDraggable= { this.props.isDraggable }
                            hasActivities={ this.props.hasActivities }

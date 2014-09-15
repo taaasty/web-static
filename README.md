@@ -17,6 +17,10 @@
 
 В браузере:
 
+Показывать попап с сообщениями
+
+    > localStorage.setItem('displayMessages', true)
+
 Есть залогиненный пользователь или нет
 
     > localStorage.setItem('userLogged', false/true)
