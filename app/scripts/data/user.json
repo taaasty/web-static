@@ -34,5 +34,6 @@
       "background": "#f37420",
       "name": "#fff"
     }
-  }
+  },
+  "features": { "chat": true }
 }
