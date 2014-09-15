@@ -24,6 +24,8 @@
   border-radius: 0 0 @messages-border-radius @messages-border-radius;
 
   .button {
+    display: block;
+    box-sizing: initial;
     padding: 3px 0;
     border-radius: 0 0 @messages-border-radius @messages-border-radius;
   }
@@ -141,6 +143,7 @@
   position: relative;
   color: @white;
   font-size: 0;
+  z-index: 5001;
   text-align: center;
   overflow: hidden;
   background-size: cover;
@@ -219,7 +222,7 @@
     border-style: solid;
     border-width: 0 20px;
     clip: rect(0, 32px, 20px, 0px);
-    z-index: -1;
+    // z-index: -1;
   }
 
   a {
@@ -383,8 +386,7 @@
   height: 100%;
   padding-top: 43px;
   position: relative;
-  display: none;
-  z-index: @zindex-messages;
+  // z-index: @zindex-messages;
   box-sizing: border-box;
 }
 
