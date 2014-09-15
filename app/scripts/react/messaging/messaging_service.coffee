@@ -39,5 +39,3 @@ class window.MessagingService
   addListenerToNewMessageInConversationArrived: (conversationId, callback) ->
 
 
-
-window.messaging = new MessagingService debug: true

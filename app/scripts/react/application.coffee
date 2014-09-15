@@ -3,6 +3,7 @@
 #= require react_ujs
 #= require react-draggable/dist/react-draggable
 #= require ./utils
+#= require ./shared/is_mobile
 #= require_tree ./entities
 #= require_tree ./services
 #= require_tree ./mixins
@@ -35,9 +36,11 @@ window.ReactApp =
     if user?.features?.chat
       messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body').get(0)
 
+      window.messaging = new MessagingService debug: true, user: user
+      window.messaging.connect
+       success: success
+       error: error
+
       if messagesContainer
         React.renderComponent MessagesPopup(), messagesContainer
 
-window.isMobile = ->
-  userAgent = navigator.userAgent || navigator.vendor || window.opera;
-  (/iPhone|iPod|iPad|Android|BlackBerry|Opera Mini|IEMobile/).test(userAgent);

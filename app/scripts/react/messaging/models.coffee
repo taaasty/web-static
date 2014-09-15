@@ -33,9 +33,11 @@ class window.ConversationStatus
 # Отсылается сервером когда он сообщает
 # что сообщение прочитано.
 class window.MessagingStatus extends DModel
-  # conversationsCount
+  # totalConversationsCount
+  # activeConversationsCount
   # lastMessageId
   # totalUnreadMessagesCount
+  # totalUnreadConversationsCount
 
 class window.MessagingMetaInfo extends DModel
   # messagingStatus = <MessagingStatus>
@@ -46,6 +48,9 @@ class window.Conversation extends DModel
   # createdAt
   # participants = [<User>, <User>]
   # status <ConversationStatus>
+  # unreadMessagesCount
+  # totalMessagesCount
+  # lastMessage <Message>
 
 ##
 ##
