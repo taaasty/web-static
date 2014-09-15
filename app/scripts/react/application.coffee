@@ -1,6 +1,7 @@
 #= require react
 #= require react-mixin-manager
 #= require react_ujs
+#= require react-draggable/dist/react-draggable
 #= require ./utils
 #= require_tree ./entities
 #= require_tree ./services
