@@ -32,7 +32,7 @@ window.ReactApp =
     if ic = document.getElementById 'js-static-inviter-container'
       React.renderComponent InviterShellBox(fixed: true), ic
 
-    if user.features.chat
+    if user?.features?.chat
       messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body').get(0)
 
       if messagesContainer
