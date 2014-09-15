@@ -49,4 +49,4 @@ window.Tasty =
         withCredentials: true
       error: (e) -> TastyNotifyController.errorResponse e
 
-    ReactApp.start()
+    ReactApp.start({ user: options.user })

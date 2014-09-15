@@ -16,7 +16,7 @@
 
 window.ReactApp =
 
-  start: ->
+  start: ({ user }) ->
     console.log 'ReactApp start'
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
@@ -31,7 +31,7 @@ window.ReactApp =
     if ic = document.getElementById 'js-static-inviter-container'
       React.renderComponent InviterShellBox(fixed: true), ic
 
-    if localStorage.getItem 'displayMessages'
+    if user.features.chat
       messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body').get(0)
 
       if messagesContainer
