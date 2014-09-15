@@ -286,4 +286,4 @@ require './settings'
 window.ReactUjs = require 'react_ujs'
 
 $ ->
-  window.Tasty.start access_token: window.tastyUser?.api_key?.access_token
+  window.Tasty.start user: window.tastyUser
