@@ -9,7 +9,7 @@ window.MessagesPopup = React.createClass
    `<Popup hasActivities={ this.hasActivities() }
            title={ MESSAGES_POPUP_TITLE }
            isDraggable={ true }
-           isLight={ true }
+           colorScheme="light"
            position={{ top: 30, left: 30 }}
            className="popup--messages"
            onClose={ this.close }>
@@ -20,13 +20,12 @@ window.MessagesPopup = React.createClass
         </div>
 
         <MessagesPopup_DialogList dialogs={ this._getMockDialogs() } />
+        <MessagesPopup_RecipientList />
+        <MessagesPopup_Thread />
 
       </div>
 
     </Popup>`
-
-    # <MessagesPopup_RecipientList />
-    # <MessagesPopup_Thread />
 
   _getMockDialogs: ->
     [{

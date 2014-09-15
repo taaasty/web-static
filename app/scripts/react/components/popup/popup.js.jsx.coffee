@@ -9,7 +9,7 @@ window.Popup = React.createClass
     title:         React.PropTypes.string.isRequired
     hasActivities: React.PropTypes.bool
     onClose:       React.PropTypes.func
-    isDark:        React.PropTypes.bool
+    colorScheme:   React.PropTypes.oneOf(['dark', 'light'])
     isDraggable:   React.PropTypes.bool
     position:      React.PropTypes.object
 
@@ -33,8 +33,8 @@ window.Popup = React.createClass
   render: ->
     classes = {
       'popup':         true
-      'popup--dark':   @props.isDark
-      'popup--light':  @props.isLight
+      'popup--dark':   @props.colorScheme is 'dark'
+      'popup--light':  @props.colorScheme is 'light'
       'popup--center': true
     }
 
