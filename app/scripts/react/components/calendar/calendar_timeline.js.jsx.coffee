@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.CalendarTimeline = CalendarTimeline = React.createClass
+window.CalendarTimeline = React.createClass
 
   propTypes:
     periods:         React.PropTypes.array.isRequired
@@ -21,5 +21,3 @@ window.CalendarTimeline = CalendarTimeline = React.createClass
                 <ul className="calendar__periods nav" ref="periodsList">{ periodNodes }</ul>
               </div>
             </div>`
-
-module.exports = CalendarTimeline

@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-module.exports = window.PopupSpinner = React.createClass
+window.PopupSpinner = React.createClass
 
   # activities содержит количество итераций, после которых спиннер будет скрыт
 
@@ -13,4 +13,4 @@ module.exports = window.PopupSpinner = React.createClass
         <span className="spinner spinner--8x8"><span className="spinner__icon"></span></span>
         </div>`
     else
-      `<div />`
+      null

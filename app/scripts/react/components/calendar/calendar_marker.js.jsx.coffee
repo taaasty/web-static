@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.CalendarMarker = CalendarMarker = React.createClass
+window.CalendarMarker = React.createClass
 
   mixins: [ReactGrammarMixin]
 
@@ -40,5 +40,3 @@ window.CalendarMarker = CalendarMarker = React.createClass
       number + ' ' + @declension(number, ['запись', 'записи', 'записей'])
     else
       'ни одной записи'
-
-module.exports = CalendarMarker

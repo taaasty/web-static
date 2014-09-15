@@ -1,10 +1,10 @@
 ###* @jsx React.DOM ###
 
-module.exports = window.PopupLayout = React.createClass
+window.PopupLayout = React.createClass
   mixins: [ReactUnmountMixin]
 
   propTypes:
-    onClose:         React.PropTypes.func
+    onClose: React.PropTypes.func
 
   handleClick: (e)->
     if $(e.target).hasClass('popup-container__cell')
@@ -25,4 +25,3 @@ module.exports = window.PopupLayout = React.createClass
         </div>
       </div>
     </div>`
-

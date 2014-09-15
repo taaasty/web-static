@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.ToolbarItem = ToolbarItem = React.createClass
+window.ToolbarItem = React.createClass
 
   propTypes:
     icon:     React.PropTypes.string.isRequired
@@ -37,5 +37,3 @@ window.ToolbarItem = ToolbarItem = React.createClass
 
   isActive: -> @props.active
   isDisabled: -> @props.disabled
-
-module.exports = ToolbarItem

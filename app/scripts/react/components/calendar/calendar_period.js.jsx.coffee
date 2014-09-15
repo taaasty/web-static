@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.CalendarPeriod = CalendarPeriod = React.createClass
+window.CalendarPeriod = React.createClass
 
   propTypes:
     period:          React.PropTypes.object.isRequired
@@ -22,5 +22,3 @@ window.CalendarPeriod = CalendarPeriod = React.createClass
               <div className="calendar__period-date">{ this.props.period.title }</div>
               <ul className="calendar__period-line">{ markerNodes }</ul>
             </li>`
-
-module.exports = CalendarPeriod

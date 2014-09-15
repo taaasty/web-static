@@ -1,4 +1,4 @@
-window.ReactGrammarMixin = ReactGrammarMixin =
+window.ReactGrammarMixin =
 
   declension: (number, titles) ->
     cases = [ 2, 0, 1, 1, 1, 2 ]
@@ -7,5 +7,3 @@ window.ReactGrammarMixin = ReactGrammarMixin =
       titles[cases[number % 10]]
     else
       titles[cases[5]]
-
-module.exports = ReactGrammarMixin
