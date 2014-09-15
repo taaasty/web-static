@@ -1,6 +1,7 @@
 require './libs'
 require './routes'
 require './shared/api-routes'
+require './shared/dmodel'
 
 require './aapp/application'
 
@@ -31,6 +32,7 @@ require './react/services/positions'
 require './react/services/entry_store'
 require './react/services/entry_normalizer'
 require './react/services/thumbor'
+require './react/services/messaging_service'
 
 require './react/mixins/unmount'
 require './react/mixins/dom_manipulations'
