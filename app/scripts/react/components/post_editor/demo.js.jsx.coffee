@@ -4,7 +4,7 @@ window.PostEditor_NewDemo = window.PostEditor_NewPost
 
 DEMO_IDS =
   text:  19299423 # 18971012
-  video: 12 # 18970969
+  video: 19306294 # 18970969
   image: 19298245 # 18971001
   quote: 11 # 18971004
 
@@ -13,7 +13,7 @@ window.PostEditor_Demo = React.createClass
 
   getInitialState: ->
     entryPrivacy: 'public'
-    entryType:    'text'
+    entryType:    'video'
     entry:        null
 
   componentDidMount: ->
