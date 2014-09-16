@@ -16,6 +16,10 @@
   .badge-style(#61cc67, @white);
 }
 
+.badge--red {
+  .badge-style(#ff0000, @white);
+}
+
 .badge--yellow {
   .badge-style(#fff627,  @black);
 }
@@ -26,4 +30,8 @@
 
 .messages-badge {
   &:extend(.badge all, .badge--yellow all);
+}
+
+.error-badge {
+  &:extend(.badge all, .badge--red all);
 }

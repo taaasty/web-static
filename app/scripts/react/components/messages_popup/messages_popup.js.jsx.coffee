@@ -1,34 +1,335 @@
 ###* @jsx React.DOM ###
 
 MESSAGES_POPUP_TITLE = 'Мои переписки'
+DIALOG_LIST_STATE    = 'dialogList'
+RECIPIENT_LIST_STATE = 'recipientList'
+THREAD_STATE         = 'thread'
 
 window.MessagesPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
 
+  getInitialState: ->
+    currentState: DIALOG_LIST_STATE
+
   render: ->
-   `<Popup hasActivities={ this.hasActivities() }
-           title={ MESSAGES_POPUP_TITLE }
-           isDraggable={ true }
-           colorScheme="light"
-           position={{ top: 30, left: 30 }}
-           className="popup--messages"
-           onClose={ this.close }>
+    switch @state.currentState
+      when DIALOG_LIST_STATE
+        content = `<MessagesPopup_DialogList dialogs={ this._getMockDialogs() }
+                                             onCreateNewThread={ this.activateRecipientListState }
+                                             onClickDialog={ this.activateThreadState } />`
+      when RECIPIENT_LIST_STATE
+        content = `<MessagesPopup_RecipientList />`
+      when THREAD_STATE
+        content = `<MessagesPopup_Thread />`
 
-      <div className="messages">
-        <div className="messages__back js-messages-back">
-          <div className="icon icon--arrow-left" />
-        </div>
+    unless @isDialogListState()
+      backButton = `<MessagesPopup_UIBackButton onClick={ this.activateDialogListState } />`
 
-        <MessagesPopup_DialogList dialogs={ this._getMockDialogs() } />
-        <MessagesPopup_RecipientList />
-        <MessagesPopup_Thread />
+    return `<Popup hasActivities={ this.hasActivities() }
+                   title={ MESSAGES_POPUP_TITLE }
+                   isDraggable={ true }
+                   colorScheme="light"
+                   position={{ top: 30, left: 30 }}
+                   className="popup--messages"
+                   onClose={ this.close }>
 
-      </div>
+              <div className="messages">
+                { backButton }
+                { content }
+              </div>
 
-    </Popup>`
+            </Popup>`
+
+  activateDialogListState:    -> @setState currentState: DIALOG_LIST_STATE
+  activateRecipientListState: -> @setState currentState: RECIPIENT_LIST_STATE
+  activateThreadState:        -> @setState currentState: THREAD_STATE
+
+  isDialogListState:    -> @state.currentState is DIALOG_LIST_STATE
+  isRecipientListState: -> @state.currentState is RECIPIENT_LIST_STATE
+  isThreadState:        -> @state.currentState is THREAD_STATE
 
   _getMockDialogs: ->
     [{
+      id: 12345
+      online: true
+      last_message: {
+        text: 'Правоспособность лица может быть поставлена под сомнение...'
+        created_at: '2014-09-16T11:35:17.000+04:00'
+        read: false
+      }
+      new_messages_count: 1
+      user: {
+        created_at: "2013-05-31T18:35:17.000+04:00"
+        id: 197430
+        is_daylog: false
+        is_female: false
+        is_privacy: false
+        name: "ffsaint"
+        private_entries_count: 4
+        public_entries_count: 33
+        slug: "ffsaint"
+        title: "ヽ(ー)ﾉ"
+        tlog_url: "http://taaasty.ru/@ffsaint"
+        total_entries_count: 38
+        updated_at: "2014-08-30T13:00:04.000+04:00"
+        userpic: {
+          default_colors: {
+            background: "#3382da"
+            name: "#ffffff"
+          }
+          large_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_large.jpg"
+          original_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_original.jpg"
+          thumb64_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_thumb64.jpg"
+          thumb128_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_thumb128.jpg"
+          thumbor_path: "userpic/5f/f2/197430_original.jpg"
+        }
+      }
+    }, {
+      id: 7654321
+      online: false
+      last_message: {
+        text: 'Еще Шпенглер в \"Закате Европы\" писал, что капиталистическое...'
+        created_at: '2014-05-27T18:58:48+04:00'
+        read: false
+      }
+      new_messages_count: 5
+      user: {
+        created_at: "2011-08-12T20:41:12.000+04:00"
+        id: 65144
+        is_daylog: false
+        is_female: true
+        is_privacy: true
+        name: "Tasani"
+        private_entries_count: 4
+        public_entries_count: 586
+        slug: "Tasani"
+        title: "Mezmerize"
+        tlog_url: "http://taaasty.ru/@Tasani"
+        total_entries_count: 602
+        updated_at: "2014-09-15T15:01:55.000+04:00"
+        userpic: {
+          default_colors: {
+            background: "#44d068"
+            name: "#ffffff"
+          }
+          large_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_large.jpg"
+          original_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_original.jpg"
+          thumb64_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_thumb64.jpg"
+          thumb128_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_thumb128.jpg"
+          thumbor_path: "userpic/8b/e5/65144_original.jpg"
+        }
+      }
+    },{
+      id: 12345
+      online: true
+      last_message: {
+        text: 'Правоспособность лица может быть поставлена под сомнение...'
+        created_at: '2014-07-16T21:24:02+04:00'
+        read: false
+      }
+      new_messages_count: 1
+      user: {
+        created_at: "2013-05-31T18:35:17.000+04:00"
+        id: 197430
+        is_daylog: false
+        is_female: false
+        is_privacy: false
+        name: "ffsaint"
+        private_entries_count: 4
+        public_entries_count: 33
+        slug: "ffsaint"
+        title: "ヽ(ー)ﾉ"
+        tlog_url: "http://taaasty.ru/@ffsaint"
+        total_entries_count: 38
+        updated_at: "2014-08-30T13:00:04.000+04:00"
+        userpic: {
+          default_colors: {
+            background: "#3382da"
+            name: "#ffffff"
+          }
+          large_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_large.jpg"
+          original_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_original.jpg"
+          thumb64_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_thumb64.jpg"
+          thumb128_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_thumb128.jpg"
+          thumbor_path: "userpic/5f/f2/197430_original.jpg"
+        }
+      }
+    }, {
+      id: 7654321
+      online: false
+      last_message: {
+        text: 'Еще Шпенглер в \"Закате Европы\" писал, что капиталистическое...'
+        created_at: '2014-05-27T18:58:48+04:00'
+        read: false
+      }
+      new_messages_count: 5
+      user: {
+        created_at: "2011-08-12T20:41:12.000+04:00"
+        id: 65144
+        is_daylog: false
+        is_female: true
+        is_privacy: true
+        name: "Tasani"
+        private_entries_count: 4
+        public_entries_count: 586
+        slug: "Tasani"
+        title: "Mezmerize"
+        tlog_url: "http://taaasty.ru/@Tasani"
+        total_entries_count: 602
+        updated_at: "2014-09-15T15:01:55.000+04:00"
+        userpic: {
+          default_colors: {
+            background: "#44d068"
+            name: "#ffffff"
+          }
+          large_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_large.jpg"
+          original_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_original.jpg"
+          thumb64_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_thumb64.jpg"
+          thumb128_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_thumb128.jpg"
+          thumbor_path: "userpic/8b/e5/65144_original.jpg"
+        }
+      }
+    },{
+      id: 12345
+      online: true
+      last_message: {
+        text: 'Правоспособность лица может быть поставлена под сомнение...'
+        created_at: '2014-07-16T21:24:02+04:00'
+        read: false
+      }
+      new_messages_count: 1
+      user: {
+        created_at: "2013-05-31T18:35:17.000+04:00"
+        id: 197430
+        is_daylog: false
+        is_female: false
+        is_privacy: false
+        name: "ffsaint"
+        private_entries_count: 4
+        public_entries_count: 33
+        slug: "ffsaint"
+        title: "ヽ(ー)ﾉ"
+        tlog_url: "http://taaasty.ru/@ffsaint"
+        total_entries_count: 38
+        updated_at: "2014-08-30T13:00:04.000+04:00"
+        userpic: {
+          default_colors: {
+            background: "#3382da"
+            name: "#ffffff"
+          }
+          large_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_large.jpg"
+          original_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_original.jpg"
+          thumb64_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_thumb64.jpg"
+          thumb128_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_thumb128.jpg"
+          thumbor_path: "userpic/5f/f2/197430_original.jpg"
+        }
+      }
+    }, {
+      id: 7654321
+      online: false
+      last_message: {
+        text: 'Еще Шпенглер в \"Закате Европы\" писал, что капиталистическое...'
+        created_at: '2014-05-27T18:58:48+04:00'
+        read: false
+      }
+      new_messages_count: 5
+      user: {
+        created_at: "2011-08-12T20:41:12.000+04:00"
+        id: 65144
+        is_daylog: false
+        is_female: true
+        is_privacy: true
+        name: "Tasani"
+        private_entries_count: 4
+        public_entries_count: 586
+        slug: "Tasani"
+        title: "Mezmerize"
+        tlog_url: "http://taaasty.ru/@Tasani"
+        total_entries_count: 602
+        updated_at: "2014-09-15T15:01:55.000+04:00"
+        userpic: {
+          default_colors: {
+            background: "#44d068"
+            name: "#ffffff"
+          }
+          large_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_large.jpg"
+          original_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_original.jpg"
+          thumb64_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_thumb64.jpg"
+          thumb128_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_thumb128.jpg"
+          thumbor_path: "userpic/8b/e5/65144_original.jpg"
+        }
+      }
+    },{
+      id: 12345
+      online: true
+      last_message: {
+        text: 'Правоспособность лица может быть поставлена под сомнение...'
+        created_at: '2014-07-16T21:24:02+04:00'
+        read: false
+      }
+      new_messages_count: 1
+      user: {
+        created_at: "2013-05-31T18:35:17.000+04:00"
+        id: 197430
+        is_daylog: false
+        is_female: false
+        is_privacy: false
+        name: "ffsaint"
+        private_entries_count: 4
+        public_entries_count: 33
+        slug: "ffsaint"
+        title: "ヽ(ー)ﾉ"
+        tlog_url: "http://taaasty.ru/@ffsaint"
+        total_entries_count: 38
+        updated_at: "2014-08-30T13:00:04.000+04:00"
+        userpic: {
+          default_colors: {
+            background: "#3382da"
+            name: "#ffffff"
+          }
+          large_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_large.jpg"
+          original_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_original.jpg"
+          thumb64_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_thumb64.jpg"
+          thumb128_url: "http://taaasty.ru/assets/userpic/5f/f2/197430_thumb128.jpg"
+          thumbor_path: "userpic/5f/f2/197430_original.jpg"
+        }
+      }
+    }, {
+      id: 7654321
+      online: false
+      last_message: {
+        text: 'Еще Шпенглер в \"Закате Европы\" писал, что капиталистическое...'
+        created_at: '2014-05-27T18:58:48+04:00'
+        read: false
+      }
+      new_messages_count: 5
+      user: {
+        created_at: "2011-08-12T20:41:12.000+04:00"
+        id: 65144
+        is_daylog: false
+        is_female: true
+        is_privacy: true
+        name: "Tasani"
+        private_entries_count: 4
+        public_entries_count: 586
+        slug: "Tasani"
+        title: "Mezmerize"
+        tlog_url: "http://taaasty.ru/@Tasani"
+        total_entries_count: 602
+        updated_at: "2014-09-15T15:01:55.000+04:00"
+        userpic: {
+          default_colors: {
+            background: "#44d068"
+            name: "#ffffff"
+          }
+          large_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_large.jpg"
+          original_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_original.jpg"
+          thumb64_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_thumb64.jpg"
+          thumb128_url: "http://taaasty.ru/assets/userpic/8b/e5/65144_thumb128.jpg"
+          thumbor_path: "userpic/8b/e5/65144_original.jpg"
+        }
+      }
+    },{
       id: 12345
       online: true
       last_message: {

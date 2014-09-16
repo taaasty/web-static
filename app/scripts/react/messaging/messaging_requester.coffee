@@ -1,23 +1,26 @@
 class window.MessagingRequester
-  connectUrl:                -> '/connect'
-  conversationUrl:  (convId) -> "/conversation/:#{convId}"
-  newConversationUrl: (slug) -> "/conversation/new/#{slug}"
-  postMessageUrl:   (convId) -> "/conversation/:#{convId}/messages/"
-  markMessageAsReadUrl: (msgId) -> "/messages/#{msgId}/read"
-  conversationOpenUrl: (convId) -> "/conversation/#{convId}/open/"
 
-  conversationMessagesUrl: (convId) -> "/conversation/#{convId}/messages"
+  connectUrl:                    -> '/connect'
+  conversationUrl:      (convId) -> "/conversation/:#{ convId }"
+  newConversationUrl:     (slug) -> "/conversation/new/#{ slug }"
+  postMessageUrl:       (convId) -> "/conversation/:#{ convId }/messages/"
+  markMessageAsReadUrl:  (msgId) -> "/messages/#{ msgId }/read"
+  conversationOpenUrl:  (convId) -> "/conversation/#{ convId }/open/"
 
-  constructor: ({@access_token}) ->
+  conversationMessagesUrl: (convId) -> "/conversation/#{ convId }/messages"
 
-  makeConnect:   ({success, error})->
-    $.ajax connectUrl(),
+  constructor: ({ @access_token }) ->
+
+  makeConnect: ({ success, error }) ->
+    $.ajax {
+      url: @connectUrl()
       method: 'POST'
       success: success
-      error:   error
+      error: error
+    }
 
   # messagesLimit - сколько последних сообщений отдать
-  mekeConversationRequest: (convId, messagesLimit) ->
+  makeConversationRequest: (convId, messagesLimit) ->
     $.ajax conversationUrl(convId),
       method: 'POST'
       data:
@@ -35,7 +38,7 @@ class window.MessagingRequester
       data:
         content: content
 
-  markMessageAsRead: (msgId)
+  markMessageAsRead: (msgId) ->
     $.ajax markMessageAsReadUrl(msgId),
       method: 'POST'
 

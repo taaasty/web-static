@@ -1,26 +1,33 @@
 ###* @jsx React.DOM ###
 
 window.MessagesPopup_DialogListItem = React.createClass
+  mixins: [ReactGrammarMixin]
 
   propTypes:
     user:             React.PropTypes.object.isRequired
+    online:           React.PropTypes.bool
     lastMessage:      React.PropTypes.object.isRequired
     newMessagesCount: React.PropTypes.number
+    onClick:          React.PropTypes.func.isRequired
 
   render: ->
-   `<div className="messages__dialog js-messages-dialog">
-      { this._getNewMessagesCount() }
-      <span className="messages__user-avatar">
-        <span className="avatar" style={{ 'background-image': 'url(images/avatars/ava_6.png)' }}>
-          <img className="avatar__img" src="images/avatars/ava_6.png" alt="vladaserb" />
-        </span>
-        <span className="messages__user-online"></span>
-      </span>
-      <div className="messages__dialog-text">
-        <span className="messages__user-name">vladaserb</span> { this.props.lastMessage.text }
-      </div>
-      <span className="messages__date">20 минут назад</span>
-    </div>`
+    online = `<span className="messages__user-online" />` if @props.online
+
+    return `<div className="messages__dialog"
+                 onClick={ this.props.onClick }>
+              { this._getNewMessagesCount() }
+
+              <span className="messages__user-avatar">
+                <UserAvatar user={ this.props.user } size={ 35 } />
+                { online }
+              </span>
+
+              <div className="messages__dialog-text">
+                <span className="messages__user-name">{ this.props.user.slug }</span> { this.props.lastMessage.text }
+              </div>
+
+              <span className="messages__date">{ this.timeAgo(this.props.lastMessage.created_at) }</span>
+            </div>`
 
   _getNewMessagesCount: ->
     if @props.newMessagesCount > 0
