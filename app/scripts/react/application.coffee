@@ -3,7 +3,6 @@
 #= require react_ujs
 #= require react-draggable/dist/react-draggable
 #= require ./utils
-#= require ./shared/is_mobile
 #= require_tree ./entities
 #= require_tree ./services
 #= require_tree ./mixins
