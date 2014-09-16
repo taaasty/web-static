@@ -26,12 +26,17 @@ class window.MessagingService
       .done success
       .fail error
 
+  close: ->
+    # TODO unbind all
+
   # принимает обновленный <MessagingStatus>
+  # подписывается на него bubble
   bindMessagingStatusUpdate: (callback) ->
     if @mock
       setInterval (-> callback MessagingMocker.stubMessagingStatus ), 1000
 
   # newConversationCallback - принимает <Conversation>
+  # подписывается на него список бесед
   bindIncomingConversation: (callback) ->
       setInterval (-> callback MessagingMocker.stubIncomingConversation ), 2000
 
