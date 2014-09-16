@@ -10,7 +10,6 @@ window.Search = React.createClass
     query:     React.PropTypes.string
 
   getInitialState: ->
-    searchUrl:    @props.searchUrl || window.location
     currentState: if @props.query then OPENED else CLOSED
 
   render: ->
@@ -23,27 +22,32 @@ window.Search = React.createClass
                            query={ this.props.query }
                            onCancel={ this.closeSearch }
                            onSubmit={ this.submit } />
-              <SearchButton onClick={ this.onButtonClick } />
+              <SearchButton onClick={ this.handleButtonClick } />
             </div>`
 
-  openSearch:  -> @setState currentState: OPENED
+  openSearch: ->
+    @setState currentState: OPENED
+
+    @refs.searchField.refs.searchInput.getDOMNode().focus()
   closeSearch: -> @setState currentState: CLOSED
 
   submit: ->
-    query = @refs.searchField.refs.searchField.getDOMNode().value
+    query = @refs.searchField.refs.searchInput.getDOMNode().value
     return if query.length == 0
 
-    url   = @_prepareSearchUrl query
+    url = @_prepareSearchUrl query
 
     # TODO Рисовать какой-то спиннер или прогресс, например полоску наверху
-    #
 
     window.location = url
 
   isOpen: -> @state.currentState != CLOSED
 
   _prepareSearchUrl: (query) ->
-    @state.searchUrl + '?q=' + query
+    url = @props.searchUrl || window.location.origin + window.location.pathname
+    url + '?q=' + query
 
-  onButtonClick: ->
+  handleButtonClick: (e) ->
+    e.stopPropagation()
+
     if @isOpen() then @submit() else @openSearch()

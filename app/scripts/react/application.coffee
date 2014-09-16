@@ -36,10 +36,10 @@ window.ReactApp =
     if user?.features?.chat
       messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body').get(0)
 
-      window.messaging = new MessagingService debug: true, user: user
-      window.messaging.connect
-       success: success
-       error: error
+      # window.messaging = new MessagingService debug: true, user: user
+      # window.messaging.connect
+      #  success: success
+      #  error: error
 
       if messagesContainer
         React.renderComponent MessagesPopup(), messagesContainer
