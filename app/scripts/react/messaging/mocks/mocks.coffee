@@ -18,7 +18,7 @@ window.MessagingMocker=
       status: @stubConversationStatus()
       messages: [@stubIncomingMessage(), @stubOutgoingMessage(), @stubIncomingMessage(), @stubOutgoingMessage()]
 
-  stubIncomingMessage:
+  stubIncomingMessage: ->
     new Message
       createdAt: '2014-09-09'
       senderId: 1
@@ -43,20 +43,3 @@ window.MessagingMocker=
       id: @userId
       name: @userName
       slug: @userName
-
-class window.Conversation extends DModel
-  # id
-  # createdAt
-  # participants = [<User>, <User>]
-  # status <ConversationStatus>
-  # unreadMessagesCount
-  # totalMessagesCount
-  # lastMessage <Message>
-
-    @
-     
-  # totalConversationsCount
-  # activeConversationsCount
-  # lastMessageId
-  # totalUnreadMessagesCount
-  # totalUnreadConversationsCount
