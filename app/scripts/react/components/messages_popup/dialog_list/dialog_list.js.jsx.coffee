@@ -3,22 +3,44 @@
 window.MessagesPopup_DialogList = React.createClass
 
   propTypes:
-    dialogs: React.PropTypes.array
+    dialogs:           React.PropTypes.array
+    onClickDialog:     React.PropTypes.func.isRequired
+    onCreateNewThread: React.PropTypes.func.isRequired
+
+  componentDidMount: ->
+    @$scroller = $( @refs.scroller.getDOMNode() )
+
+    @scroller = @$scroller.baron
+      scroller: ".js-scroller-pane"
+      bar:      ".js-scroller-bar"
+      track:    ".js-scroller-track"
+      barOnCls: "scroller--tracked"
+      pause:    0
+
+  componentDidUpdate: ->
+    @scroller.update()
+    @$scroller.trigger("sizeChange").trigger('sizeChange')
+
+  componentWillUnmount: ->
+    @scroller.dispose()
+    @$scroller = @scroller = null
 
   render: ->
-    dialogListItems = @props.dialogs.map (dialogListItem) ->
+    that = @
+    dialogListItems = @props.dialogs.map (dialogListItem, i) ->
       `<MessagesPopup_DialogListItem user={ dialogListItem.user }
+                                     online={ dialogListItem.online }
                                      lastMessage={ dialogListItem.last_message }
                                      newMessagesCount={ dialogListItem.new_messages_count }
-                                     key={ dialogListItem.id } />`
+                                     onClick={ that.props.onClickDialog }
+                                     key={ dialogListItem.id + i } />`
 
-    return `<div data-section="dialogs"
-                 data-title="Мои переписки"
-                 className="messages__section messages__section--dialogs js-messages-section">
+    return `<div className="messages__section messages__section--dialogs">
               <div className="messages__body">
-                <div className="scroller scroller--dark js-scroller">
+                <div ref="scroller"
+                     className="scroller scroller--dark">
                   <div className="scroller__pane js-scroller-pane">
-                    <div className="messages__dialogs js-messages-dialogs">
+                    <div className="messages__dialogs">
                       { dialogListItems }
                     </div>
                   </div>
@@ -28,10 +50,6 @@ window.MessagesPopup_DialogList = React.createClass
                 </div>
               </div>
               <footer className="messages__footer">
-                <span className="button button--green button--100p js-messages-add">
-                  <span className="button__inner">
-                    <span className="button__text">Cоздать переписку</span>
-                  </span>
-                </span>
+                <MessagesPopup_UICreateNewThreadButton onClick={ this.props.onCreateNewThread } />
               </footer>
             </div>`
