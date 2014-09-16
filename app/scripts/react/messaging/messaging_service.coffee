@@ -1,16 +1,17 @@
 class window.MessagingService
 
-  routeNewMessage:  ({ conversationId, messageId }) -> "#{ conversationId }/message/#{ messageId }"
-  routeReadMessage: ({ conversationId, messageId }) -> "#{ conversationId }/read/#{ messageId }"
-  routeStatus: -> '/status'
-  routeConversationStatus:    ({ conversationId }) -> "#{ converastionId }/status"
-  routeConversationPayloaded: ({ conversationId }) -> "#{ conversationId }/payload"
+  #routeNewMessage:  ({ conversationId, messageId }) -> "#{ conversationId }/message/#{ messageId }"
+  #routeReadMessage: ({ conversationId, messageId }) -> "#{ conversationId }/read/#{ messageId }"
+  #routeStatus: -> '/status'
+  #routeConversationStatus:    ({ conversationId }) -> "#{ converastionId }/status"
+  #routeConversationPayloaded: ({ conversationId }) -> "#{ conversationId }/payload"
 
   # Возвращает
   # unread
   conversationMetaRoute: ({ conversationId }) -> "#{ conversationId }:meta"
 
-  constructor: ({ @debug, @user }) ->
+  constructor: ({ @debug, @user, @mock }) ->
+    @mock = true
     # _.extend @, new EventEmitter()
 
     @requester = new MockMessagingRequester(access_token: @user.api_key.access_token)
@@ -25,15 +26,32 @@ class window.MessagingService
       .done success
       .fail error
 
-  requestConversation: (conversationId, callback, messagesLimit) ->
-    @addListener @routeConversation(conversationId), callback
-    @requester.makeConversationRequest(messagesLimit)
+  # принимает обновленный <MessagingStatus>
+  bindMessagingStatusUpdate: (callback) ->
+    if @mock
+      setInterval (-> callback MessagingMocker.stubMessagingStatus ), 1000
 
-  newConversation: -> @requester.newConversation arguments
-  postMessage:     -> @requester.postMessage arguments
-  markMessageAsRead: (messageId) -> @requester.markMessageAsRead messageId
+  # newConversationCallback - принимает <Conversation>
+  bindIncomingConversation: (callback) ->
+      setInterval (-> callback MessagingMocker.stubIncomingConversation ), 2000
 
-  # Мессенджер подписывается на все новые сообщения, чтобы
-  addListenerToFreshMessagesCount: (callback) ->
+  postNewConversation: ({recipientSlug, messageContent, success, error}) ->
+    @requester.makeNewConversation()
+      .done success
+      .fail error
 
-  addListenerToNewMessageInConversationArrived: (conversationId, callback) ->
+  postNewMessageInConversation: ({conversationId, recipientId, messageContent}) ->
+
+
+  #requestConversation: (conversationId, callback, messagesLimit) ->
+    #@addListener @routeConversation(conversationId), callback
+    #@requester.makeConversationRequest(messagesLimit)
+
+  #newConversation: -> @requester.newConversation arguments
+  #postMessage:     -> @requester.postMessage arguments
+  #markMessageAsRead: (messageId) -> @requester.markMessageAsRead messageId
+
+  ## Мессенджер подписывается на все новые сообщения, чтобы
+  #addListenerToFreshMessagesCount: (callback) ->
+
+  #addListenerToNewMessageInConversationArrived: (conversationId, callback) ->

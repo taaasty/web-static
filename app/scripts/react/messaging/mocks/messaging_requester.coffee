@@ -16,3 +16,14 @@ class window.MockMessagingRequester
     , 3000
 
     dfd.promise()
+
+  makeNewConversation: ->
+    dfd = $.Deferred()
+
+    console.info "Создаем новую переписку"
+    setTimeout ->
+      dfd.resolve MessagingMocker.stubIncomingConversation
+    , 500
+
+    dfd.promise()
+

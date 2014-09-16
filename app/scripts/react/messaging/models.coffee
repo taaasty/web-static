@@ -6,12 +6,12 @@ class window.User extends DModel
 
 # Модели генерируемые клиентом
 #
-class window.NewMessage extends DModel
+class window.OutgoingMessage extends DModel
   # conversationId
   # recipient_id
   # messageContent 
 
-class window.NewConversationMessage extends DModel
+class window.OutgoingConversation extends DModel
   # recipientSlug
   # messageContent 
 
@@ -33,24 +33,32 @@ class window.ConversationStatus
 # Отсылается сервером когда он сообщает
 # что сообщение прочитано.
 class window.MessagingStatus extends DModel
+  # totalUnreadConversationsCount
+  #
+  # В будущем:
   # totalConversationsCount
   # activeConversationsCount
   # lastMessageId
   # totalUnreadMessagesCount
-  # totalUnreadConversationsCount
+  #
 
 class window.MessagingMetaInfo extends DModel
   # messagingStatus = <MessagingStatus>
   # activeConversations = [<Conversation>,..] - список действующих бесед
 
-class window.Conversation extends DModel
+class window.ConversationDesign extends DModel
+  # backgroundUrl
+  # userpic
+
+
+class window.IncomingConversation extends DModel
   # id
   # createdAt
+  # updatedAt
+  # design = <ConversationDesign>
   # participants = [<User>, <User>]
   # status <ConversationStatus>
-  # unreadMessagesCount
-  # totalMessagesCount
-  # lastMessage <Message>
+  # messages [<Message>]
 
 ##
 ##

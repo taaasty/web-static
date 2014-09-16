@@ -17,6 +17,7 @@ require './react/services/entry_store'
 require './react/services/entry_normalizer'
 require './react/services/thumbor'
 
+require './react/messaging/mocks/mocks'
 require './react/messaging/mocks/messaging_requester'
 require './react/messaging/messaging_service'
 require './react/messaging/messaging_requester'
