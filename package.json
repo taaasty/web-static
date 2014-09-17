@@ -34,6 +34,7 @@
     "gulp-coffee": "~1.4.1",
     "gulp-bundle": "git+ssh://git@github.com:bleech/gulp-bundle.git",
     "gulp-browserify": "~0.4.6",
+    "flux": "~2.0.1",
     "reactify": "~0.10.0",
     "through2": "latest",
     "coffeeify": "^0.6.0",
