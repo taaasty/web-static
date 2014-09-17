@@ -6,14 +6,15 @@ class window.MockMessagingRequester
 
   makeConnect: ->
     dfd = $.Deferred()
+    @error ||= 0
+    @error += 1
 
     console.info "Соединяемся с сервером сообщений. Url: #{ @connectUrl() }"
-    setTimeout ->
-      dfd.resolve {
-        status:              new MessagingStatus()
-        activeConversations: [new Conversation(), new Conversation()]
-      }
-    , 3000
+
+    if @error % 2 == 0
+      setTimeout (-> dfd.resolve MessagingMocker.stubMessagingMetaInfo()), 2000
+    else
+      setTimeout (-> dfd.reject {errorMessage: 'Ошибка установки соединения!'}), 2000
 
     dfd.promise()
 
@@ -22,8 +23,7 @@ class window.MockMessagingRequester
 
     console.info "Создаем новую переписку"
     setTimeout ->
-      dfd.resolve MessagingMocker.stubIncomingConversation
-    , 500
+      dfd.resolve MessagingMocker.stubIncomingConversation()
+    , 1000
 
     dfd.promise()
-

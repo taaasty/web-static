@@ -11,6 +11,8 @@ window.IndicatorsToolbar_Messages = React.createClass
 
   getInitialState: ->
     currentState: LOADING_STATE
+    totalUnreadConversationsCount: ''
+    activeConversations: []
 
   componentDidMount: ->
     @messagingService = new MessagingService {
@@ -18,36 +20,48 @@ window.IndicatorsToolbar_Messages = React.createClass
       user:  @props.user
     }
 
-    @messagingService.connect
-      success: (metaInfo) =>
-        console.log metaInfo
-        console.log 'У нас всё загрузилось'
-      error: =>
-        console.log 'ошибка загрузки=('
+    @connectToMessagingService()
 
   componentWillUnmount: ->
     @messagingService = null
 
   render: ->
-    # if @state.isLoading
-    #   content = `<Spinner size={ 15 } />`
-    # else if @state.isError
-    #   content = `<span className="error-badge">O_o</span>`
-    # else
-    
-    content = `<span className="messages-badge">15</span>`
-        
+    switch @state.currentState
+      when LOADING_STATE then content = `<Spinner size={ 15 } />`
+      when ERROR_STATE   then content = `<span className="error-badge">O_o</span>`
+      when LOADED_STATE  then content = `<span className="messages-badge">
+                                           { this.state.totalUnreadConversationsCount }
+                                         </span>`
+
     return `<div className="toolbar__indicator"
                  onClick={ this.handleClick }>
               { content }
             </div>`
 
-  handleClick: ->
-    @setState isLoading: true, isError: false
+  connectToMessagingService: ->
+    @setState(currentState: LOADING_STATE) unless @state.currentState is 'LOADING_STATE'
 
-    setTimeout (=>
+    @messagingService.connect
+      success: (metaInfo) =>
+        @setState {
+          currentState: LOADED_STATE
+          totalUnreadConversationsCount: metaInfo.status.totalUnreadConversationsCount
+          activeConversations: metaInfo.activeConversations
+        }
+        console.info 'Соединение с сервером сообщений установлено', metaInfo
+      error: =>
+        @setState(currentState: ERROR_STATE)
+        console.error 'Ошибка при соединении с сервером сообщений'
+
+    @messagingService.bindMessagingStatusUpdate (messagingStatus) =>
+      console.info 'Обновился messagingStatus', messagingStatus
       @setState {
-        isLoading: false
-        isError: false
+        currentState: LOADED_STATE
+        totalUnreadConversationsCount: messagingStatus.totalUnreadConversationsCount
       }
-    ), 4000
+
+  handleClick: ->
+    switch @state.currentState
+      when LOADED_STATE then console.log 'Открываем попап с сообщениями'
+      when ERROR_STATE  then @connectToMessagingService()
+      else null
