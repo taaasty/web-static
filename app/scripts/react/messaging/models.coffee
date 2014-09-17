@@ -76,4 +76,3 @@ class window.Message extends DModel
   # contentHtml
   # createdAt
   # readAt  - nil если еще не прочитано
-

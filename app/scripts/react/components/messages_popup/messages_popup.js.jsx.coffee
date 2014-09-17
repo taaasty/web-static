@@ -1,29 +1,29 @@
 ###* @jsx React.DOM ###
 
-MESSAGES_POPUP_TITLE = 'Мои переписки'
-DIALOG_LIST_STATE    = 'dialogList'
-RECIPIENT_LIST_STATE = 'recipientList'
-THREAD_STATE         = 'thread'
+MESSAGES_POPUP_TITLE    = 'Мои переписки'
+CONVERSATION_LIST_STATE = 'conversationList'
+RECIPIENT_LIST_STATE    = 'recipientList'
+THREAD_STATE            = 'thread'
 
 window.MessagesPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
 
   getInitialState: ->
-    currentState: DIALOG_LIST_STATE
+    currentState: CONVERSATION_LIST_STATE
 
   render: ->
     switch @state.currentState
-      when DIALOG_LIST_STATE
-        content = `<MessagesPopup_DialogList dialogs={ this._getMockDialogs() }
-                                             onCreateNewThread={ this.activateRecipientListState }
-                                             onClickDialog={ this.activateThreadState } />`
+      when CONVERSATION_LIST_STATE
+        content = `<MessagesPopup_ConversationList conversations={ this._getMockConversations() }
+                                                   onCreateNewConversation={ this.activateRecipientListState }
+                                                   onClickConversation={ this.activateThreadState } />`
       when RECIPIENT_LIST_STATE
         content = `<MessagesPopup_RecipientList />`
       when THREAD_STATE
         content = `<MessagesPopup_Thread />`
 
-    unless @isDialogListState()
-      backButton = `<MessagesPopup_UIBackButton onClick={ this.activateDialogListState } />`
+    unless @isConversationState()
+      backButton = `<MessagesPopup_UIBackButton onClick={ this.activateConversationState } />`
 
     return `<Popup hasActivities={ this.hasActivities() }
                    title={ MESSAGES_POPUP_TITLE }
@@ -40,15 +40,15 @@ window.MessagesPopup = React.createClass
 
             </Popup>`
 
-  activateDialogListState:    -> @setState currentState: DIALOG_LIST_STATE
+  activateConversationState:  -> @setState currentState: CONVERSATION_LIST_STATE
   activateRecipientListState: -> @setState currentState: RECIPIENT_LIST_STATE
   activateThreadState:        -> @setState currentState: THREAD_STATE
 
-  isDialogListState:    -> @state.currentState is DIALOG_LIST_STATE
+  isConversationState:  -> @state.currentState is CONVERSATION_LIST_STATE
   isRecipientListState: -> @state.currentState is RECIPIENT_LIST_STATE
   isThreadState:        -> @state.currentState is THREAD_STATE
 
-  _getMockDialogs: ->
+  _getMockConversations: ->
     [{
       id: 12345
       online: true

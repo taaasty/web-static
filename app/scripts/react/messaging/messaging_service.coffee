@@ -8,7 +8,7 @@ class window.MessagingService
 
   # Возвращает
   # unread
-  conversationMetaRoute: ({ conversationId }) -> "#{ conversationId }:meta"
+  # conversationMetaRoute: ({ conversationId }) -> "#{ conversationId }:meta"
 
   constructor: ({ @debug, @user, @mock }) ->
     @mock = true
@@ -33,12 +33,12 @@ class window.MessagingService
   # подписывается на него bubble
   bindMessagingStatusUpdate: (callback) ->
     if @mock
-      setInterval (-> callback MessagingMocker.stubMessagingStatus ), 1000
+      setInterval (-> callback MessagingMocker.stubMessagingStatus() ), 5000
 
   # newConversationCallback - принимает <Conversation>
   # подписывается на него список бесед
   bindIncomingConversation: (callback) ->
-      setInterval (-> callback MessagingMocker.stubIncomingConversation ), 2000
+      setInterval (-> callback MessagingMocker.stubIncomingConversation() ), 2000
 
   postNewConversation: ({recipientSlug, messageContent, success, error}) ->
     @requester.makeNewConversation()
@@ -46,7 +46,6 @@ class window.MessagingService
       .fail error
 
   postNewMessageInConversation: ({conversationId, recipientId, messageContent}) ->
-
 
   #requestConversation: (conversationId, callback, messagesLimit) ->
     #@addListener @routeConversation(conversationId), callback

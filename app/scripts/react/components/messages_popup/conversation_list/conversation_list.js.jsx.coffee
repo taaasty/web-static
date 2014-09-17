@@ -1,11 +1,11 @@
 ###* @jsx React.DOM ###
 
-window.MessagesPopup_DialogList = React.createClass
+window.MessagesPopup_ConversationList = React.createClass
 
   propTypes:
-    dialogs:           React.PropTypes.array
-    onClickDialog:     React.PropTypes.func.isRequired
-    onCreateNewThread: React.PropTypes.func.isRequired
+    conversations:           React.PropTypes.array
+    onClickConversation:     React.PropTypes.func.isRequired
+    onCreateNewConversation: React.PropTypes.func.isRequired
 
   componentDidMount: ->
     @$scroller = $( @refs.scroller.getDOMNode() )
@@ -19,7 +19,7 @@ window.MessagesPopup_DialogList = React.createClass
 
   componentDidUpdate: ->
     @scroller.update()
-    @$scroller.trigger("sizeChange").trigger('sizeChange')
+    @$scroller.trigger('sizeChange').trigger 'sizeChange'
 
   componentWillUnmount: ->
     @scroller.dispose()
@@ -27,13 +27,13 @@ window.MessagesPopup_DialogList = React.createClass
 
   render: ->
     that = @
-    dialogListItems = @props.dialogs.map (dialogListItem, i) ->
-      `<MessagesPopup_DialogListItem user={ dialogListItem.user }
-                                     online={ dialogListItem.online }
-                                     lastMessage={ dialogListItem.last_message }
-                                     newMessagesCount={ dialogListItem.new_messages_count }
-                                     onClick={ that.props.onClickDialog }
-                                     key={ dialogListItem.id + i } />`
+    conversationListItems = @props.conversations.map (conversationListItem, i) ->
+      `<MessagesPopup_ConversationListItem user={ conversationListItem.user }
+                                     online={ conversationListItem.online }
+                                     lastMessage={ conversationListItem.last_message }
+                                     newMessagesCount={ conversationListItem.new_messages_count }
+                                     onClick={ that.props.onClickConversation }
+                                     key={ conversationListItem.id + i } />`
 
     return `<div className="messages__section messages__section--dialogs">
               <div className="messages__body">
@@ -41,7 +41,7 @@ window.MessagesPopup_DialogList = React.createClass
                      className="scroller scroller--dark">
                   <div className="scroller__pane js-scroller-pane">
                     <div className="messages__dialogs">
-                      { dialogListItems }
+                      { conversationListItems }
                     </div>
                   </div>
                   <div className="scroller__track js-scroller-track">
@@ -50,6 +50,6 @@ window.MessagesPopup_DialogList = React.createClass
                 </div>
               </div>
               <footer className="messages__footer">
-                <MessagesPopup_UICreateNewThreadButton onClick={ this.props.onCreateNewThread } />
+                <MessagesPopup_UICreateNewConversationButton onClick={ this.props.onCreateNewConversation } />
               </footer>
             </div>`

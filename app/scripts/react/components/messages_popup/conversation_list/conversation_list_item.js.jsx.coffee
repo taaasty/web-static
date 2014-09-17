@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.MessagesPopup_DialogListItem = React.createClass
+window.MessagesPopup_ConversationListItem = React.createClass
   mixins: [ReactGrammarMixin]
 
   propTypes:
