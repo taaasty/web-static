@@ -18,8 +18,10 @@ require './react/services/entry_normalizer'
 require './react/services/thumbor'
 
 require './react/dispatchers/messaging'
+require './react/dispatchers/current_user'
 
 require './react/stores/messaging_status'
+require './react/stores/current_user'
 
 require './react/messaging/mocks/mocks'
 require './react/messaging/mocks/messaging_requester'
@@ -284,4 +286,8 @@ require './settings'
 window.ReactUjs = require 'react_ujs'
 
 $ ->
-  window.Tasty.start user: window.tastyUser
+  if localStorage.getItem('userLogged') == "true"
+    window.Tasty.start user: SomeUser
+  else
+    console.debug? 'Без пользователя'
+    window.Tasty.start()
