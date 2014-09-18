@@ -9,8 +9,8 @@ class window.MessagingServiceMock extends window.MessagingService
     @requester.makeConnect()
       .done (metaInfo) =>
         MessagingDispatcher.handleServerAction {
-          type: 'totalUnreadConversationUpdate'
-          count: metaInfo.status.totalUnreadConversationsCount
+          type: 'unreadConversationUpdate'
+          count: metaInfo.status.unreadConversationsCount
         }
         @bindMessagingStatusUpdate()
         connectSuccess()
@@ -19,8 +19,8 @@ class window.MessagingServiceMock extends window.MessagingService
   bindMessagingStatusUpdate: ->
     setInterval (->
       MessagingDispatcher.handleViewAction {
-          type: 'totalUnreadConversationUpdate'
-          count: MessagingMocker.stubMessagingMetaInfo().status.totalUnreadConversationsCount
+          type: 'unreadConversationUpdate'
+          count: MessagingMocker.stubMessagingMetaInfo().status.unreadConversationsCount
       }
     ), 5000
 

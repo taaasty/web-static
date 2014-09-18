@@ -3,9 +3,11 @@
 window.MessagesPopup_ConversationList = React.createClass
 
   propTypes:
-    conversations:           React.PropTypes.array
     onClickConversation:     React.PropTypes.func.isRequired
     onCreateNewConversation: React.PropTypes.func.isRequired
+
+  getInitialState: ->
+    @getStateFromStores()
 
   componentDidMount: ->
     @$scroller = $( @refs.scroller.getDOMNode() )
@@ -17,9 +19,12 @@ window.MessagesPopup_ConversationList = React.createClass
       barOnCls: "scroller--tracked"
       pause:    0
 
+    ConversationsStore.addChangeListener @getStateFromStores
+
   componentDidUpdate: ->
     @scroller.update()
     @$scroller.trigger('sizeChange').trigger 'sizeChange'
+    ConversationsStore.removeChangeListener @getStateFromStores
 
   componentWillUnmount: ->
     @scroller.dispose()
@@ -27,7 +32,7 @@ window.MessagesPopup_ConversationList = React.createClass
 
   render: ->
     that = @
-    conversations = @props.conversations.map (conversation, i) ->
+    conversations = @state.activeConversations.map (conversation, i) ->
       `<MessagesPopup_ConversationListItem conversation={ conversation }
                                            onClick={ that.props.onClickConversation }
                                            key={ conversation.id } />`
@@ -50,3 +55,6 @@ window.MessagesPopup_ConversationList = React.createClass
                 <MessagesPopup_UICreateNewConversationButton onClick={ this.props.onCreateNewConversation } />
               </footer>
             </div>`
+
+  getStateFromStores: ->
+    activeConversations: ConversationsStore.getActiveConversations()

@@ -8,12 +8,13 @@ window.IndicatorsToolbar_Messages = React.createClass
 
   getInitialState: ->
     currentState: LOADING_STATE
-    totalUnreadConversationsCount: '?'
+    unreadConversationsCount: '?'
     isPopupShown: false
 
   getStateFromStores: ->
     currentState: LOADED_STATE
-    totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
+    unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount()
+    activeConversationsCount: MessagingStatusStore.getActiveConversationsCount()
 
   componentDidMount: ->
     MessagingStatusStore.addConnectSuccessCallback @connectSuccess
@@ -25,7 +26,7 @@ window.IndicatorsToolbar_Messages = React.createClass
       when LOADING_STATE then content = `<Spinner size={ 15 } />`
       when ERROR_STATE   then content = `<span className="error-badge">O_o</span>`
       when LOADED_STATE  then content = `<span className="messages-badge">
-                                           { this.state.totalUnreadConversationsCount }
+                                           { this.state.unreadConversationsCount }
                                          </span>`
 
     return `<div className="toolbar__indicator"
@@ -40,7 +41,9 @@ window.IndicatorsToolbar_Messages = React.createClass
     @setState currentState: LOADED_STATE
 
   statusUpdate: ->
-    @setState totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
+    @setState
+      unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount()
+      activeConversationsCount: MessagingStatusStore.getActiveConversationsCount()
 
   handleClick: ->
     switch @state.currentState

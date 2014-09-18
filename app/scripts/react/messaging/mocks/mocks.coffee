@@ -13,10 +13,10 @@ window.MessagingMocker =
     }
 
   stubMessagingStatus: ->
-    @totalUnreadConversationsCount ||= 0
-    @totalUnreadConversationsCount += 1
+    @unreadConversationsCount ||= 0
+    @unreadConversationsCount += 1
 
-    new MessagingStatus { @totalUnreadConversationsCount }
+    new MessagingStatus { @unreadConversationsCount }
 
   stubIncomingConversation: ->
     @conversationId ||= 0

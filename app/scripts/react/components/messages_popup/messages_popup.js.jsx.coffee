@@ -9,22 +9,12 @@ window.MessagesPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
 
   getInitialState: ->
-    state = _.extend @getStateFromStores(), {
-      currentState: CONVERSATION_LIST_STATE
-    }
-    state
-
-  componentDidMount: ->
-    ConversationsStore.addChangeListener @_onChange
-
-  componentWillUnmount: ->
-    ConversationsStore.removeChangeListener @_onChange
+    currentState: CONVERSATION_LIST_STATE
 
   render: ->
     switch @state.currentState
       when CONVERSATION_LIST_STATE
-        content = `<MessagesPopup_ConversationList conversations={ this.state.conversations }
-                                                   onCreateNewConversation={ this.activateRecipientListState }
+        content = `<MessagesPopup_ConversationList onCreateNewConversation={ this.activateRecipientListState }
                                                    onClickConversation={ this.activateThreadState } />`
       when RECIPIENT_LIST_STATE
         content = `<MessagesPopup_RecipientList onNewConversation={ this.postNewConversation } />`
@@ -62,16 +52,6 @@ window.MessagesPopup = React.createClass
   isConversationState:  -> @state.currentState is CONVERSATION_LIST_STATE
   isRecipientListState: -> @state.currentState is RECIPIENT_LIST_STATE
   isThreadState:        -> @state.currentState is THREAD_STATE
-
-  getStateFromStores: ->
-    return {
-      conversations: ConversationsStore.getAllConversations()
-    }
-
-  # /**
-  #  * Event handler for 'change' events coming from the MessagingStatusStore
-  #  */
-  _onChange: -> @setState @getStateFromStores()
 
 # Статика
 #

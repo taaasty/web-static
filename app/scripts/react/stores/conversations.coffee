@@ -16,7 +16,16 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
   addConversation: (newConversation) ->
     _conversations.unshift newConversation
 
-  getAllConversations: -> _conversations
+  getActiveConversations: -> _conversations
+
+  updateConversations: (activeConversations) ->
+    _conversations = activeConversations
+
+  getConversation: (id) ->
+    # TODO
+  
+  getMessagesOfConversation: (id) ->
+    # TODO
 
 }
 
@@ -28,3 +37,8 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
       ConversationsStore.addConversation action.conversation
       ConversationsStore.emitChange()
       break
+    when 'updateActiveConversations'
+      ConversationsStore.updateConversations action.activeConversations
+      ConversationsStore.emitChange()
+      break
+
