@@ -12,7 +12,7 @@ window.IndicatorsToolbar_Messages = React.createClass
   getInitialState: ->
     currentState: LOADING_STATE
     totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
-    showMessagesPopup: false
+    showMessagesPopup: localStorage.getItem('autoShowMessagesPopup')
 
   getStateFromStores: ->
     return {
