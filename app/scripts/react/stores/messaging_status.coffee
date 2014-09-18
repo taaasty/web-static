@@ -18,6 +18,7 @@ window.MessagingStatusStore = _.extend {}, EventEmitter.prototype, {
 
   _updateTotalUnreadConversationsCount: (value) ->
     _totalUnreadConversationsCount = value
+
 }
 
 MessagingStatusStore.dispatchToken = MessagingDispatcher.register (payload) ->

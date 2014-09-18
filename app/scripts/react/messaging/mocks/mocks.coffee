@@ -24,7 +24,8 @@ window.MessagingMocker =
 
     new IncomingConversation {
       id: @conversationId
-      updatedAt: '2014-07-16T21:24:02+04:00'
+      online: true
+      updatedAt: new Date().toString()
       participants: [CurrentUserStore.getUser(), @stubUser()]
       design:
         backgroundUrl: 'http://taaasty.ru/images/no_picture.png'
@@ -75,4 +76,13 @@ window.MessagingMocker =
       id:   @userId
       name: @userName
       slug: @userName
+      userpic: {
+        large_url: 'http://3000.vkontraste.ru/assets/userpic/22/35/17_large.png'
+        thumb128_url: 'http://3000.vkontraste.ru/assets/userpic/22/35/17_thumb128.png'
+        thumb64_url: 'http://3000.vkontraste.ru/assets/userpic/22/35/17_thumb64.png'
+        default_colors: {
+          background: '#f37420'
+          name: '#fff'
+        }
+      }
     }

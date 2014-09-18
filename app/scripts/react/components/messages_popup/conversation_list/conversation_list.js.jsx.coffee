@@ -27,13 +27,10 @@ window.MessagesPopup_ConversationList = React.createClass
 
   render: ->
     that = @
-    conversationListItems = @props.conversations.map (conversationListItem, i) ->
-      `<MessagesPopup_ConversationListItem user={ conversationListItem.user }
-                                     online={ conversationListItem.online }
-                                     lastMessage={ conversationListItem.last_message }
-                                     newMessagesCount={ conversationListItem.new_messages_count }
-                                     onClick={ that.props.onClickConversation }
-                                     key={ conversationListItem.id + i } />`
+    conversations = @props.conversations.map (conversation, i) ->
+      `<MessagesPopup_ConversationListItem conversation={ conversation }
+                                           onClick={ that.props.onClickConversation }
+                                           key={ conversation.id } />`
 
     return `<div className="messages__section messages__section--dialogs">
               <div className="messages__body">
@@ -41,7 +38,7 @@ window.MessagesPopup_ConversationList = React.createClass
                      className="scroller scroller--dark">
                   <div className="scroller__pane js-scroller-pane">
                     <div className="messages__dialogs">
-                      { conversationListItems }
+                      { conversations }
                     </div>
                   </div>
                   <div className="scroller__track js-scroller-track">

@@ -16,7 +16,7 @@ class window.MessagingService
   connect: ({ success, error }) ->
     @requester.makeConnect()
       .done (metaInfo) =>
-        MessagingDispatcher.handleViewAction {
+        MessagingDispatcher.handleServerAction {
           type: 'totalUnreadConversationUpdate'
           count: metaInfo.status.totalUnreadConversationsCount
         }
@@ -32,7 +32,7 @@ class window.MessagingService
   bindMessagingStatusUpdate: ->
     if @mock
       setInterval (->
-        MessagingDispatcher.handleViewAction {
+        MessagingDispatcher.handleServerAction {
             type: 'totalUnreadConversationUpdate'
             count: MessagingMocker.stubMessagingMetaInfo().status.totalUnreadConversationsCount
         }
@@ -40,15 +40,20 @@ class window.MessagingService
 
   # newConversationCallback - принимает <Conversation>
   # подписывается на него список бесед
-  bindIncomingConversation: (callback) ->
-      setInterval (-> callback MessagingMocker.stubIncomingConversation() ), 2000
+  # bindIncomingConversation: (callback) ->
+  #     setInterval (-> callback MessagingMocker.stubIncomingConversation() ), 2000
 
-  postNewConversation: ({recipientSlug, messageContent, success, error}) ->
-    @requester.makeNewConversation()
-      .done success
+  postNewConversation: ({ recipientSlug, success, error }) ->
+    @requester.makeNewConversation(recipientSlug)
+      .done (newConversation) =>
+        MessagingDispatcher.handleServerAction {
+          type: 'newConversationReceived'
+          conversation: newConversation
+        }
+        success()
       .fail error
 
-  postNewMessageInConversation: ({conversationId, recipientId, messageContent}) ->
+  # postNewMessageInConversation: ({conversationId, recipientId, messageContent}) ->
 
   #requestConversation: (conversationId, callback, messagesLimit) ->
     #@addListener @routeConversation(conversationId), callback
