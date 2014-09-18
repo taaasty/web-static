@@ -1,5 +1,4 @@
 #= require angular
-#= require angular-resource/angular-resource
 #= require quick-ng-repeat/quick-ng-repeat
 #= require ng-rails-csrf
 #= require ngInfiniteScroll
@@ -7,7 +6,6 @@
 #= require_self
 #= require_tree ./directives/
 #= require_tree ./filters/
-#= require_tree ./services/
 #= require_tree ./controllers/
 #
 # Приложение на angular
