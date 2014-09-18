@@ -27,7 +27,7 @@ $ ->
 # передается user
 #
 window.Tasty =
-  start: (options) ->
+  start: ({user, flashes}) ->
     #console.debug? "Залогинен пользователь", user.slug if user?
     #new GuidePopup()
     #
@@ -36,11 +36,13 @@ window.Tasty =
     # нет необходимости, jquery_ujs это делает сам
     # 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
     headers = {}
-    headers['X-User-Token'] = options.access_token if options.access_token?
 
-    TastyUtils.showFlashes options.flashes
+    if user?
+      headers['X-User-Token'] = user.api_key.access_token
+      Honeybadger?.setContext user_id: user.id
+      CurrentUserDispatcher.setupUser user
 
-    Honeybadger?.setContext user_id: options.user?.id
+    TastyUtils.showFlashes flashes
 
     $.ajaxSetup
       headers: headers
@@ -49,4 +51,4 @@ window.Tasty =
         withCredentials: true
       error: (e) -> TastyNotifyController.errorResponse e
 
-    ReactApp.start({ user: options.user })
+    ReactApp.start user: user

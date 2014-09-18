@@ -25,10 +25,10 @@ window.MessagingMocker =
     new IncomingConversation {
       id: @conversationId
       updatedAt: '2014-07-16T21:24:02+04:00'
-      participants: [window.tastyUser, @stubUser()]
+      participants: [CurrentUserStore.getUser(), @stubUser()]
       design:
         backgroundUrl: 'http://taaasty.ru/images/no_picture.png'
-        userpic: window.tastyUser.userpic
+        userpic: CurrentUserStore.getUserpic()
       status: @stubConversationStatus()
       messages: [
         @stubIncomingMessage()

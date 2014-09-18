@@ -20,16 +20,11 @@ window.IndicatorsToolbar_Messages = React.createClass
     }
 
   componentDidMount: ->
-    @messagingService = new MessagingService {
-      debug: true
-      user:  @props.user
-    }
     @connectToMessagingService()
 
     MessagingStatusStore.addChangeListener @_onChange
 
   componentWillUnmount: ->
-    @messagingService = null
     MessagingStatusStore.removeChangeListener @_onChange
 
   render: ->
@@ -48,7 +43,7 @@ window.IndicatorsToolbar_Messages = React.createClass
   connectToMessagingService: ->
     @setState(currentState: LOADING_STATE) unless @state.currentState is 'LOADING_STATE'
 
-    @messagingService.connect
+    window.messagingService.connect
       success: => @setState(currentState: LOADED_STATE)
       error: =>   @setState(currentState: ERROR_STATE)
 

@@ -17,7 +17,7 @@
 
 window.ReactApp =
 
-  start: ({ user }) ->
+  start: ->
     console.log 'ReactApp start'
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
@@ -32,9 +32,7 @@ window.ReactApp =
     if ic = document.getElementById 'js-static-inviter-container'
       React.renderComponent InviterShellBox(fixed: true), ic
 
-    if user?.features?.chat
-      messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body').get(0)
-
-      if messagesContainer
-        React.renderComponent MessagesPopup(), messagesContainer
-
+    if user?
+      window.messagingService = new MessagingService
+        user:  CurrentUserStore.getUser()
+        mock: APP_ENV=='static-development'

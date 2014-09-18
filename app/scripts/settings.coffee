@@ -1,12 +1,7 @@
 
-SomeUser     = require './data/user.json'
-SomeCalendar = require './data/calendar.json'
-SomeEntry    = require './data/entry.json'
-UserGenue =
-  id: 1
-  email: 'genue@ya.ru'
-  api_key:
-    access_token: 'd72fd485ca42af43d133d7367a4b4a3b'
+window.SomeUser     = require './data/user.json'
+window.SomeCalendar = require './data/calendar.json'
+window.SomeEntry    = require './data/entry.json'
 
 window.TASTY_ENV = 'development'
 window.TastySettings =
@@ -21,22 +16,4 @@ window.TastySettings.api_host = localStorage.getItem('api_host') if localStorage
 
 console.info? "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
 
-if localStorage.getItem('userLogged') == "true"
-  window.tastyUser = SomeUser
-  console.log 'Залогинен пользователь:', window.tastyUser.slug
-
-  $.ajaxSetup
-    xhrFields:
-      withCredentials: true
-      crossDomain: true
-    headers:
-      "X-User-Token": SomeUser.api_key.access_token
-
-else
-  console.log 'Без пользователя'
-  #$.ajaxSetup
-    #xhrFields:
-      #withCredentials: true
-      #crossDomain: true
-
-
+window.APP_ENV='static-development'
