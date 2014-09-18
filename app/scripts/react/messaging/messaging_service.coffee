@@ -23,7 +23,13 @@ class window.MessagingService
   # Запрашиваем MessagingMetaInfo асинхронно
   connect: ({ success, error }) ->
     @requester.makeConnect()
-      .done success
+      .done (metaInfo) =>
+        MessagingDispatcher.handleViewAction {
+          type: 'totalUnreadConversationUpdate'
+          count: metaInfo.status.totalUnreadConversationsCount
+        }
+        @bindMessagingStatusUpdate()
+        success()
       .fail error
 
   close: ->
@@ -31,9 +37,14 @@ class window.MessagingService
 
   # принимает обновленный <MessagingStatus>
   # подписывается на него bubble
-  bindMessagingStatusUpdate: (callback) ->
+  bindMessagingStatusUpdate: ->
     if @mock
-      setInterval (-> callback MessagingMocker.stubMessagingStatus() ), 5000
+      setInterval (->
+        MessagingDispatcher.handleViewAction {
+            type: 'totalUnreadConversationUpdate'
+            count: MessagingMocker.stubMessagingMetaInfo().status.totalUnreadConversationsCount
+        }
+      ), 5000
 
   # newConversationCallback - принимает <Conversation>
   # подписывается на него список бесед

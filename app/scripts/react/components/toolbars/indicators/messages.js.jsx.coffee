@@ -11,19 +11,26 @@ window.IndicatorsToolbar_Messages = React.createClass
 
   getInitialState: ->
     currentState: LOADING_STATE
-    totalUnreadConversationsCount: ''
-    activeConversations: []
+    totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
+
+  getStateFromStores: ->
+    return {
+      currentState: LOADED_STATE
+      totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
+    }
 
   componentDidMount: ->
     @messagingService = new MessagingService {
       debug: true
       user:  @props.user
     }
-
     @connectToMessagingService()
+
+    MessagingStatusStore.addChangeListener @_onChange
 
   componentWillUnmount: ->
     @messagingService = null
+    MessagingStatusStore.removeChangeListener @_onChange
 
   render: ->
     switch @state.currentState
@@ -42,26 +49,17 @@ window.IndicatorsToolbar_Messages = React.createClass
     @setState(currentState: LOADING_STATE) unless @state.currentState is 'LOADING_STATE'
 
     @messagingService.connect
-      success: (metaInfo) =>
-        @setState {
-          currentState: LOADED_STATE
-          totalUnreadConversationsCount: metaInfo.status.totalUnreadConversationsCount
-          activeConversations: metaInfo.activeConversations
-        }
-        console.info 'Соединение с сервером сообщений установлено', metaInfo
-      error: =>
-        @setState(currentState: ERROR_STATE)
-        console.error 'Ошибка при соединении с сервером сообщений'
-
-    @messagingService.bindMessagingStatusUpdate (messagingStatus) =>
-      console.info 'Обновился messagingStatus', messagingStatus
-      @setState {
-        currentState: LOADED_STATE
-        totalUnreadConversationsCount: messagingStatus.totalUnreadConversationsCount
-      }
+      success: => @setState(currentState: LOADED_STATE)
+      error: =>   @setState(currentState: ERROR_STATE)
 
   handleClick: ->
     switch @state.currentState
       when LOADED_STATE then console.log 'Открываем попап с сообщениями'
       when ERROR_STATE  then @connectToMessagingService()
       else null
+
+  # /**
+  #  * Event handler for 'change' events coming from the MessagingStatusStore
+  #  */
+  _onChange: ->
+    @setState @getStateFromStores()
