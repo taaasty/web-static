@@ -14,3 +14,8 @@ window.gon =
     users_in_live_count: "93608"
     users_votes_in_day_count: "34"
     votes_in_day_count: "169"
+
+  # taaasty development app
+  pusher:
+    key: "c2df484ac3efe2b0cf87"
+    authEndpoint: 'http://api.3000.vkontraste.ru/v1/messenger/auth'

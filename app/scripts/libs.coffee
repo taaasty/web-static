@@ -11,6 +11,8 @@ require '../javascripts/old/libs/jquery.autosize.input.js'
 # Jquery UI components
 require 'jquery-ui-slider'
 
+window.Pusher = require('pusher')
+
 require 'momentjs/lang/ru'
 require 'blueimp-file-upload/js/jquery.fileupload'
 require('react-mixin-manager')(window.React)
@@ -19,7 +21,7 @@ window.imagesLoaded = require 'imagesloaded'
 
 window.Backbone = require 'backbone'
 
-window.Request = require 'superagent'
+#window.Request = require 'superagent'
 
 require 'bootstrap/js/tooltip'
 

@@ -6,37 +6,22 @@ class window.MessagingService
   #routeConversationStatus:    ({ conversationId }) -> "#{ converastionId }/status"
   #routeConversationPayloaded: ({ conversationId }) -> "#{ conversationId }/payload"
 
-  constructor: ({ @user, @mock }) ->
-    @mock = true
+  constructor: ({ @user }) ->
     # _.extend @, new EventEmitter()
 
     @requester = new MockMessagingRequester(access_token: @user.api_key.access_token)
+    @socker = new SockerAgent user: @user
 
-  # Запрашиваем MessagingMetaInfo асинхронно
-  connect: ({ success, error }) ->
-    @requester.makeConnect()
-      .done (metaInfo) =>
-        MessagingDispatcher.handleServerAction {
-          type: 'totalUnreadConversationUpdate'
-          count: metaInfo.status.totalUnreadConversationsCount
-        }
-        @bindMessagingStatusUpdate()
-        success()
-      .fail error
+  connect: ({ connectSuccess, connectError }) ->
+    @socker.connect()
+    @socker.pusher.connection.bind 'connected', connectSuccess
+    @socker.pusher.connection.bind 'unavailable', connectError
+    @socker.pusher.connection.bind 'failed',      connectError
 
-  close: ->
-    # TODO unbind all
+  _statusUpdate: (messagingStatus) ->
+    MessagingStatusStore.updateStatus messagingStatus
+    statusUpdate messagingStatus
 
-  # принимает обновленный <MessagingStatus>
-  # подписывается на него bubble
-  bindMessagingStatusUpdate: ->
-    if @mock
-      setInterval (->
-        MessagingDispatcher.handleServerAction {
-            type: 'totalUnreadConversationUpdate'
-            count: MessagingMocker.stubMessagingMetaInfo().status.totalUnreadConversationsCount
-        }
-      ), 5000
 
   # newConversationCallback - принимает <Conversation>
   # подписывается на него список бесед
@@ -67,3 +52,26 @@ class window.MessagingService
   #addListenerToFreshMessagesCount: (callback) ->
 
   #addListenerToNewMessageInConversationArrived: (conversationId, callback) ->
+  
+  close: -> console.error? "This is inpossible!"
+
+class window.SockerAgent
+  CHANNEL_STATUS: 'status'
+  CHANNEL_MAIN: (userId) -> "private-#{userId}-messaging"
+
+  constructor: ({@user}) ->
+    @pusher = new Pusher gon.pusher.key,
+      authEndpoint: gon.pusher.authEndpoint
+      auth:
+        params:
+          acces_key: @user.api_key.access_key
+
+  connect: ->
+    @channel = @pusher.subscribe CHANNEL_MAIN(@user.id)
+    @channel.bind 'pusher:subscription_succeeded', (data) ->
+      debugger
+    @channel.bind 'pusher:subscription_error', @_subscriptionError
+    @channel.bind @EVENT_STATUS, @_statusUpdate, callback: statusUpdate
+
+  _subscriptionError: (status) ->
+    TastyNotifyController.errorResponse "Can't subscribe to private channe. Error is #{status}"

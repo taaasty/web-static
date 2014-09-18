@@ -8,14 +8,12 @@ window.IndicatorsToolbar_Messages = React.createClass
 
   getInitialState: ->
     currentState: LOADING_STATE
-    totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
+    totalUnreadConversationsCount: '?'
     isPopupShown: false
 
   getStateFromStores: ->
-    return {
-      currentState: LOADED_STATE
-      totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
-    }
+    currentState: LOADED_STATE
+    totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
 
   componentDidMount: ->
     if window.messagingService?
@@ -27,10 +25,8 @@ window.IndicatorsToolbar_Messages = React.createClass
           clearInterval connection
       ), 1000
 
-    MessagingStatusStore.addChangeListener @_onChange
-
   componentWillUnmount: ->
-    MessagingStatusStore.removeChangeListener @_onChange
+    window.messagingService.close()
 
   render: ->
     switch @state.currentState
@@ -49,8 +45,9 @@ window.IndicatorsToolbar_Messages = React.createClass
     @setState(currentState: LOADING_STATE) unless @state.currentState is 'LOADING_STATE'
 
     window.messagingService.connect
-      success: => @setState(currentState: LOADED_STATE)
-      error:   => @setState(currentState: ERROR_STATE)
+      connectError:   =>  @setState(currentState: ERROR_STATE)
+      connectSuccess: @successfulConnected
+      statusUpdate:   @statusUpdate
 
   toggleMessagesPopup: ->
     messagesContainer = document.querySelector '[popup-messages-container]'
@@ -64,6 +61,12 @@ window.IndicatorsToolbar_Messages = React.createClass
       React.renderComponent MessagesPopup({ onClose: @handlePopupClose }), messagesContainer
 
     @setState isPopupShown: !@state.isPopupShown
+
+  successfulConnected: (messagingInfo) ->
+    @setState(currentState: LOADED_STATE)
+
+  statusUpdate: (messagingStatus) ->
+    @setState(currentState: LOADED_STATE)
 
   handleClick: ->
     switch @state.currentState

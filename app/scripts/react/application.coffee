@@ -33,6 +33,9 @@ window.ReactApp =
       React.renderComponent InviterShellBox(fixed: true), ic
 
     if user?
-      window.messagingService = new MessagingService
-        user: CurrentUserStore.getUser()
-        mock: APP_ENV == 'static-development'
+      if localStorage.getItem 'mockMessages'
+        window.messagingService = new MessagingServiceMocked
+          user:  CurrentUserStore.getUser()
+      else
+        window.messagingService = new MessagingService
+          user:  CurrentUserStore.getUser()
