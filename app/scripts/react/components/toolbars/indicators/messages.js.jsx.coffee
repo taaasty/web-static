@@ -8,29 +8,17 @@ window.IndicatorsToolbar_Messages = React.createClass
 
   getInitialState: ->
     currentState: LOADING_STATE
-    totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
+    totalUnreadConversationsCount: '?'
     isPopupShown: false
 
   getStateFromStores: ->
-    return {
-      currentState: LOADED_STATE
-      totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
-    }
+    currentState: LOADED_STATE
+    totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
 
   componentDidMount: ->
-    if window.messagingService?
-      @connectToMessagingService()
-    else
-      connection = setInterval (=>
-        if window.messagingService?
-          @connectToMessagingService()
-          clearInterval connection
-      ), 1000
-
-    MessagingStatusStore.addChangeListener @_onChange
-
-  componentWillUnmount: ->
-    MessagingStatusStore.removeChangeListener @_onChange
+    MessagingStatusStore.addConnectSuccessCallback @connectSuccess
+    MessagingStatusStore.addConnectErrorCallback   @connectError
+    MessagingStatusStore.addChangeListener         @statusUpdate
 
   render: ->
     switch @state.currentState
@@ -45,33 +33,20 @@ window.IndicatorsToolbar_Messages = React.createClass
               { content }
             </div>`
 
-  connectToMessagingService: ->
-    @setState(currentState: LOADING_STATE) unless @state.currentState is 'LOADING_STATE'
+  connectError: ->
+    @setState currentState: ERROR_STATE
 
-    window.messagingService.connect
-      success: => @setState(currentState: LOADED_STATE)
-      error:   => @setState(currentState: ERROR_STATE)
+  connectSuccess: ->
+    @setState currentState: LOADED_STATE
 
-  toggleMessagesPopup: ->
-    messagesContainer = document.querySelector '[popup-messages-container]'
-
-    unless messagesContainer
-      messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
-
-    if @state.isPopupShown
-      React.unmountComponentAtNode messagesContainer
-    else
-      React.renderComponent MessagesPopup({ onClose: @handlePopupClose }), messagesContainer
-
-    @setState isPopupShown: !@state.isPopupShown
+  statusUpdate: ->
+    @setState totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
 
   handleClick: ->
     switch @state.currentState
-      when LOADED_STATE then @toggleMessagesPopup()
+      when LOADED_STATE then messagingService.toggleMessagesPopup()
       when ERROR_STATE  then @connectToMessagingService()
       else null
-
-  handlePopupClose: -> @setState isPopupShown: false
 
   # /**
   #  * Event handler for 'change' events coming from the MessagingStatusStore

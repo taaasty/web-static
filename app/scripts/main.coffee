@@ -24,12 +24,14 @@ require './react/stores/messaging_status'
 require './react/stores/conversations'
 require './react/stores/current_user'
 
-require './react/messaging/mocks/mocks'
-require './react/messaging/mocks/messaging_requester'
 require './react/messaging/messaging_service'
 require './react/messaging/messaging_requester'
 require './react/messaging/messaging_testing'
 require './react/messaging/models'
+
+require './react/messaging/mocks/mocks'
+require './react/messaging/mocks/messaging_requester'
+require './react/messaging/mocks/messaging_service'
 
 require './react/mixins/unmount'
 require './react/mixins/dom_manipulations'

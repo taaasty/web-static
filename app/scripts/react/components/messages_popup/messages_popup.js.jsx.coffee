@@ -8,9 +8,6 @@ THREAD_STATE            = 'thread'
 window.MessagesPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
 
-  propTypes:
-    onClose: React.PropTypes.func.isRequired
-
   getInitialState: ->
     state = _.extend @getStateFromStores(), {
       currentState: CONVERSATION_LIST_STATE
@@ -43,7 +40,7 @@ window.MessagesPopup = React.createClass
                    colorScheme="light"
                    position={{ top: 30, left: 30 }}
                    className="popup--messages"
-                   onClose={ this.close }>
+                   onClose={ this.unmount }>
 
               <div className="messages">
                 { backButton }
@@ -57,10 +54,6 @@ window.MessagesPopup = React.createClass
       recipientSlug: recipientSlug
       success: @activateConversationState
       error: => console.error 'Не удалось создать переписку с пользователем', recipientSlug
-
-  close: ->
-    @props.onClose()
-    @unmount()
 
   activateConversationState:  -> @setState currentState: CONVERSATION_LIST_STATE
   activateRecipientListState: -> @setState currentState: RECIPIENT_LIST_STATE

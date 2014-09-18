@@ -1,47 +1,31 @@
 class window.MessagingService
+  EVENT_STATUS: 'status'
+  CHANNEL_MAIN: (userId) -> "private-#{userId}-messaging"
 
-  #routeNewMessage:  ({ conversationId, messageId }) -> "#{ conversationId }/message/#{ messageId }"
-  #routeReadMessage: ({ conversationId, messageId }) -> "#{ conversationId }/read/#{ messageId }"
-  #routeStatus: -> '/status'
-  #routeConversationStatus:    ({ conversationId }) -> "#{ converastionId }/status"
-  #routeConversationPayloaded: ({ conversationId }) -> "#{ conversationId }/payload"
+  constructor: ({ @user }) ->
+    @requester = new MessagingRequester access_token: @user.api_key.access_token
+    @pusher = new Pusher gon.pusher.key,
+      authEndpoint: gon.pusher.authEndpoint
+      auth:
+        headers:
+          'X-User-Token': @user.api_key.access_token
 
-  constructor: ({ @user, @mock }) ->
-    @mock = true
-    # _.extend @, new EventEmitter()
+    @channel = @pusher.subscribe @CHANNEL_MAIN(@user.id)
+    @channel.bind 'pusher:subscription_succeeded', @_connected
+    @channel.bind 'pusher:subscription_error',     MessagingDispatcher.connectionError
+    @channel.bind @EVENT_STATUS,                   MessagingDispatcher.updateMessagingStatus
+    @messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
 
-    @requester = new MockMessagingRequester(access_token: @user.api_key.access_token)
+  _connected: =>
+    MessagingDispatcher.connected()
+    @requester.notifyReady
+      socket_id: @pusher.connection.socket_id
+      success: -> console.log 'Server is notified'
+      error: (data) -> console.error? "Error", error
 
-  # Запрашиваем MessagingMetaInfo асинхронно
-  connect: ({ success, error }) ->
-    @requester.makeConnect()
-      .done (metaInfo) =>
-        MessagingDispatcher.handleServerAction {
-          type: 'totalUnreadConversationUpdate'
-          count: metaInfo.status.totalUnreadConversationsCount
-        }
-        @bindMessagingStatusUpdate()
-        success()
-      .fail error
+    #@socker.pusher.connection.bind 'unavailable', connectError
+    #@socker.pusher.connection.bind 'failed',      connectError
 
-  close: ->
-    # TODO unbind all
-
-  # принимает обновленный <MessagingStatus>
-  # подписывается на него bubble
-  bindMessagingStatusUpdate: ->
-    if @mock
-      setInterval (->
-        MessagingDispatcher.handleServerAction {
-            type: 'totalUnreadConversationUpdate'
-            count: MessagingMocker.stubMessagingMetaInfo().status.totalUnreadConversationsCount
-        }
-      ), 5000
-
-  # newConversationCallback - принимает <Conversation>
-  # подписывается на него список бесед
-  # bindIncomingConversation: (callback) ->
-  #     setInterval (-> callback MessagingMocker.stubIncomingConversation() ), 2000
 
   postNewConversation: ({ recipientSlug, success, error }) ->
     @requester.makeNewConversation(recipientSlug)
@@ -53,17 +37,8 @@ class window.MessagingService
         success()
       .fail error
 
-  # postNewMessageInConversation: ({conversationId, recipientId, messageContent}) ->
-
-  #requestConversation: (conversationId, callback, messagesLimit) ->
-    #@addListener @routeConversation(conversationId), callback
-    #@requester.makeConversationRequest(messagesLimit)
-
-  #newConversation: -> @requester.newConversation arguments
-  #postMessage:     -> @requester.postMessage arguments
-  #markMessageAsRead: (messageId) -> @requester.markMessageAsRead messageId
-
-  ## Мессенджер подписывается на все новые сообщения, чтобы
-  #addListenerToFreshMessagesCount: (callback) ->
-
-  #addListenerToNewMessageInConversationArrived: (conversationId, callback) ->
+  toggleMessagesPopup: ->
+    if @messagesPopup?._lifeCycleState=='MOUNTED'
+      React.unmountComponentAtNode @messagesContainer
+    else
+      @messagesPopup = React.renderComponent MessagesPopup(), @messagesContainer

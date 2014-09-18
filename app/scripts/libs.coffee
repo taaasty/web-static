@@ -19,7 +19,7 @@ window.imagesLoaded = require 'imagesloaded'
 
 window.Backbone = require 'backbone'
 
-window.Request = require 'superagent'
+#window.Request = require 'superagent'
 
 require 'bootstrap/js/tooltip'
 
