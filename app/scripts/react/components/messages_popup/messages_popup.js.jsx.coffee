@@ -31,7 +31,7 @@ window.MessagesPopup = React.createClass
                    colorScheme="light"
                    position={{ top: 30, left: 30 }}
                    className="popup--messages"
-                   onClose={ this.close }>
+                   onClose={ this.unmount }>
 
               <div className="messages">
                 { backButton }

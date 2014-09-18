@@ -20,16 +20,10 @@ window.IndicatorsToolbar_Messages = React.createClass
     }
 
   componentDidMount: ->
-    @messagingService = new MessagingService {
-      debug: true
-      user:  @props.user
-    }
     @connectToMessagingService()
-
     MessagingStatusStore.addChangeListener @_onChange
 
   componentWillUnmount: ->
-    @messagingService = null
     MessagingStatusStore.removeChangeListener @_onChange
 
   render: ->
@@ -46,15 +40,30 @@ window.IndicatorsToolbar_Messages = React.createClass
             </div>`
 
   connectToMessagingService: ->
-    @setState(currentState: LOADING_STATE) unless @state.currentState is 'LOADING_STATE'
+    @setState(currentState: LOADING_STATE) unless @state.currentState is LOADING_STATE
 
-    @messagingService.connect
+    MessagingService.connect
       success: => @setState(currentState: LOADED_STATE)
-      error: =>   @setState(currentState: ERROR_STATE)
+      error:   => @setState(currentState: ERROR_STATE)
+
+  toggleMessagesPopup: ->
+    unless messagesNode = document.querySelector '[popup-messages-container]'
+      messagesNode = document.createElement 'div'
+      messagesAttr = document.createAttribute 'popup-messages-container'
+      messagesNode.setAttributeNode messagesAttr
+      document.body.appendChild messagesNode
+
+    if messagesNode.innerHTML is ''
+      React.renderComponent MessagesPopup(), messagesNode
+    else
+      React.unmountComponentAtNode messagesNode
+      messagesNode.remove()
+
+    messagesNode = null
 
   handleClick: ->
     switch @state.currentState
-      when LOADED_STATE then console.log 'Открываем попап с сообщениями'
+      when LOADED_STATE then @toggleMessagesPopup()
       when ERROR_STATE  then @connectToMessagingService()
       else null
 

@@ -3,6 +3,7 @@ require './routes'
 require './shared/api-routes'
 require './shared/dmodel'
 require './shared/is_mobile'
+require './settings'
 
 require './aapp/application'
 
@@ -277,8 +278,6 @@ require './plugins/jquery.collage'
 require './editors'
 
 require './gon'
-
-require './settings'
 
 # React_ujs нужно подключать после того как все компоненты загружены
 window.ReactUjs = require 'react_ujs'
