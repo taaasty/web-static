@@ -45,4 +45,7 @@ ApiRoutes =
   change_my_relationship_url:    (tlogId, state) ->
     TastySettings.api_host + 'v1/relationships/to/tlog/' + tlogId + '/' + state
 
+  messenger_ready_url: ->
+    TastySettings.api_host + 'v1/messenger/ready'
+
 window.Routes.api = ApiRoutes

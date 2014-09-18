@@ -16,17 +16,9 @@ window.IndicatorsToolbar_Messages = React.createClass
     totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
 
   componentDidMount: ->
-    if window.messagingService?
-      @connectToMessagingService()
-    else
-      connection = setInterval (=>
-        if window.messagingService?
-          @connectToMessagingService()
-          clearInterval connection
-      ), 1000
-
-  componentWillUnmount: ->
-    window.messagingService.close()
+    MessagingStatusStore.addConnectSuccessCallback @connectSuccess
+    MessagingStatusStore.addConnectErrorCallback   @connectError
+    MessagingStatusStore.addChangeListener         @statusUpdate
 
   render: ->
     switch @state.currentState
@@ -41,19 +33,14 @@ window.IndicatorsToolbar_Messages = React.createClass
               { content }
             </div>`
 
-  connectToMessagingService: ->
-    @setState(currentState: LOADING_STATE) unless @state.currentState is 'LOADING_STATE'
+  connectError: ->
+    @setState currentState: ERROR_STATE
 
-    window.messagingService.connect
-      connectError:   =>  @setState(currentState: ERROR_STATE)
-      connectSuccess: @successfulConnected
-      statusUpdate:   @statusUpdate
+  connectSuccess: ->
+    @setState currentState: LOADED_STATE
 
-  successfulConnected: (messagingInfo) ->
-    @setState(currentState: LOADED_STATE)
-
-  statusUpdate: (messagingStatus) ->
-    @setState(currentState: LOADED_STATE)
+  statusUpdate: ->
+    @setState totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
 
   handleClick: ->
     switch @state.currentState

@@ -1,6 +1,5 @@
 class window.MessagingRequester
 
-  connectUrl:                    -> '/connect'
   conversationUrl:      (convId) -> "/conversation/:#{ convId }"
   newConversationUrl:     (slug) -> "/conversation/new/#{ slug }"
   postMessageUrl:       (convId) -> "/conversation/:#{ convId }/messages/"
@@ -11,12 +10,14 @@ class window.MessagingRequester
 
   constructor: ({ @access_token }) ->
 
-  makeConnect: ({ success, error }) ->
+  notifyReady: ({ success, error, socket_id }) ->
     $.ajax {
-      url: @connectUrl()
+      url: Routes.api.messenger_ready_url()
+      data:
+        socket_id: socket_id
       method: 'POST'
       success: success
-      error: error
+      error:   error
     }
 
   # messagesLimit - сколько последних сообщений отдать

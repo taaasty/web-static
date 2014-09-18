@@ -1,5 +1,9 @@
 class window.MessagingServiceMock extends window.MessagingService
 
+  constructor: ({ @user }) ->
+    @requester = new MockMessagingRequester(access_token: @user.api_key.access_token)
+
+
   # Запрашиваем MessagingMetaInfo асинхронно
   connect: ({ connectSuccess, connectError }) ->
     @requester.makeConnect()
