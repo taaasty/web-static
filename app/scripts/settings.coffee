@@ -15,3 +15,5 @@ window.TastySettings.api_host = localStorage.getItem('api_host') if localStorage
 # модели из window.Tasty по мере перехода на модели
 
 console.info? "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
+
+window.APP_ENV='static-development'
