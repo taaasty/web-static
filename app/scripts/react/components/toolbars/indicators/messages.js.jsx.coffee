@@ -12,6 +12,7 @@ window.IndicatorsToolbar_Messages = React.createClass
   getInitialState: ->
     currentState: LOADING_STATE
     totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
+    showMessagesPopup: localStorage.getItem('autoShowMessagesPopup')
 
   getStateFromStores: ->
     return {
@@ -38,6 +39,7 @@ window.IndicatorsToolbar_Messages = React.createClass
     return `<div className="toolbar__indicator"
                  onClick={ this.handleClick }>
               { content }
+              <MessagesPopup show={ this.state.showMessagesPopup } />
             </div>`
 
   connectToMessagingService: ->
@@ -49,7 +51,7 @@ window.IndicatorsToolbar_Messages = React.createClass
 
   handleClick: ->
     switch @state.currentState
-      when LOADED_STATE then console.log 'Открываем попап с сообщениями'
+      when LOADED_STATE then @setState showMessagesPopup: !@state.showMessagesPopup
       when ERROR_STATE  then @connectToMessagingService()
       else null
 
