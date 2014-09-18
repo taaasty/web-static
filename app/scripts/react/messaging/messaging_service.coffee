@@ -1,4 +1,9 @@
-class window.MessagingService
+CHANGE_EVENT = 'change'
+
+_totalUnreadConversationsCount = null
+requester = new MockMessagingRequester access_token: tastyUser.api_key.access_token
+
+window.MessagingService = _.extend {}, EventEmitter.prototype, {
 
   #routeNewMessage:  ({ conversationId, messageId }) -> "#{ conversationId }/message/#{ messageId }"
   #routeReadMessage: ({ conversationId, messageId }) -> "#{ conversationId }/read/#{ messageId }"
@@ -10,21 +15,11 @@ class window.MessagingService
   # unread
   # conversationMetaRoute: ({ conversationId }) -> "#{ conversationId }:meta"
 
-  constructor: ({ @debug, @user, @mock }) ->
-    @mock = true
-    # _.extend @, new EventEmitter()
-
-    @requester = new MockMessagingRequester(access_token: @user.api_key.access_token)
-
-    # if @debug
-    #   @addListener @routeNewMessage('*','*'),  (message)  -> console.debug? "New message", message
-    #   @addListener @routeReadMessage('*','*'), (message)  -> console.debug? "Read message", message
-
   # Запрашиваем MessagingMetaInfo асинхронно
   connect: ({ success, error }) ->
-    @requester.makeConnect()
+    requester.makeConnect()
       .done (metaInfo) =>
-        MessagingDispatcher.handleViewAction {
+        MessagingDispatcher.handleServerAction {
           type: 'totalUnreadConversationUpdate'
           count: metaInfo.status.totalUnreadConversationsCount
         }
@@ -38,25 +33,24 @@ class window.MessagingService
   # принимает обновленный <MessagingStatus>
   # подписывается на него bubble
   bindMessagingStatusUpdate: ->
-    if @mock
-      setInterval (->
-        MessagingDispatcher.handleViewAction {
-            type: 'totalUnreadConversationUpdate'
-            count: MessagingMocker.stubMessagingMetaInfo().status.totalUnreadConversationsCount
-        }
-      ), 5000
+    setInterval (->
+      MessagingDispatcher.handleServerAction {
+        type: 'totalUnreadConversationUpdate'
+        count: MessagingMocker.stubMessagingMetaInfo().status.totalUnreadConversationsCount
+      }
+    ), 5000
 
-  # newConversationCallback - принимает <Conversation>
-  # подписывается на него список бесед
-  bindIncomingConversation: (callback) ->
-      setInterval (-> callback MessagingMocker.stubIncomingConversation() ), 2000
+  # # newConversationCallback - принимает <Conversation>
+  # # подписывается на него список бесед
+  # bindIncomingConversation: (callback) ->
+  #   setInterval (-> callback MessagingMocker.stubIncomingConversation() ), 2000
 
-  postNewConversation: ({recipientSlug, messageContent, success, error}) ->
-    @requester.makeNewConversation()
-      .done success
-      .fail error
+  # postNewConversation: ({recipientSlug, messageContent, success, error}) ->
+  #   @requester.makeNewConversation()
+  #     .done success
+  #     .fail error
 
-  postNewMessageInConversation: ({conversationId, recipientId, messageContent}) ->
+  # postNewMessageInConversation: ({conversationId, recipientId, messageContent}) ->
 
   #requestConversation: (conversationId, callback, messagesLimit) ->
     #@addListener @routeConversation(conversationId), callback
@@ -70,3 +64,5 @@ class window.MessagingService
   #addListenerToFreshMessagesCount: (callback) ->
 
   #addListenerToNewMessageInConversationArrived: (conversationId, callback) ->
+
+}
