@@ -8,6 +8,9 @@ THREAD_STATE            = 'thread'
 window.MessagesPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
 
+  propTypes:
+    onClose: React.PropTypes.func.isRequired
+
   getInitialState: ->
     currentState: CONVERSATION_LIST_STATE
 
@@ -39,6 +42,10 @@ window.MessagesPopup = React.createClass
               </div>
 
             </Popup>`
+
+  close: ->
+    @props.onClose()
+    @unmount()
 
   activateConversationState:  -> @setState currentState: CONVERSATION_LIST_STATE
   activateRecipientListState: -> @setState currentState: RECIPIENT_LIST_STATE

@@ -17,7 +17,7 @@
 
 window.ReactApp =
 
-  start: ->
+  start: ({ user }) ->
     console.log 'ReactApp start'
 
     $(document).on 'page:change', ReactUjs.mountReactComponents
@@ -34,5 +34,5 @@ window.ReactApp =
 
     if user?
       window.messagingService = new MessagingService
-        user:  CurrentUserStore.getUser()
-        mock: APP_ENV=='static-development'
+        user: CurrentUserStore.getUser()
+        mock: APP_ENV == 'static-development'
