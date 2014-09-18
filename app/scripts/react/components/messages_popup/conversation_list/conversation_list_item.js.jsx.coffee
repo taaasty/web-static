@@ -4,30 +4,32 @@ window.MessagesPopup_ConversationListItem = React.createClass
   mixins: [ReactGrammarMixin]
 
   propTypes:
-    user:             React.PropTypes.object.isRequired
-    online:           React.PropTypes.bool
-    lastMessage:      React.PropTypes.object.isRequired
-    newMessagesCount: React.PropTypes.number
-    onClick:          React.PropTypes.func.isRequired
+    conversation: React.PropTypes.object.isRequired
+    onClick:      React.PropTypes.func.isRequired
 
   render: ->
-    online = `<span className="messages__user-online" />` if @props.online
+    online = `<span className="messages__user-online" />` if @props.conversation.online
 
     return `<div className="messages__dialog"
                  onClick={ this.props.onClick }>
               { this._getNewMessagesCount() }
 
               <span className="messages__user-avatar">
-                <UserAvatar user={ this.props.user } size={ 35 } />
+                <UserAvatar user={ this.props.conversation.participants[1] } size={ 35 } />
                 { online }
               </span>
 
               <div className="messages__dialog-text">
-                <span className="messages__user-name">{ this.props.user.slug }</span> { this.props.lastMessage.text }
+                <span className="messages__user-name">{ this.props.conversation.participants[1].slug }</span> 
+                <span dangerouslySetInnerHTML={{ __html: this._getLastMessage().contentHtml }} />
               </div>
 
-              <span className="messages__date">{ this.timeAgo(this.props.lastMessage.created_at) }</span>
+              <span className="messages__date">{ this.timeAgo( this._getLastMessage().updatedAt) }</span>
             </div>`
+
+  _getLastMessage: ->
+    index = @props.conversation.messages.length - 1
+    @props.conversation.messages[index]
 
   _getNewMessagesCount: ->
     if @props.newMessagesCount > 0

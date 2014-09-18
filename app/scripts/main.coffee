@@ -21,6 +21,7 @@ require './react/dispatchers/messaging'
 require './react/dispatchers/current_user'
 
 require './react/stores/messaging_status'
+require './react/stores/conversations'
 require './react/stores/current_user'
 
 require './react/messaging/mocks/mocks'
@@ -128,6 +129,9 @@ require './react/components/design_settings_popup/controls_items/_progressbar'
 
 require './react/components/messages_popup/ui/back_button'
 require './react/components/messages_popup/ui/create_new_conversation_button'
+require './react/components/messages_popup/ui/chooser_button'
+require './react/components/messages_popup/ui/chooser_dropdown'
+
 require './react/components/messages_popup/messages_popup'
 require './react/components/messages_popup/conversation_list/conversation_list'
 require './react/components/messages_popup/conversation_list/conversation_list_item'
