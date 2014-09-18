@@ -1,5 +1,7 @@
 class window.MessagingService
   EVENT_STATUS: 'status'
+  EVENT_ACTIVE_CONVERSATIONS: 'active_conversations'
+
   CHANNEL_MAIN: (userId) -> "private-#{userId}-messaging"
 
   constructor: ({ @user }) ->
@@ -14,6 +16,8 @@ class window.MessagingService
     @channel.bind 'pusher:subscription_succeeded', @_connected
     @channel.bind 'pusher:subscription_error',     MessagingDispatcher.connectionError
     @channel.bind @EVENT_STATUS,                   MessagingDispatcher.updateMessagingStatus
+    @channel.bind @EVENT_ACTIVE_CONVERSATIONS,     MessagingDispatcher.updateActiveConversations
+
     @messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
 
   _connected: =>
@@ -21,7 +25,7 @@ class window.MessagingService
     @requester.notifyReady
       socket_id: @pusher.connection.socket_id
       success: -> console.log 'Server is notified'
-      error: (data) -> console.error? "Error", error
+      error: (error) -> console.error? "Error", error
 
     #@socker.pusher.connection.bind 'unavailable', connectError
     #@socker.pusher.connection.bind 'failed',      connectError

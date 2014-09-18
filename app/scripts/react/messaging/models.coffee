@@ -33,13 +33,13 @@ class window.ConversationStatus
 # Отсылается сервером когда он сообщает
 # что сообщение прочитано.
 class window.MessagingStatus extends DModel
-  # totalUnreadConversationsCount
+  # unreadConversationsCount
   #
   # В будущем:
   # totalConversationsCount
   # activeConversationsCount
   # lastMessageId
-  # totalUnreadMessagesCount
+  # unreadMessagesCount
   #
 
 class window.MessagingMetaInfo extends DModel

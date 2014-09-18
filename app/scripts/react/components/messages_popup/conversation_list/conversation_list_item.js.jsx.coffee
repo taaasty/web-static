@@ -15,23 +15,21 @@ window.MessagesPopup_ConversationListItem = React.createClass
               { this._getNewMessagesCount() }
 
               <span className="messages__user-avatar">
-                <UserAvatar user={ this.props.conversation.participants[1] } size={ 35 } />
+                <UserAvatar user={ this.props.conversation.recipient } size={ 35 } />
                 { online }
               </span>
 
               <div className="messages__dialog-text">
-                <span className="messages__user-name">{ this.props.conversation.participants[1].slug }</span> 
-                <span dangerouslySetInnerHTML={{ __html: this._getLastMessage().contentHtml }} />
+                <span className="messages__user-name">{ this.props.conversation.recipient.slug }</span> 
+                <span dangerouslySetInnerHTML={{ __html: this.props.conversation.last_message.content_html }} />
               </div>
 
-              <span className="messages__date">{ this.timeAgo( this._getLastMessage().updatedAt) }</span>
+              <span className="messages__date">{ this.timeAgo( this.props.conversation.last_message.updated_at) }</span>
             </div>`
 
-  _getLastMessage: ->
-    index = @props.conversation.messages.length - 1
-    @props.conversation.messages[index]
-
   _getNewMessagesCount: ->
+    # Счетчик сообщений лежит в conversations
+    # TODO Подписываться на ConversatoinsStore
     if @props.newMessagesCount > 0
       `<div className="messages__counter">{ this.props.newMessagesCount }</div>`
 

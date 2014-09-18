@@ -11,6 +11,12 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
       type:            'updateMessagingStatus'
       messagingStatus: messagingStatus
 
+  updateActiveConversations: (activeConversations) ->
+    console.log 'Receive activeConversations', activeConversations
+    MessagingDispatcher.handleServerAction
+      type:               'updateActiveConversations'
+      activeConversations: activeConversations
+
   connected: ->
     MessagingDispatcher.handleServerAction type: 'connected'
 

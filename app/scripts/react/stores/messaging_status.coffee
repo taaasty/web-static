@@ -4,8 +4,6 @@ ERROR_EVENT = 'connectionError'
 
 _messagingStatus = {}
 
-_totalUnreadConversationsCount = null
-
 window.MessagingStatusStore = _.extend {}, EventEmitter.prototype, {
 
   emitChange:            -> @emit CHANGE_EVENT
@@ -18,7 +16,8 @@ window.MessagingStatusStore = _.extend {}, EventEmitter.prototype, {
   addConnectErrorCallback:   (callback) -> @on ERROR_EVENT, callback
   emitConnectError:          -> @emit ERROR_EVENT
 
-  getTotalUnreadConversationsCount: -> _messagingStatus.totalUnreadConversationsCount
+  getUnreadConversationsCount: -> _messagingStatus.unreadConversationsCount
+  getActiveConversationsCount: -> _messagingStatus.anreadConversationsCount
 
   _update:        (messagingStatus) -> _messagingStatus = messagingStatus
 
@@ -31,10 +30,11 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register (payload) ->
     when 'updateMessagingStatus'
       MessagingStatusStore._update action.messagingStatus
       MessagingStatusStore.emitChange()
+      break
     when 'connected'
       MessagingStatusStore.emitConnectSuccess()
+      break
     when 'connectionError'
       MessagingStatusStore.emitConnectError()
-    else
-      console.error? "Unknown action type: #{action.type}", action
+      break
 
