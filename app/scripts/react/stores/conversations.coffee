@@ -10,7 +10,7 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
   addChangeListener: (callback) ->
     @on CHANGE_EVENT, callback
 
-  removedChangeListener: (callback) ->
+  removeChangeListener: (callback) ->
     @off CHANGE_EVENT, callback
 
   addConversation: (newConversation) ->
