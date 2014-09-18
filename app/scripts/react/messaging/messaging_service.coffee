@@ -55,6 +55,16 @@ class window.MessagingService
   
   close: -> console.error? "This is inpossible!"
 
+  toggleMessagesPopup: ->
+    messagesContainer = document.querySelector '[popup-messages-container]'
+
+    if messagesContainer
+      React.unmountComponentAtNode messagesContainer
+    else
+      messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
+      React.renderComponent MessagesPopup(), messagesContainer
+
+
 class window.SockerAgent
   CHANNEL_STATUS: 'status'
   CHANNEL_MAIN: (userId) -> "private-#{userId}-messaging"

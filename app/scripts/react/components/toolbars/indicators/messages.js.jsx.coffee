@@ -49,19 +49,6 @@ window.IndicatorsToolbar_Messages = React.createClass
       connectSuccess: @successfulConnected
       statusUpdate:   @statusUpdate
 
-  toggleMessagesPopup: ->
-    messagesContainer = document.querySelector '[popup-messages-container]'
-
-    unless messagesContainer
-      messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
-
-    if @state.isPopupShown
-      React.unmountComponentAtNode messagesContainer
-    else
-      React.renderComponent MessagesPopup({ onClose: @handlePopupClose }), messagesContainer
-
-    @setState isPopupShown: !@state.isPopupShown
-
   successfulConnected: (messagingInfo) ->
     @setState(currentState: LOADED_STATE)
 
@@ -70,11 +57,9 @@ window.IndicatorsToolbar_Messages = React.createClass
 
   handleClick: ->
     switch @state.currentState
-      when LOADED_STATE then @toggleMessagesPopup()
+      when LOADED_STATE then messagingService.toggleMessagesPopup()
       when ERROR_STATE  then @connectToMessagingService()
       else null
-
-  handlePopupClose: -> @setState isPopupShown: false
 
   # /**
   #  * Event handler for 'change' events coming from the MessagingStatusStore
