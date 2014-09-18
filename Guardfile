@@ -16,10 +16,10 @@ guard :bundler do
   # watch(/^.+\.gemspec/)
 end
 
-guard :shell, :all_on_start => true do
-  watch(/^(app)\/.*\.coffee$/) { |m| `coffeetags -f tags #{m[0]}` }
-end
-
-#guard 'ctags-bundler', :src_path => ["app"], emacs: false, arguments: '-R --languages=coffee' do
-  #watch(/^(app)\/.*\.coffee$/)
+#guard :shell, :all_on_start => true do
+  #watch(/^(app)\/.*\.coffee$/) { |m| `coffeetags -f tags #{m[0]}` }
 #end
+
+guard 'ctags-bundler', :src_path => ["app"], emacs: false, arguments: '-R --languages=coffee' do
+  watch(/^(app)\/.*\.coffee$/)
+end
