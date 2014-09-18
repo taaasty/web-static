@@ -27,7 +27,7 @@ $ ->
 # передается user
 #
 window.Tasty =
-  start: ({user, flashes}) ->
+  start: ({ user, flashes }) ->
     #console.debug? "Залогинен пользователь", user.slug if user?
     #new GuidePopup()
     #

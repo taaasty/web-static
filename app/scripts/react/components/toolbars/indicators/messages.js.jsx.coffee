@@ -6,13 +6,10 @@ LOADED_STATE  = 'loaded'
 
 window.IndicatorsToolbar_Messages = React.createClass
 
-  propTypes:
-    user: React.PropTypes.object.isRequired
-
   getInitialState: ->
     currentState: LOADING_STATE
     totalUnreadConversationsCount: MessagingStatusStore.getTotalUnreadConversationsCount()
-    showMessagesPopup: localStorage.getItem('autoShowMessagesPopup')
+    isPopupShown: false
 
   getStateFromStores: ->
     return {
@@ -21,7 +18,14 @@ window.IndicatorsToolbar_Messages = React.createClass
     }
 
   componentDidMount: ->
-    @connectToMessagingService()
+    if window.messagingService?
+      @connectToMessagingService()
+    else
+      connection = setInterval (=>
+        if window.messagingService?
+          @connectToMessagingService()
+          clearInterval connection
+      ), 1000
 
     MessagingStatusStore.addChangeListener @_onChange
 
@@ -39,7 +43,6 @@ window.IndicatorsToolbar_Messages = React.createClass
     return `<div className="toolbar__indicator"
                  onClick={ this.handleClick }>
               { content }
-              <MessagesPopup show={ this.state.showMessagesPopup } />
             </div>`
 
   connectToMessagingService: ->
@@ -47,13 +50,28 @@ window.IndicatorsToolbar_Messages = React.createClass
 
     window.messagingService.connect
       success: => @setState(currentState: LOADED_STATE)
-      error: =>   @setState(currentState: ERROR_STATE)
+      error:   => @setState(currentState: ERROR_STATE)
+
+  toggleMessagesPopup: ->
+    messagesContainer = document.querySelector '[popup-messages-container]'
+
+    unless messagesContainer
+      messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
+
+    if @state.isPopupShown
+      React.unmountComponentAtNode messagesContainer
+    else
+      React.renderComponent MessagesPopup({ onClose: @handlePopupClose }), messagesContainer
+
+    @setState isPopupShown: !@state.isPopupShown
 
   handleClick: ->
     switch @state.currentState
-      when LOADED_STATE then @setState showMessagesPopup: !@state.showMessagesPopup
+      when LOADED_STATE then @toggleMessagesPopup()
       when ERROR_STATE  then @connectToMessagingService()
       else null
+
+  handlePopupClose: -> @setState isPopupShown: false
 
   # /**
   #  * Event handler for 'change' events coming from the MessagingStatusStore

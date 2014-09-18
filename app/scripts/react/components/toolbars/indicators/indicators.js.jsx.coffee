@@ -2,12 +2,9 @@
 
 window.IndicatorsToolbar = React.createClass
 
-  propTypes:
-    user: React.PropTypes.object.isRequired
-
   render: ->
    `<nav className="toolbar toolbar--right state--open-indicators">
       <div className="toolbar__indicators">
-        <IndicatorsToolbar_Messages user={ this.props.user } />
+        <IndicatorsToolbar_Messages />
       </div>
     </nav>`
