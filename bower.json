@@ -18,7 +18,6 @@
     "angular-resource": "~1.2.19",
     "angular-sanitize": "~1.2.19",
     "ng-rails-csrf": "https://raw.githubusercontent.com/xrd/ng-rails-csrf/master/vendor/assets/javascripts/ng-rails-csrf.js",
-    "flux_bower": "git@github.com:BrandyMint/flux_bower.git",
     "medium-editor": "1.9",
     "Medium.js": "git@github.com:jakiestfu/Medium.js.git",
     "undo": "https://github.com/jzaefferer/undo/archive/master.zip",

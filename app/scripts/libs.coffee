@@ -6,7 +6,6 @@ window._ = require 'underscore'
 window.moment = require 'momentjs'
 window.EventEmitter = require 'eventEmitter'
 
-require 'flux_bower'
 require '../javascripts/old/libs/jquery.autosize.input.js'
 
 # Jquery UI components
