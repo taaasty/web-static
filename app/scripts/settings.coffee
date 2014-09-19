@@ -16,4 +16,4 @@ window.TastySettings.api_host = localStorage.getItem('api_host') if localStorage
 
 console.info? "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
 
-window.APP_ENV='static-development'
+Tasty.env='static-development'

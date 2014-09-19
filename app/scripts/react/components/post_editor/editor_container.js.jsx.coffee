@@ -25,7 +25,7 @@ window.PostEditor_EditorContainer = React.createClass
     EntryStore.storeEntry normalizedEntry
 
   redirectToEntryPage: (entry) ->
-    if window.TASTY_ENV == 'development'
+    if Tasty.env == 'static-development'
       alert "Статья #{ entry.id } успешно сохранена"
       window.location.reload()
     else
