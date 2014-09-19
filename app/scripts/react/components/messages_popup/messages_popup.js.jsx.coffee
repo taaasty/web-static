@@ -9,7 +9,19 @@ window.MessagesPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
 
   getInitialState: ->
-    currentState: CONVERSATION_LIST_STATE
+    @getStateFromStore()
+
+  store: -> window.messagesPopupStateStore
+
+  componentDidMount: ->
+    @store().addChangeHandler @setStateFromStore
+
+  setStateFromStore: ->
+    @setState @getStateFromStore()
+
+  getStateFromStore: ->
+    currentState:          @store.currentState()
+    currentConversationId: @store.currentConversationId()
 
   render: ->
     switch @state.currentState
@@ -17,9 +29,9 @@ window.MessagesPopup = React.createClass
         content = `<MessagesPopup_ConversationList onCreateNewConversation={ this.activateRecipientListState }
                                                    onClickConversation={ this.activateThreadState } />`
       when RECIPIENT_LIST_STATE
-        content = `<MessagesPopup_RecipientList onNewConversation={ this.postNewConversation } />`
+        content = `<MessagesPopup_RecipientList />`
       when THREAD_STATE
-        content = `<MessagesPopup_Thread />`
+        content = `<MessagesPopup_Thread conversationId={this.state.currentConversationId} />`
 
     unless @isConversationState()
       backButton = `<MessagesPopup_UIBackButton onClick={ this.activateConversationState } />`
@@ -39,11 +51,6 @@ window.MessagesPopup = React.createClass
 
             </Popup>`
 
-  postNewConversation: (recipientSlug) ->
-    window.messagingService.postNewConversation
-      recipientSlug: recipientSlug
-      success: @activateConversationState
-      error: => console.error 'Не удалось создать переписку с пользователем', recipientSlug
 
   activateConversationState:  -> @setState currentState: CONVERSATION_LIST_STATE
   activateRecipientListState: -> @setState currentState: RECIPIENT_LIST_STATE

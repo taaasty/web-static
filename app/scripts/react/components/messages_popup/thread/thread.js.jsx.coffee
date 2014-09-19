@@ -1,6 +1,9 @@
 ###* @jsx React.DOM ###
 
 window.MessagesPopup_Thread = React.createClass
+
+  propTypes:
+    conversationId: React.PropTypes.number.isRequired
   
   getInitialState: ->
     isEmpty: false

@@ -32,7 +32,7 @@ class window.MessagingService
 
 
   postNewConversation: ({ recipientSlug, success, error }) ->
-    @requester.makeNewConversation(recipientSlug)
+    @requester.postNewConversation(recipientSlug)
       .done (newConversation) =>
         MessagingDispatcher.handleServerAction {
           type: 'newConversationReceived'

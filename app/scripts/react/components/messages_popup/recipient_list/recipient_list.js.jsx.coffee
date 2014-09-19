@@ -7,11 +7,16 @@ ACTIVE_STATE   = 'activeState'
 
 window.MessagesPopup_RecipientList = React.createClass
 
-  propTypes:
-    onNewConversation: React.PropTypes.func.isRequired
-
   getInitialState: ->
     currentState: CLOSE_STATE
+
+  postNewConversation: (recipientSlug) ->
+    window.messagingService.postNewConversation
+      recipientSlug: recipientSlug
+      success: (conversationId) ->
+        window.messagesPopupStateDispatcher.setMessagePopupState THREAD_STATE, conversationId
+
+      error: => console.error 'Не удалось создать переписку с пользователем', recipientSlug
 
   render: ->
     chooserClasses = React.addons.classSet {
@@ -24,7 +29,7 @@ window.MessagesPopup_RecipientList = React.createClass
         chooser = `<MessagesPopup_UIChooserButton onClick={ this.activateOpenState } />`
       when OPEN_STATE
         chooser = `<MessagesPopup_UIChooserDropdown onCancel={ this.activateCloseState }
-                                                    onSubmit={ this.props.onNewConversation } />`
+                                                    onSubmit={ this.postNewConversation } />`
 
     return `<div className="messages__section messages__section--recipients">
               <div className="messages__body">

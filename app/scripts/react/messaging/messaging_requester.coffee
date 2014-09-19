@@ -21,14 +21,14 @@ class window.MessagingRequester
     }
 
   # messagesLimit - сколько последних сообщений отдать
-  makeConversationRequest: (convId, messagesLimit) ->
-    $.ajax conversationUrl(convId),
-      method: 'POST'
-      data:
-        messagesLimit: messagesLimit
+  #makeConversationRequest: (convId, messagesLimit) ->
+    #$.ajax conversationUrl(convId),
+      #method: 'POST'
+      #data:
+        #messagesLimit: messagesLimit
 
-  newConversation: (recipientSlug, content) ->
-    $.ajax newConverastion(recipientSlug),
+  postNewConversation: (recipientSlug, content) ->
+    $.ajax Routes.api.messenger_new_conversation_url(recipientSlug)
       method: 'POST'
       data:
         content: content
