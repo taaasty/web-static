@@ -34,8 +34,8 @@ window.ReactApp =
 
     if user?
       if localStorage.getItem 'mockMessages'
-        window.messagingService = new MessagingServiceMocked
-          user:  CurrentUserStore.getUser()
+        window.messagingService = new MessagingServiceMock
+          user: CurrentUserStore.getUser()
       else
         window.messagingService = new MessagingService
-          user:  CurrentUserStore.getUser()
+          user: CurrentUserStore.getUser()

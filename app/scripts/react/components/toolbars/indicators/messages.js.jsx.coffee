@@ -8,7 +8,7 @@ window.IndicatorsToolbar_Messages = React.createClass
 
   getInitialState: ->
     currentState: LOADING_STATE
-    unreadConversationsCount: '?'
+    unreadConversationsCount: '·'
     isPopupShown: false
 
   getStateFromStores: ->

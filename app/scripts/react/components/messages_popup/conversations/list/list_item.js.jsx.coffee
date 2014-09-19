@@ -1,17 +1,24 @@
 ###* @jsx React.DOM ###
 
-window.MessagesPopup_ConversationListItem = React.createClass
+MAXIMUM_LAST_MESSAGE_LENGTH = 200
+
+window.MessagesPopup_ConversationsListItem = React.createClass
   mixins: [ReactGrammarMixin]
 
   propTypes:
     conversation: React.PropTypes.object.isRequired
-    onClick:      React.PropTypes.func.isRequired
 
   render: ->
     online = `<span className="messages__user-online" />` if @props.conversation.online
 
+    if @props.conversation.last_message?
+      lastMessageText      = `<span dangerouslySetInnerHTML={{ __html: this._getLastMessageText() }} />`
+      lastMessageUpdatedAt = `<span className="messages__date">
+                                { this.timeAgo( this.props.conversation.last_message.updated_at) }
+                              </span>`
+
     return `<div className="messages__dialog"
-                 onClick={ this.props.onClick }>
+                 onClick={ this.handleClick }>
               { this._getNewMessagesCount() }
 
               <span className="messages__user-avatar">
@@ -20,11 +27,13 @@ window.MessagesPopup_ConversationListItem = React.createClass
               </span>
 
               <div className="messages__dialog-text">
-                <span className="messages__user-name">{ this.props.conversation.recipient.slug }</span> 
-                <span dangerouslySetInnerHTML={{ __html: this.props.conversation.last_message.content_html }} />
+                <a href={ this.props.conversation.recipient.tlog_url }>
+                  <span className="messages__user-name">{ this.props.conversation.recipient.slug }</span>
+                </a> 
+                { lastMessageText }
               </div>
 
-              <span className="messages__date">{ this.timeAgo( this.props.conversation.last_message.updated_at) }</span>
+              { lastMessageUpdatedAt }
             </div>`
 
   _getNewMessagesCount: ->
@@ -32,6 +41,12 @@ window.MessagesPopup_ConversationListItem = React.createClass
     # TODO Подписываться на ConversatoinsStore
     if @props.newMessagesCount > 0
       `<div className="messages__counter">{ this.props.newMessagesCount }</div>`
+
+  _getLastMessageText: ->
+    @props.conversation.last_message.content_html.substring(0, MAXIMUM_LAST_MESSAGE_LENGTH) + '…'
+
+  handleClick: ->
+    console.log @props.conversation
 
 # <div data-id="2"
 #            className="messages__dialog js-messages-dialog">

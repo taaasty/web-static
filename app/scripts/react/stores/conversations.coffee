@@ -41,4 +41,3 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
       ConversationsStore.updateConversations action.activeConversations
       ConversationsStore.emitChange()
       break
-
