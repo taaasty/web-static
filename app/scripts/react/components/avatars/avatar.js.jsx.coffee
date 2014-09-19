@@ -20,7 +20,7 @@ window.Avatar = React.createClass
     avatar_url = @props.userpic?['original_url'] || @props.userpic?['large_url']
 
     if avatar_url?
-      if Tasty.env is 'static-development'
+      if TASTY_ENV is 'static-development'
         avatar_url = @props.userpic.thumb128_url
       else
         avatar_url = ThumborService.image_url avatar_url, @props.size + 'x' + @props.size

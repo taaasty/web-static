@@ -21,6 +21,7 @@ require './react/dispatchers/messaging'
 require './react/dispatchers/current_user'
 
 require './react/stores/messaging_status'
+require './react/stores/connection_state'
 require './react/stores/messages_popup_state'
 require './react/stores/conversations'
 require './react/stores/current_user'

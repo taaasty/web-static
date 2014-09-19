@@ -1,54 +1,47 @@
 ###* @jsx React.DOM ###
 
-LOADING_STATE = 'loading'
-ERROR_STATE   = 'error'
-LOADED_STATE  = 'loaded'
-
 window.IndicatorsToolbar_Messages = React.createClass
 
   getInitialState: ->
-    currentState: LOADING_STATE
+    currentState: ConnectionStateStore.NOT_CONNECTED_STATE
     unreadConversationsCount: '·'
-    isPopupShown: false
 
   getStateFromStores: ->
-    currentState: LOADED_STATE
+    currentState:             ConnectionStateStore.getConnectionState()
     unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount()
     activeConversationsCount: MessagingStatusStore.getActiveConversationsCount()
 
   componentDidMount: ->
-    MessagingStatusStore.addConnectSuccessCallback @connectSuccess
-    MessagingStatusStore.addConnectErrorCallback   @connectError
-    MessagingStatusStore.addChangeListener         @statusUpdate
+    ConnectionStateStore.addUpdateListener =>
+      @setState
+        currentState: ConnectionStateStore.getConnectionState()
+
+    MessagingStatusStore.addChangeListener =>
+      @setState
+        unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount()
+        activeConversationsCount: MessagingStatusStore.getActiveConversationsCount()
 
   render: ->
     switch @state.currentState
-      when LOADING_STATE then content = `<Spinner size={ 15 } />`
-      when ERROR_STATE   then content = `<span className="error-badge">O_o</span>`
-      when LOADED_STATE  then content = `<span className="messages-badge">
-                                           { this.state.unreadConversationsCount }
-                                         </span>`
+      when ConnectionStateStore.ERROR_STATE
+        content = `<span className="error-badge">?</span>`
+
+      when ConnectionStateStore.CONNECTED_STATE
+        content = `<span className="messages-badge">
+                        { this.state.unreadConversationsCount }
+                   </span>`
+      else
+        content = `<Spinner size={ 15 } />`
 
     return `<div className="toolbar__indicator"
                  onClick={ this.handleClick }>
               { content }
             </div>`
 
-  connectError: ->
-    @setState currentState: ERROR_STATE
-
-  connectSuccess: ->
-    @setState currentState: LOADED_STATE
-
-  statusUpdate: ->
-    @setState
-      unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount()
-      activeConversationsCount: MessagingStatusStore.getActiveConversationsCount()
-
   handleClick: ->
     switch @state.currentState
-      when LOADED_STATE then messagingService.toggleMessagesPopup()
-      when ERROR_STATE  then @connectToMessagingService()
+      when ConnectionStateStore.CONNECTED_STATE then messagingService.toggleMessagesPopup()
+      when ConnectionStateStore.ERROR_STATE     then messagingService.reconnect()
       else null
 
   # /**

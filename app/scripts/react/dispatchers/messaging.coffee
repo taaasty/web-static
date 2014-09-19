@@ -17,9 +17,7 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
       type:               'updateActiveConversations'
       activeConversations: activeConversations
 
-  connected: ->
-    MessagingDispatcher.handleServerAction type: 'connected'
-
-  connectionError: (error) ->
-    console.error? "Can't subscribe to private user channel. Error is #{error}"
-    MessagingDispatcher.handleServerAction type: 'connectionError', error: error
+  changeConnectionState: (state) ->
+    MessagingDispatcher.handleServerAction
+      type:  'connectionState'
+      state: state

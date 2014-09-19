@@ -3,7 +3,6 @@ window.SomeUser     = require './data/user.json'
 window.SomeCalendar = require './data/calendar.json'
 window.SomeEntry    = require './data/entry.json'
 
-window.TASTY_ENV = 'development'
 window.TastySettings =
   host:     'http://3000.vkontraste.ru/' # Это не api-шный хост, это адрес для прямых ссылок
   api_host: 'http://3000.vkontraste.ru/api/'
@@ -16,4 +15,4 @@ window.TastySettings.api_host = localStorage.getItem('api_host') if localStorage
 
 console.info? "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
 
-Tasty.env='static-development'
+window.TASTY_ENV='static-development'
