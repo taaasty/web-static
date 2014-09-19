@@ -21,7 +21,7 @@ window.Avatar = React.createClass
 
     if avatar_url?
       if APP_ENV is 'static-development'
-        avatar_url = @props.userpic.thumb64_url
+        avatar_url = @props.userpic.thumb128_url
       else
         avatar_url = ThumborService.image_url avatar_url, @props.size + 'x' + @props.size
       avatarStyles = "background-image": "url(#{avatar_url})"

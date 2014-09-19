@@ -7,43 +7,29 @@ window.MessagesPopup_Thread = React.createClass
   
   getInitialState: ->
     isEmpty:      false
-    conversation: ConversationsStore.getMessagesOfConversation @props.conversationId
+    conversation: ConversationsStore.getConversation @props.conversationId
 
   render: ->
     console.log 'Беседа', @state.conversation
     if @state.isEmpty
       thread = `<MessagesPopup_ThreadEmpty />`
     else
-      thread = `<MessagesPopup_ThreadList />`
+      thread = `<MessagesPopup_ThreadMessageList conversationId={ this.props.conversationId} />`
 
-    return `<div data-section="thread"
-                 className="messages__section messages__section--thread js-messages-section">
+    return `<div className="messages__section messages__section--thread">
               <header className="messages__header">
-                <div className="messages__hero" style={{ 'background-image': 'url(images/images/1.jpg)' }}>
+                <div className="messages__hero" style={ this._getHeroStyle() }>
                   <div className="messages__hero-overlay" />
                   <div className="messages__hero-box">
                     <div className="messages__hero-avatar">
-                      <span className="avatar" style={{ 'background-image': 'url(images/avatars/ava_6.png)' }}>
-                        <img className="avatar__img" src="images/avatars/ava_6.png" alt="vladaserb" />
-                      </span>
+                      <UserAvatar user={ this.state.conversation.recipient } size={ 35 } />
                     </div>
-                    <div className="messages__hero-name">vladaserb</div>
+                    <div className="messages__hero-name">{ this.state.conversation.recipient.slug }</div>
                   </div>
                 </div>
               </header>
               <div className="messages__body">
-                <div className="scroller scroller--dark scroller--messages js-scroller">
-                  <div className="scroller__pane js-scroller-pane">
-                    <div className="messages__list">
-                      <div className="messages__list-cell js-messages-list">
-                        { thread }
-                      </div>
-                    </div>
-                  </div>
-                  <div className="scroller__track js-scroller-track">
-                    <div className="scroller__bar js-scroller-bar"></div>
-                  </div>
-                </div>
+                { thread }
               </div>
               <footer className="messages__footer">
                 <div className="message-form">
@@ -56,3 +42,9 @@ window.MessagesPopup_Thread = React.createClass
                 </div>
               </footer>
             </div>`
+
+  _getHeroStyle: ->
+    backgroundUrl = @state.conversation.recipient.design.background_url
+
+    # 'background-image': "url(#{ backgroundUrl })"
+    'background-image': "url(http://taaasty.ru/assets/backgrounds/76/98/1881243_03012_treesbythewater_3840x2160.jpg)"

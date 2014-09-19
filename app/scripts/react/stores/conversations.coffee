@@ -22,11 +22,37 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
   updateConversations: (activeConversations) ->
     _conversations = activeConversations
 
-  getConversation: (id) ->
-    # TODO
+  getConversation: (conversationId) ->
+    for conversation in _conversations
+      return conversation if conversation.id == conversationId
   
-  getMessagesOfConversation: (id) ->
-    _.findWhere _conversations, { id }
+  getMessagesOfConversation: (conversationId) ->
+    conversation = @getConversation conversationId
+    conversation.last_messages
+
+  getMessageInfo: (conversationId, messageId) ->
+    conversation = @getConversation conversationId
+    messages     = conversation.last_messages
+    currentUser  = CurrentUserStore.getUser()
+    recipient    = conversation.recipient
+
+    for message in messages
+      if message.id == messageId
+        if recipient.id == message.recipient_id
+          messageInfo = { type: 'outgoing', user: currentUser }
+        else
+          messageInfo = { type: 'incoming', user: recipient }
+        break
+    console.log messageInfo
+    messageInfo
+
+  getRecipientData: (conversationId, recipientId) ->
+    conversation = @getConversation conversationId
+
+    if conversation.recipient.id == recipientId
+      return
+
+  getUserData: (conversationId, userId) ->
 
 }
 

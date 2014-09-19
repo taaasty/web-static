@@ -27,7 +27,6 @@ window.MessagesPopup_ConversationsList = React.createClass
     @$scroller = @scroller = null
 
   render: ->
-    that = @
     conversations = @state.activeConversations.map (conversation, i) ->
       `<MessagesPopup_ConversationsListItem conversation={ conversation }
                                             key={ conversation.id } />`

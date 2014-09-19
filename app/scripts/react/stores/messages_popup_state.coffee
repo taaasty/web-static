@@ -8,14 +8,15 @@ conversationId = null
 
 window.MessagesPopupStateStore = _.extend {}, EventEmitter.prototype, {
 
-  emitChange:               -> @emit CHANGE_EVENT
-  addChangeListener:        (callback) -> @on  CHANGE_EVENT, callback
-  removeChangeListener:     (callback) -> @off CHANGE_EVENT, callback
-  getCurrentState:          -> currentState
-  getCurrentConversationId: -> conversationId
-  setCurrentConversationId: (id) -> conversationId = id
-  setThreadState:           -> currentState = CREATE_NEW_CONVERSATION_STATE
-  setConversationsState:    -> currentState = CONVERSATIONS_STATE
+  emitChange:                    -> @emit CHANGE_EVENT
+  addChangeListener:             (callback) -> @on  CHANGE_EVENT, callback
+  removeChangeListener:          (callback) -> @off CHANGE_EVENT, callback
+  getCurrentState:               -> currentState
+  getCurrentConversationId:      -> conversationId
+  setCurrentConversationId:      (id) -> conversationId = id
+  setThreadState:                -> currentState = THREAD_STATE
+  setCreateNewConversationState: -> currentState = CREATE_NEW_CONVERSATION_STATE
+  setConversationsState:         -> currentState = CONVERSATIONS_STATE
 
 }
 
@@ -30,7 +31,7 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register (payload) -
       MessagesPopupStateStore.emitChange()
       break
     when 'clickNewConversation'
-      MessagesPopupStateStore.setThreadState()
+      MessagesPopupStateStore.setCreateNewConversationState()
       MessagesPopupStateStore.emitChange()
       break
     when 'clickBackButton'
@@ -38,6 +39,12 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register (payload) -
       MessagesPopupStateStore.emitChange()
       break
     when 'newConversationReceived'
+      # MessagingDispatcher.waitFor [ConversationsStore.dispatchToken]
+      MessagesPopupStateStore.setCurrentConversationId action.conversation.id
+      MessagesPopupStateStore.setThreadState()
+      MessagesPopupStateStore.emitChange()
+      break
+    when 'clickConversation'
       # MessagingDispatcher.waitFor [ConversationsStore.dispatchToken]
       MessagesPopupStateStore.setCurrentConversationId action.conversation.id
       MessagesPopupStateStore.setThreadState()
