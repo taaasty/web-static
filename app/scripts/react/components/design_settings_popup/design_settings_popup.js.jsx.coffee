@@ -28,6 +28,7 @@ window.DesignSettingsPopup = React.createClass
     return `<Popup hasActivities={ this.hasActivities() }
                    title={ DESIGN_SETTINGS_POPUP_TITLE }
                    isDraggable={ true }
+                   colorScheme="dark"
                    position={{ top: 30, left: 30 }}
                    className="popup--settings-design"
                    onClose={ this.close }>
