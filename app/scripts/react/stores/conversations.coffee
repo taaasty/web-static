@@ -25,7 +25,7 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
     # TODO
   
   getMessagesOfConversation: (id) ->
-    # TODO
+    _.findWhere _conversations, { id }
 
 }
 
