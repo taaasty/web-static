@@ -1,36 +1,21 @@
 class window.MessagingRequester
 
-  conversationUrl:      (convId) -> "/conversation/:#{ convId }"
-  newConversationUrl:     (slug) -> "/conversation/new/#{ slug }"
-  postMessageUrl:       (convId) -> "/conversation/:#{ convId }/messages/"
-  markMessageAsReadUrl:  (msgId) -> "/messages/#{ msgId }/read"
-  conversationOpenUrl:  (convId) -> "/conversation/#{ convId }/open/"
+  constructor: ({ @access_token, @socket_id })
 
-  conversationMessagesUrl: (convId) -> "/conversation/#{ convId }/messages"
-
-  constructor: ({ @access_token }) ->
-
-  notifyReady: ({ success, error, socket_id }) ->
-    $.ajax {
+  notifyReady: ({ success, error }) ->
+    $.ajax
       url: Routes.api.messenger_ready_url()
       data:
-        socket_id: socket_id
+        socket_id: @socket_id
       method: 'POST'
       success: success
       error:   error
-    }
-
-  # messagesLimit - сколько последних сообщений отдать
-  #makeConversationRequest: (convId, messagesLimit) ->
-    #$.ajax conversationUrl(convId),
-      #method: 'POST'
-      #data:
-        #messagesLimit: messagesLimit
 
   postNewConversation: (recipientSlug, content) ->
     $.ajax Routes.api.messenger_new_conversation_url(recipientSlug)
       method: 'POST'
       data:
+        socket_id: @socket_id
         content: content
 
   postMessage: (conversationId, content) ->

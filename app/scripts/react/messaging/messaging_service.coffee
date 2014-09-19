@@ -5,8 +5,7 @@ class window.MessagingService
   CHANNEL_MAIN: (userId) -> "private-#{userId}-messaging"
 
   constructor: ({ @user }) ->
-    @requester = new MessagingRequester access_token: @user.api_key.access_token
-    @pusher    = new Pusher gon.pusher.key,
+    @pusher = new Pusher gon.pusher.key,
       authEndpoint: gon.pusher.authEndpoint
       auth:
         headers:
@@ -22,8 +21,10 @@ class window.MessagingService
 
   _connected: =>
     MessagingDispatcher.connected()
-    @requester.notifyReady
+    @requester = new MessagingRequester
+      access_token: @user.api_key.access_token
       socket_id: @pusher.connection.socket_id
+    @requester.notifyReady
       success: -> console.log 'Server is notified'
       error: (error) -> console.error? "Error", error
 
@@ -32,11 +33,11 @@ class window.MessagingService
 
   postNewConversation: ({ recipientSlug, success, error }) ->
     @requester.postNewConversation(recipientSlug)
-      .done (newConversation) =>
-        MessagingDispatcher.handleServerAction {
+      .done (data) =>
+        # TODO Незаметно положить в store
+        MessagingDispatcher.handleServerAction
           type: 'newConversationReceived'
           conversation: newConversation
-        }
         success()
       .fail error
 
