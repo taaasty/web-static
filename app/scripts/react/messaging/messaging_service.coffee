@@ -6,7 +6,7 @@ class window.MessagingService
 
   constructor: ({ @user }) ->
     @requester = new MessagingRequester access_token: @user.api_key.access_token
-    @pusher = new Pusher gon.pusher.key,
+    @pusher    = new Pusher gon.pusher.key,
       authEndpoint: gon.pusher.authEndpoint
       auth:
         headers:
@@ -29,7 +29,6 @@ class window.MessagingService
 
     #@socker.pusher.connection.bind 'unavailable', connectError
     #@socker.pusher.connection.bind 'failed',      connectError
-
 
   postNewConversation: ({ recipientSlug, success, error }) ->
     @requester.postNewConversation(recipientSlug)

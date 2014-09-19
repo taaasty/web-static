@@ -4,13 +4,13 @@ currentUser = null
 
 window.CurrentUserStore = _.extend {}, EventEmitter.prototype, {
 
-  emitChange:            -> @emit CHANGE_EVENT
-  addChangeListener:     (callback) -> @on   CHANGE_EVENT, callback
-  removedChangeListener: (callback) -> @off  CHANGE_EVENT, callback
-  isLogged:              -> currentUser?
-  getUser:               -> currentUser
-  getAccessToken:        -> currentUser.api_key.access_token
-  getUserpic:            -> currentUser.userpic
+  emitChange:           -> @emit CHANGE_EVENT
+  addChangeListener:    (callback) -> @on   CHANGE_EVENT, callback
+  removeChangeListener: (callback) -> @off  CHANGE_EVENT, callback
+  isLogged:             -> currentUser?
+  getUser:              -> currentUser
+  getAccessToken:       -> currentUser.api_key.access_token
+  getUserpic:           -> currentUser.userpic
 
   _setupUser: (user) ->
     currentUser = user

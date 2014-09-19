@@ -1,40 +1,32 @@
 ###* @jsx React.DOM ###
 
-MESSAGES_POPUP_TITLE    = 'Мои переписки'
-CONVERSATION_LIST_STATE = 'conversationList'
-RECIPIENT_LIST_STATE    = 'recipientList'
-THREAD_STATE            = 'thread'
+MESSAGES_POPUP_TITLE = 'Мои переписки'
+CONVERSATIONS_STATE           = 'conversations'
+CREATE_NEW_CONVERSATION_STATE = 'createNewConversation'
+THREAD_STATE                  = 'thread'
 
 window.MessagesPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
 
-  getInitialState: ->
-    @getStateFromStore()
-
-  store: -> window.messagesPopupStateStore
+  getInitialState: -> @getStateFromStore()
 
   componentDidMount: ->
-    @store().addChangeHandler @setStateFromStore
+    @store.addChangeListener @setStateFromStore
 
-  setStateFromStore: ->
-    @setState @getStateFromStore()
-
-  getStateFromStore: ->
-    currentState:          @store.currentState()
-    currentConversationId: @store.currentConversationId()
+  componentWillUnmount: ->
+    @store.removeChangeListener @setStateFromStore
 
   render: ->
     switch @state.currentState
-      when CONVERSATION_LIST_STATE
-        content = `<MessagesPopup_ConversationList onCreateNewConversation={ this.activateRecipientListState }
-                                                   onClickConversation={ this.activateThreadState } />`
-      when RECIPIENT_LIST_STATE
-        content = `<MessagesPopup_RecipientList />`
+      when CONVERSATIONS_STATE
+        content = `<MessagesPopup_Conversations />`
+      when CREATE_NEW_CONVERSATION_STATE
+        content = `<MessagesPopup_CreateNewConversation />`
       when THREAD_STATE
-        content = `<MessagesPopup_Thread conversationId={this.state.currentConversationId} />`
+        content = `<MessagesPopup_Thread conversationId={ this.state.currentConversationId } />`
 
-    unless @isConversationState()
-      backButton = `<MessagesPopup_UIBackButton onClick={ this.activateConversationState } />`
+    unless @isConversationsState()
+      backButton = `<MessagesPopup_UIBackButton onClick={ this.handleBackButtonClick } />`
 
     return `<Popup hasActivities={ this.hasActivities() }
                    title={ MESSAGES_POPUP_TITLE }
@@ -51,14 +43,23 @@ window.MessagesPopup = React.createClass
 
             </Popup>`
 
+  store: window.MessagesPopupStateStore
 
-  activateConversationState:  -> @setState currentState: CONVERSATION_LIST_STATE
-  activateRecipientListState: -> @setState currentState: RECIPIENT_LIST_STATE
-  activateThreadState:        -> @setState currentState: THREAD_STATE
+  setStateFromStore: ->
+    @setState @getStateFromStore()
 
-  isConversationState:  -> @state.currentState is CONVERSATION_LIST_STATE
-  isRecipientListState: -> @state.currentState is RECIPIENT_LIST_STATE
-  isThreadState:        -> @state.currentState is THREAD_STATE
+  getStateFromStore: ->
+    currentState:          @store.getCurrentState()
+    currentConversationId: @store.getCurrentConversationId()
+
+  handleBackButtonClick: ->
+    MessagingDispatcher.handleViewAction {
+      type: 'clickBackButton'
+    }
+
+  isConversationsState:         -> @state.currentState is CONVERSATIONS_STATE
+  isCreateNewConversationState: -> @state.currentState is CREATE_NEW_CONVERSATION_STATE
+  isThreadState:                -> @state.currentState is THREAD_STATE
 
 # Статика
 #

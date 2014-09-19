@@ -5,7 +5,7 @@ OPEN_STATE     = 'openState'
 EXPANDED_STATE = 'expandedState'
 ACTIVE_STATE   = 'activeState'
 
-window.MessagesPopup_RecipientList = React.createClass
+window.MessagesPopup_CreateNewConversation = React.createClass
 
   getInitialState: ->
     currentState: CLOSE_STATE

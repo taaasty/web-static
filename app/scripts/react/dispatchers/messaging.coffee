@@ -23,4 +23,3 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
   connectionError: (error) ->
     console.error? "Can't subscribe to private user channel. Error is #{error}"
     MessagingDispatcher.handleServerAction type: 'connectionError', error: error
-
