@@ -46,7 +46,10 @@ window.MessagesPopup_ConversationsListItem = React.createClass
     @props.conversation.last_message.content_html.substring(0, MAXIMUM_LAST_MESSAGE_LENGTH) + '…'
 
   handleClick: ->
-    console.log @props.conversation
+    MessagingDispatcher.handleViewAction {
+      type: 'clickConversation'
+      conversation: @props.conversation
+    }
 
 # <div data-id="2"
 #            className="messages__dialog js-messages-dialog">
