@@ -6,6 +6,8 @@
 #= require_tree ./entities
 #= require_tree ./services
 #= require_tree ./mixins
+#= require_tree ./stores
+#= require_tree ./dispatchers
 #= require_tree ./messaging
 #= require_tree ./components/post_editor/mixins/
 #= require_tree ./components/post_editor/editors/mixins
