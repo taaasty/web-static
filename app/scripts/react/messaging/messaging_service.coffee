@@ -31,14 +31,12 @@ class window.MessagingService
     #@socker.pusher.connection.bind 'unavailable', connectError
     #@socker.pusher.connection.bind 'failed',      connectError
 
-  postNewConversation: ({ recipientSlug, success, error }) ->
+  postNewConversation: ({ recipientSlug, error }) ->
     @requester.postNewConversation(recipientSlug)
-      .done (data) =>
-        # TODO Незаметно положить в store
+      .done (conversation) =>
         MessagingDispatcher.handleServerAction
-          type: 'newConversationReceived'
-          conversation: newConversation
-        success()
+          type: 'postNewConversation'
+          conversation: conversation
       .fail error
 
   toggleMessagesPopup: ->

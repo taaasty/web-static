@@ -14,6 +14,7 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
     @off CHANGE_EVENT, callback
 
   addConversation: (newConversation) ->
+    # TODO Проверять что такого беседы еще нет
     _conversations.unshift newConversation
 
   getActiveConversations: -> _conversations
@@ -33,6 +34,10 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
   action = payload.action
 
   switch action.type
+    when 'postNewConversation'
+      ConversationsStore.addConversation action.conversation
+      ConversationsStore.emitChange()
+      break
     when 'newConversationReceived'
       ConversationsStore.addConversation action.conversation
       ConversationsStore.emitChange()

@@ -3,22 +3,27 @@
 CLOSE_STATE    = 'closeState'
 OPEN_STATE     = 'openState'
 EXPANDED_STATE = 'expandedState'
+PROCESS_STATE  = 'process'
 ACTIVE_STATE   = 'activeState'
 
+# TODO Разбить на компоненты
 window.MessagesPopup_CreateNewConversation = React.createClass
 
   getInitialState: ->
     currentState: CLOSE_STATE
 
   postNewConversation: (recipientSlug) ->
+    @setState currentState: PROCESS_STATE
     window.messagingService.postNewConversation
       recipientSlug: recipientSlug
-      success: (conversationId) ->
-        window.messagesPopupStateDispatcher.setMessagePopupState THREAD_STATE, conversationId
-
-      error: => console.error 'Не удалось создать переписку с пользователем', recipientSlug
+      error: => 
+        @setState currentState: CLOSE_STATE
+        console.error 'Не удалось создать переписку с пользователем', recipientSlug
 
   render: ->
+
+    return @renderProcess() if @state.currentState == PROCESS_STATE
+
     chooserClasses = React.addons.classSet {
       'messages__chooser': true
       'state--open': @isOpenState()
@@ -47,6 +52,17 @@ window.MessagesPopup_CreateNewConversation = React.createClass
                 </div>
               </div>
             </div>`
+
+  renderProcess:  ->
+
+    return `<div className="messages__section messages__section--recipients">
+              <div className="messages__body">
+                <div className="messages__box">
+                  <div className="messages__hint">Создаю беседу..</div>
+                </div>
+              </div>
+            </div>`
+
 
   activateOpenState:  -> @setState(currentState: OPEN_STATE)
   activateCloseState: -> @setState(currentState: CLOSE_STATE)

@@ -23,6 +23,12 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register (payload) -
   action = payload.action
 
   switch action.type
+
+    when 'postNewConversation'
+      MessagesPopupStateStore.setThreadState()
+      MessagesPopupStateStore.setCurrentConversationId action.conversation.id
+      MessagesPopupStateStore.emitChange()
+      break
     when 'clickNewConversation'
       MessagesPopupStateStore.setThreadState()
       MessagesPopupStateStore.emitChange()
