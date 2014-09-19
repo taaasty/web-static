@@ -24,15 +24,15 @@
     "fontType": "serif",
     "coverAlign": "center",
     "feedOpacity": 1,
-    "background_url": "images/backgrounds/3.png"
+    "background_url": "http://taaasty.ru/assets/backgrounds/76/98/1881243_03012_treesbythewater_3840x2160.jpg"
   },
   "userpic": {
-    "large_url": "http://3000.vkontraste.ru/assets/userpic/22/35/17_large.png",
-    "thumb128_url": "http://3000.vkontraste.ru/assets/userpic/22/35/17_thumb128.png",
-    "thumb64_url": "http://3000.vkontraste.ru/assets/userpic/22/35/17_thumb64.png",
+    "large_url": "http://taaasty.ru/assets/userpic/20/2d/232992_large.jpg",
+    "thumb128_url": "http://taaasty.ru/assets/userpic/20/2d/232992_thumb128.jpg",
+    "thumb64_url": "http://taaasty.ru/assets/userpic/20/2d/232992_thumb64.jpg",
     "default_colors": {
-      "background": "#f37420",
-      "name": "#fff"
+      "background": "#b5c31e",
+      "name": "#ffffff"
     }
   },
   "features": {
