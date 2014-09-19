@@ -6,7 +6,7 @@ class window.MessagingService
 
   constructor: ({ @user }) ->
     @pusher = new Pusher gon.pusher.key,
-      authEndpoint: gon.pusher.authEndpoint
+      authEndpoint: Routes.api.pusher_auth_url()
       auth:
         headers:
           'X-User-Token': @user.api_key.access_token
