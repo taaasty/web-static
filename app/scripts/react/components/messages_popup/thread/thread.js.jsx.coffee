@@ -6,9 +6,11 @@ window.MessagesPopup_Thread = React.createClass
     conversationId: React.PropTypes.number.isRequired
   
   getInitialState: ->
-    isEmpty: false
+    isEmpty:      false
+    conversation: ConversationsStore.getMessagesOfConversation @props.conversationId
 
   render: ->
+    console.log 'Беседа', @state.conversation
     if @state.isEmpty
       thread = `<MessagesPopup_ThreadEmpty />`
     else

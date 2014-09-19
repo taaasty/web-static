@@ -1,6 +1,6 @@
 class window.MessagingRequester
 
-  constructor: ({ @access_token, @socket_id })
+  constructor: ({ @access_token, @socket_id }) ->
 
   notifyReady: ({ success, error }) ->
     $.ajax
@@ -12,7 +12,8 @@ class window.MessagingRequester
       error:   error
 
   postNewConversation: (recipientSlug, content) ->
-    $.ajax Routes.api.messenger_new_conversation_url(recipientSlug)
+    $.ajax
+      url: Routes.api.messenger_new_conversation_url(recipientSlug)
       method: 'POST'
       data:
         socket_id: @socket_id
