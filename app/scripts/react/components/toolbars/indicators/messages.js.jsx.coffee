@@ -4,7 +4,7 @@ window.IndicatorsToolbar_Messages = React.createClass
 
   getInitialState: ->
     currentState: ConnectionStateStore.NOT_CONNECTED_STATE
-    unreadConversationsCount: '·'
+    unreadConversationsCount: '?'
 
   getStateFromStores: ->
     currentState:             ConnectionStateStore.getConnectionState()

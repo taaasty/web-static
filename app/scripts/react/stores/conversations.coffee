@@ -23,8 +23,7 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
     _conversations = activeConversations
 
   getConversation: (conversationId) ->
-    for conversation in _conversations
-      return conversation if conversation.id == conversationId
+    _.findWhere _conversations, id: conversationId
   
   getMessagesOfConversation: (conversationId) ->
     conversation = @getConversation conversationId

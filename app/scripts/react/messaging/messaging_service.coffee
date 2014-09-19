@@ -37,8 +37,8 @@ class window.MessagingService
       success: -> console.log 'Server is notified'
       error: (error) -> console.error? "Error", error
 
-    @socker.pusher.connection.bind 'unavailable', (error) -> console.log "pusher unavailable", error
-    @socker.pusher.connection.bind 'failed',      (error) -> console.log "pusher failer", error
+    @pusher.connection.bind 'unavailable', (error) -> console.log "pusher unavailable", error
+    @pusher.connection.bind 'failed',      (error) -> console.log "pusher failer", error
 
   postNewConversation: ({ recipientSlug, error }) ->
     @requester.postNewConversation(recipientSlug)

@@ -16,7 +16,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass
     @setState currentState: PROCESS_STATE
     window.messagingService.postNewConversation
       recipientSlug: recipientSlug
-      error: => 
+      error: =>
         @setState currentState: CLOSE_STATE
         console.error 'Не удалось создать переписку с пользователем', recipientSlug
 
