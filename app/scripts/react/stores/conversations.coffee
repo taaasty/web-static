@@ -32,7 +32,7 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
 
   getMessageInfo: (conversationId, messageId) ->
     conversation = @getConversation conversationId
-    messages     = conversation.last_messages
+    messages     = @getMessagesOfConversation conversationId
     currentUser  = CurrentUserStore.getUser()
     recipient    = conversation.recipient
 
@@ -43,7 +43,7 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
         else
           messageInfo = { type: 'incoming', user: recipient }
         break
-    console.log messageInfo
+
     messageInfo
 
   getRecipientData: (conversationId, recipientId) ->
