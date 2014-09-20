@@ -27,7 +27,7 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
   
   getMessagesOfConversation: (conversationId) ->
     conversation = @getConversation conversationId
-    conversation.last_messages
+    conversation.messages || []
 
   getMessageInfo: (conversationId, messageId) ->
     conversation = @getConversation conversationId
