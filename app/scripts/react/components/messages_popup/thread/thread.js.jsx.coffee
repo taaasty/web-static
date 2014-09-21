@@ -10,7 +10,6 @@ window.MessagesPopup_Thread = React.createClass
     conversation: ConversationsStore.getConversation @props.conversationId
 
   render: ->
-    console.log 'Беседа', @state.conversation
     if @state.isEmpty
       thread = `<MessagesPopup_ThreadEmpty />`
     else
@@ -47,4 +46,4 @@ window.MessagesPopup_Thread = React.createClass
     backgroundUrl = @state.conversation.recipient.design.background_url
 
     # 'background-image': "url(#{ backgroundUrl })"
-    'background-image': "url(http://taaasty.ru/assets/backgrounds/76/98/1881243_03012_treesbythewater_3840x2160.jpg)"
+    'background-image': "url(http://taaasty.ru/assets/backgrounds/da/9c/1881243_1881243_03012_treesbythewater_3840x2160.jpg)"

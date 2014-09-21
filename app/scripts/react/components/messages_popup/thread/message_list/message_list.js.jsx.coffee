@@ -17,6 +17,8 @@ window.MessagesPopup_ThreadMessageList = React.createClass
       barOnCls: "scroller--tracked"
       pause:    0
 
+    MessagesStore.addChangeListener @_onStoreChange
+
   componentDidUpdate: ->
     @scroller.update()
     @$scroller.trigger('sizeChange').trigger 'sizeChange'
@@ -25,11 +27,12 @@ window.MessagesPopup_ThreadMessageList = React.createClass
     @scroller.dispose()
     @$scroller = @scroller = null
 
+    MessagesStore.removeChangeListener @_onStoreChange
+
   render: ->
     that = @
     messages = @state.messages.map (message) ->
       `<MessagesPopup_ThreadMessageListItem message={ message }
-                                            conversationId={ that.props.conversationId }
                                             key={ message.id } />`
 
     return `<div ref="scroller"
@@ -50,4 +53,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass
             </div>`
 
   getStateFromStore: ->
-    messages: ConversationsStore.getMessagesOfConversation @props.conversationId
+    messages: MessagesStore.getMessages @props.conversationId
+
+  _onStoreChange: ->
+    @setState @getStateFromStore()

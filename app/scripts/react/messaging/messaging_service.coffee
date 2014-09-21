@@ -2,7 +2,7 @@ class window.MessagingService
   EVENT_STATUS: 'status'
   EVENT_ACTIVE_CONVERSATIONS: 'active_conversations'
 
-  CHANNEL_MAIN: (userId) -> "private-#{userId}-messaging"
+  CHANNEL_MAIN: (userId) -> "private-#{ userId }-messaging"
 
   constructor: ({ @user }) ->
     MessagingDispatcher.changeConnectionState ConnectionStateStore.PROCESS_STATE
@@ -42,14 +42,24 @@ class window.MessagingService
 
   postNewConversation: ({ recipientSlug, error }) ->
     @requester.postNewConversation(recipientSlug)
-      .done (conversation) =>
+      .done (conversation) ->
         MessagingDispatcher.handleServerAction
           type: 'postNewConversation'
           conversation: conversation
       .fail error
 
+  loadMessages: (conversationId) ->
+    @requester.loadMessages(conversationId)
+      .done (data) ->
+        MessagingDispatcher.handleServerAction
+          type: 'messageListUpdated'
+          conversationId: conversationId
+          messages: data.messages
+      .fail (error) ->
+        console.error 'Проблема при загрузке сообщений для переписки', error
+
   toggleMessagesPopup: ->
-    if @messagesPopup?._lifeCycleState=='MOUNTED'
+    if @messagesPopup?._lifeCycleState is 'MOUNTED'
       React.unmountComponentAtNode @messagesContainer
     else
       @messagesPopup = React.renderComponent MessagesPopup(), @messagesContainer

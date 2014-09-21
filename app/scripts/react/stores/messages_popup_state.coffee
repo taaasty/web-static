@@ -39,13 +39,12 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register (payload) -
       MessagesPopupStateStore.setConversationsState()
       MessagesPopupStateStore.emitChange()
       break
-    when 'newConversationReceived'
-      # MessagingDispatcher.waitFor [ConversationsStore.dispatchToken]
-      MessagesPopupStateStore.setCurrentConversationId action.conversation.id
+    when 'clickConversation'
+      MessagesPopupStateStore.setCurrentConversationId action.conversationId
       MessagesPopupStateStore.setThreadState()
       MessagesPopupStateStore.emitChange()
       break
-    when 'clickConversation'
+    when 'newConversationReceived'
       # MessagingDispatcher.waitFor [ConversationsStore.dispatchToken]
       MessagesPopupStateStore.setCurrentConversationId action.conversation.id
       MessagesPopupStateStore.setThreadState()

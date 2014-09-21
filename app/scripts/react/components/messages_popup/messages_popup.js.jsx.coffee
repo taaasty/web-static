@@ -11,10 +11,10 @@ window.MessagesPopup = React.createClass
   getInitialState: -> @getStateFromStore()
 
   componentDidMount: ->
-    @store.addChangeListener @setStateFromStore
+    MessagesPopupStateStore.addChangeListener @_onStoreChange
 
   componentWillUnmount: ->
-    @store.removeChangeListener @setStateFromStore
+    MessagesPopupStateStore.removeChangeListener @_onStoreChange
 
   render: ->
     switch @state.currentState
@@ -43,23 +43,21 @@ window.MessagesPopup = React.createClass
 
             </Popup>`
 
-  store: window.MessagesPopupStateStore
-
-  setStateFromStore: ->
-    @setState @getStateFromStore()
+  isConversationsState:         -> @state.currentState is CONVERSATIONS_STATE
+  isCreateNewConversationState: -> @state.currentState is CREATE_NEW_CONVERSATION_STATE
+  isThreadState:                -> @state.currentState is THREAD_STATE
 
   getStateFromStore: ->
-    currentState:          @store.getCurrentState()
-    currentConversationId: @store.getCurrentConversationId()
+    currentState:          MessagesPopupStateStore.getCurrentState()
+    currentConversationId: MessagesPopupStateStore.getCurrentConversationId()
 
   handleBackButtonClick: ->
     MessagingDispatcher.handleViewAction {
       type: 'clickBackButton'
     }
 
-  isConversationsState:         -> @state.currentState is CONVERSATIONS_STATE
-  isCreateNewConversationState: -> @state.currentState is CREATE_NEW_CONVERSATION_STATE
-  isThreadState:                -> @state.currentState is THREAD_STATE
+  _onStoreChange: ->
+    @setState @getStateFromStore()
 
 # Статика
 #

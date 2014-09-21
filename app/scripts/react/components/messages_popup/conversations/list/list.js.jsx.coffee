@@ -2,8 +2,7 @@
 
 window.MessagesPopup_ConversationsList = React.createClass
 
-  getInitialState: ->
-    @getStateFromStores()
+  getInitialState: -> @getStateFromStore()
 
   componentDidMount: ->
     @$scroller = $( @refs.scroller.getDOMNode() )
@@ -15,12 +14,13 @@ window.MessagesPopup_ConversationsList = React.createClass
       barOnCls: "scroller--tracked"
       pause:    0
 
-    ConversationsStore.addChangeListener @getStateFromStores
+    ConversationsStore.addChangeListener @_onStoreChange
 
   componentDidUpdate: ->
     @scroller.update()
     @$scroller.trigger('sizeChange').trigger 'sizeChange'
-    ConversationsStore.removeChangeListener @getStateFromStores
+
+    ConversationsStore.removeChangeListener @_onStoreChange
 
   componentWillUnmount: ->
     @scroller.dispose()
@@ -45,5 +45,8 @@ window.MessagesPopup_ConversationsList = React.createClass
               </div>
             </div>`
 
-  getStateFromStores: ->
+  getStateFromStore: ->
     activeConversations: ConversationsStore.getActiveConversations()
+
+  _onStoreChange: ->
+    @setState @getStateFromStore()

@@ -23,35 +23,7 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
     _conversations = activeConversations
 
   getConversation: (conversationId) ->
-    _.findWhere _conversations, id: conversationId
-  
-  getMessagesOfConversation: (conversationId) ->
-    conversation = @getConversation conversationId
-    conversation.messages || []
-
-  getMessageInfo: (conversationId, messageId) ->
-    conversation = @getConversation conversationId
-    messages     = @getMessagesOfConversation conversationId
-    currentUser  = CurrentUserStore.getUser()
-    recipient    = conversation.recipient
-
-    for message in messages
-      if message.id == messageId
-        if recipient.id == message.recipient_id
-          messageInfo = { type: 'outgoing', user: currentUser }
-        else
-          messageInfo = { type: 'incoming', user: recipient }
-        break
-
-    messageInfo
-
-  getRecipientData: (conversationId, recipientId) ->
-    conversation = @getConversation conversationId
-
-    if conversation.recipient.id == recipientId
-      return
-
-  getUserData: (conversationId, userId) ->
+    _.findWhere _conversations, { id: conversationId }
 
 }
 
