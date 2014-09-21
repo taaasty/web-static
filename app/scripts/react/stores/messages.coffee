@@ -54,18 +54,6 @@ MessagesStore.dispatchToken = MessagingDispatcher.register (payload) ->
       MessagesStore.updateMessages action.conversationId, action.messages
       MessagesStore.emitChange()
       break
-    # when 'postNewConversation'
-    #   ConversationsStore.addConversation action.conversation
-    #   ConversationsStore.emitChange()
-    #   break
-    # when 'newConversationReceived'
-    #   ConversationsStore.addConversation action.conversation
-    #   ConversationsStore.emitChange()
-    #   break
-    # when 'updateActiveConversations'
-    #   ConversationsStore.updateConversations action.activeConversations
-    #   ConversationsStore.emitChange()
-    #   break
 
 # var MessageStore = merge(EventEmitter.prototype, {
 
