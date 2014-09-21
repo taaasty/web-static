@@ -1,7 +1,5 @@
 ###* @jsx React.DOM ###
 
-MAXIMUM_LAST_MESSAGE_LENGTH = 200
-
 window.MessagesPopup_ConversationsListItem = React.createClass
   mixins: [ReactGrammarMixin]
 
@@ -43,7 +41,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass
       `<div className="messages__counter">{ this.props.newMessagesCount }</div>`
 
   _getLastMessageText: ->
-    @props.conversation.last_message.content_html.substring(0, MAXIMUM_LAST_MESSAGE_LENGTH) + '…'
+    @props.conversation.last_message.content_html
 
   handleClick: ->
     MessagingDispatcher.handleViewAction {
