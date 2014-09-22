@@ -17,6 +17,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass
       barOnCls: "scroller--tracked"
       pause:    0
 
+    messagingService.openConversation @props.conversationId
     MessagesStore.addChangeListener @_onStoreChange
 
   componentDidUpdate: ->

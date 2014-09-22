@@ -48,6 +48,9 @@ class window.MessagingService
           conversation: conversation
       .fail error
 
+  openConversation: (conversationId) ->
+    @loadMessages conversationId
+
   loadMessages: (conversationId) ->
     @requester.loadMessages(conversationId)
       .done (data) ->
