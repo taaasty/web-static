@@ -2,6 +2,7 @@ class window.MessagingService
   EVENT_STATUS: 'status'
   EVENT_ACTIVE_CONVERSATIONS: 'active_conversations'
   EVENT_UPDATE_CONVERSATION:  'update_conversation'
+  EVENT_PUSH_MESSAGE:         'push_message'
 
   CHANNEL_MAIN: (userId) -> "private-#{ userId }-messaging"
 
@@ -66,11 +67,7 @@ class window.MessagingService
   postMessage: ({ conversationId, content, success, error, always }) ->
     @requester.postMessage(conversationId, content)
       .done (message) ->
-        MessagingDispatcher.handleViewAction {
-          type: 'messageReceived'
-          conversationId: conversationId
-          message: message
-        }
+        MessagingDispatcher.newMessageReceived message
         success?()
       .fail (errMsg) ->
         error?()
@@ -82,3 +79,9 @@ class window.MessagingService
       React.unmountComponentAtNode @messagesContainer
     else
       @messagesPopup = React.renderComponent MessagesPopup(), @messagesContainer
+
+  bindPushMessages: ->
+    @channel.bind @EVENT_PUSH_MESSAGE, MessagingDispatcher.newMessageReceived
+
+  unbindPushMessages: ->
+    @channel.unbind @EVENT_PUSH_MESSAGE, MessagingDispatcher.newMessageReceived

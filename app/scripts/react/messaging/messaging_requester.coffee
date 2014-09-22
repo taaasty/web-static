@@ -24,6 +24,7 @@ class window.MessagingRequester
       url: Routes.api.messenger_load_messages_url conversationId
       data:
         socket_id: @socket_id
+        order:     'asc'
 
   postMessage: (conversationId, content) ->
     $.ajax

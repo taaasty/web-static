@@ -10,8 +10,10 @@ window.MessagesPopup_ConversationsListItem = React.createClass
     online = `<span className="messages__user-online" />` if @props.conversation.online
 
     if @props.conversation.last_message?
-      lastMessageText      = `<span dangerouslySetInnerHTML={{ __html: this._getLastMessageText() }} />`
-      lastMessageUpdatedAt = @_getLastMessageCreatedAt()
+      lastMessageText = `<span dangerouslySetInnerHTML={{ __html: this._getLastMessageText() }} />`
+      lastCreatedAt   = @_getLastMessageCreatedAt()
+    else
+      lastCreatedAt   = @_getLastConversationCreatedAt()
 
     return `<div className="messages__dialog"
                  onClick={ this.handleClick }>
@@ -26,8 +28,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass
                 <span className="messages__user-name">{ this.props.conversation.recipient.slug }</span>
                 { lastMessageText }
               </div>
-
-              { lastMessageUpdatedAt }
+              <span className="messages__date">{ lastCreatedAt }</span>
             </div>`
 
   _getUnreadMessagesCount: ->
@@ -38,9 +39,10 @@ window.MessagesPopup_ConversationsListItem = React.createClass
     @props.conversation.last_message.content_html
 
   _getLastMessageCreatedAt: ->
-    date = moment( @props.conversation.last_message.created_at ).format 'D MMMM LT'
+    moment( @props.conversation.last_message.created_at ).format 'D MMMM LT'
 
-    return `<span className="messages__date">{ date }</span>`
+  _getLastConversationCreatedAt: ->
+    moment( @props.conversation.created_at ).format 'D MMMM LT'
 
   handleClick: ->
     ConversationActions.clickConversation @props.conversation.id
