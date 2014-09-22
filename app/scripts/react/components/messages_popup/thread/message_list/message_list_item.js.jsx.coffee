@@ -4,11 +4,10 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
   mixins: [ReactGrammarMixin]
 
   propTypes:
-    message:        React.PropTypes.object.isRequired
-    conversationId: React.PropTypes.number.isRequired
+    message: React.PropTypes.object.isRequired
 
   getInitialState: ->
-    messageInfo: ConversationsStore.getMessageInfo( @props.conversationId, @props.message.id )
+    messageInfo: MessagesStore.getMessageInfo( @props.message, @props.message.conversation_id )
 
   render: ->
     messageClasses = React.addons.classSet {
