@@ -27,9 +27,11 @@
     "background_url": "http://taaasty.ru/assets/backgrounds/da/9c/1881243_1881243_03012_treesbythewater_3840x2160.jpg"
   },
   "userpic": {
-    "large_url": "http://taaasty.ru/assets/userpic/20/2d/232992_large.jpg",
-    "thumb128_url": "http://taaasty.ru/assets/userpic/20/2d/232992_thumb128.jpg",
-    "thumb64_url": "http://taaasty.ru/assets/userpic/20/2d/232992_thumb64.jpg",
+    "large_url": "http://3000.vkontraste.ru/assets/userpic/26/d8/13_large.jpg",
+    "original_url": "http://3000.vkontraste.ru/assets/userpic/26/d8/13_original.jpg",
+    "thumb64_url": "http://3000.vkontraste.ru/assets/userpic/26/d8/13_thumb64.jpg",
+    "thumb128_url": "http://3000.vkontraste.ru/assets/userpic/26/d8/13_thumb128.jpg",
+    "thumbor_path": "userpic/26/d8/13_original.jpg",
     "default_colors": {
       "background": "#b5c31e",
       "name": "#ffffff"

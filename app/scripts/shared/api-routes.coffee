@@ -47,8 +47,10 @@ ApiRoutes =
 
   pusher_auth_url:            -> TastySettings.api_host + 'v1/messenger/auth'
 
+  # Messenger
   messenger_ready_url:                             -> TastySettings.api_host + 'v1/messenger/ready'
   messenger_new_conversation_url:           (slug) -> TastySettings.api_host + 'v1/messenger/conversations/by_slug/' + slug
+  messenger_new_message_url:      (conversationId) -> TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages'
   messenger_load_messages_url:    (conversationId) -> TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages'
 
 window.Routes.api = ApiRoutes

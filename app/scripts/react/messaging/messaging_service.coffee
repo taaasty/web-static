@@ -61,6 +61,17 @@ class window.MessagingService
       .fail (error) ->
         console.error 'Проблема при загрузке сообщений для переписки', error
 
+  postMessage: ({ conversationId, content, success, error }) ->
+    @requester.postMessage(conversationId, content)
+      .done (message) ->
+        MessagingDispatcher.handleViewAction {
+          type: 'messageReceived'
+          conversationId: conversationId
+          message: message
+        }
+      .fail (errMsg) ->
+        console.error 'Проблема при отправке сообщения', errMsg
+
   toggleMessagesPopup: ->
     if @messagesPopup?._lifeCycleState is 'MOUNTED'
       React.unmountComponentAtNode @messagesContainer

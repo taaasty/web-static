@@ -23,7 +23,7 @@ window.MessagesPopup_Thread = React.createClass
                     <div className="messages__hero-avatar">
                       <a href={ this.state.conversation.recipient.tlog_url }
                          target="_blank">
-                        <UserAvatar user={ this.state.conversation.recipient } size={ 35 } />
+                        <UserAvatar user={ this.state.conversation.recipient } size={ 70 } />
                       </a>
                     </div>
                     <div className="messages__hero-name">{ this.state.conversation.recipient.slug }</div>
@@ -34,19 +34,12 @@ window.MessagesPopup_Thread = React.createClass
                 { thread }
               </div>
               <footer className="messages__footer">
-                <div className="message-form">
-                  <span className="messages__user-avatar">
-                    <span className="avatar avatar--eighth">
-                      <span className="avatar__text">M</span>
-                    </span>
-                  </span>
-                  <textarea className="message-form__textarea" placeholder="Ваше сообщение…"></textarea>
-                </div>
+                <MessagesPopup_ThreadMessageForm conversationId={ this.props.conversationId } />
               </footer>
             </div>`
 
   _getHeroStyle: ->
     backgroundUrl = @state.conversation.recipient.design.background_url
 
-    # 'background-image': "url(#{ backgroundUrl })"
-    'background-image': "url(http://taaasty.ru/assets/backgrounds/da/9c/1881243_1881243_03012_treesbythewater_3840x2160.jpg)"
+    # 'background-image': "url(http://taaasty.ru/assets/backgrounds/da/9c/1881243_1881243_03012_treesbythewater_3840x2160.jpg)"
+    'background-image': "url(#{ backgroundUrl })"
