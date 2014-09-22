@@ -8,22 +8,32 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
 
   updateMessagingStatus: (messagingStatus) ->
     MessagingDispatcher.handleServerAction
-      type:            'updateMessagingStatus'
+      type: 'updateMessagingStatus'
       messagingStatus: messagingStatus
 
   updateActiveConversations: (activeConversations) ->
     console.log 'Receive activeConversations', activeConversations
-    MessagingDispatcher.handleServerAction
-      type:               'updateActiveConversations'
+    MessagingDispatcher.handleServerAction {
+      type: 'updateActiveConversations'
       activeConversations: activeConversations
+    }
 
   updateConversation: (conversation) ->
-    MessagingDispatcher.handleServerAction
-      type:         'updateConversation'
+    MessagingDispatcher.handleServerAction {
+      type: 'updateConversation'
       conversation: conversation
+    }
     console.log 'conversation updated', conversation
 
   changeConnectionState: (state) ->
-    MessagingDispatcher.handleServerAction
+    MessagingDispatcher.handleServerAction {
       type:  'connectionState'
       state: state
+    }
+
+  newMessageReceived: (message) ->
+    MessagingDispatcher.handleServerAction {
+      type: 'messageReceived'
+      conversationId: message.conversation_id
+      message: message
+    }
