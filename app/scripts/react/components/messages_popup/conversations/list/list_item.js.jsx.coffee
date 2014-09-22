@@ -15,7 +15,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass
 
     return `<div className="messages__dialog"
                  onClick={ this.handleClick }>
-              { this._getNewMessagesCount() }
+              { this._getUnreadMessagesCount() }
 
               <span className="messages__user-avatar">
                 <UserAvatar user={ this.props.conversation.recipient } size={ 35 } />
@@ -30,11 +30,9 @@ window.MessagesPopup_ConversationsListItem = React.createClass
               { lastMessageUpdatedAt }
             </div>`
 
-  _getNewMessagesCount: ->
-    # Счетчик сообщений лежит в conversations
-    # TODO Подписываться на ConversatoinsStore
-    if @props.newMessagesCount > 0
-      `<div className="messages__counter">{ this.props.newMessagesCount }</div>`
+  _getUnreadMessagesCount: ->
+    if @props.conversation.unread_messages_count > 0
+      `<div className="messages__counter">{ this.props.conversation.unread_messages_count }</div>`
 
   _getLastMessageText: ->
     @props.conversation.last_message.content_html
