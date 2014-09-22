@@ -20,11 +20,11 @@ window.MessagesPopup_ConversationsList = React.createClass
     @scroller.update()
     @$scroller.trigger('sizeChange').trigger 'sizeChange'
 
-    ConversationsStore.removeChangeListener @_onStoreChange
-
   componentWillUnmount: ->
     @scroller.dispose()
     @$scroller = @scroller = null
+
+    ConversationsStore.removeChangeListener @_onStoreChange
 
   render: ->
     conversations = @state.activeConversations.map (conversation, i) ->

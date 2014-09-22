@@ -14,8 +14,8 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
     @off CHANGE_EVENT, callback
 
   addConversation: (newConversation) ->
-    # TODO Проверять что такого беседы еще нет
-    _conversations.unshift newConversation
+    unless @getConversation newConversation.id
+      _conversations.unshift newConversation
 
   getActiveConversations: -> _conversations
 

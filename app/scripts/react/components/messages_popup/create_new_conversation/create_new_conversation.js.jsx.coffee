@@ -14,6 +14,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass
 
   postNewConversation: (recipientSlug) ->
     @setState currentState: PROCESS_STATE
+
     window.messagingService.postNewConversation
       recipientSlug: recipientSlug
       error: =>
@@ -21,8 +22,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass
         console.error 'Не удалось создать переписку с пользователем', recipientSlug
 
   render: ->
-
-    return @renderProcess() if @state.currentState == PROCESS_STATE
+    return @renderProcess() if @isProcessState()
 
     chooserClasses = React.addons.classSet {
       'messages__chooser': true
@@ -45,8 +45,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass
                   <div className="messages__field">
                     <input type="hidden"
                            data-placeholder="Введите имя"
-                           style={{ 'width': '100%' }}
-                           className="js-messages-select-recipients" />
+                           style={{ 'width': '100%' }} />
                   </div>
                   <div className="messages__hint">Начните вводить имя друга, которому хотите написать сообщение</div>
                 </div>
@@ -54,20 +53,19 @@ window.MessagesPopup_CreateNewConversation = React.createClass
             </div>`
 
   renderProcess:  ->
-
-    return `<div className="messages__section messages__section--recipients">
-              <div className="messages__body">
-                <div className="messages__box">
-                  <div className="messages__hint">Создаю беседу..</div>
-                </div>
-              </div>
-            </div>`
-
+   `<div className="messages__section messages__section--recipients">
+      <div className="messages__body">
+        <div className="messages__box">
+          <div className="messages__hint">Создаю беседу..</div>
+        </div>
+      </div>
+    </div>`
 
   activateOpenState:  -> @setState(currentState: OPEN_STATE)
   activateCloseState: -> @setState(currentState: CLOSE_STATE)
 
-  isOpenState: -> @state.currentState is OPEN_STATE
+  isOpenState:    -> @state.currentState is OPEN_STATE
+  isProcessState: -> @state.currentState is PROCESS_STATE
 
 # <div class="messages__chooser-results js-messages-chooser-results"><div class="messages__chooser-result state--active">
 #             <div class="messages__person" data-id="1">
