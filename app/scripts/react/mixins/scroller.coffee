@@ -1,14 +1,15 @@
 window.ScrollerMixin =
 
   componentDidMount: ->
-    $('body').addClass 'no-scroll'
+    # $('body').addClass 'no-scroll'
     @initScroll()
 
   componentDidUpdate: -> @scroller.update()
 
   componentWillUnmount: ->
-    $('body').removeClass 'no-scroll'
+    # $('body').removeClass 'no-scroll'
     @scroller.dispose()
+    @$scroller = @scroller = null
 
   initScroll: ->
     # TODO Скроллинг только в пределах попапа

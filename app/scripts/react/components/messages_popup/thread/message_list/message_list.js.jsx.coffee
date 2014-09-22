@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.MessagesPopup_ThreadMessageList = React.createClass
+  mixins: [ScrollerMixin]
 
   propTypes:
     conversationId: React.PropTypes.number.isRequired
@@ -8,30 +9,13 @@ window.MessagesPopup_ThreadMessageList = React.createClass
   getInitialState: -> @getStateFromStore()
 
   componentDidMount: ->
-    @$scroller = $( @refs.scroller.getDOMNode() )
-
-    @scroller = @$scroller.baron
-      scroller: ".js-scroller-pane"
-      bar:      ".js-scroller-bar"
-      track:    ".js-scroller-track"
-      barOnCls: "scroller--tracked"
-      pause:    0
-
-    messagingService.openConversation @props.conversationId
     MessagesStore.addChangeListener @_onStoreChange
-
-  componentDidUpdate: ->
-    @scroller.update()
-    @$scroller.trigger('sizeChange').trigger 'sizeChange'
+    messagingService.openConversation @props.conversationId
 
   componentWillUnmount: ->
-    @scroller.dispose()
-    @$scroller = @scroller = null
-
     MessagesStore.removeChangeListener @_onStoreChange
 
   render: ->
-    that = @
     messages = @state.messages.map (message) ->
       `<MessagesPopup_ThreadMessageListItem message={ message }
                                             key={ message.id } />`
