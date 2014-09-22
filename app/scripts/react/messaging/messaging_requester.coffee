@@ -25,12 +25,13 @@ class window.MessagingRequester
       data:
         socket_id: @socket_id
 
-  #postMessage: (conversationId, content) ->
-    #$.ajax 
-    #url: postMessageUrl(conversationId),
-      #method: 'POST'
-      #data:
-        #content: content
+  postMessage: (conversationId, content) ->
+    $.ajax
+      url: Routes.api.messenger_new_message_url conversationId
+      method: 'POST'
+      data:
+        socket_id: @socket_id
+        content: content
 
   #markMessageAsRead: (msgId) ->
     #$.ajax markMessageAsReadUrl(msgId),

@@ -24,10 +24,13 @@ window.MessagesStore = _.extend {}, EventEmitter.prototype, {
   removeChangeListener: (callback) ->
     @off CHANGE_EVENT, callback
 
-  addMessage: (message, conversationId) ->
+  addMessage: (conversationId, message) ->
+    _messages[conversationId] ||= []
     _messages[conversationId].push message
 
   getMessages: (conversationId) -> _messages[conversationId] ? []
+
+  getAllMessages: -> _messages
 
   updateMessages: (conversationId, messages) ->
     _messages[conversationId] = messages
@@ -52,6 +55,10 @@ MessagesStore.dispatchToken = MessagingDispatcher.register (payload) ->
   switch action.type
     when 'messageListUpdated'
       MessagesStore.updateMessages action.conversationId, action.messages
+      MessagesStore.emitChange()
+      break
+    when 'messageReceived'
+      MessagesStore.addMessage action.conversationId, action.message
       MessagesStore.emitChange()
       break
 

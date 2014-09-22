@@ -12,6 +12,8 @@ window.MessagesPopup_ThreadMessageList = React.createClass
     MessagesStore.addChangeListener @_onStoreChange
     messagingService.openConversation @props.conversationId
 
+  componentDidUpdate: -> @_scrollToBottom()
+
   componentWillUnmount: ->
     MessagesStore.removeChangeListener @_onStoreChange
 
@@ -22,7 +24,8 @@ window.MessagesPopup_ThreadMessageList = React.createClass
 
     return `<div ref="scroller"
                  className="scroller scroller--dark scroller--messages">
-              <div className="scroller__pane js-scroller-pane">
+              <div ref="scrollerPane"
+                   className="scroller__pane js-scroller-pane">
                 <div className="messages__list">
                   <div className="messages__list-cell">
                     <div className="messages__empty state--hidden">
@@ -39,6 +42,10 @@ window.MessagesPopup_ThreadMessageList = React.createClass
 
   getStateFromStore: ->
     messages: MessagesStore.getMessages @props.conversationId
+
+  _scrollToBottom: ->
+    node           = @refs.scrollerPane.getDOMNode()
+    node.scrollTop = node.scrollHeight
 
   _onStoreChange: ->
     @setState @getStateFromStore()
