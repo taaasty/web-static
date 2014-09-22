@@ -11,9 +11,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass
 
     if @props.conversation.last_message?
       lastMessageText      = `<span dangerouslySetInnerHTML={{ __html: this._getLastMessageText() }} />`
-      lastMessageUpdatedAt = `<span className="messages__date">
-                                { this.timeAgo( this.props.conversation.last_message.created_at) }
-                              </span>`
+      lastMessageUpdatedAt = @_getLastMessageCreatedAt()
 
     return `<div className="messages__dialog"
                  onClick={ this.handleClick }>
@@ -40,6 +38,11 @@ window.MessagesPopup_ConversationsListItem = React.createClass
 
   _getLastMessageText: ->
     @props.conversation.last_message.content_html
+
+  _getLastMessageCreatedAt: ->
+    date = moment( @props.conversation.last_message.created_at ).format 'D MMMM LT'
+
+    return `<span className="messages__date">{ date }</span>`
 
   handleClick: ->
     ConversationActions.clickConversation @props.conversation.id

@@ -1,4 +1,4 @@
 window.MessageActions = 
 
-  newMessage: ({ conversationId, content, success, error }) ->
-    messagingService.postMessage { conversationId, content, success, error }
+  newMessage: ({ conversationId, content, success, error, always }) ->
+    messagingService.postMessage { conversationId, content, success, error, always }

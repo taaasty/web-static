@@ -17,6 +17,12 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
       type:               'updateActiveConversations'
       activeConversations: activeConversations
 
+  updateConversation: (conversation) ->
+    MessagingDispatcher.handleServerAction
+      type:         'updateConversation'
+      conversation: conversation
+    console.log 'conversation updated', conversation
+
   changeConnectionState: (state) ->
     MessagingDispatcher.handleServerAction
       type:  'connectionState'

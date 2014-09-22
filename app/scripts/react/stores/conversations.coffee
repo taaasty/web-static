@@ -22,6 +22,14 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
   updateConversations: (activeConversations) ->
     _conversations = activeConversations
 
+  updateConversation: (newConversation) ->
+    for conversation, i in _conversations
+      if conversation.id == newConversation.id
+        index = i
+        break
+
+    _conversations[index] = newConversation if index?
+
   getConversation: (conversationId) ->
     _.findWhere _conversations, { id: conversationId }
 
@@ -41,5 +49,9 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
       break
     when 'updateActiveConversations'
       ConversationsStore.updateConversations action.activeConversations
+      ConversationsStore.emitChange()
+      break
+    when 'updateConversation'
+      ConversationsStore.updateConversation action.conversation
       ConversationsStore.emitChange()
       break

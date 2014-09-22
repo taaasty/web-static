@@ -9,6 +9,8 @@ window.MessagesPopup_ThreadMessageList = React.createClass
   getInitialState: -> @getStateFromStore()
 
   componentDidMount: ->
+    @_scrollToBottom()
+
     MessagesStore.addChangeListener @_onStoreChange
     messagingService.openConversation @props.conversationId
 

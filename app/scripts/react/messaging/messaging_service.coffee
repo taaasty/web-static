@@ -1,6 +1,7 @@
 class window.MessagingService
   EVENT_STATUS: 'status'
   EVENT_ACTIVE_CONVERSATIONS: 'active_conversations'
+  EVENT_UPDATE_CONVERSATION:  'update_conversation'
 
   CHANNEL_MAIN: (userId) -> "private-#{ userId }-messaging"
 
@@ -18,8 +19,9 @@ class window.MessagingService
       TastyNotifyController.notify 'error', 'Соединение не установлено'
       MessagingDispatcher.changeConnectionState ConnectionStateStore.ERROR_STATE
 
-    @channel.bind @EVENT_STATUS,                   MessagingDispatcher.updateMessagingStatus
-    @channel.bind @EVENT_ACTIVE_CONVERSATIONS,     MessagingDispatcher.updateActiveConversations
+    @channel.bind @EVENT_STATUS,               MessagingDispatcher.updateMessagingStatus
+    @channel.bind @EVENT_ACTIVE_CONVERSATIONS, MessagingDispatcher.updateActiveConversations
+    @channel.bind @EVENT_UPDATE_CONVERSATION,  MessagingDispatcher.updateConversation
 
     @messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
 
@@ -61,7 +63,7 @@ class window.MessagingService
       .fail (error) ->
         console.error 'Проблема при загрузке сообщений для переписки', error
 
-  postMessage: ({ conversationId, content, success, error }) ->
+  postMessage: ({ conversationId, content, success, error, always }) ->
     @requester.postMessage(conversationId, content)
       .done (message) ->
         MessagingDispatcher.handleViewAction {
@@ -69,8 +71,11 @@ class window.MessagingService
           conversationId: conversationId
           message: message
         }
+        success?()
       .fail (errMsg) ->
-        console.error 'Проблема при отправке сообщения', errMsg
+        error?()
+        TastyNotifyController.errorResponse errMsg
+      .always always
 
   toggleMessagesPopup: ->
     if @messagesPopup?._lifeCycleState is 'MOUNTED'

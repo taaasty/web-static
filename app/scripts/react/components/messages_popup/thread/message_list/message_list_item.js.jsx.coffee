@@ -24,5 +24,10 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
                 <span className="messages__user-name">{ this.state.messageInfo.user.slug }</span> 
                 <span dangerouslySetInnerHTML={{ __html: this.props.message.content_html }} />
               </div>
-              <span className="messages__date">{ this.timeAgo( this.props.message.created_at) }</span>
+              { this._getMessageCreatedAt() }
             </div>`
+
+  _getMessageCreatedAt: ->
+    date = moment( @props.message.created_at ).format 'D MMMM LT'
+
+    return `<span className="messages__date">{ date }</span>`
