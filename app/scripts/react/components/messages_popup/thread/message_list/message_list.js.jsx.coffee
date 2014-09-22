@@ -24,7 +24,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass
                  className="scroller scroller--dark scroller--messages">
               <div className="scroller__pane js-scroller-pane">
                 <div className="messages__list">
-                  <div className="messages__list-cell js-messages-list">
+                  <div className="messages__list-cell">
                     <div className="messages__empty state--hidden">
                       <div className="messages__empty-text">Здесь будут отображаться сообщения</div>
                     </div>

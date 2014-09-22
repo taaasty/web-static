@@ -25,9 +25,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass
               </span>
 
               <div className="messages__dialog-text">
-                <a href={ this.props.conversation.recipient.tlog_url }>
-                  <span className="messages__user-name">{ this.props.conversation.recipient.slug }</span>
-                </a> 
+                <span className="messages__user-name">{ this.props.conversation.recipient.slug }</span>
                 { lastMessageText }
               </div>
 

@@ -21,7 +21,10 @@ window.MessagesPopup_Thread = React.createClass
                   <div className="messages__hero-overlay" />
                   <div className="messages__hero-box">
                     <div className="messages__hero-avatar">
-                      <UserAvatar user={ this.state.conversation.recipient } size={ 35 } />
+                      <a href={ this.state.conversation.recipient.tlog_url }
+                         target="_blank">
+                        <UserAvatar user={ this.state.conversation.recipient } size={ 35 } />
+                      </a>
                     </div>
                     <div className="messages__hero-name">{ this.state.conversation.recipient.slug }</div>
                   </div>
