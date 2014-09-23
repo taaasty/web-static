@@ -28,7 +28,10 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
         index = i
         break
 
-    _conversations[index] = newConversation if index?
+    if index?
+      _conversations[index] = newConversation 
+    else
+      @addConversation newConversation
 
   getConversation: (conversationId) ->
     _.findWhere _conversations, { id: conversationId }

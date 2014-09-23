@@ -4,4 +4,4 @@ window.MessageActions =
     messagingService.postMessage { conversationId, content, success, error, always }
 
   readMessage: (conversationId, messageId) ->
-    messagingService.readMessage conversationId, messageId
+    messagingService.markAsReadMessage conversationId, messageId

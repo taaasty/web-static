@@ -33,7 +33,7 @@ class window.MessagingRequester
         socket_id: @socket_id
         content: content
 
-  readMessage: (conversationId, messageId) ->
+  markAsReadMessage: (conversationId, messageId) ->
     $.ajax
       url: Routes.api.messenger_read_messages_url conversationId
       method: 'PUT'

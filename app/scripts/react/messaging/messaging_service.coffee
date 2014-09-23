@@ -78,8 +78,8 @@ class window.MessagingService
         TastyNotifyController.errorResponse errMsg
       .always always
 
-  readMessage: (conversationId, messageId) ->
-    @requester.readMessage(conversationId, messageId)
+  markAsReadMessage: (conversationId, messageId) ->
+    @requester.markAsReadMessage(conversationId, messageId)
       .fail (errMsg) ->
         console.error 'Проблема при прочтении сообщения', errMsg
 
