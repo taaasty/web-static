@@ -135,6 +135,7 @@
   clear: both;
   font-size: 12px;
   color: #888;
+  transition: color .5s ease;
 }
 
 // Message Hero
@@ -473,6 +474,15 @@
       border-bottom: 1px solid rgba(red(@white), green(@white), blue(@white), .4);
     }
   }
+
+  &.state--unread {
+
+    .messages__date {
+      color: @black;
+    }
+
+  }
+
 }
 
 .message--to {
@@ -495,4 +505,9 @@
       border-bottom: 1px solid rgba(red(@black), green(@black), blue(@black), .2);
     }
   }
+
+  .messages__date {
+    text-align: right;
+  }
+
 }

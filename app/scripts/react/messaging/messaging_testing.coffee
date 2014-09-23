@@ -24,5 +24,3 @@ window.MessagingMock =
   emulateRead: ({message}) ->
     message ||= @message()
     messaging.emitEvent "#{message.conversation_id}:read:#{message.id}"
-
-

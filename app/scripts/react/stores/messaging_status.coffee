@@ -4,14 +4,19 @@ _messagingStatus = {}
 
 window.MessagingStatusStore = _.extend {}, EventEmitter.prototype, {
 
-  emitChange:            -> @emit CHANGE_EVENT
-  addChangeListener:     (callback) -> @on   CHANGE_EVENT, callback
-  removedChangeListener: (callback) -> @off  CHANGE_EVENT, callback
+  emitChange: ->
+    @emit CHANGE_EVENT
+
+  addChangeListener: (callback) ->
+    @on CHANGE_EVENT, callback
+
+  removeChangeListener: (callback) ->
+    @off CHANGE_EVENT, callback
 
   getUnreadConversationsCount: -> _messagingStatus.unreadConversationsCount
   getActiveConversationsCount: -> _messagingStatus.anreadConversationsCount
 
-  _update:        (messagingStatus) -> _messagingStatus = messagingStatus
+  _update: (messagingStatus) -> _messagingStatus = messagingStatus
 
 }
 
@@ -23,5 +28,3 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register (payload) ->
       MessagingStatusStore._update action.messagingStatus
       MessagingStatusStore.emitChange()
       break
-      break
-
