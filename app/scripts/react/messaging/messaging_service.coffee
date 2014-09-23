@@ -3,6 +3,7 @@ class window.MessagingService
   EVENT_ACTIVE_CONVERSATIONS: 'active_conversations'
   EVENT_UPDATE_CONVERSATION:  'update_conversation'
   EVENT_PUSH_MESSAGE:         'push_message'
+  EVENT_UPDATE_MESSAGES:      'update_messages'
 
   CHANNEL_MAIN: (userId) -> "private-#{ userId }-messaging"
 
@@ -23,6 +24,8 @@ class window.MessagingService
     @channel.bind @EVENT_STATUS,               MessagingDispatcher.updateMessagingStatus
     @channel.bind @EVENT_ACTIVE_CONVERSATIONS, MessagingDispatcher.updateActiveConversations
     @channel.bind @EVENT_UPDATE_CONVERSATION,  MessagingDispatcher.updateConversation
+    @bindPushMessages()
+    @bindUpdateMessages()
 
     @messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
 
@@ -36,6 +39,7 @@ class window.MessagingService
     @requester = new MessagingRequester
       access_token: @user.api_key.access_token
       socket_id: @pusher.connection.socket_id
+
     @requester.notifyReady
       success: -> console.log 'Server is notified'
       error: (error) -> console.error? "Error", error
@@ -58,7 +62,7 @@ class window.MessagingService
     @requester.loadMessages(conversationId)
       .done (data) ->
         MessagingDispatcher.handleServerAction
-          type: 'messageListUpdated'
+          type: 'messagesLoaded'
           conversationId: conversationId
           messages: data.messages
       .fail (error) ->
@@ -74,6 +78,11 @@ class window.MessagingService
         TastyNotifyController.errorResponse errMsg
       .always always
 
+  readMessage: (conversationId, messageId) ->
+    @requester.readMessage(conversationId, messageId)
+      .fail (errMsg) ->
+        console.error 'Проблема при прочтении сообщения', errMsg
+
   toggleMessagesPopup: ->
     if @messagesPopup?._lifeCycleState is 'MOUNTED'
       React.unmountComponentAtNode @messagesContainer
@@ -85,3 +94,9 @@ class window.MessagingService
 
   unbindPushMessages: ->
     @channel.unbind @EVENT_PUSH_MESSAGE, MessagingDispatcher.newMessageReceived
+
+  bindUpdateMessages: ->
+    @channel.bind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated
+
+  unbindUpdateMessages: ->
+    @channel.unbind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated

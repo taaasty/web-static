@@ -24,7 +24,6 @@ class window.MessagingRequester
       url: Routes.api.messenger_load_messages_url conversationId
       data:
         socket_id: @socket_id
-        order:     'asc'
 
   postMessage: (conversationId, content) ->
     $.ajax
@@ -33,6 +32,14 @@ class window.MessagingRequester
       data:
         socket_id: @socket_id
         content: content
+
+  readMessage: (conversationId, messageId) ->
+    $.ajax
+      url: Routes.api.messenger_read_messages_url conversationId
+      method: 'PUT'
+      data:
+        socket_id: @socket_id
+        ids: messageId
 
   #markMessageAsRead: (msgId) ->
     #$.ajax markMessageAsReadUrl(msgId),

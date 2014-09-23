@@ -9,13 +9,18 @@ window.MessagesPopup_ConversationsListItem = React.createClass
   render: ->
     online = `<span className="messages__user-online" />` if @props.conversation.online
 
+    listItemClasses = React.addons.classSet {
+      'messages__dialog': true
+      'state--read': !@hasUnreadMessages()
+    }
+
     if @props.conversation.last_message?
       lastMessageText = `<span dangerouslySetInnerHTML={{ __html: this._getLastMessageText() }} />`
       lastCreatedAt   = @_getLastMessageCreatedAt()
     else
       lastCreatedAt   = @_getLastConversationCreatedAt()
 
-    return `<div className="messages__dialog"
+    return `<div className={ listItemClasses }
                  onClick={ this.handleClick }>
               { this._getUnreadMessagesCount() }
 
@@ -31,8 +36,10 @@ window.MessagesPopup_ConversationsListItem = React.createClass
               <span className="messages__date">{ lastCreatedAt }</span>
             </div>`
 
+  hasUnreadMessages: -> @props.conversation.unread_messages_count > 0
+
   _getUnreadMessagesCount: ->
-    if @props.conversation.unread_messages_count > 0
+    if @hasUnreadMessages()
       `<div className="messages__counter">{ this.props.conversation.unread_messages_count }</div>`
 
   _getLastMessageText: ->

@@ -32,8 +32,17 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
     }
 
   newMessageReceived: (message) ->
+    console.log 'newMessageReceived', message
     MessagingDispatcher.handleServerAction {
       type: 'messageReceived'
       conversationId: message.conversation_id
       message: message
+    }
+
+  messagesUpdated: (data) ->
+    console.log 'обновлены сообщения', data
+    MessagingDispatcher.handleServerAction {
+      type: 'messagesUpdated'
+      conversationId: data.conversation_id
+      messages: data.messages
     }

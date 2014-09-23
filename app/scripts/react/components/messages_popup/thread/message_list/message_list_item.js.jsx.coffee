@@ -9,11 +9,16 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
   getInitialState: ->
     messageInfo: MessagesStore.getMessageInfo( @props.message, @props.message.conversation_id )
 
+  componentDidMount: ->
+    if @isUnread() && @state.messageInfo.type is 'incoming'
+      MessageActions.readMessage @props.message.conversation_id, @props.message.id
+
   render: ->
     messageClasses = React.addons.classSet {
       'message': true
       'message--from': @state.messageInfo.type is 'outgoing'
       'message--to':   @state.messageInfo.type is 'incoming'
+      'state--unread': @isUnread()
     }
 
     return `<div className={ messageClasses }>
@@ -26,6 +31,8 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
               </div>
               { this._getMessageCreatedAt() }
             </div>`
+
+  isUnread: -> @props.message.read_at is null
 
   _getMessageCreatedAt: ->
     date = moment( @props.message.created_at ).format 'D MMMM LT'

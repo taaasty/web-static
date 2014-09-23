@@ -9,12 +9,6 @@ window.MessagesPopup_Thread = React.createClass
     isEmpty:      false
     conversation: ConversationsStore.getConversation @props.conversationId
 
-  componentDidMount: ->
-    messagingService.bindPushMessages()
-
-  componentWillUnmount: ->
-    messagingService.unbindPushMessages()
-
   render: ->
     if @state.isEmpty
       thread = `<MessagesPopup_ThreadEmpty />`

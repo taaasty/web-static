@@ -26,14 +26,19 @@ window.MessagesStore = _.extend {}, EventEmitter.prototype, {
 
   addMessage: (conversationId, message) ->
     _messages[conversationId] ||= []
+
+    for msg in _messages[conversationId]
+      return if msg.id == message.id
+
     _messages[conversationId].push message
 
+  updateMessage: (conversationId, data) ->
+    for message in _messages[conversationId]
+      if message.id == data.id
+        _.extend message, data
+        break
+
   getMessages: (conversationId) -> _messages[conversationId] ? []
-
-  getAllMessages: -> _messages
-
-  updateMessages: (conversationId, messages) ->
-    _messages[conversationId] = messages
 
   getMessageInfo: (message, conversationId) ->
     conversation = ConversationsStore.getConversation conversationId
@@ -53,8 +58,16 @@ MessagesStore.dispatchToken = MessagingDispatcher.register (payload) ->
   action = payload.action
 
   switch action.type
-    when 'messageListUpdated'
-      MessagesStore.updateMessages action.conversationId, action.messages
+    when 'messagesLoaded'
+      for message in action.messages
+        MessagesStore.addMessage action.conversationId, message
+
+      MessagesStore.emitChange()
+      break
+    when 'messagesUpdated'
+      for message in action.messages
+        MessagesStore.updateMessage action.conversationId, message
+
       MessagesStore.emitChange()
       break
     when 'messageReceived'

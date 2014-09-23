@@ -302,6 +302,8 @@ window.ReactUjs = require 'react_ujs'
 
 $ ->
   if localStorage.getItem('userLogged') == "true"
+    SomeUser.api_key.access_token = localStorage.getItem('userToken') if localStorage.getItem('userToken')?
+    SomeUser.id = localStorage.getItem('userId') if localStorage.getItem('userId')?
     window.Tasty.start user: SomeUser
   else
     console.debug? 'Без пользователя'
