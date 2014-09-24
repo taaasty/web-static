@@ -11,7 +11,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass
   render: ->
     switch @state.currentState
       when PROCESS_STATE
-        content = `<MessagesPopup_LoadingMessage content="Создаю беседу.." />`
+        content = `<MessagesPopup_LoadingMessage content="Создаю беседу…" />`
       when CHOOSER_STATE
         content = `<MessagesPopup_Chooser onSubmit={ this.postNewConversation } />`
 

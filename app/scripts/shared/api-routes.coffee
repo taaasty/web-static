@@ -7,11 +7,14 @@ ApiRoutes =
   design_settings_url:                    (slug) -> TastySettings.api_host + 'v1/design_settings/' + slug
   design_settings_cover_url:              (slug) -> TastySettings.api_host + 'v1/design_settings/' + slug + '/cover'
   signin_url:                                    -> TastySettings.api_host + 'v1/sessions'
+
+  # Users
   signup_url:                                    -> TastySettings.api_host + 'v1/users'
   update_profile_url:                            -> TastySettings.api_host + 'v1/users' # method put
   recovery_url:                                  -> TastySettings.api_host + 'v1/users/password/recovery'
   request_confirm_url:                           -> TastySettings.api_host + 'v1/users/confirmation'
   userpic_url:                                   -> TastySettings.api_host + 'v1/users/userpic'
+  users_predict:                                 -> TastySettings.api_host + 'v1/users/predict'
 
   create_entry_url:                       (type) -> TastySettings.api_host + 'v1/entries/' + type
   update_entry_url:         (entryId, entryType) -> TastySettings.api_host + 'v1/entries/' + entryType + '/' + entryId

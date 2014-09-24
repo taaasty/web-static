@@ -148,6 +148,7 @@ require './react/components/messages_popup/create_new_conversation/chooser/choos
 require './react/components/messages_popup/create_new_conversation/chooser/chooser_button'
 require './react/components/messages_popup/create_new_conversation/chooser/chooser_dropdown'
 require './react/components/messages_popup/create_new_conversation/chooser/chooser_results'
+require './react/components/messages_popup/create_new_conversation/chooser/chooser_results_item'
 require './react/components/messages_popup/thread/thread'
 require './react/components/messages_popup/thread/message_form/message_form'
 require './react/components/messages_popup/thread/message_list/message_list'
