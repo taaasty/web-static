@@ -2,8 +2,6 @@
 
 OPEN_STATE  = 'openState'
 CLOSE_STATE = 'closeState'
-# EXPANDED_STATE = 'expandedState'
-# ACTIVE_STATE   = 'activeState'
 
 window.MessagesPopup_Chooser = React.createClass
 
