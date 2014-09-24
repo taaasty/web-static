@@ -2,7 +2,7 @@
 
 BUTTON_TEXT = 'Введите имя'
 
-window.MessagesPopup_UIChooserButton = React.createClass
+window.MessagesPopup_ChooserButton = React.createClass
 
   propTypes:
     onClick: React.PropTypes.func.isRequired

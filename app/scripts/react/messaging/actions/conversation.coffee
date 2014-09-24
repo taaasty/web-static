@@ -5,3 +5,6 @@ window.ConversationActions =
       type: 'clickConversation'
       conversationId: conversationId
     }
+
+  postNewConversation: ({ recipientSlug, error }) ->
+    messagingService.postNewConversation { recipientSlug, error }
