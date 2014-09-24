@@ -282,11 +282,6 @@
     }
   }
 
-  &.state--expanded {
-    .messages__chooser-results {
-      display: block;
-    }
-  }
 }
 
 .messages__chooser-button {
@@ -338,9 +333,18 @@
   box-sizing: border-box;
 }
 
-  .messages__chooser-results {
-    display: none;
-  }
+.messages__chooser-loading {
+  text-align: center;
+  padding: 10px;
+  border-top: 1px solid rgba(red(@white), green(@white), blue(@white), .1);
+}
+
+.messages__chooser-empty {
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  border-top: 1px solid rgba(red(@white), green(@white), blue(@white), .1);
+}
 
 .messages__chooser-result {
   padding: 10px;
@@ -381,6 +385,17 @@
   font-size: 12px;
   line-height: 16px;
   color: #a3a3a3;
+}
+
+// Messages Loading
+.messages-loading {
+  text-align: center;
+  font-size: 14px;
+  color: #a3a3a3;
+
+  .messages-loading__header {
+    margin-bottom: 10px;
+  }
 }
 
 // Messages Section

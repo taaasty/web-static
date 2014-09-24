@@ -9,6 +9,7 @@ class window.MessagingService
 
   constructor: ({ @user }) ->
     MessagingDispatcher.changeConnectionState ConnectionStateStore.PROCESS_STATE
+
     @pusher = new Pusher gon.pusher.key,
       authEndpoint: Routes.api.pusher_auth_url()
       auth:
@@ -17,7 +18,7 @@ class window.MessagingService
 
     @channel = @pusher.subscribe @CHANNEL_MAIN(@user.id)
     @channel.bind 'pusher:subscription_succeeded', @_connected
-    @channel.bind 'pusher:subscription_error',     (error) ->
+    @channel.bind 'pusher:subscription_error', (error) ->
       TastyNotifyController.notify 'error', 'Соединение не установлено'
       MessagingDispatcher.changeConnectionState ConnectionStateStore.ERROR_STATE
 
@@ -53,7 +54,9 @@ class window.MessagingService
         MessagingDispatcher.handleServerAction
           type: 'postNewConversation'
           conversation: conversation
-      .fail error
+      .fail (errMsg) ->
+        error?()
+        TastyNotifyController.errorResponse errMsg
 
   openConversation: (conversationId) ->
     @loadMessages conversationId
