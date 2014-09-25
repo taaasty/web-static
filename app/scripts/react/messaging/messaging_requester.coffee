@@ -41,10 +41,6 @@ class window.MessagingRequester
         socket_id: @socket_id
         ids: messageId
 
-  #markMessageAsRead: (msgId) ->
-    #$.ajax markMessageAsReadUrl(msgId),
-      #method: 'POST'
-
   #loadMoreMessages: (convId, toMessageId, limit) ->
     #$.ajax conversationMessagesUrl(convId),
       #method: 'GET'

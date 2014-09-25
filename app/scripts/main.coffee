@@ -17,28 +17,6 @@ require './react/services/entry_store'
 require './react/services/entry_normalizer'
 require './react/services/thumbor'
 
-require './react/dispatchers/messaging'
-require './react/dispatchers/current_user'
-
-require './react/stores/messaging_status'
-require './react/stores/connection_state'
-require './react/stores/messages_popup_state'
-require './react/stores/conversations'
-require './react/stores/messages'
-require './react/stores/current_user'
-
-require './react/messaging/messaging_service'
-require './react/messaging/messaging_requester'
-require './react/messaging/messaging_testing'
-require './react/messaging/models'
-
-require './react/messaging/actions/conversation'
-require './react/messaging/actions/message'
-
-require './react/messaging/mocks/mocks'
-require './react/messaging/mocks/messaging_requester'
-require './react/messaging/mocks/messaging_service'
-
 require './react/mixins/unmount'
 require './react/mixins/dom_manipulations'
 require './react/mixins/component_manipulations'
@@ -50,6 +28,68 @@ require './react/mixins/activities'
 require './react/mixins/requester'
 require './react/mixins/scroller'
 require './react/mixins/touch'
+
+require './react/dispatchers/current_user'
+require './react/stores/current_user'
+
+# /*============================================
+# =            Messaging resourses            =
+# ============================================*/
+
+# /*==========  Dispatchers  ==========*/
+
+require './react/messaging/dispatchers/messaging'
+
+# /*==========  Stores  ==========*/
+
+require './react/messaging/stores/messaging_status'
+require './react/messaging/stores/connection_state'
+require './react/messaging/stores/messages_popup_state'
+require './react/messaging/stores/conversations'
+require './react/messaging/stores/messages'
+
+# /*==========  Control structures  ==========*/
+
+require './react/messaging/messaging_service'
+require './react/messaging/messaging_requester'
+require './react/messaging/messaging_testing'
+require './react/messaging/models'
+
+# /*==========  Actions  ==========*/
+
+require './react/messaging/actions/conversation'
+require './react/messaging/actions/message'
+
+# /*==========  Mocks  ==========*/
+
+require './react/messaging/mocks/mocks'
+require './react/messaging/mocks/messaging_requester'
+require './react/messaging/mocks/messaging_service'
+
+# /*==========  Components  ==========*/
+
+require './react/messaging/components/toolbars/indicators/indicators'
+require './react/messaging/components/toolbars/indicators/messages'
+require './react/messaging/components/messages_popup/ui/back_button'
+require './react/messaging/components/messages_popup/ui/create_new_conversation_button'
+require './react/messaging/components/messages_popup/messages_popup'
+require './react/messaging/components/messages_popup/loading_message'
+require './react/messaging/components/messages_popup/conversations/conversations'
+require './react/messaging/components/messages_popup/conversations/list/list'
+require './react/messaging/components/messages_popup/conversations/list/list_item'
+require './react/messaging/components/messages_popup/create_new_conversation/create_new_conversation'
+require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser'
+require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button'
+require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown'
+require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results'
+require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item'
+require './react/messaging/components/messages_popup/thread/thread'
+require './react/messaging/components/messages_popup/thread/message_form/message_form'
+require './react/messaging/components/messages_popup/thread/message_list/message_list'
+require './react/messaging/components/messages_popup/thread/message_list/message_list_item'
+require './react/messaging/components/messages_popup/thread/empty/empty'
+
+# /*-----  End of Messaging resources  ------*/
 
 require './react/components/avatars/avatar'
 require './react/components/avatars/user_avatar'
@@ -64,7 +104,6 @@ require './react/components/shellbox/email_signup_shellbox'
 require './react/components/shellbox/recovery_shellbox'
 require './react/components/shellbox/select_signin_shellbox'
 require './react/components/shellbox/inviter_shellbox'
-
 
 require './react/components/settings_popup/settings_email/settings_email'
 require './react/components/settings_popup/settings_email/edit'
@@ -86,8 +125,6 @@ require './react/components/settings_popup/settings_vkontakte'
 require './react/components/settings_popup/toolbar_settings'
 
 require './react/components/toolbars/user/user'
-require './react/components/toolbars/indicators/indicators'
-require './react/components/toolbars/indicators/messages'
 require './react/components/toolbars/feed/feed'
 require './react/components/toolbars/close/close'
 require './react/components/toolbars/toolbar_item'
@@ -134,26 +171,6 @@ require './react/components/design_settings_popup/controls_items/font_type_item'
 require './react/components/design_settings_popup/controls_items/opacity_item'
 require './react/components/design_settings_popup/controls_items/_radiobutton'
 require './react/components/design_settings_popup/controls_items/_progressbar'
-
-require './react/components/messages_popup/ui/back_button'
-require './react/components/messages_popup/ui/create_new_conversation_button'
-
-require './react/components/messages_popup/messages_popup'
-require './react/components/messages_popup/loading_message'
-require './react/components/messages_popup/conversations/conversations'
-require './react/components/messages_popup/conversations/list/list'
-require './react/components/messages_popup/conversations/list/list_item'
-require './react/components/messages_popup/create_new_conversation/create_new_conversation'
-require './react/components/messages_popup/create_new_conversation/chooser/chooser'
-require './react/components/messages_popup/create_new_conversation/chooser/chooser_button'
-require './react/components/messages_popup/create_new_conversation/chooser/chooser_dropdown'
-require './react/components/messages_popup/create_new_conversation/chooser/chooser_results'
-require './react/components/messages_popup/create_new_conversation/chooser/chooser_results_item'
-require './react/components/messages_popup/thread/thread'
-require './react/components/messages_popup/thread/message_form/message_form'
-require './react/components/messages_popup/thread/message_list/message_list'
-require './react/components/messages_popup/thread/message_list/message_list_item'
-require './react/components/messages_popup/thread/empty/empty'
 
 require './react/components/persons_popup/mixins/panel_mixin'
 require './react/components/persons_popup/persons_popup'
