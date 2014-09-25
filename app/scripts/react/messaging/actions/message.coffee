@@ -5,3 +5,6 @@ window.MessageActions =
 
   readMessage: (conversationId, messageId) ->
     messagingService.markAsReadMessage conversationId, messageId
+
+  loadMoreMessages: ({ conversationId, toMessageId }) ->
+    messagingService.loadMoreMessages conversationId, toMessageId

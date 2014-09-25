@@ -71,6 +71,17 @@ class window.MessagingService
       .fail (error) ->
         console.error 'Проблема при загрузке сообщений для переписки', error
 
+  loadMoreMessages: (conversationId, toMessageId) ->
+    @requester.loadMoreMessages(conversationId, toMessageId)
+      .done (data) ->
+        MessagingDispatcher.handleServerAction
+          type: 'moreMessagesLoaded'
+          conversationId: conversationId
+          messages: data.messages
+          allMessagesLoaded: data.scope_count < 10
+      .fail (error) ->
+        console.error 'Проблема при загрузке сообщений для переписки', error
+
   postMessage: ({ conversationId, content, success, error, always }) ->
     @requester.postMessage(conversationId, content)
       .done (message) ->

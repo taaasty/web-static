@@ -1,6 +1,7 @@
 CHANGE_EVENT = 'change'
 
 _messages = {}
+_allMessagesLoaded = {}
 
 # function _addMessages(rawMessages) {
 #   rawMessages.forEach(function(message) {
@@ -15,8 +16,8 @@ _messages = {}
 
 window.MessagesStore = _.extend {}, EventEmitter.prototype, {
 
-  emitChange: ->
-    @emit CHANGE_EVENT
+  emitChange: (type) ->
+    @emit CHANGE_EVENT, type
 
   addChangeListener: (callback) ->
     @on CHANGE_EVENT, callback
@@ -24,7 +25,7 @@ window.MessagesStore = _.extend {}, EventEmitter.prototype, {
   removeChangeListener: (callback) ->
     @off CHANGE_EVENT, callback
 
-  addMessage: (conversationId, message) ->
+  pushMessage: (conversationId, message) ->
     _messages[conversationId] ||= []
 
     for msg in _messages[conversationId]
@@ -32,7 +33,17 @@ window.MessagesStore = _.extend {}, EventEmitter.prototype, {
 
     _messages[conversationId].push message
 
+  unshiftMessage: (conversationId, message) ->
+    _messages[conversationId] ||= []
+
+    for msg in _messages[conversationId]
+      return if msg.id == message.id
+
+    _messages[conversationId].unshift message
+
   updateMessage: (conversationId, data) ->
+    _messages[conversationId] ||= []
+
     for message in _messages[conversationId]
       if message.id == data.id
         _.extend message, data
@@ -52,6 +63,8 @@ window.MessagesStore = _.extend {}, EventEmitter.prototype, {
 
     messageInfo
 
+  isAllMessagesLoaded: (conversationId) -> _allMessagesLoaded[conversationId]
+
 }
 
 MessagesStore.dispatchToken = MessagingDispatcher.register (payload) ->
@@ -60,9 +73,19 @@ MessagesStore.dispatchToken = MessagingDispatcher.register (payload) ->
   switch action.type
     when 'messagesLoaded'
       for message in action.messages
-        MessagesStore.addMessage action.conversationId, message
+        MessagesStore.pushMessage action.conversationId, message
 
       MessagesStore.emitChange()
+      break
+    when 'moreMessagesLoaded'
+      messages = action.messages.reverse()
+
+      for message in messages
+        MessagesStore.unshiftMessage action.conversationId, message
+
+      _allMessagesLoaded[action.conversationId] = action.allMessagesLoaded
+
+      MessagesStore.emitChange('moreMessagesLoaded')
       break
     when 'messagesUpdated'
       for message in action.messages
@@ -71,8 +94,8 @@ MessagesStore.dispatchToken = MessagingDispatcher.register (payload) ->
       MessagesStore.emitChange()
       break
     when 'messageReceived'
-      MessagesStore.addMessage action.conversationId, action.message
-      MessagesStore.emitChange()
+      MessagesStore.pushMessage action.conversationId, action.message
+      MessagesStore.emitChange('messageReceived')
       break
 
 # var MessageStore = merge(EventEmitter.prototype, {

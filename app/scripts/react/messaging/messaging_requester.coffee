@@ -25,6 +25,14 @@ class window.MessagingRequester
       data:
         socket_id: @socket_id
 
+  loadMoreMessages: (conversationId, toMessageId) ->
+    $.ajax
+      url: Routes.api.messenger_load_messages_url conversationId
+      data:
+        socket_id:     @socket_id
+        to_message_id: toMessageId
+        limit:         10
+
   postMessage: (conversationId, content) ->
     $.ajax
       url: Routes.api.messenger_new_message_url conversationId
