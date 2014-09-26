@@ -1,6 +1,6 @@
 _cache = []
 _soundList = {
-  'incomingMessage': 'sounds/incoming_message.wav'
+  'incomingMessage': '/sounds/incoming_message.wav'
 }
 
 window.TastySoundController =
