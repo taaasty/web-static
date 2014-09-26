@@ -63,10 +63,9 @@
 .messages__user-avatar {
   width: 35px;
   height: 35px;
-  margin-top: -18px;
   position: absolute;
   display: inline-block;
-  top: 50%;
+  top: 12px;
   left: 15px;
 }
 
@@ -88,17 +87,29 @@
 }
 
 // Message Counter
-.messages__counter {
-  width: 18px;
-  height: 18px;
+
+.messages__counter() {
   position: absolute;
-  top: 12px;
   right: 14px;
   background-color: #2ba26a;
   font-size: 12px;
   color: @white;
   text-align: center;
   border-radius: 50%;
+}
+
+.unread-messages__counter {
+  .messages__counter;
+  width: 18px;
+  height: 18px;
+  top: 20px;
+}
+
+.unreceived-messages__counter {
+  .messages__counter;
+  width: 9px;
+  height: 9px;
+  top: 25px;
 }
 
 // Message Dialogs
@@ -217,7 +228,7 @@
     height: 38px;
     position: absolute;
     top: -18px;
-    right: -46px;
+    right: 15px;
     border-radius: 50% 50% 50% 50%;
     border-style: solid;
     border-width: 0 20px;
@@ -472,13 +483,18 @@
     color: @white;
   }
 
+  .message-delivery__status {
+    font-size: 8px;
+    margin-left: 3px;
+  }
+
   .messages__bubble {
     float: left;
     background-color: #32a16c;
     color: @white;
 
     &:before {
-      left: -46px;
+      left: 15px;
       border-color: #32a16c;
       .transform(rotateY(180deg));
     }
@@ -486,14 +502,6 @@
     a {
       border-bottom: 1px solid rgba(red(@white), green(@white), blue(@white), .4);
     }
-  }
-
-  &.state--unread {
-
-    .messages__date {
-      color: @black;
-    }
-
   }
 
 }
