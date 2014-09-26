@@ -32,7 +32,8 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
     }
 
   newMessageReceived: (message) ->
-    console.log 'newMessageReceived', message
+    TastySoundController.incomingMessage()
+
     MessagingDispatcher.handleServerAction {
       type: 'messageReceived'
       conversationId: message.conversation_id
@@ -40,7 +41,6 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
     }
 
   messagesUpdated: (data) ->
-    console.log 'обновлены сообщения', data
     MessagingDispatcher.handleServerAction {
       type: 'messagesUpdated'
       conversationId: data.conversation_id
