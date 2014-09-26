@@ -18,8 +18,13 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
       'message': true
       'message--from': @state.messageInfo.type is 'outgoing'
       'message--to':   @state.messageInfo.type is 'incoming'
-      'state--unread': @isUnread()
     }
+
+    if @isOutgoing()
+      deliveryClass  = if @isUnread() then 'icon--tick' else 'icon--double-tick'
+      deliveryStatus = `<span className="message-delivery__status">
+                          <span className={ 'icon ' + deliveryClass } />
+                        </span>`
 
     return `<div className={ messageClasses }>
               <span className="messages__user-avatar">
@@ -29,12 +34,16 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
                 <span className="messages__user-name">{ this.state.messageInfo.user.slug }</span> 
                 <span dangerouslySetInnerHTML={{ __html: this.props.message.content_html }} />
               </div>
-              { this._getMessageCreatedAt() }
+              <span className="messages__date">
+                { this._getMessageCreatedAt() }
+                { deliveryStatus }
+              </span>
             </div>`
 
   isUnread: -> @props.message.read_at is null
 
-  _getMessageCreatedAt: ->
-    date = moment( @props.message.created_at ).format 'D MMMM LT'
+  isOutgoing: -> @state.messageInfo.type is 'outgoing'
+  isIncoming: -> @state.messageInfo.type is 'incoming'
 
-    return `<span className="messages__date">{ date }</span>`
+  _getMessageCreatedAt: ->
+    moment( @props.message.created_at ).format 'D MMMM LT'

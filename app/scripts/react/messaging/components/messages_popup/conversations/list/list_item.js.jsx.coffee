@@ -22,7 +22,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass
 
     return `<div className={ listItemClasses }
                  onClick={ this.handleClick }>
-              { this._getUnreadMessagesCount() }
+              { this._getMessagesIndicator() }
 
               <span className="messages__user-avatar">
                 <UserAvatar user={ this.props.conversation.recipient } size={ 35 } />
@@ -36,7 +36,16 @@ window.MessagesPopup_ConversationsListItem = React.createClass
               <span className="messages__date">{ lastCreatedAt }</span>
             </div>`
 
-  hasUnreadMessages: -> @props.conversation.unread_messages_count > 0
+  hasUnreadMessages:     -> @props.conversation.unread_messages_count > 0
+  hasUnreceivedMessages: -> @props.conversation.unreceived_messages_count > 0
+
+  _getMessagesIndicator: ->
+    if @hasUnreadMessages()
+      return `<div className="unread-messages__counter">
+               { this.props.conversation.unread_messages_count }
+              </div>`
+    else if @hasUnreceivedMessages()
+      return `<div className="unreceived-messages__counter" />`
 
   _getUnreadMessagesCount: ->
     if @hasUnreadMessages()
