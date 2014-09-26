@@ -99,6 +99,10 @@ gulp.task "html", ->
     .pipe($.connect.reload())
     .on "error", $.util.log
 
+# Sounds
+gulp.task 'sounds', ->
+  gulp.src("app/sounds/*")
+    .pipe gulp.dest('dist/sounds')
 
 # Images
 gulp.task "images", ->
@@ -137,6 +141,7 @@ gulp.task "build", [
   "html"
   "bundle"
   "images"
+  "sounds"
 ]
 
 # Default task
@@ -168,6 +173,7 @@ gulp.task "json", ->
 
 # Watch
 gulp.task "watch", [
+  "sounds"
   "images"
   "assets"
   "html"
@@ -199,4 +205,3 @@ gulp.task "watch", [
   # Watch image files
   gulp.watch "app/images/**/*", ["images"]
   return
-

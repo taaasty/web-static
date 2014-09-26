@@ -300,6 +300,7 @@ require './react/controllers/tasty_events'
 require './react/controllers/tasty_notify'
 require './react/controllers/tasty_confirm'
 require './react/controllers/tasty_alert'
+require './react/controllers/tasty_sound'
 require './react/controllers/tasty_locking_alert'
 
 require './react/controllers/shellbox'
