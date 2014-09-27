@@ -1,9 +1,16 @@
 _cache = []
 _soundList = {
-  'incomingMessage': 'sounds/incoming_message.wav'
+  'incomingMessage': TastySettings.asset_url + 'sounds/incoming_message.mp3'
 }
 
 window.TastySoundController =
+
+  init: ->
+    for event, path of _soundList
+      audioElement     = document.createElement 'audio'
+      audioElement.src = path
+
+      @_cacheElement audioElement
 
   play: (url) ->
     cachedElement = @_getCachedElement url
@@ -13,16 +20,12 @@ window.TastySoundController =
     else
       audioElement     = new Audio()
       audioElement.src = url
-      audioElement.play()
 
+      audioElement.play()
       @_cacheElement audioElement
 
   incomingMessage: ->
-    url = @_getAbsoluteUrl _soundList.incomingMessage
-    @play url
-
-  _getAbsoluteUrl: (relativeUrl) ->
-    TastySettings.asset_url + relativeUrl
+    @play _soundList.incomingMessage
 
   _getCachedElement: (url) ->
     for cache in _cache
@@ -30,4 +33,7 @@ window.TastySoundController =
 
   _getCache: -> _cache
 
-  _cacheElement: (audioElement) -> _cache.push audioElement
+  _cacheElement: (audioElement) ->
+    _cache.push audioElement
+
+TastySoundController.init()
