@@ -32,7 +32,10 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
     }
 
   newMessageReceived: (message) ->
-    TastySoundController.incomingMessage()
+    console.info 'Получено новое сообщение', message
+
+    if message.user_id != CurrentUserStore.getUser().id
+      TastySoundController.incomingMessage()
 
     MessagingDispatcher.handleServerAction {
       type: 'messageReceived'

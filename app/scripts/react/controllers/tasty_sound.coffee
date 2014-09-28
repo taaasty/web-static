@@ -1,27 +1,20 @@
-_cache = []
-_soundList = {
-  'incomingMessage': 'sounds/incoming_message.wav'
-}
+INCOMING_MESSAGE     = new Audio()
+# В этот момент файл начинает скачиваться
+INCOMING_MESSAGE.src = TastySettings.sound_asset_url + 'incoming_message.mp3'
+
+AUDIO_ELEMENT_ID = 'audio-element'
 
 window.TastySoundController =
 
-  play: (url) ->
-    cachedElement = @_getCachedElement url
+  play: (audio) ->
+    audioElement     = document.getElementById(AUDIO_ELEMENT_ID)
 
-    if cachedElement?
-      cachedElement.play()
-    else
-      audioElement = document.createElement 'audio'
-      audioElement.setAttribute 'src', url
-      audioElement.play()
+    unless audioElement?
+      audioElement = document.createElement('audio')
+      audioElement.id = AUDIO_ELEMENT_ID
 
-      @_cacheElement audioElement
+    audioElement.src = audio.src
+    audioElement.play()
 
   incomingMessage: ->
-    @play _soundList.incomingMessage
-
-  _getCachedElement: (url) ->
-    for cache in _cache
-      return cache if cache.src is url
-
-  _cacheElement: (audioElement) -> _cache.push audioElement
+    @play INCOMING_MESSAGE
