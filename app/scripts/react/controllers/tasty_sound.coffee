@@ -1,20 +1,12 @@
-INCOMING_MESSAGE     = new Audio()
-# В этот момент файл начинает скачиваться
-INCOMING_MESSAGE.src = TastySettings.sound_asset_url + 'incoming_message.mp3'
-
-AUDIO_ELEMENT_ID = 'audio-element'
-
 window.TastySoundController =
 
-  play: (audio) ->
-    audioElement     = document.getElementById(AUDIO_ELEMENT_ID)
+  _buildAudioElement: (url) ->
+    audioElement     = document.createElement 'audio'
+    audioElement.src = TastySettings.sound_asset_url + url
+    audioElement
 
-    unless audioElement?
-      audioElement = document.createElement('audio')
-      audioElement.id = AUDIO_ELEMENT_ID
+  play: (audio) -> audio.play()
 
-    audioElement.src = audio.src
-    audioElement.play()
+  incomingMessage: -> @play INCOMING_MESSAGE
 
-  incomingMessage: ->
-    @play INCOMING_MESSAGE
+INCOMING_MESSAGE = TastySoundController._buildAudioElement 'incoming_message.mp3'
