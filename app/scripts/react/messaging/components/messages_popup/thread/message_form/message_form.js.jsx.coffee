@@ -42,6 +42,7 @@ window.MessagesPopup_ThreadMessageForm = React.createClass
         MessageActions.newMessage {
           content: e.target.value
           conversationId: @props.conversationId
+          uuid: UuidService.generate()
           success: => @clearForm()
           always:  => @setState(isLoading: false)
         }

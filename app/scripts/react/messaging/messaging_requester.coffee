@@ -33,13 +33,11 @@ class window.MessagingRequester
         to_message_id: toMessageId
         limit:         10
 
-  postMessage: (conversationId, content) ->
+  postMessage: (conversationId, content, uuid) ->
     $.ajax
       url: Routes.api.messenger_new_message_url conversationId
       method: 'POST'
-      data:
-        socket_id: @socket_id
-        content: content
+      data: { @socket_id, content, uuid }
 
   markAsReadMessage: (conversationId, messageId) ->
     $.ajax

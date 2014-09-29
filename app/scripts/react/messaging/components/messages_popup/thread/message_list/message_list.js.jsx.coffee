@@ -1,5 +1,7 @@
 ###* @jsx React.DOM ###
 
+savedScrollHeight = null
+
 window.MessagesPopup_ThreadMessageList = React.createClass
   mixins: [ScrollerMixin]
 
@@ -14,13 +16,33 @@ window.MessagesPopup_ThreadMessageList = React.createClass
     MessagesStore.addChangeListener @_onStoreChange
     messagingService.openConversation @props.conversationId
 
+  componentWillUpdate: (nextProps, nextState) ->
+    if @state.messages[0]?
+
+      if @state.messages[0]?.uuid isnt nextState.messages[0]?.uuid
+        # Добавятся сообщения из истории
+        scrollerNode      = @refs.scrollerPane.getDOMNode()
+        savedScrollHeight = scrollerNode.scrollHeight
+
+  componentDidUpdate: (prevProps, prevState) ->
+    if prevState.messages[0]?
+
+      if prevState.messages[0]?.uuid isnt @state.messages[0]?.uuid
+        # Подгрузились сообщения из истории
+        @_holdScroll()
+      else if prevState.messages.length != @state.messages.length
+        # Добавлено сообщение
+        @_scrollToBottom()
+    else
+      @_scrollToBottom()
+
   componentWillUnmount: ->
     MessagesStore.removeChangeListener @_onStoreChange
 
   render: ->
     messages = @state.messages.map (message) ->
       `<MessagesPopup_ThreadMessageListItem message={ message }
-                                            key={ message.id } />`
+                                            key={ message.uuid } />`
 
     return `<div ref="scroller"
                  className="scroller scroller--dark scroller--messages">
@@ -51,13 +73,6 @@ window.MessagesPopup_ThreadMessageList = React.createClass
         toMessageId:    @state.messages[0].id
       }
 
-    # messageListNode       = @refs.messageList.getDOMNode()
-    # scrollerNode          = @refs.scrollerPane.getDOMNode()
-    # scrollerNodeScrollTop = scrollerNode.scrollTop
-    # scrollerNodeHeight    = scrollerNode.offsetHeight
-    # messageListNodeHeight = messageListNode.offsetHeight
-    # scrollProgress        = scrollerNodeScrollTop / (messageListNodeHeight - scrollerNodeHeight)
-
   getStateFromStore: ->
     messages:            MessagesStore.getMessages @props.conversationId
     isAllMessagesLoaded: MessagesStore.isAllMessagesLoaded @props.conversationId
@@ -66,13 +81,9 @@ window.MessagesPopup_ThreadMessageList = React.createClass
     scrollerNode           = @refs.scrollerPane.getDOMNode()
     scrollerNode.scrollTop = scrollerNode.scrollHeight
 
-  _onStoreChange: (type) ->
-    scrollerNode = @refs.scrollerPane.getDOMNode()
-    scrollHeight = scrollerNode.scrollHeight
+  _holdScroll: ->
+    scrollerNode           = @refs.scrollerPane.getDOMNode()
+    scrollerNode.scrollTop = scrollerNode.scrollHeight - savedScrollHeight
+    savedScrollHeight = null
 
-    @setState @getStateFromStore()
-
-    if type is 'moreMessagesLoaded'
-      scrollerNode.scrollTop = scrollerNode.scrollHeight - scrollHeight
-    else
-      @_scrollToBottom()
+  _onStoreChange: -> @setState @getStateFromStore()
