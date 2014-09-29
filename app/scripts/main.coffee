@@ -17,6 +17,7 @@ require './react/services/positions'
 require './react/services/entry_store'
 require './react/services/entry_normalizer'
 require './react/services/thumbor'
+require './react/services/uuid'
 
 require './react/mixins/unmount'
 require './react/mixins/dom_manipulations'

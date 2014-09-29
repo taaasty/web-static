@@ -20,7 +20,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
       'message--to':   @state.messageInfo.type is 'incoming'
     }
 
-    if @isOutgoing()
+    if @isOutgoing() && @props.message.id
       deliveryClass  = if @isUnread() then 'icon--tick' else 'icon--double-tick'
       deliveryStatus = `<span className="message-delivery__status">
                           <span className={ 'icon ' + deliveryClass } />

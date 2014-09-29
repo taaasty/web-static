@@ -49,3 +49,22 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
       conversationId: data.conversation_id
       messages: data.messages
     }
+
+  messageSent: ({ conversationId, content, uuid }) ->
+    conversation = ConversationsStore.getConversation conversationId
+    currentUser  = CurrentUserStore.getUser()
+    recipient    = conversation.recipient
+    message      = {
+      content_html:    content
+      conversation_id: conversationId
+      created_at:      new Date().getTime()
+      recipient_id:    recipient.id
+      user_id:         currentUser.id
+      uuid:            uuid
+    }
+
+    MessagingDispatcher.handleViewAction {
+      type: 'messageSent'
+      conversationId: conversationId
+      message: message
+    }
