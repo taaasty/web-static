@@ -1,3 +1,4 @@
+require './settings'
 require './libs'
 require './routes'
 require './shared/api-routes'
@@ -317,15 +318,17 @@ require './editors'
 
 require './gon'
 
-require './settings'
-
 # React_ujs нужно подключать после того как все компоненты загружены
 window.ReactUjs = require 'react_ujs'
 
 $ ->
   if localStorage.getItem('userLogged') == "true"
-    SomeUser.api_key.access_token = localStorage.getItem('userToken') if localStorage.getItem('userToken')?
-    SomeUser.id = localStorage.getItem('userId') if localStorage.getItem('userId')?
+    if localStorage.getItem('userToken')
+      SomeUser.api_key.access_token = localStorage.getItem('userToken')
+
+    if localStorage.getItem('userId')
+      SomeUser.id = parseInt( localStorage.getItem('userId') )
+
     window.Tasty.start user: SomeUser
   else
     console.debug? 'Без пользователя'
