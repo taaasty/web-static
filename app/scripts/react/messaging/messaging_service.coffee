@@ -4,14 +4,19 @@ class window.MessagingService
   EVENT_UPDATE_CONVERSATION:  'update_conversation'
   EVENT_PUSH_MESSAGE:         'push_message'
   EVENT_UPDATE_MESSAGES:      'update_messages'
+  RECONNECT_EVENT:            'reconnected'
 
   CHANNEL_MAIN: (userId) -> "private-#{ userId }-messaging"
 
   constructor: ({ @user }) ->
     MessagingDispatcher.changeConnectionState ConnectionStateStore.PROCESS_STATE
 
+    _.extend @, EventEmitter.prototype
+
     @pusher = new Pusher gon.pusher.key,
       authEndpoint: Routes.api.pusher_auth_url()
+      pong_timeout: 6000
+      unavailable_timeout: 2000
       auth:
         headers:
           'X-User-Token': @user.api_key.access_token
@@ -47,6 +52,10 @@ class window.MessagingService
 
     @pusher.connection.bind 'unavailable', (error) -> console.log "pusher unavailable", error
     @pusher.connection.bind 'failed',      (error) -> console.log "pusher failer", error
+    @pusher.connection.bind 'connected', @emitReconnect
+
+  emitReconnect: =>
+    @emit @RECONNECT_EVENT
 
   postNewConversation: ({ recipientSlug, error }) ->
     @requester.postNewConversation(recipientSlug)
@@ -85,7 +94,7 @@ class window.MessagingService
   postMessage: ({ conversationId, content, uuid }) ->
     @requester.postMessage(conversationId, content, uuid)
       .done (message) ->
-        MessagingDispatcher.newMessageReceived message
+        MessagingDispatcher.messageReceived message
       .fail (errMsg) ->
         MessagingDispatcher.handleServerAction {
           type: 'messageSendingError'
@@ -105,11 +114,17 @@ class window.MessagingService
     else
       @messagesPopup = React.renderComponent MessagesPopup(), @messagesContainer
 
+  addReconnectListener: (callback) ->
+    @on @RECONNECT_EVENT, callback
+
+  removeReconnectListener: (callback) ->
+    @off @RECONNECT_EVENT, callback
+
   bindPushMessages: ->
-    @channel.bind @EVENT_PUSH_MESSAGE, MessagingDispatcher.newMessageReceived
+    @channel.bind @EVENT_PUSH_MESSAGE, MessagingDispatcher.messageReceived
 
   unbindPushMessages: ->
-    @channel.unbind @EVENT_PUSH_MESSAGE, MessagingDispatcher.newMessageReceived
+    @channel.unbind @EVENT_PUSH_MESSAGE, MessagingDispatcher.messageReceived
 
   bindUpdateMessages: ->
     @channel.bind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated

@@ -31,8 +31,8 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
       state: state
     }
 
-  newMessageReceived: (message) ->
-    console.info 'Получено новое сообщение', message
+  messageReceived: (message) ->
+    console.info 'Получено сообщение', message
 
     if message.user_id != CurrentUserStore.getUser().id
       TastySoundController.incomingMessage()
@@ -50,21 +50,20 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
       messages: data.messages
     }
 
-  messageSent: ({ conversationId, content, uuid }) ->
+  messageSubmitted: ({ conversationId, content, uuid }) ->
     conversation = ConversationsStore.getConversation conversationId
     currentUser  = CurrentUserStore.getUser()
     recipient    = conversation.recipient
     message      = {
       content_html:    content
       conversation_id: conversationId
-      created_at:      new Date().getTime()
       recipient_id:    recipient.id
       user_id:         currentUser.id
       uuid:            uuid
     }
 
     MessagingDispatcher.handleViewAction {
-      type: 'messageSent'
+      type: 'messageSubmitted'
       conversationId: conversationId
       message: message
     }
