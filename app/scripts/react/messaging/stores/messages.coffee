@@ -101,3 +101,10 @@ MessagesStore.dispatchToken = MessagingDispatcher.register (payload) ->
       MessagesStore.pushMessages action.conversationId, [action.message]
       MessagesStore.emitChange()
       break
+    when 'messageSendingError'
+      MessagesStore.updateMessage action.conversationId, {
+        uuid: action.uuid
+        sendingState: 'error'
+      }
+      MessagesStore.emitChange()
+      break
