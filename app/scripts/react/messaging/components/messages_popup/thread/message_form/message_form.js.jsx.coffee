@@ -37,12 +37,10 @@ window.MessagesPopup_ThreadMessageForm = React.createClass
       when 'Enter'
         e.preventDefault()
 
-        @setState(isLoading: true)
-
         MessageActions.newMessage {
           content: e.target.value
           conversationId: @props.conversationId
           uuid: UuidService.generate()
-          success: => @clearForm()
-          always:  => @setState(isLoading: false)
         }
+
+        @clearForm()

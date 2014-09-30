@@ -82,15 +82,17 @@ class window.MessagingService
       .fail (error) ->
         console.error 'Проблема при загрузке сообщений для переписки', error
 
-  postMessage: ({ conversationId, content, uuid, success, error, always }) ->
+  postMessage: ({ conversationId, content, uuid }) ->
     @requester.postMessage(conversationId, content, uuid)
       .done (message) ->
         MessagingDispatcher.newMessageReceived message
-        success?()
       .fail (errMsg) ->
-        error?()
+        MessagingDispatcher.handleServerAction {
+          type: 'messageSendingError'
+          conversationId: conversationId
+          uuid: uuid
+        }
         TastyNotifyController.errorResponse errMsg
-      .always always
 
   markAsReadMessage: (conversationId, messageId) ->
     @requester.markAsReadMessage(conversationId, messageId)

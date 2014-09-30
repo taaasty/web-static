@@ -89,6 +89,7 @@ require './react/messaging/components/messages_popup/thread/thread'
 require './react/messaging/components/messages_popup/thread/message_form/message_form'
 require './react/messaging/components/messages_popup/thread/message_list/message_list'
 require './react/messaging/components/messages_popup/thread/message_list/message_list_item'
+require './react/messaging/components/messages_popup/thread/message_list/message_list_item_manager'
 require './react/messaging/components/messages_popup/thread/empty/empty'
 
 # /*-----  End of Messaging resources  ------*/
