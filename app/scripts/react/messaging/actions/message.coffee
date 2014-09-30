@@ -7,5 +7,8 @@ window.MessageActions =
   readMessage: (conversationId, messageId) ->
     messagingService.markAsReadMessage conversationId, messageId
 
+  resendMessage: ({ conversationId, content, uuid, error }) ->
+    messagingService.resendMessage { conversationId, content, uuid, error }
+
   loadMoreMessages: ({ conversationId, toMessageId }) ->
     messagingService.loadMoreMessages conversationId, toMessageId
