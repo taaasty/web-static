@@ -89,6 +89,14 @@ MessagesStore.dispatchToken = MessagingDispatcher.register (payload) ->
 
       MessagesStore.emitChange()
       break
+    when 'messageResubmitted'
+      message = _.extend action.message, {
+        sendingState: null
+      }
+
+      MessagesStore.updateMessage action.conversationId, message
+      MessagesStore.emitChange()
+      break
     when 'messageReceived'
       if MessagesStore.isMessageExists action.conversationId, action.message
         MessagesStore.updateMessage action.conversationId, action.message

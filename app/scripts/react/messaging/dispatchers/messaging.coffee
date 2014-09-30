@@ -31,6 +31,15 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
       state: state
     }
 
+  messageResubmitted: (message) ->
+    console.info 'Сообщение успешно переотправлено', message
+
+    MessagingDispatcher.handleServerAction {
+      type: 'messageResubmitted'
+      conversationId: message.conversation_id
+      message: message
+    }
+
   newMessageReceived: (message) ->
     console.info 'Получено новое сообщение', message
 

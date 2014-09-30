@@ -33,6 +33,12 @@ class window.MessagingRequester
         to_message_id: toMessageId
         limit:         10
 
+  resendMessage: (conversationId, content, uuid) ->
+    $.ajax
+      url: Routes.api.messenger_resend_message_url conversationId
+      method: 'POST'
+      data: { @socket_id, content, uuid }
+
   postMessage: (conversationId, content, uuid) ->
     $.ajax
       url: Routes.api.messenger_new_message_url conversationId
