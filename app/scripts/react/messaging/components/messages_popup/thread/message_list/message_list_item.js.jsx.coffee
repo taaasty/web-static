@@ -1,15 +1,22 @@
 ###* @jsx React.DOM ###
 
+ERROR_STATE   = 'error'
+SENT_STATE    = 'sent'
+READ_STATE    = 'read'
+SENDING_STATE = 'sending'
+
 window.MessagesPopup_ThreadMessageListItem = React.createClass
   mixins: [ReactGrammarMixin]
 
   propTypes:
-    message:     React.PropTypes.object.isRequired
-    messageInfo: React.PropTypes.object.isRequired
+    message:         React.PropTypes.object.isRequired
+    messageInfo:     React.PropTypes.object.isRequired
+    onResendMessage: React.PropTypes.func.isRequired
 
   render: ->
-    deliveryStatus = @_getDeliveryStatus() if @isOutgoing()
-    messageClasses = React.addons.classSet {
+    deliveryStatus   = @_getDeliveryStatus() if @isOutgoing()
+    messageCreatedAt = @_getMessageCreatedAt()
+    messageClasses   = React.addons.classSet {
       'message': true
       'message--from': @props.messageInfo.type is 'outgoing'
       'message--to':   @props.messageInfo.type is 'incoming'
@@ -24,7 +31,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
                 <span dangerouslySetInnerHTML={{ __html: this.props.message.content_html }} />
               </div>
               <span className="messages__date">
-                { this._getMessageCreatedAt() }
+                { messageCreatedAt }
                 { deliveryStatus }
               </span>
             </div>`
@@ -35,12 +42,16 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
   isIncoming: -> @props.messageInfo.type is 'incoming'
 
   _getDeliveryStatus: ->
-    if @props.message.sendingState is 'error'
-      deliveryClass = 'icon--refresh-2'
-    else if @props.message.id
-      deliveryClass = if @isUnread() then 'icon--tick' else 'icon--double-tick'
+    switch @props.deliveryStatus
+      when ERROR_STATE
+        deliveryClass = 'icon--refresh-2'
+        onClick = => @props.onResendMessage()
+      when SENT_STATE then deliveryClass = 'icon--tick'
+      when READ_STATE then deliveryClass = 'icon--double-tick'
+      # when SENDING_STATE then ...
 
-    return `<span className="message-delivery__status">
+    return `<span className="message-delivery__status"
+                  onClick={ onClick }>
               <span className={ 'icon ' + deliveryClass } />
             </span>`
 
