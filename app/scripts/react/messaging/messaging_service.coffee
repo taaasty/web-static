@@ -82,6 +82,12 @@ class window.MessagingService
       .fail (error) ->
         console.error 'Проблема при загрузке сообщений для переписки', error
 
+  resendMessage: ({ conversationId, content, uuid, error }) ->
+    @requester.postMessage(conversationId, content, uuid)
+      .done (message) ->
+        MessagingDispatcher.messageResubmitted message
+      .fail error
+
   postMessage: ({ conversationId, content, uuid }) ->
     @requester.postMessage(conversationId, content, uuid)
       .done (message) ->
