@@ -55,7 +55,8 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
     currentUser  = CurrentUserStore.getUser()
     recipient    = conversation.recipient
     message      = {
-      content_html:    content
+      content:         content
+      content_html:    _.escape(content)
       conversation_id: conversationId
       recipient_id:    recipient.id
       user_id:         currentUser.id

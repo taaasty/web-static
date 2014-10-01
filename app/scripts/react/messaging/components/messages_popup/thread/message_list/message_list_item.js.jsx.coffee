@@ -28,7 +28,8 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
               </span>
               <div className="messages__bubble">
                 <span className="messages__user-name">{ this.props.messageInfo.user.slug }</span> 
-                <span dangerouslySetInnerHTML={{ __html: this.props.message.content_html }} />
+                <span className="messages__text"
+                      dangerouslySetInnerHTML={{ __html: this.props.message.content_html }} />
               </div>
               <span className="messages__date">
                 { messageCreatedAt }

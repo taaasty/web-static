@@ -1,6 +1,8 @@
 window.MessageActions = 
 
-  newMessage: ({ conversationId, content, uuid }) ->
+  newMessage: ({ conversationId, content }) ->
+    uuid = UuidService.generate()
+
     MessagingDispatcher.messageSubmitted { conversationId, content, uuid }
     messagingService.postMessage { conversationId, content, uuid }
 
