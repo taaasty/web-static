@@ -1,29 +1,14 @@
 ###* @jsx React.DOM ###
 
 window.MessagesPopup_ConversationsList = React.createClass
+  mixins: [ScrollerMixin]
 
   getInitialState: -> @getStateFromStore()
 
   componentDidMount: ->
-    @$scroller = $( @refs.scroller.getDOMNode() )
-
-    @scroller = @$scroller.baron
-      scroller: ".js-scroller-pane"
-      bar:      ".js-scroller-bar"
-      track:    ".js-scroller-track"
-      barOnCls: "scroller--tracked"
-      pause:    0
-
     ConversationsStore.addChangeListener @_onStoreChange
 
-  componentDidUpdate: ->
-    @scroller.update()
-    @$scroller.trigger('sizeChange').trigger 'sizeChange'
-
   componentWillUnmount: ->
-    @scroller.dispose()
-    @$scroller = @scroller = null
-
     ConversationsStore.removeChangeListener @_onStoreChange
 
   render: ->
