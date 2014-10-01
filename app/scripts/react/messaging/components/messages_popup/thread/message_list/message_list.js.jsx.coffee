@@ -40,9 +40,12 @@ window.MessagesPopup_ThreadMessageList = React.createClass
     MessagesStore.removeChangeListener @_onStoreChange
 
   render: ->
-    messages = @state.messages.map (message) ->
-      `<MessagesPopup_ThreadMessageListItemManager message={ message }
-                                                   key={ message.uuid } />`
+    if @isEmpty()
+      messages = `<MessagesPopup_MessageListEmpty />`
+    else
+      messages = @state.messages.map (message) ->
+        `<MessagesPopup_ThreadMessageListItemManager message={ message }
+                                                     key={ message.uuid } />`
 
     return `<div ref="scroller"
                  className="scroller scroller--dark scroller--messages">
@@ -63,6 +66,8 @@ window.MessagesPopup_ThreadMessageList = React.createClass
                 <div className="scroller__bar js-scroller-bar"></div>
               </div>
             </div>`
+
+  isEmpty: -> @state.messages.length == 0
 
   handleScroll: ->
     scrollerNode = @refs.scrollerPane.getDOMNode()
