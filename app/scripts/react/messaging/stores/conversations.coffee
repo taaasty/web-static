@@ -19,6 +19,14 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
 
   getActiveConversations: -> _conversations
 
+  unshiftConversations: (conversations) ->
+    clonedConversations = _conversations.slice(0)
+
+    for conversation in conversations
+      clonedConversations.unshift conversation
+
+    _conversations = clonedConversations
+
   updateConversations: (activeConversations) ->
     _conversations = activeConversations
 
@@ -36,6 +44,14 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
   getConversation: (conversationId) ->
     _.findWhere _conversations, { id: conversationId }
 
+  sortByDesc: ->
+    clonedConversations = _conversations.slice(0)
+
+    clonedConversations.sort (a, b) ->
+      new Date(b.updated_at) - new Date(a.updated_at)
+
+    _conversations = clonedConversations
+
 }
 
 ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
@@ -50,11 +66,17 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
       ConversationsStore.addConversation action.conversation
       ConversationsStore.emitChange()
       break
-    when 'updateActiveConversations'
-      ConversationsStore.updateConversations action.activeConversations
+    # when 'updateActiveConversations'
+    #   ConversationsStore.updateConversations action.activeConversations
+    #   ConversationsStore.emitChange()
+    #   break
+    when 'conversationsLoaded'
+      ConversationsStore.unshiftConversations action.conversations
+      ConversationsStore.sortByDesc()
       ConversationsStore.emitChange()
       break
     when 'updateConversation'
       ConversationsStore.updateConversation action.conversation
+      ConversationsStore.sortByDesc()
       ConversationsStore.emitChange()
       break

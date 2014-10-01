@@ -23,7 +23,7 @@ class window.MessagingService
       MessagingDispatcher.changeConnectionState ConnectionStateStore.ERROR_STATE
 
     @channel.bind @EVENT_STATUS,               MessagingDispatcher.updateMessagingStatus
-    @channel.bind @EVENT_ACTIVE_CONVERSATIONS, MessagingDispatcher.updateActiveConversations
+    # @channel.bind @EVENT_ACTIVE_CONVERSATIONS, MessagingDispatcher.updateActiveConversations
     @channel.bind @EVENT_UPDATE_CONVERSATION,  MessagingDispatcher.updateConversation
     @bindPushMessages()
     @bindUpdateMessages()
@@ -42,7 +42,13 @@ class window.MessagingService
       socket_id: @pusher.connection.socket_id
 
     @requester.notifyReady
-      success: -> console.log 'Server is notified'
+      success: (data) ->
+        console.log 'Server is notified'
+
+        MessagingDispatcher.handleServerAction {
+          type: 'conversationsLoaded'
+          conversations: data.conversations
+        }
       error: (error) -> console.error? "Error", error
 
     @pusher.connection.bind 'unavailable', (error) -> console.log "pusher unavailable", error
