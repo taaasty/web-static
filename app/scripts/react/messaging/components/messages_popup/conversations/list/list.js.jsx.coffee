@@ -12,9 +12,12 @@ window.MessagesPopup_ConversationsList = React.createClass
     ConversationsStore.removeChangeListener @_onStoreChange
 
   render: ->
-    conversations = @state.activeConversations.map (conversation, i) ->
-      `<MessagesPopup_ConversationsListItem conversation={ conversation }
-                                            key={ conversation.id } />`
+    if @isEmpty()
+      conversations = `<MessagesPopup_ConversationsListEmpty />`
+    else
+      conversations = @state.activeConversations.map (conversation, i) ->
+        `<MessagesPopup_ConversationsListItem conversation={ conversation }
+                                              key={ conversation.id } />`
 
     return `<div className="messages__body">
               <div ref="scroller"
@@ -29,6 +32,8 @@ window.MessagesPopup_ConversationsList = React.createClass
                 </div>
               </div>
             </div>`
+
+  isEmpty: -> @state.activeConversations.length == 0
 
   getStateFromStore: ->
     activeConversations: ConversationsStore.getActiveConversations()

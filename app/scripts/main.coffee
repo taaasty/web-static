@@ -79,6 +79,7 @@ require './react/messaging/components/messages_popup/loading_message'
 require './react/messaging/components/messages_popup/conversations/conversations'
 require './react/messaging/components/messages_popup/conversations/list/list'
 require './react/messaging/components/messages_popup/conversations/list/list_item'
+require './react/messaging/components/messages_popup/conversations/list/empty'
 require './react/messaging/components/messages_popup/create_new_conversation/create_new_conversation'
 require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser'
 require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button'
@@ -90,7 +91,7 @@ require './react/messaging/components/messages_popup/thread/message_form/message
 require './react/messaging/components/messages_popup/thread/message_list/message_list'
 require './react/messaging/components/messages_popup/thread/message_list/message_list_item'
 require './react/messaging/components/messages_popup/thread/message_list/message_list_item_manager'
-require './react/messaging/components/messages_popup/thread/empty/empty'
+require './react/messaging/components/messages_popup/thread/message_list/empty'
 
 # /*-----  End of Messaging resources  ------*/
 
