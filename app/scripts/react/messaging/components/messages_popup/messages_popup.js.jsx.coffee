@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 
-MESSAGES_POPUP_TITLE = 'Мои переписки'
+MESSAGES_POPUP_TITLE  = 'Мои переписки'
+MESSAGES_THREAD_TITLE = 'Переписка с #{name}'
 CONVERSATIONS_STATE           = 'conversations'
 CREATE_NEW_CONVERSATION_STATE = 'createNewConversation'
 THREAD_STATE                  = 'thread'
@@ -17,6 +18,8 @@ window.MessagesPopup = React.createClass
     MessagesPopupStateStore.removeChangeListener @_onStoreChange
 
   render: ->
+    popupTitle = @getPopupTitle()
+
     switch @state.currentState
       when CONVERSATIONS_STATE
         content = `<MessagesPopup_Conversations />`
@@ -29,7 +32,8 @@ window.MessagesPopup = React.createClass
       backButton = `<MessagesPopup_UIBackButton onClick={ this.handleBackButtonClick } />`
 
     return `<Popup hasActivities={ this.hasActivities() }
-                   title={ MESSAGES_POPUP_TITLE }
+                   title={ popupTitle }
+                   type="messages"
                    isDraggable={ true }
                    colorScheme="light"
                    position={{ top: 30, left: 30 }}
@@ -50,6 +54,17 @@ window.MessagesPopup = React.createClass
   getStateFromStore: ->
     currentState:          MessagesPopupStateStore.getCurrentState()
     currentConversationId: MessagesPopupStateStore.getCurrentConversationId()
+
+  getPopupTitle: ->
+    if @isThreadState()
+      conversation  = ConversationsStore.getConversation @state.currentConversationId
+      recipientSlug = conversation.recipient.slug
+      popupTitle    = MESSAGES_THREAD_TITLE.replace(/#{.+}/, recipientSlug)
+    else
+      popupTitle = MESSAGES_POPUP_TITLE
+
+    popupTitle
+
 
   handleBackButtonClick: ->
     MessagingDispatcher.handleViewAction {
