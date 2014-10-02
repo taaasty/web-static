@@ -13,36 +13,30 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
   removeChangeListener: (callback) ->
     @off CHANGE_EVENT, callback
 
-  addConversation: (newConversation) ->
-    unless @getConversation newConversation.id
-      _conversations.unshift newConversation
-
-  getActiveConversations: -> _conversations
-
   unshiftConversations: (conversations) ->
     clonedConversations = _conversations.slice(0)
 
     for conversation in conversations
-      clonedConversations.unshift conversation
+      unless @isConversationExists conversation
+        clonedConversations.unshift conversation
 
     _conversations = clonedConversations
 
-  updateConversations: (activeConversations) ->
-    _conversations = activeConversations
+  updateConversation: (data) ->
+    clonedConversations = _conversations.slice(0)
 
-  updateConversation: (newConversation) ->
-    for conversation, i in _conversations
-      if conversation.id == newConversation.id
-        index = i
+    for conversation, i in clonedConversations
+      if conversation.id == data.id
+        clonedConversations[i] = data
         break
 
-    if index?
-      _conversations[index] = newConversation 
-    else
-      @addConversation newConversation
+    _conversations = clonedConversations
 
   getConversation: (conversationId) ->
-    _.findWhere _conversations, { id: conversationId }
+    for conversation in _conversations
+      return conversation if conversation.id is conversationId
+
+  getActiveConversations: -> _conversations
 
   sortByDesc: ->
     clonedConversations = _conversations.slice(0)
@@ -52,6 +46,12 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
 
     _conversations = clonedConversations
 
+  isConversationExists: (conversation) ->
+    for cnv in _conversations
+      return true if cnv.id is conversation.id
+
+    false
+
 }
 
 ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
@@ -59,24 +59,20 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
 
   switch action.type
     when 'postNewConversation'
-      ConversationsStore.addConversation action.conversation
+      ConversationsStore.unshiftConversations [action.conversation]
       ConversationsStore.emitChange()
       break
-    when 'newConversationReceived'
-      ConversationsStore.addConversation action.conversation
-      ConversationsStore.emitChange()
-      break
-    # when 'updateActiveConversations'
-    #   ConversationsStore.updateConversations action.activeConversations
-    #   ConversationsStore.emitChange()
-    #   break
     when 'conversationsLoaded'
       ConversationsStore.unshiftConversations action.conversations
       ConversationsStore.sortByDesc()
       ConversationsStore.emitChange()
       break
     when 'updateConversation'
-      ConversationsStore.updateConversation action.conversation
+      if ConversationsStore.isConversationExists action.conversation
+        ConversationsStore.updateConversation action.conversation
+      else
+        ConversationsStore.unshiftConversations [action.conversation]
+
       ConversationsStore.sortByDesc()
       ConversationsStore.emitChange()
       break
