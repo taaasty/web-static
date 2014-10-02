@@ -69,9 +69,7 @@ window.MessagesStore = _.extend {}, EventEmitter.prototype, {
 
   sortByAsc: (conversationId) ->
     clonedMessages = _messages[conversationId].slice(0)
-
-    clonedMessages.sort (a, b) ->
-       new Date(a.created_at) - new Date(b.created_at)
+    clonedMessages.sort (a, b) -> a.id - b.id
 
     _messages[conversationId] = clonedMessages
 
@@ -88,6 +86,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register (payload) ->
       break
     when 'moreMessagesLoaded'
       _allMessagesLoaded[action.conversationId] = action.allMessagesLoaded
+
       MessagesStore.unshiftMessages action.conversationId, action.messages
       MessagesStore.emitChange()
       break
@@ -106,6 +105,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register (payload) ->
         MessagesStore.updateMessage action.conversationId, message
       else
         MessagesStore.pushMessages action.conversationId, [message]
+        MessagesStore.sortByAsc(action.conversationId)
 
       MessagesStore.emitChange()
       break
