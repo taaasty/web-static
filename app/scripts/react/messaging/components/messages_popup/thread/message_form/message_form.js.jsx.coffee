@@ -10,6 +10,9 @@ window.MessagesPopup_ThreadMessageForm = React.createClass
       isLoading: false
     }
 
+  componentDidMount: ->
+    @refs.messageForm.getDOMNode().focus()
+
   render: ->
     if @state.isLoading
       avatar = `<span className="spinner spinner--31x31"><span className="spinner__icon"></span></span>`
