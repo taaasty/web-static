@@ -2,10 +2,11 @@ REPOSITION_TIMEOUT = 500
 COMPONENT_WIDTH = 400
 
 window.ReactPositionsMixin =
-  propTypes:
-    position:      React.PropTypes.object
 
-  positionKey:       -> @props.title
+  propTypes:
+    position: React.PropTypes.object
+
+  positionKey: -> @props.type || @props.title
 
   componentDidMount: ->
     @restorePosition()

@@ -7,6 +7,7 @@ window.Popup = React.createClass
 
   propTypes:
     title:         React.PropTypes.string.isRequired
+    type:          React.PropTypes.string
     hasActivities: React.PropTypes.bool
     onClose:       React.PropTypes.func
     colorScheme:   React.PropTypes.oneOf(['dark', 'light'])
