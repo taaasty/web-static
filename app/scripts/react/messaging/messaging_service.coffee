@@ -47,8 +47,10 @@ class window.MessagingService
       socket_id: @pusher.connection.socket_id
 
     @requester.notifyReady
-      success: (data) ->
-        console.log 'Server is notified'
+      success: (data) =>
+        console.log 'Server is notified', data
+
+        _.defer => @_preloadConversationImages(data.conversations)
 
         MessagingDispatcher.handleServerAction {
           type: 'conversationsLoaded'
@@ -137,3 +139,17 @@ class window.MessagingService
 
   unbindUpdateMessages: ->
     @channel.unbind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated
+
+  _preloadConversationImages: (conversations) ->
+    imageUrls = []
+    images    = []
+
+    for conversation in conversations
+      if conversation.recipient.design.background_url?
+        imageUrls.push conversation.recipient.design.background_url
+
+    for imageUrl, i in imageUrls
+      images[i]     = new Image()
+      images[i].src = imageUrl
+
+    true
