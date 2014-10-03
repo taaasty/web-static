@@ -43,8 +43,9 @@ window.MessagesPopup_ThreadMessageList = React.createClass
     if @isEmpty()
       messages = `<MessagesPopup_MessageListEmpty />`
     else
-      messages = @state.messages.map (message) ->
+      messages = @state.messages.map (message, i) ->
         `<MessagesPopup_ThreadMessageListItemManager message={ message }
+                                                     ref={ 'message-' + i }
                                                      key={ message.uuid } />`
 
     return `<div ref="scroller"
@@ -77,6 +78,8 @@ window.MessagesPopup_ThreadMessageList = React.createClass
         conversationId: @props.conversationId
         toMessageId:    @state.messages[0].id
       }
+
+    TastyEvents.emit TastyEvents.keys.message_list_scrolled(), [scrollerNode]
 
   getStateFromStore: ->
     messages:            MessagesStore.getMessages @props.conversationId

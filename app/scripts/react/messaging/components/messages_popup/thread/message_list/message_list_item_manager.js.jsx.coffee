@@ -5,6 +5,16 @@ SENT_STATE    = 'sent'
 READ_STATE    = 'read'
 SENDING_STATE = 'sending'
 
+isElementInViewport = (el, parent) =>
+  rect = el.getBoundingClientRect()
+
+  return (
+    rect.top    >= 0 &&
+    rect.left   >= 0 &&
+    rect.bottom <= (parent.innerHeight || document.documentElement.clientHeight) &&
+    rect.right  <= (parent.innerWidth || document.documentElement.clientWidth)
+  )
+
 window.MessagesPopup_ThreadMessageListItemManager = React.createClass
   mixins: [ReactGrammarMixin]
 
@@ -16,7 +26,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass
 
   componentDidMount: ->
     if @isUnread() && @state.messageInfo.type is 'incoming'
-      MessageActions.readMessage @props.message.conversation_id, @props.message.id
+      TastyEvents.on TastyEvents.keys.message_list_scrolled(), @handleMessageListScroll
 
     if @isErrorState()
       messagingService.addReconnectListener @resendMessage
@@ -29,6 +39,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass
     @setState @stateFromProps(nextProps)
 
   componentWillUnmount: ->
+    TastyEvents.off TastyEvents.keys.message_list_scrolled(), @handleMessageListScroll
     messagingService.removeReconnectListener @resendMessage
 
   render: ->
@@ -53,6 +64,9 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass
       uuid:           @props.message.uuid
     }
 
+  readMessage: ->
+    MessageActions.readMessage @props.message.conversation_id, @props.message.id
+
   stateFromProps: (props) ->
     if props.message.sendingState?
       currentState = ERROR_STATE
@@ -65,3 +79,10 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass
       messageInfo: MessagesStore.getMessageInfo( props.message, props.message.conversation_id )
       currentState: currentState
     }
+
+  handleMessageListScroll: (scrollerNode) ->
+    messageNode = @getDOMNode()
+
+    if isElementInViewport(messageNode, scrollerNode)
+      @readMessage()
+      TastyEvents.off TastyEvents.keys.message_list_scrolled(), @handleMessageListScroll
