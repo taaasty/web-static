@@ -29,6 +29,9 @@ window.MessagesPopup_ThreadMessageForm = React.createClass
                         className="message-form__textarea" />
             </div>`
 
+  isFormEmpty: ->
+    @refs.messageForm.getDOMNode().value == ''
+
   clearForm: ->
     @refs.messageForm.getDOMNode().value = ''
 
@@ -36,13 +39,15 @@ window.MessagesPopup_ThreadMessageForm = React.createClass
     user: CurrentUserStore.getUser()
 
   handleKeyDown: (e) ->
-    switch e.key
-      when 'Enter'
-        e.preventDefault()
+    # Нажат Enter, введёный текст содержит какие-то символы, без Shift, Ctrl, Alt, Cmd
+    if e.key is 'Enter' && !@isFormEmpty() &&
+       !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey
 
-        MessageActions.newMessage {
+      e.preventDefault()
+
+      MessageActions.newMessage {
           content: e.target.value
           conversationId: @props.conversationId
         }
 
-        @clearForm()
+      @clearForm()
