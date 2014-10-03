@@ -1,3 +1,5 @@
+TLOG_BACKGROUND_IMAGES_URLS = []
+
 class window.MessagingService
   EVENT_STATUS: 'status'
   EVENT_ACTIVE_CONVERSATIONS: 'active_conversations'
@@ -47,8 +49,10 @@ class window.MessagingService
       socket_id: @pusher.connection.socket_id
 
     @requester.notifyReady
-      success: (data) ->
-        console.log 'Server is notified'
+      success: (data) =>
+        console.log 'Server is notified', data
+
+        _.defer => @_preloadConversationImages(data.conversations)
 
         MessagingDispatcher.handleServerAction {
           type: 'conversationsLoaded'
@@ -137,3 +141,15 @@ class window.MessagingService
 
   unbindUpdateMessages: ->
     @channel.unbind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated
+
+  _preloadConversationImages: (conversations) ->
+    for conversation in conversations
+      backgroundUrl = conversation.recipient.design.background_url
+
+      if TLOG_BACKGROUND_IMAGES_URLS.indexOf(backgroundUrl) == -1
+        image     = new Image()
+        image.src = backgroundUrl
+
+        TLOG_BACKGROUND_IMAGES_URLS.push backgroundUrl
+
+    true
