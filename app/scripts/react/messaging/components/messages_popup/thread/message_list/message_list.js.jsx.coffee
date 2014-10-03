@@ -2,6 +2,16 @@
 
 savedScrollHeight = null
 
+isElementInViewport = (el, parent) =>
+  rect = el.getBoundingClientRect()
+
+  return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (parent.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (parent.innerWidth || document.documentElement.clientWidth)
+  )
+
 window.MessagesPopup_ThreadMessageList = React.createClass
   mixins: [ScrollerMixin]
 
@@ -43,8 +53,9 @@ window.MessagesPopup_ThreadMessageList = React.createClass
     if @isEmpty()
       messages = `<MessagesPopup_MessageListEmpty />`
     else
-      messages = @state.messages.map (message) ->
+      messages = @state.messages.map (message, i) ->
         `<MessagesPopup_ThreadMessageListItemManager message={ message }
+                                                     ref={ 'message-' + i }
                                                      key={ message.uuid } />`
 
     return `<div ref="scroller"
@@ -71,12 +82,21 @@ window.MessagesPopup_ThreadMessageList = React.createClass
 
   handleScroll: ->
     scrollerNode = @refs.scrollerPane.getDOMNode()
+    i = 0
 
     if scrollerNode.scrollTop == 0 && !@state.isAllMessagesLoaded
       MessageActions.loadMoreMessages {
         conversationId: @props.conversationId
         toMessageId:    @state.messages[0].id
       }
+
+    while @refs['message-' + i]
+      message     = @refs['message-' + i]
+      messageNode = message.getDOMNode()
+
+      if isElementInViewport(messageNode, scrollerNode) && message.isUnread()
+        message.readMessage()
+      i++
 
   getStateFromStore: ->
     messages:            MessagesStore.getMessages @props.conversationId

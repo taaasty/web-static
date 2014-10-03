@@ -15,9 +15,6 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass
     @stateFromProps @props
 
   componentDidMount: ->
-    if @isUnread() && @state.messageInfo.type is 'incoming'
-      MessageActions.readMessage @props.message.conversation_id, @props.message.id
-
     if @isErrorState()
       messagingService.addReconnectListener @resendMessage
 
@@ -52,6 +49,10 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass
       content:        @props.message.content
       uuid:           @props.message.uuid
     }
+
+  readMessage: ->
+    if @isUnread() && @state.messageInfo.type is 'incoming'
+      MessageActions.readMessage @props.message.conversation_id, @props.message.id
 
   stateFromProps: (props) ->
     if props.message.sendingState?
