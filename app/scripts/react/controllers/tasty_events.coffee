@@ -7,3 +7,4 @@ TastyEvents.keys =
   comment_form_toggled:                         -> "comment_form:toggled"
   user_property_changed: (propertyName, userId) -> "#{ propertyName }:#{ userId }:changed"
   command_current_notification_hide:            -> "command:current_notification:hide"
+  message_list_scrolled:                        -> "message_list:scrolled"
