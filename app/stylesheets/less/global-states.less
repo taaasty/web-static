@@ -195,6 +195,25 @@
       background-color: @black;
     }
   }
+
+  // Эксперимент (Форма комментирования):
+  // Когда лента светлая, фон формы делаем чёрным,
+  // а цвет - белым
+  .comment-form__field-bg {
+    display: none !important;
+  }
+
+  .comment-form__field-label {
+    color: @white;
+  }
+
+  .comment-form__field-textarea {
+    background-color: rgba(0, 0, 0, .3);
+
+    &::-moz-placeholder           { color: @white; }
+    &:-ms-input-placeholder       { color: @white; }
+    &::-webkit-input-placeholder  { color: @white; }
+  }
 }
 
 .tlog-feedcolor-black {
@@ -220,6 +239,25 @@
 
   .content-info__text {
     color: @white;
+  }
+
+  // Эксперимент (Форма комментирования):
+  // Когда лента тёмная, фон формы делаем белым,
+  // а цвет - чёрным
+  .comment-form__field-bg {
+    display: none !important;
+  }
+
+  .comment-form__field-label {
+    color: @black;
+  }
+
+  .comment-form__field-textarea {
+    background-color: rgba(255, 255, 255, .3);
+
+    &::-moz-placeholder           { color: @black; }
+    &:-ms-input-placeholder       { color: @black; }
+    &::-webkit-input-placeholder  { color: @black; }
   }
 }
 
