@@ -253,7 +253,7 @@
   bottom: 0;
   left: 0;
   border: 1px solid @comment-textarea-border-color;
-  border-radius: 5px;
+  border-radius: @comment-textarea-border-radius;
 }
 
 .comment-form__field-label {
@@ -278,6 +278,7 @@
   vertical-align: top;
   z-index: @zindex-field-control;
   transition: all .2s ease;
+  border-radius: @comment-textarea-border-radius;
 
   &::-moz-placeholder           { color: @comment-textarea-placeholder-color; opacity: @comment-textarea-placeholder-opacity; }
   &:-ms-input-placeholder       { color: @comment-textarea-placeholder-color; opacity: @comment-textarea-placeholder-opacity; }
