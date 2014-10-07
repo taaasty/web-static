@@ -76,7 +76,14 @@
 
   .page {
     height: 100% !important;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .45);
+
+    // Хак для ie10+
+    // [#540] Текст в ie10+ обрезается из-за значения "0 1px 1px rgba(0, 0, 0, .45)" свойства text-shadow.
+    // Если значение "0 1px 1px 1px rgba(0, 0, 0, .45)", то не обрезается
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+      text-shadow: none;
+    }
   }
 
   .page__inner {
