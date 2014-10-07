@@ -98,7 +98,7 @@ window.UserToolbar = React.createClass
     React.renderComponent PersonsPopup(user: @state.user), container
 
   showDesignSettings: ->
-    url = window.location.origin + window.location.pathname
+    url = window.location.href
     container = document.querySelectorAll('[popup-design-settings-container]')[0]
 
     unless container
