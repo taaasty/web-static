@@ -49,6 +49,7 @@ require './react/messaging/stores/connection_state'
 require './react/messaging/stores/messages_popup_state'
 require './react/messaging/stores/conversations'
 require './react/messaging/stores/messages'
+require './react/messaging/stores/notifications'
 
 # /*==========  Control structures  ==========*/
 
@@ -73,6 +74,7 @@ require './react/messaging/mocks/messaging_service'
 
 require './react/messaging/components/toolbars/indicators/indicators'
 require './react/messaging/components/toolbars/indicators/messages'
+require './react/messaging/components/toolbars/indicators/notifications'
 require './react/messaging/components/messages_popup/ui/back_button'
 require './react/messaging/components/messages_popup/ui/create_new_conversation_button'
 require './react/messaging/components/messages_popup/messages_popup'
@@ -93,6 +95,10 @@ require './react/messaging/components/messages_popup/thread/message_list/message
 require './react/messaging/components/messages_popup/thread/message_list/message_list_item'
 require './react/messaging/components/messages_popup/thread/message_list/message_list_item_manager'
 require './react/messaging/components/messages_popup/thread/message_list/empty'
+require './react/messaging/components/notifications_popup/notifications_popup'
+require './react/messaging/components/notifications_popup/notifications/notifications'
+require './react/messaging/components/notifications_popup/notifications/notification'
+require './react/messaging/components/notifications_popup/notifications/empty'
 
 # /*-----  End of Messaging resources  ------*/
 

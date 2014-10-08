@@ -11,3 +11,6 @@ window.PopupActions =
 
   toggleMessagesPopup: ->
     messagingService.toggleMessagesPopup()
+
+  toggleNotificationsPopup: ->
+    messagingService.toggleNotificationsPopup()
