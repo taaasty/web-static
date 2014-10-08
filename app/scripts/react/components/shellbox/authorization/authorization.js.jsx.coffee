@@ -3,7 +3,11 @@
 window.AuthorizationShellBox = React.createClass
 
   render: ->
-    boxStyle = 'background-image': "url(http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg)"
+    entriesCount = @_getEntriesCount()
+    usersCount   = @_getUsersCount()
+    boxStyle = {
+      'background-image': "url(http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg)"
+    }
 
     return `<div className="inviter">
               <div className="inviter__box" style={ boxStyle }>
@@ -20,11 +24,11 @@ window.AuthorizationShellBox = React.createClass
                     <div className="inviter__spacer" />
                     <div className="inviter__stats">
                       <div className="inviter__stats-item">
-                        <strong>14 000 000+</strong>
+                        <strong>{ entriesCount }</strong>
                         записей
                       </div>
                       <div className="inviter__stats-item">
-                        <strong>200 000+</strong>
+                        <strong>{ usersCount }</strong>
                         пользователей
                       </div>
                       <div className="inviter__stats-item">
@@ -36,3 +40,9 @@ window.AuthorizationShellBox = React.createClass
                 </div>
               </div>
             </div>`
+
+  _getEntriesCount: ->
+    TastyUtils.formatNumber( window.gon.app_stats.entries_count, 100 ) + '+'
+
+  _getUsersCount: ->
+    TastyUtils.formatNumber( window.gon.app_stats.users_count, 100 ) + '+'
