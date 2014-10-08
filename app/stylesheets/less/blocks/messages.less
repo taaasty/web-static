@@ -460,6 +460,12 @@
     color: #fff;
   }
 
+  .messages__text {
+    a {
+      border-bottom: 1px solid rgba(red(@black), green(@black), blue(@black), .2);
+    }
+  }
+
 }
 
 .message-form {
@@ -499,6 +505,7 @@
 
   .messages__user-name {
     color: @white;
+
   }
 
   .messages__bubble {
@@ -512,9 +519,6 @@
       .transform(rotateY(180deg));
     }
 
-    a {
-      border-bottom: 1px solid rgba(red(@white), green(@white), blue(@white), .4);
-    }
   }
 
 }
@@ -535,9 +539,6 @@
       border-color: #f1f1f1;
     }
 
-    a {
-      border-bottom: 1px solid rgba(red(@black), green(@black), blue(@black), .2);
-    }
   }
 
   .messages__date {
