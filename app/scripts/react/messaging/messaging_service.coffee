@@ -114,11 +114,18 @@ class window.MessagingService
       .fail (errMsg) ->
         console.error 'Проблема при прочтении сообщения', errMsg
 
-  toggleMessagesPopup: ->
-    if @messagesPopup?._lifeCycleState is 'MOUNTED'
+  isMessagesPopupShown: -> @messagesPopup?._lifeCycleState is 'MOUNTED'
+
+  closeMessagesPopup: ->
+    if @isMessagesPopupShown()
       React.unmountComponentAtNode @messagesContainer
-    else
+
+  openMessagesPopup: ->
+    unless @isMessagesPopupShown()
       @messagesPopup = React.renderComponent MessagesPopup(), @messagesContainer
+
+  toggleMessagesPopup: ->
+    if @isMessagesPopupShown() then @closeMessagesPopup() else @openMessagesPopup()
 
   addReconnectListener: (callback) ->
     @on @RECONNECT_EVENT, callback
