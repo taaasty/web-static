@@ -59,6 +59,7 @@ require './react/messaging/models'
 
 # /*==========  Actions  ==========*/
 
+require './react/messaging/actions/popup'
 require './react/messaging/actions/conversation'
 require './react/messaging/actions/message'
 

@@ -33,19 +33,21 @@ window.IndicatorsToolbar_Messages = React.createClass
       else
         content = `<Spinner size={ 15 } />`
 
-    return `<div className="toolbar__indicator"
-                 onClick={ this.handleClick }>
-              { content }
-            </div>`
+    if @hasUnreadConversations()
+      return `<div className="toolbar__indicator"
+                   onClick={ this.handleClick }>
+                { content }
+              </div>`
+    else
+      return null
 
   handleClick: ->
     switch @state.currentState
-      when ConnectionStateStore.CONNECTED_STATE then messagingService.toggleMessagesPopup()
+      when ConnectionStateStore.CONNECTED_STATE then PopupActions.toggleMessagesPopup()
       when ConnectionStateStore.ERROR_STATE     then messagingService.reconnect()
       else null
 
-  # /**
-  #  * Event handler for 'change' events coming from the MessagingStatusStore
-  #  */
+  hasUnreadConversations: -> !!@state.unreadConversationsCount
+
   _onChange: ->
     @setState @getStateFromStores()

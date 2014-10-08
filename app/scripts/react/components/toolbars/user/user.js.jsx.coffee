@@ -70,7 +70,7 @@ window.UserToolbar = React.createClass
                   <ToolbarItem href={ this.props.privateEntriesUrl }
                                icon="icon--lock"
                                title="Скрытые записи" />
-                  <ToolbarItem disabled={ true }
+                  <ToolbarItem onSelect={ this.handleMessagesSelect }
                                icon="icon--messages"
                                title="Сообщения" />
                   <ToolbarItem onSelect={ this.handleFriendsSelect }
@@ -118,6 +118,9 @@ window.UserToolbar = React.createClass
       title: 'Настройки'
       user:  @state.user
     }
+
+  handleMessagesSelect: ->
+    PopupActions.openMessagesPopup()
 
   redirectToProfile: ->
     localStorage.setItem 'displayDesignSettings', true
