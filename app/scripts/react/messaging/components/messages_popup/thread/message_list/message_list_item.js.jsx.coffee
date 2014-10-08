@@ -14,20 +14,31 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
     onResendMessage: React.PropTypes.func.isRequired
 
   render: ->
-    deliveryStatus   = @_getDeliveryStatus() if @isOutgoing()
-    messageCreatedAt = @_getMessageCreatedAt() if @props.message.created_at
-    messageClasses   = React.addons.classSet {
+    messageClasses = React.addons.classSet {
       'message': true
       'message--from': @props.messageInfo.type is 'outgoing'
       'message--to':   @props.messageInfo.type is 'incoming'
     }
+
+    deliveryStatus   = @_getDeliveryStatus() if @isOutgoing()
+    messageCreatedAt = @_getMessageCreatedAt() if @props.message.created_at
+
+    if @isIncoming()
+      userSlug = `<span className="messages__user-name">
+                    <a href={ this.props.messageInfo.user.tlog_url }
+                       target="_blank">
+                      { this.props.messageInfo.user.slug }
+                    </a>
+                  </span> `
+    else
+      userSlug = `<span className="messages__user-name">{ this.props.messageInfo.user.slug }</span> `
 
     return `<div className={ messageClasses }>
               <span className="messages__user-avatar">
                 <UserAvatar user={ this.props.messageInfo.user } size={ 35 } />
               </span>
               <div className="messages__bubble">
-                <span className="messages__user-name">{ this.props.messageInfo.user.slug }</span> 
+                { userSlug }
                 <span className="messages__text"
                       dangerouslySetInnerHTML={{ __html: this.props.message.content_html }} />
               </div>
