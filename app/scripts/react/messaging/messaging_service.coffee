@@ -33,7 +33,8 @@ class window.MessagingService
     @bindPushMessages()
     @bindUpdateMessages()
 
-    @messagesContainer = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
+    @messagesContainer      = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
+    @notificationsContainer = $('<\div>', {'popup-notifications-container': ''}).appendTo('body')[0]
 
   reconnect: ->
     MessagingDispatcher.changeConnectionState ConnectionStateStore.PROCESS_STATE
@@ -114,18 +115,30 @@ class window.MessagingService
       .fail (errMsg) ->
         console.error 'Проблема при прочтении сообщения', errMsg
 
-  isMessagesPopupShown: -> @messagesPopup?._lifeCycleState is 'MOUNTED'
+  isMessagesPopupShown:      -> @messagesPopup?._lifeCycleState is 'MOUNTED'
+  isNotificationsPopupShown: -> @notificationsPopup?._lifeCycleState is 'MOUNTED'
 
   closeMessagesPopup: ->
     if @isMessagesPopupShown()
       React.unmountComponentAtNode @messagesContainer
 
+  closeNotificationsPopup: ->
+    if @isNotificationsPopupShown()
+      React.unmountComponentAtNode @notificationsContainer
+
   openMessagesPopup: ->
     unless @isMessagesPopupShown()
       @messagesPopup = React.renderComponent MessagesPopup(), @messagesContainer
 
+  openNotificationsPopup: ->
+    unless @isNotificationsPopupShown()
+      @notificationsPopup = React.renderComponent NotificationsPopup(), @notificationsContainer
+
   toggleMessagesPopup: ->
     if @isMessagesPopupShown() then @closeMessagesPopup() else @openMessagesPopup()
+
+  toggleNotificationsPopup: ->
+    if @isNotificationsPopupShown() then @closeNotificationsPopup() else @openNotificationsPopup()
 
   addReconnectListener: (callback) ->
     @on @RECONNECT_EVENT, callback

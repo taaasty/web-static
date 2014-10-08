@@ -6,5 +6,6 @@ window.IndicatorsToolbar = React.createClass
    `<nav className="toolbar toolbar--right state--open-indicators">
       <div className="toolbar__indicators">
         <IndicatorsToolbar_Messages />
+        <IndicatorsToolbar_Notifications />
       </div>
     </nav>`
