@@ -7,6 +7,10 @@ window.IndicatorsToolbar_Notifications = React.createClass
   componentDidMount: ->
     MessagingStatusStore.addChangeListener @_onStoreChange
 
+  componentDidUpdate: (prevProps, prevState) ->
+    if prevState.unreadNotificationsCount > 0 && !@hasUnreadNotifications()
+      PopupActions.closeNotificationsPopup()
+
   componentWillUnmount: ->
     MessagingStatusStore.removeChangeListener @_onStoreChange
 

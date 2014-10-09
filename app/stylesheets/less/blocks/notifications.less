@@ -4,6 +4,12 @@
 
 .notification {
   position: relative;
+
+  &.state--unread {
+    .notification__read-state {
+      background-color: #64c467;
+    }
+  }
 }
 
 .notification__inner {
@@ -42,14 +48,14 @@
   font-weight: bold;
 }
 
-.notification__user-online {
+.notification__read-state {
   width: 6px;
   height: 6px;
   margin: 14px -100% 0 0;
   position: relative;
   float: left;
   left: -12px;
-  background-color: #64c467;
+  background-color: #9b9e9d;
   border-radius: 50%;
 }
 

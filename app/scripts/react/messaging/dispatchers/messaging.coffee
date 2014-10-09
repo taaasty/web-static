@@ -43,11 +43,25 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
       message: message
     }
 
+  notificationReceived: (notification) ->
+    console.info 'Получено уведомление', notification
+
+    MessagingDispatcher.handleServerAction {
+      type: 'notificationReceived'
+      notification: notification
+    }
+
   messagesUpdated: (data) ->
     MessagingDispatcher.handleServerAction {
       type: 'messagesUpdated'
       conversationId: data.conversation_id
       messages: data.messages
+    }
+
+  notificationsUpdated: (data) ->
+    MessagingDispatcher.handleServerAction {
+      type: 'notificationsUpdated'
+      notifications: data.notifications
     }
 
   messageSubmitted: ({ conversationId, content, uuid }) ->
