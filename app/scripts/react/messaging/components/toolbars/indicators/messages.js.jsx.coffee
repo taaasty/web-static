@@ -2,52 +2,33 @@
 
 window.IndicatorsToolbar_Messages = React.createClass
 
-  getInitialState: ->
-    currentState: ConnectionStateStore.NOT_CONNECTED_STATE
-    unreadConversationsCount: '?'
-
-  getStateFromStores: ->
-    currentState:             ConnectionStateStore.getConnectionState()
-    unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount()
-    activeConversationsCount: MessagingStatusStore.getActiveConversationsCount()
+  getInitialState: -> @getStateFromStore()
 
   componentDidMount: ->
-    ConnectionStateStore.addUpdateListener =>
-      @setState
-        currentState: ConnectionStateStore.getConnectionState()
+    MessagingStatusStore.addChangeListener @_onStoreChange
 
-    MessagingStatusStore.addChangeListener =>
-      @setState
-        unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount()
-        activeConversationsCount: MessagingStatusStore.getActiveConversationsCount()
+  componentWillUnmount: ->
+    MessagingStatusStore.removeChangeListener @_onStoreChange
 
   render: ->
-    switch @state.currentState
-      when ConnectionStateStore.ERROR_STATE
-        content = `<span className="error-badge">?</span>`
-
-      when ConnectionStateStore.CONNECTED_STATE
-        content = `<span className="messages-badge">
-                        { this.state.unreadConversationsCount }
-                   </span>`
-      else
-        content = `<Spinner size={ 15 } />`
-
     if @hasUnreadConversations()
       return `<div className="toolbar__indicator"
                    onClick={ this.handleClick }>
-                { content }
+                <span className="messages-badge">
+                  { this.state.unreadConversationsCount }
+                </span>
               </div>`
     else
       return null
 
   handleClick: ->
-    switch @state.currentState
-      when ConnectionStateStore.CONNECTED_STATE then PopupActions.toggleMessagesPopup()
-      when ConnectionStateStore.ERROR_STATE     then messagingService.reconnect()
-      else null
+    PopupActions.toggleMessagesPopup()
 
   hasUnreadConversations: -> !!@state.unreadConversationsCount
 
-  _onChange: ->
-    @setState @getStateFromStores()
+  getStateFromStore: ->
+    unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount()
+    activeConversationsCount: MessagingStatusStore.getActiveConversationsCount()
+
+  _onStoreChange: ->
+    @setState @getStateFromStore()

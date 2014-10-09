@@ -10,8 +10,8 @@ window.ConnectionStateStore = _.extend {}, EventEmitter.prototype, {
 
   emitUpdate: -> @emit CONNECTION_EVENT
 
-  addUpdateListener:     (callback) -> @on  CONNECTION_EVENT, callback
-  removedUpdateListener: (callback) -> @off CONNECTION_EVENT, callback
+  addUpdateListener:    (callback) -> @on  CONNECTION_EVENT, callback
+  removeUpdateListener: (callback) -> @off CONNECTION_EVENT, callback
 
   getConnectionState: -> _connectionState
 
