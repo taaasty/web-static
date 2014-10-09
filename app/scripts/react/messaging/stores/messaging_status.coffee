@@ -10,7 +10,7 @@ window.MessagingStatusStore = _.extend {}, EventEmitter.prototype, {
   removeChangeListener: (callback) -> @off CHANGE_EVENT, callback
 
   getUnreadConversationsCount: -> _messagingStatus.unreadConversationsCount
-  getActiveConversationsCount: -> _messagingStatus.unreadConversationsCount
+  getActiveConversationsCount: -> _messagingStatus.unreadActiveConversationsCount
   getUnreadNotificationsCount: -> _messagingStatus.unreadNotificationsCount
 
   _update: (messagingStatus) -> _messagingStatus = messagingStatus

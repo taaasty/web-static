@@ -47,9 +47,10 @@ class window.MessagingRequester
         socket_id: @socket_id
         ids: messageId
 
-  #loadMoreMessages: (convId, toMessageId, limit) ->
-    #$.ajax conversationMessagesUrl(convId),
-      #method: 'GET'
-      #data:
-        #to_message_id: toMessageId
-        #limit: limit
+  markAsReadNotification: (notificationId) ->
+    $.ajax
+      url: Routes.api.notifications_read_url notificationId
+      method: 'PUT'
+      data:
+        socket_id: @socket_id
+        id: notificationId

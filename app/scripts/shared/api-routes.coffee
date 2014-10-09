@@ -57,4 +57,7 @@ ApiRoutes =
   messenger_load_messages_url:    (conversationId) -> TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages'
   messenger_read_messages_url:    (conversationId) -> TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages/read'
 
+  # Notifications
+  notifications_read_url:         (notificationId) -> TastySettings.api_host + 'v1/messenger/notifications/' + notificationId + '/read'
+
 window.Routes.api = ApiRoutes

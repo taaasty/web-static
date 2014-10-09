@@ -6,6 +6,9 @@ window.PopupActions =
       type: 'closeMessagesPopup'
     }
 
+  closeNotificationsPopup: ->
+    messagingService.closeNotificationsPopup()
+
   openMessagesPopup: ->
     messagingService.openMessagesPopup()
 

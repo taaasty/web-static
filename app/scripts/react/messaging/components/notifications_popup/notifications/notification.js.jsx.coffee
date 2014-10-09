@@ -6,33 +6,42 @@ window.NotificationsPopup_Notification = React.createClass
     notification: React.PropTypes.object.isRequired
 
   render: ->
-    userSlug = @props.notification.user.slug
-    action   = @props.notification.action
-    text     = @props.notification.text
-    imageUrl = @props.notification.image
-
-    if @props.notification.online
-      online = `<div className="notification__user-online" />` 
+    notificationClasses = React.addons.classSet {
+      'notification':  true
+      'state--unread': @isUnread()
+    }
+    userSlug   = @props.notification.sender.slug
+    actionText = @props.notification.action_text
+    text       = @props.notification.text
+    imageUrl   = @props.notification.image
+    entityUrl  = @props.notification.entity_url
 
     if @props.notification.image
       image  = `<figure className="notification__image">
                   <img src={ imageUrl } />
                 </figure>`
 
-    return `<li className="notification">
-              <a href="#"
+    return `<li className={ notificationClasses }
+                onClick={ this.handleClick }>
+              <a href={ entityUrl }
+                 target="_blank"
                  className="notification__link">
                 <div className="notification__inner">
-                  { online }
+                  <div className="notification__read-state" />
                   <div className="notification__user-avatar">
-                    <UserAvatar user={ this.props.notification.user } size={ 35 } />
+                    <UserAvatar user={ this.props.notification.sender } size={ 35 } />
                   </div>
                   { image }
                   <div className="notification__desc">
                     <span className="notification__user">{ userSlug }</span>
-                    <span> { action }: </span>
+                    <span> { actionText }: </span>
                     <span className="notification__text">{ text }</span>
                   </div>
                 </div>
               </a>
             </li>`
+
+  isUnread: -> @props.notification.read_at is null
+
+  handleClick: ->
+    NotificationActions.readNotification @props.notification.id if @isUnread()
