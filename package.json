@@ -32,7 +32,7 @@
     "gulp-jade": "~0.4.2",
     "gulp-useref": "^0.4.4",
     "gulp-coffee": "~1.4.1",
-    "gulp-bundle": "git+ssh://git@github.com:bleech/gulp-bundle.git",
+    "gulp-bundle": "bleech/gulp-bundle",
     "gulp-browserify": "~0.4.6",
     "flux": "~2.0.1",
     "reactify": "~0.10.0",
