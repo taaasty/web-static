@@ -1,9 +1,14 @@
 ###* @jsx React.DOM ###
 
+IMAGE_SIZE = 88
+
 window.NotificationsPopup_Notification = React.createClass
 
   propTypes:
     notification: React.PropTypes.object.isRequired
+
+  componentWillUnmount: ->
+    NotificationActions.readNotification @props.notification.id if @isUnread()
 
   render: ->
     notificationClasses = React.addons.classSet {
@@ -13,13 +18,13 @@ window.NotificationsPopup_Notification = React.createClass
     userSlug   = @props.notification.sender.slug
     actionText = @props.notification.action_text
     text       = @props.notification.text
-    imageUrl   = @props.notification.image
     entityUrl  = @props.notification.entity_url
 
     if @props.notification.image
-      image  = `<figure className="notification__image">
-                  <img src={ imageUrl } />
-                </figure>`
+      imageUrl = ThumborService.image_url @props.notification.image.url, IMAGE_SIZE + 'x' + IMAGE_SIZE
+      image    = `<figure className="notification__image">
+                    <img src={ imageUrl } />
+                  </figure>`
 
     return `<li className={ notificationClasses }
                 onClick={ this.handleClick }>
@@ -34,7 +39,7 @@ window.NotificationsPopup_Notification = React.createClass
                   { image }
                   <div className="notification__desc">
                     <span className="notification__user">{ userSlug }</span>
-                    <span> { actionText }: </span>
+                    <span className="notification__action-text"> { actionText }: </span>
                     <span className="notification__text">{ text }</span>
                   </div>
                 </div>

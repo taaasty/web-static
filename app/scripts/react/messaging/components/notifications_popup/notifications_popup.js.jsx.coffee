@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 
 window.NotificationsPopup = React.createClass
+  mixins: [ScrollerMixin]
 
   render: ->
    `<div className="popup popup--notifications popup--dark"
@@ -9,7 +10,18 @@ window.NotificationsPopup = React.createClass
       <div className="popup__content">
         <div className="popup__body">
           <div className="notifications">
-            <NotificationsPopup_Notifications />
+
+            <div ref="scroller"
+                 className="scroller scroller--dark scroller--notifications">
+              <div ref="scrollerPane"
+                   className="scroller__pane js-scroller-pane">
+                <NotificationsPopup_Notifications />
+              </div>
+              <div className="scroller__track js-scroller-track">
+                <div className="scroller__bar js-scroller-bar"></div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>

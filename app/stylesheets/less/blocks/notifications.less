@@ -9,12 +9,33 @@
     .notification__read-state {
       background-color: #64c467;
     }
+
+    .notification__user {
+      color: #888;
+    }
+
+    .notification__action-text {
+      color: #888;
+    }
+
+    .notification__text {
+      color: @notification-text-color;
+    }
+
   }
+
 }
 
 .notification__inner {
   padding: @notification-vertical-padding @notification-horizontal-padding;
   .clearfix();
+}
+
+.notifications__list {
+  height: 100%;
+  position: relative;
+  display: table;
+  width: 100%;
 }
 
 .notification__link {
@@ -40,12 +61,17 @@
   }
 }
 
-.notification__text {
-  color: @notification-text-color;
-}
-
 .notification__user {
   font-weight: bold;
+  color: #656565;
+}
+
+.notification__action-text {
+  color: #656565;
+}
+
+.notification__text {
+  color: #888;
 }
 
 .notification__read-state {
@@ -55,7 +81,6 @@
   position: relative;
   float: left;
   left: -12px;
-  background-color: #9b9e9d;
   border-radius: 50%;
 }
 
