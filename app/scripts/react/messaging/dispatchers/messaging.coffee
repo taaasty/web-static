@@ -46,6 +46,8 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
   notificationReceived: (notification) ->
     console.info 'Получено уведомление', notification
 
+    TastySoundController.incomingNotification()
+
     MessagingDispatcher.handleServerAction {
       type: 'notificationReceived'
       notification: notification
