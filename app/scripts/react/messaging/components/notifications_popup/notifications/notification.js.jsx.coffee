@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-IMAGE_SIZE = 88
+IMAGE_SIZE = 50
 
 window.NotificationsPopup_Notification = React.createClass
 
