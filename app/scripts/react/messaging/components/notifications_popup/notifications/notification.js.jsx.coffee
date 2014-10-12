@@ -39,7 +39,7 @@ window.NotificationsPopup_Notification = React.createClass
                   { image }
                   <div className="notification__desc">
                     <span className="notification__user">{ userSlug }</span>
-                    <span className="notification__action-text"> { actionText }: </span>
+                    <span className="notification__action-text"> { actionText }</span>
                     <span className="notification__text">{ text }</span>
                   </div>
                 </div>
