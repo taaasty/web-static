@@ -1,8 +1,5 @@
 ###* @jsx React.DOM ###
 
-ENTER_KEYCODE = 13
-ESC_KEYCODE   = 27
-
 window.SettingsEmailEdit = React.createClass
 
   propTypes:
@@ -21,17 +18,21 @@ window.SettingsEmailEdit = React.createClass
     hasInput: @props.email?.length >= 5
 
   render: ->
-    buttonClasses = React.addons.classSet
+    saveButtonTitle = @getSaveButtonTitle()
+    buttonClasses = React.addons.classSet {
       'button':          true
       'button--yellow':  @state.hasInput
       'button--outline': !@state.hasInput
+    }
 
-    return `<div className="settings__item settings__item--full" >
+    return `<div className="settings__item settings__item--full">
               <div className="settings__right">
                 <button ref="saveButton"
                         className={ buttonClasses }
-                        onClick={ this.onClickSave }>
-                  <span className="button__text">{ this.getSaveButtonTitle() }</span>
+                        onMouseDown={ this.handleClickSave }>
+                  <span className="button__text">
+                    { saveButtonTitle }
+                  </span>
                 </button>
               </div>
               <div className="settings__left">
@@ -39,43 +40,45 @@ window.SettingsEmailEdit = React.createClass
                 <div className="form-field form-field--default">
                   <input ref="email"
                          defaultValue={ this.props.email }
-                         onChange={ this.onChange }
-                         onKeyDown={ this.onKeyDown }
-                         onFocus={ this.onFocus }
-                         onBlur={ this.onBlur }
+                         onChange={ this.handleChange }
+                         onKeyDown={ this.handleKeyDown }
+                         onFocus={ this.handleFocus }
+                         onBlur={ this.handleBlur }
                          className="form-field__input" />
                   <div className="form-field__bg" />
                 </div>
               </div>
             </div>`
 
-  getSaveButtonTitle: -> if @state.hasInput then 'сохранить' else 'отмена'
+  getSaveButtonTitle: ->
+    if @state.hasInput then 'сохранить' else 'отмена'
 
-  onClickSave: (e) ->
+  handleClickSave: (e) ->
     e.preventDefault()
+    e.stopPropagation()
 
     newEmail = @$emailField.val()
 
     if @state.hasInput then @props.onSubmitEdit(newEmail) else @props.onCancelEdit()
 
-  onChange: ->
+  handleChange: ->
     newEmail = @$emailField.val()
     hasInput = newEmail.length >= 5
 
-    @setState hasInput: hasInput
+    @setState(hasInput: hasInput)
 
-  onKeyDown: (e) ->
+  handleKeyDown: (e) ->
     newEmail = @$emailField.val()
 
-    switch e.which
-      when ESC_KEYCODE
+    switch e.key
+      when 'Escape'
         e.preventDefault()
         @props.onCancelEdit()
-      when ENTER_KEYCODE
+      when 'Enter'
         e.preventDefault()
         @props.onSubmitEdit newEmail
 
-  onFocus: ->
+  handleFocus: ->
     # После фокуса, переводим курсор в конец строки
     valueLength = @$emailField.val().length
 
@@ -84,8 +87,8 @@ window.SettingsEmailEdit = React.createClass
     else
       @$emailField.val @$emailField.val()
 
-  onBlur: (e) ->
-    if e.relatedTarget is @$saveButton.get 0
+  handleBlur: (e) ->
+    if e.relatedTarget is @$saveButton.get(0)
       e.preventDefault()
     else
       @props.onCancelEdit()

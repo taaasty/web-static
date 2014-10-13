@@ -80,7 +80,7 @@ window.ToolbarSettings = React.createClass
                                  saveCallback={ saveCallback } />
 
                   <SettingsRadioItem title="Уведомления"
-                                     description="Вы хотите получать уведомления о всех новых комментариях, подписчиках и личных сообщениях?"
+                                     description="Отправлять мне емейл уведомления обо всех новых комментариях, подписчиках и личных сообщениях?"
                                      user={ this.state.user }
                                      saveCallback={ saveCallback }
                                      key="available_notifications"/>

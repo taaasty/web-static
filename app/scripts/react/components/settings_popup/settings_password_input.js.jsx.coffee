@@ -6,6 +6,7 @@ CANCEL_TIMEOUT = 500
 
 module.experts = window.SettingsPasswordItem = React.createClass
   mixins: [ReactShakeMixin]
+
   propTypes:
     saveCallback: React.PropTypes.func.isRequired
 
@@ -13,14 +14,14 @@ module.experts = window.SettingsPasswordItem = React.createClass
     isEditing: false
     hasInput:  false
 
-  validate: (silent=false)->
+  validate: (silent = false) ->
     unless @refs.password.state.value?
       unless silent
-        TastyNotifyController.notify 'error', 'Введите пароль чтобы соохранить или нажмите ESC чтобы прекратить'
+        TastyNotifyController.notify 'error', 'Введите пароль чтобы сохранить или нажмите ESC чтобы прекратить'
         @shake()
       return false
 
-    if @refs.password.state.value.length<3
+    if @refs.password.state.value.length < 3
       unless silent
         TastyNotifyController.notify 'error', 'Пароль должен быть не менее 3-х символов в длинну'
         @shake()
@@ -45,10 +46,7 @@ module.experts = window.SettingsPasswordItem = React.createClass
     @clearCancelTimer()
     event.preventDefault()
     event.stopPropagation()
-    if @state.hasInput
-      @save()
-    else
-      @cancel()
+    if @state.hasInput then @save() else @cancel()
 
     return false
 
@@ -81,8 +79,10 @@ module.experts = window.SettingsPasswordItem = React.createClass
       return
 
   hasInput: ->
-    @refs.password.state.value? && @refs.password.state.value.length>1 && @refs.password_confirm.state.value? && @refs.password_confirm.state.value.length>1
-
+    @refs.password.state.value?                   &&
+    @refs.password.state.value.length > 1         &&
+    @refs.password_confirm.state.value?           &&
+    @refs.password_confirm.state.value.length > 1
 
   handleChange: ->
     # Когда срабатывает этот колбек измнения в state еще не сохранены,
@@ -91,10 +91,7 @@ module.experts = window.SettingsPasswordItem = React.createClass
     setTimeout f, 50
 
   saveButtonTitle: ->
-    if @state.hasInput
-      'сохранить'
-    else
-      'отмена'
+    if @state.hasInput then 'сохранить' else 'отмена'
 
   setCancelTimer: ->
     @cancelTimer = setTimeout @cancel, CANCEL_TIMEOUT
@@ -105,46 +102,64 @@ module.experts = window.SettingsPasswordItem = React.createClass
       @cancelTimer = null
 
   render: ->
-    if @state.isEditing
-      @edit()
-    else
-      @show()
+    if @state.isEditing then @edit() else @show()
 
   show: ->
-    `<div className="settings__item settings__item--full">
-    <div className="settings__right">
+   `<div className="settings__item settings__item--full">
+      <div className="settings__right">
         <button onClick={this.clickChange} className="button button--outline" >
-            <span className="button__text">Изменить</span>
+          <span className="button__text">Изменить</span>
         </button>
       </div>
-        <div className="settings__left">
-          <h3 className="settings__title">Пароль</h3>
-          <p className="settings__desc">Отправлять мне емейл уведомления и всех новых комментариях, подписчиках и личных сообщениях?</p>
-        </div>
-        </div>`
+      <div className="settings__left">
+        <h3 className="settings__title">Пароль</h3>
+        <p className="settings__desc">
+          Используйте сложный пароль для авторизации и обеспечения сохранности данных.
+        </p>
+      </div>
+    </div>`
 
   edit: ->
-    buttonClasses = React.addons.classSet
+    saveButtonTitle = @saveButtonTitle()
+    buttonClasses = React.addons.classSet {
       'button':          true
       'button--yellow':  @state.hasInput
       'button--outline': !@state.hasInput
+    }
 
-    `<div className="settings__item setting_item--full">
-      <div className="settings__right">
-      <button onClick={this.clickSave} className={buttonClasses} >
-        <span className="button__text">{this.saveButtonTitle()}</span>
-      </button>
-    </div>
-    <div className="settings__left">
-      <h3 className="settings__title">Пароль</h3>
-      <div className="form-field form-field--default">
-        <input onKeyDown={this.handleKey} onBlur={this.handleBlur} onChange={this.handleChange} onFocus={this.handleFocus} autoFocus={true} className="form-field__input" ref="password" type="password" placeholder="Новый пароль" />
-        <div className="form-field__bg"></div>
-      </div>
-      <div className="form-field form-field--default">
-        <input onKeyDown={this.handleKey} onBlur={this.handleBlur} onChange={this.handleChange} onFocus={this.handleFocus} className="form-field__input" ref="password_confirm" type="password" placeholder="Новый пароль еще раз" />
-        <div className="form-field__bg"></div>
-      </div>
-    </div>
-    </div>`
-
+    return `<div className="settings__item setting_item--full">
+              <div className="settings__right">
+                <button className={ buttonClasses }
+                        onClick={ this.clickSave }>
+                  <span className="button__text">
+                    { saveButtonTitle }
+                  </span>
+                </button>
+              </div>
+              <div className="settings__left">
+                <h3 className="settings__title">Пароль</h3>
+                <div className="form-field form-field--default">
+                  <input ref="password"
+                         autoFocus={ true }
+                         type="password"
+                         placeholder="Новый пароль"
+                         className="form-field__input"
+                         onKeyDown={ this.handleKey }
+                         onBlur={ this.handleBlur }
+                         onChange={ this.handleChange }
+                         onFocus={ this.handleFocus } />
+                  <div className="form-field__bg" />
+                </div>
+                <div className="form-field form-field--default">
+                  <input ref="password_confirm"
+                         type="password"
+                         placeholder="Новый пароль еще раз"
+                         className="form-field__input"
+                         onKeyDown={ this.handleKey }
+                         onBlur={ this.handleBlur }
+                         onChange={ this.handleChange }
+                         onFocus={ this.handleFocus } />
+                  <div className="form-field__bg" />
+                </div>
+              </div>
+            </div>`

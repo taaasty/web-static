@@ -17,22 +17,23 @@ window.SettingsEmail = React.createClass
     currentState: if @props.email then SHOW_STATE else ESTABLISH_STATE
 
   render: ->
-    if @isShowing()
-      `<SettingsEmailShow email={ this.props.email }
-                          confirmationEmail={ this.props.confirmationEmail }
-                          isConfirmed={ this.props.isConfirmed }
-                          onClickEdit={ this.enableEditMode }
-                          onClickCancel={ this.makeCancelRequest } />`
-    else if @isEstablishing()
-      `<SettingsEmailEstablish onSubmitEstablish={ this.onSubmit } />`
-    else
-      `<SettingsEmailEdit email={ this.props.email }
-                          onCancelEdit={ this.enableShowMode }
-                          onSubmitEdit={ this.onSubmit }
-                          onBlurEdit={ this.enableShowMode } />`
+    switch @state.currentState
+      when SHOW_STATE
+        settingsEmail = `<SettingsEmailShow email={ this.props.email }
+                                            confirmationEmail={ this.props.confirmationEmail }
+                                            isConfirmed={ this.props.isConfirmed }
+                                            onClickEdit={ this.activateEditState }
+                                            onClickCancel={ this.makeCancelRequest } />`
+      when ESTABLISH_STATE
+        settingsEmail = `<SettingsEmailEstablish onSubmitEstablish={ this.onSubmit } />`
+      when EDIT_STATE
+        settingsEmail = `<SettingsEmailEdit email={ this.props.email }
+                                            onCancelEdit={ this.activateShowState }
+                                            onSubmitEdit={ this.onSubmit }
+                                            onBlurEdit={ this.activateShowState } />`
 
-  enableEditMode: -> @setState currentState: EDIT_STATE
-  enableShowMode: -> @setState currentState: SHOW_STATE
+  activateEditState: -> @setState(currentState: EDIT_STATE)
+  activateShowState: -> @setState(currentState: SHOW_STATE)
 
   isEditing:      -> @state.currentState is EDIT_STATE
   isShowing:      -> @state.currentState is SHOW_STATE
@@ -40,11 +41,13 @@ window.SettingsEmail = React.createClass
 
   onSubmit: (newEmail) ->
     @props.saveCallback 'email', newEmail
-    @enableShowMode()
+    @activateShowState()
 
   makeCancelRequest: ->
     @createRequest
       url:  Routes.api.request_confirm_url()
       method: 'DELETE'
-      success: => @props.saveCallback 'confirmation_email', null
-      error: (data) => TastyNotifyController.errorResponse data
+      success: =>
+        @props.saveCallback 'confirmation_email', null
+      error: (data) =>
+        TastyNotifyController.errorResponse data
