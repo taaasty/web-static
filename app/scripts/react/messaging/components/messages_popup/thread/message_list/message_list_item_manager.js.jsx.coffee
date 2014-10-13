@@ -5,34 +5,47 @@ SENT_STATE    = 'sent'
 READ_STATE    = 'read'
 SENDING_STATE = 'sending'
 
-isElementInViewport = (el, parent) =>
-  rect = el.getBoundingClientRect()
+isElementInViewport = (el, parent) ->
+  position = getElementPosition el, parent
 
-  return (
-    rect.top    >= 0 &&
-    rect.left   >= 0 &&
-    rect.bottom <= (parent.innerHeight || document.documentElement.clientHeight) &&
-    rect.right  <= (parent.innerWidth || document.documentElement.clientWidth)
+  if (
+    position.viewportHeight > position.elemBottomBorder ||
+    position.viewportHeight > position.elemTopBorder
   )
+    position.elemTopBorder > 0 || position.elemBottomBorder > 0
+
+getElementPosition = (el, parent) ->
+  _topBorder = el.offsetTop - parent.scrollTop
+
+  return {
+    elemTopBorder:    _topBorder
+    elemBottomBorder: _topBorder + el.offsetHeight
+    viewport:         parent
+    viewportHeight:   parent.offsetHeight
+  }
 
 window.MessagesPopup_ThreadMessageListItemManager = React.createClass
   mixins: [ReactGrammarMixin]
 
   propTypes:
-    message: React.PropTypes.object.isRequired
+    message:       React.PropTypes.object.isRequired
+    messagesCount: React.PropTypes.number
 
   getInitialState: ->
     @stateFromProps @props
 
   componentDidMount: ->
     if @isUnread() && @state.messageInfo.type is 'incoming'
-      TastyEvents.on TastyEvents.keys.message_list_scrolled(), @handleMessageListScroll
+      if @props.messagesCount > 10
+        TastyEvents.on TastyEvents.keys.message_list_scrolled(), @handleMessageListScroll
+      else
+        @readMessage()
 
     if @isErrorState()
       messagingService.addReconnectListener @resendMessage
 
   componentDidUpdate: ->
-    if @isErrorState() && !@isReconnectListening
+    if @isErrorState()
       messagingService.addReconnectListener @resendMessage
 
   componentWillReceiveProps: (nextProps) ->
@@ -76,7 +89,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass
       currentState = SENDING_STATE
 
     return {
-      messageInfo: MessagesStore.getMessageInfo( props.message, props.message.conversation_id )
+      messageInfo:  MessagesStore.getMessageInfo( props.message, props.message.conversation_id )
       currentState: currentState
     }
 
