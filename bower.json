@@ -19,7 +19,7 @@
     "angular-sanitize": "~1.2.19",
     "ng-rails-csrf": "https://raw.githubusercontent.com/xrd/ng-rails-csrf/master/vendor/assets/javascripts/ng-rails-csrf.js",
     "medium-editor": "1.9",
-    "Medium.js": "git@github.com:jakiestfu/Medium.js.git",
+    "Medium.js": "https://github.com/jakiestfu/Medium.js.git",
     "undo": "https://github.com/jzaefferer/undo/archive/master.zip",
     "rangy-1.3alpha.804": "https://rangy.googlecode.com/files/rangy-1.3alpha.804.zip",
     "jquery-autosize": "~1.18.9",
