@@ -43,9 +43,10 @@ window.MessagesPopup_ThreadMessageList = React.createClass
     if @isEmpty()
       messages = `<MessagesPopup_MessageListEmpty />`
     else
+      that = @
       messages = @state.messages.map (message, i) ->
         `<MessagesPopup_ThreadMessageListItemManager message={ message }
-                                                     ref={ 'message-' + i }
+                                                     messagesCount={ that.state.messages.length }
                                                      key={ message.uuid } />`
 
     return `<div ref="scroller"
@@ -56,9 +57,6 @@ window.MessagesPopup_ThreadMessageList = React.createClass
                 <div ref="messageList"
                      className="messages__list">
                   <div className="messages__list-cell">
-                    <div className="messages__empty state--hidden">
-                      <div className="messages__empty-text">Здесь будут отображаться сообщения</div>
-                    </div>
                     { messages }
                   </div>
                 </div>
@@ -71,26 +69,26 @@ window.MessagesPopup_ThreadMessageList = React.createClass
   isEmpty: -> @state.messages.length == 0
 
   handleScroll: ->
-    scrollerNode = @refs.scrollerPane.getDOMNode()
+    scrollerPaneNode = @refs.scrollerPane.getDOMNode()
 
-    if scrollerNode.scrollTop == 0 && !@state.isAllMessagesLoaded
+    if scrollerPaneNode.scrollTop == 0 && !@state.isAllMessagesLoaded
       MessageActions.loadMoreMessages {
         conversationId: @props.conversationId
         toMessageId:    @state.messages[0].id
       }
 
-    TastyEvents.emit TastyEvents.keys.message_list_scrolled(), [scrollerNode]
+    TastyEvents.emit TastyEvents.keys.message_list_scrolled(), scrollerPaneNode
 
   getStateFromStore: ->
     messages:            MessagesStore.getMessages @props.conversationId
     isAllMessagesLoaded: MessagesStore.isAllMessagesLoaded @props.conversationId
 
   _scrollToBottom: ->
-    scrollerNode           = @refs.scrollerPane.getDOMNode()
+    scrollerNode = @refs.scrollerPane.getDOMNode()
     scrollerNode.scrollTop = scrollerNode.scrollHeight
 
   _holdScroll: ->
-    scrollerNode           = @refs.scrollerPane.getDOMNode()
+    scrollerNode = @refs.scrollerPane.getDOMNode()
     scrollerNode.scrollTop = scrollerNode.scrollHeight - savedScrollHeight
     savedScrollHeight = null
 
