@@ -20,11 +20,7 @@ window.NotificationsPopup_Notification = React.createClass
     text       = @props.notification.text
     entityUrl  = @props.notification.entity_url
 
-    if @props.notification.image
-      imageUrl = ThumborService.image_url @props.notification.image.url, IMAGE_SIZE + 'x' + IMAGE_SIZE
-      image    = `<figure className="notification__image">
-                    <img src={ imageUrl } />
-                  </figure>`
+    image = @_getNotificationImage() if @props.notification.image
 
     return `<li className={ notificationClasses }
                 onClick={ this.handleClick }>
@@ -47,6 +43,28 @@ window.NotificationsPopup_Notification = React.createClass
             </li>`
 
   isUnread: -> @props.notification.read_at is null
+
+  _getNotificationImage: ->
+    url         = ThumborService.image_url @props.notification.image.url, IMAGE_SIZE + 'x' + IMAGE_SIZE
+    geometry    = @props.notification.image.geometry
+    aspectRatio = @calculateAspectRatioFit(geometry.width, geometry.height, IMAGE_SIZE, IMAGE_SIZE)
+    imageStyles = {
+      height: aspectRatio.height + 'px'
+      width:  aspectRatio.width + 'px'
+    }
+
+    return `<figure className="notification__image"
+                    style={ imageStyles }>
+              <img src={ url } />
+            </figure>`
+
+  calculateAspectRatioFit: (srcWidth, srcHeight, maxWidth, maxHeight) ->
+    ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight)
+
+    return {
+      width:  srcWidth * ratio
+      height: srcHeight * ratio
+    }
 
   handleClick: ->
     NotificationActions.readNotification @props.notification.id if @isUnread()
