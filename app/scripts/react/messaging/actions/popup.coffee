@@ -12,6 +12,9 @@ window.PopupActions =
   openMessagesPopup: ->
     messagingService.openMessagesPopup()
 
+  openNotificationsPopup: ->
+    messagingService.openNotificationsPopup()
+
   toggleMessagesPopup: ->
     messagingService.toggleMessagesPopup()
 
