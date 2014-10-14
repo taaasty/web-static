@@ -187,11 +187,41 @@
 
 // Indicators
 .toolbar__indicators {
-  margin-right: -8px;
-  position: absolute;
-  right: 100%;
+  height: @toolbar-size;
+  position: fixed;
+  top: @toolbar-indent;
+  line-height: @toolbar-size;
+  color: @white;
+  text-align: center;
+  z-index: @zindex-toolbar-indicators;
+  opacity: 1;
   white-space: nowrap;
-  .transition(~"opacity .6s ease");
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  right: 70px;
+  .transition(~"opacity .6s ease, right .3s ease");
+
+  &.state--advanced {
+    right: 76px;
+
+    .toolbar__indicator {
+      width: @toolbar-size;
+      height: @toolbar-size;
+      margin-right: 10px;
+      background: @toolbar-bg-base;
+      background-color: @toolbar-bg;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+  }
+
+  &.state--basic {
+    .toolbar__indicator {
+      &.state--empty {
+        display: none;
+      }
+    }
+  }
 }
 
 .toolbar__indicator {
@@ -199,6 +229,8 @@
   background-color: transparent;
   display: inline-block;
   cursor: pointer;
+  border-radius: @toolbar-size;
+  .user-select(none);
 }
 
 // Aside dropdown
