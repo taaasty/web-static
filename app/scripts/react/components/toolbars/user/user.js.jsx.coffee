@@ -1,12 +1,13 @@
 ###* @jsx React.DOM ###
 
+PureRenderMixin = React.addons.PureRenderMixin
 MOUSE_LEAVE_TIMEOUT = 300
 TOOLBAR_CLOSED          = 'closed'
 TOOLBAR_OPENED_BY_HOVER = 'openedByHover'
 TOOLBAR_OPENED_BY_CLICK = 'openedByClick'
 
 window.UserToolbar = React.createClass
-  mixins: [TouchMixin, ComponentManipulationsMixin]
+  mixins: [TouchMixin, ComponentManipulationsMixin, PureRenderMixin]
 
   propTypes:
     user:                 React.PropTypes.object.isRequired
@@ -28,6 +29,13 @@ window.UserToolbar = React.createClass
       localStorage.removeItem 'displayDesignSettings'
 
     @state.user.on 'change', @updateStateUser
+
+  componentWillUpdate: (nextProps, nextState) ->
+    if @state.currentState isnt nextState.currentState
+      switch nextState.currentState
+        when TOOLBAR_OPENED_BY_CLICK then TastyEvents.emit TastyEvents.keys.user_toolbar_opened()
+        when TOOLBAR_OPENED_BY_HOVER then TastyEvents.emit TastyEvents.keys.user_toolbar_opened()
+        when TOOLBAR_CLOSED          then TastyEvents.emit TastyEvents.keys.user_toolbar_closed()
 
   componentWillUnmount: ->
     clearTimeout @timeout if @timeout
@@ -132,19 +140,19 @@ window.UserToolbar = React.createClass
 
   onClick: ->
     switch @state.currentState
-      when TOOLBAR_CLOSED          then @setState currentState: TOOLBAR_OPENED_BY_CLICK
-      when TOOLBAR_OPENED_BY_CLICK then @setState currentState: TOOLBAR_CLOSED
-      when TOOLBAR_OPENED_BY_HOVER then @setState currentState: TOOLBAR_CLOSED
+      when TOOLBAR_CLOSED          then @setState(currentState: TOOLBAR_OPENED_BY_CLICK)
+      when TOOLBAR_OPENED_BY_CLICK then @setState(currentState: TOOLBAR_CLOSED)
+      when TOOLBAR_OPENED_BY_HOVER then @setState(currentState: TOOLBAR_CLOSED)
       else console.error? 'Unknown state.currentState', @state.currentState
 
   onMouseEnter: ->
     clearTimeout @timeout if @timeout?
 
     if @state.currentState == TOOLBAR_CLOSED
-      @setState currentState: TOOLBAR_OPENED_BY_HOVER
+      @setState(currentState: TOOLBAR_OPENED_BY_HOVER)
 
   onMouseLeave: ->
     if @state.currentState == TOOLBAR_OPENED_BY_HOVER
       @timeout = setTimeout (=>
-        @safeUpdateState currentState: TOOLBAR_CLOSED
+        @safeUpdateState(currentState: TOOLBAR_CLOSED)
       ), MOUSE_LEAVE_TIMEOUT

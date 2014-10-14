@@ -2,6 +2,9 @@
 
 window.IndicatorsToolbar_Messages = React.createClass
 
+  propTypes:
+    onClick: React.PropTypes.func.isRequired
+
   getInitialState: -> @getStateFromStore()
 
   componentDidMount: ->
@@ -11,9 +14,14 @@ window.IndicatorsToolbar_Messages = React.createClass
     MessagingStatusStore.removeChangeListener @_onStoreChange
 
   render: ->
+    indicatorClasses = React.addons.classSet {
+      'toolbar__indicator': true
+      'state--empty': @state.unreadConversationsCount == 0
+    }
+
     if @hasUnreadConversations()
-      return `<div className="toolbar__indicator"
-                   onClick={ this.handleClick }>
+      return `<div className={ indicatorClasses }
+                   onClick={ this.props.onClick }>
                 <span className="messages-badge">
                   { this.state.unreadConversationsCount }
                 </span>
@@ -21,10 +29,7 @@ window.IndicatorsToolbar_Messages = React.createClass
     else
       return null
 
-  handleClick: ->
-    PopupActions.toggleMessagesPopup()
-
-  hasUnreadConversations: -> !!@state.unreadConversationsCount
+  hasUnreadConversations: -> @state.unreadConversationsCount?
 
   getStateFromStore: ->
     unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount()
