@@ -132,7 +132,9 @@ window.UserToolbar = React.createClass
 
   onClick: ->
     switch @state.currentState
-      when TOOLBAR_CLOSED          then @setState currentState: TOOLBAR_OPENED_BY_CLICK
+      when TOOLBAR_CLOSED
+        TastyEvents.emit TastyEvents.keys.user_toolbar_opened()
+        @setState(currentState: TOOLBAR_OPENED_BY_CLICK)
       when TOOLBAR_OPENED_BY_CLICK then @setState currentState: TOOLBAR_CLOSED
       when TOOLBAR_OPENED_BY_HOVER then @setState currentState: TOOLBAR_CLOSED
       else console.error? 'Unknown state.currentState', @state.currentState
@@ -141,10 +143,12 @@ window.UserToolbar = React.createClass
     clearTimeout @timeout if @timeout?
 
     if @state.currentState == TOOLBAR_CLOSED
+      TastyEvents.emit TastyEvents.keys.user_toolbar_opened()
       @setState currentState: TOOLBAR_OPENED_BY_HOVER
 
   onMouseLeave: ->
     if @state.currentState == TOOLBAR_OPENED_BY_HOVER
       @timeout = setTimeout (=>
+        TastyEvents.emit TastyEvents.keys.user_toolbar_closed()
         @safeUpdateState currentState: TOOLBAR_CLOSED
       ), MOUSE_LEAVE_TIMEOUT
