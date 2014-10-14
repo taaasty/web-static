@@ -1,9 +1,11 @@
 ###* @jsx React.DOM ###
 
+MOUSE_LEAVE_TIMEOUT = 800
 BASIC_STATE    = 'basic'
 ADVANCED_STATE = 'advanced'
 
 window.IndicatorsToolbar = React.createClass
+  mixins: [ComponentManipulationsMixin]
 
   getInitialState: ->
     _.extend @getStateFromStore(), {
@@ -15,14 +17,15 @@ window.IndicatorsToolbar = React.createClass
 
     $(document).on 'click', @_onDocumentClick
     TastyEvents.on TastyEvents.keys.user_toolbar_closed(), @_onUserToolbarClose
-    TastyEvents.on TastyEvents.keys.user_toolbar_opened(), @activateAdvancedState
+    TastyEvents.on TastyEvents.keys.user_toolbar_opened(), @_onUserToolbarOpen
 
   componentWillUnmount: ->
+    clearTimeout @timeout if @timeout
     ConnectionStateStore.removeUpdateListener @_onStoreChange
 
     $(document).off 'click', @_onDocumentClick
     TastyEvents.off TastyEvents.keys.user_toolbar_closed(), @_onUserToolbarClose
-    TastyEvents.off TastyEvents.keys.user_toolbar_opened(), @activateAdvancedState
+    TastyEvents.off TastyEvents.keys.user_toolbar_opened(), @_onUserToolbarOpen
 
   render: ->
     indicatorsClasses = React.addons.classSet {
@@ -57,17 +60,25 @@ window.IndicatorsToolbar = React.createClass
     PopupActions.toggleNotificationsPopup() if @isAdvancedState()
 
   handleMouseEnter: ->
+    clearTimeout @timeout if @timeout
+
     @setState {
       isHovered: true
       currentState: ADVANCED_STATE
     }
 
   handleMouseLeave: ->
+    @safeUpdateState { isHovered: false }
+
     unless messagingService.isNotificationsPopupShown()
-      @setState {
-        isHovered: false
-        currentState: BASIC_STATE
-      }
+      @timeout = setTimeout (=>
+        @safeUpdateState { currentState: BASIC_STATE }
+      ), MOUSE_LEAVE_TIMEOUT
+
+  _onUserToolbarOpen: ->
+    clearTimeout @timeout if @timeout
+
+    @activateAdvancedState()
 
   _onUserToolbarClose: ->
     @activateBasicState() unless @state.isHovered

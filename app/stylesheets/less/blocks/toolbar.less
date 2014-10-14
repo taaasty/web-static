@@ -205,12 +205,16 @@
     right: 76px;
 
     .toolbar__indicator {
+      opacity: 1;
       width: @toolbar-size;
       height: @toolbar-size;
       margin-right: 10px;
       background: @toolbar-bg-base;
       background-color: @toolbar-bg;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      &.state--empty {
+        .transition(~"width .3s ease, opacity .6s ease, background-color .2s ease");
+      }
     }
 
   }
@@ -218,7 +222,9 @@
   &.state--basic {
     .toolbar__indicator {
       &.state--empty {
-        display: none;
+        opacity:0;
+        width: 0;
+        .transition(~"width 1s ease, opacity .6s ease, background-color .2s ease");
       }
     }
   }
@@ -231,6 +237,7 @@
   cursor: pointer;
   border-radius: @toolbar-size;
   .user-select(none);
+  .transition(~"width .6s ease, opacity .6s ease");
 }
 
 // Aside dropdown
