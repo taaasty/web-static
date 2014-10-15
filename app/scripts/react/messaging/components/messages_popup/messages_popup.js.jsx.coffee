@@ -5,6 +5,8 @@ MESSAGES_THREAD_TITLE = 'Переписка с #{name}'
 CONVERSATIONS_STATE           = 'conversations'
 CREATE_NEW_CONVERSATION_STATE = 'createNewConversation'
 THREAD_STATE                  = 'thread'
+ENTER_TIMEOUT = 300
+LEAVE_TIMEOUT = 300
 
 window.MessagesPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
@@ -22,11 +24,15 @@ window.MessagesPopup = React.createClass
 
     switch @state.currentState
       when CONVERSATIONS_STATE
-        content = `<MessagesPopup_Conversations />`
+        content         = `<MessagesPopup_Conversations key="conversations" />`
+        transitionName  = 'conversations'
       when CREATE_NEW_CONVERSATION_STATE
-        content = `<MessagesPopup_CreateNewConversation />`
+        content         = `<MessagesPopup_CreateNewConversation key="newConversation" />`
+        transitionName  = 'new-conversation'
       when THREAD_STATE
-        content = `<MessagesPopup_Thread conversationId={ this.state.currentConversationId } />`
+        content         = `<MessagesPopup_Thread conversationId={ this.state.currentConversationId }
+                                                 key="thread" />`
+        transitionName  = 'thread'
 
     unless @isConversationsState()
       backButton = `<MessagesPopup_UIBackButton onClick={ this.handleBackButtonClick } />`
@@ -42,7 +48,11 @@ window.MessagesPopup = React.createClass
 
               <div className="messages">
                 { backButton }
-                { content }
+                <TimeoutTransitionGroup enterTimeout={ ENTER_TIMEOUT }
+                                        leaveTimeout={ LEAVE_TIMEOUT }
+                                        transitionName={ transitionName }>
+                  { content }
+                </TimeoutTransitionGroup>
               </div>
 
             </Popup>`

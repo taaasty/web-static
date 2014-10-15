@@ -1,5 +1,7 @@
 .messages {
   height: @messages-height;
+  overflow: hidden;
+  position: relative;
 
   .scroller {
     height: 100%;
@@ -555,3 +557,58 @@
   }
 
 }
+
+/*==================================
+=            Animations            =
+==================================*/
+
+.thread-enter {
+  position: absolute;
+  .translate(100%, 0);
+}
+.thread-enter.thread-enter-active {
+  .translate(0, 0);
+  .transition(.3s ease);
+}
+.thread-leave {
+  position: absolute;
+  .translate(0, 0);
+}
+.thread-leave.thread-leave-active {
+  .translate(-100%, 0);
+  .transition(.3s ease);
+}
+
+.conversations-enter {
+  position: absolute;
+  .translate(-100%, 0);
+}
+.conversations-enter.conversations-enter-active {
+  .translate(0, 0);
+  .transition(.3s ease);
+}
+.conversations-leave {
+  position: absolute;
+  .translate(0, 0);
+}
+.conversations-leave.conversations-leave-active {
+  .translate(100%, 0);
+  .transition(.3s ease);
+}
+.new-conversation-enter {
+  position: absolute;
+  .translate(0, 100%);
+}
+.new-conversation-enter.new-conversation-enter-active {
+  .translate(0, 0);
+  .transition(.3s ease);
+}
+.new-conversation-leave {
+  position: absolute;
+  .translate(0, 0);
+}
+.new-conversation-leave.new-conversation-leave-active {
+  .translate(0, -100%);
+  .transition(.3s ease);
+}
+/*-----  End of Animations  ------*/

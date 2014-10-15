@@ -34,6 +34,8 @@ require './react/mixins/touch'
 require './react/dispatchers/current_user'
 require './react/stores/current_user'
 
+require './react/components/transition/timeout_transition_group'
+
 # /*============================================
 # =            Messaging resourses            =
 # ============================================*/
