@@ -32,6 +32,11 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
 
     _conversations = clonedConversations
 
+  preloadConversationsImages: (conversations) ->
+    for conversation in conversations
+      image = new Image()
+      image.src = conversation.recipient.design.background_url
+
   getConversation: (conversationId) ->
     for conversation in _conversations
       return conversation if conversation.id is conversationId
@@ -60,10 +65,12 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
   switch action.type
     when 'postNewConversation'
       ConversationsStore.unshiftConversations [action.conversation]
+      ConversationsStore.preloadConversationsImages [action.conversation]
       ConversationsStore.emitChange()
       break
     when 'conversationsLoaded'
       ConversationsStore.unshiftConversations action.conversations
+      ConversationsStore.preloadConversationsImages action.conversations
       ConversationsStore.sortByDesc()
       ConversationsStore.emitChange()
       break
@@ -72,6 +79,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
         ConversationsStore.updateConversation action.conversation
       else
         ConversationsStore.unshiftConversations [action.conversation]
+        ConversationsStore.preloadConversationsImages [action.conversation]
 
       ConversationsStore.sortByDesc()
       ConversationsStore.emitChange()
