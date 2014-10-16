@@ -48,7 +48,7 @@ animationAllowed = ->
   # Под запрет попадают:
   # - Firefox < 34
 
-  browser        = bowser.browser
+  browser        = bowser.browser || bowser
   browserName    = browser.name
   browserVersion = parseInt browser.version
 
