@@ -3,7 +3,7 @@
 ENTRY_PRIVACY_PRIVATE   = TLOG_TYPE_PRIVATE   = 'private'
 ENTRY_PRIVACY_PUBLIC    = TLOG_TYPE_PUBLIC    = 'public'
 ENTRY_PRIVACY_ANONYMOUS = TLOG_TYPE_ANONYMOUS = 'anonymous'
-ENTRY_PRIVACY_LIVE      = 'live'
+ENTRY_PRIVACY_PUBLIC_WITH_VOTING = 'public_with_voting'
 
 PREVIEW_BODY_CLASSES = {
   true:  'tlog-mode-full'
@@ -38,7 +38,7 @@ window.PostActions = React.createClass
     }
 
     privacyButton = `<div className="post-action post-action--button">
-                        <PostActions_PrivacyButton isVoteEnabled={ this.isPostLive() }
+                        <PostActions_PrivacyButton isVoteEnabled={ this.isPostPublicWithVoting() }
                                                    private={ this.isPostPrivate() }
                                                    onChange={ this.onPrivacyChanged } />
                     </div>`
@@ -50,7 +50,7 @@ window.PostActions = React.createClass
 
     unless @isPostPrivate() || @isTlogPrivate()
       voteButton = `<div className="post-action post-action--button">
-                      <PostActions_VoteButton enabled={ this.isPostLive() }
+                      <PostActions_VoteButton enabled={ this.isPostPublicWithVoting() }
                                               onChange={ this.onVoteChanged } />
                     </div>`
 
@@ -79,10 +79,10 @@ window.PostActions = React.createClass
               </div>
             </div>`
 
-  isPostPublic:    -> @props.entryPrivacy is ENTRY_PRIVACY_PUBLIC
-  isPostPrivate:   -> @props.entryPrivacy is ENTRY_PRIVACY_PRIVATE
-  isPostLive:      -> @props.entryPrivacy is ENTRY_PRIVACY_LIVE
-  isPostAnonymous: -> @props.entryPrivacy is ENTRY_PRIVACY_ANONYMOUS
+  isPostPublic:           -> @props.entryPrivacy is ENTRY_PRIVACY_PUBLIC
+  isPostPrivate:          -> @props.entryPrivacy is ENTRY_PRIVACY_PRIVATE
+  isPostPublicWithVoting: -> @props.entryPrivacy is ENTRY_PRIVACY_PUBLIC_WITH_VOTING
+  isPostAnonymous:        -> @props.entryPrivacy is ENTRY_PRIVACY_ANONYMOUS
 
   isTlogAnonymous: -> @props.tlogType is TLOG_TYPE_ANONYMOUS
   isTlogPublic:    -> @props.tlogType is TLOG_TYPE_PUBLIC
@@ -92,7 +92,7 @@ window.PostActions = React.createClass
     if @isPostPrivate() then 'Сохранить в тлоге' else 'Опубликовать'
 
   onVoteChanged: (value) ->
-    newEntryPrivacy = if value then ENTRY_PRIVACY_LIVE else ENTRY_PRIVACY_PUBLIC
+    newEntryPrivacy = if value then ENTRY_PRIVACY_PUBLIC_WITH_VOTING else ENTRY_PRIVACY_PUBLIC
 
     @props.onChangePrivacy newEntryPrivacy
 
