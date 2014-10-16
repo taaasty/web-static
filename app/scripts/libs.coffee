@@ -5,6 +5,7 @@ window.Dispatcher = require('flux').Dispatcher
 window._ = require 'underscore'
 window.moment = require 'momentjs'
 window.EventEmitter = require 'eventEmitter'
+window.bowser = require 'bowser'
 
 require '../javascripts/old/libs/jquery.autosize.input.js'
 
