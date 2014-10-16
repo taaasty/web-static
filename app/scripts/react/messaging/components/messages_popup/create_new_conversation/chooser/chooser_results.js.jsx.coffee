@@ -12,8 +12,9 @@ window.MessagesPopup_ChooserResults = React.createClass
     onSubmit: React.PropTypes.func.isRequired
 
   getInitialState: ->
-    currentState:   LOADING_STATE
+    currentState: LOADING_STATE
     predictedUsers: []
+    selectedUserIndex: 0
 
   componentDidMount: -> @loadPredictions(@props.query)
 
@@ -30,8 +31,9 @@ window.MessagesPopup_ChooserResults = React.createClass
 
       when LOADED_STATE
         that = @
-        predictedUsers = @state.predictedUsers.map (predictedUser) ->
+        predictedUsers = @state.predictedUsers.map (predictedUser, i) ->
           `<MessagesPopup_ChooserResultsItem predictedUser={ predictedUser }
+                                             selected={ that.state.selectedUserIndex == i }
                                              onClick={ that.props.onSubmit }
                                              key={ predictedUser.id } />`
 
@@ -49,6 +51,9 @@ window.MessagesPopup_ChooserResults = React.createClass
   activateEmptyState:  -> @setState currentState: EMPTY_STATE
   activateLoadedState: -> @setState currentState: LOADED_STATE
 
+  selectPreviousResult: -> @_moveHighlight(-1)
+  selectNextResult:     -> @_moveHighlight(1)
+
   loadPredictions: (query) ->
     @createRequest
       url: Routes.api.users_predict()
@@ -64,3 +69,16 @@ window.MessagesPopup_ChooserResults = React.createClass
           @activateLoadedState()
       error: (errMsg) =>
         TastyNotifyController.errorResponse errMsg
+
+  getSelectedUserSlug: ->
+    @state.predictedUsers[@state.selectedUserIndex].slug
+
+  _moveHighlight: (delta) ->
+    usersCount = @state.predictedUsers.length
+    userIndex  = @state.selectedUserIndex
+
+    if usersCount > 0
+      if (userIndex > 0 && delta < 0) || (userIndex < usersCount - 1 && delta > 0)
+        @setState {
+          selectedUserIndex: userIndex + delta
+        }
