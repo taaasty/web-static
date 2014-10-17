@@ -1,5 +1,6 @@
 require './settings'
 require './libs'
+require './locales'
 require './routes'
 require './shared/api-routes'
 require './shared/dmodel'

@@ -1,70 +1,73 @@
 ###* @jsx React.DOM ###
 
+PureRenderMixin = React.addons.PureRenderMixin
+
 window.Voting = React.createClass
-  mixins: [RequesterMixin, ComponentManipulationsMixin]
+  mixins: [RequesterMixin, ComponentManipulationsMixin, PureRenderMixin]
 
   propTypes:
+    entryId:    React.PropTypes.number.isRequired
     isVoteable: React.PropTypes.bool.isRequired
     isVoted:    React.PropTypes.bool.isRequired
     votes:      React.PropTypes.number.isRequired
     rating:     React.PropTypes.number.isRequired
-    entryId:    React.PropTypes.number.isRequired
 
   getInitialState: ->
-    isVoteable: @props.isVoteable
-    isVoted:    @props.isVoted
-    votes:      @props.votes
-    rating:     @props.rating
-    process:    false
+    canVote: @props.isVoteable
+    isVoted: @props.isVoted
+    votes:   @props.votes
+    rating:  @props.rating
+    process: false
 
-  # Почему-то React.addons не доступен
-  #mixins: [React.addons.ReactComponentWithPureRenderMixin]
+  componentDidMount: ->
+    $voting = $( @getDOMNode() )
+    $voting.tooltip placement: 'top'
 
-  handleClick: (e)->
-    return if @state.isVoted || !@state.isVoteable
-
-    @setState process: true
-    @createRequest
-      url: Routes.api.votes_url(@props.entryId)
-      method: @ajaxMethod()
-      success: (data) =>
-        @safeUpdateState {
-          isVoted:    data.is_voted
-          isVoteable: data.is_voteable
-          votes:      data.votes
-          rating:     data.votes
-        }
-      complete: =>
-        @safeUpdateState process: false
-
-  shouldComponentUpdate: (nextProps, nextState) ->
-    res = !_.isEqual(nextProps, @props) || !_.isEqual(nextState, @state)
+  componentWillUnmount: ->
+    $voting = $( @getDOMNode() )
+    $voting.tooltip 'destroy'
 
   render: ->
-    return `<span className={ this.votableClass() }
-                  onClick={ this.handleClick }
-                  title={ this.title() }>
-              { this.ratingValue() }
+    title = @getTitle()
+    votingClasses = React.addons.classSet {
+      'voting':     true
+      'votable':    @state.canVote
+      'unvotable': !@state.canVote
+      'voted':      @state.isVoted
+    }
+
+    rating = if @state.process then `<Spinner size={ 8 } />` else @state.rating
+
+    return `<span className={ votingClasses }
+                  data-original-title={ title }
+                  onClick={ this.handleClick }>
+              { rating }
             </span>`
 
-  ajaxMethod: ->
-      if @state.isVoted then method = 'DELETE' else method = 'POST'
+  handleClick: ->
+    return if @state.isVoted || !@state.canVote
 
-  ratingValue: ->
-    if @state.process
-      '·' # TODO заменить на спиннер
+    @setState(process: true)
+
+    @createRequest
+      url: Routes.api.votes_url @props.entryId
+      method: 'POST'
+      success: (data) =>
+        @safeUpdateState {
+          isVoted: data.is_voted
+          canVote: data.is_voteable
+          votes:   data.votes
+          rating:  data.votes
+        }
+      complete: =>
+        @safeUpdateState(process: false)
+
+  getTitle: ->
+    if @state.canVote && !@state.isVoted
+      title = i18n.t 'votes.vote'
+    else if @state.isVoted
+      title = i18n.t 'votes.voted'
     else
-      @state.rating
+      title = i18n.t 'votes.cantVote'
 
-  title: ->
-    if @state.isVoted
-      i18n.t 'votes.unvote'
-    else
-      i18n.t 'votes.vote'
-
-  votableClass: ->
-    votableClass = 'voting'
-    votableClass += ' votable' if @state.isVoteable
-    votableClass += ' voted'   if @state.isVoted
-
-    return votableClass
+    title
