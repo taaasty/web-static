@@ -88,7 +88,6 @@ gulp.task "assets", ->
     .src("app/{api,javascripts,stylesheets,includes}/**/*.{less,css,json,html,js}")
     .pipe gulp.dest("dist/")
 
-
 # HTML
 gulp.task "html", ->
   gulp
@@ -103,6 +102,11 @@ gulp.task "html", ->
 gulp.task 'sounds', ->
   gulp.src("app/sounds/*")
     .pipe gulp.dest('dist/sounds')
+
+# Locales
+gulp.task 'locales', ->
+  gulp.src('app/locales/**/*.json')
+    .pipe gulp.dest('dist/locales')
 
 # Images
 gulp.task "images", ->
@@ -142,6 +146,7 @@ gulp.task "build", [
   "bundle"
   "images"
   "sounds"
+  "locales"
 ]
 
 # Default task
@@ -174,6 +179,7 @@ gulp.task "json", ->
 # Watch
 gulp.task "watch", [
   "sounds"
+  "locales"
   "images"
   "assets"
   "html"
@@ -195,6 +201,7 @@ gulp.task "watch", [
   gulp.watch "app/scripts/**/*.coffee", ["scripts"]
   gulp.watch "app/stylesheets/**/*.css", ["assets"]
   gulp.watch "app/stylesheets/**/*.less", ["less"]
+  gulp.watch 'app/locales/**/*.json', ['locales']
   
   # Watch .jsx files
   # gulp.watch('app/scripts/**/*.jsx', ['jsx', 'scripts']);

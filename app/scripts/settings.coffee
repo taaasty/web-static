@@ -5,7 +5,8 @@ window.SomeEntry    = require './data/entry.json'
 window.TastySettings =
   host:      'http://3000.vkontraste.ru/' # Это не api-шный хост, это адрес для прямых ссылок
   api_host:  'http://3000.vkontraste.ru/api/'
-  sound_asset_url: 'sounds/'
+  sound_asset_url:   'sounds/'
+  locales_asset_url: 'locales/'
 
 window.TastySettings.host      = localStorage.getItem('host')      if localStorage.getItem('host')?.length > 0
 window.TastySettings.api_host  = localStorage.getItem('api_host')  if localStorage.getItem('api_host')?.length > 0

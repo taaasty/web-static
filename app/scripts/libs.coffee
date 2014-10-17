@@ -6,6 +6,7 @@ window._ = require 'underscore'
 window.moment = require 'momentjs'
 window.EventEmitter = require 'eventEmitter'
 window.bowser = require 'bowser'
+window.i18n = require 'i18next'
 
 require '../javascripts/old/libs/jquery.autosize.input.js'
 
