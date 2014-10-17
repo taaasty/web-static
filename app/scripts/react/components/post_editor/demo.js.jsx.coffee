@@ -3,17 +3,14 @@
 window.PostEditor_NewDemo = window.PostEditor_NewPost
 
 DEMO_IDS =
-  text:  19299423 # 18971012
-  video: 19306294 # 18970969
-  image: 19298245 # 18971001
-  quote: 11 # 18971004
+  image: 19322364
 
 window.PostEditor_Demo = React.createClass
   mixins: ['ReactActivitiesMixin', RequesterMixin, ComponentManipulationsMixin]
 
   getInitialState: ->
     entryPrivacy: 'public'
-    entryType:    'video'
+    entryType:    'image'
     entry:        null
 
   componentDidMount: ->
@@ -21,7 +18,7 @@ window.PostEditor_Demo = React.createClass
 
   loadEntry: (entryId) ->
     @incrementActivities()
-    @setState entry: null
+    @setState(entry: null)
 
     @createRequest
       url: Routes.api.entry_url(entryId)
