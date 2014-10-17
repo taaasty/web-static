@@ -11,7 +11,7 @@ window.EntryNormalizer =
         when 'image'
           data2:     entryData.title
           embedUrl:  entryData.image_url
-          # image_attachments: entry.image_attachments
+          imageAttachments: entryData.image_attachments
           # image_attachments: @_decodeImageAttachments(entryData.image_attachments || [])
         when 'instagram', 'music', 'video'
           data2:     entryData.title
