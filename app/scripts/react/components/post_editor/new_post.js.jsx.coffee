@@ -9,7 +9,7 @@ window.PostEditor_NewPost = React.createClass
     # Может сделать зависимость от @props.tlogType ?
     normalizedEntry: EntryStore.restoreNewEntry() || new NormalizedEntry()
     entryType:       DEFAULT_POST_TYPE
-    entryPrivacy:    'public'
+    entryPrivacy:    if @props.tlogType is 'public' then 'public_with_voting' else 'public'
 
   changeType: (type) ->
     @refs.editorContainer.refs.editor.storeEntry()
