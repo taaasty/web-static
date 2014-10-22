@@ -1,0 +1,61 @@
+.site-app {
+  width: 170px;
+  padding: 25px 0 20px 170px;
+  text-align: left;
+
+  .hero & {
+    position: absolute;
+    left: 62%;
+    bottom: 0;
+  }
+}
+
+.site-app__title {
+  margin-bottom: 10px;
+  font-size: @font-size-base;
+  font-weight: normal;
+}
+
+.site-app__link {
+  width: 148px;
+  height: 48px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
+  vertical-align: top;
+}
+
+.site-app__cover {
+  width: 162px;
+  height: 272px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
+}
+
+.site-app--android {
+  .site-app__cover {
+    background-image: url("@{images-path}/site-app-cover-android.png");
+  }
+
+  .site-app__link {
+    background-image: url("@{images-path}/site-app-link-android.png");
+  }
+}
+
+@media (max-width: 1000px) {
+  .hero {
+    .site-app {
+      padding-left: 0;
+      left: 70%
+    }
+
+    .site-app__cover {
+      display: none;
+    }
+  }
+}
