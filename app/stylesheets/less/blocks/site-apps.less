@@ -1,6 +1,7 @@
 .site-app {
   width: 170px;
-  padding: 25px 0 20px 170px;
+  height: 178px;
+  padding-left: 185px;
   text-align: left;
 
   .hero & {
@@ -10,10 +11,27 @@
   }
 }
 
+.site-app__cover {
+  width: 188px;
+  height: 178px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: contain;
+}
+
+.site-app__desc {
+  padding: 25px 0 20px;
+  position: relative;
+}
+
 .site-app__title {
   margin-bottom: 10px;
-  font-size: @font-size-base;
   font-weight: normal;
+  font-size: 16px;
+  line-height: 135%;
 }
 
 .site-app__link {
@@ -24,17 +42,6 @@
   background-position: 50% 50%;
   background-size: contain;
   vertical-align: top;
-}
-
-.site-app__cover {
-  width: 162px;
-  height: 272px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: contain;
 }
 
 .site-app--android {
