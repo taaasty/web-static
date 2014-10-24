@@ -7,6 +7,7 @@ window.moment       = require 'momentjs'
 window.EventEmitter = require 'eventEmitter'
 window.bowser       = require 'bowser'
 window.i18n         = require 'i18next'
+require './react/resources/react_ujs'
 require 'jquery.shapeshift/core/jquery.shapeshift'
 
 require '../javascripts/old/libs/jquery.autosize.input.js'
