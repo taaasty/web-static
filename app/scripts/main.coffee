@@ -6,12 +6,6 @@ require './shared/api-routes'
 require './shared/dmodel'
 require './shared/is_mobile'
 
-require './aapp/application'
-
-require './aapp/filters/timeAgo.js.coffee'
-require './aapp/controllers/infiniteFeedController.coffee'
-require './aapp/application.coffee'
-
 require './react/entities/normalized_entry'
 
 require './react/services/positions'
@@ -171,6 +165,8 @@ require './react/components/calendar/calendar_timeline'
 require './react/components/calendar/calendar_header'
 require './react/components/calendar/calendar_period'
 require './react/components/calendar/calendar_marker'
+
+require './react/components/feed/feed'
 
 require './react/components/search/search'
 require './react/components/search/button'
@@ -333,7 +329,6 @@ require './editors'
 require './gon'
 
 # React_ujs нужно подключать после того как все компоненты загружены
-window.ReactUjs = require 'react_ujs'
 
 $ ->
   if localStorage.getItem('userLogged') == "true"
