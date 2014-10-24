@@ -1,4 +1,4 @@
-ReactUjs = (->
+window.ReactUjs = (->
   CLASS_NAME_ATTR = 'data-react-class'
   PROPS_ATTR      = 'data-react-props'
 
@@ -29,12 +29,14 @@ ReactUjs = (->
       React.unmountComponentAtNode nodes[i]
       ++i
 
-  handleNativeEvents = ->
+  initEvents = ->
     $(mountReactComponents)
     $(document).on 'page:change', mountReactComponents
     $(window).unload(unmountReactComponents)
 
-  handleNativeEvents()
+  return {
+    initEvents: initEvents
+  }
 )()
 
 module.exports = ReactUjs

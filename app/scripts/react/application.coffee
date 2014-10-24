@@ -22,7 +22,7 @@ window.ReactApp =
   start: ({ user }) ->
     console.log 'ReactApp start'
 
-    ReactUjs = require '../resources/react_ujs'
+    ReactUjs.initEvents()
 
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()
