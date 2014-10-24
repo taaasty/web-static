@@ -25,6 +25,7 @@
     "jquery-autosize": "~1.18.9",
     "pusher": "~2.2.3",
     "bowser": "0.7.2",
-    "i18next": "~1.7.3"
+    "i18next": "~1.7.3",
+    "jquery.shapeshift": "~2.0.0"
   }
 }

@@ -1,6 +1,5 @@
 #= require react
 #= require react-mixin-manager
-#= require react_ujs
 #= require react-draggable/dist/react-draggable
 #= require ./utils
 #= require_tree ./entities
@@ -16,13 +15,14 @@
 #= require_tree ./components
 #= require_tree ./controllers
 #= require_tree ./mediators
+#= require_tree ./resources
 
 window.ReactApp =
 
   start: ({ user }) ->
     console.log 'ReactApp start'
 
-    $(document).on 'page:change', ReactUjs.mountReactComponents
+    ReactUjs = require '../resources/react_ujs'
 
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()

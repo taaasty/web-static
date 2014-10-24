@@ -7,6 +7,7 @@
 
 // Block Bricks
 .bricks {
+  position: relative;
   margin: 0 auto;
   font-family: @font-family-sans-serif;
   overflow: visible !important;
@@ -19,8 +20,8 @@
 
 // Brick
 .brick {
+  position: absolute;
   width: @brick-width;
-  margin: @brick-margin;
   display: inline-block;
   background-color: @white;
   vertical-align: top;
@@ -138,7 +139,6 @@
 
   @media screen and (max-width: 1024px) { // Делаем три столбика кирпичиков на айпаде и адаптируем картинки под новую ширину
     width: 285px;
-    margin: 7px;
 
     .brick__media {
       img {

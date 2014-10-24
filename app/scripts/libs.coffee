@@ -1,12 +1,13 @@
-jQuery = require 'jquery'
-window.MouseTrap = require 'mousetrap'
-window.React = require 'react/addons'
-window.Dispatcher = require('flux').Dispatcher
-window._ = require 'underscore'
-window.moment = require 'momentjs'
+jQuery              = require 'jquery'
+window.MouseTrap    = require 'mousetrap'
+window.React        = require 'react/react-with-addons'
+window.Dispatcher   = require('flux').Dispatcher
+window._            = require 'underscore'
+window.moment       = require 'momentjs'
 window.EventEmitter = require 'eventEmitter'
-window.bowser = require 'bowser'
-window.i18n = require 'i18next'
+window.bowser       = require 'bowser'
+window.i18n         = require 'i18next'
+require 'jquery.shapeshift/core/jquery.shapeshift'
 
 require '../javascripts/old/libs/jquery.autosize.input.js'
 
@@ -24,17 +25,6 @@ window.Backbone = require 'backbone'
 #window.Request = require 'superagent'
 
 require 'bootstrap/js/tooltip'
-
-require 'angular'
-
-require 'angular-resource'
-require 'quick-ng-repeat/quick-ng-repeat'
-
-require 'ngInfiniteScroll'
-require 'angular-sanitize'
-
-require 'ng-rails-csrf/index'
-
 require 'jquery-waypoints'
 
 require 'jquery-autosize'
