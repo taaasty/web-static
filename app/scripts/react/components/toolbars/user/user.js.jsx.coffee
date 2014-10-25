@@ -50,6 +50,10 @@ window.UserToolbar = React.createClass
       'state--open':    @isOpen()
     }
 
+    #<ToolbarItem disabled={ true }
+                 #href={ this.props.profileUrl }
+                 #icon="icon--profile"
+                 #title="Профиль" />
     return `<nav onClick={ this.onClick }
                  onMouseEnter={ this.onMouseEnter }
                  onMouseLeave={ this.onMouseLeave }
@@ -65,10 +69,6 @@ window.UserToolbar = React.createClass
                   <ToolbarItem href={ this.props.myTlogUrl }
                                icon="icon--diary"
                                title="Мой дневник" />
-                  <ToolbarItem disabled={ true }
-                               href={ this.props.profileUrl }
-                               icon="icon--profile"
-                               title="Профиль" />
                   <ToolbarItem href={ this.props.favoritesUrl }
                                icon="icon--star"
                                title="Избранное" />
