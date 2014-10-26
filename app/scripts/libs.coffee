@@ -1,44 +1,35 @@
-jQuery              = require 'jquery'
-window.MouseTrap    = require 'mousetrap'
-window.React        = require 'react/react-with-addons'
-window.Dispatcher   = require('flux').Dispatcher
-window._            = require 'underscore'
-window.moment       = require 'momentjs'
-window.EventEmitter = require 'eventEmitter'
-window.bowser       = require 'bowser'
-window.i18n         = require 'i18next'
-require './react/resources/react_ujs'
-require 'jquery.shapeshift/core/jquery.shapeshift'
+window._                 = require 'underscore'
+window.$ = window.jQuery = require 'jquery'
+window.Backbone          = require 'backbone'
+window.MouseTrap         = require 'mousetrap'
+window.React             = require 'react'
+window.Dispatcher        = require('flux').Dispatcher
+window.moment            = require 'momentjs'
+window.EventEmitter      = require 'eventEmitter'
+window.bowser            = require 'bowser'
+window.i18n              = require 'i18next'
+window.Pusher            = require 'pusher'
+window.Modernizr         = require 'Modernizr'
+window.imagesLoaded      = require 'imagesloaded'
 
-require '../javascripts/old/libs/jquery.autosize.input.js'
-
-# Jquery UI components
-require 'jquery-ui-slider'
-
-require 'momentjs/lang/ru'
-require 'blueimp-file-upload/js/jquery.fileupload'
+require 'baron'
+require('momentjsRU')(window.moment)
+require 'reactUjs'
 require('react-mixin-manager')(window.React)
+require 'i18next'
+require 'bootstrap.tooltip'
 
-window.imagesLoaded = require 'imagesloaded'
+# jQuery UI components
+require 'jquery.ui.core'
+require 'jquery.ui.widget'
+require 'jquery.ui.mouse'
+require 'jquery.ui.slider'
+require 'jquery.ui.draggable'
 
-window.Backbone = require 'backbone'
-
-#window.Request = require 'superagent'
-
-require 'bootstrap/js/tooltip'
-require 'jquery-waypoints'
-
-require 'jquery-autosize'
-#require 'rangy'
-
-#require "undo/undo.js"
-#require "rangy/rangy-core.js"
-#require "rangy/rangy-cssclassapplier.js"
-#require "rangy/rangy-selectionsaverestore.js"
-#require "rangy/rangy-serializer.js"
-# window.Medium = require "Medium.js/medium.js"
-
-#require 'undo.js'
-#require 'rangy'
-
-#require 'medium-editor' #/dist/js/medium-editor'
+# jQuery plugins
+require 'jquery.autosize'
+require 'jquery.autosize.input'
+require 'jquery.collage'
+require 'jquery.waypoints'
+require 'jquery.fileupload'
+require 'jquery.shapeshift'
