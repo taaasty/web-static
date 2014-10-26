@@ -12,6 +12,7 @@
 #= require_tree ./components/post_editor/editors/mixins
 #= require_tree ./components/entry_comment_box/mixins
 #= require_tree ./components/relationship_buttons/mixins
+#= require      ./components/feed/mixins/base.coffee
 #= require_tree ./components
 #= require_tree ./controllers
 #= require_tree ./mediators
