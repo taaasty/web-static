@@ -3728,8 +3728,8 @@ window.FeedBricks = React.createClass({displayName: 'FeedBricks',
       colWidth: 302,
       enableDrag: false,
       enableCrossDrop: false,
-      gutterX: 10,
-      gutterY: 10,
+      gutterX: 20,
+      gutterY: 20,
       paddingX: 0,
       paddingY: 0
     });
@@ -13169,6 +13169,9 @@ window.IndicatorsToolbar = React.createClass({displayName: 'IndicatorsToolbar',
   _onUserToolbarOpen: function() {
     if (this.timeout) {
       clearTimeout(this.timeout);
+    }
+    if (messagingService.isNotificationsPopupShown()) {
+      PopupActions.closeNotificationsPopup();
     }
     return this.activateAdvancedState();
   },

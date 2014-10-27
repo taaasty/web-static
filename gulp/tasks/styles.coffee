@@ -7,7 +7,7 @@ less         = require 'gulp-less'
 autoprefixer = require 'gulp-autoprefixer'
 rename       = require 'gulp-rename'
 handleErrors = require '../util/handleErrors'
-config       = require('../config').build.styles
+config       = require('../config').dist.styles
 
 gulp.task 'styles', ['clean'], ->
   gulp.src config.src

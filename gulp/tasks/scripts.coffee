@@ -10,7 +10,7 @@ bundleLogger = require '../util/bundleLogger'
 gulp         = require 'gulp'
 handleErrors = require '../util/handleErrors'
 source       = require 'vinyl-source-stream'
-config       = require('../config').build.scripts
+config       = require('../config').dist.scripts
 
 gulp.task 'scripts', ['clean'], ->
   bundler = browserify({

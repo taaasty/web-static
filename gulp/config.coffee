@@ -1,64 +1,64 @@
 src   = './app'
-dest  = './dist'
-build = './build'
+build  = './build'
+dist = './dist'
 
 module.exports = {
-  build: {
+  dist: {
     scripts: {
       baseDir: src
       extensions: ['.coffee', '.js.jsx.coffee']
       entries: './scripts/bundle.coffee'
-      dest: build + '/scripts/'
+      dest: dist + '/scripts/'
       outputName: 'bundle.js'
     }
     styles: {
       src: src + '/stylesheets/main.less'
-      dest: build + '/stylesheets'
+      dest: dist + '/stylesheets'
       outputName: 'main.css'
     }
   }
   vendor: {
     baseDir: './app/bower_components'
-    dest: dest + '/scripts'
+    dest: build + '/scripts'
     outputName: 'vendor.js'
     extensions: ['.coffee']
   }
   client: {
     entries: src + '/scripts/main.coffee'
-    dest: dest + '/scripts'
+    dest: build + '/scripts'
     outputName: 'client.js'
     extensions: ['.coffee', '.js.jsx.coffee']
   }
   browserSync: {
     port: 9000
     server: {
-      baseDir: [dest, src]
+      baseDir: [build, src]
     }
     files: [
-      dest + '/**',
-      '!' + dest + '/**.map'
+      build + '/**',
+      '!' + build + '/**.map'
     ]
   }
   html: {
     src: src + '/*.html'
-    dest: dest
+    dest: build
   }
   less: {
     src: src + '/stylesheets/main.less'
-    dest: dest + '/stylesheets'
+    dest: build + '/stylesheets'
     outputName: 'main.css'
   }
   minifyJS: {
-    src:  build + '/scripts/bundle.js'
-    dest: build + '/scripts'
+    src: dist + '/scripts/bundle.js'
+    dest: dist + '/scripts'
     outputName: 'bundle.min.js'
   }
   minifyCSS: {
-    src: build + '/stylesheets/main.css'
-    dest: build + '/stylesheets'
+    src: dist + '/stylesheets/main.css'
+    dest: dist + '/stylesheets'
     outputName: 'main.min.css'
   }
   clean: {
-    dest: dest
+    dest: build
   }
 }
