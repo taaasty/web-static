@@ -78,6 +78,8 @@ window.IndicatorsToolbar = React.createClass
   _onUserToolbarOpen: ->
     clearTimeout @timeout if @timeout
 
+    PopupActions.closeNotificationsPopup() if messagingService.isNotificationsPopupShown()
+
     @activateAdvancedState()
 
   _onUserToolbarClose: ->
