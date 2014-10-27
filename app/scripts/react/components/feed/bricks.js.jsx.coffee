@@ -35,8 +35,8 @@ window.FeedBricks = React.createClass
       colWidth: 302
       enableDrag: false
       enableCrossDrop: false
-      gutterX: 10
-      gutterY: 10
+      gutterX: 20
+      gutterY: 20
       paddingX: 0
       paddingY: 0
     }
