@@ -7,7 +7,7 @@ TOOLBAR_OPENED_BY_HOVER = 'openedByHover'
 TOOLBAR_OPENED_BY_CLICK = 'openedByClick'
 
 window.UserToolbar = React.createClass
-  mixins: [TouchMixin, ComponentManipulationsMixin, PureRenderMixin]
+  mixins: [TouchMixin, ComponentManipulationsMixin, PureRenderMixin, ScrollerMixin]
 
   propTypes:
     user:                 React.PropTypes.object.isRequired
@@ -62,44 +62,51 @@ window.UserToolbar = React.createClass
                 <i className="icon icon--menu" />
               </div>
               <div className="toolbar__popup">
-                <ul className="toolbar__popup-list">
-                  <ToolbarItem href={ this.props.newEntryUrl }
-                               icon="icon--plus"
-                               title="Новая запись" />
-                  <ToolbarItem href={ this.props.myTlogUrl }
-                               icon="icon--diary"
-                               title="Мой дневник" />
-                  <ToolbarItem href={ this.props.favoritesUrl }
-                               icon="icon--star"
-                               title="Избранное" />
-                  <ToolbarItem href={ this.props.newAnonymousEntryUrl }
-                               icon="icon--anonymous"
-                               title="Новая анонимка" />
-                  <ToolbarItem href={ this.props.privateEntriesUrl }
-                               icon="icon--lock"
-                               title="Скрытые записи" />
-                  <ToolbarItem onSelect={ this.handleMessagesSelect }
-                               icon="icon--messages"
-                               title="Сообщения" />
-                  <ToolbarItem onSelect={ this.handleFriendsSelect }
-                               icon="icon--friends"
-                               title="Друзья" />
-                  <ToolbarItem onSelect={ this.showDesignSettings }
-                               icon="icon--drawing"
-                               title="Дизайн дневника" />
-                  <ToolbarItem onSelect={ this.handleSettingsSelect }
-                               icon="icon--cogwheel"
-                               title="Настройки" />
-                  <ToolbarItem href={ this.props.logoutUrl }
-                               icon="icon--logout"
-                               title="Выйти" />
-                </ul>
+                <div className="scroller scroller--dark scroller--toolbar" ref="scroller">
+                  <div className="scroller__pane js-scroller-pane">
+                    <ul className="toolbar__popup-list">
+                      <ToolbarItem href={ this.props.newEntryUrl }
+                                   icon="icon--plus"
+                                   title="Новая запись" />
+                      <ToolbarItem href={ this.props.myTlogUrl }
+                                   icon="icon--diary"
+                                   title="Мой дневник" />
+                      <ToolbarItem href={ this.props.favoritesUrl }
+                                   icon="icon--star"
+                                   title="Избранное" />
+                      <ToolbarItem href={ this.props.newAnonymousEntryUrl }
+                                   icon="icon--anonymous"
+                                   title="Новая анонимка" />
+                      <ToolbarItem href={ this.props.privateEntriesUrl }
+                                   icon="icon--lock"
+                                   title="Скрытые записи" />
+                      <ToolbarItem onSelect={ this.handleMessagesSelect }
+                                   icon="icon--messages"
+                                   title="Сообщения" />
+                      <ToolbarItem onSelect={ this.handleFriendsSelect }
+                                   icon="icon--friends"
+                                   title="Друзья" />
+                      <ToolbarItem onSelect={ this.showDesignSettings }
+                                   icon="icon--drawing"
+                                   title="Дизайн дневника" />
+                      <ToolbarItem onSelect={ this.handleSettingsSelect }
+                                   icon="icon--cogwheel"
+                                   title="Настройки" />
+                      <ToolbarItem href={ this.props.logoutUrl }
+                                   icon="icon--logout"
+                                   title="Выйти" />
+                    </ul>
+                  </div>
+                  <div className="scroller__track js-scroller-track">
+                      <div className="scroller__bar js-scroller-bar"></div>
+                  </div>
+                </div>
               </div>
             </nav>`
 
   handleFriendsSelect: ->
     container = document.querySelectorAll('[popup-persons-container]')[0]
-    
+
     unless container
       container = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get 0
 
