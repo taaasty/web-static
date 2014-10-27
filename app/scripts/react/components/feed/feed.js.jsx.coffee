@@ -38,7 +38,7 @@ window.Feed = React.createClass
 
   getFeedData: (nextEntryId) ->
     @safeUpdateState(currentState: APPEND_LOADING_STATE)
-
+    console.log window.location.href
     @createRequest
       # Component should be included only on feed pages like http://taaasty.ru/best
       # When you are making some changes in static, need set url value as production
