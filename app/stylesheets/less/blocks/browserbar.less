@@ -1,0 +1,46 @@
+.browserbar {
+  width: 100%;
+  height: @browserbar-height;
+  position: fixed;
+  top: -@browserbar-height;
+  left: 0;
+  background-color: @browserbar-bg;
+  font-size: 15px;
+  text-align: center;
+  color: @white;
+  overflow: hidden;
+  z-index: @zindex-browsebar;
+  opacity: 0;
+  transition: top .4s ease, opacity .4s ease;
+
+  a {
+    border-bottom: 1px solid rgba(255, 255, 255, .4);
+    color: inherit;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, .8);
+    }
+  }
+}
+
+.browserbar__inner {
+  .text-overflow();
+  padding: 14px 20px;
+}
+
+// Browserbar Enabled
+.browserbar-enabled:not(.hero-enabled) {
+  .browserbar {
+    top: 0;
+    opacity: 1;
+  }
+
+  .toolbar {
+    margin-top: @browserbar-height;
+  }
+
+  .page {
+    padding-top: @browserbar-height;
+    transition: padding-top .2s ease .2s;
+  }
+}
