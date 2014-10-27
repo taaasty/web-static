@@ -22,7 +22,6 @@ window.FeedTlog = React.createClass
                 <section ref="container"
                          className="posts"
                          dangerouslySetInnerHTML={{__html: this.props.feedHtml}}>
-                  { this.state.feedHtml }
                 </section>
                 { spinnerAfter }
               </div>
