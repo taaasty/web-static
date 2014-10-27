@@ -334,14 +334,14 @@ require './gon'
 # React_ujs нужно подключать после того как все компоненты загружены
 
 $ ->
-  if localStorage.getItem('userLogged') == "true"
+  if localStorage.getItem('userLogged') is "true"
     if localStorage.getItem('userToken')
       SomeUser.api_key.access_token = localStorage.getItem('userToken')
 
-    if localStorage.getItem('userId')
+    if localStorage.getItem 'userId'
       SomeUser.id = parseInt( localStorage.getItem('userId') )
 
     window.Tasty.start user: SomeUser
   else
     console.debug? 'Без пользователя'
-    window.Tasty.start()
+    window.Tasty.start {}

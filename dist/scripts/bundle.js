@@ -508,6 +508,7 @@ require('./react/application');
 require('./editors');
 
 
+
 },{"./editors":2,"./libs":3,"./locales":4,"./react/application":5,"./react/components/avatars/avatar":6,"./react/components/avatars/user_avatar":7,"./react/components/buttons/load_more":8,"./react/components/calendar/calendar":9,"./react/components/calendar/calendar_header":10,"./react/components/calendar/calendar_marker":11,"./react/components/calendar/calendar_period":12,"./react/components/calendar/calendar_timeline":13,"./react/components/design_settings_popup/controls":14,"./react/components/design_settings_popup/controls_items/_progressbar":15,"./react/components/design_settings_popup/controls_items/_radiobutton":16,"./react/components/design_settings_popup/controls_items/align_item":17,"./react/components/design_settings_popup/controls_items/background_item":18,"./react/components/design_settings_popup/controls_items/feed_color_item":19,"./react/components/design_settings_popup/controls_items/font_type_item":20,"./react/components/design_settings_popup/controls_items/header_color_item":21,"./react/components/design_settings_popup/controls_items/opacity_item":22,"./react/components/design_settings_popup/design_settings_popup":23,"./react/components/editable_field":24,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":25,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":26,"./react/components/entry_comment_box/comment_form/comment_form":27,"./react/components/entry_comment_box/comment_list/comment":28,"./react/components/entry_comment_box/comment_list/comment_list":29,"./react/components/entry_comment_box/comment_list/comment_manager":30,"./react/components/entry_comment_box/comment_metabar/comment_metabar":31,"./react/components/entry_comment_box/comment_metabar/date":32,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":33,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":34,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":35,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":36,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":37,"./react/components/entry_comment_box/comment_metabar/reply":38,"./react/components/entry_comment_box/entry_comment_box":39,"./react/components/entry_comment_box/load_more":40,"./react/components/entry_comment_box/mixins/comments":41,"./react/components/entry_metabar/author":42,"./react/components/entry_metabar/comment":43,"./react/components/entry_metabar/date":44,"./react/components/entry_metabar/dropdown_menu":45,"./react/components/entry_metabar/dropdown_menu_items/delete_item":46,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":47,"./react/components/entry_metabar/dropdown_menu_items/item":48,"./react/components/entry_metabar/dropdown_menu_items/report_item":49,"./react/components/entry_metabar/dropdown_menu_items/watch_item":50,"./react/components/entry_metabar/entry_metabar":51,"./react/components/entry_metabar/tag":52,"./react/components/entry_metabar/tags":53,"./react/components/feed/bricks":54,"./react/components/feed/feed":55,"./react/components/feed/mixins/base":56,"./react/components/feed/tlog":57,"./react/components/follow_status":58,"./react/components/hero/profile/popup/followers_popup":59,"./react/components/hero/profile/popup/followings_popup":60,"./react/components/hero/profile/popup/items/follower_item":61,"./react/components/hero/profile/popup/items/following_item":62,"./react/components/hero/profile/popup/items/tag_item":63,"./react/components/hero/profile/popup/popup":64,"./react/components/hero/profile/popup/tags_popup":65,"./react/components/hero/profile/profile":66,"./react/components/hero/profile/profile_avatar":67,"./react/components/hero/profile/profile_head":68,"./react/components/hero/profile/profile_stats":69,"./react/components/hero/profile/profile_stats_item":70,"./react/components/images_collage":71,"./react/components/notifications/tasty_alert":72,"./react/components/notifications/tasty_confirm":73,"./react/components/notifications/tasty_locking_alert":74,"./react/components/notifications/tasty_notify":75,"./react/components/people/item":76,"./react/components/persons_popup/items/follower_relationship":77,"./react/components/persons_popup/items/following_relationship":78,"./react/components/persons_popup/items/guess_relationship":79,"./react/components/persons_popup/items/ignored_relationship":80,"./react/components/persons_popup/items/item":81,"./react/components/persons_popup/items/request_relationship":82,"./react/components/persons_popup/menu":83,"./react/components/persons_popup/menu_item":84,"./react/components/persons_popup/mixins/panel_mixin":85,"./react/components/persons_popup/panels/followers_panel":86,"./react/components/persons_popup/panels/followings_panel":87,"./react/components/persons_popup/panels/guesses_panel":88,"./react/components/persons_popup/panels/ignores_panel":89,"./react/components/persons_popup/panels/requests_panel":90,"./react/components/persons_popup/persons_popup":91,"./react/components/popup/header":92,"./react/components/popup/layout":93,"./react/components/popup/popup":94,"./react/components/popup/spinner":95,"./react/components/popup_box":96,"./react/components/post_editor/actions/actions":97,"./react/components/post_editor/actions/buttons/privacy":98,"./react/components/post_editor/actions/buttons/vote":99,"./react/components/post_editor/choicer":100,"./react/components/post_editor/demo":101,"./react/components/post_editor/edit_post":102,"./react/components/post_editor/editor_container":103,"./react/components/post_editor/editors/_tasty":104,"./react/components/post_editor/editors/anonymous":105,"./react/components/post_editor/editors/image":106,"./react/components/post_editor/editors/instagram":107,"./react/components/post_editor/editors/mixins/autosave":108,"./react/components/post_editor/editors/music":109,"./react/components/post_editor/editors/quote":110,"./react/components/post_editor/editors/text":111,"./react/components/post_editor/editors/video":112,"./react/components/post_editor/images_mediabox/loaded":113,"./react/components/post_editor/images_mediabox/url_insert":114,"./react/components/post_editor/layout":115,"./react/components/post_editor/mediabox/actions":116,"./react/components/post_editor/mediabox/layout":117,"./react/components/post_editor/mediabox/loading_progress":118,"./react/components/post_editor/mixins/dragging":119,"./react/components/post_editor/mixins/images_form":120,"./react/components/post_editor/mixins/layout":121,"./react/components/post_editor/mixins/persistence":122,"./react/components/post_editor/mixins/video":123,"./react/components/post_editor/new_anonymous_post":124,"./react/components/post_editor/new_post":125,"./react/components/post_editor/video_mediabox/embeded":126,"./react/components/post_editor/video_mediabox/loading":127,"./react/components/post_editor/video_mediabox/url_insert":128,"./react/components/post_editor/video_mediabox/video_mediabox":129,"./react/components/post_editor/welcome_messages/image":130,"./react/components/post_editor/welcome_messages/instagram":131,"./react/components/post_editor/welcome_messages/music":132,"./react/components/post_editor/welcome_messages/video":133,"./react/components/relationship_buttons/follow_button":134,"./react/components/relationship_buttons/guess_button":135,"./react/components/relationship_buttons/ignore_button":136,"./react/components/relationship_buttons/mixins/relationship":137,"./react/components/relationship_buttons/request_button":138,"./react/components/search/button":139,"./react/components/search/field":140,"./react/components/search/search":141,"./react/components/settings_popup/settings_accounts_item":142,"./react/components/settings_popup/settings_avatar":143,"./react/components/settings_popup/settings_email/confirmation":144,"./react/components/settings_popup/settings_email/edit":145,"./react/components/settings_popup/settings_email/establish/edit":146,"./react/components/settings_popup/settings_email/establish/establish":147,"./react/components/settings_popup/settings_email/establish/show":148,"./react/components/settings_popup/settings_email/settings_email":149,"./react/components/settings_popup/settings_email/show":150,"./react/components/settings_popup/settings_header":151,"./react/components/settings_popup/settings_name":152,"./react/components/settings_popup/settings_password_input":153,"./react/components/settings_popup/settings_radio_item":154,"./react/components/settings_popup/settings_title":155,"./react/components/settings_popup/settings_vkontakte":156,"./react/components/settings_popup/toolbar_settings":157,"./react/components/shellbox/authorization/authorization":158,"./react/components/shellbox/authorization/vk":159,"./react/components/shellbox/buttons/vk_auth_button":160,"./react/components/shellbox/email_signin_shellbox":161,"./react/components/shellbox/email_signup_shellbox":162,"./react/components/shellbox/inviter_shellbox":163,"./react/components/shellbox/recovery_shellbox":164,"./react/components/shellbox/select_signin_shellbox":165,"./react/components/shellbox_layer":166,"./react/components/smart_follow_status":167,"./react/components/spinner":168,"./react/components/toolbars/close/close":169,"./react/components/toolbars/feed/feed":170,"./react/components/toolbars/toolbar_item":171,"./react/components/toolbars/user/user":172,"./react/components/transition/timeout_transition_group":173,"./react/components/voting":174,"./react/controllers/popup":175,"./react/controllers/shellbox":176,"./react/controllers/tasty_alert":177,"./react/controllers/tasty_confirm":178,"./react/controllers/tasty_events":179,"./react/controllers/tasty_locking_alert":180,"./react/controllers/tasty_notify":181,"./react/controllers/tasty_sound":182,"./react/dispatchers/current_user":183,"./react/entities/normalized_entry":184,"./react/mediators/comments":185,"./react/messaging/actions/conversation":186,"./react/messaging/actions/message":187,"./react/messaging/actions/notification":188,"./react/messaging/actions/popup":189,"./react/messaging/components/messages_popup/conversations/conversations":190,"./react/messaging/components/messages_popup/conversations/list/empty":191,"./react/messaging/components/messages_popup/conversations/list/list":192,"./react/messaging/components/messages_popup/conversations/list/list_item":193,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":194,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":195,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":196,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":197,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":198,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":199,"./react/messaging/components/messages_popup/loading_message":200,"./react/messaging/components/messages_popup/messages_popup":201,"./react/messaging/components/messages_popup/thread/message_form/message_form":202,"./react/messaging/components/messages_popup/thread/message_list/empty":203,"./react/messaging/components/messages_popup/thread/message_list/message_list":204,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":205,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":206,"./react/messaging/components/messages_popup/thread/thread":207,"./react/messaging/components/messages_popup/ui/back_button":208,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":209,"./react/messaging/components/notifications_popup/notifications/empty":210,"./react/messaging/components/notifications_popup/notifications/notification":211,"./react/messaging/components/notifications_popup/notifications/notifications":212,"./react/messaging/components/notifications_popup/notifications_popup":213,"./react/messaging/components/toolbars/indicators/indicators":214,"./react/messaging/components/toolbars/indicators/messages":215,"./react/messaging/components/toolbars/indicators/notifications":216,"./react/messaging/dispatchers/messaging":217,"./react/messaging/messaging_requester":218,"./react/messaging/messaging_service":219,"./react/messaging/messaging_testing":220,"./react/messaging/mocks/messaging_requester":221,"./react/messaging/mocks/messaging_service":222,"./react/messaging/mocks/mocks":223,"./react/messaging/models":224,"./react/messaging/stores/connection_state":225,"./react/messaging/stores/conversations":226,"./react/messaging/stores/messages":227,"./react/messaging/stores/messages_popup_state":228,"./react/messaging/stores/messaging_status":229,"./react/messaging/stores/notifications":230,"./react/mixins/activities":231,"./react/mixins/component_manipulations":232,"./react/mixins/dom_manipulations":233,"./react/mixins/error_timer":234,"./react/mixins/grammar":235,"./react/mixins/positions":236,"./react/mixins/requester":237,"./react/mixins/scroller":238,"./react/mixins/shake":239,"./react/mixins/touch":240,"./react/mixins/unmount":241,"./react/services/entry_normalizer":242,"./react/services/entry_store":243,"./react/services/positions":244,"./react/services/thumbor":245,"./react/services/uuid":246,"./react/stores/current_user":247,"./react/utils":248,"./routes":249,"./shared/api-routes":250,"./shared/dmodel":251,"./shared/fileReceiver":252,"./shared/is_mobile":253,"./shared/tasty":254,"./shared/utils":255}],2:[function(require,module,exports){
 $(function() {
   var mediumeditor;
@@ -528,6 +529,7 @@ $(function() {
     });
   }
 });
+
 
 
 },{}],3:[function(require,module,exports){
@@ -590,6 +592,7 @@ require('jquery.fileupload');
 require('jquery.shapeshift');
 
 
+
 },{"Modernizr":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"eventEmitter":undefined,"flux":256,"i18next":undefined,"imagesloaded":259,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"momentjs":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"reactUjs":undefined,"underscore":undefined}],4:[function(require,module,exports){
 var locale;
 
@@ -600,6 +603,7 @@ i18n.init({
   useLocalStorage: true,
   localStorageExpirationTime: 3600000
 });
+
 
 
 },{}],5:[function(require,module,exports){
@@ -634,6 +638,7 @@ window.ReactApp = {
     }
   }
 };
+
 
 
 },{}],6:[function(require,module,exports){
@@ -679,6 +684,7 @@ window.Avatar = React.createClass({displayName: 'Avatar',
 });
 
 
+
 },{}],7:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -716,6 +722,7 @@ window.UserAvatar = React.createClass({displayName: 'UserAvatar',
 });
 
 
+
 },{}],8:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -732,6 +739,7 @@ window.LoadMoreButton = React.createClass({displayName: 'LoadMoreButton',
     );
   }
 });
+
 
 
 },{}],9:[function(require,module,exports){
@@ -941,6 +949,7 @@ window.Calendar = React.createClass({displayName: 'Calendar',
 });
 
 
+
 },{}],10:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -963,6 +972,7 @@ window.CalendarHeader = React.createClass({displayName: 'CalendarHeader',
             );
   }
 });
+
 
 
 },{}],11:[function(require,module,exports){
@@ -1009,6 +1019,7 @@ window.CalendarMarker = React.createClass({displayName: 'CalendarMarker',
 });
 
 
+
 },{}],12:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -1038,6 +1049,7 @@ window.CalendarPeriod = React.createClass({displayName: 'CalendarPeriod',
 });
 
 
+
 },{}],13:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -1064,6 +1076,7 @@ window.CalendarTimeline = React.createClass({displayName: 'CalendarTimeline',
             );
   }
 });
+
 
 
 },{}],14:[function(require,module,exports){
@@ -1110,6 +1123,7 @@ window.DesignSettingsPopup_Controls = React.createClass({displayName: 'DesignSet
 });
 
 
+
 },{}],15:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -1133,6 +1147,7 @@ window.DesignSettingsPopup_ControlsProgressbar = React.createClass({displayName:
     return this.props.progress + '%';
   }
 });
+
 
 
 },{}],16:[function(require,module,exports){
@@ -1199,6 +1214,7 @@ window.DesignSettingsPopup_ControlsRadioButton = React.createClass({displayName:
 });
 
 
+
 },{}],17:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -1249,6 +1265,7 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass({displayName: '
     }
   }
 });
+
 
 
 },{}],18:[function(require,module,exports){
@@ -1374,6 +1391,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({displayNa
 });
 
 
+
 },{}],19:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -1420,6 +1438,7 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({displayNam
     }
   }
 });
+
 
 
 },{}],20:[function(require,module,exports){
@@ -1469,6 +1488,7 @@ window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({displayName
     }
   }
 });
+
 
 
 },{}],21:[function(require,module,exports){
@@ -1531,6 +1551,7 @@ window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({displayN
     }
   }
 });
+
 
 
 },{}],22:[function(require,module,exports){
@@ -1628,6 +1649,7 @@ window.DesignSettingsPopup_ControlsOpacityItem = React.createClass({displayName:
     return (this.state.feedOpacity * 100).toFixed() + '%';
   }
 });
+
 
 
 },{}],23:[function(require,module,exports){
@@ -1761,6 +1783,7 @@ window.DesignSettingsPopup = React.createClass({displayName: 'DesignSettingsPopu
 });
 
 
+
 },{}],24:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -1871,6 +1894,7 @@ window.EditableField = React.createClass({displayName: 'EditableField',
     return textarea.value.replace(/\n/g, '');
   }
 });
+
 
 
 },{}],25:[function(require,module,exports){
@@ -2030,6 +2054,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({displayName
 });
 
 
+
 },{}],26:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -2089,6 +2114,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({displayName: 
     });
   }
 });
+
 
 
 },{}],27:[function(require,module,exports){
@@ -2208,6 +2234,7 @@ window.EntryCommentBox_CommentForm = React.createClass({displayName: 'EntryComme
 });
 
 
+
 },{}],28:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -2272,6 +2299,7 @@ window.EntryCommentBox_Comment = React.createClass({displayName: 'EntryCommentBo
 });
 
 
+
 },{}],29:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -2320,6 +2348,7 @@ window.EntryCommentBox_CommentList = React.createClass({displayName: 'EntryComme
     return result.length > 0;
   }
 });
+
 
 
 },{}],30:[function(require,module,exports){
@@ -2389,6 +2418,7 @@ window.EntryCommentBox_CommentManager = React.createClass({displayName: 'EntryCo
 });
 
 
+
 },{}],31:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -2425,6 +2455,7 @@ window.EntryCommentBox_CommentMetaBar = React.createClass({displayName: 'EntryCo
 });
 
 
+
 },{}],32:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -2459,6 +2490,7 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass({displayName: 'Ent
     return this.props.entryUrl + '#comment-' + this.props.commentId;
   }
 });
+
 
 
 },{}],33:[function(require,module,exports){
@@ -2552,6 +2584,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass({displayNa
 });
 
 
+
 },{}],34:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -2598,6 +2631,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
 });
 
 
+
 },{}],35:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -2620,6 +2654,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({d
 });
 
 
+
 },{}],36:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -2639,6 +2674,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({d
     return this.props.entryUrl + '#comment-' + this.props.commentId;
   }
 });
+
 
 
 },{}],37:[function(require,module,exports){
@@ -2683,6 +2719,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
 });
 
 
+
 },{}],38:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -2701,6 +2738,7 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass({displayName: 'En
     return window.commentsMediator.doReplyClicked(this.props.entryId, this.props.name);
   }
 });
+
 
 
 },{}],39:[function(require,module,exports){
@@ -2774,6 +2812,7 @@ window.EntryCommentBox = React.createClass({displayName: 'EntryCommentBox',
 });
 
 
+
 },{}],40:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -2806,6 +2845,7 @@ window.EntryCommentBox_LoadMore = React.createClass({displayName: 'EntryCommentB
     }
   }
 });
+
 
 
 },{}],41:[function(require,module,exports){
@@ -2984,6 +3024,7 @@ CommentsMixin = {
 React.mixins.add('CommentsMixin', [CommentsMixin, RequesterMixin, ComponentManipulationsMixin]);
 
 
+
 },{}],42:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -3006,6 +3047,7 @@ window.EntryMetabarAuthor = React.createClass({displayName: 'EntryMetabarAuthor'
     );
   }
 });
+
 
 
 },{}],43:[function(require,module,exports){
@@ -3049,6 +3091,7 @@ window.EntryMetabarComment = React.createClass({displayName: 'EntryMetabarCommen
 });
 
 
+
 },{}],44:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -3079,6 +3122,7 @@ window.EntryMetabarDate = React.createClass({displayName: 'EntryMetabarDate',
             );
   }
 });
+
 
 
 },{}],45:[function(require,module,exports){
@@ -3234,6 +3278,7 @@ window.EntryMetabarDropdownMenu = React.createClass({displayName: 'EntryMetabarD
 });
 
 
+
 },{}],46:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -3306,6 +3351,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({displayName: 'Ent
     });
   }
 });
+
 
 
 },{}],47:[function(require,module,exports){
@@ -3416,6 +3462,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({displayName: 'E
 });
 
 
+
 },{}],48:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -3433,6 +3480,7 @@ window.EntryMetabarDropdownMenuItem = React.createClass({displayName: 'EntryMeta
     );
   }
 });
+
 
 
 },{}],49:[function(require,module,exports){
@@ -3474,6 +3522,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({displayName: 'Ent
     });
   }
 });
+
 
 
 },{}],50:[function(require,module,exports){
@@ -3573,6 +3622,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({displayName: 'Entr
 });
 
 
+
 },{}],51:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -3640,6 +3690,7 @@ window.EntryMetabar = React.createClass({displayName: 'EntryMetabar',
 });
 
 
+
 },{}],52:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -3656,6 +3707,7 @@ window.EntryMetabarTag = React.createClass({displayName: 'EntryMetabarTag',
     );
   }
 });
+
 
 
 },{}],53:[function(require,module,exports){
@@ -3686,6 +3738,7 @@ window.EntryMetabarTags = React.createClass({displayName: 'EntryMetabarTags',
     }
   }
 });
+
 
 
 },{}],54:[function(require,module,exports){
@@ -3735,6 +3788,7 @@ window.FeedBricks = React.createClass({displayName: 'FeedBricks',
     });
   }
 });
+
 
 
 },{}],55:[function(require,module,exports){
@@ -3787,6 +3841,7 @@ window.Feed = React.createClass({displayName: 'Feed',
     this.safeUpdateState({
       currentState: APPEND_LOADING_STATE
     });
+    console.log(window.location.href);
     return this.createRequest({
       url: window.location.href,
       data: {
@@ -3831,6 +3886,7 @@ window.Feed = React.createClass({displayName: 'Feed',
 });
 
 
+
 },{}],56:[function(require,module,exports){
 var THRESHOLD;
 
@@ -3867,6 +3923,7 @@ window.FeedBaseMixin = {
 };
 
 
+
 },{}],57:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -3891,14 +3948,14 @@ window.FeedTlog = React.createClass({displayName: 'FeedTlog',
                 spinnerBefore, 
                 React.DOM.section({ref: "container", 
                          className: "posts", 
-                         dangerouslySetInnerHTML: {__html: this.props.feedHtml}}, 
-                   this.state.feedHtml
+                         dangerouslySetInnerHTML: {__html: this.props.feedHtml}}
                 ), 
                 spinnerAfter 
               )
             );
   }
 });
+
 
 
 },{}],58:[function(require,module,exports){
@@ -3914,6 +3971,7 @@ window.FollowStatus = React.createClass({displayName: 'FollowStatus',
     );
   }
 });
+
 
 
 },{}],59:[function(require,module,exports){
@@ -4004,6 +4062,7 @@ window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroPr
 });
 
 
+
 },{}],60:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -4092,6 +4151,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroP
 });
 
 
+
 },{}],61:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -4113,6 +4173,7 @@ window.HeroProfileStats_FollowerItem = React.createClass({displayName: 'HeroProf
     );
   }
 });
+
 
 
 },{}],62:[function(require,module,exports){
@@ -4138,6 +4199,7 @@ window.HeroProfileStats_FollowingItem = React.createClass({displayName: 'HeroPro
 });
 
 
+
 },{}],63:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -4156,6 +4218,7 @@ window.HeroProfileStats_TagItem = React.createClass({displayName: 'HeroProfileSt
     );
   }
 });
+
 
 
 },{}],64:[function(require,module,exports){
@@ -4236,6 +4299,7 @@ window.HeroProfileStats_Popup = React.createClass({displayName: 'HeroProfileStat
     })(this));
   }
 });
+
 
 
 },{}],65:[function(require,module,exports){
@@ -4323,6 +4387,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfile
     });
   }
 });
+
 
 
 },{}],66:[function(require,module,exports){
@@ -4462,6 +4527,7 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
 });
 
 
+
 },{}],67:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -4484,6 +4550,7 @@ window.HeroProfileAvatar = React.createClass({displayName: 'HeroProfileAvatar',
     );
   }
 });
+
 
 
 },{}],68:[function(require,module,exports){
@@ -4543,6 +4610,7 @@ window.HeroProfileHeadStatic = React.createClass({displayName: 'HeroProfileHeadS
     );
   }
 });
+
 
 
 },{}],69:[function(require,module,exports){
@@ -4671,6 +4739,7 @@ window.HeroProfileStats = React.createClass({displayName: 'HeroProfileStats',
 });
 
 
+
 },{}],70:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -4712,6 +4781,7 @@ window.HeroProfileStatsItem = React.createClass({displayName: 'HeroProfileStatsI
     }
   }
 });
+
 
 
 },{}],71:[function(require,module,exports){
@@ -4858,6 +4928,7 @@ window.ImagesCollage_Legacy = React.createClass({displayName: 'ImagesCollage_Leg
 });
 
 
+
 },{}],72:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -4922,6 +4993,7 @@ window.TastyAlert = React.createClass({displayName: 'TastyAlert',
     }
   }
 });
+
 
 
 },{}],73:[function(require,module,exports){
@@ -4989,6 +5061,7 @@ window.TastyConfirm = React.createClass({displayName: 'TastyConfirm',
 });
 
 
+
 },{}],74:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5041,6 +5114,7 @@ window.TastyLockingAlert = React.createClass({displayName: 'TastyLockingAlert',
 });
 
 
+
 },{}],75:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5090,6 +5164,7 @@ window.TastyNotify = React.createClass({displayName: 'TastyNotify',
 });
 
 
+
 },{}],76:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5127,6 +5202,7 @@ window.PeopleItem = React.createClass({displayName: 'PeopleItem',
 });
 
 
+
 },{}],77:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5148,6 +5224,7 @@ window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'Pers
 });
 
 
+
 },{}],78:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5167,6 +5244,7 @@ window.PersonsPopup_FollowingRelationship = React.createClass({displayName: 'Per
     );
   }
 });
+
 
 
 },{}],79:[function(require,module,exports){
@@ -5192,6 +5270,7 @@ window.PersonsPopup_GuessRelationship = React.createClass({displayName: 'Persons
 });
 
 
+
 },{}],80:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5211,6 +5290,7 @@ window.PersonsPopup_IgnoredRelationship = React.createClass({displayName: 'Perso
     );
   }
 });
+
 
 
 },{}],81:[function(require,module,exports){
@@ -5244,6 +5324,7 @@ window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_P
 });
 
 
+
 },{}],82:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5265,6 +5346,7 @@ window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'Perso
     );
   }
 });
+
 
 
 },{}],83:[function(require,module,exports){
@@ -5331,6 +5413,7 @@ window.PersonsPopup_Menu = React.createClass({displayName: 'PersonsPopup_Menu',
 });
 
 
+
 },{}],84:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5357,6 +5440,7 @@ window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass({displa
             );
   }
 });
+
 
 
 },{}],85:[function(require,module,exports){
@@ -5506,6 +5590,7 @@ window.PersonsPopup_PanelMixin = {
 React.mixins.add('PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser', ComponentManipulationsMixin]);
 
 
+
 },{}],86:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5516,6 +5601,7 @@ window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPop
   },
   itemClass: PersonsPopup_FollowerRelationship
 });
+
 
 
 },{}],87:[function(require,module,exports){
@@ -5530,6 +5616,7 @@ window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPo
 });
 
 
+
 },{}],88:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5540,6 +5627,7 @@ window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup
   },
   itemClass: PersonsPopup_GuessRelationship
 });
+
 
 
 },{}],89:[function(require,module,exports){
@@ -5554,6 +5642,7 @@ window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup
 });
 
 
+
 },{}],90:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5564,6 +5653,7 @@ window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopu
   },
   itemClass: PersonsPopup_RequestRelationship
 });
+
 
 
 },{}],91:[function(require,module,exports){
@@ -5675,6 +5765,7 @@ window.PersonsPopup = React.createClass({displayName: 'PersonsPopup',
 });
 
 
+
 },{}],92:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5710,6 +5801,7 @@ window.PopupHeader = React.createClass({displayName: 'PopupHeader',
 });
 
 
+
 },{}],93:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5741,6 +5833,7 @@ window.PopupLayout = React.createClass({displayName: 'PopupLayout',
     );
   }
 });
+
 
 
 },{}],94:[function(require,module,exports){
@@ -5830,6 +5923,7 @@ window.Popup = React.createClass({displayName: 'Popup',
 });
 
 
+
 },{}],95:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -5847,6 +5941,7 @@ window.PopupSpinner = React.createClass({displayName: 'PopupSpinner',
     }
   }
 });
+
 
 
 },{}],96:[function(require,module,exports){
@@ -5896,6 +5991,7 @@ window.PopupBox = React.createClass({displayName: 'PopupBox',
     }
   }
 });
+
 
 
 },{}],97:[function(require,module,exports){
@@ -6023,6 +6119,7 @@ window.PostActions = React.createClass({displayName: 'PostActions',
 });
 
 
+
 },{}],98:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -6069,6 +6166,7 @@ window.PostActions_PrivacyButton = React.createClass({displayName: 'PostActions_
 });
 
 
+
 },{}],99:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -6111,6 +6209,7 @@ window.PostActions_VoteButton = React.createClass({displayName: 'PostActions_Vot
     return this.$button.tooltip('hide');
   }
 });
+
 
 
 },{}],100:[function(require,module,exports){
@@ -6232,6 +6331,7 @@ window.PostEditor_ChoicerItem = React.createClass({displayName: 'PostEditor_Choi
 });
 
 
+
 },{}],101:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -6320,6 +6420,7 @@ window.PostEditor_Demo = React.createClass({displayName: 'PostEditor_Demo',
 });
 
 
+
 },{}],102:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -6348,6 +6449,7 @@ window.PostEditor_EditPost = React.createClass({displayName: 'PostEditor_EditPos
     });
   }
 });
+
 
 
 },{}],103:[function(require,module,exports){
@@ -6477,6 +6579,7 @@ window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_
 });
 
 
+
 },{}],104:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -6599,6 +6702,7 @@ window.TastyEditor = React.createClass({displayName: 'TastyEditor',
 });
 
 
+
 },{}],105:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -6655,6 +6759,7 @@ window.PostEditor_AnonymousEditor = React.createClass({displayName: 'PostEditor_
     };
   }
 });
+
 
 
 },{}],106:[function(require,module,exports){
@@ -6840,6 +6945,7 @@ window.PostEditor_ImageEditor = React.createClass({displayName: 'PostEditor_Imag
 });
 
 
+
 },{}],107:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -6874,6 +6980,7 @@ window.PostEditor_InstagramEditor = React.createClass({displayName: 'PostEditor_
 });
 
 
+
 },{}],108:[function(require,module,exports){
 var AUTOSAVE_TIME;
 
@@ -6904,6 +7011,7 @@ window.PostEditor_AutosaveMixin = {
     }
   }
 };
+
 
 
 },{}],109:[function(require,module,exports){
@@ -6938,6 +7046,7 @@ window.PostEditor_MusicEditor = React.createClass({displayName: 'PostEditor_Musi
             );
   }
 });
+
 
 
 },{}],110:[function(require,module,exports){
@@ -6991,6 +7100,7 @@ window.PostEditor_QuoteEditor = React.createClass({displayName: 'PostEditor_Quot
     };
   }
 });
+
 
 
 },{}],111:[function(require,module,exports){
@@ -7052,6 +7162,7 @@ window.PostEditor_TextEditor = React.createClass({displayName: 'PostEditor_TextE
 });
 
 
+
 },{}],112:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -7086,6 +7197,7 @@ window.PostEditor_VideoEditor = React.createClass({displayName: 'PostEditor_Vide
 });
 
 
+
 },{}],113:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -7109,6 +7221,7 @@ window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_L
     );
   }
 });
+
 
 
 },{}],114:[function(require,module,exports){
@@ -7140,6 +7253,7 @@ window.ImagesMediaBox_UrlInsert = React.createClass({displayName: 'ImagesMediaBo
 });
 
 
+
 },{}],115:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -7167,6 +7281,7 @@ window.PostEditor_Layout = React.createClass({displayName: 'PostEditor_Layout',
     }
   }
 });
+
 
 
 },{}],116:[function(require,module,exports){
@@ -7200,6 +7315,7 @@ window.MediaBox_Actions = React.createClass({displayName: 'MediaBox_Actions',
     return React.DOM.div({className: "media-box__actions"}, actions );
   }
 });
+
 
 
 },{}],117:[function(require,module,exports){
@@ -7236,6 +7352,7 @@ window.MediaBox_Layout = React.createClass({displayName: 'MediaBox_Layout',
 });
 
 
+
 },{}],118:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -7251,6 +7368,7 @@ window.MediaBox_LoadingProgress = React.createClass({displayName: 'MediaBox_Load
      );
   }
 });
+
 
 
 },{}],119:[function(require,module,exports){
@@ -7318,6 +7436,7 @@ window.PostEditor_Dragging = {
     return this.refs.layout.refs.dropZone.getDOMNode();
   }
 };
+
 
 
 },{}],120:[function(require,module,exports){
@@ -7501,6 +7620,7 @@ window.PostEditor_ImagesForm = {
 };
 
 
+
 },{}],121:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -7555,6 +7675,7 @@ window.PostEditor_LayoutMixin = {
     });
   }
 };
+
 
 
 },{}],122:[function(require,module,exports){
@@ -7619,6 +7740,7 @@ window.PostEditor_PersistenceMixin = {
 React.mixins.add('PostEditor_PersistenceMixin', [window.PostEditor_PersistenceMixin, window.RequesterMixin, ComponentManipulationsMixin]);
 
 
+
 },{}],123:[function(require,module,exports){
 window.PostEditor_VideoMixin = {
   propTypes: {
@@ -7664,6 +7786,7 @@ window.PostEditor_VideoMixin = {
 };
 
 
+
 },{}],124:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -7684,6 +7807,7 @@ window.PostEditor_NewAnonymousPost = React.createClass({displayName: 'PostEditor
     };
   }
 });
+
 
 
 },{}],125:[function(require,module,exports){
@@ -7716,6 +7840,7 @@ window.PostEditor_NewPost = React.createClass({displayName: 'PostEditor_NewPost'
 });
 
 
+
 },{}],126:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -7732,6 +7857,7 @@ window.VideoMediaBox_Embeded = React.createClass({displayName: 'VideoMediaBox_Em
     );
   }
 });
+
 
 
 },{}],127:[function(require,module,exports){
@@ -7753,6 +7879,7 @@ window.VideoMediaBox_Loading = React.createClass({displayName: 'VideoMediaBox_Lo
     );
   }
 });
+
 
 
 },{}],128:[function(require,module,exports){
@@ -7785,6 +7912,7 @@ window.VideoMediaBox_UrlInsert = React.createClass({displayName: 'VideoMediaBox_
     return this.props.onChange(e.clipboardData.getData('text/plain'));
   }
 });
+
 
 
 },{}],129:[function(require,module,exports){
@@ -7932,6 +8060,7 @@ window.VideoMediaBox = React.createClass({displayName: 'VideoMediaBox',
 });
 
 
+
 },{}],130:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -7965,6 +8094,7 @@ window.MediaBox_ImageWelcome = React.createClass({displayName: 'MediaBox_ImageWe
 });
 
 
+
 },{}],131:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -7986,6 +8116,7 @@ window.MediaBox_InstagramWelcome = React.createClass({displayName: 'MediaBox_Ins
     );
   }
 });
+
 
 
 },{}],132:[function(require,module,exports){
@@ -8013,6 +8144,7 @@ window.MediaBox_MusicWelcome = React.createClass({displayName: 'MediaBox_MusicWe
 });
 
 
+
 },{}],133:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -8036,6 +8168,7 @@ window.MediaBox_VideoWelcome = React.createClass({displayName: 'MediaBox_VideoWe
     );
   }
 });
+
 
 
 },{}],134:[function(require,module,exports){
@@ -8171,6 +8304,7 @@ window.FollowButton = React.createClass({displayName: 'FollowButton',
 });
 
 
+
 },{}],135:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -8205,6 +8339,7 @@ window.RelationshipGuessButton = React.createClass({displayName: 'RelationshipGu
     });
   }
 });
+
 
 
 },{}],136:[function(require,module,exports){
@@ -8273,6 +8408,7 @@ window.RelationshipIgnoreButton = React.createClass({displayName: 'RelationshipI
     }
   }
 });
+
 
 
 },{}],137:[function(require,module,exports){
@@ -8495,6 +8631,7 @@ window.RelationshipMixin = {
 React.mixins.add('RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, RequesterMixin, ComponentManipulationsMixin]);
 
 
+
 },{}],138:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -8561,6 +8698,7 @@ window.RelationshipRequestButton = React.createClass({displayName: 'Relationship
 });
 
 
+
 },{}],139:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -8575,6 +8713,7 @@ window.SearchButton = React.createClass({displayName: 'SearchButton',
     );
   }
 });
+
 
 
 },{}],140:[function(require,module,exports){
@@ -8622,6 +8761,7 @@ window.SearchField = React.createClass({displayName: 'SearchField',
     }
   }
 });
+
 
 
 },{}],141:[function(require,module,exports){
@@ -8696,6 +8836,7 @@ window.Search = React.createClass({displayName: 'Search',
 });
 
 
+
 },{}],142:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -8754,6 +8895,7 @@ module.experts = window.SettingsAccountsItem = React.createClass({displayName: '
 });
 
 
+
 },{}],143:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -8804,6 +8946,7 @@ module.experts = window.SettingsAvatar = React.createClass({displayName: 'Settin
     return React.DOM.input({className: "form-upload__input", type: "file", accept: "image/*", name: "file"});
   }
 });
+
 
 
 },{}],144:[function(require,module,exports){
@@ -8877,6 +9020,7 @@ window.SettingsEmailConfirmation = React.createClass({displayName: 'SettingsEmai
     });
   }
 });
+
 
 
 },{}],145:[function(require,module,exports){
@@ -8990,6 +9134,7 @@ window.SettingsEmailEdit = React.createClass({displayName: 'SettingsEmailEdit',
 });
 
 
+
 },{}],146:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -9099,6 +9244,7 @@ window.SettingsEmailEstablishEdit = React.createClass({displayName: 'SettingsEma
 });
 
 
+
 },{}],147:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -9144,6 +9290,7 @@ window.SettingsEmailEstablish = React.createClass({displayName: 'SettingsEmailEs
 });
 
 
+
 },{}],148:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -9169,6 +9316,7 @@ window.SettingsEmailEstablishShow = React.createClass({displayName: 'SettingsEma
     return this.props.onClickEstablish();
   }
 });
+
 
 
 },{}],149:[function(require,module,exports){
@@ -9255,6 +9403,7 @@ window.SettingsEmail = React.createClass({displayName: 'SettingsEmail',
 });
 
 
+
 },{}],150:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -9311,6 +9460,7 @@ window.SettingsEmailShow = React.createClass({displayName: 'SettingsEmailShow',
 });
 
 
+
 },{}],151:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -9357,6 +9507,7 @@ window.SettingsHeader = React.createClass({displayName: 'SettingsHeader',
 });
 
 
+
 },{}],152:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -9386,6 +9537,7 @@ window.SettingsName = React.createClass({displayName: 'SettingsName',
     }
   }
 });
+
 
 
 },{}],153:[function(require,module,exports){
@@ -9596,6 +9748,7 @@ module.experts = window.SettingsPasswordItem = React.createClass({displayName: '
 });
 
 
+
 },{}],154:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -9632,6 +9785,7 @@ module.experts = window.SettingsRadioItem = React.createClass({displayName: 'Set
 });
 
 
+
 },{}],155:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -9663,6 +9817,7 @@ window.SettingsTitle = React.createClass({displayName: 'SettingsTitle',
 });
 
 
+
 },{}],156:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -9688,6 +9843,7 @@ module.experts = window.SettingsVkontakteItem = React.createClass({displayName: 
     );
   }
 });
+
 
 
 },{}],157:[function(require,module,exports){
@@ -9800,6 +9956,7 @@ window.ToolbarSettings = React.createClass({displayName: 'ToolbarSettings',
 });
 
 
+
 },{}],158:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -9852,6 +10009,7 @@ window.AuthorizationShellBox = React.createClass({displayName: 'AuthorizationShe
 });
 
 
+
 },{}],159:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -9892,6 +10050,7 @@ window.VkAuthorizationShellBox = React.createClass({displayName: 'VkAuthorizatio
     return ReactApp.shellbox.show(InviterShellBox);
   }
 });
+
 
 
 },{}],160:[function(require,module,exports){
@@ -9937,6 +10096,7 @@ window.Shellbox_VkAuthButton = React.createClass({displayName: 'Shellbox_VkAuthB
     }
   }
 });
+
 
 
 },{}],161:[function(require,module,exports){
@@ -10120,6 +10280,7 @@ window.EmailSigninShellBox = React.createClass({displayName: 'EmailSigninShellBo
 });
 
 
+
 },{}],162:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -10250,6 +10411,7 @@ module.experts = window.EmailSignupShellBox = React.createClass({displayName: 'E
 });
 
 
+
 },{}],163:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -10333,6 +10495,7 @@ window.InviterShellBox = React.createClass({displayName: 'InviterShellBox',
     return ReactApp.shellbox.show(SelectSigninShellBox);
   }
 });
+
 
 
 },{}],164:[function(require,module,exports){
@@ -10427,6 +10590,7 @@ module.experts = window.RecoveryShellBox = React.createClass({displayName: 'Reco
 });
 
 
+
 },{}],165:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -10478,6 +10642,7 @@ window.SelectSigninShellBox = React.createClass({displayName: 'SelectSigninShell
     return ReactApp.shellbox.show(VkAuthorizationShellBox);
   }
 });
+
 
 
 },{}],166:[function(require,module,exports){
@@ -10551,6 +10716,7 @@ window.ShellBox = React.createClass({displayName: 'ShellBox',
 });
 
 
+
 },{}],167:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -10581,6 +10747,7 @@ window.SmartFollowStatus = React.createClass({displayName: 'SmartFollowStatus',
 });
 
 
+
 },{}],168:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -10604,6 +10771,7 @@ window.Spinner = React.createClass({displayName: 'Spinner',
 });
 
 
+
 },{}],169:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -10618,6 +10786,7 @@ window.CloseToolbar = React.createClass({displayName: 'CloseToolbar',
     );
   }
 });
+
 
 
 },{}],170:[function(require,module,exports){
@@ -10738,6 +10907,7 @@ window.FeedToolbar = React.createClass({displayName: 'FeedToolbar',
 });
 
 
+
 },{}],171:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -10785,6 +10955,7 @@ window.ToolbarItem = React.createClass({displayName: 'ToolbarItem',
     return this.props.disabled;
   }
 });
+
 
 
 },{}],172:[function(require,module,exports){
@@ -10993,6 +11164,7 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
 });
 
 
+
 },{}],173:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -11161,6 +11333,7 @@ window.TimeoutTransitionGroup = React.createClass({displayName: 'TimeoutTransiti
 });
 
 
+
 },{}],174:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -11257,6 +11430,7 @@ window.Voting = React.createClass({displayName: 'Voting',
 });
 
 
+
 },{}],175:[function(require,module,exports){
 window.ReactPopup = (function() {
   function ReactPopup() {
@@ -11284,6 +11458,7 @@ window.ReactPopup = (function() {
 })();
 
 
+
 },{}],176:[function(require,module,exports){
 window.ReactShellBox = (function() {
   function ReactShellBox() {
@@ -11309,6 +11484,7 @@ window.ReactShellBox = (function() {
   return ReactShellBox;
 
 })();
+
 
 
 },{}],177:[function(require,module,exports){
@@ -11342,6 +11518,7 @@ window.TastyAlertController = {
 };
 
 
+
 },{}],178:[function(require,module,exports){
 window.TastyConfirmController = {
   show: function(_arg) {
@@ -11372,6 +11549,7 @@ window.TastyConfirmController = {
     }
   }
 };
+
 
 
 },{}],179:[function(require,module,exports){
@@ -11408,6 +11586,7 @@ TastyEvents.keys = {
 };
 
 
+
 },{}],180:[function(require,module,exports){
 window.TastyLockingAlertController = {
   show: function(_arg) {
@@ -11435,6 +11614,7 @@ window.TastyLockingAlertController = {
     }
   }
 };
+
 
 
 },{}],181:[function(require,module,exports){
@@ -11507,6 +11687,7 @@ TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() 
 });
 
 
+
 },{}],182:[function(require,module,exports){
 var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
 
@@ -11533,6 +11714,7 @@ INCOMING_MESSAGE = TastySoundController._buildAudioElement('incoming_message.mp3
 INCOMING_NOTIFICATION = TastySoundController._buildAudioElement('incoming_message.mp3');
 
 
+
 },{}],183:[function(require,module,exports){
 window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
   SERVER_ACTION: 'SERVER_ACTION',
@@ -11547,6 +11729,7 @@ window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
 });
 
 
+
 },{}],184:[function(require,module,exports){
 window.NormalizedEntry = (function() {
   function NormalizedEntry(data) {
@@ -11556,6 +11739,7 @@ window.NormalizedEntry = (function() {
   return NormalizedEntry;
 
 })();
+
 
 
 },{}],185:[function(require,module,exports){
@@ -11693,6 +11877,7 @@ window.CommentsMediator = (function() {
 window.commentsMediator = new CommentsMediator();
 
 
+
 },{}],186:[function(require,module,exports){
 window.ConversationActions = {
   clickConversation: function(conversationId) {
@@ -11710,6 +11895,7 @@ window.ConversationActions = {
     });
   }
 };
+
 
 
 },{}],187:[function(require,module,exports){
@@ -11749,6 +11935,7 @@ window.MessageActions = {
 };
 
 
+
 },{}],188:[function(require,module,exports){
 window.NotificationActions = {
   readNotification: function(notificationId) {
@@ -11756,6 +11943,7 @@ window.NotificationActions = {
     return messagingService.markAsReadNotification(notificationId);
   }
 };
+
 
 
 },{}],189:[function(require,module,exports){
@@ -11784,6 +11972,7 @@ window.PopupActions = {
 };
 
 
+
 },{}],190:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -11804,6 +11993,7 @@ window.MessagesPopup_Conversations = React.createClass({displayName: 'MessagesPo
 });
 
 
+
 },{}],191:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -11816,6 +12006,7 @@ window.MessagesPopup_ConversationsListEmpty = React.createClass({displayName: 'M
     );
   }
 });
+
 
 
 },{}],192:[function(require,module,exports){
@@ -11868,6 +12059,7 @@ window.MessagesPopup_ConversationsList = React.createClass({displayName: 'Messag
     return this.setState(this.getStateFromStore());
   }
 });
+
 
 
 },{}],193:[function(require,module,exports){
@@ -11944,6 +12136,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'Me
 });
 
 
+
 },{}],194:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -12009,6 +12202,7 @@ window.MessagesPopup_Chooser = React.createClass({displayName: 'MessagesPopup_Ch
 });
 
 
+
 },{}],195:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -12027,6 +12221,7 @@ window.MessagesPopup_ChooserButton = React.createClass({displayName: 'MessagesPo
     );
   }
 });
+
 
 
 },{}],196:[function(require,module,exports){
@@ -12087,6 +12282,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass({displayName: 'Messages
     }
   }
 });
+
 
 
 },{}],197:[function(require,module,exports){
@@ -12208,6 +12404,7 @@ window.MessagesPopup_ChooserResults = React.createClass({displayName: 'MessagesP
 });
 
 
+
 },{}],198:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -12239,6 +12436,7 @@ window.MessagesPopup_ChooserResultsItem = React.createClass({displayName: 'Messa
     return this.props.onClick(this.props.predictedUser.slug);
   }
 });
+
 
 
 },{}],199:[function(require,module,exports){
@@ -12291,6 +12489,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass({displayName: 'Me
 });
 
 
+
 },{}],200:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -12318,6 +12517,7 @@ window.MessagesPopup_LoadingMessage = React.createClass({displayName: 'MessagesP
     );
   }
 });
+
 
 
 },{}],201:[function(require,module,exports){
@@ -12427,6 +12627,7 @@ window.MessagesPopup = React.createClass({displayName: 'MessagesPopup',
 });
 
 
+
 },{}],202:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -12484,6 +12685,7 @@ window.MessagesPopup_ThreadMessageForm = React.createClass({displayName: 'Messag
 });
 
 
+
 },{}],203:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -12494,6 +12696,7 @@ window.MessagesPopup_MessageListEmpty = React.createClass({displayName: 'Message
     );
   }
 });
+
 
 
 },{}],204:[function(require,module,exports){
@@ -12606,6 +12809,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass({displayName: 'Messag
 });
 
 
+
 },{}],205:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -12699,6 +12903,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({displayName: 'Me
     return moment(this.props.message.created_at).format('D MMMM LT');
   }
 });
+
 
 
 },{}],206:[function(require,module,exports){
@@ -12824,6 +13029,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass({displayNa
 });
 
 
+
 },{}],207:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -12855,6 +13061,7 @@ window.MessagesPopup_Thread = React.createClass({displayName: 'MessagesPopup_Thr
 });
 
 
+
 },{}],208:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -12869,6 +13076,7 @@ window.MessagesPopup_UIBackButton = React.createClass({displayName: 'MessagesPop
     );
   }
 });
+
 
 
 },{}],209:[function(require,module,exports){
@@ -12893,6 +13101,7 @@ window.MessagesPopup_UICreateNewConversationButton = React.createClass({displayN
 });
 
 
+
 },{}],210:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -12905,6 +13114,7 @@ window.NotificationsPopup_NotificationsEmpty = React.createClass({displayName: '
     );
   }
 });
+
 
 
 },{}],211:[function(require,module,exports){
@@ -12989,6 +13199,7 @@ window.NotificationsPopup_Notification = React.createClass({displayName: 'Notifi
 });
 
 
+
 },{}],212:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -13030,6 +13241,7 @@ window.NotificationsPopup_Notifications = React.createClass({displayName: 'Notif
 });
 
 
+
 },{}],213:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -13060,6 +13272,7 @@ window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup'
     );
   }
 });
+
 
 
 },{}],214:[function(require,module,exports){
@@ -13192,6 +13405,7 @@ window.IndicatorsToolbar = React.createClass({displayName: 'IndicatorsToolbar',
 });
 
 
+
 },{}],215:[function(require,module,exports){
 
 /** @jsx React.DOM */
@@ -13238,6 +13452,7 @@ window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsT
     return this.setState(this.getStateFromStore());
   }
 });
+
 
 
 },{}],216:[function(require,module,exports){
@@ -13290,6 +13505,7 @@ window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'Indica
     return this.setState(this.getStateFromStore());
   }
 });
+
 
 
 },{}],217:[function(require,module,exports){
@@ -13387,6 +13603,7 @@ window.MessagingDispatcher = _.extend(new Dispatcher(), {
 });
 
 
+
 },{}],218:[function(require,module,exports){
 window.MessagingRequester = (function() {
   function MessagingRequester(_arg) {
@@ -13475,6 +13692,7 @@ window.MessagingRequester = (function() {
   return MessagingRequester;
 
 })();
+
 
 
 },{}],219:[function(require,module,exports){
@@ -13744,6 +13962,7 @@ window.MessagingService = (function() {
 })();
 
 
+
 },{}],220:[function(require,module,exports){
 window.MessagingMock = {
   message: function() {
@@ -13781,6 +14000,7 @@ window.MessagingMock = {
     return messaging.emitEvent("" + message.conversation_id + ":read:" + message.id);
   }
 };
+
 
 
 },{}],221:[function(require,module,exports){
@@ -13826,6 +14046,7 @@ window.MockMessagingRequester = (function() {
   return MockMessagingRequester;
 
 })();
+
 
 
 },{}],222:[function(require,module,exports){
@@ -13875,6 +14096,7 @@ window.MessagingServiceMock = (function(_super) {
   return MessagingServiceMock;
 
 })(window.MessagingService);
+
 
 
 },{}],223:[function(require,module,exports){
@@ -13955,6 +14177,7 @@ window.MessagingMocker = {
     });
   }
 };
+
 
 
 },{}],224:[function(require,module,exports){
@@ -14075,6 +14298,7 @@ window.Message = (function(_super) {
 })(DModel);
 
 
+
 },{}],225:[function(require,module,exports){
 var CONNECTION_EVENT, _connectionState;
 
@@ -14116,6 +14340,7 @@ ConnectionStateStore.dispatchToken = MessagingDispatcher.register(function(paylo
       break;
   }
 });
+
 
 
 },{}],226:[function(require,module,exports){
@@ -14227,6 +14452,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
       break;
   }
 });
+
 
 
 },{}],227:[function(require,module,exports){
@@ -14382,6 +14608,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(function(payload) {
 });
 
 
+
 },{}],228:[function(require,module,exports){
 var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
 
@@ -14458,6 +14685,7 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
 });
 
 
+
 },{}],229:[function(require,module,exports){
 var CHANGE_EVENT, _messagingStatus;
 
@@ -14499,6 +14727,7 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(paylo
       break;
   }
 });
+
 
 
 },{}],230:[function(require,module,exports){
@@ -14604,6 +14833,7 @@ NotificationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 });
 
 
+
 },{}],231:[function(require,module,exports){
 var BaseMixin, ERROR_TIMEOUT, ram, rau;
 
@@ -14685,6 +14915,7 @@ React.mixins.add('ReactActivitiesMixin', [ram, BaseMixin]);
 React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
 
+
 },{}],232:[function(require,module,exports){
 window.ComponentManipulationsMixin = {
   safeUpdate: function(func) {
@@ -14701,6 +14932,7 @@ window.ComponentManipulationsMixin = {
     return this._compositeLifeCycleState === 'UNMOUNTING' || this._compositeLifeCycleState === 'UNMOUNTED' || this._lifeCycleState === 'UNMOUNTING' || this._lifeCycleState === 'UNMOUNTED';
   }
 };
+
 
 
 },{}],233:[function(require,module,exports){
@@ -14725,6 +14957,7 @@ window.DOMManipulationsMixin = {
     })(this));
   }
 };
+
 
 
 },{}],234:[function(require,module,exports){
@@ -14752,6 +14985,7 @@ window.ErrorTimerMixin = {
     });
   }
 };
+
 
 
 },{}],235:[function(require,module,exports){
@@ -14786,6 +15020,7 @@ window.ReactGrammarMixin = {
     return date;
   }
 };
+
 
 
 },{}],236:[function(require,module,exports){
@@ -14854,6 +15089,7 @@ window.ReactPositionsMixin = {
 };
 
 
+
 },{}],237:[function(require,module,exports){
 window.RequesterMixin = {
   createRequest: function(settings) {
@@ -14896,6 +15132,7 @@ window.RequesterMixin = {
     return this.abortActiveRequests();
   }
 };
+
 
 
 },{}],238:[function(require,module,exports){
@@ -14947,6 +15184,7 @@ window.ScrollerMixin = {
 };
 
 
+
 },{}],239:[function(require,module,exports){
 window.ReactShakeMixin = {
   shake: function() {
@@ -14960,6 +15198,7 @@ window.ReactShakeMixin = {
 };
 
 
+
 },{}],240:[function(require,module,exports){
 window.TouchMixin = {
   componentWillMount: function() {
@@ -14969,6 +15208,7 @@ window.TouchMixin = {
     }
   }
 };
+
 
 
 },{}],241:[function(require,module,exports){
@@ -14981,6 +15221,7 @@ window.ReactUnmountMixin = {
     })(this));
   }
 };
+
 
 
 },{}],242:[function(require,module,exports){
@@ -15022,6 +15263,7 @@ window.EntryNormalizer = {
     return new NormalizedEntry(attr);
   }
 };
+
 
 
 },{}],243:[function(require,module,exports){
@@ -15089,6 +15331,7 @@ window.EntryStore = {
 };
 
 
+
 },{}],244:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
 
@@ -15134,6 +15377,7 @@ window.PositionsService = {
 };
 
 
+
 },{}],245:[function(require,module,exports){
 window.ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
@@ -15148,6 +15392,7 @@ window.ThumborService = {
 };
 
 
+
 },{}],246:[function(require,module,exports){
 window.UuidService = {
   generate: function() {
@@ -15158,6 +15403,7 @@ window.UuidService = {
     return "" + (s4() + s4()) + "-" + (s4()) + "-" + (s4()) + "-" + (s4()) + "-" + (s4() + s4() + s4());
   }
 };
+
 
 
 },{}],247:[function(require,module,exports){
@@ -15205,6 +15451,7 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 });
 
 
+
 },{}],248:[function(require,module,exports){
 window.ReactUtils = {
   isImagesEqual: function(nextImages, currentImages) {
@@ -15221,6 +15468,7 @@ window.ReactUtils = {
     return _.isEqual(currentUrls, nextUrls);
   }
 };
+
 
 
 },{}],249:[function(require,module,exports){
@@ -15244,6 +15492,7 @@ window.Routes = {
     return '/people/';
   }
 };
+
 
 
 },{}],250:[function(require,module,exports){
@@ -15378,6 +15627,7 @@ ApiRoutes = {
 window.Routes.api = ApiRoutes;
 
 
+
 },{}],251:[function(require,module,exports){
 window.DModel = (function() {
   function DModel(message) {
@@ -15387,6 +15637,7 @@ window.DModel = (function() {
   return DModel;
 
 })();
+
 
 
 },{}],252:[function(require,module,exports){
@@ -15527,12 +15778,14 @@ window.FileReceiver = (function() {
 })();
 
 
+
 },{}],253:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
   return /iPhone|iPod|iPad|Android|BlackBerry|Opera Mini|IEMobile/.test(userAgent);
 };
+
 
 
 },{}],254:[function(require,module,exports){
@@ -15591,6 +15844,7 @@ window.Tasty = {
 };
 
 
+
 },{}],255:[function(require,module,exports){
 window.TastyUtils = {
   showFlashes: function(flashes) {
@@ -15640,6 +15894,7 @@ window.TastyUtils = {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
   }
 };
+
 
 
 },{}],256:[function(require,module,exports){
@@ -27553,7 +27808,7 @@ var Plugins;
 
 },{}],"jquery.ui.core":[function(require,module,exports){
 /*!
- * jQuery UI Core 1.11.1
+ * jQuery UI Core 1.11.2
  * http://jqueryui.com
  *
  * Copyright 2014 jQuery Foundation and other contributors
@@ -27578,7 +27833,7 @@ var Plugins;
 $.ui = $.ui || {};
 
 $.extend( $.ui, {
-	version: "1.11.1",
+	version: "1.11.2",
 
 	keyCode: {
 		BACKSPACE: 8,
@@ -27859,7 +28114,7 @@ $.ui.plugin = {
 
 },{}],"jquery.ui.draggable":[function(require,module,exports){
 /*!
- * jQuery UI Draggable 1.11.1
+ * jQuery UI Draggable 1.11.2
  * http://jqueryui.com
  *
  * Copyright 2014 jQuery Foundation and other contributors
@@ -27886,7 +28141,7 @@ $.ui.plugin = {
 }(function( $ ) {
 
 $.widget("ui.draggable", $.ui.mouse, {
-	version: "1.11.1",
+	version: "1.11.2",
 	widgetEventPrefix: "drag",
 	options: {
 		addClasses: true,
@@ -27921,8 +28176,8 @@ $.widget("ui.draggable", $.ui.mouse, {
 	},
 	_create: function() {
 
-		if (this.options.helper === "original" && !(/^(?:r|a|f)/).test(this.element.css("position"))) {
-			this.element[0].style.position = "relative";
+		if ( this.options.helper === "original" ) {
+			this._setPositionRelative();
 		}
 		if (this.options.addClasses){
 			this.element.addClass("ui-draggable");
@@ -27954,20 +28209,9 @@ $.widget("ui.draggable", $.ui.mouse, {
 	},
 
 	_mouseCapture: function(event) {
+		var o = this.options;
 
-		var document = this.document[ 0 ],
-			o = this.options;
-
-		// support: IE9
-		// IE9 throws an "Unspecified error" accessing document.activeElement from an <iframe>
-		try {
-			// Support: IE9+
-			// If the <body> is blurred, IE will switch windows, see #9520
-			if ( document.activeElement && document.activeElement.nodeName.toLowerCase() !== "body" ) {
-				// Blur any element that currently has focus, see #4261
-				$( document.activeElement ).blur();
-			}
-		} catch ( error ) {}
+		this._blurActiveElement( event );
 
 		// among others, prevent a drag on a resizable-handle
 		if (this.helper || o.disabled || $(event.target).closest(".ui-resizable-handle").length > 0) {
@@ -27980,18 +28224,52 @@ $.widget("ui.draggable", $.ui.mouse, {
 			return false;
 		}
 
-		$(o.iframeFix === true ? "iframe" : o.iframeFix).each(function() {
-			$("<div class='ui-draggable-iframeFix' style='background: #fff;'></div>")
-			.css({
-				width: this.offsetWidth + "px", height: this.offsetHeight + "px",
-				position: "absolute", opacity: "0.001", zIndex: 1000
-			})
-			.css($(this).offset())
-			.appendTo("body");
-		});
+		this._blockFrames( o.iframeFix === true ? "iframe" : o.iframeFix );
 
 		return true;
 
+	},
+
+	_blockFrames: function( selector ) {
+		this.iframeBlocks = this.document.find( selector ).map(function() {
+			var iframe = $( this );
+
+			return $( "<div>" )
+				.css( "position", "absolute" )
+				.appendTo( iframe.parent() )
+				.outerWidth( iframe.outerWidth() )
+				.outerHeight( iframe.outerHeight() )
+				.offset( iframe.offset() )[ 0 ];
+		});
+	},
+
+	_unblockFrames: function() {
+		if ( this.iframeBlocks ) {
+			this.iframeBlocks.remove();
+			delete this.iframeBlocks;
+		}
+	},
+
+	_blurActiveElement: function( event ) {
+		var document = this.document[ 0 ];
+
+		// Only need to blur if the event occurred on the draggable itself, see #10527
+		if ( !this.handleElement.is( event.target ) ) {
+			return;
+		}
+
+		// support: IE9
+		// IE9 throws an "Unspecified error" accessing document.activeElement from an <iframe>
+		try {
+
+			// Support: IE9, IE10
+			// If the <body> is blurred, IE will switch windows, see #9520
+			if ( document.activeElement && document.activeElement.nodeName.toLowerCase() !== "body" ) {
+
+				// Blur any element that currently has focus, see #4261
+				$( document.activeElement ).blur();
+			}
+		} catch ( error ) {}
 	},
 
 	_mouseStart: function(event) {
@@ -28023,26 +28301,13 @@ $.widget("ui.draggable", $.ui.mouse, {
 		this.cssPosition = this.helper.css( "position" );
 		this.scrollParent = this.helper.scrollParent( true );
 		this.offsetParent = this.helper.offsetParent();
-		this.offsetParentCssPosition = this.offsetParent.css( "position" );
+		this.hasFixedAncestor = this.helper.parents().filter(function() {
+				return $( this ).css( "position" ) === "fixed";
+			}).length > 0;
 
 		//The element's absolute position on the page minus margins
-		this.offset = this.positionAbs = this.element.offset();
-		this.offset = {
-			top: this.offset.top - this.margins.top,
-			left: this.offset.left - this.margins.left
-		};
-
-		//Reset scroll cache
-		this.offset.scroll = false;
-
-		$.extend(this.offset, {
-			click: { //Where the click happened, relative to the element
-				left: event.pageX - this.offset.left,
-				top: event.pageY - this.offset.top
-			},
-			parent: this._getParentOffset(),
-			relative: this._getRelativeOffset() //This is a relative to absolute position minus the actual position calculation - only used for relative positioned helper
-		});
+		this.positionAbs = this.element.offset();
+		this._refreshOffsets( event );
 
 		//Generate the original position
 		this.originalPosition = this.position = this._generatePosition( event, false );
@@ -28069,6 +28334,10 @@ $.widget("ui.draggable", $.ui.mouse, {
 			$.ui.ddmanager.prepareOffsets(this, event);
 		}
 
+		// Reset helper's right/bottom css if they're set and set explicit width/height instead
+		// as this prevents resizing of elements with right/bottom set (see #7772)
+		this._normalizeRightBottom();
+
 		this._mouseDrag(event, true); //Execute the drag once - this causes the helper not to be visible before getting its correct position
 
 		//If the ddmanager is used for droppables, inform the manager that dragging has started (see #5003)
@@ -28079,9 +28348,24 @@ $.widget("ui.draggable", $.ui.mouse, {
 		return true;
 	},
 
+	_refreshOffsets: function( event ) {
+		this.offset = {
+			top: this.positionAbs.top - this.margins.top,
+			left: this.positionAbs.left - this.margins.left,
+			scroll: false,
+			parent: this._getParentOffset(),
+			relative: this._getRelativeOffset()
+		};
+
+		this.offset.click = {
+			left: event.pageX - this.offset.left,
+			top: event.pageY - this.offset.top
+		};
+	},
+
 	_mouseDrag: function(event, noPropagation) {
 		// reset any necessary cached properties (see #5009)
-		if ( this.offsetParentCssPosition === "fixed" ) {
+		if ( this.hasFixedAncestor ) {
 			this.offset.parent = this._getParentOffset();
 		}
 
@@ -28139,19 +28423,19 @@ $.widget("ui.draggable", $.ui.mouse, {
 		return false;
 	},
 
-	_mouseUp: function(event) {
-		//Remove frame helpers
-		$("div.ui-draggable-iframeFix").each(function() {
-			this.parentNode.removeChild(this);
-		});
+	_mouseUp: function( event ) {
+		this._unblockFrames();
 
 		//If the ddmanager is used for droppables, inform the manager that dragging has stopped (see #5003)
 		if ( $.ui.ddmanager ) {
 			$.ui.ddmanager.dragStop(this, event);
 		}
 
-		// The interaction is over; whether or not the click resulted in a drag, focus the element
-		this.element.focus();
+		// Only need to focus if the event occurred on the draggable itself, see #10527
+		if ( this.handleElement.is( event.target ) ) {
+			// The interaction is over; whether or not the click resulted in a drag, focus the element
+			this.element.focus();
+		}
 
 		return $.ui.mouse.prototype._mouseUp.call(this, event);
 	},
@@ -28187,10 +28471,22 @@ $.widget("ui.draggable", $.ui.mouse, {
 	_createHelper: function(event) {
 
 		var o = this.options,
-			helper = $.isFunction(o.helper) ? $(o.helper.apply(this.element[ 0 ], [ event ])) : (o.helper === "clone" ? this.element.clone().removeAttr("id") : this.element);
+			helperIsFunction = $.isFunction( o.helper ),
+			helper = helperIsFunction ?
+				$( o.helper.apply( this.element[ 0 ], [ event ] ) ) :
+				( o.helper === "clone" ?
+					this.element.clone().removeAttr( "id" ) :
+					this.element );
 
 		if (!helper.parents("body").length) {
 			helper.appendTo((o.appendTo === "parent" ? this.element[0].parentNode : o.appendTo));
+		}
+
+		// http://bugs.jqueryui.com/ticket/9446
+		// a helper function can return the original element
+		// which wouldn't have been set to relative in _create
+		if ( helperIsFunction && helper[ 0 ] === this.element[ 0 ] ) {
+			this._setPositionRelative();
 		}
 
 		if (helper[0] !== this.element[0] && !(/(fixed|absolute)/).test(helper.css("position"))) {
@@ -28199,6 +28495,12 @@ $.widget("ui.draggable", $.ui.mouse, {
 
 		return helper;
 
+	},
+
+	_setPositionRelative: function() {
+		if ( !( /^(?:r|a|f)/ ).test( this.element.css( "position" ) ) ) {
+			this.element[ 0 ].style.position = "relative";
+		}
 	},
 
 	_adjustOffsetFromHelper: function(obj) {
@@ -28285,7 +28587,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 
 	_setContainment: function() {
 
-		var over, c, ce,
+		var isUserScrollable, c, ce,
 			o = this.options,
 			document = this.document[ 0 ];
 
@@ -28332,13 +28634,23 @@ $.widget("ui.draggable", $.ui.mouse, {
 			return;
 		}
 
-		over = c.css( "overflow" ) !== "hidden";
+		isUserScrollable = /(scroll|auto)/.test( c.css( "overflow" ) );
 
 		this.containment = [
 			( parseInt( c.css( "borderLeftWidth" ), 10 ) || 0 ) + ( parseInt( c.css( "paddingLeft" ), 10 ) || 0 ),
 			( parseInt( c.css( "borderTopWidth" ), 10 ) || 0 ) + ( parseInt( c.css( "paddingTop" ), 10 ) || 0 ),
-			( over ? Math.max( ce.scrollWidth, ce.offsetWidth ) : ce.offsetWidth ) - ( parseInt( c.css( "borderRightWidth" ), 10 ) || 0 ) - ( parseInt( c.css( "paddingRight" ), 10 ) || 0 ) - this.helperProportions.width - this.margins.left - this.margins.right,
-			( over ? Math.max( ce.scrollHeight, ce.offsetHeight ) : ce.offsetHeight ) - ( parseInt( c.css( "borderBottomWidth" ), 10 ) || 0 ) - ( parseInt( c.css( "paddingBottom" ), 10 ) || 0 ) - this.helperProportions.height - this.margins.top  - this.margins.bottom
+			( isUserScrollable ? Math.max( ce.scrollWidth, ce.offsetWidth ) : ce.offsetWidth ) -
+				( parseInt( c.css( "borderRightWidth" ), 10 ) || 0 ) -
+				( parseInt( c.css( "paddingRight" ), 10 ) || 0 ) -
+				this.helperProportions.width -
+				this.margins.left -
+				this.margins.right,
+			( isUserScrollable ? Math.max( ce.scrollHeight, ce.offsetHeight ) : ce.offsetHeight ) -
+				( parseInt( c.css( "borderBottomWidth" ), 10 ) || 0 ) -
+				( parseInt( c.css( "paddingBottom" ), 10 ) || 0 ) -
+				this.helperProportions.height -
+				this.margins.top -
+				this.margins.bottom
 		];
 		this.relativeContainer = c;
 	},
@@ -28468,16 +28780,29 @@ $.widget("ui.draggable", $.ui.mouse, {
 		}
 	},
 
+	_normalizeRightBottom: function() {
+		if ( this.options.axis !== "y" && this.helper.css( "right" ) !== "auto" ) {
+			this.helper.width( this.helper.width() );
+			this.helper.css( "right", "auto" );
+		}
+		if ( this.options.axis !== "x" && this.helper.css( "bottom" ) !== "auto" ) {
+			this.helper.height( this.helper.height() );
+			this.helper.css( "bottom", "auto" );
+		}
+	},
+
 	// From now on bulk stuff - mainly helpers
 
-	_trigger: function(type, event, ui) {
+	_trigger: function( type, event, ui ) {
 		ui = ui || this._uiHash();
 		$.ui.plugin.call( this, type, [ event, ui, this ], true );
-		//The absolute position has to be recalculated after plugins
-		if (type === "drag") {
-			this.positionAbs = this._convertPositionTo("absolute");
+
+		// Absolute position and offset (see #6884 ) have to be recalculated after plugins
+		if ( /^(drag|start|stop)/.test( type ) ) {
+			this.positionAbs = this._convertPositionTo( "absolute" );
+			ui.offset = this.positionAbs;
 		}
-		return $.Widget.prototype._trigger.call(this, type, event, ui);
+		return $.Widget.prototype._trigger.call( this, type, event, ui );
 	},
 
 	plugins: {},
@@ -28493,160 +28818,197 @@ $.widget("ui.draggable", $.ui.mouse, {
 
 });
 
-$.ui.plugin.add("draggable", "connectToSortable", {
-	start: function( event, ui, inst ) {
+$.ui.plugin.add( "draggable", "connectToSortable", {
+	start: function( event, ui, draggable ) {
+		var uiSortable = $.extend( {}, ui, {
+			item: draggable.element
+		});
 
-		var o = inst.options,
-			uiSortable = $.extend({}, ui, { item: inst.element });
-		inst.sortables = [];
-		$(o.connectToSortable).each(function() {
+		draggable.sortables = [];
+		$( draggable.options.connectToSortable ).each(function() {
 			var sortable = $( this ).sortable( "instance" );
-			if (sortable && !sortable.options.disabled) {
-				inst.sortables.push({
-					instance: sortable,
-					shouldRevert: sortable.options.revert
-				});
-				sortable.refreshPositions();	// Call the sortable's refreshPositions at drag start to refresh the containerCache since the sortable container cache is used in drag and needs to be up to date (this will ensure it's initialised as well as being kept in step with any changes that might have happened on the page).
+
+			if ( sortable && !sortable.options.disabled ) {
+				draggable.sortables.push( sortable );
+
+				// refreshPositions is called at drag start to refresh the containerCache
+				// which is used in drag. This ensures it's initialized and synchronized
+				// with any changes that might have happened on the page since initialization.
+				sortable.refreshPositions();
 				sortable._trigger("activate", event, uiSortable);
 			}
 		});
-
 	},
-	stop: function( event, ui, inst ) {
-
-		//If we are still over the sortable, we fake the stop event of the sortable, but also remove helper
+	stop: function( event, ui, draggable ) {
 		var uiSortable = $.extend( {}, ui, {
-			item: inst.element
+			item: draggable.element
 		});
 
-		$.each(inst.sortables, function() {
-			if (this.instance.isOver) {
+		draggable.cancelHelperRemoval = false;
 
-				this.instance.isOver = 0;
+		$.each( draggable.sortables, function() {
+			var sortable = this;
 
-				inst.cancelHelperRemoval = true; //Don't remove the helper in the draggable instance
-				this.instance.cancelHelperRemoval = false; //Remove it in the sortable instance (so sortable plugins like revert still work)
+			if ( sortable.isOver ) {
+				sortable.isOver = 0;
 
-				//The sortable revert is supported, and we have to set a temporary dropped variable on the draggable to support revert: "valid/invalid"
-				if (this.shouldRevert) {
-					this.instance.options.revert = this.shouldRevert;
-				}
+				// Allow this sortable to handle removing the helper
+				draggable.cancelHelperRemoval = true;
+				sortable.cancelHelperRemoval = false;
 
-				//Trigger the stop of the sortable
-				this.instance._mouseStop(event);
+				// Use _storedCSS To restore properties in the sortable,
+				// as this also handles revert (#9675) since the draggable
+				// may have modified them in unexpected ways (#8809)
+				sortable._storedCSS = {
+					position: sortable.placeholder.css( "position" ),
+					top: sortable.placeholder.css( "top" ),
+					left: sortable.placeholder.css( "left" )
+				};
 
-				this.instance.options.helper = this.instance.options._helper;
+				sortable._mouseStop(event);
 
-				//If the helper has been the original item, restore properties in the sortable
-				if (inst.options.helper === "original") {
-					this.instance.currentItem.css({ top: "auto", left: "auto" });
-				}
-
+				// Once drag has ended, the sortable should return to using
+				// its original helper, not the shared helper from draggable
+				sortable.options.helper = sortable.options._helper;
 			} else {
-				this.instance.cancelHelperRemoval = false; //Remove the helper in the sortable instance
-				this.instance._trigger("deactivate", event, uiSortable);
+				// Prevent this Sortable from removing the helper.
+				// However, don't set the draggable to remove the helper
+				// either as another connected Sortable may yet handle the removal.
+				sortable.cancelHelperRemoval = true;
+
+				sortable._trigger( "deactivate", event, uiSortable );
 			}
-
 		});
-
 	},
-	drag: function( event, ui, inst ) {
-
-		var that = this;
-
-		$.each(inst.sortables, function() {
-
+	drag: function( event, ui, draggable ) {
+		$.each( draggable.sortables, function() {
 			var innermostIntersecting = false,
-				thisSortable = this;
+				sortable = this;
 
-			//Copy over some variables to allow calling the sortable's native _intersectsWith
-			this.instance.positionAbs = inst.positionAbs;
-			this.instance.helperProportions = inst.helperProportions;
-			this.instance.offset.click = inst.offset.click;
+			// Copy over variables that sortable's _intersectsWith uses
+			sortable.positionAbs = draggable.positionAbs;
+			sortable.helperProportions = draggable.helperProportions;
+			sortable.offset.click = draggable.offset.click;
 
-			if (this.instance._intersectsWith(this.instance.containerCache)) {
+			if ( sortable._intersectsWith( sortable.containerCache ) ) {
 				innermostIntersecting = true;
-				$.each(inst.sortables, function() {
-					this.instance.positionAbs = inst.positionAbs;
-					this.instance.helperProportions = inst.helperProportions;
-					this.instance.offset.click = inst.offset.click;
-					if (this !== thisSortable &&
-						this.instance._intersectsWith(this.instance.containerCache) &&
-						$.contains(thisSortable.instance.element[0], this.instance.element[0])
-					) {
+
+				$.each( draggable.sortables, function() {
+					// Copy over variables that sortable's _intersectsWith uses
+					this.positionAbs = draggable.positionAbs;
+					this.helperProportions = draggable.helperProportions;
+					this.offset.click = draggable.offset.click;
+
+					if ( this !== sortable &&
+							this._intersectsWith( this.containerCache ) &&
+							$.contains( sortable.element[ 0 ], this.element[ 0 ] ) ) {
 						innermostIntersecting = false;
 					}
+
 					return innermostIntersecting;
 				});
 			}
 
-			if (innermostIntersecting) {
-				//If it intersects, we use a little isOver variable and set it once, so our move-in stuff gets fired only once
-				if (!this.instance.isOver) {
+			if ( innermostIntersecting ) {
+				// If it intersects, we use a little isOver variable and set it once,
+				// so that the move-in stuff gets fired only once.
+				if ( !sortable.isOver ) {
+					sortable.isOver = 1;
 
-					this.instance.isOver = 1;
-					//Now we fake the start of dragging for the sortable instance,
-					//by cloning the list group item, appending it to the sortable and using it as inst.currentItem
-					//We can then fire the start event of the sortable with our passed browser event, and our own helper (so it doesn't create a new one)
-					this.instance.currentItem = $(that).clone().removeAttr("id").appendTo(this.instance.element).data("ui-sortable-item", true);
-					this.instance.options._helper = this.instance.options.helper; //Store helper option to later restore it
-					this.instance.options.helper = function() { return ui.helper[0]; };
+					sortable.currentItem = ui.helper
+						.appendTo( sortable.element )
+						.data( "ui-sortable-item", true );
 
-					event.target = this.instance.currentItem[0];
-					this.instance._mouseCapture(event, true);
-					this.instance._mouseStart(event, true, true);
+					// Store helper option to later restore it
+					sortable.options._helper = sortable.options.helper;
 
-					//Because the browser event is way off the new appended portlet, we modify a couple of variables to reflect the changes
-					this.instance.offset.click.top = inst.offset.click.top;
-					this.instance.offset.click.left = inst.offset.click.left;
-					this.instance.offset.parent.left -= inst.offset.parent.left - this.instance.offset.parent.left;
-					this.instance.offset.parent.top -= inst.offset.parent.top - this.instance.offset.parent.top;
+					sortable.options.helper = function() {
+						return ui.helper[ 0 ];
+					};
 
-					inst._trigger("toSortable", event);
-					inst.dropped = this.instance.element; //draggable revert needs that
-					//hack so receive/update callbacks work (mostly)
-					inst.currentItem = inst.element;
-					this.instance.fromOutside = inst;
+					// Fire the start events of the sortable with our passed browser event,
+					// and our own helper (so it doesn't create a new one)
+					event.target = sortable.currentItem[ 0 ];
+					sortable._mouseCapture( event, true );
+					sortable._mouseStart( event, true, true );
 
+					// Because the browser event is way off the new appended portlet,
+					// modify necessary variables to reflect the changes
+					sortable.offset.click.top = draggable.offset.click.top;
+					sortable.offset.click.left = draggable.offset.click.left;
+					sortable.offset.parent.left -= draggable.offset.parent.left -
+						sortable.offset.parent.left;
+					sortable.offset.parent.top -= draggable.offset.parent.top -
+						sortable.offset.parent.top;
+
+					draggable._trigger( "toSortable", event );
+
+					// Inform draggable that the helper is in a valid drop zone,
+					// used solely in the revert option to handle "valid/invalid".
+					draggable.dropped = sortable.element;
+
+					// Need to refreshPositions of all sortables in the case that
+					// adding to one sortable changes the location of the other sortables (#9675)
+					$.each( draggable.sortables, function() {
+						this.refreshPositions();
+					});
+
+					// hack so receive/update callbacks work (mostly)
+					draggable.currentItem = draggable.element;
+					sortable.fromOutside = draggable;
 				}
 
-				//Provided we did all the previous steps, we can fire the drag event of the sortable on every draggable drag, when it intersects with the sortable
-				if (this.instance.currentItem) {
-					this.instance._mouseDrag(event);
+				if ( sortable.currentItem ) {
+					sortable._mouseDrag( event );
+					// Copy the sortable's position because the draggable's can potentially reflect
+					// a relative position, while sortable is always absolute, which the dragged
+					// element has now become. (#8809)
+					ui.position = sortable.position;
 				}
-
 			} else {
+				// If it doesn't intersect with the sortable, and it intersected before,
+				// we fake the drag stop of the sortable, but make sure it doesn't remove
+				// the helper by using cancelHelperRemoval.
+				if ( sortable.isOver ) {
 
-				//If it doesn't intersect with the sortable, and it intersected before,
-				//we fake the drag stop of the sortable, but make sure it doesn't remove the helper by using cancelHelperRemoval
-				if (this.instance.isOver) {
+					sortable.isOver = 0;
+					sortable.cancelHelperRemoval = true;
 
-					this.instance.isOver = 0;
-					this.instance.cancelHelperRemoval = true;
+					// Calling sortable's mouseStop would trigger a revert,
+					// so revert must be temporarily false until after mouseStop is called.
+					sortable.options._revert = sortable.options.revert;
+					sortable.options.revert = false;
 
-					//Prevent reverting on this forced stop
-					this.instance.options.revert = false;
+					sortable._trigger( "out", event, sortable._uiHash( sortable ) );
+					sortable._mouseStop( event, true );
 
-					// The out event needs to be triggered independently
-					this.instance._trigger("out", event, this.instance._uiHash(this.instance));
+					// restore sortable behaviors that were modfied
+					// when the draggable entered the sortable area (#9481)
+					sortable.options.revert = sortable.options._revert;
+					sortable.options.helper = sortable.options._helper;
 
-					this.instance._mouseStop(event, true);
-					this.instance.options.helper = this.instance.options._helper;
-
-					//Now we remove our currentItem, the list group clone again, and the placeholder, and animate the helper back to it's original size
-					this.instance.currentItem.remove();
-					if (this.instance.placeholder) {
-						this.instance.placeholder.remove();
+					if ( sortable.placeholder ) {
+						sortable.placeholder.remove();
 					}
 
-					inst._trigger("fromSortable", event);
-					inst.dropped = false; //draggable revert needs that
+					// Recalculate the draggable's offset considering the sortable
+					// may have modified them in unexpected ways (#8809)
+					draggable._refreshOffsets( event );
+					ui.position = draggable._generatePosition( event, true );
+
+					draggable._trigger( "fromSortable", event );
+
+					// Inform draggable that the helper is no longer in a valid drop zone
+					draggable.dropped = false;
+
+					// Need to refreshPositions of all sortables just in case removing
+					// from one sortable changes the location of other sortables (#9675)
+					$.each( draggable.sortables, function() {
+						this.refreshPositions();
+					});
 				}
-
 			}
-
 		});
-
 	}
 });
 
@@ -28776,9 +29138,9 @@ $.ui.plugin.add("draggable", "snap", {
 
 		for (i = inst.snapElements.length - 1; i >= 0; i--){
 
-			l = inst.snapElements[i].left;
+			l = inst.snapElements[i].left - inst.margins.left;
 			r = l + inst.snapElements[i].width;
-			t = inst.snapElements[i].top;
+			t = inst.snapElements[i].top - inst.margins.top;
 			b = t + inst.snapElements[i].height;
 
 			if ( x2 < l - d || x1 > r + d || y2 < t - d || y1 > b + d || !$.contains( inst.snapElements[ i ].item.ownerDocument, inst.snapElements[ i ].item ) ) {
@@ -28795,16 +29157,16 @@ $.ui.plugin.add("draggable", "snap", {
 				ls = Math.abs(l - x2) <= d;
 				rs = Math.abs(r - x1) <= d;
 				if (ts) {
-					ui.position.top = inst._convertPositionTo("relative", { top: t - inst.helperProportions.height, left: 0 }).top - inst.margins.top;
+					ui.position.top = inst._convertPositionTo("relative", { top: t - inst.helperProportions.height, left: 0 }).top;
 				}
 				if (bs) {
-					ui.position.top = inst._convertPositionTo("relative", { top: b, left: 0 }).top - inst.margins.top;
+					ui.position.top = inst._convertPositionTo("relative", { top: b, left: 0 }).top;
 				}
 				if (ls) {
-					ui.position.left = inst._convertPositionTo("relative", { top: 0, left: l - inst.helperProportions.width }).left - inst.margins.left;
+					ui.position.left = inst._convertPositionTo("relative", { top: 0, left: l - inst.helperProportions.width }).left;
 				}
 				if (rs) {
-					ui.position.left = inst._convertPositionTo("relative", { top: 0, left: r }).left - inst.margins.left;
+					ui.position.left = inst._convertPositionTo("relative", { top: 0, left: r }).left;
 				}
 			}
 
@@ -28816,16 +29178,16 @@ $.ui.plugin.add("draggable", "snap", {
 				ls = Math.abs(l - x1) <= d;
 				rs = Math.abs(r - x2) <= d;
 				if (ts) {
-					ui.position.top = inst._convertPositionTo("relative", { top: t, left: 0 }).top - inst.margins.top;
+					ui.position.top = inst._convertPositionTo("relative", { top: t, left: 0 }).top;
 				}
 				if (bs) {
-					ui.position.top = inst._convertPositionTo("relative", { top: b - inst.helperProportions.height, left: 0 }).top - inst.margins.top;
+					ui.position.top = inst._convertPositionTo("relative", { top: b - inst.helperProportions.height, left: 0 }).top;
 				}
 				if (ls) {
-					ui.position.left = inst._convertPositionTo("relative", { top: 0, left: l }).left - inst.margins.left;
+					ui.position.left = inst._convertPositionTo("relative", { top: 0, left: l }).left;
 				}
 				if (rs) {
-					ui.position.left = inst._convertPositionTo("relative", { top: 0, left: r - inst.helperProportions.width }).left - inst.margins.left;
+					ui.position.left = inst._convertPositionTo("relative", { top: 0, left: r - inst.helperProportions.width }).left;
 				}
 			}
 
@@ -28882,7 +29244,7 @@ return $.ui.draggable;
 
 },{}],"jquery.ui.mouse":[function(require,module,exports){
 /*!
- * jQuery UI Mouse 1.11.1
+ * jQuery UI Mouse 1.11.2
  * http://jqueryui.com
  *
  * Copyright 2014 jQuery Foundation and other contributors
@@ -28912,7 +29274,7 @@ $( document ).mouseup( function() {
 });
 
 return $.widget("ui.mouse", {
-	version: "1.11.1",
+	version: "1.11.2",
 	options: {
 		cancel: "input,textarea,button,select,option",
 		distance: 1,
@@ -28952,6 +29314,8 @@ return $.widget("ui.mouse", {
 		if ( mouseHandled ) {
 			return;
 		}
+
+		this._mouseMoved = false;
 
 		// we may have missed mouseup (out of window)
 		(this._mouseStarted && this._mouseUp(event));
@@ -29006,13 +29370,23 @@ return $.widget("ui.mouse", {
 	},
 
 	_mouseMove: function(event) {
-		// IE mouseup check - mouseup happened when mouse was out of window
-		if ($.ui.ie && ( !document.documentMode || document.documentMode < 9 ) && !event.button) {
-			return this._mouseUp(event);
+		// Only check for mouseups outside the document if you've moved inside the document
+		// at least once. This prevents the firing of mouseup in the case of IE<9, which will
+		// fire a mousemove event if content is placed under the cursor. See #7778
+		// Support: IE <9
+		if ( this._mouseMoved ) {
+			// IE mouseup check - mouseup happened when mouse was out of window
+			if ($.ui.ie && ( !document.documentMode || document.documentMode < 9 ) && !event.button) {
+				return this._mouseUp(event);
 
-		// Iframe mouseup check - mouseup occurred in another document
-		} else if ( !event.which ) {
-			return this._mouseUp( event );
+			// Iframe mouseup check - mouseup occurred in another document
+			} else if ( !event.which ) {
+				return this._mouseUp( event );
+			}
+		}
+
+		if ( event.which || event.button ) {
+			this._mouseMoved = true;
 		}
 
 		if (this._mouseStarted) {
@@ -29071,7 +29445,7 @@ return $.widget("ui.mouse", {
 
 },{}],"jquery.ui.slider":[function(require,module,exports){
 /*!
- * jQuery UI Slider 1.11.1
+ * jQuery UI Slider 1.11.2
  * http://jqueryui.com
  *
  * Copyright 2014 jQuery Foundation and other contributors
@@ -29098,7 +29472,7 @@ return $.widget("ui.mouse", {
 }(function( $ ) {
 
 return $.widget( "ui.slider", $.ui.mouse, {
-	version: "1.11.1",
+	version: "1.11.2",
 	widgetEventPrefix: "slide",
 
 	options: {
@@ -29130,6 +29504,7 @@ return $.widget( "ui.slider", $.ui.mouse, {
 		this._handleIndex = null;
 		this._detectOrientation();
 		this._mouseInit();
+		this._calculateNewMax();
 
 		this.element
 			.addClass( "ui-slider" +
@@ -29544,9 +29919,11 @@ return $.widget( "ui.slider", $.ui.mouse, {
 				}
 				this._animateOff = false;
 				break;
+			case "step":
 			case "min":
 			case "max":
 				this._animateOff = true;
+				this._calculateNewMax();
 				this._refreshValue();
 				this._animateOff = false;
 				break;
@@ -29584,7 +29961,7 @@ return $.widget( "ui.slider", $.ui.mouse, {
 			// .slice() creates a copy of the array
 			// this copy gets trimmed by min and max and then returned
 			vals = this.options.values.slice();
-			for ( i = 0; i < vals.length; i+= 1) {
+			for ( i = 0; i < vals.length; i += 1) {
 				vals[ i ] = this._trimAlignValue( vals[ i ] );
 			}
 
@@ -29615,12 +29992,17 @@ return $.widget( "ui.slider", $.ui.mouse, {
 		return parseFloat( alignValue.toFixed(5) );
 	},
 
+	_calculateNewMax: function() {
+		var remainder = ( this.options.max - this._valueMin() ) % this.options.step;
+		this.max = this.options.max - remainder;
+	},
+
 	_valueMin: function() {
 		return this.options.min;
 	},
 
 	_valueMax: function() {
-		return this.options.max;
+		return this.max;
 	},
 
 	_refreshValue: function() {
@@ -29764,7 +30146,7 @@ return $.widget( "ui.slider", $.ui.mouse, {
 
 },{}],"jquery.ui.widget":[function(require,module,exports){
 /*!
- * jQuery UI Widget 1.11.1
+ * jQuery UI Widget 1.11.2
  * http://jqueryui.com
  *
  * Copyright 2014 jQuery Foundation and other contributors
@@ -29801,7 +30183,7 @@ $.cleanData = (function( orig ) {
 				}
 
 			// http://bugs.jquery.com/ticket/8235
-			} catch( e ) {}
+			} catch ( e ) {}
 		}
 		orig( elems );
 	};
@@ -30019,10 +30401,6 @@ $.Widget.prototype = {
 		this.element = $( element );
 		this.uuid = widget_uuid++;
 		this.eventNamespace = "." + this.widgetName + this.uuid;
-		this.options = $.widget.extend( {},
-			this.options,
-			this._getCreateOptions(),
-			options );
 
 		this.bindings = $();
 		this.hoverable = $();
@@ -30044,6 +30422,11 @@ $.Widget.prototype = {
 				element.document || element );
 			this.window = $( this.document[0].defaultView || this.document[0].parentWindow );
 		}
+
+		this.options = $.widget.extend( {},
+			this.options,
+			this._getCreateOptions(),
+			options );
 
 		this._create();
 		this._trigger( "create", null, this._getCreateEventData() );
@@ -30207,8 +30590,14 @@ $.Widget.prototype = {
 	},
 
 	_off: function( element, eventName ) {
-		eventName = (eventName || "").split( " " ).join( this.eventNamespace + " " ) + this.eventNamespace;
+		eventName = (eventName || "").split( " " ).join( this.eventNamespace + " " ) +
+			this.eventNamespace;
 		element.unbind( eventName ).undelegate( eventName );
+
+		// Clear the stack to avoid memory leaks (#10056)
+		this.bindings = $( this.bindings.not( element ).get() );
+		this.focusable = $( this.focusable.not( element ).get() );
+		this.hoverable = $( this.hoverable.not( element ).get() );
 	},
 
 	_delay: function( handler, delay ) {
@@ -47936,6 +48325,7 @@ window.ReactUjs = (function() {
 })();
 
 module.exports = ReactUjs;
+
 
 
 },{}],"react":[function(require,module,exports){
@@ -68218,7 +68608,7 @@ module.exports = warning;
 });
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],"underscore":[function(require,module,exports){
-//     Underscore.js 1.6.0
+//     Underscore.js 1.7.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 //     Underscore may be freely distributed under the MIT license.
@@ -68234,9 +68624,6 @@ module.exports = warning;
   // Save the previous value of the `_` variable.
   var previousUnderscore = root._;
 
-  // Establish the object that gets returned to break out of a loop iteration.
-  var breaker = {};
-
   // Save bytes in the minified (but not gzipped) version:
   var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
 
@@ -68251,15 +68638,6 @@ module.exports = warning;
   // All **ECMAScript 5** native function implementations that we hope to use
   // are declared here.
   var
-    nativeForEach      = ArrayProto.forEach,
-    nativeMap          = ArrayProto.map,
-    nativeReduce       = ArrayProto.reduce,
-    nativeReduceRight  = ArrayProto.reduceRight,
-    nativeFilter       = ArrayProto.filter,
-    nativeEvery        = ArrayProto.every,
-    nativeSome         = ArrayProto.some,
-    nativeIndexOf      = ArrayProto.indexOf,
-    nativeLastIndexOf  = ArrayProto.lastIndexOf,
     nativeIsArray      = Array.isArray,
     nativeKeys         = Object.keys,
     nativeBind         = FuncProto.bind;
@@ -68273,8 +68651,7 @@ module.exports = warning;
 
   // Export the Underscore object for **Node.js**, with
   // backwards-compatibility for the old `require()` API. If we're in
-  // the browser, add `_` as a global object via a string identifier,
-  // for Closure Compiler "advanced" mode.
+  // the browser, add `_` as a global object.
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
       exports = module.exports = _;
@@ -68285,98 +68662,125 @@ module.exports = warning;
   }
 
   // Current version.
-  _.VERSION = '1.6.0';
+  _.VERSION = '1.7.0';
+
+  // Internal function that returns an efficient (for current engines) version
+  // of the passed-in callback, to be repeatedly applied in other Underscore
+  // functions.
+  var createCallback = function(func, context, argCount) {
+    if (context === void 0) return func;
+    switch (argCount == null ? 3 : argCount) {
+      case 1: return function(value) {
+        return func.call(context, value);
+      };
+      case 2: return function(value, other) {
+        return func.call(context, value, other);
+      };
+      case 3: return function(value, index, collection) {
+        return func.call(context, value, index, collection);
+      };
+      case 4: return function(accumulator, value, index, collection) {
+        return func.call(context, accumulator, value, index, collection);
+      };
+    }
+    return function() {
+      return func.apply(context, arguments);
+    };
+  };
+
+  // A mostly-internal function to generate callbacks that can be applied
+  // to each element in a collection, returning the desired result — either
+  // identity, an arbitrary callback, a property matcher, or a property accessor.
+  _.iteratee = function(value, context, argCount) {
+    if (value == null) return _.identity;
+    if (_.isFunction(value)) return createCallback(value, context, argCount);
+    if (_.isObject(value)) return _.matches(value);
+    return _.property(value);
+  };
 
   // Collection Functions
   // --------------------
 
   // The cornerstone, an `each` implementation, aka `forEach`.
-  // Handles objects with the built-in `forEach`, arrays, and raw objects.
-  // Delegates to **ECMAScript 5**'s native `forEach` if available.
-  var each = _.each = _.forEach = function(obj, iterator, context) {
+  // Handles raw objects in addition to array-likes. Treats all
+  // sparse array-likes as if they were dense.
+  _.each = _.forEach = function(obj, iteratee, context) {
     if (obj == null) return obj;
-    if (nativeForEach && obj.forEach === nativeForEach) {
-      obj.forEach(iterator, context);
-    } else if (obj.length === +obj.length) {
-      for (var i = 0, length = obj.length; i < length; i++) {
-        if (iterator.call(context, obj[i], i, obj) === breaker) return;
+    iteratee = createCallback(iteratee, context);
+    var i, length = obj.length;
+    if (length === +length) {
+      for (i = 0; i < length; i++) {
+        iteratee(obj[i], i, obj);
       }
     } else {
       var keys = _.keys(obj);
-      for (var i = 0, length = keys.length; i < length; i++) {
-        if (iterator.call(context, obj[keys[i]], keys[i], obj) === breaker) return;
+      for (i = 0, length = keys.length; i < length; i++) {
+        iteratee(obj[keys[i]], keys[i], obj);
       }
     }
     return obj;
   };
 
-  // Return the results of applying the iterator to each element.
-  // Delegates to **ECMAScript 5**'s native `map` if available.
-  _.map = _.collect = function(obj, iterator, context) {
-    var results = [];
-    if (obj == null) return results;
-    if (nativeMap && obj.map === nativeMap) return obj.map(iterator, context);
-    each(obj, function(value, index, list) {
-      results.push(iterator.call(context, value, index, list));
-    });
+  // Return the results of applying the iteratee to each element.
+  _.map = _.collect = function(obj, iteratee, context) {
+    if (obj == null) return [];
+    iteratee = _.iteratee(iteratee, context);
+    var keys = obj.length !== +obj.length && _.keys(obj),
+        length = (keys || obj).length,
+        results = Array(length),
+        currentKey;
+    for (var index = 0; index < length; index++) {
+      currentKey = keys ? keys[index] : index;
+      results[index] = iteratee(obj[currentKey], currentKey, obj);
+    }
     return results;
   };
 
   var reduceError = 'Reduce of empty array with no initial value';
 
   // **Reduce** builds up a single result from a list of values, aka `inject`,
-  // or `foldl`. Delegates to **ECMAScript 5**'s native `reduce` if available.
-  _.reduce = _.foldl = _.inject = function(obj, iterator, memo, context) {
-    var initial = arguments.length > 2;
+  // or `foldl`.
+  _.reduce = _.foldl = _.inject = function(obj, iteratee, memo, context) {
     if (obj == null) obj = [];
-    if (nativeReduce && obj.reduce === nativeReduce) {
-      if (context) iterator = _.bind(iterator, context);
-      return initial ? obj.reduce(iterator, memo) : obj.reduce(iterator);
+    iteratee = createCallback(iteratee, context, 4);
+    var keys = obj.length !== +obj.length && _.keys(obj),
+        length = (keys || obj).length,
+        index = 0, currentKey;
+    if (arguments.length < 3) {
+      if (!length) throw new TypeError(reduceError);
+      memo = obj[keys ? keys[index++] : index++];
     }
-    each(obj, function(value, index, list) {
-      if (!initial) {
-        memo = value;
-        initial = true;
-      } else {
-        memo = iterator.call(context, memo, value, index, list);
-      }
-    });
-    if (!initial) throw new TypeError(reduceError);
+    for (; index < length; index++) {
+      currentKey = keys ? keys[index] : index;
+      memo = iteratee(memo, obj[currentKey], currentKey, obj);
+    }
     return memo;
   };
 
   // The right-associative version of reduce, also known as `foldr`.
-  // Delegates to **ECMAScript 5**'s native `reduceRight` if available.
-  _.reduceRight = _.foldr = function(obj, iterator, memo, context) {
-    var initial = arguments.length > 2;
+  _.reduceRight = _.foldr = function(obj, iteratee, memo, context) {
     if (obj == null) obj = [];
-    if (nativeReduceRight && obj.reduceRight === nativeReduceRight) {
-      if (context) iterator = _.bind(iterator, context);
-      return initial ? obj.reduceRight(iterator, memo) : obj.reduceRight(iterator);
+    iteratee = createCallback(iteratee, context, 4);
+    var keys = obj.length !== + obj.length && _.keys(obj),
+        index = (keys || obj).length,
+        currentKey;
+    if (arguments.length < 3) {
+      if (!index) throw new TypeError(reduceError);
+      memo = obj[keys ? keys[--index] : --index];
     }
-    var length = obj.length;
-    if (length !== +length) {
-      var keys = _.keys(obj);
-      length = keys.length;
+    while (index--) {
+      currentKey = keys ? keys[index] : index;
+      memo = iteratee(memo, obj[currentKey], currentKey, obj);
     }
-    each(obj, function(value, index, list) {
-      index = keys ? keys[--length] : --length;
-      if (!initial) {
-        memo = obj[index];
-        initial = true;
-      } else {
-        memo = iterator.call(context, memo, obj[index], index, list);
-      }
-    });
-    if (!initial) throw new TypeError(reduceError);
     return memo;
   };
 
   // Return the first value which passes a truth test. Aliased as `detect`.
   _.find = _.detect = function(obj, predicate, context) {
     var result;
-    any(obj, function(value, index, list) {
-      if (predicate.call(context, value, index, list)) {
+    predicate = _.iteratee(predicate, context);
+    _.some(obj, function(value, index, list) {
+      if (predicate(value, index, list)) {
         result = value;
         return true;
       }
@@ -68385,61 +68789,58 @@ module.exports = warning;
   };
 
   // Return all the elements that pass a truth test.
-  // Delegates to **ECMAScript 5**'s native `filter` if available.
   // Aliased as `select`.
   _.filter = _.select = function(obj, predicate, context) {
     var results = [];
     if (obj == null) return results;
-    if (nativeFilter && obj.filter === nativeFilter) return obj.filter(predicate, context);
-    each(obj, function(value, index, list) {
-      if (predicate.call(context, value, index, list)) results.push(value);
+    predicate = _.iteratee(predicate, context);
+    _.each(obj, function(value, index, list) {
+      if (predicate(value, index, list)) results.push(value);
     });
     return results;
   };
 
   // Return all the elements for which a truth test fails.
   _.reject = function(obj, predicate, context) {
-    return _.filter(obj, function(value, index, list) {
-      return !predicate.call(context, value, index, list);
-    }, context);
+    return _.filter(obj, _.negate(_.iteratee(predicate)), context);
   };
 
   // Determine whether all of the elements match a truth test.
-  // Delegates to **ECMAScript 5**'s native `every` if available.
   // Aliased as `all`.
   _.every = _.all = function(obj, predicate, context) {
-    predicate || (predicate = _.identity);
-    var result = true;
-    if (obj == null) return result;
-    if (nativeEvery && obj.every === nativeEvery) return obj.every(predicate, context);
-    each(obj, function(value, index, list) {
-      if (!(result = result && predicate.call(context, value, index, list))) return breaker;
-    });
-    return !!result;
+    if (obj == null) return true;
+    predicate = _.iteratee(predicate, context);
+    var keys = obj.length !== +obj.length && _.keys(obj),
+        length = (keys || obj).length,
+        index, currentKey;
+    for (index = 0; index < length; index++) {
+      currentKey = keys ? keys[index] : index;
+      if (!predicate(obj[currentKey], currentKey, obj)) return false;
+    }
+    return true;
   };
 
   // Determine if at least one element in the object matches a truth test.
-  // Delegates to **ECMAScript 5**'s native `some` if available.
   // Aliased as `any`.
-  var any = _.some = _.any = function(obj, predicate, context) {
-    predicate || (predicate = _.identity);
-    var result = false;
-    if (obj == null) return result;
-    if (nativeSome && obj.some === nativeSome) return obj.some(predicate, context);
-    each(obj, function(value, index, list) {
-      if (result || (result = predicate.call(context, value, index, list))) return breaker;
-    });
-    return !!result;
+  _.some = _.any = function(obj, predicate, context) {
+    if (obj == null) return false;
+    predicate = _.iteratee(predicate, context);
+    var keys = obj.length !== +obj.length && _.keys(obj),
+        length = (keys || obj).length,
+        index, currentKey;
+    for (index = 0; index < length; index++) {
+      currentKey = keys ? keys[index] : index;
+      if (predicate(obj[currentKey], currentKey, obj)) return true;
+    }
+    return false;
   };
 
   // Determine if the array or object contains a given value (using `===`).
   // Aliased as `include`.
   _.contains = _.include = function(obj, target) {
     if (obj == null) return false;
-    if (nativeIndexOf && obj.indexOf === nativeIndexOf) return obj.indexOf(target) != -1;
-    return any(obj, function(value) {
-      return value === target;
-    });
+    if (obj.length !== +obj.length) obj = _.values(obj);
+    return _.indexOf(obj, target) >= 0;
   };
 
   // Invoke a method (with arguments) on every item in a collection.
@@ -68468,51 +68869,67 @@ module.exports = warning;
     return _.find(obj, _.matches(attrs));
   };
 
-  // Return the maximum element or (element-based computation).
-  // Can't optimize arrays of integers longer than 65,535 elements.
-  // See [WebKit Bug 80797](https://bugs.webkit.org/show_bug.cgi?id=80797)
-  _.max = function(obj, iterator, context) {
-    if (!iterator && _.isArray(obj) && obj[0] === +obj[0] && obj.length < 65535) {
-      return Math.max.apply(Math, obj);
-    }
-    var result = -Infinity, lastComputed = -Infinity;
-    each(obj, function(value, index, list) {
-      var computed = iterator ? iterator.call(context, value, index, list) : value;
-      if (computed > lastComputed) {
-        result = value;
-        lastComputed = computed;
+  // Return the maximum element (or element-based computation).
+  _.max = function(obj, iteratee, context) {
+    var result = -Infinity, lastComputed = -Infinity,
+        value, computed;
+    if (iteratee == null && obj != null) {
+      obj = obj.length === +obj.length ? obj : _.values(obj);
+      for (var i = 0, length = obj.length; i < length; i++) {
+        value = obj[i];
+        if (value > result) {
+          result = value;
+        }
       }
-    });
+    } else {
+      iteratee = _.iteratee(iteratee, context);
+      _.each(obj, function(value, index, list) {
+        computed = iteratee(value, index, list);
+        if (computed > lastComputed || computed === -Infinity && result === -Infinity) {
+          result = value;
+          lastComputed = computed;
+        }
+      });
+    }
     return result;
   };
 
   // Return the minimum element (or element-based computation).
-  _.min = function(obj, iterator, context) {
-    if (!iterator && _.isArray(obj) && obj[0] === +obj[0] && obj.length < 65535) {
-      return Math.min.apply(Math, obj);
-    }
-    var result = Infinity, lastComputed = Infinity;
-    each(obj, function(value, index, list) {
-      var computed = iterator ? iterator.call(context, value, index, list) : value;
-      if (computed < lastComputed) {
-        result = value;
-        lastComputed = computed;
+  _.min = function(obj, iteratee, context) {
+    var result = Infinity, lastComputed = Infinity,
+        value, computed;
+    if (iteratee == null && obj != null) {
+      obj = obj.length === +obj.length ? obj : _.values(obj);
+      for (var i = 0, length = obj.length; i < length; i++) {
+        value = obj[i];
+        if (value < result) {
+          result = value;
+        }
       }
-    });
+    } else {
+      iteratee = _.iteratee(iteratee, context);
+      _.each(obj, function(value, index, list) {
+        computed = iteratee(value, index, list);
+        if (computed < lastComputed || computed === Infinity && result === Infinity) {
+          result = value;
+          lastComputed = computed;
+        }
+      });
+    }
     return result;
   };
 
-  // Shuffle an array, using the modern version of the
+  // Shuffle a collection, using the modern version of the
   // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
   _.shuffle = function(obj) {
-    var rand;
-    var index = 0;
-    var shuffled = [];
-    each(obj, function(value) {
-      rand = _.random(index++);
-      shuffled[index - 1] = shuffled[rand];
-      shuffled[rand] = value;
-    });
+    var set = obj && obj.length === +obj.length ? obj : _.values(obj);
+    var length = set.length;
+    var shuffled = Array(length);
+    for (var index = 0, rand; index < length; index++) {
+      rand = _.random(0, index);
+      if (rand !== index) shuffled[index] = shuffled[rand];
+      shuffled[rand] = set[index];
+    }
     return shuffled;
   };
 
@@ -68527,21 +68944,14 @@ module.exports = warning;
     return _.shuffle(obj).slice(0, Math.max(0, n));
   };
 
-  // An internal function to generate lookup iterators.
-  var lookupIterator = function(value) {
-    if (value == null) return _.identity;
-    if (_.isFunction(value)) return value;
-    return _.property(value);
-  };
-
-  // Sort the object's values by a criterion produced by an iterator.
-  _.sortBy = function(obj, iterator, context) {
-    iterator = lookupIterator(iterator);
+  // Sort the object's values by a criterion produced by an iteratee.
+  _.sortBy = function(obj, iteratee, context) {
+    iteratee = _.iteratee(iteratee, context);
     return _.pluck(_.map(obj, function(value, index, list) {
       return {
         value: value,
         index: index,
-        criteria: iterator.call(context, value, index, list)
+        criteria: iteratee(value, index, list)
       };
     }).sort(function(left, right) {
       var a = left.criteria;
@@ -68556,12 +68966,12 @@ module.exports = warning;
 
   // An internal function used for aggregate "group by" operations.
   var group = function(behavior) {
-    return function(obj, iterator, context) {
+    return function(obj, iteratee, context) {
       var result = {};
-      iterator = lookupIterator(iterator);
-      each(obj, function(value, index) {
-        var key = iterator.call(context, value, index, obj);
-        behavior(result, key, value);
+      iteratee = _.iteratee(iteratee, context);
+      _.each(obj, function(value, index) {
+        var key = iteratee(value, index, obj);
+        behavior(result, value, key);
       });
       return result;
     };
@@ -68569,32 +68979,32 @@ module.exports = warning;
 
   // Groups the object's values by a criterion. Pass either a string attribute
   // to group by, or a function that returns the criterion.
-  _.groupBy = group(function(result, key, value) {
-    _.has(result, key) ? result[key].push(value) : result[key] = [value];
+  _.groupBy = group(function(result, value, key) {
+    if (_.has(result, key)) result[key].push(value); else result[key] = [value];
   });
 
   // Indexes the object's values by a criterion, similar to `groupBy`, but for
   // when you know that your index values will be unique.
-  _.indexBy = group(function(result, key, value) {
+  _.indexBy = group(function(result, value, key) {
     result[key] = value;
   });
 
   // Counts instances of an object that group by a certain criterion. Pass
   // either a string attribute to count by, or a function that returns the
   // criterion.
-  _.countBy = group(function(result, key) {
-    _.has(result, key) ? result[key]++ : result[key] = 1;
+  _.countBy = group(function(result, value, key) {
+    if (_.has(result, key)) result[key]++; else result[key] = 1;
   });
 
   // Use a comparator function to figure out the smallest index at which
   // an object should be inserted so as to maintain order. Uses binary search.
-  _.sortedIndex = function(array, obj, iterator, context) {
-    iterator = lookupIterator(iterator);
-    var value = iterator.call(context, obj);
+  _.sortedIndex = function(array, obj, iteratee, context) {
+    iteratee = _.iteratee(iteratee, context, 1);
+    var value = iteratee(obj);
     var low = 0, high = array.length;
     while (low < high) {
-      var mid = (low + high) >>> 1;
-      iterator.call(context, array[mid]) < value ? low = mid + 1 : high = mid;
+      var mid = low + high >>> 1;
+      if (iteratee(array[mid]) < value) low = mid + 1; else high = mid;
     }
     return low;
   };
@@ -68610,7 +69020,18 @@ module.exports = warning;
   // Return the number of elements in an object.
   _.size = function(obj) {
     if (obj == null) return 0;
-    return (obj.length === +obj.length) ? obj.length : _.keys(obj).length;
+    return obj.length === +obj.length ? obj.length : _.keys(obj).length;
+  };
+
+  // Split a collection into two arrays: one whose elements all satisfy the given
+  // predicate, and one whose elements all do not satisfy the predicate.
+  _.partition = function(obj, predicate, context) {
+    predicate = _.iteratee(predicate, context);
+    var pass = [], fail = [];
+    _.each(obj, function(value, key, obj) {
+      (predicate(value, key, obj) ? pass : fail).push(value);
+    });
+    return [pass, fail];
   };
 
   // Array Functions
@@ -68621,7 +69042,7 @@ module.exports = warning;
   // allows it to work with `_.map`.
   _.first = _.head = _.take = function(array, n, guard) {
     if (array == null) return void 0;
-    if ((n == null) || guard) return array[0];
+    if (n == null || guard) return array[0];
     if (n < 0) return [];
     return slice.call(array, 0, n);
   };
@@ -68631,14 +69052,14 @@ module.exports = warning;
   // the array, excluding the last N. The **guard** check allows it to work with
   // `_.map`.
   _.initial = function(array, n, guard) {
-    return slice.call(array, 0, array.length - ((n == null) || guard ? 1 : n));
+    return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
   };
 
   // Get the last element of an array. Passing **n** will return the last N
   // values in the array. The **guard** check allows it to work with `_.map`.
   _.last = function(array, n, guard) {
     if (array == null) return void 0;
-    if ((n == null) || guard) return array[array.length - 1];
+    if (n == null || guard) return array[array.length - 1];
     return slice.call(array, Math.max(array.length - n, 0));
   };
 
@@ -68647,7 +69068,7 @@ module.exports = warning;
   // the rest N values in the array. The **guard**
   // check allows it to work with `_.map`.
   _.rest = _.tail = _.drop = function(array, n, guard) {
-    return slice.call(array, (n == null) || guard ? 1 : n);
+    return slice.call(array, n == null || guard ? 1 : n);
   };
 
   // Trim out all falsy values from an array.
@@ -68656,23 +69077,26 @@ module.exports = warning;
   };
 
   // Internal implementation of a recursive `flatten` function.
-  var flatten = function(input, shallow, output) {
+  var flatten = function(input, shallow, strict, output) {
     if (shallow && _.every(input, _.isArray)) {
       return concat.apply(output, input);
     }
-    each(input, function(value) {
-      if (_.isArray(value) || _.isArguments(value)) {
-        shallow ? push.apply(output, value) : flatten(value, shallow, output);
+    for (var i = 0, length = input.length; i < length; i++) {
+      var value = input[i];
+      if (!_.isArray(value) && !_.isArguments(value)) {
+        if (!strict) output.push(value);
+      } else if (shallow) {
+        push.apply(output, value);
       } else {
-        output.push(value);
+        flatten(value, shallow, strict, output);
       }
-    });
+    }
     return output;
   };
 
   // Flatten out an array, either recursively (by default), or just one level.
   _.flatten = function(array, shallow) {
-    return flatten(array, shallow, []);
+    return flatten(array, shallow, false, []);
   };
 
   // Return a version of the array that does not contain the specified value(s).
@@ -68680,68 +69104,77 @@ module.exports = warning;
     return _.difference(array, slice.call(arguments, 1));
   };
 
-  // Split an array into two arrays: one whose elements all satisfy the given
-  // predicate, and one whose elements all do not satisfy the predicate.
-  _.partition = function(array, predicate) {
-    var pass = [], fail = [];
-    each(array, function(elem) {
-      (predicate(elem) ? pass : fail).push(elem);
-    });
-    return [pass, fail];
-  };
-
   // Produce a duplicate-free version of the array. If the array has already
   // been sorted, you have the option of using a faster algorithm.
   // Aliased as `unique`.
-  _.uniq = _.unique = function(array, isSorted, iterator, context) {
-    if (_.isFunction(isSorted)) {
-      context = iterator;
-      iterator = isSorted;
+  _.uniq = _.unique = function(array, isSorted, iteratee, context) {
+    if (array == null) return [];
+    if (!_.isBoolean(isSorted)) {
+      context = iteratee;
+      iteratee = isSorted;
       isSorted = false;
     }
-    var initial = iterator ? _.map(array, iterator, context) : array;
-    var results = [];
+    if (iteratee != null) iteratee = _.iteratee(iteratee, context);
+    var result = [];
     var seen = [];
-    each(initial, function(value, index) {
-      if (isSorted ? (!index || seen[seen.length - 1] !== value) : !_.contains(seen, value)) {
-        seen.push(value);
-        results.push(array[index]);
+    for (var i = 0, length = array.length; i < length; i++) {
+      var value = array[i];
+      if (isSorted) {
+        if (!i || seen !== value) result.push(value);
+        seen = value;
+      } else if (iteratee) {
+        var computed = iteratee(value, i, array);
+        if (_.indexOf(seen, computed) < 0) {
+          seen.push(computed);
+          result.push(value);
+        }
+      } else if (_.indexOf(result, value) < 0) {
+        result.push(value);
       }
-    });
-    return results;
+    }
+    return result;
   };
 
   // Produce an array that contains the union: each distinct element from all of
   // the passed-in arrays.
   _.union = function() {
-    return _.uniq(_.flatten(arguments, true));
+    return _.uniq(flatten(arguments, true, true, []));
   };
 
   // Produce an array that contains every item shared between all the
   // passed-in arrays.
   _.intersection = function(array) {
-    var rest = slice.call(arguments, 1);
-    return _.filter(_.uniq(array), function(item) {
-      return _.every(rest, function(other) {
-        return _.contains(other, item);
-      });
-    });
+    if (array == null) return [];
+    var result = [];
+    var argsLength = arguments.length;
+    for (var i = 0, length = array.length; i < length; i++) {
+      var item = array[i];
+      if (_.contains(result, item)) continue;
+      for (var j = 1; j < argsLength; j++) {
+        if (!_.contains(arguments[j], item)) break;
+      }
+      if (j === argsLength) result.push(item);
+    }
+    return result;
   };
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
-    var rest = concat.apply(ArrayProto, slice.call(arguments, 1));
-    return _.filter(array, function(value){ return !_.contains(rest, value); });
+    var rest = flatten(slice.call(arguments, 1), true, true, []);
+    return _.filter(array, function(value){
+      return !_.contains(rest, value);
+    });
   };
 
   // Zip together multiple lists into a single array -- elements that share
   // an index go together.
-  _.zip = function() {
-    var length = _.max(_.pluck(arguments, 'length').concat(0));
-    var results = new Array(length);
+  _.zip = function(array) {
+    if (array == null) return [];
+    var length = _.max(arguments, 'length').length;
+    var results = Array(length);
     for (var i = 0; i < length; i++) {
-      results[i] = _.pluck(arguments, '' + i);
+      results[i] = _.pluck(arguments, i);
     }
     return results;
   };
@@ -68762,10 +69195,8 @@ module.exports = warning;
     return result;
   };
 
-  // If the browser doesn't supply us with indexOf (I'm looking at you, **MSIE**),
-  // we need this function. Return the position of the first occurrence of an
-  // item in an array, or -1 if the item is not included in the array.
-  // Delegates to **ECMAScript 5**'s native `indexOf` if available.
+  // Return the position of the first occurrence of an item in an array,
+  // or -1 if the item is not included in the array.
   // If the array is large and already in sort order, pass `true`
   // for **isSorted** to use binary search.
   _.indexOf = function(array, item, isSorted) {
@@ -68773,26 +69204,23 @@ module.exports = warning;
     var i = 0, length = array.length;
     if (isSorted) {
       if (typeof isSorted == 'number') {
-        i = (isSorted < 0 ? Math.max(0, length + isSorted) : isSorted);
+        i = isSorted < 0 ? Math.max(0, length + isSorted) : isSorted;
       } else {
         i = _.sortedIndex(array, item);
         return array[i] === item ? i : -1;
       }
     }
-    if (nativeIndexOf && array.indexOf === nativeIndexOf) return array.indexOf(item, isSorted);
     for (; i < length; i++) if (array[i] === item) return i;
     return -1;
   };
 
-  // Delegates to **ECMAScript 5**'s native `lastIndexOf` if available.
   _.lastIndexOf = function(array, item, from) {
     if (array == null) return -1;
-    var hasIndex = from != null;
-    if (nativeLastIndexOf && array.lastIndexOf === nativeLastIndexOf) {
-      return hasIndex ? array.lastIndexOf(item, from) : array.lastIndexOf(item);
+    var idx = array.length;
+    if (typeof from == 'number') {
+      idx = from < 0 ? idx + from + 1 : Math.min(idx, from + 1);
     }
-    var i = (hasIndex ? from : array.length);
-    while (i--) if (array[i] === item) return i;
+    while (--idx >= 0) if (array[idx] === item) return idx;
     return -1;
   };
 
@@ -68804,15 +69232,13 @@ module.exports = warning;
       stop = start || 0;
       start = 0;
     }
-    step = arguments[2] || 1;
+    step = step || 1;
 
     var length = Math.max(Math.ceil((stop - start) / step), 0);
-    var idx = 0;
-    var range = new Array(length);
+    var range = Array(length);
 
-    while(idx < length) {
-      range[idx++] = start;
-      start += step;
+    for (var idx = 0; idx < length; idx++, start += step) {
+      range[idx] = start;
     }
 
     return range;
@@ -68822,7 +69248,7 @@ module.exports = warning;
   // ------------------
 
   // Reusable constructor function for prototype setting.
-  var ctor = function(){};
+  var Ctor = function(){};
 
   // Create a function bound to a given object (assigning `this`, and arguments,
   // optionally). Delegates to **ECMAScript 5**'s native `Function.bind` if
@@ -68830,17 +69256,18 @@ module.exports = warning;
   _.bind = function(func, context) {
     var args, bound;
     if (nativeBind && func.bind === nativeBind) return nativeBind.apply(func, slice.call(arguments, 1));
-    if (!_.isFunction(func)) throw new TypeError;
+    if (!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
     args = slice.call(arguments, 2);
-    return bound = function() {
+    bound = function() {
       if (!(this instanceof bound)) return func.apply(context, args.concat(slice.call(arguments)));
-      ctor.prototype = func.prototype;
-      var self = new ctor;
-      ctor.prototype = null;
+      Ctor.prototype = func.prototype;
+      var self = new Ctor;
+      Ctor.prototype = null;
       var result = func.apply(self, args.concat(slice.call(arguments)));
-      if (Object(result) === result) return result;
+      if (_.isObject(result)) return result;
       return self;
     };
+    return bound;
   };
 
   // Partially apply a function by creating a version that has had some of its
@@ -68863,27 +69290,34 @@ module.exports = warning;
   // are the method names to be bound. Useful for ensuring that all callbacks
   // defined on an object belong to it.
   _.bindAll = function(obj) {
-    var funcs = slice.call(arguments, 1);
-    if (funcs.length === 0) throw new Error('bindAll must be passed function names');
-    each(funcs, function(f) { obj[f] = _.bind(obj[f], obj); });
+    var i, length = arguments.length, key;
+    if (length <= 1) throw new Error('bindAll must be passed function names');
+    for (i = 1; i < length; i++) {
+      key = arguments[i];
+      obj[key] = _.bind(obj[key], obj);
+    }
     return obj;
   };
 
   // Memoize an expensive function by storing its results.
   _.memoize = function(func, hasher) {
-    var memo = {};
-    hasher || (hasher = _.identity);
-    return function() {
-      var key = hasher.apply(this, arguments);
-      return _.has(memo, key) ? memo[key] : (memo[key] = func.apply(this, arguments));
+    var memoize = function(key) {
+      var cache = memoize.cache;
+      var address = hasher ? hasher.apply(this, arguments) : key;
+      if (!_.has(cache, address)) cache[address] = func.apply(this, arguments);
+      return cache[address];
     };
+    memoize.cache = {};
+    return memoize;
   };
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
   _.delay = function(func, wait) {
     var args = slice.call(arguments, 2);
-    return setTimeout(function(){ return func.apply(null, args); }, wait);
+    return setTimeout(function(){
+      return func.apply(null, args);
+    }, wait);
   };
 
   // Defers a function, scheduling it to run after the current call stack has
@@ -68901,12 +69335,12 @@ module.exports = warning;
     var context, args, result;
     var timeout = null;
     var previous = 0;
-    options || (options = {});
+    if (!options) options = {};
     var later = function() {
       previous = options.leading === false ? 0 : _.now();
       timeout = null;
       result = func.apply(context, args);
-      context = args = null;
+      if (!timeout) context = args = null;
     };
     return function() {
       var now = _.now();
@@ -68914,12 +69348,12 @@ module.exports = warning;
       var remaining = wait - (now - previous);
       context = this;
       args = arguments;
-      if (remaining <= 0) {
+      if (remaining <= 0 || remaining > wait) {
         clearTimeout(timeout);
         timeout = null;
         previous = now;
         result = func.apply(context, args);
-        context = args = null;
+        if (!timeout) context = args = null;
       } else if (!timeout && options.trailing !== false) {
         timeout = setTimeout(later, remaining);
       }
@@ -68936,13 +69370,14 @@ module.exports = warning;
 
     var later = function() {
       var last = _.now() - timestamp;
-      if (last < wait) {
+
+      if (last < wait && last > 0) {
         timeout = setTimeout(later, wait - last);
       } else {
         timeout = null;
         if (!immediate) {
           result = func.apply(context, args);
-          context = args = null;
+          if (!timeout) context = args = null;
         }
       }
     };
@@ -68952,28 +69387,13 @@ module.exports = warning;
       args = arguments;
       timestamp = _.now();
       var callNow = immediate && !timeout;
-      if (!timeout) {
-        timeout = setTimeout(later, wait);
-      }
+      if (!timeout) timeout = setTimeout(later, wait);
       if (callNow) {
         result = func.apply(context, args);
         context = args = null;
       }
 
       return result;
-    };
-  };
-
-  // Returns a function that will be executed at most one time, no matter how
-  // often you call it. Useful for lazy initialization.
-  _.once = function(func) {
-    var ran = false, memo;
-    return function() {
-      if (ran) return memo;
-      ran = true;
-      memo = func.apply(this, arguments);
-      func = null;
-      return memo;
     };
   };
 
@@ -68984,16 +69404,23 @@ module.exports = warning;
     return _.partial(wrapper, func);
   };
 
+  // Returns a negated version of the passed-in predicate.
+  _.negate = function(predicate) {
+    return function() {
+      return !predicate.apply(this, arguments);
+    };
+  };
+
   // Returns a function that is the composition of a list of functions, each
   // consuming the return value of the function that follows.
   _.compose = function() {
-    var funcs = arguments;
+    var args = arguments;
+    var start = args.length - 1;
     return function() {
-      var args = arguments;
-      for (var i = funcs.length - 1; i >= 0; i--) {
-        args = [funcs[i].apply(this, args)];
-      }
-      return args[0];
+      var i = start;
+      var result = args[start].apply(this, arguments);
+      while (i--) result = args[i].call(this, result);
+      return result;
     };
   };
 
@@ -69005,6 +69432,23 @@ module.exports = warning;
       }
     };
   };
+
+  // Returns a function that will only be executed before being called N times.
+  _.before = function(times, func) {
+    var memo;
+    return function() {
+      if (--times > 0) {
+        memo = func.apply(this, arguments);
+      } else {
+        func = null;
+      }
+      return memo;
+    };
+  };
+
+  // Returns a function that will be executed at most one time, no matter how
+  // often you call it. Useful for lazy initialization.
+  _.once = _.partial(_.before, 2);
 
   // Object Functions
   // ----------------
@@ -69023,7 +69467,7 @@ module.exports = warning;
   _.values = function(obj) {
     var keys = _.keys(obj);
     var length = keys.length;
-    var values = new Array(length);
+    var values = Array(length);
     for (var i = 0; i < length; i++) {
       values[i] = obj[keys[i]];
     }
@@ -69034,7 +69478,7 @@ module.exports = warning;
   _.pairs = function(obj) {
     var keys = _.keys(obj);
     var length = keys.length;
-    var pairs = new Array(length);
+    var pairs = Array(length);
     for (var i = 0; i < length; i++) {
       pairs[i] = [keys[i], obj[keys[i]]];
     }
@@ -69063,45 +69507,62 @@ module.exports = warning;
 
   // Extend a given object with all the properties in passed-in object(s).
   _.extend = function(obj) {
-    each(slice.call(arguments, 1), function(source) {
-      if (source) {
-        for (var prop in source) {
-          obj[prop] = source[prop];
+    if (!_.isObject(obj)) return obj;
+    var source, prop;
+    for (var i = 1, length = arguments.length; i < length; i++) {
+      source = arguments[i];
+      for (prop in source) {
+        if (hasOwnProperty.call(source, prop)) {
+            obj[prop] = source[prop];
         }
       }
-    });
+    }
     return obj;
   };
 
   // Return a copy of the object only containing the whitelisted properties.
-  _.pick = function(obj) {
-    var copy = {};
-    var keys = concat.apply(ArrayProto, slice.call(arguments, 1));
-    each(keys, function(key) {
-      if (key in obj) copy[key] = obj[key];
-    });
-    return copy;
+  _.pick = function(obj, iteratee, context) {
+    var result = {}, key;
+    if (obj == null) return result;
+    if (_.isFunction(iteratee)) {
+      iteratee = createCallback(iteratee, context);
+      for (key in obj) {
+        var value = obj[key];
+        if (iteratee(value, key, obj)) result[key] = value;
+      }
+    } else {
+      var keys = concat.apply([], slice.call(arguments, 1));
+      obj = new Object(obj);
+      for (var i = 0, length = keys.length; i < length; i++) {
+        key = keys[i];
+        if (key in obj) result[key] = obj[key];
+      }
+    }
+    return result;
   };
 
    // Return a copy of the object without the blacklisted properties.
-  _.omit = function(obj) {
-    var copy = {};
-    var keys = concat.apply(ArrayProto, slice.call(arguments, 1));
-    for (var key in obj) {
-      if (!_.contains(keys, key)) copy[key] = obj[key];
+  _.omit = function(obj, iteratee, context) {
+    if (_.isFunction(iteratee)) {
+      iteratee = _.negate(iteratee);
+    } else {
+      var keys = _.map(concat.apply([], slice.call(arguments, 1)), String);
+      iteratee = function(value, key) {
+        return !_.contains(keys, key);
+      };
     }
-    return copy;
+    return _.pick(obj, iteratee, context);
   };
 
   // Fill in a given object with default properties.
   _.defaults = function(obj) {
-    each(slice.call(arguments, 1), function(source) {
-      if (source) {
-        for (var prop in source) {
-          if (obj[prop] === void 0) obj[prop] = source[prop];
-        }
+    if (!_.isObject(obj)) return obj;
+    for (var i = 1, length = arguments.length; i < length; i++) {
+      var source = arguments[i];
+      for (var prop in source) {
+        if (obj[prop] === void 0) obj[prop] = source[prop];
       }
-    });
+    }
     return obj;
   };
 
@@ -69123,7 +69584,7 @@ module.exports = warning;
   var eq = function(a, b, aStack, bStack) {
     // Identical objects are equal. `0 === -0`, but they aren't identical.
     // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=harmony:egal).
-    if (a === b) return a !== 0 || 1 / a == 1 / b;
+    if (a === b) return a !== 0 || 1 / a === 1 / b;
     // A strict comparison is necessary because `null == undefined`.
     if (a == null || b == null) return a === b;
     // Unwrap any wrapped objects.
@@ -69131,29 +69592,27 @@ module.exports = warning;
     if (b instanceof _) b = b._wrapped;
     // Compare `[[Class]]` names.
     var className = toString.call(a);
-    if (className != toString.call(b)) return false;
+    if (className !== toString.call(b)) return false;
     switch (className) {
-      // Strings, numbers, dates, and booleans are compared by value.
+      // Strings, numbers, regular expressions, dates, and booleans are compared by value.
+      case '[object RegExp]':
+      // RegExps are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
       case '[object String]':
         // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
         // equivalent to `new String("5")`.
-        return a == String(b);
+        return '' + a === '' + b;
       case '[object Number]':
-        // `NaN`s are equivalent, but non-reflexive. An `egal` comparison is performed for
-        // other numeric values.
-        return a != +a ? b != +b : (a == 0 ? 1 / a == 1 / b : a == +b);
+        // `NaN`s are equivalent, but non-reflexive.
+        // Object(NaN) is equivalent to NaN
+        if (+a !== +a) return +b !== +b;
+        // An `egal` comparison is performed for other numeric values.
+        return +a === 0 ? 1 / +a === 1 / b : +a === +b;
       case '[object Date]':
       case '[object Boolean]':
         // Coerce dates and booleans to numeric primitive values. Dates are compared by their
         // millisecond representations. Note that invalid dates with millisecond representations
         // of `NaN` are not equivalent.
-        return +a == +b;
-      // RegExps are compared by their source patterns and flags.
-      case '[object RegExp]':
-        return a.source == b.source &&
-               a.global == b.global &&
-               a.multiline == b.multiline &&
-               a.ignoreCase == b.ignoreCase;
+        return +a === +b;
     }
     if (typeof a != 'object' || typeof b != 'object') return false;
     // Assume equality for cyclic structures. The algorithm for detecting cyclic
@@ -69162,25 +69621,29 @@ module.exports = warning;
     while (length--) {
       // Linear search. Performance is inversely proportional to the number of
       // unique nested structures.
-      if (aStack[length] == a) return bStack[length] == b;
+      if (aStack[length] === a) return bStack[length] === b;
     }
     // Objects with different constructors are not equivalent, but `Object`s
     // from different frames are.
     var aCtor = a.constructor, bCtor = b.constructor;
-    if (aCtor !== bCtor && !(_.isFunction(aCtor) && (aCtor instanceof aCtor) &&
-                             _.isFunction(bCtor) && (bCtor instanceof bCtor))
-                        && ('constructor' in a && 'constructor' in b)) {
+    if (
+      aCtor !== bCtor &&
+      // Handle Object.create(x) cases
+      'constructor' in a && 'constructor' in b &&
+      !(_.isFunction(aCtor) && aCtor instanceof aCtor &&
+        _.isFunction(bCtor) && bCtor instanceof bCtor)
+    ) {
       return false;
     }
     // Add the first object to the stack of traversed objects.
     aStack.push(a);
     bStack.push(b);
-    var size = 0, result = true;
+    var size, result;
     // Recursively compare objects and arrays.
-    if (className == '[object Array]') {
+    if (className === '[object Array]') {
       // Compare array lengths to determine if a deep comparison is necessary.
       size = a.length;
-      result = size == b.length;
+      result = size === b.length;
       if (result) {
         // Deep compare the contents, ignoring non-numeric properties.
         while (size--) {
@@ -69189,20 +69652,16 @@ module.exports = warning;
       }
     } else {
       // Deep compare objects.
-      for (var key in a) {
-        if (_.has(a, key)) {
-          // Count the expected number of properties.
-          size++;
-          // Deep compare each member.
+      var keys = _.keys(a), key;
+      size = keys.length;
+      // Ensure that both objects contain the same number of properties before comparing deep equality.
+      result = _.keys(b).length === size;
+      if (result) {
+        while (size--) {
+          // Deep compare each member
+          key = keys[size];
           if (!(result = _.has(b, key) && eq(a[key], b[key], aStack, bStack))) break;
         }
-      }
-      // Ensure that both objects contain the same number of properties.
-      if (result) {
-        for (key in b) {
-          if (_.has(b, key) && !(size--)) break;
-        }
-        result = !size;
       }
     }
     // Remove the first object from the stack of traversed objects.
@@ -69220,7 +69679,7 @@ module.exports = warning;
   // An "empty" object has no enumerable own-properties.
   _.isEmpty = function(obj) {
     if (obj == null) return true;
-    if (_.isArray(obj) || _.isString(obj)) return obj.length === 0;
+    if (_.isArray(obj) || _.isString(obj) || _.isArguments(obj)) return obj.length === 0;
     for (var key in obj) if (_.has(obj, key)) return false;
     return true;
   };
@@ -69233,18 +69692,19 @@ module.exports = warning;
   // Is a given value an array?
   // Delegates to ECMA5's native Array.isArray
   _.isArray = nativeIsArray || function(obj) {
-    return toString.call(obj) == '[object Array]';
+    return toString.call(obj) === '[object Array]';
   };
 
   // Is a given variable an object?
   _.isObject = function(obj) {
-    return obj === Object(obj);
+    var type = typeof obj;
+    return type === 'function' || type === 'object' && !!obj;
   };
 
   // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp.
-  each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp'], function(name) {
+  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp'], function(name) {
     _['is' + name] = function(obj) {
-      return toString.call(obj) == '[object ' + name + ']';
+      return toString.call(obj) === '[object ' + name + ']';
     };
   });
 
@@ -69252,14 +69712,14 @@ module.exports = warning;
   // there isn't any inspectable "Arguments" type.
   if (!_.isArguments(arguments)) {
     _.isArguments = function(obj) {
-      return !!(obj && _.has(obj, 'callee'));
+      return _.has(obj, 'callee');
     };
   }
 
-  // Optimize `isFunction` if appropriate.
-  if (typeof (/./) !== 'function') {
+  // Optimize `isFunction` if appropriate. Work around an IE 11 bug.
+  if (typeof /./ !== 'function') {
     _.isFunction = function(obj) {
-      return typeof obj === 'function';
+      return typeof obj == 'function' || false;
     };
   }
 
@@ -69270,12 +69730,12 @@ module.exports = warning;
 
   // Is the given value `NaN`? (NaN is the only number which does not equal itself).
   _.isNaN = function(obj) {
-    return _.isNumber(obj) && obj != +obj;
+    return _.isNumber(obj) && obj !== +obj;
   };
 
   // Is a given value a boolean?
   _.isBoolean = function(obj) {
-    return obj === true || obj === false || toString.call(obj) == '[object Boolean]';
+    return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
   };
 
   // Is a given value equal to null?
@@ -69291,7 +69751,7 @@ module.exports = warning;
   // Shortcut function for checking if an object has a given property directly
   // on itself (in other words, not on a prototype).
   _.has = function(obj, key) {
-    return hasOwnProperty.call(obj, key);
+    return obj != null && hasOwnProperty.call(obj, key);
   };
 
   // Utility Functions
@@ -69304,16 +69764,18 @@ module.exports = warning;
     return this;
   };
 
-  // Keep the identity function around for default iterators.
+  // Keep the identity function around for default iteratees.
   _.identity = function(value) {
     return value;
   };
 
   _.constant = function(value) {
-    return function () {
+    return function() {
       return value;
     };
   };
+
+  _.noop = function(){};
 
   _.property = function(key) {
     return function(obj) {
@@ -69323,20 +69785,23 @@ module.exports = warning;
 
   // Returns a predicate for checking whether an object has a given set of `key:value` pairs.
   _.matches = function(attrs) {
+    var pairs = _.pairs(attrs), length = pairs.length;
     return function(obj) {
-      if (obj === attrs) return true; //avoid comparing an object to itself.
-      for (var key in attrs) {
-        if (attrs[key] !== obj[key])
-          return false;
+      if (obj == null) return !length;
+      obj = new Object(obj);
+      for (var i = 0; i < length; i++) {
+        var pair = pairs[i], key = pair[0];
+        if (pair[1] !== obj[key] || !(key in obj)) return false;
       }
       return true;
-    }
+    };
   };
 
   // Run a function **n** times.
-  _.times = function(n, iterator, context) {
+  _.times = function(n, iteratee, context) {
     var accum = Array(Math.max(0, n));
-    for (var i = 0; i < n; i++) accum[i] = iterator.call(context, i);
+    iteratee = createCallback(iteratee, context, 1);
+    for (var i = 0; i < n; i++) accum[i] = iteratee(i);
     return accum;
   };
 
@@ -69350,54 +69815,44 @@ module.exports = warning;
   };
 
   // A (possibly faster) way to get the current timestamp as an integer.
-  _.now = Date.now || function() { return new Date().getTime(); };
-
-  // List of HTML entities for escaping.
-  var entityMap = {
-    escape: {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#x27;'
-    }
+  _.now = Date.now || function() {
+    return new Date().getTime();
   };
-  entityMap.unescape = _.invert(entityMap.escape);
 
-  // Regexes containing the keys and values listed immediately above.
-  var entityRegexes = {
-    escape:   new RegExp('[' + _.keys(entityMap.escape).join('') + ']', 'g'),
-    unescape: new RegExp('(' + _.keys(entityMap.unescape).join('|') + ')', 'g')
+   // List of HTML entities for escaping.
+  var escapeMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    '`': '&#x60;'
   };
+  var unescapeMap = _.invert(escapeMap);
 
   // Functions for escaping and unescaping strings to/from HTML interpolation.
-  _.each(['escape', 'unescape'], function(method) {
-    _[method] = function(string) {
-      if (string == null) return '';
-      return ('' + string).replace(entityRegexes[method], function(match) {
-        return entityMap[method][match];
-      });
+  var createEscaper = function(map) {
+    var escaper = function(match) {
+      return map[match];
     };
-  });
+    // Regexes for identifying a key that needs to be escaped
+    var source = '(?:' + _.keys(map).join('|') + ')';
+    var testRegexp = RegExp(source);
+    var replaceRegexp = RegExp(source, 'g');
+    return function(string) {
+      string = string == null ? '' : '' + string;
+      return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+    };
+  };
+  _.escape = createEscaper(escapeMap);
+  _.unescape = createEscaper(unescapeMap);
 
   // If the value of the named `property` is a function then invoke it with the
   // `object` as context; otherwise, return it.
   _.result = function(object, property) {
     if (object == null) return void 0;
     var value = object[property];
-    return _.isFunction(value) ? value.call(object) : value;
-  };
-
-  // Add your own custom functions to the Underscore object.
-  _.mixin = function(obj) {
-    each(_.functions(obj), function(name) {
-      var func = _[name] = obj[name];
-      _.prototype[name] = function() {
-        var args = [this._wrapped];
-        push.apply(args, arguments);
-        return result.call(this, func.apply(_, args));
-      };
-    });
+    return _.isFunction(value) ? object[property]() : value;
   };
 
   // Generate a unique integer id (unique within the entire client session).
@@ -69428,22 +69883,26 @@ module.exports = warning;
     '\\':     '\\',
     '\r':     'r',
     '\n':     'n',
-    '\t':     't',
     '\u2028': 'u2028',
     '\u2029': 'u2029'
   };
 
-  var escaper = /\\|'|\r|\n|\t|\u2028|\u2029/g;
+  var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+
+  var escapeChar = function(match) {
+    return '\\' + escapes[match];
+  };
 
   // JavaScript micro-templating, similar to John Resig's implementation.
   // Underscore templating handles arbitrary delimiters, preserves whitespace,
   // and correctly escapes quotes within interpolated code.
-  _.template = function(text, data, settings) {
-    var render;
+  // NB: `oldSettings` only exists for backwards compatibility.
+  _.template = function(text, settings, oldSettings) {
+    if (!settings && oldSettings) settings = oldSettings;
     settings = _.defaults({}, settings, _.templateSettings);
 
     // Combine delimiters into one regular expression via alternation.
-    var matcher = new RegExp([
+    var matcher = RegExp([
       (settings.escape || noMatch).source,
       (settings.interpolate || noMatch).source,
       (settings.evaluate || noMatch).source
@@ -69453,19 +69912,18 @@ module.exports = warning;
     var index = 0;
     var source = "__p+='";
     text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
-      source += text.slice(index, offset)
-        .replace(escaper, function(match) { return '\\' + escapes[match]; });
+      source += text.slice(index, offset).replace(escaper, escapeChar);
+      index = offset + match.length;
 
       if (escape) {
         source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
-      }
-      if (interpolate) {
+      } else if (interpolate) {
         source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
-      }
-      if (evaluate) {
+      } else if (evaluate) {
         source += "';\n" + evaluate + "\n__p+='";
       }
-      index = offset + match.length;
+
+      // Adobe VMs need the match returned to produce the correct offest.
       return match;
     });
     source += "';\n";
@@ -69475,29 +69933,31 @@ module.exports = warning;
 
     source = "var __t,__p='',__j=Array.prototype.join," +
       "print=function(){__p+=__j.call(arguments,'');};\n" +
-      source + "return __p;\n";
+      source + 'return __p;\n';
 
     try {
-      render = new Function(settings.variable || 'obj', '_', source);
+      var render = new Function(settings.variable || 'obj', '_', source);
     } catch (e) {
       e.source = source;
       throw e;
     }
 
-    if (data) return render(data, _);
     var template = function(data) {
       return render.call(this, data, _);
     };
 
-    // Provide the compiled function source as a convenience for precompilation.
-    template.source = 'function(' + (settings.variable || 'obj') + '){\n' + source + '}';
+    // Provide the compiled source as a convenience for precompilation.
+    var argument = settings.variable || 'obj';
+    template.source = 'function(' + argument + '){\n' + source + '}';
 
     return template;
   };
 
-  // Add a "chain" function, which will delegate to the wrapper.
+  // Add a "chain" function. Start chaining a wrapped Underscore object.
   _.chain = function(obj) {
-    return _(obj).chain();
+    var instance = _(obj);
+    instance._chain = true;
+    return instance;
   };
 
   // OOP
@@ -69511,42 +69971,44 @@ module.exports = warning;
     return this._chain ? _(obj).chain() : obj;
   };
 
+  // Add your own custom functions to the Underscore object.
+  _.mixin = function(obj) {
+    _.each(_.functions(obj), function(name) {
+      var func = _[name] = obj[name];
+      _.prototype[name] = function() {
+        var args = [this._wrapped];
+        push.apply(args, arguments);
+        return result.call(this, func.apply(_, args));
+      };
+    });
+  };
+
   // Add all of the Underscore functions to the wrapper object.
   _.mixin(_);
 
   // Add all mutator Array functions to the wrapper.
-  each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
+  _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
     var method = ArrayProto[name];
     _.prototype[name] = function() {
       var obj = this._wrapped;
       method.apply(obj, arguments);
-      if ((name == 'shift' || name == 'splice') && obj.length === 0) delete obj[0];
+      if ((name === 'shift' || name === 'splice') && obj.length === 0) delete obj[0];
       return result.call(this, obj);
     };
   });
 
   // Add all accessor Array functions to the wrapper.
-  each(['concat', 'join', 'slice'], function(name) {
+  _.each(['concat', 'join', 'slice'], function(name) {
     var method = ArrayProto[name];
     _.prototype[name] = function() {
       return result.call(this, method.apply(this._wrapped, arguments));
     };
   });
 
-  _.extend(_.prototype, {
-
-    // Start chaining a wrapped Underscore object.
-    chain: function() {
-      this._chain = true;
-      return this;
-    },
-
-    // Extracts the result from a wrapped and chained object.
-    value: function() {
-      return this._wrapped;
-    }
-
-  });
+  // Extracts the result from a wrapped and chained object.
+  _.prototype.value = function() {
+    return this._wrapped;
+  };
 
   // AMD registration happens at the end for compatibility with AMD loaders
   // that may not enforce next-turn semantics on modules. Even though general
@@ -69560,6 +70022,6 @@ module.exports = warning;
       return _;
     });
   }
-}).call(this);
+}.call(this));
 
 },{}]},{},[1]);

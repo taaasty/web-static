@@ -11,7 +11,9 @@ config       = require('../config').dist.styles
 
 gulp.task 'styles', ['clean'], ->
   gulp.src config.src
-    .pipe less()
+    .pipe less(
+      paths: ['./app/bower_components/']
+    )
     .on 'error', handleErrors
     .pipe autoprefixer('last 2 versions')
     .pipe rename config.outputName
