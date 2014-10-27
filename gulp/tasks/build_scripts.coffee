@@ -43,6 +43,12 @@ gulp.task 'vendorScripts', ['clean'], ->
     .require './i18next/i18next',                          { expose: 'i18next'}
     .require './bootstrap/js/tooltip',                     { expose: 'bootstrap.tooltip' }
     .require '../scripts/shims/modernizr',                 { expose: 'Modernizr' }
+    .require './honeybadger.js/honeybadger.js',            { expose: 'honeybadger' }
+    .require '../scripts/shims/swf/swfobject',             { expose: 'swfobject' }
+    .require './es5-shim/es5-shim',                        { expose: 'es5-shim' }
+    .require './jquery.mousewheel/jquery.mousewheel',      { expose: 'jquery.mousewheel' }
+    .require './jquery.scrollto/jquery.scrollTo',          { expose: 'jquery.scrollto' }
+    .require './undo/undo',                                { expose: 'undo' }
 
   bundle = ->
     bundleLogger.start vendorConfig.outputName
@@ -93,6 +99,12 @@ gulp.task 'clientScripts', ['clean'], ->
     .external 'i18next'
     .external 'bootstrap.tooltip'
     .external 'Modernizr'
+    .external 'honeybadger'
+    .external 'swfobject'
+    .external 'es5-shim'
+    .external 'jquery.mousewheel'
+    .external 'jquery.scrollto'
+    .external 'undo'
 
   bundle = ->
     bundleLogger.start clientConfig.outputName

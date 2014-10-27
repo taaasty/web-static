@@ -559,6 +559,18 @@ window.Modernizr = require('Modernizr');
 
 window.imagesLoaded = require('imagesloaded');
 
+require('honeybadger');
+
+require('swfobject');
+
+require('es5-shim');
+
+require('jquery.mousewheel')(window.jQuery);
+
+require('jquery.scrollto');
+
+window.Undo = require('undo');
+
 require('baron');
 
 require('reactUjs');
@@ -593,7 +605,7 @@ require('jquery.shapeshift');
 
 
 
-},{"Modernizr":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"eventEmitter":undefined,"flux":256,"i18next":undefined,"imagesloaded":259,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"momentjs":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"reactUjs":undefined,"underscore":undefined}],4:[function(require,module,exports){
+},{"Modernizr":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":256,"honeybadger":undefined,"i18next":undefined,"imagesloaded":259,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"momentjs":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"reactUjs":undefined,"swfobject":undefined,"underscore":undefined,"undo":undefined}],4:[function(require,module,exports){
 var locale;
 
 locale = 'ru';
@@ -15791,9 +15803,6 @@ window.isMobile = function() {
 },{}],254:[function(require,module,exports){
 $(function() {
   var height;
-  if (typeof Modernizr !== "undefined" && Modernizr !== null ? Modernizr.touch : void 0) {
-    $(".js-dropdown").dropdown();
-  }
   $(".js-alert-close").click(function() {
     return $(".js-alert").hide();
   });
@@ -22068,9 +22077,1901 @@ var
   return bowser
 });
 
+},{}],"es5-shim":[function(require,module,exports){
+/*!
+ * https://github.com/es-shims/es5-shim
+ * @license es5-shim Copyright 2009-2014 by contributors, MIT License
+ * see https://github.com/es-shims/es5-shim/blob/master/LICENSE
+ */
+
+// vim: ts=4 sts=4 sw=4 expandtab
+
+//Add semicolon to prevent IIFE from being passed as argument to concated code.
+;
+
+// UMD (Universal Module Definition)
+// see https://github.com/umdjs/umd/blob/master/returnExports.js
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(factory);
+    } else if (typeof exports === 'object') {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like enviroments that support module.exports,
+        // like Node.
+        module.exports = factory();
+    } else {
+        // Browser globals (root is window)
+        root.returnExports = factory();
+    }
+}(this, function () {
+
+/**
+ * Brings an environment as close to ECMAScript 5 compliance
+ * as is possible with the facilities of erstwhile engines.
+ *
+ * Annotated ES5: http://es5.github.com/ (specific links below)
+ * ES5 Spec: http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf
+ * Required reading: http://javascriptweblog.wordpress.com/2011/12/05/extending-javascript-natives/
+ */
+
+// Shortcut to an often accessed properties, in order to avoid multiple
+// dereference that costs universally.
+var ArrayPrototype = Array.prototype;
+var ObjectPrototype = Object.prototype;
+var FunctionPrototype = Function.prototype;
+var StringPrototype = String.prototype;
+var NumberPrototype = Number.prototype;
+var array_slice = ArrayPrototype.slice;
+var array_splice = ArrayPrototype.splice;
+var array_push = ArrayPrototype.push;
+var array_unshift = ArrayPrototype.unshift;
+var call = FunctionPrototype.call;
+
+// Having a toString local variable name breaks in Opera so use _toString.
+var _toString = ObjectPrototype.toString;
+
+var isFunction = function (val) {
+    return ObjectPrototype.toString.call(val) === '[object Function]';
+};
+var isRegex = function (val) {
+    return ObjectPrototype.toString.call(val) === '[object RegExp]';
+};
+var isArray = function isArray(obj) {
+    return _toString.call(obj) === "[object Array]";
+};
+var isString = function isString(obj) {
+    return _toString.call(obj) === "[object String]";
+};
+var isArguments = function isArguments(value) {
+    var str = _toString.call(value);
+    var isArgs = str === '[object Arguments]';
+    if (!isArgs) {
+        isArgs = !isArray(value)
+            && value !== null
+            && typeof value === 'object'
+            && typeof value.length === 'number'
+            && value.length >= 0
+            && isFunction(value.callee);
+    }
+    return isArgs;
+};
+
+var supportsDescriptors = Object.defineProperty && (function () {
+    try {
+        Object.defineProperty({}, 'x', {});
+        return true;
+    } catch (e) { /* this is ES3 */
+        return false;
+    }
+}());
+
+// Define configurable, writable and non-enumerable props
+// if they don't exist.
+var defineProperty;
+if (supportsDescriptors) {
+    defineProperty = function (object, name, method, forceAssign) {
+        if (!forceAssign && (name in object)) { return; }
+        Object.defineProperty(object, name, {
+            configurable: true,
+            enumerable: false,
+            writable: true,
+            value: method
+        });
+    };
+} else {
+    defineProperty = function (object, name, method, forceAssign) {
+        if (!forceAssign && (name in object)) { return; }
+        object[name] = method;
+    };
+}
+var defineProperties = function (object, map, forceAssign) {
+    for (var name in map) {
+        if (ObjectPrototype.hasOwnProperty.call(map, name)) {
+          defineProperty(object, name, map[name], forceAssign);
+        }
+    }
+};
+
+//
+// Util
+// ======
+//
+
+// ES5 9.4
+// http://es5.github.com/#x9.4
+// http://jsperf.com/to-integer
+
+function toInteger(n) {
+    n = +n;
+    if (n !== n) { // isNaN
+        n = 0;
+    } else if (n !== 0 && n !== (1 / 0) && n !== -(1 / 0)) {
+        n = (n > 0 || -1) * Math.floor(Math.abs(n));
+    }
+    return n;
+}
+
+function isPrimitive(input) {
+    var type = typeof input;
+    return (
+        input === null ||
+        type === "undefined" ||
+        type === "boolean" ||
+        type === "number" ||
+        type === "string"
+    );
+}
+
+function toPrimitive(input) {
+    var val, valueOf, toStr;
+    if (isPrimitive(input)) {
+        return input;
+    }
+    valueOf = input.valueOf;
+    if (isFunction(valueOf)) {
+        val = valueOf.call(input);
+        if (isPrimitive(val)) {
+            return val;
+        }
+    }
+    toStr = input.toString;
+    if (isFunction(toStr)) {
+        val = toStr.call(input);
+        if (isPrimitive(val)) {
+            return val;
+        }
+    }
+    throw new TypeError();
+}
+
+// ES5 9.9
+// http://es5.github.com/#x9.9
+var toObject = function (o) {
+    if (o == null) { // this matches both null and undefined
+        throw new TypeError("can't convert " + o + " to object");
+    }
+    return Object(o);
+};
+
+var ToUint32 = function ToUint32(x) {
+    return x >>> 0;
+};
+
+//
+// Function
+// ========
+//
+
+// ES-5 15.3.4.5
+// http://es5.github.com/#x15.3.4.5
+
+function Empty() {}
+
+defineProperties(FunctionPrototype, {
+    bind: function bind(that) { // .length is 1
+        // 1. Let Target be the this value.
+        var target = this;
+        // 2. If IsCallable(Target) is false, throw a TypeError exception.
+        if (!isFunction(target)) {
+            throw new TypeError("Function.prototype.bind called on incompatible " + target);
+        }
+        // 3. Let A be a new (possibly empty) internal list of all of the
+        //   argument values provided after thisArg (arg1, arg2 etc), in order.
+        // XXX slicedArgs will stand in for "A" if used
+        var args = array_slice.call(arguments, 1); // for normal call
+        // 4. Let F be a new native ECMAScript object.
+        // 11. Set the [[Prototype]] internal property of F to the standard
+        //   built-in Function prototype object as specified in 15.3.3.1.
+        // 12. Set the [[Call]] internal property of F as described in
+        //   15.3.4.5.1.
+        // 13. Set the [[Construct]] internal property of F as described in
+        //   15.3.4.5.2.
+        // 14. Set the [[HasInstance]] internal property of F as described in
+        //   15.3.4.5.3.
+        var binder = function () {
+
+            if (this instanceof bound) {
+                // 15.3.4.5.2 [[Construct]]
+                // When the [[Construct]] internal method of a function object,
+                // F that was created using the bind function is called with a
+                // list of arguments ExtraArgs, the following steps are taken:
+                // 1. Let target be the value of F's [[TargetFunction]]
+                //   internal property.
+                // 2. If target has no [[Construct]] internal method, a
+                //   TypeError exception is thrown.
+                // 3. Let boundArgs be the value of F's [[BoundArgs]] internal
+                //   property.
+                // 4. Let args be a new list containing the same values as the
+                //   list boundArgs in the same order followed by the same
+                //   values as the list ExtraArgs in the same order.
+                // 5. Return the result of calling the [[Construct]] internal
+                //   method of target providing args as the arguments.
+
+                var result = target.apply(
+                    this,
+                    args.concat(array_slice.call(arguments))
+                );
+                if (Object(result) === result) {
+                    return result;
+                }
+                return this;
+
+            } else {
+                // 15.3.4.5.1 [[Call]]
+                // When the [[Call]] internal method of a function object, F,
+                // which was created using the bind function is called with a
+                // this value and a list of arguments ExtraArgs, the following
+                // steps are taken:
+                // 1. Let boundArgs be the value of F's [[BoundArgs]] internal
+                //   property.
+                // 2. Let boundThis be the value of F's [[BoundThis]] internal
+                //   property.
+                // 3. Let target be the value of F's [[TargetFunction]] internal
+                //   property.
+                // 4. Let args be a new list containing the same values as the
+                //   list boundArgs in the same order followed by the same
+                //   values as the list ExtraArgs in the same order.
+                // 5. Return the result of calling the [[Call]] internal method
+                //   of target providing boundThis as the this value and
+                //   providing args as the arguments.
+
+                // equiv: target.call(this, ...boundArgs, ...args)
+                return target.apply(
+                    that,
+                    args.concat(array_slice.call(arguments))
+                );
+
+            }
+
+        };
+
+        // 15. If the [[Class]] internal property of Target is "Function", then
+        //     a. Let L be the length property of Target minus the length of A.
+        //     b. Set the length own property of F to either 0 or L, whichever is
+        //       larger.
+        // 16. Else set the length own property of F to 0.
+
+        var boundLength = Math.max(0, target.length - args.length);
+
+        // 17. Set the attributes of the length own property of F to the values
+        //   specified in 15.3.5.1.
+        var boundArgs = [];
+        for (var i = 0; i < boundLength; i++) {
+            boundArgs.push("$" + i);
+        }
+
+        // XXX Build a dynamic function with desired amount of arguments is the only
+        // way to set the length property of a function.
+        // In environments where Content Security Policies enabled (Chrome extensions,
+        // for ex.) all use of eval or Function costructor throws an exception.
+        // However in all of these environments Function.prototype.bind exists
+        // and so this code will never be executed.
+        var bound = Function("binder", "return function (" + boundArgs.join(",") + "){return binder.apply(this,arguments)}")(binder);
+
+        if (target.prototype) {
+            Empty.prototype = target.prototype;
+            bound.prototype = new Empty();
+            // Clean up dangling references.
+            Empty.prototype = null;
+        }
+
+        // TODO
+        // 18. Set the [[Extensible]] internal property of F to true.
+
+        // TODO
+        // 19. Let thrower be the [[ThrowTypeError]] function Object (13.2.3).
+        // 20. Call the [[DefineOwnProperty]] internal method of F with
+        //   arguments "caller", PropertyDescriptor {[[Get]]: thrower, [[Set]]:
+        //   thrower, [[Enumerable]]: false, [[Configurable]]: false}, and
+        //   false.
+        // 21. Call the [[DefineOwnProperty]] internal method of F with
+        //   arguments "arguments", PropertyDescriptor {[[Get]]: thrower,
+        //   [[Set]]: thrower, [[Enumerable]]: false, [[Configurable]]: false},
+        //   and false.
+
+        // TODO
+        // NOTE Function objects created using Function.prototype.bind do not
+        // have a prototype property or the [[Code]], [[FormalParameters]], and
+        // [[Scope]] internal properties.
+        // XXX can't delete prototype in pure-js.
+
+        // 22. Return F.
+        return bound;
+    }
+});
+
+// _Please note: Shortcuts are defined after `Function.prototype.bind` as we
+// us it in defining shortcuts.
+var owns = call.bind(ObjectPrototype.hasOwnProperty);
+
+// If JS engine supports accessors creating shortcuts.
+var defineGetter;
+var defineSetter;
+var lookupGetter;
+var lookupSetter;
+var supportsAccessors;
+if ((supportsAccessors = owns(ObjectPrototype, "__defineGetter__"))) {
+    defineGetter = call.bind(ObjectPrototype.__defineGetter__);
+    defineSetter = call.bind(ObjectPrototype.__defineSetter__);
+    lookupGetter = call.bind(ObjectPrototype.__lookupGetter__);
+    lookupSetter = call.bind(ObjectPrototype.__lookupSetter__);
+}
+
+//
+// Array
+// =====
+//
+
+// ES5 15.4.4.12
+// http://es5.github.com/#x15.4.4.12
+var spliceNoopReturnsEmptyArray = (function () {
+    var a = [1, 2];
+    var result = a.splice();
+    return a.length === 2 && isArray(result) && result.length === 0;
+}());
+defineProperties(ArrayPrototype, {
+    // Safari 5.0 bug where .splice() returns undefined
+    splice: function splice(start, deleteCount) {
+        if (arguments.length === 0) {
+            return [];
+        } else {
+            return array_splice.apply(this, arguments);
+        }
+    }
+}, spliceNoopReturnsEmptyArray);
+
+var spliceWorksWithEmptyObject = (function () {
+    var obj = {};
+    ArrayPrototype.splice.call(obj, 0, 0, 1);
+    return obj.length === 1;
+}());
+defineProperties(ArrayPrototype, {
+    splice: function splice(start, deleteCount) {
+        if (arguments.length === 0) { return []; }
+        var args = arguments;
+        this.length = Math.max(toInteger(this.length), 0);
+        if (arguments.length > 0 && typeof deleteCount !== 'number') {
+            args = array_slice.call(arguments);
+            if (args.length < 2) {
+                args.push(this.length - start);
+            } else {
+                args[1] = toInteger(deleteCount);
+            }
+        }
+        return array_splice.apply(this, args);
+    }
+}, !spliceWorksWithEmptyObject);
+
+// ES5 15.4.4.12
+// http://es5.github.com/#x15.4.4.13
+// Return len+argCount.
+// [bugfix, ielt8]
+// IE < 8 bug: [].unshift(0) === undefined but should be "1"
+var hasUnshiftReturnValueBug = [].unshift(0) !== 1;
+defineProperties(ArrayPrototype, {
+    unshift: function () {
+        array_unshift.apply(this, arguments);
+        return this.length;
+    }
+}, hasUnshiftReturnValueBug);
+
+// ES5 15.4.3.2
+// http://es5.github.com/#x15.4.3.2
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/isArray
+defineProperties(Array, { isArray: isArray });
+
+// The IsCallable() check in the Array functions
+// has been replaced with a strict check on the
+// internal class of the object to trap cases where
+// the provided function was actually a regular
+// expression literal, which in V8 and
+// JavaScriptCore is a typeof "function".  Only in
+// V8 are regular expression literals permitted as
+// reduce parameters, so it is desirable in the
+// general case for the shim to match the more
+// strict and common behavior of rejecting regular
+// expressions.
+
+// ES5 15.4.4.18
+// http://es5.github.com/#x15.4.4.18
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/forEach
+
+// Check failure of by-index access of string characters (IE < 9)
+// and failure of `0 in boxedString` (Rhino)
+var boxedString = Object("a");
+var splitString = boxedString[0] !== "a" || !(0 in boxedString);
+
+var properlyBoxesContext = function properlyBoxed(method) {
+    // Check node 0.6.21 bug where third parameter is not boxed
+    var properlyBoxesNonStrict = true;
+    var properlyBoxesStrict = true;
+    if (method) {
+        method.call('foo', function (_, __, context) {
+            if (typeof context !== 'object') { properlyBoxesNonStrict = false; }
+        });
+
+        method.call([1], function () {
+            'use strict';
+            properlyBoxesStrict = typeof this === 'string';
+        }, 'x');
+    }
+    return !!method && properlyBoxesNonStrict && properlyBoxesStrict;
+};
+
+defineProperties(ArrayPrototype, {
+    forEach: function forEach(fun /*, thisp*/) {
+        var object = toObject(this),
+            self = splitString && isString(this) ? this.split('') : object,
+            thisp = arguments[1],
+            i = -1,
+            length = self.length >>> 0;
+
+        // If no callback function or if callback is not a callable function
+        if (!isFunction(fun)) {
+            throw new TypeError(); // TODO message
+        }
+
+        while (++i < length) {
+            if (i in self) {
+                // Invoke the callback function with call, passing arguments:
+                // context, property value, property key, thisArg object
+                // context
+                fun.call(thisp, self[i], i, object);
+            }
+        }
+    }
+}, !properlyBoxesContext(ArrayPrototype.forEach));
+
+// ES5 15.4.4.19
+// http://es5.github.com/#x15.4.4.19
+// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/map
+defineProperties(ArrayPrototype, {
+    map: function map(fun /*, thisp*/) {
+        var object = toObject(this),
+            self = splitString && isString(this) ? this.split('') : object,
+            length = self.length >>> 0,
+            result = Array(length),
+            thisp = arguments[1];
+
+        // If no callback function or if callback is not a callable function
+        if (!isFunction(fun)) {
+            throw new TypeError(fun + " is not a function");
+        }
+
+        for (var i = 0; i < length; i++) {
+            if (i in self) {
+                result[i] = fun.call(thisp, self[i], i, object);
+            }
+        }
+        return result;
+    }
+}, !properlyBoxesContext(ArrayPrototype.map));
+
+// ES5 15.4.4.20
+// http://es5.github.com/#x15.4.4.20
+// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/filter
+defineProperties(ArrayPrototype, {
+    filter: function filter(fun /*, thisp */) {
+        var object = toObject(this),
+            self = splitString && isString(this) ? this.split('') : object,
+            length = self.length >>> 0,
+            result = [],
+            value,
+            thisp = arguments[1];
+
+        // If no callback function or if callback is not a callable function
+        if (!isFunction(fun)) {
+            throw new TypeError(fun + " is not a function");
+        }
+
+        for (var i = 0; i < length; i++) {
+            if (i in self) {
+                value = self[i];
+                if (fun.call(thisp, value, i, object)) {
+                    result.push(value);
+                }
+            }
+        }
+        return result;
+    }
+}, !properlyBoxesContext(ArrayPrototype.filter));
+
+// ES5 15.4.4.16
+// http://es5.github.com/#x15.4.4.16
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/every
+defineProperties(ArrayPrototype, {
+    every: function every(fun /*, thisp */) {
+        var object = toObject(this),
+            self = splitString && isString(this) ? this.split('') : object,
+            length = self.length >>> 0,
+            thisp = arguments[1];
+
+        // If no callback function or if callback is not a callable function
+        if (!isFunction(fun)) {
+            throw new TypeError(fun + " is not a function");
+        }
+
+        for (var i = 0; i < length; i++) {
+            if (i in self && !fun.call(thisp, self[i], i, object)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}, !properlyBoxesContext(ArrayPrototype.every));
+
+// ES5 15.4.4.17
+// http://es5.github.com/#x15.4.4.17
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/some
+defineProperties(ArrayPrototype, {
+    some: function some(fun /*, thisp */) {
+        var object = toObject(this),
+            self = splitString && isString(this) ? this.split('') : object,
+            length = self.length >>> 0,
+            thisp = arguments[1];
+
+        // If no callback function or if callback is not a callable function
+        if (!isFunction(fun)) {
+            throw new TypeError(fun + " is not a function");
+        }
+
+        for (var i = 0; i < length; i++) {
+            if (i in self && fun.call(thisp, self[i], i, object)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}, !properlyBoxesContext(ArrayPrototype.some));
+
+// ES5 15.4.4.21
+// http://es5.github.com/#x15.4.4.21
+// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/reduce
+var reduceCoercesToObject = false;
+if (ArrayPrototype.reduce) {
+    reduceCoercesToObject = typeof ArrayPrototype.reduce.call('es5', function (_, __, ___, list) { return list; }) === 'object';
+}
+defineProperties(ArrayPrototype, {
+    reduce: function reduce(fun /*, initial*/) {
+        var object = toObject(this),
+            self = splitString && isString(this) ? this.split('') : object,
+            length = self.length >>> 0;
+
+        // If no callback function or if callback is not a callable function
+        if (!isFunction(fun)) {
+            throw new TypeError(fun + " is not a function");
+        }
+
+        // no value to return if no initial value and an empty array
+        if (!length && arguments.length === 1) {
+            throw new TypeError("reduce of empty array with no initial value");
+        }
+
+        var i = 0;
+        var result;
+        if (arguments.length >= 2) {
+            result = arguments[1];
+        } else {
+            do {
+                if (i in self) {
+                    result = self[i++];
+                    break;
+                }
+
+                // if array contains no values, no initial value to return
+                if (++i >= length) {
+                    throw new TypeError("reduce of empty array with no initial value");
+                }
+            } while (true);
+        }
+
+        for (; i < length; i++) {
+            if (i in self) {
+                result = fun.call(void 0, result, self[i], i, object);
+            }
+        }
+
+        return result;
+    }
+}, !reduceCoercesToObject);
+
+// ES5 15.4.4.22
+// http://es5.github.com/#x15.4.4.22
+// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/reduceRight
+var reduceRightCoercesToObject = false;
+if (ArrayPrototype.reduceRight) {
+    reduceRightCoercesToObject = typeof ArrayPrototype.reduceRight.call('es5', function (_, __, ___, list) { return list; }) === 'object';
+}
+defineProperties(ArrayPrototype, {
+    reduceRight: function reduceRight(fun /*, initial*/) {
+        var object = toObject(this),
+            self = splitString && isString(this) ? this.split('') : object,
+            length = self.length >>> 0;
+
+        // If no callback function or if callback is not a callable function
+        if (!isFunction(fun)) {
+            throw new TypeError(fun + " is not a function");
+        }
+
+        // no value to return if no initial value, empty array
+        if (!length && arguments.length === 1) {
+            throw new TypeError("reduceRight of empty array with no initial value");
+        }
+
+        var result, i = length - 1;
+        if (arguments.length >= 2) {
+            result = arguments[1];
+        } else {
+            do {
+                if (i in self) {
+                    result = self[i--];
+                    break;
+                }
+
+                // if array contains no values, no initial value to return
+                if (--i < 0) {
+                    throw new TypeError("reduceRight of empty array with no initial value");
+                }
+            } while (true);
+        }
+
+        if (i < 0) {
+            return result;
+        }
+
+        do {
+            if (i in self) {
+                result = fun.call(void 0, result, self[i], i, object);
+            }
+        } while (i--);
+
+        return result;
+    }
+}, !reduceRightCoercesToObject);
+
+// ES5 15.4.4.14
+// http://es5.github.com/#x15.4.4.14
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf
+var hasFirefox2IndexOfBug = Array.prototype.indexOf && [0, 1].indexOf(1, 2) !== -1;
+defineProperties(ArrayPrototype, {
+    indexOf: function indexOf(sought /*, fromIndex */ ) {
+        var self = splitString && isString(this) ? this.split('') : toObject(this),
+            length = self.length >>> 0;
+
+        if (!length) {
+            return -1;
+        }
+
+        var i = 0;
+        if (arguments.length > 1) {
+            i = toInteger(arguments[1]);
+        }
+
+        // handle negative indices
+        i = i >= 0 ? i : Math.max(0, length + i);
+        for (; i < length; i++) {
+            if (i in self && self[i] === sought) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}, hasFirefox2IndexOfBug);
+
+// ES5 15.4.4.15
+// http://es5.github.com/#x15.4.4.15
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/lastIndexOf
+var hasFirefox2LastIndexOfBug = Array.prototype.lastIndexOf && [0, 1].lastIndexOf(0, -3) !== -1;
+defineProperties(ArrayPrototype, {
+    lastIndexOf: function lastIndexOf(sought /*, fromIndex */) {
+        var self = splitString && isString(this) ? this.split('') : toObject(this),
+            length = self.length >>> 0;
+
+        if (!length) {
+            return -1;
+        }
+        var i = length - 1;
+        if (arguments.length > 1) {
+            i = Math.min(i, toInteger(arguments[1]));
+        }
+        // handle negative indices
+        i = i >= 0 ? i : length - Math.abs(i);
+        for (; i >= 0; i--) {
+            if (i in self && sought === self[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}, hasFirefox2LastIndexOfBug);
+
+//
+// Object
+// ======
+//
+
+// ES5 15.2.3.14
+// http://es5.github.com/#x15.2.3.14
+
+// http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
+var hasDontEnumBug = !({'toString': null}).propertyIsEnumerable('toString'),
+    hasProtoEnumBug = (function () {}).propertyIsEnumerable('prototype'),
+    dontEnums = [
+        "toString",
+        "toLocaleString",
+        "valueOf",
+        "hasOwnProperty",
+        "isPrototypeOf",
+        "propertyIsEnumerable",
+        "constructor"
+    ],
+    dontEnumsLength = dontEnums.length;
+
+defineProperties(Object, {
+    keys: function keys(object) {
+        var isFn = isFunction(object),
+            isArgs = isArguments(object),
+            isObject = object !== null && typeof object === 'object',
+            isStr = isObject && isString(object);
+
+        if (!isObject && !isFn && !isArgs) {
+            throw new TypeError("Object.keys called on a non-object");
+        }
+
+        var theKeys = [];
+        var skipProto = hasProtoEnumBug && isFn;
+        if (isStr || isArgs) {
+            for (var i = 0; i < object.length; ++i) {
+                theKeys.push(String(i));
+            }
+        } else {
+            for (var name in object) {
+                if (!(skipProto && name === 'prototype') && owns(object, name)) {
+                    theKeys.push(String(name));
+                }
+            }
+        }
+
+        if (hasDontEnumBug) {
+            var ctor = object.constructor,
+                skipConstructor = ctor && ctor.prototype === object;
+            for (var j = 0; j < dontEnumsLength; j++) {
+                var dontEnum = dontEnums[j];
+                if (!(skipConstructor && dontEnum === 'constructor') && owns(object, dontEnum)) {
+                    theKeys.push(dontEnum);
+                }
+            }
+        }
+        return theKeys;
+    }
+});
+
+var keysWorksWithArguments = Object.keys && (function () {
+    // Safari 5.0 bug
+    return Object.keys(arguments).length === 2;
+}(1, 2));
+var originalKeys = Object.keys;
+defineProperties(Object, {
+    keys: function keys(object) {
+        if (isArguments(object)) {
+            return originalKeys(ArrayPrototype.slice.call(object));
+        } else {
+            return originalKeys(object);
+        }
+    }
+}, !keysWorksWithArguments);
+
+//
+// Date
+// ====
+//
+
+// ES5 15.9.5.43
+// http://es5.github.com/#x15.9.5.43
+// This function returns a String value represent the instance in time
+// represented by this Date object. The format of the String is the Date Time
+// string format defined in 15.9.1.15. All fields are present in the String.
+// The time zone is always UTC, denoted by the suffix Z. If the time value of
+// this object is not a finite Number a RangeError exception is thrown.
+var negativeDate = -62198755200000;
+var negativeYearString = "-000001";
+var hasNegativeDateBug = Date.prototype.toISOString && new Date(negativeDate).toISOString().indexOf(negativeYearString) === -1;
+
+defineProperties(Date.prototype, {
+    toISOString: function toISOString() {
+        var result, length, value, year, month;
+        if (!isFinite(this)) {
+            throw new RangeError("Date.prototype.toISOString called on non-finite value.");
+        }
+
+        year = this.getUTCFullYear();
+
+        month = this.getUTCMonth();
+        // see https://github.com/es-shims/es5-shim/issues/111
+        year += Math.floor(month / 12);
+        month = (month % 12 + 12) % 12;
+
+        // the date time string format is specified in 15.9.1.15.
+        result = [month + 1, this.getUTCDate(), this.getUTCHours(), this.getUTCMinutes(), this.getUTCSeconds()];
+        year = (
+            (year < 0 ? "-" : (year > 9999 ? "+" : "")) +
+            ("00000" + Math.abs(year)).slice(0 <= year && year <= 9999 ? -4 : -6)
+        );
+
+        length = result.length;
+        while (length--) {
+            value = result[length];
+            // pad months, days, hours, minutes, and seconds to have two
+            // digits.
+            if (value < 10) {
+                result[length] = "0" + value;
+            }
+        }
+        // pad milliseconds to have three digits.
+        return (
+            year + "-" + result.slice(0, 2).join("-") +
+            "T" + result.slice(2).join(":") + "." +
+            ("000" + this.getUTCMilliseconds()).slice(-3) + "Z"
+        );
+    }
+}, hasNegativeDateBug);
+
+
+// ES5 15.9.5.44
+// http://es5.github.com/#x15.9.5.44
+// This function provides a String representation of a Date object for use by
+// JSON.stringify (15.12.3).
+var dateToJSONIsSupported = false;
+try {
+    dateToJSONIsSupported = (
+        Date.prototype.toJSON &&
+        new Date(NaN).toJSON() === null &&
+        new Date(negativeDate).toJSON().indexOf(negativeYearString) !== -1 &&
+        Date.prototype.toJSON.call({ // generic
+            toISOString: function () {
+                return true;
+            }
+        })
+    );
+} catch (e) {
+}
+if (!dateToJSONIsSupported) {
+    Date.prototype.toJSON = function toJSON(key) {
+        // When the toJSON method is called with argument key, the following
+        // steps are taken:
+
+        // 1.  Let O be the result of calling ToObject, giving it the this
+        // value as its argument.
+        // 2. Let tv be toPrimitive(O, hint Number).
+        var o = Object(this),
+            tv = toPrimitive(o),
+            toISO;
+        // 3. If tv is a Number and is not finite, return null.
+        if (typeof tv === "number" && !isFinite(tv)) {
+            return null;
+        }
+        // 4. Let toISO be the result of calling the [[Get]] internal method of
+        // O with argument "toISOString".
+        toISO = o.toISOString;
+        // 5. If IsCallable(toISO) is false, throw a TypeError exception.
+        if (typeof toISO !== "function") {
+            throw new TypeError("toISOString property is not callable");
+        }
+        // 6. Return the result of calling the [[Call]] internal method of
+        //  toISO with O as the this value and an empty argument list.
+        return toISO.call(o);
+
+        // NOTE 1 The argument is ignored.
+
+        // NOTE 2 The toJSON function is intentionally generic; it does not
+        // require that its this value be a Date object. Therefore, it can be
+        // transferred to other kinds of objects for use as a method. However,
+        // it does require that any such object have a toISOString method. An
+        // object is free to use the argument key to filter its
+        // stringification.
+    };
+}
+
+// ES5 15.9.4.2
+// http://es5.github.com/#x15.9.4.2
+// based on work shared by Daniel Friesen (dantman)
+// http://gist.github.com/303249
+var supportsExtendedYears = Date.parse('+033658-09-27T01:46:40.000Z') === 1e15;
+var acceptsInvalidDates = !isNaN(Date.parse('2012-04-04T24:00:00.500Z')) || !isNaN(Date.parse('2012-11-31T23:59:59.000Z'));
+var doesNotParseY2KNewYear = isNaN(Date.parse("2000-01-01T00:00:00.000Z"));
+if (!Date.parse || doesNotParseY2KNewYear || acceptsInvalidDates || !supportsExtendedYears) {
+    // XXX global assignment won't work in embeddings that use
+    // an alternate object for the context.
+    Date = (function (NativeDate) {
+
+        // Date.length === 7
+        function Date(Y, M, D, h, m, s, ms) {
+            var length = arguments.length;
+            if (this instanceof NativeDate) {
+                var date = length === 1 && String(Y) === Y ? // isString(Y)
+                    // We explicitly pass it through parse:
+                    new NativeDate(Date.parse(Y)) :
+                    // We have to manually make calls depending on argument
+                    // length here
+                    length >= 7 ? new NativeDate(Y, M, D, h, m, s, ms) :
+                    length >= 6 ? new NativeDate(Y, M, D, h, m, s) :
+                    length >= 5 ? new NativeDate(Y, M, D, h, m) :
+                    length >= 4 ? new NativeDate(Y, M, D, h) :
+                    length >= 3 ? new NativeDate(Y, M, D) :
+                    length >= 2 ? new NativeDate(Y, M) :
+                    length >= 1 ? new NativeDate(Y) :
+                                  new NativeDate();
+                // Prevent mixups with unfixed Date object
+                date.constructor = Date;
+                return date;
+            }
+            return NativeDate.apply(this, arguments);
+        }
+
+        // 15.9.1.15 Date Time String Format.
+        var isoDateExpression = new RegExp("^" +
+            "(\\d{4}|[\+\-]\\d{6})" + // four-digit year capture or sign +
+                                      // 6-digit extended year
+            "(?:-(\\d{2})" + // optional month capture
+            "(?:-(\\d{2})" + // optional day capture
+            "(?:" + // capture hours:minutes:seconds.milliseconds
+                "T(\\d{2})" + // hours capture
+                ":(\\d{2})" + // minutes capture
+                "(?:" + // optional :seconds.milliseconds
+                    ":(\\d{2})" + // seconds capture
+                    "(?:(\\.\\d{1,}))?" + // milliseconds capture
+                ")?" +
+            "(" + // capture UTC offset component
+                "Z|" + // UTC capture
+                "(?:" + // offset specifier +/-hours:minutes
+                    "([-+])" + // sign capture
+                    "(\\d{2})" + // hours offset capture
+                    ":(\\d{2})" + // minutes offset capture
+                ")" +
+            ")?)?)?)?" +
+        "$");
+
+        var months = [
+            0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365
+        ];
+
+        function dayFromMonth(year, month) {
+            var t = month > 1 ? 1 : 0;
+            return (
+                months[month] +
+                Math.floor((year - 1969 + t) / 4) -
+                Math.floor((year - 1901 + t) / 100) +
+                Math.floor((year - 1601 + t) / 400) +
+                365 * (year - 1970)
+            );
+        }
+
+        function toUTC(t) {
+            return Number(new NativeDate(1970, 0, 1, 0, 0, 0, t));
+        }
+
+        // Copy any custom methods a 3rd party library may have added
+        for (var key in NativeDate) {
+            Date[key] = NativeDate[key];
+        }
+
+        // Copy "native" methods explicitly; they may be non-enumerable
+        Date.now = NativeDate.now;
+        Date.UTC = NativeDate.UTC;
+        Date.prototype = NativeDate.prototype;
+        Date.prototype.constructor = Date;
+
+        // Upgrade Date.parse to handle simplified ISO 8601 strings
+        Date.parse = function parse(string) {
+            var match = isoDateExpression.exec(string);
+            if (match) {
+                // parse months, days, hours, minutes, seconds, and milliseconds
+                // provide default values if necessary
+                // parse the UTC offset component
+                var year = Number(match[1]),
+                    month = Number(match[2] || 1) - 1,
+                    day = Number(match[3] || 1) - 1,
+                    hour = Number(match[4] || 0),
+                    minute = Number(match[5] || 0),
+                    second = Number(match[6] || 0),
+                    millisecond = Math.floor(Number(match[7] || 0) * 1000),
+                    // When time zone is missed, local offset should be used
+                    // (ES 5.1 bug)
+                    // see https://bugs.ecmascript.org/show_bug.cgi?id=112
+                    isLocalTime = Boolean(match[4] && !match[8]),
+                    signOffset = match[9] === "-" ? 1 : -1,
+                    hourOffset = Number(match[10] || 0),
+                    minuteOffset = Number(match[11] || 0),
+                    result;
+                if (
+                    hour < (
+                        minute > 0 || second > 0 || millisecond > 0 ?
+                        24 : 25
+                    ) &&
+                    minute < 60 && second < 60 && millisecond < 1000 &&
+                    month > -1 && month < 12 && hourOffset < 24 &&
+                    minuteOffset < 60 && // detect invalid offsets
+                    day > -1 &&
+                    day < (
+                        dayFromMonth(year, month + 1) -
+                        dayFromMonth(year, month)
+                    )
+                ) {
+                    result = (
+                        (dayFromMonth(year, month) + day) * 24 +
+                        hour +
+                        hourOffset * signOffset
+                    ) * 60;
+                    result = (
+                        (result + minute + minuteOffset * signOffset) * 60 +
+                        second
+                    ) * 1000 + millisecond;
+                    if (isLocalTime) {
+                        result = toUTC(result);
+                    }
+                    if (-8.64e15 <= result && result <= 8.64e15) {
+                        return result;
+                    }
+                }
+                return NaN;
+            }
+            return NativeDate.parse.apply(this, arguments);
+        };
+
+        return Date;
+    })(Date);
+}
+
+// ES5 15.9.4.4
+// http://es5.github.com/#x15.9.4.4
+if (!Date.now) {
+    Date.now = function now() {
+        return new Date().getTime();
+    };
+}
+
+
+//
+// Number
+// ======
+//
+
+// ES5.1 15.7.4.5
+// http://es5.github.com/#x15.7.4.5
+var hasToFixedBugs = NumberPrototype.toFixed && (
+  (0.00008).toFixed(3) !== '0.000'
+  || (0.9).toFixed(0) !== '1'
+  || (1.255).toFixed(2) !== '1.25'
+  || (1000000000000000128).toFixed(0) !== "1000000000000000128"
+);
+
+var toFixedHelpers = {
+  base: 1e7,
+  size: 6,
+  data: [0, 0, 0, 0, 0, 0],
+  multiply: function multiply(n, c) {
+      var i = -1;
+      while (++i < toFixedHelpers.size) {
+          c += n * toFixedHelpers.data[i];
+          toFixedHelpers.data[i] = c % toFixedHelpers.base;
+          c = Math.floor(c / toFixedHelpers.base);
+      }
+  },
+  divide: function divide(n) {
+      var i = toFixedHelpers.size, c = 0;
+      while (--i >= 0) {
+          c += toFixedHelpers.data[i];
+          toFixedHelpers.data[i] = Math.floor(c / n);
+          c = (c % n) * toFixedHelpers.base;
+      }
+  },
+  numToString: function numToString() {
+      var i = toFixedHelpers.size;
+      var s = '';
+      while (--i >= 0) {
+          if (s !== '' || i === 0 || toFixedHelpers.data[i] !== 0) {
+              var t = String(toFixedHelpers.data[i]);
+              if (s === '') {
+                  s = t;
+              } else {
+                  s += '0000000'.slice(0, 7 - t.length) + t;
+              }
+          }
+      }
+      return s;
+  },
+  pow: function pow(x, n, acc) {
+      return (n === 0 ? acc : (n % 2 === 1 ? pow(x, n - 1, acc * x) : pow(x * x, n / 2, acc)));
+  },
+  log: function log(x) {
+      var n = 0;
+      while (x >= 4096) {
+          n += 12;
+          x /= 4096;
+      }
+      while (x >= 2) {
+          n += 1;
+          x /= 2;
+      }
+      return n;
+  }
+};
+
+defineProperties(NumberPrototype, {
+    toFixed: function toFixed(fractionDigits) {
+        var f, x, s, m, e, z, j, k;
+
+        // Test for NaN and round fractionDigits down
+        f = Number(fractionDigits);
+        f = f !== f ? 0 : Math.floor(f);
+
+        if (f < 0 || f > 20) {
+            throw new RangeError("Number.toFixed called with invalid number of decimals");
+        }
+
+        x = Number(this);
+
+        // Test for NaN
+        if (x !== x) {
+            return "NaN";
+        }
+
+        // If it is too big or small, return the string value of the number
+        if (x <= -1e21 || x >= 1e21) {
+            return String(x);
+        }
+
+        s = "";
+
+        if (x < 0) {
+            s = "-";
+            x = -x;
+        }
+
+        m = "0";
+
+        if (x > 1e-21) {
+            // 1e-21 < x < 1e21
+            // -70 < log2(x) < 70
+            e = toFixedHelpers.log(x * toFixedHelpers.pow(2, 69, 1)) - 69;
+            z = (e < 0 ? x * toFixedHelpers.pow(2, -e, 1) : x / toFixedHelpers.pow(2, e, 1));
+            z *= 0x10000000000000; // Math.pow(2, 52);
+            e = 52 - e;
+
+            // -18 < e < 122
+            // x = z / 2 ^ e
+            if (e > 0) {
+                toFixedHelpers.multiply(0, z);
+                j = f;
+
+                while (j >= 7) {
+                    toFixedHelpers.multiply(1e7, 0);
+                    j -= 7;
+                }
+
+                toFixedHelpers.multiply(toFixedHelpers.pow(10, j, 1), 0);
+                j = e - 1;
+
+                while (j >= 23) {
+                    toFixedHelpers.divide(1 << 23);
+                    j -= 23;
+                }
+
+                toFixedHelpers.divide(1 << j);
+                toFixedHelpers.multiply(1, 1);
+                toFixedHelpers.divide(2);
+                m = toFixedHelpers.numToString();
+            } else {
+                toFixedHelpers.multiply(0, z);
+                toFixedHelpers.multiply(1 << (-e), 0);
+                m = toFixedHelpers.numToString() + '0.00000000000000000000'.slice(2, 2 + f);
+            }
+        }
+
+        if (f > 0) {
+            k = m.length;
+
+            if (k <= f) {
+                m = s + '0.0000000000000000000'.slice(0, f - k + 2) + m;
+            } else {
+                m = s + m.slice(0, k - f) + '.' + m.slice(k - f);
+            }
+        } else {
+            m = s + m;
+        }
+
+        return m;
+    }
+}, hasToFixedBugs);
+
+
+//
+// String
+// ======
+//
+
+// ES5 15.5.4.14
+// http://es5.github.com/#x15.5.4.14
+
+// [bugfix, IE lt 9, firefox 4, Konqueror, Opera, obscure browsers]
+// Many browsers do not split properly with regular expressions or they
+// do not perform the split correctly under obscure conditions.
+// See http://blog.stevenlevithan.com/archives/cross-browser-split
+// I've tested in many browsers and this seems to cover the deviant ones:
+//    'ab'.split(/(?:ab)*/) should be ["", ""], not [""]
+//    '.'.split(/(.?)(.?)/) should be ["", ".", "", ""], not ["", ""]
+//    'tesst'.split(/(s)*/) should be ["t", undefined, "e", "s", "t"], not
+//       [undefined, "t", undefined, "e", ...]
+//    ''.split(/.?/) should be [], not [""]
+//    '.'.split(/()()/) should be ["."], not ["", "", "."]
+
+var string_split = StringPrototype.split;
+if (
+    'ab'.split(/(?:ab)*/).length !== 2 ||
+    '.'.split(/(.?)(.?)/).length !== 4 ||
+    'tesst'.split(/(s)*/)[1] === "t" ||
+    'test'.split(/(?:)/, -1).length !== 4 ||
+    ''.split(/.?/).length ||
+    '.'.split(/()()/).length > 1
+) {
+    (function () {
+        var compliantExecNpcg = /()??/.exec("")[1] === void 0; // NPCG: nonparticipating capturing group
+
+        StringPrototype.split = function (separator, limit) {
+            var string = this;
+            if (separator === void 0 && limit === 0) {
+                return [];
+            }
+
+            // If `separator` is not a regex, use native split
+            if (_toString.call(separator) !== "[object RegExp]") {
+                return string_split.call(this, separator, limit);
+            }
+
+            var output = [],
+                flags = (separator.ignoreCase ? "i" : "") +
+                        (separator.multiline  ? "m" : "") +
+                        (separator.extended   ? "x" : "") + // Proposed for ES6
+                        (separator.sticky     ? "y" : ""), // Firefox 3+
+                lastLastIndex = 0,
+                // Make `global` and avoid `lastIndex` issues by working with a copy
+                separator2, match, lastIndex, lastLength;
+            separator = new RegExp(separator.source, flags + "g");
+            string += ""; // Type-convert
+            if (!compliantExecNpcg) {
+                // Doesn't need flags gy, but they don't hurt
+                separator2 = new RegExp("^" + separator.source + "$(?!\\s)", flags);
+            }
+            /* Values for `limit`, per the spec:
+             * If undefined: 4294967295 // Math.pow(2, 32) - 1
+             * If 0, Infinity, or NaN: 0
+             * If positive number: limit = Math.floor(limit); if (limit > 4294967295) limit -= 4294967296;
+             * If negative number: 4294967296 - Math.floor(Math.abs(limit))
+             * If other: Type-convert, then use the above rules
+             */
+            limit = limit === void 0 ?
+                -1 >>> 0 : // Math.pow(2, 32) - 1
+                ToUint32(limit);
+            while (match = separator.exec(string)) {
+                // `separator.lastIndex` is not reliable cross-browser
+                lastIndex = match.index + match[0].length;
+                if (lastIndex > lastLastIndex) {
+                    output.push(string.slice(lastLastIndex, match.index));
+                    // Fix browsers whose `exec` methods don't consistently return `undefined` for
+                    // nonparticipating capturing groups
+                    if (!compliantExecNpcg && match.length > 1) {
+                        match[0].replace(separator2, function () {
+                            for (var i = 1; i < arguments.length - 2; i++) {
+                                if (arguments[i] === void 0) {
+                                    match[i] = void 0;
+                                }
+                            }
+                        });
+                    }
+                    if (match.length > 1 && match.index < string.length) {
+                        ArrayPrototype.push.apply(output, match.slice(1));
+                    }
+                    lastLength = match[0].length;
+                    lastLastIndex = lastIndex;
+                    if (output.length >= limit) {
+                        break;
+                    }
+                }
+                if (separator.lastIndex === match.index) {
+                    separator.lastIndex++; // Avoid an infinite loop
+                }
+            }
+            if (lastLastIndex === string.length) {
+                if (lastLength || !separator.test("")) {
+                    output.push("");
+                }
+            } else {
+                output.push(string.slice(lastLastIndex));
+            }
+            return output.length > limit ? output.slice(0, limit) : output;
+        };
+    }());
+
+// [bugfix, chrome]
+// If separator is undefined, then the result array contains just one String,
+// which is the this value (converted to a String). If limit is not undefined,
+// then the output array is truncated so that it contains no more than limit
+// elements.
+// "0".split(undefined, 0) -> []
+} else if ("0".split(void 0, 0).length) {
+    StringPrototype.split = function split(separator, limit) {
+        if (separator === void 0 && limit === 0) { return []; }
+        return string_split.call(this, separator, limit);
+    };
+}
+
+var str_replace = StringPrototype.replace;
+var replaceReportsGroupsCorrectly = (function () {
+    var groups = [];
+    'x'.replace(/x(.)?/g, function (match, group) {
+        groups.push(group);
+    });
+    return groups.length === 1 && typeof groups[0] === 'undefined';
+}());
+
+if (!replaceReportsGroupsCorrectly) {
+    StringPrototype.replace = function replace(searchValue, replaceValue) {
+        var isFn = isFunction(replaceValue);
+        var hasCapturingGroups = isRegex(searchValue) && (/\)[*?]/).test(searchValue.source);
+        if (!isFn || !hasCapturingGroups) {
+            return str_replace.call(this, searchValue, replaceValue);
+        } else {
+            var wrappedReplaceValue = function (match) {
+                var length = arguments.length;
+                var originalLastIndex = searchValue.lastIndex;
+                searchValue.lastIndex = 0;
+                var args = searchValue.exec(match);
+                searchValue.lastIndex = originalLastIndex;
+                args.push(arguments[length - 2], arguments[length - 1]);
+                return replaceValue.apply(this, args);
+            };
+            return str_replace.call(this, searchValue, wrappedReplaceValue);
+        }
+    };
+}
+
+// ECMA-262, 3rd B.2.3
+// Not an ECMAScript standard, although ECMAScript 3rd Edition has a
+// non-normative section suggesting uniform semantics and it should be
+// normalized across all browsers
+// [bugfix, IE lt 9] IE < 9 substr() with negative value not working in IE
+var string_substr = StringPrototype.substr;
+var hasNegativeSubstrBug = "".substr && "0b".substr(-1) !== "b";
+defineProperties(StringPrototype, {
+    substr: function substr(start, length) {
+        return string_substr.call(
+            this,
+            start < 0 ? ((start = this.length + start) < 0 ? 0 : start) : start,
+            length
+        );
+    }
+}, hasNegativeSubstrBug);
+
+// ES5 15.5.4.20
+// whitespace from: http://es5.github.io/#x15.5.4.20
+var ws = "\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003" +
+    "\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028" +
+    "\u2029\uFEFF";
+var zeroWidth = '\u200b';
+var wsRegexChars = "[" + ws + "]";
+var trimBeginRegexp = new RegExp("^" + wsRegexChars + wsRegexChars + "*");
+var trimEndRegexp = new RegExp(wsRegexChars + wsRegexChars + "*$");
+var hasTrimWhitespaceBug = StringPrototype.trim && (ws.trim() || !zeroWidth.trim());
+defineProperties(StringPrototype, {
+    // http://blog.stevenlevithan.com/archives/faster-trim-javascript
+    // http://perfectionkills.com/whitespace-deviations/
+    trim: function trim() {
+        if (this === void 0 || this === null) {
+            throw new TypeError("can't convert " + this + " to object");
+        }
+        return String(this).replace(trimBeginRegexp, "").replace(trimEndRegexp, "");
+    }
+}, hasTrimWhitespaceBug);
+
+// ES-5 15.1.2.2
+if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
+    parseInt = (function (origParseInt) {
+        var hexRegex = /^0[xX]/;
+        return function parseIntES5(str, radix) {
+            str = String(str).trim();
+            if (!Number(radix)) {
+                radix = hexRegex.test(str) ? 16 : 10;
+            }
+            return origParseInt(str, radix);
+        };
+    }(parseInt));
+}
+
+}));
+
 },{}],"eventEmitter":[function(require,module,exports){
 module.exports=require(261)
-},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":261}],"i18next":[function(require,module,exports){
+},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":261}],"honeybadger":[function(require,module,exports){
+/*
+  honeybadger.js v0.1.0
+  A JavaScript Notifier for Honeybadger
+  https://github.com/honeybadger-io/honeybadger-js
+  https://www.honeybadger.io/
+  MIT license
+*/
+(function(window) {
+// Generated by CoffeeScript 1.7.1
+var Configuration;
+
+Configuration = (function() {
+  Configuration.defaults = {
+    api_key: null,
+    host: 'api.honeybadger.io',
+    ssl: true,
+    project_root: window.location.protocol + '//' + window.location.host,
+    environment: 'production',
+    component: null,
+    action: null,
+    disabled: false,
+    onerror: false,
+    debug: false,
+    timeout: false
+  };
+
+  function Configuration(options) {
+    var k, v, _ref;
+    if (options == null) {
+      options = {};
+    }
+    _ref = this.constructor.defaults;
+    for (k in _ref) {
+      v = _ref[k];
+      this[k] = v;
+    }
+    for (k in options) {
+      v = options[k];
+      this[k] = v;
+    }
+  }
+
+  Configuration.prototype.reset = function() {
+    var k, v, _ref;
+    _ref = this.constructor.defaults;
+    for (k in _ref) {
+      v = _ref[k];
+      this[k] = v;
+    }
+    return this;
+  };
+
+  return Configuration;
+
+})();
+// Generated by CoffeeScript 1.7.1
+var Notice;
+
+Notice = (function() {
+  function Notice(options) {
+    var k, v, _ref, _ref1, _ref2, _ref3;
+    this.options = options != null ? options : {};
+    this.error = this.options.error;
+    this.stack = this._stackTrace(this.error);
+    this["class"] = (_ref = this.error) != null ? _ref.name : void 0;
+    this.message = (_ref1 = this.error) != null ? _ref1.message : void 0;
+    this.source = null;
+    this.url = document.URL;
+    this.project_root = Honeybadger.configuration.project_root;
+    this.environment = Honeybadger.configuration.environment;
+    this.component = Honeybadger.configuration.component;
+    this.action = Honeybadger.configuration.action;
+    this.cgi_data = this._cgiData();
+    this.context = {};
+    _ref2 = Honeybadger.context;
+    for (k in _ref2) {
+      v = _ref2[k];
+      this.context[k] = v;
+    }
+    if (this.options.context && typeof this.options.context === 'object') {
+      _ref3 = this.options.context;
+      for (k in _ref3) {
+        v = _ref3[k];
+        this.context[k] = v;
+      }
+    }
+  }
+
+  Notice.prototype.payload = function() {
+    return {
+      notifier: {
+        name: 'honeybadger.js',
+        url: 'https://github.com/honeybadger-io/honeybadger-js',
+        version: Honeybadger.version,
+        language: 'javascript'
+      },
+      error: {
+        "class": this["class"],
+        message: this.message,
+        backtrace: this.stack,
+        source: this.source
+      },
+      request: {
+        url: this.url,
+        component: this.component,
+        action: this.action,
+        context: this.context,
+        cgi_data: this.cgi_data
+      },
+      server: {
+        project_root: this.project_root,
+        environment_name: this.environment
+      }
+    };
+  };
+
+  Notice.prototype._stackTrace = function(error) {
+    return (error != null ? error.stacktrace : void 0) || (error != null ? error.stack : void 0) || null;
+  };
+
+  Notice.prototype._cgiData = function() {
+    var data, k, v;
+    data = {};
+    if (typeof navigator !== "undefined" && navigator !== null) {
+      for (k in navigator) {
+        v = navigator[k];
+        if ((k != null) && (v != null) && !(typeof v === 'object')) {
+          data[k.replace(/(?=[A-Z][a-z]*)/g, '_').toUpperCase()] = v;
+        }
+      }
+      data['HTTP_USER_AGENT'] = data['USER_AGENT'];
+      delete data['USER_AGENT'];
+    }
+    if (document.referrer.match(/\S/)) {
+      data['HTTP_REFERER'] = document.referrer;
+    }
+    return data;
+  };
+
+  return Notice;
+
+})();
+// Generated by CoffeeScript 1.7.1
+var Client, Honeybadger, UncaughtError, currentError, currentNotice, _ref,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+_ref = [null, null], currentError = _ref[0], currentNotice = _ref[1];
+
+Client = (function() {
+  Client.prototype.version = '0.1.2';
+
+  function Client(options) {
+    this._windowOnErrorHandler = __bind(this._windowOnErrorHandler, this);
+    this._domReady = __bind(this._domReady, this);
+    this.log('Initializing honeybadger.js ' + this.version);
+    if (options) {
+      this.configure(options);
+    }
+  }
+
+  Client.prototype.log = function() {
+    this.log.history = this.log.history || [];
+    this.log.history.push(arguments);
+    if (this.configuration.debug && window.console) {
+      return console.log(Array.prototype.slice.call(arguments));
+    }
+  };
+
+  Client.prototype.configure = function(options) {
+    var args, k, v, _i, _len, _ref1;
+    if (options == null) {
+      options = {};
+    }
+    for (k in options) {
+      v = options[k];
+      this.configuration[k] = v;
+    }
+    if (!this._configured && this.configuration.debug && window.console) {
+      _ref1 = this.log.history;
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        args = _ref1[_i];
+        console.log(Array.prototype.slice.call(args));
+      }
+    }
+    this._configured = true;
+    return this;
+  };
+
+  Client.prototype.configuration = new Configuration();
+
+  Client.prototype.context = {};
+
+  Client.prototype.resetContext = function(options) {
+    if (options == null) {
+      options = {};
+    }
+    this.context = options instanceof Object ? options : {};
+    return this;
+  };
+
+  Client.prototype.setContext = function(options) {
+    var k, v;
+    if (options == null) {
+      options = {};
+    }
+    if (options instanceof Object) {
+      for (k in options) {
+        v = options[k];
+        this.context[k] = v;
+      }
+    }
+    return this;
+  };
+
+  Client.prototype.beforeNotifyHandlers = [];
+
+  Client.prototype.beforeNotify = function(handler) {
+    return this.beforeNotifyHandlers.push(handler);
+  };
+
+  Client.prototype.notify = function(error, options) {
+    var handler, k, notice, v, _i, _len, _ref1, _ref2;
+    if (options == null) {
+      options = {};
+    }
+    if (!this._validConfig() || this.configuration.disabled === true) {
+      return false;
+    }
+    if (error instanceof Error) {
+      options['error'] = error;
+    } else if (typeof error === 'string') {
+      options['error'] = new Error(error);
+    } else if (error instanceof Object) {
+      for (k in error) {
+        v = error[k];
+        options[k] = v;
+      }
+    }
+    if (currentNotice) {
+      if (options.error === currentError) {
+        return;
+      } else if (this._loaded) {
+        this._send(currentNotice);
+      }
+    }
+    if (((function() {
+      var _results;
+      _results = [];
+      for (k in options) {
+        if (!__hasProp.call(options, k)) continue;
+        _results.push(k);
+      }
+      return _results;
+    })()).length === 0) {
+      return false;
+    }
+    notice = new Notice(options);
+    _ref1 = this.beforeNotifyHandlers;
+    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+      handler = _ref1[_i];
+      if (handler(notice) === false) {
+        return false;
+      }
+    }
+    _ref2 = [options.error, notice], currentError = _ref2[0], currentNotice = _ref2[1];
+    if (!this._loaded) {
+      this.log('Queuing notice', notice);
+      this._queue.push(notice);
+    } else {
+      this.log('Defering notice', notice);
+      window.setTimeout((function(_this) {
+        return function() {
+          if (options.error === currentError) {
+            return _this._send(notice);
+          }
+        };
+      })(this));
+    }
+    return notice;
+  };
+
+  Client.prototype.wrap = function(func) {
+    var honeybadgerWrapper;
+    return honeybadgerWrapper = function() {
+      var e;
+      try {
+        return func.apply(this, arguments);
+      } catch (_error) {
+        e = _error;
+        Honeybadger.notify(e);
+        throw e;
+      }
+    };
+  };
+
+  Client.prototype.reset = function() {
+    this.resetContext();
+    this.configuration.reset();
+    this._configured = false;
+    return this;
+  };
+
+  Client.prototype.install = function() {
+    if (this.installed === true) {
+      return;
+    }
+    if (window.onerror !== this._windowOnErrorHandler) {
+      this.log('Installing window.onerror handler');
+      this._oldOnErrorHandler = window.onerror;
+      window.onerror = this._windowOnErrorHandler;
+    }
+    if (this._loaded) {
+      this.log('honeybadger.js ' + this.version + ' ready');
+    } else {
+      this.log('Installing ready handler');
+      if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', this._domReady, true);
+        window.addEventListener('load', this._domReady, true);
+      } else {
+        window.attachEvent('onload', this._domReady);
+      }
+    }
+    this._installed = true;
+    return this;
+  };
+
+  Client.prototype._queue = [];
+
+  Client.prototype._loaded = document.readyState === 'complete';
+
+  Client.prototype._configured = false;
+
+  Client.prototype._domReady = function() {
+    var notice, _results;
+    if (this._loaded) {
+      return;
+    }
+    this._loaded = true;
+    this.log('honeybadger.js ' + this.version + ' ready');
+    _results = [];
+    while (notice = this._queue.pop()) {
+      _results.push(this._send(notice));
+    }
+    return _results;
+  };
+
+  Client.prototype._send = function(notice) {
+    var _ref1;
+    this.log('Sending notice', notice);
+    _ref1 = [null, null], currentError = _ref1[0], currentNotice = _ref1[1];
+    return this._sendRequest(notice.payload());
+  };
+
+  Client.prototype._validConfig = function() {
+    var _ref1;
+    if (!this._configured) {
+      return false;
+    }
+    if ((_ref1 = this.configuration.api_key) != null ? _ref1.match(/\S/) : void 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  Client.prototype._sendRequest = function(data) {
+    var url;
+    url = 'http' + ((this.configuration.ssl && 's') || '') + '://' + this.configuration.host + '/v1/notices.gif';
+    return this._request(url, data);
+  };
+
+  Client.prototype._request = function(url, payload) {
+    var img, timeout, _ref1;
+    _ref1 = [new Image(), null], img = _ref1[0], timeout = _ref1[1];
+    img.onabort = img.onerror = (function(_this) {
+      return function() {
+        if (timeout) {
+          window.clearTimeout(timeout);
+        }
+        return _this.log('Request failed.', url, payload);
+      };
+    })(this);
+    img.onload = (function(_this) {
+      return function() {
+        if (timeout) {
+          return window.clearTimeout(timeout);
+        }
+      };
+    })(this);
+    img.src = url + '?' + this._serialize({
+      api_key: this.configuration.api_key,
+      notice: payload,
+      t: new Date().getTime()
+    });
+    if (this.configuration.timeout) {
+      timeout = window.setTimeout(((function(_this) {
+        return function() {
+          img.src = '';
+          return _this.log('Request timed out.', url, payload);
+        };
+      })(this)), this.configuration.timeout);
+    }
+    return true;
+  };
+
+  Client.prototype._serialize = function(obj, prefix) {
+    var k, pk, ret, v;
+    ret = [];
+    for (k in obj) {
+      v = obj[k];
+      if (obj.hasOwnProperty(k) && (k != null) && (v != null)) {
+        pk = (prefix ? prefix + '[' + k + ']' : k);
+        ret.push(typeof v === 'object' ? this._serialize(v, pk) : encodeURIComponent(pk) + '=' + encodeURIComponent(v));
+      }
+    }
+    return ret.join('&');
+  };
+
+  Client.prototype._windowOnErrorHandler = function(msg, url, line, col, error) {
+    if (!currentNotice && this.configuration.onerror) {
+      this.log('Error caught by window.onerror', msg, url, line, col, error);
+      if (!error) {
+        error = new UncaughtError(msg, url, line, col);
+      }
+      this.notify(error);
+    }
+    if (this._oldOnErrorHandler) {
+      return this._oldOnErrorHandler.apply(this, arguments);
+    }
+    return false;
+  };
+
+  return Client;
+
+})();
+
+UncaughtError = (function(_super) {
+  __extends(UncaughtError, _super);
+
+  function UncaughtError(message, url, line, column) {
+    this.name = 'UncaughtError';
+    this.message = message || 'An unknown error was caught by window.onerror.';
+    this.stack = [this.message, '\n    at ? (', url || 'unknown', ':', line || 0, ':', column || 0, ')'].join('');
+  }
+
+  return UncaughtError;
+
+})(Error);
+
+Honeybadger = new Client;
+
+Honeybadger.Client = Client;
+  window.Honeybadger = Honeybadger;
+  Honeybadger.install();
+})(window);
+
+},{}],"i18next":[function(require,module,exports){
 // i18next, v1.7.4
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
@@ -27172,7 +29073,419 @@ var Plugins;
 
 }));
 
-},{}],"jquery.shapeshift":[function(require,module,exports){
+},{}],"jquery.mousewheel":[function(require,module,exports){
+/*! Copyright (c) 2013 Brandon Aaron (http://brandon.aaron.sh)
+ * Licensed under the MIT License (LICENSE.txt).
+ *
+ * Version: 3.1.12
+ *
+ * Requires: jQuery 1.2.2+
+ */
+
+(function (factory) {
+    if ( typeof define === 'function' && define.amd ) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if (typeof exports === 'object') {
+        // Node/CommonJS style for Browserify
+        module.exports = factory;
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function ($) {
+
+    var toFix  = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
+        toBind = ( 'onwheel' in document || document.documentMode >= 9 ) ?
+                    ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
+        slice  = Array.prototype.slice,
+        nullLowestDeltaTimeout, lowestDelta;
+
+    if ( $.event.fixHooks ) {
+        for ( var i = toFix.length; i; ) {
+            $.event.fixHooks[ toFix[--i] ] = $.event.mouseHooks;
+        }
+    }
+
+    var special = $.event.special.mousewheel = {
+        version: '3.1.12',
+
+        setup: function() {
+            if ( this.addEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.addEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = handler;
+            }
+            // Store the line height and page height for this particular element
+            $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
+            $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
+        },
+
+        teardown: function() {
+            if ( this.removeEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.removeEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = null;
+            }
+            // Clean up the data we added to the element
+            $.removeData(this, 'mousewheel-line-height');
+            $.removeData(this, 'mousewheel-page-height');
+        },
+
+        getLineHeight: function(elem) {
+            var $elem = $(elem),
+                $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
+            if (!$parent.length) {
+                $parent = $('body');
+            }
+            return parseInt($parent.css('fontSize'), 10) || parseInt($elem.css('fontSize'), 10) || 16;
+        },
+
+        getPageHeight: function(elem) {
+            return $(elem).height();
+        },
+
+        settings: {
+            adjustOldDeltas: true, // see shouldAdjustOldDeltas() below
+            normalizeOffset: true  // calls getBoundingClientRect for each event
+        }
+    };
+
+    $.fn.extend({
+        mousewheel: function(fn) {
+            return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
+        },
+
+        unmousewheel: function(fn) {
+            return this.unbind('mousewheel', fn);
+        }
+    });
+
+
+    function handler(event) {
+        var orgEvent   = event || window.event,
+            args       = slice.call(arguments, 1),
+            delta      = 0,
+            deltaX     = 0,
+            deltaY     = 0,
+            absDelta   = 0,
+            offsetX    = 0,
+            offsetY    = 0;
+        event = $.event.fix(orgEvent);
+        event.type = 'mousewheel';
+
+        // Old school scrollwheel delta
+        if ( 'detail'      in orgEvent ) { deltaY = orgEvent.detail * -1;      }
+        if ( 'wheelDelta'  in orgEvent ) { deltaY = orgEvent.wheelDelta;       }
+        if ( 'wheelDeltaY' in orgEvent ) { deltaY = orgEvent.wheelDeltaY;      }
+        if ( 'wheelDeltaX' in orgEvent ) { deltaX = orgEvent.wheelDeltaX * -1; }
+
+        // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
+        if ( 'axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
+            deltaX = deltaY * -1;
+            deltaY = 0;
+        }
+
+        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
+        delta = deltaY === 0 ? deltaX : deltaY;
+
+        // New school wheel delta (wheel event)
+        if ( 'deltaY' in orgEvent ) {
+            deltaY = orgEvent.deltaY * -1;
+            delta  = deltaY;
+        }
+        if ( 'deltaX' in orgEvent ) {
+            deltaX = orgEvent.deltaX;
+            if ( deltaY === 0 ) { delta  = deltaX * -1; }
+        }
+
+        // No change actually happened, no reason to go any further
+        if ( deltaY === 0 && deltaX === 0 ) { return; }
+
+        // Need to convert lines and pages to pixels if we aren't already in pixels
+        // There are three delta modes:
+        //   * deltaMode 0 is by pixels, nothing to do
+        //   * deltaMode 1 is by lines
+        //   * deltaMode 2 is by pages
+        if ( orgEvent.deltaMode === 1 ) {
+            var lineHeight = $.data(this, 'mousewheel-line-height');
+            delta  *= lineHeight;
+            deltaY *= lineHeight;
+            deltaX *= lineHeight;
+        } else if ( orgEvent.deltaMode === 2 ) {
+            var pageHeight = $.data(this, 'mousewheel-page-height');
+            delta  *= pageHeight;
+            deltaY *= pageHeight;
+            deltaX *= pageHeight;
+        }
+
+        // Store lowest absolute delta to normalize the delta values
+        absDelta = Math.max( Math.abs(deltaY), Math.abs(deltaX) );
+
+        if ( !lowestDelta || absDelta < lowestDelta ) {
+            lowestDelta = absDelta;
+
+            // Adjust older deltas if necessary
+            if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+                lowestDelta /= 40;
+            }
+        }
+
+        // Adjust older deltas if necessary
+        if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+            // Divide all the things by 40!
+            delta  /= 40;
+            deltaX /= 40;
+            deltaY /= 40;
+        }
+
+        // Get a whole, normalized value for the deltas
+        delta  = Math[ delta  >= 1 ? 'floor' : 'ceil' ](delta  / lowestDelta);
+        deltaX = Math[ deltaX >= 1 ? 'floor' : 'ceil' ](deltaX / lowestDelta);
+        deltaY = Math[ deltaY >= 1 ? 'floor' : 'ceil' ](deltaY / lowestDelta);
+
+        // Normalise offsetX and offsetY properties
+        if ( special.settings.normalizeOffset && this.getBoundingClientRect ) {
+            var boundingRect = this.getBoundingClientRect();
+            offsetX = event.clientX - boundingRect.left;
+            offsetY = event.clientY - boundingRect.top;
+        }
+
+        // Add information to the event object
+        event.deltaX = deltaX;
+        event.deltaY = deltaY;
+        event.deltaFactor = lowestDelta;
+        event.offsetX = offsetX;
+        event.offsetY = offsetY;
+        // Go ahead and set deltaMode to 0 since we converted to pixels
+        // Although this is a little odd since we overwrite the deltaX/Y
+        // properties with normalized deltas.
+        event.deltaMode = 0;
+
+        // Add event and delta to the front of the arguments
+        args.unshift(event, delta, deltaX, deltaY);
+
+        // Clearout lowestDelta after sometime to better
+        // handle multiple device types that give different
+        // a different lowestDelta
+        // Ex: trackpad = 3 and mouse wheel = 120
+        if (nullLowestDeltaTimeout) { clearTimeout(nullLowestDeltaTimeout); }
+        nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
+
+        return ($.event.dispatch || $.event.handle).apply(this, args);
+    }
+
+    function nullLowestDelta() {
+        lowestDelta = null;
+    }
+
+    function shouldAdjustOldDeltas(orgEvent, absDelta) {
+        // If this is an older event and the delta is divisable by 120,
+        // then we are assuming that the browser is treating this as an
+        // older mouse wheel event and that we should divide the deltas
+        // by 40 to try and get a more usable deltaFactor.
+        // Side note, this actually impacts the reported scroll distance
+        // in older browsers and can cause scrolling to be slower than native.
+        // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
+        return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
+    }
+
+}));
+
+},{}],"jquery.scrollto":[function(require,module,exports){
+/*!
+ * jQuery.scrollTo
+ * Copyright (c) 2007-2014 Ariel Flesler - aflesler<a>gmail<d>com | http://flesler.blogspot.com
+ * Licensed under MIT
+ * http://flesler.blogspot.com/2007/10/jqueryscrollto.html
+ * @projectDescription Easy element scrolling using jQuery.
+ * @author Ariel Flesler
+ * @version 1.4.13
+ */
+;(function (define) {
+	'use strict';
+
+	define(['jquery'], function ($) {
+
+		var $scrollTo = $.scrollTo = function( target, duration, settings ) {
+			return $(window).scrollTo( target, duration, settings );
+		};
+
+		$scrollTo.defaults = {
+			axis:'xy',
+			duration: parseFloat($.fn.jquery) >= 1.3 ? 0 : 1,
+			limit:true
+		};
+
+		// Returns the element that needs to be animated to scroll the window.
+		// Kept for backwards compatibility (specially for localScroll & serialScroll)
+		$scrollTo.window = function( scope ) {
+			return $(window)._scrollable();
+		};
+
+		// Hack, hack, hack :)
+		// Returns the real elements to scroll (supports window/iframes, documents and regular nodes)
+		$.fn._scrollable = function() {
+			return this.map(function() {
+				var elem = this,
+					isWin = !elem.nodeName || $.inArray( elem.nodeName.toLowerCase(), ['iframe','#document','html','body'] ) != -1;
+
+					if (!isWin)
+						return elem;
+
+				var doc = (elem.contentWindow || elem).document || elem.ownerDocument || elem;
+
+				return /webkit/i.test(navigator.userAgent) || doc.compatMode == 'BackCompat' ?
+					doc.body :
+					doc.documentElement;
+			});
+		};
+
+		$.fn.scrollTo = function( target, duration, settings ) {
+			if (typeof duration == 'object') {
+				settings = duration;
+				duration = 0;
+			}
+			if (typeof settings == 'function')
+				settings = { onAfter:settings };
+
+			if (target == 'max')
+				target = 9e9;
+
+			settings = $.extend( {}, $scrollTo.defaults, settings );
+			// Speed is still recognized for backwards compatibility
+			duration = duration || settings.duration;
+			// Make sure the settings are given right
+			settings.queue = settings.queue && settings.axis.length > 1;
+
+			if (settings.queue)
+				// Let's keep the overall duration
+				duration /= 2;
+			settings.offset = both( settings.offset );
+			settings.over = both( settings.over );
+
+			return this._scrollable().each(function() {
+				// Null target yields nothing, just like jQuery does
+				if (target == null) return;
+
+				var elem = this,
+					$elem = $(elem),
+					targ = target, toff, attr = {},
+					win = $elem.is('html,body');
+
+				switch (typeof targ) {
+					// A number will pass the regex
+					case 'number':
+					case 'string':
+						if (/^([+-]=?)?\d+(\.\d+)?(px|%)?$/.test(targ)) {
+							targ = both( targ );
+							// We are done
+							break;
+						}
+						// Relative/Absolute selector, no break!
+						targ = win ? $(targ) : $(targ, this);
+						if (!targ.length) return;
+					case 'object':
+						// DOMElement / jQuery
+						if (targ.is || targ.style)
+							// Get the real position of the target
+							toff = (targ = $(targ)).offset();
+				}
+
+				var offset = $.isFunction(settings.offset) && settings.offset(elem, targ) || settings.offset;
+
+				$.each( settings.axis.split(''), function( i, axis ) {
+					var Pos	= axis == 'x' ? 'Left' : 'Top',
+						pos = Pos.toLowerCase(),
+						key = 'scroll' + Pos,
+						old = elem[key],
+						max = $scrollTo.max(elem, axis);
+
+					if (toff) {// jQuery / DOMElement
+						attr[key] = toff[pos] + ( win ? 0 : old - $elem.offset()[pos] );
+
+						// If it's a dom element, reduce the margin
+						if (settings.margin) {
+							attr[key] -= parseInt(targ.css('margin'+Pos)) || 0;
+							attr[key] -= parseInt(targ.css('border'+Pos+'Width')) || 0;
+						}
+
+						attr[key] += offset[pos] || 0;
+
+						if(settings.over[pos])
+							// Scroll to a fraction of its width/height
+							attr[key] += targ[axis=='x'?'width':'height']() * settings.over[pos];
+					} else {
+						var val = targ[pos];
+						// Handle percentage values
+						attr[key] = val.slice && val.slice(-1) == '%' ?
+							parseFloat(val) / 100 * max
+							: val;
+					}
+
+					// Number or 'number'
+					if (settings.limit && /^\d+$/.test(attr[key]))
+						// Check the limits
+						attr[key] = attr[key] <= 0 ? 0 : Math.min( attr[key], max );
+
+					// Queueing axes
+					if (!i && settings.queue) {
+						// Don't waste time animating, if there's no need.
+						if (old != attr[key])
+							// Intermediate animation
+							animate( settings.onAfterFirst );
+						// Don't animate this axis again in the next iteration.
+						delete attr[key];
+					}
+				});
+
+				animate( settings.onAfter );
+
+				function animate( callback ) {
+					$elem.animate( attr, duration, settings.easing, callback && function() {
+						callback.call(this, targ, settings);
+					});
+				}
+			}).end();
+		};
+
+		// Max scrolling position, works on quirks mode
+		// It only fails (not too badly) on IE, quirks mode.
+		$scrollTo.max = function( elem, axis ) {
+			var Dim = axis == 'x' ? 'Width' : 'Height',
+				scroll = 'scroll'+Dim;
+
+			if (!$(elem).is('html,body'))
+				return elem[scroll] - $(elem)[Dim.toLowerCase()]();
+
+			var size = 'client' + Dim,
+				html = elem.ownerDocument.documentElement,
+				body = elem.ownerDocument.body;
+
+			return Math.max( html[scroll], body[scroll] ) - Math.min( html[size]  , body[size]   );
+		};
+
+		function both( val ) {
+			return $.isFunction(val) || typeof val == 'object' ? val : { top:val, left:val };
+		}
+
+		// AMD requirement
+		return $scrollTo;
+	})
+}(typeof define === 'function' && define.amd ? define : function (deps, factory) {
+	if (typeof module !== 'undefined' && module.exports) {
+		// Node
+		module.exports = factory(require('jquery'));
+	} else {
+		factory(jQuery);
+	}
+}));
+
+},{"jquery":undefined}],"jquery.shapeshift":[function(require,module,exports){
 // Generated by CoffeeScript 1.4.0
 (function() {
 
@@ -68607,6 +70920,241 @@ module.exports = warning;
 (88)
 });
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],"swfobject":[function(require,module,exports){
+/**
+ * SWFObject v1.5: Flash Player detection and embed - http://blog.deconcept.com/swfobject/
+ *
+ * SWFObject is (c) 2007 Geoff Stearns and is released under the MIT License:
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ */
+if(typeof deconcept == "undefined") var deconcept = new Object();
+if(typeof deconcept.util == "undefined") deconcept.util = new Object();
+if(typeof deconcept.SWFObjectUtil == "undefined") deconcept.SWFObjectUtil = new Object();
+deconcept.SWFObject = function(swf, id, w, h, ver, c, quality, xiRedirectUrl, redirectUrl, detectKey) {
+  if (!document.getElementById) { return; }
+  this.DETECT_KEY = detectKey ? detectKey : 'detectflash';
+  this.skipDetect = deconcept.util.getRequestParameter(this.DETECT_KEY);
+  this.params = new Object();
+  this.variables = new Object();
+  this.attributes = new Array();
+  if(swf) { this.setAttribute('swf', swf); }
+  if(id) { this.setAttribute('id', id); }
+  if(w) { this.setAttribute('width', w); }
+  if(h) { this.setAttribute('height', h); }
+  if(ver) { this.setAttribute('version', new deconcept.PlayerVersion(ver.toString().split("."))); }
+  this.installedVer = deconcept.SWFObjectUtil.getPlayerVersion();
+  if (!window.opera && document.all && this.installedVer.major > 7) {
+    // only add the onunload cleanup if the Flash Player version supports External Interface and we are in IE
+    deconcept.SWFObject.doPrepUnload = true;
+  }
+  if(c) { this.addParam('wmode', 'transparent'); }
+  var q = quality ? quality : 'high';
+  this.addParam('quality', q);
+  this.setAttribute('useExpressInstall', false);
+  this.setAttribute('doExpressInstall', false);
+  var xir = (xiRedirectUrl) ? xiRedirectUrl : window.location;
+  this.setAttribute('xiRedirectUrl', xir);
+  this.setAttribute('redirectUrl', '');
+  if(redirectUrl) { this.setAttribute('redirectUrl', redirectUrl); }
+}
+deconcept.SWFObject.prototype = {
+  useExpressInstall: function(path) {
+    this.xiSWFPath = !path ? "expressinstall.swf" : path;
+    this.setAttribute('useExpressInstall', true);
+  },
+  setAttribute: function(name, value){
+    this.attributes[name] = value;
+  },
+  getAttribute: function(name){
+    return this.attributes[name];
+  },
+  addParam: function(name, value){
+    this.params[name] = value;
+  },
+  getParams: function(){
+    return this.params;
+  },
+  addVariable: function(name, value){
+    this.variables[name] = value;
+  },
+  getVariable: function(name){
+    return this.variables[name];
+  },
+  getVariables: function(){
+    return this.variables;
+  },
+  getVariablePairs: function(){
+    var variablePairs = new Array();
+    var key;
+    var variables = this.getVariables();
+    for(key in variables){
+      variablePairs[variablePairs.length] = key +"="+ variables[key];
+    }
+    return variablePairs;
+  },
+  getSWFHTML: function() {
+    var swfNode = "";
+    if (navigator.plugins && navigator.mimeTypes && navigator.mimeTypes.length) { // netscape plugin architecture
+      if (this.getAttribute("doExpressInstall")) {
+        this.addVariable("MMplayerType", "PlugIn");
+        this.setAttribute('swf', this.xiSWFPath);
+      }
+      swfNode = '<embed type="application/x-shockwave-flash" src="'+ this.getAttribute('swf') +'" width="'+ this.getAttribute('width') +'" height="'+ this.getAttribute('height') +'" style="'+ this.getAttribute('style') +'"';
+      swfNode += ' id="'+ this.getAttribute('id') +'" name="'+ this.getAttribute('id') +'" ';
+      var params = this.getParams();
+       for(var key in params){ swfNode += [key] +'="'+ params[key] +'" '; }
+      var pairs = this.getVariablePairs().join("&");
+       if (pairs.length > 0){ swfNode += 'flashvars="'+ pairs +'"'; }
+      swfNode += '/>';
+    } else { // PC IE
+      if (this.getAttribute("doExpressInstall")) {
+        this.addVariable("MMplayerType", "ActiveX");
+        this.setAttribute('swf', this.xiSWFPath);
+      }
+      swfNode = '<object id="'+ this.getAttribute('id') +'" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="'+ this.getAttribute('width') +'" height="'+ this.getAttribute('height') +'" style="'+ this.getAttribute('style') +'">';
+      swfNode += '<param name="movie" value="'+ this.getAttribute('swf') +'" />';
+      var params = this.getParams();
+      for(var key in params) {
+       swfNode += '<param name="'+ key +'" value="'+ params[key] +'" />';
+      }
+      var pairs = this.getVariablePairs().join("&");
+      if(pairs.length > 0) {swfNode += '<param name="flashvars" value="'+ pairs +'" />';}
+      swfNode += "</object>";
+    }
+    return swfNode;
+  },
+  write: function(elementId){
+    if(this.getAttribute('useExpressInstall')) {
+      // check to see if we need to do an express install
+      var expressInstallReqVer = new deconcept.PlayerVersion([6,0,65]);
+      if (this.installedVer.versionIsValid(expressInstallReqVer) && !this.installedVer.versionIsValid(this.getAttribute('version'))) {
+        this.setAttribute('doExpressInstall', true);
+        this.addVariable("MMredirectURL", escape(this.getAttribute('xiRedirectUrl')));
+        document.title = document.title.slice(0, 47) + " - Flash Player Installation";
+        this.addVariable("MMdoctitle", document.title);
+      }
+    }
+    if(this.skipDetect || this.getAttribute('doExpressInstall') || this.installedVer.versionIsValid(this.getAttribute('version'))){
+      var n = (typeof elementId == 'string') ? document.getElementById(elementId) : elementId;
+      n.innerHTML = this.getSWFHTML();
+      return true;
+    }else{
+      if(this.getAttribute('redirectUrl') != "") {
+        document.location.replace(this.getAttribute('redirectUrl'));
+      }
+    }
+    return false;
+  }
+}
+
+/* ---- detection functions ---- */
+deconcept.SWFObjectUtil.getPlayerVersion = function(){
+  var PlayerVersion = new deconcept.PlayerVersion([0,0,0]);
+  if(navigator.plugins && navigator.mimeTypes.length){
+    var x = navigator.plugins["Shockwave Flash"];
+    if(x && x.description) {
+      PlayerVersion = new deconcept.PlayerVersion(x.description.replace(/([a-zA-Z]|\s)+/, "").replace(/(\s+r|\s+b[0-9]+)/, ".").split("."));
+    }
+  }else if (navigator.userAgent && navigator.userAgent.indexOf("Windows CE") >= 0){ // if Windows CE
+    var axo = 1;
+    var counter = 3;
+    while(axo) {
+      try {
+        counter++;
+        axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash."+ counter);
+//        document.write("player v: "+ counter);
+        PlayerVersion = new deconcept.PlayerVersion([counter,0,0]);
+      } catch (e) {
+        axo = null;
+      }
+    }
+  } else { // Win IE (non mobile)
+    // do minor version lookup in IE, but avoid fp6 crashing issues
+    // see http://blog.deconcept.com/2006/01/11/getvariable-setvariable-crash-internet-explorer-flash-6/
+    try{
+      var axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7");
+    }catch(e){
+      try {
+        var axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6");
+        PlayerVersion = new deconcept.PlayerVersion([6,0,21]);
+        axo.AllowScriptAccess = "always"; // error if player version < 6.0.47 (thanks to Michael Williams @ Adobe for this code)
+      } catch(e) {
+        if (PlayerVersion.major == 6) {
+          return PlayerVersion;
+        }
+      }
+      try {
+        axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash");
+      } catch(e) {}
+    }
+    if (axo != null) {
+      PlayerVersion = new deconcept.PlayerVersion(axo.GetVariable("$version").split(" ")[1].split(","));
+    }
+  }
+  return PlayerVersion;
+}
+deconcept.PlayerVersion = function(arrVersion){
+  this.major = arrVersion[0] != null ? parseInt(arrVersion[0]) : 0;
+  this.minor = arrVersion[1] != null ? parseInt(arrVersion[1]) : 0;
+  this.rev = arrVersion[2] != null ? parseInt(arrVersion[2]) : 0;
+}
+deconcept.PlayerVersion.prototype.versionIsValid = function(fv){
+  if(this.major < fv.major) return false;
+  if(this.major > fv.major) return true;
+  if(this.minor < fv.minor) return false;
+  if(this.minor > fv.minor) return true;
+  if(this.rev < fv.rev) return false;
+  return true;
+}
+/* ---- get value of query string param ---- */
+deconcept.util = {
+  getRequestParameter: function(param) {
+    var q = document.location.search || document.location.hash;
+    if (param == null) { return q; }
+    if(q) {
+      var pairs = q.substring(1).split("&");
+      for (var i=0; i < pairs.length; i++) {
+        if (pairs[i].substring(0, pairs[i].indexOf("=")) == param) {
+          return pairs[i].substring((pairs[i].indexOf("=")+1));
+        }
+      }
+    }
+    return "";
+  }
+}
+/* fix for video streaming bug */
+deconcept.SWFObjectUtil.cleanupSWFs = function() {
+  var objects = document.getElementsByTagName("OBJECT");
+  for (var i = objects.length - 1; i >= 0; i--) {
+    objects[i].style.display = 'none';
+    for (var x in objects[i]) {
+      if (typeof objects[i][x] == 'function') {
+        objects[i][x] = function(){};
+      }
+    }
+  }
+}
+// fixes bug in some fp9 versions see http://blog.deconcept.com/2006/07/28/swfobject-143-released/
+if (deconcept.SWFObject.doPrepUnload) {
+  if (!deconcept.unloadSet) {
+    deconcept.SWFObjectUtil.prepUnload = function() {
+      __flash_unloadHandler = function(){};
+      __flash_savedUnloadHandler = function(){};
+      window.attachEvent("onunload", deconcept.SWFObjectUtil.cleanupSWFs);
+    }
+    window.attachEvent("onbeforeunload", deconcept.SWFObjectUtil.prepUnload);
+    deconcept.unloadSet = true;
+  }
+}
+/* add document.getElementById if needed (mobile IE < 5) */
+if (!document.getElementById && document.all) { document.getElementById = function(id) { return document.all[id]; }}
+
+/* add some aliases for ease of use/backwards compatibility */
+window.getQueryParamValue = deconcept.util.getRequestParameter;
+window.FlashObject = deconcept.SWFObject; // for legacy support
+window.SWFObject = deconcept.SWFObject;
+
 },{}],"underscore":[function(require,module,exports){
 //     Underscore.js 1.7.0
 //     http://underscorejs.org
@@ -70023,5 +72571,127 @@ module.exports = warning;
     });
   }
 }.call(this));
+
+},{}],"undo":[function(require,module,exports){
+/*
+ * Undo.js - A undo/redo framework for JavaScript
+ * 
+ * http://jzaefferer.github.com/undo
+ *
+ * Copyright (c) 2011 Jörn Zaefferer
+ * MIT licensed.
+ */
+(function() {
+
+// based on Backbone.js' inherits	
+var ctor = function(){};
+var inherits = function(parent, protoProps) {
+	var child;
+
+	if (protoProps && protoProps.hasOwnProperty('constructor')) {
+		child = protoProps.constructor;
+	} else {
+		child = function(){ return parent.apply(this, arguments); };
+	}
+
+	ctor.prototype = parent.prototype;
+	child.prototype = new ctor();
+	
+	if (protoProps) extend(child.prototype, protoProps);
+	
+	child.prototype.constructor = child;
+	child.__super__ = parent.prototype;
+	return child;
+};
+
+function extend(target, ref) {
+	var name, value;
+	for ( name in ref ) {
+		value = ref[name];
+		if (value !== undefined) {
+			target[ name ] = value;
+		}
+	}
+	return target;
+};
+
+var Undo;
+if (typeof exports !== 'undefined') {
+	Undo = exports;
+} else {
+	Undo = this.Undo = {};
+}
+
+Undo.Stack = function() {
+	this.commands = [];
+	this.stackPosition = -1;
+	this.savePosition = -1;
+};
+
+extend(Undo.Stack.prototype, {
+	execute: function(command) {
+		this._clearRedo();
+		command.execute();
+		this.commands.push(command);
+		this.stackPosition++;
+		this.changed();
+	},
+	undo: function() {
+		this.commands[this.stackPosition].undo();
+		this.stackPosition--;
+		this.changed();
+	},
+	canUndo: function() {
+		return this.stackPosition >= 0;
+	},
+	redo: function() {
+		this.stackPosition++;
+		this.commands[this.stackPosition].redo();
+		this.changed();
+	},
+	canRedo: function() {
+		return this.stackPosition < this.commands.length - 1;
+	},
+	save: function() {
+		this.savePosition = this.stackPosition;
+		this.changed();
+	},
+	dirty: function() {
+		return this.stackPosition != this.savePosition;
+	},
+	_clearRedo: function() {
+		// TODO there's probably a more efficient way for this
+		this.commands = this.commands.slice(0, this.stackPosition + 1);
+	},
+	changed: function() {
+		// do nothing, override
+	}
+});
+
+Undo.Command = function(name) {
+	this.name = name;
+}
+
+var up = new Error("override me!");
+
+extend(Undo.Command.prototype, {
+	execute: function() {
+		throw up;
+	},
+	undo: function() {
+		throw up;
+	},
+	redo: function() {
+		this.execute();
+	}
+});
+
+Undo.Command.extend = function(protoProps) {
+	var child = inherits(this, protoProps);
+	child.extend = Undo.Command.extend;
+	return child;
+};
+	
+}).call(this);
 
 },{}]},{},[1]);

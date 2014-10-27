@@ -45,6 +45,12 @@ gulp.task 'scripts', ['clean'], ->
     .require './bower_components/i18next/i18next',                          { expose: 'i18next'}
     .require './bower_components/bootstrap/js/tooltip',                     { expose: 'bootstrap.tooltip' }
     .require './scripts/shims/modernizr',                                   { expose: 'Modernizr' }
+    .require './bower_components/honeybadger.js/honeybadger.js',            { expose: 'honeybadger' }
+    .require './scripts/shims/swf/swfobject',                               { expose: 'swfobject' }
+    .require './bower_components/es5-shim/es5-shim',                        { expose: 'es5-shim' }
+    .require './bower_components/jquery.mousewheel/jquery.mousewheel',      { expose: 'jquery.mousewheel' }
+    .require './bower_components/jquery.scrollto/jquery.scrollTo',          { expose: 'jquery.scrollto' }
+    .require './bower_components/undo/undo',                                { expose: 'undo' }
 
   bundle = ->
     # Log when bundling starts

@@ -11,6 +11,12 @@ window.i18n              = require 'i18next'
 window.Pusher            = require 'pusher'
 window.Modernizr         = require 'Modernizr'
 window.imagesLoaded      = require 'imagesloaded'
+require 'honeybadger'
+require 'swfobject'
+require 'es5-shim'
+require('jquery.mousewheel')(window.jQuery)
+require 'jquery.scrollto'
+window.Undo = require 'undo'
 
 require 'baron'
 require 'reactUjs'
