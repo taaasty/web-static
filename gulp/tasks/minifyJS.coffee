@@ -8,7 +8,7 @@ rename       = require 'gulp-rename'
 handleErrors = require '../util/handleErrors'
 config       = require('../config').minifyJS
 
-gulp.task 'minifyJS', ['browserify'], ->
+gulp.task 'minifyJS', ['scripts'], ->
   gulp.src config.src
     .pipe uglify()
     .on 'error', handleErrors

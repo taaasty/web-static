@@ -13,7 +13,6 @@ window.Modernizr         = require 'Modernizr'
 window.imagesLoaded      = require 'imagesloaded'
 
 require 'baron'
-require('momentjsRU')(window.moment)
 require 'reactUjs'
 require('react-mixin-manager')(window.React)
 require 'i18next'

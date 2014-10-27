@@ -8,9 +8,8 @@ gulp           = require 'gulp'
 source         = require 'vinyl-source-stream'
 bundleLogger   = require '../util/bundleLogger'
 handleErrors   = require '../util/handleErrors'
-vendorConfig   = require('../config').build.vendor
-settingsConfig = require('../config').build.settings
-clientConfig   = require('../config').build.client
+vendorConfig   = require('../config').vendor
+clientConfig   = require('../config').client
 
 gulp.task 'vendorScripts', ['clean'], ->
   bundler = browserify({
