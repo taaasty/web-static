@@ -9,7 +9,9 @@ rename       = require 'gulp-rename'
 handleErrors = require '../util/handleErrors'
 config       = require('../config').less
 
-gulp.task 'less', ['clean'], ->
+gulp.task 'less', ->
+  # Here we should use ['clean'] dependency, but in Windows occurs errors
+
   gulp.src config.src
     .pipe less(
       paths: ['./app/bower_components/']
