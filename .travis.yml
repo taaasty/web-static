@@ -5,8 +5,9 @@ install:
   - npm install
   - ./node_modules/bower/bin/bower -v
   - ./node_modules/bower/bin/bower install
-  - ln -s home/vexor/.bower_components app/bower_components
-  - ls -la app/bower_components/
+  - ln -s home/vexor/.bower_components ./app/bower_components
+  - ls -la ./app
+  - ls -la ./app/bower_components/
   - ls -la home
   - ls -la home/vexor
   - ls -la home/vexor/bower_components
