@@ -5,5 +5,5 @@ install:
   - npm install
   - ./node_modules/bower/bin/bower -v
   - ./node_modules/bower/bin/bower install
-  - ln -s /home/vexor/.bower_components app/bower_component
+  - ln -s /home/vexor/.bower_components app/bower_components
 script: ./node_modules/gulp/bin/gulp.js build
