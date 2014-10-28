@@ -17,10 +17,11 @@ window.NotificationsPopup_Notifications = React.createClass
       notifications = @state.notifications.map (notification, i) ->
         `<NotificationsPopup_Notification notification={ notification }
                                           key={ notification.id } />`
+      notifications = `<ul className="notifications__list">
+                        { notifications }
+                      </ul>`
 
-    return `<ul className="notifications__list">
-              { notifications }
-            </ul>`
+    return notifications
 
   isEmpty: ->
     @state.notifications.length == 0
