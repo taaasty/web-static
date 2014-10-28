@@ -9,7 +9,7 @@
   "created_at": "2007-03-26T10:49:19.000+04:00",
   "updated_at": "2014-07-14T11:22:10.000+04:00",
   "email": "greshilov@yandex.ru",
-  "is_privacy": false,
+  "is_privacy": true,
   "is_confirmed": true,
   "available_notifications": false,
   "authentications": [],

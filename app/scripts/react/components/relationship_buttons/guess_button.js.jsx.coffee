@@ -16,7 +16,7 @@ window.RelationshipGuessButton = React.createClass
       <FollowButton relationship={ this.props.relationship } />
       <button onClick={ this.handleDisapproveClick }
               className="button button--small button--outline-light-white button--icon">
-        <i className="icon icon--cross"></i>
+        <i className="icon icon--cross" />
       </button>
     </div>`
 

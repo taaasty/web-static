@@ -34,6 +34,20 @@ window.RelationshipMixin =
       complete: =>
         @safeUpdateState isProcess: false
 
+  unfollowFromYourself: (options) ->
+    @closeError()
+    @safeUpdateState(isProcess: true)
+
+    @createRequest
+      url: Routes.api.unfollow_from_yourself_url @props.relationship.user_id
+      method: 'DELETE'
+      success: (data) => options?.success?()
+      error: (data) =>
+        @startErrorTimer()
+        TastyNotifyController.errorResponse data
+      complete: =>
+        @safeUpdateState isProcess: false
+
   cancel: (options) ->
     @closeError()
     @setState isProcess: true

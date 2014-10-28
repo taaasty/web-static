@@ -91,7 +91,14 @@ window.PersonsPopup_PanelMixin =
     @getPanelData lastLoadedPosition
 
   removeRelationship: (relationship) ->
-    newRelationships = _.without @props.relationships, relationship
+    newRelationships = @props.relationships.slice(0)
+
+    for rel, i in @props.relationships
+      if rel.id == relationship.id ||
+         rel.reverse_relationship.id == relationship.id
+        newRelationships.splice i, 1
+        return
+
     @props.onLoad('update', total_count: @props.total_count - 1, items: newRelationships)
 
 React.mixins.add 'PersonsPopup_PanelMixin', [

@@ -11,5 +11,6 @@ window.PersonsPopup_FollowerRelationship = React.createClass
 
   render: ->
    `<PersonsPopup_PersonItem user={ this.props.relationship.reader }>
-      <FollowButton relationship={ this.props.relationship.reverse_relationship } />
+      <RelationshipFollowerButton relationship={ this.props.relationship.reverse_relationship }
+                                  onRequestEnd={ this.props.onRequestEnd } />
     </PersonsPopup_PersonItem>`
