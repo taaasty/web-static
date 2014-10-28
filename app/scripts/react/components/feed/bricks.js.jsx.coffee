@@ -8,8 +8,8 @@ window.FeedBricks = React.createClass
     isLoadingNew:      React.PropTypes.bool
     isLoadingPrevious: React.PropTypes.bool
 
-  componentDidUpdate: ->
-    @initGridManager() if @props.feedHtml?
+  componentDidUpdate: (prevProps) ->
+    @initGridManager() if @props.feedHtml isnt prevProps.feedHtml
 
   render: ->
     if @props.isLoadingPrevious
