@@ -31,6 +31,7 @@ module.exports = {
   }
   browserSync: {
     port: 9000
+    open: false
     server: {
       baseDir: [build, src]
     }
