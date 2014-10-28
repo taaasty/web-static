@@ -34,7 +34,6 @@ window.EmbedComponentNoCover = React.createClass
 
     $container.height $iframe.height()
 
-
 window.EmbedComponentWithCover = React.createClass
   propTypes:
     coverImageUrl:  React.PropTypes.string.isRequired
@@ -67,4 +66,3 @@ window.EmbedComponentWithCover = React.createClass
     $embed.height $iframe.height()
 
     $(@refs.topContainer.getDOMNode()).height $iframe.height()
-

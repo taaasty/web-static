@@ -49,6 +49,7 @@ gulp.task 'vendorScripts', ['clean'], ->
     .require './jquery.mousewheel/jquery.mousewheel',      { expose: 'jquery.mousewheel' }
     .require './jquery.scrollto/jquery.scrollTo',          { expose: 'jquery.scrollto' }
     .require './undo/undo',                                { expose: 'undo' }
+    .require './medium-editor/dist/js/medium-editor',      { expose: 'medium-editor' }
 
   bundle = ->
     bundleLogger.start vendorConfig.outputName
@@ -105,6 +106,7 @@ gulp.task 'clientScripts', ['clean'], ->
     .external 'jquery.mousewheel'
     .external 'jquery.scrollto'
     .external 'undo'
+    .external 'medium-editor'
 
   bundle = ->
     bundleLogger.start clientConfig.outputName

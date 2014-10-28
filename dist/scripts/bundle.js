@@ -141,6 +141,10 @@ require('./react/messaging/components/notifications_popup/notifications/notifica
 
 require('./react/messaging/components/notifications_popup/notifications/empty');
 
+require('./react/components/embed');
+
+require('./react/components/tlog_alert');
+
 require('./react/components/avatars/avatar');
 
 require('./react/components/avatars/user_avatar');
@@ -509,7 +513,7 @@ require('./editors');
 
 
 
-},{"./editors":2,"./libs":3,"./locales":4,"./react/application":5,"./react/components/avatars/avatar":6,"./react/components/avatars/user_avatar":7,"./react/components/buttons/load_more":8,"./react/components/calendar/calendar":9,"./react/components/calendar/calendar_header":10,"./react/components/calendar/calendar_marker":11,"./react/components/calendar/calendar_period":12,"./react/components/calendar/calendar_timeline":13,"./react/components/design_settings_popup/controls":14,"./react/components/design_settings_popup/controls_items/_progressbar":15,"./react/components/design_settings_popup/controls_items/_radiobutton":16,"./react/components/design_settings_popup/controls_items/align_item":17,"./react/components/design_settings_popup/controls_items/background_item":18,"./react/components/design_settings_popup/controls_items/feed_color_item":19,"./react/components/design_settings_popup/controls_items/font_type_item":20,"./react/components/design_settings_popup/controls_items/header_color_item":21,"./react/components/design_settings_popup/controls_items/opacity_item":22,"./react/components/design_settings_popup/design_settings_popup":23,"./react/components/editable_field":24,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":25,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":26,"./react/components/entry_comment_box/comment_form/comment_form":27,"./react/components/entry_comment_box/comment_list/comment":28,"./react/components/entry_comment_box/comment_list/comment_list":29,"./react/components/entry_comment_box/comment_list/comment_manager":30,"./react/components/entry_comment_box/comment_metabar/comment_metabar":31,"./react/components/entry_comment_box/comment_metabar/date":32,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":33,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":34,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":35,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":36,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":37,"./react/components/entry_comment_box/comment_metabar/reply":38,"./react/components/entry_comment_box/entry_comment_box":39,"./react/components/entry_comment_box/load_more":40,"./react/components/entry_comment_box/mixins/comments":41,"./react/components/entry_metabar/author":42,"./react/components/entry_metabar/comment":43,"./react/components/entry_metabar/date":44,"./react/components/entry_metabar/dropdown_menu":45,"./react/components/entry_metabar/dropdown_menu_items/delete_item":46,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":47,"./react/components/entry_metabar/dropdown_menu_items/item":48,"./react/components/entry_metabar/dropdown_menu_items/report_item":49,"./react/components/entry_metabar/dropdown_menu_items/watch_item":50,"./react/components/entry_metabar/entry_metabar":51,"./react/components/entry_metabar/tag":52,"./react/components/entry_metabar/tags":53,"./react/components/feed/bricks":54,"./react/components/feed/feed":55,"./react/components/feed/mixins/base":56,"./react/components/feed/tlog":57,"./react/components/follow_status":58,"./react/components/hero/profile/popup/followers_popup":59,"./react/components/hero/profile/popup/followings_popup":60,"./react/components/hero/profile/popup/items/follower_item":61,"./react/components/hero/profile/popup/items/following_item":62,"./react/components/hero/profile/popup/items/tag_item":63,"./react/components/hero/profile/popup/popup":64,"./react/components/hero/profile/popup/tags_popup":65,"./react/components/hero/profile/profile":66,"./react/components/hero/profile/profile_avatar":67,"./react/components/hero/profile/profile_head":68,"./react/components/hero/profile/profile_stats":69,"./react/components/hero/profile/profile_stats_item":70,"./react/components/images_collage":71,"./react/components/notifications/tasty_alert":72,"./react/components/notifications/tasty_confirm":73,"./react/components/notifications/tasty_locking_alert":74,"./react/components/notifications/tasty_notify":75,"./react/components/people/item":76,"./react/components/persons_popup/items/follower_relationship":77,"./react/components/persons_popup/items/following_relationship":78,"./react/components/persons_popup/items/guess_relationship":79,"./react/components/persons_popup/items/ignored_relationship":80,"./react/components/persons_popup/items/item":81,"./react/components/persons_popup/items/request_relationship":82,"./react/components/persons_popup/menu":83,"./react/components/persons_popup/menu_item":84,"./react/components/persons_popup/mixins/panel_mixin":85,"./react/components/persons_popup/panels/followers_panel":86,"./react/components/persons_popup/panels/followings_panel":87,"./react/components/persons_popup/panels/guesses_panel":88,"./react/components/persons_popup/panels/ignores_panel":89,"./react/components/persons_popup/panels/requests_panel":90,"./react/components/persons_popup/persons_popup":91,"./react/components/popup/header":92,"./react/components/popup/layout":93,"./react/components/popup/popup":94,"./react/components/popup/spinner":95,"./react/components/popup_box":96,"./react/components/post_editor/actions/actions":97,"./react/components/post_editor/actions/buttons/privacy":98,"./react/components/post_editor/actions/buttons/vote":99,"./react/components/post_editor/choicer":100,"./react/components/post_editor/demo":101,"./react/components/post_editor/edit_post":102,"./react/components/post_editor/editor_container":103,"./react/components/post_editor/editors/_tasty":104,"./react/components/post_editor/editors/anonymous":105,"./react/components/post_editor/editors/image":106,"./react/components/post_editor/editors/instagram":107,"./react/components/post_editor/editors/mixins/autosave":108,"./react/components/post_editor/editors/music":109,"./react/components/post_editor/editors/quote":110,"./react/components/post_editor/editors/text":111,"./react/components/post_editor/editors/video":112,"./react/components/post_editor/images_mediabox/loaded":113,"./react/components/post_editor/images_mediabox/url_insert":114,"./react/components/post_editor/layout":115,"./react/components/post_editor/mediabox/actions":116,"./react/components/post_editor/mediabox/layout":117,"./react/components/post_editor/mediabox/loading_progress":118,"./react/components/post_editor/mixins/dragging":119,"./react/components/post_editor/mixins/images_form":120,"./react/components/post_editor/mixins/layout":121,"./react/components/post_editor/mixins/persistence":122,"./react/components/post_editor/mixins/video":123,"./react/components/post_editor/new_anonymous_post":124,"./react/components/post_editor/new_post":125,"./react/components/post_editor/video_mediabox/embeded":126,"./react/components/post_editor/video_mediabox/loading":127,"./react/components/post_editor/video_mediabox/url_insert":128,"./react/components/post_editor/video_mediabox/video_mediabox":129,"./react/components/post_editor/welcome_messages/image":130,"./react/components/post_editor/welcome_messages/instagram":131,"./react/components/post_editor/welcome_messages/music":132,"./react/components/post_editor/welcome_messages/video":133,"./react/components/relationship_buttons/follow_button":134,"./react/components/relationship_buttons/guess_button":135,"./react/components/relationship_buttons/ignore_button":136,"./react/components/relationship_buttons/mixins/relationship":137,"./react/components/relationship_buttons/request_button":138,"./react/components/search/button":139,"./react/components/search/field":140,"./react/components/search/search":141,"./react/components/settings_popup/settings_accounts_item":142,"./react/components/settings_popup/settings_avatar":143,"./react/components/settings_popup/settings_email/confirmation":144,"./react/components/settings_popup/settings_email/edit":145,"./react/components/settings_popup/settings_email/establish/edit":146,"./react/components/settings_popup/settings_email/establish/establish":147,"./react/components/settings_popup/settings_email/establish/show":148,"./react/components/settings_popup/settings_email/settings_email":149,"./react/components/settings_popup/settings_email/show":150,"./react/components/settings_popup/settings_header":151,"./react/components/settings_popup/settings_name":152,"./react/components/settings_popup/settings_password_input":153,"./react/components/settings_popup/settings_radio_item":154,"./react/components/settings_popup/settings_title":155,"./react/components/settings_popup/settings_vkontakte":156,"./react/components/settings_popup/toolbar_settings":157,"./react/components/shellbox/authorization/authorization":158,"./react/components/shellbox/authorization/vk":159,"./react/components/shellbox/buttons/vk_auth_button":160,"./react/components/shellbox/email_signin_shellbox":161,"./react/components/shellbox/email_signup_shellbox":162,"./react/components/shellbox/inviter_shellbox":163,"./react/components/shellbox/recovery_shellbox":164,"./react/components/shellbox/select_signin_shellbox":165,"./react/components/shellbox_layer":166,"./react/components/smart_follow_status":167,"./react/components/spinner":168,"./react/components/toolbars/close/close":169,"./react/components/toolbars/feed/feed":170,"./react/components/toolbars/toolbar_item":171,"./react/components/toolbars/user/user":172,"./react/components/transition/timeout_transition_group":173,"./react/components/voting":174,"./react/controllers/popup":175,"./react/controllers/shellbox":176,"./react/controllers/tasty_alert":177,"./react/controllers/tasty_confirm":178,"./react/controllers/tasty_events":179,"./react/controllers/tasty_locking_alert":180,"./react/controllers/tasty_notify":181,"./react/controllers/tasty_sound":182,"./react/dispatchers/current_user":183,"./react/entities/normalized_entry":184,"./react/mediators/comments":185,"./react/messaging/actions/conversation":186,"./react/messaging/actions/message":187,"./react/messaging/actions/notification":188,"./react/messaging/actions/popup":189,"./react/messaging/components/messages_popup/conversations/conversations":190,"./react/messaging/components/messages_popup/conversations/list/empty":191,"./react/messaging/components/messages_popup/conversations/list/list":192,"./react/messaging/components/messages_popup/conversations/list/list_item":193,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":194,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":195,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":196,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":197,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":198,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":199,"./react/messaging/components/messages_popup/loading_message":200,"./react/messaging/components/messages_popup/messages_popup":201,"./react/messaging/components/messages_popup/thread/message_form/message_form":202,"./react/messaging/components/messages_popup/thread/message_list/empty":203,"./react/messaging/components/messages_popup/thread/message_list/message_list":204,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":205,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":206,"./react/messaging/components/messages_popup/thread/thread":207,"./react/messaging/components/messages_popup/ui/back_button":208,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":209,"./react/messaging/components/notifications_popup/notifications/empty":210,"./react/messaging/components/notifications_popup/notifications/notification":211,"./react/messaging/components/notifications_popup/notifications/notifications":212,"./react/messaging/components/notifications_popup/notifications_popup":213,"./react/messaging/components/toolbars/indicators/indicators":214,"./react/messaging/components/toolbars/indicators/messages":215,"./react/messaging/components/toolbars/indicators/notifications":216,"./react/messaging/dispatchers/messaging":217,"./react/messaging/messaging_requester":218,"./react/messaging/messaging_service":219,"./react/messaging/messaging_testing":220,"./react/messaging/mocks/messaging_requester":221,"./react/messaging/mocks/messaging_service":222,"./react/messaging/mocks/mocks":223,"./react/messaging/models":224,"./react/messaging/stores/connection_state":225,"./react/messaging/stores/conversations":226,"./react/messaging/stores/messages":227,"./react/messaging/stores/messages_popup_state":228,"./react/messaging/stores/messaging_status":229,"./react/messaging/stores/notifications":230,"./react/mixins/activities":231,"./react/mixins/component_manipulations":232,"./react/mixins/dom_manipulations":233,"./react/mixins/error_timer":234,"./react/mixins/grammar":235,"./react/mixins/positions":236,"./react/mixins/requester":237,"./react/mixins/scroller":238,"./react/mixins/shake":239,"./react/mixins/touch":240,"./react/mixins/unmount":241,"./react/services/entry_normalizer":242,"./react/services/entry_store":243,"./react/services/positions":244,"./react/services/thumbor":245,"./react/services/uuid":246,"./react/stores/current_user":247,"./react/utils":248,"./routes":249,"./shared/api-routes":250,"./shared/dmodel":251,"./shared/fileReceiver":252,"./shared/is_mobile":253,"./shared/tasty":254,"./shared/utils":255}],2:[function(require,module,exports){
+},{"./editors":2,"./libs":3,"./locales":4,"./react/application":5,"./react/components/avatars/avatar":6,"./react/components/avatars/user_avatar":7,"./react/components/buttons/load_more":8,"./react/components/calendar/calendar":9,"./react/components/calendar/calendar_header":10,"./react/components/calendar/calendar_marker":11,"./react/components/calendar/calendar_period":12,"./react/components/calendar/calendar_timeline":13,"./react/components/design_settings_popup/controls":14,"./react/components/design_settings_popup/controls_items/_progressbar":15,"./react/components/design_settings_popup/controls_items/_radiobutton":16,"./react/components/design_settings_popup/controls_items/align_item":17,"./react/components/design_settings_popup/controls_items/background_item":18,"./react/components/design_settings_popup/controls_items/feed_color_item":19,"./react/components/design_settings_popup/controls_items/font_type_item":20,"./react/components/design_settings_popup/controls_items/header_color_item":21,"./react/components/design_settings_popup/controls_items/opacity_item":22,"./react/components/design_settings_popup/design_settings_popup":23,"./react/components/editable_field":24,"./react/components/embed":25,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":26,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":27,"./react/components/entry_comment_box/comment_form/comment_form":28,"./react/components/entry_comment_box/comment_list/comment":29,"./react/components/entry_comment_box/comment_list/comment_list":30,"./react/components/entry_comment_box/comment_list/comment_manager":31,"./react/components/entry_comment_box/comment_metabar/comment_metabar":32,"./react/components/entry_comment_box/comment_metabar/date":33,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":34,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":35,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":36,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":37,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":38,"./react/components/entry_comment_box/comment_metabar/reply":39,"./react/components/entry_comment_box/entry_comment_box":40,"./react/components/entry_comment_box/load_more":41,"./react/components/entry_comment_box/mixins/comments":42,"./react/components/entry_metabar/author":43,"./react/components/entry_metabar/comment":44,"./react/components/entry_metabar/date":45,"./react/components/entry_metabar/dropdown_menu":46,"./react/components/entry_metabar/dropdown_menu_items/delete_item":47,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":48,"./react/components/entry_metabar/dropdown_menu_items/item":49,"./react/components/entry_metabar/dropdown_menu_items/report_item":50,"./react/components/entry_metabar/dropdown_menu_items/watch_item":51,"./react/components/entry_metabar/entry_metabar":52,"./react/components/entry_metabar/tag":53,"./react/components/entry_metabar/tags":54,"./react/components/feed/bricks":55,"./react/components/feed/feed":56,"./react/components/feed/mixins/base":57,"./react/components/feed/tlog":58,"./react/components/follow_status":59,"./react/components/hero/profile/popup/followers_popup":60,"./react/components/hero/profile/popup/followings_popup":61,"./react/components/hero/profile/popup/items/follower_item":62,"./react/components/hero/profile/popup/items/following_item":63,"./react/components/hero/profile/popup/items/tag_item":64,"./react/components/hero/profile/popup/popup":65,"./react/components/hero/profile/popup/tags_popup":66,"./react/components/hero/profile/profile":67,"./react/components/hero/profile/profile_avatar":68,"./react/components/hero/profile/profile_head":69,"./react/components/hero/profile/profile_stats":70,"./react/components/hero/profile/profile_stats_item":71,"./react/components/images_collage":72,"./react/components/notifications/tasty_alert":73,"./react/components/notifications/tasty_confirm":74,"./react/components/notifications/tasty_locking_alert":75,"./react/components/notifications/tasty_notify":76,"./react/components/people/item":77,"./react/components/persons_popup/items/follower_relationship":78,"./react/components/persons_popup/items/following_relationship":79,"./react/components/persons_popup/items/guess_relationship":80,"./react/components/persons_popup/items/ignored_relationship":81,"./react/components/persons_popup/items/item":82,"./react/components/persons_popup/items/request_relationship":83,"./react/components/persons_popup/menu":84,"./react/components/persons_popup/menu_item":85,"./react/components/persons_popup/mixins/panel_mixin":86,"./react/components/persons_popup/panels/followers_panel":87,"./react/components/persons_popup/panels/followings_panel":88,"./react/components/persons_popup/panels/guesses_panel":89,"./react/components/persons_popup/panels/ignores_panel":90,"./react/components/persons_popup/panels/requests_panel":91,"./react/components/persons_popup/persons_popup":92,"./react/components/popup/header":93,"./react/components/popup/layout":94,"./react/components/popup/popup":95,"./react/components/popup/spinner":96,"./react/components/popup_box":97,"./react/components/post_editor/actions/actions":98,"./react/components/post_editor/actions/buttons/privacy":99,"./react/components/post_editor/actions/buttons/vote":100,"./react/components/post_editor/choicer":101,"./react/components/post_editor/demo":102,"./react/components/post_editor/edit_post":103,"./react/components/post_editor/editor_container":104,"./react/components/post_editor/editors/_tasty":105,"./react/components/post_editor/editors/anonymous":106,"./react/components/post_editor/editors/image":107,"./react/components/post_editor/editors/instagram":108,"./react/components/post_editor/editors/mixins/autosave":109,"./react/components/post_editor/editors/music":110,"./react/components/post_editor/editors/quote":111,"./react/components/post_editor/editors/text":112,"./react/components/post_editor/editors/video":113,"./react/components/post_editor/images_mediabox/loaded":114,"./react/components/post_editor/images_mediabox/url_insert":115,"./react/components/post_editor/layout":116,"./react/components/post_editor/mediabox/actions":117,"./react/components/post_editor/mediabox/layout":118,"./react/components/post_editor/mediabox/loading_progress":119,"./react/components/post_editor/mixins/dragging":120,"./react/components/post_editor/mixins/images_form":121,"./react/components/post_editor/mixins/layout":122,"./react/components/post_editor/mixins/persistence":123,"./react/components/post_editor/mixins/video":124,"./react/components/post_editor/new_anonymous_post":125,"./react/components/post_editor/new_post":126,"./react/components/post_editor/video_mediabox/embeded":127,"./react/components/post_editor/video_mediabox/loading":128,"./react/components/post_editor/video_mediabox/url_insert":129,"./react/components/post_editor/video_mediabox/video_mediabox":130,"./react/components/post_editor/welcome_messages/image":131,"./react/components/post_editor/welcome_messages/instagram":132,"./react/components/post_editor/welcome_messages/music":133,"./react/components/post_editor/welcome_messages/video":134,"./react/components/relationship_buttons/follow_button":135,"./react/components/relationship_buttons/guess_button":136,"./react/components/relationship_buttons/ignore_button":137,"./react/components/relationship_buttons/mixins/relationship":138,"./react/components/relationship_buttons/request_button":139,"./react/components/search/button":140,"./react/components/search/field":141,"./react/components/search/search":142,"./react/components/settings_popup/settings_accounts_item":143,"./react/components/settings_popup/settings_avatar":144,"./react/components/settings_popup/settings_email/confirmation":145,"./react/components/settings_popup/settings_email/edit":146,"./react/components/settings_popup/settings_email/establish/edit":147,"./react/components/settings_popup/settings_email/establish/establish":148,"./react/components/settings_popup/settings_email/establish/show":149,"./react/components/settings_popup/settings_email/settings_email":150,"./react/components/settings_popup/settings_email/show":151,"./react/components/settings_popup/settings_header":152,"./react/components/settings_popup/settings_name":153,"./react/components/settings_popup/settings_password_input":154,"./react/components/settings_popup/settings_radio_item":155,"./react/components/settings_popup/settings_title":156,"./react/components/settings_popup/settings_vkontakte":157,"./react/components/settings_popup/toolbar_settings":158,"./react/components/shellbox/authorization/authorization":159,"./react/components/shellbox/authorization/vk":160,"./react/components/shellbox/buttons/vk_auth_button":161,"./react/components/shellbox/email_signin_shellbox":162,"./react/components/shellbox/email_signup_shellbox":163,"./react/components/shellbox/inviter_shellbox":164,"./react/components/shellbox/recovery_shellbox":165,"./react/components/shellbox/select_signin_shellbox":166,"./react/components/shellbox_layer":167,"./react/components/smart_follow_status":168,"./react/components/spinner":169,"./react/components/tlog_alert":170,"./react/components/toolbars/close/close":171,"./react/components/toolbars/feed/feed":172,"./react/components/toolbars/toolbar_item":173,"./react/components/toolbars/user/user":174,"./react/components/transition/timeout_transition_group":175,"./react/components/voting":176,"./react/controllers/popup":177,"./react/controllers/shellbox":178,"./react/controllers/tasty_alert":179,"./react/controllers/tasty_confirm":180,"./react/controllers/tasty_events":181,"./react/controllers/tasty_locking_alert":182,"./react/controllers/tasty_notify":183,"./react/controllers/tasty_sound":184,"./react/dispatchers/current_user":185,"./react/entities/normalized_entry":186,"./react/mediators/comments":187,"./react/messaging/actions/conversation":188,"./react/messaging/actions/message":189,"./react/messaging/actions/notification":190,"./react/messaging/actions/popup":191,"./react/messaging/components/messages_popup/conversations/conversations":192,"./react/messaging/components/messages_popup/conversations/list/empty":193,"./react/messaging/components/messages_popup/conversations/list/list":194,"./react/messaging/components/messages_popup/conversations/list/list_item":195,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":196,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":197,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":198,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":199,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":200,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":201,"./react/messaging/components/messages_popup/loading_message":202,"./react/messaging/components/messages_popup/messages_popup":203,"./react/messaging/components/messages_popup/thread/message_form/message_form":204,"./react/messaging/components/messages_popup/thread/message_list/empty":205,"./react/messaging/components/messages_popup/thread/message_list/message_list":206,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":207,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":208,"./react/messaging/components/messages_popup/thread/thread":209,"./react/messaging/components/messages_popup/ui/back_button":210,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":211,"./react/messaging/components/notifications_popup/notifications/empty":212,"./react/messaging/components/notifications_popup/notifications/notification":213,"./react/messaging/components/notifications_popup/notifications/notifications":214,"./react/messaging/components/notifications_popup/notifications_popup":215,"./react/messaging/components/toolbars/indicators/indicators":216,"./react/messaging/components/toolbars/indicators/messages":217,"./react/messaging/components/toolbars/indicators/notifications":218,"./react/messaging/dispatchers/messaging":219,"./react/messaging/messaging_requester":220,"./react/messaging/messaging_service":221,"./react/messaging/messaging_testing":222,"./react/messaging/mocks/messaging_requester":223,"./react/messaging/mocks/messaging_service":224,"./react/messaging/mocks/mocks":225,"./react/messaging/models":226,"./react/messaging/stores/connection_state":227,"./react/messaging/stores/conversations":228,"./react/messaging/stores/messages":229,"./react/messaging/stores/messages_popup_state":230,"./react/messaging/stores/messaging_status":231,"./react/messaging/stores/notifications":232,"./react/mixins/activities":233,"./react/mixins/component_manipulations":234,"./react/mixins/dom_manipulations":235,"./react/mixins/error_timer":236,"./react/mixins/grammar":237,"./react/mixins/positions":238,"./react/mixins/requester":239,"./react/mixins/scroller":240,"./react/mixins/shake":241,"./react/mixins/touch":242,"./react/mixins/unmount":243,"./react/services/entry_normalizer":244,"./react/services/entry_store":245,"./react/services/positions":246,"./react/services/thumbor":247,"./react/services/uuid":248,"./react/stores/current_user":249,"./react/utils":250,"./routes":251,"./shared/api-routes":252,"./shared/dmodel":253,"./shared/fileReceiver":254,"./shared/is_mobile":255,"./shared/tasty":256,"./shared/utils":257}],2:[function(require,module,exports){
 $(function() {
   var mediumeditor;
   _.each(document.querySelectorAll('.mediumjs-editor'), function(el) {
@@ -559,6 +563,10 @@ window.Modernizr = require('Modernizr');
 
 window.imagesLoaded = require('imagesloaded');
 
+window.MediumEditor = require('medium-editor');
+
+window.Undo = require('undo');
+
 require('honeybadger');
 
 require('swfobject');
@@ -568,8 +576,6 @@ require('es5-shim');
 require('jquery.mousewheel')(window.jQuery);
 
 require('jquery.scrollto');
-
-window.Undo = require('undo');
 
 require('baron');
 
@@ -605,7 +611,7 @@ require('jquery.shapeshift');
 
 
 
-},{"Modernizr":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":256,"honeybadger":undefined,"i18next":undefined,"imagesloaded":259,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"momentjs":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"reactUjs":undefined,"swfobject":undefined,"underscore":undefined,"undo":undefined}],4:[function(require,module,exports){
+},{"Modernizr":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":258,"honeybadger":undefined,"i18next":undefined,"imagesloaded":261,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"medium-editor":undefined,"momentjs":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"reactUjs":undefined,"swfobject":undefined,"underscore":undefined,"undo":undefined}],4:[function(require,module,exports){
 var locale;
 
 locale = 'ru';
@@ -1912,6 +1918,93 @@ window.EditableField = React.createClass({displayName: 'EditableField',
 },{}],25:[function(require,module,exports){
 
 /** @jsx React.DOM */
+window.EmbedComponent = React.createClass({displayName: 'EmbedComponent',
+  propTypes: {
+    autoplay: React.PropTypes.bool.isRequired,
+    coverImageUrl: React.PropTypes.string,
+    frameWidth: React.PropTypes.number.isRequired,
+    frameHeight: React.PropTypes.number.isRequired,
+    embedHtml: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    if ((this.props.coverImageUrl != null) && !this.props.autoplay) {
+      return this.transferPropsTo(new EmbedComponentWithCover);
+    } else {
+      return this.transferPropsTo(new EmbedComponentNoCover);
+    }
+  }
+});
+
+window.EmbedComponentNoCover = React.createClass({displayName: 'EmbedComponentNoCover',
+  propTypes: {
+    frameWidth: React.PropTypes.number.isRequired,
+    frameHeight: React.PropTypes.number.isRequired,
+    embedHtml: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    var figureStyle;
+    figureStyle = {
+      width: this.props.frameWidth,
+      height: this.props.frameHeight
+    };
+    return React.DOM.figure({className: "video video-without-cover", ref: "container", 
+             dangerouslySetInnerHTML: {__html: this.props.embedHtml}, 
+             style: figureStyle});
+  },
+  componentDidMount: function() {
+    var $container, $iframe;
+    $container = $(this.refs.container.getDOMNode());
+    $iframe = $container.find("iframe");
+    return $container.height($iframe.height());
+  }
+});
+
+window.EmbedComponentWithCover = React.createClass({displayName: 'EmbedComponentWithCover',
+  propTypes: {
+    coverImageUrl: React.PropTypes.string.isRequired,
+    frameWidth: React.PropTypes.number.isRequired,
+    frameHeight: React.PropTypes.number.isRequired,
+    embedHtml: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    var coverStyle, figureStyle;
+    coverStyle = {
+      backgroundImage: "url(" + this.props.coverImageUrl + ")"
+    };
+    figureStyle = {
+      width: this.props.frameWidth,
+      height: this.props.frameHeight
+    };
+    return React.DOM.figure({className: "video", ref: "topContainer", style: figureStyle}, 
+      React.DOM.div({className: "video__cover", style: coverStyle}, 
+        React.DOM.div({className: "video__overlay", onClick: this.play}), 
+        React.DOM.div({className: "video__embed", ref: "embedContainer"})
+      )
+      );
+  },
+  play: function() {
+    var $embed, $iframe;
+    $embed = $(this.refs.embedContainer.getDOMNode());
+    $embed.show().append(this.props.embedHtml);
+    $embed.width('100%');
+    $embed.height('100%');
+    $iframe = $embed.find("iframe");
+    $iframe.attr({
+      width: $embed.data('width') || $embed.width()
+    });
+    $iframe.attr({
+      height: $embed.data('height') || $embed.height()
+    });
+    $embed.height($iframe.height());
+    return $(this.refs.topContainer.getDOMNode()).height($iframe.height());
+  }
+});
+
+
+
+},{}],26:[function(require,module,exports){
+
+/** @jsx React.DOM */
 var FORM_STATE, HIDDEN_STATE, LINK_STATE;
 
 HIDDEN_STATE = 'hidden';
@@ -2067,7 +2160,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({displayName
 
 
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentEditFormManager = React.createClass({displayName: 'EntryCommentBox_CommentEditFormManager',
@@ -2129,7 +2222,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({displayName: 
 
 
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var REPLIES_LIMIT;
@@ -2247,7 +2340,7 @@ window.EntryCommentBox_CommentForm = React.createClass({displayName: 'EntryComme
 
 
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_Comment = React.createClass({displayName: 'EntryCommentBox_Comment',
@@ -2312,7 +2405,7 @@ window.EntryCommentBox_Comment = React.createClass({displayName: 'EntryCommentBo
 
 
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentList = React.createClass({displayName: 'EntryCommentBox_CommentList',
@@ -2363,7 +2456,7 @@ window.EntryCommentBox_CommentList = React.createClass({displayName: 'EntryComme
 
 
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentManager = React.createClass({displayName: 'EntryCommentBox_CommentManager',
@@ -2431,7 +2524,7 @@ window.EntryCommentBox_CommentManager = React.createClass({displayName: 'EntryCo
 
 
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBar = React.createClass({displayName: 'EntryCommentBox_CommentMetaBar',
@@ -2468,7 +2561,7 @@ window.EntryCommentBox_CommentMetaBar = React.createClass({displayName: 'EntryCo
 
 
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDate = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDate',
@@ -2505,7 +2598,7 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass({displayName: 'Ent
 
 
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT;
@@ -2597,7 +2690,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass({displayNa
 
 
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem',
@@ -2644,7 +2737,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
 
 
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuEditItem',
@@ -2667,7 +2760,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({d
 
 
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuLinkItem',
@@ -2689,7 +2782,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({d
 
 
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuReportItem',
@@ -2732,7 +2825,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
 
 
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarReply = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarReply',
@@ -2753,7 +2846,7 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass({displayName: 'En
 
 
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MORE_COMMENTS_LIMIT;
@@ -2825,7 +2918,7 @@ window.EntryCommentBox = React.createClass({displayName: 'EntryCommentBox',
 
 
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_LoadMore = React.createClass({displayName: 'EntryCommentBox_LoadMore',
@@ -2860,7 +2953,7 @@ window.EntryCommentBox_LoadMore = React.createClass({displayName: 'EntryCommentB
 
 
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 var CommentsMixin;
 
 CommentsMixin = {
@@ -3037,7 +3130,7 @@ React.mixins.add('CommentsMixin', [CommentsMixin, RequesterMixin, ComponentManip
 
 
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarAuthor = React.createClass({displayName: 'EntryMetabarAuthor',
@@ -3062,7 +3155,7 @@ window.EntryMetabarAuthor = React.createClass({displayName: 'EntryMetabarAuthor'
 
 
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarComment = React.createClass({displayName: 'EntryMetabarComment',
@@ -3104,7 +3197,7 @@ window.EntryMetabarComment = React.createClass({displayName: 'EntryMetabarCommen
 
 
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDate = React.createClass({displayName: 'EntryMetabarDate',
@@ -3137,7 +3230,7 @@ window.EntryMetabarDate = React.createClass({displayName: 'EntryMetabarDate',
 
 
 
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_BETWEEN_TOGGLER_AND_MENU, MOUSE_LEAVE_TIMEOUT;
@@ -3291,7 +3384,7 @@ window.EntryMetabarDropdownMenu = React.createClass({displayName: 'EntryMetabarD
 
 
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuDeleteItem = React.createClass({displayName: 'EntryMetabarDropdownMenuDeleteItem',
@@ -3366,7 +3459,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({displayName: 'Ent
 
 
 
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({displayName: 'EntryMetabarDropdownMenuFavoriteItem',
@@ -3475,7 +3568,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({displayName: 'E
 
 
 
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuItem = React.createClass({displayName: 'EntryMetabarDropdownMenuItem',
@@ -3495,7 +3588,7 @@ window.EntryMetabarDropdownMenuItem = React.createClass({displayName: 'EntryMeta
 
 
 
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuReportItem = React.createClass({displayName: 'EntryMetabarDropdownMenuReportItem',
@@ -3537,7 +3630,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({displayName: 'Ent
 
 
 
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuWatchItem = React.createClass({displayName: 'EntryMetabarDropdownMenuWatchItem',
@@ -3635,7 +3728,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({displayName: 'Entr
 
 
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabar = React.createClass({displayName: 'EntryMetabar',
@@ -3703,7 +3796,7 @@ window.EntryMetabar = React.createClass({displayName: 'EntryMetabar',
 
 
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarTag = React.createClass({displayName: 'EntryMetabarTag',
@@ -3722,7 +3815,7 @@ window.EntryMetabarTag = React.createClass({displayName: 'EntryMetabarTag',
 
 
 
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarTags = React.createClass({displayName: 'EntryMetabarTags',
@@ -3753,7 +3846,7 @@ window.EntryMetabarTags = React.createClass({displayName: 'EntryMetabarTags',
 
 
 
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FeedBricks = React.createClass({displayName: 'FeedBricks',
@@ -3763,8 +3856,8 @@ window.FeedBricks = React.createClass({displayName: 'FeedBricks',
     isLoadingNew: React.PropTypes.bool,
     isLoadingPrevious: React.PropTypes.bool
   },
-  componentDidUpdate: function() {
-    if (this.props.feedHtml != null) {
+  componentDidUpdate: function(prevProps) {
+    if (this.props.feedHtml !== prevProps.feedHtml) {
       return this.initGridManager();
     }
   },
@@ -3803,7 +3896,7 @@ window.FeedBricks = React.createClass({displayName: 'FeedBricks',
 
 
 
-},{}],55:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
@@ -3853,7 +3946,6 @@ window.Feed = React.createClass({displayName: 'Feed',
     this.safeUpdateState({
       currentState: APPEND_LOADING_STATE
     });
-    console.log(window.location.href);
     return this.createRequest({
       url: window.location.href,
       data: {
@@ -3899,7 +3991,7 @@ window.Feed = React.createClass({displayName: 'Feed',
 
 
 
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 var THRESHOLD;
 
 THRESHOLD = 400;
@@ -3936,7 +4028,7 @@ window.FeedBaseMixin = {
 
 
 
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FeedTlog = React.createClass({displayName: 'FeedTlog',
@@ -3970,7 +4062,7 @@ window.FeedTlog = React.createClass({displayName: 'FeedTlog',
 
 
 
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FollowStatus = React.createClass({displayName: 'FollowStatus',
@@ -3986,7 +4078,7 @@ window.FollowStatus = React.createClass({displayName: 'FollowStatus',
 
 
 
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroProfileStats_FollowersPopup',
@@ -4075,7 +4167,7 @@ window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroPr
 
 
 
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroProfileStats_FollowingsPopup',
@@ -4164,7 +4256,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroP
 
 
 
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowerItem = React.createClass({displayName: 'HeroProfileStats_FollowerItem',
@@ -4188,7 +4280,7 @@ window.HeroProfileStats_FollowerItem = React.createClass({displayName: 'HeroProf
 
 
 
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowingItem = React.createClass({displayName: 'HeroProfileStats_FollowingItem',
@@ -4212,7 +4304,7 @@ window.HeroProfileStats_FollowingItem = React.createClass({displayName: 'HeroPro
 
 
 
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_TagItem = React.createClass({displayName: 'HeroProfileStats_TagItem',
@@ -4233,7 +4325,7 @@ window.HeroProfileStats_TagItem = React.createClass({displayName: 'HeroProfileSt
 
 
 
-},{}],64:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION, MARGIN;
@@ -4314,7 +4406,7 @@ window.HeroProfileStats_Popup = React.createClass({displayName: 'HeroProfileStat
 
 
 
-},{}],65:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfileStats_TagsPopup',
@@ -4402,7 +4494,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfile
 
 
 
-},{}],66:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS;
@@ -4540,7 +4632,7 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
 
 
 
-},{}],67:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var HERO_AVATAR_SIZE;
@@ -4565,7 +4657,7 @@ window.HeroProfileAvatar = React.createClass({displayName: 'HeroProfileAvatar',
 
 
 
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileHead = React.createClass({displayName: 'HeroProfileHead',
@@ -4625,7 +4717,7 @@ window.HeroProfileHeadStatic = React.createClass({displayName: 'HeroProfileHeadS
 
 
 
-},{}],69:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats = React.createClass({displayName: 'HeroProfileStats',
@@ -4752,7 +4844,7 @@ window.HeroProfileStats = React.createClass({displayName: 'HeroProfileStats',
 
 
 
-},{}],70:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStatsItem = React.createClass({displayName: 'HeroProfileStatsItem',
@@ -4796,7 +4888,7 @@ window.HeroProfileStatsItem = React.createClass({displayName: 'HeroProfileStatsI
 
 
 
-},{}],71:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FIRST_ROW_RATIO, NEXT_ROWS_RATIO;
@@ -4941,7 +5033,7 @@ window.ImagesCollage_Legacy = React.createClass({displayName: 'ImagesCollage_Leg
 
 
 
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION;
@@ -5008,7 +5100,7 @@ window.TastyAlert = React.createClass({displayName: 'TastyAlert',
 
 
 
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION;
@@ -5074,7 +5166,7 @@ window.TastyConfirm = React.createClass({displayName: 'TastyConfirm',
 
 
 
-},{}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION, START_TIMEOUT;
@@ -5127,7 +5219,7 @@ window.TastyLockingAlert = React.createClass({displayName: 'TastyLockingAlert',
 
 
 
-},{}],75:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEFAULT_TIMEOUT, DEFAULT_TYPE;
@@ -5177,7 +5269,7 @@ window.TastyNotify = React.createClass({displayName: 'TastyNotify',
 
 
 
-},{}],76:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PeopleItem = React.createClass({displayName: 'PeopleItem',
@@ -5215,7 +5307,7 @@ window.PeopleItem = React.createClass({displayName: 'PeopleItem',
 
 
 
-},{}],77:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'PersonsPopup_FollowerRelationship',
@@ -5230,14 +5322,15 @@ window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'Pers
   },
   render: function() {
     return PersonsPopup_PersonItem({user:  this.props.relationship.reader}, 
-      FollowButton({relationship:  this.props.relationship.reverse_relationship})
+      RelationshipFollowerButton({relationship:  this.props.relationship.reverse_relationship, 
+                                  onRequestEnd:  this.props.onRequestEnd})
     );
   }
 });
 
 
 
-},{}],78:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowingRelationship = React.createClass({displayName: 'PersonsPopup_FollowingRelationship',
@@ -5259,7 +5352,7 @@ window.PersonsPopup_FollowingRelationship = React.createClass({displayName: 'Per
 
 
 
-},{}],79:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_GuessRelationship = React.createClass({displayName: 'PersonsPopup_GuessRelationship',
@@ -5283,7 +5376,7 @@ window.PersonsPopup_GuessRelationship = React.createClass({displayName: 'Persons
 
 
 
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_IgnoredRelationship = React.createClass({displayName: 'PersonsPopup_IgnoredRelationship',
@@ -5305,7 +5398,7 @@ window.PersonsPopup_IgnoredRelationship = React.createClass({displayName: 'Perso
 
 
 
-},{}],81:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_PersonItem',
@@ -5337,7 +5430,7 @@ window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_P
 
 
 
-},{}],82:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'PersonsPopup_RequestRelationship',
@@ -5361,7 +5454,7 @@ window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'Perso
 
 
 
-},{}],83:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FOLLOWERS, FOLLOWINGS, GUESSES, IGNORES, REQUESTS;
@@ -5426,7 +5519,7 @@ window.PersonsPopup_Menu = React.createClass({displayName: 'PersonsPopup_Menu',
 
 
 
-},{}],84:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PersonsPopup_MenuItem;
@@ -5455,7 +5548,7 @@ window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass({displa
 
 
 
-},{}],85:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_PanelMixin = {
@@ -5590,8 +5683,16 @@ window.PersonsPopup_PanelMixin = {
     return this.getPanelData(lastLoadedPosition);
   },
   removeRelationship: function(relationship) {
-    var newRelationships;
-    newRelationships = _.without(this.props.relationships, relationship);
+    var i, newRelationships, rel, _i, _len, _ref;
+    newRelationships = this.props.relationships.slice(0);
+    _ref = this.props.relationships;
+    for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+      rel = _ref[i];
+      if (rel.id === relationship.id || rel.reverse_relationship.id === relationship.id) {
+        newRelationships.splice(i, 1);
+        return;
+      }
+    }
     return this.props.onLoad('update', {
       total_count: this.props.total_count - 1,
       items: newRelationships
@@ -5603,7 +5704,7 @@ React.mixins.add('PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, win
 
 
 
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPopup_FollowersPanel',
@@ -5616,7 +5717,7 @@ window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPop
 
 
 
-},{}],87:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPopup_FollowingsPanel',
@@ -5629,7 +5730,7 @@ window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPo
 
 
 
-},{}],88:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup_GuessesPanel',
@@ -5642,7 +5743,7 @@ window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup
 
 
 
-},{}],89:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup_IgnoresPanel',
@@ -5655,7 +5756,7 @@ window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup
 
 
 
-},{}],90:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopup_RequestsPanel',
@@ -5668,7 +5769,7 @@ window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopu
 
 
 
-},{}],91:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PERSON_POPUP_TITLE;
@@ -5778,7 +5879,7 @@ window.PersonsPopup = React.createClass({displayName: 'PersonsPopup',
 
 
 
-},{}],92:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupHeader = React.createClass({displayName: 'PopupHeader',
@@ -5814,7 +5915,7 @@ window.PopupHeader = React.createClass({displayName: 'PopupHeader',
 
 
 
-},{}],93:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupLayout = React.createClass({displayName: 'PopupLayout',
@@ -5848,7 +5949,7 @@ window.PopupLayout = React.createClass({displayName: 'PopupLayout',
 
 
 
-},{}],94:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var NO_TRANSITION_CLASS;
@@ -5936,7 +6037,7 @@ window.Popup = React.createClass({displayName: 'Popup',
 
 
 
-},{}],95:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupSpinner = React.createClass({displayName: 'PopupSpinner',
@@ -5956,7 +6057,7 @@ window.PopupSpinner = React.createClass({displayName: 'PopupSpinner',
 
 
 
-},{}],96:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupBox = React.createClass({displayName: 'PopupBox',
@@ -6006,7 +6107,7 @@ window.PopupBox = React.createClass({displayName: 'PopupBox',
 
 
 
-},{}],97:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ENTRY_PRIVACY_ANONYMOUS, ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, ENTRY_PRIVACY_PUBLIC_WITH_VOTING, PREVIEW_BODY_CLASSES, TLOG_TYPE_ANONYMOUS, TLOG_TYPE_PRIVATE, TLOG_TYPE_PUBLIC;
@@ -6132,7 +6233,7 @@ window.PostActions = React.createClass({displayName: 'PostActions',
 
 
 
-},{}],98:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostActions_PrivacyButton = React.createClass({displayName: 'PostActions_PrivacyButton',
@@ -6179,7 +6280,7 @@ window.PostActions_PrivacyButton = React.createClass({displayName: 'PostActions_
 
 
 
-},{}],99:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostActions_VoteButton = React.createClass({displayName: 'PostActions_VoteButton',
@@ -6224,7 +6325,7 @@ window.PostActions_VoteButton = React.createClass({displayName: 'PostActions_Vot
 
 
 
-},{}],100:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CHOICER_ITEMS, CHOICER_TYPES;
@@ -6344,7 +6445,7 @@ window.PostEditor_ChoicerItem = React.createClass({displayName: 'PostEditor_Choi
 
 
 
-},{}],101:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEMO_IDS;
@@ -6433,7 +6534,7 @@ window.PostEditor_Demo = React.createClass({displayName: 'PostEditor_Demo',
 
 
 
-},{}],102:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_EditPost = React.createClass({displayName: 'PostEditor_EditPost',
@@ -6464,7 +6565,7 @@ window.PostEditor_EditPost = React.createClass({displayName: 'PostEditor_EditPos
 
 
 
-},{}],103:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_EditorContainer',
@@ -6592,7 +6693,7 @@ window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],104:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDITOR_MODES, EDITOR_OPTIONS;
@@ -6715,7 +6816,7 @@ window.TastyEditor = React.createClass({displayName: 'TastyEditor',
 
 
 
-},{}],105:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_AnonymousEditor = React.createClass({displayName: 'PostEditor_AnonymousEditor',
@@ -6774,7 +6875,7 @@ window.PostEditor_AnonymousEditor = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],106:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var INSERT_MODE, LOADED_MODE, WELCOME_MODE;
@@ -6958,7 +7059,7 @@ window.PostEditor_ImageEditor = React.createClass({displayName: 'PostEditor_Imag
 
 
 
-},{}],107:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_InstagramEditor = React.createClass({displayName: 'PostEditor_InstagramEditor',
@@ -6993,7 +7094,7 @@ window.PostEditor_InstagramEditor = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],108:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 var AUTOSAVE_TIME;
 
 AUTOSAVE_TIME = 10000;
@@ -7026,7 +7127,7 @@ window.PostEditor_AutosaveMixin = {
 
 
 
-},{}],109:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_MusicEditor = React.createClass({displayName: 'PostEditor_MusicEditor',
@@ -7061,7 +7162,7 @@ window.PostEditor_MusicEditor = React.createClass({displayName: 'PostEditor_Musi
 
 
 
-},{}],110:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_QuoteEditor = React.createClass({displayName: 'PostEditor_QuoteEditor',
@@ -7115,7 +7216,7 @@ window.PostEditor_QuoteEditor = React.createClass({displayName: 'PostEditor_Quot
 
 
 
-},{}],111:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_TextEditor = React.createClass({displayName: 'PostEditor_TextEditor',
@@ -7175,7 +7276,7 @@ window.PostEditor_TextEditor = React.createClass({displayName: 'PostEditor_TextE
 
 
 
-},{}],112:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_VideoEditor = React.createClass({displayName: 'PostEditor_VideoEditor',
@@ -7210,7 +7311,7 @@ window.PostEditor_VideoEditor = React.createClass({displayName: 'PostEditor_Vide
 
 
 
-},{}],113:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_Loaded',
@@ -7236,7 +7337,7 @@ window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_L
 
 
 
-},{}],114:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ImagesMediaBox_UrlInsert = React.createClass({displayName: 'ImagesMediaBox_UrlInsert',
@@ -7266,7 +7367,7 @@ window.ImagesMediaBox_UrlInsert = React.createClass({displayName: 'ImagesMediaBo
 
 
 
-},{}],115:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_Layout = React.createClass({displayName: 'PostEditor_Layout',
@@ -7296,7 +7397,7 @@ window.PostEditor_Layout = React.createClass({displayName: 'PostEditor_Layout',
 
 
 
-},{}],116:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_Actions = React.createClass({displayName: 'MediaBox_Actions',
@@ -7330,7 +7431,7 @@ window.MediaBox_Actions = React.createClass({displayName: 'MediaBox_Actions',
 
 
 
-},{}],117:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_Layout = React.createClass({displayName: 'MediaBox_Layout',
@@ -7365,7 +7466,7 @@ window.MediaBox_Layout = React.createClass({displayName: 'MediaBox_Layout',
 
 
 
-},{}],118:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_LoadingProgress = React.createClass({displayName: 'MediaBox_LoadingProgress',
@@ -7383,7 +7484,7 @@ window.MediaBox_LoadingProgress = React.createClass({displayName: 'MediaBox_Load
 
 
 
-},{}],119:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 var DRAGOFF_TIMEOUT, DRAG_HOVER_CLASS;
 
 DRAG_HOVER_CLASS = 'state--drag-hover';
@@ -7451,7 +7552,7 @@ window.PostEditor_Dragging = {
 
 
 
-},{}],120:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 var ACCEPT_FILE_TYPES, MAX_FILE_SIZE, MAX_NUMBER_OF_FILES;
 
 ACCEPT_FILE_TYPES = /(\.|\/)(gif|jpe?g|png)$/i;
@@ -7633,7 +7734,7 @@ window.PostEditor_ImagesForm = {
 
 
 
-},{}],121:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.TLOG_TYPES = ['public', 'private', 'anonymous'];
@@ -7690,7 +7791,7 @@ window.PostEditor_LayoutMixin = {
 
 
 
-},{}],122:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 window.PostEditor_PersistenceMixin = {
   propTypes: {
     activitiesHandler: React.PropTypes.object.isRequired,
@@ -7753,7 +7854,7 @@ React.mixins.add('PostEditor_PersistenceMixin', [window.PostEditor_PersistenceMi
 
 
 
-},{}],123:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 window.PostEditor_VideoMixin = {
   propTypes: {
     normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
@@ -7799,7 +7900,7 @@ window.PostEditor_VideoMixin = {
 
 
 
-},{}],124:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_NewAnonymousPost = React.createClass({displayName: 'PostEditor_NewAnonymousPost',
@@ -7822,7 +7923,7 @@ window.PostEditor_NewAnonymousPost = React.createClass({displayName: 'PostEditor
 
 
 
-},{}],125:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEFAULT_POST_TYPE;
@@ -7853,7 +7954,7 @@ window.PostEditor_NewPost = React.createClass({displayName: 'PostEditor_NewPost'
 
 
 
-},{}],126:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_Embeded = React.createClass({displayName: 'VideoMediaBox_Embeded',
@@ -7872,7 +7973,7 @@ window.VideoMediaBox_Embeded = React.createClass({displayName: 'VideoMediaBox_Em
 
 
 
-},{}],127:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_Loading = React.createClass({displayName: 'VideoMediaBox_Loading',
@@ -7894,7 +7995,7 @@ window.VideoMediaBox_Loading = React.createClass({displayName: 'VideoMediaBox_Lo
 
 
 
-},{}],128:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_UrlInsert = React.createClass({displayName: 'VideoMediaBox_UrlInsert',
@@ -7927,7 +8028,7 @@ window.VideoMediaBox_UrlInsert = React.createClass({displayName: 'VideoMediaBox_
 
 
 
-},{}],129:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EMBEDED_MODE, INSERT_MODE, LOADING_MODE, WELCOME_MODE;
@@ -8073,7 +8174,7 @@ window.VideoMediaBox = React.createClass({displayName: 'VideoMediaBox',
 
 
 
-},{}],130:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_ImageWelcome = React.createClass({displayName: 'MediaBox_ImageWelcome',
@@ -8107,7 +8208,7 @@ window.MediaBox_ImageWelcome = React.createClass({displayName: 'MediaBox_ImageWe
 
 
 
-},{}],131:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_InstagramWelcome = React.createClass({displayName: 'MediaBox_InstagramWelcome',
@@ -8131,7 +8232,7 @@ window.MediaBox_InstagramWelcome = React.createClass({displayName: 'MediaBox_Ins
 
 
 
-},{}],132:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_MusicWelcome = React.createClass({displayName: 'MediaBox_MusicWelcome',
@@ -8157,7 +8258,7 @@ window.MediaBox_MusicWelcome = React.createClass({displayName: 'MediaBox_MusicWe
 
 
 
-},{}],133:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_VideoWelcome = React.createClass({displayName: 'MediaBox_VideoWelcome',
@@ -8183,7 +8284,7 @@ window.MediaBox_VideoWelcome = React.createClass({displayName: 'MediaBox_VideoWe
 
 
 
-},{}],134:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
@@ -8317,7 +8418,7 @@ window.FollowButton = React.createClass({displayName: 'FollowButton',
 
 
 
-},{}],135:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.RelationshipGuessButton = React.createClass({displayName: 'RelationshipGuessButton',
@@ -8354,7 +8455,7 @@ window.RelationshipGuessButton = React.createClass({displayName: 'RelationshipGu
 
 
 
-},{}],136:[function(require,module,exports){
+},{}],137:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_IGNORED;
@@ -8423,7 +8524,7 @@ window.RelationshipIgnoreButton = React.createClass({displayName: 'RelationshipI
 
 
 
-},{}],137:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 window.RelationshipMixin = {
   componentWillUnmount: function() {
     return this.clearErrorTimer();
@@ -8473,6 +8574,34 @@ window.RelationshipMixin = {
             relationship: data
           });
           return TastyEvents.trigger(TastyEvents.keys.follow_status_changed(data.user_id), [data.state]);
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.startErrorTimer();
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            isProcess: false
+          });
+        };
+      })(this)
+    });
+  },
+  unfollowFromYourself: function(options) {
+    this.closeError();
+    this.safeUpdateState({
+      isProcess: true
+    });
+    return this.createRequest({
+      url: Routes.api.unfollow_from_yourself_url(this.props.relationship.user_id),
+      method: 'DELETE',
+      success: (function(_this) {
+        return function(data) {
+          return options != null ? typeof options.success === "function" ? options.success() : void 0 : void 0;
         };
       })(this),
       error: (function(_this) {
@@ -8644,7 +8773,7 @@ React.mixins.add('RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, Reque
 
 
 
-},{}],138:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_REQUESTED;
@@ -8711,7 +8840,7 @@ window.RelationshipRequestButton = React.createClass({displayName: 'Relationship
 
 
 
-},{}],139:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SearchButton = React.createClass({displayName: 'SearchButton',
@@ -8728,7 +8857,7 @@ window.SearchButton = React.createClass({displayName: 'SearchButton',
 
 
 
-},{}],140:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SearchField = React.createClass({displayName: 'SearchField',
@@ -8776,7 +8905,7 @@ window.SearchField = React.createClass({displayName: 'SearchField',
 
 
 
-},{}],141:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CLOSED, OPENED;
@@ -8849,7 +8978,7 @@ window.Search = React.createClass({displayName: 'Search',
 
 
 
-},{}],142:[function(require,module,exports){
+},{}],143:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsAccountsItem = React.createClass({displayName: 'SettingsAccountsItem',
@@ -8908,7 +9037,7 @@ module.experts = window.SettingsAccountsItem = React.createClass({displayName: '
 
 
 
-},{}],143:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsAvatar = React.createClass({displayName: 'SettingsAvatar',
@@ -8961,7 +9090,7 @@ module.experts = window.SettingsAvatar = React.createClass({displayName: 'Settin
 
 
 
-},{}],144:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailConfirmation = React.createClass({displayName: 'SettingsEmailConfirmation',
@@ -9035,7 +9164,7 @@ window.SettingsEmailConfirmation = React.createClass({displayName: 'SettingsEmai
 
 
 
-},{}],145:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailEdit = React.createClass({displayName: 'SettingsEmailEdit',
@@ -9147,7 +9276,7 @@ window.SettingsEmailEdit = React.createClass({displayName: 'SettingsEmailEdit',
 
 
 
-},{}],146:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ENTER_KEYCODE, ESC_KEYCODE;
@@ -9257,7 +9386,7 @@ window.SettingsEmailEstablishEdit = React.createClass({displayName: 'SettingsEma
 
 
 
-},{}],147:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDIT_STATE, SHOW_STATE;
@@ -9303,7 +9432,7 @@ window.SettingsEmailEstablish = React.createClass({displayName: 'SettingsEmailEs
 
 
 
-},{}],148:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailEstablishShow = React.createClass({displayName: 'SettingsEmailEstablishShow',
@@ -9331,7 +9460,7 @@ window.SettingsEmailEstablishShow = React.createClass({displayName: 'SettingsEma
 
 
 
-},{}],149:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDIT_STATE, ESTABLISH_STATE, SHOW_STATE;
@@ -9416,7 +9545,7 @@ window.SettingsEmail = React.createClass({displayName: 'SettingsEmail',
 
 
 
-},{}],150:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailShow = React.createClass({displayName: 'SettingsEmailShow',
@@ -9473,7 +9602,7 @@ window.SettingsEmailShow = React.createClass({displayName: 'SettingsEmailShow',
 
 
 
-},{}],151:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsHeader = React.createClass({displayName: 'SettingsHeader',
@@ -9520,7 +9649,7 @@ window.SettingsHeader = React.createClass({displayName: 'SettingsHeader',
 
 
 
-},{}],152:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsName = React.createClass({displayName: 'SettingsName',
@@ -9552,7 +9681,7 @@ window.SettingsName = React.createClass({displayName: 'SettingsName',
 
 
 
-},{}],153:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CANCEL_TIMEOUT, KEYCODE_ENTER, KEYCODE_ESC;
@@ -9761,7 +9890,7 @@ module.experts = window.SettingsPasswordItem = React.createClass({displayName: '
 
 
 
-},{}],154:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsRadioItem = React.createClass({displayName: 'SettingsRadioItem',
@@ -9798,7 +9927,7 @@ module.experts = window.SettingsRadioItem = React.createClass({displayName: 'Set
 
 
 
-},{}],155:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsTitle = React.createClass({displayName: 'SettingsTitle',
@@ -9830,7 +9959,7 @@ window.SettingsTitle = React.createClass({displayName: 'SettingsTitle',
 
 
 
-},{}],156:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsVkontakteItem = React.createClass({displayName: 'SettingsVkontakteItem',
@@ -9858,7 +9987,7 @@ module.experts = window.SettingsVkontakteItem = React.createClass({displayName: 
 
 
 
-},{}],157:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ToolbarSettings = React.createClass({displayName: 'ToolbarSettings',
@@ -9969,7 +10098,7 @@ window.ToolbarSettings = React.createClass({displayName: 'ToolbarSettings',
 
 
 
-},{}],158:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.AuthorizationShellBox = React.createClass({displayName: 'AuthorizationShellBox',
@@ -10022,7 +10151,7 @@ window.AuthorizationShellBox = React.createClass({displayName: 'AuthorizationShe
 
 
 
-},{}],159:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var AUTH_TIMEOUT;
@@ -10065,7 +10194,7 @@ window.VkAuthorizationShellBox = React.createClass({displayName: 'VkAuthorizatio
 
 
 
-},{}],160:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.Shellbox_VkAuthButton = React.createClass({displayName: 'Shellbox_VkAuthButton',
@@ -10111,7 +10240,7 @@ window.Shellbox_VkAuthButton = React.createClass({displayName: 'Shellbox_VkAuthB
 
 
 
-},{}],161:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EmailSigninShellBox = React.createClass({displayName: 'EmailSigninShellBox',
@@ -10293,7 +10422,7 @@ window.EmailSigninShellBox = React.createClass({displayName: 'EmailSigninShellBo
 
 
 
-},{}],162:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.EmailSignupShellBox = React.createClass({displayName: 'EmailSignupShellBox',
@@ -10424,7 +10553,7 @@ module.experts = window.EmailSignupShellBox = React.createClass({displayName: 'E
 
 
 
-},{}],163:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.InviterShellBox = React.createClass({displayName: 'InviterShellBox',
@@ -10510,7 +10639,7 @@ window.InviterShellBox = React.createClass({displayName: 'InviterShellBox',
 
 
 
-},{}],164:[function(require,module,exports){
+},{}],165:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.RecoveryShellBox = React.createClass({displayName: 'RecoveryShellBox',
@@ -10603,7 +10732,7 @@ module.experts = window.RecoveryShellBox = React.createClass({displayName: 'Reco
 
 
 
-},{}],165:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SelectSigninShellBox = React.createClass({displayName: 'SelectSigninShellBox',
@@ -10657,7 +10786,7 @@ window.SelectSigninShellBox = React.createClass({displayName: 'SelectSigninShell
 
 
 
-},{}],166:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ShellBox = React.createClass({displayName: 'ShellBox',
@@ -10729,7 +10858,7 @@ window.ShellBox = React.createClass({displayName: 'ShellBox',
 
 
 
-},{}],167:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SmartFollowStatus = React.createClass({displayName: 'SmartFollowStatus',
@@ -10760,7 +10889,7 @@ window.SmartFollowStatus = React.createClass({displayName: 'SmartFollowStatus',
 
 
 
-},{}],168:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.Spinner = React.createClass({displayName: 'Spinner',
@@ -10784,7 +10913,47 @@ window.Spinner = React.createClass({displayName: 'Spinner',
 
 
 
-},{}],169:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
+
+/** @jsx React.DOM */
+var FADE_SPEED;
+
+FADE_SPEED = 300;
+
+module.experts = window.TlogAlert = React.createClass({displayName: 'TlogAlert',
+  propTypes: {
+    text: React.PropTypes.string,
+    canClose: React.PropTypes.bool
+  },
+  getDefaultProps: function() {
+    return {
+      canClose: false
+    };
+  },
+  close: function() {
+    return $(this.getDOMNode()).fadeOut(FADE_SPEED, function() {
+      return React.unmountComponentAtNode(this.getDOMNode());
+    });
+  },
+  render: function() {
+    var closeElement;
+    if ((this.props.text != null) && this.props.text.length > 0) {
+      if (this.props.canClose) {
+        closeElement = React.DOM.div({className: "alert__close", onClick: this.close}, React.DOM.i({className: "icon icon--cross"}));
+      }
+      return React.DOM.div({className: "alert"}, 
+        React.DOM.div({className: "alert__text", dangerouslySetInnerHTML: { __html: this.props.text}}), 
+        closeElement 
+      );
+    } else {
+      return null;
+    }
+  }
+});
+
+
+
+},{}],171:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CloseToolbar = React.createClass({displayName: 'CloseToolbar',
@@ -10801,7 +10970,7 @@ window.CloseToolbar = React.createClass({displayName: 'CloseToolbar',
 
 
 
-},{}],170:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MOUSE_LEAVE_TIMEOUT, TOOLBAR_CLOSED, TOOLBAR_OPENED_BY_CLICK, TOOLBAR_OPENED_BY_HOVER;
@@ -10920,7 +11089,7 @@ window.FeedToolbar = React.createClass({displayName: 'FeedToolbar',
 
 
 
-},{}],171:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ToolbarItem = React.createClass({displayName: 'ToolbarItem',
@@ -10970,7 +11139,7 @@ window.ToolbarItem = React.createClass({displayName: 'ToolbarItem',
 
 
 
-},{}],172:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MOUSE_LEAVE_TIMEOUT, PureRenderMixin, TOOLBAR_CLOSED, TOOLBAR_OPENED_BY_CLICK, TOOLBAR_OPENED_BY_HOVER;
@@ -11177,7 +11346,7 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
 
 
 
-},{}],173:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EVENT_NAME_MAP, ReactTransitionGroup, TICK, TimeoutTransitionGroupChild, animationAllowed, animationSupported, detectEvents, endEvents;
@@ -11346,7 +11515,7 @@ window.TimeoutTransitionGroup = React.createClass({displayName: 'TimeoutTransiti
 
 
 
-},{}],174:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PureRenderMixin;
@@ -11443,7 +11612,7 @@ window.Voting = React.createClass({displayName: 'Voting',
 
 
 
-},{}],175:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 window.ReactPopup = (function() {
   function ReactPopup() {
     this.popupContainer = $('<\div>').appendTo('body').get(0);
@@ -11471,7 +11640,7 @@ window.ReactPopup = (function() {
 
 
 
-},{}],176:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 window.ReactShellBox = (function() {
   function ReactShellBox() {
     this.shellboxContainer = $('<\div>').appendTo('body').get(0);
@@ -11499,7 +11668,7 @@ window.ReactShellBox = (function() {
 
 
 
-},{}],177:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 window.TastyAlertController = {
   show: function(_arg) {
     var buttonColor, buttonText, container, message, onAccept, regex, title;
@@ -11531,7 +11700,7 @@ window.TastyAlertController = {
 
 
 
-},{}],178:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 window.TastyConfirmController = {
   show: function(_arg) {
     var acceptButtonColor, acceptButtonText, container, message, messageWithoutBR, onAccept, regex, rejectButtonText;
@@ -11564,7 +11733,7 @@ window.TastyConfirmController = {
 
 
 
-},{}],179:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 window.TastyEvents = new EventEmitter();
 
 TastyEvents.keys = {
@@ -11599,7 +11768,7 @@ TastyEvents.keys = {
 
 
 
-},{}],180:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 window.TastyLockingAlertController = {
   show: function(_arg) {
     var action, container, message, regex, title;
@@ -11629,7 +11798,7 @@ window.TastyLockingAlertController = {
 
 
 
-},{}],181:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 window.TastyNotifyController = {
   _notificationList: [],
   notify: function(type, text, timeout) {
@@ -11700,7 +11869,7 @@ TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() 
 
 
 
-},{}],182:[function(require,module,exports){
+},{}],184:[function(require,module,exports){
 var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
 
 window.TastySoundController = {
@@ -11727,7 +11896,7 @@ INCOMING_NOTIFICATION = TastySoundController._buildAudioElement('incoming_messag
 
 
 
-},{}],183:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
   SERVER_ACTION: 'SERVER_ACTION',
   TYPE_SETUP: 'setup',
@@ -11742,7 +11911,7 @@ window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],184:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 window.NormalizedEntry = (function() {
   function NormalizedEntry(data) {
     _.extend(this, data);
@@ -11754,7 +11923,7 @@ window.NormalizedEntry = (function() {
 
 
 
-},{}],185:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 var CLOSED_STATE, COMMENT_CREATE_STATE, COMMENT_EDIT_STATE;
 
 CLOSED_STATE = 'closed';
@@ -11890,7 +12059,7 @@ window.commentsMediator = new CommentsMediator();
 
 
 
-},{}],186:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 window.ConversationActions = {
   clickConversation: function(conversationId) {
     return MessagingDispatcher.handleViewAction({
@@ -11910,7 +12079,7 @@ window.ConversationActions = {
 
 
 
-},{}],187:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 window.MessageActions = {
   newMessage: function(_arg) {
     var content, conversationId, uuid;
@@ -11948,7 +12117,7 @@ window.MessageActions = {
 
 
 
-},{}],188:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 window.NotificationActions = {
   readNotification: function(notificationId) {
     console.log('читаем уведомление', notificationId);
@@ -11958,7 +12127,7 @@ window.NotificationActions = {
 
 
 
-},{}],189:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 window.PopupActions = {
   closeMessagesPopup: function() {
     messagingService.closeMessagesPopup();
@@ -11985,7 +12154,7 @@ window.PopupActions = {
 
 
 
-},{}],190:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_Conversations = React.createClass({displayName: 'MessagesPopup_Conversations',
@@ -12006,7 +12175,7 @@ window.MessagesPopup_Conversations = React.createClass({displayName: 'MessagesPo
 
 
 
-},{}],191:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsListEmpty = React.createClass({displayName: 'MessagesPopup_ConversationsListEmpty',
@@ -12021,7 +12190,7 @@ window.MessagesPopup_ConversationsListEmpty = React.createClass({displayName: 'M
 
 
 
-},{}],192:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsList = React.createClass({displayName: 'MessagesPopup_ConversationsList',
@@ -12074,7 +12243,7 @@ window.MessagesPopup_ConversationsList = React.createClass({displayName: 'Messag
 
 
 
-},{}],193:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'MessagesPopup_ConversationsListItem',
@@ -12149,7 +12318,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'Me
 
 
 
-},{}],194:[function(require,module,exports){
+},{}],196:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CLOSE_STATE, OPEN_STATE;
@@ -12215,7 +12384,7 @@ window.MessagesPopup_Chooser = React.createClass({displayName: 'MessagesPopup_Ch
 
 
 
-},{}],195:[function(require,module,exports){
+},{}],197:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var BUTTON_TEXT;
@@ -12236,7 +12405,7 @@ window.MessagesPopup_ChooserButton = React.createClass({displayName: 'MessagesPo
 
 
 
-},{}],196:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ChooserDropdown = React.createClass({displayName: 'MessagesPopup_ChooserDropdown',
@@ -12297,7 +12466,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass({displayName: 'Messages
 
 
 
-},{}],197:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
@@ -12417,7 +12586,7 @@ window.MessagesPopup_ChooserResults = React.createClass({displayName: 'MessagesP
 
 
 
-},{}],198:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ChooserResultsItem = React.createClass({displayName: 'MessagesPopup_ChooserResultsItem',
@@ -12451,7 +12620,7 @@ window.MessagesPopup_ChooserResultsItem = React.createClass({displayName: 'Messa
 
 
 
-},{}],199:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CHOOSER_STATE, PROCESS_STATE;
@@ -12502,7 +12671,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass({displayName: 'Me
 
 
 
-},{}],200:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_LoadingMessage = React.createClass({displayName: 'MessagesPopup_LoadingMessage',
@@ -12532,7 +12701,7 @@ window.MessagesPopup_LoadingMessage = React.createClass({displayName: 'MessagesP
 
 
 
-},{}],201:[function(require,module,exports){
+},{}],203:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, ENTER_TIMEOUT, LEAVE_TIMEOUT, MESSAGES_POPUP_TITLE, MESSAGES_THREAD_TITLE, THREAD_STATE;
@@ -12640,7 +12809,7 @@ window.MessagesPopup = React.createClass({displayName: 'MessagesPopup',
 
 
 
-},{}],202:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ThreadMessageForm = React.createClass({displayName: 'MessagesPopup_ThreadMessageForm',
@@ -12698,7 +12867,7 @@ window.MessagesPopup_ThreadMessageForm = React.createClass({displayName: 'Messag
 
 
 
-},{}],203:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_MessageListEmpty = React.createClass({displayName: 'MessagesPopup_MessageListEmpty',
@@ -12711,7 +12880,7 @@ window.MessagesPopup_MessageListEmpty = React.createClass({displayName: 'Message
 
 
 
-},{}],204:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var savedScrollHeight;
@@ -12822,7 +12991,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass({displayName: 'Messag
 
 
 
-},{}],205:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE;
@@ -12918,7 +13087,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({displayName: 'Me
 
 
 
-},{}],206:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
@@ -13042,7 +13211,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass({displayNa
 
 
 
-},{}],207:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_Thread = React.createClass({displayName: 'MessagesPopup_Thread',
@@ -13074,7 +13243,7 @@ window.MessagesPopup_Thread = React.createClass({displayName: 'MessagesPopup_Thr
 
 
 
-},{}],208:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_UIBackButton = React.createClass({displayName: 'MessagesPopup_UIBackButton',
@@ -13091,7 +13260,7 @@ window.MessagesPopup_UIBackButton = React.createClass({displayName: 'MessagesPop
 
 
 
-},{}],209:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var BUTTON_TEXT;
@@ -13114,22 +13283,18 @@ window.MessagesPopup_UICreateNewConversationButton = React.createClass({displayN
 
 
 
-},{}],210:[function(require,module,exports){
+},{}],212:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup_NotificationsEmpty = React.createClass({displayName: 'NotificationsPopup_NotificationsEmpty',
   render: function() {
-    return React.DOM.div({className: "messages__list-cell"}, 
-      React.DOM.div({className: "messages__empty"}, 
-        React.DOM.div({className: "messages__empty-text"}, "Нет непросмотренных уведомлений")
-      )
-    );
+    return React.DOM.div({className: "notifications__empty"}, "Нет непросмотренных уведомлений");
   }
 });
 
 
 
-},{}],211:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var IMAGE_SIZE;
@@ -13212,7 +13377,7 @@ window.NotificationsPopup_Notification = React.createClass({displayName: 'Notifi
 
 
 
-},{}],212:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup_Notifications = React.createClass({displayName: 'NotificationsPopup_Notifications',
@@ -13234,10 +13399,11 @@ window.NotificationsPopup_Notifications = React.createClass({displayName: 'Notif
         return NotificationsPopup_Notification({notification: notification, 
                                           key:  notification.id});
       });
+      notifications = React.DOM.ul({className: "notifications__list"}, 
+                        notifications 
+                      );
     }
-    return React.DOM.ul({className: "notifications__list"}, 
-              notifications 
-            );
+    return notifications;
   },
   isEmpty: function() {
     return this.state.notifications.length === 0;
@@ -13254,7 +13420,7 @@ window.NotificationsPopup_Notifications = React.createClass({displayName: 'Notif
 
 
 
-},{}],213:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup',
@@ -13287,7 +13453,7 @@ window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup'
 
 
 
-},{}],214:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ADVANCED_STATE, BASIC_STATE, MOUSE_LEAVE_TIMEOUT;
@@ -13418,7 +13584,7 @@ window.IndicatorsToolbar = React.createClass({displayName: 'IndicatorsToolbar',
 
 
 
-},{}],215:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsToolbar_Messages',
@@ -13467,7 +13633,7 @@ window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsT
 
 
 
-},{}],216:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'IndicatorsToolbar_Notifications',
@@ -13520,7 +13686,7 @@ window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'Indica
 
 
 
-},{}],217:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 window.MessagingDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     return this.dispatch({
@@ -13616,7 +13782,7 @@ window.MessagingDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],218:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 window.MessagingRequester = (function() {
   function MessagingRequester(_arg) {
     this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
@@ -13707,7 +13873,7 @@ window.MessagingRequester = (function() {
 
 
 
-},{}],219:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 window.MessagingService = (function() {
@@ -13975,7 +14141,7 @@ window.MessagingService = (function() {
 
 
 
-},{}],220:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 window.MessagingMock = {
   message: function() {
     var conversation, recipient, sender;
@@ -14015,7 +14181,7 @@ window.MessagingMock = {
 
 
 
-},{}],221:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 window.MockMessagingRequester = (function() {
   function MockMessagingRequester(_arg) {
     this.access_token = _arg.access_token;
@@ -14061,7 +14227,7 @@ window.MockMessagingRequester = (function() {
 
 
 
-},{}],222:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -14111,7 +14277,7 @@ window.MessagingServiceMock = (function(_super) {
 
 
 
-},{}],223:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 window.MessagingMocker = {
   stubMessagingMetaInfo: function() {
     return {
@@ -14192,7 +14358,7 @@ window.MessagingMocker = {
 
 
 
-},{}],224:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -14311,7 +14477,7 @@ window.Message = (function(_super) {
 
 
 
-},{}],225:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 var CONNECTION_EVENT, _connectionState;
 
 CONNECTION_EVENT = 'connectionStateUpdated';
@@ -14355,7 +14521,7 @@ ConnectionStateStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],226:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 var CHANGE_EVENT, _conversations;
 
 CHANGE_EVENT = 'change';
@@ -14467,7 +14633,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],227:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 var CHANGE_EVENT, _allMessagesLoaded, _messages;
 
 CHANGE_EVENT = 'change';
@@ -14621,7 +14787,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(function(payload) {
 
 
 
-},{}],228:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
 
 CHANGE_EVENT = 'change';
@@ -14698,7 +14864,7 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
 
 
 
-},{}],229:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 var CHANGE_EVENT, _messagingStatus;
 
 CHANGE_EVENT = 'change';
@@ -14742,7 +14908,7 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],230:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 var CHANGE_EVENT, _notifications;
 
 CHANGE_EVENT = 'change';
@@ -14846,7 +15012,7 @@ NotificationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],231:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 var BaseMixin, ERROR_TIMEOUT, ram, rau;
 
 ERROR_TIMEOUT = 1000;
@@ -14928,7 +15094,7 @@ React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
 
 
-},{}],232:[function(require,module,exports){
+},{}],234:[function(require,module,exports){
 window.ComponentManipulationsMixin = {
   safeUpdate: function(func) {
     if (!this._isUnmounted()) {
@@ -14947,7 +15113,7 @@ window.ComponentManipulationsMixin = {
 
 
 
-},{}],233:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 var ENTRY_DELETE_ANIMATION_SPEED;
 
 ENTRY_DELETE_ANIMATION_SPEED = 300;
@@ -14972,7 +15138,7 @@ window.DOMManipulationsMixin = {
 
 
 
-},{}],234:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 var ERROR_TIMEOUT;
 
 ERROR_TIMEOUT = 1000;
@@ -15000,7 +15166,7 @@ window.ErrorTimerMixin = {
 
 
 
-},{}],235:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 window.ReactGrammarMixin = {
   declension: function(number, titles) {
     var cases;
@@ -15035,7 +15201,7 @@ window.ReactGrammarMixin = {
 
 
 
-},{}],236:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 var COMPONENT_WIDTH, REPOSITION_TIMEOUT;
 
 REPOSITION_TIMEOUT = 500;
@@ -15102,7 +15268,7 @@ window.ReactPositionsMixin = {
 
 
 
-},{}],237:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 window.RequesterMixin = {
   createRequest: function(settings) {
     var jqXHR;
@@ -15147,7 +15313,7 @@ window.RequesterMixin = {
 
 
 
-},{}],238:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 window.ScrollerMixin = {
   componentDidMount: function() {
     $(document).on('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
@@ -15197,7 +15363,7 @@ window.ScrollerMixin = {
 
 
 
-},{}],239:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 window.ReactShakeMixin = {
   shake: function() {
     var animationEnd, form;
@@ -15211,7 +15377,7 @@ window.ReactShakeMixin = {
 
 
 
-},{}],240:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 window.TouchMixin = {
   componentWillMount: function() {
     if (isMobile()) {
@@ -15223,7 +15389,7 @@ window.TouchMixin = {
 
 
 
-},{}],241:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 window.ReactUnmountMixin = {
   unmount: function() {
     return _.defer((function(_this) {
@@ -15236,7 +15402,7 @@ window.ReactUnmountMixin = {
 
 
 
-},{}],242:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 window.EntryNormalizer = {
   normalize: function(entryData) {
     var attr;
@@ -15278,7 +15444,7 @@ window.EntryNormalizer = {
 
 
 
-},{}],243:[function(require,module,exports){
+},{}],245:[function(require,module,exports){
 var STORAGE_PREFIX;
 
 STORAGE_PREFIX = 'entries';
@@ -15344,7 +15510,7 @@ window.EntryStore = {
 
 
 
-},{}],244:[function(require,module,exports){
+},{}],246:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
 
 MOVE_OFFSET = 100;
@@ -15390,7 +15556,7 @@ window.PositionsService = {
 
 
 
-},{}],245:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 window.ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
   image_url: function(url, style) {
@@ -15405,7 +15571,7 @@ window.ThumborService = {
 
 
 
-},{}],246:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 window.UuidService = {
   generate: function() {
     var s4;
@@ -15418,7 +15584,7 @@ window.UuidService = {
 
 
 
-},{}],247:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 var CHANGE_EVENT, currentUser;
 
 CHANGE_EVENT = 'change';
@@ -15464,7 +15630,7 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 
 
 
-},{}],248:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 window.ReactUtils = {
   isImagesEqual: function(nextImages, currentImages) {
     var currentUrls, nextUrls;
@@ -15483,7 +15649,7 @@ window.ReactUtils = {
 
 
 
-},{}],249:[function(require,module,exports){
+},{}],251:[function(require,module,exports){
 window.Routes = {
   logout_path: function() {
     return TastySettings.host + '/logout';
@@ -15507,7 +15673,7 @@ window.Routes = {
 
 
 
-},{}],250:[function(require,module,exports){
+},{}],252:[function(require,module,exports){
 var ApiRoutes;
 
 ApiRoutes = {
@@ -15583,6 +15749,9 @@ ApiRoutes = {
   relationships_by_url: function(state) {
     return TastySettings.api_host + 'v1/relationships/by/' + state;
   },
+  unfollow_from_yourself_url: function(tlogId) {
+    return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId;
+  },
   relationships_by_tlog_approve_url: function(tlogId) {
     return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/approve';
   },
@@ -15640,7 +15809,7 @@ window.Routes.api = ApiRoutes;
 
 
 
-},{}],251:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 window.DModel = (function() {
   function DModel(message) {
     _.extend(this, message);
@@ -15652,7 +15821,7 @@ window.DModel = (function() {
 
 
 
-},{}],252:[function(require,module,exports){
+},{}],254:[function(require,module,exports){
 var defaults,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -15791,7 +15960,7 @@ window.FileReceiver = (function() {
 
 
 
-},{}],253:[function(require,module,exports){
+},{}],255:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -15800,7 +15969,7 @@ window.isMobile = function() {
 
 
 
-},{}],254:[function(require,module,exports){
+},{}],256:[function(require,module,exports){
 $(function() {
   var height;
   $(".js-alert-close").click(function() {
@@ -15854,7 +16023,7 @@ window.Tasty = {
 
 
 
-},{}],255:[function(require,module,exports){
+},{}],257:[function(require,module,exports){
 window.TastyUtils = {
   showFlashes: function(flashes) {
     if (flashes == null) {
@@ -15906,7 +16075,7 @@ window.TastyUtils = {
 
 
 
-},{}],256:[function(require,module,exports){
+},{}],258:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -15918,7 +16087,7 @@ window.TastyUtils = {
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":257}],257:[function(require,module,exports){
+},{"./lib/Dispatcher":259}],259:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -16170,7 +16339,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":258}],258:[function(require,module,exports){
+},{"./invariant":260}],260:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -16225,7 +16394,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],259:[function(require,module,exports){
+},{}],261:[function(require,module,exports){
 /*!
  * imagesLoaded v3.1.8
  * JavaScript is all like "You images are done yet or what?"
@@ -16562,7 +16731,7 @@ function makeArray( obj ) {
 
 });
 
-},{"eventie":260,"wolfy87-eventemitter":261}],260:[function(require,module,exports){
+},{"eventie":262,"wolfy87-eventemitter":263}],262:[function(require,module,exports){
 /*!
  * eventie v1.0.5
  * event binding helper
@@ -16646,7 +16815,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( this );
 
-},{}],261:[function(require,module,exports){
+},{}],263:[function(require,module,exports){
 /*!
  * EventEmitter v4.2.9 - git.io/ee
  * Oliver Caldwell
@@ -23511,8 +23680,8 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 }));
 
 },{}],"eventEmitter":[function(require,module,exports){
-module.exports=require(261)
-},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":261}],"honeybadger":[function(require,module,exports){
+module.exports=require(263)
+},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":263}],"honeybadger":[function(require,module,exports){
 /*
   honeybadger.js v0.1.0
   A JavaScript Notifier for Honeybadger
@@ -42726,6 +42895,1570 @@ if ( typeof noGlobal === strundefined ) {
 return jQuery;
 
 }));
+
+},{}],"medium-editor":[function(require,module,exports){
+function MediumEditor(elements, options) {
+    'use strict';
+    return this.init(elements, options);
+}
+
+if (typeof module === 'object') {
+    module.exports = MediumEditor;
+}
+
+(function (window, document) {
+    'use strict';
+
+    function extend(b, a) {
+        var prop;
+        if (b === undefined) {
+            return a;
+        }
+        for (prop in a) {
+            if (a.hasOwnProperty(prop) && b.hasOwnProperty(prop) === false) {
+                b[prop] = a[prop];
+            }
+        }
+        return b;
+    }
+
+    function isDescendant(parent, child) {
+         var node = child.parentNode;
+         while (node !== null) {
+             if (node === parent) {
+                 return true;
+             }
+             node = node.parentNode;
+         }
+         return false;
+    }
+
+    // http://stackoverflow.com/questions/5605401/insert-link-in-contenteditable-element
+    // by Tim Down
+    function saveSelection() {
+        var i,
+            len,
+            ranges,
+            sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            ranges = [];
+            for (i = 0, len = sel.rangeCount; i < len; i += 1) {
+                ranges.push(sel.getRangeAt(i));
+            }
+            return ranges;
+        }
+        return null;
+    }
+
+    function restoreSelection(savedSel) {
+        var i,
+            len,
+            sel = window.getSelection();
+        if (savedSel) {
+            sel.removeAllRanges();
+            for (i = 0, len = savedSel.length; i < len; i += 1) {
+                sel.addRange(savedSel[i]);
+            }
+        }
+    }
+
+    // http://stackoverflow.com/questions/1197401/how-can-i-get-the-element-the-caret-is-in-with-javascript-when-using-contentedi
+    // by You
+    function getSelectionStart() {
+        var node = document.getSelection().anchorNode,
+            startNode = (node && node.nodeType === 3 ? node.parentNode : node);
+        return startNode;
+    }
+
+    // http://stackoverflow.com/questions/4176923/html-of-selected-text
+    // by Tim Down
+    function getSelectionHtml() {
+        var i,
+            html = '',
+            sel,
+            len,
+            container;
+        if (window.getSelection !== undefined) {
+            sel = window.getSelection();
+            if (sel.rangeCount) {
+                container = document.createElement('div');
+                for (i = 0, len = sel.rangeCount; i < len; i += 1) {
+                    container.appendChild(sel.getRangeAt(i).cloneContents());
+                }
+                html = container.innerHTML;
+            }
+        } else if (document.selection !== undefined) {
+            if (document.selection.type === 'Text') {
+                html = document.selection.createRange().htmlText;
+            }
+        }
+        return html;
+    }
+
+    // https://github.com/jashkenas/underscore
+    function isElement(obj) {
+        return !!(obj && obj.nodeType === 1);
+    }
+
+    MediumEditor.prototype = {
+        defaults: {
+            allowMultiParagraphSelection: true,
+            anchorInputPlaceholder: 'Paste or type a link',
+            anchorPreviewHideDelay: 500,
+            buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote'],
+            buttonLabels: false,
+            checkLinkFormat: false,
+            cleanPastedHTML: false,
+            delay: 0,
+            diffLeft: 0,
+            diffTop: -10,
+            disableReturn: false,
+            disableDoubleReturn: false,
+            disableToolbar: false,
+            disableEditing: false,
+            elementsContainer: false,
+            firstHeader: 'h3',
+            forcePlainText: true,
+            placeholder: 'Type your text',
+            secondHeader: 'h4',
+            targetBlank: false,
+            anchorTarget: false,
+            anchorButton: false,
+            anchorButtonClass: 'btn',
+            extensions: {},
+            activeButtonClass: 'medium-editor-button-active',
+            firstButtonClass: 'medium-editor-button-first',
+            lastButtonClass: 'medium-editor-button-last'
+        },
+
+        // http://stackoverflow.com/questions/17907445/how-to-detect-ie11#comment30165888_17907562
+        // by rg89
+        isIE: ((navigator.appName === 'Microsoft Internet Explorer') || ((navigator.appName === 'Netscape') && (new RegExp('Trident/.*rv:([0-9]{1,}[.0-9]{0,})').exec(navigator.userAgent) !== null))),
+
+        init: function (elements, options) {
+            this.setElementSelection(elements);
+            if (this.elements.length === 0) {
+                return;
+            }
+            this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
+            this.id = document.querySelectorAll('.medium-editor-toolbar').length + 1;
+            this.options = extend(options, this.defaults);
+            return this.setup();
+        },
+
+        setup: function () {
+            this.isActive = true;
+            this.initElements()
+                .bindSelect()
+                .bindPaste()
+                .setPlaceholders()
+                .bindWindowActions()
+                .passInstance();
+        },
+
+        initElements: function () {
+            this.updateElementList();
+            var i,
+                addToolbar = false;
+            for (i = 0; i < this.elements.length; i += 1) {
+                if (!this.options.disableEditing && !this.elements[i].getAttribute('data-disable-editing')) {
+                    this.elements[i].setAttribute('contentEditable', true);
+                }
+                if (!this.elements[i].getAttribute('data-placeholder')) {
+                    this.elements[i].setAttribute('data-placeholder', this.options.placeholder);
+                }
+                this.elements[i].setAttribute('data-medium-element', true);
+                this.bindParagraphCreation(i).bindReturn(i).bindTab(i);
+                if (!this.options.disableToolbar && !this.elements[i].getAttribute('data-disable-toolbar')) {
+                    addToolbar = true;
+                }
+            }
+            // Init toolbar
+            if (addToolbar) {
+                if (!this.options.elementsContainer) {
+                    this.options.elementsContainer = document.body;
+                }
+                this.initToolbar()
+                    .bindButtons()
+                    .bindAnchorForm()
+                    .bindAnchorPreview();
+            }
+            return this;
+        },
+
+        setElementSelection: function (selector) {
+            this.elementSelection = selector;
+            this.updateElementList();
+        },
+
+        updateElementList: function () {
+            this.elements = typeof this.elementSelection === 'string' ? document.querySelectorAll(this.elementSelection) : this.elementSelection;
+            if (this.elements.nodeType === 1) {
+                this.elements = [this.elements];
+            }
+        },
+
+        serialize: function () {
+            var i,
+                elementid,
+                content = {};
+            for (i = 0; i < this.elements.length; i += 1) {
+                elementid = (this.elements[i].id !== '') ? this.elements[i].id : 'element-' + i;
+                content[elementid] = {
+                    value: this.elements[i].innerHTML.trim()
+                };
+            }
+            return content;
+        },
+
+        /**
+         * Helper function to call a method with a number of parameters on all registered extensions.
+         * The function assures that the function exists before calling.
+         *
+         * @param {string} funcName name of the function to call
+         * @param [args] arguments passed into funcName
+         */
+        callExtensions: function (funcName) {
+            if (arguments.length < 1) {
+                return;
+            }
+
+            var args = Array.prototype.slice.call(arguments, 1),
+                ext,
+                name;
+
+            for (name in this.options.extensions) {
+                if (this.options.extensions.hasOwnProperty(name)) {
+                    ext = this.options.extensions[name];
+                    if (ext[funcName] !== undefined) {
+                        ext[funcName].apply(ext, args);
+                    }
+                }
+            }
+        },
+
+        /**
+         * Pass current Medium Editor instance to all extensions
+         * if extension constructor has 'parent' attribute set to 'true'
+         *
+         */
+        passInstance: function () {
+            var self = this,
+                ext,
+                name;
+
+            for (name in self.options.extensions) {
+                if (self.options.extensions.hasOwnProperty(name)) {
+                    ext = self.options.extensions[name];
+
+                    if (ext.parent) {
+                        ext.base = self;
+                    }
+                }
+            }
+
+            return self;
+        },
+
+        bindParagraphCreation: function (index) {
+            var self = this;
+            this.elements[index].addEventListener('keypress', function (e) {
+                var node = getSelectionStart(),
+                    tagName;
+                if (e.which === 32) {
+                    tagName = node.tagName.toLowerCase();
+                    if (tagName === 'a') {
+                        document.execCommand('unlink', false, null);
+                    }
+                }
+            });
+
+            this.elements[index].addEventListener('keyup', function (e) {
+                var node = getSelectionStart(),
+                    tagName,
+                    editorElement;
+                    
+                if (node && node.getAttribute('data-medium-element') && node.children.length === 0 && !(self.options.disableReturn || node.getAttribute('data-disable-return'))) {
+                    document.execCommand('formatBlock', false, 'p');
+                }
+                if (e.which === 13) {
+                    node = getSelectionStart();
+                    tagName = node.tagName.toLowerCase();
+                    editorElement = self.getSelectionElement();
+
+                    if (!(self.options.disableReturn || editorElement.getAttribute('data-disable-return')) &&
+                        tagName !== 'li' && !self.isListItemChild(node)) {
+                        if (!e.shiftKey) {
+                            document.execCommand('formatBlock', false, 'p');
+                        }
+                        if (tagName === 'a') {
+                            document.execCommand('unlink', false, null);
+                        }
+                    }
+                }
+            });
+            return this;
+        },
+
+        isListItemChild: function (node) {
+            var parentNode = node.parentNode,
+                tagName = parentNode.tagName.toLowerCase();
+            while (this.parentElements.indexOf(tagName) === -1 && tagName !== 'div') {
+                if (tagName === 'li') {
+                    return true;
+                }
+                parentNode = parentNode.parentNode;
+                if (parentNode && parentNode.tagName) {
+                    tagName = parentNode.tagName.toLowerCase();
+                } else {
+                    return false;
+                }
+            }
+            return false;
+        },
+
+        bindReturn: function (index) {
+            var self = this;
+            this.elements[index].addEventListener('keypress', function (e) {
+                if (e.which === 13) {
+                    if (self.options.disableReturn || this.getAttribute('data-disable-return')) {
+                        e.preventDefault();
+                    } else if (self.options.disableDoubleReturn || this.getAttribute('data-disable-double-return')) {
+                        var node = getSelectionStart();
+                        if (node && node.innerText === '\n') {
+                            e.preventDefault();
+                        }
+                    }
+                }
+            });
+            return this;
+        },
+
+        bindTab: function (index) {
+            this.elements[index].addEventListener('keydown', function (e) {
+                if (e.which === 9) {
+                    // Override tab only for pre nodes
+                    var tag = getSelectionStart().tagName.toLowerCase();
+                    if (tag === 'pre') {
+                        e.preventDefault();
+                        document.execCommand('insertHtml', null, '    ');
+                    }
+
+                    // Tab to indent list structures!
+                    if (tag === 'li') {
+                        e.preventDefault();
+
+                        // If Shift is down, outdent, otherwise indent
+                        if (e.shiftKey) {
+                            document.execCommand('outdent', e);
+                        } else {
+                            document.execCommand('indent', e);
+                        }
+                    }
+                }
+            });
+            return this;
+        },
+
+        buttonTemplate: function (btnType) {
+            var buttonLabels = this.getButtonLabels(this.options.buttonLabels),
+                buttonTemplates = {
+                    'bold': '<button class="medium-editor-action medium-editor-action-bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
+                    'italic': '<button class="medium-editor-action medium-editor-action-italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
+                    'underline': '<button class="medium-editor-action medium-editor-action-underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
+                    'strikethrough': '<button class="medium-editor-action medium-editor-action-strikethrough" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
+                    'superscript': '<button class="medium-editor-action medium-editor-action-superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
+                    'subscript': '<button class="medium-editor-action medium-editor-action-subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
+                    'anchor': '<button class="medium-editor-action medium-editor-action-anchor" data-action="anchor" data-element="a">' + buttonLabels.anchor + '</button>',
+                    'image': '<button class="medium-editor-action medium-editor-action-image" data-action="image" data-element="img">' + buttonLabels.image + '</button>',
+                    'header1': '<button class="medium-editor-action medium-editor-action-header1" data-action="append-' + this.options.firstHeader + '" data-element="' + this.options.firstHeader + '">' + buttonLabels.header1 + '</button>',
+                    'header2': '<button class="medium-editor-action medium-editor-action-header2" data-action="append-' + this.options.secondHeader + '" data-element="' + this.options.secondHeader + '">' + buttonLabels.header2 + '</button>',
+                    'quote': '<button class="medium-editor-action medium-editor-action-quote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
+                    'orderedlist': '<button class="medium-editor-action medium-editor-action-orderedlist" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
+                    'unorderedlist': '<button class="medium-editor-action medium-editor-action-unorderedlist" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
+                    'pre': '<button class="medium-editor-action medium-editor-action-pre" data-action="append-pre" data-element="pre">' + buttonLabels.pre + '</button>',
+                    'indent': '<button class="medium-editor-action medium-editor-action-indent" data-action="indent" data-element="ul">' + buttonLabels.indent + '</button>',
+                    'outdent': '<button class="medium-editor-action medium-editor-action-outdent" data-action="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
+                    'justifyCenter': '<button class="medium-editor-action medium-editor-action-justifyCenter" data-action="justifyCenter" data-element="">' + buttonLabels.justifyCenter + '</button>',
+                    'justifyFull': '<button class="medium-editor-action medium-editor-action-justifyFull" data-action="justifyFull" data-element="">' + buttonLabels.justifyFull + '</button>',
+                    'justifyLeft': '<button class="medium-editor-action medium-editor-action-justifyLeft" data-action="justifyLeft" data-element="">' + buttonLabels.justifyLeft + '</button>',
+                    'justifyRight': '<button class="medium-editor-action medium-editor-action-justifyRight" data-action="justifyRight" data-element="">' + buttonLabels.justifyRight + '</button>'
+                };
+            return buttonTemplates[btnType] || false;
+        },
+
+        // TODO: break method
+        getButtonLabels: function (buttonLabelType) {
+            var customButtonLabels,
+                attrname,
+                buttonLabels = {
+                    'bold': '<b>B</b>',
+                    'italic': '<b><i>I</i></b>',
+                    'underline': '<b><u>U</u></b>',
+                    'superscript': '<b>x<sup>1</sup></b>',
+                    'subscript': '<b>x<sub>1</sub></b>',
+                    'anchor': '<b>#</b>',
+                    'image': '<b>image</b>',
+                    'header1': '<b>H1</b>',
+                    'header2': '<b>H2</b>',
+                    'quote': '<b>&ldquo;</b>',
+                    'orderedlist': '<b>1.</b>',
+                    'unorderedlist': '<b>&bull;</b>',
+                    'pre': '<b>0101</b>',
+                    'indent': '<b>&rarr;</b>',
+                    'outdent': '<b>&larr;</b>',
+                    'justifyCenter': '<b>C</b>',
+                    'justifyFull': '<b>J</b>',
+                    'justifyLeft': '<b>L</b>',
+                    'justifyRight': '<b>R</b>'
+                };
+            if (buttonLabelType === 'fontawesome') {
+                customButtonLabels = {
+                    'bold': '<i class="fa fa-bold"></i>',
+                    'italic': '<i class="fa fa-italic"></i>',
+                    'underline': '<i class="fa fa-underline"></i>',
+                    'superscript': '<i class="fa fa-superscript"></i>',
+                    'subscript': '<i class="fa fa-subscript"></i>',
+                    'anchor': '<i class="fa fa-link"></i>',
+                    'image': '<i class="fa fa-picture-o"></i>',
+                    'quote': '<i class="fa fa-quote-right"></i>',
+                    'orderedlist': '<i class="fa fa-list-ol"></i>',
+                    'unorderedlist': '<i class="fa fa-list-ul"></i>',
+                    'pre': '<i class="fa fa-code fa-lg"></i>',
+                    'indent': '<i class="fa fa-indent"></i>',
+                    'outdent': '<i class="fa fa-outdent"></i>',
+                    'justifyCenter': '<i class="fa fa-align-center"></i>',
+                    'justifyFull': '<i class="fa fa-align-justify"></i>',
+                    'justifyLeft': '<i class="fa fa-align-left"></i>',
+                    'justifyRight': '<i class="fa fa-align-right"></i>'
+                };
+            } else if (typeof buttonLabelType === 'object') {
+                customButtonLabels = buttonLabelType;
+            }
+            if (typeof customButtonLabels === 'object') {
+                for (attrname in customButtonLabels) {
+                    if (customButtonLabels.hasOwnProperty(attrname)) {
+                        buttonLabels[attrname] = customButtonLabels[attrname];
+                    }
+                }
+            }
+            return buttonLabels;
+        },
+
+        initToolbar: function () {
+            if (this.toolbar) {
+                return this;
+            }
+            this.toolbar = this.createToolbar();
+            this.keepToolbarAlive = false;
+            this.anchorForm = this.toolbar.querySelector('.medium-editor-toolbar-form-anchor');
+            this.anchorInput = this.anchorForm.querySelector('input.medium-editor-toolbar-anchor-input');
+            this.anchorTarget = this.anchorForm.querySelector('input.medium-editor-toolbar-anchor-target');
+            this.anchorButton = this.anchorForm.querySelector('input.medium-editor-toolbar-anchor-button');
+            this.toolbarActions = this.toolbar.querySelector('.medium-editor-toolbar-actions');
+            this.anchorPreview = this.createAnchorPreview();
+
+            return this;
+        },
+
+        createToolbar: function () {
+            var toolbar = document.createElement('div');
+            toolbar.id = 'medium-editor-toolbar-' + this.id;
+            toolbar.className = 'medium-editor-toolbar';
+            toolbar.appendChild(this.toolbarButtons());
+            toolbar.appendChild(this.toolbarFormAnchor());
+            this.options.elementsContainer.appendChild(toolbar);
+            return toolbar;
+        },
+
+        //TODO: actionTemplate
+        toolbarButtons: function () {
+            var btns = this.options.buttons,
+                ul = document.createElement('ul'),
+                li,
+                i,
+                btn,
+                ext;
+
+            ul.id = 'medium-editor-toolbar-actions';
+            ul.className = 'medium-editor-toolbar-actions clearfix';
+
+            for (i = 0; i < btns.length; i += 1) {
+                if (this.options.extensions.hasOwnProperty(btns[i])) {
+                    ext = this.options.extensions[btns[i]];
+                    btn = ext.getButton !== undefined ? ext.getButton() : null;
+                } else {
+                    btn = this.buttonTemplate(btns[i]);
+                }
+
+                if (btn) {
+                    li = document.createElement('li');
+                    if (isElement(btn)) {
+                        li.appendChild(btn);
+                    } else {
+                        li.innerHTML = btn;
+                    }
+                    ul.appendChild(li);
+                }
+            }
+
+            return ul;
+        },
+
+        toolbarFormAnchor: function () {
+            var anchor = document.createElement('div'),
+                input = document.createElement('input'),
+                target_label = document.createElement('label'),
+                target = document.createElement('input'),
+                button_label = document.createElement('label'),
+                button = document.createElement('input'),
+                close = document.createElement('a'),
+                save = document.createElement('a');
+
+            close.setAttribute('href', '#');
+            close.className = 'medium-editor-toobar-anchor-close';
+            close.innerHTML = '&times;';
+
+            save.setAttribute('href', '#');
+            save.className = 'medium-editor-toobar-anchor-save';
+            save.innerHTML = '&#10003;';
+
+            input.setAttribute('type', 'text');
+            input.className = 'medium-editor-toolbar-anchor-input';
+            input.setAttribute('placeholder', this.options.anchorInputPlaceholder);
+
+
+            target.setAttribute('type', 'checkbox');
+            target.className = 'medium-editor-toolbar-anchor-target';
+            target_label.innerHTML = "Open in New Window?";
+            target_label.insertBefore(target, target_label.firstChild);
+
+            button.setAttribute('type', 'checkbox');
+            button.className = 'medium-editor-toolbar-anchor-button';
+            button_label.innerHTML = "Button";
+            button_label.insertBefore(button, button_label.firstChild);
+
+
+            anchor.className = 'medium-editor-toolbar-form-anchor';
+            anchor.id = 'medium-editor-toolbar-form-anchor';
+            anchor.appendChild(input);
+
+            anchor.appendChild(save);
+            anchor.appendChild(close);
+
+            if (this.options.anchorTarget) {
+                anchor.appendChild(target_label);
+            }
+
+            if (this.options.anchorButton) {
+                anchor.appendChild(button_label);
+            }
+
+            return anchor;
+        },
+
+        bindSelect: function () {
+            var self = this,
+                timer = '',
+                i;
+
+            this.checkSelectionWrapper = function (e) {
+
+                // Do not close the toolbar when bluring the editable area and clicking into the anchor form
+                if (e && self.clickingIntoArchorForm(e)) {
+                    return false;
+                }
+
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    self.checkSelection();
+                }, self.options.delay);
+            };
+
+            document.documentElement.addEventListener('mouseup', this.checkSelectionWrapper);
+
+            for (i = 0; i < this.elements.length; i += 1) {
+                this.elements[i].addEventListener('keyup', this.checkSelectionWrapper);
+                this.elements[i].addEventListener('blur', this.checkSelectionWrapper);
+            }
+            return this;
+        },
+
+        checkSelection: function () {
+            var newSelection,
+                selectionElement;
+
+            if (this.keepToolbarAlive !== true && !this.options.disableToolbar) {
+
+                newSelection = window.getSelection();
+                if (newSelection.toString().trim() === '' ||
+                    (this.options.allowMultiParagraphSelection === false && this.hasMultiParagraphs()) ||
+                    this.selectionInContentEditableFalse()) {
+                    this.hideToolbarActions();
+                } else {
+                    selectionElement = this.getSelectionElement();
+                    if (!selectionElement || selectionElement.getAttribute('data-disable-toolbar')) {
+                        this.hideToolbarActions();
+                    } else {
+                        this.checkSelectionElement(newSelection, selectionElement);
+                    }
+                }
+            }
+            return this;
+        },
+
+        clickingIntoArchorForm: function (e) {
+            var self = this;
+
+            if (e.type && e.type.toLowerCase() === 'blur' && e.relatedTarget && e.relatedTarget === self.anchorInput) {
+                return true;
+            }
+
+            return false;
+        },
+
+        hasMultiParagraphs: function () {
+            var selectionHtml = getSelectionHtml().replace(/<[\S]+><\/[\S]+>/gim, ''),
+                hasMultiParagraphs = selectionHtml.match(/<(p|h[0-6]|blockquote)>([\s\S]*?)<\/(p|h[0-6]|blockquote)>/g);
+
+            return (hasMultiParagraphs ? hasMultiParagraphs.length : 0);
+        },
+
+        checkSelectionElement: function (newSelection, selectionElement) {
+            var i;
+            this.selection = newSelection;
+            this.selectionRange = this.selection.getRangeAt(0);
+            for (i = 0; i < this.elements.length; i += 1) {
+                if (this.elements[i] === selectionElement) {
+                    this.setToolbarButtonStates()
+                        .setToolbarPosition()
+                        .showToolbarActions();
+                    return;
+                }
+            }
+            this.hideToolbarActions();
+        },
+
+        findMatchingSelectionParent: function(testElementFunction) {
+            var selection = window.getSelection(), range, current;
+
+            if (selection.rangeCount === 0) {
+                return false;
+            }
+
+            range = selection.getRangeAt(0);
+            current = range.commonAncestorContainer;
+
+            do {
+              if (current.nodeType === 1){
+                if ( testElementFunction(current) )
+                {
+                    return current;
+                }
+                // do not traverse upwards past the nearest containing editor
+                if (current.getAttribute('data-medium-element')) {
+                    return false;
+                }
+              }
+
+              current = current.parentNode;
+            } while (current);
+
+            return false;
+        },
+
+        getSelectionElement: function () {
+            return this.findMatchingSelectionParent(function(el) {
+                return el.getAttribute('data-medium-element');
+            });
+        },
+
+        selectionInContentEditableFalse: function () {
+            return this.findMatchingSelectionParent(function(el) {
+                return (el && el.nodeName !== '#text' && el.getAttribute('contenteditable') === 'false');
+            });
+        },
+
+        setToolbarPosition: function () {
+            var buttonHeight = 50,
+                selection = window.getSelection(),
+                range = selection.getRangeAt(0),
+                boundary = range.getBoundingClientRect(),
+                defaultLeft = (this.options.diffLeft) - (this.toolbar.offsetWidth / 2),
+                middleBoundary = (boundary.left + boundary.right) / 2,
+                halfOffsetWidth = this.toolbar.offsetWidth / 2;
+            if (boundary.top < buttonHeight) {
+                this.toolbar.classList.add('medium-toolbar-arrow-over');
+                this.toolbar.classList.remove('medium-toolbar-arrow-under');
+                this.toolbar.style.top = buttonHeight + boundary.bottom - this.options.diffTop + window.pageYOffset - this.toolbar.offsetHeight + 'px';
+            } else {
+                this.toolbar.classList.add('medium-toolbar-arrow-under');
+                this.toolbar.classList.remove('medium-toolbar-arrow-over');
+                this.toolbar.style.top = boundary.top + this.options.diffTop + window.pageYOffset - this.toolbar.offsetHeight + 'px';
+            }
+            if (middleBoundary < halfOffsetWidth) {
+                this.toolbar.style.left = defaultLeft + halfOffsetWidth + 'px';
+            } else if ((window.innerWidth - middleBoundary) < halfOffsetWidth) {
+                this.toolbar.style.left = window.innerWidth + defaultLeft - halfOffsetWidth + 'px';
+            } else {
+                this.toolbar.style.left = defaultLeft + middleBoundary + 'px';
+            }
+
+            this.hideAnchorPreview();
+
+            return this;
+        },
+
+        setToolbarButtonStates: function () {
+            var buttons = this.toolbarActions.querySelectorAll('button'),
+                i;
+            for (i = 0; i < buttons.length; i += 1) {
+                buttons[i].classList.remove(this.options.activeButtonClass);
+            }
+            this.checkActiveButtons();
+            return this;
+        },
+
+        checkActiveButtons: function () {
+            var elements = Array.prototype.slice.call(this.elements),
+                parentNode = this.getSelectedParentElement();
+            while (parentNode.tagName !== undefined && this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
+                this.activateButton(parentNode.tagName.toLowerCase());
+                this.callExtensions('checkState', parentNode);
+
+                // we can abort the search upwards if we leave the contentEditable element
+                if (elements.indexOf(parentNode) !== -1) {
+                    break;
+                }
+                parentNode = parentNode.parentNode;
+            }
+        },
+
+        activateButton: function (tag) {
+            var el = this.toolbar.querySelector('[data-element="' + tag + '"]');
+            if (el !== null && el.className.indexOf(this.options.activeButtonClass) === -1) {
+                el.className += ' ' + this.options.activeButtonClass;
+            }
+        },
+
+        bindButtons: function () {
+            var buttons = this.toolbar.querySelectorAll('button'),
+                i,
+                self = this,
+                triggerAction = function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (self.selection === undefined) {
+                        self.checkSelection();
+                    }
+                    if (this.className.indexOf(self.options.activeButtonClass) > -1) {
+                        this.classList.remove(self.options.activeButtonClass);
+                    } else {
+                        this.className += ' ' + self.options.activeButtonClass;
+                    }
+                    if (this.hasAttribute('data-action')) {
+                        self.execAction(this.getAttribute('data-action'), e);
+                    }
+                };
+            for (i = 0; i < buttons.length; i += 1) {
+                buttons[i].addEventListener('click', triggerAction);
+            }
+            this.setFirstAndLastItems(buttons);
+            return this;
+        },
+
+        setFirstAndLastItems: function (buttons) {
+            if (buttons.length > 0) {
+                buttons[0].className += ' ' + this.options.firstButtonClass;
+                buttons[buttons.length - 1].className += ' ' + this.options.lastButtonClass;
+            }
+            return this;
+        },
+
+        execAction: function (action, e) {
+            if (action.indexOf('append-') > -1) {
+                this.execFormatBlock(action.replace('append-', ''));
+                this.setToolbarPosition();
+                this.setToolbarButtonStates();
+            } else if (action === 'anchor') {
+                this.triggerAnchorAction(e);
+            } else if (action === 'image') {
+                document.execCommand('insertImage', false, window.getSelection());
+            } else {
+                document.execCommand(action, false, null);
+                this.setToolbarPosition();
+            }
+        },
+
+        // http://stackoverflow.com/questions/15867542/range-object-get-selection-parent-node-chrome-vs-firefox
+        rangeSelectsSingleNode: function (range) {
+            var startNode = range.startContainer;
+            return startNode === range.endContainer &&
+                startNode.hasChildNodes() &&
+                range.endOffset === range.startOffset + 1;
+        },
+
+        getSelectedParentElement: function () {
+            var selectedParentElement = null,
+                range = this.selectionRange;
+            if (this.rangeSelectsSingleNode(range)) {
+                selectedParentElement = range.startContainer.childNodes[range.startOffset];
+            } else if (range.startContainer.nodeType === 3) {
+                selectedParentElement = range.startContainer.parentNode;
+            } else {
+                selectedParentElement = range.startContainer;
+            }
+            return selectedParentElement;
+        },
+
+        triggerAnchorAction: function () {
+            var selectedParentElement = this.getSelectedParentElement();
+            if (selectedParentElement.tagName &&
+                    selectedParentElement.tagName.toLowerCase() === 'a') {
+                document.execCommand('unlink', false, null);
+            } else {
+                if (this.anchorForm.style.display === 'block') {
+                    this.showToolbarActions();
+                } else {
+                    this.showAnchorForm();
+                }
+            }
+            return this;
+        },
+
+        execFormatBlock: function (el) {
+            var selectionData = this.getSelectionData(this.selection.anchorNode);
+            // FF handles blockquote differently on formatBlock
+            // allowing nesting, we need to use outdent
+            // https://developer.mozilla.org/en-US/docs/Rich-Text_Editing_in_Mozilla
+            if (el === 'blockquote' && selectionData.el &&
+                selectionData.el.parentNode.tagName.toLowerCase() === 'blockquote') {
+                return document.execCommand('outdent', false, null);
+            }
+            if (selectionData.tagName === el) {
+                el = 'p';
+            }
+            // When IE we need to add <> to heading elements and
+            //  blockquote needs to be called as indent
+            // http://stackoverflow.com/questions/10741831/execcommand-formatblock-headings-in-ie
+            // http://stackoverflow.com/questions/1816223/rich-text-editor-with-blockquote-function/1821777#1821777
+            if (this.isIE) {
+                if (el === 'blockquote') {
+                    return document.execCommand('indent', false, el);
+                }
+                el = '<' + el + '>';
+            }
+            return document.execCommand('formatBlock', false, el);
+        },
+
+        getSelectionData: function (el) {
+            var tagName;
+
+            if (el && el.tagName) {
+                tagName = el.tagName.toLowerCase();
+            }
+
+            while (el && this.parentElements.indexOf(tagName) === -1) {
+                el = el.parentNode;
+                if (el && el.tagName) {
+                    tagName = el.tagName.toLowerCase();
+                }
+            }
+
+            return {
+                el: el,
+                tagName: tagName
+            };
+        },
+
+        getFirstChild: function (el) {
+            var firstChild = el.firstChild;
+            while (firstChild !== null && firstChild.nodeType !== 1) {
+                firstChild = firstChild.nextSibling;
+            }
+            return firstChild;
+        },
+
+        hideToolbarActions: function () {
+            this.keepToolbarAlive = false;
+            if (this.toolbar !== undefined) {
+                this.toolbar.classList.remove('medium-editor-toolbar-active');
+            }
+        },
+
+        showToolbarActions: function () {
+            var self = this,
+                timer;
+            this.anchorForm.style.display = 'none';
+            this.toolbarActions.style.display = 'block';
+            this.keepToolbarAlive = false;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                if (self.toolbar && !self.toolbar.classList.contains('medium-editor-toolbar-active')) {
+                    self.toolbar.classList.add('medium-editor-toolbar-active');
+                }
+            }, 100);
+        },
+
+        saveSelection: function() {
+            this.savedSelection = saveSelection();
+        },
+
+        restoreSelection: function() {
+            restoreSelection(this.savedSelection);
+        },
+
+        showAnchorForm: function (link_value) {
+            this.toolbarActions.style.display = 'none';
+            this.saveSelection();
+            this.anchorForm.style.display = 'block';
+            this.setToolbarPosition();
+            this.keepToolbarAlive = true;
+            this.anchorInput.focus();
+            this.anchorInput.value = link_value || '';
+        },
+
+        bindAnchorForm: function () {
+            var linkCancel = this.anchorForm.querySelector('a.medium-editor-toobar-anchor-close'),
+                linkSave = this.anchorForm.querySelector('a.medium-editor-toobar-anchor-save'),
+                self = this;
+
+            this.anchorForm.addEventListener('click', function (e) {
+                e.stopPropagation();
+                self.keepToolbarAlive = true;
+            });
+
+            this.anchorInput.addEventListener('keyup', function (e) {
+                var button = null,
+                    target;
+
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    if (self.options.anchorTarget && self.anchorTarget.checked) {
+                        target = "_blank";
+                    }
+                    else {
+                        target = "_self";
+                    }
+
+                    if (self.options.anchorButton && self.anchorButton.checked) {
+                        button = self.options.anchorButtonClass;
+                    }
+
+                    self.createLink(this, target, button);
+                }
+            });
+
+            linkSave.addEventListener('click', function(e) {
+                var button = null,
+                    target;
+                e.preventDefault();
+                if ( self.options.anchorTarget && self.anchorTarget.checked) {
+                    target = "_blank";
+                }
+                else {
+                    target = "_self";
+                }
+
+                if (self.options.anchorButton && self.anchorButton.checked) {
+                    button = self.options.anchorButtonClass;
+                }
+
+                self.createLink(self.anchorInput, target, button);
+            }, true);
+
+            this.anchorInput.addEventListener('click', function (e) {
+                // make sure not to hide form when cliking into the input
+                e.stopPropagation();
+                self.keepToolbarAlive = true;
+            });
+
+            // Hide the anchor form when focusing outside of it.
+            document.body.addEventListener('click', function (e) {
+                if (e.target !== self.anchorForm && !isDescendant(self.anchorForm, e.target) && !isDescendant(self.toolbarActions, e.target)) {
+                    self.keepToolbarAlive = false;
+                    self.checkSelection();
+                }
+            }, true);
+            document.body.addEventListener('focus', function (e) {
+                if (e.target !== self.anchorForm && !isDescendant(self.anchorForm, e.target) && !isDescendant(self.toolbarActions, e.target)) {
+                    self.keepToolbarAlive = false;
+                    self.checkSelection();
+                }
+            }, true);
+
+            linkCancel.addEventListener('click', function (e) {
+                e.preventDefault();
+                self.showToolbarActions();
+                restoreSelection(self.savedSelection);
+            });
+            return this;
+        },
+
+
+        hideAnchorPreview: function () {
+            this.anchorPreview.classList.remove('medium-editor-anchor-preview-active');
+        },
+
+        // TODO: break method
+        showAnchorPreview: function (anchorEl) {
+            if (this.anchorPreview.classList.contains('medium-editor-anchor-preview-active')
+                || anchorEl.getAttribute('data-disable-preview')) {
+                return true;
+            }
+
+            var self = this,
+                buttonHeight = 40,
+                boundary = anchorEl.getBoundingClientRect(),
+                middleBoundary = (boundary.left + boundary.right) / 2,
+                halfOffsetWidth,
+                defaultLeft,
+                timer;
+
+            self.anchorPreview.querySelector('i').textContent = anchorEl.href;
+            halfOffsetWidth = self.anchorPreview.offsetWidth / 2;
+            defaultLeft = self.options.diffLeft - halfOffsetWidth;
+
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                if (self.anchorPreview && !self.anchorPreview.classList.contains('medium-editor-anchor-preview-active')) {
+                    self.anchorPreview.classList.add('medium-editor-anchor-preview-active');
+                }
+            }, 100);
+
+            self.observeAnchorPreview(anchorEl);
+
+            self.anchorPreview.classList.add('medium-toolbar-arrow-over');
+            self.anchorPreview.classList.remove('medium-toolbar-arrow-under');
+            self.anchorPreview.style.top = Math.round(buttonHeight + boundary.bottom - self.options.diffTop + window.pageYOffset - self.anchorPreview.offsetHeight) + 'px';
+            if (middleBoundary < halfOffsetWidth) {
+                self.anchorPreview.style.left = defaultLeft + halfOffsetWidth + 'px';
+            } else if ((window.innerWidth - middleBoundary) < halfOffsetWidth) {
+                self.anchorPreview.style.left = window.innerWidth + defaultLeft - halfOffsetWidth + 'px';
+            } else {
+                self.anchorPreview.style.left = defaultLeft + middleBoundary + 'px';
+            }
+
+            return this;
+        },
+
+        // TODO: break method
+        observeAnchorPreview: function (anchorEl) {
+            var self = this,
+                lastOver = (new Date()).getTime(),
+                over = true,
+                stamp = function () {
+                    lastOver = (new Date()).getTime();
+                    over = true;
+                },
+                unstamp = function (e) {
+                    if (!e.relatedTarget || !/anchor-preview/.test(e.relatedTarget.className)) {
+                        over = false;
+                    }
+                },
+                interval_timer = setInterval(function () {
+                    if (over) {
+                        return true;
+                    }
+                    var durr = (new Date()).getTime() - lastOver;
+                    if (durr > self.options.anchorPreviewHideDelay) {
+                        // hide the preview 1/2 second after mouse leaves the link
+                        self.hideAnchorPreview();
+
+                        // cleanup
+                        clearInterval(interval_timer);
+                        self.anchorPreview.removeEventListener('mouseover', stamp);
+                        self.anchorPreview.removeEventListener('mouseout', unstamp);
+                        anchorEl.removeEventListener('mouseover', stamp);
+                        anchorEl.removeEventListener('mouseout', unstamp);
+
+                    }
+                }, 200);
+
+            self.anchorPreview.addEventListener('mouseover', stamp);
+            self.anchorPreview.addEventListener('mouseout', unstamp);
+            anchorEl.addEventListener('mouseover', stamp);
+            anchorEl.addEventListener('mouseout', unstamp);
+        },
+
+        createAnchorPreview: function () {
+            var self = this,
+                anchorPreview = document.createElement('div');
+
+            anchorPreview.id = 'medium-editor-anchor-preview-' + this.id;
+            anchorPreview.className = 'medium-editor-anchor-preview';
+            anchorPreview.innerHTML = this.anchorPreviewTemplate();
+            this.options.elementsContainer.appendChild(anchorPreview);
+
+            anchorPreview.addEventListener('click', function () {
+                self.anchorPreviewClickHandler();
+            });
+
+            return anchorPreview;
+        },
+
+        anchorPreviewTemplate: function () {
+            return '<div class="medium-editor-toolbar-anchor-preview" id="medium-editor-toolbar-anchor-preview">' +
+                '    <i class="medium-editor-toolbar-anchor-preview-inner"></i>' +
+                '</div>';
+        },
+
+        anchorPreviewClickHandler: function (e) {
+            if (this.activeAnchor) {
+
+                var self = this,
+                    range = document.createRange(),
+                    sel = window.getSelection();
+
+                range.selectNodeContents(self.activeAnchor);
+                sel.removeAllRanges();
+                sel.addRange(range);
+                setTimeout(function () {
+                    if (self.activeAnchor) {
+                        self.showAnchorForm(self.activeAnchor.href);
+                    }
+                    self.keepToolbarAlive = false;
+                }, 100 + self.options.delay);
+
+            }
+
+            this.hideAnchorPreview();
+        },
+
+        editorAnchorObserver: function (e) {
+            var self = this,
+                overAnchor = true,
+                leaveAnchor = function () {
+                    // mark the anchor as no longer hovered, and stop listening
+                    overAnchor = false;
+                    self.activeAnchor.removeEventListener('mouseout', leaveAnchor);
+                };
+
+            if (e.target && e.target.tagName.toLowerCase() === 'a') {
+
+                // Detect empty href attributes
+                // The browser will make href="" or href="#top"
+                // into absolute urls when accessed as e.targed.href, so check the html
+                if (!/href=["']\S+["']/.test(e.target.outerHTML) || /href=["']#\S+["']/.test(e.target.outerHTML)) {
+                    return true;
+                }
+
+                // only show when hovering on anchors
+                if (this.toolbar.classList.contains('medium-editor-toolbar-active')) {
+                    // only show when toolbar is not present
+                    return true;
+                }
+                this.activeAnchor = e.target;
+                this.activeAnchor.addEventListener('mouseout', leaveAnchor);
+                // show the anchor preview according to the configured delay
+                // if the mouse has not left the anchor tag in that time
+                setTimeout(function () {
+                    if (overAnchor) {
+                        self.showAnchorPreview(e.target);
+                    }
+                }, self.options.delay);
+
+
+            }
+        },
+
+        bindAnchorPreview: function (index) {
+            var i, self = this;
+            this.editorAnchorObserverWrapper = function (e) {
+                self.editorAnchorObserver(e);
+            };
+            for (i = 0; i < this.elements.length; i += 1) {
+                this.elements[i].addEventListener('mouseover', this.editorAnchorObserverWrapper);
+            }
+            return this;
+        },
+
+        checkLinkFormat: function (value) {
+            var re = /^(https?|ftps?|rtmpt?):\/\/|mailto:/;
+            return (re.test(value) ? '' : 'http://') + value;
+        },
+
+        setTargetBlank: function () {
+            var el = getSelectionStart(),
+                i;
+            if (el.tagName.toLowerCase() === 'a') {
+                el.target = '_blank';
+            } else {
+                el = el.getElementsByTagName('a');
+                for (i = 0; i < el.length; i += 1) {
+                    el[i].target = '_blank';
+                }
+            }
+        },
+
+        setButtonClass: function (buttonClass) {
+            var el = getSelectionStart(),
+                classes = buttonClass.split(' '),
+                i, j;
+            if (el.tagName.toLowerCase() === 'a') {
+                for (j = 0; j < classes.length; j += 1) {
+                    el.classList.add(classes[j]);
+                }
+            } else {
+                el = el.getElementsByTagName('a');
+                for (i = 0; i < el.length; i += 1) {
+                    for (j = 0; j < classes.length; j += 1) {
+                        el[i].classList.add(classes[j]);
+                    }
+                }
+            }
+        },
+
+        createLink: function (input, target, buttonClass) {
+            var i, event;
+
+            if (input.value.trim().length === 0) {
+                this.hideToolbarActions();
+                return;
+            }
+
+            restoreSelection(this.savedSelection);
+
+            if (this.options.checkLinkFormat) {
+                input.value = this.checkLinkFormat(input.value);
+            }
+
+            document.execCommand('createLink', false, input.value);
+
+            if (this.options.targetBlank || target === "_blank") {
+                this.setTargetBlank();
+            }
+
+            if (buttonClass) {
+                this.setButtonClass(buttonClass);
+            }
+
+            if (this.options.targetBlank || target === "_blank" || buttonClass) {
+                event = document.createEvent("HTMLEvents");
+                event.initEvent("input", true, true, window);
+                for (i = 0; i < this.elements.length; i += 1) {
+                    this.elements[i].dispatchEvent(event);
+                }
+            }
+
+            this.checkSelection();
+            this.showToolbarActions();
+            input.value = '';
+        },
+
+        bindWindowActions: function () {
+            var timerResize,
+                self = this;
+            this.windowResizeHandler = function () {
+                clearTimeout(timerResize);
+                timerResize = setTimeout(function () {
+                    if (self.toolbar && self.toolbar.classList.contains('medium-editor-toolbar-active')) {
+                        self.setToolbarPosition();
+                    }
+                }, 100);
+            };
+            window.addEventListener('resize', this.windowResizeHandler);
+            return this;
+        },
+
+        activate: function () {
+            if (this.isActive) {
+                return;
+            }
+
+            this.setup();
+        },
+
+        // TODO: break method
+        deactivate: function () {
+            var i;
+            if (!this.isActive) {
+                return;
+            }
+            this.isActive = false;
+
+            if (this.toolbar !== undefined) {
+                this.options.elementsContainer.removeChild(this.anchorPreview);
+                this.options.elementsContainer.removeChild(this.toolbar);
+                delete this.toolbar;
+                delete this.anchorPreview;
+            }
+
+            document.documentElement.removeEventListener('mouseup', this.checkSelectionWrapper);
+            window.removeEventListener('resize', this.windowResizeHandler);
+
+            for (i = 0; i < this.elements.length; i += 1) {
+                this.elements[i].removeEventListener('mouseover', this.editorAnchorObserverWrapper);
+                this.elements[i].removeEventListener('keyup', this.checkSelectionWrapper);
+                this.elements[i].removeEventListener('blur', this.checkSelectionWrapper);
+                this.elements[i].removeEventListener('paste', this.pasteWrapper);
+                this.elements[i].removeAttribute('contentEditable');
+                this.elements[i].removeAttribute('data-medium-element');
+            }
+
+        },
+
+        htmlEntities: function (str) {
+            // converts special characters (like <) into their escaped/encoded values (like &lt;).
+            // This allows you to show to display the string without the browser reading it as HTML.
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        },
+
+        bindPaste: function () {
+            var i, self = this;
+            this.pasteWrapper = function (e) {
+                var paragraphs,
+                    html = '',
+                    p;
+
+                this.classList.remove('medium-editor-placeholder');
+                if (!self.options.forcePlainText && !self.options.cleanPastedHTML) {
+                    return this;
+                }
+
+                if (e.clipboardData && e.clipboardData.getData && !e.defaultPrevented) {
+                    e.preventDefault();
+
+                    if (self.options.cleanPastedHTML && e.clipboardData.getData('text/html')) {
+                        return self.cleanPaste(e.clipboardData.getData('text/html'));
+                    }
+                    if (!(self.options.disableReturn || this.getAttribute('data-disable-return'))) {
+                        paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g);
+                        for (p = 0; p < paragraphs.length; p += 1) {
+                            if (paragraphs[p] !== '') {
+                                if (navigator.userAgent.match(/firefox/i) && p === 0) {
+                                    html += self.htmlEntities(paragraphs[p]);
+                                } else {
+                                    html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
+                                }
+                            }
+                        }
+                        document.execCommand('insertHTML', false, html);
+                    } else {
+                        html = self.htmlEntities(e.clipboardData.getData('text/plain'));
+                        document.execCommand('insertHTML', false, html);
+                    }
+                }
+            };
+            for (i = 0; i < this.elements.length; i += 1) {
+                this.elements[i].addEventListener('paste', this.pasteWrapper);
+            }
+            return this;
+        },
+
+        setPlaceholders: function () {
+            var i,
+                activatePlaceholder = function (el) {
+                    if (!(el.querySelector('img')) &&
+                            !(el.querySelector('blockquote')) &&
+                            el.textContent.replace(/^\s+|\s+$/g, '') === '') {
+                        el.classList.add('medium-editor-placeholder');
+                    }
+                },
+                placeholderWrapper = function (e) {
+                    this.classList.remove('medium-editor-placeholder');
+                    if (e.type !== 'keypress') {
+                        activatePlaceholder(this);
+                    }
+                };
+            for (i = 0; i < this.elements.length; i += 1) {
+                activatePlaceholder(this.elements[i]);
+                this.elements[i].addEventListener('blur', placeholderWrapper);
+                this.elements[i].addEventListener('keypress', placeholderWrapper);
+            }
+            return this;
+        },
+
+        cleanPaste: function (text) {
+
+            /*jslint regexp: true*/
+            /*
+                jslint does not allow character negation, because the negation
+                will not match any unicode characters. In the regexes in this
+                block, negation is used specifically to match the end of an html
+                tag, and in fact unicode characters *should* be allowed.
+            */
+            var i, elList, workEl,
+                el = this.getSelectionElement(),
+                multiline = /<p|<br|<div/.test(text),
+                replacements = [
+
+                    // replace two bogus tags that begin pastes from google docs
+                    [new RegExp(/<[^>]*docs-internal-guid[^>]*>/gi), ""],
+                    [new RegExp(/<\/b>(<br[^>]*>)?$/gi), ""],
+
+                     // un-html spaces and newlines inserted by OS X
+                    [new RegExp(/<span class="Apple-converted-space">\s+<\/span>/g), ' '],
+                    [new RegExp(/<br class="Apple-interchange-newline">/g), '<br>'],
+
+                    // replace google docs italics+bold with a span to be replaced once the html is inserted
+                    [new RegExp(/<span[^>]*(font-style:italic;font-weight:bold|font-weight:bold;font-style:italic)[^>]*>/gi), '<span class="replace-with italic bold">'],
+
+                    // replace google docs italics with a span to be replaced once the html is inserted
+                    [new RegExp(/<span[^>]*font-style:italic[^>]*>/gi), '<span class="replace-with italic">'],
+
+                    //[replace google docs bolds with a span to be replaced once the html is inserted
+                    [new RegExp(/<span[^>]*font-weight:bold[^>]*>/gi), '<span class="replace-with bold">'],
+
+                     // replace manually entered b/i/a tags with real ones
+                    [new RegExp(/&lt;(\/?)(i|b|a)&gt;/gi), '<$1$2>'],
+
+                     // replace manually a tags with real ones, converting smart-quotes from google docs
+                    [new RegExp(/&lt;a\s+href=(&quot;|&rdquo;|&ldquo;|“|”)([^&]+)(&quot;|&rdquo;|&ldquo;|“|”)&gt;/gi), '<a href="$2">']
+
+                ];
+            /*jslint regexp: false*/
+
+            for (i = 0; i < replacements.length; i += 1) {
+                text = text.replace(replacements[i][0], replacements[i][1]);
+            }
+
+            if (multiline) {
+
+                // double br's aren't converted to p tags, but we want paragraphs.
+                elList = text.split('<br><br>');
+
+                this.pasteHTML('<p>' + elList.join('</p><p>') + '</p>');
+                document.execCommand('insertText', false, "\n");
+
+                // block element cleanup
+                elList = el.querySelectorAll('p,div,br');
+                for (i = 0; i < elList.length; i += 1) {
+
+                    workEl = elList[i];
+
+                    switch (workEl.tagName.toLowerCase()) {
+                    case 'p':
+                    case 'div':
+                        this.filterCommonBlocks(workEl);
+                        break;
+                    case 'br':
+                        this.filterLineBreak(workEl);
+                        break;
+                    }
+
+                }
+
+
+            } else {
+
+                this.pasteHTML(text);
+
+            }
+
+        },
+
+        pasteHTML: function (html) {
+            var elList, workEl, i, fragmentBody, pasteBlock = document.createDocumentFragment();
+
+            pasteBlock.appendChild(document.createElement('body'));
+
+            fragmentBody = pasteBlock.querySelector('body');
+            fragmentBody.innerHTML = html;
+
+            this.cleanupSpans(fragmentBody);
+
+            elList = fragmentBody.querySelectorAll('*');
+            for (i = 0; i < elList.length; i += 1) {
+
+                workEl = elList[i];
+
+                // delete ugly attributes
+                workEl.removeAttribute('class');
+                workEl.removeAttribute('style');
+                workEl.removeAttribute('dir');
+
+                if (workEl.tagName.toLowerCase() === 'meta') {
+                    workEl.parentNode.removeChild(workEl);
+                }
+
+            }
+            document.execCommand('insertHTML', false, fragmentBody.innerHTML.replace(/&nbsp;/g, ' '));
+        },
+        isCommonBlock: function (el) {
+            return (el && (el.tagName.toLowerCase() === 'p' || el.tagName.toLowerCase() === 'div'));
+        },
+        filterCommonBlocks: function (el) {
+            if (/^\s*$/.test(el.innerText)) {
+                el.parentNode.removeChild(el);
+            }
+        },
+        filterLineBreak: function (el) {
+            if (this.isCommonBlock(el.previousElementSibling)) {
+
+                // remove stray br's following common block elements
+                el.parentNode.removeChild(el);
+
+            } else if (this.isCommonBlock(el.parentNode) && (el.parentNode.firstChild === el || el.parentNode.lastChild === el)) {
+
+                // remove br's just inside open or close tags of a div/p
+                el.parentNode.removeChild(el);
+
+            } else if (el.parentNode.childElementCount === 1) {
+
+                // and br's that are the only child of a div/p
+                this.removeWithParent(el);
+
+            }
+
+        },
+
+        // remove an element, including its parent, if it is the only element within its parent
+        removeWithParent: function (el) {
+            if (el && el.parentNode) {
+                if (el.parentNode.parentNode && el.parentNode.childElementCount === 1) {
+                    el.parentNode.parentNode.removeChild(el.parentNode);
+                } else {
+                    el.parentNode.removeChild(el.parentNode);
+                }
+            }
+        },
+
+        cleanupSpans: function (container_el) {
+
+            var i,
+                el,
+                new_el,
+                spans = container_el.querySelectorAll('.replace-with');
+
+            for (i = 0; i < spans.length; i += 1) {
+
+                el = spans[i];
+                new_el = document.createElement(el.classList.contains('bold') ? 'b' : 'i');
+
+                if (el.classList.contains('bold') && el.classList.contains('italic')) {
+
+                    // add an i tag as well if this has both italics and bold
+                    new_el.innerHTML = '<i>' + el.innerHTML + '</i>';
+
+                } else {
+
+                    new_el.innerHTML = el.innerHTML;
+
+                }
+                el.parentNode.replaceChild(new_el, el);
+
+            }
+
+            spans = container_el.querySelectorAll('span');
+            for (i = 0; i < spans.length; i += 1) {
+
+                el = spans[i];
+
+                // remove empty spans, replace others with their contents
+                if (/^\s*$/.test()) {
+                    el.parentNode.removeChild(el);
+                } else {
+                    el.parentNode.replaceChild(document.createTextNode(el.innerText), el);
+                }
+
+            }
+
+        }
+
+    };
+
+}(window, document));
 
 },{}],"momentjs":[function(require,module,exports){
 (function (global){

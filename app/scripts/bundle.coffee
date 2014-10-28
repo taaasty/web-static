@@ -99,6 +99,9 @@ require './react/messaging/components/notifications_popup/notifications/empty'
 
 # /*-----  End of Messaging resources  ------*/
 
+require './react/components/embed'
+require './react/components/tlog_alert'
+
 require './react/components/avatars/avatar'
 require './react/components/avatars/user_avatar'
 

@@ -51,6 +51,7 @@ gulp.task 'scripts', ['clean'], ->
     .require './bower_components/jquery.mousewheel/jquery.mousewheel',      { expose: 'jquery.mousewheel' }
     .require './bower_components/jquery.scrollto/jquery.scrollTo',          { expose: 'jquery.scrollto' }
     .require './bower_components/undo/undo',                                { expose: 'undo' }
+    .require './bower_components/medium-editor/dist/js/medium-editor',      { expose: 'medium-editor' }
 
   bundle = ->
     # Log when bundling starts
