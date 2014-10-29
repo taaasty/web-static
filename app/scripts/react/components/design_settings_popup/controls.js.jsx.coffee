@@ -4,7 +4,7 @@ window.DesignSettingsPopup_Controls = React.createClass
 
   propTypes:
     design:              React.PropTypes.object.isRequired
-    slug:                React.PropTypes.string.isRequired
+    userId:              React.PropTypes.number.isRequired
     activitiesHandler:   React.PropTypes.object.isRequired
     saveCallback:        React.PropTypes.func.isRequired
     onBackgroundChanged: React.PropTypes.func.isRequired
@@ -16,7 +16,7 @@ window.DesignSettingsPopup_Controls = React.createClass
     saveCallback = -> @props.saveCallback.apply @, arguments
 
     return `<div className="settings-design__controls">
-              <DesignSettingsPopup_ControlsBackgroundItem slug={ this.props.slug }
+              <DesignSettingsPopup_ControlsBackgroundItem userId={ this.props.userId }
                                                           backgroundUrl={ this.props.design.background_url }
                                                           activitiesHandler={ this.props.activitiesHandler }
                                                           onBackgroundChanged={ this.props.onBackgroundChanged } />

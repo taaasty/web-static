@@ -4,7 +4,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
   mixins: ['ReactActivitiesUser', ComponentManipulationsMixin]
 
   propTypes:
-    slug:                React.PropTypes.string.isRequired
+    userId:              React.PropTypes.number.isRequired
     backgroundUrl:       React.PropTypes.string.isRequired
     activitiesHandler:   React.PropTypes.object.isRequired
     onBackgroundChanged: React.PropTypes.func.isRequired
@@ -44,7 +44,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
     @$uploadCoverInput = $( @refs.uploadCoverInput.getDOMNode() )
 
     @$uploadCoverInput.fileupload
-      url: Routes.api.design_settings_cover_url @props.slug
+      url: Routes.api.design_settings_cover_url @props.userId
       paramName: 'file'
       autoUpload: true
       replaceFileInput: false
