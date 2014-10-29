@@ -13,6 +13,10 @@ window.Modernizr         = require 'Modernizr'
 window.imagesLoaded      = require 'imagesloaded'
 window.MediumEditor      = require 'medium-editor'
 window.Undo              = require 'undo'
+
+momentRu = require '../bower_components/momentjs/locale/ru'
+window.moment.locale 'ru', momentRu
+
 require 'swfobject'
 require 'es5-shim'
 require('jquery.mousewheel')(window.jQuery)

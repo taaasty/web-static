@@ -18,7 +18,7 @@
     "jquery.mousewheel": "git@github.com:jquery/jquery-mousewheel.git",
     "jquery-ui": "~1.11.2",
     "medium-editor": "1.9",
-    "momentjs": "~2.7.0",
+    "momentjs": "~2.8.3",
     "mousetrap": "~1.4.6",
     "pusher": "~2.2.3",
     "rangy": "https://rangy.googlecode.com/files/rangy-1.3alpha.804.zip",

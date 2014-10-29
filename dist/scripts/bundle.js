@@ -501,7 +501,177 @@ require('./react/application');
 
 
 
-},{"./libs":2,"./locales":3,"./react/application":4,"./react/components/avatars/avatar":5,"./react/components/avatars/user_avatar":6,"./react/components/buttons/load_more":7,"./react/components/calendar/calendar":8,"./react/components/calendar/calendar_header":9,"./react/components/calendar/calendar_marker":10,"./react/components/calendar/calendar_period":11,"./react/components/calendar/calendar_timeline":12,"./react/components/design_settings_popup/controls":13,"./react/components/design_settings_popup/controls_items/_progressbar":14,"./react/components/design_settings_popup/controls_items/_radiobutton":15,"./react/components/design_settings_popup/controls_items/align_item":16,"./react/components/design_settings_popup/controls_items/background_item":17,"./react/components/design_settings_popup/controls_items/feed_color_item":18,"./react/components/design_settings_popup/controls_items/font_type_item":19,"./react/components/design_settings_popup/controls_items/header_color_item":20,"./react/components/design_settings_popup/controls_items/opacity_item":21,"./react/components/design_settings_popup/design_settings_popup":22,"./react/components/editable_field":23,"./react/components/embed":24,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":25,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":26,"./react/components/entry_comment_box/comment_form/comment_form":27,"./react/components/entry_comment_box/comment_list/comment":28,"./react/components/entry_comment_box/comment_list/comment_list":29,"./react/components/entry_comment_box/comment_list/comment_manager":30,"./react/components/entry_comment_box/comment_metabar/comment_metabar":31,"./react/components/entry_comment_box/comment_metabar/date":32,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":33,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":34,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":35,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":36,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":37,"./react/components/entry_comment_box/comment_metabar/reply":38,"./react/components/entry_comment_box/entry_comment_box":39,"./react/components/entry_comment_box/load_more":40,"./react/components/entry_comment_box/mixins/comments":41,"./react/components/entry_metabar/author":42,"./react/components/entry_metabar/comment":43,"./react/components/entry_metabar/date":44,"./react/components/entry_metabar/dropdown_menu":45,"./react/components/entry_metabar/dropdown_menu_items/delete_item":46,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":47,"./react/components/entry_metabar/dropdown_menu_items/item":48,"./react/components/entry_metabar/dropdown_menu_items/report_item":49,"./react/components/entry_metabar/dropdown_menu_items/watch_item":50,"./react/components/entry_metabar/entry_metabar":51,"./react/components/entry_metabar/tag":52,"./react/components/entry_metabar/tags":53,"./react/components/feed/bricks":54,"./react/components/feed/feed":55,"./react/components/feed/mixins/base":56,"./react/components/feed/tlog":57,"./react/components/follow_status":58,"./react/components/hero/profile/popup/followers_popup":59,"./react/components/hero/profile/popup/followings_popup":60,"./react/components/hero/profile/popup/items/follower_item":61,"./react/components/hero/profile/popup/items/following_item":62,"./react/components/hero/profile/popup/items/tag_item":63,"./react/components/hero/profile/popup/popup":64,"./react/components/hero/profile/popup/tags_popup":65,"./react/components/hero/profile/profile":66,"./react/components/hero/profile/profile_avatar":67,"./react/components/hero/profile/profile_head":68,"./react/components/hero/profile/profile_stats":69,"./react/components/hero/profile/profile_stats_item":70,"./react/components/images_collage":71,"./react/components/notifications/tasty_alert":72,"./react/components/notifications/tasty_confirm":73,"./react/components/notifications/tasty_locking_alert":74,"./react/components/notifications/tasty_notify":75,"./react/components/people/item":76,"./react/components/persons_popup/items/follower_relationship":77,"./react/components/persons_popup/items/following_relationship":78,"./react/components/persons_popup/items/guess_relationship":79,"./react/components/persons_popup/items/ignored_relationship":80,"./react/components/persons_popup/items/item":81,"./react/components/persons_popup/items/request_relationship":82,"./react/components/persons_popup/menu":83,"./react/components/persons_popup/menu_item":84,"./react/components/persons_popup/mixins/panel_mixin":85,"./react/components/persons_popup/panels/followers_panel":86,"./react/components/persons_popup/panels/followings_panel":87,"./react/components/persons_popup/panels/guesses_panel":88,"./react/components/persons_popup/panels/ignores_panel":89,"./react/components/persons_popup/panels/requests_panel":90,"./react/components/persons_popup/persons_popup":91,"./react/components/popup/header":92,"./react/components/popup/layout":93,"./react/components/popup/popup":94,"./react/components/popup/spinner":95,"./react/components/popup_box":96,"./react/components/post_editor/actions/actions":97,"./react/components/post_editor/actions/buttons/privacy":98,"./react/components/post_editor/actions/buttons/vote":99,"./react/components/post_editor/choicer":100,"./react/components/post_editor/demo":101,"./react/components/post_editor/edit_post":102,"./react/components/post_editor/editor_container":103,"./react/components/post_editor/editors/_tasty":104,"./react/components/post_editor/editors/anonymous":105,"./react/components/post_editor/editors/image":106,"./react/components/post_editor/editors/instagram":107,"./react/components/post_editor/editors/mixins/autosave":108,"./react/components/post_editor/editors/music":109,"./react/components/post_editor/editors/quote":110,"./react/components/post_editor/editors/text":111,"./react/components/post_editor/editors/video":112,"./react/components/post_editor/images_mediabox/loaded":113,"./react/components/post_editor/images_mediabox/url_insert":114,"./react/components/post_editor/layout":115,"./react/components/post_editor/mediabox/actions":116,"./react/components/post_editor/mediabox/layout":117,"./react/components/post_editor/mediabox/loading_progress":118,"./react/components/post_editor/mixins/dragging":119,"./react/components/post_editor/mixins/images_form":120,"./react/components/post_editor/mixins/layout":121,"./react/components/post_editor/mixins/persistence":122,"./react/components/post_editor/mixins/video":123,"./react/components/post_editor/new_anonymous_post":124,"./react/components/post_editor/new_post":125,"./react/components/post_editor/video_mediabox/embeded":126,"./react/components/post_editor/video_mediabox/loading":127,"./react/components/post_editor/video_mediabox/url_insert":128,"./react/components/post_editor/video_mediabox/video_mediabox":129,"./react/components/post_editor/welcome_messages/image":130,"./react/components/post_editor/welcome_messages/instagram":131,"./react/components/post_editor/welcome_messages/music":132,"./react/components/post_editor/welcome_messages/video":133,"./react/components/relationship_buttons/follow_button":134,"./react/components/relationship_buttons/follower_button":135,"./react/components/relationship_buttons/guess_button":136,"./react/components/relationship_buttons/ignore_button":137,"./react/components/relationship_buttons/mixins/relationship":138,"./react/components/relationship_buttons/request_button":139,"./react/components/search/button":140,"./react/components/search/field":141,"./react/components/search/search":142,"./react/components/settings_popup/settings_accounts_item":143,"./react/components/settings_popup/settings_avatar":144,"./react/components/settings_popup/settings_email/confirmation":145,"./react/components/settings_popup/settings_email/edit":146,"./react/components/settings_popup/settings_email/establish/edit":147,"./react/components/settings_popup/settings_email/establish/establish":148,"./react/components/settings_popup/settings_email/establish/show":149,"./react/components/settings_popup/settings_email/settings_email":150,"./react/components/settings_popup/settings_email/show":151,"./react/components/settings_popup/settings_header":152,"./react/components/settings_popup/settings_name":153,"./react/components/settings_popup/settings_password_input":154,"./react/components/settings_popup/settings_radio_item":155,"./react/components/settings_popup/settings_title":156,"./react/components/settings_popup/settings_vkontakte":157,"./react/components/settings_popup/toolbar_settings":158,"./react/components/shellbox/authorization/authorization":159,"./react/components/shellbox/authorization/vk":160,"./react/components/shellbox/buttons/vk_auth_button":161,"./react/components/shellbox/email_signin_shellbox":162,"./react/components/shellbox/email_signup_shellbox":163,"./react/components/shellbox/inviter_shellbox":164,"./react/components/shellbox/recovery_shellbox":165,"./react/components/shellbox/select_signin_shellbox":166,"./react/components/shellbox_layer":167,"./react/components/smart_follow_status":168,"./react/components/spinner":169,"./react/components/tlog_alert":170,"./react/components/toolbars/close/close":171,"./react/components/toolbars/feed/feed":172,"./react/components/toolbars/toolbar_item":173,"./react/components/toolbars/user/user":174,"./react/components/transition/timeout_transition_group":175,"./react/components/voting":176,"./react/controllers/popup":177,"./react/controllers/shellbox":178,"./react/controllers/tasty_alert":179,"./react/controllers/tasty_confirm":180,"./react/controllers/tasty_events":181,"./react/controllers/tasty_locking_alert":182,"./react/controllers/tasty_notify":183,"./react/controllers/tasty_sound":184,"./react/dispatchers/current_user":185,"./react/entities/normalized_entry":186,"./react/mediators/comments":187,"./react/messaging/actions/conversation":188,"./react/messaging/actions/message":189,"./react/messaging/actions/notification":190,"./react/messaging/actions/popup":191,"./react/messaging/components/messages_popup/conversations/conversations":192,"./react/messaging/components/messages_popup/conversations/list/empty":193,"./react/messaging/components/messages_popup/conversations/list/list":194,"./react/messaging/components/messages_popup/conversations/list/list_item":195,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":196,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":197,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":198,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":199,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":200,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":201,"./react/messaging/components/messages_popup/loading_message":202,"./react/messaging/components/messages_popup/messages_popup":203,"./react/messaging/components/messages_popup/thread/message_form/message_form":204,"./react/messaging/components/messages_popup/thread/message_list/empty":205,"./react/messaging/components/messages_popup/thread/message_list/message_list":206,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":207,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":208,"./react/messaging/components/messages_popup/thread/thread":209,"./react/messaging/components/messages_popup/ui/back_button":210,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":211,"./react/messaging/components/notifications_popup/notifications/empty":212,"./react/messaging/components/notifications_popup/notifications/notification":213,"./react/messaging/components/notifications_popup/notifications/notifications":214,"./react/messaging/components/notifications_popup/notifications_popup":215,"./react/messaging/components/toolbars/indicators/indicators":216,"./react/messaging/components/toolbars/indicators/messages":217,"./react/messaging/components/toolbars/indicators/notifications":218,"./react/messaging/dispatchers/messaging":219,"./react/messaging/messaging_requester":220,"./react/messaging/messaging_service":221,"./react/messaging/messaging_testing":222,"./react/messaging/stores/connection_state":223,"./react/messaging/stores/conversations":224,"./react/messaging/stores/messages":225,"./react/messaging/stores/messages_popup_state":226,"./react/messaging/stores/messaging_status":227,"./react/messaging/stores/notifications":228,"./react/mixins/activities":229,"./react/mixins/component_manipulations":230,"./react/mixins/dom_manipulations":231,"./react/mixins/error_timer":232,"./react/mixins/grammar":233,"./react/mixins/positions":234,"./react/mixins/requester":235,"./react/mixins/scroller":236,"./react/mixins/shake":237,"./react/mixins/touch":238,"./react/mixins/unmount":239,"./react/services/entry_normalizer":240,"./react/services/entry_store":241,"./react/services/positions":242,"./react/services/thumbor":243,"./react/services/uuid":244,"./react/stores/current_user":245,"./resources/fileReceiver":246,"./resources/is_mobile":247,"./resources/tasty":248,"./resources/tasty_utils":249,"./routes":250}],2:[function(require,module,exports){
+},{"./libs":3,"./locales":4,"./react/application":5,"./react/components/avatars/avatar":6,"./react/components/avatars/user_avatar":7,"./react/components/buttons/load_more":8,"./react/components/calendar/calendar":9,"./react/components/calendar/calendar_header":10,"./react/components/calendar/calendar_marker":11,"./react/components/calendar/calendar_period":12,"./react/components/calendar/calendar_timeline":13,"./react/components/design_settings_popup/controls":14,"./react/components/design_settings_popup/controls_items/_progressbar":15,"./react/components/design_settings_popup/controls_items/_radiobutton":16,"./react/components/design_settings_popup/controls_items/align_item":17,"./react/components/design_settings_popup/controls_items/background_item":18,"./react/components/design_settings_popup/controls_items/feed_color_item":19,"./react/components/design_settings_popup/controls_items/font_type_item":20,"./react/components/design_settings_popup/controls_items/header_color_item":21,"./react/components/design_settings_popup/controls_items/opacity_item":22,"./react/components/design_settings_popup/design_settings_popup":23,"./react/components/editable_field":24,"./react/components/embed":25,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":26,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":27,"./react/components/entry_comment_box/comment_form/comment_form":28,"./react/components/entry_comment_box/comment_list/comment":29,"./react/components/entry_comment_box/comment_list/comment_list":30,"./react/components/entry_comment_box/comment_list/comment_manager":31,"./react/components/entry_comment_box/comment_metabar/comment_metabar":32,"./react/components/entry_comment_box/comment_metabar/date":33,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":34,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":35,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":36,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":37,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":38,"./react/components/entry_comment_box/comment_metabar/reply":39,"./react/components/entry_comment_box/entry_comment_box":40,"./react/components/entry_comment_box/load_more":41,"./react/components/entry_comment_box/mixins/comments":42,"./react/components/entry_metabar/author":43,"./react/components/entry_metabar/comment":44,"./react/components/entry_metabar/date":45,"./react/components/entry_metabar/dropdown_menu":46,"./react/components/entry_metabar/dropdown_menu_items/delete_item":47,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":48,"./react/components/entry_metabar/dropdown_menu_items/item":49,"./react/components/entry_metabar/dropdown_menu_items/report_item":50,"./react/components/entry_metabar/dropdown_menu_items/watch_item":51,"./react/components/entry_metabar/entry_metabar":52,"./react/components/entry_metabar/tag":53,"./react/components/entry_metabar/tags":54,"./react/components/feed/bricks":55,"./react/components/feed/feed":56,"./react/components/feed/mixins/base":57,"./react/components/feed/tlog":58,"./react/components/follow_status":59,"./react/components/hero/profile/popup/followers_popup":60,"./react/components/hero/profile/popup/followings_popup":61,"./react/components/hero/profile/popup/items/follower_item":62,"./react/components/hero/profile/popup/items/following_item":63,"./react/components/hero/profile/popup/items/tag_item":64,"./react/components/hero/profile/popup/popup":65,"./react/components/hero/profile/popup/tags_popup":66,"./react/components/hero/profile/profile":67,"./react/components/hero/profile/profile_avatar":68,"./react/components/hero/profile/profile_head":69,"./react/components/hero/profile/profile_stats":70,"./react/components/hero/profile/profile_stats_item":71,"./react/components/images_collage":72,"./react/components/notifications/tasty_alert":73,"./react/components/notifications/tasty_confirm":74,"./react/components/notifications/tasty_locking_alert":75,"./react/components/notifications/tasty_notify":76,"./react/components/people/item":77,"./react/components/persons_popup/items/follower_relationship":78,"./react/components/persons_popup/items/following_relationship":79,"./react/components/persons_popup/items/guess_relationship":80,"./react/components/persons_popup/items/ignored_relationship":81,"./react/components/persons_popup/items/item":82,"./react/components/persons_popup/items/request_relationship":83,"./react/components/persons_popup/menu":84,"./react/components/persons_popup/menu_item":85,"./react/components/persons_popup/mixins/panel_mixin":86,"./react/components/persons_popup/panels/followers_panel":87,"./react/components/persons_popup/panels/followings_panel":88,"./react/components/persons_popup/panels/guesses_panel":89,"./react/components/persons_popup/panels/ignores_panel":90,"./react/components/persons_popup/panels/requests_panel":91,"./react/components/persons_popup/persons_popup":92,"./react/components/popup/header":93,"./react/components/popup/layout":94,"./react/components/popup/popup":95,"./react/components/popup/spinner":96,"./react/components/popup_box":97,"./react/components/post_editor/actions/actions":98,"./react/components/post_editor/actions/buttons/privacy":99,"./react/components/post_editor/actions/buttons/vote":100,"./react/components/post_editor/choicer":101,"./react/components/post_editor/demo":102,"./react/components/post_editor/edit_post":103,"./react/components/post_editor/editor_container":104,"./react/components/post_editor/editors/_tasty":105,"./react/components/post_editor/editors/anonymous":106,"./react/components/post_editor/editors/image":107,"./react/components/post_editor/editors/instagram":108,"./react/components/post_editor/editors/mixins/autosave":109,"./react/components/post_editor/editors/music":110,"./react/components/post_editor/editors/quote":111,"./react/components/post_editor/editors/text":112,"./react/components/post_editor/editors/video":113,"./react/components/post_editor/images_mediabox/loaded":114,"./react/components/post_editor/images_mediabox/url_insert":115,"./react/components/post_editor/layout":116,"./react/components/post_editor/mediabox/actions":117,"./react/components/post_editor/mediabox/layout":118,"./react/components/post_editor/mediabox/loading_progress":119,"./react/components/post_editor/mixins/dragging":120,"./react/components/post_editor/mixins/images_form":121,"./react/components/post_editor/mixins/layout":122,"./react/components/post_editor/mixins/persistence":123,"./react/components/post_editor/mixins/video":124,"./react/components/post_editor/new_anonymous_post":125,"./react/components/post_editor/new_post":126,"./react/components/post_editor/video_mediabox/embeded":127,"./react/components/post_editor/video_mediabox/loading":128,"./react/components/post_editor/video_mediabox/url_insert":129,"./react/components/post_editor/video_mediabox/video_mediabox":130,"./react/components/post_editor/welcome_messages/image":131,"./react/components/post_editor/welcome_messages/instagram":132,"./react/components/post_editor/welcome_messages/music":133,"./react/components/post_editor/welcome_messages/video":134,"./react/components/relationship_buttons/follow_button":135,"./react/components/relationship_buttons/follower_button":136,"./react/components/relationship_buttons/guess_button":137,"./react/components/relationship_buttons/ignore_button":138,"./react/components/relationship_buttons/mixins/relationship":139,"./react/components/relationship_buttons/request_button":140,"./react/components/search/button":141,"./react/components/search/field":142,"./react/components/search/search":143,"./react/components/settings_popup/settings_accounts_item":144,"./react/components/settings_popup/settings_avatar":145,"./react/components/settings_popup/settings_email/confirmation":146,"./react/components/settings_popup/settings_email/edit":147,"./react/components/settings_popup/settings_email/establish/edit":148,"./react/components/settings_popup/settings_email/establish/establish":149,"./react/components/settings_popup/settings_email/establish/show":150,"./react/components/settings_popup/settings_email/settings_email":151,"./react/components/settings_popup/settings_email/show":152,"./react/components/settings_popup/settings_header":153,"./react/components/settings_popup/settings_name":154,"./react/components/settings_popup/settings_password_input":155,"./react/components/settings_popup/settings_radio_item":156,"./react/components/settings_popup/settings_title":157,"./react/components/settings_popup/settings_vkontakte":158,"./react/components/settings_popup/toolbar_settings":159,"./react/components/shellbox/authorization/authorization":160,"./react/components/shellbox/authorization/vk":161,"./react/components/shellbox/buttons/vk_auth_button":162,"./react/components/shellbox/email_signin_shellbox":163,"./react/components/shellbox/email_signup_shellbox":164,"./react/components/shellbox/inviter_shellbox":165,"./react/components/shellbox/recovery_shellbox":166,"./react/components/shellbox/select_signin_shellbox":167,"./react/components/shellbox_layer":168,"./react/components/smart_follow_status":169,"./react/components/spinner":170,"./react/components/tlog_alert":171,"./react/components/toolbars/close/close":172,"./react/components/toolbars/feed/feed":173,"./react/components/toolbars/toolbar_item":174,"./react/components/toolbars/user/user":175,"./react/components/transition/timeout_transition_group":176,"./react/components/voting":177,"./react/controllers/popup":178,"./react/controllers/shellbox":179,"./react/controllers/tasty_alert":180,"./react/controllers/tasty_confirm":181,"./react/controllers/tasty_events":182,"./react/controllers/tasty_locking_alert":183,"./react/controllers/tasty_notify":184,"./react/controllers/tasty_sound":185,"./react/dispatchers/current_user":186,"./react/entities/normalized_entry":187,"./react/mediators/comments":188,"./react/messaging/actions/conversation":189,"./react/messaging/actions/message":190,"./react/messaging/actions/notification":191,"./react/messaging/actions/popup":192,"./react/messaging/components/messages_popup/conversations/conversations":193,"./react/messaging/components/messages_popup/conversations/list/empty":194,"./react/messaging/components/messages_popup/conversations/list/list":195,"./react/messaging/components/messages_popup/conversations/list/list_item":196,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":197,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":198,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":199,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":200,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":201,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":202,"./react/messaging/components/messages_popup/loading_message":203,"./react/messaging/components/messages_popup/messages_popup":204,"./react/messaging/components/messages_popup/thread/message_form/message_form":205,"./react/messaging/components/messages_popup/thread/message_list/empty":206,"./react/messaging/components/messages_popup/thread/message_list/message_list":207,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":208,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":209,"./react/messaging/components/messages_popup/thread/thread":210,"./react/messaging/components/messages_popup/ui/back_button":211,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":212,"./react/messaging/components/notifications_popup/notifications/empty":213,"./react/messaging/components/notifications_popup/notifications/notification":214,"./react/messaging/components/notifications_popup/notifications/notifications":215,"./react/messaging/components/notifications_popup/notifications_popup":216,"./react/messaging/components/toolbars/indicators/indicators":217,"./react/messaging/components/toolbars/indicators/messages":218,"./react/messaging/components/toolbars/indicators/notifications":219,"./react/messaging/dispatchers/messaging":220,"./react/messaging/messaging_requester":221,"./react/messaging/messaging_service":222,"./react/messaging/messaging_testing":223,"./react/messaging/stores/connection_state":224,"./react/messaging/stores/conversations":225,"./react/messaging/stores/messages":226,"./react/messaging/stores/messages_popup_state":227,"./react/messaging/stores/messaging_status":228,"./react/messaging/stores/notifications":229,"./react/mixins/activities":230,"./react/mixins/component_manipulations":231,"./react/mixins/dom_manipulations":232,"./react/mixins/error_timer":233,"./react/mixins/grammar":234,"./react/mixins/positions":235,"./react/mixins/requester":236,"./react/mixins/scroller":237,"./react/mixins/shake":238,"./react/mixins/touch":239,"./react/mixins/unmount":240,"./react/services/entry_normalizer":241,"./react/services/entry_store":242,"./react/services/positions":243,"./react/services/thumbor":244,"./react/services/uuid":245,"./react/stores/current_user":246,"./resources/fileReceiver":247,"./resources/is_mobile":248,"./resources/tasty":249,"./resources/tasty_utils":250,"./routes":251}],2:[function(require,module,exports){
+// moment.js locale configuration
+// locale : russian (ru)
+// author : Viktorminator : https://github.com/Viktorminator
+// Author : Menelion Elensúle : https://github.com/Oire
+
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['moment'], factory); // AMD
+    } else if (typeof exports === 'object') {
+        module.exports = factory(require('../moment')); // Node
+    } else {
+        factory(window.moment); // Browser global
+    }
+}(function (moment) {
+    function plural(word, num) {
+        var forms = word.split('_');
+        return num % 10 === 1 && num % 100 !== 11 ? forms[0] : (num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? forms[1] : forms[2]);
+    }
+
+    function relativeTimeWithPlural(number, withoutSuffix, key) {
+        var format = {
+            'mm': withoutSuffix ? 'минута_минуты_минут' : 'минуту_минуты_минут',
+            'hh': 'час_часа_часов',
+            'dd': 'день_дня_дней',
+            'MM': 'месяц_месяца_месяцев',
+            'yy': 'год_года_лет'
+        };
+        if (key === 'm') {
+            return withoutSuffix ? 'минута' : 'минуту';
+        }
+        else {
+            return number + ' ' + plural(format[key], +number);
+        }
+    }
+
+    function monthsCaseReplace(m, format) {
+        var months = {
+            'nominative': 'январь_февраль_март_апрель_май_июнь_июль_август_сентябрь_октябрь_ноябрь_декабрь'.split('_'),
+            'accusative': 'января_февраля_марта_апреля_мая_июня_июля_августа_сентября_октября_ноября_декабря'.split('_')
+        },
+
+        nounCase = (/D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/).test(format) ?
+            'accusative' :
+            'nominative';
+
+        return months[nounCase][m.month()];
+    }
+
+    function monthsShortCaseReplace(m, format) {
+        var monthsShort = {
+            'nominative': 'янв_фев_мар_апр_май_июнь_июль_авг_сен_окт_ноя_дек'.split('_'),
+            'accusative': 'янв_фев_мар_апр_мая_июня_июля_авг_сен_окт_ноя_дек'.split('_')
+        },
+
+        nounCase = (/D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/).test(format) ?
+            'accusative' :
+            'nominative';
+
+        return monthsShort[nounCase][m.month()];
+    }
+
+    function weekdaysCaseReplace(m, format) {
+        var weekdays = {
+            'nominative': 'воскресенье_понедельник_вторник_среда_четверг_пятница_суббота'.split('_'),
+            'accusative': 'воскресенье_понедельник_вторник_среду_четверг_пятницу_субботу'.split('_')
+        },
+
+        nounCase = (/\[ ?[Вв] ?(?:прошлую|следующую)? ?\] ?dddd/).test(format) ?
+            'accusative' :
+            'nominative';
+
+        return weekdays[nounCase][m.day()];
+    }
+
+    return moment.defineLocale('ru', {
+        months : monthsCaseReplace,
+        monthsShort : monthsShortCaseReplace,
+        weekdays : weekdaysCaseReplace,
+        weekdaysShort : 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
+        weekdaysMin : 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
+        monthsParse : [/^янв/i, /^фев/i, /^мар/i, /^апр/i, /^ма[й|я]/i, /^июн/i, /^июл/i, /^авг/i, /^сен/i, /^окт/i, /^ноя/i, /^дек/i],
+        longDateFormat : {
+            LT : 'HH:mm',
+            L : 'DD.MM.YYYY',
+            LL : 'D MMMM YYYY г.',
+            LLL : 'D MMMM YYYY г., LT',
+            LLLL : 'dddd, D MMMM YYYY г., LT'
+        },
+        calendar : {
+            sameDay: '[Сегодня в] LT',
+            nextDay: '[Завтра в] LT',
+            lastDay: '[Вчера в] LT',
+            nextWeek: function () {
+                return this.day() === 2 ? '[Во] dddd [в] LT' : '[В] dddd [в] LT';
+            },
+            lastWeek: function () {
+                switch (this.day()) {
+                case 0:
+                    return '[В прошлое] dddd [в] LT';
+                case 1:
+                case 2:
+                case 4:
+                    return '[В прошлый] dddd [в] LT';
+                case 3:
+                case 5:
+                case 6:
+                    return '[В прошлую] dddd [в] LT';
+                }
+            },
+            sameElse: 'L'
+        },
+        relativeTime : {
+            future : 'через %s',
+            past : '%s назад',
+            s : 'несколько секунд',
+            m : relativeTimeWithPlural,
+            mm : relativeTimeWithPlural,
+            h : 'час',
+            hh : relativeTimeWithPlural,
+            d : 'день',
+            dd : relativeTimeWithPlural,
+            M : 'месяц',
+            MM : relativeTimeWithPlural,
+            y : 'год',
+            yy : relativeTimeWithPlural
+        },
+
+        meridiemParse: /ночи|утра|дня|вечера/i,
+        isPM : function (input) {
+            return /^(дня|вечера)$/.test(input);
+        },
+
+        meridiem : function (hour, minute, isLower) {
+            if (hour < 4) {
+                return 'ночи';
+            } else if (hour < 12) {
+                return 'утра';
+            } else if (hour < 17) {
+                return 'дня';
+            } else {
+                return 'вечера';
+            }
+        },
+
+        ordinal: function (number, period) {
+            switch (period) {
+            case 'M':
+            case 'd':
+            case 'DDD':
+                return number + '-й';
+            case 'D':
+                return number + '-го';
+            case 'w':
+            case 'W':
+                return number + '-я';
+            default:
+                return number;
+            }
+        },
+
+        week : {
+            dow : 1, // Monday is the first day of the week.
+            doy : 7  // The week that contains Jan 1st is the first week of the year.
+        }
+    });
+}));
+
+},{"../moment":undefined}],3:[function(require,module,exports){
+var momentRu;
+
 window._ = require('underscore');
 
 window.$ = window.jQuery = require('jquery');
@@ -531,6 +701,10 @@ window.imagesLoaded = require('imagesloaded');
 window.MediumEditor = require('medium-editor');
 
 window.Undo = require('undo');
+
+momentRu = require('../bower_components/momentjs/locale/ru');
+
+window.moment.locale('ru', momentRu);
 
 require('swfobject');
 
@@ -576,7 +750,7 @@ require('jquery.shapeshift');
 
 
 
-},{"Modernizr":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":252,"i18next":undefined,"imagesloaded":255,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"medium-editor":undefined,"momentjs":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"reactUjs":undefined,"screenviewer":undefined,"swfobject":undefined,"underscore":undefined,"undo":undefined}],3:[function(require,module,exports){
+},{"../bower_components/momentjs/locale/ru":2,"Modernizr":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":253,"i18next":undefined,"imagesloaded":256,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"medium-editor":undefined,"momentjs":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"reactUjs":undefined,"screenviewer":undefined,"swfobject":undefined,"underscore":undefined,"undo":undefined}],4:[function(require,module,exports){
 var locale;
 
 locale = 'ru';
@@ -589,7 +763,7 @@ i18n.init({
 
 
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 window.ReactApp = {
   start: function(_arg) {
     var ic, user;
@@ -618,7 +792,7 @@ window.ReactApp = {
 
 
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.Avatar = React.createClass({displayName: 'Avatar',
@@ -662,7 +836,7 @@ window.Avatar = React.createClass({displayName: 'Avatar',
 
 
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.UserAvatar = React.createClass({displayName: 'UserAvatar',
@@ -700,7 +874,7 @@ window.UserAvatar = React.createClass({displayName: 'UserAvatar',
 
 
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.LoadMoreButton = React.createClass({displayName: 'LoadMoreButton',
@@ -719,7 +893,7 @@ window.LoadMoreButton = React.createClass({displayName: 'LoadMoreButton',
 
 
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CALENDAR_CLOSED, CALENDAR_OPENED_BY_CLICK, CALENDAR_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, TARGET_POST_CLASS, TARGET_POST_PARENT_CLASS;
@@ -927,7 +1101,7 @@ window.Calendar = React.createClass({displayName: 'Calendar',
 
 
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarHeader = React.createClass({displayName: 'CalendarHeader',
@@ -937,7 +1111,7 @@ window.CalendarHeader = React.createClass({displayName: 'CalendarHeader',
   render: function() {
     var day, info;
     day = this.props.date.format('D');
-    info = this.props.date.format('D MMMM <br/> dddd<br/> LT').slice(2);
+    info = this.props.date.format('D MMMM <br/> dddd<br/> HH:mm').slice(2);
     if (moment().year() !== this.props.date.year()) {
       info = this.props.date.format('D MMMM <br/> dddd<br/> YYYY').slice(2);
     }
@@ -952,7 +1126,7 @@ window.CalendarHeader = React.createClass({displayName: 'CalendarHeader',
 
 
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarMarker = React.createClass({displayName: 'CalendarMarker',
@@ -997,7 +1171,7 @@ window.CalendarMarker = React.createClass({displayName: 'CalendarMarker',
 
 
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarPeriod = React.createClass({displayName: 'CalendarPeriod',
@@ -1027,7 +1201,7 @@ window.CalendarPeriod = React.createClass({displayName: 'CalendarPeriod',
 
 
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarTimeline = React.createClass({displayName: 'CalendarTimeline',
@@ -1056,7 +1230,7 @@ window.CalendarTimeline = React.createClass({displayName: 'CalendarTimeline',
 
 
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_Controls = React.createClass({displayName: 'DesignSettingsPopup_Controls',
@@ -1101,7 +1275,7 @@ window.DesignSettingsPopup_Controls = React.createClass({displayName: 'DesignSet
 
 
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsProgressbar = React.createClass({displayName: 'DesignSettingsPopup_ControlsProgressbar',
@@ -1127,7 +1301,7 @@ window.DesignSettingsPopup_ControlsProgressbar = React.createClass({displayName:
 
 
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsRadioButton = React.createClass({displayName: 'DesignSettingsPopup_ControlsRadioButton',
@@ -1192,7 +1366,7 @@ window.DesignSettingsPopup_ControlsRadioButton = React.createClass({displayName:
 
 
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var SETTING_TITLE;
@@ -1245,7 +1419,7 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass({displayName: '
 
 
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsBackgroundItem',
@@ -1369,7 +1543,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({displayNa
 
 
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsFeedColorItem',
@@ -1418,7 +1592,7 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({displayNam
 
 
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsFontTypeItem',
@@ -1468,7 +1642,7 @@ window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({displayName
 
 
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsHeaderColorItem',
@@ -1531,7 +1705,7 @@ window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({displayN
 
 
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MAXIMUM_OPACITY, MINIMUM_OPACITY, STEP_OPACITY, TIMEOUT_BEFORE_SAVE;
@@ -1629,7 +1803,7 @@ window.DesignSettingsPopup_ControlsOpacityItem = React.createClass({displayName:
 
 
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DESIGN_SETTINGS_POPUP_TITLE;
@@ -1761,7 +1935,7 @@ window.DesignSettingsPopup = React.createClass({displayName: 'DesignSettingsPopu
 
 
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var KEYCODE_ENTER;
@@ -1868,7 +2042,7 @@ window.EditableField = React.createClass({displayName: 'EditableField',
 
 
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EmbedComponent = React.createClass({displayName: 'EmbedComponent',
@@ -1955,7 +2129,7 @@ window.EmbedComponentWithCover = React.createClass({displayName: 'EmbedComponent
 
 
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FORM_STATE, HIDDEN_STATE, LINK_STATE;
@@ -2113,7 +2287,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({displayName
 
 
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentEditFormManager = React.createClass({displayName: 'EntryCommentBox_CommentEditFormManager',
@@ -2175,7 +2349,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({displayName: 
 
 
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var REPLIES_LIMIT;
@@ -2293,7 +2467,7 @@ window.EntryCommentBox_CommentForm = React.createClass({displayName: 'EntryComme
 
 
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_Comment = React.createClass({displayName: 'EntryCommentBox_Comment',
@@ -2358,7 +2532,7 @@ window.EntryCommentBox_Comment = React.createClass({displayName: 'EntryCommentBo
 
 
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentList = React.createClass({displayName: 'EntryCommentBox_CommentList',
@@ -2409,7 +2583,7 @@ window.EntryCommentBox_CommentList = React.createClass({displayName: 'EntryComme
 
 
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentManager = React.createClass({displayName: 'EntryCommentBox_CommentManager',
@@ -2477,7 +2651,7 @@ window.EntryCommentBox_CommentManager = React.createClass({displayName: 'EntryCo
 
 
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBar = React.createClass({displayName: 'EntryCommentBox_CommentMetaBar',
@@ -2514,7 +2688,7 @@ window.EntryCommentBox_CommentMetaBar = React.createClass({displayName: 'EntryCo
 
 
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDate = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDate',
@@ -2551,7 +2725,7 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass({displayName: 'Ent
 
 
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT;
@@ -2643,7 +2817,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass({displayNa
 
 
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem',
@@ -2690,7 +2864,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
 
 
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuEditItem',
@@ -2713,7 +2887,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({d
 
 
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuLinkItem',
@@ -2735,7 +2909,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({d
 
 
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuReportItem',
@@ -2778,7 +2952,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
 
 
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarReply = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarReply',
@@ -2799,7 +2973,7 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass({displayName: 'En
 
 
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MORE_COMMENTS_LIMIT;
@@ -2871,7 +3045,7 @@ window.EntryCommentBox = React.createClass({displayName: 'EntryCommentBox',
 
 
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_LoadMore = React.createClass({displayName: 'EntryCommentBox_LoadMore',
@@ -2906,7 +3080,7 @@ window.EntryCommentBox_LoadMore = React.createClass({displayName: 'EntryCommentB
 
 
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 var CommentsMixin;
 
 CommentsMixin = {
@@ -3083,7 +3257,7 @@ React.mixins.add('CommentsMixin', [CommentsMixin, RequesterMixin, ComponentManip
 
 
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarAuthor = React.createClass({displayName: 'EntryMetabarAuthor',
@@ -3108,7 +3282,7 @@ window.EntryMetabarAuthor = React.createClass({displayName: 'EntryMetabarAuthor'
 
 
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarComment = React.createClass({displayName: 'EntryMetabarComment',
@@ -3150,7 +3324,7 @@ window.EntryMetabarComment = React.createClass({displayName: 'EntryMetabarCommen
 
 
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDate = React.createClass({displayName: 'EntryMetabarDate',
@@ -3183,7 +3357,7 @@ window.EntryMetabarDate = React.createClass({displayName: 'EntryMetabarDate',
 
 
 
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_BETWEEN_TOGGLER_AND_MENU, MOUSE_LEAVE_TIMEOUT;
@@ -3337,7 +3511,7 @@ window.EntryMetabarDropdownMenu = React.createClass({displayName: 'EntryMetabarD
 
 
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuDeleteItem = React.createClass({displayName: 'EntryMetabarDropdownMenuDeleteItem',
@@ -3412,7 +3586,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({displayName: 'Ent
 
 
 
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({displayName: 'EntryMetabarDropdownMenuFavoriteItem',
@@ -3521,7 +3695,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({displayName: 'E
 
 
 
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuItem = React.createClass({displayName: 'EntryMetabarDropdownMenuItem',
@@ -3541,7 +3715,7 @@ window.EntryMetabarDropdownMenuItem = React.createClass({displayName: 'EntryMeta
 
 
 
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuReportItem = React.createClass({displayName: 'EntryMetabarDropdownMenuReportItem',
@@ -3583,7 +3757,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({displayName: 'Ent
 
 
 
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuWatchItem = React.createClass({displayName: 'EntryMetabarDropdownMenuWatchItem',
@@ -3681,7 +3855,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({displayName: 'Entr
 
 
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabar = React.createClass({displayName: 'EntryMetabar',
@@ -3749,7 +3923,7 @@ window.EntryMetabar = React.createClass({displayName: 'EntryMetabar',
 
 
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarTag = React.createClass({displayName: 'EntryMetabarTag',
@@ -3768,7 +3942,7 @@ window.EntryMetabarTag = React.createClass({displayName: 'EntryMetabarTag',
 
 
 
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarTags = React.createClass({displayName: 'EntryMetabarTags',
@@ -3799,7 +3973,7 @@ window.EntryMetabarTags = React.createClass({displayName: 'EntryMetabarTags',
 
 
 
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FeedBricks = React.createClass({displayName: 'FeedBricks',
@@ -3849,7 +4023,7 @@ window.FeedBricks = React.createClass({displayName: 'FeedBricks',
 
 
 
-},{}],55:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
@@ -3944,7 +4118,7 @@ window.Feed = React.createClass({displayName: 'Feed',
 
 
 
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 var THRESHOLD;
 
 THRESHOLD = 400;
@@ -3981,7 +4155,7 @@ window.FeedBaseMixin = {
 
 
 
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FeedTlog = React.createClass({displayName: 'FeedTlog',
@@ -4015,7 +4189,7 @@ window.FeedTlog = React.createClass({displayName: 'FeedTlog',
 
 
 
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FollowStatus = React.createClass({displayName: 'FollowStatus',
@@ -4031,7 +4205,7 @@ window.FollowStatus = React.createClass({displayName: 'FollowStatus',
 
 
 
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroProfileStats_FollowersPopup',
@@ -4120,7 +4294,7 @@ window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroPr
 
 
 
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroProfileStats_FollowingsPopup',
@@ -4209,7 +4383,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroP
 
 
 
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowerItem = React.createClass({displayName: 'HeroProfileStats_FollowerItem',
@@ -4233,7 +4407,7 @@ window.HeroProfileStats_FollowerItem = React.createClass({displayName: 'HeroProf
 
 
 
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowingItem = React.createClass({displayName: 'HeroProfileStats_FollowingItem',
@@ -4257,7 +4431,7 @@ window.HeroProfileStats_FollowingItem = React.createClass({displayName: 'HeroPro
 
 
 
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_TagItem = React.createClass({displayName: 'HeroProfileStats_TagItem',
@@ -4278,7 +4452,7 @@ window.HeroProfileStats_TagItem = React.createClass({displayName: 'HeroProfileSt
 
 
 
-},{}],64:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION, MARGIN;
@@ -4359,7 +4533,7 @@ window.HeroProfileStats_Popup = React.createClass({displayName: 'HeroProfileStat
 
 
 
-},{}],65:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfileStats_TagsPopup',
@@ -4447,7 +4621,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfile
 
 
 
-},{}],66:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS;
@@ -4585,7 +4759,7 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
 
 
 
-},{}],67:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var HERO_AVATAR_SIZE;
@@ -4610,7 +4784,7 @@ window.HeroProfileAvatar = React.createClass({displayName: 'HeroProfileAvatar',
 
 
 
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileHead = React.createClass({displayName: 'HeroProfileHead',
@@ -4670,7 +4844,7 @@ window.HeroProfileHeadStatic = React.createClass({displayName: 'HeroProfileHeadS
 
 
 
-},{}],69:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats = React.createClass({displayName: 'HeroProfileStats',
@@ -4797,7 +4971,7 @@ window.HeroProfileStats = React.createClass({displayName: 'HeroProfileStats',
 
 
 
-},{}],70:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStatsItem = React.createClass({displayName: 'HeroProfileStatsItem',
@@ -4841,7 +5015,7 @@ window.HeroProfileStatsItem = React.createClass({displayName: 'HeroProfileStatsI
 
 
 
-},{}],71:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FIRST_ROW_RATIO, NEXT_ROWS_RATIO;
@@ -4986,7 +5160,7 @@ window.ImagesCollage_Legacy = React.createClass({displayName: 'ImagesCollage_Leg
 
 
 
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION;
@@ -5053,7 +5227,7 @@ window.TastyAlert = React.createClass({displayName: 'TastyAlert',
 
 
 
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION;
@@ -5119,7 +5293,7 @@ window.TastyConfirm = React.createClass({displayName: 'TastyConfirm',
 
 
 
-},{}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION, START_TIMEOUT;
@@ -5172,7 +5346,7 @@ window.TastyLockingAlert = React.createClass({displayName: 'TastyLockingAlert',
 
 
 
-},{}],75:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEFAULT_TIMEOUT, DEFAULT_TYPE;
@@ -5222,7 +5396,7 @@ window.TastyNotify = React.createClass({displayName: 'TastyNotify',
 
 
 
-},{}],76:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PeopleItem = React.createClass({displayName: 'PeopleItem',
@@ -5260,7 +5434,7 @@ window.PeopleItem = React.createClass({displayName: 'PeopleItem',
 
 
 
-},{}],77:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'PersonsPopup_FollowerRelationship',
@@ -5283,7 +5457,7 @@ window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'Pers
 
 
 
-},{}],78:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowingRelationship = React.createClass({displayName: 'PersonsPopup_FollowingRelationship',
@@ -5305,7 +5479,7 @@ window.PersonsPopup_FollowingRelationship = React.createClass({displayName: 'Per
 
 
 
-},{}],79:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_GuessRelationship = React.createClass({displayName: 'PersonsPopup_GuessRelationship',
@@ -5329,7 +5503,7 @@ window.PersonsPopup_GuessRelationship = React.createClass({displayName: 'Persons
 
 
 
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_IgnoredRelationship = React.createClass({displayName: 'PersonsPopup_IgnoredRelationship',
@@ -5351,7 +5525,7 @@ window.PersonsPopup_IgnoredRelationship = React.createClass({displayName: 'Perso
 
 
 
-},{}],81:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_PersonItem',
@@ -5383,7 +5557,7 @@ window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_P
 
 
 
-},{}],82:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'PersonsPopup_RequestRelationship',
@@ -5407,7 +5581,7 @@ window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'Perso
 
 
 
-},{}],83:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FOLLOWERS, FOLLOWINGS, GUESSES, IGNORES, REQUESTS;
@@ -5472,7 +5646,7 @@ window.PersonsPopup_Menu = React.createClass({displayName: 'PersonsPopup_Menu',
 
 
 
-},{}],84:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PersonsPopup_MenuItem;
@@ -5501,7 +5675,7 @@ window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass({displa
 
 
 
-},{}],85:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_PanelMixin = {
@@ -5657,7 +5831,7 @@ React.mixins.add('PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, win
 
 
 
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPopup_FollowersPanel',
@@ -5670,7 +5844,7 @@ window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPop
 
 
 
-},{}],87:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPopup_FollowingsPanel',
@@ -5683,7 +5857,7 @@ window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPo
 
 
 
-},{}],88:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup_GuessesPanel',
@@ -5696,7 +5870,7 @@ window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup
 
 
 
-},{}],89:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup_IgnoresPanel',
@@ -5709,7 +5883,7 @@ window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup
 
 
 
-},{}],90:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopup_RequestsPanel',
@@ -5722,7 +5896,7 @@ window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopu
 
 
 
-},{}],91:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PERSON_POPUP_TITLE;
@@ -5832,7 +6006,7 @@ window.PersonsPopup = React.createClass({displayName: 'PersonsPopup',
 
 
 
-},{}],92:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupHeader = React.createClass({displayName: 'PopupHeader',
@@ -5868,7 +6042,7 @@ window.PopupHeader = React.createClass({displayName: 'PopupHeader',
 
 
 
-},{}],93:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupLayout = React.createClass({displayName: 'PopupLayout',
@@ -5902,7 +6076,7 @@ window.PopupLayout = React.createClass({displayName: 'PopupLayout',
 
 
 
-},{}],94:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var NO_TRANSITION_CLASS;
@@ -5990,7 +6164,7 @@ window.Popup = React.createClass({displayName: 'Popup',
 
 
 
-},{}],95:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupSpinner = React.createClass({displayName: 'PopupSpinner',
@@ -6010,7 +6184,7 @@ window.PopupSpinner = React.createClass({displayName: 'PopupSpinner',
 
 
 
-},{}],96:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupBox = React.createClass({displayName: 'PopupBox',
@@ -6060,7 +6234,7 @@ window.PopupBox = React.createClass({displayName: 'PopupBox',
 
 
 
-},{}],97:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ENTRY_PRIVACY_ANONYMOUS, ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, ENTRY_PRIVACY_PUBLIC_WITH_VOTING, PREVIEW_BODY_CLASSES, TLOG_TYPE_ANONYMOUS, TLOG_TYPE_PRIVATE, TLOG_TYPE_PUBLIC;
@@ -6186,7 +6360,7 @@ window.PostActions = React.createClass({displayName: 'PostActions',
 
 
 
-},{}],98:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostActions_PrivacyButton = React.createClass({displayName: 'PostActions_PrivacyButton',
@@ -6233,7 +6407,7 @@ window.PostActions_PrivacyButton = React.createClass({displayName: 'PostActions_
 
 
 
-},{}],99:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostActions_VoteButton = React.createClass({displayName: 'PostActions_VoteButton',
@@ -6278,7 +6452,7 @@ window.PostActions_VoteButton = React.createClass({displayName: 'PostActions_Vot
 
 
 
-},{}],100:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CHOICER_ITEMS, CHOICER_TYPES;
@@ -6398,7 +6572,7 @@ window.PostEditor_ChoicerItem = React.createClass({displayName: 'PostEditor_Choi
 
 
 
-},{}],101:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEMO_IDS;
@@ -6487,7 +6661,7 @@ window.PostEditor_Demo = React.createClass({displayName: 'PostEditor_Demo',
 
 
 
-},{}],102:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_EditPost = React.createClass({displayName: 'PostEditor_EditPost',
@@ -6518,7 +6692,7 @@ window.PostEditor_EditPost = React.createClass({displayName: 'PostEditor_EditPos
 
 
 
-},{}],103:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_EditorContainer',
@@ -6646,7 +6820,7 @@ window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],104:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDITOR_MODES, EDITOR_OPTIONS;
@@ -6769,7 +6943,7 @@ window.TastyEditor = React.createClass({displayName: 'TastyEditor',
 
 
 
-},{}],105:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_AnonymousEditor = React.createClass({displayName: 'PostEditor_AnonymousEditor',
@@ -6828,7 +7002,7 @@ window.PostEditor_AnonymousEditor = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],106:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var INSERT_MODE, LOADED_MODE, WELCOME_MODE;
@@ -7012,7 +7186,7 @@ window.PostEditor_ImageEditor = React.createClass({displayName: 'PostEditor_Imag
 
 
 
-},{}],107:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_InstagramEditor = React.createClass({displayName: 'PostEditor_InstagramEditor',
@@ -7047,7 +7221,7 @@ window.PostEditor_InstagramEditor = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],108:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 var AUTOSAVE_TIME;
 
 AUTOSAVE_TIME = 10000;
@@ -7080,7 +7254,7 @@ window.PostEditor_AutosaveMixin = {
 
 
 
-},{}],109:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_MusicEditor = React.createClass({displayName: 'PostEditor_MusicEditor',
@@ -7115,7 +7289,7 @@ window.PostEditor_MusicEditor = React.createClass({displayName: 'PostEditor_Musi
 
 
 
-},{}],110:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_QuoteEditor = React.createClass({displayName: 'PostEditor_QuoteEditor',
@@ -7169,7 +7343,7 @@ window.PostEditor_QuoteEditor = React.createClass({displayName: 'PostEditor_Quot
 
 
 
-},{}],111:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_TextEditor = React.createClass({displayName: 'PostEditor_TextEditor',
@@ -7229,7 +7403,7 @@ window.PostEditor_TextEditor = React.createClass({displayName: 'PostEditor_TextE
 
 
 
-},{}],112:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_VideoEditor = React.createClass({displayName: 'PostEditor_VideoEditor',
@@ -7264,7 +7438,7 @@ window.PostEditor_VideoEditor = React.createClass({displayName: 'PostEditor_Vide
 
 
 
-},{}],113:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_Loaded',
@@ -7290,7 +7464,7 @@ window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_L
 
 
 
-},{}],114:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ImagesMediaBox_UrlInsert = React.createClass({displayName: 'ImagesMediaBox_UrlInsert',
@@ -7320,7 +7494,7 @@ window.ImagesMediaBox_UrlInsert = React.createClass({displayName: 'ImagesMediaBo
 
 
 
-},{}],115:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_Layout = React.createClass({displayName: 'PostEditor_Layout',
@@ -7350,7 +7524,7 @@ window.PostEditor_Layout = React.createClass({displayName: 'PostEditor_Layout',
 
 
 
-},{}],116:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_Actions = React.createClass({displayName: 'MediaBox_Actions',
@@ -7384,7 +7558,7 @@ window.MediaBox_Actions = React.createClass({displayName: 'MediaBox_Actions',
 
 
 
-},{}],117:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_Layout = React.createClass({displayName: 'MediaBox_Layout',
@@ -7419,7 +7593,7 @@ window.MediaBox_Layout = React.createClass({displayName: 'MediaBox_Layout',
 
 
 
-},{}],118:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_LoadingProgress = React.createClass({displayName: 'MediaBox_LoadingProgress',
@@ -7437,7 +7611,7 @@ window.MediaBox_LoadingProgress = React.createClass({displayName: 'MediaBox_Load
 
 
 
-},{}],119:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 var DRAGOFF_TIMEOUT, DRAG_HOVER_CLASS;
 
 DRAG_HOVER_CLASS = 'state--drag-hover';
@@ -7505,7 +7679,7 @@ window.PostEditor_Dragging = {
 
 
 
-},{}],120:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 var ACCEPT_FILE_TYPES, MAX_FILE_SIZE, MAX_NUMBER_OF_FILES;
 
 ACCEPT_FILE_TYPES = /(\.|\/)(gif|jpe?g|png)$/i;
@@ -7687,7 +7861,7 @@ window.PostEditor_ImagesForm = {
 
 
 
-},{}],121:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.TLOG_TYPES = ['public', 'private', 'anonymous'];
@@ -7744,7 +7918,7 @@ window.PostEditor_LayoutMixin = {
 
 
 
-},{}],122:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 window.PostEditor_PersistenceMixin = {
   propTypes: {
     activitiesHandler: React.PropTypes.object.isRequired,
@@ -7807,7 +7981,7 @@ React.mixins.add('PostEditor_PersistenceMixin', [window.PostEditor_PersistenceMi
 
 
 
-},{}],123:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 window.PostEditor_VideoMixin = {
   propTypes: {
     normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
@@ -7853,7 +8027,7 @@ window.PostEditor_VideoMixin = {
 
 
 
-},{}],124:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_NewAnonymousPost = React.createClass({displayName: 'PostEditor_NewAnonymousPost',
@@ -7876,7 +8050,7 @@ window.PostEditor_NewAnonymousPost = React.createClass({displayName: 'PostEditor
 
 
 
-},{}],125:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEFAULT_POST_TYPE;
@@ -7907,7 +8081,7 @@ window.PostEditor_NewPost = React.createClass({displayName: 'PostEditor_NewPost'
 
 
 
-},{}],126:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_Embeded = React.createClass({displayName: 'VideoMediaBox_Embeded',
@@ -7926,7 +8100,7 @@ window.VideoMediaBox_Embeded = React.createClass({displayName: 'VideoMediaBox_Em
 
 
 
-},{}],127:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_Loading = React.createClass({displayName: 'VideoMediaBox_Loading',
@@ -7948,7 +8122,7 @@ window.VideoMediaBox_Loading = React.createClass({displayName: 'VideoMediaBox_Lo
 
 
 
-},{}],128:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_UrlInsert = React.createClass({displayName: 'VideoMediaBox_UrlInsert',
@@ -7981,7 +8155,7 @@ window.VideoMediaBox_UrlInsert = React.createClass({displayName: 'VideoMediaBox_
 
 
 
-},{}],129:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EMBEDED_MODE, INSERT_MODE, LOADING_MODE, WELCOME_MODE;
@@ -8127,7 +8301,7 @@ window.VideoMediaBox = React.createClass({displayName: 'VideoMediaBox',
 
 
 
-},{}],130:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_ImageWelcome = React.createClass({displayName: 'MediaBox_ImageWelcome',
@@ -8161,7 +8335,7 @@ window.MediaBox_ImageWelcome = React.createClass({displayName: 'MediaBox_ImageWe
 
 
 
-},{}],131:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_InstagramWelcome = React.createClass({displayName: 'MediaBox_InstagramWelcome',
@@ -8185,7 +8359,7 @@ window.MediaBox_InstagramWelcome = React.createClass({displayName: 'MediaBox_Ins
 
 
 
-},{}],132:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_MusicWelcome = React.createClass({displayName: 'MediaBox_MusicWelcome',
@@ -8211,7 +8385,7 @@ window.MediaBox_MusicWelcome = React.createClass({displayName: 'MediaBox_MusicWe
 
 
 
-},{}],133:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_VideoWelcome = React.createClass({displayName: 'MediaBox_VideoWelcome',
@@ -8237,7 +8411,7 @@ window.MediaBox_VideoWelcome = React.createClass({displayName: 'MediaBox_VideoWe
 
 
 
-},{}],134:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
@@ -8371,7 +8545,7 @@ window.FollowButton = React.createClass({displayName: 'FollowButton',
 
 
 
-},{}],135:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.RelationshipFollowerButton = React.createClass({displayName: 'RelationshipFollowerButton',
@@ -8417,7 +8591,7 @@ window.RelationshipFollowerButton = React.createClass({displayName: 'Relationshi
 
 
 
-},{}],136:[function(require,module,exports){
+},{}],137:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.RelationshipGuessButton = React.createClass({displayName: 'RelationshipGuessButton',
@@ -8454,7 +8628,7 @@ window.RelationshipGuessButton = React.createClass({displayName: 'RelationshipGu
 
 
 
-},{}],137:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_IGNORED;
@@ -8523,7 +8697,7 @@ window.RelationshipIgnoreButton = React.createClass({displayName: 'RelationshipI
 
 
 
-},{}],138:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 window.RelationshipMixin = {
   componentWillUnmount: function() {
     return this.clearErrorTimer();
@@ -8772,7 +8946,7 @@ React.mixins.add('RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, Reque
 
 
 
-},{}],139:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_REQUESTED;
@@ -8839,7 +9013,7 @@ window.RelationshipRequestButton = React.createClass({displayName: 'Relationship
 
 
 
-},{}],140:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SearchButton = React.createClass({displayName: 'SearchButton',
@@ -8856,7 +9030,7 @@ window.SearchButton = React.createClass({displayName: 'SearchButton',
 
 
 
-},{}],141:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SearchField = React.createClass({displayName: 'SearchField',
@@ -8904,7 +9078,7 @@ window.SearchField = React.createClass({displayName: 'SearchField',
 
 
 
-},{}],142:[function(require,module,exports){
+},{}],143:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CLOSED, OPENED;
@@ -8977,7 +9151,7 @@ window.Search = React.createClass({displayName: 'Search',
 
 
 
-},{}],143:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsAccountsItem = React.createClass({displayName: 'SettingsAccountsItem',
@@ -9036,7 +9210,7 @@ module.experts = window.SettingsAccountsItem = React.createClass({displayName: '
 
 
 
-},{}],144:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsAvatar = React.createClass({displayName: 'SettingsAvatar',
@@ -9089,7 +9263,7 @@ module.experts = window.SettingsAvatar = React.createClass({displayName: 'Settin
 
 
 
-},{}],145:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailConfirmation = React.createClass({displayName: 'SettingsEmailConfirmation',
@@ -9163,7 +9337,7 @@ window.SettingsEmailConfirmation = React.createClass({displayName: 'SettingsEmai
 
 
 
-},{}],146:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailEdit = React.createClass({displayName: 'SettingsEmailEdit',
@@ -9275,7 +9449,7 @@ window.SettingsEmailEdit = React.createClass({displayName: 'SettingsEmailEdit',
 
 
 
-},{}],147:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ENTER_KEYCODE, ESC_KEYCODE;
@@ -9385,7 +9559,7 @@ window.SettingsEmailEstablishEdit = React.createClass({displayName: 'SettingsEma
 
 
 
-},{}],148:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDIT_STATE, SHOW_STATE;
@@ -9431,7 +9605,7 @@ window.SettingsEmailEstablish = React.createClass({displayName: 'SettingsEmailEs
 
 
 
-},{}],149:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailEstablishShow = React.createClass({displayName: 'SettingsEmailEstablishShow',
@@ -9459,7 +9633,7 @@ window.SettingsEmailEstablishShow = React.createClass({displayName: 'SettingsEma
 
 
 
-},{}],150:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDIT_STATE, ESTABLISH_STATE, SHOW_STATE;
@@ -9544,7 +9718,7 @@ window.SettingsEmail = React.createClass({displayName: 'SettingsEmail',
 
 
 
-},{}],151:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailShow = React.createClass({displayName: 'SettingsEmailShow',
@@ -9601,7 +9775,7 @@ window.SettingsEmailShow = React.createClass({displayName: 'SettingsEmailShow',
 
 
 
-},{}],152:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsHeader = React.createClass({displayName: 'SettingsHeader',
@@ -9648,7 +9822,7 @@ window.SettingsHeader = React.createClass({displayName: 'SettingsHeader',
 
 
 
-},{}],153:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsName = React.createClass({displayName: 'SettingsName',
@@ -9680,7 +9854,7 @@ window.SettingsName = React.createClass({displayName: 'SettingsName',
 
 
 
-},{}],154:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CANCEL_TIMEOUT, KEYCODE_ENTER, KEYCODE_ESC;
@@ -9889,7 +10063,7 @@ module.experts = window.SettingsPasswordItem = React.createClass({displayName: '
 
 
 
-},{}],155:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsRadioItem = React.createClass({displayName: 'SettingsRadioItem',
@@ -9926,7 +10100,7 @@ module.experts = window.SettingsRadioItem = React.createClass({displayName: 'Set
 
 
 
-},{}],156:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsTitle = React.createClass({displayName: 'SettingsTitle',
@@ -9958,7 +10132,7 @@ window.SettingsTitle = React.createClass({displayName: 'SettingsTitle',
 
 
 
-},{}],157:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsVkontakteItem = React.createClass({displayName: 'SettingsVkontakteItem',
@@ -9986,7 +10160,7 @@ module.experts = window.SettingsVkontakteItem = React.createClass({displayName: 
 
 
 
-},{}],158:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ToolbarSettings = React.createClass({displayName: 'ToolbarSettings',
@@ -10097,7 +10271,7 @@ window.ToolbarSettings = React.createClass({displayName: 'ToolbarSettings',
 
 
 
-},{}],159:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.AuthorizationShellBox = React.createClass({displayName: 'AuthorizationShellBox',
@@ -10150,7 +10324,7 @@ window.AuthorizationShellBox = React.createClass({displayName: 'AuthorizationShe
 
 
 
-},{}],160:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var AUTH_TIMEOUT;
@@ -10193,7 +10367,7 @@ window.VkAuthorizationShellBox = React.createClass({displayName: 'VkAuthorizatio
 
 
 
-},{}],161:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.Shellbox_VkAuthButton = React.createClass({displayName: 'Shellbox_VkAuthButton',
@@ -10239,7 +10413,7 @@ window.Shellbox_VkAuthButton = React.createClass({displayName: 'Shellbox_VkAuthB
 
 
 
-},{}],162:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EmailSigninShellBox = React.createClass({displayName: 'EmailSigninShellBox',
@@ -10421,7 +10595,7 @@ window.EmailSigninShellBox = React.createClass({displayName: 'EmailSigninShellBo
 
 
 
-},{}],163:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.EmailSignupShellBox = React.createClass({displayName: 'EmailSignupShellBox',
@@ -10552,7 +10726,7 @@ module.experts = window.EmailSignupShellBox = React.createClass({displayName: 'E
 
 
 
-},{}],164:[function(require,module,exports){
+},{}],165:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.InviterShellBox = React.createClass({displayName: 'InviterShellBox',
@@ -10638,7 +10812,7 @@ window.InviterShellBox = React.createClass({displayName: 'InviterShellBox',
 
 
 
-},{}],165:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.RecoveryShellBox = React.createClass({displayName: 'RecoveryShellBox',
@@ -10731,7 +10905,7 @@ module.experts = window.RecoveryShellBox = React.createClass({displayName: 'Reco
 
 
 
-},{}],166:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SelectSigninShellBox = React.createClass({displayName: 'SelectSigninShellBox',
@@ -10785,7 +10959,7 @@ window.SelectSigninShellBox = React.createClass({displayName: 'SelectSigninShell
 
 
 
-},{}],167:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ShellBox = React.createClass({displayName: 'ShellBox',
@@ -10857,7 +11031,7 @@ window.ShellBox = React.createClass({displayName: 'ShellBox',
 
 
 
-},{}],168:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SmartFollowStatus = React.createClass({displayName: 'SmartFollowStatus',
@@ -10888,7 +11062,7 @@ window.SmartFollowStatus = React.createClass({displayName: 'SmartFollowStatus',
 
 
 
-},{}],169:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.Spinner = React.createClass({displayName: 'Spinner',
@@ -10912,7 +11086,7 @@ window.Spinner = React.createClass({displayName: 'Spinner',
 
 
 
-},{}],170:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_SPEED;
@@ -10952,7 +11126,7 @@ module.experts = window.TlogAlert = React.createClass({displayName: 'TlogAlert',
 
 
 
-},{}],171:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CloseToolbar = React.createClass({displayName: 'CloseToolbar',
@@ -10969,7 +11143,7 @@ window.CloseToolbar = React.createClass({displayName: 'CloseToolbar',
 
 
 
-},{}],172:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MOUSE_LEAVE_TIMEOUT, TOOLBAR_CLOSED, TOOLBAR_OPENED_BY_CLICK, TOOLBAR_OPENED_BY_HOVER;
@@ -11088,7 +11262,7 @@ window.FeedToolbar = React.createClass({displayName: 'FeedToolbar',
 
 
 
-},{}],173:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ToolbarItem = React.createClass({displayName: 'ToolbarItem',
@@ -11138,7 +11312,7 @@ window.ToolbarItem = React.createClass({displayName: 'ToolbarItem',
 
 
 
-},{}],174:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MOUSE_LEAVE_TIMEOUT, PureRenderMixin, TOOLBAR_CLOSED, TOOLBAR_OPENED_BY_CLICK, TOOLBAR_OPENED_BY_HOVER;
@@ -11345,7 +11519,7 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
 
 
 
-},{}],175:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EVENT_NAME_MAP, ReactTransitionGroup, TICK, TimeoutTransitionGroupChild, animationAllowed, animationSupported, detectEvents, endEvents;
@@ -11514,7 +11688,7 @@ window.TimeoutTransitionGroup = React.createClass({displayName: 'TimeoutTransiti
 
 
 
-},{}],176:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PureRenderMixin;
@@ -11611,7 +11785,7 @@ window.Voting = React.createClass({displayName: 'Voting',
 
 
 
-},{}],177:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 window.ReactPopup = (function() {
   function ReactPopup() {
     this.popupContainer = $('<\div>').appendTo('body').get(0);
@@ -11639,7 +11813,7 @@ window.ReactPopup = (function() {
 
 
 
-},{}],178:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 window.ReactShellBox = (function() {
   function ReactShellBox() {
     this.shellboxContainer = $('<\div>').appendTo('body').get(0);
@@ -11667,7 +11841,7 @@ window.ReactShellBox = (function() {
 
 
 
-},{}],179:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 window.TastyAlertController = {
   show: function(_arg) {
     var buttonColor, buttonText, container, message, onAccept, regex, title;
@@ -11699,7 +11873,7 @@ window.TastyAlertController = {
 
 
 
-},{}],180:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 window.TastyConfirmController = {
   show: function(_arg) {
     var acceptButtonColor, acceptButtonText, container, message, messageWithoutBR, onAccept, regex, rejectButtonText;
@@ -11732,7 +11906,7 @@ window.TastyConfirmController = {
 
 
 
-},{}],181:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 window.TastyEvents = new EventEmitter();
 
 TastyEvents.keys = {
@@ -11767,7 +11941,7 @@ TastyEvents.keys = {
 
 
 
-},{}],182:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 window.TastyLockingAlertController = {
   show: function(_arg) {
     var action, container, message, regex, title;
@@ -11797,7 +11971,7 @@ window.TastyLockingAlertController = {
 
 
 
-},{}],183:[function(require,module,exports){
+},{}],184:[function(require,module,exports){
 window.TastyNotifyController = {
   _notificationList: [],
   notify: function(type, text, timeout) {
@@ -11868,7 +12042,7 @@ TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() 
 
 
 
-},{}],184:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 var INCOMING_MESSAGE, INCOMING_NOTIFICATION, TastySettings;
 
 TastySettings = require('../../settings');
@@ -11897,7 +12071,7 @@ INCOMING_NOTIFICATION = TastySoundController._buildAudioElement('incoming_messag
 
 
 
-},{"../../settings":251}],185:[function(require,module,exports){
+},{"../../settings":252}],186:[function(require,module,exports){
 window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
   SERVER_ACTION: 'SERVER_ACTION',
   TYPE_SETUP: 'setup',
@@ -11912,7 +12086,7 @@ window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],186:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 window.NormalizedEntry = (function() {
   function NormalizedEntry(data) {
     _.extend(this, data);
@@ -11924,7 +12098,7 @@ window.NormalizedEntry = (function() {
 
 
 
-},{}],187:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 var CLOSED_STATE, COMMENT_CREATE_STATE, COMMENT_EDIT_STATE;
 
 CLOSED_STATE = 'closed';
@@ -12060,7 +12234,7 @@ window.commentsMediator = new CommentsMediator();
 
 
 
-},{}],188:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 window.ConversationActions = {
   clickConversation: function(conversationId) {
     return MessagingDispatcher.handleViewAction({
@@ -12080,7 +12254,7 @@ window.ConversationActions = {
 
 
 
-},{}],189:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 window.MessageActions = {
   newMessage: function(_arg) {
     var content, conversationId, uuid;
@@ -12118,7 +12292,7 @@ window.MessageActions = {
 
 
 
-},{}],190:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 window.NotificationActions = {
   readNotification: function(notificationId) {
     console.log('читаем уведомление', notificationId);
@@ -12128,7 +12302,7 @@ window.NotificationActions = {
 
 
 
-},{}],191:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 window.PopupActions = {
   closeMessagesPopup: function() {
     messagingService.closeMessagesPopup();
@@ -12155,7 +12329,7 @@ window.PopupActions = {
 
 
 
-},{}],192:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_Conversations = React.createClass({displayName: 'MessagesPopup_Conversations',
@@ -12176,7 +12350,7 @@ window.MessagesPopup_Conversations = React.createClass({displayName: 'MessagesPo
 
 
 
-},{}],193:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsListEmpty = React.createClass({displayName: 'MessagesPopup_ConversationsListEmpty',
@@ -12191,7 +12365,7 @@ window.MessagesPopup_ConversationsListEmpty = React.createClass({displayName: 'M
 
 
 
-},{}],194:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsList = React.createClass({displayName: 'MessagesPopup_ConversationsList',
@@ -12244,7 +12418,7 @@ window.MessagesPopup_ConversationsList = React.createClass({displayName: 'Messag
 
 
 
-},{}],195:[function(require,module,exports){
+},{}],196:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'MessagesPopup_ConversationsListItem',
@@ -12307,10 +12481,10 @@ window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'Me
     return this.props.conversation.last_message.content_html;
   },
   _getLastMessageCreatedAt: function() {
-    return moment(this.props.conversation.last_message.created_at).format('D MMMM LT');
+    return moment(this.props.conversation.last_message.created_at).format('D MMMM HH:mm');
   },
   _getLastConversationCreatedAt: function() {
-    return moment(this.props.conversation.created_at).format('D MMMM LT');
+    return moment(this.props.conversation.created_at).format('D MMMM HH:mm');
   },
   handleClick: function() {
     return ConversationActions.clickConversation(this.props.conversation.id);
@@ -12319,7 +12493,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'Me
 
 
 
-},{}],196:[function(require,module,exports){
+},{}],197:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CLOSE_STATE, OPEN_STATE;
@@ -12385,7 +12559,7 @@ window.MessagesPopup_Chooser = React.createClass({displayName: 'MessagesPopup_Ch
 
 
 
-},{}],197:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var BUTTON_TEXT;
@@ -12406,7 +12580,7 @@ window.MessagesPopup_ChooserButton = React.createClass({displayName: 'MessagesPo
 
 
 
-},{}],198:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ChooserDropdown = React.createClass({displayName: 'MessagesPopup_ChooserDropdown',
@@ -12467,7 +12641,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass({displayName: 'Messages
 
 
 
-},{}],199:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
@@ -12587,7 +12761,7 @@ window.MessagesPopup_ChooserResults = React.createClass({displayName: 'MessagesP
 
 
 
-},{}],200:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ChooserResultsItem = React.createClass({displayName: 'MessagesPopup_ChooserResultsItem',
@@ -12621,7 +12795,7 @@ window.MessagesPopup_ChooserResultsItem = React.createClass({displayName: 'Messa
 
 
 
-},{}],201:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CHOOSER_STATE, PROCESS_STATE;
@@ -12672,7 +12846,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass({displayName: 'Me
 
 
 
-},{}],202:[function(require,module,exports){
+},{}],203:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_LoadingMessage = React.createClass({displayName: 'MessagesPopup_LoadingMessage',
@@ -12702,7 +12876,7 @@ window.MessagesPopup_LoadingMessage = React.createClass({displayName: 'MessagesP
 
 
 
-},{}],203:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, ENTER_TIMEOUT, LEAVE_TIMEOUT, MESSAGES_POPUP_TITLE, MESSAGES_THREAD_TITLE, THREAD_STATE;
@@ -12810,7 +12984,7 @@ window.MessagesPopup = React.createClass({displayName: 'MessagesPopup',
 
 
 
-},{}],204:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ThreadMessageForm = React.createClass({displayName: 'MessagesPopup_ThreadMessageForm',
@@ -12868,7 +13042,7 @@ window.MessagesPopup_ThreadMessageForm = React.createClass({displayName: 'Messag
 
 
 
-},{}],205:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_MessageListEmpty = React.createClass({displayName: 'MessagesPopup_MessageListEmpty',
@@ -12881,7 +13055,7 @@ window.MessagesPopup_MessageListEmpty = React.createClass({displayName: 'Message
 
 
 
-},{}],206:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var savedScrollHeight;
@@ -12992,7 +13166,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass({displayName: 'Messag
 
 
 
-},{}],207:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE;
@@ -13082,13 +13256,13 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({displayName: 'Me
             );
   },
   _getMessageCreatedAt: function() {
-    return moment(this.props.message.created_at).format('D MMMM LT');
+    return moment(this.props.message.created_at).format('D MMMM HH:mm');
   }
 });
 
 
 
-},{}],208:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
@@ -13212,7 +13386,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass({displayNa
 
 
 
-},{}],209:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_Thread = React.createClass({displayName: 'MessagesPopup_Thread',
@@ -13244,7 +13418,7 @@ window.MessagesPopup_Thread = React.createClass({displayName: 'MessagesPopup_Thr
 
 
 
-},{}],210:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_UIBackButton = React.createClass({displayName: 'MessagesPopup_UIBackButton',
@@ -13261,7 +13435,7 @@ window.MessagesPopup_UIBackButton = React.createClass({displayName: 'MessagesPop
 
 
 
-},{}],211:[function(require,module,exports){
+},{}],212:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var BUTTON_TEXT;
@@ -13284,7 +13458,7 @@ window.MessagesPopup_UICreateNewConversationButton = React.createClass({displayN
 
 
 
-},{}],212:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup_NotificationsEmpty = React.createClass({displayName: 'NotificationsPopup_NotificationsEmpty',
@@ -13295,7 +13469,7 @@ window.NotificationsPopup_NotificationsEmpty = React.createClass({displayName: '
 
 
 
-},{}],213:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var IMAGE_SIZE;
@@ -13378,7 +13552,7 @@ window.NotificationsPopup_Notification = React.createClass({displayName: 'Notifi
 
 
 
-},{}],214:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup_Notifications = React.createClass({displayName: 'NotificationsPopup_Notifications',
@@ -13421,7 +13595,7 @@ window.NotificationsPopup_Notifications = React.createClass({displayName: 'Notif
 
 
 
-},{}],215:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup',
@@ -13454,7 +13628,7 @@ window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup'
 
 
 
-},{}],216:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ADVANCED_STATE, BASIC_STATE, MOUSE_LEAVE_TIMEOUT;
@@ -13585,7 +13759,7 @@ window.IndicatorsToolbar = React.createClass({displayName: 'IndicatorsToolbar',
 
 
 
-},{}],217:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsToolbar_Messages',
@@ -13634,7 +13808,7 @@ window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsT
 
 
 
-},{}],218:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'IndicatorsToolbar_Notifications',
@@ -13687,7 +13861,7 @@ window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'Indica
 
 
 
-},{}],219:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 window.MessagingDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     return this.dispatch({
@@ -13783,7 +13957,7 @@ window.MessagingDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],220:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 window.MessagingRequester = (function() {
   function MessagingRequester(_arg) {
     this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
@@ -13874,7 +14048,7 @@ window.MessagingRequester = (function() {
 
 
 
-},{}],221:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 window.MessagingService = (function() {
@@ -14142,7 +14316,7 @@ window.MessagingService = (function() {
 
 
 
-},{}],222:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 window.MessagingMock = {
   message: function() {
     var conversation, recipient, sender;
@@ -14182,7 +14356,7 @@ window.MessagingMock = {
 
 
 
-},{}],223:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 var CONNECTION_EVENT, _connectionState;
 
 CONNECTION_EVENT = 'connectionStateUpdated';
@@ -14226,7 +14400,7 @@ ConnectionStateStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],224:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 var CHANGE_EVENT, _conversations;
 
 CHANGE_EVENT = 'change';
@@ -14338,7 +14512,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],225:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 var CHANGE_EVENT, _allMessagesLoaded, _messages;
 
 CHANGE_EVENT = 'change';
@@ -14492,7 +14666,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(function(payload) {
 
 
 
-},{}],226:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
 
 CHANGE_EVENT = 'change';
@@ -14569,7 +14743,7 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
 
 
 
-},{}],227:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 var CHANGE_EVENT, _messagingStatus;
 
 CHANGE_EVENT = 'change';
@@ -14613,7 +14787,7 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],228:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 var CHANGE_EVENT, _notifications;
 
 CHANGE_EVENT = 'change';
@@ -14717,7 +14891,7 @@ NotificationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],229:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 var BaseMixin, ERROR_TIMEOUT, ram, rau;
 
 ERROR_TIMEOUT = 1000;
@@ -14799,7 +14973,7 @@ React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
 
 
-},{}],230:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 window.ComponentManipulationsMixin = {
   safeUpdate: function(func) {
     if (!this._isUnmounted()) {
@@ -14818,7 +14992,7 @@ window.ComponentManipulationsMixin = {
 
 
 
-},{}],231:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 var ENTRY_DELETE_ANIMATION_SPEED;
 
 ENTRY_DELETE_ANIMATION_SPEED = 300;
@@ -14843,7 +15017,7 @@ window.DOMManipulationsMixin = {
 
 
 
-},{}],232:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 var ERROR_TIMEOUT;
 
 ERROR_TIMEOUT = 1000;
@@ -14871,7 +15045,7 @@ window.ErrorTimerMixin = {
 
 
 
-},{}],233:[function(require,module,exports){
+},{}],234:[function(require,module,exports){
 window.ReactGrammarMixin = {
   declension: function(number, titles) {
     var cases;
@@ -14906,7 +15080,7 @@ window.ReactGrammarMixin = {
 
 
 
-},{}],234:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 var COMPONENT_WIDTH, REPOSITION_TIMEOUT;
 
 REPOSITION_TIMEOUT = 500;
@@ -14973,7 +15147,7 @@ window.ReactPositionsMixin = {
 
 
 
-},{}],235:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 window.RequesterMixin = {
   createRequest: function(settings) {
     var jqXHR;
@@ -15018,7 +15192,7 @@ window.RequesterMixin = {
 
 
 
-},{}],236:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 window.ScrollerMixin = {
   componentDidMount: function() {
     $(document).on('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
@@ -15068,7 +15242,7 @@ window.ScrollerMixin = {
 
 
 
-},{}],237:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 window.ReactShakeMixin = {
   shake: function() {
     var animationEnd, form;
@@ -15082,7 +15256,7 @@ window.ReactShakeMixin = {
 
 
 
-},{}],238:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 window.TouchMixin = {
   componentWillMount: function() {
     if (isMobile()) {
@@ -15094,7 +15268,7 @@ window.TouchMixin = {
 
 
 
-},{}],239:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 window.ReactUnmountMixin = {
   unmount: function() {
     return _.defer((function(_this) {
@@ -15107,7 +15281,7 @@ window.ReactUnmountMixin = {
 
 
 
-},{}],240:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 window.EntryNormalizer = {
   normalize: function(entryData) {
     var attr;
@@ -15149,7 +15323,7 @@ window.EntryNormalizer = {
 
 
 
-},{}],241:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 var STORAGE_PREFIX;
 
 STORAGE_PREFIX = 'entries';
@@ -15215,7 +15389,7 @@ window.EntryStore = {
 
 
 
-},{}],242:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
 
 MOVE_OFFSET = 100;
@@ -15261,7 +15435,7 @@ window.PositionsService = {
 
 
 
-},{}],243:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 window.ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
   image_url: function(url, style) {
@@ -15276,7 +15450,7 @@ window.ThumborService = {
 
 
 
-},{}],244:[function(require,module,exports){
+},{}],245:[function(require,module,exports){
 window.UuidService = {
   generate: function() {
     var s4;
@@ -15289,7 +15463,7 @@ window.UuidService = {
 
 
 
-},{}],245:[function(require,module,exports){
+},{}],246:[function(require,module,exports){
 var CHANGE_EVENT, currentUser;
 
 CHANGE_EVENT = 'change';
@@ -15335,7 +15509,7 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 
 
 
-},{}],246:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 var defaults,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -15474,7 +15648,7 @@ window.FileReceiver = (function() {
 
 
 
-},{}],247:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -15483,7 +15657,7 @@ window.isMobile = function() {
 
 
 
-},{}],248:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 $(function() {
   var height;
   if (typeof Modernizr !== "undefined" && Modernizr !== null ? Modernizr.touch : void 0) {
@@ -15540,7 +15714,7 @@ window.Tasty = {
 
 
 
-},{}],249:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 window.TastyUtils = {
   showFlashes: function(flashes) {
     if (flashes == null) {
@@ -15606,8 +15780,8 @@ window.TastyUtils = {
 
 
 
-},{}],250:[function(require,module,exports){
-var Routes, TastySettings;
+},{}],251:[function(require,module,exports){
+var ApiRoutes, Routes, TastySettings;
 
 TastySettings = require('./settings');
 
@@ -15629,7 +15803,10 @@ Routes = {
   },
   people_path: function() {
     return '/people/';
-  },
+  }
+};
+
+ApiRoutes = {
   omniauth_url: function(provider) {
     return TastySettings.host + 'auth/' + provider;
   },
@@ -15757,11 +15934,11 @@ Routes = {
 
 window.Routes = Routes;
 
-window.Routes.api = Routes;
+window.Routes.api = ApiRoutes;
 
 
 
-},{"./settings":251}],251:[function(require,module,exports){
+},{"./settings":252}],252:[function(require,module,exports){
 var TastySettings, _ref, _ref1;
 
 TastySettings = {
@@ -15787,7 +15964,7 @@ module.exports = TastySettings;
 
 
 
-},{}],252:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -15799,7 +15976,7 @@ module.exports = TastySettings;
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":253}],253:[function(require,module,exports){
+},{"./lib/Dispatcher":254}],254:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -16051,7 +16228,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":254}],254:[function(require,module,exports){
+},{"./invariant":255}],255:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -16106,7 +16283,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],255:[function(require,module,exports){
+},{}],256:[function(require,module,exports){
 /*!
  * imagesLoaded v3.1.8
  * JavaScript is all like "You images are done yet or what?"
@@ -16443,7 +16620,7 @@ function makeArray( obj ) {
 
 });
 
-},{"eventie":256,"wolfy87-eventemitter":257}],256:[function(require,module,exports){
+},{"eventie":257,"wolfy87-eventemitter":258}],257:[function(require,module,exports){
 /*!
  * eventie v1.0.5
  * event binding helper
@@ -16527,7 +16704,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( this );
 
-},{}],257:[function(require,module,exports){
+},{}],258:[function(require,module,exports){
 /*!
  * EventEmitter v4.2.9 - git.io/ee
  * Oliver Caldwell
@@ -23392,8 +23569,8 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 }));
 
 },{}],"eventEmitter":[function(require,module,exports){
-module.exports=require(257)
-},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":257}],"i18next":[function(require,module,exports){
+module.exports=require(258)
+},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":258}],"i18next":[function(require,module,exports){
 // i18next, v1.7.4
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
@@ -43716,23 +43893,23 @@ if (typeof module === 'object') {
 },{}],"momentjs":[function(require,module,exports){
 (function (global){
 //! moment.js
-//! version : 2.7.0
+//! version : 2.8.3
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
 
 (function (undefined) {
-
     /************************************
         Constants
     ************************************/
 
     var moment,
-        VERSION = "2.7.0",
+        VERSION = '2.8.3',
         // the global-scope this is NOT the global object in Node.js
         globalScope = typeof global !== 'undefined' ? global : this,
         oldGlobalMoment,
         round = Math.round,
+        hasOwnProperty = Object.prototype.hasOwnProperty,
         i,
 
         YEAR = 0,
@@ -43743,22 +43920,11 @@ if (typeof module === 'object') {
         SECOND = 5,
         MILLISECOND = 6,
 
-        // internal storage for language config files
-        languages = {},
+        // internal storage for locale config files
+        locales = {},
 
-        // moment internal properties
-        momentProperties = {
-            _isAMomentObject: null,
-            _i : null,
-            _f : null,
-            _l : null,
-            _strict : null,
-            _tzm : null,
-            _isUTC : null,
-            _offset : null,  // optional. Combine with _isUTC
-            _pf : null,
-            _lang : null  // optional
-        },
+        // extra moment internal properties (plugins register props here)
+        momentProperties = [],
 
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module.exports),
@@ -43817,7 +43983,7 @@ if (typeof module === 'object') {
             ['HH', /(T| )\d\d/]
         ],
 
-        // timezone chunker "+10:00" > ["10", "00"] or "-1530" > ["-15", "30"]
+        // timezone chunker '+10:00' > ['10', '00'] or '-1530' > ['-15', '30']
         parseTimezoneChunker = /([\+\-]|\d\d)/gi,
 
         // getter and setter names
@@ -43864,12 +44030,11 @@ if (typeof module === 'object') {
 
         // default relative time thresholds
         relativeTimeThresholds = {
-          s: 45,   //seconds to minutes
-          m: 45,   //minutes to hours
-          h: 22,   //hours to days
-          dd: 25,  //days to month (month == 1)
-          dm: 45,  //days to months (months > 1)
-          dy: 345  //days to year
+            s: 45,  // seconds to minute
+            m: 45,  // minutes to hour
+            h: 22,  // hours to day
+            d: 26,  // days to month
+            M: 11   // months to year
         },
 
         // tokens to ordinalize and pad
@@ -43881,10 +44046,10 @@ if (typeof module === 'object') {
                 return this.month() + 1;
             },
             MMM  : function (format) {
-                return this.lang().monthsShort(this, format);
+                return this.localeData().monthsShort(this, format);
             },
             MMMM : function (format) {
-                return this.lang().months(this, format);
+                return this.localeData().months(this, format);
             },
             D    : function () {
                 return this.date();
@@ -43896,13 +44061,13 @@ if (typeof module === 'object') {
                 return this.day();
             },
             dd   : function (format) {
-                return this.lang().weekdaysMin(this, format);
+                return this.localeData().weekdaysMin(this, format);
             },
             ddd  : function (format) {
-                return this.lang().weekdaysShort(this, format);
+                return this.localeData().weekdaysShort(this, format);
             },
             dddd : function (format) {
-                return this.lang().weekdays(this, format);
+                return this.localeData().weekdays(this, format);
             },
             w    : function () {
                 return this.week();
@@ -43948,10 +44113,10 @@ if (typeof module === 'object') {
                 return this.isoWeekday();
             },
             a    : function () {
-                return this.lang().meridiem(this.hours(), this.minutes(), true);
+                return this.localeData().meridiem(this.hours(), this.minutes(), true);
             },
             A    : function () {
-                return this.lang().meridiem(this.hours(), this.minutes(), false);
+                return this.localeData().meridiem(this.hours(), this.minutes(), false);
             },
             H    : function () {
                 return this.hours();
@@ -43979,19 +44144,19 @@ if (typeof module === 'object') {
             },
             Z    : function () {
                 var a = -this.zone(),
-                    b = "+";
+                    b = '+';
                 if (a < 0) {
                     a = -a;
-                    b = "-";
+                    b = '-';
                 }
-                return b + leftZeroFill(toInt(a / 60), 2) + ":" + leftZeroFill(toInt(a) % 60, 2);
+                return b + leftZeroFill(toInt(a / 60), 2) + ':' + leftZeroFill(toInt(a) % 60, 2);
             },
             ZZ   : function () {
                 var a = -this.zone(),
-                    b = "+";
+                    b = '+';
                 if (a < 0) {
                     a = -a;
-                    b = "-";
+                    b = '-';
                 }
                 return b + leftZeroFill(toInt(a / 60), 2) + leftZeroFill(toInt(a) % 60, 2);
             },
@@ -44009,6 +44174,8 @@ if (typeof module === 'object') {
             }
         },
 
+        deprecations = {},
+
         lists = ['months', 'monthsShort', 'weekdays', 'weekdaysShort', 'weekdaysMin'];
 
     // Pick the first defined of two or three arguments. dfl comes from
@@ -44017,8 +44184,12 @@ if (typeof module === 'object') {
         switch (arguments.length) {
             case 2: return a != null ? a : b;
             case 3: return a != null ? a : b != null ? b : c;
-            default: throw new Error("Implement me");
+            default: throw new Error('Implement me');
         }
+    }
+
+    function hasOwnProp(a, b) {
+        return hasOwnProperty.call(a, b);
     }
 
     function defaultParsingFlags() {
@@ -44038,21 +44209,29 @@ if (typeof module === 'object') {
         };
     }
 
+    function printMsg(msg) {
+        if (moment.suppressDeprecationWarnings === false &&
+                typeof console !== 'undefined' && console.warn) {
+            console.warn('Deprecation warning: ' + msg);
+        }
+    }
+
     function deprecate(msg, fn) {
         var firstTime = true;
-        function printMsg() {
-            if (moment.suppressDeprecationWarnings === false &&
-                    typeof console !== 'undefined' && console.warn) {
-                console.warn("Deprecation warning: " + msg);
-            }
-        }
         return extend(function () {
             if (firstTime) {
-                printMsg();
+                printMsg(msg);
                 firstTime = false;
             }
             return fn.apply(this, arguments);
         }, fn);
+    }
+
+    function deprecateSimple(name, msg) {
+        if (!deprecations[name]) {
+            printMsg(msg);
+            deprecations[name] = true;
+        }
     }
 
     function padToken(func, count) {
@@ -44062,7 +44241,7 @@ if (typeof module === 'object') {
     }
     function ordinalizeToken(func, period) {
         return function (a) {
-            return this.lang().ordinal(func.call(this, a), period);
+            return this.localeData().ordinal(func.call(this, a), period);
         };
     }
 
@@ -44081,14 +44260,16 @@ if (typeof module === 'object') {
         Constructors
     ************************************/
 
-    function Language() {
-
+    function Locale() {
     }
 
     // Moment prototype object
-    function Moment(config) {
-        checkOverflow(config);
-        extend(this, config);
+    function Moment(config, skipOverflow) {
+        if (skipOverflow !== false) {
+            checkOverflow(config);
+        }
+        copyConfig(this, config);
+        this._d = new Date(+config._d);
     }
 
     // Duration Constructor
@@ -44122,6 +44303,8 @@ if (typeof module === 'object') {
 
         this._data = {};
 
+        this._locale = moment.localeData();
+
         this._bubble();
     }
 
@@ -44132,31 +44315,67 @@ if (typeof module === 'object') {
 
     function extend(a, b) {
         for (var i in b) {
-            if (b.hasOwnProperty(i)) {
+            if (hasOwnProp(b, i)) {
                 a[i] = b[i];
             }
         }
 
-        if (b.hasOwnProperty("toString")) {
+        if (hasOwnProp(b, 'toString')) {
             a.toString = b.toString;
         }
 
-        if (b.hasOwnProperty("valueOf")) {
+        if (hasOwnProp(b, 'valueOf')) {
             a.valueOf = b.valueOf;
         }
 
         return a;
     }
 
-    function cloneMoment(m) {
-        var result = {}, i;
-        for (i in m) {
-            if (m.hasOwnProperty(i) && momentProperties.hasOwnProperty(i)) {
-                result[i] = m[i];
+    function copyConfig(to, from) {
+        var i, prop, val;
+
+        if (typeof from._isAMomentObject !== 'undefined') {
+            to._isAMomentObject = from._isAMomentObject;
+        }
+        if (typeof from._i !== 'undefined') {
+            to._i = from._i;
+        }
+        if (typeof from._f !== 'undefined') {
+            to._f = from._f;
+        }
+        if (typeof from._l !== 'undefined') {
+            to._l = from._l;
+        }
+        if (typeof from._strict !== 'undefined') {
+            to._strict = from._strict;
+        }
+        if (typeof from._tzm !== 'undefined') {
+            to._tzm = from._tzm;
+        }
+        if (typeof from._isUTC !== 'undefined') {
+            to._isUTC = from._isUTC;
+        }
+        if (typeof from._offset !== 'undefined') {
+            to._offset = from._offset;
+        }
+        if (typeof from._pf !== 'undefined') {
+            to._pf = from._pf;
+        }
+        if (typeof from._locale !== 'undefined') {
+            to._locale = from._locale;
+        }
+
+        if (momentProperties.length > 0) {
+            for (i in momentProperties) {
+                prop = momentProperties[i];
+                val = from[prop];
+                if (typeof val !== 'undefined') {
+                    to[prop] = val;
+                }
             }
         }
 
-        return result;
+        return to;
     }
 
     function absRound(number) {
@@ -44179,7 +44398,51 @@ if (typeof module === 'object') {
         return (sign ? (forceSign ? '+' : '') : '-') + output;
     }
 
-    // helper function for _.addTime and _.subtractTime
+    function positiveMomentsDifference(base, other) {
+        var res = {milliseconds: 0, months: 0};
+
+        res.months = other.month() - base.month() +
+            (other.year() - base.year()) * 12;
+        if (base.clone().add(res.months, 'M').isAfter(other)) {
+            --res.months;
+        }
+
+        res.milliseconds = +other - +(base.clone().add(res.months, 'M'));
+
+        return res;
+    }
+
+    function momentsDifference(base, other) {
+        var res;
+        other = makeAs(other, base);
+        if (base.isBefore(other)) {
+            res = positiveMomentsDifference(base, other);
+        } else {
+            res = positiveMomentsDifference(other, base);
+            res.milliseconds = -res.milliseconds;
+            res.months = -res.months;
+        }
+
+        return res;
+    }
+
+    // TODO: remove 'name' arg after deprecation is removed
+    function createAdder(direction, name) {
+        return function (val, period) {
+            var dur, tmp;
+            //invert the arguments, but complain about it
+            if (period !== null && !isNaN(+period)) {
+                deprecateSimple(name, 'moment().' + name  + '(period, number) is deprecated. Please use moment().' + name + '(number, period).');
+                tmp = val; val = period; period = tmp;
+            }
+
+            val = typeof val === 'string' ? +val : val;
+            dur = moment.duration(val, period);
+            addOrSubtractDurationFromMoment(this, dur, direction);
+            return this;
+        };
+    }
+
     function addOrSubtractDurationFromMoment(mom, duration, isAdding, updateOffset) {
         var milliseconds = duration._milliseconds,
             days = duration._days,
@@ -44206,8 +44469,8 @@ if (typeof module === 'object') {
     }
 
     function isDate(input) {
-        return  Object.prototype.toString.call(input) === '[object Date]' ||
-                input instanceof Date;
+        return Object.prototype.toString.call(input) === '[object Date]' ||
+            input instanceof Date;
     }
 
     // compare two arrays, return the number of differences
@@ -44239,7 +44502,7 @@ if (typeof module === 'object') {
             prop;
 
         for (prop in inputObject) {
-            if (inputObject.hasOwnProperty(prop)) {
+            if (hasOwnProp(inputObject, prop)) {
                 normalizedProp = normalizeUnits(prop);
                 if (normalizedProp) {
                     normalizedInput[normalizedProp] = inputObject[prop];
@@ -44267,7 +44530,7 @@ if (typeof module === 'object') {
 
         moment[field] = function (format, index) {
             var i, getter,
-                method = moment.fn._lang[field],
+                method = moment._locale[field],
                 results = [];
 
             if (typeof format === 'number') {
@@ -44277,7 +44540,7 @@ if (typeof module === 'object') {
 
             getter = function (i) {
                 var m = moment().utc().set(setter, i);
-                return method.call(moment.fn._lang, m, format || '');
+                return method.call(moment._locale, m, format || '');
             };
 
             if (index != null) {
@@ -44362,8 +44625,48 @@ if (typeof module === 'object') {
         return m._isValid;
     }
 
-    function normalizeLanguage(key) {
+    function normalizeLocale(key) {
         return key ? key.toLowerCase().replace('_', '-') : key;
+    }
+
+    // pick the locale from the array
+    // try ['en-au', 'en-gb'] as 'en-au', 'en-gb', 'en', as in move through the list trying each
+    // substring from most specific to least, but move to the next array item if it's a more specific variant than the current root
+    function chooseLocale(names) {
+        var i = 0, j, next, locale, split;
+
+        while (i < names.length) {
+            split = normalizeLocale(names[i]).split('-');
+            j = split.length;
+            next = normalizeLocale(names[i + 1]);
+            next = next ? next.split('-') : null;
+            while (j > 0) {
+                locale = loadLocale(split.slice(0, j).join('-'));
+                if (locale) {
+                    return locale;
+                }
+                if (next && next.length >= j && compareArrays(split, next, true) >= j - 1) {
+                    //the next array item is better than a shallower substring of this one
+                    break;
+                }
+                j--;
+            }
+            i++;
+        }
+        return null;
+    }
+
+    function loadLocale(name) {
+        var oldLocale = null;
+        if (!locales[name] && hasModule) {
+            try {
+                oldLocale = moment.locale();
+                require('./locale/' + name);
+                // because defineLocale currently also sets the global locale, we want to undo that for lazy loaded locales
+                moment.locale(oldLocale);
+            } catch (e) { }
+        }
+        return locales[name];
     }
 
     // Return a moment from input, that is local/utc/zone equivalent to model.
@@ -44373,11 +44676,11 @@ if (typeof module === 'object') {
     }
 
     /************************************
-        Languages
+        Locale
     ************************************/
 
 
-    extend(Language.prototype, {
+    extend(Locale.prototype, {
 
         set : function (config) {
             var prop, i;
@@ -44391,12 +44694,12 @@ if (typeof module === 'object') {
             }
         },
 
-        _months : "January_February_March_April_May_June_July_August_September_October_November_December".split("_"),
+        _months : 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
         months : function (m) {
             return this._months[m.month()];
         },
 
-        _monthsShort : "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_"),
+        _monthsShort : 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
         monthsShort : function (m) {
             return this._monthsShort[m.month()];
         },
@@ -44422,17 +44725,17 @@ if (typeof module === 'object') {
             }
         },
 
-        _weekdays : "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),
+        _weekdays : 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
         weekdays : function (m) {
             return this._weekdays[m.day()];
         },
 
-        _weekdaysShort : "Sun_Mon_Tue_Wed_Thu_Fri_Sat".split("_"),
+        _weekdaysShort : 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
         weekdaysShort : function (m) {
             return this._weekdaysShort[m.day()];
         },
 
-        _weekdaysMin : "Su_Mo_Tu_We_Th_Fr_Sa".split("_"),
+        _weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
         weekdaysMin : function (m) {
             return this._weekdaysMin[m.day()];
         },
@@ -44459,11 +44762,11 @@ if (typeof module === 'object') {
         },
 
         _longDateFormat : {
-            LT : "h:mm A",
-            L : "MM/DD/YYYY",
-            LL : "MMMM D YYYY",
-            LLL : "MMMM D YYYY LT",
-            LLLL : "dddd, MMMM D YYYY LT"
+            LT : 'h:mm A',
+            L : 'MM/DD/YYYY',
+            LL : 'MMMM D, YYYY',
+            LLL : 'MMMM D, YYYY LT',
+            LLLL : 'dddd, MMMM D, YYYY LT'
         },
         longDateFormat : function (key) {
             var output = this._longDateFormat[key];
@@ -44505,35 +44808,37 @@ if (typeof module === 'object') {
         },
 
         _relativeTime : {
-            future : "in %s",
-            past : "%s ago",
-            s : "a few seconds",
-            m : "a minute",
-            mm : "%d minutes",
-            h : "an hour",
-            hh : "%d hours",
-            d : "a day",
-            dd : "%d days",
-            M : "a month",
-            MM : "%d months",
-            y : "a year",
-            yy : "%d years"
+            future : 'in %s',
+            past : '%s ago',
+            s : 'a few seconds',
+            m : 'a minute',
+            mm : '%d minutes',
+            h : 'an hour',
+            hh : '%d hours',
+            d : 'a day',
+            dd : '%d days',
+            M : 'a month',
+            MM : '%d months',
+            y : 'a year',
+            yy : '%d years'
         },
+
         relativeTime : function (number, withoutSuffix, string, isFuture) {
             var output = this._relativeTime[string];
             return (typeof output === 'function') ?
                 output(number, withoutSuffix, string, isFuture) :
                 output.replace(/%d/i, number);
         },
+
         pastFuture : function (diff, output) {
             var format = this._relativeTime[diff > 0 ? 'future' : 'past'];
             return typeof format === 'function' ? format(output) : format.replace(/%s/i, output);
         },
 
         ordinal : function (number) {
-            return this._ordinal.replace("%d", number);
+            return this._ordinal.replace('%d', number);
         },
-        _ordinal : "%d",
+        _ordinal : '%d',
 
         preparse : function (string) {
             return string;
@@ -44558,78 +44863,6 @@ if (typeof module === 'object') {
         }
     });
 
-    // Loads a language definition into the `languages` cache.  The function
-    // takes a key and optionally values.  If not in the browser and no values
-    // are provided, it will load the language file module.  As a convenience,
-    // this function also returns the language values.
-    function loadLang(key, values) {
-        values.abbr = key;
-        if (!languages[key]) {
-            languages[key] = new Language();
-        }
-        languages[key].set(values);
-        return languages[key];
-    }
-
-    // Remove a language from the `languages` cache. Mostly useful in tests.
-    function unloadLang(key) {
-        delete languages[key];
-    }
-
-    // Determines which language definition to use and returns it.
-    //
-    // With no parameters, it will return the global language.  If you
-    // pass in a language key, such as 'en', it will return the
-    // definition for 'en', so long as 'en' has already been loaded using
-    // moment.lang.
-    function getLangDefinition(key) {
-        var i = 0, j, lang, next, split,
-            get = function (k) {
-                if (!languages[k] && hasModule) {
-                    try {
-                        require('./lang/' + k);
-                    } catch (e) { }
-                }
-                return languages[k];
-            };
-
-        if (!key) {
-            return moment.fn._lang;
-        }
-
-        if (!isArray(key)) {
-            //short-circuit everything else
-            lang = get(key);
-            if (lang) {
-                return lang;
-            }
-            key = [key];
-        }
-
-        //pick the language from the array
-        //try ['en-au', 'en-gb'] as 'en-au', 'en-gb', 'en', as in move through the list trying each
-        //substring from most specific to least, but move to the next array item if it's a more specific variant than the current root
-        while (i < key.length) {
-            split = normalizeLanguage(key[i]).split('-');
-            j = split.length;
-            next = normalizeLanguage(key[i + 1]);
-            next = next ? next.split('-') : null;
-            while (j > 0) {
-                lang = get(split.slice(0, j).join('-'));
-                if (lang) {
-                    return lang;
-                }
-                if (next && next.length >= j && compareArrays(split, next, true) >= j - 1) {
-                    //the next array item is better than a shallower substring of this one
-                    break;
-                }
-                j--;
-            }
-            i++;
-        }
-        return moment.fn._lang;
-    }
-
     /************************************
         Formatting
     ************************************/
@@ -44637,9 +44870,9 @@ if (typeof module === 'object') {
 
     function removeFormattingTokens(input) {
         if (input.match(/\[[\s\S]/)) {
-            return input.replace(/^\[|\]$/g, "");
+            return input.replace(/^\[|\]$/g, '');
         }
-        return input.replace(/\\/g, "");
+        return input.replace(/\\/g, '');
     }
 
     function makeFormatFunction(format) {
@@ -44654,7 +44887,7 @@ if (typeof module === 'object') {
         }
 
         return function (mom) {
-            var output = "";
+            var output = '';
             for (i = 0; i < length; i++) {
                 output += array[i] instanceof Function ? array[i].call(mom, format) : array[i];
             }
@@ -44664,12 +44897,11 @@ if (typeof module === 'object') {
 
     // format date using native date object
     function formatMoment(m, format) {
-
         if (!m.isValid()) {
-            return m.lang().invalidDate();
+            return m.localeData().invalidDate();
         }
 
-        format = expandFormat(format, m.lang());
+        format = expandFormat(format, m.localeData());
 
         if (!formatFunctions[format]) {
             formatFunctions[format] = makeFormatFunction(format);
@@ -44678,11 +44910,11 @@ if (typeof module === 'object') {
         return formatFunctions[format](m);
     }
 
-    function expandFormat(format, lang) {
+    function expandFormat(format, locale) {
         var i = 5;
 
         function replaceLongDateFormatTokens(input) {
-            return lang.longDateFormat(input) || input;
+            return locale.longDateFormat(input) || input;
         }
 
         localFormattingTokens.lastIndex = 0;
@@ -44723,13 +44955,19 @@ if (typeof module === 'object') {
         case 'ggggg':
             return strict ? parseTokenSixDigits : parseTokenOneToSixDigits;
         case 'S':
-            if (strict) { return parseTokenOneDigit; }
+            if (strict) {
+                return parseTokenOneDigit;
+            }
             /* falls through */
         case 'SS':
-            if (strict) { return parseTokenTwoDigits; }
+            if (strict) {
+                return parseTokenTwoDigits;
+            }
             /* falls through */
         case 'SSS':
-            if (strict) { return parseTokenThreeDigits; }
+            if (strict) {
+                return parseTokenThreeDigits;
+            }
             /* falls through */
         case 'DDD':
             return parseTokenOneToThreeDigits;
@@ -44741,7 +44979,7 @@ if (typeof module === 'object') {
             return parseTokenWord;
         case 'a':
         case 'A':
-            return getLangDefinition(config._l)._meridiemParse;
+            return config._locale._meridiemParse;
         case 'X':
             return parseTokenTimestampMs;
         case 'Z':
@@ -44778,13 +45016,13 @@ if (typeof module === 'object') {
         case 'Do':
             return parseTokenOrdinal;
         default :
-            a = new RegExp(regexpEscape(unescapeFormat(token.replace('\\', '')), "i"));
+            a = new RegExp(regexpEscape(unescapeFormat(token.replace('\\', '')), 'i'));
             return a;
         }
     }
 
     function timezoneMinutesFromString(string) {
-        string = string || "";
+        string = string || '';
         var possibleTzMatches = (string.match(parseTokenTimezone) || []),
             tzChunk = possibleTzMatches[possibleTzMatches.length - 1] || [],
             parts = (tzChunk + '').match(parseTimezoneChunker) || ['-', 0, 0],
@@ -44813,7 +45051,7 @@ if (typeof module === 'object') {
             break;
         case 'MMM' : // fall through to MMMM
         case 'MMMM' :
-            a = getLangDefinition(config._l).monthsParse(input);
+            a = config._locale.monthsParse(input);
             // if we didn't find a month name, mark the date as invalid.
             if (a != null) {
                 datePartArray[MONTH] = a;
@@ -44853,7 +45091,7 @@ if (typeof module === 'object') {
         // AM / PM
         case 'a' : // fall through to A
         case 'A' :
-            config._isPm = getLangDefinition(config._l).isPM(input);
+            config._isPm = config._locale.isPM(input);
             break;
         // 24 HOUR
         case 'H' : // fall through to hh
@@ -44893,7 +45131,7 @@ if (typeof module === 'object') {
         case 'dd':
         case 'ddd':
         case 'dddd':
-            a = getLangDefinition(config._l).weekdaysParse(input);
+            a = config._locale.weekdaysParse(input);
             // if we didn't get a weekday name, mark the date as invalid
             if (a != null) {
                 config._w = config._w || {};
@@ -44929,7 +45167,7 @@ if (typeof module === 'object') {
     }
 
     function dayOfYearFromWeekInfo(config) {
-        var w, weekYear, week, weekday, dow, doy, temp, lang;
+        var w, weekYear, week, weekday, dow, doy, temp;
 
         w = config._w;
         if (w.GG != null || w.W != null || w.E != null) {
@@ -44944,9 +45182,8 @@ if (typeof module === 'object') {
             week = dfl(w.W, 1);
             weekday = dfl(w.E, 1);
         } else {
-            lang = getLangDefinition(config._l);
-            dow = lang._week.dow;
-            doy = lang._week.doy;
+            dow = config._locale._week.dow;
+            doy = config._locale._week.doy;
 
             weekYear = dfl(w.gg, config._a[YEAR], weekOfYear(moment(), dow, doy).year);
             week = dfl(w.w, 1);
@@ -45060,7 +45297,6 @@ if (typeof module === 'object') {
 
     // date from string and format string
     function makeDateFromStringAndFormat(config) {
-
         if (config._f === moment.ISO_8601) {
             parseISO(config);
             return;
@@ -45070,13 +45306,12 @@ if (typeof module === 'object') {
         config._pf.empty = true;
 
         // This array is used to make a Date, either with `new Date` or `Date.UTC`
-        var lang = getLangDefinition(config._l),
-            string = '' + config._i,
+        var string = '' + config._i,
             i, parsedInput, tokens, token, skipped,
             stringLength = string.length,
             totalParsedInputLength = 0;
 
-        tokens = expandFormat(config._f, lang).match(formattingTokens) || [];
+        tokens = expandFormat(config._f, config._locale).match(formattingTokens) || [];
 
         for (i = 0; i < tokens.length; i++) {
             token = tokens[i];
@@ -45151,7 +45386,10 @@ if (typeof module === 'object') {
 
         for (i = 0; i < config._f.length; i++) {
             currentScore = 0;
-            tempConfig = extend({}, config);
+            tempConfig = copyConfig({}, config);
+            if (config._useUTC != null) {
+                tempConfig._useUTC = config._useUTC;
+            }
             tempConfig._pf = defaultParsingFlags();
             tempConfig._f = config._f[i];
             makeDateFromStringAndFormat(tempConfig);
@@ -45187,8 +45425,8 @@ if (typeof module === 'object') {
             config._pf.iso = true;
             for (i = 0, l = isoDates.length; i < l; i++) {
                 if (isoDates[i][1].exec(string)) {
-                    // match[5] should be "T" or undefined
-                    config._f = isoDates[i][0] + (match[6] || " ");
+                    // match[5] should be 'T' or undefined
+                    config._f = isoDates[i][0] + (match[6] || ' ');
                     break;
                 }
             }
@@ -45199,7 +45437,7 @@ if (typeof module === 'object') {
                 }
             }
             if (string.match(parseTokenTimezone)) {
-                config._f += "Z";
+                config._f += 'Z';
             }
             makeDateFromStringAndFormat(config);
         } else {
@@ -45216,21 +45454,29 @@ if (typeof module === 'object') {
         }
     }
 
-    function makeDateFromInput(config) {
-        var input = config._i,
-            matched = aspNetJsonRegex.exec(input);
+    function map(arr, fn) {
+        var res = [], i;
+        for (i = 0; i < arr.length; ++i) {
+            res.push(fn(arr[i], i));
+        }
+        return res;
+    }
 
+    function makeDateFromInput(config) {
+        var input = config._i, matched;
         if (input === undefined) {
             config._d = new Date();
-        } else if (matched) {
+        } else if (isDate(input)) {
+            config._d = new Date(+input);
+        } else if ((matched = aspNetJsonRegex.exec(input)) !== null) {
             config._d = new Date(+matched[1]);
         } else if (typeof input === 'string') {
             makeDateFromString(config);
         } else if (isArray(input)) {
-            config._a = input.slice(0);
+            config._a = map(input.slice(0), function (obj) {
+                return parseInt(obj, 10);
+            });
             dateFromConfig(config);
-        } else if (isDate(input)) {
-            config._d = new Date(+input);
         } else if (typeof(input) === 'object') {
             dateFromObject(config);
         } else if (typeof(input) === 'number') {
@@ -45261,13 +45507,13 @@ if (typeof module === 'object') {
         return date;
     }
 
-    function parseWeekday(input, language) {
+    function parseWeekday(input, locale) {
         if (typeof input === 'string') {
             if (!isNaN(input)) {
                 input = parseInt(input, 10);
             }
             else {
-                input = language.weekdaysParse(input);
+                input = locale.weekdaysParse(input);
                 if (typeof input !== 'number') {
                     return null;
                 }
@@ -45282,29 +45528,33 @@ if (typeof module === 'object') {
 
 
     // helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
-    function substituteTimeAgo(string, number, withoutSuffix, isFuture, lang) {
-        return lang.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
+    function substituteTimeAgo(string, number, withoutSuffix, isFuture, locale) {
+        return locale.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
     }
 
-    function relativeTime(milliseconds, withoutSuffix, lang) {
-        var seconds = round(Math.abs(milliseconds) / 1000),
-            minutes = round(seconds / 60),
-            hours = round(minutes / 60),
-            days = round(hours / 24),
-            years = round(days / 365),
-            args = seconds < relativeTimeThresholds.s  && ['s', seconds] ||
+    function relativeTime(posNegDuration, withoutSuffix, locale) {
+        var duration = moment.duration(posNegDuration).abs(),
+            seconds = round(duration.as('s')),
+            minutes = round(duration.as('m')),
+            hours = round(duration.as('h')),
+            days = round(duration.as('d')),
+            months = round(duration.as('M')),
+            years = round(duration.as('y')),
+
+            args = seconds < relativeTimeThresholds.s && ['s', seconds] ||
                 minutes === 1 && ['m'] ||
                 minutes < relativeTimeThresholds.m && ['mm', minutes] ||
                 hours === 1 && ['h'] ||
                 hours < relativeTimeThresholds.h && ['hh', hours] ||
                 days === 1 && ['d'] ||
-                days <= relativeTimeThresholds.dd && ['dd', days] ||
-                days <= relativeTimeThresholds.dm && ['M'] ||
-                days < relativeTimeThresholds.dy && ['MM', round(days / 30)] ||
+                days < relativeTimeThresholds.d && ['dd', days] ||
+                months === 1 && ['M'] ||
+                months < relativeTimeThresholds.M && ['MM', months] ||
                 years === 1 && ['y'] || ['yy', years];
+
         args[2] = withoutSuffix;
-        args[3] = milliseconds > 0;
-        args[4] = lang;
+        args[3] = +posNegDuration > 0;
+        args[4] = locale;
         return substituteTimeAgo.apply({}, args);
     }
 
@@ -45335,7 +45585,7 @@ if (typeof module === 'object') {
             daysToDayOfWeek += 7;
         }
 
-        adjustedMoment = moment(mom).add('d', daysToDayOfWeek);
+        adjustedMoment = moment(mom).add(daysToDayOfWeek, 'd');
         return {
             week: Math.ceil(adjustedMoment.dayOfYear() / 7),
             year: adjustedMoment.year()
@@ -45365,18 +45615,18 @@ if (typeof module === 'object') {
         var input = config._i,
             format = config._f;
 
+        config._locale = config._locale || moment.localeData(config._l);
+
         if (input === null || (format === undefined && input === '')) {
             return moment.invalid({nullInput: true});
         }
 
         if (typeof input === 'string') {
-            config._i = input = getLangDefinition().preparse(input);
+            config._i = input = config._locale.preparse(input);
         }
 
         if (moment.isMoment(input)) {
-            config = cloneMoment(input);
-
-            config._d = new Date(+input._d);
+            return new Moment(input, true);
         } else if (format) {
             if (isArray(format)) {
                 makeDateFromStringAndArray(config);
@@ -45390,12 +45640,12 @@ if (typeof module === 'object') {
         return new Moment(config);
     }
 
-    moment = function (input, format, lang, strict) {
+    moment = function (input, format, locale, strict) {
         var c;
 
-        if (typeof(lang) === "boolean") {
-            strict = lang;
-            lang = undefined;
+        if (typeof(locale) === 'boolean') {
+            strict = locale;
+            locale = undefined;
         }
         // object construction must be done this way.
         // https://github.com/moment/moment/issues/1423
@@ -45403,7 +45653,7 @@ if (typeof module === 'object') {
         c._isAMomentObject = true;
         c._i = input;
         c._f = format;
-        c._l = lang;
+        c._l = locale;
         c._strict = strict;
         c._isUTC = false;
         c._pf = defaultParsingFlags();
@@ -45414,13 +45664,14 @@ if (typeof module === 'object') {
     moment.suppressDeprecationWarnings = false;
 
     moment.createFromInputFallback = deprecate(
-            "moment construction falls back to js Date. This is " +
-            "discouraged and will be removed in upcoming major " +
-            "release. Please refer to " +
-            "https://github.com/moment/moment/issues/1407 for more info.",
-            function (config) {
-        config._d = new Date(config._i);
-    });
+        'moment construction falls back to js Date. This is ' +
+        'discouraged and will be removed in upcoming major ' +
+        'release. Please refer to ' +
+        'https://github.com/moment/moment/issues/1407 for more info.',
+        function (config) {
+            config._d = new Date(config._i);
+        }
+    );
 
     // Pick a moment m from moments so that m[fn](other) is true for all
     // other. This relies on the function fn to be transitive.
@@ -45457,12 +45708,12 @@ if (typeof module === 'object') {
     };
 
     // creating with utc
-    moment.utc = function (input, format, lang, strict) {
+    moment.utc = function (input, format, locale, strict) {
         var c;
 
-        if (typeof(lang) === "boolean") {
-            strict = lang;
-            lang = undefined;
+        if (typeof(locale) === 'boolean') {
+            strict = locale;
+            locale = undefined;
         }
         // object construction must be done this way.
         // https://github.com/moment/moment/issues/1423
@@ -45470,7 +45721,7 @@ if (typeof module === 'object') {
         c._isAMomentObject = true;
         c._useUTC = true;
         c._isUTC = true;
-        c._l = lang;
+        c._l = locale;
         c._i = input;
         c._f = format;
         c._strict = strict;
@@ -45491,7 +45742,8 @@ if (typeof module === 'object') {
             match = null,
             sign,
             ret,
-            parseIso;
+            parseIso,
+            diffRes;
 
         if (moment.isDuration(input)) {
             duration = {
@@ -45507,7 +45759,7 @@ if (typeof module === 'object') {
                 duration.milliseconds = input;
             }
         } else if (!!(match = aspNetTimeSpanJsonRegex.exec(input))) {
-            sign = (match[1] === "-") ? -1 : 1;
+            sign = (match[1] === '-') ? -1 : 1;
             duration = {
                 y: 0,
                 d: toInt(match[DATE]) * sign,
@@ -45517,7 +45769,7 @@ if (typeof module === 'object') {
                 ms: toInt(match[MILLISECOND]) * sign
             };
         } else if (!!(match = isoDurationRegex.exec(input))) {
-            sign = (match[1] === "-") ? -1 : 1;
+            sign = (match[1] === '-') ? -1 : 1;
             parseIso = function (inp) {
                 // We'd normally use ~~inp for this, but unfortunately it also
                 // converts floats to ints.
@@ -45535,12 +45787,19 @@ if (typeof module === 'object') {
                 s: parseIso(match[7]),
                 w: parseIso(match[8])
             };
+        } else if (typeof duration === 'object' &&
+                ('from' in duration || 'to' in duration)) {
+            diffRes = momentsDifference(moment(duration.from), moment(duration.to));
+
+            duration = {};
+            duration.ms = diffRes.milliseconds;
+            duration.M = diffRes.months;
         }
 
         ret = new Duration(duration);
 
-        if (moment.isDuration(input) && input.hasOwnProperty('_lang')) {
-            ret._lang = input._lang;
+        if (moment.isDuration(input) && hasOwnProp(input, '_locale')) {
+            ret._locale = input._locale;
         }
 
         return ret;
@@ -45564,46 +45823,99 @@ if (typeof module === 'object') {
     moment.updateOffset = function () {};
 
     // This function allows you to set a threshold for relative time strings
-    moment.relativeTimeThreshold = function(threshold, limit) {
-      if (relativeTimeThresholds[threshold] === undefined) {
-        return false;
-      }
-      relativeTimeThresholds[threshold] = limit;
-      return true;
+    moment.relativeTimeThreshold = function (threshold, limit) {
+        if (relativeTimeThresholds[threshold] === undefined) {
+            return false;
+        }
+        if (limit === undefined) {
+            return relativeTimeThresholds[threshold];
+        }
+        relativeTimeThresholds[threshold] = limit;
+        return true;
     };
 
-    // This function will load languages and then set the global language.  If
+    moment.lang = deprecate(
+        'moment.lang is deprecated. Use moment.locale instead.',
+        function (key, value) {
+            return moment.locale(key, value);
+        }
+    );
+
+    // This function will load locale and then set the global locale.  If
     // no arguments are passed in, it will simply return the current global
-    // language key.
-    moment.lang = function (key, values) {
-        var r;
-        if (!key) {
-            return moment.fn._lang._abbr;
+    // locale key.
+    moment.locale = function (key, values) {
+        var data;
+        if (key) {
+            if (typeof(values) !== 'undefined') {
+                data = moment.defineLocale(key, values);
+            }
+            else {
+                data = moment.localeData(key);
+            }
+
+            if (data) {
+                moment.duration._locale = moment._locale = data;
+            }
         }
-        if (values) {
-            loadLang(normalizeLanguage(key), values);
-        } else if (values === null) {
-            unloadLang(key);
-            key = 'en';
-        } else if (!languages[key]) {
-            getLangDefinition(key);
-        }
-        r = moment.duration.fn._lang = moment.fn._lang = getLangDefinition(key);
-        return r._abbr;
+
+        return moment._locale._abbr;
     };
 
-    // returns language data
-    moment.langData = function (key) {
-        if (key && key._lang && key._lang._abbr) {
-            key = key._lang._abbr;
+    moment.defineLocale = function (name, values) {
+        if (values !== null) {
+            values.abbr = name;
+            if (!locales[name]) {
+                locales[name] = new Locale();
+            }
+            locales[name].set(values);
+
+            // backwards compat for now: also set the locale
+            moment.locale(name);
+
+            return locales[name];
+        } else {
+            // useful for testing
+            delete locales[name];
+            return null;
         }
-        return getLangDefinition(key);
+    };
+
+    moment.langData = deprecate(
+        'moment.langData is deprecated. Use moment.localeData instead.',
+        function (key) {
+            return moment.localeData(key);
+        }
+    );
+
+    // returns locale data
+    moment.localeData = function (key) {
+        var locale;
+
+        if (key && key._locale && key._locale._abbr) {
+            key = key._locale._abbr;
+        }
+
+        if (!key) {
+            return moment._locale;
+        }
+
+        if (!isArray(key)) {
+            //short-circuit everything else
+            locale = loadLocale(key);
+            if (locale) {
+                return locale;
+            }
+            key = [key];
+        }
+
+        return chooseLocale(key);
     };
 
     // compare moment object
     moment.isMoment = function (obj) {
         return obj instanceof Moment ||
-            (obj != null &&  obj.hasOwnProperty('_isAMomentObject'));
+            (obj != null && hasOwnProp(obj, '_isAMomentObject'));
     };
 
     // for typechecking Duration objects
@@ -45659,7 +45971,7 @@ if (typeof module === 'object') {
         },
 
         toString : function () {
-            return this.clone().lang('en').format("ddd MMM DD YYYY HH:mm:ss [GMT]ZZ");
+            return this.clone().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ');
         },
 
         toDate : function () {
@@ -45693,7 +46005,6 @@ if (typeof module === 'object') {
         },
 
         isDSTShifted : function () {
-
             if (this._a) {
                 return this.isValid() && compareArrays(this._a, (this._isUTC ? moment.utc(this._a) : moment(this._a)).toArray()) > 0;
             }
@@ -45709,53 +46020,35 @@ if (typeof module === 'object') {
             return this._pf.overflow;
         },
 
-        utc : function () {
-            return this.zone(0);
+        utc : function (keepLocalTime) {
+            return this.zone(0, keepLocalTime);
         },
 
-        local : function () {
-            this.zone(0);
-            this._isUTC = false;
+        local : function (keepLocalTime) {
+            if (this._isUTC) {
+                this.zone(0, keepLocalTime);
+                this._isUTC = false;
+
+                if (keepLocalTime) {
+                    this.add(this._dateTzOffset(), 'm');
+                }
+            }
             return this;
         },
 
         format : function (inputString) {
             var output = formatMoment(this, inputString || moment.defaultFormat);
-            return this.lang().postformat(output);
+            return this.localeData().postformat(output);
         },
 
-        add : function (input, val) {
-            var dur;
-            // switch args to support add('s', 1) and add(1, 's')
-            if (typeof input === 'string' && typeof val === 'string') {
-                dur = moment.duration(isNaN(+val) ? +input : +val, isNaN(+val) ? val : input);
-            } else if (typeof input === 'string') {
-                dur = moment.duration(+val, input);
-            } else {
-                dur = moment.duration(input, val);
-            }
-            addOrSubtractDurationFromMoment(this, dur, 1);
-            return this;
-        },
+        add : createAdder(1, 'add'),
 
-        subtract : function (input, val) {
-            var dur;
-            // switch args to support subtract('s', 1) and subtract(1, 's')
-            if (typeof input === 'string' && typeof val === 'string') {
-                dur = moment.duration(isNaN(+val) ? +input : +val, isNaN(+val) ? val : input);
-            } else if (typeof input === 'string') {
-                dur = moment.duration(+val, input);
-            } else {
-                dur = moment.duration(input, val);
-            }
-            addOrSubtractDurationFromMoment(this, dur, -1);
-            return this;
-        },
+        subtract : createAdder(-1, 'subtract'),
 
         diff : function (input, units, asFloat) {
             var that = makeAs(input, this),
                 zoneDiff = (this.zone() - that.zone()) * 6e4,
-                diff, output;
+                diff, output, daysAdjust;
 
             units = normalizeUnits(units);
 
@@ -45766,11 +46059,12 @@ if (typeof module === 'object') {
                 output = ((this.year() - that.year()) * 12) + (this.month() - that.month());
                 // adjust by taking difference in days, average number of days
                 // and dst in the given months.
-                output += ((this - moment(this).startOf('month')) -
-                        (that - moment(that).startOf('month'))) / diff;
+                daysAdjust = (this - moment(this).startOf('month')) -
+                    (that - moment(that).startOf('month'));
                 // same as above but with zones, to negate all dst
-                output -= ((this.zone() - moment(this).startOf('month').zone()) -
-                        (that.zone() - moment(that).startOf('month').zone())) * 6e4 / diff;
+                daysAdjust -= ((this.zone() - moment(this).startOf('month').zone()) -
+                        (that.zone() - moment(that).startOf('month').zone())) * 6e4;
+                output += daysAdjust / diff;
                 if (units === 'year') {
                     output = output / 12;
                 }
@@ -45787,7 +46081,7 @@ if (typeof module === 'object') {
         },
 
         from : function (time, withoutSuffix) {
-            return moment.duration(this.diff(time)).lang(this.lang()._abbr).humanize(!withoutSuffix);
+            return moment.duration({to: this, from: time}).locale(this.locale()).humanize(!withoutSuffix);
         },
 
         fromNow : function (withoutSuffix) {
@@ -45806,7 +46100,7 @@ if (typeof module === 'object') {
                     diff < 1 ? 'sameDay' :
                     diff < 2 ? 'nextDay' :
                     diff < 7 ? 'nextWeek' : 'sameElse';
-            return this.format(this.lang().calendar(format, this));
+            return this.format(this.localeData().calendar(format, this));
         },
 
         isLeapYear : function () {
@@ -45821,8 +46115,8 @@ if (typeof module === 'object') {
         day : function (input) {
             var day = this._isUTC ? this._d.getUTCDay() : this._d.getDay();
             if (input != null) {
-                input = parseWeekday(input, this.lang());
-                return this.add({ d : input - day });
+                input = parseWeekday(input, this.localeData());
+                return this.add(input - day, 'd');
             } else {
                 return day;
             }
@@ -45830,7 +46124,7 @@ if (typeof module === 'object') {
 
         month : makeAccessor('Month', true),
 
-        startOf: function (units) {
+        startOf : function (units) {
             units = normalizeUnits(units);
             // the following switch intentionally omits break keywords
             // to utilize falling through the cases.
@@ -45875,26 +46169,41 @@ if (typeof module === 'object') {
 
         endOf: function (units) {
             units = normalizeUnits(units);
-            return this.startOf(units).add((units === 'isoWeek' ? 'week' : units), 1).subtract('ms', 1);
+            return this.startOf(units).add(1, (units === 'isoWeek' ? 'week' : units)).subtract(1, 'ms');
         },
 
         isAfter: function (input, units) {
-            units = typeof units !== 'undefined' ? units : 'millisecond';
-            return +this.clone().startOf(units) > +moment(input).startOf(units);
+            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
+            if (units === 'millisecond') {
+                input = moment.isMoment(input) ? input : moment(input);
+                return +this > +input;
+            } else {
+                return +this.clone().startOf(units) > +moment(input).startOf(units);
+            }
         },
 
         isBefore: function (input, units) {
-            units = typeof units !== 'undefined' ? units : 'millisecond';
-            return +this.clone().startOf(units) < +moment(input).startOf(units);
+            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
+            if (units === 'millisecond') {
+                input = moment.isMoment(input) ? input : moment(input);
+                return +this < +input;
+            } else {
+                return +this.clone().startOf(units) < +moment(input).startOf(units);
+            }
         },
 
         isSame: function (input, units) {
-            units = units || 'ms';
-            return +this.clone().startOf(units) === +makeAs(input, this).startOf(units);
+            units = normalizeUnits(units || 'millisecond');
+            if (units === 'millisecond') {
+                input = moment.isMoment(input) ? input : moment(input);
+                return +this === +input;
+            } else {
+                return +this.clone().startOf(units) === +makeAs(input, this).startOf(units);
+            }
         },
 
         min: deprecate(
-                 "moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548",
+                 'moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548',
                  function (other) {
                      other = moment.apply(null, arguments);
                      return other < this ? this : other;
@@ -45902,36 +46211,43 @@ if (typeof module === 'object') {
          ),
 
         max: deprecate(
-                "moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548",
+                'moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548',
                 function (other) {
                     other = moment.apply(null, arguments);
                     return other > this ? this : other;
                 }
         ),
 
-        // keepTime = true means only change the timezone, without affecting
-        // the local hour. So 5:31:26 +0300 --[zone(2, true)]--> 5:31:26 +0200
-        // It is possible that 5:31:26 doesn't exist int zone +0200, so we
-        // adjust the time as needed, to be valid.
+        // keepLocalTime = true means only change the timezone, without
+        // affecting the local hour. So 5:31:26 +0300 --[zone(2, true)]-->
+        // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist int zone
+        // +0200, so we adjust the time as needed, to be valid.
         //
         // Keeping the time actually adds/subtracts (one hour)
         // from the actual represented time. That is why we call updateOffset
         // a second time. In case it wants us to change the offset again
         // _changeInProgress == true case, then we have to adjust, because
         // there is no such time in the given timezone.
-        zone : function (input, keepTime) {
-            var offset = this._offset || 0;
+        zone : function (input, keepLocalTime) {
+            var offset = this._offset || 0,
+                localAdjust;
             if (input != null) {
-                if (typeof input === "string") {
+                if (typeof input === 'string') {
                     input = timezoneMinutesFromString(input);
                 }
                 if (Math.abs(input) < 16) {
                     input = input * 60;
                 }
+                if (!this._isUTC && keepLocalTime) {
+                    localAdjust = this._dateTzOffset();
+                }
                 this._offset = input;
                 this._isUTC = true;
+                if (localAdjust != null) {
+                    this.subtract(localAdjust, 'm');
+                }
                 if (offset !== input) {
-                    if (!keepTime || this._changeInProgress) {
+                    if (!keepLocalTime || this._changeInProgress) {
                         addOrSubtractDurationFromMoment(this,
                                 moment.duration(offset - input, 'm'), 1, false);
                     } else if (!this._changeInProgress) {
@@ -45941,17 +46257,17 @@ if (typeof module === 'object') {
                     }
                 }
             } else {
-                return this._isUTC ? offset : this._d.getTimezoneOffset();
+                return this._isUTC ? offset : this._dateTzOffset();
             }
             return this;
         },
 
         zoneAbbr : function () {
-            return this._isUTC ? "UTC" : "";
+            return this._isUTC ? 'UTC' : '';
         },
 
         zoneName : function () {
-            return this._isUTC ? "Coordinated Universal Time" : "";
+            return this._isUTC ? 'Coordinated Universal Time' : '';
         },
 
         parseZone : function () {
@@ -45980,7 +46296,7 @@ if (typeof module === 'object') {
 
         dayOfYear : function (input) {
             var dayOfYear = round((moment(this).startOf('day') - moment(this).startOf('year')) / 864e5) + 1;
-            return input == null ? dayOfYear : this.add("d", (input - dayOfYear));
+            return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
         },
 
         quarter : function (input) {
@@ -45988,28 +46304,28 @@ if (typeof module === 'object') {
         },
 
         weekYear : function (input) {
-            var year = weekOfYear(this, this.lang()._week.dow, this.lang()._week.doy).year;
-            return input == null ? year : this.add("y", (input - year));
+            var year = weekOfYear(this, this.localeData()._week.dow, this.localeData()._week.doy).year;
+            return input == null ? year : this.add((input - year), 'y');
         },
 
         isoWeekYear : function (input) {
             var year = weekOfYear(this, 1, 4).year;
-            return input == null ? year : this.add("y", (input - year));
+            return input == null ? year : this.add((input - year), 'y');
         },
 
         week : function (input) {
-            var week = this.lang().week(this);
-            return input == null ? week : this.add("d", (input - week) * 7);
+            var week = this.localeData().week(this);
+            return input == null ? week : this.add((input - week) * 7, 'd');
         },
 
         isoWeek : function (input) {
             var week = weekOfYear(this, 1, 4).week;
-            return input == null ? week : this.add("d", (input - week) * 7);
+            return input == null ? week : this.add((input - week) * 7, 'd');
         },
 
         weekday : function (input) {
-            var weekday = (this.day() + 7 - this.lang()._week.dow) % 7;
-            return input == null ? weekday : this.add("d", input - weekday);
+            var weekday = (this.day() + 7 - this.localeData()._week.dow) % 7;
+            return input == null ? weekday : this.add(input - weekday, 'd');
         },
 
         isoWeekday : function (input) {
@@ -46024,7 +46340,7 @@ if (typeof module === 'object') {
         },
 
         weeksInYear : function () {
-            var weekInfo = this._lang._week;
+            var weekInfo = this.localeData()._week;
             return weeksInYear(this.year(), weekInfo.dow, weekInfo.doy);
         },
 
@@ -46041,16 +46357,42 @@ if (typeof module === 'object') {
             return this;
         },
 
-        // If passed a language key, it will set the language for this
-        // instance.  Otherwise, it will return the language configuration
+        // If passed a locale key, it will set the locale for this
+        // instance.  Otherwise, it will return the locale configuration
         // variables for this instance.
-        lang : function (key) {
+        locale : function (key) {
+            var newLocaleData;
+
             if (key === undefined) {
-                return this._lang;
+                return this._locale._abbr;
             } else {
-                this._lang = getLangDefinition(key);
+                newLocaleData = moment.localeData(key);
+                if (newLocaleData != null) {
+                    this._locale = newLocaleData;
+                }
                 return this;
             }
+        },
+
+        lang : deprecate(
+            'moment().lang() is deprecated. Use moment().localeData() instead.',
+            function (key) {
+                if (key === undefined) {
+                    return this.localeData();
+                } else {
+                    return this.locale(key);
+                }
+            }
+        ),
+
+        localeData : function () {
+            return this._locale;
+        },
+
+        _dateTzOffset : function () {
+            // On Firefox.24 Date#getTimezoneOffset returns a floating point.
+            // https://github.com/moment/moment/pull/1871
+            return Math.round(this._d.getTimezoneOffset() / 15) * 15;
         }
     });
 
@@ -46059,7 +46401,7 @@ if (typeof module === 'object') {
 
         // TODO: Move this out of here!
         if (typeof value === 'string') {
-            value = mom.lang().monthsParse(value);
+            value = mom.localeData().monthsParse(value);
             // TODO: Another silent failure?
             if (typeof value !== 'number') {
                 return mom;
@@ -46106,9 +46448,9 @@ if (typeof module === 'object') {
     moment.fn.hour = moment.fn.hours = makeAccessor('Hours', true);
     // moment.fn.month is defined separately
     moment.fn.date = makeAccessor('Date', true);
-    moment.fn.dates = deprecate("dates accessor is deprecated. Use date instead.", makeAccessor('Date', true));
+    moment.fn.dates = deprecate('dates accessor is deprecated. Use date instead.', makeAccessor('Date', true));
     moment.fn.year = makeAccessor('FullYear', true);
-    moment.fn.years = deprecate("years accessor is deprecated. Use year instead.", makeAccessor('FullYear', true));
+    moment.fn.years = deprecate('years accessor is deprecated. Use year instead.', makeAccessor('FullYear', true));
 
     // add plural methods
     moment.fn.days = moment.fn.day;
@@ -46125,6 +46467,17 @@ if (typeof module === 'object') {
     ************************************/
 
 
+    function daysToYears (days) {
+        // 400 years have 146097 days (taking into account leap year rules)
+        return days * 400 / 146097;
+    }
+
+    function yearsToDays (years) {
+        // years * 365 + absRound(years / 4) -
+        //     absRound(years / 100) + absRound(years / 400);
+        return years * 146097 / 400;
+    }
+
     extend(moment.duration.fn = Duration.prototype, {
 
         _bubble : function () {
@@ -46132,7 +46485,7 @@ if (typeof module === 'object') {
                 days = this._days,
                 months = this._months,
                 data = this._data,
-                seconds, minutes, hours, years;
+                seconds, minutes, hours, years = 0;
 
             // The following code bubbles up values, see the tests for
             // examples of what that means.
@@ -46148,13 +46501,38 @@ if (typeof module === 'object') {
             data.hours = hours % 24;
 
             days += absRound(hours / 24);
-            data.days = days % 30;
 
+            // Accurately convert days to years, assume start from year 0.
+            years = absRound(daysToYears(days));
+            days -= absRound(yearsToDays(years));
+
+            // 30 days to a month
+            // TODO (iskren): Use anchor date (like 1st Jan) to compute this.
             months += absRound(days / 30);
-            data.months = months % 12;
+            days %= 30;
 
-            years = absRound(months / 12);
+            // 12 months -> 1 year
+            years += absRound(months / 12);
+            months %= 12;
+
+            data.days = days;
+            data.months = months;
             data.years = years;
+        },
+
+        abs : function () {
+            this._milliseconds = Math.abs(this._milliseconds);
+            this._days = Math.abs(this._days);
+            this._months = Math.abs(this._months);
+
+            this._data.milliseconds = Math.abs(this._data.milliseconds);
+            this._data.seconds = Math.abs(this._data.seconds);
+            this._data.minutes = Math.abs(this._data.minutes);
+            this._data.hours = Math.abs(this._data.hours);
+            this._data.months = Math.abs(this._data.months);
+            this._data.years = Math.abs(this._data.years);
+
+            return this;
         },
 
         weeks : function () {
@@ -46169,14 +46547,13 @@ if (typeof module === 'object') {
         },
 
         humanize : function (withSuffix) {
-            var difference = +this,
-                output = relativeTime(difference, !withSuffix, this.lang());
+            var output = relativeTime(this, !withSuffix, this.localeData());
 
             if (withSuffix) {
-                output = this.lang().pastFuture(difference, output);
+                output = this.localeData().pastFuture(+this, output);
             }
 
-            return this.lang().postformat(output);
+            return this.localeData().postformat(output);
         },
 
         add : function (input, val) {
@@ -46210,13 +46587,41 @@ if (typeof module === 'object') {
         },
 
         as : function (units) {
+            var days, months;
             units = normalizeUnits(units);
-            return this['as' + units.charAt(0).toUpperCase() + units.slice(1) + 's']();
+
+            if (units === 'month' || units === 'year') {
+                days = this._days + this._milliseconds / 864e5;
+                months = this._months + daysToYears(days) * 12;
+                return units === 'month' ? months : months / 12;
+            } else {
+                // handle milliseconds separately because of floating point math errors (issue #1867)
+                days = this._days + yearsToDays(this._months / 12);
+                switch (units) {
+                    case 'week': return days / 7 + this._milliseconds / 6048e5;
+                    case 'day': return days + this._milliseconds / 864e5;
+                    case 'hour': return days * 24 + this._milliseconds / 36e5;
+                    case 'minute': return days * 24 * 60 + this._milliseconds / 6e4;
+                    case 'second': return days * 24 * 60 * 60 + this._milliseconds / 1000;
+                    // Math.floor prevents floating point math errors here
+                    case 'millisecond': return Math.floor(days * 24 * 60 * 60 * 1000) + this._milliseconds;
+                    default: throw new Error('Unknown unit ' + units);
+                }
+            }
         },
 
         lang : moment.fn.lang,
+        locale : moment.fn.locale,
 
-        toIsoString : function () {
+        toIsoString : deprecate(
+            'toIsoString() is deprecated. Please use toISOString() instead ' +
+            '(notice the capitals)',
+            function () {
+                return this.toISOString();
+            }
+        ),
+
+        toISOString : function () {
             // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
             var years = Math.abs(this.years()),
                 months = Math.abs(this.months()),
@@ -46240,8 +46645,14 @@ if (typeof module === 'object') {
                 (hours ? hours + 'H' : '') +
                 (minutes ? minutes + 'M' : '') +
                 (seconds ? seconds + 'S' : '');
+        },
+
+        localeData : function () {
+            return this._locale;
         }
     });
+
+    moment.duration.fn.toString = moment.duration.fn.toISOString;
 
     function makeDurationGetter(name) {
         moment.duration.fn[name] = function () {
@@ -46249,32 +46660,44 @@ if (typeof module === 'object') {
         };
     }
 
-    function makeDurationAsGetter(name, factor) {
-        moment.duration.fn['as' + name] = function () {
-            return +this / factor;
-        };
-    }
-
     for (i in unitMillisecondFactors) {
-        if (unitMillisecondFactors.hasOwnProperty(i)) {
-            makeDurationAsGetter(i, unitMillisecondFactors[i]);
+        if (hasOwnProp(unitMillisecondFactors, i)) {
             makeDurationGetter(i.toLowerCase());
         }
     }
 
-    makeDurationAsGetter('Weeks', 6048e5);
+    moment.duration.fn.asMilliseconds = function () {
+        return this.as('ms');
+    };
+    moment.duration.fn.asSeconds = function () {
+        return this.as('s');
+    };
+    moment.duration.fn.asMinutes = function () {
+        return this.as('m');
+    };
+    moment.duration.fn.asHours = function () {
+        return this.as('h');
+    };
+    moment.duration.fn.asDays = function () {
+        return this.as('d');
+    };
+    moment.duration.fn.asWeeks = function () {
+        return this.as('weeks');
+    };
     moment.duration.fn.asMonths = function () {
-        return (+this - this.years() * 31536e6) / 2592e6 + this.years() * 12;
+        return this.as('M');
+    };
+    moment.duration.fn.asYears = function () {
+        return this.as('y');
     };
 
-
     /************************************
-        Default Lang
+        Default Locale
     ************************************/
 
 
-    // Set default language, other languages will inherit from English.
-    moment.lang('en', {
+    // Set default locale, other locale will inherit from English.
+    moment.locale('en', {
         ordinal : function (number) {
             var b = number % 10,
                 output = (toInt(number % 100 / 10) === 1) ? 'th' :
@@ -46285,7 +46708,7 @@ if (typeof module === 'object') {
         }
     });
 
-    /* EMBED_LANGUAGES */
+    /* EMBED_LOCALES */
 
     /************************************
         Exposing Moment
@@ -46299,9 +46722,9 @@ if (typeof module === 'object') {
         oldGlobalMoment = globalScope.moment;
         if (shouldDeprecate) {
             globalScope.moment = deprecate(
-                    "Accessing Moment through the global scope is " +
-                    "deprecated, and will be removed in an upcoming " +
-                    "release.",
+                    'Accessing Moment through the global scope is ' +
+                    'deprecated, and will be removed in an upcoming ' +
+                    'release.',
                     moment);
         } else {
             globalScope.moment = moment;
@@ -46311,8 +46734,8 @@ if (typeof module === 'object') {
     // CommonJS module is defined
     if (hasModule) {
         module.exports = moment;
-    } else if (typeof define === "function" && define.amd) {
-        define("moment", function (require, exports, module) {
+    } else if (typeof define === 'function' && define.amd) {
+        define('moment', function (require, exports, module) {
             if (module.config && module.config() && module.config().noGlobal === true) {
                 // release the global variable
                 globalScope.moment = oldGlobalMoment;
@@ -51630,7 +52053,7 @@ module.exports = ReactUjs;
 },{}],"react":[function(require,module,exports){
 (function (global){
 /**
- * React (with addons) v0.11.2
+ * React (with addons) v0.11.0
  */
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.React=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 /**
@@ -55344,7 +55767,6 @@ var HTMLDOMPropertyConfig = {
     loop: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
     max: null,
     maxLength: MUST_USE_ATTRIBUTE,
-    media: MUST_USE_ATTRIBUTE,
     mediaGroup: null,
     method: null,
     min: null,
@@ -55352,7 +55774,6 @@ var HTMLDOMPropertyConfig = {
     muted: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
     name: null,
     noValidate: HAS_BOOLEAN_VALUE,
-    open: null,
     pattern: null,
     placeholder: null,
     poster: null,
@@ -55373,12 +55794,11 @@ var HTMLDOMPropertyConfig = {
     selected: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
     shape: null,
     size: MUST_USE_ATTRIBUTE | HAS_POSITIVE_NUMERIC_VALUE,
-    sizes: MUST_USE_ATTRIBUTE,
     span: HAS_POSITIVE_NUMERIC_VALUE,
     spellCheck: null,
     src: null,
     srcDoc: MUST_USE_PROPERTY,
-    srcSet: MUST_USE_ATTRIBUTE,
+    srcSet: null,
     start: HAS_NUMERIC_VALUE,
     step: null,
     style: null,
@@ -55913,20 +56333,8 @@ var ReactServerRendering = _dereq_("./ReactServerRendering");
 var ReactTextComponent = _dereq_("./ReactTextComponent");
 
 var onlyChild = _dereq_("./onlyChild");
-var warning = _dereq_("./warning");
 
 ReactDefaultInjection.inject();
-
-// Specifying arguments isn't necessary since we just use apply anyway, but it
-// makes it clear for those actually consuming this API.
-function createDescriptor(type, props, children) {
-  var args = Array.prototype.slice.call(arguments, 1);
-  return type.apply(null, args);
-}
-
-if ("production" !== "development") {
-  var _warnedForDeprecation = false;
-}
 
 var React = {
   Children: {
@@ -55941,18 +56349,10 @@ var React = {
     EventPluginUtils.useTouchEvents = shouldUseTouch;
   },
   createClass: ReactCompositeComponent.createClass,
-  createDescriptor: function() {
-    if ("production" !== "development") {
-      ("production" !== "development" ? warning(
-        _warnedForDeprecation,
-        'React.createDescriptor is deprecated and will be removed in the ' +
-        'next version of React. Use React.createElement instead.'
-      ) : null);
-      _warnedForDeprecation = true;
-    }
-    return createDescriptor.apply(this, arguments);
+  createDescriptor: function(type, props, children) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    return type.apply(null, args);
   },
-  createElement: createDescriptor,
   constructAndRenderComponent: ReactMount.constructAndRenderComponent,
   constructAndRenderComponentByID: ReactMount.constructAndRenderComponentByID,
   renderComponent: ReactPerf.measure(
@@ -56021,11 +56421,11 @@ if ("production" !== "development") {
 
 // Version exists only in the open-source version of React, not in Facebook's
 // internal version.
-React.version = '0.11.2';
+React.version = '0.11.0';
 
 module.exports = React;
 
-},{"./DOMPropertyOperations":12,"./EventPluginUtils":20,"./ExecutionEnvironment":22,"./ReactChildren":34,"./ReactComponent":35,"./ReactCompositeComponent":38,"./ReactContext":39,"./ReactCurrentOwner":40,"./ReactDOM":41,"./ReactDOMComponent":43,"./ReactDefaultInjection":53,"./ReactDescriptor":56,"./ReactInstanceHandles":64,"./ReactMount":67,"./ReactMultiChild":68,"./ReactPerf":71,"./ReactPropTypes":75,"./ReactServerRendering":79,"./ReactTextComponent":83,"./onlyChild":149,"./warning":158}],30:[function(_dereq_,module,exports){
+},{"./DOMPropertyOperations":12,"./EventPluginUtils":20,"./ExecutionEnvironment":22,"./ReactChildren":34,"./ReactComponent":35,"./ReactCompositeComponent":38,"./ReactContext":39,"./ReactCurrentOwner":40,"./ReactDOM":41,"./ReactDOMComponent":43,"./ReactDefaultInjection":53,"./ReactDescriptor":56,"./ReactInstanceHandles":64,"./ReactMount":67,"./ReactMultiChild":68,"./ReactPerf":71,"./ReactPropTypes":75,"./ReactServerRendering":79,"./ReactTextComponent":83,"./onlyChild":149}],30:[function(_dereq_,module,exports){
 /**
  * Copyright 2013-2014 Facebook, Inc.
  *
@@ -58298,15 +58698,7 @@ var ReactCompositeComponentMixin = {
   replaceState: function(completeState, callback) {
     validateLifeCycleOnReplaceState(this);
     this._pendingState = completeState;
-    if (this._compositeLifeCycleState !== CompositeLifeCycle.MOUNTING) {
-      // If we're in a componentWillMount handler, don't enqueue a rerender
-      // because ReactUpdates assumes we're in a browser context (which is wrong
-      // for server rendering) and we're about to do a render anyway.
-      // TODO: The callback here is ignored when setState is called from
-      // componentWillMount. Either fix it or disallow doing so completely in
-      // favor of getInitialState.
-      ReactUpdates.enqueueUpdate(this, callback);
-    }
+    ReactUpdates.enqueueUpdate(this, callback);
   },
 
   /**
@@ -59062,7 +59454,6 @@ var ReactDOM = mapObject({
   del: false,
   details: false,
   dfn: false,
-  dialog: false,
   div: false,
   dl: false,
   dt: false,
@@ -59110,7 +59501,6 @@ var ReactDOM = mapObject({
   output: false,
   p: false,
   param: true,
-  picture: false,
   pre: false,
   progress: false,
   q: false,
@@ -68153,7 +68543,7 @@ var MouseEventInterface = {
   shiftKey: null,
   altKey: null,
   metaKey: null,
-  getModifierState: getEventModifierState,
+  getEventModifierState: getEventModifierState,
   button: function(event) {
     // Webkit, Firefox, IE9+
     // which:  1 2 3
@@ -69748,10 +70138,10 @@ module.exports = getEventKey;
  */
 
 var modifierKeyToProp = {
-  'Alt': 'altKey',
-  'Control': 'ctrlKey',
-  'Meta': 'metaKey',
-  'Shift': 'shiftKey'
+  'alt': 'altKey',
+  'control': 'ctrlKey',
+  'meta': 'metaKey',
+  'shift': 'shiftKey'
 };
 
 // IE8 does not implement getModifierState so we simply map it to the only
@@ -69764,8 +70154,8 @@ function modifierStateGetter(keyArg) {
   if (nativeEvent.getModifierState) {
     return nativeEvent.getModifierState(keyArg);
   }
-  var keyProp = modifierKeyToProp[keyArg];
-  return keyProp ? !!nativeEvent[keyProp] : false;
+  var keyProp = modifierKeyToProp[keyArg.toLowerCase()];
+  return keyProp && nativeEvent[keyProp];
 }
 
 function getEventModifierState(nativeEvent) {
@@ -71292,15 +71682,7 @@ if (ExecutionEnvironment.canUseDOM) {
         // Recover leading whitespace by temporarily prepending any character.
         // \uFEFF has the potential advantage of being zero-width/invisible.
         node.innerHTML = '\uFEFF' + html;
-
-        // deleteData leaves an empty `TextNode` which offsets the index of all
-        // children. Definitely want to avoid this.
-        var textNode = node.firstChild;
-        if (textNode.data.length === 1) {
-          node.removeChild(textNode);
-        } else {
-          textNode.deleteData(0, 1);
-        }
+        node.firstChild.deleteData(0, 1);
       } else {
         node.innerHTML = html;
       }
