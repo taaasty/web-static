@@ -351,4 +351,4 @@ $ ->
     window.Tasty.start {}
 
   # Тултип для шаринга
-  $("[data-js='tooltip']").tooltip()
+  $("[tooltip]").tooltip()
