@@ -1,19 +1,26 @@
 @import (less) "medium-editor/dist/css/medium-editor.css";
 @import (less) "medium-editor/dist/css/themes/default.css";
 
+// Settings
 @import "variables";
 
 @import "fonts";
 
+// Mixins
 @import "helpers";
 @import "animate";
 
+// Common
 @import "reset";
 @import "typography";
 @import "layout";
 @import "common";
 @import "global-states";
 
+// Vendor
+@import "bootstrap/less/tooltip";
+
+// Modules
 @import "blocks/avatar";
 @import "blocks/tastyicons";
 @import "blocks/menu";
@@ -83,15 +90,15 @@
 @import "blocks/tech-info";
 @import "blocks/connection-line";
 @import "blocks/site-apps";
+@import "blocks/tooltip";
 @import "blocks/browserbar";
+@import "blocks/social-share";
 
 @import "components/follow_button";
 @import "components/calendar";
 @import "components/progressbar";
 
 @import "custom/pagination";
-
-@import "bootstrap/less/tooltip";
 
 @import "overrides";
 

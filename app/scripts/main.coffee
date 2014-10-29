@@ -349,3 +349,6 @@ $ ->
   else
     console.debug? 'Без пользователя'
     window.Tasty.start {}
+
+  # Тултип для шаринга
+  $("[tooltip]").tooltip()
