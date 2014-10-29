@@ -46,7 +46,7 @@ window.DesignSettingsPopup = React.createClass
                 </div>
 
                 <DesignSettingsPopup_Controls design={ this.props.user.get('design') }
-                                              slug={ this.props.user.get('slug') }
+                                              userId={ this.props.user.get('id') }
                                               activitiesHandler={ this.activitiesHandler }
                                               saveCallback={ this.save }
                                               onBackgroundChanged={ this._updateUserDesign } />
@@ -62,7 +62,7 @@ window.DesignSettingsPopup = React.createClass
     @incrementActivities()
 
     @createRequest
-      url: Routes.api.design_settings_url @props.user.get('slug')
+      url: Routes.api.design_settings_url @props.user.get('id')
       data: data
       method: 'PUT'
       success: (newDesign) =>
