@@ -4,18 +4,15 @@ window.Backbone          = require 'backbone'
 window.MouseTrap         = require 'mousetrap'
 window.React             = require 'react'
 window.Dispatcher        = require('flux').Dispatcher
-window.moment            = require 'momentjs'
 window.EventEmitter      = require 'eventEmitter'
 window.bowser            = require 'bowser'
 window.i18n              = require 'i18next'
+window.moment            = require '../bower_components/momentjs/moment'
 window.Pusher            = require 'pusher'
 window.Modernizr         = require 'Modernizr'
 window.imagesLoaded      = require 'imagesloaded'
 window.MediumEditor      = require 'medium-editor'
 window.Undo              = require 'undo'
-
-momentRu = require '../bower_components/momentjs/locale/ru'
-window.moment.locale 'ru', momentRu
 
 require 'swfobject'
 require 'es5-shim'
@@ -26,7 +23,6 @@ require 'screenviewer'
 require 'baron'
 require 'reactUjs'
 require('react-mixin-manager')(window.React)
-require 'i18next'
 require 'bootstrap.tooltip'
 
 # jQuery UI components

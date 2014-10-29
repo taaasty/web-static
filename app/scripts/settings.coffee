@@ -1,10 +1,8 @@
 TastySettings =
-  version:           'v0.3.1'
+  version:           'v0.3.2'
   host:              'http://taaasty.ru/'
   api_host:          'http://taaasty.ru/api/'
-  env:               'static-development'
   sound_asset_url:   'sounds/'
-  locales_asset_url: 'locales/'
 
 console.log 'TastyVersion', TastySettings.version
 

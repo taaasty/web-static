@@ -36,8 +36,6 @@ gulp.task 'vendorScripts', ['clean'], ->
     .require './baron/baron',                              { expose: 'baron' }
     .require './mousetrap/mousetrap',                      { expose: 'mousetrap' }
     .require './bowser/bowser',                            { expose: 'bowser' }
-    .require './momentjs/moment',                          { expose: 'momentjs' }
-    .require '../scripts/react/resources/momentjs/ru',     { expose: 'momentjsRU' }
     .require './eventEmitter/EventEmitter',                { expose: 'eventEmitter' }
     .require './pusher/dist/pusher',                       { expose: 'pusher' }
     .require './i18next/i18next',                          { expose: 'i18next'}
@@ -93,8 +91,6 @@ gulp.task 'clientScripts', ['clean'], ->
     .external 'baron'
     .external 'mousetrap'
     .external 'bowser'
-    .external 'momentjs'
-    .external 'momentjsRU'
     .external 'eventEmitter'
     .external 'pusher'
     .external 'i18next'

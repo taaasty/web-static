@@ -39,7 +39,6 @@ window.Tasty =
     if user?
       headers['X-User-Token']     = user.api_key.access_token
       headers['X-Requested-With'] = 'XMLHttpRequest'
-      Honeybadger?.setContext user_id: user.id
       CurrentUserDispatcher.setupUser user
 
     TastyUtils.showFlashes flashes

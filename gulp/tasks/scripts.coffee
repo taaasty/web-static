@@ -40,7 +40,6 @@ gulp.task 'scripts', ['clean'], ->
     .require './bower_components/baron/baron',                              { expose: 'baron' }
     .require './bower_components/mousetrap/mousetrap',                      { expose: 'mousetrap' }
     .require './bower_components/bowser/bowser',                            { expose: 'bowser' }
-    .require './bower_components/momentjs/moment',                          { expose: 'momentjs' }
     .require './bower_components/eventEmitter/EventEmitter',                { expose: 'eventEmitter' }
     .require './bower_components/pusher/dist/pusher',                       { expose: 'pusher' }
     .require './bower_components/i18next/i18next',                          { expose: 'i18next'}
