@@ -58,6 +58,41 @@
   }
 }
 
+.button-social-share-style(@hover-bg; @active-bg: @hover-bg) {
+  width: @button-social-share-size;
+  height: @button-social-share-size;
+  padding: 0;
+  background-color: @white;
+  font-size: @button-social-share-font-size;
+  line-height: @button-social-share-size;
+  color: @button-social-share-color;
+  letter-spacing: 0;
+  border-radius: 50%;
+  transition: box-shadow .3s ease, background .3s ease, color .3s ease;
+  box-shadow: inset 0 0 0 1px @button-social-share-border-color;
+
+  /*.icon {
+    margin: 2px;
+    font-size: 38px;
+  }*/
+
+  &:hover,
+  &:active,
+  &.state--active {
+    box-shadow: inset 0 0 0 1px transparent !important;
+    color: @white;
+  }
+
+  &:hover {
+    background: @hover-bg;
+  }
+
+  &:active,
+  &.state--active {
+    background: @active-bg;
+  }
+}
+
 .button-group-style() {
   position: relative;
   display: inline-block;
@@ -406,4 +441,15 @@
 // Add Post Button
 .add-post-button {
   &:extend(.button all, .button--large all, .button--green-light all, .button--block all, .button--rectangle all);
+}
+
+// Social Share Buttons
+.social-share-facebook-button {
+  &:extend(.button all);
+  .button-social-share-style(@button-social-share-fb-hover-bg);
+}
+
+.social-share-vkontakte-button {
+  &:extend(.button all);
+  .button-social-share-style(@button-social-share-vk-hover-bg);
 }

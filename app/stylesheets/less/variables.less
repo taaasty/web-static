@@ -74,8 +74,9 @@
 @zindex-nav-types: @zindex-affixed; // 200
 @zindex-types-posts-active: @zindex-affixed; // 200
 @zindex-toolbar: @zindex-affixed; // 200
-@zindex-toolbar-indicators: 300;
 @zindex-calendar: @zindex-affixed; // 200
+@zindex-social-share: @zindex-affixed; // 200
+@zindex-toolbar-indicators: 300;
 @zindex-browsebar: 310;
 @zindex-popup: 5000;
 @zindex-shellbox: 5000;
@@ -109,6 +110,18 @@
 @button-circle-size: 46px;
 
 @button-affixed-indent: @indent-base;
+
+/* Social Share */
+@button-social-share-size: 56px;
+@button-social-share-color: #c2c2c2;
+@button-social-share-border-color: rgba(0, 0, 0, .1);
+@button-social-share-font-size: 22px;
+
+@button-social-share-fb-hover-bg: #44619d;
+@button-social-share-fb-active-bg: @button-social-share-fb-hover-bg;
+
+@button-social-share-vk-hover-bg: #5c82ab;
+@button-social-share-vk-active-bg: @button-social-share-fb-hover-bg;
 
 // Avatars
 /*@avatar-styles: 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth';*/
@@ -473,13 +486,16 @@
 @badge-line-height: ceil((@badge-font-size * 1.36)); // 15px
 
 // Tooltip
-
-@tooltip-max-width: 200px;
+@tooltip-max-width: 225px;
 @tooltip-color: #fff;
-@tooltip-bg: #000;
-@tooltip-opacity: .9;
+@tooltip-bg: #121212;
+@tooltip-opacity: .85;
 
-@tooltip-arrow-width: 5px;
+@tooltip-font-size: 13px;
+
+@tooltip-border-radius: 0;
+
+@tooltip-arrow-width: 7px;
 @tooltip-arrow-color: @tooltip-bg;
 
 // Browserbar
