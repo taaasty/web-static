@@ -1,10 +1,12 @@
-require './settings'
+window.TASTY_ENV = 'static-development'
+
 require './libs'
 require './locales'
 require './routes'
-require './shared/api-routes'
-require './shared/dmodel'
-require './shared/is_mobile'
+require './resources/is_mobile'
+require './resources/fileReceiver'
+require './resources/tasty'
+require './resources/tasty_utils'
 
 require './react/entities/normalized_entry'
 
@@ -13,6 +15,10 @@ require './react/services/entry_store'
 require './react/services/entry_normalizer'
 require './react/services/thumbor'
 require './react/services/uuid'
+
+# /*==============================
+# =            Mixins            =
+# ==============================*/
 
 require './react/mixins/unmount'
 require './react/mixins/dom_manipulations'
@@ -25,6 +31,8 @@ require './react/mixins/activities'
 require './react/mixins/requester'
 require './react/mixins/scroller'
 require './react/mixins/touch'
+
+# /*-----  End of Mixins  ------*/
 
 require './react/dispatchers/current_user'
 require './react/stores/current_user'
@@ -53,7 +61,6 @@ require './react/messaging/stores/notifications'
 require './react/messaging/messaging_service'
 require './react/messaging/messaging_requester'
 require './react/messaging/messaging_testing'
-require './react/messaging/models'
 
 # /*==========  Actions  ==========*/
 
@@ -61,12 +68,6 @@ require './react/messaging/actions/popup'
 require './react/messaging/actions/conversation'
 require './react/messaging/actions/message'
 require './react/messaging/actions/notification'
-
-# /*==========  Mocks  ==========*/
-
-require './react/messaging/mocks/mocks'
-require './react/messaging/mocks/messaging_requester'
-require './react/messaging/mocks/messaging_service'
 
 # /*==========  Components  ==========*/
 
@@ -154,8 +155,6 @@ require './react/components/relationship_buttons/ignore_button'
 require './react/components/relationship_buttons/request_button'
 require './react/components/relationship_buttons/guess_button'
 
-# Не работает на странице редактирования постов
-# require './shared/jquery.maxlength'
 require './react/components/editable_field'
 
 require './react/components/popup_box'
@@ -285,7 +284,6 @@ require './react/components/post_editor/new_anonymous_post'
 require './react/components/post_editor/edit_post'
 require './react/components/post_editor/editor_container'
 require './react/components/post_editor/demo'
-# require './react/components/post_editor/images_container'
 
 require './react/components/hero/profile/profile'
 require './react/components/hero/profile/profile_avatar'
@@ -300,10 +298,6 @@ require './react/components/hero/profile/popup/tags_popup'
 require './react/components/hero/profile/popup/items/follower_item'
 require './react/components/hero/profile/popup/items/following_item'
 require './react/components/hero/profile/popup/items/tag_item'
-
-require './shared/utils'
-require './shared/fileReceiver'
-require './shared/tasty'
 
 require './react/components/images_collage'
 
@@ -326,26 +320,21 @@ require './react/controllers/popup'
 
 require './react/mediators/comments'
 
-require './react/utils'
 require './react/application'
-
-require './plugins/jquery.collage'
-
-require './editors'
 
 require './gon'
 
-# React_ujs нужно подключать после того как все компоненты загружены
+mockUser = require './data/user'
 
 $ ->
   if localStorage.getItem('userLogged') is "true"
-    if localStorage.getItem('userToken')
-      SomeUser.api_key.access_token = localStorage.getItem('userToken')
+    if localStorage.getItem 'userToken'
+      mockUser.api_key.access_token = localStorage.getItem 'userToken'
 
     if localStorage.getItem 'userId'
-      SomeUser.id = parseInt( localStorage.getItem('userId') )
+      mockUser.id = parseInt( localStorage.getItem('userId') )
 
-    window.Tasty.start user: SomeUser
+    window.Tasty.start user: mockUser
   else
     console.debug? 'Без пользователя'
     window.Tasty.start {}

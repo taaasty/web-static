@@ -22,8 +22,9 @@ window.TastyUtils =
 
   onMousewheel: (e, d) ->
     e.stopPropagation()
-    e.preventDefault()  if (@scrollTop is (@scrollHeight - @offsetHeight) and d < 0) or (@scrollTop is 0 and d > 0)
-    return
+    e.preventDefault()
+
+    return if (@scrollTop is (@scrollHeight - @offsetHeight) and d < 0) or (@scrollTop is 0 and d > 0)
 
   scrollToElement: (el) ->
     setTimeout (->
@@ -37,3 +38,12 @@ window.TastyUtils =
       number = Math.ceil( number / round ) * round
 
     number.toString().replace /\B(?=(\d{3})+(?!\d))/g, delimiter
+
+  isImagesEqual: (nextImages, currentImages) ->
+
+    return false unless  nextImages.length == currentImages.length
+
+    currentUrls = currentImages.map (i) -> i.src
+    nextUrls    = nextImages.map (i) -> i.src
+
+    return  _.isEqual currentUrls, nextUrls

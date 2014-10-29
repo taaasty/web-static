@@ -26,13 +26,6 @@ window.EditableField = React.createClass
         append: '' # По-умолчанию в конец строки добавляет \n. Отключаем, чтобы при инициализации правильно высчитывалась высота
       }
 
-    # require jquery.maxlength.js
-    if $.fn.maxlength
-      @$textarea.maxlength {
-        max: @$textarea.attr 'maxlength'
-        showFeedback: false
-      }
-
   render: ->
     editableFieldClasses = React.addons.classSet {
       'editable-field': true

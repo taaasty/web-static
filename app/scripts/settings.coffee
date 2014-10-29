@@ -1,19 +1,14 @@
-window.SomeUser     = require './data/user.json'
-window.SomeCalendar = require './data/calendar.json'
-window.SomeEntry    = require './data/entry.json'
-
-window.TastySettings =
-  host:      'http://3000.vkontraste.ru/' # Это не api-шный хост, это адрес для прямых ссылок
-  api_host:  'http://3000.vkontraste.ru/api/'
+TastySettings =
+  version:           'v0.3.1'
+  host:              'http://taaasty.ru/'
+  api_host:          'http://taaasty.ru/api/'
+  env:               'static-development'
   sound_asset_url:   'sounds/'
   locales_asset_url: 'locales/'
 
-window.TastySettings.host      = localStorage.getItem('host')      if localStorage.getItem('host')?.length > 0
-window.TastySettings.api_host  = localStorage.getItem('api_host')  if localStorage.getItem('api_host')?.length > 0
+console.log 'TastyVersion', TastySettings.version
 
-# Контейнер для будущих данных проекта. Сюда постепенно мигрируют
-# модели из window.Tasty по мере перехода на модели
+TastySettings.host     = localStorage.getItem('host')     if localStorage.getItem('host')?.length > 0
+TastySettings.api_host = localStorage.getItem('api_host') if localStorage.getItem('api_host')?.length > 0
 
-console.info? "Установить/Сбросить залогиненного пользтвателя: localStorage.setItem('userLogged', false/true)"
-
-window.TASTY_ENV = 'static-development'
+module.exports = TastySettings

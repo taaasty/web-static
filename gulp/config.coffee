@@ -5,11 +5,20 @@ dist = './dist'
 module.exports = {
   dist: {
     scripts: {
-      baseDir: src
-      extensions: ['.coffee', '.js.jsx.coffee']
-      entries: './scripts/bundle.coffee'
-      dest: dist + '/scripts/'
-      outputName: 'bundle.js'
+      bundle: {
+        baseDir: src
+        extensions: ['.coffee', '.js.jsx.coffee']
+        entries: './scripts/bundle.coffee'
+        dest: dist + '/scripts/'
+        outputName: 'bundle.js'
+      }
+      static: {
+        baseDir: src
+        extensions: ['.js', '.coffee']
+        entries: './scripts/static.coffee'
+        dest: dist + '/scripts/'
+        outputName: 'static.js'
+      }
     }
     styles: {
       src: src + '/stylesheets/main.less'
@@ -50,9 +59,16 @@ module.exports = {
     outputName: 'main.css'
   }
   minifyJS: {
-    src: dist + '/scripts/bundle.js'
-    dest: dist + '/scripts'
-    outputName: 'bundle.min.js'
+    bundle: {
+      src: dist + '/scripts/bundle.js'
+      dest: dist + '/scripts'
+      outputName: 'bundle.min.js'
+    }
+    static: {
+      src: dist + '/scripts/static.js'
+      dest: dist + '/scripts'
+      outputName: 'static.min.js'
+    }
   }
   minifyCSS: {
     src: dist + '/stylesheets/main.css'

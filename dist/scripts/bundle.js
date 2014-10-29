@@ -1,15 +1,19 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+window.TASTY_ENV = 'production';
+
 require('./libs');
 
 require('./locales');
 
 require('./routes');
 
-require('./shared/api-routes');
+require('./resources/is_mobile');
 
-require('./shared/dmodel');
+require('./resources/fileReceiver');
 
-require('./shared/is_mobile');
+require('./resources/tasty');
+
+require('./resources/tasty_utils');
 
 require('./react/entities/normalized_entry');
 
@@ -71,8 +75,6 @@ require('./react/messaging/messaging_requester');
 
 require('./react/messaging/messaging_testing');
 
-require('./react/messaging/models');
-
 require('./react/messaging/actions/popup');
 
 require('./react/messaging/actions/conversation');
@@ -80,12 +82,6 @@ require('./react/messaging/actions/conversation');
 require('./react/messaging/actions/message');
 
 require('./react/messaging/actions/notification');
-
-require('./react/messaging/mocks/mocks');
-
-require('./react/messaging/mocks/messaging_requester');
-
-require('./react/messaging/mocks/messaging_service');
 
 require('./react/messaging/components/toolbars/indicators/indicators');
 
@@ -218,6 +214,8 @@ require('./react/components/smart_follow_status');
 require('./react/components/relationship_buttons/mixins/relationship');
 
 require('./react/components/relationship_buttons/follow_button');
+
+require('./react/components/relationship_buttons/follower_button');
 
 require('./react/components/relationship_buttons/ignore_button');
 
@@ -469,12 +467,6 @@ require('./react/components/hero/profile/popup/items/following_item');
 
 require('./react/components/hero/profile/popup/items/tag_item');
 
-require('./shared/utils');
-
-require('./shared/fileReceiver');
-
-require('./shared/tasty');
-
 require('./react/components/images_collage');
 
 require('./react/components/spinner');
@@ -505,38 +497,11 @@ require('./react/controllers/popup');
 
 require('./react/mediators/comments');
 
-require('./react/utils');
-
 require('./react/application');
 
-require('./editors');
 
 
-
-},{"./editors":2,"./libs":3,"./locales":4,"./react/application":5,"./react/components/avatars/avatar":6,"./react/components/avatars/user_avatar":7,"./react/components/buttons/load_more":8,"./react/components/calendar/calendar":9,"./react/components/calendar/calendar_header":10,"./react/components/calendar/calendar_marker":11,"./react/components/calendar/calendar_period":12,"./react/components/calendar/calendar_timeline":13,"./react/components/design_settings_popup/controls":14,"./react/components/design_settings_popup/controls_items/_progressbar":15,"./react/components/design_settings_popup/controls_items/_radiobutton":16,"./react/components/design_settings_popup/controls_items/align_item":17,"./react/components/design_settings_popup/controls_items/background_item":18,"./react/components/design_settings_popup/controls_items/feed_color_item":19,"./react/components/design_settings_popup/controls_items/font_type_item":20,"./react/components/design_settings_popup/controls_items/header_color_item":21,"./react/components/design_settings_popup/controls_items/opacity_item":22,"./react/components/design_settings_popup/design_settings_popup":23,"./react/components/editable_field":24,"./react/components/embed":25,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":26,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":27,"./react/components/entry_comment_box/comment_form/comment_form":28,"./react/components/entry_comment_box/comment_list/comment":29,"./react/components/entry_comment_box/comment_list/comment_list":30,"./react/components/entry_comment_box/comment_list/comment_manager":31,"./react/components/entry_comment_box/comment_metabar/comment_metabar":32,"./react/components/entry_comment_box/comment_metabar/date":33,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":34,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":35,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":36,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":37,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":38,"./react/components/entry_comment_box/comment_metabar/reply":39,"./react/components/entry_comment_box/entry_comment_box":40,"./react/components/entry_comment_box/load_more":41,"./react/components/entry_comment_box/mixins/comments":42,"./react/components/entry_metabar/author":43,"./react/components/entry_metabar/comment":44,"./react/components/entry_metabar/date":45,"./react/components/entry_metabar/dropdown_menu":46,"./react/components/entry_metabar/dropdown_menu_items/delete_item":47,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":48,"./react/components/entry_metabar/dropdown_menu_items/item":49,"./react/components/entry_metabar/dropdown_menu_items/report_item":50,"./react/components/entry_metabar/dropdown_menu_items/watch_item":51,"./react/components/entry_metabar/entry_metabar":52,"./react/components/entry_metabar/tag":53,"./react/components/entry_metabar/tags":54,"./react/components/feed/bricks":55,"./react/components/feed/feed":56,"./react/components/feed/mixins/base":57,"./react/components/feed/tlog":58,"./react/components/follow_status":59,"./react/components/hero/profile/popup/followers_popup":60,"./react/components/hero/profile/popup/followings_popup":61,"./react/components/hero/profile/popup/items/follower_item":62,"./react/components/hero/profile/popup/items/following_item":63,"./react/components/hero/profile/popup/items/tag_item":64,"./react/components/hero/profile/popup/popup":65,"./react/components/hero/profile/popup/tags_popup":66,"./react/components/hero/profile/profile":67,"./react/components/hero/profile/profile_avatar":68,"./react/components/hero/profile/profile_head":69,"./react/components/hero/profile/profile_stats":70,"./react/components/hero/profile/profile_stats_item":71,"./react/components/images_collage":72,"./react/components/notifications/tasty_alert":73,"./react/components/notifications/tasty_confirm":74,"./react/components/notifications/tasty_locking_alert":75,"./react/components/notifications/tasty_notify":76,"./react/components/people/item":77,"./react/components/persons_popup/items/follower_relationship":78,"./react/components/persons_popup/items/following_relationship":79,"./react/components/persons_popup/items/guess_relationship":80,"./react/components/persons_popup/items/ignored_relationship":81,"./react/components/persons_popup/items/item":82,"./react/components/persons_popup/items/request_relationship":83,"./react/components/persons_popup/menu":84,"./react/components/persons_popup/menu_item":85,"./react/components/persons_popup/mixins/panel_mixin":86,"./react/components/persons_popup/panels/followers_panel":87,"./react/components/persons_popup/panels/followings_panel":88,"./react/components/persons_popup/panels/guesses_panel":89,"./react/components/persons_popup/panels/ignores_panel":90,"./react/components/persons_popup/panels/requests_panel":91,"./react/components/persons_popup/persons_popup":92,"./react/components/popup/header":93,"./react/components/popup/layout":94,"./react/components/popup/popup":95,"./react/components/popup/spinner":96,"./react/components/popup_box":97,"./react/components/post_editor/actions/actions":98,"./react/components/post_editor/actions/buttons/privacy":99,"./react/components/post_editor/actions/buttons/vote":100,"./react/components/post_editor/choicer":101,"./react/components/post_editor/demo":102,"./react/components/post_editor/edit_post":103,"./react/components/post_editor/editor_container":104,"./react/components/post_editor/editors/_tasty":105,"./react/components/post_editor/editors/anonymous":106,"./react/components/post_editor/editors/image":107,"./react/components/post_editor/editors/instagram":108,"./react/components/post_editor/editors/mixins/autosave":109,"./react/components/post_editor/editors/music":110,"./react/components/post_editor/editors/quote":111,"./react/components/post_editor/editors/text":112,"./react/components/post_editor/editors/video":113,"./react/components/post_editor/images_mediabox/loaded":114,"./react/components/post_editor/images_mediabox/url_insert":115,"./react/components/post_editor/layout":116,"./react/components/post_editor/mediabox/actions":117,"./react/components/post_editor/mediabox/layout":118,"./react/components/post_editor/mediabox/loading_progress":119,"./react/components/post_editor/mixins/dragging":120,"./react/components/post_editor/mixins/images_form":121,"./react/components/post_editor/mixins/layout":122,"./react/components/post_editor/mixins/persistence":123,"./react/components/post_editor/mixins/video":124,"./react/components/post_editor/new_anonymous_post":125,"./react/components/post_editor/new_post":126,"./react/components/post_editor/video_mediabox/embeded":127,"./react/components/post_editor/video_mediabox/loading":128,"./react/components/post_editor/video_mediabox/url_insert":129,"./react/components/post_editor/video_mediabox/video_mediabox":130,"./react/components/post_editor/welcome_messages/image":131,"./react/components/post_editor/welcome_messages/instagram":132,"./react/components/post_editor/welcome_messages/music":133,"./react/components/post_editor/welcome_messages/video":134,"./react/components/relationship_buttons/follow_button":135,"./react/components/relationship_buttons/guess_button":136,"./react/components/relationship_buttons/ignore_button":137,"./react/components/relationship_buttons/mixins/relationship":138,"./react/components/relationship_buttons/request_button":139,"./react/components/search/button":140,"./react/components/search/field":141,"./react/components/search/search":142,"./react/components/settings_popup/settings_accounts_item":143,"./react/components/settings_popup/settings_avatar":144,"./react/components/settings_popup/settings_email/confirmation":145,"./react/components/settings_popup/settings_email/edit":146,"./react/components/settings_popup/settings_email/establish/edit":147,"./react/components/settings_popup/settings_email/establish/establish":148,"./react/components/settings_popup/settings_email/establish/show":149,"./react/components/settings_popup/settings_email/settings_email":150,"./react/components/settings_popup/settings_email/show":151,"./react/components/settings_popup/settings_header":152,"./react/components/settings_popup/settings_name":153,"./react/components/settings_popup/settings_password_input":154,"./react/components/settings_popup/settings_radio_item":155,"./react/components/settings_popup/settings_title":156,"./react/components/settings_popup/settings_vkontakte":157,"./react/components/settings_popup/toolbar_settings":158,"./react/components/shellbox/authorization/authorization":159,"./react/components/shellbox/authorization/vk":160,"./react/components/shellbox/buttons/vk_auth_button":161,"./react/components/shellbox/email_signin_shellbox":162,"./react/components/shellbox/email_signup_shellbox":163,"./react/components/shellbox/inviter_shellbox":164,"./react/components/shellbox/recovery_shellbox":165,"./react/components/shellbox/select_signin_shellbox":166,"./react/components/shellbox_layer":167,"./react/components/smart_follow_status":168,"./react/components/spinner":169,"./react/components/tlog_alert":170,"./react/components/toolbars/close/close":171,"./react/components/toolbars/feed/feed":172,"./react/components/toolbars/toolbar_item":173,"./react/components/toolbars/user/user":174,"./react/components/transition/timeout_transition_group":175,"./react/components/voting":176,"./react/controllers/popup":177,"./react/controllers/shellbox":178,"./react/controllers/tasty_alert":179,"./react/controllers/tasty_confirm":180,"./react/controllers/tasty_events":181,"./react/controllers/tasty_locking_alert":182,"./react/controllers/tasty_notify":183,"./react/controllers/tasty_sound":184,"./react/dispatchers/current_user":185,"./react/entities/normalized_entry":186,"./react/mediators/comments":187,"./react/messaging/actions/conversation":188,"./react/messaging/actions/message":189,"./react/messaging/actions/notification":190,"./react/messaging/actions/popup":191,"./react/messaging/components/messages_popup/conversations/conversations":192,"./react/messaging/components/messages_popup/conversations/list/empty":193,"./react/messaging/components/messages_popup/conversations/list/list":194,"./react/messaging/components/messages_popup/conversations/list/list_item":195,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":196,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":197,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":198,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":199,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":200,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":201,"./react/messaging/components/messages_popup/loading_message":202,"./react/messaging/components/messages_popup/messages_popup":203,"./react/messaging/components/messages_popup/thread/message_form/message_form":204,"./react/messaging/components/messages_popup/thread/message_list/empty":205,"./react/messaging/components/messages_popup/thread/message_list/message_list":206,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":207,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":208,"./react/messaging/components/messages_popup/thread/thread":209,"./react/messaging/components/messages_popup/ui/back_button":210,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":211,"./react/messaging/components/notifications_popup/notifications/empty":212,"./react/messaging/components/notifications_popup/notifications/notification":213,"./react/messaging/components/notifications_popup/notifications/notifications":214,"./react/messaging/components/notifications_popup/notifications_popup":215,"./react/messaging/components/toolbars/indicators/indicators":216,"./react/messaging/components/toolbars/indicators/messages":217,"./react/messaging/components/toolbars/indicators/notifications":218,"./react/messaging/dispatchers/messaging":219,"./react/messaging/messaging_requester":220,"./react/messaging/messaging_service":221,"./react/messaging/messaging_testing":222,"./react/messaging/mocks/messaging_requester":223,"./react/messaging/mocks/messaging_service":224,"./react/messaging/mocks/mocks":225,"./react/messaging/models":226,"./react/messaging/stores/connection_state":227,"./react/messaging/stores/conversations":228,"./react/messaging/stores/messages":229,"./react/messaging/stores/messages_popup_state":230,"./react/messaging/stores/messaging_status":231,"./react/messaging/stores/notifications":232,"./react/mixins/activities":233,"./react/mixins/component_manipulations":234,"./react/mixins/dom_manipulations":235,"./react/mixins/error_timer":236,"./react/mixins/grammar":237,"./react/mixins/positions":238,"./react/mixins/requester":239,"./react/mixins/scroller":240,"./react/mixins/shake":241,"./react/mixins/touch":242,"./react/mixins/unmount":243,"./react/services/entry_normalizer":244,"./react/services/entry_store":245,"./react/services/positions":246,"./react/services/thumbor":247,"./react/services/uuid":248,"./react/stores/current_user":249,"./react/utils":250,"./routes":251,"./shared/api-routes":252,"./shared/dmodel":253,"./shared/fileReceiver":254,"./shared/is_mobile":255,"./shared/tasty":256,"./shared/utils":257}],2:[function(require,module,exports){
-$(function() {
-  var mediumeditor;
-  _.each(document.querySelectorAll('.mediumjs-editor'), function(el) {
-    var mediumjs;
-    return mediumjs = new Medium({
-      debug: true,
-      element: el,
-      modifier: 'auto',
-      placeholder: 'Начните набирать текст поста. Можно без заголовка, без картинки или без видео.',
-      autofocus: true,
-      autoHR: true
-    });
-  });
-  if (typeof MediumEditor !== "undefined" && MediumEditor !== null) {
-    return mediumeditor = new MediumEditor(document.querySelectorAll('.medium-editor'), {
-      placeholder: 'Начните набирать текст поста. Можно без заголовка, без картинки или без видео.'
-    });
-  }
-});
-
-
-
-},{}],3:[function(require,module,exports){
+},{"./libs":2,"./locales":3,"./react/application":4,"./react/components/avatars/avatar":5,"./react/components/avatars/user_avatar":6,"./react/components/buttons/load_more":7,"./react/components/calendar/calendar":8,"./react/components/calendar/calendar_header":9,"./react/components/calendar/calendar_marker":10,"./react/components/calendar/calendar_period":11,"./react/components/calendar/calendar_timeline":12,"./react/components/design_settings_popup/controls":13,"./react/components/design_settings_popup/controls_items/_progressbar":14,"./react/components/design_settings_popup/controls_items/_radiobutton":15,"./react/components/design_settings_popup/controls_items/align_item":16,"./react/components/design_settings_popup/controls_items/background_item":17,"./react/components/design_settings_popup/controls_items/feed_color_item":18,"./react/components/design_settings_popup/controls_items/font_type_item":19,"./react/components/design_settings_popup/controls_items/header_color_item":20,"./react/components/design_settings_popup/controls_items/opacity_item":21,"./react/components/design_settings_popup/design_settings_popup":22,"./react/components/editable_field":23,"./react/components/embed":24,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":25,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":26,"./react/components/entry_comment_box/comment_form/comment_form":27,"./react/components/entry_comment_box/comment_list/comment":28,"./react/components/entry_comment_box/comment_list/comment_list":29,"./react/components/entry_comment_box/comment_list/comment_manager":30,"./react/components/entry_comment_box/comment_metabar/comment_metabar":31,"./react/components/entry_comment_box/comment_metabar/date":32,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":33,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":34,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":35,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":36,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":37,"./react/components/entry_comment_box/comment_metabar/reply":38,"./react/components/entry_comment_box/entry_comment_box":39,"./react/components/entry_comment_box/load_more":40,"./react/components/entry_comment_box/mixins/comments":41,"./react/components/entry_metabar/author":42,"./react/components/entry_metabar/comment":43,"./react/components/entry_metabar/date":44,"./react/components/entry_metabar/dropdown_menu":45,"./react/components/entry_metabar/dropdown_menu_items/delete_item":46,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":47,"./react/components/entry_metabar/dropdown_menu_items/item":48,"./react/components/entry_metabar/dropdown_menu_items/report_item":49,"./react/components/entry_metabar/dropdown_menu_items/watch_item":50,"./react/components/entry_metabar/entry_metabar":51,"./react/components/entry_metabar/tag":52,"./react/components/entry_metabar/tags":53,"./react/components/feed/bricks":54,"./react/components/feed/feed":55,"./react/components/feed/mixins/base":56,"./react/components/feed/tlog":57,"./react/components/follow_status":58,"./react/components/hero/profile/popup/followers_popup":59,"./react/components/hero/profile/popup/followings_popup":60,"./react/components/hero/profile/popup/items/follower_item":61,"./react/components/hero/profile/popup/items/following_item":62,"./react/components/hero/profile/popup/items/tag_item":63,"./react/components/hero/profile/popup/popup":64,"./react/components/hero/profile/popup/tags_popup":65,"./react/components/hero/profile/profile":66,"./react/components/hero/profile/profile_avatar":67,"./react/components/hero/profile/profile_head":68,"./react/components/hero/profile/profile_stats":69,"./react/components/hero/profile/profile_stats_item":70,"./react/components/images_collage":71,"./react/components/notifications/tasty_alert":72,"./react/components/notifications/tasty_confirm":73,"./react/components/notifications/tasty_locking_alert":74,"./react/components/notifications/tasty_notify":75,"./react/components/people/item":76,"./react/components/persons_popup/items/follower_relationship":77,"./react/components/persons_popup/items/following_relationship":78,"./react/components/persons_popup/items/guess_relationship":79,"./react/components/persons_popup/items/ignored_relationship":80,"./react/components/persons_popup/items/item":81,"./react/components/persons_popup/items/request_relationship":82,"./react/components/persons_popup/menu":83,"./react/components/persons_popup/menu_item":84,"./react/components/persons_popup/mixins/panel_mixin":85,"./react/components/persons_popup/panels/followers_panel":86,"./react/components/persons_popup/panels/followings_panel":87,"./react/components/persons_popup/panels/guesses_panel":88,"./react/components/persons_popup/panels/ignores_panel":89,"./react/components/persons_popup/panels/requests_panel":90,"./react/components/persons_popup/persons_popup":91,"./react/components/popup/header":92,"./react/components/popup/layout":93,"./react/components/popup/popup":94,"./react/components/popup/spinner":95,"./react/components/popup_box":96,"./react/components/post_editor/actions/actions":97,"./react/components/post_editor/actions/buttons/privacy":98,"./react/components/post_editor/actions/buttons/vote":99,"./react/components/post_editor/choicer":100,"./react/components/post_editor/demo":101,"./react/components/post_editor/edit_post":102,"./react/components/post_editor/editor_container":103,"./react/components/post_editor/editors/_tasty":104,"./react/components/post_editor/editors/anonymous":105,"./react/components/post_editor/editors/image":106,"./react/components/post_editor/editors/instagram":107,"./react/components/post_editor/editors/mixins/autosave":108,"./react/components/post_editor/editors/music":109,"./react/components/post_editor/editors/quote":110,"./react/components/post_editor/editors/text":111,"./react/components/post_editor/editors/video":112,"./react/components/post_editor/images_mediabox/loaded":113,"./react/components/post_editor/images_mediabox/url_insert":114,"./react/components/post_editor/layout":115,"./react/components/post_editor/mediabox/actions":116,"./react/components/post_editor/mediabox/layout":117,"./react/components/post_editor/mediabox/loading_progress":118,"./react/components/post_editor/mixins/dragging":119,"./react/components/post_editor/mixins/images_form":120,"./react/components/post_editor/mixins/layout":121,"./react/components/post_editor/mixins/persistence":122,"./react/components/post_editor/mixins/video":123,"./react/components/post_editor/new_anonymous_post":124,"./react/components/post_editor/new_post":125,"./react/components/post_editor/video_mediabox/embeded":126,"./react/components/post_editor/video_mediabox/loading":127,"./react/components/post_editor/video_mediabox/url_insert":128,"./react/components/post_editor/video_mediabox/video_mediabox":129,"./react/components/post_editor/welcome_messages/image":130,"./react/components/post_editor/welcome_messages/instagram":131,"./react/components/post_editor/welcome_messages/music":132,"./react/components/post_editor/welcome_messages/video":133,"./react/components/relationship_buttons/follow_button":134,"./react/components/relationship_buttons/follower_button":135,"./react/components/relationship_buttons/guess_button":136,"./react/components/relationship_buttons/ignore_button":137,"./react/components/relationship_buttons/mixins/relationship":138,"./react/components/relationship_buttons/request_button":139,"./react/components/search/button":140,"./react/components/search/field":141,"./react/components/search/search":142,"./react/components/settings_popup/settings_accounts_item":143,"./react/components/settings_popup/settings_avatar":144,"./react/components/settings_popup/settings_email/confirmation":145,"./react/components/settings_popup/settings_email/edit":146,"./react/components/settings_popup/settings_email/establish/edit":147,"./react/components/settings_popup/settings_email/establish/establish":148,"./react/components/settings_popup/settings_email/establish/show":149,"./react/components/settings_popup/settings_email/settings_email":150,"./react/components/settings_popup/settings_email/show":151,"./react/components/settings_popup/settings_header":152,"./react/components/settings_popup/settings_name":153,"./react/components/settings_popup/settings_password_input":154,"./react/components/settings_popup/settings_radio_item":155,"./react/components/settings_popup/settings_title":156,"./react/components/settings_popup/settings_vkontakte":157,"./react/components/settings_popup/toolbar_settings":158,"./react/components/shellbox/authorization/authorization":159,"./react/components/shellbox/authorization/vk":160,"./react/components/shellbox/buttons/vk_auth_button":161,"./react/components/shellbox/email_signin_shellbox":162,"./react/components/shellbox/email_signup_shellbox":163,"./react/components/shellbox/inviter_shellbox":164,"./react/components/shellbox/recovery_shellbox":165,"./react/components/shellbox/select_signin_shellbox":166,"./react/components/shellbox_layer":167,"./react/components/smart_follow_status":168,"./react/components/spinner":169,"./react/components/tlog_alert":170,"./react/components/toolbars/close/close":171,"./react/components/toolbars/feed/feed":172,"./react/components/toolbars/toolbar_item":173,"./react/components/toolbars/user/user":174,"./react/components/transition/timeout_transition_group":175,"./react/components/voting":176,"./react/controllers/popup":177,"./react/controllers/shellbox":178,"./react/controllers/tasty_alert":179,"./react/controllers/tasty_confirm":180,"./react/controllers/tasty_events":181,"./react/controllers/tasty_locking_alert":182,"./react/controllers/tasty_notify":183,"./react/controllers/tasty_sound":184,"./react/dispatchers/current_user":185,"./react/entities/normalized_entry":186,"./react/mediators/comments":187,"./react/messaging/actions/conversation":188,"./react/messaging/actions/message":189,"./react/messaging/actions/notification":190,"./react/messaging/actions/popup":191,"./react/messaging/components/messages_popup/conversations/conversations":192,"./react/messaging/components/messages_popup/conversations/list/empty":193,"./react/messaging/components/messages_popup/conversations/list/list":194,"./react/messaging/components/messages_popup/conversations/list/list_item":195,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":196,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":197,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":198,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":199,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":200,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":201,"./react/messaging/components/messages_popup/loading_message":202,"./react/messaging/components/messages_popup/messages_popup":203,"./react/messaging/components/messages_popup/thread/message_form/message_form":204,"./react/messaging/components/messages_popup/thread/message_list/empty":205,"./react/messaging/components/messages_popup/thread/message_list/message_list":206,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":207,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":208,"./react/messaging/components/messages_popup/thread/thread":209,"./react/messaging/components/messages_popup/ui/back_button":210,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":211,"./react/messaging/components/notifications_popup/notifications/empty":212,"./react/messaging/components/notifications_popup/notifications/notification":213,"./react/messaging/components/notifications_popup/notifications/notifications":214,"./react/messaging/components/notifications_popup/notifications_popup":215,"./react/messaging/components/toolbars/indicators/indicators":216,"./react/messaging/components/toolbars/indicators/messages":217,"./react/messaging/components/toolbars/indicators/notifications":218,"./react/messaging/dispatchers/messaging":219,"./react/messaging/messaging_requester":220,"./react/messaging/messaging_service":221,"./react/messaging/messaging_testing":222,"./react/messaging/stores/connection_state":223,"./react/messaging/stores/conversations":224,"./react/messaging/stores/messages":225,"./react/messaging/stores/messages_popup_state":226,"./react/messaging/stores/messaging_status":227,"./react/messaging/stores/notifications":228,"./react/mixins/activities":229,"./react/mixins/component_manipulations":230,"./react/mixins/dom_manipulations":231,"./react/mixins/error_timer":232,"./react/mixins/grammar":233,"./react/mixins/positions":234,"./react/mixins/requester":235,"./react/mixins/scroller":236,"./react/mixins/shake":237,"./react/mixins/touch":238,"./react/mixins/unmount":239,"./react/services/entry_normalizer":240,"./react/services/entry_store":241,"./react/services/positions":242,"./react/services/thumbor":243,"./react/services/uuid":244,"./react/stores/current_user":245,"./resources/fileReceiver":246,"./resources/is_mobile":247,"./resources/tasty":248,"./resources/tasty_utils":249,"./routes":250}],2:[function(require,module,exports){
 window._ = require('underscore');
 
 window.$ = window.jQuery = require('jquery');
@@ -567,8 +532,6 @@ window.MediumEditor = require('medium-editor');
 
 window.Undo = require('undo');
 
-require('honeybadger');
-
 require('swfobject');
 
 require('es5-shim');
@@ -576,6 +539,8 @@ require('es5-shim');
 require('jquery.mousewheel')(window.jQuery);
 
 require('jquery.scrollto');
+
+require('screenviewer');
 
 require('baron');
 
@@ -611,7 +576,7 @@ require('jquery.shapeshift');
 
 
 
-},{"Modernizr":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":258,"honeybadger":undefined,"i18next":undefined,"imagesloaded":261,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"medium-editor":undefined,"momentjs":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"reactUjs":undefined,"swfobject":undefined,"underscore":undefined,"undo":undefined}],4:[function(require,module,exports){
+},{"Modernizr":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":252,"i18next":undefined,"imagesloaded":255,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"medium-editor":undefined,"momentjs":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"reactUjs":undefined,"screenviewer":undefined,"swfobject":undefined,"underscore":undefined,"undo":undefined}],3:[function(require,module,exports){
 var locale;
 
 locale = 'ru';
@@ -624,7 +589,7 @@ i18n.init({
 
 
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 window.ReactApp = {
   start: function(_arg) {
     var ic, user;
@@ -644,22 +609,16 @@ window.ReactApp = {
       }), ic);
     }
     if (user != null) {
-      if (localStorage.getItem('mockMessages')) {
-        return window.messagingService = new MessagingServiceMock({
-          user: CurrentUserStore.getUser()
-        });
-      } else {
-        return window.messagingService = new MessagingService({
-          user: CurrentUserStore.getUser()
-        });
-      }
+      return window.messagingService = new MessagingService({
+        user: CurrentUserStore.getUser()
+      });
     }
   }
 };
 
 
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.Avatar = React.createClass({displayName: 'Avatar',
@@ -703,7 +662,7 @@ window.Avatar = React.createClass({displayName: 'Avatar',
 
 
 
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.UserAvatar = React.createClass({displayName: 'UserAvatar',
@@ -741,7 +700,7 @@ window.UserAvatar = React.createClass({displayName: 'UserAvatar',
 
 
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.LoadMoreButton = React.createClass({displayName: 'LoadMoreButton',
@@ -760,7 +719,7 @@ window.LoadMoreButton = React.createClass({displayName: 'LoadMoreButton',
 
 
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CALENDAR_CLOSED, CALENDAR_OPENED_BY_CLICK, CALENDAR_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, TARGET_POST_CLASS, TARGET_POST_PARENT_CLASS;
@@ -968,7 +927,7 @@ window.Calendar = React.createClass({displayName: 'Calendar',
 
 
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarHeader = React.createClass({displayName: 'CalendarHeader',
@@ -993,7 +952,7 @@ window.CalendarHeader = React.createClass({displayName: 'CalendarHeader',
 
 
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarMarker = React.createClass({displayName: 'CalendarMarker',
@@ -1038,7 +997,7 @@ window.CalendarMarker = React.createClass({displayName: 'CalendarMarker',
 
 
 
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarPeriod = React.createClass({displayName: 'CalendarPeriod',
@@ -1068,7 +1027,7 @@ window.CalendarPeriod = React.createClass({displayName: 'CalendarPeriod',
 
 
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarTimeline = React.createClass({displayName: 'CalendarTimeline',
@@ -1097,7 +1056,7 @@ window.CalendarTimeline = React.createClass({displayName: 'CalendarTimeline',
 
 
 
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_Controls = React.createClass({displayName: 'DesignSettingsPopup_Controls',
@@ -1142,7 +1101,7 @@ window.DesignSettingsPopup_Controls = React.createClass({displayName: 'DesignSet
 
 
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsProgressbar = React.createClass({displayName: 'DesignSettingsPopup_ControlsProgressbar',
@@ -1168,7 +1127,7 @@ window.DesignSettingsPopup_ControlsProgressbar = React.createClass({displayName:
 
 
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsRadioButton = React.createClass({displayName: 'DesignSettingsPopup_ControlsRadioButton',
@@ -1233,7 +1192,7 @@ window.DesignSettingsPopup_ControlsRadioButton = React.createClass({displayName:
 
 
 
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var SETTING_TITLE;
@@ -1286,7 +1245,7 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass({displayName: '
 
 
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsBackgroundItem',
@@ -1410,7 +1369,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({displayNa
 
 
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsFeedColorItem',
@@ -1459,7 +1418,7 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({displayNam
 
 
 
-},{}],20:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsFontTypeItem',
@@ -1509,7 +1468,7 @@ window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({displayName
 
 
 
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsHeaderColorItem',
@@ -1572,7 +1531,7 @@ window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({displayN
 
 
 
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MAXIMUM_OPACITY, MINIMUM_OPACITY, STEP_OPACITY, TIMEOUT_BEFORE_SAVE;
@@ -1670,7 +1629,7 @@ window.DesignSettingsPopup_ControlsOpacityItem = React.createClass({displayName:
 
 
 
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DESIGN_SETTINGS_POPUP_TITLE;
@@ -1802,7 +1761,7 @@ window.DesignSettingsPopup = React.createClass({displayName: 'DesignSettingsPopu
 
 
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var KEYCODE_ENTER;
@@ -1830,14 +1789,8 @@ window.EditableField = React.createClass({displayName: 'EditableField',
   componentDidMount: function() {
     this.$textarea = $(this.refs.textarea.getDOMNode());
     if ($.fn.autosize) {
-      this.$textarea.autosize({
+      return this.$textarea.autosize({
         append: ''
-      });
-    }
-    if ($.fn.maxlength) {
-      return this.$textarea.maxlength({
-        max: this.$textarea.attr('maxlength'),
-        showFeedback: false
       });
     }
   },
@@ -1915,7 +1868,7 @@ window.EditableField = React.createClass({displayName: 'EditableField',
 
 
 
-},{}],25:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EmbedComponent = React.createClass({displayName: 'EmbedComponent',
@@ -2002,7 +1955,7 @@ window.EmbedComponentWithCover = React.createClass({displayName: 'EmbedComponent
 
 
 
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FORM_STATE, HIDDEN_STATE, LINK_STATE;
@@ -2160,7 +2113,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({displayName
 
 
 
-},{}],27:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentEditFormManager = React.createClass({displayName: 'EntryCommentBox_CommentEditFormManager',
@@ -2222,7 +2175,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({displayName: 
 
 
 
-},{}],28:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var REPLIES_LIMIT;
@@ -2340,7 +2293,7 @@ window.EntryCommentBox_CommentForm = React.createClass({displayName: 'EntryComme
 
 
 
-},{}],29:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_Comment = React.createClass({displayName: 'EntryCommentBox_Comment',
@@ -2405,7 +2358,7 @@ window.EntryCommentBox_Comment = React.createClass({displayName: 'EntryCommentBo
 
 
 
-},{}],30:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentList = React.createClass({displayName: 'EntryCommentBox_CommentList',
@@ -2456,7 +2409,7 @@ window.EntryCommentBox_CommentList = React.createClass({displayName: 'EntryComme
 
 
 
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentManager = React.createClass({displayName: 'EntryCommentBox_CommentManager',
@@ -2524,7 +2477,7 @@ window.EntryCommentBox_CommentManager = React.createClass({displayName: 'EntryCo
 
 
 
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBar = React.createClass({displayName: 'EntryCommentBox_CommentMetaBar',
@@ -2561,7 +2514,7 @@ window.EntryCommentBox_CommentMetaBar = React.createClass({displayName: 'EntryCo
 
 
 
-},{}],33:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDate = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDate',
@@ -2598,7 +2551,7 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass({displayName: 'Ent
 
 
 
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT;
@@ -2690,7 +2643,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass({displayNa
 
 
 
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem',
@@ -2737,7 +2690,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
 
 
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuEditItem',
@@ -2760,7 +2713,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({d
 
 
 
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuLinkItem',
@@ -2782,7 +2735,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({d
 
 
 
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuReportItem',
@@ -2825,7 +2778,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
 
 
 
-},{}],39:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarReply = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarReply',
@@ -2846,7 +2799,7 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass({displayName: 'En
 
 
 
-},{}],40:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MORE_COMMENTS_LIMIT;
@@ -2918,7 +2871,7 @@ window.EntryCommentBox = React.createClass({displayName: 'EntryCommentBox',
 
 
 
-},{}],41:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_LoadMore = React.createClass({displayName: 'EntryCommentBox_LoadMore',
@@ -2953,7 +2906,7 @@ window.EntryCommentBox_LoadMore = React.createClass({displayName: 'EntryCommentB
 
 
 
-},{}],42:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 var CommentsMixin;
 
 CommentsMixin = {
@@ -3130,7 +3083,7 @@ React.mixins.add('CommentsMixin', [CommentsMixin, RequesterMixin, ComponentManip
 
 
 
-},{}],43:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarAuthor = React.createClass({displayName: 'EntryMetabarAuthor',
@@ -3155,7 +3108,7 @@ window.EntryMetabarAuthor = React.createClass({displayName: 'EntryMetabarAuthor'
 
 
 
-},{}],44:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarComment = React.createClass({displayName: 'EntryMetabarComment',
@@ -3197,7 +3150,7 @@ window.EntryMetabarComment = React.createClass({displayName: 'EntryMetabarCommen
 
 
 
-},{}],45:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDate = React.createClass({displayName: 'EntryMetabarDate',
@@ -3230,7 +3183,7 @@ window.EntryMetabarDate = React.createClass({displayName: 'EntryMetabarDate',
 
 
 
-},{}],46:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_BETWEEN_TOGGLER_AND_MENU, MOUSE_LEAVE_TIMEOUT;
@@ -3384,7 +3337,7 @@ window.EntryMetabarDropdownMenu = React.createClass({displayName: 'EntryMetabarD
 
 
 
-},{}],47:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuDeleteItem = React.createClass({displayName: 'EntryMetabarDropdownMenuDeleteItem',
@@ -3459,7 +3412,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({displayName: 'Ent
 
 
 
-},{}],48:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({displayName: 'EntryMetabarDropdownMenuFavoriteItem',
@@ -3568,7 +3521,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({displayName: 'E
 
 
 
-},{}],49:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuItem = React.createClass({displayName: 'EntryMetabarDropdownMenuItem',
@@ -3588,7 +3541,7 @@ window.EntryMetabarDropdownMenuItem = React.createClass({displayName: 'EntryMeta
 
 
 
-},{}],50:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuReportItem = React.createClass({displayName: 'EntryMetabarDropdownMenuReportItem',
@@ -3630,7 +3583,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({displayName: 'Ent
 
 
 
-},{}],51:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuWatchItem = React.createClass({displayName: 'EntryMetabarDropdownMenuWatchItem',
@@ -3728,7 +3681,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({displayName: 'Entr
 
 
 
-},{}],52:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabar = React.createClass({displayName: 'EntryMetabar',
@@ -3796,7 +3749,7 @@ window.EntryMetabar = React.createClass({displayName: 'EntryMetabar',
 
 
 
-},{}],53:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarTag = React.createClass({displayName: 'EntryMetabarTag',
@@ -3815,7 +3768,7 @@ window.EntryMetabarTag = React.createClass({displayName: 'EntryMetabarTag',
 
 
 
-},{}],54:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarTags = React.createClass({displayName: 'EntryMetabarTags',
@@ -3846,7 +3799,7 @@ window.EntryMetabarTags = React.createClass({displayName: 'EntryMetabarTags',
 
 
 
-},{}],55:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FeedBricks = React.createClass({displayName: 'FeedBricks',
@@ -3896,7 +3849,7 @@ window.FeedBricks = React.createClass({displayName: 'FeedBricks',
 
 
 
-},{}],56:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
@@ -3991,7 +3944,7 @@ window.Feed = React.createClass({displayName: 'Feed',
 
 
 
-},{}],57:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 var THRESHOLD;
 
 THRESHOLD = 400;
@@ -4028,7 +3981,7 @@ window.FeedBaseMixin = {
 
 
 
-},{}],58:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FeedTlog = React.createClass({displayName: 'FeedTlog',
@@ -4062,7 +4015,7 @@ window.FeedTlog = React.createClass({displayName: 'FeedTlog',
 
 
 
-},{}],59:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FollowStatus = React.createClass({displayName: 'FollowStatus',
@@ -4078,7 +4031,7 @@ window.FollowStatus = React.createClass({displayName: 'FollowStatus',
 
 
 
-},{}],60:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroProfileStats_FollowersPopup',
@@ -4167,7 +4120,7 @@ window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroPr
 
 
 
-},{}],61:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroProfileStats_FollowingsPopup',
@@ -4256,7 +4209,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroP
 
 
 
-},{}],62:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowerItem = React.createClass({displayName: 'HeroProfileStats_FollowerItem',
@@ -4280,7 +4233,7 @@ window.HeroProfileStats_FollowerItem = React.createClass({displayName: 'HeroProf
 
 
 
-},{}],63:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowingItem = React.createClass({displayName: 'HeroProfileStats_FollowingItem',
@@ -4304,7 +4257,7 @@ window.HeroProfileStats_FollowingItem = React.createClass({displayName: 'HeroPro
 
 
 
-},{}],64:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_TagItem = React.createClass({displayName: 'HeroProfileStats_TagItem',
@@ -4325,7 +4278,7 @@ window.HeroProfileStats_TagItem = React.createClass({displayName: 'HeroProfileSt
 
 
 
-},{}],65:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION, MARGIN;
@@ -4406,7 +4359,7 @@ window.HeroProfileStats_Popup = React.createClass({displayName: 'HeroProfileStat
 
 
 
-},{}],66:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfileStats_TagsPopup',
@@ -4494,7 +4447,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfile
 
 
 
-},{}],67:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS;
@@ -4632,7 +4585,7 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
 
 
 
-},{}],68:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var HERO_AVATAR_SIZE;
@@ -4657,7 +4610,7 @@ window.HeroProfileAvatar = React.createClass({displayName: 'HeroProfileAvatar',
 
 
 
-},{}],69:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileHead = React.createClass({displayName: 'HeroProfileHead',
@@ -4717,7 +4670,7 @@ window.HeroProfileHeadStatic = React.createClass({displayName: 'HeroProfileHeadS
 
 
 
-},{}],70:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats = React.createClass({displayName: 'HeroProfileStats',
@@ -4844,7 +4797,7 @@ window.HeroProfileStats = React.createClass({displayName: 'HeroProfileStats',
 
 
 
-},{}],71:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStatsItem = React.createClass({displayName: 'HeroProfileStatsItem',
@@ -4888,7 +4841,7 @@ window.HeroProfileStatsItem = React.createClass({displayName: 'HeroProfileStatsI
 
 
 
-},{}],72:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FIRST_ROW_RATIO, NEXT_ROWS_RATIO;
@@ -4934,7 +4887,7 @@ window.ImagesCollage = React.createClass({displayName: 'ImagesCollage',
     };
   },
   shouldComponentUpdate: function(nextProps, nextState) {
-    return !(ReactUtils.isImagesEqual(nextState.images, this.state.images) && ReactUtils.isImagesEqual(nextProps.images, this.props.images));
+    return !(TastyUtils.isImagesEqual(nextState.images, this.state.images) && TastyUtils.isImagesEqual(nextProps.images, this.props.images));
   },
   componentWillReceiveProps: function(nextProps) {
     return this.loadImages(nextProps.images);
@@ -5000,7 +4953,7 @@ window.ImagesCollage_Legacy = React.createClass({displayName: 'ImagesCollage_Leg
     images: React.PropTypes.array.isRequired
   },
   shouldComponentUpdate: function(nextProps, nextState) {
-    return !ReactUtils.isImagesEqual(nextProps.images, this.props.images);
+    return !TastyUtils.isImagesEqual(nextProps.images, this.props.images);
   },
   componentDidMount: function() {
     this.$node = $(this.getDOMNode());
@@ -5033,7 +4986,7 @@ window.ImagesCollage_Legacy = React.createClass({displayName: 'ImagesCollage_Leg
 
 
 
-},{}],73:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION;
@@ -5100,7 +5053,7 @@ window.TastyAlert = React.createClass({displayName: 'TastyAlert',
 
 
 
-},{}],74:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION;
@@ -5166,7 +5119,7 @@ window.TastyConfirm = React.createClass({displayName: 'TastyConfirm',
 
 
 
-},{}],75:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION, START_TIMEOUT;
@@ -5219,7 +5172,7 @@ window.TastyLockingAlert = React.createClass({displayName: 'TastyLockingAlert',
 
 
 
-},{}],76:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEFAULT_TIMEOUT, DEFAULT_TYPE;
@@ -5269,7 +5222,7 @@ window.TastyNotify = React.createClass({displayName: 'TastyNotify',
 
 
 
-},{}],77:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PeopleItem = React.createClass({displayName: 'PeopleItem',
@@ -5307,7 +5260,7 @@ window.PeopleItem = React.createClass({displayName: 'PeopleItem',
 
 
 
-},{}],78:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'PersonsPopup_FollowerRelationship',
@@ -5330,7 +5283,7 @@ window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'Pers
 
 
 
-},{}],79:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowingRelationship = React.createClass({displayName: 'PersonsPopup_FollowingRelationship',
@@ -5352,7 +5305,7 @@ window.PersonsPopup_FollowingRelationship = React.createClass({displayName: 'Per
 
 
 
-},{}],80:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_GuessRelationship = React.createClass({displayName: 'PersonsPopup_GuessRelationship',
@@ -5376,7 +5329,7 @@ window.PersonsPopup_GuessRelationship = React.createClass({displayName: 'Persons
 
 
 
-},{}],81:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_IgnoredRelationship = React.createClass({displayName: 'PersonsPopup_IgnoredRelationship',
@@ -5398,7 +5351,7 @@ window.PersonsPopup_IgnoredRelationship = React.createClass({displayName: 'Perso
 
 
 
-},{}],82:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_PersonItem',
@@ -5430,7 +5383,7 @@ window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_P
 
 
 
-},{}],83:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'PersonsPopup_RequestRelationship',
@@ -5454,7 +5407,7 @@ window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'Perso
 
 
 
-},{}],84:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FOLLOWERS, FOLLOWINGS, GUESSES, IGNORES, REQUESTS;
@@ -5519,7 +5472,7 @@ window.PersonsPopup_Menu = React.createClass({displayName: 'PersonsPopup_Menu',
 
 
 
-},{}],85:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PersonsPopup_MenuItem;
@@ -5548,7 +5501,7 @@ window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass({displa
 
 
 
-},{}],86:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_PanelMixin = {
@@ -5704,7 +5657,7 @@ React.mixins.add('PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, win
 
 
 
-},{}],87:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPopup_FollowersPanel',
@@ -5717,7 +5670,7 @@ window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPop
 
 
 
-},{}],88:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPopup_FollowingsPanel',
@@ -5730,7 +5683,7 @@ window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPo
 
 
 
-},{}],89:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup_GuessesPanel',
@@ -5743,7 +5696,7 @@ window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup
 
 
 
-},{}],90:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup_IgnoresPanel',
@@ -5756,7 +5709,7 @@ window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup
 
 
 
-},{}],91:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopup_RequestsPanel',
@@ -5769,7 +5722,7 @@ window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopu
 
 
 
-},{}],92:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PERSON_POPUP_TITLE;
@@ -5879,7 +5832,7 @@ window.PersonsPopup = React.createClass({displayName: 'PersonsPopup',
 
 
 
-},{}],93:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupHeader = React.createClass({displayName: 'PopupHeader',
@@ -5915,7 +5868,7 @@ window.PopupHeader = React.createClass({displayName: 'PopupHeader',
 
 
 
-},{}],94:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupLayout = React.createClass({displayName: 'PopupLayout',
@@ -5949,7 +5902,7 @@ window.PopupLayout = React.createClass({displayName: 'PopupLayout',
 
 
 
-},{}],95:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var NO_TRANSITION_CLASS;
@@ -6037,7 +5990,7 @@ window.Popup = React.createClass({displayName: 'Popup',
 
 
 
-},{}],96:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupSpinner = React.createClass({displayName: 'PopupSpinner',
@@ -6057,7 +6010,7 @@ window.PopupSpinner = React.createClass({displayName: 'PopupSpinner',
 
 
 
-},{}],97:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupBox = React.createClass({displayName: 'PopupBox',
@@ -6107,7 +6060,7 @@ window.PopupBox = React.createClass({displayName: 'PopupBox',
 
 
 
-},{}],98:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ENTRY_PRIVACY_ANONYMOUS, ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, ENTRY_PRIVACY_PUBLIC_WITH_VOTING, PREVIEW_BODY_CLASSES, TLOG_TYPE_ANONYMOUS, TLOG_TYPE_PRIVATE, TLOG_TYPE_PUBLIC;
@@ -6233,7 +6186,7 @@ window.PostActions = React.createClass({displayName: 'PostActions',
 
 
 
-},{}],99:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostActions_PrivacyButton = React.createClass({displayName: 'PostActions_PrivacyButton',
@@ -6280,7 +6233,7 @@ window.PostActions_PrivacyButton = React.createClass({displayName: 'PostActions_
 
 
 
-},{}],100:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostActions_VoteButton = React.createClass({displayName: 'PostActions_VoteButton',
@@ -6325,7 +6278,7 @@ window.PostActions_VoteButton = React.createClass({displayName: 'PostActions_Vot
 
 
 
-},{}],101:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CHOICER_ITEMS, CHOICER_TYPES;
@@ -6445,7 +6398,7 @@ window.PostEditor_ChoicerItem = React.createClass({displayName: 'PostEditor_Choi
 
 
 
-},{}],102:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEMO_IDS;
@@ -6534,7 +6487,7 @@ window.PostEditor_Demo = React.createClass({displayName: 'PostEditor_Demo',
 
 
 
-},{}],103:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_EditPost = React.createClass({displayName: 'PostEditor_EditPost',
@@ -6565,7 +6518,7 @@ window.PostEditor_EditPost = React.createClass({displayName: 'PostEditor_EditPos
 
 
 
-},{}],104:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_EditorContainer',
@@ -6693,7 +6646,7 @@ window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],105:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDITOR_MODES, EDITOR_OPTIONS;
@@ -6816,7 +6769,7 @@ window.TastyEditor = React.createClass({displayName: 'TastyEditor',
 
 
 
-},{}],106:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_AnonymousEditor = React.createClass({displayName: 'PostEditor_AnonymousEditor',
@@ -6875,7 +6828,7 @@ window.PostEditor_AnonymousEditor = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],107:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var INSERT_MODE, LOADED_MODE, WELCOME_MODE;
@@ -7059,7 +7012,7 @@ window.PostEditor_ImageEditor = React.createClass({displayName: 'PostEditor_Imag
 
 
 
-},{}],108:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_InstagramEditor = React.createClass({displayName: 'PostEditor_InstagramEditor',
@@ -7094,7 +7047,7 @@ window.PostEditor_InstagramEditor = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],109:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 var AUTOSAVE_TIME;
 
 AUTOSAVE_TIME = 10000;
@@ -7127,7 +7080,7 @@ window.PostEditor_AutosaveMixin = {
 
 
 
-},{}],110:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_MusicEditor = React.createClass({displayName: 'PostEditor_MusicEditor',
@@ -7162,7 +7115,7 @@ window.PostEditor_MusicEditor = React.createClass({displayName: 'PostEditor_Musi
 
 
 
-},{}],111:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_QuoteEditor = React.createClass({displayName: 'PostEditor_QuoteEditor',
@@ -7216,7 +7169,7 @@ window.PostEditor_QuoteEditor = React.createClass({displayName: 'PostEditor_Quot
 
 
 
-},{}],112:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_TextEditor = React.createClass({displayName: 'PostEditor_TextEditor',
@@ -7276,7 +7229,7 @@ window.PostEditor_TextEditor = React.createClass({displayName: 'PostEditor_TextE
 
 
 
-},{}],113:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_VideoEditor = React.createClass({displayName: 'PostEditor_VideoEditor',
@@ -7311,7 +7264,7 @@ window.PostEditor_VideoEditor = React.createClass({displayName: 'PostEditor_Vide
 
 
 
-},{}],114:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_Loaded',
@@ -7324,7 +7277,7 @@ window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_L
     if (nextProps.onDelete !== this.props.onDelete) {
       return true;
     }
-    return !ReactUtils.isImagesEqual(nextProps.images, this.props.images);
+    return !TastyUtils.isImagesEqual(nextProps.images, this.props.images);
   },
   render: function() {
     return React.DOM.div({className: "media-box__display"}, 
@@ -7337,7 +7290,7 @@ window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_L
 
 
 
-},{}],115:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ImagesMediaBox_UrlInsert = React.createClass({displayName: 'ImagesMediaBox_UrlInsert',
@@ -7367,7 +7320,7 @@ window.ImagesMediaBox_UrlInsert = React.createClass({displayName: 'ImagesMediaBo
 
 
 
-},{}],116:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_Layout = React.createClass({displayName: 'PostEditor_Layout',
@@ -7397,7 +7350,7 @@ window.PostEditor_Layout = React.createClass({displayName: 'PostEditor_Layout',
 
 
 
-},{}],117:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_Actions = React.createClass({displayName: 'MediaBox_Actions',
@@ -7431,7 +7384,7 @@ window.MediaBox_Actions = React.createClass({displayName: 'MediaBox_Actions',
 
 
 
-},{}],118:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_Layout = React.createClass({displayName: 'MediaBox_Layout',
@@ -7466,7 +7419,7 @@ window.MediaBox_Layout = React.createClass({displayName: 'MediaBox_Layout',
 
 
 
-},{}],119:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_LoadingProgress = React.createClass({displayName: 'MediaBox_LoadingProgress',
@@ -7484,7 +7437,7 @@ window.MediaBox_LoadingProgress = React.createClass({displayName: 'MediaBox_Load
 
 
 
-},{}],120:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 var DRAGOFF_TIMEOUT, DRAG_HOVER_CLASS;
 
 DRAG_HOVER_CLASS = 'state--drag-hover';
@@ -7552,7 +7505,7 @@ window.PostEditor_Dragging = {
 
 
 
-},{}],121:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 var ACCEPT_FILE_TYPES, MAX_FILE_SIZE, MAX_NUMBER_OF_FILES;
 
 ACCEPT_FILE_TYPES = /(\.|\/)(gif|jpe?g|png)$/i;
@@ -7734,7 +7687,7 @@ window.PostEditor_ImagesForm = {
 
 
 
-},{}],122:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.TLOG_TYPES = ['public', 'private', 'anonymous'];
@@ -7791,7 +7744,7 @@ window.PostEditor_LayoutMixin = {
 
 
 
-},{}],123:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 window.PostEditor_PersistenceMixin = {
   propTypes: {
     activitiesHandler: React.PropTypes.object.isRequired,
@@ -7854,7 +7807,7 @@ React.mixins.add('PostEditor_PersistenceMixin', [window.PostEditor_PersistenceMi
 
 
 
-},{}],124:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 window.PostEditor_VideoMixin = {
   propTypes: {
     normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
@@ -7900,7 +7853,7 @@ window.PostEditor_VideoMixin = {
 
 
 
-},{}],125:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_NewAnonymousPost = React.createClass({displayName: 'PostEditor_NewAnonymousPost',
@@ -7923,7 +7876,7 @@ window.PostEditor_NewAnonymousPost = React.createClass({displayName: 'PostEditor
 
 
 
-},{}],126:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEFAULT_POST_TYPE;
@@ -7954,7 +7907,7 @@ window.PostEditor_NewPost = React.createClass({displayName: 'PostEditor_NewPost'
 
 
 
-},{}],127:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_Embeded = React.createClass({displayName: 'VideoMediaBox_Embeded',
@@ -7973,7 +7926,7 @@ window.VideoMediaBox_Embeded = React.createClass({displayName: 'VideoMediaBox_Em
 
 
 
-},{}],128:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_Loading = React.createClass({displayName: 'VideoMediaBox_Loading',
@@ -7995,7 +7948,7 @@ window.VideoMediaBox_Loading = React.createClass({displayName: 'VideoMediaBox_Lo
 
 
 
-},{}],129:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_UrlInsert = React.createClass({displayName: 'VideoMediaBox_UrlInsert',
@@ -8028,7 +7981,7 @@ window.VideoMediaBox_UrlInsert = React.createClass({displayName: 'VideoMediaBox_
 
 
 
-},{}],130:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EMBEDED_MODE, INSERT_MODE, LOADING_MODE, WELCOME_MODE;
@@ -8174,7 +8127,7 @@ window.VideoMediaBox = React.createClass({displayName: 'VideoMediaBox',
 
 
 
-},{}],131:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_ImageWelcome = React.createClass({displayName: 'MediaBox_ImageWelcome',
@@ -8208,7 +8161,7 @@ window.MediaBox_ImageWelcome = React.createClass({displayName: 'MediaBox_ImageWe
 
 
 
-},{}],132:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_InstagramWelcome = React.createClass({displayName: 'MediaBox_InstagramWelcome',
@@ -8232,7 +8185,7 @@ window.MediaBox_InstagramWelcome = React.createClass({displayName: 'MediaBox_Ins
 
 
 
-},{}],133:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_MusicWelcome = React.createClass({displayName: 'MediaBox_MusicWelcome',
@@ -8258,7 +8211,7 @@ window.MediaBox_MusicWelcome = React.createClass({displayName: 'MediaBox_MusicWe
 
 
 
-},{}],134:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_VideoWelcome = React.createClass({displayName: 'MediaBox_VideoWelcome',
@@ -8284,7 +8237,7 @@ window.MediaBox_VideoWelcome = React.createClass({displayName: 'MediaBox_VideoWe
 
 
 
-},{}],135:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
@@ -8413,6 +8366,52 @@ window.FollowButton = React.createClass({displayName: 'FollowButton',
           return 'Неизвестный статус';
       }
     }
+  }
+});
+
+
+
+},{}],135:[function(require,module,exports){
+
+/** @jsx React.DOM */
+window.RelationshipFollowerButton = React.createClass({displayName: 'RelationshipFollowerButton',
+  mixins: ['RelationshipMixin'],
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired,
+    onRequestEnd: React.PropTypes.func
+  },
+  getInitialState: function() {
+    return {
+      isError: false,
+      isProcess: false
+    };
+  },
+  render: function() {
+    var unfollowButton;
+    if (this.isPrivacy()) {
+      unfollowButton = React.DOM.button({className: "button button--small button--outline-light-white button--icon", 
+                                onClick:  this.handleDisapproveClick}, 
+                          React.DOM.i({className: "icon icon--cross"})
+                        );
+    }
+    return React.DOM.div(null, 
+              FollowButton({relationship:  this.props.relationship}), 
+              unfollowButton 
+            );
+  },
+  isPrivacy: function() {
+    var currentUser;
+    currentUser = CurrentUserStore.getUser();
+    return currentUser.is_privacy;
+  },
+  handleDisapproveClick: function() {
+    return this.unfollowFromYourself({
+      success: (function(_this) {
+        return function() {
+          return _this.props.onRequestEnd(_this.props.relationship);
+        };
+      })(this)
+    });
   }
 });
 
@@ -11870,7 +11869,9 @@ TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() 
 
 
 },{}],184:[function(require,module,exports){
-var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
+var INCOMING_MESSAGE, INCOMING_NOTIFICATION, TastySettings;
+
+TastySettings = require('../../settings');
 
 window.TastySoundController = {
   _buildAudioElement: function(url) {
@@ -11896,7 +11897,7 @@ INCOMING_NOTIFICATION = TastySoundController._buildAudioElement('incoming_messag
 
 
 
-},{}],185:[function(require,module,exports){
+},{"../../settings":251}],185:[function(require,module,exports){
 window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
   SERVER_ACTION: 'SERVER_ACTION',
   TYPE_SETUP: 'setup',
@@ -14182,302 +14183,6 @@ window.MessagingMock = {
 
 
 },{}],223:[function(require,module,exports){
-window.MockMessagingRequester = (function() {
-  function MockMessagingRequester(_arg) {
-    this.access_token = _arg.access_token;
-  }
-
-  MockMessagingRequester.prototype.connectUrl = function() {
-    return '/connect';
-  };
-
-  MockMessagingRequester.prototype.makeConnect = function() {
-    var dfd;
-    dfd = $.Deferred();
-    this.error || (this.error = -1);
-    this.error += 1;
-    console.info("Соединяемся с сервером сообщений. Url: " + (this.connectUrl()));
-    if (this.error % 2 === 0) {
-      setTimeout((function() {
-        return dfd.resolve(MessagingMocker.stubMessagingMetaInfo());
-      }), 1000);
-    } else {
-      setTimeout((function() {
-        return dfd.reject({
-          errorMessage: 'Ошибка установки соединения!'
-        });
-      }), 2000);
-    }
-    return dfd.promise();
-  };
-
-  MockMessagingRequester.prototype.makeNewConversation = function(recipientSlug) {
-    var dfd;
-    dfd = $.Deferred();
-    console.info("Создаем новую переписку с " + recipientSlug);
-    setTimeout((function() {
-      return dfd.resolve(MessagingMocker.stubIncomingConversation(recipientSlug));
-    }), 1000);
-    return dfd.promise();
-  };
-
-  return MockMessagingRequester;
-
-})();
-
-
-
-},{}],224:[function(require,module,exports){
-var __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-window.MessagingServiceMock = (function(_super) {
-  __extends(MessagingServiceMock, _super);
-
-  function MessagingServiceMock(_arg) {
-    this.user = _arg.user;
-    this.requester = new MockMessagingRequester({
-      access_token: this.user.api_key.access_token
-    });
-  }
-
-  MessagingServiceMock.prototype.connect = function(_arg) {
-    var connectError, connectSuccess;
-    connectSuccess = _arg.connectSuccess, connectError = _arg.connectError;
-    return this.requester.makeConnect().done((function(_this) {
-      return function(metaInfo) {
-        MessagingDispatcher.handleServerAction({
-          type: 'unreadConversationUpdate',
-          count: metaInfo.status.unreadConversationsCount
-        });
-        _this.bindMessagingStatusUpdate();
-        return connectSuccess();
-      };
-    })(this)).fail(connectError);
-  };
-
-  MessagingServiceMock.prototype.bindMessagingStatusUpdate = function() {
-    return setInterval((function() {
-      return MessagingDispatcher.handleViewAction({
-        type: 'unreadConversationUpdate',
-        count: MessagingMocker.stubMessagingMetaInfo().status.unreadConversationsCount
-      });
-    }), 5000);
-  };
-
-  MessagingServiceMock.prototype.bindIncomingConversation = function(callback) {
-    return setInterval((function() {
-      return callback(MessagingMocker.stubIncomingConversation());
-    }), 2000);
-  };
-
-  return MessagingServiceMock;
-
-})(window.MessagingService);
-
-
-
-},{}],225:[function(require,module,exports){
-window.MessagingMocker = {
-  stubMessagingMetaInfo: function() {
-    return {
-      status: MessagingMocker.stubMessagingStatus(),
-      activeConversations: [MessagingMocker.stubIncomingConversation(), MessagingMocker.stubIncomingConversation(), MessagingMocker.stubIncomingConversation(), MessagingMocker.stubIncomingConversation(), MessagingMocker.stubIncomingConversation()]
-    };
-  },
-  stubMessagingStatus: function() {
-    this.unreadConversationsCount || (this.unreadConversationsCount = 0);
-    this.unreadConversationsCount += 1;
-    return new MessagingStatus({
-      unreadConversationsCount: this.unreadConversationsCount
-    });
-  },
-  stubIncomingConversation: function() {
-    this.conversationId || (this.conversationId = 0);
-    this.conversationId += 1;
-    return new IncomingConversation({
-      id: this.conversationId,
-      online: true,
-      updatedAt: new Date().toString(),
-      participants: [CurrentUserStore.getUser(), this.stubUser()],
-      design: {
-        backgroundUrl: 'http://taaasty.ru/images/no_picture.png',
-        userpic: CurrentUserStore.getUserpic()
-      },
-      status: this.stubConversationStatus(),
-      messages: [this.stubIncomingMessage(), this.stubOutgoingMessage(), this.stubIncomingMessage(), this.stubOutgoingMessage()]
-    });
-  },
-  stubIncomingMessage: function() {
-    return new Message({
-      createdAt: '2014-05-25T15:19:50+04:00',
-      senderId: 1,
-      recipientId: 2,
-      readAt: null,
-      contentHtml: 'Сообщение <b>Жирное</b> от собеседника'
-    });
-  },
-  stubOutgoingMessage: function() {
-    return new Message({
-      createdAt: '2014-05-27T00:38:25+04:00',
-      senderId: 2,
-      recipientId: 1,
-      readAt: null,
-      contentHtml: 'Сообщение <b>Жирное</b> от нас'
-    });
-  },
-  stubConversationStatus: function() {
-    this.convTotalMessagesCount || (this.convTotalMessagesCount = this.convUnreadMessagesCount || (this.convUnreadMessagesCount = 0));
-    this.convTotalMessagesCount += 1;
-    this.convUnreadMessagesCount += 1;
-    return new ConversationStatus({
-      totalMessagesCount: this.convTotalMessagesCount,
-      unreadMessagesCount: this.convUnreadMessagesCount
-    });
-  },
-  stubUser: function() {
-    this.userId || (this.userId = 0);
-    this.userId += 1;
-    this.userName = "vasya " + this.userId;
-    return new User({
-      id: this.userId,
-      name: this.userName,
-      slug: this.userName,
-      userpic: {
-        large_url: 'http://3000.vkontraste.ru/assets/userpic/22/35/17_large.png',
-        thumb128_url: 'http://3000.vkontraste.ru/assets/userpic/22/35/17_thumb128.png',
-        thumb64_url: 'http://3000.vkontraste.ru/assets/userpic/22/35/17_thumb64.png',
-        default_colors: {
-          background: '#f37420',
-          name: '#fff'
-        }
-      }
-    });
-  }
-};
-
-
-
-},{}],226:[function(require,module,exports){
-var __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-window.User = (function(_super) {
-  __extends(User, _super);
-
-  function User() {
-    return User.__super__.constructor.apply(this, arguments);
-  }
-
-  return User;
-
-})(DModel);
-
-window.OutgoingMessage = (function(_super) {
-  __extends(OutgoingMessage, _super);
-
-  function OutgoingMessage() {
-    return OutgoingMessage.__super__.constructor.apply(this, arguments);
-  }
-
-  return OutgoingMessage;
-
-})(DModel);
-
-window.OutgoingConversation = (function(_super) {
-  __extends(OutgoingConversation, _super);
-
-  function OutgoingConversation() {
-    return OutgoingConversation.__super__.constructor.apply(this, arguments);
-  }
-
-  return OutgoingConversation;
-
-})(DModel);
-
-window.MessagePayloaded = (function() {
-  function MessagePayloaded() {}
-
-  return MessagePayloaded;
-
-})();
-
-window.ConversationStatus = (function() {
-  function ConversationStatus() {}
-
-  return ConversationStatus;
-
-})();
-
-window.MessagingStatus = (function(_super) {
-  __extends(MessagingStatus, _super);
-
-  function MessagingStatus() {
-    return MessagingStatus.__super__.constructor.apply(this, arguments);
-  }
-
-  return MessagingStatus;
-
-})(DModel);
-
-window.MessagingMetaInfo = (function(_super) {
-  __extends(MessagingMetaInfo, _super);
-
-  function MessagingMetaInfo() {
-    return MessagingMetaInfo.__super__.constructor.apply(this, arguments);
-  }
-
-  return MessagingMetaInfo;
-
-})(DModel);
-
-window.ConversationDesign = (function(_super) {
-  __extends(ConversationDesign, _super);
-
-  function ConversationDesign() {
-    return ConversationDesign.__super__.constructor.apply(this, arguments);
-  }
-
-  return ConversationDesign;
-
-})(DModel);
-
-window.IncomingConversation = (function(_super) {
-  __extends(IncomingConversation, _super);
-
-  function IncomingConversation() {
-    return IncomingConversation.__super__.constructor.apply(this, arguments);
-  }
-
-  return IncomingConversation;
-
-})(DModel);
-
-window.ConversationPayloaded = (function(_super) {
-  __extends(ConversationPayloaded, _super);
-
-  function ConversationPayloaded() {
-    return ConversationPayloaded.__super__.constructor.apply(this, arguments);
-  }
-
-  return ConversationPayloaded;
-
-})(DModel);
-
-window.Message = (function(_super) {
-  __extends(Message, _super);
-
-  function Message() {
-    return Message.__super__.constructor.apply(this, arguments);
-  }
-
-  return Message;
-
-})(DModel);
-
-
-
-},{}],227:[function(require,module,exports){
 var CONNECTION_EVENT, _connectionState;
 
 CONNECTION_EVENT = 'connectionStateUpdated';
@@ -14521,7 +14226,7 @@ ConnectionStateStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],228:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 var CHANGE_EVENT, _conversations;
 
 CHANGE_EVENT = 'change';
@@ -14633,7 +14338,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],229:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 var CHANGE_EVENT, _allMessagesLoaded, _messages;
 
 CHANGE_EVENT = 'change';
@@ -14787,7 +14492,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(function(payload) {
 
 
 
-},{}],230:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
 
 CHANGE_EVENT = 'change';
@@ -14864,7 +14569,7 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
 
 
 
-},{}],231:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 var CHANGE_EVENT, _messagingStatus;
 
 CHANGE_EVENT = 'change';
@@ -14908,7 +14613,7 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],232:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 var CHANGE_EVENT, _notifications;
 
 CHANGE_EVENT = 'change';
@@ -15012,7 +14717,7 @@ NotificationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],233:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 var BaseMixin, ERROR_TIMEOUT, ram, rau;
 
 ERROR_TIMEOUT = 1000;
@@ -15094,7 +14799,7 @@ React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
 
 
-},{}],234:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 window.ComponentManipulationsMixin = {
   safeUpdate: function(func) {
     if (!this._isUnmounted()) {
@@ -15113,7 +14818,7 @@ window.ComponentManipulationsMixin = {
 
 
 
-},{}],235:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 var ENTRY_DELETE_ANIMATION_SPEED;
 
 ENTRY_DELETE_ANIMATION_SPEED = 300;
@@ -15138,7 +14843,7 @@ window.DOMManipulationsMixin = {
 
 
 
-},{}],236:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 var ERROR_TIMEOUT;
 
 ERROR_TIMEOUT = 1000;
@@ -15166,7 +14871,7 @@ window.ErrorTimerMixin = {
 
 
 
-},{}],237:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 window.ReactGrammarMixin = {
   declension: function(number, titles) {
     var cases;
@@ -15201,7 +14906,7 @@ window.ReactGrammarMixin = {
 
 
 
-},{}],238:[function(require,module,exports){
+},{}],234:[function(require,module,exports){
 var COMPONENT_WIDTH, REPOSITION_TIMEOUT;
 
 REPOSITION_TIMEOUT = 500;
@@ -15268,7 +14973,7 @@ window.ReactPositionsMixin = {
 
 
 
-},{}],239:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 window.RequesterMixin = {
   createRequest: function(settings) {
     var jqXHR;
@@ -15313,7 +15018,7 @@ window.RequesterMixin = {
 
 
 
-},{}],240:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 window.ScrollerMixin = {
   componentDidMount: function() {
     $(document).on('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
@@ -15363,7 +15068,7 @@ window.ScrollerMixin = {
 
 
 
-},{}],241:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 window.ReactShakeMixin = {
   shake: function() {
     var animationEnd, form;
@@ -15377,7 +15082,7 @@ window.ReactShakeMixin = {
 
 
 
-},{}],242:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 window.TouchMixin = {
   componentWillMount: function() {
     if (isMobile()) {
@@ -15389,7 +15094,7 @@ window.TouchMixin = {
 
 
 
-},{}],243:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 window.ReactUnmountMixin = {
   unmount: function() {
     return _.defer((function(_this) {
@@ -15402,7 +15107,7 @@ window.ReactUnmountMixin = {
 
 
 
-},{}],244:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 window.EntryNormalizer = {
   normalize: function(entryData) {
     var attr;
@@ -15444,7 +15149,7 @@ window.EntryNormalizer = {
 
 
 
-},{}],245:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 var STORAGE_PREFIX;
 
 STORAGE_PREFIX = 'entries';
@@ -15510,7 +15215,7 @@ window.EntryStore = {
 
 
 
-},{}],246:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
 
 MOVE_OFFSET = 100;
@@ -15556,7 +15261,7 @@ window.PositionsService = {
 
 
 
-},{}],247:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 window.ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
   image_url: function(url, style) {
@@ -15571,7 +15276,7 @@ window.ThumborService = {
 
 
 
-},{}],248:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 window.UuidService = {
   generate: function() {
     var s4;
@@ -15584,7 +15289,7 @@ window.UuidService = {
 
 
 
-},{}],249:[function(require,module,exports){
+},{}],245:[function(require,module,exports){
 var CHANGE_EVENT, currentUser;
 
 CHANGE_EVENT = 'change';
@@ -15630,198 +15335,7 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 
 
 
-},{}],250:[function(require,module,exports){
-window.ReactUtils = {
-  isImagesEqual: function(nextImages, currentImages) {
-    var currentUrls, nextUrls;
-    if (nextImages.length !== currentImages.length) {
-      return false;
-    }
-    currentUrls = currentImages.map(function(i) {
-      return i.src;
-    });
-    nextUrls = nextImages.map(function(i) {
-      return i.src;
-    });
-    return _.isEqual(currentUrls, nextUrls);
-  }
-};
-
-
-
-},{}],251:[function(require,module,exports){
-window.Routes = {
-  logout_path: function() {
-    return TastySettings.host + '/logout';
-  },
-  tlog_favorite_entries_path: function(slug) {
-    return '/@' + slug + '/favorites';
-  },
-  tag_path: function(tag) {
-    return '/tags/' + tag;
-  },
-  friends_feed_path: function() {
-    return '/friends/';
-  },
-  live_feed_path: function() {
-    return '/live/';
-  },
-  people_path: function() {
-    return '/people/';
-  }
-};
-
-
-
-},{}],252:[function(require,module,exports){
-var ApiRoutes;
-
-ApiRoutes = {
-  omniauth_url: function(provider) {
-    return TastySettings.host + 'auth/' + provider;
-  },
-  calendar_url: function(tlogId) {
-    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/calendar';
-  },
-  votes_url: function(entryId) {
-    return TastySettings.api_host + 'v1/entries/' + entryId + '/votes';
-  },
-  embed_url: function() {
-    return TastySettings.api_host + 'v1/embed';
-  },
-  design_settings_url: function(slug) {
-    return TastySettings.api_host + 'v1/design_settings/' + slug;
-  },
-  design_settings_cover_url: function(slug) {
-    return TastySettings.api_host + 'v1/design_settings/' + slug + '/cover';
-  },
-  signin_url: function() {
-    return TastySettings.api_host + 'v1/sessions';
-  },
-  signup_url: function() {
-    return TastySettings.api_host + 'v1/users';
-  },
-  update_profile_url: function() {
-    return TastySettings.api_host + 'v1/users';
-  },
-  recovery_url: function() {
-    return TastySettings.api_host + 'v1/users/password/recovery';
-  },
-  request_confirm_url: function() {
-    return TastySettings.api_host + 'v1/users/confirmation';
-  },
-  userpic_url: function() {
-    return TastySettings.api_host + 'v1/users/userpic';
-  },
-  users_predict: function() {
-    return TastySettings.api_host + 'v1/users/predict';
-  },
-  create_entry_url: function(type) {
-    return TastySettings.api_host + 'v1/entries/' + type;
-  },
-  update_entry_url: function(entryId, entryType) {
-    return TastySettings.api_host + 'v1/entries/' + entryType + '/' + entryId;
-  },
-  update_images_url: function(entryId) {
-    return TastySettings.api_host + 'v1/entries/image/' + entryId + '/images';
-  },
-  entry_url: function(entryId) {
-    return TastySettings.api_host + 'v1/entries/' + entryId;
-  },
-  favorites_url: function() {
-    return TastySettings.api_host + 'v1/favorites';
-  },
-  watching_url: function() {
-    return TastySettings.api_host + 'v1/watching';
-  },
-  report_url: function(entryId) {
-    return TastySettings.api_host + '/v1/entries/' + entryId + '/report';
-  },
-  iframely_url: function() {
-    return TastySettings.api_host + 'v1/embeding/iframely.json';
-  },
-  relationships_summary_url: function() {
-    return TastySettings.api_host + 'v1/relationships/summary';
-  },
-  relationships_to_url: function(state) {
-    return TastySettings.api_host + 'v1/relationships/to/' + state;
-  },
-  relationships_by_url: function(state) {
-    return TastySettings.api_host + 'v1/relationships/by/' + state;
-  },
-  unfollow_from_yourself_url: function(tlogId) {
-    return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId;
-  },
-  relationships_by_tlog_approve_url: function(tlogId) {
-    return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/approve';
-  },
-  relationships_by_tlog_disapprove_url: function(tlogId) {
-    return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/disapprove';
-  },
-  tlog_followers: function(tlogId) {
-    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/followers';
-  },
-  tlog_followings: function(tlogId) {
-    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/followings';
-  },
-  tlog_tags: function(tlogId) {
-    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/tags';
-  },
-  get_my_relationship_url: function(tlogId) {
-    return TastySettings.api_host + 'v1/relationships/to/tlog/' + tlogId;
-  },
-  comments_url: function(entryId) {
-    return TastySettings.api_host + 'v1/comments';
-  },
-  comments_edit_delete_url: function(commentId) {
-    return TastySettings.api_host + 'v1/comments/' + commentId;
-  },
-  comments_report_url: function(commentId) {
-    return TastySettings.api_host + 'v1/comments/' + commentId + '/report';
-  },
-  change_my_relationship_url: function(tlogId, state) {
-    return TastySettings.api_host + 'v1/relationships/to/tlog/' + tlogId + '/' + state;
-  },
-  pusher_auth_url: function() {
-    return TastySettings.api_host + 'v1/messenger/auth';
-  },
-  messenger_ready_url: function() {
-    return TastySettings.api_host + 'v1/messenger/ready';
-  },
-  messenger_new_conversation_url: function(slug) {
-    return TastySettings.api_host + 'v1/messenger/conversations/by_slug/' + slug;
-  },
-  messenger_new_message_url: function(conversationId) {
-    return TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages';
-  },
-  messenger_load_messages_url: function(conversationId) {
-    return TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages';
-  },
-  messenger_read_messages_url: function(conversationId) {
-    return TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages/read';
-  },
-  notifications_read_url: function(notificationId) {
-    return TastySettings.api_host + 'v1/messenger/notifications/' + notificationId + '/read';
-  }
-};
-
-window.Routes.api = ApiRoutes;
-
-
-
-},{}],253:[function(require,module,exports){
-window.DModel = (function() {
-  function DModel(message) {
-    _.extend(this, message);
-  }
-
-  return DModel;
-
-})();
-
-
-
-},{}],254:[function(require,module,exports){
+},{}],246:[function(require,module,exports){
 var defaults,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -15960,7 +15474,7 @@ window.FileReceiver = (function() {
 
 
 
-},{}],255:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -15969,9 +15483,12 @@ window.isMobile = function() {
 
 
 
-},{}],256:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 $(function() {
   var height;
+  if (typeof Modernizr !== "undefined" && Modernizr !== null ? Modernizr.touch : void 0) {
+    $(".js-dropdown").dropdown();
+  }
   $(".js-alert-close").click(function() {
     return $(".js-alert").hide();
   });
@@ -16023,7 +15540,7 @@ window.Tasty = {
 
 
 
-},{}],257:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 window.TastyUtils = {
   showFlashes: function(flashes) {
     if (flashes == null) {
@@ -16051,8 +15568,9 @@ window.TastyUtils = {
   },
   onMousewheel: function(e, d) {
     e.stopPropagation();
+    e.preventDefault();
     if ((this.scrollTop === (this.scrollHeight - this.offsetHeight) && d < 0) || (this.scrollTop === 0 && d > 0)) {
-      e.preventDefault();
+
     }
   },
   scrollToElement: function(el) {
@@ -16070,12 +15588,206 @@ window.TastyUtils = {
       number = Math.ceil(number / round) * round;
     }
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
+  },
+  isImagesEqual: function(nextImages, currentImages) {
+    var currentUrls, nextUrls;
+    if (nextImages.length !== currentImages.length) {
+      return false;
+    }
+    currentUrls = currentImages.map(function(i) {
+      return i.src;
+    });
+    nextUrls = nextImages.map(function(i) {
+      return i.src;
+    });
+    return _.isEqual(currentUrls, nextUrls);
   }
 };
 
 
 
-},{}],258:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
+var Routes, TastySettings;
+
+TastySettings = require('./settings');
+
+Routes = {
+  logout_path: function() {
+    return TastySettings.host + '/logout';
+  },
+  tlog_favorite_entries_path: function(slug) {
+    return '/@' + slug + '/favorites';
+  },
+  tag_path: function(tag) {
+    return '/tags/' + tag;
+  },
+  friends_feed_path: function() {
+    return '/friends/';
+  },
+  live_feed_path: function() {
+    return '/live/';
+  },
+  people_path: function() {
+    return '/people/';
+  },
+  omniauth_url: function(provider) {
+    return TastySettings.host + 'auth/' + provider;
+  },
+  iframely_url: function() {
+    return TastySettings.api_host + 'v1/embeding/iframely.json';
+  },
+  pusher_auth_url: function() {
+    return TastySettings.api_host + 'v1/messenger/auth';
+  },
+  calendar_url: function(tlogId) {
+    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/calendar';
+  },
+  votes_url: function(entryId) {
+    return TastySettings.api_host + 'v1/entries/' + entryId + '/votes';
+  },
+  embed_url: function() {
+    return TastySettings.api_host + 'v1/embed';
+  },
+  design_settings_url: function(slug) {
+    return TastySettings.api_host + 'v1/design_settings/' + slug;
+  },
+  design_settings_cover_url: function(slug) {
+    return TastySettings.api_host + 'v1/design_settings/' + slug + '/cover';
+  },
+  signin_url: function() {
+    return TastySettings.api_host + 'v1/sessions';
+  },
+  signup_url: function() {
+    return TastySettings.api_host + 'v1/users';
+  },
+  update_profile_url: function() {
+    return TastySettings.api_host + 'v1/users';
+  },
+  recovery_url: function() {
+    return TastySettings.api_host + 'v1/users/password/recovery';
+  },
+  request_confirm_url: function() {
+    return TastySettings.api_host + 'v1/users/confirmation';
+  },
+  userpic_url: function() {
+    return TastySettings.api_host + 'v1/users/userpic';
+  },
+  users_predict: function() {
+    return TastySettings.api_host + 'v1/users/predict';
+  },
+  create_entry_url: function(type) {
+    return TastySettings.api_host + 'v1/entries/' + type;
+  },
+  update_entry_url: function(entryId, entryType) {
+    return TastySettings.api_host + 'v1/entries/' + entryType + '/' + entryId;
+  },
+  update_images_url: function(entryId) {
+    return TastySettings.api_host + 'v1/entries/image/' + entryId + '/images';
+  },
+  entry_url: function(entryId) {
+    return TastySettings.api_host + 'v1/entries/' + entryId;
+  },
+  favorites_url: function() {
+    return TastySettings.api_host + 'v1/favorites';
+  },
+  watching_url: function() {
+    return TastySettings.api_host + 'v1/watching';
+  },
+  report_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/' + entryId + '/report';
+  },
+  relationships_summary_url: function() {
+    return TastySettings.api_host + 'v1/relationships/summary';
+  },
+  relationships_to_url: function(state) {
+    return TastySettings.api_host + 'v1/relationships/to/' + state;
+  },
+  relationships_by_url: function(state) {
+    return TastySettings.api_host + 'v1/relationships/by/' + state;
+  },
+  relationships_by_tlog_approve_url: function(tlogId) {
+    return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/approve';
+  },
+  relationships_by_tlog_disapprove_url: function(tlogId) {
+    return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/disapprove';
+  },
+  tlog_followers: function(tlogId) {
+    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/followers';
+  },
+  tlog_followings: function(tlogId) {
+    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/followings';
+  },
+  tlog_tags: function(tlogId) {
+    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/tags';
+  },
+  get_my_relationship_url: function(tlogId) {
+    return TastySettings.api_host + 'v1/relationships/to/tlog/' + tlogId;
+  },
+  comments_url: function(entryId) {
+    return TastySettings.api_host + 'v1/comments';
+  },
+  comments_edit_delete_url: function(commentId) {
+    return TastySettings.api_host + 'v1/comments/' + commentId;
+  },
+  comments_report_url: function(commentId) {
+    return TastySettings.api_host + 'v1/comments/' + commentId + '/report';
+  },
+  change_my_relationship_url: function(tlogId, state) {
+    return TastySettings.api_host + 'v1/relationships/to/tlog/' + tlogId + '/' + state;
+  },
+  messenger_ready_url: function() {
+    return TastySettings.api_host + 'v1/messenger/ready';
+  },
+  messenger_new_conversation_url: function(slug) {
+    return TastySettings.api_host + 'v1/messenger/conversations/by_slug/' + slug;
+  },
+  messenger_new_message_url: function(conversationId) {
+    return TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages';
+  },
+  messenger_load_messages_url: function(conversationId) {
+    return TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages';
+  },
+  messenger_read_messages_url: function(conversationId) {
+    return TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages/read';
+  },
+  notifications_read_url: function(notificationId) {
+    return TastySettings.api_host + 'v1/messenger/notifications/' + notificationId + '/read';
+  }
+};
+
+window.Routes = Routes;
+
+window.Routes.api = Routes;
+
+
+
+},{"./settings":251}],251:[function(require,module,exports){
+var TastySettings, _ref, _ref1;
+
+TastySettings = {
+  version: 'v0.3.1',
+  host: 'http://taaasty.ru/',
+  api_host: 'http://taaasty.ru/api/',
+  env: 'static-development',
+  sound_asset_url: 'sounds/',
+  locales_asset_url: 'locales/'
+};
+
+console.log('TastyVersion', TastySettings.version);
+
+if (((_ref = localStorage.getItem('host')) != null ? _ref.length : void 0) > 0) {
+  TastySettings.host = localStorage.getItem('host');
+}
+
+if (((_ref1 = localStorage.getItem('api_host')) != null ? _ref1.length : void 0) > 0) {
+  TastySettings.api_host = localStorage.getItem('api_host');
+}
+
+module.exports = TastySettings;
+
+
+
+},{}],252:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -16087,7 +15799,7 @@ window.TastyUtils = {
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":259}],259:[function(require,module,exports){
+},{"./lib/Dispatcher":253}],253:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -16339,7 +16051,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":260}],260:[function(require,module,exports){
+},{"./invariant":254}],254:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -16394,7 +16106,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],261:[function(require,module,exports){
+},{}],255:[function(require,module,exports){
 /*!
  * imagesLoaded v3.1.8
  * JavaScript is all like "You images are done yet or what?"
@@ -16731,7 +16443,7 @@ function makeArray( obj ) {
 
 });
 
-},{"eventie":262,"wolfy87-eventemitter":263}],262:[function(require,module,exports){
+},{"eventie":256,"wolfy87-eventemitter":257}],256:[function(require,module,exports){
 /*!
  * eventie v1.0.5
  * event binding helper
@@ -16815,7 +16527,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( this );
 
-},{}],263:[function(require,module,exports){
+},{}],257:[function(require,module,exports){
 /*!
  * EventEmitter v4.2.9 - git.io/ee
  * Oliver Caldwell
@@ -23680,467 +23392,8 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 }));
 
 },{}],"eventEmitter":[function(require,module,exports){
-module.exports=require(263)
-},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":263}],"honeybadger":[function(require,module,exports){
-/*
-  honeybadger.js v0.1.0
-  A JavaScript Notifier for Honeybadger
-  https://github.com/honeybadger-io/honeybadger-js
-  https://www.honeybadger.io/
-  MIT license
-*/
-(function(window) {
-// Generated by CoffeeScript 1.7.1
-var Configuration;
-
-Configuration = (function() {
-  Configuration.defaults = {
-    api_key: null,
-    host: 'api.honeybadger.io',
-    ssl: true,
-    project_root: window.location.protocol + '//' + window.location.host,
-    environment: 'production',
-    component: null,
-    action: null,
-    disabled: false,
-    onerror: false,
-    debug: false,
-    timeout: false
-  };
-
-  function Configuration(options) {
-    var k, v, _ref;
-    if (options == null) {
-      options = {};
-    }
-    _ref = this.constructor.defaults;
-    for (k in _ref) {
-      v = _ref[k];
-      this[k] = v;
-    }
-    for (k in options) {
-      v = options[k];
-      this[k] = v;
-    }
-  }
-
-  Configuration.prototype.reset = function() {
-    var k, v, _ref;
-    _ref = this.constructor.defaults;
-    for (k in _ref) {
-      v = _ref[k];
-      this[k] = v;
-    }
-    return this;
-  };
-
-  return Configuration;
-
-})();
-// Generated by CoffeeScript 1.7.1
-var Notice;
-
-Notice = (function() {
-  function Notice(options) {
-    var k, v, _ref, _ref1, _ref2, _ref3;
-    this.options = options != null ? options : {};
-    this.error = this.options.error;
-    this.stack = this._stackTrace(this.error);
-    this["class"] = (_ref = this.error) != null ? _ref.name : void 0;
-    this.message = (_ref1 = this.error) != null ? _ref1.message : void 0;
-    this.source = null;
-    this.url = document.URL;
-    this.project_root = Honeybadger.configuration.project_root;
-    this.environment = Honeybadger.configuration.environment;
-    this.component = Honeybadger.configuration.component;
-    this.action = Honeybadger.configuration.action;
-    this.cgi_data = this._cgiData();
-    this.context = {};
-    _ref2 = Honeybadger.context;
-    for (k in _ref2) {
-      v = _ref2[k];
-      this.context[k] = v;
-    }
-    if (this.options.context && typeof this.options.context === 'object') {
-      _ref3 = this.options.context;
-      for (k in _ref3) {
-        v = _ref3[k];
-        this.context[k] = v;
-      }
-    }
-  }
-
-  Notice.prototype.payload = function() {
-    return {
-      notifier: {
-        name: 'honeybadger.js',
-        url: 'https://github.com/honeybadger-io/honeybadger-js',
-        version: Honeybadger.version,
-        language: 'javascript'
-      },
-      error: {
-        "class": this["class"],
-        message: this.message,
-        backtrace: this.stack,
-        source: this.source
-      },
-      request: {
-        url: this.url,
-        component: this.component,
-        action: this.action,
-        context: this.context,
-        cgi_data: this.cgi_data
-      },
-      server: {
-        project_root: this.project_root,
-        environment_name: this.environment
-      }
-    };
-  };
-
-  Notice.prototype._stackTrace = function(error) {
-    return (error != null ? error.stacktrace : void 0) || (error != null ? error.stack : void 0) || null;
-  };
-
-  Notice.prototype._cgiData = function() {
-    var data, k, v;
-    data = {};
-    if (typeof navigator !== "undefined" && navigator !== null) {
-      for (k in navigator) {
-        v = navigator[k];
-        if ((k != null) && (v != null) && !(typeof v === 'object')) {
-          data[k.replace(/(?=[A-Z][a-z]*)/g, '_').toUpperCase()] = v;
-        }
-      }
-      data['HTTP_USER_AGENT'] = data['USER_AGENT'];
-      delete data['USER_AGENT'];
-    }
-    if (document.referrer.match(/\S/)) {
-      data['HTTP_REFERER'] = document.referrer;
-    }
-    return data;
-  };
-
-  return Notice;
-
-})();
-// Generated by CoffeeScript 1.7.1
-var Client, Honeybadger, UncaughtError, currentError, currentNotice, _ref,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-_ref = [null, null], currentError = _ref[0], currentNotice = _ref[1];
-
-Client = (function() {
-  Client.prototype.version = '0.1.2';
-
-  function Client(options) {
-    this._windowOnErrorHandler = __bind(this._windowOnErrorHandler, this);
-    this._domReady = __bind(this._domReady, this);
-    this.log('Initializing honeybadger.js ' + this.version);
-    if (options) {
-      this.configure(options);
-    }
-  }
-
-  Client.prototype.log = function() {
-    this.log.history = this.log.history || [];
-    this.log.history.push(arguments);
-    if (this.configuration.debug && window.console) {
-      return console.log(Array.prototype.slice.call(arguments));
-    }
-  };
-
-  Client.prototype.configure = function(options) {
-    var args, k, v, _i, _len, _ref1;
-    if (options == null) {
-      options = {};
-    }
-    for (k in options) {
-      v = options[k];
-      this.configuration[k] = v;
-    }
-    if (!this._configured && this.configuration.debug && window.console) {
-      _ref1 = this.log.history;
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        args = _ref1[_i];
-        console.log(Array.prototype.slice.call(args));
-      }
-    }
-    this._configured = true;
-    return this;
-  };
-
-  Client.prototype.configuration = new Configuration();
-
-  Client.prototype.context = {};
-
-  Client.prototype.resetContext = function(options) {
-    if (options == null) {
-      options = {};
-    }
-    this.context = options instanceof Object ? options : {};
-    return this;
-  };
-
-  Client.prototype.setContext = function(options) {
-    var k, v;
-    if (options == null) {
-      options = {};
-    }
-    if (options instanceof Object) {
-      for (k in options) {
-        v = options[k];
-        this.context[k] = v;
-      }
-    }
-    return this;
-  };
-
-  Client.prototype.beforeNotifyHandlers = [];
-
-  Client.prototype.beforeNotify = function(handler) {
-    return this.beforeNotifyHandlers.push(handler);
-  };
-
-  Client.prototype.notify = function(error, options) {
-    var handler, k, notice, v, _i, _len, _ref1, _ref2;
-    if (options == null) {
-      options = {};
-    }
-    if (!this._validConfig() || this.configuration.disabled === true) {
-      return false;
-    }
-    if (error instanceof Error) {
-      options['error'] = error;
-    } else if (typeof error === 'string') {
-      options['error'] = new Error(error);
-    } else if (error instanceof Object) {
-      for (k in error) {
-        v = error[k];
-        options[k] = v;
-      }
-    }
-    if (currentNotice) {
-      if (options.error === currentError) {
-        return;
-      } else if (this._loaded) {
-        this._send(currentNotice);
-      }
-    }
-    if (((function() {
-      var _results;
-      _results = [];
-      for (k in options) {
-        if (!__hasProp.call(options, k)) continue;
-        _results.push(k);
-      }
-      return _results;
-    })()).length === 0) {
-      return false;
-    }
-    notice = new Notice(options);
-    _ref1 = this.beforeNotifyHandlers;
-    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-      handler = _ref1[_i];
-      if (handler(notice) === false) {
-        return false;
-      }
-    }
-    _ref2 = [options.error, notice], currentError = _ref2[0], currentNotice = _ref2[1];
-    if (!this._loaded) {
-      this.log('Queuing notice', notice);
-      this._queue.push(notice);
-    } else {
-      this.log('Defering notice', notice);
-      window.setTimeout((function(_this) {
-        return function() {
-          if (options.error === currentError) {
-            return _this._send(notice);
-          }
-        };
-      })(this));
-    }
-    return notice;
-  };
-
-  Client.prototype.wrap = function(func) {
-    var honeybadgerWrapper;
-    return honeybadgerWrapper = function() {
-      var e;
-      try {
-        return func.apply(this, arguments);
-      } catch (_error) {
-        e = _error;
-        Honeybadger.notify(e);
-        throw e;
-      }
-    };
-  };
-
-  Client.prototype.reset = function() {
-    this.resetContext();
-    this.configuration.reset();
-    this._configured = false;
-    return this;
-  };
-
-  Client.prototype.install = function() {
-    if (this.installed === true) {
-      return;
-    }
-    if (window.onerror !== this._windowOnErrorHandler) {
-      this.log('Installing window.onerror handler');
-      this._oldOnErrorHandler = window.onerror;
-      window.onerror = this._windowOnErrorHandler;
-    }
-    if (this._loaded) {
-      this.log('honeybadger.js ' + this.version + ' ready');
-    } else {
-      this.log('Installing ready handler');
-      if (document.addEventListener) {
-        document.addEventListener('DOMContentLoaded', this._domReady, true);
-        window.addEventListener('load', this._domReady, true);
-      } else {
-        window.attachEvent('onload', this._domReady);
-      }
-    }
-    this._installed = true;
-    return this;
-  };
-
-  Client.prototype._queue = [];
-
-  Client.prototype._loaded = document.readyState === 'complete';
-
-  Client.prototype._configured = false;
-
-  Client.prototype._domReady = function() {
-    var notice, _results;
-    if (this._loaded) {
-      return;
-    }
-    this._loaded = true;
-    this.log('honeybadger.js ' + this.version + ' ready');
-    _results = [];
-    while (notice = this._queue.pop()) {
-      _results.push(this._send(notice));
-    }
-    return _results;
-  };
-
-  Client.prototype._send = function(notice) {
-    var _ref1;
-    this.log('Sending notice', notice);
-    _ref1 = [null, null], currentError = _ref1[0], currentNotice = _ref1[1];
-    return this._sendRequest(notice.payload());
-  };
-
-  Client.prototype._validConfig = function() {
-    var _ref1;
-    if (!this._configured) {
-      return false;
-    }
-    if ((_ref1 = this.configuration.api_key) != null ? _ref1.match(/\S/) : void 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  Client.prototype._sendRequest = function(data) {
-    var url;
-    url = 'http' + ((this.configuration.ssl && 's') || '') + '://' + this.configuration.host + '/v1/notices.gif';
-    return this._request(url, data);
-  };
-
-  Client.prototype._request = function(url, payload) {
-    var img, timeout, _ref1;
-    _ref1 = [new Image(), null], img = _ref1[0], timeout = _ref1[1];
-    img.onabort = img.onerror = (function(_this) {
-      return function() {
-        if (timeout) {
-          window.clearTimeout(timeout);
-        }
-        return _this.log('Request failed.', url, payload);
-      };
-    })(this);
-    img.onload = (function(_this) {
-      return function() {
-        if (timeout) {
-          return window.clearTimeout(timeout);
-        }
-      };
-    })(this);
-    img.src = url + '?' + this._serialize({
-      api_key: this.configuration.api_key,
-      notice: payload,
-      t: new Date().getTime()
-    });
-    if (this.configuration.timeout) {
-      timeout = window.setTimeout(((function(_this) {
-        return function() {
-          img.src = '';
-          return _this.log('Request timed out.', url, payload);
-        };
-      })(this)), this.configuration.timeout);
-    }
-    return true;
-  };
-
-  Client.prototype._serialize = function(obj, prefix) {
-    var k, pk, ret, v;
-    ret = [];
-    for (k in obj) {
-      v = obj[k];
-      if (obj.hasOwnProperty(k) && (k != null) && (v != null)) {
-        pk = (prefix ? prefix + '[' + k + ']' : k);
-        ret.push(typeof v === 'object' ? this._serialize(v, pk) : encodeURIComponent(pk) + '=' + encodeURIComponent(v));
-      }
-    }
-    return ret.join('&');
-  };
-
-  Client.prototype._windowOnErrorHandler = function(msg, url, line, col, error) {
-    if (!currentNotice && this.configuration.onerror) {
-      this.log('Error caught by window.onerror', msg, url, line, col, error);
-      if (!error) {
-        error = new UncaughtError(msg, url, line, col);
-      }
-      this.notify(error);
-    }
-    if (this._oldOnErrorHandler) {
-      return this._oldOnErrorHandler.apply(this, arguments);
-    }
-    return false;
-  };
-
-  return Client;
-
-})();
-
-UncaughtError = (function(_super) {
-  __extends(UncaughtError, _super);
-
-  function UncaughtError(message, url, line, column) {
-    this.name = 'UncaughtError';
-    this.message = message || 'An unknown error was caught by window.onerror.';
-    this.stack = [this.message, '\n    at ? (', url || 'unknown', ':', line || 0, ':', column || 0, ')'].join('');
-  }
-
-  return UncaughtError;
-
-})(Error);
-
-Honeybadger = new Client;
-
-Honeybadger.Client = Client;
-  window.Honeybadger = Honeybadger;
-  Honeybadger.install();
-})(window);
-
-},{}],"i18next":[function(require,module,exports){
+module.exports=require(257)
+},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":257}],"i18next":[function(require,module,exports){
 // i18next, v1.7.4
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
@@ -72653,6 +71906,115 @@ module.exports = warning;
 (88)
 });
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],"screenviewer":[function(require,module,exports){
+(function($){
+  ScreenViewer = function(container, options){
+    this.$viewer = $(container);
+
+    if (options) $.extend(this.settings, options);
+
+    this._init();
+  };
+
+  ScreenViewer.prototype = {
+    $viewer: null,
+    $items: null,
+    $images: null,
+
+    current: 0,
+    count: 0,
+    loaded: 0,
+    startTimeout: false,
+    numTimeout: null,
+
+    settings: {
+      item: ".js-screen-viewer-item",
+      image: ".js-screen-viewer-bg",
+      currentClass: "state--current",
+      readyClass: "state--ready",
+      delaySwitch: 8000
+    },
+
+    _init: function(){
+      var opts = this.settings;
+
+      this.$items = this.$viewer.find(opts.item);
+      this.$images = this.$viewer.find(opts.image);
+      this.$images = this.$viewer.find(opts.image);
+      this.$images = this.$viewer.find(opts.image);
+
+      this.count = this.$items.length;
+
+      if (this.count == 0) return;
+
+      this.load();
+    },
+
+    load: function(target){
+      var target = target || 0;
+
+      var bg = this.$images.eq(target),
+        url = bg.data("url");
+
+      var img = new Image();
+      img.src = url;
+
+      var handler = function(){
+        bg.css("background-image", "url(" + url + ")");
+
+        if (target == 0) {
+          this.switch(target);
+          this.$viewer.addClass(this.settings.readyClass);
+        }
+
+        this.loaded++;
+
+        if (this.count != 1) {
+          if (target < this.count - 1) this.load(target + 1);
+
+          if (!this.startTimeout) {
+            this.timeout();
+            this.startTimeout = true;
+          }
+        }
+      }.bind(this);
+
+      img.onload = handler;
+      img.onerror = handler;
+    },
+
+    switch: function(target){
+      var currentClass = this.settings.currentClass;
+
+      this.$items.eq(this.current).removeClass(currentClass);
+      this.$items.eq(target).addClass(currentClass);
+      this.current = target;
+    },
+
+    next: function(target){
+      if (target > this.loaded - 1) target = 0;
+
+      this.switch(target);
+    },
+
+    timeout: function(){
+      var delay = this.settings.delaySwitch;
+
+      clearTimeout(this.numTimeout);
+      this.numTimeout = setTimeout(function(){
+        this.next(this.current + 1);
+        this.timeout();
+      }.bind(this), delay);
+    }
+  };
+})(jQuery);
+
+
+jQuery(function(){
+  jQuery(".js-screen-viewer").each(function(){
+    new ScreenViewer(this);
+  });
+})
 },{}],"swfobject":[function(require,module,exports){
 /**
  * SWFObject v1.5: Flash Player detection and embed - http://blog.deconcept.com/swfobject/
@@ -72887,7 +72249,6 @@ if (!document.getElementById && document.all) { document.getElementById = functi
 window.getQueryParamValue = deconcept.util.getRequestParameter;
 window.FlashObject = deconcept.SWFObject; // for legacy support
 window.SWFObject = deconcept.SWFObject;
-
 },{}],"underscore":[function(require,module,exports){
 //     Underscore.js 1.7.0
 //     http://underscorejs.org
