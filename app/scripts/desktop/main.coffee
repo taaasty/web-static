@@ -19,3 +19,6 @@ $ ->
 
   # Тултип для шаринга
   $("[tooltip]").tooltip()
+
+  # Запускаем гайд
+  introJs.introJs().start()

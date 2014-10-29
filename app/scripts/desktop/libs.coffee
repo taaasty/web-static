@@ -12,6 +12,7 @@ window.Modernizr         = require 'Modernizr'
 window.imagesLoaded      = require 'imagesloaded'
 window.MediumEditor      = require 'medium-editor'
 window.Undo              = require 'undo'
+window.introJs           = require 'introJs'
 require 'aviator'
 
 require 'swfobject'
@@ -23,7 +24,6 @@ require 'screenviewer'
 require 'baron'
 require('react-mixin-manager')(window.React)
 require 'bootstrap.tooltip'
-require 'introJs'
 
 # jQuery UI components
 require 'jquery.ui.core'
