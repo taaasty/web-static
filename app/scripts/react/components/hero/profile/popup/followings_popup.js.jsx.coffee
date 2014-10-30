@@ -42,7 +42,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass
     @safeUpdate => @incrementActivities()
     @setState isError: false, isLoading: true
     @createRequest
-      url: Routes.api.tlog_followings(@props.tlogId)
+      url: ApiRoutes.tlog_followings(@props.tlogId)
       success: (data) =>
         @safeUpdateState relationships: data.relationships
       error:   (data) =>

@@ -16,7 +16,7 @@ class window.MessagingService
     _.extend @, EventEmitter.prototype
 
     @pusher = new Pusher gon.pusher.key,
-      authEndpoint: Routes.api.pusher_auth_url()
+      authEndpoint: ApiRoutes.pusher_auth_url()
       pong_timeout: 6000
       unavailable_timeout: 2000
       auth:

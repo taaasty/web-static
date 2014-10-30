@@ -66,7 +66,7 @@ window.Calendar = React.createClass
 
   getCalendarFromServer: (tlogId) ->
     @createRequest
-      url: Routes.api.calendar_url tlogId
+      url: ApiRoutes.calendar_url tlogId
       success: (calendar) =>
         @safeUpdateState calendar: calendar
       error: (data) =>

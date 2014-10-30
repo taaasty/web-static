@@ -26,7 +26,7 @@ module.experts = window.RecoveryShellBox = React.createClass
     @setState inProcess: true
 
     @createRequest
-      url:      Routes.api.recovery_url()
+      url:      ApiRoutes.recovery_url()
       data:
         location:      window.location.href
         slug_or_email: slug

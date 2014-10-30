@@ -7,7 +7,7 @@ window.RelationshipMixin =
     @setState isProcess: true
 
     @createRequest
-      url: Routes.api.change_my_relationship_url @state.relationship.user_id, 'follow'
+      url: ApiRoutes.change_my_relationship_url @state.relationship.user_id, 'follow'
       method: 'POST'
       success: (data) =>
         @safeUpdateState relationship: data
@@ -23,7 +23,7 @@ window.RelationshipMixin =
     @setState isProcess: true
 
     @createRequest
-      url: Routes.api.change_my_relationship_url @state.relationship.user_id, 'unfollow'
+      url: ApiRoutes.change_my_relationship_url @state.relationship.user_id, 'unfollow'
       method: 'POST'
       success: (data) =>
         @safeUpdateState relationship: data
@@ -39,7 +39,7 @@ window.RelationshipMixin =
     @safeUpdateState(isProcess: true)
 
     @createRequest
-      url: Routes.api.unfollow_from_yourself_url @props.relationship.user_id
+      url: ApiRoutes.unfollow_from_yourself_url @props.relationship.user_id
       method: 'DELETE'
       success: (data) => options?.success?()
       error: (data) =>
@@ -53,7 +53,7 @@ window.RelationshipMixin =
     @setState isProcess: true
 
     @createRequest
-      url: Routes.api.change_my_relationship_url @state.relationship.user_id, 'cancel'
+      url: ApiRoutes.change_my_relationship_url @state.relationship.user_id, 'cancel'
       method: 'POST'
       success: (data) =>
         @safeUpdateState relationship: data
@@ -72,7 +72,7 @@ window.RelationshipMixin =
     @setState isProcess: true
 
     @createRequest
-      url: Routes.api.change_my_relationship_url @state.relationship.user_id, 'ignore'
+      url: ApiRoutes.change_my_relationship_url @state.relationship.user_id, 'ignore'
       method: 'POST'
       success: (data) =>
         @safeUpdateState relationship: data
@@ -88,7 +88,7 @@ window.RelationshipMixin =
     @setState isProcess: true
 
     @createRequest
-      url: Routes.api.relationships_by_tlog_approve_url(@props.relationship.reader.id)
+      url: ApiRoutes.relationships_by_tlog_approve_url(@props.relationship.reader.id)
       method: 'POST'
       success: (data) => options?.success() if options?.success
       error:   (data) =>
@@ -102,7 +102,7 @@ window.RelationshipMixin =
     @setState isProcess: true
 
     @createRequest
-      url: Routes.api.relationships_by_tlog_disapprove_url(@props.relationship.reader.id)
+      url: ApiRoutes.relationships_by_tlog_disapprove_url(@props.relationship.reader.id)
       method: 'POST'
       success: (data) => options?.success() if options?.success
       error: (data) =>
@@ -113,7 +113,7 @@ window.RelationshipMixin =
 
   _loadRelationship: ->
     @createRequest
-      url: Routes.api.get_my_relationship_url(@props.tlogId)
+      url: ApiRoutes.get_my_relationship_url(@props.tlogId)
       success: (data) =>
         @safeUpdateState relationship: data
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]

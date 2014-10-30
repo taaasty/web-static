@@ -4,7 +4,7 @@ class window.MessagingRequester
 
   notifyReady: ({ success, error }) ->
     $.ajax
-      url: Routes.api.messenger_ready_url()
+      url: ApiRoutes.messenger_ready_url()
       data:
         socket_id: @socket_id
       method: 'POST'
@@ -13,7 +13,7 @@ class window.MessagingRequester
 
   postNewConversation: (recipientSlug, content) ->
     $.ajax
-      url: Routes.api.messenger_new_conversation_url(recipientSlug)
+      url: ApiRoutes.messenger_new_conversation_url(recipientSlug)
       method: 'POST'
       data:
         socket_id: @socket_id
@@ -21,13 +21,13 @@ class window.MessagingRequester
 
   loadMessages: (conversationId) ->
     $.ajax
-      url: Routes.api.messenger_load_messages_url conversationId
+      url: ApiRoutes.messenger_load_messages_url conversationId
       data:
         socket_id: @socket_id
 
   loadMoreMessages: (conversationId, toMessageId) ->
     $.ajax
-      url: Routes.api.messenger_load_messages_url conversationId
+      url: ApiRoutes.messenger_load_messages_url conversationId
       data:
         socket_id:     @socket_id
         to_message_id: toMessageId
@@ -35,13 +35,13 @@ class window.MessagingRequester
 
   postMessage: (conversationId, content, uuid) ->
     $.ajax
-      url: Routes.api.messenger_new_message_url conversationId
+      url: ApiRoutes.messenger_new_message_url conversationId
       method: 'POST'
       data: { @socket_id, content, uuid }
 
   markAsReadMessage: (conversationId, messageId) ->
     $.ajax
-      url: Routes.api.messenger_read_messages_url conversationId
+      url: ApiRoutes.messenger_read_messages_url conversationId
       method: 'PUT'
       data:
         socket_id: @socket_id
@@ -49,7 +49,7 @@ class window.MessagingRequester
 
   markAsReadNotification: (notificationId) ->
     $.ajax
-      url: Routes.api.notifications_read_url notificationId
+      url: ApiRoutes.notifications_read_url notificationId
       method: 'PUT'
       data:
         socket_id: @socket_id

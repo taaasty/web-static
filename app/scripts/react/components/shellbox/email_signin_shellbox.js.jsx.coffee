@@ -73,7 +73,7 @@ window.EmailSigninShellBox = React.createClass
 
   renderFooter: ->
    `<div className="form-popup__footer">
-      <a href={ Routes.api.omniauth_url('vkontakte') }
+      <a href={ ApiRoutes.omniauth_url('vkontakte') }
          title="Войти через Вконтакте"
          className="form-popup__footer-item"
          onClick={ this.onVkAuthClick }>
@@ -91,7 +91,7 @@ window.EmailSigninShellBox = React.createClass
     @setState inProcess: true
 
     @createRequest
-      url: Routes.api.signin_url()
+      url: ApiRoutes.signin_url()
       data:
         email:    @$emailField.val()
         password: @$passwordField.val()

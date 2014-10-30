@@ -8,9 +8,9 @@ window.PostEditor_PersistenceMixin =
 
   savingUrl: ->
     if @entryId()?
-      Routes.api.update_entry_url @entryId(), @entryType()
+      ApiRoutes.update_entry_url @entryId(), @entryType()
     else
-      Routes.api.create_entry_url @entryType()
+      ApiRoutes.create_entry_url @entryType()
 
   savingMethod: ->
     if @entryId()? then 'PUT' else 'POST'

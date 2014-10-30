@@ -41,7 +41,7 @@ window.HeroProfileStats_TagsPopup = React.createClass
     @safeUpdate => @incrementActivities()
     @setState isError: false, isLoading: true
     @createRequest
-      url: Routes.api.tlog_tags(@props.tlogId)
+      url: ApiRoutes.tlog_tags(@props.tlogId)
       success: (data) =>
         @safeUpdateState tags: data
       error:   (data) =>

@@ -50,7 +50,7 @@ window.Voting = React.createClass
     @setState(process: true)
 
     @createRequest
-      url: Routes.api.votes_url @props.entryId
+      url: ApiRoutes.votes_url @props.entryId
       method: 'POST'
       success: (data) =>
         @safeUpdateState {

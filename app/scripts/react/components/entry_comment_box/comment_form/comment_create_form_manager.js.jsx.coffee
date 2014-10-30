@@ -74,7 +74,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
     @setState isPostError: false, isPostLoading: true
 
     @createRequest
-      url: Routes.api.comments_url()
+      url: ApiRoutes.comments_url()
       method: 'POST'
       data:
         entry_id: @props.entryId

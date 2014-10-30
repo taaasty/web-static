@@ -21,7 +21,7 @@ CommentsMixin =
     @setState isLoadError: false, isLoadLoading: true
 
     @createRequest
-      url: Routes.api.comments_url()
+      url: ApiRoutes.comments_url()
       data: {
         entry_id: @props.entryId
         limit:    @_getFirstLoadLimit()
@@ -43,7 +43,7 @@ CommentsMixin =
     @setState isLoadError: false, isLoadLoading: true
 
     @createRequest
-      url: Routes.api.comments_url()
+      url: ApiRoutes.comments_url()
       data: {
         entry_id:        @props.entryId
         from_comment_id: id - 1
@@ -67,7 +67,7 @@ CommentsMixin =
     @setState isLoadMoreError: false, isLoadMoreLoading: true
 
     @createRequest
-      url: Routes.api.comments_url()
+      url: ApiRoutes.comments_url()
       data:
         entry_id:      @props.entryId
         limit:         @props.limit

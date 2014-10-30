@@ -8,7 +8,7 @@ module.experts = window.SettingsAvatar = React.createClass
 
   componentDidMount: ->
     $(@getDOMNode()).fileupload
-      url: Routes.api.userpic_url()
+      url: ApiRoutes.userpic_url()
       replaceFileInput: false
       dataType: 'json'
       start: =>

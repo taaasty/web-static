@@ -16,7 +16,7 @@ window.Shellbox_VkAuthButton = React.createClass
     else
       icon = `<span className="icon icon--vkontakte" />`
 
-    return `<a href={ Routes.api.omniauth_url('vkontakte') }
+    return `<a href={ ApiRoutes.omniauth_url('vkontakte') }
                onClick={ this.onClick }>
               <button className="button button--vkontakte">
                 { icon }

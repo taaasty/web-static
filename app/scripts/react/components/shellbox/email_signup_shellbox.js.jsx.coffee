@@ -26,7 +26,7 @@ module.experts = window.EmailSignupShellBox = React.createClass
     @setState inProcess: true
 
     @createRequest
-      url:  Routes.api.signup_url()
+      url:  ApiRoutes.signup_url()
       data: user
       method:   'POST'
       dataType: 'JSON'
@@ -89,7 +89,7 @@ module.experts = window.EmailSignupShellBox = React.createClass
 
   renderFooter: ->
     return `<div className="form-popup__footer">
-              <a href={Routes.api.omniauth_url('vkontakte')}
+              <a href={ApiRoutes.omniauth_url('vkontakte')}
                  title="У вас есть аккаунт вконтакте?"
                  className="form-popup__footer-item"
                  onClick={ this.onVkAuthClick }>

@@ -21,7 +21,7 @@ window.PostEditor_Demo = React.createClass
     @setState(entry: null)
 
     @createRequest
-      url: Routes.api.entry_url(entryId)
+      url: ApiRoutes.entry_url(entryId)
       success: (data) =>
         @safeUpdateState {
           entry:        data

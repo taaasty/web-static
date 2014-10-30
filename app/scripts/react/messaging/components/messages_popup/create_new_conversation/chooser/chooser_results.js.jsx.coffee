@@ -56,7 +56,7 @@ window.MessagesPopup_ChooserResults = React.createClass
 
   loadPredictions: (query) ->
     @createRequest
-      url: Routes.api.users_predict()
+      url: ApiRoutes.users_predict()
       method: 'GET'
       data:
         query: query

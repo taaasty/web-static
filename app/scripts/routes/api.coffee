@@ -1,17 +1,4 @@
-TastySettings = require './settings'
-
-Routes =
-  ## TODO Это не path, это url!
-  logout_path: -> TastySettings.host + '/logout'
-
-  tlog_favorite_entries_path: (slug) -> '/@' + slug + '/favorites'
-  tag_path: (tag) -> '/tags/' + tag
-
-  friends_feed_path: -> '/friends/'
-  live_feed_path:    -> '/live/'
-  people_path:       -> '/people/'
-
-ApiRoutes =
+window.ApiRoutes =
   omniauth_url:    (provider) -> TastySettings.host + 'auth/' + provider
   iframely_url:               -> TastySettings.api_host + 'v1/embeding/iframely.json'
   pusher_auth_url:            -> TastySettings.api_host + 'v1/messenger/auth'
@@ -70,6 +57,3 @@ ApiRoutes =
 
   # Notifications
   notifications_read_url: (notificationId) -> TastySettings.api_host + 'v1/messenger/notifications/' + notificationId + '/read'
-
-window.Routes     = Routes
-window.Routes.api = ApiRoutes
