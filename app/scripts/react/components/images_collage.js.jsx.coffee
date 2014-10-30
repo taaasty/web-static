@@ -32,8 +32,8 @@ window.ImagesCollage = React.createClass
 
   shouldComponentUpdate: (nextProps, nextState) ->
     not (
-      ReactUtils.isImagesEqual( nextState.images, @state.images) &&
-      ReactUtils.isImagesEqual( nextProps.images, @props.images)
+      TastyUtils.isImagesEqual( nextState.images, @state.images) &&
+      TastyUtils.isImagesEqual( nextProps.images, @props.images)
     )
 
   componentWillReceiveProps: (nextProps) ->
@@ -87,7 +87,7 @@ window.ImagesCollage_Legacy = React.createClass
     images: React.PropTypes.array.isRequired
 
   shouldComponentUpdate: (nextProps, nextState) ->
-    not ReactUtils.isImagesEqual nextProps.images, @props.images
+    not TastyUtils.isImagesEqual nextProps.images, @props.images
 
   componentDidMount: ->
     @$node = $ @getDOMNode()

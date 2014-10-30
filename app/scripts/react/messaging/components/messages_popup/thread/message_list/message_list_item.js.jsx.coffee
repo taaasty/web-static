@@ -68,4 +68,4 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
             </span>`
 
   _getMessageCreatedAt: ->
-    moment( @props.message.created_at ).format 'D MMMM LT'
+    moment( @props.message.created_at ).format 'D MMMM HH:mm'

@@ -1,3 +1,5 @@
+TastySettings = require '../../settings'
+
 window.TastySoundController =
 
   _buildAudioElement: (url) ->

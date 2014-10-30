@@ -1,23 +1,3 @@
-#= require react
-#= require react-mixin-manager
-#= require react-draggable/dist/react-draggable
-#= require ./utils
-#= require_tree ./entities
-#= require_tree ./services
-#= require_tree ./mixins
-#= require_tree ./dispatchers
-#= require_tree ./stores
-#= require_tree ./messaging
-#= require_tree ./components/post_editor/mixins/
-#= require_tree ./components/post_editor/editors/mixins
-#= require_tree ./components/entry_comment_box/mixins
-#= require_tree ./components/relationship_buttons/mixins
-#= require      ./components/feed/mixins/base.coffee
-#= require_tree ./components
-#= require_tree ./controllers
-#= require_tree ./mediators
-#= require_tree ./resources
-
 window.ReactApp =
 
   start: ({ user }) ->
@@ -36,9 +16,5 @@ window.ReactApp =
       React.renderComponent InviterShellBox(fixed: true), ic
 
     if user?
-      if localStorage.getItem 'mockMessages'
-        window.messagingService = new MessagingServiceMock
-          user: CurrentUserStore.getUser()
-      else
-        window.messagingService = new MessagingService
-          user: CurrentUserStore.getUser()
+      window.messagingService = new MessagingService
+        user: CurrentUserStore.getUser()

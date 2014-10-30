@@ -6,11 +6,18 @@ gulp         = require 'gulp'
 uglify       = require 'gulp-uglify'
 rename       = require 'gulp-rename'
 handleErrors = require '../util/handleErrors'
-config       = require('../config').minifyJS
+configBundle = require('../config').minifyJS.bundle
+configStatic = require('../config').minifyJS.static
 
 gulp.task 'minifyJS', ['scripts'], ->
-  gulp.src config.src
+  gulp.src configBundle.src
     .pipe uglify()
     .on 'error', handleErrors
-    .pipe rename config.outputName
-    .pipe gulp.dest config.dest
+    .pipe rename configBundle.outputName
+    .pipe gulp.dest configBundle.dest
+
+  gulp.src configStatic.src
+    .pipe uglify()
+    .on 'error', handleErrors
+    .pipe rename configStatic.outputName
+    .pipe gulp.dest configStatic.dest

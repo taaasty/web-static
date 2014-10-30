@@ -55,10 +55,10 @@ window.MessagesPopup_ConversationsListItem = React.createClass
     @props.conversation.last_message.content_html
 
   _getLastMessageCreatedAt: ->
-    moment( @props.conversation.last_message.created_at ).format 'D MMMM LT'
+    moment( @props.conversation.last_message.created_at ).format 'D MMMM HH:mm'
 
   _getLastConversationCreatedAt: ->
-    moment( @props.conversation.created_at ).format 'D MMMM LT'
+    moment( @props.conversation.created_at ).format 'D MMMM HH:mm'
 
   handleClick: ->
     ConversationActions.clickConversation @props.conversation.id

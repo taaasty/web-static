@@ -1,6 +1,5 @@
 $ ->
-  # if Modernizr?.touch
-  #   $(".js-dropdown").dropdown()
+  $(".js-dropdown").dropdown() if Modernizr?.touch
 
   $(".js-alert-close").click -> $(".js-alert").hide()
 
@@ -40,7 +39,6 @@ window.Tasty =
     if user?
       headers['X-User-Token']     = user.api_key.access_token
       headers['X-Requested-With'] = 'XMLHttpRequest'
-      Honeybadger?.setContext user_id: user.id
       CurrentUserDispatcher.setupUser user
 
     TastyUtils.showFlashes flashes

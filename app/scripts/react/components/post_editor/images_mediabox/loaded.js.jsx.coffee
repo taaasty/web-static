@@ -9,7 +9,7 @@ window.ImagesMediaBox_Loaded = React.createClass
 
   shouldComponentUpdate: (nextProps) ->
     return true unless nextProps.onDelete == @props.onDelete
-    not ReactUtils.isImagesEqual nextProps.images, @props.images
+    not TastyUtils.isImagesEqual nextProps.images, @props.images
 
   render: ->
    `<div className="media-box__display">

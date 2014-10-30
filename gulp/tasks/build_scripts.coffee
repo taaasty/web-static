@@ -36,20 +36,18 @@ gulp.task 'vendorScripts', ['clean'], ->
     .require './baron/baron',                              { expose: 'baron' }
     .require './mousetrap/mousetrap',                      { expose: 'mousetrap' }
     .require './bowser/bowser',                            { expose: 'bowser' }
-    .require './momentjs/moment',                          { expose: 'momentjs' }
-    .require '../scripts/react/resources/momentjs/ru',     { expose: 'momentjsRU' }
     .require './eventEmitter/EventEmitter',                { expose: 'eventEmitter' }
     .require './pusher/dist/pusher',                       { expose: 'pusher' }
     .require './i18next/i18next',                          { expose: 'i18next'}
     .require './bootstrap/js/tooltip',                     { expose: 'bootstrap.tooltip' }
     .require '../scripts/shims/modernizr',                 { expose: 'Modernizr' }
-    .require './honeybadger.js/honeybadger.js',            { expose: 'honeybadger' }
     .require '../scripts/shims/swf/swfobject',             { expose: 'swfobject' }
     .require './es5-shim/es5-shim',                        { expose: 'es5-shim' }
     .require './jquery.mousewheel/jquery.mousewheel',      { expose: 'jquery.mousewheel' }
     .require './jquery.scrollto/jquery.scrollTo',          { expose: 'jquery.scrollto' }
     .require './undo/undo',                                { expose: 'undo' }
     .require './medium-editor/dist/js/medium-editor',      { expose: 'medium-editor' }
+    .require '../scripts/resources/screen_viewer',         { expose: 'screenviewer' }
 
   bundle = ->
     bundleLogger.start vendorConfig.outputName
@@ -93,20 +91,18 @@ gulp.task 'clientScripts', ['clean'], ->
     .external 'baron'
     .external 'mousetrap'
     .external 'bowser'
-    .external 'momentjs'
-    .external 'momentjsRU'
     .external 'eventEmitter'
     .external 'pusher'
     .external 'i18next'
     .external 'bootstrap.tooltip'
     .external 'Modernizr'
-    .external 'honeybadger'
     .external 'swfobject'
     .external 'es5-shim'
     .external 'jquery.mousewheel'
     .external 'jquery.scrollto'
     .external 'undo'
     .external 'medium-editor'
+    .external 'screenviewer'
 
   bundle = ->
     bundleLogger.start clientConfig.outputName

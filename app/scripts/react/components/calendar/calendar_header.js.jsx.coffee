@@ -7,7 +7,7 @@ window.CalendarHeader = React.createClass
 
   render: ->
     day  = @props.date.format 'D'
-    info = @props.date.format('D MMMM <br/> dddd<br/> LT').slice 2
+    info = @props.date.format('D MMMM <br/> dddd<br/> HH:mm').slice 2
 
     if moment().year() != @props.date.year()
       info = @props.date.format('D MMMM <br/> dddd<br/> YYYY').slice 2
