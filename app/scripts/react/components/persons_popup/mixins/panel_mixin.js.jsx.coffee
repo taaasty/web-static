@@ -94,10 +94,9 @@ window.PersonsPopup_PanelMixin =
     newRelationships = @props.relationships.slice(0)
 
     for rel, i in @props.relationships
-      if rel.id == relationship.id ||
-         rel.reverse_relationship.id == relationship.id
+      if rel.id == relationship.id || rel.reader_id == relationship.user_id
         newRelationships.splice i, 1
-        return
+        break
 
     @props.onLoad('update', total_count: @props.total_count - 1, items: newRelationships)
 

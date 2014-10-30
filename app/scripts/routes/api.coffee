@@ -31,13 +31,14 @@ window.ApiRoutes =
   relationships_summary_url:                     -> TastySettings.api_host + 'v1/relationships/summary'
   relationships_to_url:                  (state) -> TastySettings.api_host + 'v1/relationships/to/' + state
   relationships_by_url:                  (state) -> TastySettings.api_host + 'v1/relationships/by/' + state
+  unfollow_from_yourself_url:           (tlogId) -> TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId
   relationships_by_tlog_approve_url:    (tlogId) -> TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/approve'
   relationships_by_tlog_disapprove_url: (tlogId) -> TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/disapprove'
 
-  tlog_followers:           (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/followers'
-  tlog_followings:          (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/followings'
-  tlog_tags:                (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/tags'
-  get_my_relationship_url:  (tlogId) -> TastySettings.api_host + 'v1/relationships/to/tlog/' + tlogId
+  tlog_followers:                       (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/followers'
+  tlog_followings:                      (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/followings'
+  tlog_tags:                            (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/tags'
+  get_my_relationship_url:              (tlogId) -> TastySettings.api_host + 'v1/relationships/to/tlog/' + tlogId
 
   # Comments
   comments_url:             (entryId) -> TastySettings.api_host + 'v1/comments'

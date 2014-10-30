@@ -1,11 +1,11 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-window.TASTY_ENV = 'production';
-
 require('./libs');
 
 require('./locales/locales');
 
-require('./routes');
+require('./routes/routes');
+
+require('./routes/api');
 
 require('./resources/is_mobile');
 
@@ -501,7 +501,7 @@ require('./react/application');
 
 
 
-},{"./libs":4,"./locales/locales":5,"./react/application":7,"./react/components/avatars/avatar":8,"./react/components/avatars/user_avatar":9,"./react/components/buttons/load_more":10,"./react/components/calendar/calendar":11,"./react/components/calendar/calendar_header":12,"./react/components/calendar/calendar_marker":13,"./react/components/calendar/calendar_period":14,"./react/components/calendar/calendar_timeline":15,"./react/components/design_settings_popup/controls":16,"./react/components/design_settings_popup/controls_items/_progressbar":17,"./react/components/design_settings_popup/controls_items/_radiobutton":18,"./react/components/design_settings_popup/controls_items/align_item":19,"./react/components/design_settings_popup/controls_items/background_item":20,"./react/components/design_settings_popup/controls_items/feed_color_item":21,"./react/components/design_settings_popup/controls_items/font_type_item":22,"./react/components/design_settings_popup/controls_items/header_color_item":23,"./react/components/design_settings_popup/controls_items/opacity_item":24,"./react/components/design_settings_popup/design_settings_popup":25,"./react/components/editable_field":26,"./react/components/embed":27,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":28,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":29,"./react/components/entry_comment_box/comment_form/comment_form":30,"./react/components/entry_comment_box/comment_list/comment":31,"./react/components/entry_comment_box/comment_list/comment_list":32,"./react/components/entry_comment_box/comment_list/comment_manager":33,"./react/components/entry_comment_box/comment_metabar/comment_metabar":34,"./react/components/entry_comment_box/comment_metabar/date":35,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":36,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":37,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":38,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":39,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":40,"./react/components/entry_comment_box/comment_metabar/reply":41,"./react/components/entry_comment_box/entry_comment_box":42,"./react/components/entry_comment_box/load_more":43,"./react/components/entry_comment_box/mixins/comments":44,"./react/components/entry_metabar/author":45,"./react/components/entry_metabar/comment":46,"./react/components/entry_metabar/date":47,"./react/components/entry_metabar/dropdown_menu":48,"./react/components/entry_metabar/dropdown_menu_items/delete_item":49,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":50,"./react/components/entry_metabar/dropdown_menu_items/item":51,"./react/components/entry_metabar/dropdown_menu_items/report_item":52,"./react/components/entry_metabar/dropdown_menu_items/watch_item":53,"./react/components/entry_metabar/entry_metabar":54,"./react/components/entry_metabar/tag":55,"./react/components/entry_metabar/tags":56,"./react/components/feed/bricks":57,"./react/components/feed/feed":58,"./react/components/feed/mixins/base":59,"./react/components/feed/tlog":60,"./react/components/follow_status":61,"./react/components/hero/profile/popup/followers_popup":62,"./react/components/hero/profile/popup/followings_popup":63,"./react/components/hero/profile/popup/items/follower_item":64,"./react/components/hero/profile/popup/items/following_item":65,"./react/components/hero/profile/popup/items/tag_item":66,"./react/components/hero/profile/popup/popup":67,"./react/components/hero/profile/popup/tags_popup":68,"./react/components/hero/profile/profile":69,"./react/components/hero/profile/profile_avatar":70,"./react/components/hero/profile/profile_head":71,"./react/components/hero/profile/profile_stats":72,"./react/components/hero/profile/profile_stats_item":73,"./react/components/images_collage":74,"./react/components/notifications/tasty_alert":75,"./react/components/notifications/tasty_confirm":76,"./react/components/notifications/tasty_locking_alert":77,"./react/components/notifications/tasty_notify":78,"./react/components/people/item":79,"./react/components/persons_popup/items/follower_relationship":80,"./react/components/persons_popup/items/following_relationship":81,"./react/components/persons_popup/items/guess_relationship":82,"./react/components/persons_popup/items/ignored_relationship":83,"./react/components/persons_popup/items/item":84,"./react/components/persons_popup/items/request_relationship":85,"./react/components/persons_popup/menu":86,"./react/components/persons_popup/menu_item":87,"./react/components/persons_popup/mixins/panel_mixin":88,"./react/components/persons_popup/panels/followers_panel":89,"./react/components/persons_popup/panels/followings_panel":90,"./react/components/persons_popup/panels/guesses_panel":91,"./react/components/persons_popup/panels/ignores_panel":92,"./react/components/persons_popup/panels/requests_panel":93,"./react/components/persons_popup/persons_popup":94,"./react/components/popup/header":95,"./react/components/popup/layout":96,"./react/components/popup/popup":97,"./react/components/popup/spinner":98,"./react/components/popup_box":99,"./react/components/post_editor/actions/actions":100,"./react/components/post_editor/actions/buttons/privacy":101,"./react/components/post_editor/actions/buttons/vote":102,"./react/components/post_editor/choicer":103,"./react/components/post_editor/demo":104,"./react/components/post_editor/edit_post":105,"./react/components/post_editor/editor_container":106,"./react/components/post_editor/editors/_tasty":107,"./react/components/post_editor/editors/anonymous":108,"./react/components/post_editor/editors/image":109,"./react/components/post_editor/editors/instagram":110,"./react/components/post_editor/editors/mixins/autosave":111,"./react/components/post_editor/editors/music":112,"./react/components/post_editor/editors/quote":113,"./react/components/post_editor/editors/text":114,"./react/components/post_editor/editors/video":115,"./react/components/post_editor/images_mediabox/loaded":116,"./react/components/post_editor/images_mediabox/url_insert":117,"./react/components/post_editor/layout":118,"./react/components/post_editor/mediabox/actions":119,"./react/components/post_editor/mediabox/layout":120,"./react/components/post_editor/mediabox/loading_progress":121,"./react/components/post_editor/mixins/dragging":122,"./react/components/post_editor/mixins/images_form":123,"./react/components/post_editor/mixins/layout":124,"./react/components/post_editor/mixins/persistence":125,"./react/components/post_editor/mixins/video":126,"./react/components/post_editor/new_anonymous_post":127,"./react/components/post_editor/new_post":128,"./react/components/post_editor/video_mediabox/embeded":129,"./react/components/post_editor/video_mediabox/loading":130,"./react/components/post_editor/video_mediabox/url_insert":131,"./react/components/post_editor/video_mediabox/video_mediabox":132,"./react/components/post_editor/welcome_messages/image":133,"./react/components/post_editor/welcome_messages/instagram":134,"./react/components/post_editor/welcome_messages/music":135,"./react/components/post_editor/welcome_messages/video":136,"./react/components/relationship_buttons/follow_button":137,"./react/components/relationship_buttons/follower_button":138,"./react/components/relationship_buttons/guess_button":139,"./react/components/relationship_buttons/ignore_button":140,"./react/components/relationship_buttons/mixins/relationship":141,"./react/components/relationship_buttons/request_button":142,"./react/components/search/button":143,"./react/components/search/field":144,"./react/components/search/search":145,"./react/components/settings_popup/settings_accounts_item":146,"./react/components/settings_popup/settings_avatar":147,"./react/components/settings_popup/settings_email/confirmation":148,"./react/components/settings_popup/settings_email/edit":149,"./react/components/settings_popup/settings_email/establish/edit":150,"./react/components/settings_popup/settings_email/establish/establish":151,"./react/components/settings_popup/settings_email/establish/show":152,"./react/components/settings_popup/settings_email/settings_email":153,"./react/components/settings_popup/settings_email/show":154,"./react/components/settings_popup/settings_header":155,"./react/components/settings_popup/settings_name":156,"./react/components/settings_popup/settings_password_input":157,"./react/components/settings_popup/settings_radio_item":158,"./react/components/settings_popup/settings_title":159,"./react/components/settings_popup/settings_vkontakte":160,"./react/components/settings_popup/toolbar_settings":161,"./react/components/shellbox/authorization/authorization":162,"./react/components/shellbox/authorization/vk":163,"./react/components/shellbox/buttons/vk_auth_button":164,"./react/components/shellbox/email_signin_shellbox":165,"./react/components/shellbox/email_signup_shellbox":166,"./react/components/shellbox/inviter_shellbox":167,"./react/components/shellbox/recovery_shellbox":168,"./react/components/shellbox/select_signin_shellbox":169,"./react/components/shellbox_layer":170,"./react/components/smart_follow_status":171,"./react/components/spinner":172,"./react/components/tlog_alert":173,"./react/components/toolbars/close/close":174,"./react/components/toolbars/feed/feed":175,"./react/components/toolbars/toolbar_item":176,"./react/components/toolbars/user/user":177,"./react/components/transition/timeout_transition_group":178,"./react/components/voting":179,"./react/controllers/popup":180,"./react/controllers/shellbox":181,"./react/controllers/tasty_alert":182,"./react/controllers/tasty_confirm":183,"./react/controllers/tasty_events":184,"./react/controllers/tasty_locking_alert":185,"./react/controllers/tasty_notify":186,"./react/controllers/tasty_sound":187,"./react/dispatchers/current_user":188,"./react/entities/normalized_entry":189,"./react/mediators/comments":190,"./react/messaging/actions/conversation":191,"./react/messaging/actions/message":192,"./react/messaging/actions/notification":193,"./react/messaging/actions/popup":194,"./react/messaging/components/messages_popup/conversations/conversations":195,"./react/messaging/components/messages_popup/conversations/list/empty":196,"./react/messaging/components/messages_popup/conversations/list/list":197,"./react/messaging/components/messages_popup/conversations/list/list_item":198,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":199,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":200,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":201,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":202,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":203,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":204,"./react/messaging/components/messages_popup/loading_message":205,"./react/messaging/components/messages_popup/messages_popup":206,"./react/messaging/components/messages_popup/thread/message_form/message_form":207,"./react/messaging/components/messages_popup/thread/message_list/empty":208,"./react/messaging/components/messages_popup/thread/message_list/message_list":209,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":210,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":211,"./react/messaging/components/messages_popup/thread/thread":212,"./react/messaging/components/messages_popup/ui/back_button":213,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":214,"./react/messaging/components/notifications_popup/notifications/empty":215,"./react/messaging/components/notifications_popup/notifications/notification":216,"./react/messaging/components/notifications_popup/notifications/notifications":217,"./react/messaging/components/notifications_popup/notifications_popup":218,"./react/messaging/components/toolbars/indicators/indicators":219,"./react/messaging/components/toolbars/indicators/messages":220,"./react/messaging/components/toolbars/indicators/notifications":221,"./react/messaging/dispatchers/messaging":222,"./react/messaging/messaging_requester":223,"./react/messaging/messaging_service":224,"./react/messaging/messaging_testing":225,"./react/messaging/stores/connection_state":226,"./react/messaging/stores/conversations":227,"./react/messaging/stores/messages":228,"./react/messaging/stores/messages_popup_state":229,"./react/messaging/stores/messaging_status":230,"./react/messaging/stores/notifications":231,"./react/mixins/activities":232,"./react/mixins/component_manipulations":233,"./react/mixins/dom_manipulations":234,"./react/mixins/error_timer":235,"./react/mixins/grammar":236,"./react/mixins/positions":237,"./react/mixins/requester":238,"./react/mixins/scroller":239,"./react/mixins/shake":240,"./react/mixins/touch":241,"./react/mixins/unmount":242,"./react/services/entry_normalizer":243,"./react/services/entry_store":244,"./react/services/positions":245,"./react/services/thumbor":246,"./react/services/uuid":247,"./react/stores/current_user":248,"./resources/fileReceiver":249,"./resources/is_mobile":250,"./resources/tasty":251,"./resources/tasty_utils":252,"./routes":253}],2:[function(require,module,exports){
+},{"./libs":4,"./locales/locales":5,"./react/application":7,"./react/components/avatars/avatar":8,"./react/components/avatars/user_avatar":9,"./react/components/buttons/load_more":10,"./react/components/calendar/calendar":11,"./react/components/calendar/calendar_header":12,"./react/components/calendar/calendar_marker":13,"./react/components/calendar/calendar_period":14,"./react/components/calendar/calendar_timeline":15,"./react/components/design_settings_popup/controls":16,"./react/components/design_settings_popup/controls_items/_progressbar":17,"./react/components/design_settings_popup/controls_items/_radiobutton":18,"./react/components/design_settings_popup/controls_items/align_item":19,"./react/components/design_settings_popup/controls_items/background_item":20,"./react/components/design_settings_popup/controls_items/feed_color_item":21,"./react/components/design_settings_popup/controls_items/font_type_item":22,"./react/components/design_settings_popup/controls_items/header_color_item":23,"./react/components/design_settings_popup/controls_items/opacity_item":24,"./react/components/design_settings_popup/design_settings_popup":25,"./react/components/editable_field":26,"./react/components/embed":27,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":28,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":29,"./react/components/entry_comment_box/comment_form/comment_form":30,"./react/components/entry_comment_box/comment_list/comment":31,"./react/components/entry_comment_box/comment_list/comment_list":32,"./react/components/entry_comment_box/comment_list/comment_manager":33,"./react/components/entry_comment_box/comment_metabar/comment_metabar":34,"./react/components/entry_comment_box/comment_metabar/date":35,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":36,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":37,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":38,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":39,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":40,"./react/components/entry_comment_box/comment_metabar/reply":41,"./react/components/entry_comment_box/entry_comment_box":42,"./react/components/entry_comment_box/load_more":43,"./react/components/entry_comment_box/mixins/comments":44,"./react/components/entry_metabar/author":45,"./react/components/entry_metabar/comment":46,"./react/components/entry_metabar/date":47,"./react/components/entry_metabar/dropdown_menu":48,"./react/components/entry_metabar/dropdown_menu_items/delete_item":49,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":50,"./react/components/entry_metabar/dropdown_menu_items/item":51,"./react/components/entry_metabar/dropdown_menu_items/report_item":52,"./react/components/entry_metabar/dropdown_menu_items/watch_item":53,"./react/components/entry_metabar/entry_metabar":54,"./react/components/entry_metabar/tag":55,"./react/components/entry_metabar/tags":56,"./react/components/feed/bricks":57,"./react/components/feed/feed":58,"./react/components/feed/mixins/base":59,"./react/components/feed/tlog":60,"./react/components/follow_status":61,"./react/components/hero/profile/popup/followers_popup":62,"./react/components/hero/profile/popup/followings_popup":63,"./react/components/hero/profile/popup/items/follower_item":64,"./react/components/hero/profile/popup/items/following_item":65,"./react/components/hero/profile/popup/items/tag_item":66,"./react/components/hero/profile/popup/popup":67,"./react/components/hero/profile/popup/tags_popup":68,"./react/components/hero/profile/profile":69,"./react/components/hero/profile/profile_avatar":70,"./react/components/hero/profile/profile_head":71,"./react/components/hero/profile/profile_stats":72,"./react/components/hero/profile/profile_stats_item":73,"./react/components/images_collage":74,"./react/components/notifications/tasty_alert":75,"./react/components/notifications/tasty_confirm":76,"./react/components/notifications/tasty_locking_alert":77,"./react/components/notifications/tasty_notify":78,"./react/components/people/item":79,"./react/components/persons_popup/items/follower_relationship":80,"./react/components/persons_popup/items/following_relationship":81,"./react/components/persons_popup/items/guess_relationship":82,"./react/components/persons_popup/items/ignored_relationship":83,"./react/components/persons_popup/items/item":84,"./react/components/persons_popup/items/request_relationship":85,"./react/components/persons_popup/menu":86,"./react/components/persons_popup/menu_item":87,"./react/components/persons_popup/mixins/panel_mixin":88,"./react/components/persons_popup/panels/followers_panel":89,"./react/components/persons_popup/panels/followings_panel":90,"./react/components/persons_popup/panels/guesses_panel":91,"./react/components/persons_popup/panels/ignores_panel":92,"./react/components/persons_popup/panels/requests_panel":93,"./react/components/persons_popup/persons_popup":94,"./react/components/popup/header":95,"./react/components/popup/layout":96,"./react/components/popup/popup":97,"./react/components/popup/spinner":98,"./react/components/popup_box":99,"./react/components/post_editor/actions/actions":100,"./react/components/post_editor/actions/buttons/privacy":101,"./react/components/post_editor/actions/buttons/vote":102,"./react/components/post_editor/choicer":103,"./react/components/post_editor/demo":104,"./react/components/post_editor/edit_post":105,"./react/components/post_editor/editor_container":106,"./react/components/post_editor/editors/_tasty":107,"./react/components/post_editor/editors/anonymous":108,"./react/components/post_editor/editors/image":109,"./react/components/post_editor/editors/instagram":110,"./react/components/post_editor/editors/mixins/autosave":111,"./react/components/post_editor/editors/music":112,"./react/components/post_editor/editors/quote":113,"./react/components/post_editor/editors/text":114,"./react/components/post_editor/editors/video":115,"./react/components/post_editor/images_mediabox/loaded":116,"./react/components/post_editor/images_mediabox/url_insert":117,"./react/components/post_editor/layout":118,"./react/components/post_editor/mediabox/actions":119,"./react/components/post_editor/mediabox/layout":120,"./react/components/post_editor/mediabox/loading_progress":121,"./react/components/post_editor/mixins/dragging":122,"./react/components/post_editor/mixins/images_form":123,"./react/components/post_editor/mixins/layout":124,"./react/components/post_editor/mixins/persistence":125,"./react/components/post_editor/mixins/video":126,"./react/components/post_editor/new_anonymous_post":127,"./react/components/post_editor/new_post":128,"./react/components/post_editor/video_mediabox/embeded":129,"./react/components/post_editor/video_mediabox/loading":130,"./react/components/post_editor/video_mediabox/url_insert":131,"./react/components/post_editor/video_mediabox/video_mediabox":132,"./react/components/post_editor/welcome_messages/image":133,"./react/components/post_editor/welcome_messages/instagram":134,"./react/components/post_editor/welcome_messages/music":135,"./react/components/post_editor/welcome_messages/video":136,"./react/components/relationship_buttons/follow_button":137,"./react/components/relationship_buttons/follower_button":138,"./react/components/relationship_buttons/guess_button":139,"./react/components/relationship_buttons/ignore_button":140,"./react/components/relationship_buttons/mixins/relationship":141,"./react/components/relationship_buttons/request_button":142,"./react/components/search/button":143,"./react/components/search/field":144,"./react/components/search/search":145,"./react/components/settings_popup/settings_accounts_item":146,"./react/components/settings_popup/settings_avatar":147,"./react/components/settings_popup/settings_email/confirmation":148,"./react/components/settings_popup/settings_email/edit":149,"./react/components/settings_popup/settings_email/establish/edit":150,"./react/components/settings_popup/settings_email/establish/establish":151,"./react/components/settings_popup/settings_email/establish/show":152,"./react/components/settings_popup/settings_email/settings_email":153,"./react/components/settings_popup/settings_email/show":154,"./react/components/settings_popup/settings_header":155,"./react/components/settings_popup/settings_name":156,"./react/components/settings_popup/settings_password_input":157,"./react/components/settings_popup/settings_radio_item":158,"./react/components/settings_popup/settings_title":159,"./react/components/settings_popup/settings_vkontakte":160,"./react/components/settings_popup/toolbar_settings":161,"./react/components/shellbox/authorization/authorization":162,"./react/components/shellbox/authorization/vk":163,"./react/components/shellbox/buttons/vk_auth_button":164,"./react/components/shellbox/email_signin_shellbox":165,"./react/components/shellbox/email_signup_shellbox":166,"./react/components/shellbox/inviter_shellbox":167,"./react/components/shellbox/recovery_shellbox":168,"./react/components/shellbox/select_signin_shellbox":169,"./react/components/shellbox_layer":170,"./react/components/smart_follow_status":171,"./react/components/spinner":172,"./react/components/tlog_alert":173,"./react/components/toolbars/close/close":174,"./react/components/toolbars/feed/feed":175,"./react/components/toolbars/toolbar_item":176,"./react/components/toolbars/user/user":177,"./react/components/transition/timeout_transition_group":178,"./react/components/voting":179,"./react/controllers/popup":180,"./react/controllers/shellbox":181,"./react/controllers/tasty_alert":182,"./react/controllers/tasty_confirm":183,"./react/controllers/tasty_events":184,"./react/controllers/tasty_locking_alert":185,"./react/controllers/tasty_notify":186,"./react/controllers/tasty_sound":187,"./react/dispatchers/current_user":188,"./react/entities/normalized_entry":189,"./react/mediators/comments":190,"./react/messaging/actions/conversation":191,"./react/messaging/actions/message":192,"./react/messaging/actions/notification":193,"./react/messaging/actions/popup":194,"./react/messaging/components/messages_popup/conversations/conversations":195,"./react/messaging/components/messages_popup/conversations/list/empty":196,"./react/messaging/components/messages_popup/conversations/list/list":197,"./react/messaging/components/messages_popup/conversations/list/list_item":198,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":199,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":200,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":201,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":202,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":203,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":204,"./react/messaging/components/messages_popup/loading_message":205,"./react/messaging/components/messages_popup/messages_popup":206,"./react/messaging/components/messages_popup/thread/message_form/message_form":207,"./react/messaging/components/messages_popup/thread/message_list/empty":208,"./react/messaging/components/messages_popup/thread/message_list/message_list":209,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":210,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":211,"./react/messaging/components/messages_popup/thread/thread":212,"./react/messaging/components/messages_popup/ui/back_button":213,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":214,"./react/messaging/components/notifications_popup/notifications/empty":215,"./react/messaging/components/notifications_popup/notifications/notification":216,"./react/messaging/components/notifications_popup/notifications/notifications":217,"./react/messaging/components/notifications_popup/notifications_popup":218,"./react/messaging/components/toolbars/indicators/indicators":219,"./react/messaging/components/toolbars/indicators/messages":220,"./react/messaging/components/toolbars/indicators/notifications":221,"./react/messaging/dispatchers/messaging":222,"./react/messaging/messaging_requester":223,"./react/messaging/messaging_service":224,"./react/messaging/messaging_testing":225,"./react/messaging/stores/connection_state":226,"./react/messaging/stores/conversations":227,"./react/messaging/stores/messages":228,"./react/messaging/stores/messages_popup_state":229,"./react/messaging/stores/messaging_status":230,"./react/messaging/stores/notifications":231,"./react/mixins/activities":232,"./react/mixins/component_manipulations":233,"./react/mixins/dom_manipulations":234,"./react/mixins/error_timer":235,"./react/mixins/grammar":236,"./react/mixins/positions":237,"./react/mixins/requester":238,"./react/mixins/scroller":239,"./react/mixins/shake":240,"./react/mixins/touch":241,"./react/mixins/unmount":242,"./react/services/entry_normalizer":243,"./react/services/entry_store":244,"./react/services/positions":245,"./react/services/thumbor":246,"./react/services/uuid":247,"./react/stores/current_user":248,"./resources/fileReceiver":249,"./resources/is_mobile":250,"./resources/tasty":251,"./resources/tasty_utils":252,"./routes/api":253,"./routes/routes":254}],2:[function(require,module,exports){
 // moment.js locale configuration
 // locale : russian (ru)
 // author : Viktorminator : https://github.com/Viktorminator
@@ -3841,7 +3841,7 @@ window.Calendar = React.createClass({displayName: 'Calendar',
   },
   getCalendarFromServer: function(tlogId) {
     return this.createRequest({
-      url: Routes.api.calendar_url(tlogId),
+      url: ApiRoutes.calendar_url(tlogId),
       success: (function(_this) {
         return function(calendar) {
           return _this.safeUpdateState({
@@ -4105,7 +4105,7 @@ window.CalendarTimeline = React.createClass({displayName: 'CalendarTimeline',
 window.DesignSettingsPopup_Controls = React.createClass({displayName: 'DesignSettingsPopup_Controls',
   propTypes: {
     design: React.PropTypes.object.isRequired,
-    slug: React.PropTypes.string.isRequired,
+    userId: React.PropTypes.number.isRequired,
     activitiesHandler: React.PropTypes.object.isRequired,
     saveCallback: React.PropTypes.func.isRequired,
     onBackgroundChanged: React.PropTypes.func.isRequired
@@ -4119,7 +4119,7 @@ window.DesignSettingsPopup_Controls = React.createClass({displayName: 'DesignSet
       return this.props.saveCallback.apply(this, arguments);
     };
     return React.DOM.div({className: "settings-design__controls"}, 
-              DesignSettingsPopup_ControlsBackgroundItem({slug:  this.props.slug, 
+              DesignSettingsPopup_ControlsBackgroundItem({userId:  this.props.userId, 
                                                           backgroundUrl:  this.props.design.background_url, 
                                                           activitiesHandler:  this.props.activitiesHandler, 
                                                           onBackgroundChanged:  this.props.onBackgroundChanged}), 
@@ -4294,7 +4294,7 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass({displayName: '
 window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsBackgroundItem',
   mixins: ['ReactActivitiesUser', ComponentManipulationsMixin],
   propTypes: {
-    slug: React.PropTypes.string.isRequired,
+    userId: React.PropTypes.number.isRequired,
     backgroundUrl: React.PropTypes.string.isRequired,
     activitiesHandler: React.PropTypes.object.isRequired,
     onBackgroundChanged: React.PropTypes.func.isRequired
@@ -4340,7 +4340,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({displayNa
   _bindCoverUpload: function() {
     this.$uploadCoverInput = $(this.refs.uploadCoverInput.getDOMNode());
     return this.$uploadCoverInput.fileupload({
-      url: Routes.api.design_settings_cover_url(this.props.slug),
+      url: ApiRoutes.design_settings_cover_url(this.props.userId),
       paramName: 'file',
       autoUpload: true,
       replaceFileInput: false,
@@ -4723,7 +4723,7 @@ window.DesignSettingsPopup = React.createClass({displayName: 'DesignSettingsPopu
                 ), 
 
                 DesignSettingsPopup_Controls({design:  this.props.user.get('design'), 
-                                              slug:  this.props.user.get('slug'), 
+                                              userId:  this.props.user.get('id'), 
                                               activitiesHandler:  this.activitiesHandler, 
                                               saveCallback:  this.save, 
                                               onBackgroundChanged:  this._updateUserDesign})
@@ -4738,7 +4738,7 @@ window.DesignSettingsPopup = React.createClass({displayName: 'DesignSettingsPopu
     console.log('save design', key, value);
     this.incrementActivities();
     return this.createRequest({
-      url: Routes.api.design_settings_url(this.props.user.get('slug')),
+      url: ApiRoutes.design_settings_url(this.props.user.get('id')),
       data: data,
       method: 'PUT',
       success: (function(_this) {
@@ -5116,7 +5116,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({displayName
       isPostLoading: true
     });
     return this.createRequest({
-      url: Routes.api.comments_url(),
+      url: ApiRoutes.comments_url(),
       method: 'POST',
       data: {
         entry_id: this.props.entryId,
@@ -5187,7 +5187,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({displayName: 
       isEditLoading: true
     });
     return this.createRequest({
-      url: Routes.api.comments_edit_delete_url(this.props.comment.id),
+      url: ApiRoutes.comments_edit_delete_url(this.props.comment.id),
       method: 'PUT',
       data: {
         text: text
@@ -5714,7 +5714,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
   },
   deleteComment: function() {
     return this.createRequest({
-      url: Routes.api.comments_edit_delete_url(this.props.commentId),
+      url: ApiRoutes.comments_edit_delete_url(this.props.commentId),
       method: 'DELETE',
       success: (function(_this) {
         return function() {
@@ -5805,7 +5805,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
   },
   createReport: function() {
     return this.createRequest({
-      url: Routes.api.comments_report_url(this.props.commentId),
+      url: ApiRoutes.comments_report_url(this.props.commentId),
       method: 'POST',
       success: (function(_this) {
         return function() {
@@ -5980,7 +5980,7 @@ CommentsMixin = {
       isLoadLoading: true
     });
     return this.createRequest({
-      url: Routes.api.comments_url(),
+      url: ApiRoutes.comments_url(),
       data: {
         entry_id: this.props.entryId,
         limit: this._getFirstLoadLimit()
@@ -6019,7 +6019,7 @@ CommentsMixin = {
       isLoadLoading: true
     });
     return this.createRequest({
-      url: Routes.api.comments_url(),
+      url: ApiRoutes.comments_url(),
       data: {
         entry_id: this.props.entryId,
         from_comment_id: id - 1,
@@ -6060,7 +6060,7 @@ CommentsMixin = {
       isLoadMoreLoading: true
     });
     return this.createRequest({
-      url: Routes.api.comments_url(),
+      url: ApiRoutes.comments_url(),
       data: {
         entry_id: this.props.entryId,
         limit: this.props.limit,
@@ -6425,7 +6425,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({displayName: 'Ent
     });
     this.incrementActivities();
     return this.createRequest({
-      url: Routes.api.entry_url(this.props.entryId),
+      url: ApiRoutes.entry_url(this.props.entryId),
       method: 'DELETE',
       success: (function(_this) {
         return function() {
@@ -6508,7 +6508,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({displayName: 'E
   },
   addToFavorites: function() {
     return this.createRequest({
-      url: Routes.api.favorites_url(),
+      url: ApiRoutes.favorites_url(),
       method: 'POST',
       data: {
         entry_id: this.props.entryId
@@ -6528,7 +6528,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({displayName: 'E
   },
   removeFromFavorites: function() {
     return this.createRequest({
-      url: Routes.api.favorites_url(),
+      url: ApiRoutes.favorites_url(),
       method: 'DELETE',
       data: {
         entry_id: this.props.entryId
@@ -6610,7 +6610,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({displayName: 'Ent
   },
   createReport: function() {
     return this.createRequest({
-      url: Routes.api.report_url(this.props.entryId),
+      url: ApiRoutes.report_url(this.props.entryId),
       method: 'POST',
       success: (function(_this) {
         return function() {
@@ -6672,7 +6672,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({displayName: 'Entr
   },
   addToWatching: function() {
     return this.createRequest({
-      url: Routes.api.watching_url(),
+      url: ApiRoutes.watching_url(),
       method: 'POST',
       data: {
         entry_id: this.props.entryId
@@ -6692,7 +6692,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({displayName: 'Entr
   },
   removeFromWatching: function() {
     return this.createRequest({
-      url: Routes.api.watching_url(),
+      url: ApiRoutes.watching_url(),
       method: 'DELETE',
       data: {
         entry_id: this.props.entryId
@@ -7131,7 +7131,7 @@ window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroPr
       isLoading: true
     });
     return this.createRequest({
-      url: Routes.api.tlog_followers(this.props.tlogId),
+      url: ApiRoutes.tlog_followers(this.props.tlogId),
       success: (function(_this) {
         return function(data) {
           return _this.safeUpdateState({
@@ -7220,7 +7220,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroP
       isLoading: true
     });
     return this.createRequest({
-      url: Routes.api.tlog_followings(this.props.tlogId),
+      url: ApiRoutes.tlog_followings(this.props.tlogId),
       success: (function(_this) {
         return function(data) {
           return _this.safeUpdateState({
@@ -7458,7 +7458,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfile
       isLoading: true
     });
     return this.createRequest({
-      url: Routes.api.tlog_tags(this.props.tlogId),
+      url: ApiRoutes.tlog_tags(this.props.tlogId),
       success: (function(_this) {
         return function(data) {
           return _this.safeUpdateState({
@@ -8684,9 +8684,9 @@ window.PersonsPopup_PanelMixin = {
     _ref = this.props.relationships;
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
       rel = _ref[i];
-      if (rel.id === relationship.id || rel.reverse_relationship.id === relationship.id) {
+      if (rel.id === relationship.id || rel.reader_id === relationship.user_id) {
         newRelationships.splice(i, 1);
-        return;
+        break;
       }
     }
     return this.props.onLoad('update', {
@@ -8706,7 +8706,7 @@ React.mixins.add('PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, win
 window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPopup_FollowersPanel',
   mixins: ['PersonsPopup_PanelMixin'],
   relationUrl: function() {
-    return Routes.api.relationships_by_url('friend');
+    return ApiRoutes.relationships_by_url('friend');
   },
   itemClass: PersonsPopup_FollowerRelationship
 });
@@ -8719,7 +8719,7 @@ window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPop
 window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPopup_FollowingsPanel',
   mixins: ['PersonsPopup_PanelMixin'],
   relationUrl: function() {
-    return Routes.api.relationships_to_url('friend');
+    return ApiRoutes.relationships_to_url('friend');
   },
   itemClass: PersonsPopup_FollowingRelationship
 });
@@ -8732,7 +8732,7 @@ window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPo
 window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup_GuessesPanel',
   mixins: ['PersonsPopup_PanelMixin'],
   relationUrl: function() {
-    return Routes.api.relationships_to_url('guessed');
+    return ApiRoutes.relationships_to_url('guessed');
   },
   itemClass: PersonsPopup_GuessRelationship
 });
@@ -8745,7 +8745,7 @@ window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup
 window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup_IgnoresPanel',
   mixins: ['PersonsPopup_PanelMixin'],
   relationUrl: function() {
-    return Routes.api.relationships_to_url('ignored');
+    return ApiRoutes.relationships_to_url('ignored');
   },
   itemClass: PersonsPopup_IgnoredRelationship
 });
@@ -8758,7 +8758,7 @@ window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup
 window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopup_RequestsPanel',
   mixins: ['PersonsPopup_PanelMixin'],
   relationUrl: function() {
-    return Routes.api.relationships_by_url('requested');
+    return ApiRoutes.relationships_by_url('requested');
   },
   itemClass: PersonsPopup_RequestRelationship
 });
@@ -9470,7 +9470,7 @@ window.PostEditor_Demo = React.createClass({displayName: 'PostEditor_Demo',
       entry: null
     });
     return this.createRequest({
-      url: Routes.api.entry_url(entryId),
+      url: ApiRoutes.entry_url(entryId),
       success: (function(_this) {
         return function(data) {
           return _this.safeUpdateState({
@@ -9593,7 +9593,7 @@ window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_
     return EntryStore.storeEntry(normalizedEntry);
   },
   redirectToEntryPage: function(entry) {
-    if (TASTY_ENV === 'static-development') {
+    if (TastySettings.env === 'static-development') {
       alert("Статья " + entry.id + " успешно сохранена");
       return window.location.reload();
     } else {
@@ -10714,9 +10714,9 @@ window.PostEditor_ImagesForm = {
   },
   _getSaveUrl: function() {
     if (this.entryId() != null) {
-      return Routes.api.update_entry_url(this.entryId(), this.entryType());
+      return ApiRoutes.update_entry_url(this.entryId(), this.entryType());
     } else {
-      return Routes.api.create_entry_url(this.entryType());
+      return ApiRoutes.create_entry_url(this.entryType());
     }
   },
   _getSaveMethod: function() {
@@ -10798,9 +10798,9 @@ window.PostEditor_PersistenceMixin = {
   },
   savingUrl: function() {
     if (this.entryId() != null) {
-      return Routes.api.update_entry_url(this.entryId(), this.entryType());
+      return ApiRoutes.update_entry_url(this.entryId(), this.entryType());
     } else {
-      return Routes.api.create_entry_url(this.entryType());
+      return ApiRoutes.create_entry_url(this.entryType());
     }
   },
   savingMethod: function() {
@@ -11091,7 +11091,7 @@ window.VideoMediaBox = React.createClass({displayName: 'VideoMediaBox',
     this.activateLoadingMode();
     this.incrementActivities();
     return this.createRequest({
-      url: Routes.api.iframely_url(),
+      url: ApiRoutes.iframely_url(),
       method: 'POST',
       data: {
         url: embedUrl
@@ -11577,7 +11577,7 @@ window.RelationshipMixin = {
       isProcess: true
     });
     return this.createRequest({
-      url: Routes.api.change_my_relationship_url(this.state.relationship.user_id, 'follow'),
+      url: ApiRoutes.change_my_relationship_url(this.state.relationship.user_id, 'follow'),
       method: 'POST',
       success: (function(_this) {
         return function(data) {
@@ -11608,7 +11608,7 @@ window.RelationshipMixin = {
       isProcess: true
     });
     return this.createRequest({
-      url: Routes.api.change_my_relationship_url(this.state.relationship.user_id, 'unfollow'),
+      url: ApiRoutes.change_my_relationship_url(this.state.relationship.user_id, 'unfollow'),
       method: 'POST',
       success: (function(_this) {
         return function(data) {
@@ -11639,7 +11639,7 @@ window.RelationshipMixin = {
       isProcess: true
     });
     return this.createRequest({
-      url: Routes.api.unfollow_from_yourself_url(this.props.relationship.user_id),
+      url: ApiRoutes.unfollow_from_yourself_url(this.props.relationship.user_id),
       method: 'DELETE',
       success: (function(_this) {
         return function(data) {
@@ -11667,7 +11667,7 @@ window.RelationshipMixin = {
       isProcess: true
     });
     return this.createRequest({
-      url: Routes.api.change_my_relationship_url(this.state.relationship.user_id, 'cancel'),
+      url: ApiRoutes.change_my_relationship_url(this.state.relationship.user_id, 'cancel'),
       method: 'POST',
       success: (function(_this) {
         return function(data) {
@@ -11703,7 +11703,7 @@ window.RelationshipMixin = {
       isProcess: true
     });
     return this.createRequest({
-      url: Routes.api.change_my_relationship_url(this.state.relationship.user_id, 'ignore'),
+      url: ApiRoutes.change_my_relationship_url(this.state.relationship.user_id, 'ignore'),
       method: 'POST',
       success: (function(_this) {
         return function(data) {
@@ -11734,7 +11734,7 @@ window.RelationshipMixin = {
       isProcess: true
     });
     return this.createRequest({
-      url: Routes.api.relationships_by_tlog_approve_url(this.props.relationship.reader.id),
+      url: ApiRoutes.relationships_by_tlog_approve_url(this.props.relationship.reader.id),
       method: 'POST',
       success: (function(_this) {
         return function(data) {
@@ -11764,7 +11764,7 @@ window.RelationshipMixin = {
       isProcess: true
     });
     return this.createRequest({
-      url: Routes.api.relationships_by_tlog_disapprove_url(this.props.relationship.reader.id),
+      url: ApiRoutes.relationships_by_tlog_disapprove_url(this.props.relationship.reader.id),
       method: 'POST',
       success: (function(_this) {
         return function(data) {
@@ -11790,7 +11790,7 @@ window.RelationshipMixin = {
   },
   _loadRelationship: function() {
     return this.createRequest({
-      url: Routes.api.get_my_relationship_url(this.props.tlogId),
+      url: ApiRoutes.get_my_relationship_url(this.props.tlogId),
       success: (function(_this) {
         return function(data) {
           _this.safeUpdateState({
@@ -12089,7 +12089,7 @@ module.experts = window.SettingsAvatar = React.createClass({displayName: 'Settin
   },
   componentDidMount: function() {
     return $(this.getDOMNode()).fileupload({
-      url: Routes.api.userpic_url(),
+      url: ApiRoutes.userpic_url(),
       replaceFileInput: false,
       dataType: 'json',
       start: (function(_this) {
@@ -12175,7 +12175,7 @@ window.SettingsEmailConfirmation = React.createClass({displayName: 'SettingsEmai
       isProcess: true
     });
     return this.createRequest({
-      url: Routes.api.request_confirm_url(),
+      url: ApiRoutes.request_confirm_url(),
       method: 'POST',
       dataType: 'JSON',
       success: (function(_this) {
@@ -12569,7 +12569,7 @@ window.SettingsEmail = React.createClass({displayName: 'SettingsEmail',
   },
   makeCancelRequest: function() {
     return this.createRequest({
-      url: Routes.api.request_confirm_url(),
+      url: ApiRoutes.request_confirm_url(),
       method: 'DELETE',
       success: (function(_this) {
         return function() {
@@ -13009,7 +13009,7 @@ module.experts = window.SettingsVkontakteItem = React.createClass({displayName: 
     user: React.PropTypes.object.isRequired
   },
   click: function() {
-    return window.location = Routes.api.omniauth_url('vkontakte') + "?attach_to_user_id=" + this.props.user.id;
+    return window.location = ApiRoutes.omniauth_url('vkontakte') + "?attach_to_user_id=" + this.props.user.id;
   },
   render: function() {
     return React.DOM.div({className: "settings__item"}, 
@@ -13054,7 +13054,7 @@ window.ToolbarSettings = React.createClass({displayName: 'ToolbarSettings',
     data = {};
     data[key] = value;
     return this.createRequest({
-      url: Routes.api.update_profile_url(),
+      url: ApiRoutes.update_profile_url(),
       data: data,
       dataType: 'JSON',
       method: 'PUT',
@@ -13214,7 +13214,7 @@ window.VkAuthorizationShellBox = React.createClass({displayName: 'VkAuthorizatio
     this.props.disableShellbox();
     this.timeout = setTimeout(this._cancelAuth, AUTH_TIMEOUT);
     return _.defer(function() {
-      return window.location = Routes.api.omniauth_url('vkontakte');
+      return window.location = ApiRoutes.omniauth_url('vkontakte');
     });
   },
   componentWillUnmount: function() {
@@ -13257,7 +13257,7 @@ window.Shellbox_VkAuthButton = React.createClass({displayName: 'Shellbox_VkAuthB
     } else {
       icon = React.DOM.span({className: "icon icon--vkontakte"});
     }
-    return React.DOM.a({href:  Routes.api.omniauth_url('vkontakte'), 
+    return React.DOM.a({href:  ApiRoutes.omniauth_url('vkontakte'), 
                onClick:  this.onClick}, 
               React.DOM.button({className: "button button--vkontakte"}, 
                 icon, 
@@ -13362,7 +13362,7 @@ window.EmailSigninShellBox = React.createClass({displayName: 'EmailSigninShellBo
   },
   renderFooter: function() {
     return React.DOM.div({className: "form-popup__footer"}, 
-      React.DOM.a({href:  Routes.api.omniauth_url('vkontakte'), 
+      React.DOM.a({href:  ApiRoutes.omniauth_url('vkontakte'), 
          title: "Войти через Вконтакте", 
          className: "form-popup__footer-item", 
          onClick:  this.onVkAuthClick}, 
@@ -13381,7 +13381,7 @@ window.EmailSigninShellBox = React.createClass({displayName: 'EmailSigninShellBo
       inProcess: true
     });
     return this.createRequest({
-      url: Routes.api.signin_url(),
+      url: ApiRoutes.signin_url(),
       data: {
         email: this.$emailField.val(),
         password: this.$passwordField.val()
@@ -13496,7 +13496,7 @@ module.experts = window.EmailSignupShellBox = React.createClass({displayName: 'E
       inProcess: true
     });
     return this.createRequest({
-      url: Routes.api.signup_url(),
+      url: ApiRoutes.signup_url(),
       data: user,
       method: 'POST',
       dataType: 'JSON',
@@ -13579,7 +13579,7 @@ module.experts = window.EmailSignupShellBox = React.createClass({displayName: 'E
   },
   renderFooter: function() {
     return React.DOM.div({className: "form-popup__footer"}, 
-              React.DOM.a({href: Routes.api.omniauth_url('vkontakte'), 
+              React.DOM.a({href: ApiRoutes.omniauth_url('vkontakte'), 
                  title: "У вас есть аккаунт вконтакте?", 
                  className: "form-popup__footer-item", 
                  onClick:  this.onVkAuthClick}, 
@@ -13712,7 +13712,7 @@ module.experts = window.RecoveryShellBox = React.createClass({displayName: 'Reco
       inProcess: true
     });
     return this.createRequest({
-      url: Routes.api.recovery_url(),
+      url: ApiRoutes.recovery_url(),
       data: {
         location: window.location.href,
         slug_or_email: slug
@@ -13785,7 +13785,7 @@ window.SelectSigninShellBox = React.createClass({displayName: 'SelectSigninShell
               ), 
               React.DOM.div({className: "form-popup__body"}, 
                   React.DOM.div({className: "form-popup__select"}, 
-                      React.DOM.a({href:  Routes.api.omniauth_url('vkontakte'), 
+                      React.DOM.a({href:  ApiRoutes.omniauth_url('vkontakte'), 
                          className: "form-popup__select-item is--vkontakte", 
                          onClick:  this.onVkAuthClick}, 
                           React.DOM.div({className: "form-popup__select-item-i"}, 
@@ -14618,7 +14618,7 @@ window.Voting = React.createClass({displayName: 'Voting',
       process: true
     });
     return this.createRequest({
-      url: Routes.api.votes_url(this.props.entryId),
+      url: ApiRoutes.votes_url(this.props.entryId),
       method: 'POST',
       success: (function(_this) {
         return function(data) {
@@ -14912,9 +14912,7 @@ TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() 
 
 
 },{}],187:[function(require,module,exports){
-var INCOMING_MESSAGE, INCOMING_NOTIFICATION, TastySettings;
-
-TastySettings = require('../../settings');
+var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
 
 window.TastySoundController = {
   _buildAudioElement: function(url) {
@@ -14940,7 +14938,7 @@ INCOMING_NOTIFICATION = TastySoundController._buildAudioElement('incoming_messag
 
 
 
-},{"../../settings":254}],188:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
   SERVER_ACTION: 'SERVER_ACTION',
   TYPE_SETUP: 'setup',
@@ -15587,7 +15585,7 @@ window.MessagesPopup_ChooserResults = React.createClass({displayName: 'MessagesP
   },
   loadPredictions: function(query) {
     return this.createRequest({
-      url: Routes.api.users_predict(),
+      url: ApiRoutes.users_predict(),
       method: 'GET',
       data: {
         query: query
@@ -16836,7 +16834,7 @@ window.MessagingRequester = (function() {
     var error, success;
     success = _arg.success, error = _arg.error;
     return $.ajax({
-      url: Routes.api.messenger_ready_url(),
+      url: ApiRoutes.messenger_ready_url(),
       data: {
         socket_id: this.socket_id
       },
@@ -16848,7 +16846,7 @@ window.MessagingRequester = (function() {
 
   MessagingRequester.prototype.postNewConversation = function(recipientSlug, content) {
     return $.ajax({
-      url: Routes.api.messenger_new_conversation_url(recipientSlug),
+      url: ApiRoutes.messenger_new_conversation_url(recipientSlug),
       method: 'POST',
       data: {
         socket_id: this.socket_id,
@@ -16859,7 +16857,7 @@ window.MessagingRequester = (function() {
 
   MessagingRequester.prototype.loadMessages = function(conversationId) {
     return $.ajax({
-      url: Routes.api.messenger_load_messages_url(conversationId),
+      url: ApiRoutes.messenger_load_messages_url(conversationId),
       data: {
         socket_id: this.socket_id
       }
@@ -16868,7 +16866,7 @@ window.MessagingRequester = (function() {
 
   MessagingRequester.prototype.loadMoreMessages = function(conversationId, toMessageId) {
     return $.ajax({
-      url: Routes.api.messenger_load_messages_url(conversationId),
+      url: ApiRoutes.messenger_load_messages_url(conversationId),
       data: {
         socket_id: this.socket_id,
         to_message_id: toMessageId,
@@ -16879,7 +16877,7 @@ window.MessagingRequester = (function() {
 
   MessagingRequester.prototype.postMessage = function(conversationId, content, uuid) {
     return $.ajax({
-      url: Routes.api.messenger_new_message_url(conversationId),
+      url: ApiRoutes.messenger_new_message_url(conversationId),
       method: 'POST',
       data: {
         socket_id: this.socket_id,
@@ -16891,7 +16889,7 @@ window.MessagingRequester = (function() {
 
   MessagingRequester.prototype.markAsReadMessage = function(conversationId, messageId) {
     return $.ajax({
-      url: Routes.api.messenger_read_messages_url(conversationId),
+      url: ApiRoutes.messenger_read_messages_url(conversationId),
       method: 'PUT',
       data: {
         socket_id: this.socket_id,
@@ -16902,7 +16900,7 @@ window.MessagingRequester = (function() {
 
   MessagingRequester.prototype.markAsReadNotification = function(notificationId) {
     return $.ajax({
-      url: Routes.api.notifications_read_url(notificationId),
+      url: ApiRoutes.notifications_read_url(notificationId),
       method: 'PUT',
       data: {
         socket_id: this.socket_id,
@@ -16948,7 +16946,7 @@ window.MessagingService = (function() {
     MessagingDispatcher.changeConnectionState(ConnectionStateStore.PROCESS_STATE);
     _.extend(this, EventEmitter.prototype);
     this.pusher = new Pusher(gon.pusher.key, {
-      authEndpoint: Routes.api.pusher_auth_url(),
+      authEndpoint: ApiRoutes.pusher_auth_url(),
       pong_timeout: 6000,
       unavailable_timeout: 2000,
       auth: {
@@ -18308,7 +18306,7 @@ window.PositionsService = {
 window.ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
   image_url: function(url, style) {
-    if (TASTY_ENV === 'static-development') {
+    if (TastySettings.env === 'static-development') {
       return url;
     } else {
       url = url.replace(/^.*\/assets\//, '');
@@ -18645,32 +18643,7 @@ window.TastyUtils = {
 
 
 },{}],253:[function(require,module,exports){
-var ApiRoutes, Routes, TastySettings;
-
-TastySettings = require('./settings');
-
-Routes = {
-  logout_path: function() {
-    return TastySettings.host + '/logout';
-  },
-  tlog_favorite_entries_path: function(slug) {
-    return '/@' + slug + '/favorites';
-  },
-  tag_path: function(tag) {
-    return '/tags/' + tag;
-  },
-  friends_feed_path: function() {
-    return '/friends/';
-  },
-  live_feed_path: function() {
-    return '/live/';
-  },
-  people_path: function() {
-    return '/people/';
-  }
-};
-
-ApiRoutes = {
+window.ApiRoutes = {
   omniauth_url: function(provider) {
     return TastySettings.host + 'auth/' + provider;
   },
@@ -18746,6 +18719,9 @@ ApiRoutes = {
   relationships_by_url: function(state) {
     return TastySettings.api_host + 'v1/relationships/by/' + state;
   },
+  unfollow_from_yourself_url: function(tlogId) {
+    return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId;
+  },
   relationships_by_tlog_approve_url: function(tlogId) {
     return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/approve';
   },
@@ -18796,33 +18772,33 @@ ApiRoutes = {
   }
 };
 
-window.Routes = Routes;
-
-window.Routes.api = ApiRoutes;
 
 
+},{}],254:[function(require,module,exports){
+var Routes;
 
-},{"./settings":254}],254:[function(require,module,exports){
-var TastySettings, _ref, _ref1;
-
-TastySettings = {
-  version: 'v0.3.2',
-  host: 'http://taaasty.ru/',
-  api_host: 'http://taaasty.ru/api/',
-  sound_asset_url: 'sounds/'
+Routes = {
+  logout_path: function() {
+    return TastySettings.host + '/logout';
+  },
+  tlog_favorite_entries_path: function(slug) {
+    return '/@' + slug + '/favorites';
+  },
+  tag_path: function(tag) {
+    return '/tags/' + tag;
+  },
+  friends_feed_path: function() {
+    return '/friends/';
+  },
+  live_feed_path: function() {
+    return '/live/';
+  },
+  people_path: function() {
+    return '/people/';
+  }
 };
 
-console.log('TastyVersion', TastySettings.version);
-
-if (((_ref = localStorage.getItem('host')) != null ? _ref.length : void 0) > 0) {
-  TastySettings.host = localStorage.getItem('host');
-}
-
-if (((_ref1 = localStorage.getItem('api_host')) != null ? _ref1.length : void 0) > 0) {
-  TastySettings.api_host = localStorage.getItem('api_host');
-}
-
-module.exports = TastySettings;
+window.Routes = window.Routes || Routes;
 
 
 

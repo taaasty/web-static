@@ -279,6 +279,7 @@
   color: #b3b3b1;
 }
 /*--------------------------*/
+/* Social Share */
 /*@avatar-styles: 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth';*/
 /*@avatar-backgrounds: #eb4656, #f37420, #ffca00, #b5c31e, #44d068, #34c8bc, #3382da, #7648de;*/
 /*@avatar-colors: @color-white, @color-white, #222, @color-white, @color-white, @color-white, @color-white, @color-white;*/
@@ -777,6 +778,7 @@ body {
   display: block;
 }
 .layout--tech .page-cover {
+  background-image: url(/images/techpage-bg.gif);
   background-position: 50% 50%;
   background-size: cover;
 }
@@ -1127,6 +1129,110 @@ body {
   background-color: #ffffff !important;
   opacity: 1 !important;
 }
+.tlog-mode-minimal .social-share-facebook-button,
+.tlog-mode-minimal .social-share-vkontakte-button {
+  box-shadow: inset 0 0 0 1px #b7b7b7;
+}
+.tooltip {
+  position: absolute;
+  z-index: 1070;
+  display: block;
+  visibility: visible;
+  font-size: 12px;
+  line-height: 1.4;
+  -moz-opacity: 0;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.tooltip.in {
+  -moz-opacity: 0.85;
+  opacity: 0.85;
+  filter: alpha(opacity=85);
+}
+.tooltip.top {
+  margin-top: -3px;
+  padding: 7px 0;
+}
+.tooltip.right {
+  margin-left: 3px;
+  padding: 0 7px;
+}
+.tooltip.bottom {
+  margin-top: 3px;
+  padding: 7px 0;
+}
+.tooltip.left {
+  margin-left: -3px;
+  padding: 0 7px;
+}
+.tooltip-inner {
+  max-width: 225px;
+  padding: 3px 8px;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  background-color: #121212;
+  border-radius: 4px;
+}
+.tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.tooltip.top .tooltip-arrow {
+  bottom: 0;
+  left: 50%;
+  margin-left: -7px;
+  border-width: 7px 7px 0;
+  border-top-color: #121212;
+}
+.tooltip.top-left .tooltip-arrow {
+  bottom: 0;
+  left: 7px;
+  border-width: 7px 7px 0;
+  border-top-color: #121212;
+}
+.tooltip.top-right .tooltip-arrow {
+  bottom: 0;
+  right: 7px;
+  border-width: 7px 7px 0;
+  border-top-color: #121212;
+}
+.tooltip.right .tooltip-arrow {
+  top: 50%;
+  left: 0;
+  margin-top: -7px;
+  border-width: 7px 7px 7px 0;
+  border-right-color: #121212;
+}
+.tooltip.left .tooltip-arrow {
+  top: 50%;
+  right: 0;
+  margin-top: -7px;
+  border-width: 7px 0 7px 7px;
+  border-left-color: #121212;
+}
+.tooltip.bottom .tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -7px;
+  border-width: 0 7px 7px;
+  border-bottom-color: #121212;
+}
+.tooltip.bottom-left .tooltip-arrow {
+  top: 0;
+  left: 7px;
+  border-width: 0 7px 7px;
+  border-bottom-color: #121212;
+}
+.tooltip.bottom-right .tooltip-arrow {
+  top: 0;
+  right: 7px;
+  border-width: 0 7px 7px;
+  border-bottom-color: #121212;
+}
 /*.avatar-style(@i: length(@avatar-backgrounds)) when (@i > 0) {
   @style: e(extract(@avatar-styles, @i));
   @background: extract(@avatar-backgrounds, @i);
@@ -1421,6 +1527,8 @@ body {
 .menu .auth-button,
 .menu .more-button,
 .menu .add-post-button,
+.menu .social-share-facebook-button,
+.menu .social-share-vkontakte-button,
 .menu .follow-button {
   margin: 5px 12px;
   text-align: left;
@@ -1464,6 +1572,8 @@ body {
   .menu .auth-button,
   .menu .more-button,
   .menu .add-post-button,
+  .menu .social-share-facebook-button,
+  .menu .social-share-vkontakte-button,
   .menu .follow-button {
     margin-top: 3px;
     margin-bottom: 3px;
@@ -1476,6 +1586,8 @@ body {
   .menu .auth-button,
   .menu .more-button,
   .menu .add-post-button,
+  .menu .social-share-facebook-button,
+  .menu .social-share-vkontakte-button,
   .menu .follow-button {
     width: 180px;
   }
@@ -1487,6 +1599,8 @@ body {
   .menu .auth-button,
   .menu .more-button,
   .menu .add-post-button,
+  .menu .social-share-facebook-button,
+  .menu .social-share-vkontakte-button,
   .menu .follow-button {
     width: 100px;
   }
@@ -2928,6 +3042,8 @@ a.toolbar__popup-link:active {
 .confirmation .auth-button,
 .confirmation .more-button,
 .confirmation .add-post-button,
+.confirmation .social-share-facebook-button,
+.confirmation .social-share-vkontakte-button,
 .confirmation .follow-button {
   margin: 0 5px;
 }
@@ -3956,6 +4072,8 @@ a.toolbar__popup-link:active {
 .auth-button,
 .more-button,
 .add-post-button,
+.social-share-facebook-button,
+.social-share-vkontakte-button,
 .follow-button {
   width: auto;
   margin: 0;
@@ -3991,6 +4109,8 @@ a.disapprove-button,
 a.auth-button,
 a.more-button,
 a.add-post-button,
+a.social-share-facebook-button,
+a.social-share-vkontakte-button,
 a.follow-button {
   text-decoration: none !important;
 }
@@ -4000,6 +4120,8 @@ a.follow-button {
 .auth-button:before,
 .more-button:before,
 .add-post-button:before,
+.social-share-facebook-button:before,
+.social-share-vkontakte-button:before,
 .follow-button:before {
   content: "";
   position: absolute;
@@ -4018,6 +4140,8 @@ a.follow-button {
 .auth-button .icon,
 .more-button .icon,
 .add-post-button .icon,
+.social-share-facebook-button .icon,
+.social-share-vkontakte-button .icon,
 .follow-button .icon {
   position: relative;
   top: -1px;
@@ -4031,6 +4155,8 @@ a.follow-button {
 .auth-button .icon--cross,
 .more-button .icon--cross,
 .add-post-button .icon--cross,
+.social-share-facebook-button .icon--cross,
+.social-share-vkontakte-button .icon--cross,
 .follow-button .icon--cross {
   font-size: 18px;
 }
@@ -4040,6 +4166,8 @@ a.follow-button {
 .auth-button .spinner,
 .more-button .spinner,
 .add-post-button .spinner,
+.social-share-facebook-button .spinner,
+.social-share-vkontakte-button .spinner,
 .follow-button .spinner {
   top: -3px;
 }
@@ -4054,6 +4182,8 @@ a.follow-button {
 .button-group > .auth-button:not(:first-of-type),
 .button-group > .more-button:not(:first-of-type),
 .button-group > .add-post-button:not(:first-of-type),
+.button-group > .social-share-facebook-button:not(:first-of-type),
+.button-group > .social-share-vkontakte-button:not(:first-of-type),
 .button-group > .follow-button:not(:first-of-type) {
   margin-left: -1px;
   border-top-left-radius: 0;
@@ -4065,6 +4195,8 @@ a.follow-button {
 .button-group > .auth-button:not(:last-of-type),
 .button-group > .more-button:not(:last-of-type),
 .button-group > .add-post-button:not(:last-of-type),
+.button-group > .social-share-facebook-button:not(:last-of-type),
+.button-group > .social-share-vkontakte-button:not(:last-of-type),
 .button-group > .follow-button:not(:last-of-type) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -4075,6 +4207,8 @@ a.follow-button {
 .button-group > .auth-button:not(:first-of-type):not(:last-of-type),
 .button-group > .more-button:not(:first-of-type):not(:last-of-type),
 .button-group > .add-post-button:not(:first-of-type):not(:last-of-type),
+.button-group > .social-share-facebook-button:not(:first-of-type):not(:last-of-type),
+.button-group > .social-share-vkontakte-button:not(:first-of-type):not(:last-of-type),
 .button-group > .follow-button:not(:first-of-type):not(:last-of-type) {
   border-radius: 0;
 }
@@ -4084,6 +4218,8 @@ a.follow-button {
 .button-group.state--expanded > .auth-button,
 .button-group.state--expanded > .more-button,
 .button-group.state--expanded > .add-post-button,
+.button-group.state--expanded > .social-share-facebook-button,
+.button-group.state--expanded > .social-share-vkontakte-button,
 .button-group.state--expanded > .follow-button {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
@@ -4103,6 +4239,8 @@ a.follow-button {
 .button-group-dropdown:not(:first-child) .auth-button,
 .button-group-dropdown:not(:first-child) .more-button,
 .button-group-dropdown:not(:first-child) .add-post-button,
+.button-group-dropdown:not(:first-child) .social-share-facebook-button,
+.button-group-dropdown:not(:first-child) .social-share-vkontakte-button,
 .button-group-dropdown:not(:first-child) .follow-button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -4113,6 +4251,8 @@ a.follow-button {
 .button-group-dropdown:not(:last-child) .auth-button,
 .button-group-dropdown:not(:last-child) .more-button,
 .button-group-dropdown:not(:last-child) .add-post-button,
+.button-group-dropdown:not(:last-child) .social-share-facebook-button,
+.button-group-dropdown:not(:last-child) .social-share-vkontakte-button,
 .button-group-dropdown:not(:last-child) .follow-button {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -4123,6 +4263,8 @@ a.follow-button {
 .button-group-dropdown:not(:first-child):not(:last-child) .auth-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .more-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .add-post-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .social-share-facebook-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .social-share-vkontakte-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .follow-button {
   border-radius: 0;
 }
@@ -4358,6 +4500,8 @@ a.follow-button {
 .post-settings-button.auth-button,
 .post-settings-button.more-button,
 .post-settings-button.add-post-button,
+.post-settings-button.social-share-facebook-button,
+.post-settings-button.social-share-vkontakte-button,
 .post-settings-button.follow-button {
   padding: 0 10px;
 }
@@ -4396,6 +4540,68 @@ a.follow-button {
   position: fixed;
   right: 20px;
   bottom: 20px;
+}
+.social-share-facebook-button {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  background-color: #ffffff;
+  font-size: 20px;
+  line-height: 56px;
+  color: #c2c2c2;
+  letter-spacing: 0;
+  border-radius: 50%;
+  -webkit-transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+          transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  /*.icon {
+    margin: 2px;
+    font-size: 38px;
+  }*/
+}
+.social-share-facebook-button:hover,
+.social-share-facebook-button:active,
+.social-share-facebook-button.state--active {
+  box-shadow: inset 0 0 0 1px transparent !important;
+  color: #ffffff;
+}
+.social-share-facebook-button:hover {
+  background: #44619d;
+}
+.social-share-facebook-button:active,
+.social-share-facebook-button.state--active {
+  background: #44619d;
+}
+.social-share-vkontakte-button {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  background-color: #ffffff;
+  font-size: 20px;
+  line-height: 56px;
+  color: #c2c2c2;
+  letter-spacing: 0;
+  border-radius: 50%;
+  -webkit-transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+          transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  /*.icon {
+    margin: 2px;
+    font-size: 38px;
+  }*/
+}
+.social-share-vkontakte-button:hover,
+.social-share-vkontakte-button:active,
+.social-share-vkontakte-button.state--active {
+  box-shadow: inset 0 0 0 1px transparent !important;
+  color: #ffffff;
+}
+.social-share-vkontakte-button:hover {
+  background: #5c82ab;
+}
+.social-share-vkontakte-button:active,
+.social-share-vkontakte-button.state--active {
+  background: #5c82ab;
 }
 .pagination {
   font-size: 14px;
@@ -6719,6 +6925,8 @@ a.types-posts__item:hover .types-posts__text {
 .messages__footer .auth-button,
 .messages__footer .more-button,
 .messages__footer .add-post-button,
+.messages__footer .social-share-facebook-button,
+.messages__footer .social-share-vkontakte-button,
 .messages__footer .follow-button {
   display: block;
   box-sizing: initial;
@@ -7036,6 +7244,7 @@ a.types-posts__item:hover .types-posts__text {
   margin-bottom: 10px;
 }
 .messages__section {
+  width: 100%;
   height: 100%;
   padding-top: 43px;
   position: relative;
@@ -7687,6 +7896,8 @@ a.types-posts__item:hover .types-posts__text {
 .nav-types.state--loading .auth-button,
 .nav-types.state--loading .more-button,
 .nav-types.state--loading .add-post-button,
+.nav-types.state--loading .social-share-facebook-button,
+.nav-types.state--loading .social-share-vkontakte-button,
 .nav-types.state--loading .follow-button {
   opacity: 0.3;
   -webkit-transition: opacity .3s ease;
@@ -7698,6 +7909,8 @@ a.types-posts__item:hover .types-posts__text {
 .nav-types.state--loading .auth-button.state--active,
 .nav-types.state--loading .more-button.state--active,
 .nav-types.state--loading .add-post-button.state--active,
+.nav-types.state--loading .social-share-facebook-button.state--active,
+.nav-types.state--loading .social-share-vkontakte-button.state--active,
 .nav-types.state--loading .follow-button.state--active {
   opacity: 1;
 }
@@ -7707,6 +7920,8 @@ a.types-posts__item:hover .types-posts__text {
 .nav-types .auth-button,
 .nav-types .more-button,
 .nav-types .add-post-button,
+.nav-types .social-share-facebook-button,
+.nav-types .social-share-vkontakte-button,
 .nav-types .follow-button {
   margin: 0 5px;
 }
@@ -7826,8 +8041,6 @@ a.types-posts__item:hover .types-posts__text {
 .hero .follow-status {
   left: 310px;
   top: 105px;
-  right: none;
-  left: none;
   -webkit-transition-property: top, left;
           transition-property: top, left;
   -webkit-transition-timing-function: ease;
@@ -8227,6 +8440,14 @@ a.types-posts__item:hover .types-posts__text {
     display: none;
   }
 }
+.tooltip {
+  font-size: 13px;
+  font-family: 'Proxima Nova Light', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+.tooltip-inner {
+  padding: .7em 1em;
+  border-radius: 0;
+}
 .browserbar {
   width: 100%;
   height: 50px;
@@ -8268,6 +8489,17 @@ a.types-posts__item:hover .types-posts__text {
   padding-top: 50px;
   -webkit-transition: padding-top 0.2s ease 0.2s;
           transition: padding-top 0.2s ease 0.2s;
+}
+.social-share {
+  margin-top: -68px;
+  position: fixed;
+  top: 50%;
+  left: 20px;
+  z-index: 200;
+}
+.social-share button {
+  margin: 8px 0;
+  display: block;
 }
 .follow-button {
   color: #ffffff !important;
@@ -8494,106 +8726,6 @@ a.types-posts__item:hover .types-posts__text {
 }
 a.pagination__item:hover {
   opacity: .8 !important;
-}
-.tooltip {
-  position: absolute;
-  z-index: 1070;
-  display: block;
-  visibility: visible;
-  font-size: 12px;
-  line-height: 1.4;
-  -moz-opacity: 0;
-  opacity: 0;
-  filter: alpha(opacity=0);
-}
-.tooltip.in {
-  -moz-opacity: 0.9;
-  opacity: 0.9;
-  filter: alpha(opacity=90);
-}
-.tooltip.top {
-  margin-top: -3px;
-  padding: 5px 0;
-}
-.tooltip.right {
-  margin-left: 3px;
-  padding: 0 5px;
-}
-.tooltip.bottom {
-  margin-top: 3px;
-  padding: 5px 0;
-}
-.tooltip.left {
-  margin-left: -3px;
-  padding: 0 5px;
-}
-.tooltip-inner {
-  max-width: 200px;
-  padding: 3px 8px;
-  color: #ffffff;
-  text-align: center;
-  text-decoration: none;
-  background-color: #000000;
-  border-radius: 4px;
-}
-.tooltip-arrow {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-}
-.tooltip.top .tooltip-arrow {
-  bottom: 0;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px 5px 0;
-  border-top-color: #000000;
-}
-.tooltip.top-left .tooltip-arrow {
-  bottom: 0;
-  left: 5px;
-  border-width: 5px 5px 0;
-  border-top-color: #000000;
-}
-.tooltip.top-right .tooltip-arrow {
-  bottom: 0;
-  right: 5px;
-  border-width: 5px 5px 0;
-  border-top-color: #000000;
-}
-.tooltip.right .tooltip-arrow {
-  top: 50%;
-  left: 0;
-  margin-top: -5px;
-  border-width: 5px 5px 5px 0;
-  border-right-color: #000000;
-}
-.tooltip.left .tooltip-arrow {
-  top: 50%;
-  right: 0;
-  margin-top: -5px;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #000000;
-}
-.tooltip.bottom .tooltip-arrow {
-  top: 0;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 0 5px 5px;
-  border-bottom-color: #000000;
-}
-.tooltip.bottom-left .tooltip-arrow {
-  top: 0;
-  left: 5px;
-  border-width: 0 5px 5px;
-  border-bottom-color: #000000;
-}
-.tooltip.bottom-right .tooltip-arrow {
-  top: 0;
-  right: 5px;
-  border-width: 0 5px 5px;
-  border-bottom-color: #000000;
 }
 .video-without-cover {
   overflow: hidden;
