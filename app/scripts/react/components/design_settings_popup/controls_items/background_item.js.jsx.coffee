@@ -44,7 +44,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
     @$uploadCoverInput = $( @refs.uploadCoverInput.getDOMNode() )
 
     @$uploadCoverInput.fileupload
-      url: Routes.api.design_settings_cover_url @props.userId
+      url: ApiRoutes.design_settings_cover_url @props.userId
       paramName: 'file'
       autoUpload: true
       replaceFileInput: false

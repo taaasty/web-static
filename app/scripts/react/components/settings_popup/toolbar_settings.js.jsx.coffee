@@ -25,7 +25,7 @@ window.ToolbarSettings = React.createClass
     data[key] = value
 
     @createRequest
-      url:  Routes.api.update_profile_url()
+      url:  ApiRoutes.update_profile_url()
       data: data
       dataType: 'JSON'
       method:   'PUT'

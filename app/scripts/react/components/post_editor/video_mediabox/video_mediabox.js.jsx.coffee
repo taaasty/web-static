@@ -56,7 +56,7 @@ window.VideoMediaBox = React.createClass
     @incrementActivities()
 
     @createRequest
-      url: Routes.api.iframely_url()
+      url: ApiRoutes.iframely_url()
       method: 'POST'
       data:
         url: embedUrl

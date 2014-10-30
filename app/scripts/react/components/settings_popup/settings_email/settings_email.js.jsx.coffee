@@ -45,7 +45,7 @@ window.SettingsEmail = React.createClass
 
   makeCancelRequest: ->
     @createRequest
-      url:  Routes.api.request_confirm_url()
+      url:  ApiRoutes.request_confirm_url()
       method: 'DELETE'
       success: =>
         @props.saveCallback 'confirmation_email', null

@@ -15,7 +15,7 @@ window.VkAuthorizationShellBox = React.createClass
     @props.disableShellbox()
 
     @timeout = setTimeout @_cancelAuth, AUTH_TIMEOUT
-    _.defer -> window.location = Routes.api.omniauth_url 'vkontakte'
+    _.defer -> window.location = ApiRoutes.omniauth_url 'vkontakte'
 
   componentWillUnmount: -> clearTimeout @timeout if @timeout?
 

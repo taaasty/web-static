@@ -44,7 +44,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
 
   addToFavorites: ->
     @createRequest
-      url: Routes.api.favorites_url()
+      url: ApiRoutes.favorites_url()
       method: 'POST'
       data:
         entry_id: @props.entryId
@@ -56,7 +56,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
 
   removeFromFavorites: ->
     @createRequest
-      url: Routes.api.favorites_url()
+      url: ApiRoutes.favorites_url()
       method: 'DELETE'
       data:
         entry_id: @props.entryId

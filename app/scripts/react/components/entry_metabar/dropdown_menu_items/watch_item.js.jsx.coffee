@@ -37,7 +37,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass
 
   addToWatching: ->
     @createRequest
-      url: Routes.api.watching_url()
+      url: ApiRoutes.watching_url()
       method: 'POST'
       data:
         entry_id: @props.entryId
@@ -49,7 +49,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass
 
   removeFromWatching: ->
     @createRequest
-      url: Routes.api.watching_url()
+      url: ApiRoutes.watching_url()
       method: 'DELETE'
       data:
         entry_id: @props.entryId

@@ -62,7 +62,7 @@ window.DesignSettingsPopup = React.createClass
     @incrementActivities()
 
     @createRequest
-      url: Routes.api.design_settings_url @props.user.get('id')
+      url: ApiRoutes.design_settings_url @props.user.get('id')
       data: data
       method: 'PUT'
       success: (newDesign) =>

@@ -9,7 +9,7 @@ window.SelectSigninShellBox = React.createClass
               </div>
               <div className="form-popup__body">
                   <div className="form-popup__select">
-                      <a href={ Routes.api.omniauth_url('vkontakte') }
+                      <a href={ ApiRoutes.omniauth_url('vkontakte') }
                          className="form-popup__select-item is--vkontakte"
                          onClick={ this.onVkAuthClick }>
                           <div className="form-popup__select-item-i">

@@ -38,7 +38,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass
     @setState isProcess: true
     @incrementActivities()
     @createRequest
-      url: Routes.api.entry_url @props.entryId
+      url: ApiRoutes.entry_url @props.entryId
       method: 'DELETE'
       success: =>
         if @props.successDeleteUrl?

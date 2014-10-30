@@ -36,7 +36,7 @@ window.SettingsEmailConfirmation = React.createClass
     @setState isProcess: true
 
     @createRequest
-      url: Routes.api.request_confirm_url()
+      url: ApiRoutes.request_confirm_url()
       method: 'POST'
       dataType: 'JSON'
       success: (data) =>

@@ -25,7 +25,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass
     @setState isEditError: false, isEditLoading: true
 
     @createRequest
-      url: Routes.api.comments_edit_delete_url @props.comment.id
+      url: ApiRoutes.comments_edit_delete_url @props.comment.id
       method: 'PUT'
       data:
         text: text

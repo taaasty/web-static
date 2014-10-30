@@ -5,7 +5,7 @@ module.experts = window.SettingsVkontakteItem = React.createClass
     user:   React.PropTypes.object.isRequired
 
   click: ->
-    window.location = Routes.api.omniauth_url('vkontakte') + "?attach_to_user_id=" +@props.user.id
+    window.location = ApiRoutes.omniauth_url('vkontakte') + "?attach_to_user_id=" +@props.user.id
 
   render: ->
     `<div className="settings__item">

@@ -1,8 +1,7 @@
-window.TASTY_ENV = 'production'
-
 require './libs'
 require './locales/locales'
-require './routes'
+require './routes/routes'
+require './routes/api'
 require './resources/is_mobile'
 require './resources/fileReceiver'
 require './resources/tasty'
