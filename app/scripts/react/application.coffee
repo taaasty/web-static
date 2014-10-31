@@ -18,3 +18,18 @@ window.ReactApp =
     if user?
       window.messagingService = new MessagingService
         user: CurrentUserStore.getUser()
+
+    UserRoutes = {
+      profile: (request) ->
+        TastyEvents.emit TastyEvents.keys.command_hero_open()
+    }
+
+    # Aviator.pushStateEnabled = false
+
+    Aviator.setRoutes {
+      target: UserRoutes
+      '/:slug/profile': 'profile'
+    }
+
+    $ ->
+      Aviator.dispatch()

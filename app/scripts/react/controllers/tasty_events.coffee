@@ -10,3 +10,5 @@ TastyEvents.keys =
   message_list_scrolled:                        -> "message_list:scrolled"
   user_toolbar_closed:                          -> "user_toolbar:closed"
   user_toolbar_opened:                          -> "user_toolbar:opened"
+
+  command_hero_open:                            -> "hero:open"

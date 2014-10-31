@@ -52,6 +52,7 @@ gulp.task 'scripts', ['clean'], ->
     .require './bower_components/undo/undo',                                { expose: 'undo' }
     .require './bower_components/medium-editor/dist/js/medium-editor',      { expose: 'medium-editor' }
     .require './scripts/resources/screen_viewer',                           { expose: 'screenviewer' }
+    .require './bower_components/aviator/src/main',                         { expose: 'aviator' }
 
   bundle = ->
     # Log when bundling starts

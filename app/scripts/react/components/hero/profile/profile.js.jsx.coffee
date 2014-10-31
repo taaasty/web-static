@@ -23,6 +23,8 @@ window.HeroProfile = React.createClass
     $(window).on 'resize', @onResize
     $(window).on 'scroll', @scrollFade
 
+    TastyEvents.on TastyEvents.keys.command_hero_open(), @open
+
   shouldComponentUpdate: (nextProps, nextState) ->
     @state.currentState != nextState.currentState
 
@@ -61,12 +63,11 @@ window.HeroProfile = React.createClass
                                 stats={ this.props.stats } />
             </div>`
 
-  open: (e) ->
+  open: ->
     transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' +
                     'msTransitionEnd transitionend'
 
     unless @isOpen()
-      e.preventDefault()
       Mousetrap.bind 'esc', @close
       @setHeroWindowHeight()
       $('body').addClass(HERO_OPENED_CLASS).scrollTop 0

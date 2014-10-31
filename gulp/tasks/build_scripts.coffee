@@ -48,6 +48,7 @@ gulp.task 'vendorScripts', ['clean'], ->
     .require './undo/undo',                                { expose: 'undo' }
     .require './medium-editor/dist/js/medium-editor',      { expose: 'medium-editor' }
     .require '../scripts/resources/screen_viewer',         { expose: 'screenviewer' }
+    .require './aviator/src/main',                         { expose: 'aviator' }
 
   bundle = ->
     bundleLogger.start vendorConfig.outputName
@@ -103,6 +104,7 @@ gulp.task 'clientScripts', ['clean'], ->
     .external 'undo'
     .external 'medium-editor'
     .external 'screenviewer'
+    .external 'aviator'
 
   bundle = ->
     bundleLogger.start clientConfig.outputName
