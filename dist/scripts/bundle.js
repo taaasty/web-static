@@ -3676,16 +3676,21 @@ window.Avatar = React.createClass({displayName: 'Avatar',
     };
   },
   render: function() {
-    var avatarStyles, avatar_url, _ref, _ref1;
-    avatar_url = ((_ref = this.props.userpic) != null ? _ref['original_url'] : void 0) || ((_ref1 = this.props.userpic) != null ? _ref1['large_url'] : void 0);
-    if (avatar_url != null) {
-      avatar_url = ThumborService.image_url(avatar_url, this.props.size + 'x' + this.props.size);
+    var avatarClasses, avatarStyles, avatarSymbol, avatarUrl;
+    avatarUrl = this.props.userpic.original_url || this.props.userpic.large_url;
+    avatarSymbol = this.props.userpic.symbol;
+    avatarClasses = React.addons.classSet({
+      'avatar': true,
+      'anonymous_char': this.isAnonymous()
+    });
+    if (avatarUrl != null) {
+      avatarUrl = ThumborService.image_url(avatarUrl, this.props.size + 'x' + this.props.size);
       avatarStyles = {
-        "background-image": "url(" + avatar_url + ")"
+        "background-image": "url(" + avatarUrl + ")"
       };
-      return React.DOM.span({className: "avatar", 
-                    style: avatarStyles }, 
-                React.DOM.img({src: avatar_url, 
+      return React.DOM.span({style: avatarStyles, 
+                    className: avatarClasses }, 
+                React.DOM.img({src: avatarUrl, 
                      alt:  this.props.name, 
                      className: "avatar__img"})
               );
@@ -3694,12 +3699,20 @@ window.Avatar = React.createClass({displayName: 'Avatar',
         'background-color': this.props.userpic.default_colors.background,
         'color': this.props.userpic.default_colors.name
       };
-      return React.DOM.span({title:  this.props.name, 
-                    className: "avatar", 
-                    style: avatarStyles }, 
-                React.DOM.span({className: "avatar__text"},  this.props.name.charAt(0) )
+      return React.DOM.span({style: avatarStyles, 
+                    className: avatarClasses, 
+                    title:  this.props.name}, 
+                React.DOM.span({className: "avatar__text"}, 
+                  avatarSymbol 
+                )
               );
     }
+  },
+  isAnonymous: function() {
+    return this.props.userpic.kind === 'anonymous';
+  },
+  isUser: function() {
+    return this.props.userpic.kind === 'user';
   }
 });
 
@@ -29411,7 +29424,7 @@ var Plugins;
 })(Plugins || (Plugins = {}));
 },{}],"jquery.autosize":[function(require,module,exports){
 /*!
-	Autosize 1.18.13
+	Autosize 1.18.14
 	license: MIT
 	http://www.jacklmoore.com/autosize
 */
@@ -29612,6 +29625,10 @@ var Plugins;
 
 				if (original !== height) {
 					ta.style.height = height + 'px';
+
+					// Trigger a repaint for IE8 for when ta is nested 2 or more levels inside an inline-block
+					mirror.className = mirror.className;
+
 					if (callback) {
 						options.callback.call(ta,ta);
 					}

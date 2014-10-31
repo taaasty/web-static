@@ -21,7 +21,7 @@ module.exports = {
       }
     }
     styles: {
-      src: src + '/stylesheets/main.less'
+      src: src + '/stylesheets/bundle.less'
       dest: dist + '/stylesheets'
       outputName: 'main.css'
     }
