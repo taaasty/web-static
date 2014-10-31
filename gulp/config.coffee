@@ -1,6 +1,6 @@
 src   = './app'
-build  = './build'
-dist = './dist'
+build = './build'
+dist  = './dist'
 
 module.exports = {
   dist: {
@@ -25,6 +25,10 @@ module.exports = {
       dest: dist + '/stylesheets'
       outputName: 'main.css'
     }
+  }
+  assets: {
+    src: src + '/assets/**/*.{ttf,woff,eof,svg}'
+    dest: build + '/assets'
   }
   vendor: {
     baseDir: './app/bower_components'
