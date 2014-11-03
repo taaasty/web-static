@@ -54,7 +54,7 @@ window.HeroProfile = React.createClass
               <div className="hero__gradient"></div>
               <div className="hero__box" ref="heroBox">
                 <HeroProfileAvatar user={ this.props.user }
-                                   onClick={ this.open } />
+                                   onClick={ this.handleAvatarClick } />
                 { follow_status }
                 <HeroProfileHead user={ this.props.user } />
                 { actions }
@@ -67,15 +67,14 @@ window.HeroProfile = React.createClass
     transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' +
                     'msTransitionEnd transitionend'
 
-    unless @isOpen()
-      Mousetrap.bind 'esc', @close
-      @setHeroWindowHeight()
-      $('body').addClass(HERO_OPENED_CLASS).scrollTop 0
+    Mousetrap.bind 'esc', @close
+    @setHeroWindowHeight()
+    $('body').addClass(HERO_OPENED_CLASS).scrollTop 0
 
-      @$hero.on transitionEnd, =>
-        @setState currentState: HERO_OPENED
-        $(window).on 'scroll.hero', @close
-        @$hero.off transitionEnd
+    @$hero.on transitionEnd, =>
+      @setState currentState: HERO_OPENED
+      $(window).on 'scroll.hero', @close
+      @$hero.off transitionEnd
 
   close: ->
     if @isOpen()
@@ -120,3 +119,8 @@ window.HeroProfile = React.createClass
   onResize: -> @setHeroWindowHeight() if @isOpen()
 
   isOpen: -> @state.currentState != HERO_CLOSED
+
+  handleAvatarClick: (e) ->
+    unless @isOpen()
+      e.preventDefault()
+      @open()

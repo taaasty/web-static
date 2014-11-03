@@ -1,9 +1,11 @@
+ReactUjs = require 'reactUjs'
+
 window.ReactApp =
 
   start: ({ user }) ->
     console.log 'ReactApp start'
 
-    ReactUjs.initEvents()
+    ReactUjs.initialize()
 
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()
@@ -31,5 +33,4 @@ window.ReactApp =
       '/:slug/profile': 'profile'
     }
 
-    $ ->
-      Aviator.dispatch()
+    Aviator.dispatch()

@@ -22,7 +22,6 @@ require 'jquery.scrollto'
 require 'screenviewer'
 
 require 'baron'
-require 'reactUjs'
 require('react-mixin-manager')(window.React)
 require 'bootstrap.tooltip'
 

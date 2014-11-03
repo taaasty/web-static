@@ -10,14 +10,9 @@ window.HeroProfileAvatar = React.createClass
 
   render: ->
    `<a href={ this.props.user.tlog_url }
-       onClick={ this.handleClick }>
+       onClick={ this.props.onClick }>
       <div className="hero__avatar">
         <UserAvatar user={ this.props.user }
                     size={ HERO_AVATAR_SIZE } />
       </div>
     </a>`
-
-  handleClick: (e) ->
-    e.preventDefault()
-
-    @props.onClick()
