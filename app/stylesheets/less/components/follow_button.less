@@ -1,42 +1,31 @@
 .follow-button {
-  &:extend(.button all, .button--small all);
+  &:extend(.button all, .button--small all, .write-message-button all);
   color: @white !important;
-
-  &:before {
-    border: 1px solid @fb-border-color;
-  }
-
-  // При наведении, когда ещё не подписаны
-  &:hover {
-    &:before {
-      border-color: @fb-hover-border-color;
-    }
-  }
 
   // Подписаны
   &.state--active {
-    background-color: @fb-active-bg;
+    background-color: @follow-button-active-bg;
 
     &:before {
       border-color: transparent;
     }
 
     &:hover {
-      background-color: @fb-active-hover-bg;
+      background-color: @follow-button-active-hover-bg;
     }
 
     &:active {
-      background-color: @fb-active-click-bg;
+      background-color: @follow-button-active-click-bg;
     }
   }
 
   // Кнопка Follow Button в блоке Persons
   .persons & {
     width: auto;
-    color: @person-fb-color !important;
+    color: @person-follow-button-color !important;
 
     &:before {
-      border-color: @person-fb-border-color;
+      border-color: @person-follow-button-border-color;
     }
 
     &:hover {

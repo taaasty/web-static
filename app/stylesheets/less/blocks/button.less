@@ -7,7 +7,7 @@
   line-height: @height + 1;
 }
 
-.button-style(@background) {
+.button-common-style(@background) {
   background-color: @background;
 
   &:hover {
@@ -19,7 +19,7 @@
   }
 }
 
-.button-outline(@color) {
+.button-outline-style(@color) {
   color: @color !important;
 
   &:before {
@@ -40,7 +40,7 @@
   }
 }
 
-.button-social() {
+.button-social-style() {
   .icon {
     height: 100%;
     margin-right: @button-middle-padding-horizontal - 4;
@@ -59,17 +59,17 @@
 }
 
 .button-social-share-style(@hover-bg; @active-bg: @hover-bg) {
-  width: @button-social-share-size;
-  height: @button-social-share-size;
+  width: @social-share-button-size;
+  height: @social-share-button-size;
   padding: 0;
   background-color: @white;
-  font-size: @button-social-share-font-size;
-  line-height: @button-social-share-size;
-  color: @button-social-share-color;
+  font-size: @social-share-button-font-size;
+  line-height: @social-share-button-size;
+  color: @social-share-button-color;
   letter-spacing: 0;
   border-radius: 50%;
   transition: box-shadow .3s ease, background .3s ease, color .3s ease;
-  box-shadow: inset 0 0 0 1px @button-social-share-border-color;
+  box-shadow: inset 0 0 0 1px @social-share-button-border-color;
 
   /*.icon {
     margin: 2px;
@@ -90,6 +90,22 @@
   &:active,
   &.state--active {
     background: @active-bg;
+  }
+}
+
+.button-hero-style() {
+  &:extend(.button all, .button--small all);
+  color: @hero-button-color;
+
+  &:before {
+    border: 1px solid @hero-button-border-color;
+  }
+
+  &:hover {
+    &:before {
+      border-color: @hero-button-border-color-hover;
+      color: @hero-button-color-hover;
+    }
   }
 }
 
@@ -229,46 +245,46 @@
 /*-- red --*/
 .button--red {
   color: @white !important;
-  .button-style(#f3534b);
+  .button-common-style(#f3534b);
 }
 
 /*-- green --*/
 .button--green {
   color: @white !important;
-  .button-style(@green);
+  .button-common-style(@green);
 }
 
 .button--green-light {
   color: @white !important;
-  .button-style(@green-light);
+  .button-common-style(@green-light);
 }
 
 .button--green-dark {
   color: @white !important;
-  .button-style(@green-dark);
+  .button-common-style(@green-dark);
 }
 
 /*-- blue --*/
 .button--blue {
   color: @white !important;
-  .button-style(#4d75a3);
+  .button-common-style(#4d75a3);
 }
 
 /*-- grey --*/
 .button--grey {
   color: @white !important;
-  .button-style(#b2b2b2);
+  .button-common-style(#b2b2b2);
 }
 
 /*-- yellow --*/
 .button--yellow {
   color: @black !important;
-  .button-style(@yellow);
+  .button-common-style(@yellow);
 }
 
 /*-- outline --*/
 .button--outline {
-  .button-outline(@white);
+  .button-outline-style(@white);
 }
 
 .button--outline-light-white {
@@ -308,8 +324,8 @@
 
 // Social Buttons
 .button--vkontakte {
-  .button-social;
-  .button-style(#4d75a3);
+  .button-social-style;
+  .button-common-style(#4d75a3);
 }
 
 // Icon Button
@@ -446,10 +462,26 @@
 // Social Share Buttons
 .social-share-facebook-button {
   &:extend(.button all);
-  .button-social-share-style(@button-social-share-fb-hover-bg);
+  .button-social-share-style(@social-share-button-fb-hover-bg);
 }
 
 .social-share-vkontakte-button {
   &:extend(.button all);
-  .button-social-share-style(@button-social-share-vk-hover-bg);
+  .button-social-share-style(@social-share-button-vk-hover-bg);
+}
+
+// Hero Buttons
+.write-message-button {
+  .button-hero-style();
+}
+
+.action-menu-button {
+  &:extend( .write-message-button all);
+  width: 46px;
+  padding: 0;
+  color: rgba(255, 255, 255, .6);
+
+  &:hover {
+    color: @white;
+  }
 }

@@ -109,17 +109,33 @@
 
 @button-affixed-indent: @indent-base;
 
-/* Social Share */
-@button-social-share-size: 56px;
-@button-social-share-color: #c2c2c2;
-@button-social-share-border-color: rgba(0, 0, 0, .1);
-@button-social-share-font-size: 20px;
+// Follow Button
+@follow-button-border-color: rgba(red(@white), green(@white), blue(@white), .3);
 
-@button-social-share-fb-hover-bg: #44619d;
-@button-social-share-fb-active-bg: @button-social-share-fb-hover-bg;
+@follow-button-hover-border-color: rgba(red(@white), green(@white), blue(@white), .6);
 
-@button-social-share-vk-hover-bg: #5c82ab;
-@button-social-share-vk-active-bg: @button-social-share-fb-hover-bg;
+@follow-button-active-bg: #36b377;
+@follow-button-active-hover-bg: #ed4545;
+@follow-button-active-click-bg: #ce3e3e;
+
+// Social Share Button
+@social-share-button-size: 56px;
+@social-share-button-color: #c2c2c2;
+@social-share-button-border-color: rgba(0, 0, 0, .1);
+@social-share-button-font-size: 20px;
+
+@social-share-button-fb-hover-bg: #44619d;
+@social-share-button-fb-active-bg: @social-share-button-fb-hover-bg;
+
+@social-share-button-vk-hover-bg: #5c82ab;
+@social-share-button-vk-active-bg: @social-share-button-fb-hover-bg;
+
+// Hero Button
+@hero-button-border-color: rgba(red(@white), green(@white), blue(@white), .3);
+@hero-button-border-color-hover: rgba(red(@white), green(@white), blue(@white), .6);
+
+@hero-button-color: @white;
+@hero-button-color-hover: @white;
 
 // Avatars
 /*@avatar-styles: 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth';*/
@@ -160,15 +176,6 @@
 @dropdown-border-radius: 3px;
 @dropdown-height-item: 40px;
 
-// Follow Button
-@fb-border-color: rgba(red(@white), green(@white), blue(@white), .3);
-
-@fb-hover-border-color: rgba(red(@white), green(@white), blue(@white), .6);
-
-@fb-active-bg: #36b377;
-@fb-active-hover-bg: #ed4545;
-@fb-active-click-bg: #ce3e3e;
-
 // Tabs Nav
 @tabs-nav-linear-gradient: linear-gradient(to right, rgba(51,51,51,0) 0%, rgba(51,51,51,0.93) 100%);
 @tabs-nav-gray-color: #d3d3d3;
@@ -182,8 +189,8 @@
 @person-gray-color: #5a5a5a;
 
 /*-- Follow Button --*/
-@person-fb-border-color: rgba(red(@white), green(@white), blue(@white), .1);
-@person-fb-color: rgba(red(@white), green(@white), blue(@white), .2);
+@person-follow-button-border-color: rgba(red(@white), green(@white), blue(@white), .1);
+@person-follow-button-color: rgba(red(@white), green(@white), blue(@white), .2);
 
 // Bricks
 @brick-width: 302px;
