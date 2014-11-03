@@ -1,0 +1,51 @@
+.privacy-badge {
+  margin-right: 10px;
+  padding: 6px 6px 5px;
+  position: absolute;
+  display: inline-block;
+  float: left;
+  top: .05em;
+  left: -50px;
+  background-color: rgba(red(@white), green(@white), blue(@white), .5);
+  font-size: @privacy-badge-font-size;
+  line-height: @privacy-badge-line-height;
+  font-family: @font-family-base;
+  color: rgba(red(@black), green(@black), blue(@black), .55);
+  text-align: center;
+  white-space: nowrap;
+  z-index: @zindex-privacy-badge;
+  border-radius: @privacy-badge-border-radius;
+  user-select: none;
+  transition: background .4s ease, opacity .4s ease, color .4s ease;
+
+  .icon {
+    margin: -4px 0 -2px;
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    vertical-align: middle;
+    transition: color .4s ease;
+    opacity: .9;
+  }
+
+  .icon--lock {
+    top: -1px;
+  }
+
+  /** Types **/
+  .post--image & {
+    top: 1.5em;
+  }
+
+  .post--video & {
+    top: 1.5em;
+  }
+
+  .post--quote & {
+    top: .5em;
+  }
+
+  .post__header + .post__content & {
+    top: .833em;
+  }
+}
