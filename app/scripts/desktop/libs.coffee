@@ -24,8 +24,6 @@ require 'screenviewer'
 require 'baron'
 require('react-mixin-manager')(window.React)
 require 'bootstrap.tooltip'
-require 'bootstrap.popover'
-require 'bootstro'
 
 # jQuery UI components
 require 'jquery.ui.core'
