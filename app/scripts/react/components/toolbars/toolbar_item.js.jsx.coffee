@@ -33,7 +33,7 @@ window.ToolbarItem = React.createClass
   handleSelect: (e) ->
     if !@props.href && !@props.disabled
       e.preventDefault()
-      @props.onSelect @props.icon
+      @props.onSelect()
 
-  isActive: -> @props.active
+  isActive:   -> @props.active
   isDisabled: -> @props.disabled

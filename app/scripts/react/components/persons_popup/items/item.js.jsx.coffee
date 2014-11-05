@@ -4,8 +4,8 @@ window.PersonsPopup_PersonItem = React.createClass
   mixins: [ReactGrammarMixin]
 
   propTypes:
-    user:        React.PropTypes.object.isRequired
-    children:    React.PropTypes.component.isRequired
+    user:     React.PropTypes.object.isRequired
+    children: React.PropTypes.component.isRequired
 
   render: ->
     entriesCount = @getNumberOfEntries @props.user.public_entries_count

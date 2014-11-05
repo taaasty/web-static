@@ -8,34 +8,17 @@ window.PersonsPopup_PanelMixin =
     total_count: React.PropTypes.number
 
   getInitialState: ->
-    isError:       false
-    isLoading:     false
+    isError:   false
+    isLoading: false
 
   componentDidMount: ->
-    @$scroller = $ @refs.scroller.getDOMNode()
-
-    @scroller = @$scroller.baron
-      scroller: ".js-scroller-pane"
-      bar:      ".js-scroller-bar"
-      track:    ".js-scroller-track"
-      barOnCls: "scroller--tracked"
-      pause:    0
-
-    # TODO Специально вызывается два раза, один раз иногда не срабатывает
-    @$scroller.trigger("sizeChange").trigger('sizeChange')
-
     @getPanelData()
 
-  componentDidUpdate: ->
-    @scroller.update()
-    @$scroller.trigger("sizeChange").trigger('sizeChange')
-
-  componentWillUnmount: ->
-    @scroller.dispose()
-    @$scroller = @scroller = null
-
   render: ->
-    panelClasses = React.addons.classSet 'tabs-panel': true, 'state--hidden': !@props.isActive
+    panelClasses = React.addons.classSet {
+      'tabs-panel': true
+      'state--hidden': !@props.isActive
+    }
 
     if @props.relationships?.length > 0
       itemClass = @itemClass
@@ -102,5 +85,5 @@ window.PersonsPopup_PanelMixin =
 
 React.mixins.add 'PersonsPopup_PanelMixin', [
   window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser'
-  ComponentManipulationsMixin
+  ComponentManipulationsMixin, ScrollerMixin
 ]
