@@ -36,12 +36,12 @@ window.Voting = React.createClass
       'voted':      @state.isVoted
     }
 
-    rating = if @state.process then `<Spinner size={ 8 } />` else @state.rating
+    votes = if @state.process then `<Spinner size={ 8 } />` else @state.votes
 
     return `<span className={ votingClasses }
                   data-original-title={ title }
                   onClick={ this.handleClick }>
-              { rating }
+              { votes }
             </span>`
 
   handleClick: ->
@@ -70,4 +70,4 @@ window.Voting = React.createClass
     else
       title = i18n.t 'votes.cantVote'
 
-    title
+     '(Рейтинг ' + @state.rating + ') ' + title
