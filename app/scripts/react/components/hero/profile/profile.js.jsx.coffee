@@ -33,17 +33,19 @@ window.HeroProfile = React.createClass
     $(window).off 'scroll', @scrollFade
 
   render: ->
+    # <button className="write-message-button">Написать сообщение</button>
+
+    # <div className="dropdown-container">
+    #                <button className="action-menu-button"><i className="icon icon--dots"></i></button>
+    #                <span className="action-dropdown position-top state--open">
+    #                  <a className="action-dropdown-item" href="#" title="Заблокировать"><i className="icon icon--not-allowed"></i>Заблокировать</a>
+    #                   <a className="action-dropdown-item" href="#" title="Пожаловаться"><i className="icon icon--exclamation-mark"></i>Пожаловаться</a>
+    #                </span>
+    #              </div>
+
     if @props.relationship?
-      actions = `<div className="hero__actions">
-                   <button className="write-message-button">Написать сообщение</button>
-                   <FollowButton relationship={ this.props.relationship } />
-                   <div className="dropdown-container">
-                     <button className="action-menu-button"><i className="icon icon--dots"></i></button>
-                     <span className="action-dropdown position-top state--open">
-                       <a className="action-dropdown-item" href="#" title="Заблокировать"><i className="icon icon--not-allowed"></i>Заблокировать</a>
-                        <a className="action-dropdown-item" href="#" title="Пожаловаться"><i className="icon icon--exclamation-mark"></i>Пожаловаться</a>
-                     </span>
-                   </div>
+      actions = `<div className="hero__actions">                   
+                   <FollowButton relationship={ this.props.relationship } />                   
                  </div>`
       follow_status = `<SmartFollowStatus tlogId={ this.props.user.id }
                                           status={ this.props.relationship.state } />`
