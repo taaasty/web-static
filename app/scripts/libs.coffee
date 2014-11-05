@@ -13,6 +13,7 @@ window.Modernizr         = require 'Modernizr'
 window.imagesLoaded      = require 'imagesloaded'
 window.MediumEditor      = require 'medium-editor'
 window.Undo              = require 'undo'
+require 'aviator'
 
 require 'swfobject'
 require 'es5-shim'
@@ -21,7 +22,6 @@ require 'jquery.scrollto'
 require 'screenviewer'
 
 require 'baron'
-require 'reactUjs'
 require('react-mixin-manager')(window.React)
 require 'bootstrap.tooltip'
 

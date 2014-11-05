@@ -25,6 +25,7 @@
     "react-mixin-manager": "~0.7.0",
     "underscore": "~1.7.0",
     "undo": "https://github.com/jzaefferer/undo/archive/master.zip",
-    "es5-shim": "~4.0.3"
+    "es5-shim": "~4.0.3",
+    "aviator": "~0.4.2"
   }
 }

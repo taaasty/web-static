@@ -31,6 +31,7 @@ window.ApiRoutes =
   relationships_summary_url:                     -> TastySettings.api_host + 'v1/relationships/summary'
   relationships_to_url:                  (state) -> TastySettings.api_host + 'v1/relationships/to/' + state
   relationships_by_url:                  (state) -> TastySettings.api_host + 'v1/relationships/by/' + state
+  relationships_by_id_url:              (tlogId) -> TastySettings.api_host + 'v1/relationships/by/' + tlogId
   unfollow_from_yourself_url:           (tlogId) -> TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId
   relationships_by_tlog_approve_url:    (tlogId) -> TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/approve'
   relationships_by_tlog_disapprove_url: (tlogId) -> TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/disapprove'

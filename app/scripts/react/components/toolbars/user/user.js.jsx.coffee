@@ -24,11 +24,13 @@ window.UserToolbar = React.createClass
     currentState: TOOLBAR_CLOSED
 
   componentDidMount: ->
+    TastyEvents.on TastyEvents.keys.command_settings_open(), @showSettings
+    TastyEvents.on TastyEvents.keys.command_requests_open(), @showFriendsRequests
+    @state.user.on 'change', @updateStateUser
+
     if localStorage.getItem 'displayDesignSettings'
       @showDesignSettings()
       localStorage.removeItem 'displayDesignSettings'
-
-    @state.user.on 'change', @updateStateUser
 
   componentWillUpdate: (nextProps, nextState) ->
     if @state.currentState isnt nextState.currentState
@@ -40,6 +42,8 @@ window.UserToolbar = React.createClass
   componentWillUnmount: ->
     clearTimeout @timeout if @timeout
 
+    TastyEvents.off TastyEvents.keys.command_settings_open(), @showSettings
+    TastyEvents.off TastyEvents.keys.command_requests_open(), @showFriendsRequests
     @state.user.off 'change', @updateStateUser
 
   render: ->
@@ -83,13 +87,13 @@ window.UserToolbar = React.createClass
                       <ToolbarItem onSelect={ this.handleMessagesSelect }
                                    icon="icon--messages"
                                    title="Сообщения" />
-                      <ToolbarItem onSelect={ this.handleFriendsSelect }
+                      <ToolbarItem onSelect={ this.showFriends }
                                    icon="icon--friends"
                                    title="Друзья" />
                       <ToolbarItem onSelect={ this.showDesignSettings }
                                    icon="icon--drawing"
                                    title="Дизайн дневника" />
-                      <ToolbarItem onSelect={ this.handleSettingsSelect }
+                      <ToolbarItem onSelect={ this.showSettings }
                                    icon="icon--cogwheel"
                                    title="Настройки" />
                       <ToolbarItem href={ this.props.logoutUrl }
@@ -104,13 +108,19 @@ window.UserToolbar = React.createClass
               </div>
             </nav>`
 
-  handleFriendsSelect: ->
+  showFriendsRequests: (userId) -> @showFriends 'requests', userId
+
+  showFriends: (panelName, userId) ->
     container = document.querySelectorAll('[popup-persons-container]')[0]
 
     unless container
       container = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get 0
 
-    React.renderComponent PersonsPopup(user: @state.user), container
+    React.renderComponent PersonsPopup({
+      user:      @state.user
+      panelName: panelName
+      userId:    userId
+    }), container
 
   showDesignSettings: ->
     url = window.location.href
@@ -128,7 +138,7 @@ window.UserToolbar = React.createClass
     else
       React.renderComponent DesignSettingsPopup(user: @state.user), container
 
-  handleSettingsSelect: ->
+  showSettings: ->
     ReactApp.popup.show ToolbarSettings, {
       title: 'Настройки'
       user:  @state.user
