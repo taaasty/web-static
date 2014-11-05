@@ -6,7 +6,12 @@ window.PersonsPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
 
   propTypes:
-    user: React.PropTypes.object.isRequired
+    user:      React.PropTypes.object.isRequired
+    panelName: React.PropTypes.string
+    userId:    React.PropTypes.number
+
+  getDefaultProps: ->
+    panelName: 'followings'
 
   getInitialState: ->
     relationships: {
@@ -31,13 +36,14 @@ window.PersonsPopup = React.createClass
         total_count: null
       }
     }
-    currentTab: 'followings'
+    currentTab: @props.panelName
 
   render: ->
     onLoad = -> @updateRelationships.apply @, arguments
 
     if @_isProfilePrivate()
       requestsPanel = `<PersonsPopup_RequestsPanel isActive={ this.state.currentTab == 'requests' }
+                                                   userId={ this.props.userId }
                                                    relationships={ this.state.relationships.requests.items }
                                                    total_count={ this.state.relationships.requests.total_count }
                                                    activitiesHandler={ this.activitiesHandler }
@@ -55,24 +61,27 @@ window.PersonsPopup = React.createClass
                                  onSelect={ this.selectTab } />
 
               <PersonsPopup_FollowingsPanel isActive={ this.state.currentTab == 'followings' }
+                                            userId={ this.props.userId }
                                             relationships={ this.state.relationships.followings.items }
                                             total_count={ this.state.relationships.followings.total_count }
                                             activitiesHandler={ this.activitiesHandler }
                                             onLoad={ onLoad.bind(this, 'followings') } />
 
               <PersonsPopup_FollowersPanel isActive={ this.state.currentTab == 'followers' }
+                                           userId={ this.props.userId }
                                            relationships={ this.state.relationships.followers.items }
                                            total_count={ this.state.relationships.followers.total_count }
                                            activitiesHandler={ this.activitiesHandler }
                                            onLoad={ onLoad.bind(this, 'followers') } />
 
               <PersonsPopup_GuessesPanel isActive={ this.state.currentTab == 'guesses' }
+                                         userId={ this.props.userId }
                                          relationships={ this.state.relationships.guesses.items }
                                          total_count={ this.state.relationships.guesses.total_count }
                                          activitiesHandler={ this.activitiesHandler }
                                          onLoad={ onLoad.bind(this, 'guesses') } />
 
-              {requestsPanel}
+              { requestsPanel }
 
             </Popup>`
 

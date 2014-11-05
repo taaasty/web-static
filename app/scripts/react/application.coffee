@@ -21,16 +21,27 @@ window.ReactApp =
       window.messagingService = new MessagingService
         user: CurrentUserStore.getUser()
 
-    UserRoutes = {
-      profile: (request) ->
-        TastyEvents.emit TastyEvents.keys.command_hero_open()
-    }
-
     # Aviator.pushStateEnabled = false
 
+    UserRouteTarget = {
+      profile:               -> TastyEvents.emit TastyEvents.keys.command_hero_open()
+      settings:              -> TastyEvents.emit TastyEvents.keys.command_settings_open()
+      showRequestById: (req) -> TastyEvents.emit TastyEvents.keys.command_requests_open(), +req.params.id
+      showRequests:          -> TastyEvents.emit TastyEvents.keys.command_requests_open()
+    }
+
     Aviator.setRoutes {
-      target: UserRoutes
-      '/:slug/profile': 'profile'
+      '/:user': {
+        target: UserRouteTarget
+        '/profile': 'profile'
+        '/settings': 'settings'
+        '/friends': {
+          '/requests': {
+            '/': 'showRequests'
+            '/:id': 'showRequestById'
+          }
+        }
+      }
     }
 
     Aviator.dispatch()

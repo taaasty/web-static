@@ -1,5 +1,5 @@
 ###* @jsx React.DOM ###
-#
+
 window.PersonsPopup_PanelMixin =
 
   propTypes:
