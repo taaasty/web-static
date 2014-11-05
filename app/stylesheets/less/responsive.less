@@ -1,0 +1,42 @@
+@media (max-width: 768px) {
+  .layout-constrain {
+    width: 90%;
+  }
+
+  .page {
+    min-width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    transition: padding-top .4s ease, margin .4s ease
+  }
+
+
+
+  .toolbar__popup {
+    width: 220px;
+    height: 100%;
+    margin-top: 0;
+    position: fixed;
+    top: 0;
+    border-radius: 0;
+
+    .scroller {
+      height: 100%;
+    }
+
+    .scroller__pane {
+      max-height: 100%;
+    }
+  }
+
+  .toolbar {
+    &.state--open {
+      margin-left: 220px;
+
+      &.toolbar--right {
+        margin-right: 220px;
+        margin-left: 0;
+      }
+    }
+  }
+}

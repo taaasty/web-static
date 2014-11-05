@@ -6,7 +6,7 @@ TOOLBAR_OPENED_BY_HOVER = 'openedByHover'
 TOOLBAR_OPENED_BY_CLICK = 'openedByClick'
 
 window.FeedToolbar = React.createClass
-  mixins: [TouchMixin, ComponentManipulationsMixin]
+  mixins: [TouchMixin, ComponentManipulationsMixin, ScrollerMixin]
 
   propTypes:
     friendsUrl:   React.PropTypes.string
@@ -59,7 +59,14 @@ window.FeedToolbar = React.createClass
                 <i className="icon icon--ribbon"></i>
               </div>
               <div className="toolbar__popup" data-element="dropdown-menu">
-                <ul className="toolbar__popup-list">{ feedList }</ul>
+                <div className="scroller scroller--dark scroller--toolbar" ref="scroller">
+                  <div className="scroller__pane js-scroller-pane">
+                    <ul className="toolbar__popup-list">{ feedList }</ul>
+                  </div>
+                  <div className="scroller__track js-scroller-track">
+                      <div className="scroller__bar js-scroller-bar"></div>
+                  </div>
+                </div>
               </div>
             </nav>`
 
