@@ -54,10 +54,6 @@ window.UserToolbar = React.createClass
       'state--open':    @isOpen()
     }
 
-    #<ToolbarItem disabled={ true }
-                 #href={ this.props.profileUrl }
-                 #icon="icon--profile"
-                 #title="Профиль" />
     return `<nav onClick={ this.onClick }
                  onMouseEnter={ this.onMouseEnter }
                  onMouseLeave={ this.onMouseLeave }
@@ -75,6 +71,9 @@ window.UserToolbar = React.createClass
                       <ToolbarItem href={ this.props.myTlogUrl }
                                    icon="icon--diary"
                                    title="Мой дневник" />
+                      <ToolbarItem onSelect={ this.showProfile }
+                                   icon="icon--profile"
+                                   title="Профиль" />
                       <ToolbarItem href={ this.props.favoritesUrl }
                                    icon="icon--star"
                                    title="Избранное" />
@@ -107,6 +106,16 @@ window.UserToolbar = React.createClass
                 </div>
               </div>
             </nav>`
+
+  showProfile: ->
+    slug       = @props.user.slug
+    currentUrl = window.location.href
+    profileUrl = @props.myTlogUrl + '/profile'
+
+    if profileUrl.indexOf(currentUrl) != -1
+      Aviator.navigate '/:user/profile', namedParams: { user: slug }
+    else
+      window.location = profileUrl
 
   showFriendsRequests: (userId) -> @showFriends 'requests', userId
 
