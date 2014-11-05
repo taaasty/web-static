@@ -108,7 +108,7 @@ window.UserToolbar = React.createClass
             </nav>`
 
   showProfile: ->
-    slug       = @props.user.slug
+    slug       = '@' + @props.user.slug
     currentUrl = window.location.href
     profileUrl = @props.myTlogUrl + '/profile'
 
