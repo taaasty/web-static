@@ -5,4 +5,4 @@ install:
   - npm install
   - ./node_modules/bower/bin/bower -v
   - ./node_modules/bower/bin/bower install
-script: ./node_modules/gulp/bin/gulp.js build
+script: ./test.sh
