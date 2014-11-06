@@ -19,4 +19,4 @@ window.WriteMessageButton = React.createClass
   _getTitle: -> TITLE
 
   handleClick: ->
-    console.log 'Открываем im с пользователем', @props.user.slug
+    ConversationActions.openConversation @props.user.slug
