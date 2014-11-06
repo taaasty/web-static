@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 
-output = `grep -r icon-- app/stylesheets/less/blocks/tastyicons.less`
+output = `grep -r icon-- app/stylesheets/less/fonts/tastyicons.less`
 
 icons = []
 
@@ -10,7 +10,7 @@ output.each_line do |line|
   line.gsub!(/ .+/,'')
   line.gsub!(/\r/,'')
   line.gsub!(/\n/,'')
-  icons << "<i icon=\"icon icon--#{line}\"></i><br />"
+  icons << "<i class=\"icon icon--#{line}\"></i><br />"
 end
 
 head=<<END

@@ -1,37 +1,115 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html>
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>Icons</title>
+    <title>Taaasty Icons</title>
+
+    <meta name="viewport" content="width=device-width">
 
     <link rel="import" href="includes/icons.html">
-
-    <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
-
-    <!-- Fonts -->
-    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
-    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
-    <!-- end Fonts -->
 
     <!-- Styles -->
     <link rel="stylesheet" href="stylesheets/main.css" />
     <!-- end Styles -->
 
-  </head>
-  <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white not-logged" >
-    <h2>Иконки</h2>
-    <script>
-      var link = document.querySelector('link[rel="import"]');
-      var content = link.import;
+    <style>
+      html { font-size: 100%; }
+      body { margin: 2em; font-size: 1.2em; line-height: 1.5em; font-family: Arial, Verdana, Helvetica, sans-serif; letter-spacing: .02em; color: #444; }
 
-      var template = link.import.querySelector('template');
-      var clone = document.importNode(template.content, true);
+      h1, h2, h3, h4, h5, h6 { margin: 1em 0; text-transform: uppercase; letter-spacing: .06em; }
+      h1, h2 { line-height: 1.3em; }
+      h3, h4, h5, h6 { line-height: 1.5em; }
+      ol, ul { margin: 1.5em 0 1.5em .25em; }
+      li { margin-top: .6em; margin-bottom: .6em; }
+      p { margin-top: 1.5em; margin-bottom: 1.5em }
+      a {
+        border-bottom: 1px solid #b2c8ed; color: #1059d1; text-decoration: none;
+        -webkit-transition: border .3s linear, color .3s linear;
+        transition: border .2s ease, color .2s ease;
+      }
+      a:hover { border-bottom-color: #fbc4c4; color: #ec2c2c; }
+
+      hr { margin: 2em -2em; height: 1px; border: none; background: #eee; }
+
+      #icons { margin-bottom: 2em; border: 1px solid #eee; }
+
+      .icon { margin: 1em; display: inline-block; font-size: 2em; }
+
+      @media (max-width: 640px) {
+        body { margin: 1.8em; font-size: 1em; }
+        .icon { margin: .78em; }
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Иконки</h2>
+    <div id="icons">
+      <i class="icon icon--menu"></i>
+      <i class="icon icon--plus"></i>
+      <i class="icon icon--arrow-left"></i>
+      <i class="icon icon--cross"></i>
+      <i class="icon icon--tick"></i>
+      <i class="icon icon--cogwheel"></i>
+      <i class="icon icon--cogwheel-bold"></i>
+      <i class="icon icon--cloud"></i>
+      <i class="icon icon--diary"></i>
+      <i class="icon icon--people"></i>
+      <i class="icon icon--friends"></i>
+      <i class="icon icon--profile"></i>
+      <i class="icon icon--logout"></i>
+      <i class="icon icon--open-eye"></i>
+      <i class="icon icon--closed-eye"></i>
+      <i class="icon icon--eye"></i>
+      <i class="icon icon--refresh"></i>
+      <i class="icon icon--rotate"></i>
+      <i class="icon icon--drawing"></i>
+      <i class="icon icon--pencil"></i>
+      <i class="icon icon--hyperlink-square"></i>
+      <i class="icon icon--hyperlink"></i>
+      <i class="icon icon--basket"></i>
+      <i class="icon icon--basket-square"></i>
+      <i class="icon icon--paper"></i>
+      <i class="icon icon--picture"></i>
+      <i class="icon icon--video"></i>
+      <i class="icon icon--pictures"></i>
+      <i class="icon icon--quote"></i>
+      <i class="icon icon--plus-bold"></i>
+      <i class="icon icon--arrow-down-bold"></i>
+      <i class="icon icon--question-mark"></i>
+      <i class="icon icon--exclamation-mark"></i>
+      <i class="icon icon--type-tlogoden"></i>
+      <i class="icon icon--type-regular"></i>
+      <i class="icon icon--wave"></i>
+      <i class="icon icon--lock"></i>
+      <i class="icon icon--unlock"></i>
+      <i class="icon icon--rating"></i>
+      <i class="icon icon--messages"></i>
+      <i class="icon icon--comments-subscribe"></i>
+      <i class="icon icon--comments-unsubscribe"></i>
+      <i class="icon icon--star"></i>
+      <i class="icon icon--star-fill"></i>
+      <i class="icon icon--magnifier"></i>
+      <i class="icon icon--vkontakte"></i>
+      <i class="icon icon--email"></i>
+      <i class="icon icon--anonymous"></i>
+      <i class="icon icon--dots"></i>
+      <i class="icon icon--text-circle"></i>
+      <i class="icon icon--image-circle"></i>
+      <i class="icon icon--video-circle"></i>
+      <i class="icon icon--quote-circle"></i>
+    </div>
+    <script>
+      //var link = document.querySelector('link[rel="import"]');
+      //var content = link.import;
+
+      //var template = link.import.querySelector('template');
+      //var clone = document.importNode(template.content, true);
       //var el = content.querySelector('#icons');
       // var el = content.body;
       // document.body.appendChild(el.cloneNode(true));
-      document.body.appendChild(clone);
+      //document.body.appendChild(clone);
     </script>
   </body>
 </html>

@@ -270,6 +270,16 @@
   .button-common-style(@green-light);
 }
 
+.button--green-lighter {
+  .button-common-style(#19d889);
+
+  &,
+  &:hover,
+  &:active {
+    color: @white;
+  }
+}
+
 .button--green-dark {
   color: @white !important;
   .button-common-style(@green-dark);

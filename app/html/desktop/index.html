@@ -1,23 +1,46 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
   <head>
     <meta charset="utf-8">
-    <title>mmm-tasty-static</title>
-    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Taaasty Static</title>
+
     <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <link rel="stylesheet" href="stylesheets/main.css">
+    <style>
+      html { font-size: 100%; }
+      body { margin: 2em; font-size: 1.2em; line-height: 1.5em; font-family: Arial, Verdana, Helvetica, sans-serif; letter-spacing: .02em; color: #444; }
 
+      h1, h2, h3, h4, h5, h6 { margin: 1em 0; text-transform: uppercase; letter-spacing: .06em; }
+      h1, h2 { line-height: 1.3em; }
+      h3, h4, h5, h6 { line-height: 1.5em; }
+      ol, ul { margin: 1.5em 0 1.5em .25em; }
+      li { margin-top: .6em; margin-bottom: .6em; }
+      p { margin-top: 1.5em; margin-bottom: 1.5em }
+      a {
+        border-bottom: 1px solid #b2c8ed; color: #1059d1; text-decoration: none;
+        -webkit-transition: border .3s linear, color .3s linear;
+        transition: border .2s ease, color .2s ease;
+      }
+      a:hover { border-bottom-color: #fbc4c4; color: #ec2c2c; }
+
+      hr { margin: 2em -2em; height: 1px; border: none; background: #eee; }
+
+      #icons { border: 1px solid #eee; }
+
+      .icon { margin: 1em; display: inline-block; font-size: 2em; }
+
+      @media (max-width: 640px) {
+        body { margin: 1.8em; font-size: 1em; }
+        .icon { margin: .78em; }
+      }
+    </style>
   </head>
   <body>
     <!--[if lt IE 10]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
     <h1>Страницы Tasty:</h1>
     <ol>
       <li><a href="tasty__landing.html">Главная страница</a></li>
@@ -43,34 +66,32 @@
       <li><a href="tasty__nopost.html">Ещё ничего не написано</a></li>
       <li><a href="tasty__only-for-registered.html">Только для зарегистрированных пользователей</a></li>
     </ol>
-    <h2>Компоненты</h2>
+    <hr>
+    <h3>Email</h3>
+    <ol>
+      <li><a href="tasty__email-accept-friend.html">Accept Friend</a></li>
+      <li><a href="tasty__email-change-password.html">Change Password</a></li>
+      <li><a href="tasty__email-confirm-email.html">Confirm Email</a></li>
+      <li><a href="tasty__email-in-favorites.html">In Favorites</a></li>
+      <li><a href="tasty__email-new-comment.html">New Comment</a></li>
+      <li><a href="tasty__email-new-follower.html">New Follower</a></li>
+      <li><a href="tasty__email-welcome.html">Welcome</a></li>
+    </ol>
+    <hr>
+    <h3>Компоненты</h3>
     <ol>
       <li><a href="tasty__editable-field.html">EditableField</a></li>
     </ol>
-    <h2>Guides</h2>
+    <hr>
+    <h3>Guides</h3>
     <ol>
-      <li>
-        <li><a href="icons.html">Все иконки</a></li>
-      </li>
-    </ol>
-    <h2>Email</h2>
-    <ol>
-      <li><a href="tasty__email-accept-friend.html">accept friend</a></li>
-      <li><a href="tasty__email-change-password.html">change password</a></li>
-      <li><a href="tasty__email-confirm-email.html">confirm email</a></li>
-      <li><a href="tasty__email-in-favorites.html">in favorites</a></li>
-      <li><a href="tasty__email-new-comment.html">new comment</a></li>
-      <li><a href="tasty__email-new-follower.html">new follower</a></li>
-      <li><a href="tasty__email-welcome.html">welcome</a></li>
+      <li><a href="icons.html">Tastyicons</a></li>
     </ol>
     <hr>
-    <h2>Прочее</h2>
+    <h3>Прочее</h3>
     <ol>
       <li><a href="tasty__clear-localStorage.html">Сбросить localStorage</a></li>
       <li><a href="http://test.genue.ru/tlogs/!/app/">Старая верстка</a></li>
     </ol>
-
-    <script src="scripts/vendor.js"></script>
-    <script src="scripts/client.js"></script>
   </body>
 </html>
