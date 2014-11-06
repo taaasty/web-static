@@ -71,6 +71,7 @@ require './react/messaging/actions/notification'
 
 # /*==========  Components  ==========*/
 
+require './react/messaging/components/buttons/write_message'
 require './react/messaging/components/toolbars/indicators/indicators'
 require './react/messaging/components/toolbars/indicators/messages'
 require './react/messaging/components/toolbars/indicators/notifications'

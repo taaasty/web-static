@@ -33,8 +33,6 @@ window.HeroProfile = React.createClass
     $(window).off 'scroll', @scrollFade
 
   render: ->
-    # <button className="write-message-button">Написать сообщение</button>
-
     # <div className="dropdown-container">
     #                <button className="action-menu-button"><i className="icon icon--dots"></i></button>
     #                <span className="action-dropdown position-top state--open">
@@ -44,8 +42,9 @@ window.HeroProfile = React.createClass
     #              </div>
 
     if @props.relationship?
-      actions = `<div className="hero__actions">                   
-                   <FollowButton relationship={ this.props.relationship } />                   
+      actions = `<div className="hero__actions">
+                   <WriteMessageButton user={ this.props.user } />
+                   <FollowButton relationship={ this.props.relationship } />
                  </div>`
       follow_status = `<SmartFollowStatus tlogId={ this.props.user.id }
                                           status={ this.props.relationship.state } />`
