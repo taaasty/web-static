@@ -18,6 +18,12 @@ window.FollowButton = React.createClass
     isError:      false
     isProcess:    false
 
+  componentDidMount: ->
+    TastyEvents.on TastyEvents.keys.follow_status_changed(@state.relationship.user_id), @updateFollowStatus
+
+  componentWillUnmount: ->
+    TastyEvents.off TastyEvents.keys.follow_status_changed(@state.relationship.user_id), @updateFollowStatus
+
   render: ->
     if @isFollow() && !@state.isError && !@state.isProcess
       rootClass = 'state--active'
@@ -42,6 +48,12 @@ window.FollowButton = React.createClass
 
   onMouseOver:  -> @setState isHover: true
   onMouseLeave: -> @setState isHover: false
+
+  updateFollowStatus: (newStatus) ->
+    newRelationship = @state.relationship
+    newRelationship.state = newStatus
+
+    @setState(relationship: newRelationship)
 
   _getTitle: ->
     return 'ошибка'       if @state.isError

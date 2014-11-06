@@ -71,6 +71,7 @@ require './react/messaging/actions/notification'
 
 # /*==========  Components  ==========*/
 
+require './react/messaging/components/buttons/write_message'
 require './react/messaging/components/toolbars/indicators/indicators'
 require './react/messaging/components/toolbars/indicators/messages'
 require './react/messaging/components/toolbars/indicators/notifications'
@@ -290,6 +291,9 @@ require './react/components/hero/profile/profile_avatar'
 require './react/components/hero/profile/profile_head'
 require './react/components/hero/profile/profile_stats'
 require './react/components/hero/profile/profile_stats_item'
+require './react/components/hero/profile/dropdown_menu'
+require './react/components/hero/profile/dropdown_menu_items/ignore'
+require './react/components/hero/profile/dropdown_menu_items/report'
 
 require './react/components/hero/profile/popup/popup'
 require './react/components/hero/profile/popup/followers_popup'

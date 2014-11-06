@@ -41,6 +41,10 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
     for conversation in _conversations
       return conversation if conversation.id is conversationId
 
+  getConversationBySlug: (recipientSlug) ->
+    for conversation in _conversations
+      return conversation if conversation.recipient.slug is recipientSlug
+
   getActiveConversations: -> _conversations
 
   sortByDesc: ->
