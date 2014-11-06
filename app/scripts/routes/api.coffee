@@ -39,6 +39,7 @@ window.ApiRoutes =
   tlog_followers:                       (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/followers'
   tlog_followings:                      (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/followings'
   tlog_tags:                            (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/tags'
+  tlog_report:                          (tlogId) -> TastySettings.api_host + 'v1/tlog/' + tlogId + '/report'
   get_my_relationship_url:              (tlogId) -> TastySettings.api_host + 'v1/relationships/to/tlog/' + tlogId
 
   # Comments
