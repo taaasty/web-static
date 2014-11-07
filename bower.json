@@ -19,6 +19,7 @@
     "medium-editor": "1.9",
     "momentjs": "~2.8.3",
     "mousetrap": "~1.4.6",
+    "nanobar": "~0.2.0",
     "pusher": "~2.2.3",
     "rangy": "https://rangy.googlecode.com/files/rangy-1.3alpha.804.zip",
     "react": "0.11.0",

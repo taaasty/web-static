@@ -83,6 +83,8 @@ require('./react/messaging/actions/message');
 
 require('./react/messaging/actions/notification');
 
+require('./react/messaging/components/buttons/write_message');
+
 require('./react/messaging/components/toolbars/indicators/indicators');
 
 require('./react/messaging/components/toolbars/indicators/messages');
@@ -453,6 +455,12 @@ require('./react/components/hero/profile/profile_stats');
 
 require('./react/components/hero/profile/profile_stats_item');
 
+require('./react/components/hero/profile/dropdown_menu');
+
+require('./react/components/hero/profile/dropdown_menu_items/ignore');
+
+require('./react/components/hero/profile/dropdown_menu_items/report');
+
 require('./react/components/hero/profile/popup/popup');
 
 require('./react/components/hero/profile/popup/followers_popup');
@@ -501,7 +509,852 @@ require('./react/application');
 
 
 
-},{"./libs":4,"./locales/locales":5,"./react/application":7,"./react/components/avatars/avatar":8,"./react/components/avatars/user_avatar":9,"./react/components/buttons/load_more":10,"./react/components/calendar/calendar":11,"./react/components/calendar/calendar_header":12,"./react/components/calendar/calendar_marker":13,"./react/components/calendar/calendar_period":14,"./react/components/calendar/calendar_timeline":15,"./react/components/design_settings_popup/controls":16,"./react/components/design_settings_popup/controls_items/_progressbar":17,"./react/components/design_settings_popup/controls_items/_radiobutton":18,"./react/components/design_settings_popup/controls_items/align_item":19,"./react/components/design_settings_popup/controls_items/background_item":20,"./react/components/design_settings_popup/controls_items/feed_color_item":21,"./react/components/design_settings_popup/controls_items/font_type_item":22,"./react/components/design_settings_popup/controls_items/header_color_item":23,"./react/components/design_settings_popup/controls_items/opacity_item":24,"./react/components/design_settings_popup/design_settings_popup":25,"./react/components/editable_field":26,"./react/components/embed":27,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":28,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":29,"./react/components/entry_comment_box/comment_form/comment_form":30,"./react/components/entry_comment_box/comment_list/comment":31,"./react/components/entry_comment_box/comment_list/comment_list":32,"./react/components/entry_comment_box/comment_list/comment_manager":33,"./react/components/entry_comment_box/comment_metabar/comment_metabar":34,"./react/components/entry_comment_box/comment_metabar/date":35,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":36,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":37,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":38,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":39,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":40,"./react/components/entry_comment_box/comment_metabar/reply":41,"./react/components/entry_comment_box/entry_comment_box":42,"./react/components/entry_comment_box/load_more":43,"./react/components/entry_comment_box/mixins/comments":44,"./react/components/entry_metabar/author":45,"./react/components/entry_metabar/comment":46,"./react/components/entry_metabar/date":47,"./react/components/entry_metabar/dropdown_menu":48,"./react/components/entry_metabar/dropdown_menu_items/delete_item":49,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":50,"./react/components/entry_metabar/dropdown_menu_items/item":51,"./react/components/entry_metabar/dropdown_menu_items/report_item":52,"./react/components/entry_metabar/dropdown_menu_items/watch_item":53,"./react/components/entry_metabar/entry_metabar":54,"./react/components/entry_metabar/tag":55,"./react/components/entry_metabar/tags":56,"./react/components/feed/bricks":57,"./react/components/feed/feed":58,"./react/components/feed/mixins/base":59,"./react/components/feed/tlog":60,"./react/components/follow_status":61,"./react/components/hero/profile/popup/followers_popup":62,"./react/components/hero/profile/popup/followings_popup":63,"./react/components/hero/profile/popup/items/follower_item":64,"./react/components/hero/profile/popup/items/following_item":65,"./react/components/hero/profile/popup/items/tag_item":66,"./react/components/hero/profile/popup/popup":67,"./react/components/hero/profile/popup/tags_popup":68,"./react/components/hero/profile/profile":69,"./react/components/hero/profile/profile_avatar":70,"./react/components/hero/profile/profile_head":71,"./react/components/hero/profile/profile_stats":72,"./react/components/hero/profile/profile_stats_item":73,"./react/components/images_collage":74,"./react/components/notifications/tasty_alert":75,"./react/components/notifications/tasty_confirm":76,"./react/components/notifications/tasty_locking_alert":77,"./react/components/notifications/tasty_notify":78,"./react/components/people/item":79,"./react/components/persons_popup/items/follower_relationship":80,"./react/components/persons_popup/items/following_relationship":81,"./react/components/persons_popup/items/guess_relationship":82,"./react/components/persons_popup/items/ignored_relationship":83,"./react/components/persons_popup/items/item":84,"./react/components/persons_popup/items/request_relationship":85,"./react/components/persons_popup/menu":86,"./react/components/persons_popup/menu_item":87,"./react/components/persons_popup/mixins/panel_mixin":88,"./react/components/persons_popup/panels/followers_panel":89,"./react/components/persons_popup/panels/followings_panel":90,"./react/components/persons_popup/panels/guesses_panel":91,"./react/components/persons_popup/panels/ignores_panel":92,"./react/components/persons_popup/panels/requests_panel":93,"./react/components/persons_popup/persons_popup":94,"./react/components/popup/header":95,"./react/components/popup/layout":96,"./react/components/popup/popup":97,"./react/components/popup/spinner":98,"./react/components/popup_box":99,"./react/components/post_editor/actions/actions":100,"./react/components/post_editor/actions/buttons/privacy":101,"./react/components/post_editor/actions/buttons/vote":102,"./react/components/post_editor/choicer":103,"./react/components/post_editor/demo":104,"./react/components/post_editor/edit_post":105,"./react/components/post_editor/editor_container":106,"./react/components/post_editor/editors/_tasty":107,"./react/components/post_editor/editors/anonymous":108,"./react/components/post_editor/editors/image":109,"./react/components/post_editor/editors/instagram":110,"./react/components/post_editor/editors/mixins/autosave":111,"./react/components/post_editor/editors/music":112,"./react/components/post_editor/editors/quote":113,"./react/components/post_editor/editors/text":114,"./react/components/post_editor/editors/video":115,"./react/components/post_editor/images_mediabox/loaded":116,"./react/components/post_editor/images_mediabox/url_insert":117,"./react/components/post_editor/layout":118,"./react/components/post_editor/mediabox/actions":119,"./react/components/post_editor/mediabox/layout":120,"./react/components/post_editor/mediabox/loading_progress":121,"./react/components/post_editor/mixins/dragging":122,"./react/components/post_editor/mixins/images_form":123,"./react/components/post_editor/mixins/layout":124,"./react/components/post_editor/mixins/persistence":125,"./react/components/post_editor/mixins/video":126,"./react/components/post_editor/new_anonymous_post":127,"./react/components/post_editor/new_post":128,"./react/components/post_editor/video_mediabox/embeded":129,"./react/components/post_editor/video_mediabox/loading":130,"./react/components/post_editor/video_mediabox/url_insert":131,"./react/components/post_editor/video_mediabox/video_mediabox":132,"./react/components/post_editor/welcome_messages/image":133,"./react/components/post_editor/welcome_messages/instagram":134,"./react/components/post_editor/welcome_messages/music":135,"./react/components/post_editor/welcome_messages/video":136,"./react/components/relationship_buttons/follow_button":137,"./react/components/relationship_buttons/follower_button":138,"./react/components/relationship_buttons/guess_button":139,"./react/components/relationship_buttons/ignore_button":140,"./react/components/relationship_buttons/mixins/relationship":141,"./react/components/relationship_buttons/request_button":142,"./react/components/search/button":143,"./react/components/search/field":144,"./react/components/search/search":145,"./react/components/settings_popup/settings_accounts_item":146,"./react/components/settings_popup/settings_avatar":147,"./react/components/settings_popup/settings_email/confirmation":148,"./react/components/settings_popup/settings_email/edit":149,"./react/components/settings_popup/settings_email/establish/edit":150,"./react/components/settings_popup/settings_email/establish/establish":151,"./react/components/settings_popup/settings_email/establish/show":152,"./react/components/settings_popup/settings_email/settings_email":153,"./react/components/settings_popup/settings_email/show":154,"./react/components/settings_popup/settings_header":155,"./react/components/settings_popup/settings_name":156,"./react/components/settings_popup/settings_password_input":157,"./react/components/settings_popup/settings_radio_item":158,"./react/components/settings_popup/settings_title":159,"./react/components/settings_popup/settings_vkontakte":160,"./react/components/settings_popup/toolbar_settings":161,"./react/components/shellbox/authorization/authorization":162,"./react/components/shellbox/authorization/vk":163,"./react/components/shellbox/buttons/vk_auth_button":164,"./react/components/shellbox/email_signin_shellbox":165,"./react/components/shellbox/email_signup_shellbox":166,"./react/components/shellbox/inviter_shellbox":167,"./react/components/shellbox/recovery_shellbox":168,"./react/components/shellbox/select_signin_shellbox":169,"./react/components/shellbox_layer":170,"./react/components/smart_follow_status":171,"./react/components/spinner":172,"./react/components/tlog_alert":173,"./react/components/toolbars/close/close":174,"./react/components/toolbars/feed/feed":175,"./react/components/toolbars/toolbar_item":176,"./react/components/toolbars/user/user":177,"./react/components/transition/timeout_transition_group":178,"./react/components/voting":179,"./react/controllers/popup":180,"./react/controllers/shellbox":181,"./react/controllers/tasty_alert":182,"./react/controllers/tasty_confirm":183,"./react/controllers/tasty_events":184,"./react/controllers/tasty_locking_alert":185,"./react/controllers/tasty_notify":186,"./react/controllers/tasty_sound":187,"./react/dispatchers/current_user":188,"./react/entities/normalized_entry":189,"./react/mediators/comments":190,"./react/messaging/actions/conversation":191,"./react/messaging/actions/message":192,"./react/messaging/actions/notification":193,"./react/messaging/actions/popup":194,"./react/messaging/components/messages_popup/conversations/conversations":195,"./react/messaging/components/messages_popup/conversations/list/empty":196,"./react/messaging/components/messages_popup/conversations/list/list":197,"./react/messaging/components/messages_popup/conversations/list/list_item":198,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":199,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":200,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":201,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":202,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":203,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":204,"./react/messaging/components/messages_popup/loading_message":205,"./react/messaging/components/messages_popup/messages_popup":206,"./react/messaging/components/messages_popup/thread/message_form/message_form":207,"./react/messaging/components/messages_popup/thread/message_list/empty":208,"./react/messaging/components/messages_popup/thread/message_list/message_list":209,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":210,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":211,"./react/messaging/components/messages_popup/thread/thread":212,"./react/messaging/components/messages_popup/ui/back_button":213,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":214,"./react/messaging/components/notifications_popup/notifications/empty":215,"./react/messaging/components/notifications_popup/notifications/notification":216,"./react/messaging/components/notifications_popup/notifications/notifications":217,"./react/messaging/components/notifications_popup/notifications_popup":218,"./react/messaging/components/toolbars/indicators/indicators":219,"./react/messaging/components/toolbars/indicators/messages":220,"./react/messaging/components/toolbars/indicators/notifications":221,"./react/messaging/dispatchers/messaging":222,"./react/messaging/messaging_requester":223,"./react/messaging/messaging_service":224,"./react/messaging/messaging_testing":225,"./react/messaging/stores/connection_state":226,"./react/messaging/stores/conversations":227,"./react/messaging/stores/messages":228,"./react/messaging/stores/messages_popup_state":229,"./react/messaging/stores/messaging_status":230,"./react/messaging/stores/notifications":231,"./react/mixins/activities":232,"./react/mixins/component_manipulations":233,"./react/mixins/dom_manipulations":234,"./react/mixins/error_timer":235,"./react/mixins/grammar":236,"./react/mixins/positions":237,"./react/mixins/requester":238,"./react/mixins/scroller":239,"./react/mixins/shake":240,"./react/mixins/touch":241,"./react/mixins/unmount":242,"./react/services/entry_normalizer":243,"./react/services/entry_store":244,"./react/services/positions":245,"./react/services/thumbor":246,"./react/services/uuid":247,"./react/stores/current_user":248,"./resources/fileReceiver":249,"./resources/is_mobile":250,"./resources/tasty":251,"./resources/tasty_utils":252,"./routes/api":253,"./routes/routes":254}],2:[function(require,module,exports){
+},{"./libs":8,"./locales/locales":9,"./react/application":11,"./react/components/avatars/avatar":12,"./react/components/avatars/user_avatar":13,"./react/components/buttons/load_more":14,"./react/components/calendar/calendar":15,"./react/components/calendar/calendar_header":16,"./react/components/calendar/calendar_marker":17,"./react/components/calendar/calendar_period":18,"./react/components/calendar/calendar_timeline":19,"./react/components/design_settings_popup/controls":20,"./react/components/design_settings_popup/controls_items/_progressbar":21,"./react/components/design_settings_popup/controls_items/_radiobutton":22,"./react/components/design_settings_popup/controls_items/align_item":23,"./react/components/design_settings_popup/controls_items/background_item":24,"./react/components/design_settings_popup/controls_items/feed_color_item":25,"./react/components/design_settings_popup/controls_items/font_type_item":26,"./react/components/design_settings_popup/controls_items/header_color_item":27,"./react/components/design_settings_popup/controls_items/opacity_item":28,"./react/components/design_settings_popup/design_settings_popup":29,"./react/components/editable_field":30,"./react/components/embed":31,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":32,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":33,"./react/components/entry_comment_box/comment_form/comment_form":34,"./react/components/entry_comment_box/comment_list/comment":35,"./react/components/entry_comment_box/comment_list/comment_list":36,"./react/components/entry_comment_box/comment_list/comment_manager":37,"./react/components/entry_comment_box/comment_metabar/comment_metabar":38,"./react/components/entry_comment_box/comment_metabar/date":39,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":40,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":41,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":42,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":43,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":44,"./react/components/entry_comment_box/comment_metabar/reply":45,"./react/components/entry_comment_box/entry_comment_box":46,"./react/components/entry_comment_box/load_more":47,"./react/components/entry_comment_box/mixins/comments":48,"./react/components/entry_metabar/author":49,"./react/components/entry_metabar/comment":50,"./react/components/entry_metabar/date":51,"./react/components/entry_metabar/dropdown_menu":52,"./react/components/entry_metabar/dropdown_menu_items/delete_item":53,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":54,"./react/components/entry_metabar/dropdown_menu_items/item":55,"./react/components/entry_metabar/dropdown_menu_items/report_item":56,"./react/components/entry_metabar/dropdown_menu_items/watch_item":57,"./react/components/entry_metabar/entry_metabar":58,"./react/components/entry_metabar/tag":59,"./react/components/entry_metabar/tags":60,"./react/components/feed/bricks":61,"./react/components/feed/feed":62,"./react/components/feed/mixins/base":63,"./react/components/feed/tlog":64,"./react/components/follow_status":65,"./react/components/hero/profile/dropdown_menu":66,"./react/components/hero/profile/dropdown_menu_items/ignore":67,"./react/components/hero/profile/dropdown_menu_items/report":68,"./react/components/hero/profile/popup/followers_popup":69,"./react/components/hero/profile/popup/followings_popup":70,"./react/components/hero/profile/popup/items/follower_item":71,"./react/components/hero/profile/popup/items/following_item":72,"./react/components/hero/profile/popup/items/tag_item":73,"./react/components/hero/profile/popup/popup":74,"./react/components/hero/profile/popup/tags_popup":75,"./react/components/hero/profile/profile":76,"./react/components/hero/profile/profile_avatar":77,"./react/components/hero/profile/profile_head":78,"./react/components/hero/profile/profile_stats":79,"./react/components/hero/profile/profile_stats_item":80,"./react/components/images_collage":81,"./react/components/notifications/tasty_alert":82,"./react/components/notifications/tasty_confirm":83,"./react/components/notifications/tasty_locking_alert":84,"./react/components/notifications/tasty_notify":85,"./react/components/people/item":86,"./react/components/persons_popup/items/follower_relationship":87,"./react/components/persons_popup/items/following_relationship":88,"./react/components/persons_popup/items/guess_relationship":89,"./react/components/persons_popup/items/ignored_relationship":90,"./react/components/persons_popup/items/item":91,"./react/components/persons_popup/items/request_relationship":92,"./react/components/persons_popup/menu":93,"./react/components/persons_popup/menu_item":94,"./react/components/persons_popup/mixins/panel_mixin":95,"./react/components/persons_popup/panels/followers_panel":96,"./react/components/persons_popup/panels/followings_panel":97,"./react/components/persons_popup/panels/guesses_panel":98,"./react/components/persons_popup/panels/ignores_panel":99,"./react/components/persons_popup/panels/requests_panel":100,"./react/components/persons_popup/persons_popup":101,"./react/components/popup/header":102,"./react/components/popup/layout":103,"./react/components/popup/popup":104,"./react/components/popup/spinner":105,"./react/components/popup_box":106,"./react/components/post_editor/actions/actions":107,"./react/components/post_editor/actions/buttons/privacy":108,"./react/components/post_editor/actions/buttons/vote":109,"./react/components/post_editor/choicer":110,"./react/components/post_editor/demo":111,"./react/components/post_editor/edit_post":112,"./react/components/post_editor/editor_container":113,"./react/components/post_editor/editors/_tasty":114,"./react/components/post_editor/editors/anonymous":115,"./react/components/post_editor/editors/image":116,"./react/components/post_editor/editors/instagram":117,"./react/components/post_editor/editors/mixins/autosave":118,"./react/components/post_editor/editors/music":119,"./react/components/post_editor/editors/quote":120,"./react/components/post_editor/editors/text":121,"./react/components/post_editor/editors/video":122,"./react/components/post_editor/images_mediabox/loaded":123,"./react/components/post_editor/images_mediabox/url_insert":124,"./react/components/post_editor/layout":125,"./react/components/post_editor/mediabox/actions":126,"./react/components/post_editor/mediabox/layout":127,"./react/components/post_editor/mediabox/loading_progress":128,"./react/components/post_editor/mixins/dragging":129,"./react/components/post_editor/mixins/images_form":130,"./react/components/post_editor/mixins/layout":131,"./react/components/post_editor/mixins/persistence":132,"./react/components/post_editor/mixins/video":133,"./react/components/post_editor/new_anonymous_post":134,"./react/components/post_editor/new_post":135,"./react/components/post_editor/video_mediabox/embeded":136,"./react/components/post_editor/video_mediabox/loading":137,"./react/components/post_editor/video_mediabox/url_insert":138,"./react/components/post_editor/video_mediabox/video_mediabox":139,"./react/components/post_editor/welcome_messages/image":140,"./react/components/post_editor/welcome_messages/instagram":141,"./react/components/post_editor/welcome_messages/music":142,"./react/components/post_editor/welcome_messages/video":143,"./react/components/relationship_buttons/follow_button":144,"./react/components/relationship_buttons/follower_button":145,"./react/components/relationship_buttons/guess_button":146,"./react/components/relationship_buttons/ignore_button":147,"./react/components/relationship_buttons/mixins/relationship":148,"./react/components/relationship_buttons/request_button":149,"./react/components/search/button":150,"./react/components/search/field":151,"./react/components/search/search":152,"./react/components/settings_popup/settings_accounts_item":153,"./react/components/settings_popup/settings_avatar":154,"./react/components/settings_popup/settings_email/confirmation":155,"./react/components/settings_popup/settings_email/edit":156,"./react/components/settings_popup/settings_email/establish/edit":157,"./react/components/settings_popup/settings_email/establish/establish":158,"./react/components/settings_popup/settings_email/establish/show":159,"./react/components/settings_popup/settings_email/settings_email":160,"./react/components/settings_popup/settings_email/show":161,"./react/components/settings_popup/settings_header":162,"./react/components/settings_popup/settings_name":163,"./react/components/settings_popup/settings_password_input":164,"./react/components/settings_popup/settings_radio_item":165,"./react/components/settings_popup/settings_title":166,"./react/components/settings_popup/settings_vkontakte":167,"./react/components/settings_popup/toolbar_settings":168,"./react/components/shellbox/authorization/authorization":169,"./react/components/shellbox/authorization/vk":170,"./react/components/shellbox/buttons/vk_auth_button":171,"./react/components/shellbox/email_signin_shellbox":172,"./react/components/shellbox/email_signup_shellbox":173,"./react/components/shellbox/inviter_shellbox":174,"./react/components/shellbox/recovery_shellbox":175,"./react/components/shellbox/select_signin_shellbox":176,"./react/components/shellbox_layer":177,"./react/components/smart_follow_status":178,"./react/components/spinner":179,"./react/components/tlog_alert":180,"./react/components/toolbars/close/close":181,"./react/components/toolbars/feed/feed":182,"./react/components/toolbars/toolbar_item":183,"./react/components/toolbars/user/user":184,"./react/components/transition/timeout_transition_group":185,"./react/components/voting":186,"./react/controllers/popup":187,"./react/controllers/shellbox":188,"./react/controllers/tasty_alert":189,"./react/controllers/tasty_confirm":190,"./react/controllers/tasty_events":191,"./react/controllers/tasty_locking_alert":192,"./react/controllers/tasty_notify":193,"./react/controllers/tasty_sound":194,"./react/dispatchers/current_user":195,"./react/entities/normalized_entry":196,"./react/mediators/comments":197,"./react/messaging/actions/conversation":198,"./react/messaging/actions/message":199,"./react/messaging/actions/notification":200,"./react/messaging/actions/popup":201,"./react/messaging/components/buttons/write_message":202,"./react/messaging/components/messages_popup/conversations/conversations":203,"./react/messaging/components/messages_popup/conversations/list/empty":204,"./react/messaging/components/messages_popup/conversations/list/list":205,"./react/messaging/components/messages_popup/conversations/list/list_item":206,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":207,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":208,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":209,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":210,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":211,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":212,"./react/messaging/components/messages_popup/loading_message":213,"./react/messaging/components/messages_popup/messages_popup":214,"./react/messaging/components/messages_popup/thread/message_form/message_form":215,"./react/messaging/components/messages_popup/thread/message_list/empty":216,"./react/messaging/components/messages_popup/thread/message_list/message_list":217,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":218,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":219,"./react/messaging/components/messages_popup/thread/thread":220,"./react/messaging/components/messages_popup/ui/back_button":221,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":222,"./react/messaging/components/notifications_popup/notifications/empty":223,"./react/messaging/components/notifications_popup/notifications/notification":224,"./react/messaging/components/notifications_popup/notifications/notifications":225,"./react/messaging/components/notifications_popup/notifications_popup":226,"./react/messaging/components/toolbars/indicators/indicators":227,"./react/messaging/components/toolbars/indicators/messages":228,"./react/messaging/components/toolbars/indicators/notifications":229,"./react/messaging/dispatchers/messaging":230,"./react/messaging/messaging_requester":231,"./react/messaging/messaging_service":232,"./react/messaging/messaging_testing":233,"./react/messaging/stores/connection_state":234,"./react/messaging/stores/conversations":235,"./react/messaging/stores/messages":236,"./react/messaging/stores/messages_popup_state":237,"./react/messaging/stores/messaging_status":238,"./react/messaging/stores/notifications":239,"./react/mixins/activities":240,"./react/mixins/component_manipulations":241,"./react/mixins/dom_manipulations":242,"./react/mixins/error_timer":243,"./react/mixins/grammar":244,"./react/mixins/positions":245,"./react/mixins/requester":246,"./react/mixins/scroller":247,"./react/mixins/shake":248,"./react/mixins/touch":249,"./react/mixins/unmount":250,"./react/services/entry_normalizer":251,"./react/services/entry_store":252,"./react/services/positions":253,"./react/services/thumbor":254,"./react/services/uuid":255,"./react/stores/current_user":256,"./resources/fileReceiver":257,"./resources/is_mobile":258,"./resources/tasty":259,"./resources/tasty_utils":260,"./routes/api":261,"./routes/routes":262}],2:[function(require,module,exports){
+/**
+binds a function to a context
+
+@method bind
+@param {Function} func
+@param {Object} context
+@return {Function}
+@private
+**/
+var bind = function (func, context) {
+  return function () {
+    func.apply(context, Array.prototype.slice.call(arguments));
+  };
+};
+
+/**
+@method each
+@param {Array} arr
+@param {Function} iterator
+@private
+**/
+var each = function (arr, iterator, context) {
+  context = context || this;
+
+  for (var i = 0, len = arr.length; i < len; i++) {
+    iterator.call(context, arr[i], i);
+  }
+};
+
+/**
+@method merge
+@return {Object}
+@private
+**/
+var merge = function () {
+  var result = {},
+      arr = Array.prototype.slice.call(arguments, 0);
+
+  each(arr, function (obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        result[key] = obj[key];
+      }
+    }
+  });
+
+  return result;
+};
+
+/**
+@method addEvent
+@param {Any} host
+@param {String} eventName
+@param {Function} handler
+@param {Any} [context]
+@private
+**/
+var addEvent = function (host, eventName, handler, context) {
+  host.addEventListener(eventName, bind(handler, context), false);
+};
+
+/**
+@method isArray
+@param {Object} o
+@return {Boolean}
+@private
+**/
+var isArray = function (o) {
+  return Array.isArray(o);
+};
+
+/**
+@method isPlainObject
+@param {any} val
+@return {Boolean}
+@private
+**/
+var isPlainObject = function (val) {
+  return (!!val) && (val.constructor === Object);
+};
+
+/**
+@method isString
+@param {Any} val
+@return {Boolean}
+@private
+**/
+var isString = function (val) {
+  return typeof val === 'string';
+};
+
+module.exports = {
+  bind: bind,
+  each: each,
+  merge: merge,
+  addEvent: addEvent,
+  isArray: isArray,
+  isPlainObject: isPlainObject,
+  isString: isString
+};
+
+},{}],3:[function(require,module,exports){
+var helpers = require('./helpers'),
+    Request = require('./request'),
+    Route   = require('./route');
+
+// helpers
+var each      = helpers.each,
+    addEvent  = helpers.addEvent,
+    isArray   = helpers.isArray;
+
+/**
+@class Navigator
+@constructor
+@private
+**/
+var Navigator = function () {
+  this._routes  = null;
+  this._exits   = [];
+  this._silent  = false;
+  this._dispatchingStarted = false;
+};
+
+Navigator.prototype = {
+
+  /**
+  @method setup
+  @param {Object} options
+  **/
+  setup: function (options) {
+    options = options || {};
+
+    for (var k in options) {
+      if (options.hasOwnProperty(k)) {
+        this[k] = options[k];
+      }
+    }
+
+    this._attachEvents();
+  },
+
+  /**
+  @method setRoutes
+  @param {Object} routes a configuration of routes and targets
+  **/
+  setRoutes: function (routes) {
+    this._routes = routes;
+  },
+
+  /**
+  @method createRouteForURI
+  @param {String} uri
+  @return {Request}
+  **/
+  createRouteForURI: function (uri) {
+    return new Route(this._routes, uri);
+  },
+
+  /**
+  @method createRequest
+  @param {String} uri
+  @param {String|Null} queryString
+  @param {String} matchedRoute
+  @return {Request}
+  **/
+  createRequest: function (uri, queryString, matchedRoute) {
+    this._request = new Request({
+      uri: uri,
+      queryString: queryString,
+      matchedRoute: matchedRoute
+    });
+
+    return this._request;
+  },
+
+  /**
+  @method getCurrentRequest
+  @return {Request}
+  **/
+  getCurrentRequest: function () {
+    return this._request;
+  },
+
+  /**
+  @method getCurrentPathname
+  @return {String}
+  **/
+  getCurrentPathname: function () {
+    if (this.pushStateEnabled) {
+      return this._removeURIRoot(location.pathname);
+    }
+    else {
+      return location.hash.replace('#', '').split('?')[0];
+    }
+  },
+
+  /**
+  @method getCurrentURI
+  @return {String}
+  **/
+  getCurrentURI: function () {
+    if (this.pushStateEnabled) {
+      return this._removeURIRoot(location.pathname) + location.search;
+    }
+    else {
+      return location.hash.replace('#', '');
+    }
+  },
+
+  /**
+  @method getQueryString
+  @return {String|Null}
+  **/
+  getQueryString: function () {
+    var uri, queryString;
+
+    if (this.pushStateEnabled) {
+      return location.search || null;
+    }
+    else {
+      queryString = this.getCurrentURI().split('?')[1];
+
+      if (queryString) {
+        return '?' + queryString;
+      }
+      else {
+        return null;
+      }
+    }
+  },
+
+  /**
+  @method dispatch
+  **/
+  dispatch: function () {
+    var uri         = this.getCurrentPathname(),
+        route       = this.createRouteForURI(uri),
+        queryString = this.getQueryString(),
+        request     = this.createRequest(uri, queryString, route.matchedRoute);
+
+    this._invokeExits(request);
+
+    // temporary action array that can be halted
+    this._actions = route.actions;
+    this._invokeActions(request, route.options);
+
+    // collect exits of the current matching route
+    this._exits = route.exits;
+
+    if (!this._dispatchingStarted) {
+      this._dispatchingStarted = true;
+    }
+  },
+
+  /**
+  @method onURIChange
+  **/
+  onURIChange: function () {
+    if (!this._silent) {
+      this.dispatch();
+    }
+
+    this._silent = false;
+  },
+
+  /**
+  @method onPopState
+  @param {Event}
+  **/
+  onPopState: function (ev) {
+    // Some browsers fire 'popstate' on the initial page load with a null state
+    // object. We always want manual control over the initial page dispatch, so
+    // prevent any popStates from changing the url until we have started
+    // dispatching.
+    if (this._dispatchingStarted) {
+      this.onURIChange();
+    }
+  },
+
+  /**
+  @method onClick
+  @param {Event} ev
+  **/
+  onClick: function (ev) {
+    var target = ev.target,
+        matchesSelector = this._matchesSelector(target),
+        pathname,
+        uri;
+
+    if (ev.metaKey || ev.ctrlKey) return;
+
+    // Sub optimal. It itererates through all ancestors on every single click :/
+    while (target) {
+      if (this._matchesSelector(target)) {
+        break;
+      }
+
+      target = target.parentNode;
+    }
+
+    if (!target) return;
+
+    ev.preventDefault();
+
+    pathname = target.pathname;
+
+    // Some browsers drop the leading slash
+    // from an `a` tag's href location.
+    if ( pathname.charAt(0) !== '/' ) pathname = '/' + pathname;
+
+    uri = pathname.replace(this.root, '');
+
+    this.navigate(uri);
+  },
+
+  /**
+  @method navigate
+  @param {String} uri
+  @param {Object} [options]
+  **/
+  navigate: function (uri, options) {
+    options = options || {};
+
+    var request     = this.getCurrentRequest();
+    var namedParams = options.namedParams;
+    var queryParams = options.queryParams;
+
+    if (!namedParams && request) {
+      namedParams = request.namedParams;
+    }
+
+    // halt any previous action invocations
+    this._actions = [];
+
+    if (queryParams) {
+      uri += this.serializeQueryParams(queryParams);
+    }
+
+    if (namedParams) {
+      for (var p in namedParams) {
+        if (namedParams.hasOwnProperty(p)) {
+          uri = uri.replace(':' + p, encodeURIComponent(namedParams[p]));
+        }
+      }
+    }
+
+    if (options.silent) {
+      this._silent = true;
+    }
+
+    if (this.pushStateEnabled) {
+      uri = this._removeURIRoot(uri);
+
+      uri = this.root + uri;
+
+      if (options.replace) {
+        history.replaceState('navigate', '', uri);
+      }
+      else {
+        history.pushState('navigate', '', uri);
+      }
+
+      this.onURIChange();
+    }
+    else {
+      if (options.replace) location.replace('#' + uri);
+      else location.hash = uri;
+    }
+  },
+
+  /**
+  @method refresh
+  **/
+  refresh: function () {
+    this.dispatch();
+  },
+
+  /**
+  @method _attachEvents
+  @protected
+  **/
+  _attachEvents: function () {
+    var pushStateEnabled = this.pushStateEnabled;
+
+    if (pushStateEnabled) {
+      addEvent(window, 'popstate', this.onPopState, this);
+    }
+    else {
+      addEvent(window, 'hashchange', this.onURIChange, this);
+    }
+
+    addEvent(document, 'click', this.onClick, this);
+  },
+
+  /**
+  @method _matchesSelector
+  @param {DOMNode} node
+  @protected
+  **/
+  _matchesSelector: function (node) {
+    var nodeList = document.querySelectorAll(this.linkSelector),
+        contains = false,
+        i;
+
+    for ( i = 0; i < nodeList.length; i++ ) {
+      if (!contains) contains = ( node === nodeList[i] );
+      else break;
+    }
+
+    return contains;
+  },
+
+  /**
+  pop of any exits function and invoke them
+
+  @method _invokeExits
+  @param {Request} request
+  @protected
+  **/
+  _invokeExits: function (request) {
+    var exit, target, method;
+
+    while(this._exits.length) {
+      exit = this._exits.pop();
+      target = exit.target;
+      method = exit.method;
+
+      if (!(method in target)) {
+        throw new Error("Can't call exit " + method + ' on target for uri ' + request.uri);
+      }
+
+      target[method].call(target);
+    }
+  },
+
+  /**
+  invoke all actions with request and options
+
+  @method _invokeActions
+  @param {Request} request
+  @param {Object} options
+  @protected
+  **/
+  _invokeActions: function (request, options) {
+    var action, target, method;
+
+    while (this._actions.length) {
+      action = this._actions.shift();
+      target = action.target;
+      method = action.method;
+
+     if (!(method in target)) {
+        throw new Error("Can't call action " + method + ' on target for uri ' + request.uri);
+      }
+
+      target[method].call(target, request, options);
+    }
+  },
+
+  /**
+  @method _removeURIRoot
+  @param {String} uri '/partners/s/foo-bar'
+  @return {String} uri '/s/foo-bar'
+  **/
+  _removeURIRoot: function (uri) {
+    var rootRegex = new RegExp('^' + this.root);
+
+    return uri.replace(rootRegex, '');
+  },
+
+  /**
+  @method serializeQueryParams
+  @param {Object} queryParams
+  @return {String} queryString "?foo=bar&baz[]=boo&baz=[]oob"
+  **/
+  serializeQueryParams: function (queryParams) {
+    var queryString = [],
+        val;
+
+    for (var key in queryParams) {
+      if (queryParams.hasOwnProperty(key)) {
+        val = queryParams[key];
+
+        if (isArray(val)) {
+          each(val, function (item) {
+            queryString.push(encodeURIComponent(key) + '[]=' + encodeURIComponent(item));
+          });
+        }
+        else {
+          queryString.push(encodeURIComponent(key) + '=' + encodeURIComponent(val));
+        }
+      }
+    }
+
+    queryString = '?' + queryString.join('&');
+
+    return queryString;
+  }
+
+};
+
+module.exports = Navigator;
+
+},{"./helpers":2,"./request":4,"./route":5}],4:[function(require,module,exports){
+var helpers = require('./helpers'),
+    each = helpers.each,
+    merge = helpers.merge,
+    isArray = helpers.isArray;
+
+/**
+@class Request
+@constructor
+**/
+var Request = function (options) {
+  this.namedParams  = {};
+  this.queryParams  = {};
+  this.params       = {};
+
+  this.uri          = options.uri;
+  this.queryString  = options.queryString;
+  this.matchedRoute = options.matchedRoute;
+
+  this._extractNamedParamsFromURI();
+  this._extractQueryParamsFromQueryString();
+  this._mergeParams();
+};
+
+Request.prototype = {
+  /**
+  @method _extractNamedParamsFromURI
+  @private
+  **/
+  _extractNamedParamsFromURI: function () {
+    var uriParts = this.uri.split('/'),
+        routeParts = this.matchedRoute.split('/'),
+        params = {};
+
+    each(routeParts, function (part, i) {
+      var key;
+
+      if (part.indexOf(':') === 0) {
+        key = part.replace(':', '');
+
+        params[key] = decodeURIComponent( uriParts[i] );
+      }
+    });
+
+    this.namedParams = params;
+  },
+
+  /**
+  Splits the query string by '&'. Splits each part by '='.
+  Passes the key and value for each part to _applyQueryParam
+
+  @method _extractQueryParamsFromQueryString
+  @private
+  **/
+  _extractQueryParamsFromQueryString: function () {
+    var parts;
+
+    if (!this.queryString) return;
+
+    parts = this.queryString.replace('?','').split('&');
+
+    each(parts, function (part) {
+      var key = decodeURIComponent( part.split('=')[0] ),
+          val = decodeURIComponent( part.split('=')[1] );
+
+      if ( part.indexOf( '=' ) === -1 ) return;
+      this._applyQueryParam( key, val );
+
+    }, this);
+
+  },
+
+  /**
+  Update the queryParams property with a new key and value.
+  Values for keys with the [] notation are put into arrays
+  or pushed into an existing array for that key.
+
+  @method _applyQueryParam
+  @param {String} key
+  @param {String} val
+  **/
+  _applyQueryParam: function (key, val) {
+    if ( key.indexOf( '[]' ) !== -1 ) {
+      key = key.replace( '[]', '' );
+
+      if (isArray(this.queryParams[key])) {
+        this.queryParams[key].push(val);
+      }
+      else {
+        this.queryParams[key] = [val];
+      }
+    }
+    else {
+      this.queryParams[key] = val;
+    }
+  },
+
+  /**
+  @method _mergeParams
+  @private
+  **/
+  _mergeParams: function () {
+    this.params = merge(this.namedParams, this.queryParams);
+  }
+};
+
+module.exports = Request;
+
+},{"./helpers":2}],5:[function(require,module,exports){
+var helpers = require('./helpers'),
+    merge = helpers.merge,
+    isString = helpers.isString,
+    isPlainObject = helpers.isPlainObject;
+
+/**
+Contains the properties for a route
+After attempting to match a uri to the Routes map
+
+@class Route
+@constructor
+@private
+**/
+var Route = function (routes, uri) {
+  this.uri          = uri;
+  this.matchedRoute = '';
+  this.targets      = [];
+  this.actions      = [];
+  this.exits        = [];
+  this.options      = {};
+
+  this.match(routes);
+
+  this.uri = uri;
+};
+
+Route.prototype = {
+
+  /**
+  Matches the uri from the routes map.
+
+  @method match
+  @param {String} routeLevel
+  @return {Object}
+  **/
+  match: function (routeLevel) {
+    var value, action, target;
+
+    if (routeLevel.target) {
+      this.targets.push(routeLevel.target);
+    }
+
+    if (this.targets.length) {
+      target = this.targets[this.targets.length - 1];
+    }
+
+    action = {
+      target: target,
+      method: null
+    };
+
+    for (var key in routeLevel) {
+      if (routeLevel.hasOwnProperty(key)) {
+        value = routeLevel[key];
+
+        if (this.isFragment(key) && this.isFragmentInURI(key)) {
+          this.updateMatchedRoute(key);
+          this.removeFragmentFromURI(key);
+
+          if (this.isActionDescriptor(value)) {
+
+            // Check that if this fragment is a namedParam,
+            // we never override a regular fragment.
+            if (!this.isNamedParam(key) || !action.method) {
+              if (isString(value)) {
+                action.method = value;
+              }
+              else {
+                action.method = value.method;
+
+                if (value.exit) {
+                  this.exits.unshift({
+                    method: value.exit,
+                    target: routeLevel.target
+                  });
+                }
+
+                if (value.options) {
+                  this.mergeOptions(value.options);
+                }
+              }
+
+              // Adding the action
+              this.actions.push(action);
+            }
+          }
+          else if (value.hasOwnProperty('options')) {
+            this.mergeOptions(value.options);
+          }
+
+          if (isPlainObject(value)) {
+            // recurse
+            this.match(value);
+          }
+        }
+      }
+    }
+  },
+
+  /**
+  @method mergeOptions
+  @param {Object} options
+  **/
+  mergeOptions: function (options) {
+    this.options = merge(this.options, options);
+  },
+
+  /**
+  appends the matched fragment to the matched route
+
+  @method updateMatchedRoute
+  @param {String} fragment
+  **/
+  updateMatchedRoute: function (fragment) {
+    if (fragment !== '/' && fragment !== '/*') {
+      this.matchedRoute += fragment;
+    }
+  },
+
+  /**
+  removes matched fragments from the beginning of the uri
+
+  @method removeFragmentFromURI
+  @param {String} fragment
+  **/
+  removeFragmentFromURI: function (fragment) {
+    var uri = this.uri,
+        uriParts, subFrags;
+
+    if (fragment !== '/' && fragment !== '/*') {
+      if (this.includesNamedParam(fragment)) {
+        uriParts = uri.split('/'),
+        subFrags = fragment.split('/');
+
+        subFrags.forEach(function (f, i) {
+          if (f.indexOf(':') === 0) {
+            uri = uri.replace('/' + uriParts[i], '');
+          }
+          else if (f) {
+            uri = uri.replace('/' + f, '');
+          }
+        });
+      }
+      else {
+        uri = uri.replace(fragment, '');
+      }
+    }
+
+    this.uri = uri;
+  },
+
+  /**
+  @method isFragmentInURI
+  @param {Any} fragment
+  @return {Boolean}
+  **/
+  isFragmentInURI: function (fragment) {
+    var uri = this.uri,
+        uriParts, subFrags;
+
+    if (uri === '/' || uri === '') {
+      return fragment === '/' || fragment === '/*';
+    }
+
+    if ( fragment === '/' ) {
+      return false;
+    }
+    else if ( fragment === '/*' ) {
+      return true;
+    }
+    // includes vs is named param
+    else if (this.includesNamedParam(fragment)) {
+      uriParts = uri.split('/'),
+      subFrags = fragment.split('/');
+
+      if (subFrags.length === 2) {
+        return true;
+      }
+
+      return subFrags.map(function (f, i) {
+        if (f.indexOf(':') === 0) {
+          return true;
+        }
+        else {
+          return uriParts[i].indexOf(f) !== -1;
+        }
+      }).reduce(function (a, b) { return a && b; });
+    }
+    else {
+      return uri.indexOf(fragment) === 0;
+    }
+  },
+
+  /**
+  @method includesNamedParam
+  @param {String} fragment
+  @return {Boolean}
+  **/
+  includesNamedParam: function (fragment) {
+    return fragment.indexOf('/:') !== -1;
+  },
+
+  /**
+  @method isFragment
+  @param {Any} key
+  @return {Boolean}
+  **/
+  isFragment: function (key) {
+    return key.indexOf('/') === 0;
+  },
+
+  /**
+  @method isActionDescriptor
+  @param {Any} val
+  @return {Boolean}
+  **/
+  isActionDescriptor: function (val) {
+    return isString(val) || isPlainObject(val) && val.method;
+  },
+
+  /**
+  @method isNamedParam
+  @param {String} fragment
+  @return {Boolean}
+  **/
+  isNamedParam: function (fragment) {
+    return fragment.indexOf('/:') === 0;
+  }
+};
+
+module.exports = Route;
+
+},{"./helpers":2}],6:[function(require,module,exports){
 // moment.js locale configuration
 // locale : russian (ru)
 // author : Viktorminator : https://github.com/Viktorminator
@@ -669,7 +1522,7 @@ require('./react/application');
     });
 }));
 
-},{"../moment":3}],3:[function(require,module,exports){
+},{"../moment":7}],7:[function(require,module,exports){
 (function (global){
 //! moment.js
 //! version : 2.8.3
@@ -3529,7 +4382,7 @@ require('./react/application');
 }).call(this);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],4:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 window._ = require('underscore');
 
 window.$ = window.jQuery = require('jquery');
@@ -3560,6 +4413,8 @@ window.MediumEditor = require('medium-editor');
 
 window.Undo = require('undo');
 
+require('aviator');
+
 require('swfobject');
 
 require('es5-shim');
@@ -3571,8 +4426,6 @@ require('jquery.scrollto');
 require('screenviewer');
 
 require('baron');
-
-require('reactUjs');
 
 require('react-mixin-manager')(window.React);
 
@@ -3602,7 +4455,7 @@ require('jquery.shapeshift');
 
 
 
-},{"../bower_components/momentjs/moment":3,"Modernizr":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":255,"i18next":undefined,"imagesloaded":258,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"medium-editor":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"reactUjs":undefined,"screenviewer":undefined,"swfobject":undefined,"underscore":undefined,"undo":undefined}],5:[function(require,module,exports){
+},{"../bower_components/momentjs/moment":7,"Modernizr":undefined,"aviator":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":263,"i18next":undefined,"imagesloaded":266,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"medium-editor":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"screenviewer":undefined,"swfobject":undefined,"underscore":undefined,"undo":undefined}],9:[function(require,module,exports){
 var i18nLocales, momentLocales;
 
 i18nLocales = {
@@ -3624,7 +4477,7 @@ i18n.init({
 
 
 
-},{"../../bower_components/momentjs/locale/ru":2,"./ru/translation":6}],6:[function(require,module,exports){
+},{"../../bower_components/momentjs/locale/ru":6,"./ru/translation":10}],10:[function(require,module,exports){
 module.exports={ 
   "votes": {
     "vote": "Проголосовать",
@@ -3632,13 +4485,17 @@ module.exports={
     "cantVote": "Вы не можете проголосовать"
   }
 }
-},{}],7:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
+var ReactUjs;
+
+ReactUjs = require('reactUjs');
+
 window.ReactApp = {
   start: function(_arg) {
-    var ic, user;
+    var UserRouteTarget, ic, user;
     user = _arg.user;
     console.log('ReactApp start');
-    ReactUjs.initEvents();
+    ReactUjs.initialize();
     this.shellbox = new ReactShellBox();
     this.popup = new ReactPopup();
     $('[invite-button]').click((function(_this) {
@@ -3652,16 +4509,44 @@ window.ReactApp = {
       }), ic);
     }
     if (user != null) {
-      return window.messagingService = new MessagingService({
+      window.messagingService = new MessagingService({
         user: CurrentUserStore.getUser()
       });
     }
+    UserRouteTarget = {
+      profile: function() {
+        return TastyEvents.emit(TastyEvents.keys.command_hero_open());
+      },
+      settings: function() {
+        return TastyEvents.emit(TastyEvents.keys.command_settings_open());
+      },
+      showRequestById: function(req) {
+        return TastyEvents.emit(TastyEvents.keys.command_requests_open(), +req.params.id);
+      },
+      showRequests: function() {
+        return TastyEvents.emit(TastyEvents.keys.command_requests_open());
+      }
+    };
+    Aviator.setRoutes({
+      '/:user': {
+        target: UserRouteTarget,
+        '/profile': 'profile',
+        '/settings': 'settings',
+        '/friends': {
+          '/requests': {
+            '/': 'showRequests',
+            '/:id': 'showRequestById'
+          }
+        }
+      }
+    });
+    return Aviator.dispatch();
   }
 };
 
 
 
-},{}],8:[function(require,module,exports){
+},{"reactUjs":undefined}],12:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.Avatar = React.createClass({displayName: 'Avatar',
@@ -3718,7 +4603,7 @@ window.Avatar = React.createClass({displayName: 'Avatar',
 
 
 
-},{}],9:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.UserAvatar = React.createClass({displayName: 'UserAvatar',
@@ -3756,7 +4641,7 @@ window.UserAvatar = React.createClass({displayName: 'UserAvatar',
 
 
 
-},{}],10:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.LoadMoreButton = React.createClass({displayName: 'LoadMoreButton',
@@ -3775,7 +4660,7 @@ window.LoadMoreButton = React.createClass({displayName: 'LoadMoreButton',
 
 
 
-},{}],11:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CALENDAR_CLOSED, CALENDAR_OPENED_BY_CLICK, CALENDAR_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, TARGET_POST_CLASS, TARGET_POST_PARENT_CLASS;
@@ -3983,7 +4868,7 @@ window.Calendar = React.createClass({displayName: 'Calendar',
 
 
 
-},{}],12:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarHeader = React.createClass({displayName: 'CalendarHeader',
@@ -4008,7 +4893,7 @@ window.CalendarHeader = React.createClass({displayName: 'CalendarHeader',
 
 
 
-},{}],13:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarMarker = React.createClass({displayName: 'CalendarMarker',
@@ -4053,7 +4938,7 @@ window.CalendarMarker = React.createClass({displayName: 'CalendarMarker',
 
 
 
-},{}],14:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarPeriod = React.createClass({displayName: 'CalendarPeriod',
@@ -4083,7 +4968,7 @@ window.CalendarPeriod = React.createClass({displayName: 'CalendarPeriod',
 
 
 
-},{}],15:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CalendarTimeline = React.createClass({displayName: 'CalendarTimeline',
@@ -4112,7 +4997,7 @@ window.CalendarTimeline = React.createClass({displayName: 'CalendarTimeline',
 
 
 
-},{}],16:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_Controls = React.createClass({displayName: 'DesignSettingsPopup_Controls',
@@ -4157,7 +5042,7 @@ window.DesignSettingsPopup_Controls = React.createClass({displayName: 'DesignSet
 
 
 
-},{}],17:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsProgressbar = React.createClass({displayName: 'DesignSettingsPopup_ControlsProgressbar',
@@ -4183,7 +5068,7 @@ window.DesignSettingsPopup_ControlsProgressbar = React.createClass({displayName:
 
 
 
-},{}],18:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsRadioButton = React.createClass({displayName: 'DesignSettingsPopup_ControlsRadioButton',
@@ -4248,7 +5133,7 @@ window.DesignSettingsPopup_ControlsRadioButton = React.createClass({displayName:
 
 
 
-},{}],19:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var SETTING_TITLE;
@@ -4301,7 +5186,7 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass({displayName: '
 
 
 
-},{}],20:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsBackgroundItem',
@@ -4425,7 +5310,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({displayNa
 
 
 
-},{}],21:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsFeedColorItem',
@@ -4474,7 +5359,7 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({displayNam
 
 
 
-},{}],22:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsFontTypeItem',
@@ -4524,7 +5409,7 @@ window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({displayName
 
 
 
-},{}],23:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({displayName: 'DesignSettingsPopup_ControlsHeaderColorItem',
@@ -4587,7 +5472,7 @@ window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({displayN
 
 
 
-},{}],24:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MAXIMUM_OPACITY, MINIMUM_OPACITY, STEP_OPACITY, TIMEOUT_BEFORE_SAVE;
@@ -4685,7 +5570,7 @@ window.DesignSettingsPopup_ControlsOpacityItem = React.createClass({displayName:
 
 
 
-},{}],25:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DESIGN_SETTINGS_POPUP_TITLE;
@@ -4817,7 +5702,7 @@ window.DesignSettingsPopup = React.createClass({displayName: 'DesignSettingsPopu
 
 
 
-},{}],26:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var KEYCODE_ENTER;
@@ -4924,7 +5809,7 @@ window.EditableField = React.createClass({displayName: 'EditableField',
 
 
 
-},{}],27:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EmbedComponent = React.createClass({displayName: 'EmbedComponent',
@@ -5011,7 +5896,7 @@ window.EmbedComponentWithCover = React.createClass({displayName: 'EmbedComponent
 
 
 
-},{}],28:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FORM_STATE, HIDDEN_STATE, LINK_STATE;
@@ -5169,7 +6054,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({displayName
 
 
 
-},{}],29:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentEditFormManager = React.createClass({displayName: 'EntryCommentBox_CommentEditFormManager',
@@ -5231,7 +6116,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({displayName: 
 
 
 
-},{}],30:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var REPLIES_LIMIT;
@@ -5349,7 +6234,7 @@ window.EntryCommentBox_CommentForm = React.createClass({displayName: 'EntryComme
 
 
 
-},{}],31:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_Comment = React.createClass({displayName: 'EntryCommentBox_Comment',
@@ -5414,7 +6299,7 @@ window.EntryCommentBox_Comment = React.createClass({displayName: 'EntryCommentBo
 
 
 
-},{}],32:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentList = React.createClass({displayName: 'EntryCommentBox_CommentList',
@@ -5465,7 +6350,7 @@ window.EntryCommentBox_CommentList = React.createClass({displayName: 'EntryComme
 
 
 
-},{}],33:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentManager = React.createClass({displayName: 'EntryCommentBox_CommentManager',
@@ -5533,7 +6418,7 @@ window.EntryCommentBox_CommentManager = React.createClass({displayName: 'EntryCo
 
 
 
-},{}],34:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBar = React.createClass({displayName: 'EntryCommentBox_CommentMetaBar',
@@ -5570,7 +6455,7 @@ window.EntryCommentBox_CommentMetaBar = React.createClass({displayName: 'EntryCo
 
 
 
-},{}],35:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDate = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDate',
@@ -5607,7 +6492,7 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass({displayName: 'Ent
 
 
 
-},{}],36:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT;
@@ -5699,7 +6584,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass({displayNa
 
 
 
-},{}],37:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem',
@@ -5746,7 +6631,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
 
 
 
-},{}],38:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuEditItem',
@@ -5769,7 +6654,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({d
 
 
 
-},{}],39:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuLinkItem',
@@ -5791,7 +6676,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({d
 
 
 
-},{}],40:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenuReportItem',
@@ -5834,7 +6719,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
 
 
 
-},{}],41:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_CommentMetaBarReply = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarReply',
@@ -5855,7 +6740,7 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass({displayName: 'En
 
 
 
-},{}],42:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MORE_COMMENTS_LIMIT;
@@ -5927,7 +6812,7 @@ window.EntryCommentBox = React.createClass({displayName: 'EntryCommentBox',
 
 
 
-},{}],43:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryCommentBox_LoadMore = React.createClass({displayName: 'EntryCommentBox_LoadMore',
@@ -5962,7 +6847,7 @@ window.EntryCommentBox_LoadMore = React.createClass({displayName: 'EntryCommentB
 
 
 
-},{}],44:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 var CommentsMixin;
 
 CommentsMixin = {
@@ -6139,7 +7024,7 @@ React.mixins.add('CommentsMixin', [CommentsMixin, RequesterMixin, ComponentManip
 
 
 
-},{}],45:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarAuthor = React.createClass({displayName: 'EntryMetabarAuthor',
@@ -6164,7 +7049,7 @@ window.EntryMetabarAuthor = React.createClass({displayName: 'EntryMetabarAuthor'
 
 
 
-},{}],46:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarComment = React.createClass({displayName: 'EntryMetabarComment',
@@ -6206,7 +7091,7 @@ window.EntryMetabarComment = React.createClass({displayName: 'EntryMetabarCommen
 
 
 
-},{}],47:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDate = React.createClass({displayName: 'EntryMetabarDate',
@@ -6239,7 +7124,7 @@ window.EntryMetabarDate = React.createClass({displayName: 'EntryMetabarDate',
 
 
 
-},{}],48:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_BETWEEN_TOGGLER_AND_MENU, MOUSE_LEAVE_TIMEOUT;
@@ -6393,7 +7278,7 @@ window.EntryMetabarDropdownMenu = React.createClass({displayName: 'EntryMetabarD
 
 
 
-},{}],49:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuDeleteItem = React.createClass({displayName: 'EntryMetabarDropdownMenuDeleteItem',
@@ -6468,7 +7353,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({displayName: 'Ent
 
 
 
-},{}],50:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({displayName: 'EntryMetabarDropdownMenuFavoriteItem',
@@ -6577,7 +7462,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({displayName: 'E
 
 
 
-},{}],51:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuItem = React.createClass({displayName: 'EntryMetabarDropdownMenuItem',
@@ -6597,7 +7482,7 @@ window.EntryMetabarDropdownMenuItem = React.createClass({displayName: 'EntryMeta
 
 
 
-},{}],52:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuReportItem = React.createClass({displayName: 'EntryMetabarDropdownMenuReportItem',
@@ -6639,7 +7524,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({displayName: 'Ent
 
 
 
-},{}],53:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarDropdownMenuWatchItem = React.createClass({displayName: 'EntryMetabarDropdownMenuWatchItem',
@@ -6737,7 +7622,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({displayName: 'Entr
 
 
 
-},{}],54:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabar = React.createClass({displayName: 'EntryMetabar',
@@ -6805,7 +7690,7 @@ window.EntryMetabar = React.createClass({displayName: 'EntryMetabar',
 
 
 
-},{}],55:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarTag = React.createClass({displayName: 'EntryMetabarTag',
@@ -6824,7 +7709,7 @@ window.EntryMetabarTag = React.createClass({displayName: 'EntryMetabarTag',
 
 
 
-},{}],56:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EntryMetabarTags = React.createClass({displayName: 'EntryMetabarTags',
@@ -6855,7 +7740,7 @@ window.EntryMetabarTags = React.createClass({displayName: 'EntryMetabarTags',
 
 
 
-},{}],57:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FeedBricks = React.createClass({displayName: 'FeedBricks',
@@ -6905,7 +7790,7 @@ window.FeedBricks = React.createClass({displayName: 'FeedBricks',
 
 
 
-},{}],58:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
@@ -7000,7 +7885,7 @@ window.Feed = React.createClass({displayName: 'Feed',
 
 
 
-},{}],59:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 var THRESHOLD;
 
 THRESHOLD = 400;
@@ -7037,7 +7922,7 @@ window.FeedBaseMixin = {
 
 
 
-},{}],60:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FeedTlog = React.createClass({displayName: 'FeedTlog',
@@ -7071,7 +7956,7 @@ window.FeedTlog = React.createClass({displayName: 'FeedTlog',
 
 
 
-},{}],61:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.FollowStatus = React.createClass({displayName: 'FollowStatus',
@@ -7087,7 +7972,187 @@ window.FollowStatus = React.createClass({displayName: 'FollowStatus',
 
 
 
-},{}],62:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
+
+/** @jsx React.DOM */
+var DROPDOWN_CLOSED, DROPDOWN_OPENED, MOUSE_LEAVE_TIMEOUT;
+
+MOUSE_LEAVE_TIMEOUT = 300;
+
+DROPDOWN_CLOSED = 'closed';
+
+DROPDOWN_OPENED = 'opened';
+
+window.HeroProfile_DropdownMenu = React.createClass({displayName: 'HeroProfile_DropdownMenu',
+  mixins: [ComponentManipulationsMixin],
+  propTypes: {
+    userId: React.PropTypes.number.isRequired,
+    status: React.PropTypes.string.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: DROPDOWN_CLOSED,
+      status: this.props.status
+    };
+  },
+  componentDidMount: function() {
+    return TastyEvents.on(TastyEvents.keys.follow_status_changed(this.props.userId), this.updateFollowStatus);
+  },
+  componentWillUnmount: function() {
+    if (this.timeout) {
+      return clearTimeout(this.timeout);
+    }
+  },
+  render: function() {
+    var actionList, dropdownMenuClasses;
+    actionList = [];
+    dropdownMenuClasses = React.addons.classSet({
+      'action-dropdown': true,
+      'position-top': true,
+      'state--open': !this.isClosedState()
+    });
+    if (this.state.status !== 'ignored') {
+      actionList.push(HeroProfile_DropdownMenuIgnoreItem({userId:  this.props.userId, 
+                                                           onRequestEnd:  this.activateClosedState, 
+                                                           key: "ignore"}));
+    }
+    actionList.push(HeroProfile_DropdownMenuReportItem({userId:  this.props.userId, 
+                                                         onRequestEnd:  this.activateClosedState, 
+                                                         key: "report"}));
+    return React.DOM.div({className: "dropdown-container", 
+                 onMouseEnter:  this.handleMouseEnter, 
+                 onMouseLeave:  this.handleMouseLeave}, 
+              React.DOM.button({className: "action-menu-button"}, 
+                React.DOM.i({className: "icon icon--dots"})
+              ), 
+              React.DOM.span({className: dropdownMenuClasses }, 
+                actionList 
+              )
+            );
+  },
+  activateClosedState: function() {
+    return this.safeUpdateState({
+      currentState: DROPDOWN_CLOSED
+    });
+  },
+  activateOpenedState: function() {
+    return this.safeUpdateState({
+      currentState: DROPDOWN_OPENED
+    });
+  },
+  isClosedState: function() {
+    return this.state.currentState === DROPDOWN_CLOSED;
+  },
+  isOpenedState: function() {
+    return this.state.currentState === DROPDOWN_OPENED;
+  },
+  updateFollowStatus: function(newStatus) {
+    return this.safeUpdateState({
+      status: newStatus
+    });
+  },
+  handleMouseEnter: function() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+    if (this.isClosedState()) {
+      return this.activateOpenedState();
+    }
+  },
+  handleMouseLeave: function() {
+    if (this.isOpenedState()) {
+      return this.timeout = setTimeout(((function(_this) {
+        return function() {
+          return _this.activateClosedState();
+        };
+      })(this)), MOUSE_LEAVE_TIMEOUT);
+    }
+  }
+});
+
+
+
+},{}],67:[function(require,module,exports){
+
+/** @jsx React.DOM */
+var TITLE;
+
+TITLE = 'Заблокировать';
+
+window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({displayName: 'HeroProfile_DropdownMenuIgnoreItem',
+  mixins: [RequesterMixin],
+  propTypes: {
+    userId: React.PropTypes.number.isRequired,
+    onRequestEnd: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.DOM.a({className: "action-dropdown-item", 
+       onClick:  this.ignore}, 
+      React.DOM.i({className: "icon icon--not-allowed"}), 
+      TITLE 
+    );
+  },
+  ignore: function() {
+    return this.createRequest({
+      url: ApiRoutes.change_my_relationship_url(this.props.userId, 'ignore'),
+      method: 'POST',
+      success: (function(_this) {
+        return function(relationship) {
+          TastyEvents.emit(TastyEvents.keys.follow_status_changed(_this.props.userId), relationship.state);
+          return _this.props.onRequestEnd();
+        };
+      })(this),
+      error: function(data) {
+        return TastyNotifyController.errorResponse(data);
+      }
+    }, {
+      progressBar: true
+    });
+  }
+});
+
+
+
+},{}],68:[function(require,module,exports){
+
+/** @jsx React.DOM */
+var TITLE;
+
+TITLE = 'Пожаловаться';
+
+window.HeroProfile_DropdownMenuReportItem = React.createClass({displayName: 'HeroProfile_DropdownMenuReportItem',
+  mixins: [RequesterMixin],
+  propTypes: {
+    userId: React.PropTypes.number.isRequired,
+    onRequestEnd: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.DOM.a({className: "action-dropdown-item", 
+       onClick:  this.report}, 
+      React.DOM.i({className: "icon icon--exclamation-mark"}), 
+      TITLE 
+    );
+  },
+  report: function() {
+    return this.createRequest({
+      url: ApiRoutes.tlog_report(this.props.userId),
+      method: 'POST',
+      success: function() {
+        TastyNotifyController.notify('success', 'Жалоба на пользователя принята, и будет рассмотрена в ближайшее время');
+        return this.props.onRequestEnd();
+      },
+      error: function(data) {
+        return TastyNotifyController.errorResponse(data);
+      }
+    }, {
+      progressBar: true
+    });
+  }
+});
+
+
+
+},{}],69:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroProfileStats_FollowersPopup',
@@ -7176,7 +8241,7 @@ window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroPr
 
 
 
-},{}],63:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroProfileStats_FollowingsPopup',
@@ -7265,7 +8330,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroP
 
 
 
-},{}],64:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowerItem = React.createClass({displayName: 'HeroProfileStats_FollowerItem',
@@ -7289,7 +8354,7 @@ window.HeroProfileStats_FollowerItem = React.createClass({displayName: 'HeroProf
 
 
 
-},{}],65:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowingItem = React.createClass({displayName: 'HeroProfileStats_FollowingItem',
@@ -7313,7 +8378,7 @@ window.HeroProfileStats_FollowingItem = React.createClass({displayName: 'HeroPro
 
 
 
-},{}],66:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_TagItem = React.createClass({displayName: 'HeroProfileStats_TagItem',
@@ -7334,7 +8399,7 @@ window.HeroProfileStats_TagItem = React.createClass({displayName: 'HeroProfileSt
 
 
 
-},{}],67:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION, MARGIN;
@@ -7415,7 +8480,7 @@ window.HeroProfileStats_Popup = React.createClass({displayName: 'HeroProfileStat
 
 
 
-},{}],68:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfileStats_TagsPopup',
@@ -7503,7 +8568,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfile
 
 
 
-},{}],69:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS;
@@ -7530,20 +8595,27 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
     this.heroClosedHeight = this.$hero.height();
     this.setInitialHeroHeight();
     $(window).on('resize', this.onResize);
-    return $(window).on('scroll', this.scrollFade);
+    $(window).on('scroll', this.scrollFade);
+    TastyEvents.on(TastyEvents.keys.command_hero_open(), this.open);
+    return TastyEvents.on(TastyEvents.keys.command_hero_close(), this.close);
   },
   shouldComponentUpdate: function(nextProps, nextState) {
     return this.state.currentState !== nextState.currentState;
   },
   componentWillUnmount: function() {
     $(window).off('resize', this.onResize);
-    return $(window).off('scroll', this.scrollFade);
+    $(window).off('scroll', this.scrollFade);
+    TastyEvents.off(TastyEvents.keys.command_hero_open(), this.open);
+    return TastyEvents.off(TastyEvents.keys.command_hero_close(), this.close);
   },
   render: function() {
     var actions, follow_status;
     if (this.props.relationship != null) {
       actions = React.DOM.div({className: "hero__actions"}, 
-                   FollowButton({relationship:  this.props.relationship})
+                   WriteMessageButton({user:  this.props.user}), 
+                   FollowButton({relationship:  this.props.relationship}), 
+                   HeroProfile_DropdownMenu({userId:  this.props.user.id, 
+                                             status:  this.props.relationship.state})
                  );
       follow_status = SmartFollowStatus({tlogId:  this.props.user.id, 
                                           status:  this.props.relationship.state});
@@ -7554,7 +8626,7 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
               React.DOM.div({className: "hero__gradient"}), 
               React.DOM.div({className: "hero__box", ref: "heroBox"}, 
                 HeroProfileAvatar({user:  this.props.user, 
-                                   onClick:  this.open}), 
+                                   onClick:  this.handleAvatarClick}), 
                 follow_status, 
                 HeroProfileHead({user:  this.props.user}), 
                 actions 
@@ -7563,24 +8635,21 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
                                 stats:  this.props.stats})
             );
   },
-  open: function(e) {
+  open: function() {
     var transitionEnd;
     transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' + 'msTransitionEnd transitionend';
-    if (!this.isOpen()) {
-      e.preventDefault();
-      Mousetrap.bind('esc', this.close);
-      this.setHeroWindowHeight();
-      $('body').addClass(HERO_OPENED_CLASS).scrollTop(0);
-      return this.$hero.on(transitionEnd, (function(_this) {
-        return function() {
-          _this.setState({
-            currentState: HERO_OPENED
-          });
-          $(window).on('scroll.hero', _this.close);
-          return _this.$hero.off(transitionEnd);
-        };
-      })(this));
-    }
+    Mousetrap.bind('esc', this.close);
+    this.setHeroWindowHeight();
+    $('body').addClass(HERO_OPENED_CLASS).scrollTop(0);
+    return this.$hero.on(transitionEnd, (function(_this) {
+      return function() {
+        _this.setState({
+          currentState: HERO_OPENED
+        });
+        $(window).on('scroll.hero', _this.close);
+        return _this.$hero.off(transitionEnd);
+      };
+    })(this));
   },
   close: function() {
     if (this.isOpen()) {
@@ -7636,12 +8705,18 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
   },
   isOpen: function() {
     return this.state.currentState !== HERO_CLOSED;
+  },
+  handleAvatarClick: function(e) {
+    if (!this.isOpen()) {
+      e.preventDefault();
+      return this.open();
+    }
   }
 });
 
 
 
-},{}],70:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var HERO_AVATAR_SIZE;
@@ -7666,7 +8741,7 @@ window.HeroProfileAvatar = React.createClass({displayName: 'HeroProfileAvatar',
 
 
 
-},{}],71:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileHead = React.createClass({displayName: 'HeroProfileHead',
@@ -7726,7 +8801,7 @@ window.HeroProfileHeadStatic = React.createClass({displayName: 'HeroProfileHeadS
 
 
 
-},{}],72:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats = React.createClass({displayName: 'HeroProfileStats',
@@ -7853,7 +8928,7 @@ window.HeroProfileStats = React.createClass({displayName: 'HeroProfileStats',
 
 
 
-},{}],73:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStatsItem = React.createClass({displayName: 'HeroProfileStatsItem',
@@ -7897,7 +8972,7 @@ window.HeroProfileStatsItem = React.createClass({displayName: 'HeroProfileStatsI
 
 
 
-},{}],74:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FIRST_ROW_RATIO, NEXT_ROWS_RATIO;
@@ -8042,7 +9117,7 @@ window.ImagesCollage_Legacy = React.createClass({displayName: 'ImagesCollage_Leg
 
 
 
-},{}],75:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION;
@@ -8109,7 +9184,7 @@ window.TastyAlert = React.createClass({displayName: 'TastyAlert',
 
 
 
-},{}],76:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION;
@@ -8175,7 +9250,7 @@ window.TastyConfirm = React.createClass({displayName: 'TastyConfirm',
 
 
 
-},{}],77:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION, START_TIMEOUT;
@@ -8228,7 +9303,7 @@ window.TastyLockingAlert = React.createClass({displayName: 'TastyLockingAlert',
 
 
 
-},{}],78:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEFAULT_TIMEOUT, DEFAULT_TYPE;
@@ -8278,7 +9353,7 @@ window.TastyNotify = React.createClass({displayName: 'TastyNotify',
 
 
 
-},{}],79:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PeopleItem = React.createClass({displayName: 'PeopleItem',
@@ -8316,7 +9391,7 @@ window.PeopleItem = React.createClass({displayName: 'PeopleItem',
 
 
 
-},{}],80:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'PersonsPopup_FollowerRelationship',
@@ -8339,7 +9414,7 @@ window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'Pers
 
 
 
-},{}],81:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowingRelationship = React.createClass({displayName: 'PersonsPopup_FollowingRelationship',
@@ -8361,7 +9436,7 @@ window.PersonsPopup_FollowingRelationship = React.createClass({displayName: 'Per
 
 
 
-},{}],82:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_GuessRelationship = React.createClass({displayName: 'PersonsPopup_GuessRelationship',
@@ -8385,7 +9460,7 @@ window.PersonsPopup_GuessRelationship = React.createClass({displayName: 'Persons
 
 
 
-},{}],83:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_IgnoredRelationship = React.createClass({displayName: 'PersonsPopup_IgnoredRelationship',
@@ -8407,7 +9482,7 @@ window.PersonsPopup_IgnoredRelationship = React.createClass({displayName: 'Perso
 
 
 
-},{}],84:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_PersonItem',
@@ -8439,7 +9514,7 @@ window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_P
 
 
 
-},{}],85:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'PersonsPopup_RequestRelationship',
@@ -8463,7 +9538,7 @@ window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'Perso
 
 
 
-},{}],86:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FOLLOWERS, FOLLOWINGS, GUESSES, IGNORES, REQUESTS;
@@ -8528,7 +9603,7 @@ window.PersonsPopup_Menu = React.createClass({displayName: 'PersonsPopup_Menu',
 
 
 
-},{}],87:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PersonsPopup_MenuItem;
@@ -8557,7 +9632,7 @@ window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass({displa
 
 
 
-},{}],88:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_PanelMixin = {
@@ -8573,24 +9648,7 @@ window.PersonsPopup_PanelMixin = {
     };
   },
   componentDidMount: function() {
-    this.$scroller = $(this.refs.scroller.getDOMNode());
-    this.scroller = this.$scroller.baron({
-      scroller: ".js-scroller-pane",
-      bar: ".js-scroller-bar",
-      track: ".js-scroller-track",
-      barOnCls: "scroller--tracked",
-      pause: 0
-    });
-    this.$scroller.trigger("sizeChange").trigger('sizeChange');
     return this.getPanelData();
-  },
-  componentDidUpdate: function() {
-    this.scroller.update();
-    return this.$scroller.trigger("sizeChange").trigger('sizeChange');
-  },
-  componentWillUnmount: function() {
-    this.scroller.dispose();
-    return this.$scroller = this.scroller = null;
   },
   render: function() {
     var itemClass, message, panelClasses, panelContent, relationships, _ref, _ref1;
@@ -8709,11 +9767,11 @@ window.PersonsPopup_PanelMixin = {
   }
 };
 
-React.mixins.add('PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser', ComponentManipulationsMixin]);
+React.mixins.add('PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser', ComponentManipulationsMixin, ScrollerMixin]);
 
 
 
-},{}],89:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPopup_FollowersPanel',
@@ -8726,7 +9784,7 @@ window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPop
 
 
 
-},{}],90:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPopup_FollowingsPanel',
@@ -8739,7 +9797,7 @@ window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPo
 
 
 
-},{}],91:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup_GuessesPanel',
@@ -8752,7 +9810,7 @@ window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup
 
 
 
-},{}],92:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup_IgnoresPanel',
@@ -8765,7 +9823,7 @@ window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup
 
 
 
-},{}],93:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopup_RequestsPanel',
@@ -8778,7 +9836,7 @@ window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopu
 
 
 
-},{}],94:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PERSON_POPUP_TITLE;
@@ -8788,7 +9846,14 @@ PERSON_POPUP_TITLE = 'Управление подписками';
 window.PersonsPopup = React.createClass({displayName: 'PersonsPopup',
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin],
   propTypes: {
-    user: React.PropTypes.object.isRequired
+    user: React.PropTypes.object.isRequired,
+    panelName: React.PropTypes.string,
+    userId: React.PropTypes.number
+  },
+  getDefaultProps: function() {
+    return {
+      panelName: 'followings'
+    };
   },
   getInitialState: function() {
     return {
@@ -8814,7 +9879,7 @@ window.PersonsPopup = React.createClass({displayName: 'PersonsPopup',
           total_count: null
         }
       },
-      currentTab: 'followings'
+      currentTab: this.props.panelName
     };
   },
   render: function() {
@@ -8824,6 +9889,7 @@ window.PersonsPopup = React.createClass({displayName: 'PersonsPopup',
     };
     if (this._isProfilePrivate()) {
       requestsPanel = PersonsPopup_RequestsPanel({isActive:  this.state.currentTab == 'requests', 
+                                                   userId:  this.props.userId, 
                                                    relationships:  this.state.relationships.requests.items, 
                                                    total_count:  this.state.relationships.requests.total_count, 
                                                    activitiesHandler:  this.activitiesHandler, 
@@ -8841,24 +9907,27 @@ window.PersonsPopup = React.createClass({displayName: 'PersonsPopup',
                                  onSelect:  this.selectTab}), 
 
               PersonsPopup_FollowingsPanel({isActive:  this.state.currentTab == 'followings', 
+                                            userId:  this.props.userId, 
                                             relationships:  this.state.relationships.followings.items, 
                                             total_count:  this.state.relationships.followings.total_count, 
                                             activitiesHandler:  this.activitiesHandler, 
                                             onLoad:  onLoad.bind(this, 'followings') }), 
 
               PersonsPopup_FollowersPanel({isActive:  this.state.currentTab == 'followers', 
+                                           userId:  this.props.userId, 
                                            relationships:  this.state.relationships.followers.items, 
                                            total_count:  this.state.relationships.followers.total_count, 
                                            activitiesHandler:  this.activitiesHandler, 
                                            onLoad:  onLoad.bind(this, 'followers') }), 
 
               PersonsPopup_GuessesPanel({isActive:  this.state.currentTab == 'guesses', 
+                                         userId:  this.props.userId, 
                                          relationships:  this.state.relationships.guesses.items, 
                                          total_count:  this.state.relationships.guesses.total_count, 
                                          activitiesHandler:  this.activitiesHandler, 
                                          onLoad:  onLoad.bind(this, 'guesses') }), 
 
-              requestsPanel
+              requestsPanel 
 
             );
   },
@@ -8888,7 +9957,7 @@ window.PersonsPopup = React.createClass({displayName: 'PersonsPopup',
 
 
 
-},{}],95:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupHeader = React.createClass({displayName: 'PopupHeader',
@@ -8924,7 +9993,7 @@ window.PopupHeader = React.createClass({displayName: 'PopupHeader',
 
 
 
-},{}],96:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupLayout = React.createClass({displayName: 'PopupLayout',
@@ -8958,7 +10027,7 @@ window.PopupLayout = React.createClass({displayName: 'PopupLayout',
 
 
 
-},{}],97:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var NO_TRANSITION_CLASS;
@@ -9046,7 +10115,7 @@ window.Popup = React.createClass({displayName: 'Popup',
 
 
 
-},{}],98:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupSpinner = React.createClass({displayName: 'PopupSpinner',
@@ -9066,7 +10135,7 @@ window.PopupSpinner = React.createClass({displayName: 'PopupSpinner',
 
 
 
-},{}],99:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupBox = React.createClass({displayName: 'PopupBox',
@@ -9116,7 +10185,7 @@ window.PopupBox = React.createClass({displayName: 'PopupBox',
 
 
 
-},{}],100:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ENTRY_PRIVACY_ANONYMOUS, ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, ENTRY_PRIVACY_PUBLIC_WITH_VOTING, PREVIEW_BODY_CLASSES, TLOG_TYPE_ANONYMOUS, TLOG_TYPE_PRIVATE, TLOG_TYPE_PUBLIC;
@@ -9242,7 +10311,7 @@ window.PostActions = React.createClass({displayName: 'PostActions',
 
 
 
-},{}],101:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostActions_PrivacyButton = React.createClass({displayName: 'PostActions_PrivacyButton',
@@ -9289,7 +10358,7 @@ window.PostActions_PrivacyButton = React.createClass({displayName: 'PostActions_
 
 
 
-},{}],102:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostActions_VoteButton = React.createClass({displayName: 'PostActions_VoteButton',
@@ -9334,7 +10403,7 @@ window.PostActions_VoteButton = React.createClass({displayName: 'PostActions_Vot
 
 
 
-},{}],103:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CHOICER_ITEMS, CHOICER_TYPES;
@@ -9454,7 +10523,7 @@ window.PostEditor_ChoicerItem = React.createClass({displayName: 'PostEditor_Choi
 
 
 
-},{}],104:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEMO_IDS;
@@ -9543,7 +10612,7 @@ window.PostEditor_Demo = React.createClass({displayName: 'PostEditor_Demo',
 
 
 
-},{}],105:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_EditPost = React.createClass({displayName: 'PostEditor_EditPost',
@@ -9574,7 +10643,7 @@ window.PostEditor_EditPost = React.createClass({displayName: 'PostEditor_EditPos
 
 
 
-},{}],106:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_EditorContainer',
@@ -9702,7 +10771,7 @@ window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],107:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDITOR_MODES, EDITOR_OPTIONS;
@@ -9825,7 +10894,7 @@ window.TastyEditor = React.createClass({displayName: 'TastyEditor',
 
 
 
-},{}],108:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_AnonymousEditor = React.createClass({displayName: 'PostEditor_AnonymousEditor',
@@ -9884,7 +10953,7 @@ window.PostEditor_AnonymousEditor = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],109:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var INSERT_MODE, LOADED_MODE, WELCOME_MODE;
@@ -10068,7 +11137,7 @@ window.PostEditor_ImageEditor = React.createClass({displayName: 'PostEditor_Imag
 
 
 
-},{}],110:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_InstagramEditor = React.createClass({displayName: 'PostEditor_InstagramEditor',
@@ -10103,7 +11172,7 @@ window.PostEditor_InstagramEditor = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],111:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 var AUTOSAVE_TIME;
 
 AUTOSAVE_TIME = 10000;
@@ -10136,7 +11205,7 @@ window.PostEditor_AutosaveMixin = {
 
 
 
-},{}],112:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_MusicEditor = React.createClass({displayName: 'PostEditor_MusicEditor',
@@ -10171,7 +11240,7 @@ window.PostEditor_MusicEditor = React.createClass({displayName: 'PostEditor_Musi
 
 
 
-},{}],113:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_QuoteEditor = React.createClass({displayName: 'PostEditor_QuoteEditor',
@@ -10225,7 +11294,7 @@ window.PostEditor_QuoteEditor = React.createClass({displayName: 'PostEditor_Quot
 
 
 
-},{}],114:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_TextEditor = React.createClass({displayName: 'PostEditor_TextEditor',
@@ -10285,7 +11354,7 @@ window.PostEditor_TextEditor = React.createClass({displayName: 'PostEditor_TextE
 
 
 
-},{}],115:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_VideoEditor = React.createClass({displayName: 'PostEditor_VideoEditor',
@@ -10320,7 +11389,7 @@ window.PostEditor_VideoEditor = React.createClass({displayName: 'PostEditor_Vide
 
 
 
-},{}],116:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_Loaded',
@@ -10346,7 +11415,7 @@ window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_L
 
 
 
-},{}],117:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ImagesMediaBox_UrlInsert = React.createClass({displayName: 'ImagesMediaBox_UrlInsert',
@@ -10376,7 +11445,7 @@ window.ImagesMediaBox_UrlInsert = React.createClass({displayName: 'ImagesMediaBo
 
 
 
-},{}],118:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_Layout = React.createClass({displayName: 'PostEditor_Layout',
@@ -10406,7 +11475,7 @@ window.PostEditor_Layout = React.createClass({displayName: 'PostEditor_Layout',
 
 
 
-},{}],119:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_Actions = React.createClass({displayName: 'MediaBox_Actions',
@@ -10440,7 +11509,7 @@ window.MediaBox_Actions = React.createClass({displayName: 'MediaBox_Actions',
 
 
 
-},{}],120:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_Layout = React.createClass({displayName: 'MediaBox_Layout',
@@ -10475,7 +11544,7 @@ window.MediaBox_Layout = React.createClass({displayName: 'MediaBox_Layout',
 
 
 
-},{}],121:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_LoadingProgress = React.createClass({displayName: 'MediaBox_LoadingProgress',
@@ -10493,7 +11562,7 @@ window.MediaBox_LoadingProgress = React.createClass({displayName: 'MediaBox_Load
 
 
 
-},{}],122:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 var DRAGOFF_TIMEOUT, DRAG_HOVER_CLASS;
 
 DRAG_HOVER_CLASS = 'state--drag-hover';
@@ -10561,7 +11630,7 @@ window.PostEditor_Dragging = {
 
 
 
-},{}],123:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 var ACCEPT_FILE_TYPES, MAX_FILE_SIZE, MAX_NUMBER_OF_FILES;
 
 ACCEPT_FILE_TYPES = /(\.|\/)(gif|jpe?g|png)$/i;
@@ -10743,7 +11812,7 @@ window.PostEditor_ImagesForm = {
 
 
 
-},{}],124:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.TLOG_TYPES = ['public', 'private', 'anonymous'];
@@ -10800,7 +11869,7 @@ window.PostEditor_LayoutMixin = {
 
 
 
-},{}],125:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 window.PostEditor_PersistenceMixin = {
   propTypes: {
     activitiesHandler: React.PropTypes.object.isRequired,
@@ -10863,7 +11932,7 @@ React.mixins.add('PostEditor_PersistenceMixin', [window.PostEditor_PersistenceMi
 
 
 
-},{}],126:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 window.PostEditor_VideoMixin = {
   propTypes: {
     normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
@@ -10909,7 +11978,7 @@ window.PostEditor_VideoMixin = {
 
 
 
-},{}],127:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_NewAnonymousPost = React.createClass({displayName: 'PostEditor_NewAnonymousPost',
@@ -10932,7 +12001,7 @@ window.PostEditor_NewAnonymousPost = React.createClass({displayName: 'PostEditor
 
 
 
-},{}],128:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEFAULT_POST_TYPE;
@@ -10963,7 +12032,7 @@ window.PostEditor_NewPost = React.createClass({displayName: 'PostEditor_NewPost'
 
 
 
-},{}],129:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_Embeded = React.createClass({displayName: 'VideoMediaBox_Embeded',
@@ -10982,7 +12051,7 @@ window.VideoMediaBox_Embeded = React.createClass({displayName: 'VideoMediaBox_Em
 
 
 
-},{}],130:[function(require,module,exports){
+},{}],137:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_Loading = React.createClass({displayName: 'VideoMediaBox_Loading',
@@ -11004,7 +12073,7 @@ window.VideoMediaBox_Loading = React.createClass({displayName: 'VideoMediaBox_Lo
 
 
 
-},{}],131:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_UrlInsert = React.createClass({displayName: 'VideoMediaBox_UrlInsert',
@@ -11037,7 +12106,7 @@ window.VideoMediaBox_UrlInsert = React.createClass({displayName: 'VideoMediaBox_
 
 
 
-},{}],132:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EMBEDED_MODE, INSERT_MODE, LOADING_MODE, WELCOME_MODE;
@@ -11183,7 +12252,7 @@ window.VideoMediaBox = React.createClass({displayName: 'VideoMediaBox',
 
 
 
-},{}],133:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_ImageWelcome = React.createClass({displayName: 'MediaBox_ImageWelcome',
@@ -11217,7 +12286,7 @@ window.MediaBox_ImageWelcome = React.createClass({displayName: 'MediaBox_ImageWe
 
 
 
-},{}],134:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_InstagramWelcome = React.createClass({displayName: 'MediaBox_InstagramWelcome',
@@ -11241,7 +12310,7 @@ window.MediaBox_InstagramWelcome = React.createClass({displayName: 'MediaBox_Ins
 
 
 
-},{}],135:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_MusicWelcome = React.createClass({displayName: 'MediaBox_MusicWelcome',
@@ -11267,7 +12336,7 @@ window.MediaBox_MusicWelcome = React.createClass({displayName: 'MediaBox_MusicWe
 
 
 
-},{}],136:[function(require,module,exports){
+},{}],143:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_VideoWelcome = React.createClass({displayName: 'MediaBox_VideoWelcome',
@@ -11293,7 +12362,7 @@ window.MediaBox_VideoWelcome = React.createClass({displayName: 'MediaBox_VideoWe
 
 
 
-},{}],137:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
@@ -11320,6 +12389,12 @@ window.FollowButton = React.createClass({displayName: 'FollowButton',
       isError: false,
       isProcess: false
     };
+  },
+  componentDidMount: function() {
+    return TastyEvents.on(TastyEvents.keys.follow_status_changed(this.state.relationship.user_id), this.updateFollowStatus);
+  },
+  componentWillUnmount: function() {
+    return TastyEvents.off(TastyEvents.keys.follow_status_changed(this.state.relationship.user_id), this.updateFollowStatus);
   },
   render: function() {
     var rootClass;
@@ -11360,6 +12435,14 @@ window.FollowButton = React.createClass({displayName: 'FollowButton',
   onMouseLeave: function() {
     return this.setState({
       isHover: false
+    });
+  },
+  updateFollowStatus: function(newStatus) {
+    var newRelationship;
+    newRelationship = this.state.relationship;
+    newRelationship.state = newStatus;
+    return this.setState({
+      relationship: newRelationship
     });
   },
   _getTitle: function() {
@@ -11427,7 +12510,7 @@ window.FollowButton = React.createClass({displayName: 'FollowButton',
 
 
 
-},{}],138:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.RelationshipFollowerButton = React.createClass({displayName: 'RelationshipFollowerButton',
@@ -11473,7 +12556,7 @@ window.RelationshipFollowerButton = React.createClass({displayName: 'Relationshi
 
 
 
-},{}],139:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.RelationshipGuessButton = React.createClass({displayName: 'RelationshipGuessButton',
@@ -11510,7 +12593,7 @@ window.RelationshipGuessButton = React.createClass({displayName: 'RelationshipGu
 
 
 
-},{}],140:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_IGNORED;
@@ -11579,7 +12662,7 @@ window.RelationshipIgnoreButton = React.createClass({displayName: 'RelationshipI
 
 
 
-},{}],141:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 window.RelationshipMixin = {
   componentWillUnmount: function() {
     return this.clearErrorTimer();
@@ -11828,7 +12911,7 @@ React.mixins.add('RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, Reque
 
 
 
-},{}],142:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_REQUESTED;
@@ -11895,7 +12978,7 @@ window.RelationshipRequestButton = React.createClass({displayName: 'Relationship
 
 
 
-},{}],143:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SearchButton = React.createClass({displayName: 'SearchButton',
@@ -11912,7 +12995,7 @@ window.SearchButton = React.createClass({displayName: 'SearchButton',
 
 
 
-},{}],144:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SearchField = React.createClass({displayName: 'SearchField',
@@ -11960,7 +13043,7 @@ window.SearchField = React.createClass({displayName: 'SearchField',
 
 
 
-},{}],145:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CLOSED, OPENED;
@@ -12033,7 +13116,7 @@ window.Search = React.createClass({displayName: 'Search',
 
 
 
-},{}],146:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsAccountsItem = React.createClass({displayName: 'SettingsAccountsItem',
@@ -12092,7 +13175,7 @@ module.experts = window.SettingsAccountsItem = React.createClass({displayName: '
 
 
 
-},{}],147:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsAvatar = React.createClass({displayName: 'SettingsAvatar',
@@ -12145,7 +13228,7 @@ module.experts = window.SettingsAvatar = React.createClass({displayName: 'Settin
 
 
 
-},{}],148:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailConfirmation = React.createClass({displayName: 'SettingsEmailConfirmation',
@@ -12219,7 +13302,7 @@ window.SettingsEmailConfirmation = React.createClass({displayName: 'SettingsEmai
 
 
 
-},{}],149:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailEdit = React.createClass({displayName: 'SettingsEmailEdit',
@@ -12331,7 +13414,7 @@ window.SettingsEmailEdit = React.createClass({displayName: 'SettingsEmailEdit',
 
 
 
-},{}],150:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ENTER_KEYCODE, ESC_KEYCODE;
@@ -12441,7 +13524,7 @@ window.SettingsEmailEstablishEdit = React.createClass({displayName: 'SettingsEma
 
 
 
-},{}],151:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDIT_STATE, SHOW_STATE;
@@ -12487,7 +13570,7 @@ window.SettingsEmailEstablish = React.createClass({displayName: 'SettingsEmailEs
 
 
 
-},{}],152:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailEstablishShow = React.createClass({displayName: 'SettingsEmailEstablishShow',
@@ -12515,7 +13598,7 @@ window.SettingsEmailEstablishShow = React.createClass({displayName: 'SettingsEma
 
 
 
-},{}],153:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDIT_STATE, ESTABLISH_STATE, SHOW_STATE;
@@ -12600,7 +13683,7 @@ window.SettingsEmail = React.createClass({displayName: 'SettingsEmail',
 
 
 
-},{}],154:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailShow = React.createClass({displayName: 'SettingsEmailShow',
@@ -12657,7 +13740,7 @@ window.SettingsEmailShow = React.createClass({displayName: 'SettingsEmailShow',
 
 
 
-},{}],155:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsHeader = React.createClass({displayName: 'SettingsHeader',
@@ -12704,7 +13787,7 @@ window.SettingsHeader = React.createClass({displayName: 'SettingsHeader',
 
 
 
-},{}],156:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsName = React.createClass({displayName: 'SettingsName',
@@ -12736,7 +13819,7 @@ window.SettingsName = React.createClass({displayName: 'SettingsName',
 
 
 
-},{}],157:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CANCEL_TIMEOUT, KEYCODE_ENTER, KEYCODE_ESC;
@@ -12945,7 +14028,7 @@ module.experts = window.SettingsPasswordItem = React.createClass({displayName: '
 
 
 
-},{}],158:[function(require,module,exports){
+},{}],165:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsRadioItem = React.createClass({displayName: 'SettingsRadioItem',
@@ -12982,7 +14065,7 @@ module.experts = window.SettingsRadioItem = React.createClass({displayName: 'Set
 
 
 
-},{}],159:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsTitle = React.createClass({displayName: 'SettingsTitle',
@@ -13014,7 +14097,7 @@ window.SettingsTitle = React.createClass({displayName: 'SettingsTitle',
 
 
 
-},{}],160:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsVkontakteItem = React.createClass({displayName: 'SettingsVkontakteItem',
@@ -13042,7 +14125,7 @@ module.experts = window.SettingsVkontakteItem = React.createClass({displayName: 
 
 
 
-},{}],161:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ToolbarSettings = React.createClass({displayName: 'ToolbarSettings',
@@ -13153,7 +14236,7 @@ window.ToolbarSettings = React.createClass({displayName: 'ToolbarSettings',
 
 
 
-},{}],162:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.AuthorizationShellBox = React.createClass({displayName: 'AuthorizationShellBox',
@@ -13206,7 +14289,7 @@ window.AuthorizationShellBox = React.createClass({displayName: 'AuthorizationShe
 
 
 
-},{}],163:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var AUTH_TIMEOUT;
@@ -13249,7 +14332,7 @@ window.VkAuthorizationShellBox = React.createClass({displayName: 'VkAuthorizatio
 
 
 
-},{}],164:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.Shellbox_VkAuthButton = React.createClass({displayName: 'Shellbox_VkAuthButton',
@@ -13295,7 +14378,7 @@ window.Shellbox_VkAuthButton = React.createClass({displayName: 'Shellbox_VkAuthB
 
 
 
-},{}],165:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.EmailSigninShellBox = React.createClass({displayName: 'EmailSigninShellBox',
@@ -13477,7 +14560,7 @@ window.EmailSigninShellBox = React.createClass({displayName: 'EmailSigninShellBo
 
 
 
-},{}],166:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.EmailSignupShellBox = React.createClass({displayName: 'EmailSignupShellBox',
@@ -13608,7 +14691,7 @@ module.experts = window.EmailSignupShellBox = React.createClass({displayName: 'E
 
 
 
-},{}],167:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.InviterShellBox = React.createClass({displayName: 'InviterShellBox',
@@ -13694,7 +14777,7 @@ window.InviterShellBox = React.createClass({displayName: 'InviterShellBox',
 
 
 
-},{}],168:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.RecoveryShellBox = React.createClass({displayName: 'RecoveryShellBox',
@@ -13787,7 +14870,7 @@ module.experts = window.RecoveryShellBox = React.createClass({displayName: 'Reco
 
 
 
-},{}],169:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SelectSigninShellBox = React.createClass({displayName: 'SelectSigninShellBox',
@@ -13841,7 +14924,7 @@ window.SelectSigninShellBox = React.createClass({displayName: 'SelectSigninShell
 
 
 
-},{}],170:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ShellBox = React.createClass({displayName: 'ShellBox',
@@ -13913,7 +14996,7 @@ window.ShellBox = React.createClass({displayName: 'ShellBox',
 
 
 
-},{}],171:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SmartFollowStatus = React.createClass({displayName: 'SmartFollowStatus',
@@ -13944,7 +15027,7 @@ window.SmartFollowStatus = React.createClass({displayName: 'SmartFollowStatus',
 
 
 
-},{}],172:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.Spinner = React.createClass({displayName: 'Spinner',
@@ -13968,7 +15051,7 @@ window.Spinner = React.createClass({displayName: 'Spinner',
 
 
 
-},{}],173:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_SPEED;
@@ -14008,7 +15091,7 @@ module.experts = window.TlogAlert = React.createClass({displayName: 'TlogAlert',
 
 
 
-},{}],174:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CloseToolbar = React.createClass({displayName: 'CloseToolbar',
@@ -14025,7 +15108,7 @@ window.CloseToolbar = React.createClass({displayName: 'CloseToolbar',
 
 
 
-},{}],175:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MOUSE_LEAVE_TIMEOUT, TOOLBAR_CLOSED, TOOLBAR_OPENED_BY_CLICK, TOOLBAR_OPENED_BY_HOVER;
@@ -14039,7 +15122,7 @@ TOOLBAR_OPENED_BY_HOVER = 'openedByHover';
 TOOLBAR_OPENED_BY_CLICK = 'openedByClick';
 
 window.FeedToolbar = React.createClass({displayName: 'FeedToolbar',
-  mixins: [TouchMixin, ComponentManipulationsMixin],
+  mixins: [TouchMixin, ComponentManipulationsMixin, ScrollerMixin],
   propTypes: {
     friendsUrl: React.PropTypes.string,
     liveUrl: React.PropTypes.string.isRequired,
@@ -14094,7 +15177,14 @@ window.FeedToolbar = React.createClass({displayName: 'FeedToolbar',
                 React.DOM.i({className: "icon icon--ribbon"})
               ), 
               React.DOM.div({className: "toolbar__popup", 'data-element': "dropdown-menu"}, 
-                React.DOM.ul({className: "toolbar__popup-list"}, feedList )
+                React.DOM.div({className: "scroller scroller--dark scroller--toolbar", ref: "scroller"}, 
+                  React.DOM.div({className: "scroller__pane js-scroller-pane"}, 
+                    React.DOM.ul({className: "toolbar__popup-list"}, feedList )
+                  ), 
+                  React.DOM.div({className: "scroller__track js-scroller-track"}, 
+                      React.DOM.div({className: "scroller__bar js-scroller-bar"})
+                  )
+                )
               )
             );
   },
@@ -14144,7 +15234,7 @@ window.FeedToolbar = React.createClass({displayName: 'FeedToolbar',
 
 
 
-},{}],176:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ToolbarItem = React.createClass({displayName: 'ToolbarItem',
@@ -14181,7 +15271,7 @@ window.ToolbarItem = React.createClass({displayName: 'ToolbarItem',
   handleSelect: function(e) {
     if (!this.props.href && !this.props.disabled) {
       e.preventDefault();
-      return this.props.onSelect(this.props.icon);
+      return this.props.onSelect();
     }
   },
   isActive: function() {
@@ -14194,7 +15284,7 @@ window.ToolbarItem = React.createClass({displayName: 'ToolbarItem',
 
 
 
-},{}],177:[function(require,module,exports){
+},{}],184:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MOUSE_LEAVE_TIMEOUT, PureRenderMixin, TOOLBAR_CLOSED, TOOLBAR_OPENED_BY_CLICK, TOOLBAR_OPENED_BY_HOVER;
@@ -14210,7 +15300,7 @@ TOOLBAR_OPENED_BY_HOVER = 'openedByHover';
 TOOLBAR_OPENED_BY_CLICK = 'openedByClick';
 
 window.UserToolbar = React.createClass({displayName: 'UserToolbar',
-  mixins: [TouchMixin, ComponentManipulationsMixin, PureRenderMixin],
+  mixins: [TouchMixin, ComponentManipulationsMixin, PureRenderMixin, ScrollerMixin],
   propTypes: {
     user: React.PropTypes.object.isRequired,
     newEntryUrl: React.PropTypes.string,
@@ -14228,11 +15318,13 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
     };
   },
   componentDidMount: function() {
+    TastyEvents.on(TastyEvents.keys.command_settings_open(), this.showSettings);
+    TastyEvents.on(TastyEvents.keys.command_requests_open(), this.showFriendsRequests);
+    this.state.user.on('change', this.updateStateUser);
     if (localStorage.getItem('displayDesignSettings')) {
       this.showDesignSettings();
-      localStorage.removeItem('displayDesignSettings');
+      return localStorage.removeItem('displayDesignSettings');
     }
-    return this.state.user.on('change', this.updateStateUser);
   },
   componentWillUpdate: function(nextProps, nextState) {
     if (this.state.currentState !== nextState.currentState) {
@@ -14250,6 +15342,8 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
+    TastyEvents.off(TastyEvents.keys.command_settings_open(), this.showSettings);
+    TastyEvents.off(TastyEvents.keys.command_requests_open(), this.showFriendsRequests);
     return this.state.user.off('change', this.updateStateUser);
   },
   render: function() {
@@ -14268,42 +15362,70 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
                 React.DOM.i({className: "icon icon--menu"})
               ), 
               React.DOM.div({className: "toolbar__popup"}, 
-                React.DOM.ul({className: "toolbar__popup-list"}, 
-                  ToolbarItem({href:  this.props.newEntryUrl, 
-                               icon: "icon--plus", 
-                               title: "Новая запись"}), 
-                  ToolbarItem({href:  this.props.myTlogUrl, 
-                               icon: "icon--diary", 
-                               title: "Мой дневник"}), 
-                  ToolbarItem({href:  this.props.favoritesUrl, 
-                               icon: "icon--star", 
-                               title: "Избранное"}), 
-                  ToolbarItem({href:  this.props.newAnonymousEntryUrl, 
-                               icon: "icon--anonymous", 
-                               title: "Новая анонимка"}), 
-                  ToolbarItem({href:  this.props.privateEntriesUrl, 
-                               icon: "icon--lock", 
-                               title: "Скрытые записи"}), 
-                  ToolbarItem({onSelect:  this.handleMessagesSelect, 
-                               icon: "icon--messages", 
-                               title: "Сообщения"}), 
-                  ToolbarItem({onSelect:  this.handleFriendsSelect, 
-                               icon: "icon--friends", 
-                               title: "Друзья"}), 
-                  ToolbarItem({onSelect:  this.showDesignSettings, 
-                               icon: "icon--drawing", 
-                               title: "Дизайн дневника"}), 
-                  ToolbarItem({onSelect:  this.handleSettingsSelect, 
-                               icon: "icon--cogwheel", 
-                               title: "Настройки"}), 
-                  ToolbarItem({href:  this.props.logoutUrl, 
-                               icon: "icon--logout", 
-                               title: "Выйти"})
+                React.DOM.div({className: "scroller scroller--dark scroller--toolbar", ref: "scroller"}, 
+                  React.DOM.div({className: "scroller__pane js-scroller-pane"}, 
+                    React.DOM.ul({className: "toolbar__popup-list"}, 
+                      ToolbarItem({href:  this.props.newEntryUrl, 
+                                   icon: "icon--plus", 
+                                   title: "Новая запись"}), 
+                      ToolbarItem({href:  this.props.myTlogUrl, 
+                                   icon: "icon--diary", 
+                                   title: "Мой дневник"}), 
+                      ToolbarItem({onSelect:  this.showProfile, 
+                                   icon: "icon--profile", 
+                                   title: "Профиль"}), 
+                      ToolbarItem({href:  this.props.favoritesUrl, 
+                                   icon: "icon--star", 
+                                   title: "Избранное"}), 
+                      ToolbarItem({href:  this.props.newAnonymousEntryUrl, 
+                                   icon: "icon--anonymous", 
+                                   title: "Новая анонимка"}), 
+                      ToolbarItem({href:  this.props.privateEntriesUrl, 
+                                   icon: "icon--lock", 
+                                   title: "Скрытые записи"}), 
+                      ToolbarItem({onSelect:  this.handleMessagesSelect, 
+                                   icon: "icon--messages", 
+                                   title: "Сообщения"}), 
+                      ToolbarItem({onSelect:  this.showFriends, 
+                                   icon: "icon--friends", 
+                                   title: "Друзья"}), 
+                      ToolbarItem({onSelect:  this.showDesignSettings, 
+                                   icon: "icon--drawing", 
+                                   title: "Дизайн дневника"}), 
+                      ToolbarItem({onSelect:  this.showSettings, 
+                                   icon: "icon--cogwheel", 
+                                   title: "Настройки"}), 
+                      ToolbarItem({href:  this.props.logoutUrl, 
+                                   icon: "icon--logout", 
+                                   title: "Выйти"})
+                    )
+                  ), 
+                  React.DOM.div({className: "scroller__track js-scroller-track"}, 
+                      React.DOM.div({className: "scroller__bar js-scroller-bar"})
+                  )
                 )
               )
             );
   },
-  handleFriendsSelect: function() {
+  showProfile: function() {
+    var currentUrl, profileUrl, slug;
+    slug = '@' + this.props.user.slug;
+    currentUrl = window.location.href;
+    profileUrl = this.props.myTlogUrl + '/profile';
+    if (profileUrl.indexOf(currentUrl) !== -1) {
+      return Aviator.navigate('/:user/profile', {
+        namedParams: {
+          user: slug
+        }
+      });
+    } else {
+      return window.location = profileUrl;
+    }
+  },
+  showFriendsRequests: function(userId) {
+    return this.showFriends('requests', userId);
+  },
+  showFriends: function(panelName, userId) {
     var container;
     container = document.querySelectorAll('[popup-persons-container]')[0];
     if (!container) {
@@ -14312,7 +15434,9 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
       }).appendTo('body').get(0);
     }
     return React.renderComponent(PersonsPopup({
-      user: this.state.user
+      user: this.state.user,
+      panelName: panelName,
+      userId: userId
     }), container);
   },
   showDesignSettings: function() {
@@ -14337,7 +15461,7 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
       }), container);
     }
   },
-  handleSettingsSelect: function() {
+  showSettings: function() {
     return ReactApp.popup.show(ToolbarSettings, {
       title: 'Настройки',
       user: this.state.user
@@ -14401,7 +15525,7 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
 
 
 
-},{}],178:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EVENT_NAME_MAP, ReactTransitionGroup, TICK, TimeoutTransitionGroupChild, animationAllowed, animationSupported, detectEvents, endEvents;
@@ -14570,7 +15694,7 @@ window.TimeoutTransitionGroup = React.createClass({displayName: 'TimeoutTransiti
 
 
 
-},{}],179:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PureRenderMixin;
@@ -14608,7 +15732,7 @@ window.Voting = React.createClass({displayName: 'Voting',
     return $voting.tooltip('destroy');
   },
   render: function() {
-    var rating, title, votingClasses;
+    var title, votes, votingClasses;
     title = this.getTitle();
     votingClasses = React.addons.classSet({
       'voting': true,
@@ -14616,11 +15740,11 @@ window.Voting = React.createClass({displayName: 'Voting',
       'unvotable': !this.state.canVote,
       'voted': this.state.isVoted
     });
-    rating = this.state.process ? Spinner({size: 8 }) : this.state.rating;
+    votes = this.state.process ? Spinner({size: 8 }) : this.state.votes;
     return React.DOM.span({className: votingClasses, 
                   'data-original-title': title, 
                   onClick:  this.handleClick}, 
-              rating 
+              votes 
             );
   },
   handleClick: function() {
@@ -14661,13 +15785,13 @@ window.Voting = React.createClass({displayName: 'Voting',
     } else {
       title = i18n.t('votes.cantVote');
     }
-    return title;
+    return '(Рейтинг ' + this.state.rating + ') ' + title;
   }
 });
 
 
 
-},{}],180:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 window.ReactPopup = (function() {
   function ReactPopup() {
     this.popupContainer = $('<\div>').appendTo('body').get(0);
@@ -14695,7 +15819,7 @@ window.ReactPopup = (function() {
 
 
 
-},{}],181:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 window.ReactShellBox = (function() {
   function ReactShellBox() {
     this.shellboxContainer = $('<\div>').appendTo('body').get(0);
@@ -14723,7 +15847,7 @@ window.ReactShellBox = (function() {
 
 
 
-},{}],182:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 window.TastyAlertController = {
   show: function(_arg) {
     var buttonColor, buttonText, container, message, onAccept, regex, title;
@@ -14755,7 +15879,7 @@ window.TastyAlertController = {
 
 
 
-},{}],183:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 window.TastyConfirmController = {
   show: function(_arg) {
     var acceptButtonColor, acceptButtonText, container, message, messageWithoutBR, onAccept, regex, rejectButtonText;
@@ -14788,7 +15912,7 @@ window.TastyConfirmController = {
 
 
 
-},{}],184:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 window.TastyEvents = new EventEmitter();
 
 TastyEvents.keys = {
@@ -14818,12 +15942,24 @@ TastyEvents.keys = {
   },
   user_toolbar_opened: function() {
     return "user_toolbar:opened";
+  },
+  command_hero_open: function() {
+    return "command:hero:open";
+  },
+  command_hero_close: function() {
+    return "command:hero:close";
+  },
+  command_settings_open: function() {
+    return "command:settings:open";
+  },
+  command_requests_open: function() {
+    return "command:requests:open";
   }
 };
 
 
 
-},{}],185:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 window.TastyLockingAlertController = {
   show: function(_arg) {
     var action, container, message, regex, title;
@@ -14853,7 +15989,7 @@ window.TastyLockingAlertController = {
 
 
 
-},{}],186:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 window.TastyNotifyController = {
   _notificationList: [],
   notify: function(type, text, timeout) {
@@ -14924,7 +16060,7 @@ TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() 
 
 
 
-},{}],187:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
 
 window.TastySoundController = {
@@ -14951,7 +16087,7 @@ INCOMING_NOTIFICATION = TastySoundController._buildAudioElement('incoming_messag
 
 
 
-},{}],188:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
   SERVER_ACTION: 'SERVER_ACTION',
   TYPE_SETUP: 'setup',
@@ -14966,7 +16102,7 @@ window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],189:[function(require,module,exports){
+},{}],196:[function(require,module,exports){
 window.NormalizedEntry = (function() {
   function NormalizedEntry(data) {
     _.extend(this, data);
@@ -14978,7 +16114,7 @@ window.NormalizedEntry = (function() {
 
 
 
-},{}],190:[function(require,module,exports){
+},{}],197:[function(require,module,exports){
 var CLOSED_STATE, COMMENT_CREATE_STATE, COMMENT_EDIT_STATE;
 
 CLOSED_STATE = 'closed';
@@ -15114,13 +16250,29 @@ window.commentsMediator = new CommentsMediator();
 
 
 
-},{}],191:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 window.ConversationActions = {
   clickConversation: function(conversationId) {
     return MessagingDispatcher.handleViewAction({
-      type: 'clickConversation',
+      type: 'openConversation',
       conversationId: conversationId
     });
+  },
+  openConversation: function(recipientSlug) {
+    var conversation;
+    conversation = ConversationsStore.getConversationBySlug(recipientSlug);
+    if (conversation != null) {
+      MessagingDispatcher.handleViewAction({
+        type: 'openConversation',
+        conversationId: conversation.id
+      });
+    } else {
+      messagingService.postNewConversation({
+        recipientSlug: recipientSlug
+      });
+    }
+    messagingService.openMessagesPopup();
+    return TastyEvents.emit(TastyEvents.keys.command_hero_close());
   },
   postNewConversation: function(_arg) {
     var error, recipientSlug;
@@ -15134,7 +16286,7 @@ window.ConversationActions = {
 
 
 
-},{}],192:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 window.MessageActions = {
   newMessage: function(_arg) {
     var content, conversationId, uuid;
@@ -15172,7 +16324,7 @@ window.MessageActions = {
 
 
 
-},{}],193:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 window.NotificationActions = {
   readNotification: function(notificationId) {
     console.log('читаем уведомление', notificationId);
@@ -15182,7 +16334,7 @@ window.NotificationActions = {
 
 
 
-},{}],194:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 window.PopupActions = {
   closeMessagesPopup: function() {
     messagingService.closeMessagesPopup();
@@ -15209,7 +16361,36 @@ window.PopupActions = {
 
 
 
-},{}],195:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
+
+/** @jsx React.DOM */
+var TITLE;
+
+TITLE = 'Написать сообщение';
+
+window.WriteMessageButton = React.createClass({displayName: 'WriteMessageButton',
+  propTypes: {
+    user: React.PropTypes.object.isRequired
+  },
+  render: function() {
+    var title;
+    title = this._getTitle();
+    return React.DOM.button({className: "write-message-button", 
+                    onClick:  this.handleClick}, 
+              title 
+            );
+  },
+  _getTitle: function() {
+    return TITLE;
+  },
+  handleClick: function() {
+    return ConversationActions.openConversation(this.props.user.slug);
+  }
+});
+
+
+
+},{}],203:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_Conversations = React.createClass({displayName: 'MessagesPopup_Conversations',
@@ -15230,7 +16411,7 @@ window.MessagesPopup_Conversations = React.createClass({displayName: 'MessagesPo
 
 
 
-},{}],196:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsListEmpty = React.createClass({displayName: 'MessagesPopup_ConversationsListEmpty',
@@ -15245,7 +16426,7 @@ window.MessagesPopup_ConversationsListEmpty = React.createClass({displayName: 'M
 
 
 
-},{}],197:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsList = React.createClass({displayName: 'MessagesPopup_ConversationsList',
@@ -15298,7 +16479,7 @@ window.MessagesPopup_ConversationsList = React.createClass({displayName: 'Messag
 
 
 
-},{}],198:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'MessagesPopup_ConversationsListItem',
@@ -15373,7 +16554,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'Me
 
 
 
-},{}],199:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CLOSE_STATE, OPEN_STATE;
@@ -15439,7 +16620,7 @@ window.MessagesPopup_Chooser = React.createClass({displayName: 'MessagesPopup_Ch
 
 
 
-},{}],200:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var BUTTON_TEXT;
@@ -15460,7 +16641,7 @@ window.MessagesPopup_ChooserButton = React.createClass({displayName: 'MessagesPo
 
 
 
-},{}],201:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ChooserDropdown = React.createClass({displayName: 'MessagesPopup_ChooserDropdown',
@@ -15521,7 +16702,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass({displayName: 'Messages
 
 
 
-},{}],202:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
@@ -15641,7 +16822,7 @@ window.MessagesPopup_ChooserResults = React.createClass({displayName: 'MessagesP
 
 
 
-},{}],203:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ChooserResultsItem = React.createClass({displayName: 'MessagesPopup_ChooserResultsItem',
@@ -15675,7 +16856,7 @@ window.MessagesPopup_ChooserResultsItem = React.createClass({displayName: 'Messa
 
 
 
-},{}],204:[function(require,module,exports){
+},{}],212:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CHOOSER_STATE, PROCESS_STATE;
@@ -15726,7 +16907,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass({displayName: 'Me
 
 
 
-},{}],205:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_LoadingMessage = React.createClass({displayName: 'MessagesPopup_LoadingMessage',
@@ -15756,7 +16937,7 @@ window.MessagesPopup_LoadingMessage = React.createClass({displayName: 'MessagesP
 
 
 
-},{}],206:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, ENTER_TIMEOUT, LEAVE_TIMEOUT, MESSAGES_POPUP_TITLE, MESSAGES_THREAD_TITLE, THREAD_STATE;
@@ -15864,7 +17045,7 @@ window.MessagesPopup = React.createClass({displayName: 'MessagesPopup',
 
 
 
-},{}],207:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ThreadMessageForm = React.createClass({displayName: 'MessagesPopup_ThreadMessageForm',
@@ -15922,7 +17103,7 @@ window.MessagesPopup_ThreadMessageForm = React.createClass({displayName: 'Messag
 
 
 
-},{}],208:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_MessageListEmpty = React.createClass({displayName: 'MessagesPopup_MessageListEmpty',
@@ -15935,7 +17116,7 @@ window.MessagesPopup_MessageListEmpty = React.createClass({displayName: 'Message
 
 
 
-},{}],209:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var savedScrollHeight;
@@ -16046,7 +17227,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass({displayName: 'Messag
 
 
 
-},{}],210:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE;
@@ -16142,7 +17323,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({displayName: 'Me
 
 
 
-},{}],211:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
@@ -16266,7 +17447,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass({displayNa
 
 
 
-},{}],212:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_Thread = React.createClass({displayName: 'MessagesPopup_Thread',
@@ -16298,7 +17479,7 @@ window.MessagesPopup_Thread = React.createClass({displayName: 'MessagesPopup_Thr
 
 
 
-},{}],213:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_UIBackButton = React.createClass({displayName: 'MessagesPopup_UIBackButton',
@@ -16315,7 +17496,7 @@ window.MessagesPopup_UIBackButton = React.createClass({displayName: 'MessagesPop
 
 
 
-},{}],214:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var BUTTON_TEXT;
@@ -16338,7 +17519,7 @@ window.MessagesPopup_UICreateNewConversationButton = React.createClass({displayN
 
 
 
-},{}],215:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup_NotificationsEmpty = React.createClass({displayName: 'NotificationsPopup_NotificationsEmpty',
@@ -16349,7 +17530,7 @@ window.NotificationsPopup_NotificationsEmpty = React.createClass({displayName: '
 
 
 
-},{}],216:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var IMAGE_SIZE;
@@ -16432,7 +17613,7 @@ window.NotificationsPopup_Notification = React.createClass({displayName: 'Notifi
 
 
 
-},{}],217:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup_Notifications = React.createClass({displayName: 'NotificationsPopup_Notifications',
@@ -16475,7 +17656,7 @@ window.NotificationsPopup_Notifications = React.createClass({displayName: 'Notif
 
 
 
-},{}],218:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup',
@@ -16508,7 +17689,7 @@ window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup'
 
 
 
-},{}],219:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ADVANCED_STATE, BASIC_STATE, MOUSE_LEAVE_TIMEOUT;
@@ -16639,7 +17820,7 @@ window.IndicatorsToolbar = React.createClass({displayName: 'IndicatorsToolbar',
 
 
 
-},{}],220:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsToolbar_Messages',
@@ -16688,7 +17869,7 @@ window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsT
 
 
 
-},{}],221:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'IndicatorsToolbar_Notifications',
@@ -16741,7 +17922,7 @@ window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'Indica
 
 
 
-},{}],222:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 window.MessagingDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     return this.dispatch({
@@ -16837,7 +18018,7 @@ window.MessagingDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],223:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 window.MessagingRequester = (function() {
   function MessagingRequester(_arg) {
     this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
@@ -16928,7 +18109,7 @@ window.MessagingRequester = (function() {
 
 
 
-},{}],224:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 window.MessagingService = (function() {
@@ -17196,7 +18377,7 @@ window.MessagingService = (function() {
 
 
 
-},{}],225:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 window.MessagingMock = {
   message: function() {
     var conversation, recipient, sender;
@@ -17236,7 +18417,7 @@ window.MessagingMock = {
 
 
 
-},{}],226:[function(require,module,exports){
+},{}],234:[function(require,module,exports){
 var CONNECTION_EVENT, _connectionState;
 
 CONNECTION_EVENT = 'connectionStateUpdated';
@@ -17280,7 +18461,7 @@ ConnectionStateStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],227:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 var CHANGE_EVENT, _conversations;
 
 CHANGE_EVENT = 'change';
@@ -17339,6 +18520,15 @@ window.ConversationsStore = _.extend({}, EventEmitter.prototype, {
       }
     }
   },
+  getConversationBySlug: function(recipientSlug) {
+    var conversation, _i, _len;
+    for (_i = 0, _len = _conversations.length; _i < _len; _i++) {
+      conversation = _conversations[_i];
+      if (conversation.recipient.slug === recipientSlug) {
+        return conversation;
+      }
+    }
+  },
   getActiveConversations: function() {
     return _conversations;
   },
@@ -17392,7 +18582,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],228:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 var CHANGE_EVENT, _allMessagesLoaded, _messages;
 
 CHANGE_EVENT = 'change';
@@ -17546,7 +18736,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(function(payload) {
 
 
 
-},{}],229:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
 
 CHANGE_EVENT = 'change';
@@ -17597,8 +18787,8 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
   switch (action.type) {
     case 'postNewConversation':
       MessagingDispatcher.waitFor([ConversationsStore.dispatchToken]);
-      MessagesPopupStateStore.setThreadState();
       MessagesPopupStateStore.setCurrentConversationId(action.conversation.id);
+      MessagesPopupStateStore.setThreadState();
       MessagesPopupStateStore.emitChange();
       break;
     case 'clickNewConversation':
@@ -17609,7 +18799,7 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
       MessagesPopupStateStore.setConversationsState();
       MessagesPopupStateStore.emitChange();
       break;
-    case 'clickConversation':
+    case 'openConversation':
       MessagesPopupStateStore.setCurrentConversationId(action.conversationId);
       MessagesPopupStateStore.setThreadState();
       MessagesPopupStateStore.emitChange();
@@ -17623,7 +18813,7 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
 
 
 
-},{}],230:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 var CHANGE_EVENT, _messagingStatus;
 
 CHANGE_EVENT = 'change';
@@ -17667,7 +18857,7 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],231:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 var CHANGE_EVENT, _notifications;
 
 CHANGE_EVENT = 'change';
@@ -17771,7 +18961,7 @@ NotificationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],232:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 var BaseMixin, ERROR_TIMEOUT, ram, rau;
 
 ERROR_TIMEOUT = 1000;
@@ -17853,7 +19043,7 @@ React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
 
 
-},{}],233:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 window.ComponentManipulationsMixin = {
   safeUpdate: function(func) {
     if (!this._isUnmounted()) {
@@ -17872,7 +19062,7 @@ window.ComponentManipulationsMixin = {
 
 
 
-},{}],234:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 var ENTRY_DELETE_ANIMATION_SPEED;
 
 ENTRY_DELETE_ANIMATION_SPEED = 300;
@@ -17897,7 +19087,7 @@ window.DOMManipulationsMixin = {
 
 
 
-},{}],235:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 var ERROR_TIMEOUT;
 
 ERROR_TIMEOUT = 1000;
@@ -17925,7 +19115,7 @@ window.ErrorTimerMixin = {
 
 
 
-},{}],236:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 window.ReactGrammarMixin = {
   declension: function(number, titles) {
     var cases;
@@ -17960,7 +19150,7 @@ window.ReactGrammarMixin = {
 
 
 
-},{}],237:[function(require,module,exports){
+},{}],245:[function(require,module,exports){
 var COMPONENT_WIDTH, REPOSITION_TIMEOUT;
 
 REPOSITION_TIMEOUT = 500;
@@ -18027,10 +19217,45 @@ window.ReactPositionsMixin = {
 
 
 
-},{}],238:[function(require,module,exports){
+},{}],246:[function(require,module,exports){
+var Nanobar, nanobar, oldXHR;
+
+Nanobar = require('nanobar');
+
+nanobar = new Nanobar({
+  bg: '#24df88'
+});
+
+oldXHR = $.ajaxSettings.xhr;
+
+$.ajaxSettings.xhr = function() {
+  var xhr;
+  xhr = oldXHR();
+  if (xhr instanceof window.XMLHttpRequest) {
+    xhr.addEventListener('progress', this.progress, false);
+  }
+  if (xhr.upload) {
+    xhr.upload.addEventListener('progress', this.progress, false);
+  }
+  return xhr;
+};
+
 window.RequesterMixin = {
-  createRequest: function(settings) {
+  createRequest: function(settings, options) {
     var jqXHR;
+    if (options == null) {
+      options = {};
+    }
+    if (options.progressBar != null) {
+      settings.progress = function(e) {
+        var percentComplete, progress;
+        if (e.lengthComputable) {
+          progress = e.loaded / e.total;
+          percentComplete = Math.round(progress * 100);
+          return nanobar.go(percentComplete);
+        }
+      };
+    }
     jqXHR = $.ajax(settings);
     jqXHR.always((function(_this) {
       return function() {
@@ -18072,7 +19297,7 @@ window.RequesterMixin = {
 
 
 
-},{}],239:[function(require,module,exports){
+},{"nanobar":undefined}],247:[function(require,module,exports){
 window.ScrollerMixin = {
   componentDidMount: function() {
     $(document).on('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
@@ -18122,7 +19347,7 @@ window.ScrollerMixin = {
 
 
 
-},{}],240:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 window.ReactShakeMixin = {
   shake: function() {
     var animationEnd, form;
@@ -18136,7 +19361,7 @@ window.ReactShakeMixin = {
 
 
 
-},{}],241:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 window.TouchMixin = {
   componentWillMount: function() {
     if (isMobile()) {
@@ -18148,7 +19373,7 @@ window.TouchMixin = {
 
 
 
-},{}],242:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 window.ReactUnmountMixin = {
   unmount: function() {
     return _.defer((function(_this) {
@@ -18161,7 +19386,7 @@ window.ReactUnmountMixin = {
 
 
 
-},{}],243:[function(require,module,exports){
+},{}],251:[function(require,module,exports){
 window.EntryNormalizer = {
   normalize: function(entryData) {
     var attr;
@@ -18203,7 +19428,7 @@ window.EntryNormalizer = {
 
 
 
-},{}],244:[function(require,module,exports){
+},{}],252:[function(require,module,exports){
 var STORAGE_PREFIX;
 
 STORAGE_PREFIX = 'entries';
@@ -18269,7 +19494,7 @@ window.EntryStore = {
 
 
 
-},{}],245:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
 
 MOVE_OFFSET = 100;
@@ -18315,7 +19540,7 @@ window.PositionsService = {
 
 
 
-},{}],246:[function(require,module,exports){
+},{}],254:[function(require,module,exports){
 window.ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
   image_url: function(url, style) {
@@ -18330,7 +19555,7 @@ window.ThumborService = {
 
 
 
-},{}],247:[function(require,module,exports){
+},{}],255:[function(require,module,exports){
 window.UuidService = {
   generate: function() {
     var s4;
@@ -18343,7 +19568,7 @@ window.UuidService = {
 
 
 
-},{}],248:[function(require,module,exports){
+},{}],256:[function(require,module,exports){
 var CHANGE_EVENT, currentUser;
 
 CHANGE_EVENT = 'change';
@@ -18389,7 +19614,7 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 
 
 
-},{}],249:[function(require,module,exports){
+},{}],257:[function(require,module,exports){
 var defaults,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -18528,7 +19753,7 @@ window.FileReceiver = (function() {
 
 
 
-},{}],250:[function(require,module,exports){
+},{}],258:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -18537,7 +19762,7 @@ window.isMobile = function() {
 
 
 
-},{}],251:[function(require,module,exports){
+},{}],259:[function(require,module,exports){
 $(function() {
   var height;
   if (typeof Modernizr !== "undefined" && Modernizr !== null ? Modernizr.touch : void 0) {
@@ -18589,7 +19814,7 @@ window.Tasty = {
 
 
 
-},{}],252:[function(require,module,exports){
+},{}],260:[function(require,module,exports){
 window.TastyUtils = {
   showFlashes: function(flashes) {
     if (flashes == null) {
@@ -18655,7 +19880,7 @@ window.TastyUtils = {
 
 
 
-},{}],253:[function(require,module,exports){
+},{}],261:[function(require,module,exports){
 window.ApiRoutes = {
   omniauth_url: function(provider) {
     return TastySettings.host + 'auth/' + provider;
@@ -18732,6 +19957,9 @@ window.ApiRoutes = {
   relationships_by_url: function(state) {
     return TastySettings.api_host + 'v1/relationships/by/' + state;
   },
+  relationships_by_id_url: function(tlogId) {
+    return TastySettings.api_host + 'v1/relationships/by/' + tlogId;
+  },
   unfollow_from_yourself_url: function(tlogId) {
     return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId;
   },
@@ -18749,6 +19977,9 @@ window.ApiRoutes = {
   },
   tlog_tags: function(tlogId) {
     return TastySettings.api_host + 'v1/tlog/' + tlogId + '/tags';
+  },
+  tlog_report: function(tlogId) {
+    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/report';
   },
   get_my_relationship_url: function(tlogId) {
     return TastySettings.api_host + 'v1/relationships/to/tlog/' + tlogId;
@@ -18787,7 +20018,7 @@ window.ApiRoutes = {
 
 
 
-},{}],254:[function(require,module,exports){
+},{}],262:[function(require,module,exports){
 var Routes;
 
 Routes = {
@@ -18815,7 +20046,7 @@ window.Routes = window.Routes || Routes;
 
 
 
-},{}],255:[function(require,module,exports){
+},{}],263:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -18827,7 +20058,7 @@ window.Routes = window.Routes || Routes;
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":256}],256:[function(require,module,exports){
+},{"./lib/Dispatcher":264}],264:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -19079,7 +20310,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":257}],257:[function(require,module,exports){
+},{"./invariant":265}],265:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -19134,7 +20365,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],258:[function(require,module,exports){
+},{}],266:[function(require,module,exports){
 /*!
  * imagesLoaded v3.1.8
  * JavaScript is all like "You images are done yet or what?"
@@ -19471,7 +20702,7 @@ function makeArray( obj ) {
 
 });
 
-},{"eventie":259,"wolfy87-eventemitter":260}],259:[function(require,module,exports){
+},{"eventie":267,"wolfy87-eventemitter":268}],267:[function(require,module,exports){
 /*!
  * eventie v1.0.5
  * event binding helper
@@ -19555,7 +20786,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( this );
 
-},{}],260:[function(require,module,exports){
+},{}],268:[function(require,module,exports){
 /*!
  * EventEmitter v4.2.9 - git.io/ee
  * Oliver Caldwell
@@ -21438,7 +22669,140 @@ Modernizr = (function( window, document, undefined ) {
 })(this, document);
 
 module.exports = Modernizr;
-},{}],"backbone":[function(require,module,exports){
+},{}],"aviator":[function(require,module,exports){
+// Modules
+var Navigator = require('./navigator');
+
+
+/**
+Only expose a tiny API to keep internal routing safe
+
+@singleton Aviator
+**/
+window.Aviator = {
+
+  /**
+  @property pushStateEnabled
+  @type {Boolean}
+  @default true if the browser supports pushState
+  **/
+  pushStateEnabled: ('pushState' in window.history),
+
+  /**
+  @property linkSelector
+  @type {String}
+  @default 'a.navigate'
+  **/
+  linkSelector: 'a.navigate',
+
+  /**
+  the root of the uri from which routing will append to
+
+  @property root
+  @type {String}
+  @default ''
+  **/
+  root: '',
+
+  /**
+  @property _navigator
+  @type {Navigator}
+
+  @private
+  **/
+  _navigator: new Navigator(),
+
+  /**
+  @method setRoutes
+  @param {Object} routes
+  **/
+  setRoutes: function (routes) {
+    this._navigator.setRoutes(routes);
+  },
+
+  /**
+  dispatches routes to targets and sets up event handlers
+
+  @method dispatch
+  **/
+  dispatch: function () {
+    var navigator = this._navigator;
+
+    navigator.setup({
+      pushStateEnabled: this.pushStateEnabled,
+      linkSelector:     this.linkSelector,
+      root:             this.root
+    });
+
+    navigator.dispatch();
+  },
+
+  /**
+  @method navigate
+  @param {String} uri to navigate to
+  @param {Object} [options]
+  **/
+  navigate: function (uri, options) {
+    this._navigator.navigate(uri, options);
+  },
+
+
+  /**
+  @method serializeQueryParams
+  @param {Object} queryParams
+  @return {String} queryString "?foo=bar&baz[]=boo&baz=[]oob"
+  **/
+  serializeQueryParams: function (queryParams) {
+    return this._navigator.serializeQueryParams(queryParams);
+  },
+
+  /**
+  @method getCurrentRequest
+  @return {String}
+  **/
+  getCurrentRequest: function () {
+    return this._navigator.getCurrentRequest();
+  },
+
+  /**
+  @method getCurrentURI
+  @return {String}
+  **/
+  getCurrentURI: function () {
+    return this._navigator.getCurrentURI();
+  },
+
+  /**
+  @method refresh
+  **/
+  refresh: function () {
+    this._navigator.refresh();
+  },
+
+  /**
+  @method rewriteRouteTo
+  @param {String} newRoute
+  @return {Object}
+  **/
+  rewriteRouteTo: function (newRoute) {
+    var target = {
+      rewrite: function (request) {
+        Aviator.navigate(newRoute, {
+          namedParams: request.namedParams,
+          replace: true
+        });
+      }
+    };
+
+    return {
+      target: target,
+      '/': 'rewrite'
+    };
+  }
+
+};
+
+},{"./navigator":3}],"backbone":[function(require,module,exports){
 //     Backbone.js 1.1.2
 
 //     (c) 2010-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -26420,8 +27784,8 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 }));
 
 },{}],"eventEmitter":[function(require,module,exports){
-module.exports=require(260)
-},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":260}],"i18next":[function(require,module,exports){
+module.exports=require(268)
+},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":268}],"i18next":[function(require,module,exports){
 // i18next, v1.7.4
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
@@ -47700,6 +49064,142 @@ if (typeof module === 'object') {
     }
 }) (window, document);
 
+},{}],"nanobar":[function(require,module,exports){
+/* http://nanobar.micronube.com/  ||  https://github.com/jacoborus/nanobar/    MIT LICENSE */
+var Nanobar = (function () {
+
+	'use strict';
+	var addCss, Bar, Nanobar, move, place, init,
+		// container styles
+		cssCont = {
+			width: '100%',
+			height: '4px',
+			zIndex: 9999,
+			top : '0'
+		},
+		// bar styles
+		cssBar = {
+			width:0,
+			height: '100%',
+			clear: 'both',
+			transition: 'height .3s'
+		};
+
+
+	// add `css` to `el` element
+	addCss = function (el, css ) {
+		var i;
+		for (i in css) {
+			el.style[i] = css[i];
+		}
+		el.style.float = 'left';
+	};
+
+	// animation loop
+	move = function () {
+		var self = this,
+			dist = this.width - this.here;
+
+		if (dist < 0.1 && dist > -0.1) {
+			place.call( this, this.here );
+			this.moving = false;
+			if (this.width == 100) {
+				this.el.style.height = 0;
+				setTimeout( function () {
+					self.cont.el.removeChild( self.el );
+				}, 300);
+			}
+		} else {
+			place.call( this, this.width - (dist/4) );
+			setTimeout( function () {
+				self.go();
+			}, 16);
+		}
+	};
+
+	// set bar width
+	place = function (num) {
+		this.width = num;
+		this.el.style.width = this.width + '%';
+	};
+
+	// create and insert bar in DOM and this.bars array
+	init = function () {
+		var bar = new Bar( this );
+		this.bars.unshift( bar );
+	};
+
+	Bar = function ( cont ) {
+		// create progress element
+		this.el = document.createElement( 'div' );
+		this.el.style.backgroundColor = cont.opts.bg;
+		this.width = 0;
+		this.here = 0;
+		this.moving = false;
+		this.cont = cont;
+		addCss( this.el, cssBar);
+		cont.el.appendChild( this.el );
+	};
+
+	Bar.prototype.go = function (num) {
+		if (num) {
+			this.here = num;
+			if (!this.moving) {
+				this.moving = true;
+				move.call( this );
+			}
+		} else if (this.moving) {
+			move.call( this );
+		}
+	};
+
+
+	Nanobar = function (opt) {
+
+		var opts = this.opts = opt || {},
+			el;
+
+		// set options
+		opts.bg = opts.bg || '#000';
+		this.bars = [];
+
+
+		// create bar container
+		el = this.el = document.createElement( 'div' );
+		// append style
+		addCss( this.el, cssCont);
+		if (opts.id) {
+			el.id = opts.id;
+		}
+		// set CSS position
+		el.style.position = !opts.target ? 'fixed' : 'relative';
+
+		// insert container
+		if (!opts.target) {
+			document.getElementsByTagName( 'body' )[0].appendChild( el );
+		} else {
+			opts.target.insertBefore( el, opts.target.firstChild);
+		}
+
+		init.call( this );
+	};
+
+
+	Nanobar.prototype.go = function (p) {
+		// expand bar
+		this.bars[0].go( p );
+
+		// create new bar at progress end
+		if (p == 100) {
+			init.call( this );
+		}
+	};
+
+	return Nanobar;
+})();
+
+module.exports = Nanobar;
+
 },{}],"pusher":[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
@@ -51993,55 +53493,58 @@ if (typeof module === 'object') {
 });
 
 },{}],"reactUjs":[function(require,module,exports){
-window.ReactUjs = (function() {
-  var CLASS_NAME_ATTR, PROPS_ATTR, findReactDOMNodes, initEvents, mountReactComponents, unmountReactComponents;
-  CLASS_NAME_ATTR = 'data-react-class';
-  PROPS_ATTR = 'data-react-props';
-  findReactDOMNodes = function() {
-    var SELECTOR;
-    SELECTOR = '[' + CLASS_NAME_ATTR + ']';
-    return $(SELECTOR);
-  };
-  mountReactComponents = function() {
-    var className, component, i, node, nodes, props, propsJson, _results;
-    nodes = findReactDOMNodes();
-    i = 0;
-    _results = [];
-    while (i < nodes.length) {
-      node = nodes[i];
-      className = node.getAttribute(CLASS_NAME_ATTR);
-      component = window[className] || eval.call(window, className);
-      if (component != null) {
-        propsJson = node.getAttribute(PROPS_ATTR);
-        props = propsJson && JSON.parse(propsJson);
-        React.renderComponent(component(props), node);
-      }
-      _results.push(++i);
-    }
-    return _results;
-  };
-  unmountReactComponents = function() {
-    var i, nodes, _results;
-    nodes = findReactDOMNodes();
-    i = 0;
-    _results = [];
-    while (i < nodes.length) {
-      React.unmountComponentAtNode(nodes[i]);
-      _results.push(++i);
-    }
-    return _results;
-  };
-  initEvents = function() {
-    $(mountReactComponents);
-    $(document).on('page:change', mountReactComponents);
-    return $(window).unload(unmountReactComponents);
-  };
-  return {
-    initEvents: initEvents
-  };
-})();
+var CLASS_NAME_ATTR, PROPS_ATTR, findReactDOMNodes, initialize, mountReactComponents, unmountReactComponents;
 
-module.exports = ReactUjs;
+CLASS_NAME_ATTR = 'data-react-class';
+
+PROPS_ATTR = 'data-react-props';
+
+findReactDOMNodes = function() {
+  var SELECTOR;
+  SELECTOR = '[' + CLASS_NAME_ATTR + ']';
+  return $(SELECTOR);
+};
+
+mountReactComponents = function() {
+  var className, component, i, node, nodes, props, propsJson, _results;
+  nodes = findReactDOMNodes();
+  i = 0;
+  _results = [];
+  while (i < nodes.length) {
+    node = nodes[i];
+    className = node.getAttribute(CLASS_NAME_ATTR);
+    component = window[className] || eval.call(window, className);
+    if (component != null) {
+      propsJson = node.getAttribute(PROPS_ATTR);
+      props = propsJson && JSON.parse(propsJson);
+      React.renderComponent(component(props), node);
+    }
+    _results.push(++i);
+  }
+  return _results;
+};
+
+unmountReactComponents = function() {
+  var i, nodes, _results;
+  nodes = findReactDOMNodes();
+  i = 0;
+  _results = [];
+  while (i < nodes.length) {
+    React.unmountComponentAtNode(nodes[i]);
+    _results.push(++i);
+  }
+  return _results;
+};
+
+initialize = function() {
+  mountReactComponents();
+  $(document).on('page:change', mountReactComponents);
+  return $(window).unload(unmountReactComponents);
+};
+
+module.exports = {
+  initialize: initialize
+};
 
 
 

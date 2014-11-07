@@ -18,6 +18,7 @@ window.ConversationActions =
       messagingService.postNewConversation { recipientSlug }
 
     messagingService.openMessagesPopup()
+    TastyEvents.emit TastyEvents.keys.command_hero_close()
 
   postNewConversation: ({ recipientSlug, error }) ->
     messagingService.postNewConversation { recipientSlug, error }

@@ -49,6 +49,7 @@ gulp.task 'vendorScripts', ['clean'], ->
     .require './medium-editor/dist/js/medium-editor',      { expose: 'medium-editor' }
     .require '../scripts/resources/screen_viewer',         { expose: 'screenviewer' }
     .require './aviator/src/main',                         { expose: 'aviator' }
+    .require './nanobar/index',                            { expose: 'nanobar' }
 
   bundle = ->
     bundleLogger.start vendorConfig.outputName
@@ -105,6 +106,7 @@ gulp.task 'clientScripts', ['clean'], ->
     .external 'medium-editor'
     .external 'screenviewer'
     .external 'aviator'
+    .external 'nanobar'
 
   bundle = ->
     bundleLogger.start clientConfig.outputName
