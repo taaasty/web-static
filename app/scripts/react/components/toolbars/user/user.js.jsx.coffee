@@ -25,6 +25,7 @@ window.UserToolbar = React.createClass
 
   componentDidMount: ->
     TastyEvents.on TastyEvents.keys.command_settings_open(), @showSettings
+    TastyEvents.on TastyEvents.keys.command_design_settings_open(), @showDesignSettings
     TastyEvents.on TastyEvents.keys.command_requests_open(), @showFriendsRequests
     @state.user.on 'change', @updateStateUser
 
@@ -43,6 +44,7 @@ window.UserToolbar = React.createClass
     clearTimeout @timeout if @timeout
 
     TastyEvents.off TastyEvents.keys.command_settings_open(), @showSettings
+    TastyEvents.off TastyEvents.keys.command_design_settings_open(), @showDesignSettings
     TastyEvents.off TastyEvents.keys.command_requests_open(), @showFriendsRequests
     @state.user.off 'change', @updateStateUser
 
@@ -113,7 +115,7 @@ window.UserToolbar = React.createClass
     profileUrl = @props.myTlogUrl + '/profile'
 
     if profileUrl.indexOf(currentUrl) != -1
-      Aviator.navigate '/:user/profile', namedParams: { user: slug }
+      Aviator.navigate "/#{slug}/profile"
     else
       window.location = profileUrl
 

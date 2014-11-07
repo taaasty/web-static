@@ -14,4 +14,5 @@ TastyEvents.keys =
   command_hero_open:                            -> "command:hero:open"
   command_hero_close:                           -> "command:hero:close"
   command_settings_open:                        -> "command:settings:open"
+  command_design_settings_open:                 -> "command:design_settings:open"
   command_requests_open:                        -> "command:requests:open"

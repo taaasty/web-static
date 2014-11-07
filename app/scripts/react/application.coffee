@@ -26,6 +26,7 @@ window.ReactApp =
     UserRouteTarget = {
       profile:               -> TastyEvents.emit TastyEvents.keys.command_hero_open()
       settings:              -> TastyEvents.emit TastyEvents.keys.command_settings_open()
+      design_settings:       -> TastyEvents.emit TastyEvents.keys.command_design_settings_open()
       showRequestById: (req) -> TastyEvents.emit TastyEvents.keys.command_requests_open(), +req.params.id
       showRequests:          -> TastyEvents.emit TastyEvents.keys.command_requests_open()
     }
@@ -35,6 +36,7 @@ window.ReactApp =
         target: UserRouteTarget
         '/profile': 'profile'
         '/settings': 'settings'
+        '/design_settings': 'design_settings'
         '/friends': {
           '/requests': {
             '/': 'showRequests'
