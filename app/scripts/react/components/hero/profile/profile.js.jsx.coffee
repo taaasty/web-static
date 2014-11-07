@@ -39,8 +39,8 @@ window.HeroProfile = React.createClass
   render: ->
     if @props.relationship?
       actions = `<div className="hero__actions">
-                   <WriteMessageButton user={ this.props.user } />
                    <FollowButton relationship={ this.props.relationship } />
+                   <WriteMessageButton user={ this.props.user } />
                    <HeroProfile_DropdownMenu userId={ this.props.user.id }
                                              status={ this.props.relationship.state } />
                  </div>`

@@ -109,6 +109,17 @@
   }
 }
 
+.button-hero-icon-style() {
+  .button-hero-style();
+  width: 46px;
+  padding: 0;
+  color: rgba(255, 255, 255, .6);
+
+  &:hover {
+    color: @white;
+  }
+}
+
 .button-group-style() {
   position: relative;
   display: inline-block;
@@ -471,17 +482,14 @@
 }
 
 // Hero Buttons
-.write-message-button {
-  .button-hero-style();
+.action-menu-button {
+  .button-hero-icon-style();
 }
 
-.action-menu-button {
-  &:extend( .write-message-button all);
-  width: 46px;
-  padding: 0;
-  color: rgba(255, 255, 255, .6);
+.write-message-button {
+  &:extend(.action-menu-button all);
 
-  &:hover {
-    color: @white;
+  .icon {
+    font-size: 22px;
   }
 }
