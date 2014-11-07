@@ -7,26 +7,23 @@ window.HeroProfile_DropdownMenuReportItem = React.createClass
   mixins: [RequesterMixin]
 
   propTypes:
-    userId:  React.PropTypes.number.isRequired
-    onClick: React.PropTypes.func.isRequired
+    userId:       React.PropTypes.number.isRequired
+    onRequestEnd: React.PropTypes.func.isRequired
 
   render: ->
-   `<a title={ TITLE }
-       className="action-dropdown-item"
-       onClick={ this.handleClick }>
+   `<a className="action-dropdown-item"
+       onClick={ this.report }>
       <i className="icon icon--exclamation-mark" />
-      <span>{ TITLE }</span>
+      { TITLE }
     </a>`
 
   report: ->
-    @createRequest
+    @createRequest(
       url: ApiRoutes.tlog_report @props.userId
       method: 'POST'
       success: ->
         TastyNotifyController.notify 'success', 'Жалоба на пользователя принята, и будет рассмотрена в ближайшее время'
+        @props.onRequestEnd()
       error: (data) ->
         TastyNotifyController.errorResponse data
-
-  handleClick: ->
-    @props.onClick()
-    @report()
+    , { progressBar: true })

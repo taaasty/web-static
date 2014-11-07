@@ -9,7 +9,7 @@ window.HeroProfile_DropdownMenu = React.createClass
 
   propTypes:
     userId: React.PropTypes.number.isRequired
-    status: React.PropTypes.object.isRequired
+    status: React.PropTypes.string.isRequired
 
   getInitialState: ->
     currentState: DROPDOWN_CLOSED
@@ -31,10 +31,12 @@ window.HeroProfile_DropdownMenu = React.createClass
 
     if @state.status isnt 'ignored'
       actionList.push `<HeroProfile_DropdownMenuIgnoreItem userId={ this.props.userId }
-                                                           onClick={ this.activateClosedState } />`
+                                                           onRequestEnd={ this.activateClosedState }
+                                                           key="ignore" />`
 
     actionList.push `<HeroProfile_DropdownMenuReportItem userId={ this.props.userId }
-                                                         onClick={ this.activateClosedState } />`
+                                                         onRequestEnd={ this.activateClosedState }
+                                                         key="report" />`
 
     return `<div className="dropdown-container"
                  onMouseEnter={ this.handleMouseEnter }

@@ -24,6 +24,7 @@ window.HeroProfile = React.createClass
     $(window).on 'scroll', @scrollFade
 
     TastyEvents.on TastyEvents.keys.command_hero_open(), @open
+    TastyEvents.on TastyEvents.keys.command_hero_close(), @close
 
   shouldComponentUpdate: (nextProps, nextState) ->
     @state.currentState != nextState.currentState
@@ -31,6 +32,9 @@ window.HeroProfile = React.createClass
   componentWillUnmount: ->
     $(window).off 'resize', @onResize
     $(window).off 'scroll', @scrollFade
+
+    TastyEvents.off TastyEvents.keys.command_hero_open(), @open
+    TastyEvents.off TastyEvents.keys.command_hero_close(), @close
 
   render: ->
     if @props.relationship?

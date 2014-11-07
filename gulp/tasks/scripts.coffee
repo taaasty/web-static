@@ -53,6 +53,7 @@ gulp.task 'scripts', ['clean'], ->
     .require './bower_components/medium-editor/dist/js/medium-editor',      { expose: 'medium-editor' }
     .require './scripts/resources/screen_viewer',                           { expose: 'screenviewer' }
     .require './bower_components/aviator/src/main',                         { expose: 'aviator' }
+    .require './bower_components/nanobar/index',                            { expose: 'nanobar' }
 
   bundle = ->
     # Log when bundling starts
