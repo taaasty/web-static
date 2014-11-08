@@ -1,5 +1,7 @@
 ###* @jsx React.DOM ###
 
+LOADING_STATE = 'loading'
+
 window.PersonsPopup_PanelMixin =
 
   propTypes:
@@ -8,82 +10,82 @@ window.PersonsPopup_PanelMixin =
     total_count: React.PropTypes.number
 
   getInitialState: ->
-    isError:   false
-    isLoading: false
-
-  componentDidMount: ->
-    @getPanelData()
-
-  render: ->
-    panelClasses = React.addons.classSet {
-      'tabs-panel': true
-      'state--hidden': !@props.isActive
+    _.extend @getStateFromStore(), {
+      currentState: LOADING_STATE
     }
 
-    if @props.relationships?.length > 0
-      itemClass = @itemClass
-      relationships = @props.relationships.map (relationship) =>
-        itemClass relationship: relationship, key: relationship.id, onRequestEnd: @removeRelationship
+  # componentDidMount: -> @getPanelData()
 
-      panelContent = `<ul className="persons">{ relationships }</ul>`
-    else
-      if @state.isError
-        message = `<div className="popup__text">Ошибка загрузки.</div>`
-      else if @state.isLoading
-        message = `<div className="popup__text">Загружаю..</div>`
-      else
-        message = `<div className="popup__text">Список пуст.</div>`
-      panelContent = `<div className="grid-full"><div className="grid-full__middle">{ message }</div></div>`
+#   render: ->
+#     panelClasses = React.addons.classSet {
+#       'tabs-panel': true
+#       'state--hidden': !@props.isActive
+#     }
 
-    if @props.relationships?.length < @props.total_count
-      panelContent = `<div>{ panelContent }<LoadMoreButton onClick={ this.loadMoreData } /></div>`
+#     if @props.relationships?.length > 0
+#       itemClass = @itemClass
+#       relationships = @props.relationships.map (relationship) =>
+#         itemClass relationship: relationship, key: relationship.id, onRequestEnd: @removeRelationship
 
-    return `<div className={ panelClasses }>
-              <div className="scroller scroller--persons" ref="scroller">
-                <div className="scroller__pane js-scroller-pane">
-                  { panelContent }
-                </div>
-                <div className="scroller__track js-scroller-track">
-                  <div className="scroller__bar js-scroller-bar"></div>
-                </div>
-              </div>
-            </div>`
+#       panelContent = `<ul className="persons">{ relationships }</ul>`
+#     else
+#       if @state.isError
+#         message = `<div className="popup__text">Ошибка загрузки.</div>`
+#       else if @state.isLoading
+#         message = `<div className="popup__text">Загружаю..</div>`
+#       else
+#         message = `<div className="popup__text">Список пуст.</div>`
+#       panelContent = `<div className="grid-full"><div className="grid-full__middle">{ message }</div></div>`
 
-  getPanelData: (sincePosition) ->
-    console.error 'getPanelData when xhr' if @xhr?
-    @safeUpdate => @incrementActivities()
-    @setState isError: false, isLoading: true
+#     if @props.relationships?.length < @props.total_count
+#       panelContent = `<div>{ panelContent }<LoadMoreButton onClick={ this.loadMoreData } /></div>`
 
-    @createRequest
-      url: @relationUrl()
-      data:
-        since_position: sincePosition
-        expose_reverse: 1
-      success: (data) =>
-        @safeUpdate => @props.onLoad('add', total_count: data.total_count, items: data.relationships)
-      error:   (data) =>
-        @safeUpdateState isError: true
-        TastyNotifyController.errorResponse data
-      complete: =>
-        @safeUpdateState isLoading: false
-        @safeUpdate => @decrementActivities()
+#     return `<div className={ panelClasses }>
+#               <div className="scroller scroller--persons" ref="scroller">
+#                 <div className="scroller__pane js-scroller-pane">
+#                   { panelContent }
+#                 </div>
+#                 <div className="scroller__track js-scroller-track">
+#                   <div className="scroller__bar js-scroller-bar"></div>
+#                 </div>
+#               </div>
+#             </div>`
 
-  loadMoreData: ->
-    return if @state.isLoading
-    lastLoadedPosition = @props.relationships[ @props.relationships.length - 1].position
-    @getPanelData lastLoadedPosition
+#   getPanelData: (sincePosition) ->
+#     console.error 'getPanelData when xhr' if @xhr?
+#     @safeUpdate => @incrementActivities()
+#     @setState isError: false, isLoading: true
 
-  removeRelationship: (relationship) ->
-    newRelationships = @props.relationships.slice(0)
+#     @createRequest
+#       url: @relationUrl()
+#       data:
+#         since_position: sincePosition
+#         expose_reverse: 1
+#       success: (data) =>
+#         @safeUpdate => @props.onLoad('add', total_count: data.total_count, items: data.relationships)
+#       error:   (data) =>
+#         @safeUpdateState isError: true
+#         TastyNotifyController.errorResponse data
+#       complete: =>
+#         @safeUpdateState isLoading: false
+#         @safeUpdate => @decrementActivities()
 
-    for rel, i in @props.relationships
-      if rel.id == relationship.id || rel.reader_id == relationship.user_id
-        newRelationships.splice i, 1
-        break
+#   loadMoreData: ->
+#     return if @state.isLoading
+#     lastLoadedPosition = @props.relationships[ @props.relationships.length - 1].position
+#     @getPanelData lastLoadedPosition
 
-    @props.onLoad('update', total_count: @props.total_count - 1, items: newRelationships)
+#   removeRelationship: (relationship) ->
+#     newRelationships = @props.relationships.slice(0)
 
-React.mixins.add 'PersonsPopup_PanelMixin', [
-  window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser'
-  ComponentManipulationsMixin, ScrollerMixin
-]
+#     for rel, i in @props.relationships
+#       if rel.id == relationship.id || rel.reader_id == relationship.user_id
+#         newRelationships.splice i, 1
+#         break
+
+#     @props.onLoad('update', total_count: @props.total_count - 1, items: newRelationships)
+
+# React.mixins.add 'PersonsPopup_PanelMixin', [
+#   window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser'
+#   ComponentManipulationsMixin, ScrollerMixin
+# ]

@@ -21,7 +21,7 @@ window.ReactApp =
       window.messagingService = new MessagingService
         user: CurrentUserStore.getUser()
 
-    # Aviator.pushStateEnabled = false
+    Aviator.pushStateEnabled = false
 
     UserRouteTarget = {
       profile:               -> TastyEvents.emit TastyEvents.keys.command_hero_open()

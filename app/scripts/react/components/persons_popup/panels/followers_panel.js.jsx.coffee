@@ -5,3 +5,6 @@ window.PersonsPopup_FollowersPanel = React.createClass
 
   relationUrl: -> ApiRoutes.relationships_by_url 'friend'
   itemClass: PersonsPopup_FollowerRelationship
+
+  getStateFromStore: ->
+    relationships: RelationshipsStore.getFollowers()

@@ -5,3 +5,6 @@ window.PersonsPopup_RequestsPanel = React.createClass
 
   relationUrl: -> ApiRoutes.relationships_by_url 'requested'
   itemClass: PersonsPopup_RequestRelationship
+
+  getStateFromStore: ->
+    relationships: RelationshipsStore.getRequests()

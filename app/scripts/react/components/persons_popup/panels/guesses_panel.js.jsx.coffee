@@ -5,3 +5,6 @@ window.PersonsPopup_GuessesPanel = React.createClass
 
   relationUrl: -> ApiRoutes.relationships_to_url 'guessed'
   itemClass: PersonsPopup_GuessRelationship
+
+  getStateFromStore: ->
+    relationships: RelationshipsStore.getGuesses()

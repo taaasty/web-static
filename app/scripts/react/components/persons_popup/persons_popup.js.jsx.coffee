@@ -1,109 +1,97 @@
 ###* @jsx React.DOM ###
 
+# TODO: i18n
 PERSON_POPUP_TITLE = 'Управление подписками'
+
+DEFAULT_PANEL = 'followings'
 
 window.PersonsPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
 
   propTypes:
-    user:      React.PropTypes.object.isRequired
     panelName: React.PropTypes.string
-    userId:    React.PropTypes.number
 
   getDefaultProps: ->
-    panelName: 'followings'
+    panelName: DEFAULT_PANEL
 
   getInitialState: ->
-    relationships: {
-      followings: {
-        items:       null
-        total_count: null
-      }
-      followers: {
-        items:       null
-        total_count: null
-      }
-      guesses: {
-        items:       null
-        total_count: null
-      }
-      requests: {
-        items:       null
-        total_count: null
-      }
-      ignores: {
-        items:       null
-        total_count: null
-      }
+    _.extend @getStateFromStores(), {
+      currentTab: @props.panelName
     }
-    currentTab: @props.panelName
+
+  componentDidMount: ->
+    CurrentUserStore.addChangeListener @onStoresChange()
+    RelationshipsStore.addChangeListener @onStoresChange()
+
+  componentWillUnmount: ->
+    CurrentUserStore.removeChangeListener @onStoresChange()
+    RelationshipsStore.removeChangeListener @onStoresChange()
 
   render: ->
     onLoad = -> @updateRelationships.apply @, arguments
 
-    if @_isProfilePrivate()
-      requestsPanel = `<PersonsPopup_RequestsPanel isActive={ this.state.currentTab == 'requests' }
-                                                   userId={ this.props.userId }
-                                                   relationships={ this.state.relationships.requests.items }
-                                                   total_count={ this.state.relationships.requests.total_count }
-                                                   activitiesHandler={ this.activitiesHandler }
-                                                   onLoad={ onLoad.bind(this, 'requests') } />`
+    if @isProfilePrivate()
+      requestsPanel = `<PersonsPopup_RequestsPanel
+                           isActive={ this.state.currentTab == 'requests' }
+                           activitiesHandler={ this.activitiesHandler }
+                           onLoad={ onLoad.bind(this, 'requests') } />`
 
     return `<Popup hasActivities={ this.hasActivities() }
                    title={ PERSON_POPUP_TITLE }
                    isDraggable={ true }
-                   onClose={ this.unmount }
-                   className="popup--persons">
+                   colorScheme="dark"
+                   className="popup--persons"
+                   onClose={ this.unmount }>
 
-              <PersonsPopup_Menu user={ this.props.user }
-                                 relationships={ this.state.relationships }
-                                 currentTab={ this.state.currentTab }
-                                 onSelect={ this.selectTab } />
+              <PersonsPopup_Menu
+                  user={ this.state.user }
+                  currentTab={ this.state.currentTab }
+                  onSelect={ this.selectTab } />
 
-              <PersonsPopup_FollowingsPanel isActive={ this.state.currentTab == 'followings' }
-                                            userId={ this.props.userId }
-                                            relationships={ this.state.relationships.followings.items }
-                                            total_count={ this.state.relationships.followings.total_count }
-                                            activitiesHandler={ this.activitiesHandler }
-                                            onLoad={ onLoad.bind(this, 'followings') } />
+              <PersonsPopup_FollowingsPanel
+                  isActive={ this.state.currentTab == 'followings' }
+                  activitiesHandler={ this.activitiesHandler }
+                  onLoad={ onLoad.bind(this, 'followings') } />
 
-              <PersonsPopup_FollowersPanel isActive={ this.state.currentTab == 'followers' }
-                                           userId={ this.props.userId }
-                                           relationships={ this.state.relationships.followers.items }
-                                           total_count={ this.state.relationships.followers.total_count }
-                                           activitiesHandler={ this.activitiesHandler }
-                                           onLoad={ onLoad.bind(this, 'followers') } />
-
-              <PersonsPopup_GuessesPanel isActive={ this.state.currentTab == 'guesses' }
-                                         userId={ this.props.userId }
-                                         relationships={ this.state.relationships.guesses.items }
-                                         total_count={ this.state.relationships.guesses.total_count }
-                                         activitiesHandler={ this.activitiesHandler }
-                                         onLoad={ onLoad.bind(this, 'guesses') } />
+              <PersonsPopup_FollowersPanel
+                  isActive={ this.state.currentTab == 'followers' }
+                  activitiesHandler={ this.activitiesHandler }
+                  onLoad={ onLoad.bind(this, 'followers') } />
 
               { requestsPanel }
 
+              <PersonsPopup_IgnoredPanel
+                  isActive={ this.state.currentTab == 'ignored' }
+                  activitiesHandler={ this.activitiesHandler }
+                  onLoad={ onLoad.bind(this, 'ignored') } />
+
             </Popup>`
 
-# Временно убираем блокировки
-# <PersonsPopup_IgnoresPanel isActive={ this.state.currentTab == 'ignores' }
-#                            relationships={ this.state.relationships.ignores.items }
-#                            total_count={ this.state.relationships.ignores.total_count }
+# Temporarily exclude guesses tab
+# <PersonsPopup_GuessesPanel isActive={ this.state.currentTab == 'guesses' }
+#                            total_count={ this.state.relationships.guesses.total_count }
 #                            activitiesHandler={ this.activitiesHandler }
-#                            onLoad={ onLoad.bind(this, 'ignores') } />
+#                            onLoad={ onLoad.bind(this, 'guesses') } />
 
-  selectTab: (type) -> @setState currentTab: type
+  isProfilePrivate: -> @state.user.is_privacy is true
 
-  updateRelationships: (type, action, relationships) ->
-    newRelationships = @state.relationships
-    newRelationships[type].items ||= []
+  selectTab: (type) -> @setState(currentTab: type)
 
-    if action is 'update'
-      newRelationships[type] = relationships
-    else if action is 'add'
-      relationships.items = newRelationships[type].items.concat relationships.items
-      newRelationships[type] = relationships
+  getStateFromStores: ->
+    user:          CurrentUserStore.getUser()
+    relationships: RelationshipsStore.getRelationships()
 
-    @setState relationships: newRelationships
+#   updateRelationships: (type, action, relationships) ->
+#     newRelationships = @state.relationships
+#     newRelationships[type].items ||= []
 
-  _isProfilePrivate: -> @props.user.get 'is_privacy'
+#     if action is 'update'
+#       newRelationships[type] = relationships
+#     else if action is 'add'
+#       relationships.items = newRelationships[type].items.concat relationships.items
+#       newRelationships[type] = relationships
+
+#     @setState relationships: newRelationships
+
+  onStoresChange: ->
+    @setState @getStateFromStores()

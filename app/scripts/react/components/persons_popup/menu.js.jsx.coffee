@@ -1,57 +1,89 @@
 ###* @jsx React.DOM ###
 
-FOLLOWINGS = 'Подписки'
+#TODO: Вынести состояния в константы, а тексты в i18n
+FOLLOWINGS = 'Вы подписаны'
 FOLLOWERS  = 'Подписчики'
 REQUESTS   = 'Заявки'
 GUESSES    = 'Рекомендации'
-IGNORES    = 'Блокировка'
+IGNORED    = 'Заблокированы'
 
-# TODO Вынести состояния в константы, а текста в i18n
 window.PersonsPopup_Menu = React.createClass
+  mixins: [RequesterMixin]
 
   propTypes:
-    user:          React.PropTypes.object.isRequired
-    relationships: React.PropTypes.object.isRequired
-    currentTab:    React.PropTypes.string.isRequired
-    onSelect:      React.PropTypes.func.isRequired
+    user:       React.PropTypes.object.isRequired
+    currentTab: React.PropTypes.string.isRequired
+    onSelect:   React.PropTypes.func.isRequired
+
+  getInitialState: -> @getStateFromStore()
+
+  componentWillMount: ->
+    @loadSummary() unless @isSummaryLoaded()
+
+  componentDidMount: ->
+    RelationshipsStore.addSummaryChangeListener @onStoreChange
+
+  componentWillUnmount: ->
+    RelationshipsStore.removeSummaryChangeListener @onStoreChange
 
   render: ->
-    onSelect = (type) -> @props.onSelect(type)
-
-    if @_isProfilePrivate()
-      requestsMenuItem = `<PersonsPopup_MenuItem isActive={ this.props.currentTab == "requests" }
-                                                 count={ this.getCount(this.props.relationships.requests) }
-                                                 title={ REQUESTS }
-                                                 onClick={ onSelect.bind(this, 'requests') } />`
+    if @isProfilePrivate()
+      requestsMenuItem = `<PersonsPopup_MenuItem
+                              isActive={ this.props.currentTab == 'requests' }
+                              totalCount={ this.state.requestsTotalCount }
+                              title={ REQUESTS }
+                              onClick={ this.props.onSelect.bind(null, 'requests') } />`
 
     return `<nav className="tabs-nav tabs-nav--white">
               <ul className="tabs-nav__list">
-                <PersonsPopup_MenuItem isActive={ this.props.currentTab == "followings" }
-                                       count={ this.getCount(this.props.relationships.followings) }
-                                       title={ FOLLOWINGS }
-                                       onClick={ onSelect.bind(this, 'followings') } />
+                <PersonsPopup_MenuItem 
+                    isActive={ this.props.currentTab == "followings" }
+                    totalCount={ this.state.followingsTotalCount }
+                    title={ FOLLOWINGS }
+                    onClick={ this.props.onSelect.bind(null, 'followings') } />
 
-                <PersonsPopup_MenuItem isActive={ this.props.currentTab == "followers" }
-                                       count={ this.getCount(this.props.relationships.followers) }
-                                       title={ FOLLOWERS }
-                                       onClick={ onSelect.bind(this, 'followers') } />
-
-                <PersonsPopup_MenuItem isActive={ this.props.currentTab == "guesses" }
-                                       count={ this.getCount(this.props.relationships.guesses) }
-                                       title={ GUESSES }
-                                       onClick={ onSelect.bind(this, 'guesses') } />
+                <PersonsPopup_MenuItem
+                    isActive={ this.props.currentTab == "followers" }
+                    totalCount={ this.state.followersTotalCount }
+                    title={ FOLLOWERS }
+                    onClick={ this.props.onSelect.bind(null, 'followers') } />
 
                 { requestsMenuItem }
 
+                <PersonsPopup_MenuItem
+                    isActive={ this.props.currentTab == "ignored" }
+                    totalCount={ this.state.ignoredTotalCount }
+                    title={ IGNORED }
+                    onClick={ this.props.onSelect.bind(null, 'ignored') } />
               </ul>
             </nav>`
 
-# Временно убираем блокировки
-# <PersonsPopup_MenuItem isActive={ this.props.currentTab == "ignores" }
-#                        count={ this.getCount(this.props.relationships.ignores) }
-#                        title={ IGNORES }
-#                        onClick={ onSelect.bind(this, 'ignores') } />
+    # Temporarily exclude guesses tab
+    # <PersonsPopup_MenuItem isActive={ this.props.currentTab == "guesses" }
+    #                    totalCount={ this.state.guessesTotalCount }
+    #                    title={ GUESSES }
+    #                    onClick={ onSelect.bind(this, 'guesses') } />
 
-  getCount: (value) -> value.total_count
+  isProfilePrivate: -> @props.user.is_privacy is true
+  isSummaryLoaded:  -> RelationshipsStore.isSummaryLoaded()
 
-  _isProfilePrivate: -> @props.user.get 'is_privacy'
+  loadSummary: ->
+    @createRequest
+      url: ApiRoutes.relationships_summary_url()
+      success: (summary) ->
+        RelationshipsDispatcher.handleServerAction {
+          type: 'summaryLoaded'
+          summary: summary
+        }
+      error: (data) ->
+        TastyNotifyController.errorResponse data
+
+  getStateFromStore: ->
+    followersTotalCount:  RelationshipsStore.getFollowersTotalCount()
+    followingsTotalCount: RelationshipsStore.getFollowingsTotalCount()
+    guessesTotalCount:    RelationshipsStore.getGuessesTotalCount()
+    ignoredTotalCount:    RelationshipsStore.getIgnoredTotalCount()
+    requestsTotalCount:   RelationshipsStore.getRequestsTotalCount()
+
+  onStoreChange: ->
+    @setState @getStateFromStore()
