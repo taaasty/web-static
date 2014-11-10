@@ -1,6 +1,6 @@
 .inviter {
   width: @inviter-width;
-  height: @inviter-height;
+  /*height: @inviter-height;*/
   margin: 0 auto;
   padding-bottom: 50px;
   position: relative;
@@ -52,8 +52,16 @@
   line-height: 34px;
 }
 
+.inviter__text {
+  margin-bottom: 15px;
+}
+
 .inviter__actions {
   margin-bottom: 15px;
+
+  a {
+    margin: 0 4px;
+  }
 }
 
 .inviter__spacer {
@@ -134,3 +142,14 @@
     }
   }
 }
+
+/*
+  https://www.pivotaltracker.com/story/show/82267628:
+
+  <div class="inviter__text">Выберите способ входа/регистрации</div>
+  <div class="inviter__actions">
+      <a class="vk-auth-button" href="http://taaasty.ru/auth/vkontakte">Вконтакте</a>
+      <a class="fb-auth-button" href="http://taaasty.ru/auth/facebook">Facebook</a>
+      <a class="site-auth-button" href="http://taaasty.ru/auth/site">Емейл или Ник</a>
+  </div>
+*/
