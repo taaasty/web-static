@@ -13,7 +13,7 @@ window.WriteMessageButton = React.createClass
 
     return `<button className="write-message-button"
                     onClick={ this.handleClick }>
-              { title }
+              <i className="icon icon--letter"></i>
             </button>`
 
   _getTitle: -> TITLE
