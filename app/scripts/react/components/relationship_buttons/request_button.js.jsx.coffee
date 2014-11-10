@@ -31,7 +31,7 @@ window.RelationshipRequestButton = React.createClass
               </button>
               <button
                   className="button button--small button--outline-light-white button--icon"
-                  onClick={ this.disapprove }>
+                  onClick={ this.handleDisapproveClick }>
                <i className="icon icon--cross" />
               </button>
             </div>`
@@ -52,26 +52,11 @@ window.RelationshipRequestButton = React.createClass
           type: 'requestedRelationshipApproved'
           relationship: relationship
         }
-        
-#   removeRelationship: (relationship) ->
-#     newRelationships = @props.relationships.slice(0)
-
-#     for rel, i in @props.relationships
-#       if rel.id == relationship.id || rel.reader_id == relationship.user_id
-#         newRelationships.splice i, 1
-#         break
-
-#     @props.onLoad('update', total_count: @props.total_count - 1, items: newRelationships)
 
   handleDisapproveClick: ->
-    @disapprove( success: => @props.onRequestEnd(@props.relationship) )
-
-#   removeRelationship: (relationship) ->
-#     newRelationships = @props.relationships.slice(0)
-
-#     for rel, i in @props.relationships
-#       if rel.id == relationship.id || rel.reader_id == relationship.user_id
-#         newRelationships.splice i, 1
-#         break
-
-#     @props.onLoad('update', total_count: @props.total_count - 1, items: newRelationships)
+    @disapprove
+      success: (relationship) =>
+        RelationshipsDispatcher.handleServerAction {
+          type: 'requestedRelationshipDisapproved'
+          relationship: relationship
+        }

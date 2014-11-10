@@ -17,7 +17,7 @@ window.PersonsPopup_PanelMixin =
     }
 
   componentWillMount: ->
-    @loadPanelData() unless @isPanelDataLoaded()
+    @loadPanelData()
 
   componentDidMount: ->
     RelationshipsStore.addChangeListener @onStoreChange
@@ -78,7 +78,7 @@ window.PersonsPopup_PanelMixin =
   activateLoadingState: -> @safeUpdateState(currentState: LOADING_STATE)
   activateErrorState:   -> @safeUpdateState(currentState: ERROR_STATE)
 
-  loadPanelData: (sincePosition) ->
+  loadPanelData: (sincePosition, options) ->
     @safeUpdate => @incrementActivities()
     @activateLoadingState()
 
@@ -88,11 +88,14 @@ window.PersonsPopup_PanelMixin =
         since_position: sincePosition
         expose_reverse: 1
       success: (data) =>
-        RelationshipsDispatcher.handleServerAction {
-          type: 'relationshipsLoaded'
-          relationship: @relationshipType
-          items: data.relationships
-        }
+        if options?.success
+          options.success(data)
+        else
+          RelationshipsDispatcher.handleServerAction {
+            type: 'relationshipsLoaded'
+            relationship: @relationshipType
+            items: data.relationships
+          }
       error: (data) =>
         @activateErrorState()
         TastyNotifyController.errorResponse data
@@ -104,7 +107,14 @@ window.PersonsPopup_PanelMixin =
     return if @isLoadingState()
 
     lastLoadedPosition = @state.relationships[@state.relationships.length - 1].position
-    @loadPanelData lastLoadedPosition
+    @loadPanelData lastLoadedPosition, {
+      success: (data) =>
+        RelationshipsDispatcher.handleServerAction {
+          type: 'moreRelationshipsLoaded'
+          relationship: @relationshipType
+          items: data.relationships
+        }
+    }
 
   onStoreChange: ->
     @setState @getStateFromStore()

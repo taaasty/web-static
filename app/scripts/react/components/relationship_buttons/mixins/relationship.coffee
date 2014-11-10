@@ -92,18 +92,17 @@ window.RelationshipMixin =
         @activateWaitingState()
 
   disapprove: (options) ->
-    @closeError()
-    @setState isProcess: true
+    @activateLoadingState()
 
     @createRequest
-      url: ApiRoutes.relationships_by_tlog_disapprove_url(@props.relationship.reader.id)
+      url: ApiRoutes.relationships_by_tlog_disapprove_url @props.relationship.reader.id
       method: 'POST'
-      success: (data) => options?.success() if options?.success
+      success: (relationship) =>
+        options?.success?(relationship)
       error: (data) =>
-        @startErrorTimer()
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState isProcess: false
+        @activateWaitingState()
 
   _loadRelationship: ->
     @createRequest

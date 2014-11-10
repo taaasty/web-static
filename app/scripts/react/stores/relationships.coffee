@@ -56,8 +56,9 @@ window.RelationshipsStore = _.extend {}, EventEmitter.prototype, {
     for rel, value of _relationships
       continue unless value.items?
 
-      for item in value.items when item.id is relationship.id
-        return true
+      for item in value.items
+        if item.id == relationship.id || item.reader_id == relationship.reader_id
+          return true
 
     false
 
@@ -74,40 +75,35 @@ window.RelationshipsStore = _.extend {}, EventEmitter.prototype, {
       return console.warn 'Unknown type of relationship', type
 
     _relationships[type].items ||= []
-    isInitialLoading           = _relationships[type].items.length == 0
-    newRelationships           = _relationships[type].items.slice(0)
-    newRelationshipsTotalCount = _relationships[type].totalCount
+    newRelationships = _relationships[type].items.slice(0)
 
     for relationship in relationships
       unless @isRelationshipExists relationship
         newRelationships.unshift relationship
-        newRelationshipsTotalCount++ unless isInitialLoading
 
-    _relationships[type].items      = newRelationships
-    _relationships[type].totalCount = newRelationshipsTotalCount
+    _relationships[type].items = newRelationships
 
   pushRelationships: (type, relationships) ->
     unless _relationships[type]
       return console.warn 'Unknown type of relationship', type
 
     _relationships[type].items ||= []
-    isInitialLoading           = _relationships[type].items.length == 0
-    newRelationships           = _relationships[type].items.slice(0)
-    newRelationshipsTotalCount = _relationships[type].totalCount
+    newRelationships = _relationships[type].items.slice(0)
 
     for relationship in relationships
       unless @isRelationshipExists relationship
         newRelationships.push relationship
-        newRelationshipsTotalCount++ unless isInitialLoading
 
-    _relationships[type].items      = newRelationships
-    _relationships[type].totalCount = newRelationshipsTotalCount
+    _relationships[type].items = newRelationships
 
   approveRequest: (relationship) ->
     relationships = _relationships['requested'].items
 
     @_removeRelationship 'requested', relationship if @isRelationshipExists relationship
     @unshiftRelationships 'followers', [relationship]
+
+  disapproveRequest: (relationship) ->
+    @_removeRelationship 'requested', relationship if @isRelationshipExists relationship
 
   unfollowFromYourself: (relationship) ->
     @_removeRelationship 'followers', relationship if @isRelationshipExists relationship
@@ -117,7 +113,9 @@ window.RelationshipsStore = _.extend {}, EventEmitter.prototype, {
     newRelationshipsTotalCount = _relationships[type].totalCount
 
     for rel, i in newRelationships
-      if rel.id == relationship.id || rel.reader_id == relationship.user_id
+      if rel.id == relationship.id               ||
+         rel.reader_id == relationship.user_id   ||
+         rel.reader_id == relationship.reader_id
         newRelationships.splice i, 1
         newRelationshipsTotalCount--
         break
@@ -136,11 +134,21 @@ RelationshipsStore.dispatchToken = RelationshipsDispatcher.register (payload) ->
       RelationshipsStore.emitSummaryChange()
       break
     when 'relationshipsLoaded'
+      _relationships[action.relationship].items = []
+      RelationshipsStore.pushRelationships action.relationship, action.items
+      RelationshipsStore.emitChange()
+      break
+    when 'moreRelationshipsLoaded'
       RelationshipsStore.pushRelationships action.relationship, action.items
       RelationshipsStore.emitChange()
       break
     when 'requestedRelationshipApproved'
       RelationshipsStore.approveRequest action.relationship
+      RelationshipsStore.emitSummaryChange()
+      RelationshipsStore.emitChange()
+      break
+    when 'requestedRelationshipDisapproved'
+      RelationshipsStore.disapproveRequest action.relationship
       RelationshipsStore.emitSummaryChange()
       RelationshipsStore.emitChange()
       break
