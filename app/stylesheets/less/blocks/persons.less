@@ -1,7 +1,12 @@
 .persons {
   padding: 20px 0;
+
+  & + .persons-headline {
+    padding-top: 6px;
+  }
 }
 
+// Person
 .person {
   padding: 8px 18px;
   cursor: default;
@@ -59,3 +64,79 @@
   font-size: 12px;
   color: @person-gray-color;
 }
+
+
+// Persons Headline
+.persons-headline {
+  .clearfix();
+  padding: 26px 18px 12px;
+  font-size: 16px;
+
+  & + .persons {
+    padding-top: 0
+  }
+}
+
+.persons-headline__left {
+  margin: 11px 15px 11px 0;
+  color: #71747b;
+  overflow: hidden;
+}
+
+.persons-headline__right {
+  float: right;
+}
+
+
+
+/*
+  First Tab Panel
+
+  =================
+
+  <div class="persons-headline">
+      <div class="persons-headline__right">
+          <button class="manage-persons-button">Подписаться на всех</button>
+      </div>
+      <div class="persons-headline__left">Мы нашли 154 друга</div>
+  </div>
+  <ul class="persons">...</ul>
+  <div class="persons-headline">
+      <div class="persons-headline__right">
+          <button class="manage-persons-button">Пригласить всех</button>
+      </div>
+      <div class="persons-headline__left">200 человек еще не в тейсти</div>
+  </div>
+  <ul class="persons">...</ul>
+*/
+
+
+
+/*
+  Second Tab Panel
+
+  =================
+
+  <div class="grid-full">
+      <div class="grid-full__middle">
+          <div class="popup__text popup__text--soc">
+              Вы еще не привязали свой аккаунт Вконтакте <button class="vk-auth-button">Найти друзей Вконтакте</button>
+          </div>
+      </div>
+  </div>
+*/
+
+
+/*
+  Third Tab Panel
+
+  =================
+
+  <div class="grid-full">
+      <div class="grid-full__middle">
+          <div class="popup__text popup__text--soc">
+              Вы еще не привязали свой аккаунт Facebook <button class="fb-auth-button">Найти друзей Вконтакте</button>
+          </div>
+      </div>
+  </div>
+*/
