@@ -41,6 +41,7 @@ window.HeroProfile = React.createClass
       actions = `<div className="hero__actions">
                    <FollowButton relationship={ this.props.relationship } />
                    <WriteMessageButton user={ this.props.user } />
+                   <button className="profile-settings-button"><i className="icon icon--cogwheel"></i></button>
                    <HeroProfile_DropdownMenu userId={ this.props.user.id }
                                              status={ this.props.relationship.state } />
                  </div>`
