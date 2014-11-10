@@ -34,7 +34,9 @@ require './react/mixins/touch'
 # /*-----  End of Mixins  ------*/
 
 require './react/dispatchers/current_user'
+require './react/dispatchers/relationships'
 require './react/stores/current_user'
+require './react/stores/relationships'
 
 require './react/components/transition/timeout_transition_group'
 
@@ -197,15 +199,15 @@ require './react/components/persons_popup/menu_item'
 require './react/components/persons_popup/items/item'
 require './react/components/persons_popup/items/following_relationship'
 require './react/components/persons_popup/items/follower_relationship'
-require './react/components/persons_popup/items/request_relationship'
+require './react/components/persons_popup/items/requested_relationship'
 require './react/components/persons_popup/items/guess_relationship'
 require './react/components/persons_popup/items/ignored_relationship'
 
 require './react/components/persons_popup/panels/followings_panel'
 require './react/components/persons_popup/panels/followers_panel'
-require './react/components/persons_popup/panels/guesses_panel'
-require './react/components/persons_popup/panels/requests_panel'
-require './react/components/persons_popup/panels/ignores_panel'
+require './react/components/persons_popup/panels/guessed_panel'
+require './react/components/persons_popup/panels/requested_panel'
+require './react/components/persons_popup/panels/ignored_panel'
 
 require './react/components/people/item'
 

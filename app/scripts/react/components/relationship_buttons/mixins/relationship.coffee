@@ -35,18 +35,13 @@ window.RelationshipMixin =
         @safeUpdateState isProcess: false
 
   unfollowFromYourself: (options) ->
-    @closeError()
-    @safeUpdateState(isProcess: true)
-
     @createRequest
-      url: ApiRoutes.unfollow_from_yourself_url @props.relationship.user_id
+      url: ApiRoutes.unfollow_from_yourself_url @props.relationship.reader_id
       method: 'DELETE'
-      success: (data) => options?.success?()
+      success: ->
+        options?.success?()
       error: (data) =>
-        @startErrorTimer()
         TastyNotifyController.errorResponse data
-      complete: =>
-        @safeUpdateState isProcess: false
 
   cancel: (options) ->
     @closeError()
@@ -84,32 +79,30 @@ window.RelationshipMixin =
         @safeUpdateState isProcess: false
 
   approve: (options) ->
-    @closeError()
-    @setState isProcess: true
+    @activateLoadingState()
 
     @createRequest
-      url: ApiRoutes.relationships_by_tlog_approve_url(@props.relationship.reader.id)
+      url: ApiRoutes.relationships_by_tlog_approve_url @props.relationship.reader.id
       method: 'POST'
-      success: (data) => options?.success() if options?.success
-      error:   (data) =>
-        @startErrorTimer()
+      success: (relationship) =>
+        options?.success?(relationship)
+      error: (data) =>
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState isProcess: false
+        @activateWaitingState()
 
   disapprove: (options) ->
-    @closeError()
-    @setState isProcess: true
+    @activateLoadingState()
 
     @createRequest
-      url: ApiRoutes.relationships_by_tlog_disapprove_url(@props.relationship.reader.id)
+      url: ApiRoutes.relationships_by_tlog_disapprove_url @props.relationship.reader.id
       method: 'POST'
-      success: (data) => options?.success() if options?.success
+      success: (relationship) =>
+        options?.success?(relationship)
       error: (data) =>
-        @startErrorTimer()
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState isProcess: false
+        @activateWaitingState()
 
   _loadRelationship: ->
     @createRequest

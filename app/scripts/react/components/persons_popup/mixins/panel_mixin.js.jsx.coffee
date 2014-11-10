@@ -1,47 +1,66 @@
 ###* @jsx React.DOM ###
 
+#TODO: i18n
+LOADING_ERROR = 'Ошибка загрузки.'
+LOADING       = 'Загружаю..'
+EMPTY_LIST    = 'Список пуст.'
+
+ERROR_STATE   = 'error'
+LOADED_STATE  = 'loaded'
+LOADING_STATE = 'loading'
+
 window.PersonsPopup_PanelMixin =
 
-  propTypes:
-    isActive:    React.PropTypes.bool.isRequired
-    onLoad:      React.PropTypes.func.isRequired
-    total_count: React.PropTypes.number
-
   getInitialState: ->
-    isError:   false
-    isLoading: false
+    _.extend @getStateFromStore(), {
+      currentState: LOADING_STATE
+    }
+
+  componentWillMount: ->
+    @loadPanelData()
 
   componentDidMount: ->
-    @getPanelData()
+    RelationshipsStore.addChangeListener @onStoreChange
+
+  componentWillUnmount: ->
+    RelationshipsStore.removeChangeListener @onStoreChange
 
   render: ->
     panelClasses = React.addons.classSet {
       'tabs-panel': true
-      'state--hidden': !@props.isActive
     }
 
-    if @props.relationships?.length > 0
-      itemClass = @itemClass
-      relationships = @props.relationships.map (relationship) =>
-        itemClass relationship: relationship, key: relationship.id, onRequestEnd: @removeRelationship
+    if @hasRelationships()
+      relationships = @state.relationships.map (relationship) =>
+        @itemClass {
+          relationship: relationship
+          key: relationship.id
+        }
 
       panelContent = `<ul className="persons">{ relationships }</ul>`
     else
-      if @state.isError
-        message = `<div className="popup__text">Ошибка загрузки.</div>`
-      else if @state.isLoading
-        message = `<div className="popup__text">Загружаю..</div>`
-      else
-        message = `<div className="popup__text">Список пуст.</div>`
-      panelContent = `<div className="grid-full"><div className="grid-full__middle">{ message }</div></div>`
+      switch @state.currentState
+        when ERROR_STATE   then messageText = LOADING_ERROR
+        when LOADING_STATE then messageText = LOADING
+        when LOADED_STATE  then messageText = EMPTY_LIST
+        else console.warn 'Unknown currentState', @state.currentState
 
-    if @props.relationships?.length < @props.total_count
-      panelContent = `<div>{ panelContent }<LoadMoreButton onClick={ this.loadMoreData } /></div>`
+      panelContent = `<div className="grid-full">
+                        <div className="grid-full__middle">
+                          <div className="popup__text">
+                            { messageText }
+                          </div>
+                        </div>
+                      </div>`
+
+    unless @isAllRelationshipsLoaded()
+      loadMoreButton = `<LoadMoreButton onClick={ this.loadMoreData } />`
 
     return `<div className={ panelClasses }>
               <div className="scroller scroller--persons" ref="scroller">
                 <div className="scroller__pane js-scroller-pane">
                   { panelContent }
+                  { loadMoreButton }
                 </div>
                 <div className="scroller__track js-scroller-track">
                   <div className="scroller__bar js-scroller-bar"></div>
@@ -49,10 +68,19 @@ window.PersonsPopup_PanelMixin =
               </div>
             </div>`
 
-  getPanelData: (sincePosition) ->
-    console.error 'getPanelData when xhr' if @xhr?
+  hasRelationships:         -> @state.relationships?.length > 0
+  isPanelDataLoaded:        -> @state.relationships?
+  isAllRelationshipsLoaded: -> @state.relationships?.length == @state.totalCount
+
+  isLoadingState: -> @state.currentState is LOADING_STATE
+
+  activateLoadedState:  -> @safeUpdateState(currentState: LOADED_STATE)
+  activateLoadingState: -> @safeUpdateState(currentState: LOADING_STATE)
+  activateErrorState:   -> @safeUpdateState(currentState: ERROR_STATE)
+
+  loadPanelData: (sincePosition, options) ->
     @safeUpdate => @incrementActivities()
-    @setState isError: false, isLoading: true
+    @activateLoadingState()
 
     @createRequest
       url: @relationUrl()
@@ -60,30 +88,38 @@ window.PersonsPopup_PanelMixin =
         since_position: sincePosition
         expose_reverse: 1
       success: (data) =>
-        @safeUpdate => @props.onLoad('add', total_count: data.total_count, items: data.relationships)
-      error:   (data) =>
-        @safeUpdateState isError: true
+        if options?.success
+          options.success(data)
+        else
+          RelationshipsDispatcher.handleServerAction {
+            type: 'relationshipsLoaded'
+            relationship: @relationshipType
+            items: data.relationships
+          }
+      error: (data) =>
+        @activateErrorState()
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState isLoading: false
+        @activateLoadedState()
         @safeUpdate => @decrementActivities()
 
   loadMoreData: ->
-    return if @state.isLoading
-    lastLoadedPosition = @props.relationships[ @props.relationships.length - 1].position
-    @getPanelData lastLoadedPosition
+    return if @isLoadingState()
 
-  removeRelationship: (relationship) ->
-    newRelationships = @props.relationships.slice(0)
+    lastLoadedPosition = @state.relationships[@state.relationships.length - 1].position
+    @loadPanelData lastLoadedPosition, {
+      success: (data) =>
+        RelationshipsDispatcher.handleServerAction {
+          type: 'moreRelationshipsLoaded'
+          relationship: @relationshipType
+          items: data.relationships
+        }
+    }
 
-    for rel, i in @props.relationships
-      if rel.id == relationship.id || rel.reader_id == relationship.user_id
-        newRelationships.splice i, 1
-        break
-
-    @props.onLoad('update', total_count: @props.total_count - 1, items: newRelationships)
+  onStoreChange: ->
+    @setState @getStateFromStore()
 
 React.mixins.add 'PersonsPopup_PanelMixin', [
-  window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser'
+  PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser',
   ComponentManipulationsMixin, ScrollerMixin
 ]

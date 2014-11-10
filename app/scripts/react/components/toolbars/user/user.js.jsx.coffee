@@ -26,7 +26,7 @@ window.UserToolbar = React.createClass
   componentDidMount: ->
     TastyEvents.on TastyEvents.keys.command_settings_open(), @showSettings
     TastyEvents.on TastyEvents.keys.command_design_settings_open(), @showDesignSettings
-    TastyEvents.on TastyEvents.keys.command_requests_open(), @showFriendsRequests
+    TastyEvents.on TastyEvents.keys.command_requested_open(), @showFriendsRequested
     @state.user.on 'change', @updateStateUser
 
     if localStorage.getItem 'displayDesignSettings'
@@ -45,7 +45,7 @@ window.UserToolbar = React.createClass
 
     TastyEvents.off TastyEvents.keys.command_settings_open(), @showSettings
     TastyEvents.off TastyEvents.keys.command_design_settings_open(), @showDesignSettings
-    TastyEvents.off TastyEvents.keys.command_requests_open(), @showFriendsRequests
+    TastyEvents.off TastyEvents.keys.command_requested_open(), @showFriendsRequested
     @state.user.off 'change', @updateStateUser
 
   render: ->
@@ -119,7 +119,7 @@ window.UserToolbar = React.createClass
     else
       window.location = profileUrl
 
-  showFriendsRequests: (userId) -> @showFriends 'requests', userId
+  showFriendsRequested: (userId) -> @showFriends 'requested', userId
 
   showFriends: (panelName, userId) ->
     container = document.querySelectorAll('[popup-persons-container]')[0]
@@ -128,7 +128,6 @@ window.UserToolbar = React.createClass
       container = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get 0
 
     React.renderComponent PersonsPopup({
-      user:      @state.user
       panelName: panelName
       userId:    userId
     }), container

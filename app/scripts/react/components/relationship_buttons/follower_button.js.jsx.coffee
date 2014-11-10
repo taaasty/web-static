@@ -5,29 +5,41 @@ window.RelationshipFollowerButton = React.createClass
 
   propTypes:
     relationship: React.PropTypes.object.isRequired
-    onRequestEnd: React.PropTypes.func
 
   getInitialState: ->
-    isError:   false
-    isProcess: false
+    @getStateFromStore()
+
+  componentDidMount: ->
+    CurrentUserStore.addChangeListener @onStoreChange
+
+  componentWillUnmount: ->
+    CurrentUserStore.removeChangeListener @onStoreChange
 
   render: ->
-    if @isPrivacy()
-      unfollowButton = `<button className="button button--small button--outline-light-white button--icon"
-                                onClick={ this.handleDisapproveClick }>
+    if @isProfilePrivate()
+      unfollowButton = `<button
+                            className="button button--small button--outline-light-white button--icon"
+                            onClick={ this.handleDisapproveClick }>
                           <i className="icon icon--cross" />
                         </button>`
 
     return `<div>
-              <FollowButton relationship={ this.props.relationship } />
+              <FollowButton relationship={ this.props.relationship.reverse_relationship } />
               { unfollowButton }
             </div>`
 
-  isPrivacy: ->
-    currentUser = CurrentUserStore.getUser()
-    currentUser.is_privacy
+  isProfilePrivate: -> @state.user.is_privacy is true
+
+  getStateFromStore: ->
+    user: CurrentUserStore.getUser()
 
   handleDisapproveClick: ->
-    @unfollowFromYourself {
-      success: => @props.onRequestEnd(@props.relationship)
-    }
+    @unfollowFromYourself
+      success: =>
+        RelationshipsDispatcher.handleServerAction {
+          type: 'relationshipUnfollowedFromYourself'
+          relationship: @props.relationship
+        }
+
+  onStoreChange: ->
+    @setState @getStateFromStore()
