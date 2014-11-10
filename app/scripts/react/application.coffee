@@ -21,14 +21,14 @@ window.ReactApp =
       window.messagingService = new MessagingService
         user: CurrentUserStore.getUser()
 
-    Aviator.pushStateEnabled = false
+    # Aviator.pushStateEnabled = false
 
     UserRouteTarget = {
-      profile:               -> TastyEvents.emit TastyEvents.keys.command_hero_open()
-      settings:              -> TastyEvents.emit TastyEvents.keys.command_settings_open()
-      design_settings:       -> TastyEvents.emit TastyEvents.keys.command_design_settings_open()
-      showRequestById: (req) -> TastyEvents.emit TastyEvents.keys.command_requests_open(), +req.params.id
-      showRequests:          -> TastyEvents.emit TastyEvents.keys.command_requests_open()
+      profile:                 -> TastyEvents.emit TastyEvents.keys.command_hero_open()
+      settings:                -> TastyEvents.emit TastyEvents.keys.command_settings_open()
+      design_settings:         -> TastyEvents.emit TastyEvents.keys.command_design_settings_open()
+      showRequestedById: (req) -> TastyEvents.emit TastyEvents.keys.command_requested_open(), +req.params.id
+      showRequested:           -> TastyEvents.emit TastyEvents.keys.command_requested_open()
     }
 
     Aviator.setRoutes {
@@ -38,9 +38,9 @@ window.ReactApp =
         '/settings': 'settings'
         '/design_settings': 'design_settings'
         '/friends': {
-          '/requests': {
-            '/': 'showRequests'
-            '/:id': 'showRequestById'
+          '/requested': {
+            '/': 'showRequested'
+            '/:id': 'showRequestedById'
           }
         }
       }

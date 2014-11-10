@@ -3,8 +3,8 @@
 #TODO: Вынести состояния в константы, а тексты в i18n
 FOLLOWINGS = 'Вы подписаны'
 FOLLOWERS  = 'Подписчики'
-REQUESTS   = 'Заявки'
-GUESSES    = 'Рекомендации'
+REQUESTED  = 'Заявки'
+GUESSED    = 'Рекомендации'
 IGNORED    = 'Заблокированы'
 
 window.PersonsPopup_Menu = React.createClass
@@ -15,7 +15,8 @@ window.PersonsPopup_Menu = React.createClass
     currentTab: React.PropTypes.string.isRequired
     onSelect:   React.PropTypes.func.isRequired
 
-  getInitialState: -> @getStateFromStore()
+  getInitialState: ->
+    @getStateFromStore()
 
   componentWillMount: ->
     @loadSummary() unless @isSummaryLoaded()
@@ -28,11 +29,11 @@ window.PersonsPopup_Menu = React.createClass
 
   render: ->
     if @isProfilePrivate()
-      requestsMenuItem = `<PersonsPopup_MenuItem
-                              isActive={ this.props.currentTab == 'requests' }
-                              totalCount={ this.state.requestsTotalCount }
-                              title={ REQUESTS }
-                              onClick={ this.props.onSelect.bind(null, 'requests') } />`
+      requestedMenuItem = `<PersonsPopup_MenuItem
+                              isActive={ this.props.currentTab == 'requested' }
+                              totalCount={ this.state.requestedTotalCount }
+                              title={ REQUESTED }
+                              onClick={ this.props.onSelect.bind(null, 'requested') } />`
 
     return `<nav className="tabs-nav tabs-nav--white">
               <ul className="tabs-nav__list">
@@ -48,7 +49,7 @@ window.PersonsPopup_Menu = React.createClass
                     title={ FOLLOWERS }
                     onClick={ this.props.onSelect.bind(null, 'followers') } />
 
-                { requestsMenuItem }
+                { requestedMenuItem }
 
                 <PersonsPopup_MenuItem
                     isActive={ this.props.currentTab == "ignored" }
@@ -81,9 +82,9 @@ window.PersonsPopup_Menu = React.createClass
   getStateFromStore: ->
     followersTotalCount:  RelationshipsStore.getFollowersTotalCount()
     followingsTotalCount: RelationshipsStore.getFollowingsTotalCount()
-    guessesTotalCount:    RelationshipsStore.getGuessesTotalCount()
+    guessedTotalCount:    RelationshipsStore.getGuessedTotalCount()
     ignoredTotalCount:    RelationshipsStore.getIgnoredTotalCount()
-    requestsTotalCount:   RelationshipsStore.getRequestsTotalCount()
+    requestedTotalCount:   RelationshipsStore.getRequestedTotalCount()
 
   onStoreChange: ->
     @setState @getStateFromStore()

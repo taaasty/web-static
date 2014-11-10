@@ -13,13 +13,17 @@ window.PersonsPopup_PersonItem = React.createClass
     return `<li className="person">
               <div className="person__in">
                 <div className="person__avatar">
-                  <a href={this.props.user.tlog_url}><UserAvatar user={ this.props.user }/></a>
+                  <a href={ this.props.user.tlog_url }>
+                    <UserAvatar
+                        user={ this.props.user }
+                        size={ 48 } />
+                  </a>
                 </div>
                 <div className="person__desc">
-                  <a href={this.props.user.tlog_url}><p className="person__name">{ this.props.user.name }</p></a>
+                  <a href={ this.props.user.tlog_url }><p className="person__name">{ this.props.user.name }</p></a>
                   <div className="person__count">{ entriesCount }</div>
                 </div>
-                <div className="person__actions">{this.props.children}</div>
+                <div className="person__actions">{ this.props.children }</div>
               </div>
             </li>`
 
