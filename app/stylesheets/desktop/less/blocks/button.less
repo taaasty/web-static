@@ -497,3 +497,22 @@
     font-size: 22px;
   }
 }
+
+// Manage Persons Button
+.manage-persons-button {
+  &:extend(.button all, .button--small all);
+  .button-common-style(@manage-persons-button-bg);
+  color: @white !important;
+}
+
+// Social Auth Buttons
+.vk-auth-button {
+  &:extend(.button all);
+  .button-common-style(#0174de);
+  color: @white;
+}
+.fb-auth-button {
+  &:extend(.button all);
+  .button-common-style(#1746b8);
+  color: @white;
+}

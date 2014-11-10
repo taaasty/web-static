@@ -213,6 +213,19 @@
   text-align: center;
 }
 
+.popup__text--soc {
+  width: 244px;
+  margin: 0 auto;
+  font-size: 20px;
+  line-height: 1.2em;
+  color: #71747b !important;
+  text-align: center;
+
+  button {
+    margin-top: 10px;
+  }
+}
+
 .popup__more {
   padding: 0 18px 18px;
 }
@@ -259,6 +272,15 @@
 .popup--persons {
   width: @persons-popup-width;
   position: absolute;
+
+  .popup__body {
+    height: @persons-popup-body-height;
+    background-color: @persons-popup-body-bg;
+  }
+
+  .popup__text {
+    color: @white;
+  }
 }
 
 .popup--center {
@@ -315,5 +337,46 @@
   .popup__body {
     .border-radius-top-left(@popup-border-radius);
     .border-radius-top-right(@popup-border-radius);
+  }
+}
+
+// Responsive height of Persons Popup
+@media (max-height: 600px) {
+  .popup--persons {
+    .popup__body {
+      height: 460px;
+    }
+  }
+}
+
+@media (max-height: 520px) {
+  .popup--persons {
+    .popup__body {
+      height: 420px;
+    }
+  }
+}
+
+@media (max-height: 480px) {
+  .popup--persons {
+    .popup__body {
+      height: 380px;
+    }
+  }
+}
+
+@media (max-height: 440px) {
+  .popup--persons {
+    .popup__body {
+      height: 340px;
+    }
+  }
+}
+
+@media (max-height: 380px) {
+  .popup--persons {
+    .popup__body {
+      height: 260px;
+    }
   }
 }
