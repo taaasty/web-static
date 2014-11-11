@@ -3,9 +3,9 @@ less         = require 'gulp-less'
 autoprefixer = require 'gulp-autoprefixer'
 rename       = require 'gulp-rename'
 handleErrors = require '../../util/handleErrors'
-config       = require('../../config').mobile.production.styles.bundle
+config       = require('../../config').desktop.local.less
 
-gulp.task 'mobileStyles', ->
+gulp.task 'desktopLess', ->
   gulp.src config.src
     .pipe less(
       paths: ['./app/bower_components/']

@@ -1,1 +1,0 @@
-request = require 'superagent-browserify'
