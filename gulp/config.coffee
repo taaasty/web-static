@@ -3,44 +3,8 @@ build = './build'
 dist  = './dist'
 
 module.exports = {
-  dist: {
-    scripts: {
-      bundle: {
-        baseDir: src
-        extensions: ['.coffee', '.js.jsx.coffee']
-        entries: './scripts/bundle.coffee'
-        dest: dist + '/scripts/'
-        outputName: 'bundle.js'
-      }
-      static: {
-        baseDir: src
-        extensions: ['.js', '.coffee']
-        entries: './scripts/static.coffee'
-        dest: dist + '/scripts/'
-        outputName: 'static.js'
-      }
-    }
-    styles: {
-      src: src + '/stylesheets/bundle.less'
-      dest: dist + '/stylesheets'
-      outputName: 'main.css'
-    }
-  }
-  assets: {
-    src: src + '/assets/**/*.{ttf,woff,eof,svg}'
-    dest: build + '/assets'
-  }
-  vendor: {
-    baseDir: './app/bower_components'
-    dest: build + '/scripts'
-    outputName: 'vendor.js'
-    extensions: ['.coffee']
-  }
-  client: {
-    entries: src + '/scripts/main.coffee'
-    dest: build + '/scripts'
-    outputName: 'client.js'
-    extensions: ['.coffee', '.js.jsx.coffee']
+  clean: {
+    dest: [build, dist]
   }
   browserSync: {
     port: 9000
@@ -48,38 +12,120 @@ module.exports = {
     server: {
       baseDir: [build, src]
     }
-    files: [
-      build + '/**',
-      '!' + build + '/**.map'
-    ]
+    files: [build + '/**']
   }
-  html: {
-    src: src + '/*.html'
-    dest: build
-  }
-  less: {
-    src: src + '/stylesheets/main.less'
-    dest: build + '/stylesheets'
-    outputName: 'main.css'
-  }
-  minifyJS: {
-    bundle: {
-      src: dist + '/scripts/bundle.js'
-      dest: dist + '/scripts'
-      outputName: 'bundle.min.js'
+  desktop: {
+    local: {
+      scripts: {
+        vendor: {
+          baseDir: src + '/bower_components'
+          dest: build + '/scripts'
+          outputName: 'vendor.js'
+          extensions: ['.coffee']
+        }
+        client: {
+          entries: src + '/scripts/desktop.local.coffee'
+          dest: build + '/scripts'
+          outputName: 'client.js'
+          extensions: ['.coffee', '.js.jsx.coffee']
+        }
+      }
+      less: {
+        src: src + '/stylesheets/desktop.local.less'
+        dest: build + '/stylesheets'
+        outputName: 'main.css'
+      }
+      html: {
+        src: src + '/html/desktop/*.html'
+        dest: build
+      }
+      assets: {
+        src: src + '/assets/**/*.{ttf,woff,eof,eot,svg}'
+        dest: build + '/assets'
+      }
     }
-    static: {
-      src: dist + '/scripts/static.js'
-      dest: dist + '/scripts'
-      outputName: 'static.min.js'
+    production: {
+      scripts: {
+        bundle: {
+          baseDir: src
+          entries: './scripts/desktop.production.coffee'
+          extensions: ['.coffee', '.js.jsx.coffee']
+          dest: dist + '/scripts/'
+          outputName: 'bundle.js'
+        }
+        minify: {
+          src: dist + '/scripts/bundle.js'
+          dest: dist + '/scripts'
+          outputName: 'bundle.min.js'
+        }
+      }
+      styles: {
+        bundle: {
+          src: src + '/stylesheets/desktop.production.less'
+          dest: dist + '/stylesheets'
+          outputName: 'bundle.css'
+        }
+        minify: {
+          src: dist + '/stylesheets/bundle.css'
+          dest: dist + '/stylesheets'
+          outputName: 'bundle.min.css'
+        }
+      }
     }
   }
-  minifyCSS: {
-    src: dist + '/stylesheets/main.css'
-    dest: dist + '/stylesheets'
-    outputName: 'main.min.css'
-  }
-  clean: {
-    dest: build
+  mobile: {
+    local: {
+      scripts: {
+        vendor: {
+          baseDir: src + '/bower_components'
+          dest: build + '/mobile/scripts'
+          outputName: 'vendor.js'
+          extensions: ['.coffee']
+        }
+        client: {
+          entries: src + '/scripts/mobile.local.coffee'
+          dest: build + '/mobile/scripts'
+          outputName: 'client.js'
+          extensions: ['.coffee', '.js.jsx.coffee']
+        }
+      }
+      less: {
+        src: src + '/stylesheets/mobile.local.less'
+        dest: build + '/mobile/stylesheets'
+        outputName: 'main.css'
+      }
+      html: {
+        src: src + '/html/mobile/*.html'
+        dest: build + '/mobile'
+      }
+    }
+    production: {
+      scripts: {
+        bundle: {
+          baseDir: src
+          entries: './scripts/mobile.production.coffee'
+          extensions: ['.coffee', '.js.jsx.coffee']
+          dest: dist + '/scripts/'
+          outputName: 'mobile_bundle.js'
+        }
+        minify: {
+          src: dist + '/scripts/mobile_bundle.js'
+          dest: dist + '/scripts'
+          outputName: 'mobile_bundle.min.js'
+        }
+      }
+      styles: {
+        bundle: {
+          src: src + '/stylesheets/mobile.production.less'
+          dest: dist + '/stylesheets'
+          outputName: 'mobile_bundle.css'
+        }
+        minify: {
+          src: dist + '/stylesheets/mobile_bundle.css'
+          dest: dist + '/stylesheets'
+          outputName: 'mobile_bundle.min.css'
+        }
+      }
+    }
   }
 }
