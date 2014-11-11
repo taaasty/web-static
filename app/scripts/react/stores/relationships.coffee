@@ -64,10 +64,6 @@ window.RelationshipsStore = _.extend {}, EventEmitter.prototype, {
 
   updateSummary: (summary) ->
     for relationship, value of _relationships
-      #TODO: Dispose from this workaround, when requestes_count will be renamed to
-      # requested_count as our appropriate store key
-      relationship = 'requests' if relationship is 'requested'
-
       value.totalCount = summary[relationship + '_count']
 
   unshiftRelationships: (type, relationships) ->

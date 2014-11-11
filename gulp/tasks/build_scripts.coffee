@@ -11,7 +11,7 @@ handleErrors   = require '../util/handleErrors'
 vendorConfig   = require('../config').vendor
 clientConfig   = require('../config').client
 
-gulp.task 'vendorScripts', ['clean'], ->
+gulp.task 'vendorScripts', ->
   bundler = browserify({
     cache: {}, packageCache: {}
     basedir: vendorConfig.baseDir
@@ -68,7 +68,7 @@ gulp.task 'vendorScripts', ['clean'], ->
 
   return bundle()
 
-gulp.task 'clientScripts', ['clean'], ->
+gulp.task 'clientScripts', ->
   bundler = browserify({
     cache: {}, packageCache: {}
     entries: clientConfig.entries

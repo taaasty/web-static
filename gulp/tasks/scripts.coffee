@@ -13,7 +13,7 @@ source       = require 'vinyl-source-stream'
 configBundle = require('../config').dist.scripts.bundle
 configStatic = require('../config').dist.scripts.static
 
-gulp.task 'scripts', ['clean'], ->
+gulp.task 'scripts', ->
   bundler = browserify({
     cache: {}, packageCache: {}
     basedir: configBundle.baseDir
@@ -91,7 +91,7 @@ handleErrors = require '../util/handleErrors'
 source       = require 'vinyl-source-stream'
 config       = require('../config').dist.scripts
 
-gulp.task 'staticScripts', ['clean'], ->
+gulp.task 'staticScripts', ->
   bundler = browserify({
     basedir: configStatic.baseDir
     entries: configStatic.entries

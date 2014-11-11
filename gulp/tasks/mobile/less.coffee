@@ -1,18 +1,18 @@
-# /*===================================
-# =            Styles Task            =
-# ===================================*/
+# /*========================================
+# =            Less mobile Task            =
+# ========================================*/
 
 gulp         = require 'gulp'
 less         = require 'gulp-less'
 autoprefixer = require 'gulp-autoprefixer'
 rename       = require 'gulp-rename'
-handleErrors = require '../util/handleErrors'
-config       = require('../config').dist.styles
+handleErrors = require '../../util/handleErrors'
+config       = require('../../config').mobile.less
 
-gulp.task 'styles', ->
+gulp.task 'lessMobile', ->
   gulp.src config.src
     .pipe less(
-      paths: ['./app/bower_components/']
+      paths: ['./app/mobile/bower_components/']
     )
     .on 'error', handleErrors
     .pipe autoprefixer('last 2 versions')

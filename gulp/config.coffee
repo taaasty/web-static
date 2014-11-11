@@ -1,8 +1,57 @@
-src   = './app'
-build = './build'
-dist  = './dist'
+src         = './app'
+srcMobile   = './app/mobile'
+build       = './build'
+buildMobile = './build/mobile'
+dist        = './dist'
 
 module.exports = {
+  mobile: {
+    dist: {
+      scripts: {
+        baseDir: srcMobile
+        extensions: ['.coffee', '.js.jsx.coffee']
+        entries: './scripts/bundle.coffee'
+        dest: dist + '/scripts/'
+        outputName: 'mobile_bundle.js'
+      }
+      styles: {
+        src: srcMobile + '/stylesheets/bundle.less'
+        dest: dist + '/stylesheets'
+        outputName: 'mobile_bundle.css'
+      }
+    }
+    vendor: {
+      baseDir: srcMobile + '/bower_components'
+      dest: buildMobile + '/scripts'
+      outputName: 'vendor.js'
+      extensions: ['.coffee']
+    }
+    client: {
+      entries: srcMobile + '/scripts/main.coffee'
+      dest: buildMobile + '/scripts'
+      outputName: 'client.js'
+      extensions: ['.coffee', '.jsx.coffee']
+    }
+    html: {
+      src: srcMobile + '/html/*.html'
+      dest: buildMobile
+    }
+    less: {
+      src: srcMobile + '/stylesheets/main.less'
+      dest: buildMobile + '/stylesheets'
+      outputName: 'main.css'
+    }
+    minifyJS: {
+      src: dist + '/scripts/mobile_bundle.js'
+      dest: dist + '/scripts'
+      outputName: 'mobile_bundle.min.js'
+    }
+    minifyCSS: {
+      src: dist + '/stylesheets/mobile_bundle.css'
+      dest: dist + '/stylesheets'
+      outputName: 'mobile_bundle.min.css'
+    }
+  }
   dist: {
     scripts: {
       bundle: {

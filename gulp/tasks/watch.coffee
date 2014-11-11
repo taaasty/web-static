@@ -11,4 +11,6 @@ config = require '../config'
 
 gulp.task 'watch', ['setWatch', 'browserSync'], ->
   gulp.watch 'app/*.html', ['html']
+  gulp.watch 'app/mobile/html/*.html', ['htmlMobile']
   gulp.watch 'app/stylesheets/**/*.less', ['less']
+  gulp.watch 'app/mobile/stylesheets/**/*.less', ['lessMobile']

@@ -51,7 +51,11 @@ require('./react/mixins/touch');
 
 require('./react/dispatchers/current_user');
 
+require('./react/dispatchers/relationships');
+
 require('./react/stores/current_user');
+
+require('./react/stores/relationships');
 
 require('./react/components/transition/timeout_transition_group');
 
@@ -295,7 +299,7 @@ require('./react/components/persons_popup/items/following_relationship');
 
 require('./react/components/persons_popup/items/follower_relationship');
 
-require('./react/components/persons_popup/items/request_relationship');
+require('./react/components/persons_popup/items/requested_relationship');
 
 require('./react/components/persons_popup/items/guess_relationship');
 
@@ -305,11 +309,11 @@ require('./react/components/persons_popup/panels/followings_panel');
 
 require('./react/components/persons_popup/panels/followers_panel');
 
-require('./react/components/persons_popup/panels/guesses_panel');
+require('./react/components/persons_popup/panels/guessed_panel');
 
-require('./react/components/persons_popup/panels/requests_panel');
+require('./react/components/persons_popup/panels/requested_panel');
 
-require('./react/components/persons_popup/panels/ignores_panel');
+require('./react/components/persons_popup/panels/ignored_panel');
 
 require('./react/components/people/item');
 
@@ -509,7 +513,7 @@ require('./react/application');
 
 
 
-},{"./libs":8,"./locales/locales":9,"./react/application":11,"./react/components/avatars/avatar":12,"./react/components/avatars/user_avatar":13,"./react/components/buttons/load_more":14,"./react/components/calendar/calendar":15,"./react/components/calendar/calendar_header":16,"./react/components/calendar/calendar_marker":17,"./react/components/calendar/calendar_period":18,"./react/components/calendar/calendar_timeline":19,"./react/components/design_settings_popup/controls":20,"./react/components/design_settings_popup/controls_items/_progressbar":21,"./react/components/design_settings_popup/controls_items/_radiobutton":22,"./react/components/design_settings_popup/controls_items/align_item":23,"./react/components/design_settings_popup/controls_items/background_item":24,"./react/components/design_settings_popup/controls_items/feed_color_item":25,"./react/components/design_settings_popup/controls_items/font_type_item":26,"./react/components/design_settings_popup/controls_items/header_color_item":27,"./react/components/design_settings_popup/controls_items/opacity_item":28,"./react/components/design_settings_popup/design_settings_popup":29,"./react/components/editable_field":30,"./react/components/embed":31,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":32,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":33,"./react/components/entry_comment_box/comment_form/comment_form":34,"./react/components/entry_comment_box/comment_list/comment":35,"./react/components/entry_comment_box/comment_list/comment_list":36,"./react/components/entry_comment_box/comment_list/comment_manager":37,"./react/components/entry_comment_box/comment_metabar/comment_metabar":38,"./react/components/entry_comment_box/comment_metabar/date":39,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":40,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":41,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":42,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":43,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":44,"./react/components/entry_comment_box/comment_metabar/reply":45,"./react/components/entry_comment_box/entry_comment_box":46,"./react/components/entry_comment_box/load_more":47,"./react/components/entry_comment_box/mixins/comments":48,"./react/components/entry_metabar/author":49,"./react/components/entry_metabar/comment":50,"./react/components/entry_metabar/date":51,"./react/components/entry_metabar/dropdown_menu":52,"./react/components/entry_metabar/dropdown_menu_items/delete_item":53,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":54,"./react/components/entry_metabar/dropdown_menu_items/item":55,"./react/components/entry_metabar/dropdown_menu_items/report_item":56,"./react/components/entry_metabar/dropdown_menu_items/watch_item":57,"./react/components/entry_metabar/entry_metabar":58,"./react/components/entry_metabar/tag":59,"./react/components/entry_metabar/tags":60,"./react/components/feed/bricks":61,"./react/components/feed/feed":62,"./react/components/feed/mixins/base":63,"./react/components/feed/tlog":64,"./react/components/follow_status":65,"./react/components/hero/profile/dropdown_menu":66,"./react/components/hero/profile/dropdown_menu_items/ignore":67,"./react/components/hero/profile/dropdown_menu_items/report":68,"./react/components/hero/profile/popup/followers_popup":69,"./react/components/hero/profile/popup/followings_popup":70,"./react/components/hero/profile/popup/items/follower_item":71,"./react/components/hero/profile/popup/items/following_item":72,"./react/components/hero/profile/popup/items/tag_item":73,"./react/components/hero/profile/popup/popup":74,"./react/components/hero/profile/popup/tags_popup":75,"./react/components/hero/profile/profile":76,"./react/components/hero/profile/profile_avatar":77,"./react/components/hero/profile/profile_head":78,"./react/components/hero/profile/profile_stats":79,"./react/components/hero/profile/profile_stats_item":80,"./react/components/images_collage":81,"./react/components/notifications/tasty_alert":82,"./react/components/notifications/tasty_confirm":83,"./react/components/notifications/tasty_locking_alert":84,"./react/components/notifications/tasty_notify":85,"./react/components/people/item":86,"./react/components/persons_popup/items/follower_relationship":87,"./react/components/persons_popup/items/following_relationship":88,"./react/components/persons_popup/items/guess_relationship":89,"./react/components/persons_popup/items/ignored_relationship":90,"./react/components/persons_popup/items/item":91,"./react/components/persons_popup/items/request_relationship":92,"./react/components/persons_popup/menu":93,"./react/components/persons_popup/menu_item":94,"./react/components/persons_popup/mixins/panel_mixin":95,"./react/components/persons_popup/panels/followers_panel":96,"./react/components/persons_popup/panels/followings_panel":97,"./react/components/persons_popup/panels/guesses_panel":98,"./react/components/persons_popup/panels/ignores_panel":99,"./react/components/persons_popup/panels/requests_panel":100,"./react/components/persons_popup/persons_popup":101,"./react/components/popup/header":102,"./react/components/popup/layout":103,"./react/components/popup/popup":104,"./react/components/popup/spinner":105,"./react/components/popup_box":106,"./react/components/post_editor/actions/actions":107,"./react/components/post_editor/actions/buttons/privacy":108,"./react/components/post_editor/actions/buttons/vote":109,"./react/components/post_editor/choicer":110,"./react/components/post_editor/demo":111,"./react/components/post_editor/edit_post":112,"./react/components/post_editor/editor_container":113,"./react/components/post_editor/editors/_tasty":114,"./react/components/post_editor/editors/anonymous":115,"./react/components/post_editor/editors/image":116,"./react/components/post_editor/editors/instagram":117,"./react/components/post_editor/editors/mixins/autosave":118,"./react/components/post_editor/editors/music":119,"./react/components/post_editor/editors/quote":120,"./react/components/post_editor/editors/text":121,"./react/components/post_editor/editors/video":122,"./react/components/post_editor/images_mediabox/loaded":123,"./react/components/post_editor/images_mediabox/url_insert":124,"./react/components/post_editor/layout":125,"./react/components/post_editor/mediabox/actions":126,"./react/components/post_editor/mediabox/layout":127,"./react/components/post_editor/mediabox/loading_progress":128,"./react/components/post_editor/mixins/dragging":129,"./react/components/post_editor/mixins/images_form":130,"./react/components/post_editor/mixins/layout":131,"./react/components/post_editor/mixins/persistence":132,"./react/components/post_editor/mixins/video":133,"./react/components/post_editor/new_anonymous_post":134,"./react/components/post_editor/new_post":135,"./react/components/post_editor/video_mediabox/embeded":136,"./react/components/post_editor/video_mediabox/loading":137,"./react/components/post_editor/video_mediabox/url_insert":138,"./react/components/post_editor/video_mediabox/video_mediabox":139,"./react/components/post_editor/welcome_messages/image":140,"./react/components/post_editor/welcome_messages/instagram":141,"./react/components/post_editor/welcome_messages/music":142,"./react/components/post_editor/welcome_messages/video":143,"./react/components/relationship_buttons/follow_button":144,"./react/components/relationship_buttons/follower_button":145,"./react/components/relationship_buttons/guess_button":146,"./react/components/relationship_buttons/ignore_button":147,"./react/components/relationship_buttons/mixins/relationship":148,"./react/components/relationship_buttons/request_button":149,"./react/components/search/button":150,"./react/components/search/field":151,"./react/components/search/search":152,"./react/components/settings_popup/settings_accounts_item":153,"./react/components/settings_popup/settings_avatar":154,"./react/components/settings_popup/settings_email/confirmation":155,"./react/components/settings_popup/settings_email/edit":156,"./react/components/settings_popup/settings_email/establish/edit":157,"./react/components/settings_popup/settings_email/establish/establish":158,"./react/components/settings_popup/settings_email/establish/show":159,"./react/components/settings_popup/settings_email/settings_email":160,"./react/components/settings_popup/settings_email/show":161,"./react/components/settings_popup/settings_header":162,"./react/components/settings_popup/settings_name":163,"./react/components/settings_popup/settings_password_input":164,"./react/components/settings_popup/settings_radio_item":165,"./react/components/settings_popup/settings_title":166,"./react/components/settings_popup/settings_vkontakte":167,"./react/components/settings_popup/toolbar_settings":168,"./react/components/shellbox/authorization/authorization":169,"./react/components/shellbox/authorization/vk":170,"./react/components/shellbox/buttons/vk_auth_button":171,"./react/components/shellbox/email_signin_shellbox":172,"./react/components/shellbox/email_signup_shellbox":173,"./react/components/shellbox/inviter_shellbox":174,"./react/components/shellbox/recovery_shellbox":175,"./react/components/shellbox/select_signin_shellbox":176,"./react/components/shellbox_layer":177,"./react/components/smart_follow_status":178,"./react/components/spinner":179,"./react/components/tlog_alert":180,"./react/components/toolbars/close/close":181,"./react/components/toolbars/feed/feed":182,"./react/components/toolbars/toolbar_item":183,"./react/components/toolbars/user/user":184,"./react/components/transition/timeout_transition_group":185,"./react/components/voting":186,"./react/controllers/popup":187,"./react/controllers/shellbox":188,"./react/controllers/tasty_alert":189,"./react/controllers/tasty_confirm":190,"./react/controllers/tasty_events":191,"./react/controllers/tasty_locking_alert":192,"./react/controllers/tasty_notify":193,"./react/controllers/tasty_sound":194,"./react/dispatchers/current_user":195,"./react/entities/normalized_entry":196,"./react/mediators/comments":197,"./react/messaging/actions/conversation":198,"./react/messaging/actions/message":199,"./react/messaging/actions/notification":200,"./react/messaging/actions/popup":201,"./react/messaging/components/buttons/write_message":202,"./react/messaging/components/messages_popup/conversations/conversations":203,"./react/messaging/components/messages_popup/conversations/list/empty":204,"./react/messaging/components/messages_popup/conversations/list/list":205,"./react/messaging/components/messages_popup/conversations/list/list_item":206,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":207,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":208,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":209,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":210,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":211,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":212,"./react/messaging/components/messages_popup/loading_message":213,"./react/messaging/components/messages_popup/messages_popup":214,"./react/messaging/components/messages_popup/thread/message_form/message_form":215,"./react/messaging/components/messages_popup/thread/message_list/empty":216,"./react/messaging/components/messages_popup/thread/message_list/message_list":217,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":218,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":219,"./react/messaging/components/messages_popup/thread/thread":220,"./react/messaging/components/messages_popup/ui/back_button":221,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":222,"./react/messaging/components/notifications_popup/notifications/empty":223,"./react/messaging/components/notifications_popup/notifications/notification":224,"./react/messaging/components/notifications_popup/notifications/notifications":225,"./react/messaging/components/notifications_popup/notifications_popup":226,"./react/messaging/components/toolbars/indicators/indicators":227,"./react/messaging/components/toolbars/indicators/messages":228,"./react/messaging/components/toolbars/indicators/notifications":229,"./react/messaging/dispatchers/messaging":230,"./react/messaging/messaging_requester":231,"./react/messaging/messaging_service":232,"./react/messaging/messaging_testing":233,"./react/messaging/stores/connection_state":234,"./react/messaging/stores/conversations":235,"./react/messaging/stores/messages":236,"./react/messaging/stores/messages_popup_state":237,"./react/messaging/stores/messaging_status":238,"./react/messaging/stores/notifications":239,"./react/mixins/activities":240,"./react/mixins/component_manipulations":241,"./react/mixins/dom_manipulations":242,"./react/mixins/error_timer":243,"./react/mixins/grammar":244,"./react/mixins/positions":245,"./react/mixins/requester":246,"./react/mixins/scroller":247,"./react/mixins/shake":248,"./react/mixins/touch":249,"./react/mixins/unmount":250,"./react/services/entry_normalizer":251,"./react/services/entry_store":252,"./react/services/positions":253,"./react/services/thumbor":254,"./react/services/uuid":255,"./react/stores/current_user":256,"./resources/fileReceiver":257,"./resources/is_mobile":258,"./resources/tasty":259,"./resources/tasty_utils":260,"./routes/api":261,"./routes/routes":262}],2:[function(require,module,exports){
+},{"./libs":8,"./locales/locales":9,"./react/application":11,"./react/components/avatars/avatar":12,"./react/components/avatars/user_avatar":13,"./react/components/buttons/load_more":14,"./react/components/calendar/calendar":15,"./react/components/calendar/calendar_header":16,"./react/components/calendar/calendar_marker":17,"./react/components/calendar/calendar_period":18,"./react/components/calendar/calendar_timeline":19,"./react/components/design_settings_popup/controls":20,"./react/components/design_settings_popup/controls_items/_progressbar":21,"./react/components/design_settings_popup/controls_items/_radiobutton":22,"./react/components/design_settings_popup/controls_items/align_item":23,"./react/components/design_settings_popup/controls_items/background_item":24,"./react/components/design_settings_popup/controls_items/feed_color_item":25,"./react/components/design_settings_popup/controls_items/font_type_item":26,"./react/components/design_settings_popup/controls_items/header_color_item":27,"./react/components/design_settings_popup/controls_items/opacity_item":28,"./react/components/design_settings_popup/design_settings_popup":29,"./react/components/editable_field":30,"./react/components/embed":31,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":32,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":33,"./react/components/entry_comment_box/comment_form/comment_form":34,"./react/components/entry_comment_box/comment_list/comment":35,"./react/components/entry_comment_box/comment_list/comment_list":36,"./react/components/entry_comment_box/comment_list/comment_manager":37,"./react/components/entry_comment_box/comment_metabar/comment_metabar":38,"./react/components/entry_comment_box/comment_metabar/date":39,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":40,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":41,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":42,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":43,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":44,"./react/components/entry_comment_box/comment_metabar/reply":45,"./react/components/entry_comment_box/entry_comment_box":46,"./react/components/entry_comment_box/load_more":47,"./react/components/entry_comment_box/mixins/comments":48,"./react/components/entry_metabar/author":49,"./react/components/entry_metabar/comment":50,"./react/components/entry_metabar/date":51,"./react/components/entry_metabar/dropdown_menu":52,"./react/components/entry_metabar/dropdown_menu_items/delete_item":53,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":54,"./react/components/entry_metabar/dropdown_menu_items/item":55,"./react/components/entry_metabar/dropdown_menu_items/report_item":56,"./react/components/entry_metabar/dropdown_menu_items/watch_item":57,"./react/components/entry_metabar/entry_metabar":58,"./react/components/entry_metabar/tag":59,"./react/components/entry_metabar/tags":60,"./react/components/feed/bricks":61,"./react/components/feed/feed":62,"./react/components/feed/mixins/base":63,"./react/components/feed/tlog":64,"./react/components/follow_status":65,"./react/components/hero/profile/dropdown_menu":66,"./react/components/hero/profile/dropdown_menu_items/ignore":67,"./react/components/hero/profile/dropdown_menu_items/report":68,"./react/components/hero/profile/popup/followers_popup":69,"./react/components/hero/profile/popup/followings_popup":70,"./react/components/hero/profile/popup/items/follower_item":71,"./react/components/hero/profile/popup/items/following_item":72,"./react/components/hero/profile/popup/items/tag_item":73,"./react/components/hero/profile/popup/popup":74,"./react/components/hero/profile/popup/tags_popup":75,"./react/components/hero/profile/profile":76,"./react/components/hero/profile/profile_avatar":77,"./react/components/hero/profile/profile_head":78,"./react/components/hero/profile/profile_stats":79,"./react/components/hero/profile/profile_stats_item":80,"./react/components/images_collage":81,"./react/components/notifications/tasty_alert":82,"./react/components/notifications/tasty_confirm":83,"./react/components/notifications/tasty_locking_alert":84,"./react/components/notifications/tasty_notify":85,"./react/components/people/item":86,"./react/components/persons_popup/items/follower_relationship":87,"./react/components/persons_popup/items/following_relationship":88,"./react/components/persons_popup/items/guess_relationship":89,"./react/components/persons_popup/items/ignored_relationship":90,"./react/components/persons_popup/items/item":91,"./react/components/persons_popup/items/requested_relationship":92,"./react/components/persons_popup/menu":93,"./react/components/persons_popup/menu_item":94,"./react/components/persons_popup/mixins/panel_mixin":95,"./react/components/persons_popup/panels/followers_panel":96,"./react/components/persons_popup/panels/followings_panel":97,"./react/components/persons_popup/panels/guessed_panel":98,"./react/components/persons_popup/panels/ignored_panel":99,"./react/components/persons_popup/panels/requested_panel":100,"./react/components/persons_popup/persons_popup":101,"./react/components/popup/header":102,"./react/components/popup/layout":103,"./react/components/popup/popup":104,"./react/components/popup/spinner":105,"./react/components/popup_box":106,"./react/components/post_editor/actions/actions":107,"./react/components/post_editor/actions/buttons/privacy":108,"./react/components/post_editor/actions/buttons/vote":109,"./react/components/post_editor/choicer":110,"./react/components/post_editor/demo":111,"./react/components/post_editor/edit_post":112,"./react/components/post_editor/editor_container":113,"./react/components/post_editor/editors/_tasty":114,"./react/components/post_editor/editors/anonymous":115,"./react/components/post_editor/editors/image":116,"./react/components/post_editor/editors/instagram":117,"./react/components/post_editor/editors/mixins/autosave":118,"./react/components/post_editor/editors/music":119,"./react/components/post_editor/editors/quote":120,"./react/components/post_editor/editors/text":121,"./react/components/post_editor/editors/video":122,"./react/components/post_editor/images_mediabox/loaded":123,"./react/components/post_editor/images_mediabox/url_insert":124,"./react/components/post_editor/layout":125,"./react/components/post_editor/mediabox/actions":126,"./react/components/post_editor/mediabox/layout":127,"./react/components/post_editor/mediabox/loading_progress":128,"./react/components/post_editor/mixins/dragging":129,"./react/components/post_editor/mixins/images_form":130,"./react/components/post_editor/mixins/layout":131,"./react/components/post_editor/mixins/persistence":132,"./react/components/post_editor/mixins/video":133,"./react/components/post_editor/new_anonymous_post":134,"./react/components/post_editor/new_post":135,"./react/components/post_editor/video_mediabox/embeded":136,"./react/components/post_editor/video_mediabox/loading":137,"./react/components/post_editor/video_mediabox/url_insert":138,"./react/components/post_editor/video_mediabox/video_mediabox":139,"./react/components/post_editor/welcome_messages/image":140,"./react/components/post_editor/welcome_messages/instagram":141,"./react/components/post_editor/welcome_messages/music":142,"./react/components/post_editor/welcome_messages/video":143,"./react/components/relationship_buttons/follow_button":144,"./react/components/relationship_buttons/follower_button":145,"./react/components/relationship_buttons/guess_button":146,"./react/components/relationship_buttons/ignore_button":147,"./react/components/relationship_buttons/mixins/relationship":148,"./react/components/relationship_buttons/request_button":149,"./react/components/search/button":150,"./react/components/search/field":151,"./react/components/search/search":152,"./react/components/settings_popup/settings_accounts_item":153,"./react/components/settings_popup/settings_avatar":154,"./react/components/settings_popup/settings_email/confirmation":155,"./react/components/settings_popup/settings_email/edit":156,"./react/components/settings_popup/settings_email/establish/edit":157,"./react/components/settings_popup/settings_email/establish/establish":158,"./react/components/settings_popup/settings_email/establish/show":159,"./react/components/settings_popup/settings_email/settings_email":160,"./react/components/settings_popup/settings_email/show":161,"./react/components/settings_popup/settings_header":162,"./react/components/settings_popup/settings_name":163,"./react/components/settings_popup/settings_password_input":164,"./react/components/settings_popup/settings_radio_item":165,"./react/components/settings_popup/settings_title":166,"./react/components/settings_popup/settings_vkontakte":167,"./react/components/settings_popup/toolbar_settings":168,"./react/components/shellbox/authorization/authorization":169,"./react/components/shellbox/authorization/vk":170,"./react/components/shellbox/buttons/vk_auth_button":171,"./react/components/shellbox/email_signin_shellbox":172,"./react/components/shellbox/email_signup_shellbox":173,"./react/components/shellbox/inviter_shellbox":174,"./react/components/shellbox/recovery_shellbox":175,"./react/components/shellbox/select_signin_shellbox":176,"./react/components/shellbox_layer":177,"./react/components/smart_follow_status":178,"./react/components/spinner":179,"./react/components/tlog_alert":180,"./react/components/toolbars/close/close":181,"./react/components/toolbars/feed/feed":182,"./react/components/toolbars/toolbar_item":183,"./react/components/toolbars/user/user":184,"./react/components/transition/timeout_transition_group":185,"./react/components/voting":186,"./react/controllers/popup":187,"./react/controllers/shellbox":188,"./react/controllers/tasty_alert":189,"./react/controllers/tasty_confirm":190,"./react/controllers/tasty_events":191,"./react/controllers/tasty_locking_alert":192,"./react/controllers/tasty_notify":193,"./react/controllers/tasty_sound":194,"./react/dispatchers/current_user":195,"./react/dispatchers/relationships":196,"./react/entities/normalized_entry":197,"./react/mediators/comments":198,"./react/messaging/actions/conversation":199,"./react/messaging/actions/message":200,"./react/messaging/actions/notification":201,"./react/messaging/actions/popup":202,"./react/messaging/components/buttons/write_message":203,"./react/messaging/components/messages_popup/conversations/conversations":204,"./react/messaging/components/messages_popup/conversations/list/empty":205,"./react/messaging/components/messages_popup/conversations/list/list":206,"./react/messaging/components/messages_popup/conversations/list/list_item":207,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":208,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":209,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":210,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":211,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":212,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":213,"./react/messaging/components/messages_popup/loading_message":214,"./react/messaging/components/messages_popup/messages_popup":215,"./react/messaging/components/messages_popup/thread/message_form/message_form":216,"./react/messaging/components/messages_popup/thread/message_list/empty":217,"./react/messaging/components/messages_popup/thread/message_list/message_list":218,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":219,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":220,"./react/messaging/components/messages_popup/thread/thread":221,"./react/messaging/components/messages_popup/ui/back_button":222,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":223,"./react/messaging/components/notifications_popup/notifications/empty":224,"./react/messaging/components/notifications_popup/notifications/notification":225,"./react/messaging/components/notifications_popup/notifications/notifications":226,"./react/messaging/components/notifications_popup/notifications_popup":227,"./react/messaging/components/toolbars/indicators/indicators":228,"./react/messaging/components/toolbars/indicators/messages":229,"./react/messaging/components/toolbars/indicators/notifications":230,"./react/messaging/dispatchers/messaging":231,"./react/messaging/messaging_requester":232,"./react/messaging/messaging_service":233,"./react/messaging/messaging_testing":234,"./react/messaging/stores/connection_state":235,"./react/messaging/stores/conversations":236,"./react/messaging/stores/messages":237,"./react/messaging/stores/messages_popup_state":238,"./react/messaging/stores/messaging_status":239,"./react/messaging/stores/notifications":240,"./react/mixins/activities":241,"./react/mixins/component_manipulations":242,"./react/mixins/dom_manipulations":243,"./react/mixins/error_timer":244,"./react/mixins/grammar":245,"./react/mixins/positions":246,"./react/mixins/requester":247,"./react/mixins/scroller":248,"./react/mixins/shake":249,"./react/mixins/touch":250,"./react/mixins/unmount":251,"./react/services/entry_normalizer":252,"./react/services/entry_store":253,"./react/services/positions":254,"./react/services/thumbor":255,"./react/services/uuid":256,"./react/stores/current_user":257,"./react/stores/relationships":258,"./resources/fileReceiver":259,"./resources/is_mobile":260,"./resources/tasty":261,"./resources/tasty_utils":262,"./routes/api":263,"./routes/routes":264}],2:[function(require,module,exports){
 /**
 binds a function to a context
 
@@ -4455,7 +4459,7 @@ require('jquery.shapeshift');
 
 
 
-},{"../bower_components/momentjs/moment":7,"Modernizr":undefined,"aviator":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":263,"i18next":undefined,"imagesloaded":266,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"medium-editor":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"screenviewer":undefined,"swfobject":undefined,"underscore":undefined,"undo":undefined}],9:[function(require,module,exports){
+},{"../bower_components/momentjs/moment":7,"Modernizr":undefined,"aviator":undefined,"backbone":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":265,"i18next":undefined,"imagesloaded":268,"jquery":undefined,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"medium-editor":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-mixin-manager":undefined,"screenviewer":undefined,"swfobject":undefined,"underscore":undefined,"undo":undefined}],9:[function(require,module,exports){
 var i18nLocales, momentLocales;
 
 i18nLocales = {
@@ -4520,11 +4524,14 @@ window.ReactApp = {
       settings: function() {
         return TastyEvents.emit(TastyEvents.keys.command_settings_open());
       },
-      showRequestById: function(req) {
-        return TastyEvents.emit(TastyEvents.keys.command_requests_open(), +req.params.id);
+      design_settings: function() {
+        return TastyEvents.emit(TastyEvents.keys.command_design_settings_open());
       },
-      showRequests: function() {
-        return TastyEvents.emit(TastyEvents.keys.command_requests_open());
+      showRequestedById: function(req) {
+        return TastyEvents.emit(TastyEvents.keys.command_requested_open(), +req.params.id);
+      },
+      showRequested: function() {
+        return TastyEvents.emit(TastyEvents.keys.command_requested_open());
       }
     };
     Aviator.setRoutes({
@@ -4532,10 +4539,11 @@ window.ReactApp = {
         target: UserRouteTarget,
         '/profile': 'profile',
         '/settings': 'settings',
+        '/design_settings': 'design_settings',
         '/friends': {
-          '/requests': {
-            '/': 'showRequests',
-            '/:id': 'showRequestById'
+          '/requested': {
+            '/': 'showRequested',
+            '/:id': 'showRequestedById'
           }
         }
       }
@@ -8612,8 +8620,9 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
     var actions, follow_status;
     if (this.props.relationship != null) {
       actions = React.DOM.div({className: "hero__actions"}, 
-                   WriteMessageButton({user:  this.props.user}), 
                    FollowButton({relationship:  this.props.relationship}), 
+                   WriteMessageButton({user:  this.props.user}), 
+                   React.DOM.button({className: "profile-settings-button"}, React.DOM.i({className: "icon icon--cogwheel"})), 
                    HeroProfile_DropdownMenu({userId:  this.props.user.id, 
                                              status:  this.props.relationship.state})
                  );
@@ -9406,8 +9415,7 @@ window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'Pers
   },
   render: function() {
     return PersonsPopup_PersonItem({user:  this.props.relationship.reader}, 
-      RelationshipFollowerButton({relationship:  this.props.relationship.reverse_relationship, 
-                                  onRequestEnd:  this.props.onRequestEnd})
+      RelationshipFollowerButton({relationship:  this.props.relationship})
     );
   }
 });
@@ -9497,13 +9505,17 @@ window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_P
     return React.DOM.li({className: "person"}, 
               React.DOM.div({className: "person__in"}, 
                 React.DOM.div({className: "person__avatar"}, 
-                  React.DOM.a({href: this.props.user.tlog_url}, UserAvatar({user:  this.props.user}))
+                  React.DOM.a({href:  this.props.user.tlog_url}, 
+                    UserAvatar({
+                        user:  this.props.user, 
+                        size: 48 })
+                  )
                 ), 
                 React.DOM.div({className: "person__desc"}, 
-                  React.DOM.a({href: this.props.user.tlog_url}, React.DOM.p({className: "person__name"},  this.props.user.name)), 
+                  React.DOM.a({href:  this.props.user.tlog_url}, React.DOM.p({className: "person__name"},  this.props.user.name)), 
                   React.DOM.div({className: "person__count"}, entriesCount )
                 ), 
-                React.DOM.div({className: "person__actions"}, this.props.children)
+                React.DOM.div({className: "person__actions"},  this.props.children)
               )
             );
   },
@@ -9517,7 +9529,7 @@ window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_P
 },{}],92:[function(require,module,exports){
 
 /** @jsx React.DOM */
-window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'PersonsPopup_RequestRelationship',
+window.PersonsPopup_RequestedRelationship = React.createClass({displayName: 'PersonsPopup_RequestedRelationship',
   propTypes: {
     relationship: React.PropTypes.object.isRequired
   },
@@ -9530,7 +9542,6 @@ window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'Perso
   render: function() {
     return PersonsPopup_PersonItem({user:  this.props.relationship.reader}, 
       RelationshipRequestButton({relationship:  this.props.relationship, 
-                                 onRequestEnd:  this.props.onRequestEnd, 
                                  key:  this.props.key})
     );
   }
@@ -9541,63 +9552,103 @@ window.PersonsPopup_RequestRelationship = React.createClass({displayName: 'Perso
 },{}],93:[function(require,module,exports){
 
 /** @jsx React.DOM */
-var FOLLOWERS, FOLLOWINGS, GUESSES, IGNORES, REQUESTS;
+var FOLLOWERS, FOLLOWINGS, GUESSED, IGNORED, REQUESTED;
 
-FOLLOWINGS = 'Подписки';
+FOLLOWINGS = 'Вы подписаны';
 
 FOLLOWERS = 'Подписчики';
 
-REQUESTS = 'Заявки';
+REQUESTED = 'Заявки';
 
-GUESSES = 'Рекомендации';
+GUESSED = 'Рекомендации';
 
-IGNORES = 'Блокировка';
+IGNORED = 'Заблокированы';
 
 window.PersonsPopup_Menu = React.createClass({displayName: 'PersonsPopup_Menu',
+  mixins: [RequesterMixin],
   propTypes: {
     user: React.PropTypes.object.isRequired,
-    relationships: React.PropTypes.object.isRequired,
     currentTab: React.PropTypes.string.isRequired,
     onSelect: React.PropTypes.func.isRequired
   },
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentWillMount: function() {
+    if (!this.isSummaryLoaded()) {
+      return this.loadSummary();
+    }
+  },
+  componentDidMount: function() {
+    return RelationshipsStore.addSummaryChangeListener(this.onStoreChange);
+  },
+  componentWillUnmount: function() {
+    return RelationshipsStore.removeSummaryChangeListener(this.onStoreChange);
+  },
   render: function() {
-    var onSelect, requestsMenuItem;
-    onSelect = function(type) {
-      return this.props.onSelect(type);
-    };
-    if (this._isProfilePrivate()) {
-      requestsMenuItem = PersonsPopup_MenuItem({isActive:  this.props.currentTab == "requests", 
-                                                 count:  this.getCount(this.props.relationships.requests), 
-                                                 title: REQUESTS, 
-                                                 onClick:  onSelect.bind(this, 'requests') });
+    var requestedMenuItem;
+    if (this.isProfilePrivate()) {
+      requestedMenuItem = PersonsPopup_MenuItem({
+                              isActive:  this.props.currentTab == 'requested', 
+                              totalCount:  this.state.requestedTotalCount, 
+                              title: REQUESTED, 
+                              onClick:  this.props.onSelect.bind(null, 'requested') });
     }
     return React.DOM.nav({className: "tabs-nav tabs-nav--white"}, 
               React.DOM.ul({className: "tabs-nav__list"}, 
-                PersonsPopup_MenuItem({isActive:  this.props.currentTab == "followings", 
-                                       count:  this.getCount(this.props.relationships.followings), 
-                                       title: FOLLOWINGS, 
-                                       onClick:  onSelect.bind(this, 'followings') }), 
+                PersonsPopup_MenuItem({
+                    isActive:  this.props.currentTab == "followings", 
+                    totalCount:  this.state.followingsTotalCount, 
+                    title: FOLLOWINGS, 
+                    onClick:  this.props.onSelect.bind(null, 'followings') }), 
 
-                PersonsPopup_MenuItem({isActive:  this.props.currentTab == "followers", 
-                                       count:  this.getCount(this.props.relationships.followers), 
-                                       title: FOLLOWERS, 
-                                       onClick:  onSelect.bind(this, 'followers') }), 
+                PersonsPopup_MenuItem({
+                    isActive:  this.props.currentTab == "followers", 
+                    totalCount:  this.state.followersTotalCount, 
+                    title: FOLLOWERS, 
+                    onClick:  this.props.onSelect.bind(null, 'followers') }), 
 
-                PersonsPopup_MenuItem({isActive:  this.props.currentTab == "guesses", 
-                                       count:  this.getCount(this.props.relationships.guesses), 
-                                       title: GUESSES, 
-                                       onClick:  onSelect.bind(this, 'guesses') }), 
+                requestedMenuItem, 
 
-                requestsMenuItem 
-
+                PersonsPopup_MenuItem({
+                    isActive:  this.props.currentTab == "ignored", 
+                    totalCount:  this.state.ignoredTotalCount, 
+                    title: IGNORED, 
+                    onClick:  this.props.onSelect.bind(null, 'ignored') })
               )
             );
   },
-  getCount: function(value) {
-    return value.total_count;
+  isProfilePrivate: function() {
+    return this.props.user.is_privacy === true;
   },
-  _isProfilePrivate: function() {
-    return this.props.user.get('is_privacy');
+  isSummaryLoaded: function() {
+    return RelationshipsStore.isSummaryLoaded();
+  },
+  loadSummary: function() {
+    return this.createRequest({
+      url: ApiRoutes.relationships_summary_url(),
+      success: function(summary) {
+        return RelationshipsDispatcher.handleServerAction({
+          type: 'summaryLoaded',
+          summary: summary
+        });
+      },
+      error: function(data) {
+        return TastyNotifyController.errorResponse(data);
+      }
+    });
+  },
+  getStateFromStore: function() {
+    return {
+      followersTotalCount: RelationshipsStore.getFollowersTotalCount(),
+      followingsTotalCount: RelationshipsStore.getFollowingsTotalCount(),
+      guessedTotalCount: RelationshipsStore.getGuessedTotalCount(),
+      ignoredTotalCount: RelationshipsStore.getIgnoredTotalCount(),
+      requestedTotalCount: RelationshipsStore.getRequestedTotalCount()
+    };
+  },
+  onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
   }
 });
 
@@ -9606,25 +9657,24 @@ window.PersonsPopup_Menu = React.createClass({displayName: 'PersonsPopup_Menu',
 },{}],94:[function(require,module,exports){
 
 /** @jsx React.DOM */
-var PersonsPopup_MenuItem;
-
-window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass({displayName: 'PersonsPopup_MenuItem',
+window.PersonsPopup_MenuItem = React.createClass({displayName: 'PersonsPopup_MenuItem',
   propTypes: {
     title: React.PropTypes.string.isRequired,
-    isActive: React.PropTypes.bool.isRequired
+    isActive: React.PropTypes.bool.isRequired,
+    onClick: React.PropTypes.func.isRequired
   },
   render: function() {
-    var linkClasses;
-    linkClasses = React.addons.classSet({
+    var menuItemClasses;
+    menuItemClasses = React.addons.classSet({
       'tabs-nav__link': true,
       'state--active': this.props.isActive
     });
     return React.DOM.li({className: "tabs-nav__item"}, 
               React.DOM.a({title:  this.props.title, 
-                 className: linkClasses, 
+                 className: menuItemClasses, 
                  onClick:  this.props.onClick}, 
                  this.props.title, 
-                React.DOM.span({className: "tabs-nav__count"}, " ",  this.props.count)
+                React.DOM.span({className: "tabs-nav__count"}, " ",  this.props.totalCount)
               )
             );
   }
@@ -9635,56 +9685,80 @@ window.PersonsPopup_MenuItem = PersonsPopup_MenuItem = React.createClass({displa
 },{}],95:[function(require,module,exports){
 
 /** @jsx React.DOM */
+var EMPTY_LIST, ERROR_STATE, LOADED_STATE, LOADING, LOADING_ERROR, LOADING_STATE;
+
+LOADING_ERROR = 'Ошибка загрузки.';
+
+LOADING = 'Загружаю..';
+
+EMPTY_LIST = 'Список пуст.';
+
+ERROR_STATE = 'error';
+
+LOADED_STATE = 'loaded';
+
+LOADING_STATE = 'loading';
+
 window.PersonsPopup_PanelMixin = {
-  propTypes: {
-    isActive: React.PropTypes.bool.isRequired,
-    onLoad: React.PropTypes.func.isRequired,
-    total_count: React.PropTypes.number
-  },
   getInitialState: function() {
-    return {
-      isError: false,
-      isLoading: false
-    };
+    return _.extend(this.getStateFromStore(), {
+      currentState: LOADING_STATE
+    });
+  },
+  componentWillMount: function() {
+    return this.loadPanelData();
   },
   componentDidMount: function() {
-    return this.getPanelData();
+    return RelationshipsStore.addChangeListener(this.onStoreChange);
+  },
+  componentWillUnmount: function() {
+    return RelationshipsStore.removeChangeListener(this.onStoreChange);
   },
   render: function() {
-    var itemClass, message, panelClasses, panelContent, relationships, _ref, _ref1;
+    var loadMoreButton, messageText, panelClasses, panelContent, relationships;
     panelClasses = React.addons.classSet({
-      'tabs-panel': true,
-      'state--hidden': !this.props.isActive
+      'tabs-panel': true
     });
-    if (((_ref = this.props.relationships) != null ? _ref.length : void 0) > 0) {
-      itemClass = this.itemClass;
-      relationships = this.props.relationships.map((function(_this) {
+    if (this.hasRelationships()) {
+      relationships = this.state.relationships.map((function(_this) {
         return function(relationship) {
-          return itemClass({
+          return _this.itemClass({
             relationship: relationship,
-            key: relationship.id,
-            onRequestEnd: _this.removeRelationship
+            key: relationship.id
           });
         };
       })(this));
       panelContent = React.DOM.ul({className: "persons"}, relationships );
     } else {
-      if (this.state.isError) {
-        message = React.DOM.div({className: "popup__text"}, "Ошибка загрузки.");
-      } else if (this.state.isLoading) {
-        message = React.DOM.div({className: "popup__text"}, "Загружаю..");
-      } else {
-        message = React.DOM.div({className: "popup__text"}, "Список пуст.");
+      switch (this.state.currentState) {
+        case ERROR_STATE:
+          messageText = LOADING_ERROR;
+          break;
+        case LOADING_STATE:
+          messageText = LOADING;
+          break;
+        case LOADED_STATE:
+          messageText = EMPTY_LIST;
+          break;
+        default:
+          console.warn('Unknown currentState', this.state.currentState);
       }
-      panelContent = React.DOM.div({className: "grid-full"}, React.DOM.div({className: "grid-full__middle"}, message ));
+      panelContent = React.DOM.div({className: "grid-full"}, 
+                        React.DOM.div({className: "grid-full__middle"}, 
+                          React.DOM.div({className: "popup__text"}, 
+                            messageText 
+                          )
+                        )
+                      );
     }
-    if (((_ref1 = this.props.relationships) != null ? _ref1.length : void 0) < this.props.total_count) {
-      panelContent = React.DOM.div(null, panelContent, LoadMoreButton({onClick:  this.loadMoreData}));
+    if (!this.isAllRelationshipsLoaded()) {
+      loadMoreButton = LoadMoreButton({onClick:  this.loadMoreData});
     }
     return React.DOM.div({className: panelClasses }, 
               React.DOM.div({className: "scroller scroller--persons", ref: "scroller"}, 
                 React.DOM.div({className: "scroller__pane js-scroller-pane"}, 
-                  panelContent 
+                  panelContent, 
+                  loadMoreButton 
                 ), 
                 React.DOM.div({className: "scroller__track js-scroller-track"}, 
                   React.DOM.div({className: "scroller__bar js-scroller-bar"})
@@ -9692,19 +9766,42 @@ window.PersonsPopup_PanelMixin = {
               )
             );
   },
-  getPanelData: function(sincePosition) {
-    if (this.xhr != null) {
-      console.error('getPanelData when xhr');
-    }
+  hasRelationships: function() {
+    var _ref;
+    return ((_ref = this.state.relationships) != null ? _ref.length : void 0) > 0;
+  },
+  isPanelDataLoaded: function() {
+    return this.state.relationships != null;
+  },
+  isAllRelationshipsLoaded: function() {
+    var _ref;
+    return ((_ref = this.state.relationships) != null ? _ref.length : void 0) === this.state.totalCount;
+  },
+  isLoadingState: function() {
+    return this.state.currentState === LOADING_STATE;
+  },
+  activateLoadedState: function() {
+    return this.safeUpdateState({
+      currentState: LOADED_STATE
+    });
+  },
+  activateLoadingState: function() {
+    return this.safeUpdateState({
+      currentState: LOADING_STATE
+    });
+  },
+  activateErrorState: function() {
+    return this.safeUpdateState({
+      currentState: ERROR_STATE
+    });
+  },
+  loadPanelData: function(sincePosition, options) {
     this.safeUpdate((function(_this) {
       return function() {
         return _this.incrementActivities();
       };
     })(this));
-    this.setState({
-      isError: false,
-      isLoading: true
-    });
+    this.activateLoadingState();
     return this.createRequest({
       url: this.relationUrl(),
       data: {
@@ -9713,27 +9810,26 @@ window.PersonsPopup_PanelMixin = {
       },
       success: (function(_this) {
         return function(data) {
-          return _this.safeUpdate(function() {
-            return _this.props.onLoad('add', {
-              total_count: data.total_count,
+          if (options != null ? options.success : void 0) {
+            return options.success(data);
+          } else {
+            return RelationshipsDispatcher.handleServerAction({
+              type: 'relationshipsLoaded',
+              relationship: _this.relationshipType,
               items: data.relationships
             });
-          });
+          }
         };
       })(this),
       error: (function(_this) {
         return function(data) {
-          _this.safeUpdateState({
-            isError: true
-          });
+          _this.activateErrorState();
           return TastyNotifyController.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
         return function() {
-          _this.safeUpdateState({
-            isLoading: false
-          });
+          _this.activateLoadedState();
           return _this.safeUpdate(function() {
             return _this.decrementActivities();
           });
@@ -9743,31 +9839,28 @@ window.PersonsPopup_PanelMixin = {
   },
   loadMoreData: function() {
     var lastLoadedPosition;
-    if (this.state.isLoading) {
+    if (this.isLoadingState()) {
       return;
     }
-    lastLoadedPosition = this.props.relationships[this.props.relationships.length - 1].position;
-    return this.getPanelData(lastLoadedPosition);
-  },
-  removeRelationship: function(relationship) {
-    var i, newRelationships, rel, _i, _len, _ref;
-    newRelationships = this.props.relationships.slice(0);
-    _ref = this.props.relationships;
-    for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-      rel = _ref[i];
-      if (rel.id === relationship.id || rel.reader_id === relationship.user_id) {
-        newRelationships.splice(i, 1);
-        break;
-      }
-    }
-    return this.props.onLoad('update', {
-      total_count: this.props.total_count - 1,
-      items: newRelationships
+    lastLoadedPosition = this.state.relationships[this.state.relationships.length - 1].position;
+    return this.loadPanelData(lastLoadedPosition, {
+      success: (function(_this) {
+        return function(data) {
+          return RelationshipsDispatcher.handleServerAction({
+            type: 'moreRelationshipsLoaded',
+            relationship: _this.relationshipType,
+            items: data.relationships
+          });
+        };
+      })(this)
     });
+  },
+  onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
   }
 };
 
-React.mixins.add('PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser', ComponentManipulationsMixin, ScrollerMixin]);
+React.mixins.add('PersonsPopup_PanelMixin', [PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser', ComponentManipulationsMixin, ScrollerMixin]);
 
 
 
@@ -9776,10 +9869,17 @@ React.mixins.add('PersonsPopup_PanelMixin', [window.PersonsPopup_PanelMixin, win
 /** @jsx React.DOM */
 window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPopup_FollowersPanel',
   mixins: ['PersonsPopup_PanelMixin'],
+  relationshipType: 'followers',
+  itemClass: PersonsPopup_FollowerRelationship,
   relationUrl: function() {
     return ApiRoutes.relationships_by_url('friend');
   },
-  itemClass: PersonsPopup_FollowerRelationship
+  getStateFromStore: function() {
+    return {
+      relationships: RelationshipsStore.getFollowers(),
+      totalCount: RelationshipsStore.getFollowersTotalCount()
+    };
+  }
 });
 
 
@@ -9789,10 +9889,17 @@ window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPop
 /** @jsx React.DOM */
 window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPopup_FollowingsPanel',
   mixins: ['PersonsPopup_PanelMixin'],
+  relationshipType: 'followings',
+  itemClass: PersonsPopup_FollowingRelationship,
   relationUrl: function() {
     return ApiRoutes.relationships_to_url('friend');
   },
-  itemClass: PersonsPopup_FollowingRelationship
+  getStateFromStore: function() {
+    return {
+      relationships: RelationshipsStore.getFollowings(),
+      totalCount: RelationshipsStore.getFollowingsTotalCount()
+    };
+  }
 });
 
 
@@ -9800,12 +9907,19 @@ window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPo
 },{}],98:[function(require,module,exports){
 
 /** @jsx React.DOM */
-window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup_GuessesPanel',
+window.PersonsPopup_GuessedPanel = React.createClass({displayName: 'PersonsPopup_GuessedPanel',
   mixins: ['PersonsPopup_PanelMixin'],
+  relationshipType: 'guessed',
+  itemClass: PersonsPopup_GuessRelationship,
   relationUrl: function() {
     return ApiRoutes.relationships_to_url('guessed');
   },
-  itemClass: PersonsPopup_GuessRelationship
+  getStateFromStore: function() {
+    return {
+      relationships: RelationshipsStore.getGuessed(),
+      totalCount: RelationshipsStore.getGuessedTotalCount()
+    };
+  }
 });
 
 
@@ -9813,12 +9927,19 @@ window.PersonsPopup_GuessesPanel = React.createClass({displayName: 'PersonsPopup
 },{}],99:[function(require,module,exports){
 
 /** @jsx React.DOM */
-window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup_IgnoresPanel',
+window.PersonsPopup_IgnoredPanel = React.createClass({displayName: 'PersonsPopup_IgnoredPanel',
   mixins: ['PersonsPopup_PanelMixin'],
+  relationshipType: 'ignored',
+  itemClass: PersonsPopup_IgnoredRelationship,
   relationUrl: function() {
     return ApiRoutes.relationships_to_url('ignored');
   },
-  itemClass: PersonsPopup_IgnoredRelationship
+  getStateFromStore: function() {
+    return {
+      relationships: RelationshipsStore.getIgnored(),
+      totalCount: RelationshipsStore.getIgnoredTotalCount()
+    };
+  }
 });
 
 
@@ -9826,12 +9947,19 @@ window.PersonsPopup_IgnoresPanel = React.createClass({displayName: 'PersonsPopup
 },{}],100:[function(require,module,exports){
 
 /** @jsx React.DOM */
-window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopup_RequestsPanel',
+window.PersonsPopup_RequestedPanel = React.createClass({displayName: 'PersonsPopup_RequestedPanel',
   mixins: ['PersonsPopup_PanelMixin'],
+  relationshipType: 'requested',
+  itemClass: PersonsPopup_RequestedRelationship,
   relationUrl: function() {
     return ApiRoutes.relationships_by_url('requested');
   },
-  itemClass: PersonsPopup_RequestRelationship
+  getStateFromStore: function() {
+    return {
+      relationships: RelationshipsStore.getRequested(),
+      totalCount: RelationshipsStore.getRequestedTotalCount()
+    };
+  }
 });
 
 
@@ -9839,119 +9967,84 @@ window.PersonsPopup_RequestsPanel = React.createClass({displayName: 'PersonsPopu
 },{}],101:[function(require,module,exports){
 
 /** @jsx React.DOM */
-var PERSON_POPUP_TITLE;
+var DEFAULT_PANEL, PERSON_POPUP_TITLE;
 
 PERSON_POPUP_TITLE = 'Управление подписками';
 
+DEFAULT_PANEL = 'followings';
+
 window.PersonsPopup = React.createClass({displayName: 'PersonsPopup',
-  mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin],
+  mixins: ['ReactActivitiesMixin', RequesterMixin],
   propTypes: {
-    user: React.PropTypes.object.isRequired,
-    panelName: React.PropTypes.string,
-    userId: React.PropTypes.number
+    panelName: React.PropTypes.string
   },
   getDefaultProps: function() {
     return {
-      panelName: 'followings'
+      panelName: DEFAULT_PANEL
     };
   },
   getInitialState: function() {
-    return {
-      relationships: {
-        followings: {
-          items: null,
-          total_count: null
-        },
-        followers: {
-          items: null,
-          total_count: null
-        },
-        guesses: {
-          items: null,
-          total_count: null
-        },
-        requests: {
-          items: null,
-          total_count: null
-        },
-        ignores: {
-          items: null,
-          total_count: null
-        }
-      },
+    return _.extend(this.getStateFromStores(), {
       currentTab: this.props.panelName
-    };
+    });
+  },
+  componentDidMount: function() {
+    CurrentUserStore.addChangeListener(this.onStoresChange);
+    return RelationshipsStore.addChangeListener(this.onStoresChange);
+  },
+  componentWillUnmount: function() {
+    CurrentUserStore.removeChangeListener(this.onStoresChange);
+    return RelationshipsStore.removeChangeListener(this.onStoresChange);
   },
   render: function() {
-    var onLoad, requestsPanel;
-    onLoad = function() {
-      return this.updateRelationships.apply(this, arguments);
-    };
-    if (this._isProfilePrivate()) {
-      requestsPanel = PersonsPopup_RequestsPanel({isActive:  this.state.currentTab == 'requests', 
-                                                   userId:  this.props.userId, 
-                                                   relationships:  this.state.relationships.requests.items, 
-                                                   total_count:  this.state.relationships.requests.total_count, 
-                                                   activitiesHandler:  this.activitiesHandler, 
-                                                   onLoad:  onLoad.bind(this, 'requests') });
-    }
-    return Popup({hasActivities:  this.hasActivities(), 
-                   title: PERSON_POPUP_TITLE, 
-                   isDraggable: true, 
-                   onClose:  this.unmount, 
-                   className: "popup--persons"}, 
+    var currentPanel;
+    currentPanel = this._getCurrentPanel();
+    return Popup({
+                hasActivities:  this.hasActivities(), 
+                title: PERSON_POPUP_TITLE, 
+                isDraggable: true, 
+                colorScheme: "dark", 
+                className: "popup--persons"}, 
 
-              PersonsPopup_Menu({user:  this.props.user, 
-                                 relationships:  this.state.relationships, 
-                                 currentTab:  this.state.currentTab, 
-                                 onSelect:  this.selectTab}), 
+              PersonsPopup_Menu({
+                  user:  this.state.user, 
+                  currentTab:  this.state.currentTab, 
+                  onSelect:  this.selectTab}), 
 
-              PersonsPopup_FollowingsPanel({isActive:  this.state.currentTab == 'followings', 
-                                            userId:  this.props.userId, 
-                                            relationships:  this.state.relationships.followings.items, 
-                                            total_count:  this.state.relationships.followings.total_count, 
-                                            activitiesHandler:  this.activitiesHandler, 
-                                            onLoad:  onLoad.bind(this, 'followings') }), 
-
-              PersonsPopup_FollowersPanel({isActive:  this.state.currentTab == 'followers', 
-                                           userId:  this.props.userId, 
-                                           relationships:  this.state.relationships.followers.items, 
-                                           total_count:  this.state.relationships.followers.total_count, 
-                                           activitiesHandler:  this.activitiesHandler, 
-                                           onLoad:  onLoad.bind(this, 'followers') }), 
-
-              PersonsPopup_GuessesPanel({isActive:  this.state.currentTab == 'guesses', 
-                                         userId:  this.props.userId, 
-                                         relationships:  this.state.relationships.guesses.items, 
-                                         total_count:  this.state.relationships.guesses.total_count, 
-                                         activitiesHandler:  this.activitiesHandler, 
-                                         onLoad:  onLoad.bind(this, 'guesses') }), 
-
-              requestsPanel 
+              currentPanel 
 
             );
+  },
+  isProfilePrivate: function() {
+    return this.state.user.is_privacy === true;
   },
   selectTab: function(type) {
     return this.setState({
       currentTab: type
     });
   },
-  updateRelationships: function(type, action, relationships) {
-    var newRelationships, _base;
-    newRelationships = this.state.relationships;
-    (_base = newRelationships[type]).items || (_base.items = []);
-    if (action === 'update') {
-      newRelationships[type] = relationships;
-    } else if (action === 'add') {
-      relationships.items = newRelationships[type].items.concat(relationships.items);
-      newRelationships[type] = relationships;
+  _getCurrentPanel: function() {
+    switch (this.state.currentTab) {
+      case 'requested':
+        return PersonsPopup_RequestedPanel({activitiesHandler:  this.activitiesHandler});
+      case 'followings':
+        return PersonsPopup_FollowingsPanel({activitiesHandler:  this.activitiesHandler});
+      case 'followers':
+        return PersonsPopup_FollowersPanel({activitiesHandler:  this.activitiesHandler});
+      case 'ignored':
+        return PersonsPopup_IgnoredPanel({activitiesHandler:  this.activitiesHandler});
+      default:
+        return console.warn('Unknown type of current tab', this.state.currentTab);
     }
-    return this.setState({
-      relationships: newRelationships
-    });
   },
-  _isProfilePrivate: function() {
-    return this.props.user.get('is_privacy');
+  getStateFromStores: function() {
+    return {
+      user: CurrentUserStore.getUser(),
+      relationships: RelationshipsStore.getRelationships()
+    };
+  },
+  onStoresChange: function() {
+    return this.setState(this.getStateFromStores());
   }
 });
 
@@ -12516,41 +12609,53 @@ window.FollowButton = React.createClass({displayName: 'FollowButton',
 window.RelationshipFollowerButton = React.createClass({displayName: 'RelationshipFollowerButton',
   mixins: ['RelationshipMixin'],
   propTypes: {
-    relationship: React.PropTypes.object.isRequired,
-    onRequestEnd: React.PropTypes.func
+    relationship: React.PropTypes.object.isRequired
   },
   getInitialState: function() {
-    return {
-      isError: false,
-      isProcess: false
-    };
+    return this.getStateFromStore();
+  },
+  componentDidMount: function() {
+    return CurrentUserStore.addChangeListener(this.onStoreChange);
+  },
+  componentWillUnmount: function() {
+    return CurrentUserStore.removeChangeListener(this.onStoreChange);
   },
   render: function() {
     var unfollowButton;
-    if (this.isPrivacy()) {
-      unfollowButton = React.DOM.button({className: "button button--small button--outline-light-white button--icon", 
-                                onClick:  this.handleDisapproveClick}, 
+    if (this.isProfilePrivate()) {
+      unfollowButton = React.DOM.button({
+                            className: "button button--small button--outline-light-white button--icon", 
+                            onClick:  this.handleDisapproveClick}, 
                           React.DOM.i({className: "icon icon--cross"})
                         );
     }
     return React.DOM.div(null, 
-              FollowButton({relationship:  this.props.relationship}), 
+              FollowButton({relationship:  this.props.relationship.reverse_relationship}), 
               unfollowButton 
             );
   },
-  isPrivacy: function() {
-    var currentUser;
-    currentUser = CurrentUserStore.getUser();
-    return currentUser.is_privacy;
+  isProfilePrivate: function() {
+    return this.state.user.is_privacy === true;
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser()
+    };
   },
   handleDisapproveClick: function() {
     return this.unfollowFromYourself({
       success: (function(_this) {
         return function() {
-          return _this.props.onRequestEnd(_this.props.relationship);
+          return RelationshipsDispatcher.handleServerAction({
+            type: 'relationshipUnfollowedFromYourself',
+            relationship: _this.props.relationship
+          });
         };
       })(this)
     });
+  },
+  onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
   }
 });
 
@@ -12730,29 +12835,15 @@ window.RelationshipMixin = {
     });
   },
   unfollowFromYourself: function(options) {
-    this.closeError();
-    this.safeUpdateState({
-      isProcess: true
-    });
     return this.createRequest({
-      url: ApiRoutes.unfollow_from_yourself_url(this.props.relationship.user_id),
+      url: ApiRoutes.unfollow_from_yourself_url(this.props.relationship.reader_id),
       method: 'DELETE',
-      success: (function(_this) {
-        return function(data) {
-          return options != null ? typeof options.success === "function" ? options.success() : void 0 : void 0;
-        };
-      })(this),
+      success: function() {
+        return options != null ? typeof options.success === "function" ? options.success() : void 0 : void 0;
+      },
       error: (function(_this) {
         return function(data) {
-          _this.startErrorTimer();
           return TastyNotifyController.errorResponse(data);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          return _this.safeUpdateState({
-            isProcess: false
-          });
         };
       })(this)
     });
@@ -12825,61 +12916,48 @@ window.RelationshipMixin = {
     });
   },
   approve: function(options) {
-    this.closeError();
-    this.setState({
-      isProcess: true
-    });
+    this.activateLoadingState();
     return this.createRequest({
       url: ApiRoutes.relationships_by_tlog_approve_url(this.props.relationship.reader.id),
       method: 'POST',
+      data: {
+        expose_reverse: 1
+      },
       success: (function(_this) {
-        return function(data) {
-          if (options != null ? options.success : void 0) {
-            return options != null ? options.success() : void 0;
-          }
+        return function(relationship) {
+          return options != null ? typeof options.success === "function" ? options.success(relationship) : void 0 : void 0;
         };
       })(this),
       error: (function(_this) {
         return function(data) {
-          _this.startErrorTimer();
           return TastyNotifyController.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
         return function() {
-          return _this.safeUpdateState({
-            isProcess: false
-          });
+          return _this.activateWaitingState();
         };
       })(this)
     });
   },
   disapprove: function(options) {
-    this.closeError();
-    this.setState({
-      isProcess: true
-    });
+    this.activateLoadingState();
     return this.createRequest({
       url: ApiRoutes.relationships_by_tlog_disapprove_url(this.props.relationship.reader.id),
       method: 'POST',
       success: (function(_this) {
-        return function(data) {
-          if (options != null ? options.success : void 0) {
-            return options != null ? options.success() : void 0;
-          }
+        return function(relationship) {
+          return options != null ? typeof options.success === "function" ? options.success(relationship) : void 0 : void 0;
         };
       })(this),
       error: (function(_this) {
         return function(data) {
-          _this.startErrorTimer();
           return TastyNotifyController.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
         return function() {
-          return _this.safeUpdateState({
-            isProcess: false
-          });
+          return _this.activateWaitingState();
         };
       })(this)
     });
@@ -12914,42 +12992,76 @@ React.mixins.add('RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, Reque
 },{}],149:[function(require,module,exports){
 
 /** @jsx React.DOM */
-var STATE_REQUESTED;
+var APPROVE, ERROR, ERROR_STATE, LOADING, LOADING_STATE, WAITING_STATE;
 
-STATE_REQUESTED = 'requested';
+ERROR = 'ошибка';
+
+LOADING = 'в процессе..';
+
+APPROVE = 'одобрить';
+
+ERROR_STATE = 'error';
+
+LOADING_STATE = 'loading';
+
+WAITING_STATE = 'waiting';
 
 window.RelationshipRequestButton = React.createClass({displayName: 'RelationshipRequestButton',
   mixins: ['RelationshipMixin'],
   propTypes: {
-    relationship: React.PropTypes.object.isRequired,
-    onRequestEnd: React.PropTypes.func
+    relationship: React.PropTypes.object.isRequired
   },
   getInitialState: function() {
     return {
+      currentState: WAITING_STATE,
       isError: false,
       isProcess: false
     };
   },
   render: function() {
+    var title;
+    title = this._getTitle();
     return React.DOM.div(null, 
-      React.DOM.button({onClick:  this.handleApproveClick, 
-              className: "button button--small button--outline-light-white"}, 
-         this._getTitle() 
-      ), 
-      React.DOM.button({onClick:  this.handleDisapproveClick, 
-              className: "button button--small button--outline-light-white button--icon"}, 
-        React.DOM.i({className: "icon icon--cross"})
-      )
-    );
+              React.DOM.button({
+                  className: "button button--small button--outline-light-white", 
+                  onClick:  this.handleApproveClick}, 
+                title 
+              ), 
+              React.DOM.button({
+                  className: "button button--small button--outline-light-white button--icon", 
+                  onClick:  this.handleDisapproveClick}, 
+               React.DOM.i({className: "icon icon--cross"})
+              )
+            );
   },
-  isRequested: function() {
-    return this.props.relationship.state === STATE_REQUESTED;
+  activateLoadingState: function() {
+    return this.safeUpdateState({
+      currentState: LOADING_STATE
+    });
+  },
+  activateWaitingState: function() {
+    return this.safeUpdateState({
+      currentState: WAITING_STATE
+    });
+  },
+  _getTitle: function() {
+    switch (this.state.currentState) {
+      case ERROR_STATE:
+        return ERROR;
+      case LOADING_STATE:
+        return LOADING;
+      default:
+        return APPROVE;
+    }
   },
   handleApproveClick: function() {
     return this.approve({
       success: (function(_this) {
-        return function() {
-          return _this.props.onRequestEnd(_this.props.relationship);
+        return function(relationship) {
+          return RelationshipsDispatcher.handleServerAction({
+            type: 'requestedRelationshipApproved',
+            relationship: relationship
+          });
         };
       })(this)
     });
@@ -12957,22 +13069,14 @@ window.RelationshipRequestButton = React.createClass({displayName: 'Relationship
   handleDisapproveClick: function() {
     return this.disapprove({
       success: (function(_this) {
-        return function() {
-          return _this.props.onRequestEnd(_this.props.relationship);
+        return function(relationship) {
+          return RelationshipsDispatcher.handleServerAction({
+            type: 'requestedRelationshipDisapproved',
+            relationship: relationship
+          });
         };
       })(this)
     });
-  },
-  _getTitle: function() {
-    if (this.state.isError) {
-      return 'ошибка';
-    }
-    if (this.state.isProcess) {
-      return 'в процессе..';
-    }
-    if (this.isRequested()) {
-      return 'Одобрить';
-    }
   }
 });
 
@@ -15319,7 +15423,8 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
   },
   componentDidMount: function() {
     TastyEvents.on(TastyEvents.keys.command_settings_open(), this.showSettings);
-    TastyEvents.on(TastyEvents.keys.command_requests_open(), this.showFriendsRequests);
+    TastyEvents.on(TastyEvents.keys.command_design_settings_open(), this.showDesignSettings);
+    TastyEvents.on(TastyEvents.keys.command_requested_open(), this.showFriendsRequested);
     this.state.user.on('change', this.updateStateUser);
     if (localStorage.getItem('displayDesignSettings')) {
       this.showDesignSettings();
@@ -15343,7 +15448,8 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
       clearTimeout(this.timeout);
     }
     TastyEvents.off(TastyEvents.keys.command_settings_open(), this.showSettings);
-    TastyEvents.off(TastyEvents.keys.command_requests_open(), this.showFriendsRequests);
+    TastyEvents.off(TastyEvents.keys.command_design_settings_open(), this.showDesignSettings);
+    TastyEvents.off(TastyEvents.keys.command_requested_open(), this.showFriendsRequested);
     return this.state.user.off('change', this.updateStateUser);
   },
   render: function() {
@@ -15413,17 +15519,13 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
     currentUrl = window.location.href;
     profileUrl = this.props.myTlogUrl + '/profile';
     if (profileUrl.indexOf(currentUrl) !== -1) {
-      return Aviator.navigate('/:user/profile', {
-        namedParams: {
-          user: slug
-        }
-      });
+      return Aviator.navigate("/" + slug + "/profile");
     } else {
       return window.location = profileUrl;
     }
   },
-  showFriendsRequests: function(userId) {
-    return this.showFriends('requests', userId);
+  showFriendsRequested: function(userId) {
+    return this.showFriends('requested', userId);
   },
   showFriends: function(panelName, userId) {
     var container;
@@ -15434,7 +15536,6 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
       }).appendTo('body').get(0);
     }
     return React.renderComponent(PersonsPopup({
-      user: this.state.user,
       panelName: panelName,
       userId: userId
     }), container);
@@ -15952,8 +16053,11 @@ TastyEvents.keys = {
   command_settings_open: function() {
     return "command:settings:open";
   },
-  command_requests_open: function() {
-    return "command:requests:open";
+  command_design_settings_open: function() {
+    return "command:design_settings:open";
+  },
+  command_requested_open: function() {
+    return "command:requested:open";
   }
 };
 
@@ -16103,6 +16207,28 @@ window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
 
 
 },{}],196:[function(require,module,exports){
+window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
+  handleViewAction: function(action) {
+    var payload;
+    payload = {
+      source: 'viewAction',
+      action: action
+    };
+    return this.dispatch(payload);
+  },
+  handleServerAction: function(action) {
+    var payload;
+    payload = {
+      source: 'serverAction',
+      action: action
+    };
+    return this.dispatch(payload);
+  }
+});
+
+
+
+},{}],197:[function(require,module,exports){
 window.NormalizedEntry = (function() {
   function NormalizedEntry(data) {
     _.extend(this, data);
@@ -16114,7 +16240,7 @@ window.NormalizedEntry = (function() {
 
 
 
-},{}],197:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 var CLOSED_STATE, COMMENT_CREATE_STATE, COMMENT_EDIT_STATE;
 
 CLOSED_STATE = 'closed';
@@ -16250,7 +16376,7 @@ window.commentsMediator = new CommentsMediator();
 
 
 
-},{}],198:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 window.ConversationActions = {
   clickConversation: function(conversationId) {
     return MessagingDispatcher.handleViewAction({
@@ -16286,7 +16412,7 @@ window.ConversationActions = {
 
 
 
-},{}],199:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 window.MessageActions = {
   newMessage: function(_arg) {
     var content, conversationId, uuid;
@@ -16324,7 +16450,7 @@ window.MessageActions = {
 
 
 
-},{}],200:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 window.NotificationActions = {
   readNotification: function(notificationId) {
     console.log('читаем уведомление', notificationId);
@@ -16334,7 +16460,7 @@ window.NotificationActions = {
 
 
 
-},{}],201:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 window.PopupActions = {
   closeMessagesPopup: function() {
     messagingService.closeMessagesPopup();
@@ -16361,7 +16487,7 @@ window.PopupActions = {
 
 
 
-},{}],202:[function(require,module,exports){
+},{}],203:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var TITLE;
@@ -16377,7 +16503,7 @@ window.WriteMessageButton = React.createClass({displayName: 'WriteMessageButton'
     title = this._getTitle();
     return React.DOM.button({className: "write-message-button", 
                     onClick:  this.handleClick}, 
-              title 
+              React.DOM.i({className: "icon icon--letter"})
             );
   },
   _getTitle: function() {
@@ -16390,7 +16516,7 @@ window.WriteMessageButton = React.createClass({displayName: 'WriteMessageButton'
 
 
 
-},{}],203:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_Conversations = React.createClass({displayName: 'MessagesPopup_Conversations',
@@ -16411,7 +16537,7 @@ window.MessagesPopup_Conversations = React.createClass({displayName: 'MessagesPo
 
 
 
-},{}],204:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsListEmpty = React.createClass({displayName: 'MessagesPopup_ConversationsListEmpty',
@@ -16426,7 +16552,7 @@ window.MessagesPopup_ConversationsListEmpty = React.createClass({displayName: 'M
 
 
 
-},{}],205:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsList = React.createClass({displayName: 'MessagesPopup_ConversationsList',
@@ -16479,7 +16605,7 @@ window.MessagesPopup_ConversationsList = React.createClass({displayName: 'Messag
 
 
 
-},{}],206:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'MessagesPopup_ConversationsListItem',
@@ -16554,7 +16680,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'Me
 
 
 
-},{}],207:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CLOSE_STATE, OPEN_STATE;
@@ -16620,7 +16746,7 @@ window.MessagesPopup_Chooser = React.createClass({displayName: 'MessagesPopup_Ch
 
 
 
-},{}],208:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var BUTTON_TEXT;
@@ -16641,7 +16767,7 @@ window.MessagesPopup_ChooserButton = React.createClass({displayName: 'MessagesPo
 
 
 
-},{}],209:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ChooserDropdown = React.createClass({displayName: 'MessagesPopup_ChooserDropdown',
@@ -16702,7 +16828,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass({displayName: 'Messages
 
 
 
-},{}],210:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
@@ -16822,7 +16948,7 @@ window.MessagesPopup_ChooserResults = React.createClass({displayName: 'MessagesP
 
 
 
-},{}],211:[function(require,module,exports){
+},{}],212:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ChooserResultsItem = React.createClass({displayName: 'MessagesPopup_ChooserResultsItem',
@@ -16856,7 +16982,7 @@ window.MessagesPopup_ChooserResultsItem = React.createClass({displayName: 'Messa
 
 
 
-},{}],212:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CHOOSER_STATE, PROCESS_STATE;
@@ -16907,7 +17033,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass({displayName: 'Me
 
 
 
-},{}],213:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_LoadingMessage = React.createClass({displayName: 'MessagesPopup_LoadingMessage',
@@ -16937,7 +17063,7 @@ window.MessagesPopup_LoadingMessage = React.createClass({displayName: 'MessagesP
 
 
 
-},{}],214:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, ENTER_TIMEOUT, LEAVE_TIMEOUT, MESSAGES_POPUP_TITLE, MESSAGES_THREAD_TITLE, THREAD_STATE;
@@ -17045,7 +17171,7 @@ window.MessagesPopup = React.createClass({displayName: 'MessagesPopup',
 
 
 
-},{}],215:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ThreadMessageForm = React.createClass({displayName: 'MessagesPopup_ThreadMessageForm',
@@ -17103,7 +17229,7 @@ window.MessagesPopup_ThreadMessageForm = React.createClass({displayName: 'Messag
 
 
 
-},{}],216:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_MessageListEmpty = React.createClass({displayName: 'MessagesPopup_MessageListEmpty',
@@ -17116,7 +17242,7 @@ window.MessagesPopup_MessageListEmpty = React.createClass({displayName: 'Message
 
 
 
-},{}],217:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var savedScrollHeight;
@@ -17227,7 +17353,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass({displayName: 'Messag
 
 
 
-},{}],218:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE;
@@ -17323,7 +17449,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({displayName: 'Me
 
 
 
-},{}],219:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
@@ -17447,7 +17573,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass({displayNa
 
 
 
-},{}],220:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_Thread = React.createClass({displayName: 'MessagesPopup_Thread',
@@ -17479,7 +17605,7 @@ window.MessagesPopup_Thread = React.createClass({displayName: 'MessagesPopup_Thr
 
 
 
-},{}],221:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_UIBackButton = React.createClass({displayName: 'MessagesPopup_UIBackButton',
@@ -17496,7 +17622,7 @@ window.MessagesPopup_UIBackButton = React.createClass({displayName: 'MessagesPop
 
 
 
-},{}],222:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var BUTTON_TEXT;
@@ -17519,7 +17645,7 @@ window.MessagesPopup_UICreateNewConversationButton = React.createClass({displayN
 
 
 
-},{}],223:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup_NotificationsEmpty = React.createClass({displayName: 'NotificationsPopup_NotificationsEmpty',
@@ -17530,7 +17656,7 @@ window.NotificationsPopup_NotificationsEmpty = React.createClass({displayName: '
 
 
 
-},{}],224:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var IMAGE_SIZE;
@@ -17613,7 +17739,7 @@ window.NotificationsPopup_Notification = React.createClass({displayName: 'Notifi
 
 
 
-},{}],225:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup_Notifications = React.createClass({displayName: 'NotificationsPopup_Notifications',
@@ -17656,7 +17782,7 @@ window.NotificationsPopup_Notifications = React.createClass({displayName: 'Notif
 
 
 
-},{}],226:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup',
@@ -17689,7 +17815,7 @@ window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup'
 
 
 
-},{}],227:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ADVANCED_STATE, BASIC_STATE, MOUSE_LEAVE_TIMEOUT;
@@ -17820,7 +17946,7 @@ window.IndicatorsToolbar = React.createClass({displayName: 'IndicatorsToolbar',
 
 
 
-},{}],228:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsToolbar_Messages',
@@ -17869,7 +17995,7 @@ window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsT
 
 
 
-},{}],229:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'IndicatorsToolbar_Notifications',
@@ -17922,7 +18048,7 @@ window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'Indica
 
 
 
-},{}],230:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 window.MessagingDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     return this.dispatch({
@@ -18018,7 +18144,7 @@ window.MessagingDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],231:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 window.MessagingRequester = (function() {
   function MessagingRequester(_arg) {
     this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
@@ -18109,7 +18235,7 @@ window.MessagingRequester = (function() {
 
 
 
-},{}],232:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 window.MessagingService = (function() {
@@ -18377,7 +18503,7 @@ window.MessagingService = (function() {
 
 
 
-},{}],233:[function(require,module,exports){
+},{}],234:[function(require,module,exports){
 window.MessagingMock = {
   message: function() {
     var conversation, recipient, sender;
@@ -18417,7 +18543,7 @@ window.MessagingMock = {
 
 
 
-},{}],234:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 var CONNECTION_EVENT, _connectionState;
 
 CONNECTION_EVENT = 'connectionStateUpdated';
@@ -18461,7 +18587,7 @@ ConnectionStateStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],235:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 var CHANGE_EVENT, _conversations;
 
 CHANGE_EVENT = 'change';
@@ -18582,7 +18708,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],236:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 var CHANGE_EVENT, _allMessagesLoaded, _messages;
 
 CHANGE_EVENT = 'change';
@@ -18736,7 +18862,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(function(payload) {
 
 
 
-},{}],237:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
 
 CHANGE_EVENT = 'change';
@@ -18813,7 +18939,7 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
 
 
 
-},{}],238:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 var CHANGE_EVENT, _messagingStatus;
 
 CHANGE_EVENT = 'change';
@@ -18857,7 +18983,7 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],239:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 var CHANGE_EVENT, _notifications;
 
 CHANGE_EVENT = 'change';
@@ -18961,7 +19087,7 @@ NotificationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],240:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 var BaseMixin, ERROR_TIMEOUT, ram, rau;
 
 ERROR_TIMEOUT = 1000;
@@ -19043,7 +19169,7 @@ React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
 
 
-},{}],241:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 window.ComponentManipulationsMixin = {
   safeUpdate: function(func) {
     if (!this._isUnmounted()) {
@@ -19062,7 +19188,7 @@ window.ComponentManipulationsMixin = {
 
 
 
-},{}],242:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 var ENTRY_DELETE_ANIMATION_SPEED;
 
 ENTRY_DELETE_ANIMATION_SPEED = 300;
@@ -19087,7 +19213,7 @@ window.DOMManipulationsMixin = {
 
 
 
-},{}],243:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 var ERROR_TIMEOUT;
 
 ERROR_TIMEOUT = 1000;
@@ -19115,7 +19241,7 @@ window.ErrorTimerMixin = {
 
 
 
-},{}],244:[function(require,module,exports){
+},{}],245:[function(require,module,exports){
 window.ReactGrammarMixin = {
   declension: function(number, titles) {
     var cases;
@@ -19150,7 +19276,7 @@ window.ReactGrammarMixin = {
 
 
 
-},{}],245:[function(require,module,exports){
+},{}],246:[function(require,module,exports){
 var COMPONENT_WIDTH, REPOSITION_TIMEOUT;
 
 REPOSITION_TIMEOUT = 500;
@@ -19217,7 +19343,7 @@ window.ReactPositionsMixin = {
 
 
 
-},{}],246:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 var Nanobar, nanobar, oldXHR;
 
 Nanobar = require('nanobar');
@@ -19297,7 +19423,7 @@ window.RequesterMixin = {
 
 
 
-},{"nanobar":undefined}],247:[function(require,module,exports){
+},{"nanobar":undefined}],248:[function(require,module,exports){
 window.ScrollerMixin = {
   componentDidMount: function() {
     $(document).on('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
@@ -19347,7 +19473,7 @@ window.ScrollerMixin = {
 
 
 
-},{}],248:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 window.ReactShakeMixin = {
   shake: function() {
     var animationEnd, form;
@@ -19361,7 +19487,7 @@ window.ReactShakeMixin = {
 
 
 
-},{}],249:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 window.TouchMixin = {
   componentWillMount: function() {
     if (isMobile()) {
@@ -19373,7 +19499,7 @@ window.TouchMixin = {
 
 
 
-},{}],250:[function(require,module,exports){
+},{}],251:[function(require,module,exports){
 window.ReactUnmountMixin = {
   unmount: function() {
     return _.defer((function(_this) {
@@ -19386,7 +19512,7 @@ window.ReactUnmountMixin = {
 
 
 
-},{}],251:[function(require,module,exports){
+},{}],252:[function(require,module,exports){
 window.EntryNormalizer = {
   normalize: function(entryData) {
     var attr;
@@ -19428,7 +19554,7 @@ window.EntryNormalizer = {
 
 
 
-},{}],252:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 var STORAGE_PREFIX;
 
 STORAGE_PREFIX = 'entries';
@@ -19494,7 +19620,7 @@ window.EntryStore = {
 
 
 
-},{}],253:[function(require,module,exports){
+},{}],254:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
 
 MOVE_OFFSET = 100;
@@ -19540,7 +19666,7 @@ window.PositionsService = {
 
 
 
-},{}],254:[function(require,module,exports){
+},{}],255:[function(require,module,exports){
 window.ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
   image_url: function(url, style) {
@@ -19555,7 +19681,7 @@ window.ThumborService = {
 
 
 
-},{}],255:[function(require,module,exports){
+},{}],256:[function(require,module,exports){
 window.UuidService = {
   generate: function() {
     var s4;
@@ -19568,7 +19694,7 @@ window.UuidService = {
 
 
 
-},{}],256:[function(require,module,exports){
+},{}],257:[function(require,module,exports){
 var CHANGE_EVENT, currentUser;
 
 CHANGE_EVENT = 'change';
@@ -19614,7 +19740,227 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 
 
 
-},{}],257:[function(require,module,exports){
+},{}],258:[function(require,module,exports){
+var CHANGE_EVENT, SUMMARY_CHANGE_EVENT, _relationships;
+
+CHANGE_EVENT = 'changed';
+
+SUMMARY_CHANGE_EVENT = 'summary:changed';
+
+_relationships = {
+  followings: {
+    items: null,
+    totalCount: null
+  },
+  followers: {
+    items: null,
+    totalCount: null
+  },
+  guessed: {
+    items: null,
+    totalCount: null
+  },
+  requested: {
+    items: null,
+    totalCount: null
+  },
+  ignored: {
+    items: null,
+    totalCount: null
+  }
+};
+
+window.RelationshipsStore = _.extend({}, EventEmitter.prototype, {
+  emitChange: function() {
+    return this.emit(CHANGE_EVENT);
+  },
+  addChangeListener: function(cb) {
+    return this.on(CHANGE_EVENT, cb);
+  },
+  removeChangeListener: function(cb) {
+    return this.off(CHANGE_EVENT, cb);
+  },
+  emitSummaryChange: function() {
+    return this.emit(SUMMARY_CHANGE_EVENT);
+  },
+  addSummaryChangeListener: function(cb) {
+    return this.on(SUMMARY_CHANGE_EVENT, cb);
+  },
+  removeSummaryChangeListener: function(cb) {
+    return this.off(SUMMARY_CHANGE_EVENT, cb);
+  },
+  getRelationships: function() {
+    return _relationships;
+  },
+  getFollowers: function() {
+    return _relationships.followers.items;
+  },
+  getFollowings: function() {
+    return _relationships.followings.items;
+  },
+  getGuessed: function() {
+    return _relationships.guessed.items;
+  },
+  getIgnored: function() {
+    return _relationships.ignored.items;
+  },
+  getRequested: function() {
+    return _relationships.requested.items;
+  },
+  getFollowersTotalCount: function() {
+    return _relationships.followers.totalCount;
+  },
+  getFollowingsTotalCount: function() {
+    return _relationships.followings.totalCount;
+  },
+  getGuessedTotalCount: function() {
+    return _relationships.guessed.totalCount;
+  },
+  getIgnoredTotalCount: function() {
+    return _relationships.ignored.totalCount;
+  },
+  getRequestedTotalCount: function() {
+    return _relationships.requested.totalCount;
+  },
+  isSummaryLoaded: function() {
+    var relationship, value;
+    for (relationship in _relationships) {
+      value = _relationships[relationship];
+      if (value.totalCount === null) {
+        return false;
+      }
+    }
+    return true;
+  },
+  isRelationshipExists: function(relationship) {
+    var item, rel, value, _i, _len, _ref;
+    for (rel in _relationships) {
+      value = _relationships[rel];
+      if (value.items == null) {
+        continue;
+      }
+      _ref = value.items;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        if (item.id === relationship.id || item.reader_id === relationship.reader_id) {
+          return true;
+        }
+      }
+    }
+    return false;
+  },
+  updateSummary: function(summary) {
+    var relationship, value, _results;
+    _results = [];
+    for (relationship in _relationships) {
+      value = _relationships[relationship];
+      _results.push(value.totalCount = summary[relationship + '_count']);
+    }
+    return _results;
+  },
+  unshiftRelationships: function(type, relationships) {
+    var newRelationships, relationship, _base, _i, _len;
+    if (!_relationships[type]) {
+      return console.warn('Unknown type of relationship', type);
+    }
+    (_base = _relationships[type]).items || (_base.items = []);
+    newRelationships = _relationships[type].items.slice(0);
+    for (_i = 0, _len = relationships.length; _i < _len; _i++) {
+      relationship = relationships[_i];
+      if (!this.isRelationshipExists(relationship)) {
+        newRelationships.unshift(relationship);
+      }
+    }
+    return _relationships[type].items = newRelationships;
+  },
+  pushRelationships: function(type, relationships) {
+    var newRelationships, relationship, _base, _i, _len;
+    if (!_relationships[type]) {
+      return console.warn('Unknown type of relationship', type);
+    }
+    (_base = _relationships[type]).items || (_base.items = []);
+    newRelationships = _relationships[type].items.slice(0);
+    for (_i = 0, _len = relationships.length; _i < _len; _i++) {
+      relationship = relationships[_i];
+      if (!this.isRelationshipExists(relationship)) {
+        newRelationships.push(relationship);
+      }
+    }
+    return _relationships[type].items = newRelationships;
+  },
+  approveRequest: function(relationship) {
+    var relationships;
+    relationships = _relationships['requested'].items;
+    if (this.isRelationshipExists(relationship)) {
+      this._removeRelationship('requested', relationship);
+    }
+    return this.unshiftRelationships('followers', [relationship]);
+  },
+  disapproveRequest: function(relationship) {
+    if (this.isRelationshipExists(relationship)) {
+      return this._removeRelationship('requested', relationship);
+    }
+  },
+  unfollowFromYourself: function(relationship) {
+    if (this.isRelationshipExists(relationship)) {
+      return this._removeRelationship('followers', relationship);
+    }
+  },
+  _removeRelationship: function(type, relationship) {
+    var i, newRelationships, newRelationshipsTotalCount, rel, _i, _len;
+    newRelationships = _relationships[type].items.slice(0);
+    newRelationshipsTotalCount = _relationships[type].totalCount;
+    for (i = _i = 0, _len = newRelationships.length; _i < _len; i = ++_i) {
+      rel = newRelationships[i];
+      if (rel.id === relationship.id || rel.reader_id === relationship.user_id || rel.reader_id === relationship.reader_id) {
+        newRelationships.splice(i, 1);
+        newRelationshipsTotalCount--;
+        break;
+      }
+    }
+    _relationships[type].items = newRelationships;
+    return _relationships[type].totalCount = newRelationshipsTotalCount;
+  }
+});
+
+RelationshipsStore.dispatchToken = RelationshipsDispatcher.register(function(payload) {
+  var action;
+  action = payload.action;
+  switch (action.type) {
+    case 'summaryLoaded':
+      RelationshipsStore.updateSummary(action.summary);
+      RelationshipsStore.emitSummaryChange();
+      break;
+    case 'relationshipsLoaded':
+      _relationships[action.relationship].items = [];
+      RelationshipsStore.pushRelationships(action.relationship, action.items);
+      RelationshipsStore.emitChange();
+      break;
+    case 'moreRelationshipsLoaded':
+      RelationshipsStore.pushRelationships(action.relationship, action.items);
+      RelationshipsStore.emitChange();
+      break;
+    case 'requestedRelationshipApproved':
+      RelationshipsStore.approveRequest(action.relationship);
+      RelationshipsStore.emitSummaryChange();
+      RelationshipsStore.emitChange();
+      break;
+    case 'requestedRelationshipDisapproved':
+      RelationshipsStore.disapproveRequest(action.relationship);
+      RelationshipsStore.emitSummaryChange();
+      RelationshipsStore.emitChange();
+      break;
+    case 'relationshipUnfollowedFromYourself':
+      RelationshipsStore.unfollowFromYourself(action.relationship);
+      RelationshipsStore.emitSummaryChange();
+      RelationshipsStore.emitChange();
+      break;
+  }
+});
+
+
+
+},{}],259:[function(require,module,exports){
 var defaults,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -19753,7 +20099,7 @@ window.FileReceiver = (function() {
 
 
 
-},{}],258:[function(require,module,exports){
+},{}],260:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -19762,7 +20108,7 @@ window.isMobile = function() {
 
 
 
-},{}],259:[function(require,module,exports){
+},{}],261:[function(require,module,exports){
 $(function() {
   var height;
   if (typeof Modernizr !== "undefined" && Modernizr !== null ? Modernizr.touch : void 0) {
@@ -19814,7 +20160,7 @@ window.Tasty = {
 
 
 
-},{}],260:[function(require,module,exports){
+},{}],262:[function(require,module,exports){
 window.TastyUtils = {
   showFlashes: function(flashes) {
     if (flashes == null) {
@@ -19880,7 +20226,7 @@ window.TastyUtils = {
 
 
 
-},{}],261:[function(require,module,exports){
+},{}],263:[function(require,module,exports){
 window.ApiRoutes = {
   omniauth_url: function(provider) {
     return TastySettings.host + 'auth/' + provider;
@@ -20018,7 +20364,7 @@ window.ApiRoutes = {
 
 
 
-},{}],262:[function(require,module,exports){
+},{}],264:[function(require,module,exports){
 var Routes;
 
 Routes = {
@@ -20046,7 +20392,7 @@ window.Routes = window.Routes || Routes;
 
 
 
-},{}],263:[function(require,module,exports){
+},{}],265:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -20058,7 +20404,7 @@ window.Routes = window.Routes || Routes;
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":264}],264:[function(require,module,exports){
+},{"./lib/Dispatcher":266}],266:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -20310,7 +20656,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":265}],265:[function(require,module,exports){
+},{"./invariant":267}],267:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -20365,7 +20711,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],266:[function(require,module,exports){
+},{}],268:[function(require,module,exports){
 /*!
  * imagesLoaded v3.1.8
  * JavaScript is all like "You images are done yet or what?"
@@ -20702,7 +21048,7 @@ function makeArray( obj ) {
 
 });
 
-},{"eventie":267,"wolfy87-eventemitter":268}],267:[function(require,module,exports){
+},{"eventie":269,"wolfy87-eventemitter":270}],269:[function(require,module,exports){
 /*!
  * eventie v1.0.5
  * event binding helper
@@ -20786,7 +21132,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( this );
 
-},{}],268:[function(require,module,exports){
+},{}],270:[function(require,module,exports){
 /*!
  * EventEmitter v4.2.9 - git.io/ee
  * Oliver Caldwell
@@ -27784,8 +28130,8 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 }));
 
 },{}],"eventEmitter":[function(require,module,exports){
-module.exports=require(268)
-},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":268}],"i18next":[function(require,module,exports){
+module.exports=require(270)
+},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":270}],"i18next":[function(require,module,exports){
 // i18next, v1.7.4
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license

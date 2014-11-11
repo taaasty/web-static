@@ -84,6 +84,8 @@ window.RelationshipMixin =
     @createRequest
       url: ApiRoutes.relationships_by_tlog_approve_url @props.relationship.reader.id
       method: 'POST'
+      data:
+        expose_reverse: 1
       success: (relationship) =>
         options?.success?(relationship)
       error: (data) =>
