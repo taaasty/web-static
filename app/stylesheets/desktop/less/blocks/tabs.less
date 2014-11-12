@@ -1,51 +1,39 @@
 .tabs-nav {
+  width: @tabs-nav-width;
+  height: 100%;
+  background-color: @tabs-nav-bg;
   position: relative;
-  white-space: nowrap;
-
-  &:after {
-    content: "";
-    width: 50px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 1px;
-    background: @tabs-nav-linear-gradient;
-    pointer-events: none;
-  }
+  float: left;
 }
 
 .tabs-nav__list {
-  margin: 0 12px;
   overflow: hidden;
 }
 
-.tabs-nav__list:after {
-  content: "";
-  height: 1px;
-  display: block;
-  background: @tabs-nav-border-color;
-  .font-null();
-}
-
 // Item
-.tabs-nav__item {
-  display: inline-block;
-}
-
 .tabs-nav__link {
-  padding: 14px 8px 13px;
-  margin-bottom: -1px;
-  display: inline-block;
-  border-bottom: 2px solid transparent;
+  padding: 15px 12px 14px;
+  display: block;
   color: inherit;
+  overflow: hidden;
+
+  .new-badge {
+    margin: -3px 0;
+  }
 
   &.state--active {
-    border-color: @yellow;
-    color: @yellow !important;
+    background-color: @yellow;
+    color: #2c333b !important;
+
+    .tabs-nav__count {
+      color: #363636;
+    }
   }
 }
 
 .tabs-nav__count {
+  margin-left: 6px;
+  float: right;
   font-size: 12px;
   color: @tabs-nav-gray-color;
   .opacity(.3);
@@ -56,4 +44,10 @@
   .tabs-nav__link {
     color: @white;
   }
+}
+
+// Tabs Panel
+.tabs-panel {
+  height: 100%;
+  overflow: hidden;
 }
