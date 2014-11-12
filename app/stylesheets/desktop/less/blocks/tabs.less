@@ -12,10 +12,14 @@
 
 // Item
 .tabs-nav__link {
-  padding: 15px 13px 14px;
+  padding: 15px 12px 14px;
   display: block;
   color: inherit;
   overflow: hidden;
+
+  .new-badge {
+    margin: -3px 0;
+  }
 
   &.state--active {
     background-color: @yellow;
@@ -28,7 +32,7 @@
 }
 
 .tabs-nav__count {
-  margin-left: 8px;
+  margin-left: 6px;
   float: right;
   font-size: 12px;
   color: @tabs-nav-gray-color;

@@ -35,3 +35,11 @@
 .error-badge {
   &:extend(.badge all, .badge--red all);
 }
+
+.new-badge {
+  &:extend(.badge all);
+  .badge-style(#36b377, @white);
+  padding: 2px 5px 1px;
+  display: inline-block;
+  border-radius: 50%;
+}
