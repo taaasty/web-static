@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.AuthorizationShellBox = React.createClass
+window.AuthorizationShellbox = React.createClass
 
   render: ->
     entriesCount = @_getEntriesCount()

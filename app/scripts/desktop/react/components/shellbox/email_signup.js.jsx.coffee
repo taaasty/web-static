@@ -1,8 +1,6 @@
 ###* @jsx React.DOM ###
 
-# Ex .js-subscribe handler
-#
-module.experts = window.EmailSignupShellBox = React.createClass
+window.EmailSignupShellbox = React.createClass
   mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin]
 
   getInitialState: ->
@@ -36,7 +34,7 @@ module.experts = window.EmailSignupShellBox = React.createClass
         _.defer -> window.location.href = data.tlog_url
       error: (data) =>
         if data.responseJSON? && data.responseJSON.error_code == "user_creator/user_exists"
-          ReactApp.shellbox.show EmailSigninShellBox, email: user.email
+          ReactApp.shellbox.show EmailSigninShellbox, email: user.email
         else
           @shake()
 
@@ -99,5 +97,4 @@ module.experts = window.EmailSignupShellBox = React.createClass
 
   onVkAuthClick: (e) ->
     e.preventDefault()
-
-    ReactApp.shellbox.show VkAuthorizationShellBox
+    ReactApp.shellbox.show VkAuthorizationShellbox

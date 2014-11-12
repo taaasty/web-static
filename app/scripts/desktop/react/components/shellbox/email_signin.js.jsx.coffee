@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.EmailSigninShellBox = React.createClass
+window.EmailSigninShellbox = React.createClass
   mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:
@@ -73,11 +73,10 @@ window.EmailSigninShellBox = React.createClass
 
   renderFooter: ->
    `<div className="form-popup__footer">
-      <a href={ ApiRoutes.omniauth_url('vkontakte') }
-         title="Войти через Вконтакте"
+      <a title="Вернуться к выбору способа входа"
          className="form-popup__footer-item"
-         onClick={ this.onVkAuthClick }>
-        Войти через Вконтакте
+         onClick={ this.handleSelectAuth }>
+        Вернуться к выбору способа входа
       </a>
       <span className="form-popup__footer-sep">·</span>
       <a title="Я забыл пароль или почту"
@@ -134,12 +133,10 @@ window.EmailSigninShellBox = React.createClass
 
     @login()
 
-  onVkAuthClick: (e) ->
+  handleSelectAuth: (e) ->
     e.preventDefault()
-    
-    ReactApp.shellbox.show VkAuthorizationShellBox
+    ReactApp.shellbox.show AuthShellbox
 
   gotoRecovery: (e) ->
     e.preventDefault()
-
-    ReactApp.shellbox.show RecoveryShellBox
+    ReactApp.shellbox.show RecoveryShellbox

@@ -109,16 +109,23 @@ require './react/components/tlog_alert'
 require './react/components/avatars/avatar'
 require './react/components/avatars/user_avatar'
 
+# /*===============================================
+# =            Authorization resources            =
+# ===============================================*/
+
+require './react/components/shellbox/auth'
 require './react/components/shellbox/authorization/authorization'
 require './react/components/shellbox/authorization/vk'
+require './react/components/shellbox/authorization/facebook'
 
 require './react/components/shellbox/buttons/vk_auth_button'
+require './react/components/shellbox/buttons/facebook_auth_button'
 
-require './react/components/shellbox/email_signin_shellbox'
-require './react/components/shellbox/email_signup_shellbox'
-require './react/components/shellbox/recovery_shellbox'
-require './react/components/shellbox/select_signin_shellbox'
-require './react/components/shellbox/inviter_shellbox'
+require './react/components/shellbox/email_signin'
+require './react/components/shellbox/email_signup'
+require './react/components/shellbox/recovery'
+
+# /*-----  End of Authorization resources  ------*/
 
 require './react/components/settings_popup/settings_email/settings_email'
 require './react/components/settings_popup/settings_email/edit'
