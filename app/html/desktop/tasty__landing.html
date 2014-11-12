@@ -9,7 +9,7 @@
         <meta name="keywords" content="" />
         <meta name="description" content="" />
 
-        <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="Shortcut Icon" type="image/x-icon" href="favicons/favicon.ico" />
 
         <!-- Fonts -->
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
@@ -19,45 +19,6 @@
         <!-- Styles -->
         <link rel="stylesheet" href="stylesheets/main.css" />
         <!-- end Styles -->
-
-        <!-- Scripts -->
-        <script src="javascripts/old/libs/less-1.7.0.min.js"></script>
-        <script src="shared/modernizr.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.min.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.ui.core.min.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.ui.widget.min.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.ui.mouse.min.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.ui.slider.min.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.ui.draggable.min.js"></script>
-        <script src="javascripts/old/libs/jquery.autosize.min.js"></script>
-        <script src="javascripts/old/libs/jquery.caretposition.js"></script>
-        <script src="javascripts/old/libs/jquery.sew.js"></script>
-        <script src="javascripts/old/libs/jquery.timeago.js"></script>
-        <script src="javascripts/old/libs/jquery.timeago.ru.js"></script>
-        <script src="javascripts/old/libs/jsrender.min.js"></script>
-        <script src="javascripts/old/libs/uploaderObject.js"></script>
-        <script src="javascripts/old/libs/cookie.js"></script>
-        <script src="javascripts/old/libs/baron.js"></script>
-        <script src="javascripts/old/libs/jquery.custom-select.js"></script>
-        <script src="javascripts/old/libs/jquery.autosize.input.js"></script>
-
-        <script src="javascripts/old/plugins/jquery.formradio.js"></script>
-        <script src="javascripts/old/plugins/jquery.dropdown.js"></script>
-        <script src="javascripts/old/plugins/jquery.expander.js"></script>
-        <script src="javascripts/old/plugins/jquery.togglevalue.js"></script>
-
-        <!--<script src="javascripts/old/tasty.api.js"></script>-->
-        <script src="javascripts/old/tasty.js"></script>
-        <script src="javascripts/old/tasty.utils.js"></script>
-        <script src="javascripts/old/fileReceiver.js"></script>
-        <script src="javascripts/old/popup.js"></script>
-        <script src="javascripts/old/design.js"></script>
-        <script src="javascripts/old/comments.js"></script>
-        <script src="javascripts/old/hero.js"></script>
-        <script src="javascripts/old/postEditor.js"></script>
-        <script src="javascripts/old/viewer.js"></script>
-        <script src="javascripts/old/shellbox.js"></script>
-        <!-- end Scripts -->
     </head>
     <body class="layout--landing not-logged">
         <!-- Page -->
@@ -95,10 +56,30 @@
                     <!-- end Page Header -->
                     <!-- Page Body -->
                     <div class="page-body">
+                        <!-- React Viewer -->
+                        <div class="screen-viewer-container" data-react-class="ScreenViewer"
+                             data-react-props='
+                                {
+                                    "text": "Это дневник, в&nbsp;который хочется писать каждый день",
+                                    "screens": [
+                                        {
+                                            "srcImg": "images/images/IMG_9292.jpg",
+                                            "userName": "@nuriat",
+                                            "tlogUrl": "http://taaasty.ru/@nuriat"
+                                        },
+                                        {
+                                            "srcImg": "images/images/IMG_2332.jpg",
+                                            "userName": "@nuriat",
+                                            "tlogUrl": "http://taaasty.ru/@nuriat"
+                                        }
+                                    ]
+                                }'></div>
+                        <!-- end React Viewer -->
+
                         <!-- Screen Viewer -->
-                        <div class="screen-viewer js-screen-viewer">
+                        <!--<div class="screen-viewer js-screen-viewer">
                             <div class="screen-viewer__loader">
-                                <span class="spinner spinner--24x24"><span class="spinner__icon"></span></span>
+                                <span class="spinner spinner-/-24x24"><span class="spinner__icon"></span></span>
                             </div>
                             <div class="screen-viewer__text">Это дневник, в&nbsp;который хочется писать каждый день</div>
                             <div class="screen-viewer__box">
@@ -157,7 +138,7 @@
                                     <div class="screen-viewer__user"><a href="#" title="@nuriat">Фотография – @nuriat</a></div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <!-- end Screen Viewer -->
                     </div>
                     <!-- end Page Body -->
@@ -336,7 +317,7 @@
 
         <!-- Demonstration Shake Animation -->
         <script>
-          (function($){
+          /*(function($){
             var formPopup = $(".form-popup");
             var animationEnd = "webkitAnimationEnd oanimationend msAnimationEnd animationend";
 
@@ -351,8 +332,11 @@
                 e.preventDefault();
               });
             });
-          })(jQuery);
+          })(jQuery);*/
         </script>
         <!-- end Demonstration Shake Animation -->
+
+        <script src="scripts/vendor.js"></script>
+        <script src="scripts/client.js"></script>
     </body>
 </html>

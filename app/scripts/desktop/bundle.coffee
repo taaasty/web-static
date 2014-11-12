@@ -314,6 +314,11 @@ require './react/components/notifications/tasty_confirm'
 require './react/components/notifications/tasty_alert'
 require './react/components/notifications/tasty_locking_alert'
 
+require './react/components/screen_viewer/screen_viewer'
+require './react/components/screen_viewer/screen_viewer_item'
+
+require './react/components/screen_viewer/controller/screen_viewer'
+
 require './react/controllers/tasty_events'
 require './react/controllers/tasty_notify'
 require './react/controllers/tasty_confirm'
