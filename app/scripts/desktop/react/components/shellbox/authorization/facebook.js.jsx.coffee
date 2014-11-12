@@ -2,7 +2,7 @@
 
 AUTH_TIMEOUT = 30000
 
-window.VkAuthorizationShellbox = React.createClass
+window.FacebookAuthorizationShellbox = React.createClass
 
   propTypes:
     disableShellbox: React.PropTypes.func.isRequired
@@ -15,13 +15,13 @@ window.VkAuthorizationShellbox = React.createClass
     @props.disableShellbox()
 
     @timeout = setTimeout @_cancelAuth, AUTH_TIMEOUT
-    _.defer -> window.location = ApiRoutes.omniauth_url 'vkontakte'
+    _.defer -> window.location = ApiRoutes.omniauth_url 'facebook'
 
   componentWillUnmount: -> clearTimeout @timeout if @timeout?
 
   render: ->
    `<AuthorizationShellbox>
-      <Shellbox_VkAuthButton isActive={ this.state.isActive } />
+      <Shellbox_FacebookAuthButton isActive={ this.state.isActive } />
     </AuthorizationShellbox>`
 
   _cancelAuth: ->

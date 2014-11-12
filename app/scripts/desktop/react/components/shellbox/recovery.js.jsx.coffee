@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-module.experts = window.RecoveryShellBox = React.createClass
+window.RecoveryShellbox = React.createClass
   mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin]
 
   getInitialState: ->
@@ -9,7 +9,7 @@ module.experts = window.RecoveryShellBox = React.createClass
   gotoSelectSignin: ->
     event.preventDefault()
     event.stopPropagation()
-    ReactApp.shellbox.show SelectSigninShellBox
+    ReactApp.shellbox.show AuthShellbox
 
   submit: (event)->
     event.preventDefault()
@@ -58,7 +58,12 @@ module.experts = window.RecoveryShellBox = React.createClass
                       div className='form-field__bg' /></div> 
                   </div> 
                   <div className='form-popup__submit'>
-                    <button disabled={this.state.inProcess} className='button button--large button--green-light button--block button--rectangle'><span className='button__text'>{button_title}</span></button> 
+                    <button disabled={ this.state.inProcess }
+                            className="button button--large button--green-light button--block button--rectangle">
+                      <span className='button__text'>
+                        { button_title }
+                      </span>
+                    </button> 
                   </div>
                 </form>
                 </div>
