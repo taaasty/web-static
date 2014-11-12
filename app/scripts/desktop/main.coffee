@@ -83,4 +83,4 @@ $ ->
         userToolbar.click()
         userToolbarClicked = false
 
-    intro.start()
+    #intro.start()
