@@ -6510,13 +6510,15 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass({displayName: 'Ent
 },{}],41:[function(require,module,exports){
 
 /** @jsx React.DOM */
-var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT;
+var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT;
 
 MOUSE_LEAVE_TIMEOUT = 300;
 
 DROPDOWN_CLOSED = 'closed';
 
 DROPDOWN_OPENED_BY_HOVER = 'openedByHover';
+
+DROPDOWN_OPENED_BY_CLICK = 'openedByClick';
 
 window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass({displayName: 'EntryCommentBox_CommentMetaBarDropdownMenu',
   mixins: [ComponentManipulationsMixin],
@@ -6547,25 +6549,30 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass({displayNa
       'comment__dropdown': true,
       'state--open': this.isOpen()
     });
-    actionList.push(EntryCommentBox_CommentMetaBarDropdownMenuLinkItem({commentId:  this.props.commentId, 
-                                                                         entryUrl:  this.props.entryUrl, 
-                                                                         key: "link"}));
+    actionList.push(EntryCommentBox_CommentMetaBarDropdownMenuLinkItem({
+                         commentId:  this.props.commentId, 
+                         entryUrl:  this.props.entryUrl, 
+                         key: "link"}));
     if (this.props.canReport) {
-      actionList.push(EntryCommentBox_CommentMetaBarDropdownMenuReportItem({commentId:  this.props.commentId, 
-                                                                             key: "report"}));
+      actionList.push(EntryCommentBox_CommentMetaBarDropdownMenuReportItem({
+                           commentId:  this.props.commentId, 
+                           key: "report"}));
     }
     if (this.props.canEdit) {
-      actionList.push(EntryCommentBox_CommentMetaBarDropdownMenuEditItem({entryId:  this.props.entryId, 
-                                                                           commentId:  this.props.commentId, 
-                                                                           key: "report"}));
+      actionList.push(EntryCommentBox_CommentMetaBarDropdownMenuEditItem({
+                           entryId:  this.props.entryId, 
+                           commentId:  this.props.commentId, 
+                           key: "report"}));
     }
     if (this.props.canDelete) {
-      actionList.push(EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem({commentId:  this.props.commentId, 
-                                                                             onDelete:  this.props.onDelete, 
-                                                                             key: "delete"}));
+      actionList.push(EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem({
+                           commentId:  this.props.commentId, 
+                           onDelete:  this.props.onDelete, 
+                           key: "delete"}));
     }
     return React.DOM.span({onMouseEnter:  this.onMouseEnter, 
                   onMouseLeave:  this.onMouseLeave, 
+                  onClick:  this.onClick, 
                   className: "comment__actions"}, 
               React.DOM.i({className: "icon icon--dots"}), 
               React.DOM.span({className: menuClasses }, actionList )
@@ -6590,6 +6597,24 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass({displayNa
           });
         };
       })(this)), MOUSE_LEAVE_TIMEOUT);
+    }
+  },
+  onClick: function() {
+    switch (this.state.currentState) {
+      case DROPDOWN_CLOSED:
+        return this.setState({
+          currentState: DROPDOWN_OPENED_BY_CLICK
+        });
+      case DROPDOWN_OPENED_BY_CLICK:
+        return this.setState({
+          currentState: DROPDOWN_CLOSED
+        });
+      case DROPDOWN_OPENED_BY_HOVER:
+        return this.setState({
+          currentState: DROPDOWN_CLOSED
+        });
+      default:
+        return typeof console.error === "function" ? console.error("Unknown state.currentState", this.state.currentState) : void 0;
     }
   },
   isOpen: function() {
@@ -7229,6 +7254,7 @@ window.EntryMetabarDropdownMenu = React.createClass({displayName: 'EntryMetabarD
     return React.DOM.span({className: "meta-item meta-item--actions"}, 
               React.DOM.span({onMouseEnter:  this.onMouseEnter, 
                     onMouseLeave:  this.onMouseLeave, 
+                    onClick:  this.onClick, 
                     className: "meta-item__content"}, 
                 React.DOM.i({className: "meta-item__common icon icon--dots"}), 
                 React.DOM.span({ref: "dropdownMenu", 
@@ -7287,6 +7313,24 @@ window.EntryMetabarDropdownMenu = React.createClass({displayName: 'EntryMetabarD
   onDelete: function() {
     if (this.isMounted()) {
       return this.unmount();
+    }
+  },
+  onClick: function() {
+    switch (this.state.currentState) {
+      case DROPDOWN_CLOSED:
+        return this.setState({
+          currentState: DROPDOWN_OPENED_BY_CLICK
+        });
+      case DROPDOWN_OPENED_BY_CLICK:
+        return this.setState({
+          currentState: DROPDOWN_CLOSED
+        });
+      case DROPDOWN_OPENED_BY_HOVER:
+        return this.setState({
+          currentState: DROPDOWN_CLOSED
+        });
+      default:
+        return typeof console.error === "function" ? console.error("Unknown state.currentState", this.state.currentState) : void 0;
     }
   }
 });
