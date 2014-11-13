@@ -73,6 +73,7 @@ window.EntryMetabarDropdownMenu = React.createClass
     return `<span className="meta-item meta-item--actions">
               <span onMouseEnter={ this.onMouseEnter }
                     onMouseLeave={ this.onMouseLeave }
+                    onClick={ this.onClick }
                     className="meta-item__content">
                 <i className="meta-item__common icon icon--dots" />
                 <span ref="dropdownMenu"
@@ -115,3 +116,10 @@ window.EntryMetabarDropdownMenu = React.createClass
       ), MOUSE_LEAVE_TIMEOUT
 
   onDelete: -> @unmount() if @isMounted()
+
+  onClick: ->
+    switch @state.currentState
+      when DROPDOWN_CLOSED          then @setState currentState: DROPDOWN_OPENED_BY_CLICK
+      when DROPDOWN_OPENED_BY_CLICK then @setState currentState: DROPDOWN_CLOSED
+      when DROPDOWN_OPENED_BY_HOVER then @setState currentState: DROPDOWN_CLOSED
+      else console.error? "Unknown state.currentState", @state.currentState

@@ -2964,6 +2964,7 @@ a.toolbar__popup-link:active {
   opacity: .7;
 }
 .comment__actions {
+  cursor: pointer;
   position: relative;
 }
 .comment__actions .icon {
@@ -3977,6 +3978,7 @@ a.toolbar__popup-link:active {
 }
 .meta-item__content {
   position: relative;
+  cursor: pointer;
 }
 .meta-item__common,
 .meta-item:before {
