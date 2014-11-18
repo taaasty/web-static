@@ -1,0 +1,137 @@
+.posts--edit {
+  position: relative;
+}
+
+// Post
+.post {
+  padding: @indent-base;
+  position: relative;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+// Еще не перебрал
+.post__title {
+  margin-bottom: 20px;
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: normal;
+
+  a {
+    opacity: 1;
+
+    &:hover {
+      opacity: .7;
+    }
+
+    &.post__link {
+      text-decoration: underline
+    }
+  }
+}
+
+.post__content {
+  &:extend(.text-content all);
+  margin-bottom: 1em;
+
+  .media-image,
+  .media-video {
+    margin-right: -@indent-base;
+    margin-left: -@indent-base;
+  }
+
+  // Цитата в посте
+  .blockquote {
+    margin-bottom: .769em;
+    font-size: 26px;
+    line-height: 33px;
+
+    .meta-bar {
+      display: block;
+      line-height: 18px;
+    }
+  }
+
+  .blockquote__caption {
+    font-size: 18px;
+    line-height: 25px;
+  }
+
+  // Коллаж
+  .collage {
+    margin: 0 -@indent-base 1em;
+  }
+}
+
+.post__meta {
+  &:extend(.meta all);
+  margin-top: -4px;
+
+  .meta-actions {
+    float: right;
+  }
+}
+
+.post__comments {
+  margin-top: 16px;
+}
+
+// Типы постов
+.post--image {
+  &:first-child {
+    margin-top: -@indent-base;
+
+    .media-image {
+      margin-top: -@indent-base;
+      overflow: hidden;
+    }
+  }
+
+  &.post--edit {
+    &:first-child {
+      .media-image {
+        overflow: visible;
+      }
+    }
+  }
+}
+
+.post--video {
+  &:first-child {
+    margin-top: -@indent-base;
+
+    .media-video {
+      margin-top: -@indent-base;
+      overflow: hidden;
+    }
+  }
+
+  &.post--edit {
+    &:first-child {
+      .media-video {
+        overflow: visible;
+      }
+    }
+  }
+}
+
+.post--code {
+  .post__content {
+    font-family: @font-family-monospace;
+  }
+}
+
+.convo {
+  [class^=person_] {
+    margin: .4em 0;
+    font-size: .9em;
+
+    span {
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+  }
+}
+
+
+
+// TODO: Логично будет вынести активные состояния в отдельные хелперы

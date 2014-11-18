@@ -1,0 +1,21 @@
+.follow-button {
+  .button-hero-style();
+  text-transform: none;
+
+  // Подписаны
+  &.state--active {
+    background-color: @follow-button-active-bg;
+
+    &:before {
+      border-color: transparent;
+    }
+
+    &:hover {
+      background-color: @follow-button-active-hover-bg;
+    }
+
+    &:active {
+      background-color: @follow-button-active-click-bg;
+    }
+  }
+}

@@ -1,0 +1,56 @@
+.follow-status {
+  width: @follow-status-size;
+  height: @follow-status-size;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  background-color: @follow-status-default-bg;
+  line-height: @follow-status-size;
+  color: @follow-status-color;
+  text-align: center;
+  cursor: default;
+  z-index: @zindex-follow-status;
+  opacity: .94;
+  border-radius: 50%;
+
+  &.state--friend {
+    background-color: @follow-status-friend-bg;
+
+    .follow-status__icon {
+      .ico-tick;
+    }
+  }
+
+  &.state--ignored {
+    background-color: @follow-status-ignored-bg;
+
+    .follow-status__icon {
+      .ico-minus;
+    }
+  }
+
+  &.state--guessed {
+    background-color: @follow-status-guessed-bg;
+
+    .follow-status__icon {
+      .ico-plus;
+    }
+  }
+
+  &.state--requested {
+    background-color: @follow-status-requested-bg;
+
+    .follow-status__icon {
+      .ico-plus;
+    }
+  }
+}
+
+.follow-status__icon {
+  &:extend(.icon);
+  .ico-plus;
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 1;
+  vertical-align: middle;
+}

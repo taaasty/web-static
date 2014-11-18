@@ -1,0 +1,151 @@
+// Colors
+@white: #fff;
+
+@yellow: #f8c700;
+
+@green-light: #77b97e;
+@green: #32a16c;
+@green-dark: #2d9161;
+
+@grey: #b2b2b2;
+
+@black: #000;
+
+@color-base: @black;
+@color-placeholder: #777;
+
+// Fonts
+@font-family-serif: 'PT Serif', Georgia, serif;
+@font-family-sans-serif: 'PT Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+@font-family-base: 'Proxima Nova', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+@font-family-base-light: 'Proxima Nova Light', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+@font-family-monospace: monospace;
+
+@font-size-xs: 14px;
+@font-size-sm: 16px;
+@font-size-base: 18px;
+@font-size-lg: 20px;
+@font-size-xl: 22px;
+
+@line-height-base: 1.222em;
+
+// Icons
+@icons-path: @fonts-path;
+
+/*--------------------------*/
+
+// Z-indexes
+@zindex-media-video-embed: 2;
+@zindex-follow-status: 2;
+@zindex-dropdown-popup: 150;
+
+// Еще не перебирал
+@zindex-field-control: 2;
+@zindex-post-edit-active: 3;
+@zindex-form-field: 12;
+@zindex-post-actions: 110;
+
+@zindex-affixed: 200; // toolbar, auth button
+@zindex-button-affixed: @zindex-affixed; // 200
+@zindex-button-back: @zindex-affixed; // 200
+
+// Indents
+@indent-base: 12px;
+
+// Border Radiuses
+@border-radius-small: 3px;
+@border-radius-base:  4px;
+@border-radius-large: 6px;
+
+// Buttons
+@button-border-radius: @border-radius-small;
+
+@button-extra-small-height: 32px;
+@button-small-height: @button-middle-height;
+@button-middle-height: 40px;
+@button-large-height: 48px;
+
+@button-extra-small-padding-horizontal: 1em;
+@button-small-padding-horizontal: @button-middle-padding-horizontal;
+@button-middle-padding-horizontal: 18px;
+@button-large-padding-horizontal: 28px;
+
+@button-extra-small-font-size: 12px;
+@button-small-font-size: 11px;
+@button-middle-font-size: 13px;
+@button-large-font-size: @button-middle-font-size;
+
+// Follow Button
+@follow-button-border-color: rgba(red(@white), green(@white), blue(@white), .3);
+
+@follow-button-hover-border-color: rgba(red(@white), green(@white), blue(@white), .6);
+
+@follow-button-active-bg: #36b377;
+@follow-button-active-hover-bg: #ed4545;
+@follow-button-active-click-bg: #ce3e3e;
+
+// Person Follow Button
+@person-follow-button-border-color-opacity: .1;
+@person-follow-button-border-color: rgba(red(@white), green(@white), blue(@white), @person-follow-button-border-color-opacity);
+@person-follow-button-color-opacity: .2;
+@person-follow-button-color: rgba(red(@white), green(@white), blue(@white), @person-follow-button-color-opacity);
+
+// Hero Button
+@hero-button-border-color-opacity: .3;
+@hero-button-border-color: rgba(red(@white), green(@white), blue(@white), @hero-button-border-color-opacity);
+@hero-button-border-color-hover-opacity: .6;
+@hero-button-border-color-hover: rgba(red(@white), green(@white), blue(@white), @hero-button-border-color-hover-opacity);
+
+@hero-button-color: @white;
+@hero-button-color-hover: @white;
+
+// Follow Status
+@follow-status-size: @font-size-xl; // 22px
+@follow-status-color: @white;
+
+@follow-status-default-bg: #bbb;
+@follow-status-friend-bg: #38a870;
+@follow-status-ignored-bg: #f3534b;
+@follow-status-guessed-bg: #fda432;
+@follow-status-requested-bg: #fda432;
+
+// Dropdown
+@dropdown-popup-width: 244px;
+@dropdown-popup-border-radius: @border-radius-base;
+
+@dropdown-popup-bg-base: #333;
+@dropdown-popup-bg-opacity: .93;
+@dropdown-popup-bg: rgba(red(@dropdown-popup-bg-base), green(@dropdown-popup-bg-base), blue(@dropdown-popup-bg-base), @dropdown-popup-bg-opacity);
+
+@dropdown-popup-font-size: @font-size-xs;
+@dropdown-popup-line-height: ceil((@dropdown-popup-font-size * 1.4)); // ~20px
+
+// Hero
+@hero-min-height: 192px;
+@hero-overlay-bg: #000;
+
+// Meta
+@meta-font-size: @font-size-xs;
+@meta-line-height: ceil((@dropdown-popup-font-size * 1.4)); // ~20px;
+
+// Comments
+@comments-font-size: 16px;
+@comments-line-height: 22px;
+
+@comment-highlighted-background-color: rgba(82, 118, 151, @comment-highlighted-background-opacity);
+@comment-highlighted-background-opacity: .2;
+
+// Pagination
+@pagination-divider-color: rgba(0, 0, 0, .1);
+
+@pagination-font-size: 16px;
+@pagination-line-height: 22px;
+
+@pagination-item-vertical-padding: 22px;
+@pagination-item-horizontal-padding: 0;
+
+@pagination-item-bg: @black;
+@pagination-item-color: @white;
+
+// Bricks
+@brick-width: 302px;

@@ -1,0 +1,41 @@
+.pagination {
+  &:extend(.clearfix all);
+  border-top: 1px solid @pagination-divider-color;
+  font-size: @pagination-font-size;
+  line-height: @pagination-line-height;
+  font-family: @font-family-base;
+  text-align: center;
+
+  .main-pane & {
+    margin-bottom: -@indent-base;
+  }
+}
+
+.pagination__item {
+  width: 100%;
+  margin-top: -1px;
+  padding: @pagination-item-vertical-padding @pagination-item-horizontal-padding;
+  display: inline-block;
+  background-color: lighten(@pagination-item-bg, 14%);
+  vertical-align: middle;
+  color: @pagination-item-color;
+
+  a& {
+    border: none;
+
+    &:active {
+      background-color: lighten(@pagination-item-bg, 8%);
+    }
+  }
+}
+
+.pagination__item--prev {
+  width: 50%;
+  float: left;
+  margin-right: -15%;
+}
+
+.pagination__item--next {
+  width: 50%;
+  float: right;
+}

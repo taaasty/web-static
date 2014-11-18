@@ -1,0 +1,214 @@
+.hero {
+  min-height: @hero-min-height;
+  position: relative;
+  background-position: 50% 50%;
+  background-size: cover;
+  color: @white;
+  text-align: center;
+  overflow: hidden;
+  transition: height .4s ease .2s;
+
+  &:before {
+    content: "";
+    height: 100%;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+.hero__overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: @hero-overlay-bg;
+  opacity: .3;
+  transition: opacity .4s ease;
+}
+
+.hero__gradient {
+  width: 100%;
+  height: 300px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.5) 100%);
+  opacity: 0;
+  transform: translateY(80%);
+  transition: transform .4s ease, visibility 0s ease .4s, opacity .4s ease;
+}
+
+.hero__content {
+  width: 90%;
+  max-width: 540px;
+  padding: 20px 0;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  transition: padding-top .4s ease, padding-bottom .4s ease;
+}
+
+.hero__avatar {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto;
+  position: relative;
+  display: block;
+  opacity: 1;
+  transition: width .4s ease .2s, height .4s ease .2s, opacity .3s ease;
+
+  .avatar__text {
+    font-size: 36px;
+    font-family: @font-family-base-light;
+    transition: margin-top .3s ease, top .3s ease, font-size .3s ease;
+  }
+}
+
+.hero__head {
+  margin-top: 8px;
+}
+
+.hero__title {
+  position: relative;
+  display: inline-block;
+  font-size: 26px;
+  line-height: 1.231em;
+  font-family: @font-family-base-light;
+  transition: font-size .4s ease .2s, opacity .6s ease;
+  animation: hero-animate-close .6s 1 ease;
+
+  &[class*="js"] {
+    cursor: pointer;
+  }
+}
+
+.hero__text,
+.hero__actions {
+  max-height: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.hero__text {
+  transition: max-height .4s ease .2s, font-size .4s ease .2s, visibility 0s ease .6s, opacity .3s ease;
+  animation: hero-animate-close .6s 1 ease;
+}
+
+.hero__actions {
+  padding-top: 0;
+  transition: max-height .4s ease .2s, padding .4s ease .2s, visibility 0s ease .6s, opacity .3s ease;
+
+  button {
+    margin: 0 5px;
+  }
+}
+
+.hero__dropdown-container {
+  &:extend(.dropdown-container all);
+}
+
+.hero__dropdown-popup {
+  &:extend(.dropdown-popup all);
+}
+
+.hero__dropdown-popup-list {
+  &:extend(.dropdown-popup__list all);
+}
+
+.hero__dropdown-popup-item {
+  &:extend(.dropdown-popup__item all);
+}
+
+.hero__dropdown-popup-link {
+  &:extend(.dropdown-popup__link all);
+}
+
+.hero__stats {
+  width: 100%;
+  padding: 0 0 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(150%);
+  transition: transform .4s ease, visibility 0s ease .4s, opacity .4s ease;
+}
+
+.hero__stats-item {
+  width: 20%;
+  min-width: 64px;
+  padding: 4px;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1.2;
+  vertical-align: top;
+  cursor: default;
+
+  &.hero__stats-item-handler {
+    cursor: pointer
+  }
+}
+
+.hero__stats-value {
+  display: block;
+  font-weight: normal;
+  font-size: 30px;
+  font-family: @font-family-base-light;
+}
+
+.hero__stats-label {
+  opacity: .4;
+}
+
+.hero__stats-link {
+  display: block;
+  color: @white;
+}
+
+// Keyframes
+@-webkit-keyframes hero-animate-open {
+  20%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes hero-animate-open {
+  20%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-o-keyframes hero-animate-open {
+  20%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes hero-animate-open {
+  20%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes hero-animate-close {
+  20%  { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes hero-animate-close {
+  20%  { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-o-keyframes hero-animate-close {
+  20%  { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes hero-animate-close {
+  20%  { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 1; }
+}
