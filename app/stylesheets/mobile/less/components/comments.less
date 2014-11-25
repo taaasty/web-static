@@ -12,12 +12,12 @@
 }
 
 .comments__more-link {
+  &:extend(.link-design-default all, .link-design all);
   .text-overflow();
   display: block;
-  color: @grey;
 
   &:active {
-    color: darken(@grey, 14%);
+    &:extend(.link-design-default-active all);
   }
 }
 
@@ -44,7 +44,7 @@
   word-wrap: break-word;
 
   img {
-    max-width: @brick-width;
+    max-width: 300px;
     max-height: 900px;
     margin-bottom: 5px;
   }
@@ -70,11 +70,12 @@
 }
 
 .comment__image {
-  max-width: @brick-width;
+  max-width: 300px;
   max-height: 900px;
 }
 
 .comment__actions {
+  &:extend(.link-design-default all, .link-design all);
   position: absolute;
   top: 10px;
   right: 0;
@@ -83,14 +84,11 @@
   & > .icon {
     font-size: 20px;
     line-height: 1;
-    color: @grey;
     vertical-align: middle;
   }
 
   &.state--open {
-    & > .icon {
-      color: darken(@grey, 14%);
-    }
+    &:extend(.link-design-default-active all, .link-design:active all);
   }
 }
 

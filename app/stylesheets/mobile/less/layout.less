@@ -2,3 +2,22 @@ body {
   padding: 0;
   margin: 0;
 }
+
+.page {
+  background: @white;
+  position: relative;
+  transform: translateX(0);
+  transition: transform .4s ease;
+}
+
+.page-body {
+  background: @white;
+
+  a {
+    &:extend(.link-design-default all);
+
+    &:active {
+      &:extend(.link-design-default-active all);
+    }
+  }
+}

@@ -4,29 +4,16 @@
 
 // Post
 .post {
+  margin-bottom: 15px;
   padding: @indent-base;
   position: relative;
+  font-family: @font-family-serif;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-// Еще не перебрал
 .post__title {
-  margin-bottom: 20px;
-  font-size: 30px;
-  line-height: 38px;
-  font-weight: normal;
-
-  a {
-    opacity: 1;
-
-    &:hover {
-      opacity: .7;
-    }
-
-    &.post__link {
-      text-decoration: underline
-    }
-  }
+  &:extend(.text-content h1 all);
+  margin-top: 0;
 }
 
 .post__content {
@@ -39,24 +26,6 @@
     margin-left: -@indent-base;
   }
 
-  // Цитата в посте
-  .blockquote {
-    margin-bottom: .769em;
-    font-size: 26px;
-    line-height: 33px;
-
-    .meta-bar {
-      display: block;
-      line-height: 18px;
-    }
-  }
-
-  .blockquote__caption {
-    font-size: 18px;
-    line-height: 25px;
-  }
-
-  // Коллаж
   .collage {
     margin: 0 -@indent-base 1em;
   }
@@ -78,38 +47,16 @@
 // Типы постов
 .post--image {
   &:first-child {
-    margin-top: -@indent-base;
-
     .media-image {
       margin-top: -@indent-base;
-      overflow: hidden;
-    }
-  }
-
-  &.post--edit {
-    &:first-child {
-      .media-image {
-        overflow: visible;
-      }
     }
   }
 }
 
 .post--video {
   &:first-child {
-    margin-top: -@indent-base;
-
     .media-video {
       margin-top: -@indent-base;
-      overflow: hidden;
-    }
-  }
-
-  &.post--edit {
-    &:first-child {
-      .media-video {
-        overflow: visible;
-      }
     }
   }
 }
@@ -131,7 +78,3 @@
     }
   }
 }
-
-
-
-// TODO: Логично будет вынести активные состояния в отдельные хелперы

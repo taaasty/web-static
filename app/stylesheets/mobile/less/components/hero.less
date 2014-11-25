@@ -21,6 +21,19 @@
   }
 }
 
+.hero__close {
+  &:extend(.toolbar__toggle);
+  left: -385px;
+
+  .icon {
+    &:extend(.toolbar .icon);
+  }
+
+  .icon--cross {
+    font-size: 19px;
+  }
+}
+
 .hero__overlay {
   width: 100%;
   height: 100%;
@@ -83,10 +96,6 @@
   font-family: @font-family-base-light;
   transition: font-size .4s ease .2s, opacity .6s ease;
   animation: hero-animate-close .6s 1 ease;
-
-  &[class*="js"] {
-    cursor: pointer;
-  }
 }
 
 .hero__text,
@@ -101,6 +110,11 @@
   animation: hero-animate-close .6s 1 ease;
 }
 
+.hero__smalltext {
+  font-size: @font-size-xs;
+  color: @grey;
+}
+
 .hero__actions {
   padding-top: 0;
   transition: max-height .4s ease .2s, padding .4s ease .2s, visibility 0s ease .6s, opacity .3s ease;
@@ -110,7 +124,7 @@
   }
 }
 
-.hero__dropdown-container {
+.hero__user-actions {
   &:extend(.dropdown-container all);
 }
 

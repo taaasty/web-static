@@ -1,0 +1,94 @@
+.post-editor {
+  padding: 2.5em 0;
+
+  .blockquote__caption {
+    &:before {
+      color: @grey;
+    }
+  }
+}
+
+.post-editor-back {
+  position: fixed;
+  padding: 15px;
+  top: 0;
+  left: 0;
+  background: @white;
+  font-size: 100%;
+  line-height: 1;
+  color: @grey;
+
+  .icon {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &:active {
+    &:extend(.link-design-default-active all);
+  }
+}
+
+.post-editor-actions {
+  position: fixed;
+  right: @indent-base;
+  text-align: right;
+}
+
+.post-editor-actions--top {
+  top: @indent-base;
+}
+
+.post-editor-actions--bottom {
+  bottom: @indent-base;
+}
+
+.post-editor-action {
+  .inline-block();
+  margin-left: 8px;
+}
+
+.post-editor-types {
+  position: fixed;
+  bottom: @indent-base;
+  left: @indent-base;
+}
+
+.post-editor-field {
+  position: relative;
+
+  .state--hidden {
+    display: none;
+  }
+
+  blockquote {
+    border-left: 2px solid black;
+    padding-left: 10px;
+  }
+
+  ul {
+    li {
+      list-style-type: disc;
+    }
+  }
+
+  ol {
+    li {
+      list-style-type: decimal;
+    }
+  }
+
+  & > .image {
+    margin-left: 0px;
+    margin-right: -136px;
+  }
+}
+
+.post-editor-field-content {
+  min-height: 1.2em;
+  outline: none;
+}
+
+.medium-editor-placeholder:after {
+  font-style: normal !important;
+  color: @grey;
+}

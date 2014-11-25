@@ -9,11 +9,12 @@
 }
 
 .meta-item {
+  &:extend(.link-design-default all, .link-design all);
   .inline-block();
   padding: 4px;
+  font-family: @font-family-base;
   font-size: @meta-font-size;
   line-height: @meta-line-height;
-  color: @grey;
   white-space: nowrap;
 
   &:before {
@@ -24,67 +25,6 @@
   }
 
   &:active {
-    color: darken(@grey, 14%);
+    &:extend(.link-design-default-active all);
   }
-}
-
-.meta-voting {
-  &:extend(.meta-item all);
-  .ico-fire-reg;
-
-  &.voted {
-    color: @yellow;
-
-    .ico-fire-fill-reg;
-  }
-
-  &.unvotable {
-    .ico-fire-fill-reg;
-  }
-
-  &.votable {
-    &:active {
-      color: @yellow;
-
-      .ico-fire-fill-reg;
-    }
-  }
-}
-
-.meta-comments {
-  &:extend(.meta-item all);
-  .ico-messages;
-
-  &:before {
-    margin-right: 4px;
-  }
-}
-
-.meta-actions {
-  &:extend(.meta-item all);
-  .ico-dots;
-  position: relative;
-}
-
-.meta-actions__dropdown-popup {
-  &:extend(.dropdown-popup all);
-  right: -@indent-base/2;
-  left: auto;
-
-  &:after {
-    right: 10px;
-    left: auto;
-  }
-}
-
-.meta-actions__dropdown-popup-list {
-  &:extend(.dropdown-popup__list all);
-}
-
-.meta-actions__dropdown-popup-item {
-  &:extend(.dropdown-popup__item all);
-}
-
-.meta-actions__dropdown-popup-link {
-  &:extend(.dropdown-popup__link all);
 }

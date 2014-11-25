@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html class="post-editor-page">
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=1">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="stylesheets/main.css" />
+  </head>
+  <body>
+
+    <!-- Page -->
+    <div class="page">
+      <!-- Page Body -->
+      <div class="page-body">
+        <!-- Post Editor -->
+        <div class="post-editor">
+          <!-- Post -->
+          <div class="post post--image">
+            <div class="post__content">
+              <form enctype="multipart/form-data">
+                <div class="media-object">
+                  <!-- Uploader -->
+                  <div class="uploader">
+                    <div class="uploader__info">
+                      <div class="uploader__text">
+                        <span class="form-choose-file uploader__strong">
+                          <span class="form-choose-file__text">Выберите</span>
+                          <input id="uploader-image" class="form-choose-file__input" type="file" accept="image/*" multiple="" />
+                        </span> картинку или <a class="uploader__strong" title="вставьте">вставьте</a> ссылку на нее
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end Uploader -->
+                </div>
+                <div class="post-editor-field">
+                  <div class="post-editor-field-content medium-editor-placeholder" contenteditable="true" data-placeholder="Придумайте подпись"></div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- end Post -->
+          <div class="post-editor-back">
+            <i class="icon icon--cross"></i>
+          </div>
+          <div class="post-editor-actions post-editor-actions--top">
+            <div class="post-editor-action">
+              <button class="post-save-button"><i class="icon icon--tick"></i></button>
+            </div>
+          </div>
+          <div class="post-editor-actions post-editor-actions--bottom">
+            <div class="post-editor-action">
+              <button class="post-privacy-button state--active"><i class="icon icon--lock"></i></button>
+            </div>
+          </div>
+          <div class="post-editor-types">
+            <button class="button button--circle"><i class="icon icon--text-circle"></i></button>
+            <button class="button button--circle state--active"><i class="icon icon--image-circle"></i></button>
+            <button class="button button--circle"><i class="icon icon--quote-circle"></i></button>
+          </div>
+        </div>
+        <!-- end Post Editor -->
+      </div>
+      <!-- end Page Body -->
+    </div>
+    <!-- end Page -->
+
+    <script src="scripts/vendor.js"></script>
+    <script src="scripts/client.js"></script>
+  </body>
+</html>

@@ -3,10 +3,9 @@
   border-top: 1px solid @pagination-divider-color;
   font-size: @pagination-font-size;
   line-height: @pagination-line-height;
-  font-family: @font-family-base;
   text-align: center;
 
-  .main-pane & {
+  .page-body & {
     margin-bottom: -@indent-base;
   }
 }
@@ -16,15 +15,15 @@
   margin-top: -1px;
   padding: @pagination-item-vertical-padding @pagination-item-horizontal-padding;
   display: inline-block;
-  background-color: lighten(@pagination-item-bg, 14%);
+  background-color: @pagination-item-bg;
   vertical-align: middle;
-  color: @pagination-item-color;
+  color: @pagination-item-color !important;
 
   a& {
     border: none;
 
     &:active {
-      background-color: lighten(@pagination-item-bg, 8%);
+      background-color: lighten(@pagination-item-bg, 6%);
     }
   }
 }
@@ -33,6 +32,10 @@
   width: 50%;
   float: left;
   margin-right: -15%;
+
+  & + .pagination__item--next {
+    border-left: 1px solid @pagination-divider-color;
+  }
 }
 
 .pagination__item--next {

@@ -3,7 +3,8 @@
 
 @yellow: #f8c700;
 
-@green-light: #77b97e;
+@green-lighter: #77b97e;
+@green-light: #24b166;
 @green: #32a16c;
 @green-dark: #2d9161;
 
@@ -27,10 +28,11 @@
 @font-size-lg: 20px;
 @font-size-xl: 22px;
 
-@line-height-base: 1.222em;
+@line-height-base: 1.223em;
 
 // Icons
 @icons-path: @fonts-path;
+@icons-name: 'tastyicons';
 
 /*--------------------------*/
 
@@ -38,16 +40,7 @@
 @zindex-media-video-embed: 2;
 @zindex-follow-status: 2;
 @zindex-dropdown-popup: 150;
-
-// Еще не перебирал
-@zindex-field-control: 2;
-@zindex-post-edit-active: 3;
-@zindex-form-field: 12;
-@zindex-post-actions: 110;
-
-@zindex-affixed: 200; // toolbar, auth button
-@zindex-button-affixed: @zindex-affixed; // 200
-@zindex-button-back: @zindex-affixed; // 200
+@zindex-toolbar: 200;
 
 // Indents
 @indent-base: 12px;
@@ -74,6 +67,9 @@
 @button-small-font-size: 11px;
 @button-middle-font-size: 13px;
 @button-large-font-size: @button-middle-font-size;
+
+// Cicle Button
+@button-circle-size: 42px;
 
 // Follow Button
 @follow-button-border-color: rgba(red(@white), green(@white), blue(@white), .3);
@@ -120,6 +116,18 @@
 @dropdown-popup-font-size: @font-size-xs;
 @dropdown-popup-line-height: ceil((@dropdown-popup-font-size * 1.4)); // ~20px
 
+// Toolbar
+@toolbar-size: 42px;
+
+@toolbar-bg-base: #252525;
+@toolbar-bg-base-opacity: .72;
+@toolbar-bg: rgba(red(@toolbar-bg-base), green(@toolbar-bg-base), blue(@toolbar-bg-base), @toolbar-bg-base-opacity);
+
+@toolbar-popup-width: 240px;
+@toolbar-popup-bg: #222;
+
+@toolbar-item-highlight-bg: #f5f5f5;
+
 // Hero
 @hero-min-height: 192px;
 @hero-overlay-bg: #000;
@@ -144,8 +152,17 @@
 @pagination-item-vertical-padding: 22px;
 @pagination-item-horizontal-padding: 0;
 
-@pagination-item-bg: @black;
-@pagination-item-color: @white;
+@pagination-item-bg: lighten(@black, 15%);
+@pagination-item-color: @grey;
 
-// Bricks
-@brick-width: 302px;
+// Uploader
+@uploader-height: 200px;
+
+@uploader-border-color: #ededed;
+@uploader-bg: @white;
+
+@uploader-text-color: @grey;
+
+@uploader-input-placeholder-color: @grey;
+
+@uploader-loader-fill-bg: @green-light;

@@ -1,7 +1,279 @@
-// Когда развёрнут профиль пользователя
-.hero-enabled {
+.landing-page {
+  height: 100%;
+  background-color: #323039;
+
+  body {
+    height: 100%;
+    color: @white;
+  }
+}
+
+.feed-page {
   .hero {
-    margin-bottom: 40px;
+    height: 200px;
+  }
+
+  .hero__overlay {
+    opacity: .6;
+  }
+
+  .hero__title {
+    font-size: 30px;
+  }
+
+  .post {
+    font-family: @font-family-sans-serif;
+  }
+}
+
+.tlog-page {}
+
+.post-editor-page {
+  .page {
+    transform: none;
+  }
+
+  .page-body {
+    padding: 0;
+  }
+
+  .post--image {
+    &:first-child {
+      .media-image {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .post--video {
+    &:first-child {
+      .media-video {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+// Настройки дизайна тлога
+
+/* Вспомогательные классы, как placeholder selectors в sass (используем только для расширения)
+ *
+ * ----------------------------------------------------------------------
+ * | .link-design, .link-design-default, .link-design-default-active,   |
+ * | .link-design-feedcolor-white, .link-design-feedcolor-white-active, |
+ * | .link-design-feedcolor-black, .link-design-feedcolor-black-active  |
+ * ----------------------------------------------------------------------
+ */
+
+a {
+  &:extend(.link-design all);
+}
+
+.link-design-default {
+  color: @grey;
+}
+
+.link-design-default-active {
+  color: darken(@grey, 14%);
+}
+
+.link-design-feedcolor-white {
+  &:extend(.link-design-default all);
+}
+
+.link-design-feedcolor-white-active {
+  &:extend(.link-design-default-active all);
+}
+
+.link-design-feedcolor-black {
+  color: #777;
+}
+
+.link-design-feedcolor-black-active {
+  color: lighten(#777, 14%);
+}
+
+// Светлая тема тлога
+.design-feedcolor-white {
+  .page-body {
+    color: @black;
+    background-color: @white;
+
+    .link-design {
+      &:extend(.link-design-feedcolor-white all);
+    }
+
+    .link-design:active {
+      &:extend(.link-design-feedcolor-white-active all);
+    }
+  }
+}
+
+// Темная тема тлога
+.design-feedcolor-black {
+  .page-body {
+    color: @white;
+    background-color: #1e1e1e;
+
+    .link-design {
+      &:extend(.link-design-feedcolor-black all);
+    }
+
+    .link-design:active {
+      &:extend(.link-design-feedcolor-black-active all);
+    }
+  }
+
+  .meta {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .meta-item {
+    padding-right: 6px;
+    padding-left: 6px;
+    border: 1px solid #323232;
+    border-radius: @border-radius-small;
+  }
+}
+
+// Шрифт тлога - с засечками
+.design-fonttype-serif {
+  .post {
+    font-family: @font-family-serif;
+  }
+}
+
+// Шрифт тлога - без засечек
+.design-fonttype-sans {
+  .post {
+    font-family: @font-family-sans-serif;
+  }
+}
+
+// Темы для шапки тлога
+.design-headercolor-black {
+  .hero {
+    color: @black;
+  }
+}
+
+.design-headercolor-white {
+  .hero {
+    color: @white;
+  }
+}
+
+.design-headercolor-blackonwhite {
+  .hero {
+    color: @black;
+  }
+
+  .hero__title {
+    span {
+      background: @white;
+    }
+  }
+
+  .hero__text {
+    span {
+      background: @white;
+    }
+  }
+}
+
+.design-headercolor-whiteonblack {
+  .hero {
+    color: @white;
+  }
+
+  .hero__title {
+    span {
+      background: @black;
+    }
+  }
+
+  .hero__text {
+    span {
+      background: @black;
+    }
+  }
+}
+
+// Когда открыт Feed Toolbar
+.feed-toolbar-open {
+  &,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .page {
+    transform: translateX(@toolbar-popup-width);
+  }
+
+  .toolbar--feed {
+    .toolbar__toggle {
+      transform: translateX(@toolbar-popup-width);
+
+      .icon {
+        .toolbar-active;
+      }
+    }
+  }
+
+  .toolbar--user {
+    .toolbar__toggle {
+      transform: translateX(@toolbar-popup-width);
+    }
+  }
+}
+
+// Когда открыт User Toolbar
+.user-toolbar-open {
+  &,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .page {
+    transform: translateX(-@toolbar-popup-width);
+  }
+
+  .toolbar--user {
+    .toolbar__toggle {
+      transform: translateX(-@toolbar-popup-width);
+
+      .icon {
+        .toolbar-active;
+      }
+    }
+  }
+
+  .toolbar--feed {
+    .toolbar__toggle {
+      transform: translateX(-@toolbar-popup-width);
+    }
+  }
+}
+
+// Когда развёрнут профиль пользователя
+// TODO: Ускорить анимацию
+.hero-enabled {
+  &,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .toolbar--user .toolbar__toggle,
+  .toolbar--feed .toolbar__toggle {
+    top: -85px !important;
+    opacity: 0 !important;
+  }
+
+  .hero {
     color: @white !important;
     transition: height .4s ease, color .4s ease;
 
@@ -9,6 +281,11 @@
       right: -@follow-status-size/2;
       bottom: 0;
     }
+  }
+
+  .hero__close {
+    left: @indent-base;
+    transition: left .4s ease .2s;
   }
 
   .hero__overlay {

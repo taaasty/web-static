@@ -52,6 +52,10 @@
 }
 
 // Styles
+button {
+  outline: 0;
+}
+
 .button {
   width: auto;
   margin: 0;
@@ -67,11 +71,11 @@
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
-  .button-size(@button-middle-height, @button-middle-padding-horizontal, @button-middle-font-size);
   box-sizing: border-box;
   border-radius: @button-border-radius;
   user-select: none;
   transition: all .3s ease;
+  .button-size(@button-middle-height, @button-middle-padding-horizontal, @button-middle-font-size);
 
   // Button Link
   a& {
@@ -194,9 +198,9 @@
   .button-common-style(@green);
 }
 
-.button--green-light {
+.button--green-lighter {
   color: @white !important;
-  .button-common-style(@green-light);
+  .button-common-style(@green-lighter);
 }
 
 .button--green-dark {
@@ -236,6 +240,35 @@
   box-sizing: content-box;
 }
 
+// Circle Button
+.button--circle {
+  width: @button-circle-size;
+  height: @button-circle-size;
+  padding: 0;
+  background-color: @white;
+  line-height: @button-circle-size;
+  color: @grey;
+  letter-spacing: 0;
+  border-radius: 50%;
+  transition: background .3s ease;
+
+  .icon {
+    margin: 2px;
+    font-size: 38px;
+  }
+
+  &:active,
+  &.state--active {
+    background-color: @green-light;
+    color: @white;
+  }
+
+  &.state--disable {
+    background-color: @grey;
+    color: @white;
+  }
+}
+
 // Icon Button
 .button--icon {
   padding-right: 12px !important;
@@ -253,4 +286,75 @@
 
 .write-message-button {
   &:extend(.action-menu-button all);
+}
+
+// Post Action Buttons
+.post-privacy-button {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: @grey;
+
+  .icon {
+    font-size: 36px;
+    vertical-align: middle;
+  }
+
+  &.state--active {
+    color: @green-light;
+  }
+}
+
+.post-save-button {
+  width: auto;
+  margin: 0;
+  padding: .4em;
+  border: none;
+  background: @green-light;
+  color: @white;
+  border-radius: @border-radius-base;
+
+  .icon {
+    font-size: 22px;
+    vertical-align: middle;
+  }
+}
+
+// Social Auth Buttons
+.vk-auth-button {
+  &:extend(.button all);
+  .button-common-style(#0174de);
+  color: @white !important;
+  text-transform: none;
+}
+
+.fb-auth-button {
+  &:extend(.button all);
+  .button-common-style(#1746b8);
+  color: @white !important;
+  text-transform: none;
+}
+
+.site-auth-button {
+  &:extend(.button all);
+  .button-common-style(#eeeef0);
+  color: @color-base !important;
+  text-transform: none;
+}
+
+.reg-auth-button {
+  &:extend(.button all);
+  color: inherit;
+  text-transform: none;
+
+  &:before {
+    border: 1px solid;
+    opacity: .3;
+  }
+}
+
+.outline-auth-button {
+  &:extend(.reg-auth-button all);
 }

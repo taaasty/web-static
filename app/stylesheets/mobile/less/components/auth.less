@@ -1,0 +1,157 @@
+.auth {
+  height: 100%;
+  position: relative;
+  text-align: center;
+
+  a {
+    color: inherit;
+  }
+}
+
+.auth__bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+  z-index: -1;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .1);
+  }
+}
+
+.auth__grid-table {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: table;
+}
+
+.auth__grid-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.auth__section {
+  padding: @indent-base;
+}
+
+.auth__header {
+  padding: @indent-base;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.auth__header-error {
+  margin: -@indent-base -@indent-base @indent-base;
+  padding: .5em @indent-base;
+  background-color: #fd0043;
+  font-size: 11px;
+  line-height: 13px;
+}
+
+.auth__header-title {
+  font-size: 1.222em; // 22px
+  line-height: 1.273em; // 28px
+  font-family: @font-family-base-light;
+}
+
+.auth__back {
+  float: left;
+}
+
+.auth__footer {
+  padding: @indent-base;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  font-size: .667em;
+  line-height: 1.5em;
+}
+
+.auth__footer-sep {
+  margin: 0 .4em;
+}
+
+.auth__logo {
+  margin-bottom: 10px;
+  font-size: 3em;
+}
+
+.auth__lead {
+  max-width: 286px;
+  margin: 0 auto 1em;
+  font-weight: normal;
+  font-size: 1.667em;
+  line-height: 1.067em;
+  font-family: @font-family-base-light;
+
+  strong {
+    font-weight: bold;
+    font-family: @font-family-base;
+  }
+}
+
+.auth__buttons {
+  button {
+    &:extend(.button--block all);
+    margin-top: 10px;
+  }
+}
+
+.auth__field {
+  padding-left: 50px;
+
+  &:first-child {
+    .auth__field-input {
+      border-top: none;
+    }
+  }
+}
+
+.auth__field-icon {
+  margin: 6px 0 0 -38px;
+  float: left;
+  font-size: 26px;
+  opacity: .5;
+}
+
+.auth__field-input {
+  .placeholder(rgba(255, 255, 255, .5));
+  width: 100%;
+  margin: 0;
+  padding: 8px 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, .3);
+  background: none;
+  font: inherit;
+  border-radius: 0;
+  -webkit-appearance:none;
+}
+
+.auth__field--horizontal {
+  padding: 0 20px;
+
+  .auth__field-icon {
+    margin: 0;
+    float: none;
+    font-size: 90px;
+  }
+
+  .auth__field-input {
+    border-bottom: 1px solid rgba(255, 255, 255, .3);
+  }
+}
