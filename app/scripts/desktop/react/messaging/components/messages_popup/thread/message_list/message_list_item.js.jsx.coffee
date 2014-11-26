@@ -56,7 +56,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
   _getDeliveryStatus: ->
     switch @props.deliveryStatus
       when ERROR_STATE
-        deliveryClass = 'icon--refresh-2'
+        deliveryClass = 'icon--refresh'
         onClick = => @props.onResendMessage()
       when SENT_STATE then deliveryClass = 'icon--tick'
       when READ_STATE then deliveryClass = 'icon--double-tick'
