@@ -6,7 +6,8 @@
 
 // Styles
 .badge {
-  padding: .2em .5em;
+  padding: 2px 5px 1px;
+  display: inline-block;
   font-size: @badge-font-size;
   line-height: @badge-line-height;
   border-radius: 1em;
@@ -26,10 +27,12 @@
 
 .notifications-badge {
   &:extend(.badge all, .badge--green all);
+  min-width: 1em;
 }
 
 .messages-badge {
   &:extend(.badge all, .badge--yellow all);
+  min-width: 1em;
 }
 
 .error-badge {
@@ -39,7 +42,5 @@
 .new-badge {
   &:extend(.badge all);
   .badge-style(#36b377, @white);
-  padding: 2px 5px 1px;
-  display: inline-block;
   border-radius: 50%;
 }

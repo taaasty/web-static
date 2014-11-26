@@ -20,6 +20,7 @@ window.IndicatorsToolbar_Notifications = React.createClass
   render: ->
     indicatorClasses = React.addons.classSet {
       'toolbar__indicator': true
+      'toolbar__indicator--notifications': true
       'state--empty': @state.unreadNotificationsCount == 0
     }
 
@@ -29,6 +30,7 @@ window.IndicatorsToolbar_Notifications = React.createClass
                 <span className="notifications-badge">
                   { this.state.unreadNotificationsCount }
                 </span>
+                <i className="icon icon--bell"></i>
               </div>`
     else
       return null

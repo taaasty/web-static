@@ -4,8 +4,7 @@ window.NotificationsPopup = React.createClass
   mixins: [ScrollerMixin]
 
   render: ->
-   `<div className="popup popup--notifications popup--dark"
-         style={{ top: '94px', right: '20px', display: 'block' }}>
+   `<div className="popup popup--notifications popup--dark">
       <div className="popup__arrow popup__arrow--up" />
       <div className="popup__content">
         <div className="popup__body">
