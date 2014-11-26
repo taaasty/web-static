@@ -3,7 +3,5097 @@ require('./desktop/bundle');
 
 
 
-},{"./desktop/bundle":8}],2:[function(require,module,exports){
+},{"./desktop/bundle":8}],"Modernizr":[function(require,module,exports){
+/*!
+ * Modernizr v2.8.3
+ * www.modernizr.com
+ *
+ * Copyright (c) Faruk Ates, Paul Irish, Alex Sexton
+ * Available under the BSD and MIT licenses: www.modernizr.com/license/
+ */
+
+/*
+ * Modernizr tests which native CSS3 and HTML5 features are available in
+ * the current UA and makes the results available to you in two ways:
+ * as properties on a global Modernizr object, and as classes on the
+ * <html> element. This information allows you to progressively enhance
+ * your pages with a granular level of control over the experience.
+ *
+ * Modernizr has an optional (not included) conditional resource loader
+ * called Modernizr.load(), based on Yepnope.js (yepnopejs.com).
+ * To get a build that includes Modernizr.load(), as well as choosing
+ * which tests to include, go to www.modernizr.com/download/
+ *
+ * Authors        Faruk Ates, Paul Irish, Alex Sexton
+ * Contributors   Ryan Seddon, Ben Alman
+ */
+
+Modernizr = (function( window, document, undefined ) {
+
+    var version = '2.8.3',
+
+    Modernizr = {},
+
+    /*>>cssclasses*/
+    // option for enabling the HTML classes to be added
+    enableClasses = true,
+    /*>>cssclasses*/
+
+    docElement = document.documentElement,
+
+    /**
+     * Create our "modernizr" element that we do most feature tests on.
+     */
+    mod = 'modernizr',
+    modElem = document.createElement(mod),
+    mStyle = modElem.style,
+
+    /**
+     * Create the input element for various Web Forms feature tests.
+     */
+    inputElem /*>>inputelem*/ = document.createElement('input') /*>>inputelem*/ ,
+
+    /*>>smile*/
+    smile = ':)',
+    /*>>smile*/
+
+    toString = {}.toString,
+
+    // TODO :: make the prefixes more granular
+    /*>>prefixes*/
+    // List of property values to set for css tests. See ticket #21
+    prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
+    /*>>prefixes*/
+
+    /*>>domprefixes*/
+    // Following spec is to expose vendor-specific style properties as:
+    //   elem.style.WebkitBorderRadius
+    // and the following would be incorrect:
+    //   elem.style.webkitBorderRadius
+
+    // Webkit ghosts their properties in lowercase but Opera & Moz do not.
+    // Microsoft uses a lowercase `ms` instead of the correct `Ms` in IE8+
+    //   erik.eae.net/archives/2008/03/10/21.48.10/
+
+    // More here: github.com/Modernizr/Modernizr/issues/issue/21
+    omPrefixes = 'Webkit Moz O ms',
+
+    cssomPrefixes = omPrefixes.split(' '),
+
+    domPrefixes = omPrefixes.toLowerCase().split(' '),
+    /*>>domprefixes*/
+
+    /*>>ns*/
+    ns = {'svg': 'http://www.w3.org/2000/svg'},
+    /*>>ns*/
+
+    tests = {},
+    inputs = {},
+    attrs = {},
+
+    classes = [],
+
+    slice = classes.slice,
+
+    featureName, // used in testing loop
+
+
+    /*>>teststyles*/
+    // Inject element with style element and some CSS rules
+    injectElementWithStyles = function( rule, callback, nodes, testnames ) {
+
+      var style, ret, node, docOverflow,
+          div = document.createElement('div'),
+          // After page load injecting a fake body doesn't work so check if body exists
+          body = document.body,
+          // IE6 and 7 won't return offsetWidth or offsetHeight unless it's in the body element, so we fake it.
+          fakeBody = body || document.createElement('body');
+
+      if ( parseInt(nodes, 10) ) {
+          // In order not to give false positives we create a node for each test
+          // This also allows the method to scale for unspecified uses
+          while ( nodes-- ) {
+              node = document.createElement('div');
+              node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
+              div.appendChild(node);
+          }
+      }
+
+      // <style> elements in IE6-9 are considered 'NoScope' elements and therefore will be removed
+      // when injected with innerHTML. To get around this you need to prepend the 'NoScope' element
+      // with a 'scoped' element, in our case the soft-hyphen entity as it won't mess with our measurements.
+      // msdn.microsoft.com/en-us/library/ms533897%28VS.85%29.aspx
+      // Documents served as xml will throw if using &shy; so use xml friendly encoded version. See issue #277
+      style = ['&#173;','<style id="s', mod, '">', rule, '</style>'].join('');
+      div.id = mod;
+      // IE6 will false positive on some tests due to the style element inside the test div somehow interfering offsetHeight, so insert it into body or fakebody.
+      // Opera will act all quirky when injecting elements in documentElement when page is served as xml, needs fakebody too. #270
+      (body ? div : fakeBody).innerHTML += style;
+      fakeBody.appendChild(div);
+      if ( !body ) {
+          //avoid crashing IE8, if background image is used
+          fakeBody.style.background = '';
+          //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
+          fakeBody.style.overflow = 'hidden';
+          docOverflow = docElement.style.overflow;
+          docElement.style.overflow = 'hidden';
+          docElement.appendChild(fakeBody);
+      }
+
+      ret = callback(div, rule);
+      // If this is done after page load we don't want to remove the body so check if body exists
+      if ( !body ) {
+          fakeBody.parentNode.removeChild(fakeBody);
+          docElement.style.overflow = docOverflow;
+      } else {
+          div.parentNode.removeChild(div);
+      }
+
+      return !!ret;
+
+    },
+    /*>>teststyles*/
+
+    /*>>mq*/
+    // adapted from matchMedia polyfill
+    // by Scott Jehl and Paul Irish
+    // gist.github.com/786768
+    testMediaQuery = function( mq ) {
+
+      var matchMedia = window.matchMedia || window.msMatchMedia;
+      if ( matchMedia ) {
+        return matchMedia(mq) && matchMedia(mq).matches || false;
+      }
+
+      var bool;
+
+      injectElementWithStyles('@media ' + mq + ' { #' + mod + ' { position: absolute; } }', function( node ) {
+        bool = (window.getComputedStyle ?
+                  getComputedStyle(node, null) :
+                  node.currentStyle)['position'] == 'absolute';
+      });
+
+      return bool;
+
+     },
+     /*>>mq*/
+
+
+    /*>>hasevent*/
+    //
+    // isEventSupported determines if a given element supports the given event
+    // kangax.github.com/iseventsupported/
+    //
+    // The following results are known incorrects:
+    //   Modernizr.hasEvent("webkitTransitionEnd", elem) // false negative
+    //   Modernizr.hasEvent("textInput") // in Webkit. github.com/Modernizr/Modernizr/issues/333
+    //   ...
+    isEventSupported = (function() {
+
+      var TAGNAMES = {
+        'select': 'input', 'change': 'input',
+        'submit': 'form', 'reset': 'form',
+        'error': 'img', 'load': 'img', 'abort': 'img'
+      };
+
+      function isEventSupported( eventName, element ) {
+
+        element = element || document.createElement(TAGNAMES[eventName] || 'div');
+        eventName = 'on' + eventName;
+
+        // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize", whereas `in` "catches" those
+        var isSupported = eventName in element;
+
+        if ( !isSupported ) {
+          // If it has no `setAttribute` (i.e. doesn't implement Node interface), try generic element
+          if ( !element.setAttribute ) {
+            element = document.createElement('div');
+          }
+          if ( element.setAttribute && element.removeAttribute ) {
+            element.setAttribute(eventName, '');
+            isSupported = is(element[eventName], 'function');
+
+            // If property was created, "remove it" (by setting value to `undefined`)
+            if ( !is(element[eventName], 'undefined') ) {
+              element[eventName] = undefined;
+            }
+            element.removeAttribute(eventName);
+          }
+        }
+
+        element = null;
+        return isSupported;
+      }
+      return isEventSupported;
+    })(),
+    /*>>hasevent*/
+
+    // TODO :: Add flag for hasownprop ? didn't last time
+
+    // hasOwnProperty shim by kangax needed for Safari 2.0 support
+    _hasOwnProperty = ({}).hasOwnProperty, hasOwnProp;
+
+    if ( !is(_hasOwnProperty, 'undefined') && !is(_hasOwnProperty.call, 'undefined') ) {
+      hasOwnProp = function (object, property) {
+        return _hasOwnProperty.call(object, property);
+      };
+    }
+    else {
+      hasOwnProp = function (object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
+        return ((property in object) && is(object.constructor.prototype[property], 'undefined'));
+      };
+    }
+
+    // Adapted from ES5-shim https://github.com/kriskowal/es5-shim/blob/master/es5-shim.js
+    // es5.github.com/#x15.3.4.5
+
+    if (!Function.prototype.bind) {
+      Function.prototype.bind = function bind(that) {
+
+        var target = this;
+
+        if (typeof target != "function") {
+            throw new TypeError();
+        }
+
+        var args = slice.call(arguments, 1),
+            bound = function () {
+
+            if (this instanceof bound) {
+
+              var F = function(){};
+              F.prototype = target.prototype;
+              var self = new F();
+
+              var result = target.apply(
+                  self,
+                  args.concat(slice.call(arguments))
+              );
+              if (Object(result) === result) {
+                  return result;
+              }
+              return self;
+
+            } else {
+
+              return target.apply(
+                  that,
+                  args.concat(slice.call(arguments))
+              );
+
+            }
+
+        };
+
+        return bound;
+      };
+    }
+
+    /**
+     * setCss applies given styles to the Modernizr DOM node.
+     */
+    function setCss( str ) {
+        mStyle.cssText = str;
+    }
+
+    /**
+     * setCssAll extrapolates all vendor-specific css strings.
+     */
+    function setCssAll( str1, str2 ) {
+        return setCss(prefixes.join(str1 + ';') + ( str2 || '' ));
+    }
+
+    /**
+     * is returns a boolean for if typeof obj is exactly type.
+     */
+    function is( obj, type ) {
+        return typeof obj === type;
+    }
+
+    /**
+     * contains returns a boolean for if substr is found within str.
+     */
+    function contains( str, substr ) {
+        return !!~('' + str).indexOf(substr);
+    }
+
+    /*>>testprop*/
+
+    // testProps is a generic CSS / DOM property test.
+
+    // In testing support for a given CSS property, it's legit to test:
+    //    `elem.style[styleName] !== undefined`
+    // If the property is supported it will return an empty string,
+    // if unsupported it will return undefined.
+
+    // We'll take advantage of this quick test and skip setting a style
+    // on our modernizr element, but instead just testing undefined vs
+    // empty string.
+
+    // Because the testing of the CSS property names (with "-", as
+    // opposed to the camelCase DOM properties) is non-portable and
+    // non-standard but works in WebKit and IE (but not Gecko or Opera),
+    // we explicitly reject properties with dashes so that authors
+    // developing in WebKit or IE first don't end up with
+    // browser-specific content by accident.
+
+    function testProps( props, prefixed ) {
+        for ( var i in props ) {
+            var prop = props[i];
+            if ( !contains(prop, "-") && mStyle[prop] !== undefined ) {
+                return prefixed == 'pfx' ? prop : true;
+            }
+        }
+        return false;
+    }
+    /*>>testprop*/
+
+    // TODO :: add testDOMProps
+    /**
+     * testDOMProps is a generic DOM property test; if a browser supports
+     *   a certain property, it won't return undefined for it.
+     */
+    function testDOMProps( props, obj, elem ) {
+        for ( var i in props ) {
+            var item = obj[props[i]];
+            if ( item !== undefined) {
+
+                // return the property name as a string
+                if (elem === false) return props[i];
+
+                // let's bind a function
+                if (is(item, 'function')){
+                  // default to autobind unless override
+                  return item.bind(elem || obj);
+                }
+
+                // return the unbound function or obj or value
+                return item;
+            }
+        }
+        return false;
+    }
+
+    /*>>testallprops*/
+    /**
+     * testPropsAll tests a list of DOM properties we want to check against.
+     *   We specify literally ALL possible (known and/or likely) properties on
+     *   the element including the non-vendor prefixed one, for forward-
+     *   compatibility.
+     */
+    function testPropsAll( prop, prefixed, elem ) {
+
+        var ucProp  = prop.charAt(0).toUpperCase() + prop.slice(1),
+            props   = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
+
+        // did they call .prefixed('boxSizing') or are we just testing a prop?
+        if(is(prefixed, "string") || is(prefixed, "undefined")) {
+          return testProps(props, prefixed);
+
+        // otherwise, they called .prefixed('requestAnimationFrame', window[, elem])
+        } else {
+          props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
+          return testDOMProps(props, prefixed, elem);
+        }
+    }
+    /*>>testallprops*/
+
+
+    /**
+     * Tests
+     * -----
+     */
+
+    // The *new* flexbox
+    // dev.w3.org/csswg/css3-flexbox
+
+    tests['flexbox'] = function() {
+      return testPropsAll('flexWrap');
+    };
+
+    // The *old* flexbox
+    // www.w3.org/TR/2009/WD-css3-flexbox-20090723/
+
+    tests['flexboxlegacy'] = function() {
+        return testPropsAll('boxDirection');
+    };
+
+    // On the S60 and BB Storm, getContext exists, but always returns undefined
+    // so we actually have to call getContext() to verify
+    // github.com/Modernizr/Modernizr/issues/issue/97/
+
+    tests['canvas'] = function() {
+        var elem = document.createElement('canvas');
+        return !!(elem.getContext && elem.getContext('2d'));
+    };
+
+    tests['canvastext'] = function() {
+        return !!(Modernizr['canvas'] && is(document.createElement('canvas').getContext('2d').fillText, 'function'));
+    };
+
+    // webk.it/70117 is tracking a legit WebGL feature detect proposal
+
+    // We do a soft detect which may false positive in order to avoid
+    // an expensive context creation: bugzil.la/732441
+
+    tests['webgl'] = function() {
+        return !!window.WebGLRenderingContext;
+    };
+
+    /*
+     * The Modernizr.touch test only indicates if the browser supports
+     *    touch events, which does not necessarily reflect a touchscreen
+     *    device, as evidenced by tablets running Windows 7 or, alas,
+     *    the Palm Pre / WebOS (touch) phones.
+     *
+     * Additionally, Chrome (desktop) used to lie about its support on this,
+     *    but that has since been rectified: crbug.com/36415
+     *
+     * We also test for Firefox 4 Multitouch Support.
+     *
+     * For more info, see: modernizr.github.com/Modernizr/touch.html
+     */
+
+    tests['touch'] = function() {
+        var bool;
+
+        if(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+          bool = true;
+        } else {
+          injectElementWithStyles(['@media (',prefixes.join('touch-enabled),('),mod,')','{#modernizr{top:9px;position:absolute}}'].join(''), function( node ) {
+            bool = node.offsetTop === 9;
+          });
+        }
+
+        return bool;
+    };
+
+
+    // geolocation is often considered a trivial feature detect...
+    // Turns out, it's quite tricky to get right:
+    //
+    // Using !!navigator.geolocation does two things we don't want. It:
+    //   1. Leaks memory in IE9: github.com/Modernizr/Modernizr/issues/513
+    //   2. Disables page caching in WebKit: webk.it/43956
+    //
+    // Meanwhile, in Firefox < 8, an about:config setting could expose
+    // a false positive that would throw an exception: bugzil.la/688158
+
+    tests['geolocation'] = function() {
+        return 'geolocation' in navigator;
+    };
+
+
+    tests['postmessage'] = function() {
+      return !!window.postMessage;
+    };
+
+
+    // Chrome incognito mode used to throw an exception when using openDatabase
+    // It doesn't anymore.
+    tests['websqldatabase'] = function() {
+      return !!window.openDatabase;
+    };
+
+    // Vendors had inconsistent prefixing with the experimental Indexed DB:
+    // - Webkit's implementation is accessible through webkitIndexedDB
+    // - Firefox shipped moz_indexedDB before FF4b9, but since then has been mozIndexedDB
+    // For speed, we don't test the legacy (and beta-only) indexedDB
+    tests['indexedDB'] = function() {
+      return !!testPropsAll("indexedDB", window);
+    };
+
+    // documentMode logic from YUI to filter out IE8 Compat Mode
+    //   which false positives.
+    tests['hashchange'] = function() {
+      return isEventSupported('hashchange', window) && (document.documentMode === undefined || document.documentMode > 7);
+    };
+
+    // Per 1.6:
+    // This used to be Modernizr.historymanagement but the longer
+    // name has been deprecated in favor of a shorter and property-matching one.
+    // The old API is still available in 1.6, but as of 2.0 will throw a warning,
+    // and in the first release thereafter disappear entirely.
+    tests['history'] = function() {
+      return !!(window.history && history.pushState);
+    };
+
+    tests['draganddrop'] = function() {
+        var div = document.createElement('div');
+        return ('draggable' in div) || ('ondragstart' in div && 'ondrop' in div);
+    };
+
+    // FF3.6 was EOL'ed on 4/24/12, but the ESR version of FF10
+    // will be supported until FF19 (2/12/13), at which time, ESR becomes FF17.
+    // FF10 still uses prefixes, so check for it until then.
+    // for more ESR info, see: mozilla.org/en-US/firefox/organizations/faq/
+    tests['websockets'] = function() {
+        return 'WebSocket' in window || 'MozWebSocket' in window;
+    };
+
+
+    // css-tricks.com/rgba-browser-support/
+    tests['rgba'] = function() {
+        // Set an rgba() color and check the returned value
+
+        setCss('background-color:rgba(150,255,150,.5)');
+
+        return contains(mStyle.backgroundColor, 'rgba');
+    };
+
+    tests['hsla'] = function() {
+        // Same as rgba(), in fact, browsers re-map hsla() to rgba() internally,
+        //   except IE9 who retains it as hsla
+
+        setCss('background-color:hsla(120,40%,100%,.5)');
+
+        return contains(mStyle.backgroundColor, 'rgba') || contains(mStyle.backgroundColor, 'hsla');
+    };
+
+    tests['multiplebgs'] = function() {
+        // Setting multiple images AND a color on the background shorthand property
+        //  and then querying the style.background property value for the number of
+        //  occurrences of "url(" is a reliable method for detecting ACTUAL support for this!
+
+        setCss('background:url(https://),url(https://),red url(https://)');
+
+        // If the UA supports multiple backgrounds, there should be three occurrences
+        //   of the string "url(" in the return value for elemStyle.background
+
+        return (/(url\s*\(.*?){3}/).test(mStyle.background);
+    };
+
+
+
+    // this will false positive in Opera Mini
+    //   github.com/Modernizr/Modernizr/issues/396
+
+    tests['backgroundsize'] = function() {
+        return testPropsAll('backgroundSize');
+    };
+
+    tests['borderimage'] = function() {
+        return testPropsAll('borderImage');
+    };
+
+
+    // Super comprehensive table about all the unique implementations of
+    // border-radius: muddledramblings.com/table-of-css3-border-radius-compliance
+
+    tests['borderradius'] = function() {
+        return testPropsAll('borderRadius');
+    };
+
+    // WebOS unfortunately false positives on this test.
+    tests['boxshadow'] = function() {
+        return testPropsAll('boxShadow');
+    };
+
+    // FF3.0 will false positive on this test
+    tests['textshadow'] = function() {
+        return document.createElement('div').style.textShadow === '';
+    };
+
+
+    tests['opacity'] = function() {
+        // Browsers that actually have CSS Opacity implemented have done so
+        //  according to spec, which means their return values are within the
+        //  range of [0.0,1.0] - including the leading zero.
+
+        setCssAll('opacity:.55');
+
+        // The non-literal . in this regex is intentional:
+        //   German Chrome returns this value as 0,55
+        // github.com/Modernizr/Modernizr/issues/#issue/59/comment/516632
+        return (/^0.55$/).test(mStyle.opacity);
+    };
+
+
+    // Note, Android < 4 will pass this test, but can only animate
+    //   a single property at a time
+    //   goo.gl/v3V4Gp
+    tests['cssanimations'] = function() {
+        return testPropsAll('animationName');
+    };
+
+
+    tests['csscolumns'] = function() {
+        return testPropsAll('columnCount');
+    };
+
+
+    tests['cssgradients'] = function() {
+        /**
+         * For CSS Gradients syntax, please see:
+         * webkit.org/blog/175/introducing-css-gradients/
+         * developer.mozilla.org/en/CSS/-moz-linear-gradient
+         * developer.mozilla.org/en/CSS/-moz-radial-gradient
+         * dev.w3.org/csswg/css3-images/#gradients-
+         */
+
+        var str1 = 'background-image:',
+            str2 = 'gradient(linear,left top,right bottom,from(#9f9),to(white));',
+            str3 = 'linear-gradient(left top,#9f9, white);';
+
+        setCss(
+             // legacy webkit syntax (FIXME: remove when syntax not in use anymore)
+              (str1 + '-webkit- '.split(' ').join(str2 + str1) +
+             // standard syntax             // trailing 'background-image:'
+              prefixes.join(str3 + str1)).slice(0, -str1.length)
+        );
+
+        return contains(mStyle.backgroundImage, 'gradient');
+    };
+
+
+    tests['cssreflections'] = function() {
+        return testPropsAll('boxReflect');
+    };
+
+
+    tests['csstransforms'] = function() {
+        return !!testPropsAll('transform');
+    };
+
+
+    tests['csstransforms3d'] = function() {
+
+        var ret = !!testPropsAll('perspective');
+
+        // Webkit's 3D transforms are passed off to the browser's own graphics renderer.
+        //   It works fine in Safari on Leopard and Snow Leopard, but not in Chrome in
+        //   some conditions. As a result, Webkit typically recognizes the syntax but
+        //   will sometimes throw a false positive, thus we must do a more thorough check:
+        if ( ret && 'webkitPerspective' in docElement.style ) {
+
+          // Webkit allows this media query to succeed only if the feature is enabled.
+          // `@media (transform-3d),(-webkit-transform-3d){ ... }`
+          injectElementWithStyles('@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}', function( node, rule ) {
+            ret = node.offsetLeft === 9 && node.offsetHeight === 3;
+          });
+        }
+        return ret;
+    };
+
+
+    tests['csstransitions'] = function() {
+        return testPropsAll('transition');
+    };
+
+
+    /*>>fontface*/
+    // @font-face detection routine by Diego Perini
+    // javascript.nwbox.com/CSSSupport/
+
+    // false positives:
+    //   WebOS github.com/Modernizr/Modernizr/issues/342
+    //   WP7   github.com/Modernizr/Modernizr/issues/538
+    tests['fontface'] = function() {
+        var bool;
+
+        injectElementWithStyles('@font-face {font-family:"font";src:url("https://")}', function( node, rule ) {
+          var style = document.getElementById('smodernizr'),
+              sheet = style.sheet || style.styleSheet,
+              cssText = sheet ? (sheet.cssRules && sheet.cssRules[0] ? sheet.cssRules[0].cssText : sheet.cssText || '') : '';
+
+          bool = /src/i.test(cssText) && cssText.indexOf(rule.split(' ')[0]) === 0;
+        });
+
+        return bool;
+    };
+    /*>>fontface*/
+
+    // CSS generated content detection
+    tests['generatedcontent'] = function() {
+        var bool;
+
+        injectElementWithStyles(['#',mod,'{font:0/0 a}#',mod,':after{content:"',smile,'";visibility:hidden;font:3px/1 a}'].join(''), function( node ) {
+          bool = node.offsetHeight >= 3;
+        });
+
+        return bool;
+    };
+
+
+
+    // These tests evaluate support of the video/audio elements, as well as
+    // testing what types of content they support.
+    //
+    // We're using the Boolean constructor here, so that we can extend the value
+    // e.g.  Modernizr.video     // true
+    //       Modernizr.video.ogg // 'probably'
+    //
+    // Codec values from : github.com/NielsLeenheer/html5test/blob/9106a8/index.html#L845
+    //                     thx to NielsLeenheer and zcorpan
+
+    // Note: in some older browsers, "no" was a return value instead of empty string.
+    //   It was live in FF3.5.0 and 3.5.1, but fixed in 3.5.2
+    //   It was also live in Safari 4.0.0 - 4.0.4, but fixed in 4.0.5
+
+    tests['video'] = function() {
+        var elem = document.createElement('video'),
+            bool = false;
+
+        // IE9 Running on Windows Server SKU can cause an exception to be thrown, bug #224
+        try {
+            if ( bool = !!elem.canPlayType ) {
+                bool      = new Boolean(bool);
+                bool.ogg  = elem.canPlayType('video/ogg; codecs="theora"')      .replace(/^no$/,'');
+
+                // Without QuickTime, this value will be `undefined`. github.com/Modernizr/Modernizr/issues/546
+                bool.h264 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/,'');
+
+                bool.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/,'');
+            }
+
+        } catch(e) { }
+
+        return bool;
+    };
+
+    tests['audio'] = function() {
+        var elem = document.createElement('audio'),
+            bool = false;
+
+        try {
+            if ( bool = !!elem.canPlayType ) {
+                bool      = new Boolean(bool);
+                bool.ogg  = elem.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,'');
+                bool.mp3  = elem.canPlayType('audio/mpeg;')               .replace(/^no$/,'');
+
+                // Mimetypes accepted:
+                //   developer.mozilla.org/En/Media_formats_supported_by_the_audio_and_video_elements
+                //   bit.ly/iphoneoscodecs
+                bool.wav  = elem.canPlayType('audio/wav; codecs="1"')     .replace(/^no$/,'');
+                bool.m4a  = ( elem.canPlayType('audio/x-m4a;')            ||
+                              elem.canPlayType('audio/aac;'))             .replace(/^no$/,'');
+            }
+        } catch(e) { }
+
+        return bool;
+    };
+
+
+    // In FF4, if disabled, window.localStorage should === null.
+
+    // Normally, we could not test that directly and need to do a
+    //   `('localStorage' in window) && ` test first because otherwise Firefox will
+    //   throw bugzil.la/365772 if cookies are disabled
+
+    // Also in iOS5 Private Browsing mode, attempting to use localStorage.setItem
+    // will throw the exception:
+    //   QUOTA_EXCEEDED_ERRROR DOM Exception 22.
+    // Peculiarly, getItem and removeItem calls do not throw.
+
+    // Because we are forced to try/catch this, we'll go aggressive.
+
+    // Just FWIW: IE8 Compat mode supports these features completely:
+    //   www.quirksmode.org/dom/html5.html
+    // But IE8 doesn't support either with local files
+
+    tests['localstorage'] = function() {
+        try {
+            localStorage.setItem(mod, mod);
+            localStorage.removeItem(mod);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    };
+
+    tests['sessionstorage'] = function() {
+        try {
+            sessionStorage.setItem(mod, mod);
+            sessionStorage.removeItem(mod);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    };
+
+
+    tests['webworkers'] = function() {
+        return !!window.Worker;
+    };
+
+
+    tests['applicationcache'] = function() {
+        return !!window.applicationCache;
+    };
+
+
+    // Thanks to Erik Dahlstrom
+    tests['svg'] = function() {
+        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+    };
+
+    // specifically for SVG inline in HTML, not within XHTML
+    // test page: paulirish.com/demo/inline-svg
+    tests['inlinesvg'] = function() {
+      var div = document.createElement('div');
+      div.innerHTML = '<svg/>';
+      return (div.firstChild && div.firstChild.namespaceURI) == ns.svg;
+    };
+
+    // SVG SMIL animation
+    tests['smil'] = function() {
+        return !!document.createElementNS && /SVGAnimate/.test(toString.call(document.createElementNS(ns.svg, 'animate')));
+    };
+
+    // This test is only for clip paths in SVG proper, not clip paths on HTML content
+    // demo: srufaculty.sru.edu/david.dailey/svg/newstuff/clipPath4.svg
+
+    // However read the comments to dig into applying SVG clippaths to HTML content here:
+    //   github.com/Modernizr/Modernizr/issues/213#issuecomment-1149491
+    tests['svgclippaths'] = function() {
+        return !!document.createElementNS && /SVGClipPath/.test(toString.call(document.createElementNS(ns.svg, 'clipPath')));
+    };
+
+    /*>>webforms*/
+    // input features and input types go directly onto the ret object, bypassing the tests loop.
+    // Hold this guy to execute in a moment.
+    function webforms() {
+        /*>>input*/
+        // Run through HTML5's new input attributes to see if the UA understands any.
+        // We're using f which is the <input> element created early on
+        // Mike Taylr has created a comprehensive resource for testing these attributes
+        //   when applied to all input types:
+        //   miketaylr.com/code/input-type-attr.html
+        // spec: www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
+
+        // Only input placeholder is tested while textarea's placeholder is not.
+        // Currently Safari 4 and Opera 11 have support only for the input placeholder
+        // Both tests are available in feature-detects/forms-placeholder.js
+        Modernizr['input'] = (function( props ) {
+            for ( var i = 0, len = props.length; i < len; i++ ) {
+                attrs[ props[i] ] = !!(props[i] in inputElem);
+            }
+            if (attrs.list){
+              // safari false positive's on datalist: webk.it/74252
+              // see also github.com/Modernizr/Modernizr/issues/146
+              attrs.list = !!(document.createElement('datalist') && window.HTMLDataListElement);
+            }
+            return attrs;
+        })('autocomplete autofocus list placeholder max min multiple pattern required step'.split(' '));
+        /*>>input*/
+
+        /*>>inputtypes*/
+        // Run through HTML5's new input types to see if the UA understands any.
+        //   This is put behind the tests runloop because it doesn't return a
+        //   true/false like all the other tests; instead, it returns an object
+        //   containing each input type with its corresponding true/false value
+
+        // Big thanks to @miketaylr for the html5 forms expertise. miketaylr.com/
+        Modernizr['inputtypes'] = (function(props) {
+
+            for ( var i = 0, bool, inputElemType, defaultView, len = props.length; i < len; i++ ) {
+
+                inputElem.setAttribute('type', inputElemType = props[i]);
+                bool = inputElem.type !== 'text';
+
+                // We first check to see if the type we give it sticks..
+                // If the type does, we feed it a textual value, which shouldn't be valid.
+                // If the value doesn't stick, we know there's input sanitization which infers a custom UI
+                if ( bool ) {
+
+                    inputElem.value         = smile;
+                    inputElem.style.cssText = 'position:absolute;visibility:hidden;';
+
+                    if ( /^range$/.test(inputElemType) && inputElem.style.WebkitAppearance !== undefined ) {
+
+                      docElement.appendChild(inputElem);
+                      defaultView = document.defaultView;
+
+                      // Safari 2-4 allows the smiley as a value, despite making a slider
+                      bool =  defaultView.getComputedStyle &&
+                              defaultView.getComputedStyle(inputElem, null).WebkitAppearance !== 'textfield' &&
+                              // Mobile android web browser has false positive, so must
+                              // check the height to see if the widget is actually there.
+                              (inputElem.offsetHeight !== 0);
+
+                      docElement.removeChild(inputElem);
+
+                    } else if ( /^(search|tel)$/.test(inputElemType) ){
+                      // Spec doesn't define any special parsing or detectable UI
+                      //   behaviors so we pass these through as true
+
+                      // Interestingly, opera fails the earlier test, so it doesn't
+                      //  even make it here.
+
+                    } else if ( /^(url|email)$/.test(inputElemType) ) {
+                      // Real url and email support comes with prebaked validation.
+                      bool = inputElem.checkValidity && inputElem.checkValidity() === false;
+
+                    } else {
+                      // If the upgraded input compontent rejects the :) text, we got a winner
+                      bool = inputElem.value != smile;
+                    }
+                }
+
+                inputs[ props[i] ] = !!bool;
+            }
+            return inputs;
+        })('search tel url email datetime date month week time datetime-local number range color'.split(' '));
+        /*>>inputtypes*/
+    }
+    /*>>webforms*/
+
+
+    // End of test definitions
+    // -----------------------
+
+
+
+    // Run through all tests and detect their support in the current UA.
+    // todo: hypothetically we could be doing an array of tests and use a basic loop here.
+    for ( var feature in tests ) {
+        if ( hasOwnProp(tests, feature) ) {
+            // run the test, throw the return value into the Modernizr,
+            //   then based on that boolean, define an appropriate className
+            //   and push it into an array of classes we'll join later.
+            featureName  = feature.toLowerCase();
+            Modernizr[featureName] = tests[feature]();
+
+            classes.push((Modernizr[featureName] ? '' : 'no-') + featureName);
+        }
+    }
+
+    /*>>webforms*/
+    // input tests need to run.
+    Modernizr.input || webforms();
+    /*>>webforms*/
+
+
+    /**
+     * addTest allows the user to define their own feature tests
+     * the result will be added onto the Modernizr object,
+     * as well as an appropriate className set on the html element
+     *
+     * @param feature - String naming the feature
+     * @param test - Function returning true if feature is supported, false if not
+     */
+     Modernizr.addTest = function ( feature, test ) {
+       if ( typeof feature == 'object' ) {
+         for ( var key in feature ) {
+           if ( hasOwnProp( feature, key ) ) {
+             Modernizr.addTest( key, feature[ key ] );
+           }
+         }
+       } else {
+
+         feature = feature.toLowerCase();
+
+         if ( Modernizr[feature] !== undefined ) {
+           // we're going to quit if you're trying to overwrite an existing test
+           // if we were to allow it, we'd do this:
+           //   var re = new RegExp("\\b(no-)?" + feature + "\\b");
+           //   docElement.className = docElement.className.replace( re, '' );
+           // but, no rly, stuff 'em.
+           return Modernizr;
+         }
+
+         test = typeof test == 'function' ? test() : test;
+
+         if (typeof enableClasses !== "undefined" && enableClasses) {
+           docElement.className += " mod-" + (test ? '' : 'no-') + feature;
+         }
+         Modernizr[feature] = test;
+
+       }
+
+       return Modernizr; // allow chaining.
+     };
+
+
+    // Reset modElem.cssText to nothing to reduce memory footprint.
+    setCss('');
+    modElem = inputElem = null;
+
+    /*>>shiv*/
+    /**
+     * @preserve HTML5 Shiv prev3.7.1 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
+     */
+    ;(function(window, document) {
+        /*jshint evil:true */
+        /** version */
+        var version = '3.7.0';
+
+        /** Preset options */
+        var options = window.html5 || {};
+
+        /** Used to skip problem elements */
+        var reSkip = /^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i;
+
+        /** Not all elements can be cloned in IE **/
+        var saveClones = /^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i;
+
+        /** Detect whether the browser supports default html5 styles */
+        var supportsHtml5Styles;
+
+        /** Name of the expando, to work with multiple documents or to re-shiv one document */
+        var expando = '_html5shiv';
+
+        /** The id for the the documents expando */
+        var expanID = 0;
+
+        /** Cached data for each document */
+        var expandoData = {};
+
+        /** Detect whether the browser supports unknown elements */
+        var supportsUnknownElements;
+
+        (function() {
+          try {
+            var a = document.createElement('a');
+            a.innerHTML = '<xyz></xyz>';
+            //if the hidden property is implemented we can assume, that the browser supports basic HTML5 Styles
+            supportsHtml5Styles = ('hidden' in a);
+
+            supportsUnknownElements = a.childNodes.length == 1 || (function() {
+              // assign a false positive if unable to shiv
+              (document.createElement)('a');
+              var frag = document.createDocumentFragment();
+              return (
+                typeof frag.cloneNode == 'undefined' ||
+                typeof frag.createDocumentFragment == 'undefined' ||
+                typeof frag.createElement == 'undefined'
+              );
+            }());
+          } catch(e) {
+            // assign a false positive if detection fails => unable to shiv
+            supportsHtml5Styles = true;
+            supportsUnknownElements = true;
+          }
+
+        }());
+
+        /*--------------------------------------------------------------------------*/
+
+        /**
+         * Creates a style sheet with the given CSS text and adds it to the document.
+         * @private
+         * @param {Document} ownerDocument The document.
+         * @param {String} cssText The CSS text.
+         * @returns {StyleSheet} The style element.
+         */
+        function addStyleSheet(ownerDocument, cssText) {
+          var p = ownerDocument.createElement('p'),
+          parent = ownerDocument.getElementsByTagName('head')[0] || ownerDocument.documentElement;
+
+          p.innerHTML = 'x<style>' + cssText + '</style>';
+          return parent.insertBefore(p.lastChild, parent.firstChild);
+        }
+
+        /**
+         * Returns the value of `html5.elements` as an array.
+         * @private
+         * @returns {Array} An array of shived element node names.
+         */
+        function getElements() {
+          var elements = html5.elements;
+          return typeof elements == 'string' ? elements.split(' ') : elements;
+        }
+
+        /**
+         * Returns the data associated to the given document
+         * @private
+         * @param {Document} ownerDocument The document.
+         * @returns {Object} An object of data.
+         */
+        function getExpandoData(ownerDocument) {
+          var data = expandoData[ownerDocument[expando]];
+          if (!data) {
+            data = {};
+            expanID++;
+            ownerDocument[expando] = expanID;
+            expandoData[expanID] = data;
+          }
+          return data;
+        }
+
+        /**
+         * returns a shived element for the given nodeName and document
+         * @memberOf html5
+         * @param {String} nodeName name of the element
+         * @param {Document} ownerDocument The context document.
+         * @returns {Object} The shived element.
+         */
+        function createElement(nodeName, ownerDocument, data){
+          if (!ownerDocument) {
+            ownerDocument = document;
+          }
+          if(supportsUnknownElements){
+            return ownerDocument.createElement(nodeName);
+          }
+          if (!data) {
+            data = getExpandoData(ownerDocument);
+          }
+          var node;
+
+          if (data.cache[nodeName]) {
+            node = data.cache[nodeName].cloneNode();
+          } else if (saveClones.test(nodeName)) {
+            node = (data.cache[nodeName] = data.createElem(nodeName)).cloneNode();
+          } else {
+            node = data.createElem(nodeName);
+          }
+
+          // Avoid adding some elements to fragments in IE < 9 because
+          // * Attributes like `name` or `type` cannot be set/changed once an element
+          //   is inserted into a document/fragment
+          // * Link elements with `src` attributes that are inaccessible, as with
+          //   a 403 response, will cause the tab/window to crash
+          // * Script elements appended to fragments will execute when their `src`
+          //   or `text` property is set
+          return node.canHaveChildren && !reSkip.test(nodeName) && !node.tagUrn ? data.frag.appendChild(node) : node;
+        }
+
+        /**
+         * returns a shived DocumentFragment for the given document
+         * @memberOf html5
+         * @param {Document} ownerDocument The context document.
+         * @returns {Object} The shived DocumentFragment.
+         */
+        function createDocumentFragment(ownerDocument, data){
+          if (!ownerDocument) {
+            ownerDocument = document;
+          }
+          if(supportsUnknownElements){
+            return ownerDocument.createDocumentFragment();
+          }
+          data = data || getExpandoData(ownerDocument);
+          var clone = data.frag.cloneNode(),
+          i = 0,
+          elems = getElements(),
+          l = elems.length;
+          for(;i<l;i++){
+            clone.createElement(elems[i]);
+          }
+          return clone;
+        }
+
+        /**
+         * Shivs the `createElement` and `createDocumentFragment` methods of the document.
+         * @private
+         * @param {Document|DocumentFragment} ownerDocument The document.
+         * @param {Object} data of the document.
+         */
+        function shivMethods(ownerDocument, data) {
+          if (!data.cache) {
+            data.cache = {};
+            data.createElem = ownerDocument.createElement;
+            data.createFrag = ownerDocument.createDocumentFragment;
+            data.frag = data.createFrag();
+          }
+
+
+          ownerDocument.createElement = function(nodeName) {
+            //abort shiv
+            if (!html5.shivMethods) {
+              return data.createElem(nodeName);
+            }
+            return createElement(nodeName, ownerDocument, data);
+          };
+
+          ownerDocument.createDocumentFragment = Function('h,f', 'return function(){' +
+                                                          'var n=f.cloneNode(),c=n.createElement;' +
+                                                          'h.shivMethods&&(' +
+                                                          // unroll the `createElement` calls
+                                                          getElements().join().replace(/[\w\-]+/g, function(nodeName) {
+            data.createElem(nodeName);
+            data.frag.createElement(nodeName);
+            return 'c("' + nodeName + '")';
+          }) +
+            ');return n}'
+                                                         )(html5, data.frag);
+        }
+
+        /*--------------------------------------------------------------------------*/
+
+        /**
+         * Shivs the given document.
+         * @memberOf html5
+         * @param {Document} ownerDocument The document to shiv.
+         * @returns {Document} The shived document.
+         */
+        function shivDocument(ownerDocument) {
+          if (!ownerDocument) {
+            ownerDocument = document;
+          }
+          var data = getExpandoData(ownerDocument);
+
+          if (html5.shivCSS && !supportsHtml5Styles && !data.hasCSS) {
+            data.hasCSS = !!addStyleSheet(ownerDocument,
+                                          // corrects block display not defined in IE6/7/8/9
+                                          'article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}' +
+                                            // adds styling not present in IE6/7/8/9
+                                            'mark{background:#FF0;color:#000}' +
+                                            // hides non-rendered elements
+                                            'template{display:none}'
+                                         );
+          }
+          if (!supportsUnknownElements) {
+            shivMethods(ownerDocument, data);
+          }
+          return ownerDocument;
+        }
+
+        /*--------------------------------------------------------------------------*/
+
+        /**
+         * The `html5` object is exposed so that more elements can be shived and
+         * existing shiving can be detected on iframes.
+         * @type Object
+         * @example
+         *
+         * // options can be changed before the script is included
+         * html5 = { 'elements': 'mark section', 'shivCSS': false, 'shivMethods': false };
+         */
+        var html5 = {
+
+          /**
+           * An array or space separated string of node names of the elements to shiv.
+           * @memberOf html5
+           * @type Array|String
+           */
+          'elements': options.elements || 'abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video',
+
+          /**
+           * current version of html5shiv
+           */
+          'version': version,
+
+          /**
+           * A flag to indicate that the HTML5 style sheet should be inserted.
+           * @memberOf html5
+           * @type Boolean
+           */
+          'shivCSS': (options.shivCSS !== false),
+
+          /**
+           * Is equal to true if a browser supports creating unknown/HTML5 elements
+           * @memberOf html5
+           * @type boolean
+           */
+          'supportsUnknownElements': supportsUnknownElements,
+
+          /**
+           * A flag to indicate that the document's `createElement` and `createDocumentFragment`
+           * methods should be overwritten.
+           * @memberOf html5
+           * @type Boolean
+           */
+          'shivMethods': (options.shivMethods !== false),
+
+          /**
+           * A string to describe the type of `html5` object ("default" or "default print").
+           * @memberOf html5
+           * @type String
+           */
+          'type': 'default',
+
+          // shivs the document according to the specified `html5` object options
+          'shivDocument': shivDocument,
+
+          //creates a shived element
+          createElement: createElement,
+
+          //creates a shived documentFragment
+          createDocumentFragment: createDocumentFragment
+        };
+
+        /*--------------------------------------------------------------------------*/
+
+        // expose html5
+        window.html5 = html5;
+
+        // shiv the document
+        shivDocument(document);
+
+    }(this, document));
+    /*>>shiv*/
+
+    // Assign private properties to the return object with prefix
+    Modernizr._version      = version;
+
+    // expose these for the plugin API. Look in the source for how to join() them against your input
+    /*>>prefixes*/
+    Modernizr._prefixes     = prefixes;
+    /*>>prefixes*/
+    /*>>domprefixes*/
+    Modernizr._domPrefixes  = domPrefixes;
+    Modernizr._cssomPrefixes  = cssomPrefixes;
+    /*>>domprefixes*/
+
+    /*>>mq*/
+    // Modernizr.mq tests a given media query, live against the current state of the window
+    // A few important notes:
+    //   * If a browser does not support media queries at all (eg. oldIE) the mq() will always return false
+    //   * A max-width or orientation query will be evaluated against the current state, which may change later.
+    //   * You must specify values. Eg. If you are testing support for the min-width media query use:
+    //       Modernizr.mq('(min-width:0)')
+    // usage:
+    // Modernizr.mq('only screen and (max-width:768)')
+    Modernizr.mq            = testMediaQuery;
+    /*>>mq*/
+
+    /*>>hasevent*/
+    // Modernizr.hasEvent() detects support for a given event, with an optional element to test on
+    // Modernizr.hasEvent('gesturestart', elem)
+    Modernizr.hasEvent      = isEventSupported;
+    /*>>hasevent*/
+
+    /*>>testprop*/
+    // Modernizr.testProp() investigates whether a given style property is recognized
+    // Note that the property names must be provided in the camelCase variant.
+    // Modernizr.testProp('pointerEvents')
+    Modernizr.testProp      = function(prop){
+        return testProps([prop]);
+    };
+    /*>>testprop*/
+
+    /*>>testallprops*/
+    // Modernizr.testAllProps() investigates whether a given style property,
+    //   or any of its vendor-prefixed variants, is recognized
+    // Note that the property names must be provided in the camelCase variant.
+    // Modernizr.testAllProps('boxSizing')
+    Modernizr.testAllProps  = testPropsAll;
+    /*>>testallprops*/
+
+
+    /*>>teststyles*/
+    // Modernizr.testStyles() allows you to add custom styles to the document and test an element afterwards
+    // Modernizr.testStyles('#modernizr { position:absolute }', function(elem, rule){ ... })
+    Modernizr.testStyles    = injectElementWithStyles;
+    /*>>teststyles*/
+
+
+    /*>>prefixed*/
+    // Modernizr.prefixed() returns the prefixed or nonprefixed property name variant of your input
+    // Modernizr.prefixed('boxSizing') // 'MozBoxSizing'
+
+    // Properties must be passed as dom-style camelcase, rather than `box-sizing` hypentated style.
+    // Return values will also be the camelCase variant, if you need to translate that to hypenated style use:
+    //
+    //     str.replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-');
+
+    // If you're trying to ascertain which transition end event to bind to, you might do something like...
+    //
+    //     var transEndEventNames = {
+    //       'WebkitTransition' : 'webkitTransitionEnd',
+    //       'MozTransition'    : 'transitionend',
+    //       'OTransition'      : 'oTransitionEnd',
+    //       'msTransition'     : 'MSTransitionEnd',
+    //       'transition'       : 'transitionend'
+    //     },
+    //     transEndEventName = transEndEventNames[ Modernizr.prefixed('transition') ];
+
+    Modernizr.prefixed      = function(prop, obj, elem){
+      if(!obj) {
+        return testPropsAll(prop, 'pfx');
+      } else {
+        // Testing DOM property e.g. Modernizr.prefixed('requestAnimationFrame', window) // 'mozRequestAnimationFrame'
+        return testPropsAll(prop, obj, elem);
+      }
+    };
+    /*>>prefixed*/
+
+
+    /*>>cssclasses*/
+    // Remove "no-js" class from <html> element, if it exists:
+    docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2') +
+
+                            // Add the new classes to the <html> element.
+                            (enableClasses ? " mod-js mod-"+classes.join(" mod-") : '');
+    /*>>cssclasses*/
+
+    return Modernizr;
+
+})(this, document);
+
+module.exports = Modernizr;
+},{}],"aviator":[function(require,module,exports){
+// Modules
+var Navigator = require('./navigator');
+
+
+/**
+Only expose a tiny API to keep internal routing safe
+
+@singleton Aviator
+**/
+window.Aviator = {
+
+  /**
+  @property pushStateEnabled
+  @type {Boolean}
+  @default true if the browser supports pushState
+  **/
+  pushStateEnabled: ('pushState' in window.history),
+
+  /**
+  @property linkSelector
+  @type {String}
+  @default 'a.navigate'
+  **/
+  linkSelector: 'a.navigate',
+
+  /**
+  the root of the uri from which routing will append to
+
+  @property root
+  @type {String}
+  @default ''
+  **/
+  root: '',
+
+  /**
+  @property _navigator
+  @type {Navigator}
+
+  @private
+  **/
+  _navigator: new Navigator(),
+
+  /**
+  @method setRoutes
+  @param {Object} routes
+  **/
+  setRoutes: function (routes) {
+    this._navigator.setRoutes(routes);
+  },
+
+  /**
+  dispatches routes to targets and sets up event handlers
+
+  @method dispatch
+  **/
+  dispatch: function () {
+    var navigator = this._navigator;
+
+    navigator.setup({
+      pushStateEnabled: this.pushStateEnabled,
+      linkSelector:     this.linkSelector,
+      root:             this.root
+    });
+
+    navigator.dispatch();
+  },
+
+  /**
+  @method navigate
+  @param {String} uri to navigate to
+  @param {Object} [options]
+  **/
+  navigate: function (uri, options) {
+    this._navigator.navigate(uri, options);
+  },
+
+
+  /**
+  @method serializeQueryParams
+  @param {Object} queryParams
+  @return {String} queryString "?foo=bar&baz[]=boo&baz=[]oob"
+  **/
+  serializeQueryParams: function (queryParams) {
+    return this._navigator.serializeQueryParams(queryParams);
+  },
+
+  /**
+  @method getCurrentRequest
+  @return {String}
+  **/
+  getCurrentRequest: function () {
+    return this._navigator.getCurrentRequest();
+  },
+
+  /**
+  @method getCurrentURI
+  @return {String}
+  **/
+  getCurrentURI: function () {
+    return this._navigator.getCurrentURI();
+  },
+
+  /**
+  @method refresh
+  **/
+  refresh: function () {
+    this._navigator.refresh();
+  },
+
+  /**
+  @method rewriteRouteTo
+  @param {String} newRoute
+  @return {Object}
+  **/
+  rewriteRouteTo: function (newRoute) {
+    var target = {
+      rewrite: function (request) {
+        Aviator.navigate(newRoute, {
+          namedParams: request.namedParams,
+          replace: true
+        });
+      }
+    };
+
+    return {
+      target: target,
+      '/': 'rewrite'
+    };
+  }
+
+};
+
+},{"./navigator":3}],"backbone":[function(require,module,exports){
+//     Backbone.js 1.1.2
+
+//     (c) 2010-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+//     Backbone may be freely distributed under the MIT license.
+//     For all details and documentation:
+//     http://backbonejs.org
+
+(function(root, factory) {
+
+  // Set up Backbone appropriately for the environment. Start with AMD.
+  if (typeof define === 'function' && define.amd) {
+    define(['underscore', 'jquery', 'exports'], function(_, $, exports) {
+      // Export global even in AMD case in case this script is loaded with
+      // others that may still expect a global Backbone.
+      root.Backbone = factory(root, exports, _, $);
+    });
+
+  // Next for Node.js or CommonJS. jQuery may not be needed as a module.
+  } else if (typeof exports !== 'undefined') {
+    var _ = require('underscore');
+    factory(root, exports, _);
+
+  // Finally, as a browser global.
+  } else {
+    root.Backbone = factory(root, {}, root._, (root.jQuery || root.Zepto || root.ender || root.$));
+  }
+
+}(this, function(root, Backbone, _, $) {
+
+  // Initial Setup
+  // -------------
+
+  // Save the previous value of the `Backbone` variable, so that it can be
+  // restored later on, if `noConflict` is used.
+  var previousBackbone = root.Backbone;
+
+  // Create local references to array methods we'll want to use later.
+  var array = [];
+  var push = array.push;
+  var slice = array.slice;
+  var splice = array.splice;
+
+  // Current version of the library. Keep in sync with `package.json`.
+  Backbone.VERSION = '1.1.2';
+
+  // For Backbone's purposes, jQuery, Zepto, Ender, or My Library (kidding) owns
+  // the `$` variable.
+  Backbone.$ = $;
+
+  // Runs Backbone.js in *noConflict* mode, returning the `Backbone` variable
+  // to its previous owner. Returns a reference to this Backbone object.
+  Backbone.noConflict = function() {
+    root.Backbone = previousBackbone;
+    return this;
+  };
+
+  // Turn on `emulateHTTP` to support legacy HTTP servers. Setting this option
+  // will fake `"PATCH"`, `"PUT"` and `"DELETE"` requests via the `_method` parameter and
+  // set a `X-Http-Method-Override` header.
+  Backbone.emulateHTTP = false;
+
+  // Turn on `emulateJSON` to support legacy servers that can't deal with direct
+  // `application/json` requests ... will encode the body as
+  // `application/x-www-form-urlencoded` instead and will send the model in a
+  // form param named `model`.
+  Backbone.emulateJSON = false;
+
+  // Backbone.Events
+  // ---------------
+
+  // A module that can be mixed in to *any object* in order to provide it with
+  // custom events. You may bind with `on` or remove with `off` callback
+  // functions to an event; `trigger`-ing an event fires all callbacks in
+  // succession.
+  //
+  //     var object = {};
+  //     _.extend(object, Backbone.Events);
+  //     object.on('expand', function(){ alert('expanded'); });
+  //     object.trigger('expand');
+  //
+  var Events = Backbone.Events = {
+
+    // Bind an event to a `callback` function. Passing `"all"` will bind
+    // the callback to all events fired.
+    on: function(name, callback, context) {
+      if (!eventsApi(this, 'on', name, [callback, context]) || !callback) return this;
+      this._events || (this._events = {});
+      var events = this._events[name] || (this._events[name] = []);
+      events.push({callback: callback, context: context, ctx: context || this});
+      return this;
+    },
+
+    // Bind an event to only be triggered a single time. After the first time
+    // the callback is invoked, it will be removed.
+    once: function(name, callback, context) {
+      if (!eventsApi(this, 'once', name, [callback, context]) || !callback) return this;
+      var self = this;
+      var once = _.once(function() {
+        self.off(name, once);
+        callback.apply(this, arguments);
+      });
+      once._callback = callback;
+      return this.on(name, once, context);
+    },
+
+    // Remove one or many callbacks. If `context` is null, removes all
+    // callbacks with that function. If `callback` is null, removes all
+    // callbacks for the event. If `name` is null, removes all bound
+    // callbacks for all events.
+    off: function(name, callback, context) {
+      var retain, ev, events, names, i, l, j, k;
+      if (!this._events || !eventsApi(this, 'off', name, [callback, context])) return this;
+      if (!name && !callback && !context) {
+        this._events = void 0;
+        return this;
+      }
+      names = name ? [name] : _.keys(this._events);
+      for (i = 0, l = names.length; i < l; i++) {
+        name = names[i];
+        if (events = this._events[name]) {
+          this._events[name] = retain = [];
+          if (callback || context) {
+            for (j = 0, k = events.length; j < k; j++) {
+              ev = events[j];
+              if ((callback && callback !== ev.callback && callback !== ev.callback._callback) ||
+                  (context && context !== ev.context)) {
+                retain.push(ev);
+              }
+            }
+          }
+          if (!retain.length) delete this._events[name];
+        }
+      }
+
+      return this;
+    },
+
+    // Trigger one or many events, firing all bound callbacks. Callbacks are
+    // passed the same arguments as `trigger` is, apart from the event name
+    // (unless you're listening on `"all"`, which will cause your callback to
+    // receive the true name of the event as the first argument).
+    trigger: function(name) {
+      if (!this._events) return this;
+      var args = slice.call(arguments, 1);
+      if (!eventsApi(this, 'trigger', name, args)) return this;
+      var events = this._events[name];
+      var allEvents = this._events.all;
+      if (events) triggerEvents(events, args);
+      if (allEvents) triggerEvents(allEvents, arguments);
+      return this;
+    },
+
+    // Tell this object to stop listening to either specific events ... or
+    // to every object it's currently listening to.
+    stopListening: function(obj, name, callback) {
+      var listeningTo = this._listeningTo;
+      if (!listeningTo) return this;
+      var remove = !name && !callback;
+      if (!callback && typeof name === 'object') callback = this;
+      if (obj) (listeningTo = {})[obj._listenId] = obj;
+      for (var id in listeningTo) {
+        obj = listeningTo[id];
+        obj.off(name, callback, this);
+        if (remove || _.isEmpty(obj._events)) delete this._listeningTo[id];
+      }
+      return this;
+    }
+
+  };
+
+  // Regular expression used to split event strings.
+  var eventSplitter = /\s+/;
+
+  // Implement fancy features of the Events API such as multiple event
+  // names `"change blur"` and jQuery-style event maps `{change: action}`
+  // in terms of the existing API.
+  var eventsApi = function(obj, action, name, rest) {
+    if (!name) return true;
+
+    // Handle event maps.
+    if (typeof name === 'object') {
+      for (var key in name) {
+        obj[action].apply(obj, [key, name[key]].concat(rest));
+      }
+      return false;
+    }
+
+    // Handle space separated event names.
+    if (eventSplitter.test(name)) {
+      var names = name.split(eventSplitter);
+      for (var i = 0, l = names.length; i < l; i++) {
+        obj[action].apply(obj, [names[i]].concat(rest));
+      }
+      return false;
+    }
+
+    return true;
+  };
+
+  // A difficult-to-believe, but optimized internal dispatch function for
+  // triggering events. Tries to keep the usual cases speedy (most internal
+  // Backbone events have 3 arguments).
+  var triggerEvents = function(events, args) {
+    var ev, i = -1, l = events.length, a1 = args[0], a2 = args[1], a3 = args[2];
+    switch (args.length) {
+      case 0: while (++i < l) (ev = events[i]).callback.call(ev.ctx); return;
+      case 1: while (++i < l) (ev = events[i]).callback.call(ev.ctx, a1); return;
+      case 2: while (++i < l) (ev = events[i]).callback.call(ev.ctx, a1, a2); return;
+      case 3: while (++i < l) (ev = events[i]).callback.call(ev.ctx, a1, a2, a3); return;
+      default: while (++i < l) (ev = events[i]).callback.apply(ev.ctx, args); return;
+    }
+  };
+
+  var listenMethods = {listenTo: 'on', listenToOnce: 'once'};
+
+  // Inversion-of-control versions of `on` and `once`. Tell *this* object to
+  // listen to an event in another object ... keeping track of what it's
+  // listening to.
+  _.each(listenMethods, function(implementation, method) {
+    Events[method] = function(obj, name, callback) {
+      var listeningTo = this._listeningTo || (this._listeningTo = {});
+      var id = obj._listenId || (obj._listenId = _.uniqueId('l'));
+      listeningTo[id] = obj;
+      if (!callback && typeof name === 'object') callback = this;
+      obj[implementation](name, callback, this);
+      return this;
+    };
+  });
+
+  // Aliases for backwards compatibility.
+  Events.bind   = Events.on;
+  Events.unbind = Events.off;
+
+  // Allow the `Backbone` object to serve as a global event bus, for folks who
+  // want global "pubsub" in a convenient place.
+  _.extend(Backbone, Events);
+
+  // Backbone.Model
+  // --------------
+
+  // Backbone **Models** are the basic data object in the framework --
+  // frequently representing a row in a table in a database on your server.
+  // A discrete chunk of data and a bunch of useful, related methods for
+  // performing computations and transformations on that data.
+
+  // Create a new model with the specified attributes. A client id (`cid`)
+  // is automatically generated and assigned for you.
+  var Model = Backbone.Model = function(attributes, options) {
+    var attrs = attributes || {};
+    options || (options = {});
+    this.cid = _.uniqueId('c');
+    this.attributes = {};
+    if (options.collection) this.collection = options.collection;
+    if (options.parse) attrs = this.parse(attrs, options) || {};
+    attrs = _.defaults({}, attrs, _.result(this, 'defaults'));
+    this.set(attrs, options);
+    this.changed = {};
+    this.initialize.apply(this, arguments);
+  };
+
+  // Attach all inheritable methods to the Model prototype.
+  _.extend(Model.prototype, Events, {
+
+    // A hash of attributes whose current and previous value differ.
+    changed: null,
+
+    // The value returned during the last failed validation.
+    validationError: null,
+
+    // The default name for the JSON `id` attribute is `"id"`. MongoDB and
+    // CouchDB users may want to set this to `"_id"`.
+    idAttribute: 'id',
+
+    // Initialize is an empty function by default. Override it with your own
+    // initialization logic.
+    initialize: function(){},
+
+    // Return a copy of the model's `attributes` object.
+    toJSON: function(options) {
+      return _.clone(this.attributes);
+    },
+
+    // Proxy `Backbone.sync` by default -- but override this if you need
+    // custom syncing semantics for *this* particular model.
+    sync: function() {
+      return Backbone.sync.apply(this, arguments);
+    },
+
+    // Get the value of an attribute.
+    get: function(attr) {
+      return this.attributes[attr];
+    },
+
+    // Get the HTML-escaped value of an attribute.
+    escape: function(attr) {
+      return _.escape(this.get(attr));
+    },
+
+    // Returns `true` if the attribute contains a value that is not null
+    // or undefined.
+    has: function(attr) {
+      return this.get(attr) != null;
+    },
+
+    // Set a hash of model attributes on the object, firing `"change"`. This is
+    // the core primitive operation of a model, updating the data and notifying
+    // anyone who needs to know about the change in state. The heart of the beast.
+    set: function(key, val, options) {
+      var attr, attrs, unset, changes, silent, changing, prev, current;
+      if (key == null) return this;
+
+      // Handle both `"key", value` and `{key: value}` -style arguments.
+      if (typeof key === 'object') {
+        attrs = key;
+        options = val;
+      } else {
+        (attrs = {})[key] = val;
+      }
+
+      options || (options = {});
+
+      // Run validation.
+      if (!this._validate(attrs, options)) return false;
+
+      // Extract attributes and options.
+      unset           = options.unset;
+      silent          = options.silent;
+      changes         = [];
+      changing        = this._changing;
+      this._changing  = true;
+
+      if (!changing) {
+        this._previousAttributes = _.clone(this.attributes);
+        this.changed = {};
+      }
+      current = this.attributes, prev = this._previousAttributes;
+
+      // Check for changes of `id`.
+      if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
+
+      // For each `set` attribute, update or delete the current value.
+      for (attr in attrs) {
+        val = attrs[attr];
+        if (!_.isEqual(current[attr], val)) changes.push(attr);
+        if (!_.isEqual(prev[attr], val)) {
+          this.changed[attr] = val;
+        } else {
+          delete this.changed[attr];
+        }
+        unset ? delete current[attr] : current[attr] = val;
+      }
+
+      // Trigger all relevant attribute changes.
+      if (!silent) {
+        if (changes.length) this._pending = options;
+        for (var i = 0, l = changes.length; i < l; i++) {
+          this.trigger('change:' + changes[i], this, current[changes[i]], options);
+        }
+      }
+
+      // You might be wondering why there's a `while` loop here. Changes can
+      // be recursively nested within `"change"` events.
+      if (changing) return this;
+      if (!silent) {
+        while (this._pending) {
+          options = this._pending;
+          this._pending = false;
+          this.trigger('change', this, options);
+        }
+      }
+      this._pending = false;
+      this._changing = false;
+      return this;
+    },
+
+    // Remove an attribute from the model, firing `"change"`. `unset` is a noop
+    // if the attribute doesn't exist.
+    unset: function(attr, options) {
+      return this.set(attr, void 0, _.extend({}, options, {unset: true}));
+    },
+
+    // Clear all attributes on the model, firing `"change"`.
+    clear: function(options) {
+      var attrs = {};
+      for (var key in this.attributes) attrs[key] = void 0;
+      return this.set(attrs, _.extend({}, options, {unset: true}));
+    },
+
+    // Determine if the model has changed since the last `"change"` event.
+    // If you specify an attribute name, determine if that attribute has changed.
+    hasChanged: function(attr) {
+      if (attr == null) return !_.isEmpty(this.changed);
+      return _.has(this.changed, attr);
+    },
+
+    // Return an object containing all the attributes that have changed, or
+    // false if there are no changed attributes. Useful for determining what
+    // parts of a view need to be updated and/or what attributes need to be
+    // persisted to the server. Unset attributes will be set to undefined.
+    // You can also pass an attributes object to diff against the model,
+    // determining if there *would be* a change.
+    changedAttributes: function(diff) {
+      if (!diff) return this.hasChanged() ? _.clone(this.changed) : false;
+      var val, changed = false;
+      var old = this._changing ? this._previousAttributes : this.attributes;
+      for (var attr in diff) {
+        if (_.isEqual(old[attr], (val = diff[attr]))) continue;
+        (changed || (changed = {}))[attr] = val;
+      }
+      return changed;
+    },
+
+    // Get the previous value of an attribute, recorded at the time the last
+    // `"change"` event was fired.
+    previous: function(attr) {
+      if (attr == null || !this._previousAttributes) return null;
+      return this._previousAttributes[attr];
+    },
+
+    // Get all of the attributes of the model at the time of the previous
+    // `"change"` event.
+    previousAttributes: function() {
+      return _.clone(this._previousAttributes);
+    },
+
+    // Fetch the model from the server. If the server's representation of the
+    // model differs from its current attributes, they will be overridden,
+    // triggering a `"change"` event.
+    fetch: function(options) {
+      options = options ? _.clone(options) : {};
+      if (options.parse === void 0) options.parse = true;
+      var model = this;
+      var success = options.success;
+      options.success = function(resp) {
+        if (!model.set(model.parse(resp, options), options)) return false;
+        if (success) success(model, resp, options);
+        model.trigger('sync', model, resp, options);
+      };
+      wrapError(this, options);
+      return this.sync('read', this, options);
+    },
+
+    // Set a hash of model attributes, and sync the model to the server.
+    // If the server returns an attributes hash that differs, the model's
+    // state will be `set` again.
+    save: function(key, val, options) {
+      var attrs, method, xhr, attributes = this.attributes;
+
+      // Handle both `"key", value` and `{key: value}` -style arguments.
+      if (key == null || typeof key === 'object') {
+        attrs = key;
+        options = val;
+      } else {
+        (attrs = {})[key] = val;
+      }
+
+      options = _.extend({validate: true}, options);
+
+      // If we're not waiting and attributes exist, save acts as
+      // `set(attr).save(null, opts)` with validation. Otherwise, check if
+      // the model will be valid when the attributes, if any, are set.
+      if (attrs && !options.wait) {
+        if (!this.set(attrs, options)) return false;
+      } else {
+        if (!this._validate(attrs, options)) return false;
+      }
+
+      // Set temporary attributes if `{wait: true}`.
+      if (attrs && options.wait) {
+        this.attributes = _.extend({}, attributes, attrs);
+      }
+
+      // After a successful server-side save, the client is (optionally)
+      // updated with the server-side state.
+      if (options.parse === void 0) options.parse = true;
+      var model = this;
+      var success = options.success;
+      options.success = function(resp) {
+        // Ensure attributes are restored during synchronous saves.
+        model.attributes = attributes;
+        var serverAttrs = model.parse(resp, options);
+        if (options.wait) serverAttrs = _.extend(attrs || {}, serverAttrs);
+        if (_.isObject(serverAttrs) && !model.set(serverAttrs, options)) {
+          return false;
+        }
+        if (success) success(model, resp, options);
+        model.trigger('sync', model, resp, options);
+      };
+      wrapError(this, options);
+
+      method = this.isNew() ? 'create' : (options.patch ? 'patch' : 'update');
+      if (method === 'patch') options.attrs = attrs;
+      xhr = this.sync(method, this, options);
+
+      // Restore attributes.
+      if (attrs && options.wait) this.attributes = attributes;
+
+      return xhr;
+    },
+
+    // Destroy this model on the server if it was already persisted.
+    // Optimistically removes the model from its collection, if it has one.
+    // If `wait: true` is passed, waits for the server to respond before removal.
+    destroy: function(options) {
+      options = options ? _.clone(options) : {};
+      var model = this;
+      var success = options.success;
+
+      var destroy = function() {
+        model.trigger('destroy', model, model.collection, options);
+      };
+
+      options.success = function(resp) {
+        if (options.wait || model.isNew()) destroy();
+        if (success) success(model, resp, options);
+        if (!model.isNew()) model.trigger('sync', model, resp, options);
+      };
+
+      if (this.isNew()) {
+        options.success();
+        return false;
+      }
+      wrapError(this, options);
+
+      var xhr = this.sync('delete', this, options);
+      if (!options.wait) destroy();
+      return xhr;
+    },
+
+    // Default URL for the model's representation on the server -- if you're
+    // using Backbone's restful methods, override this to change the endpoint
+    // that will be called.
+    url: function() {
+      var base =
+        _.result(this, 'urlRoot') ||
+        _.result(this.collection, 'url') ||
+        urlError();
+      if (this.isNew()) return base;
+      return base.replace(/([^\/])$/, '$1/') + encodeURIComponent(this.id);
+    },
+
+    // **parse** converts a response into the hash of attributes to be `set` on
+    // the model. The default implementation is just to pass the response along.
+    parse: function(resp, options) {
+      return resp;
+    },
+
+    // Create a new model with identical attributes to this one.
+    clone: function() {
+      return new this.constructor(this.attributes);
+    },
+
+    // A model is new if it has never been saved to the server, and lacks an id.
+    isNew: function() {
+      return !this.has(this.idAttribute);
+    },
+
+    // Check if the model is currently in a valid state.
+    isValid: function(options) {
+      return this._validate({}, _.extend(options || {}, { validate: true }));
+    },
+
+    // Run validation against the next complete set of model attributes,
+    // returning `true` if all is well. Otherwise, fire an `"invalid"` event.
+    _validate: function(attrs, options) {
+      if (!options.validate || !this.validate) return true;
+      attrs = _.extend({}, this.attributes, attrs);
+      var error = this.validationError = this.validate(attrs, options) || null;
+      if (!error) return true;
+      this.trigger('invalid', this, error, _.extend(options, {validationError: error}));
+      return false;
+    }
+
+  });
+
+  // Underscore methods that we want to implement on the Model.
+  var modelMethods = ['keys', 'values', 'pairs', 'invert', 'pick', 'omit'];
+
+  // Mix in each Underscore method as a proxy to `Model#attributes`.
+  _.each(modelMethods, function(method) {
+    Model.prototype[method] = function() {
+      var args = slice.call(arguments);
+      args.unshift(this.attributes);
+      return _[method].apply(_, args);
+    };
+  });
+
+  // Backbone.Collection
+  // -------------------
+
+  // If models tend to represent a single row of data, a Backbone Collection is
+  // more analagous to a table full of data ... or a small slice or page of that
+  // table, or a collection of rows that belong together for a particular reason
+  // -- all of the messages in this particular folder, all of the documents
+  // belonging to this particular author, and so on. Collections maintain
+  // indexes of their models, both in order, and for lookup by `id`.
+
+  // Create a new **Collection**, perhaps to contain a specific type of `model`.
+  // If a `comparator` is specified, the Collection will maintain
+  // its models in sort order, as they're added and removed.
+  var Collection = Backbone.Collection = function(models, options) {
+    options || (options = {});
+    if (options.model) this.model = options.model;
+    if (options.comparator !== void 0) this.comparator = options.comparator;
+    this._reset();
+    this.initialize.apply(this, arguments);
+    if (models) this.reset(models, _.extend({silent: true}, options));
+  };
+
+  // Default options for `Collection#set`.
+  var setOptions = {add: true, remove: true, merge: true};
+  var addOptions = {add: true, remove: false};
+
+  // Define the Collection's inheritable methods.
+  _.extend(Collection.prototype, Events, {
+
+    // The default model for a collection is just a **Backbone.Model**.
+    // This should be overridden in most cases.
+    model: Model,
+
+    // Initialize is an empty function by default. Override it with your own
+    // initialization logic.
+    initialize: function(){},
+
+    // The JSON representation of a Collection is an array of the
+    // models' attributes.
+    toJSON: function(options) {
+      return this.map(function(model){ return model.toJSON(options); });
+    },
+
+    // Proxy `Backbone.sync` by default.
+    sync: function() {
+      return Backbone.sync.apply(this, arguments);
+    },
+
+    // Add a model, or list of models to the set.
+    add: function(models, options) {
+      return this.set(models, _.extend({merge: false}, options, addOptions));
+    },
+
+    // Remove a model, or a list of models from the set.
+    remove: function(models, options) {
+      var singular = !_.isArray(models);
+      models = singular ? [models] : _.clone(models);
+      options || (options = {});
+      var i, l, index, model;
+      for (i = 0, l = models.length; i < l; i++) {
+        model = models[i] = this.get(models[i]);
+        if (!model) continue;
+        delete this._byId[model.id];
+        delete this._byId[model.cid];
+        index = this.indexOf(model);
+        this.models.splice(index, 1);
+        this.length--;
+        if (!options.silent) {
+          options.index = index;
+          model.trigger('remove', model, this, options);
+        }
+        this._removeReference(model, options);
+      }
+      return singular ? models[0] : models;
+    },
+
+    // Update a collection by `set`-ing a new list of models, adding new ones,
+    // removing models that are no longer present, and merging models that
+    // already exist in the collection, as necessary. Similar to **Model#set**,
+    // the core operation for updating the data contained by the collection.
+    set: function(models, options) {
+      options = _.defaults({}, options, setOptions);
+      if (options.parse) models = this.parse(models, options);
+      var singular = !_.isArray(models);
+      models = singular ? (models ? [models] : []) : _.clone(models);
+      var i, l, id, model, attrs, existing, sort;
+      var at = options.at;
+      var targetModel = this.model;
+      var sortable = this.comparator && (at == null) && options.sort !== false;
+      var sortAttr = _.isString(this.comparator) ? this.comparator : null;
+      var toAdd = [], toRemove = [], modelMap = {};
+      var add = options.add, merge = options.merge, remove = options.remove;
+      var order = !sortable && add && remove ? [] : false;
+
+      // Turn bare objects into model references, and prevent invalid models
+      // from being added.
+      for (i = 0, l = models.length; i < l; i++) {
+        attrs = models[i] || {};
+        if (attrs instanceof Model) {
+          id = model = attrs;
+        } else {
+          id = attrs[targetModel.prototype.idAttribute || 'id'];
+        }
+
+        // If a duplicate is found, prevent it from being added and
+        // optionally merge it into the existing model.
+        if (existing = this.get(id)) {
+          if (remove) modelMap[existing.cid] = true;
+          if (merge) {
+            attrs = attrs === model ? model.attributes : attrs;
+            if (options.parse) attrs = existing.parse(attrs, options);
+            existing.set(attrs, options);
+            if (sortable && !sort && existing.hasChanged(sortAttr)) sort = true;
+          }
+          models[i] = existing;
+
+        // If this is a new, valid model, push it to the `toAdd` list.
+        } else if (add) {
+          model = models[i] = this._prepareModel(attrs, options);
+          if (!model) continue;
+          toAdd.push(model);
+          this._addReference(model, options);
+        }
+
+        // Do not add multiple models with the same `id`.
+        model = existing || model;
+        if (order && (model.isNew() || !modelMap[model.id])) order.push(model);
+        modelMap[model.id] = true;
+      }
+
+      // Remove nonexistent models if appropriate.
+      if (remove) {
+        for (i = 0, l = this.length; i < l; ++i) {
+          if (!modelMap[(model = this.models[i]).cid]) toRemove.push(model);
+        }
+        if (toRemove.length) this.remove(toRemove, options);
+      }
+
+      // See if sorting is needed, update `length` and splice in new models.
+      if (toAdd.length || (order && order.length)) {
+        if (sortable) sort = true;
+        this.length += toAdd.length;
+        if (at != null) {
+          for (i = 0, l = toAdd.length; i < l; i++) {
+            this.models.splice(at + i, 0, toAdd[i]);
+          }
+        } else {
+          if (order) this.models.length = 0;
+          var orderedModels = order || toAdd;
+          for (i = 0, l = orderedModels.length; i < l; i++) {
+            this.models.push(orderedModels[i]);
+          }
+        }
+      }
+
+      // Silently sort the collection if appropriate.
+      if (sort) this.sort({silent: true});
+
+      // Unless silenced, it's time to fire all appropriate add/sort events.
+      if (!options.silent) {
+        for (i = 0, l = toAdd.length; i < l; i++) {
+          (model = toAdd[i]).trigger('add', model, this, options);
+        }
+        if (sort || (order && order.length)) this.trigger('sort', this, options);
+      }
+
+      // Return the added (or merged) model (or models).
+      return singular ? models[0] : models;
+    },
+
+    // When you have more items than you want to add or remove individually,
+    // you can reset the entire set with a new list of models, without firing
+    // any granular `add` or `remove` events. Fires `reset` when finished.
+    // Useful for bulk operations and optimizations.
+    reset: function(models, options) {
+      options || (options = {});
+      for (var i = 0, l = this.models.length; i < l; i++) {
+        this._removeReference(this.models[i], options);
+      }
+      options.previousModels = this.models;
+      this._reset();
+      models = this.add(models, _.extend({silent: true}, options));
+      if (!options.silent) this.trigger('reset', this, options);
+      return models;
+    },
+
+    // Add a model to the end of the collection.
+    push: function(model, options) {
+      return this.add(model, _.extend({at: this.length}, options));
+    },
+
+    // Remove a model from the end of the collection.
+    pop: function(options) {
+      var model = this.at(this.length - 1);
+      this.remove(model, options);
+      return model;
+    },
+
+    // Add a model to the beginning of the collection.
+    unshift: function(model, options) {
+      return this.add(model, _.extend({at: 0}, options));
+    },
+
+    // Remove a model from the beginning of the collection.
+    shift: function(options) {
+      var model = this.at(0);
+      this.remove(model, options);
+      return model;
+    },
+
+    // Slice out a sub-array of models from the collection.
+    slice: function() {
+      return slice.apply(this.models, arguments);
+    },
+
+    // Get a model from the set by id.
+    get: function(obj) {
+      if (obj == null) return void 0;
+      return this._byId[obj] || this._byId[obj.id] || this._byId[obj.cid];
+    },
+
+    // Get the model at the given index.
+    at: function(index) {
+      return this.models[index];
+    },
+
+    // Return models with matching attributes. Useful for simple cases of
+    // `filter`.
+    where: function(attrs, first) {
+      if (_.isEmpty(attrs)) return first ? void 0 : [];
+      return this[first ? 'find' : 'filter'](function(model) {
+        for (var key in attrs) {
+          if (attrs[key] !== model.get(key)) return false;
+        }
+        return true;
+      });
+    },
+
+    // Return the first model with matching attributes. Useful for simple cases
+    // of `find`.
+    findWhere: function(attrs) {
+      return this.where(attrs, true);
+    },
+
+    // Force the collection to re-sort itself. You don't need to call this under
+    // normal circumstances, as the set will maintain sort order as each item
+    // is added.
+    sort: function(options) {
+      if (!this.comparator) throw new Error('Cannot sort a set without a comparator');
+      options || (options = {});
+
+      // Run sort based on type of `comparator`.
+      if (_.isString(this.comparator) || this.comparator.length === 1) {
+        this.models = this.sortBy(this.comparator, this);
+      } else {
+        this.models.sort(_.bind(this.comparator, this));
+      }
+
+      if (!options.silent) this.trigger('sort', this, options);
+      return this;
+    },
+
+    // Pluck an attribute from each model in the collection.
+    pluck: function(attr) {
+      return _.invoke(this.models, 'get', attr);
+    },
+
+    // Fetch the default set of models for this collection, resetting the
+    // collection when they arrive. If `reset: true` is passed, the response
+    // data will be passed through the `reset` method instead of `set`.
+    fetch: function(options) {
+      options = options ? _.clone(options) : {};
+      if (options.parse === void 0) options.parse = true;
+      var success = options.success;
+      var collection = this;
+      options.success = function(resp) {
+        var method = options.reset ? 'reset' : 'set';
+        collection[method](resp, options);
+        if (success) success(collection, resp, options);
+        collection.trigger('sync', collection, resp, options);
+      };
+      wrapError(this, options);
+      return this.sync('read', this, options);
+    },
+
+    // Create a new instance of a model in this collection. Add the model to the
+    // collection immediately, unless `wait: true` is passed, in which case we
+    // wait for the server to agree.
+    create: function(model, options) {
+      options = options ? _.clone(options) : {};
+      if (!(model = this._prepareModel(model, options))) return false;
+      if (!options.wait) this.add(model, options);
+      var collection = this;
+      var success = options.success;
+      options.success = function(model, resp) {
+        if (options.wait) collection.add(model, options);
+        if (success) success(model, resp, options);
+      };
+      model.save(null, options);
+      return model;
+    },
+
+    // **parse** converts a response into a list of models to be added to the
+    // collection. The default implementation is just to pass it through.
+    parse: function(resp, options) {
+      return resp;
+    },
+
+    // Create a new collection with an identical list of models as this one.
+    clone: function() {
+      return new this.constructor(this.models);
+    },
+
+    // Private method to reset all internal state. Called when the collection
+    // is first initialized or reset.
+    _reset: function() {
+      this.length = 0;
+      this.models = [];
+      this._byId  = {};
+    },
+
+    // Prepare a hash of attributes (or other model) to be added to this
+    // collection.
+    _prepareModel: function(attrs, options) {
+      if (attrs instanceof Model) return attrs;
+      options = options ? _.clone(options) : {};
+      options.collection = this;
+      var model = new this.model(attrs, options);
+      if (!model.validationError) return model;
+      this.trigger('invalid', this, model.validationError, options);
+      return false;
+    },
+
+    // Internal method to create a model's ties to a collection.
+    _addReference: function(model, options) {
+      this._byId[model.cid] = model;
+      if (model.id != null) this._byId[model.id] = model;
+      if (!model.collection) model.collection = this;
+      model.on('all', this._onModelEvent, this);
+    },
+
+    // Internal method to sever a model's ties to a collection.
+    _removeReference: function(model, options) {
+      if (this === model.collection) delete model.collection;
+      model.off('all', this._onModelEvent, this);
+    },
+
+    // Internal method called every time a model in the set fires an event.
+    // Sets need to update their indexes when models change ids. All other
+    // events simply proxy through. "add" and "remove" events that originate
+    // in other collections are ignored.
+    _onModelEvent: function(event, model, collection, options) {
+      if ((event === 'add' || event === 'remove') && collection !== this) return;
+      if (event === 'destroy') this.remove(model, options);
+      if (model && event === 'change:' + model.idAttribute) {
+        delete this._byId[model.previous(model.idAttribute)];
+        if (model.id != null) this._byId[model.id] = model;
+      }
+      this.trigger.apply(this, arguments);
+    }
+
+  });
+
+  // Underscore methods that we want to implement on the Collection.
+  // 90% of the core usefulness of Backbone Collections is actually implemented
+  // right here:
+  var methods = ['forEach', 'each', 'map', 'collect', 'reduce', 'foldl',
+    'inject', 'reduceRight', 'foldr', 'find', 'detect', 'filter', 'select',
+    'reject', 'every', 'all', 'some', 'any', 'include', 'contains', 'invoke',
+    'max', 'min', 'toArray', 'size', 'first', 'head', 'take', 'initial', 'rest',
+    'tail', 'drop', 'last', 'without', 'difference', 'indexOf', 'shuffle',
+    'lastIndexOf', 'isEmpty', 'chain', 'sample'];
+
+  // Mix in each Underscore method as a proxy to `Collection#models`.
+  _.each(methods, function(method) {
+    Collection.prototype[method] = function() {
+      var args = slice.call(arguments);
+      args.unshift(this.models);
+      return _[method].apply(_, args);
+    };
+  });
+
+  // Underscore methods that take a property name as an argument.
+  var attributeMethods = ['groupBy', 'countBy', 'sortBy', 'indexBy'];
+
+  // Use attributes instead of properties.
+  _.each(attributeMethods, function(method) {
+    Collection.prototype[method] = function(value, context) {
+      var iterator = _.isFunction(value) ? value : function(model) {
+        return model.get(value);
+      };
+      return _[method](this.models, iterator, context);
+    };
+  });
+
+  // Backbone.View
+  // -------------
+
+  // Backbone Views are almost more convention than they are actual code. A View
+  // is simply a JavaScript object that represents a logical chunk of UI in the
+  // DOM. This might be a single item, an entire list, a sidebar or panel, or
+  // even the surrounding frame which wraps your whole app. Defining a chunk of
+  // UI as a **View** allows you to define your DOM events declaratively, without
+  // having to worry about render order ... and makes it easy for the view to
+  // react to specific changes in the state of your models.
+
+  // Creating a Backbone.View creates its initial element outside of the DOM,
+  // if an existing element is not provided...
+  var View = Backbone.View = function(options) {
+    this.cid = _.uniqueId('view');
+    options || (options = {});
+    _.extend(this, _.pick(options, viewOptions));
+    this._ensureElement();
+    this.initialize.apply(this, arguments);
+    this.delegateEvents();
+  };
+
+  // Cached regex to split keys for `delegate`.
+  var delegateEventSplitter = /^(\S+)\s*(.*)$/;
+
+  // List of view options to be merged as properties.
+  var viewOptions = ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName', 'events'];
+
+  // Set up all inheritable **Backbone.View** properties and methods.
+  _.extend(View.prototype, Events, {
+
+    // The default `tagName` of a View's element is `"div"`.
+    tagName: 'div',
+
+    // jQuery delegate for element lookup, scoped to DOM elements within the
+    // current view. This should be preferred to global lookups where possible.
+    $: function(selector) {
+      return this.$el.find(selector);
+    },
+
+    // Initialize is an empty function by default. Override it with your own
+    // initialization logic.
+    initialize: function(){},
+
+    // **render** is the core function that your view should override, in order
+    // to populate its element (`this.el`), with the appropriate HTML. The
+    // convention is for **render** to always return `this`.
+    render: function() {
+      return this;
+    },
+
+    // Remove this view by taking the element out of the DOM, and removing any
+    // applicable Backbone.Events listeners.
+    remove: function() {
+      this.$el.remove();
+      this.stopListening();
+      return this;
+    },
+
+    // Change the view's element (`this.el` property), including event
+    // re-delegation.
+    setElement: function(element, delegate) {
+      if (this.$el) this.undelegateEvents();
+      this.$el = element instanceof Backbone.$ ? element : Backbone.$(element);
+      this.el = this.$el[0];
+      if (delegate !== false) this.delegateEvents();
+      return this;
+    },
+
+    // Set callbacks, where `this.events` is a hash of
+    //
+    // *{"event selector": "callback"}*
+    //
+    //     {
+    //       'mousedown .title':  'edit',
+    //       'click .button':     'save',
+    //       'click .open':       function(e) { ... }
+    //     }
+    //
+    // pairs. Callbacks will be bound to the view, with `this` set properly.
+    // Uses event delegation for efficiency.
+    // Omitting the selector binds the event to `this.el`.
+    // This only works for delegate-able events: not `focus`, `blur`, and
+    // not `change`, `submit`, and `reset` in Internet Explorer.
+    delegateEvents: function(events) {
+      if (!(events || (events = _.result(this, 'events')))) return this;
+      this.undelegateEvents();
+      for (var key in events) {
+        var method = events[key];
+        if (!_.isFunction(method)) method = this[events[key]];
+        if (!method) continue;
+
+        var match = key.match(delegateEventSplitter);
+        var eventName = match[1], selector = match[2];
+        method = _.bind(method, this);
+        eventName += '.delegateEvents' + this.cid;
+        if (selector === '') {
+          this.$el.on(eventName, method);
+        } else {
+          this.$el.on(eventName, selector, method);
+        }
+      }
+      return this;
+    },
+
+    // Clears all callbacks previously bound to the view with `delegateEvents`.
+    // You usually don't need to use this, but may wish to if you have multiple
+    // Backbone views attached to the same DOM element.
+    undelegateEvents: function() {
+      this.$el.off('.delegateEvents' + this.cid);
+      return this;
+    },
+
+    // Ensure that the View has a DOM element to render into.
+    // If `this.el` is a string, pass it through `$()`, take the first
+    // matching element, and re-assign it to `el`. Otherwise, create
+    // an element from the `id`, `className` and `tagName` properties.
+    _ensureElement: function() {
+      if (!this.el) {
+        var attrs = _.extend({}, _.result(this, 'attributes'));
+        if (this.id) attrs.id = _.result(this, 'id');
+        if (this.className) attrs['class'] = _.result(this, 'className');
+        var $el = Backbone.$('<' + _.result(this, 'tagName') + '>').attr(attrs);
+        this.setElement($el, false);
+      } else {
+        this.setElement(_.result(this, 'el'), false);
+      }
+    }
+
+  });
+
+  // Backbone.sync
+  // -------------
+
+  // Override this function to change the manner in which Backbone persists
+  // models to the server. You will be passed the type of request, and the
+  // model in question. By default, makes a RESTful Ajax request
+  // to the model's `url()`. Some possible customizations could be:
+  //
+  // * Use `setTimeout` to batch rapid-fire updates into a single request.
+  // * Send up the models as XML instead of JSON.
+  // * Persist models via WebSockets instead of Ajax.
+  //
+  // Turn on `Backbone.emulateHTTP` in order to send `PUT` and `DELETE` requests
+  // as `POST`, with a `_method` parameter containing the true HTTP method,
+  // as well as all requests with the body as `application/x-www-form-urlencoded`
+  // instead of `application/json` with the model in a param named `model`.
+  // Useful when interfacing with server-side languages like **PHP** that make
+  // it difficult to read the body of `PUT` requests.
+  Backbone.sync = function(method, model, options) {
+    var type = methodMap[method];
+
+    // Default options, unless specified.
+    _.defaults(options || (options = {}), {
+      emulateHTTP: Backbone.emulateHTTP,
+      emulateJSON: Backbone.emulateJSON
+    });
+
+    // Default JSON-request options.
+    var params = {type: type, dataType: 'json'};
+
+    // Ensure that we have a URL.
+    if (!options.url) {
+      params.url = _.result(model, 'url') || urlError();
+    }
+
+    // Ensure that we have the appropriate request data.
+    if (options.data == null && model && (method === 'create' || method === 'update' || method === 'patch')) {
+      params.contentType = 'application/json';
+      params.data = JSON.stringify(options.attrs || model.toJSON(options));
+    }
+
+    // For older servers, emulate JSON by encoding the request into an HTML-form.
+    if (options.emulateJSON) {
+      params.contentType = 'application/x-www-form-urlencoded';
+      params.data = params.data ? {model: params.data} : {};
+    }
+
+    // For older servers, emulate HTTP by mimicking the HTTP method with `_method`
+    // And an `X-HTTP-Method-Override` header.
+    if (options.emulateHTTP && (type === 'PUT' || type === 'DELETE' || type === 'PATCH')) {
+      params.type = 'POST';
+      if (options.emulateJSON) params.data._method = type;
+      var beforeSend = options.beforeSend;
+      options.beforeSend = function(xhr) {
+        xhr.setRequestHeader('X-HTTP-Method-Override', type);
+        if (beforeSend) return beforeSend.apply(this, arguments);
+      };
+    }
+
+    // Don't process data on a non-GET request.
+    if (params.type !== 'GET' && !options.emulateJSON) {
+      params.processData = false;
+    }
+
+    // If we're sending a `PATCH` request, and we're in an old Internet Explorer
+    // that still has ActiveX enabled by default, override jQuery to use that
+    // for XHR instead. Remove this line when jQuery supports `PATCH` on IE8.
+    if (params.type === 'PATCH' && noXhrPatch) {
+      params.xhr = function() {
+        return new ActiveXObject("Microsoft.XMLHTTP");
+      };
+    }
+
+    // Make the request, allowing the user to override any Ajax options.
+    var xhr = options.xhr = Backbone.ajax(_.extend(params, options));
+    model.trigger('request', model, xhr, options);
+    return xhr;
+  };
+
+  var noXhrPatch =
+    typeof window !== 'undefined' && !!window.ActiveXObject &&
+      !(window.XMLHttpRequest && (new XMLHttpRequest).dispatchEvent);
+
+  // Map from CRUD to HTTP for our default `Backbone.sync` implementation.
+  var methodMap = {
+    'create': 'POST',
+    'update': 'PUT',
+    'patch':  'PATCH',
+    'delete': 'DELETE',
+    'read':   'GET'
+  };
+
+  // Set the default implementation of `Backbone.ajax` to proxy through to `$`.
+  // Override this if you'd like to use a different library.
+  Backbone.ajax = function() {
+    return Backbone.$.ajax.apply(Backbone.$, arguments);
+  };
+
+  // Backbone.Router
+  // ---------------
+
+  // Routers map faux-URLs to actions, and fire events when routes are
+  // matched. Creating a new one sets its `routes` hash, if not set statically.
+  var Router = Backbone.Router = function(options) {
+    options || (options = {});
+    if (options.routes) this.routes = options.routes;
+    this._bindRoutes();
+    this.initialize.apply(this, arguments);
+  };
+
+  // Cached regular expressions for matching named param parts and splatted
+  // parts of route strings.
+  var optionalParam = /\((.*?)\)/g;
+  var namedParam    = /(\(\?)?:\w+/g;
+  var splatParam    = /\*\w+/g;
+  var escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#\s]/g;
+
+  // Set up all inheritable **Backbone.Router** properties and methods.
+  _.extend(Router.prototype, Events, {
+
+    // Initialize is an empty function by default. Override it with your own
+    // initialization logic.
+    initialize: function(){},
+
+    // Manually bind a single named route to a callback. For example:
+    //
+    //     this.route('search/:query/p:num', 'search', function(query, num) {
+    //       ...
+    //     });
+    //
+    route: function(route, name, callback) {
+      if (!_.isRegExp(route)) route = this._routeToRegExp(route);
+      if (_.isFunction(name)) {
+        callback = name;
+        name = '';
+      }
+      if (!callback) callback = this[name];
+      var router = this;
+      Backbone.history.route(route, function(fragment) {
+        var args = router._extractParameters(route, fragment);
+        router.execute(callback, args);
+        router.trigger.apply(router, ['route:' + name].concat(args));
+        router.trigger('route', name, args);
+        Backbone.history.trigger('route', router, name, args);
+      });
+      return this;
+    },
+
+    // Execute a route handler with the provided parameters.  This is an
+    // excellent place to do pre-route setup or post-route cleanup.
+    execute: function(callback, args) {
+      if (callback) callback.apply(this, args);
+    },
+
+    // Simple proxy to `Backbone.history` to save a fragment into the history.
+    navigate: function(fragment, options) {
+      Backbone.history.navigate(fragment, options);
+      return this;
+    },
+
+    // Bind all defined routes to `Backbone.history`. We have to reverse the
+    // order of the routes here to support behavior where the most general
+    // routes can be defined at the bottom of the route map.
+    _bindRoutes: function() {
+      if (!this.routes) return;
+      this.routes = _.result(this, 'routes');
+      var route, routes = _.keys(this.routes);
+      while ((route = routes.pop()) != null) {
+        this.route(route, this.routes[route]);
+      }
+    },
+
+    // Convert a route string into a regular expression, suitable for matching
+    // against the current location hash.
+    _routeToRegExp: function(route) {
+      route = route.replace(escapeRegExp, '\\$&')
+                   .replace(optionalParam, '(?:$1)?')
+                   .replace(namedParam, function(match, optional) {
+                     return optional ? match : '([^/?]+)';
+                   })
+                   .replace(splatParam, '([^?]*?)');
+      return new RegExp('^' + route + '(?:\\?([\\s\\S]*))?$');
+    },
+
+    // Given a route, and a URL fragment that it matches, return the array of
+    // extracted decoded parameters. Empty or unmatched parameters will be
+    // treated as `null` to normalize cross-browser behavior.
+    _extractParameters: function(route, fragment) {
+      var params = route.exec(fragment).slice(1);
+      return _.map(params, function(param, i) {
+        // Don't decode the search params.
+        if (i === params.length - 1) return param || null;
+        return param ? decodeURIComponent(param) : null;
+      });
+    }
+
+  });
+
+  // Backbone.History
+  // ----------------
+
+  // Handles cross-browser history management, based on either
+  // [pushState](http://diveintohtml5.info/history.html) and real URLs, or
+  // [onhashchange](https://developer.mozilla.org/en-US/docs/DOM/window.onhashchange)
+  // and URL fragments. If the browser supports neither (old IE, natch),
+  // falls back to polling.
+  var History = Backbone.History = function() {
+    this.handlers = [];
+    _.bindAll(this, 'checkUrl');
+
+    // Ensure that `History` can be used outside of the browser.
+    if (typeof window !== 'undefined') {
+      this.location = window.location;
+      this.history = window.history;
+    }
+  };
+
+  // Cached regex for stripping a leading hash/slash and trailing space.
+  var routeStripper = /^[#\/]|\s+$/g;
+
+  // Cached regex for stripping leading and trailing slashes.
+  var rootStripper = /^\/+|\/+$/g;
+
+  // Cached regex for detecting MSIE.
+  var isExplorer = /msie [\w.]+/;
+
+  // Cached regex for removing a trailing slash.
+  var trailingSlash = /\/$/;
+
+  // Cached regex for stripping urls of hash.
+  var pathStripper = /#.*$/;
+
+  // Has the history handling already been started?
+  History.started = false;
+
+  // Set up all inheritable **Backbone.History** properties and methods.
+  _.extend(History.prototype, Events, {
+
+    // The default interval to poll for hash changes, if necessary, is
+    // twenty times a second.
+    interval: 50,
+
+    // Are we at the app root?
+    atRoot: function() {
+      return this.location.pathname.replace(/[^\/]$/, '$&/') === this.root;
+    },
+
+    // Gets the true hash value. Cannot use location.hash directly due to bug
+    // in Firefox where location.hash will always be decoded.
+    getHash: function(window) {
+      var match = (window || this).location.href.match(/#(.*)$/);
+      return match ? match[1] : '';
+    },
+
+    // Get the cross-browser normalized URL fragment, either from the URL,
+    // the hash, or the override.
+    getFragment: function(fragment, forcePushState) {
+      if (fragment == null) {
+        if (this._hasPushState || !this._wantsHashChange || forcePushState) {
+          fragment = decodeURI(this.location.pathname + this.location.search);
+          var root = this.root.replace(trailingSlash, '');
+          if (!fragment.indexOf(root)) fragment = fragment.slice(root.length);
+        } else {
+          fragment = this.getHash();
+        }
+      }
+      return fragment.replace(routeStripper, '');
+    },
+
+    // Start the hash change handling, returning `true` if the current URL matches
+    // an existing route, and `false` otherwise.
+    start: function(options) {
+      if (History.started) throw new Error("Backbone.history has already been started");
+      History.started = true;
+
+      // Figure out the initial configuration. Do we need an iframe?
+      // Is pushState desired ... is it available?
+      this.options          = _.extend({root: '/'}, this.options, options);
+      this.root             = this.options.root;
+      this._wantsHashChange = this.options.hashChange !== false;
+      this._wantsPushState  = !!this.options.pushState;
+      this._hasPushState    = !!(this.options.pushState && this.history && this.history.pushState);
+      var fragment          = this.getFragment();
+      var docMode           = document.documentMode;
+      var oldIE             = (isExplorer.exec(navigator.userAgent.toLowerCase()) && (!docMode || docMode <= 7));
+
+      // Normalize root to always include a leading and trailing slash.
+      this.root = ('/' + this.root + '/').replace(rootStripper, '/');
+
+      if (oldIE && this._wantsHashChange) {
+        var frame = Backbone.$('<iframe src="javascript:0" tabindex="-1">');
+        this.iframe = frame.hide().appendTo('body')[0].contentWindow;
+        this.navigate(fragment);
+      }
+
+      // Depending on whether we're using pushState or hashes, and whether
+      // 'onhashchange' is supported, determine how we check the URL state.
+      if (this._hasPushState) {
+        Backbone.$(window).on('popstate', this.checkUrl);
+      } else if (this._wantsHashChange && ('onhashchange' in window) && !oldIE) {
+        Backbone.$(window).on('hashchange', this.checkUrl);
+      } else if (this._wantsHashChange) {
+        this._checkUrlInterval = setInterval(this.checkUrl, this.interval);
+      }
+
+      // Determine if we need to change the base url, for a pushState link
+      // opened by a non-pushState browser.
+      this.fragment = fragment;
+      var loc = this.location;
+
+      // Transition from hashChange to pushState or vice versa if both are
+      // requested.
+      if (this._wantsHashChange && this._wantsPushState) {
+
+        // If we've started off with a route from a `pushState`-enabled
+        // browser, but we're currently in a browser that doesn't support it...
+        if (!this._hasPushState && !this.atRoot()) {
+          this.fragment = this.getFragment(null, true);
+          this.location.replace(this.root + '#' + this.fragment);
+          // Return immediately as browser will do redirect to new url
+          return true;
+
+        // Or if we've started out with a hash-based route, but we're currently
+        // in a browser where it could be `pushState`-based instead...
+        } else if (this._hasPushState && this.atRoot() && loc.hash) {
+          this.fragment = this.getHash().replace(routeStripper, '');
+          this.history.replaceState({}, document.title, this.root + this.fragment);
+        }
+
+      }
+
+      if (!this.options.silent) return this.loadUrl();
+    },
+
+    // Disable Backbone.history, perhaps temporarily. Not useful in a real app,
+    // but possibly useful for unit testing Routers.
+    stop: function() {
+      Backbone.$(window).off('popstate', this.checkUrl).off('hashchange', this.checkUrl);
+      if (this._checkUrlInterval) clearInterval(this._checkUrlInterval);
+      History.started = false;
+    },
+
+    // Add a route to be tested when the fragment changes. Routes added later
+    // may override previous routes.
+    route: function(route, callback) {
+      this.handlers.unshift({route: route, callback: callback});
+    },
+
+    // Checks the current URL to see if it has changed, and if it has,
+    // calls `loadUrl`, normalizing across the hidden iframe.
+    checkUrl: function(e) {
+      var current = this.getFragment();
+      if (current === this.fragment && this.iframe) {
+        current = this.getFragment(this.getHash(this.iframe));
+      }
+      if (current === this.fragment) return false;
+      if (this.iframe) this.navigate(current);
+      this.loadUrl();
+    },
+
+    // Attempt to load the current URL fragment. If a route succeeds with a
+    // match, returns `true`. If no defined routes matches the fragment,
+    // returns `false`.
+    loadUrl: function(fragment) {
+      fragment = this.fragment = this.getFragment(fragment);
+      return _.any(this.handlers, function(handler) {
+        if (handler.route.test(fragment)) {
+          handler.callback(fragment);
+          return true;
+        }
+      });
+    },
+
+    // Save a fragment into the hash history, or replace the URL state if the
+    // 'replace' option is passed. You are responsible for properly URL-encoding
+    // the fragment in advance.
+    //
+    // The options object can contain `trigger: true` if you wish to have the
+    // route callback be fired (not usually desirable), or `replace: true`, if
+    // you wish to modify the current URL without adding an entry to the history.
+    navigate: function(fragment, options) {
+      if (!History.started) return false;
+      if (!options || options === true) options = {trigger: !!options};
+
+      var url = this.root + (fragment = this.getFragment(fragment || ''));
+
+      // Strip the hash for matching.
+      fragment = fragment.replace(pathStripper, '');
+
+      if (this.fragment === fragment) return;
+      this.fragment = fragment;
+
+      // Don't include a trailing slash on the root.
+      if (fragment === '' && url !== '/') url = url.slice(0, -1);
+
+      // If pushState is available, we use it to set the fragment as a real URL.
+      if (this._hasPushState) {
+        this.history[options.replace ? 'replaceState' : 'pushState']({}, document.title, url);
+
+      // If hash changes haven't been explicitly disabled, update the hash
+      // fragment to store history.
+      } else if (this._wantsHashChange) {
+        this._updateHash(this.location, fragment, options.replace);
+        if (this.iframe && (fragment !== this.getFragment(this.getHash(this.iframe)))) {
+          // Opening and closing the iframe tricks IE7 and earlier to push a
+          // history entry on hash-tag change.  When replace is true, we don't
+          // want this.
+          if(!options.replace) this.iframe.document.open().close();
+          this._updateHash(this.iframe.location, fragment, options.replace);
+        }
+
+      // If you've told us that you explicitly don't want fallback hashchange-
+      // based history, then `navigate` becomes a page refresh.
+      } else {
+        return this.location.assign(url);
+      }
+      if (options.trigger) return this.loadUrl(fragment);
+    },
+
+    // Update the hash location, either replacing the current entry, or adding
+    // a new one to the browser history.
+    _updateHash: function(location, fragment, replace) {
+      if (replace) {
+        var href = location.href.replace(/(javascript:|#).*$/, '');
+        location.replace(href + '#' + fragment);
+      } else {
+        // Some browsers require that `hash` contains a leading #.
+        location.hash = '#' + fragment;
+      }
+    }
+
+  });
+
+  // Create the default Backbone.history.
+  Backbone.history = new History;
+
+  // Helpers
+  // -------
+
+  // Helper function to correctly set up the prototype chain, for subclasses.
+  // Similar to `goog.inherits`, but uses a hash of prototype properties and
+  // class properties to be extended.
+  var extend = function(protoProps, staticProps) {
+    var parent = this;
+    var child;
+
+    // The constructor function for the new subclass is either defined by you
+    // (the "constructor" property in your `extend` definition), or defaulted
+    // by us to simply call the parent's constructor.
+    if (protoProps && _.has(protoProps, 'constructor')) {
+      child = protoProps.constructor;
+    } else {
+      child = function(){ return parent.apply(this, arguments); };
+    }
+
+    // Add static properties to the constructor function, if supplied.
+    _.extend(child, parent, staticProps);
+
+    // Set the prototype chain to inherit from `parent`, without calling
+    // `parent`'s constructor function.
+    var Surrogate = function(){ this.constructor = child; };
+    Surrogate.prototype = parent.prototype;
+    child.prototype = new Surrogate;
+
+    // Add prototype properties (instance properties) to the subclass,
+    // if supplied.
+    if (protoProps) _.extend(child.prototype, protoProps);
+
+    // Set a convenience property in case the parent's prototype is needed
+    // later.
+    child.__super__ = parent.prototype;
+
+    return child;
+  };
+
+  // Set up inheritance for the model, collection, router, view and history.
+  Model.extend = Collection.extend = Router.extend = View.extend = History.extend = extend;
+
+  // Throw an error when a URL is needed, and none is supplied.
+  var urlError = function() {
+    throw new Error('A "url" property or function must be specified');
+  };
+
+  // Wrap an optional error callback with a fallback error event.
+  var wrapError = function(model, options) {
+    var error = options.error;
+    options.error = function(resp) {
+      if (error) error(model, resp, options);
+      model.trigger('error', model, resp, options);
+    };
+  };
+
+  return Backbone;
+
+}));
+
+},{"underscore":undefined}],"baron":[function(require,module,exports){
+(function(window, $, undefined) {
+    'use strict';
+
+    if (!window) return; // Server side
+
+var
+    _baron = baron, // Stored baron value for noConflict usage
+    pos = ['left', 'top', 'right', 'bottom', 'width', 'height'],
+    origin = {
+        v: { // Vertical
+            x: 'Y', pos: pos[1], oppos: pos[3], crossPos: pos[0], crossOpPos: pos[2], size: pos[5], crossSize: pos[4],
+            client: 'clientHeight', crossClient: 'clientWidth', crossScroll: 'scrollWidth', offset: 'offsetHeight', crossOffset: 'offsetWidth', offsetPos: 'offsetTop',
+            scroll: 'scrollTop', scrollSize: 'scrollHeight'
+        },
+        h: { // Horizontal
+            x: 'X', pos: pos[0], oppos: pos[2], crossPos: pos[1], crossOpPos: pos[3], size: pos[4], crossSize: pos[5],
+            client: 'clientWidth', crossClient: 'clientHeight', crossScroll: 'scrollHeight', offset: 'offsetWidth', crossOffset: 'offsetHeight', offsetPos: 'offsetLeft',
+            scroll: 'scrollLeft', scrollSize: 'scrollWidth'
+        }
+    },
+
+    each = function(obj, iterator) {
+        var i = 0;
+
+        if (obj.length === undefined || obj === window) obj = [obj];
+
+        while (obj[i]) {
+            iterator.call(this, obj[i], i);
+            i++;
+        }
+    },
+
+    baron = function(params) {
+        var jQueryMode,
+            roots,
+            $;
+
+        params = params || {};
+        $ = params.$ || $ || window.jQuery;
+        jQueryMode = this instanceof $;  // this - window or jQuery instance
+
+        if (jQueryMode) {
+            params.root = roots = this;
+        } else {
+            roots = $(params.root || params.scroller);
+        }
+
+        var instance = new baron.fn.constructor(roots, params, $);
+
+        if (instance.autoUpdate) {
+            instance.autoUpdate();
+        }
+
+        return instance;
+    };
+
+    // shortcut for getTime
+    function getTime() {
+        return new Date().getTime();
+    }
+
+    baron.fn = {
+        constructor: function(roots, input, $) {
+            var params = validate(input);
+
+            params.$ = $;
+            each.call(this, roots, function(root, i) {
+                var localParams = clone(params);
+
+                if (params.root && params.scroller) {
+                    localParams.scroller = params.$(params.scroller, root);
+                    if (!localParams.scroller.length) {
+                        localParams.scroller = root;
+                    }
+                } else {
+                    localParams.scroller = root;
+                }
+
+                localParams.root = root;
+                this[i] = init(localParams);
+                this.length = i + 1;
+            });
+
+            this.params = params;
+        },
+
+        dispose: function() {
+            var params = this.params;
+
+            if (this[0]) { /* Если есть хотя бы 1 рабочий инстанс */
+                each(this, function(item) {
+                    item.dispose(params);
+                });
+            }
+            this.params = null;
+        },
+
+        update: function() {
+            var i = 0;
+
+            while (this[i]) {
+                this[i].update.apply(this[i], arguments);
+                i++;
+            }
+        },
+
+        baron: function(params) {
+            params.root = [];
+            params.scroller = this.params.scroller;
+
+            each.call(this, this, function(elem) {
+                params.root.push(elem.root);
+            });
+            params.direction = (this.params.direction == 'v') ? 'h' : 'v';
+            params._chain = true;
+
+            return baron(params);
+        }
+    };
+
+    function manageEvents(item, eventManager, mode) {
+        item._eventHandlers = item._eventHandlers || [ // Creating new functions for one baron item only one time
+            {
+                // onScroll:
+                element: item.scroller,
+
+                handler: function(e) {
+                    item.scroll(e);
+                },
+
+                type: 'scroll'
+            }, {
+                // css transitions & animations
+                element: item.root,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'transitionend animationend'
+            }, {
+                // onKeyup (textarea):
+                element: item.scroller,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'keyup'
+            }, {
+                // onMouseDown:
+                element: item.bar,
+
+                handler: function(e) {
+                    e.preventDefault(); // Text selection disabling in Opera... and all other browsers?
+                    item.selection(); // Disable text selection in ie8
+                    item.drag.now = 1; // Save private byte
+                },
+
+                type: 'touchstart mousedown'
+            }, {
+                // onMouseUp:
+                element: document,
+
+                handler: function() {
+                    item.selection(1); // Enable text selection
+                    item.drag.now = 0;
+                },
+
+                type: 'mouseup blur touchend'
+            }, {
+                // onCoordinateReset:
+                element: document,
+
+                handler: function(e) {
+                    if (e.button != 2) { // Not RM
+                        item._pos0(e);
+                    }
+                },
+
+                type: 'touchstart mousedown'
+            }, {
+                // onMouseMove:
+                element: document,
+
+                handler: function(e) {
+                    if (item.drag.now) {
+                        item.drag(e);
+                    }
+                },
+
+                type: 'mousemove touchmove'
+            }, {
+                // onResize:
+                element: window,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'resize'
+            }, {
+                // sizeChange:
+                element: item.root,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'sizeChange'
+            }
+        ];
+
+        each(item._eventHandlers, function(event) {
+            if (event.element) {
+                eventManager(event.element, event.type, event.handler, mode);
+            }
+        });
+
+        // if (item.scroller) {
+        //     event(item.scroller, 'scroll', item._eventHandlers.onScroll, mode);
+        // }
+        // if (item.bar) {
+        //     event(item.bar, 'touchstart mousedown', item._eventHandlers.onMouseDown, mode);
+        // }
+        // event(document, 'mouseup blur touchend', item._eventHandlers.onMouseUp, mode);
+        // event(document, 'touchstart mousedown', item._eventHandlers.onCoordinateReset, mode);
+        // event(document, 'mousemove touchmove', item._eventHandlers.onMouseMove, mode);
+        // event(window, 'resize', item._eventHandlers.onResize, mode);
+        // if (item.root) {
+        //     event(item.root, 'sizeChange', item._eventHandlers.onResize, mode); // Custon event for alternate baron update mechanism
+        // }
+    }
+
+    function manageAttr(node, direction, mode) {
+        var attrName = 'data-baron-' + direction;
+
+        if (mode == 'on') {
+            node.setAttribute(attrName, 'inited');
+        } else if (mode == 'off') {
+            node.removeAttribute(attrName);
+        } else {
+            return node.getAttribute(attrName);
+        }
+    }
+
+    function init(params) {
+        if (manageAttr(params.root, params.direction)) throw new Error('Second baron initialization');
+
+        var out = new item.prototype.constructor(params); // __proto__ of returning object is baron.prototype
+
+        manageEvents(out, params.event, 'on');
+
+        manageAttr(out.root, params.direction, 'on');
+
+        out.update();
+
+        return out;
+    }
+
+    function clone(input) {
+        var output = {};
+
+        input = input || {};
+
+        for (var key in input) {
+            if (input.hasOwnProperty(key)) {
+                output[key] = input[key];
+            }
+        }
+
+        return output;
+    }
+
+    function validate(input) {
+        var output = clone(input);
+
+        output.direction = output.direction || 'v';
+
+        var event = input.event || function(elem, event, func, mode) {
+            output.$(elem)[mode || 'on'](event, func);
+        };
+
+        output.event = function(elems, e, func, mode) {
+            each(elems, function(elem) {
+                event(elem, e, func, mode);
+            });
+        };
+
+        return output;
+    }
+
+    function fire(eventName) {
+        /* jshint validthis:true */
+        if (this.events && this.events[eventName]) {
+            for (var i = 0 ; i < this.events[eventName].length ; i++) {
+                var args = Array.prototype.slice.call( arguments, 1 );
+
+                this.events[eventName][i].apply(this, args);
+            }
+        }
+    }
+
+    var item = {};
+
+    item.prototype = {
+        // underscore.js realization
+        _debounce: function(func, wait) {
+            var self = this,
+                timeout,
+                // args, // right now there is no need for arguments
+                // context, // and for context
+                timestamp;
+                // result; // and for result
+
+            var later = function() {
+                if (self._disposed) {
+                    clearTimeout(timeout);
+                    timeout = self = null;
+                    return;
+                }
+
+                var last = getTime() - timestamp;
+
+                if (last < wait && last >= 0) {
+                    timeout = setTimeout(later, wait - last);
+                } else {
+                    timeout = null;
+                    // result = func.apply(context, args);
+                    func();
+                    // context = args = null;
+                }
+            };
+
+            return function() {
+                // context = this;
+                // args = arguments;
+                timestamp = getTime();
+
+                if (!timeout) {
+                    timeout = setTimeout(later, wait);
+                }
+
+                // return result;
+            };
+        },
+
+        constructor: function(params) {
+            var $,
+                barPos,
+                scrollerPos0,
+                track,
+                resizePauseTimer,
+                scrollPauseTimer,
+                scrollingTimer,
+                pause,
+                scrollLastFire,
+                resizeLastFire,
+                oldBarSize;
+
+            resizeLastFire = scrollLastFire = getTime();
+
+            $ = this.$ = params.$;
+            this.event = params.event;
+            this.events = {};
+
+            function getNode(sel, context) {
+                return $(sel, context)[0]; // Can be undefined
+            }
+
+            // DOM elements
+            this.root = params.root; // Always html node, not just selector
+            this.scroller = getNode(params.scroller); // (params.scroller) ? getNode(params.scroller, this.root) : this.root;
+            this.bar = getNode(params.bar, this.root);
+            track = this.track = getNode(params.track, this.root);
+            if (!this.track && this.bar) {
+                track = this.bar.parentNode;
+            }
+            this.clipper = this.scroller.parentNode;
+
+            // Parameters
+            this.direction = params.direction;
+            this.origin = origin[this.direction];
+            this.barOnCls = params.barOnCls || '_baron';
+            this.scrollingCls = params.scrollingCls;
+            this.barTopLimit = 0;
+            pause = params.pause * 1000 || 0;
+
+            // Updating height or width of bar
+            function setBarSize(size) {
+                /* jshint validthis:true */
+                var barMinSize = this.barMinSize || 20;
+
+                if (size > 0 && size < barMinSize) {
+                    size = barMinSize;
+                }
+
+                if (this.bar) {
+                    $(this.bar).css(this.origin.size, parseInt(size, 10) + 'px');
+                }
+            }
+
+            // Updating top or left bar position
+            function posBar(pos) {
+                /* jshint validthis:true */
+                if (this.bar) {
+                    var was = $(this.bar).css(this.origin.pos),
+                        will = +pos + 'px';
+
+                    if (will && will != was) {
+                        $(this.bar).css(this.origin.pos, will);
+                    }
+                }
+            }
+
+            // Free path for bar
+            function k() {
+                /* jshint validthis:true */
+                return track[this.origin.client] - this.barTopLimit - this.bar[this.origin.offset];
+            }
+
+            // Relative content top position to bar top position
+            function relToPos(r) {
+                /* jshint validthis:true */
+                return r * k.call(this) + this.barTopLimit;
+            }
+
+            // Bar position to relative content position
+            function posToRel(t) {
+                /* jshint validthis:true */
+                return (t - this.barTopLimit) / k.call(this);
+            }
+
+            // Cursor position in main direction in px // Now with iOs support
+            this.cursor = function(e) {
+                return e['client' + this.origin.x] || (((e.originalEvent || e).touches || {})[0] || {})['page' + this.origin.x];
+            };
+
+            // Text selection pos preventing
+            function dontPosSelect() {
+                return false;
+            }
+
+            this.pos = function(x) { // Absolute scroller position in px
+                var ie = 'page' + this.origin.x + 'Offset',
+                    key = (this.scroller[ie]) ? ie : this.origin.scroll;
+
+                if (x !== undefined) this.scroller[key] = x;
+
+                return this.scroller[key];
+            };
+
+            this.rpos = function(r) { // Relative scroller position (0..1)
+                var free = this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client],
+                    x;
+
+                if (r) {
+                    x = this.pos(r * free);
+                } else {
+                    x = this.pos();
+                }
+
+                return x / (free || 1);
+            };
+
+            // Switch on the bar by adding user-defined CSS classname to scroller
+            this.barOn = function(dispose) {
+                if (this.barOnCls) {
+                    if (dispose || this.scroller[this.origin.client] >= this.scroller[this.origin.scrollSize]) {
+                        if ($(this.root).hasClass(this.barOnCls)) $(this.root).removeClass(this.barOnCls);
+                    } else {
+                        if (!$(this.root).hasClass(this.barOnCls)) $(this.root).addClass(this.barOnCls);
+                    }
+                }
+            };
+
+            this._pos0 = function(e) {
+                scrollerPos0 = this.cursor(e) - barPos;
+            };
+
+            this.drag = function(e) {
+                this.scroller[this.origin.scroll] = posToRel.call(this, this.cursor(e) - scrollerPos0) * (this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client]);
+            };
+
+            // Text selection preventing on drag
+            this.selection = function(enable) {
+                this.event(document, 'selectpos selectstart', dontPosSelect, enable ? 'off' : 'on');
+            };
+
+            // onResize & DOM modified handler
+            this.resize = function() {
+                var self = this,
+                    delay = 0;
+
+                if (getTime() - resizeLastFire < pause) {
+                    clearTimeout(resizePauseTimer);
+                    delay = pause;
+                }
+
+                function upd() {
+                    var delta,
+                        client,
+                        offset,
+                        was,
+                        will;
+
+                    // Change a css inline rule only if it is really changing value
+                    // function tryCss(prop, value, ) {
+                    //     var was = $(self.clipper).css(self.origin.crossSize),
+                    //         will = self.clipper[self.origin.crossClient] - delta + 'px';
+                    // };
+
+                    self.barOn();
+
+                    client = self.scroller[self.origin.crossClient];
+                    offset = self.scroller[self.origin.crossOffset];
+                    delta = offset - client;
+
+                    if (offset) { // if there is no size, css should not be set
+                        if (params.freeze && !self.clipper.style[self.origin.crossSize]) { // Sould fire only once
+                            was = $(self.clipper).css(self.origin.crossSize);
+                            will = self.clipper[self.origin.crossClient] - delta + 'px';
+
+                            if (was != will) {
+                                $(self.clipper).css(self.origin.crossSize, will);
+                            }
+                        }
+
+                        was = $(self.clipper).css(self.origin.crossSize);
+                        will = self.clipper[self.origin.crossClient] + delta + 'px';
+
+                        if (was != will) {
+                            $(self.scroller).css(self.origin.crossSize, will);
+                        }
+                    }
+
+                    Array.prototype.unshift.call(arguments, 'resize');
+                    fire.apply(self, arguments);
+
+                    resizeLastFire = getTime();
+                }
+
+                if (delay) {
+                    resizePauseTimer = setTimeout(upd, delay);
+                } else {
+                    upd();
+                }
+            };
+
+            this.updatePositions = function() {
+                var newBarSize,
+                    self = this;
+
+                if (self.bar) {
+                    newBarSize = (track[self.origin.client] - self.barTopLimit) * self.scroller[self.origin.client] / self.scroller[self.origin.scrollSize];
+
+                    // Positioning bar
+                    if (parseInt(oldBarSize, 10) != parseInt(newBarSize, 10)) {
+                        setBarSize.call(self, newBarSize);
+                        oldBarSize = newBarSize;
+                    }
+
+                    barPos = relToPos.call(self, self.rpos());
+
+                    posBar.call(self, barPos);
+                }
+
+                Array.prototype.unshift.call( arguments, 'scroll' );
+                fire.apply(self, arguments);
+
+                scrollLastFire = getTime();
+            };
+
+            // onScroll handler
+            this.scroll = function() {
+                var delay = 0,
+                    self = this;
+
+                if (getTime() - scrollLastFire < pause) {
+                    clearTimeout(scrollPauseTimer);
+                    delay = pause;
+                }
+
+                if (getTime() - scrollLastFire < pause) {
+                    clearTimeout(scrollPauseTimer);
+                    delay = pause;
+                }
+
+                if (delay) {
+                    scrollPauseTimer = setTimeout(function() {
+                        self.updatePositions();
+                    }, delay);
+                } else {
+                    self.updatePositions();
+                }
+
+                if (self.scrollingCls) {
+                    if (!scrollingTimer) {
+                        this.$(this.scroller).addClass(this.scrollingCls);
+                    }
+                    clearTimeout(scrollingTimer);
+                    scrollingTimer = setTimeout(function() {
+                        self.$(self.scroller).removeClass(self.scrollingCls);
+                        scrollingTimer = undefined;
+                    }, 300);
+                }
+
+            };
+
+            return this;
+        },
+
+        update: function(params) {
+            fire.call(this, 'upd', params); // Update all plugins' params
+
+            this.resize(1);
+            this.updatePositions();
+
+            return this;
+        },
+
+        // One instance
+        dispose: function(params) {
+            manageEvents(this, this.event, 'off');
+            manageAttr(this.root, params.direction, 'off');
+            $(this.scroller).css(this.origin.crossSize, '');
+            this.barOn(true);
+            fire.call(this, 'dispose');
+            this._disposed = true;
+        },
+
+        on: function(eventName, func, arg) {
+            var names = eventName.split(' ');
+
+            for (var i = 0 ; i < names.length ; i++) {
+                if (names[i] == 'init') {
+                    func.call(this, arg);
+                } else {
+                    this.events[names[i]] = this.events[names[i]] || [];
+
+                    this.events[names[i]].push(function(userArg) {
+                        func.call(this, userArg || arg);
+                    });
+                }
+            }
+        }
+    };
+
+    baron.fn.constructor.prototype = baron.fn;
+    item.prototype.constructor.prototype = item.prototype;
+
+    // Use when you need "baron" global var for another purposes
+    baron.noConflict = function() {
+        window.baron = _baron; // Restoring original value of "baron" global var
+
+        return baron;
+    };
+
+    baron.version = '0.7.10';
+
+    if ($ && $.fn) { // Adding baron to jQuery as plugin
+        $.fn.baron = baron;
+    }
+
+    window.baron = baron; // Use noConflict method if you need window.baron var for another purposes
+    if (window['module'] && module.exports) {
+        module.exports = baron.noConflict();
+    }
+})(window, window.$);
+
+/* Fixable elements plugin for baron 0.6+ */
+(function(window, undefined) {
+    var fix = function(userParams) {
+        var elements, viewPortSize,
+            params = { // Default params
+                outside: '',
+                inside: '',
+                before: '',
+                after: '',
+                past: '',
+                future: '',
+                radius: 0,
+                minView: 0
+            },
+            topFixHeights = [], // inline style for element
+            topRealHeights = [], // ? something related to negative margins for fixable elements
+            headerTops = [], // offset positions when not fixed
+            scroller = this.scroller,
+            eventManager = this.event,
+            $ = this.$,
+            self = this;
+
+        // i - number of fixing element, pos - fix-position in px, flag - 1: top, 2: bottom
+        // Invocation only in case when fix-state changed
+        function fixElement(i, pos, flag) {
+            var ori = flag == 1 ? 'pos' : 'oppos';
+
+            if (viewPortSize < (params.minView || 0)) { // No headers fixing when no enought space for viewport
+                pos = undefined;
+            }
+
+            // Removing all fixing stuff - we can do this because fixElement triggers only when fixState really changed
+            this.$(elements[i]).css(this.origin.pos, '').css(this.origin.oppos, '').removeClass(params.outside);
+
+            // Fixing if needed
+            if (pos !== undefined) {
+                pos += 'px';
+                this.$(elements[i]).css(this.origin[ori], pos).addClass(params.outside);
+            }
+        }
+
+        function bubbleWheel(e) {
+            try {
+                i = document.createEvent('WheelEvent'); // i - for extra byte
+                // evt.initWebKitWheelEvent(deltaX, deltaY, window, screenX, screenY, clientX, clientY, ctrlKey, altKey, shiftKey, metaKey);
+                i.initWebKitWheelEvent(e.originalEvent.wheelDeltaX, e.originalEvent.wheelDeltaY);
+                scroller.dispatchEvent(i);
+                e.preventDefault();
+            } catch (e) {}
+        }
+
+        function init(_params) {
+            var pos;
+
+            for (var key in _params) {
+                params[key] = _params[key];
+            }
+
+            elements = this.$(params.elements, this.scroller);
+
+            if (elements) {
+                viewPortSize = this.scroller[this.origin.client];
+                for (var i = 0 ; i < elements.length ; i++) {
+                    // Variable header heights
+                    pos = {};
+                    pos[this.origin.size] = elements[i][this.origin.offset];
+                    if (elements[i].parentNode !== this.scroller) {
+                        this.$(elements[i].parentNode).css(pos);
+                    }
+                    pos = {};
+                    pos[this.origin.crossSize] = elements[i].parentNode[this.origin.crossClient];
+                    this.$(elements[i]).css(pos);
+
+                    // Between fixed headers
+                    viewPortSize -= elements[i][this.origin.offset];
+
+                    headerTops[i] = elements[i].parentNode[this.origin.offsetPos]; // No paddings for parentNode
+
+                    // Summary elements height above current
+                    topFixHeights[i] = (topFixHeights[i - 1] || 0); // Not zero because of negative margins
+                    topRealHeights[i] = (topRealHeights[i - 1] || Math.min(headerTops[i], 0));
+
+                    if (elements[i - 1]) {
+                        topFixHeights[i] += elements[i - 1][this.origin.offset];
+                        topRealHeights[i] += elements[i - 1][this.origin.offset];
+                    }
+
+                    if ( !(i == 0 && headerTops[i] == 0)/* && force */) {
+                        this.event(elements[i], 'mousewheel', bubbleWheel, 'off');
+                        this.event(elements[i], 'mousewheel', bubbleWheel);
+                    }
+                }
+
+                if (params.limiter && elements[0]) { // Bottom edge of first header as top limit for track
+                    if (this.track && this.track != this.scroller) {
+                        pos = {};
+                        pos[this.origin.pos] = elements[0].parentNode[this.origin.offset];
+                        this.$(this.track).css(pos);
+                    } else {
+                        this.barTopLimit = elements[0].parentNode[this.origin.offset];
+                    }
+                    // this.barTopLimit = elements[0].parentNode[this.origin.offset];
+                    this.scroll();
+                }
+
+                if (params.limiter === false) { // undefined (in second fix instance) should have no influence on bar limit
+                    this.barTopLimit = 0;
+                }
+            }
+
+            var event = {
+                element: elements,
+
+                handler: function() {
+                    var parent = $(this)[0].parentNode,
+                        top = parent.offsetTop,
+                        num;
+
+                    // finding num -> elements[num] === this
+                    for (var i = 0 ; i < elements.length ; i++ ) {
+                        if (elements[i] === this) num = i;
+                    }
+
+                    var pos = top - topFixHeights[num];
+
+                    if (params.scroll) { // User defined callback
+                        params.scroll({
+                            x1: self.scroller.scrollTop,
+                            x2: pos
+                        });
+                    } else {
+                        self.scroller.scrollTop = pos;
+                    }
+                },
+
+                type: 'click'
+            };
+
+            if (params.clickable) {
+                this._eventHandlers.push(event); // For auto-dispose
+                // eventManager(event.element, event.type, event.handler, 'off');
+                eventManager(event.element, event.type, event.handler, 'on');
+            }
+        }
+
+        this.on('init', init, userParams);
+
+        var fixFlag = [], // 1 - past, 2 - future, 3 - current (not fixed)
+            gradFlag = [];
+        this.on('init scroll', function() {
+            var fixState, hTop, gradState;
+
+            if (elements) {
+                var change;
+
+                // fixFlag update
+                for (var i = 0 ; i < elements.length ; i++) {
+                    fixState = 0;
+                    if (headerTops[i] - this.pos() < topRealHeights[i] + params.radius) {
+                        // Header trying to go up
+                        fixState = 1;
+                        hTop = topFixHeights[i];
+                    } else if (headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize - params.radius) {
+                        // Header trying to go down
+                        fixState = 2;
+                        // console.log('topFixHeights[i] + viewPortSize + topRealHeights[i]', topFixHeights[i], this.scroller[this.origin.client], topRealHeights[i]);
+                        hTop = this.scroller[this.origin.client] - elements[i][this.origin.offset] - topFixHeights[i] - viewPortSize;
+                        // console.log('hTop', hTop, viewPortSize, elements[this.origin.offset], topFixHeights[i]);
+                        //(topFixHeights[i] + viewPortSize + elements[this.origin.offset]) - this.scroller[this.origin.client];
+                    } else {
+                        // Header in viewport
+                        fixState = 3;
+                        hTop = undefined;
+                    }
+
+                    gradState = false;
+                    if (headerTops[i] - this.pos() < topRealHeights[i] || headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize) {
+                        gradState = true;
+                    }
+
+                    if (fixState != fixFlag[i] || gradState != gradFlag[i]) {
+                        fixElement.call(this, i, hTop, fixState);
+                        fixFlag[i] = fixState;
+                        gradFlag[i] = gradState;
+                        change = true;
+                    }
+                }
+
+                // Adding positioning classes (on last top and first bottom header)
+                if (change) { // At leats one change in elements flag structure occured
+                    for (i = 0 ; i < elements.length ; i++) {
+                        if (fixFlag[i] == 1 && params.past) {
+                            this.$(elements[i]).addClass(params.past).removeClass(params.future);
+                        }
+
+                        if (fixFlag[i] == 2 && params.future) {
+                            this.$(elements[i]).addClass(params.future).removeClass(params.past);
+                        }
+
+                        if (fixFlag[i] == 3) {
+                            if (params.future || params.past) this.$(elements[i]).removeClass(params.past).removeClass(params.future);
+                            if (params.inside) this.$(elements[i]).addClass(params.inside);
+                        } else if (params.inside) {
+                            this.$(elements[i]).removeClass(params.inside);
+                        }
+
+                        if (fixFlag[i] != fixFlag[i + 1] && fixFlag[i] == 1 && params.before) {
+                            this.$(elements[i]).addClass(params.before).removeClass(params.after); // Last top fixed header
+                        } else if (fixFlag[i] != fixFlag[i - 1] && fixFlag[i] == 2 && params.after) {
+                            this.$(elements[i]).addClass(params.after).removeClass(params.before); // First bottom fixed header
+                        } else {
+                            this.$(elements[i]).removeClass(params.before).removeClass(params.after);
+                        }
+
+                        if (params.grad) {
+                            if (gradFlag[i]) {
+                                this.$(elements[i]).addClass(params.grad);
+                            } else {
+                                this.$(elements[i]).removeClass(params.grad);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        this.on('resize upd', function(updParams) {
+            init.call(this, updParams && updParams.fix);
+        });
+    };
+
+    baron.fn.fix = function(params) {
+        var i = 0;
+
+        while (this[i]) {
+            fix.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+/* Controls plugin for baron 0.6+ */
+(function(window, undefined) {
+    var controls = function(params) {
+        var forward, backward, track, screen,
+            self = this, // AAAAAA!!!!!11
+            event;
+
+        screen = params.screen || 0.9;
+
+        if (params.forward) {
+            forward = this.$(params.forward, this.clipper);
+
+            event = {
+                element: forward,
+
+                handler: function() {
+                    var y = self.pos() - params.delta || 30;
+
+                    self.pos(y);
+                },
+
+                type: 'click'
+            };
+
+            this._eventHandlers.push(event); // For auto-dispose
+            this.event(event.element, event.type, event.handler, 'on');
+        }
+
+        if (params.backward) {
+            backward = this.$(params.backward, this.clipper);
+
+            event = {
+                element: backward,
+
+                handler: function() {
+                    var y = self.pos() + params.delta || 30;
+
+                    self.pos(y);
+                },
+
+                type: 'click'
+            };
+
+            this._eventHandlers.push(event); // For auto-dispose
+            this.event(event.element, event.type, event.handler, 'on');
+        }
+
+        if (params.track) {
+            if (params.track === true) {
+                track = this.track;
+            } else {
+                track = this.$(params.track, this.clipper)[0];
+            }
+
+            if (track) {
+                event = {
+                    element: track,
+
+                    handler: function(e) {
+                        var x = e['offset' + self.origin.x],
+                            xBar = self.bar[self.origin.offsetPos],
+                            sign = 0;
+
+                        if (x < xBar) {
+                            sign = -1;
+                        } else if (x > xBar + self.bar[self.origin.offset]) {
+                            sign = 1;
+                        }
+
+                        var y = self.pos() + sign * screen * self.scroller[self.origin.client];
+                        self.pos(y);
+                    },
+
+                    type: 'mousedown'
+                };
+
+                this._eventHandlers.push(event); // For auto-dispose
+                this.event(event.element, event.type, event.handler, 'on');
+            }
+        }
+    };
+
+    baron.fn.controls = function(params) {
+        var i = 0;
+
+        while (this[i]) {
+            controls.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+/* Pull to load plugin for baron 0.6+ */
+(function(window, undefined) {
+    var pull = function(params) {
+        var block = this.$(params.block),
+            size = params.size || this.origin.size,
+            limit = params.limit || 80,
+            onExpand = params.onExpand,
+            elements = params.elements || [],
+            inProgress = params.inProgress || '',
+            self = this,
+            _insistence = 0,
+            _zeroXCount = 0,
+            _interval,
+            _timer,
+            _x = 0,
+            _onExpandCalled,
+            _waiting = params.waiting || 500,
+            _on;
+
+        function getSize() {
+            return self.scroller[self.origin.scroll] + self.scroller[self.origin.offset];
+        }
+
+        // Scroller content height
+        function getContentSize() {
+            return self.scroller[self.origin.scrollSize];
+        }
+
+        // Scroller height
+        function getScrollerSize() {
+            return self.scroller[self.origin.client];
+        }
+
+        function step(x, force) {
+            var k = x * 0.0005;
+
+            return Math.floor(force - k * (x + 550));
+        }
+
+        function toggle(on) {
+            _on = on;
+
+            if (on) {
+                update(); // First time with no delay
+                _interval = setInterval(update, 200);
+            } else {
+                clearInterval(_interval);
+            }
+        }
+
+        function update() {
+            var pos = {},
+                height = getSize(),
+                scrollHeight = getContentSize(),
+                dx,
+                op4,
+                scrollInProgress = _insistence == 1;
+
+            op4 = 0; // Возвращающая сила
+            if (_insistence > 0) {
+                op4 = 40;
+            }
+            //if (_insistence > -1) {
+                dx = step(_x, op4);
+                if (height >= scrollHeight - _x && _insistence > -1) {
+                    if (scrollInProgress) {
+                        _x += dx;
+                    }
+                } else {
+                    _x = 0;
+                }
+
+                if (_x < 0) _x = 0;
+
+                pos[size] = _x + 'px';
+                if (getScrollerSize() <= getContentSize()) {
+                    self.$(block).css(pos);
+                    for (var i = 0 ; i < elements.length ; i++) {
+                        self.$(elements[i].self).css(elements[i].property, Math.min(_x / limit * 100, 100) + '%');
+                    }
+                }
+
+                if (inProgress && _x) {
+                    self.$(self.root).addClass(inProgress);
+                }
+
+                if (_x == 0) {
+                    if (params.onCollapse) {
+                        params.onCollapse();
+                    }
+                }
+
+                _insistence = 0;
+                _timer = setTimeout(function() {
+                    _insistence = -1;
+                }, _waiting);
+            //}
+
+            if (onExpand && _x > limit && !_onExpandCalled) {
+                onExpand();
+                _onExpandCalled = true;
+            }
+
+            if (_x == 0) {
+                _zeroXCount++;
+            } else {
+                _zeroXCount = 0;
+            }
+            if (_zeroXCount > 1) {
+                toggle(false);
+                _onExpandCalled = false;
+                if (inProgress) {
+                    self.$(self.root).removeClass(inProgress);
+                }
+            }
+        }
+
+        this.on('init', function() {
+            toggle(true);
+        });
+
+        this.on('dispose', function() {
+            toggle(false);
+        });
+
+        this.event(this.scroller, 'mousewheel DOMMouseScroll', function(e) {
+            var down = e.wheelDelta < 0 || (e.originalEvent && e.originalEvent.wheelDelta < 0) || e.detail > 0;
+
+            if (down) {
+                _insistence = 1;
+                clearTimeout(_timer);
+                if (!_on && getSize() >= getContentSize()) {
+                    toggle(true);
+                }
+            }
+            //  else {
+            //     toggle(false);
+            // }
+        });
+    };
+
+    baron.fn.pull = function(params) {
+        var i = 0;
+
+        while (this[i]) {
+            pull.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+/* Autoupdate plugin for baron 0.6+ */
+(function(window) {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || null;
+
+    var autoUpdate = function() {
+        var self = this;
+        var watcher;
+
+        function actualizeWatcher() {
+            if (!self.root[self.origin.offset]) {
+                startWatch();
+            } else {
+                stopWatch();
+            }
+        }
+
+        // Set interval timeout for watching when root node will be visible
+        function startWatch() {
+            if (watcher) return;
+
+            watcher = setInterval(function() {
+                if (self.root[self.origin.offset]) {
+                    stopWatch();
+                    self.update();
+                }
+            }, 300); // is it good enought for you?)
+        }
+
+        function stopWatch() {
+            clearInterval(watcher);
+            watcher = null;
+        }
+
+        var debouncedUpdater = self._debounce(function() {
+            self.update();
+        }, 300);
+
+        this._observer = new MutationObserver(function() {
+            actualizeWatcher();
+            self.update();
+            debouncedUpdater();
+        });
+
+        this.on('init', function() {
+            self._observer.observe(self.root, {
+                childList: true,
+                subtree: true,
+                characterData: true
+                // attributes: true
+                // No reasons to set attributes to true
+                // The case when root/child node with already properly inited baron toggled to hidden and then back to visible,
+                // and the size of parent was changed during that hidden state, is very rare
+                // Other cases are covered by watcher, and you still can do .update by yourself
+            });
+
+            actualizeWatcher();
+        });
+
+        this.on('dispose', function() {
+            self._observer.disconnect();
+            stopWatch();
+            delete self._observer;
+        });
+    };
+
+    baron.fn.autoUpdate = function(params) {
+        if (!MutationObserver) return this;
+
+        var i = 0;
+
+        while (this[i]) {
+            autoUpdate.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+
+},{}],"bootstrap.tooltip":[function(require,module,exports){
+/* ========================================================================
+ * Bootstrap: tooltip.js v3.2.0
+ * http://getbootstrap.com/javascript/#tooltip
+ * Inspired by the original jQuery.tipsy by Jason Frame
+ * ========================================================================
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
+
++function ($) {
+  'use strict';
+
+  // TOOLTIP PUBLIC CLASS DEFINITION
+  // ===============================
+
+  var Tooltip = function (element, options) {
+    this.type       =
+    this.options    =
+    this.enabled    =
+    this.timeout    =
+    this.hoverState =
+    this.$element   = null
+
+    this.init('tooltip', element, options)
+  }
+
+  Tooltip.VERSION  = '3.2.0'
+
+  Tooltip.DEFAULTS = {
+    animation: true,
+    placement: 'top',
+    selector: false,
+    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+    trigger: 'hover focus',
+    title: '',
+    delay: 0,
+    html: false,
+    container: false,
+    viewport: {
+      selector: 'body',
+      padding: 0
+    }
+  }
+
+  Tooltip.prototype.init = function (type, element, options) {
+    this.enabled   = true
+    this.type      = type
+    this.$element  = $(element)
+    this.options   = this.getOptions(options)
+    this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
+
+    var triggers = this.options.trigger.split(' ')
+
+    for (var i = triggers.length; i--;) {
+      var trigger = triggers[i]
+
+      if (trigger == 'click') {
+        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
+      } else if (trigger != 'manual') {
+        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
+        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
+
+        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
+        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
+      }
+    }
+
+    this.options.selector ?
+      (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
+      this.fixTitle()
+  }
+
+  Tooltip.prototype.getDefaults = function () {
+    return Tooltip.DEFAULTS
+  }
+
+  Tooltip.prototype.getOptions = function (options) {
+    options = $.extend({}, this.getDefaults(), this.$element.data(), options)
+
+    if (options.delay && typeof options.delay == 'number') {
+      options.delay = {
+        show: options.delay,
+        hide: options.delay
+      }
+    }
+
+    return options
+  }
+
+  Tooltip.prototype.getDelegateOptions = function () {
+    var options  = {}
+    var defaults = this.getDefaults()
+
+    this._options && $.each(this._options, function (key, value) {
+      if (defaults[key] != value) options[key] = value
+    })
+
+    return options
+  }
+
+  Tooltip.prototype.enter = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget).data('bs.' + this.type)
+
+    if (!self) {
+      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+      $(obj.currentTarget).data('bs.' + this.type, self)
+    }
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'in'
+
+    if (!self.options.delay || !self.options.delay.show) return self.show()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'in') self.show()
+    }, self.options.delay.show)
+  }
+
+  Tooltip.prototype.leave = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget).data('bs.' + this.type)
+
+    if (!self) {
+      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+      $(obj.currentTarget).data('bs.' + this.type, self)
+    }
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'out'
+
+    if (!self.options.delay || !self.options.delay.hide) return self.hide()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'out') self.hide()
+    }, self.options.delay.hide)
+  }
+
+  Tooltip.prototype.show = function () {
+    var e = $.Event('show.bs.' + this.type)
+
+    if (this.hasContent() && this.enabled) {
+      this.$element.trigger(e)
+
+      var inDom = $.contains(document.documentElement, this.$element[0])
+      if (e.isDefaultPrevented() || !inDom) return
+      var that = this
+
+      var $tip = this.tip()
+
+      var tipId = this.getUID(this.type)
+
+      this.setContent()
+      $tip.attr('id', tipId)
+      this.$element.attr('aria-describedby', tipId)
+
+      if (this.options.animation) $tip.addClass('fade')
+
+      var placement = typeof this.options.placement == 'function' ?
+        this.options.placement.call(this, $tip[0], this.$element[0]) :
+        this.options.placement
+
+      var autoToken = /\s?auto?\s?/i
+      var autoPlace = autoToken.test(placement)
+      if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
+
+      $tip
+        .detach()
+        .css({ top: 0, left: 0, display: 'block' })
+        .addClass(placement)
+        .data('bs.' + this.type, this)
+
+      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
+
+      var pos          = this.getPosition()
+      var actualWidth  = $tip[0].offsetWidth
+      var actualHeight = $tip[0].offsetHeight
+
+      if (autoPlace) {
+        var orgPlacement = placement
+        var $parent      = this.$element.parent()
+        var parentDim    = this.getPosition($parent)
+
+        placement = placement == 'bottom' && pos.top   + pos.height       + actualHeight - parentDim.scroll > parentDim.height ? 'top'    :
+                    placement == 'top'    && pos.top   - parentDim.scroll - actualHeight < 0                                   ? 'bottom' :
+                    placement == 'right'  && pos.right + actualWidth      > parentDim.width                                    ? 'left'   :
+                    placement == 'left'   && pos.left  - actualWidth      < parentDim.left                                     ? 'right'  :
+                    placement
+
+        $tip
+          .removeClass(orgPlacement)
+          .addClass(placement)
+      }
+
+      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
+
+      this.applyPlacement(calculatedOffset, placement)
+
+      var complete = function () {
+        that.$element.trigger('shown.bs.' + that.type)
+        that.hoverState = null
+      }
+
+      $.support.transition && this.$tip.hasClass('fade') ?
+        $tip
+          .one('bsTransitionEnd', complete)
+          .emulateTransitionEnd(150) :
+        complete()
+    }
+  }
+
+  Tooltip.prototype.applyPlacement = function (offset, placement) {
+    var $tip   = this.tip()
+    var width  = $tip[0].offsetWidth
+    var height = $tip[0].offsetHeight
+
+    // manually read margins because getBoundingClientRect includes difference
+    var marginTop = parseInt($tip.css('margin-top'), 10)
+    var marginLeft = parseInt($tip.css('margin-left'), 10)
+
+    // we must check for NaN for ie 8/9
+    if (isNaN(marginTop))  marginTop  = 0
+    if (isNaN(marginLeft)) marginLeft = 0
+
+    offset.top  = offset.top  + marginTop
+    offset.left = offset.left + marginLeft
+
+    // $.fn.offset doesn't round pixel values
+    // so we use setOffset directly with our own function B-0
+    $.offset.setOffset($tip[0], $.extend({
+      using: function (props) {
+        $tip.css({
+          top: Math.round(props.top),
+          left: Math.round(props.left)
+        })
+      }
+    }, offset), 0)
+
+    $tip.addClass('in')
+
+    // check to see if placing tip in new offset caused the tip to resize itself
+    var actualWidth  = $tip[0].offsetWidth
+    var actualHeight = $tip[0].offsetHeight
+
+    if (placement == 'top' && actualHeight != height) {
+      offset.top = offset.top + height - actualHeight
+    }
+
+    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
+
+    if (delta.left) offset.left += delta.left
+    else offset.top += delta.top
+
+    var arrowDelta          = delta.left ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
+    var arrowPosition       = delta.left ? 'left'        : 'top'
+    var arrowOffsetPosition = delta.left ? 'offsetWidth' : 'offsetHeight'
+
+    $tip.offset(offset)
+    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], arrowPosition)
+  }
+
+  Tooltip.prototype.replaceArrow = function (delta, dimension, position) {
+    this.arrow().css(position, delta ? (50 * (1 - delta / dimension) + '%') : '')
+  }
+
+  Tooltip.prototype.setContent = function () {
+    var $tip  = this.tip()
+    var title = this.getTitle()
+
+    $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
+    $tip.removeClass('fade in top bottom left right')
+  }
+
+  Tooltip.prototype.hide = function () {
+    var that = this
+    var $tip = this.tip()
+    var e    = $.Event('hide.bs.' + this.type)
+
+    this.$element.removeAttr('aria-describedby')
+
+    function complete() {
+      if (that.hoverState != 'in') $tip.detach()
+      that.$element.trigger('hidden.bs.' + that.type)
+    }
+
+    this.$element.trigger(e)
+
+    if (e.isDefaultPrevented()) return
+
+    $tip.removeClass('in')
+
+    $.support.transition && this.$tip.hasClass('fade') ?
+      $tip
+        .one('bsTransitionEnd', complete)
+        .emulateTransitionEnd(150) :
+      complete()
+
+    this.hoverState = null
+
+    return this
+  }
+
+  Tooltip.prototype.fixTitle = function () {
+    var $e = this.$element
+    if ($e.attr('title') || typeof ($e.attr('data-original-title')) != 'string') {
+      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
+    }
+  }
+
+  Tooltip.prototype.hasContent = function () {
+    return this.getTitle()
+  }
+
+  Tooltip.prototype.getPosition = function ($element) {
+    $element   = $element || this.$element
+    var el     = $element[0]
+    var isBody = el.tagName == 'BODY'
+    return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : null, {
+      scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop(),
+      width:  isBody ? $(window).width()  : $element.outerWidth(),
+      height: isBody ? $(window).height() : $element.outerHeight()
+    }, isBody ? { top: 0, left: 0 } : $element.offset())
+  }
+
+  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
+    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
+           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
+           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
+        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
+
+  }
+
+  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
+    var delta = { top: 0, left: 0 }
+    if (!this.$viewport) return delta
+
+    var viewportPadding = this.options.viewport && this.options.viewport.padding || 0
+    var viewportDimensions = this.getPosition(this.$viewport)
+
+    if (/right|left/.test(placement)) {
+      var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
+      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
+      if (topEdgeOffset < viewportDimensions.top) { // top overflow
+        delta.top = viewportDimensions.top - topEdgeOffset
+      } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
+        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
+      }
+    } else {
+      var leftEdgeOffset  = pos.left - viewportPadding
+      var rightEdgeOffset = pos.left + viewportPadding + actualWidth
+      if (leftEdgeOffset < viewportDimensions.left) { // left overflow
+        delta.left = viewportDimensions.left - leftEdgeOffset
+      } else if (rightEdgeOffset > viewportDimensions.width) { // right overflow
+        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
+      }
+    }
+
+    return delta
+  }
+
+  Tooltip.prototype.getTitle = function () {
+    var title
+    var $e = this.$element
+    var o  = this.options
+
+    title = $e.attr('data-original-title')
+      || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
+
+    return title
+  }
+
+  Tooltip.prototype.getUID = function (prefix) {
+    do prefix += ~~(Math.random() * 1000000)
+    while (document.getElementById(prefix))
+    return prefix
+  }
+
+  Tooltip.prototype.tip = function () {
+    return (this.$tip = this.$tip || $(this.options.template))
+  }
+
+  Tooltip.prototype.arrow = function () {
+    return (this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow'))
+  }
+
+  Tooltip.prototype.validate = function () {
+    if (!this.$element[0].parentNode) {
+      this.hide()
+      this.$element = null
+      this.options  = null
+    }
+  }
+
+  Tooltip.prototype.enable = function () {
+    this.enabled = true
+  }
+
+  Tooltip.prototype.disable = function () {
+    this.enabled = false
+  }
+
+  Tooltip.prototype.toggleEnabled = function () {
+    this.enabled = !this.enabled
+  }
+
+  Tooltip.prototype.toggle = function (e) {
+    var self = this
+    if (e) {
+      self = $(e.currentTarget).data('bs.' + this.type)
+      if (!self) {
+        self = new this.constructor(e.currentTarget, this.getDelegateOptions())
+        $(e.currentTarget).data('bs.' + this.type, self)
+      }
+    }
+
+    self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
+  }
+
+  Tooltip.prototype.destroy = function () {
+    clearTimeout(this.timeout)
+    this.hide().$element.off('.' + this.type).removeData('bs.' + this.type)
+  }
+
+
+  // TOOLTIP PLUGIN DEFINITION
+  // =========================
+
+  function Plugin(option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.tooltip')
+      var options = typeof option == 'object' && option
+
+      if (!data && option == 'destroy') return
+      if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  var old = $.fn.tooltip
+
+  $.fn.tooltip             = Plugin
+  $.fn.tooltip.Constructor = Tooltip
+
+
+  // TOOLTIP NO CONFLICT
+  // ===================
+
+  $.fn.tooltip.noConflict = function () {
+    $.fn.tooltip = old
+    return this
+  }
+
+}(jQuery);
+
+},{}],"bowser":[function(require,module,exports){
+/*!
+  * Bowser - a browser detector
+  * https://github.com/ded/bowser
+  * MIT License | (c) Dustin Diaz 2014
+  */
+
+!function (name, definition) {
+  if (typeof module != 'undefined' && module.exports) module.exports['browser'] = definition()
+  else if (typeof define == 'function' && define.amd) define(definition)
+  else this[name] = definition()
+}('bowser', function () {
+  /**
+    * See useragents.js for examples of navigator.userAgent
+    */
+
+  var t = true
+
+  function detect(ua) {
+
+    function getFirstMatch(regex) {
+      var match = ua.match(regex);
+      return (match && match.length > 1 && match[1]) || '';
+    }
+
+    var iosdevice = getFirstMatch(/(ipod|iphone|ipad)/i).toLowerCase()
+      , likeAndroid = /like android/i.test(ua)
+      , android = !likeAndroid && /android/i.test(ua)
+      , versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i)
+      , tablet = /tablet/i.test(ua)
+      , mobile = !tablet && /[^-]mobi/i.test(ua)
+      , result
+
+    if (/opera|opr/i.test(ua)) {
+      result = {
+        name: 'Opera'
+      , opera: t
+      , version: versionIdentifier || getFirstMatch(/(?:opera|opr)[\s\/](\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/windows phone/i.test(ua)) {
+      result = {
+        name: 'Windows Phone'
+      , windowsphone: t
+      , msie: t
+      , version: getFirstMatch(/iemobile\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/msie|trident/i.test(ua)) {
+      result = {
+        name: 'Internet Explorer'
+      , msie: t
+      , version: getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/chrome|crios|crmo/i.test(ua)) {
+      result = {
+        name: 'Chrome'
+      , chrome: t
+      , version: getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (iosdevice) {
+      result = {
+        name : iosdevice == 'iphone' ? 'iPhone' : iosdevice == 'ipad' ? 'iPad' : 'iPod'
+      }
+      // WTF: version is not part of user agent in web apps
+      if (versionIdentifier) {
+        result.version = versionIdentifier
+      }
+    }
+    else if (/sailfish/i.test(ua)) {
+      result = {
+        name: 'Sailfish'
+      , sailfish: t
+      , version: getFirstMatch(/sailfish\s?browser\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/seamonkey\//i.test(ua)) {
+      result = {
+        name: 'SeaMonkey'
+      , seamonkey: t
+      , version: getFirstMatch(/seamonkey\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/firefox|iceweasel/i.test(ua)) {
+      result = {
+        name: 'Firefox'
+      , firefox: t
+      , version: getFirstMatch(/(?:firefox|iceweasel)[ \/](\d+(\.\d+)?)/i)
+      }
+      if (/\((mobile|tablet);[^\)]*rv:[\d\.]+\)/i.test(ua)) {
+        result.firefoxos = t
+      }
+    }
+    else if (/silk/i.test(ua)) {
+      result =  {
+        name: 'Amazon Silk'
+      , silk: t
+      , version : getFirstMatch(/silk\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (android) {
+      result = {
+        name: 'Android'
+      , version: versionIdentifier
+      }
+    }
+    else if (/phantom/i.test(ua)) {
+      result = {
+        name: 'PhantomJS'
+      , phantom: t
+      , version: getFirstMatch(/phantomjs\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/blackberry|\bbb\d+/i.test(ua) || /rim\stablet/i.test(ua)) {
+      result = {
+        name: 'BlackBerry'
+      , blackberry: t
+      , version: versionIdentifier || getFirstMatch(/blackberry[\d]+\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/(web|hpw)os/i.test(ua)) {
+      result = {
+        name: 'WebOS'
+      , webos: t
+      , version: versionIdentifier || getFirstMatch(/w(?:eb)?osbrowser\/(\d+(\.\d+)?)/i)
+      };
+      /touchpad\//i.test(ua) && (result.touchpad = t)
+    }
+    else if (/bada/i.test(ua)) {
+      result = {
+        name: 'Bada'
+      , bada: t
+      , version: getFirstMatch(/dolfin\/(\d+(\.\d+)?)/i)
+      };
+    }
+    else if (/tizen/i.test(ua)) {
+      result = {
+        name: 'Tizen'
+      , tizen: t
+      , version: getFirstMatch(/(?:tizen\s?)?browser\/(\d+(\.\d+)?)/i) || versionIdentifier
+      };
+    }
+    else if (/safari/i.test(ua)) {
+      result = {
+        name: 'Safari'
+      , safari: t
+      , version: versionIdentifier
+      }
+    }
+    else result = {}
+
+    // set webkit or gecko flag for browsers based on these engines
+    if (/(apple)?webkit/i.test(ua)) {
+      result.name = result.name || "Webkit"
+      result.webkit = t
+      if (!result.version && versionIdentifier) {
+        result.version = versionIdentifier
+      }
+    } else if (!result.opera && /gecko\//i.test(ua)) {
+      result.name = result.name || "Gecko"
+      result.gecko = t
+      result.version = result.version || getFirstMatch(/gecko\/(\d+(\.\d+)?)/i)
+    }
+
+    // set OS flags for platforms that have multiple browsers
+    if (android || result.silk) {
+      result.android = t
+    } else if (iosdevice) {
+      result[iosdevice] = t
+      result.ios = t
+    }
+
+    // OS version extraction
+    var osVersion = '';
+    if (iosdevice) {
+      osVersion = getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i);
+      osVersion = osVersion.replace(/[_\s]/g, '.');
+    } else if (android) {
+      osVersion = getFirstMatch(/android[ \/-](\d+(\.\d+)*)/i);
+    } else if (result.windowsphone) {
+      osVersion = getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i);
+    } else if (result.webos) {
+      osVersion = getFirstMatch(/(?:web|hpw)os\/(\d+(\.\d+)*)/i);
+    } else if (result.blackberry) {
+      osVersion = getFirstMatch(/rim\stablet\sos\s(\d+(\.\d+)*)/i);
+    } else if (result.bada) {
+      osVersion = getFirstMatch(/bada\/(\d+(\.\d+)*)/i);
+    } else if (result.tizen) {
+      osVersion = getFirstMatch(/tizen[\/\s](\d+(\.\d+)*)/i);
+    }
+    if (osVersion) {
+      result.osversion = osVersion;
+    }
+
+    // device type extraction
+    var osMajorVersion = osVersion.split('.')[0];
+    if (tablet || iosdevice == 'ipad' || (android && (osMajorVersion == 3 || (osMajorVersion == 4 && !mobile))) || result.silk) {
+      result.tablet = t
+    } else if (mobile || iosdevice == 'iphone' || iosdevice == 'ipod' || android || result.blackberry || result.webos || result.bada) {
+      result.mobile = t
+    }
+
+    // Graded Browser Support
+    // http://developer.yahoo.com/yui/articles/gbs
+    if ((result.msie && result.version >= 10) ||
+        (result.chrome && result.version >= 20) ||
+        (result.firefox && result.version >= 20.0) ||
+        (result.safari && result.version >= 6) ||
+        (result.opera && result.version >= 10.0) ||
+        (result.ios && result.osversion && result.osversion.split(".")[0] >= 6) ||
+        (result.blackberry && result.version >= 10.1)
+        ) {
+      result.a = t;
+    }
+    else if ((result.msie && result.version < 10) ||
+        (result.chrome && result.version < 20) ||
+        (result.firefox && result.version < 20.0) ||
+        (result.safari && result.version < 6) ||
+        (result.opera && result.version < 10.0) ||
+        (result.ios && result.osversion && result.osversion.split(".")[0] < 6)
+        ) {
+      result.c = t
+    } else result.x = t
+
+    return result
+  }
+
+  var bowser = detect(typeof navigator !== 'undefined' ? navigator.userAgent : '')
+
+
+  /*
+   * Set our detect method to the main bowser object so we can
+   * reuse it to test other user agents.
+   * This is needed to implement future tests.
+   */
+  bowser._detect = detect;
+
+  return bowser
+});
+
+},{}],2:[function(require,module,exports){
 /**
 binds a function to a context
 
@@ -17529,7 +22619,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({displayName: 'Me
     var deliveryClass, onClick;
     switch (this.props.deliveryStatus) {
       case ERROR_STATE:
-        deliveryClass = 'icon--refresh-2';
+        deliveryClass = 'icon--refresh';
         onClick = (function(_this) {
           return function() {
             return _this.props.onResendMessage();
@@ -17893,8 +22983,7 @@ window.NotificationsPopup_Notifications = React.createClass({displayName: 'Notif
 window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup',
   mixins: [ScrollerMixin],
   render: function() {
-    return React.DOM.div({className: "popup popup--notifications popup--dark", 
-         style: { top: '94px', right: '20px', display: 'block'}}, 
+    return React.DOM.div({className: "popup popup--notifications popup--dark"}, 
       React.DOM.div({className: "popup__arrow popup__arrow--up"}), 
       React.DOM.div({className: "popup__content"}, 
         React.DOM.div({className: "popup__body"}, 
@@ -18071,6 +23160,7 @@ window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsT
     var indicatorClasses;
     indicatorClasses = React.addons.classSet({
       'toolbar__indicator': true,
+      'toolbar__indicator--messages': true,
       'state--empty': this.state.unreadConversationsCount === 0
     });
     if (this.hasUnreadConversations()) {
@@ -18078,7 +23168,8 @@ window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsT
                    onClick:  this.props.onClick}, 
                 React.DOM.span({className: "messages-badge"}, 
                    this.state.unreadConversationsCount
-                )
+                ), 
+                React.DOM.i({className: "icon icon--messages"})
               );
     } else {
       return null;
@@ -18125,6 +23216,7 @@ window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'Indica
     var indicatorClasses;
     indicatorClasses = React.addons.classSet({
       'toolbar__indicator': true,
+      'toolbar__indicator--notifications': true,
       'state--empty': this.state.unreadNotificationsCount === 0
     });
     if (this.hasUnreadNotifications()) {
@@ -18132,7 +23224,8 @@ window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'Indica
                    onClick:  this.props.onClick}, 
                 React.DOM.span({className: "notifications-badge"}, 
                    this.state.unreadNotificationsCount
-                )
+                ), 
+                React.DOM.i({className: "icon icon--bell"})
               );
     } else {
       return null;
@@ -21711,5096 +26804,6 @@ if ( typeof define === 'function' && define.amd ) {
     }
 }.call(this));
 
-},{}],"Modernizr":[function(require,module,exports){
-/*!
- * Modernizr v2.8.3
- * www.modernizr.com
- *
- * Copyright (c) Faruk Ates, Paul Irish, Alex Sexton
- * Available under the BSD and MIT licenses: www.modernizr.com/license/
- */
-
-/*
- * Modernizr tests which native CSS3 and HTML5 features are available in
- * the current UA and makes the results available to you in two ways:
- * as properties on a global Modernizr object, and as classes on the
- * <html> element. This information allows you to progressively enhance
- * your pages with a granular level of control over the experience.
- *
- * Modernizr has an optional (not included) conditional resource loader
- * called Modernizr.load(), based on Yepnope.js (yepnopejs.com).
- * To get a build that includes Modernizr.load(), as well as choosing
- * which tests to include, go to www.modernizr.com/download/
- *
- * Authors        Faruk Ates, Paul Irish, Alex Sexton
- * Contributors   Ryan Seddon, Ben Alman
- */
-
-Modernizr = (function( window, document, undefined ) {
-
-    var version = '2.8.3',
-
-    Modernizr = {},
-
-    /*>>cssclasses*/
-    // option for enabling the HTML classes to be added
-    enableClasses = true,
-    /*>>cssclasses*/
-
-    docElement = document.documentElement,
-
-    /**
-     * Create our "modernizr" element that we do most feature tests on.
-     */
-    mod = 'modernizr',
-    modElem = document.createElement(mod),
-    mStyle = modElem.style,
-
-    /**
-     * Create the input element for various Web Forms feature tests.
-     */
-    inputElem /*>>inputelem*/ = document.createElement('input') /*>>inputelem*/ ,
-
-    /*>>smile*/
-    smile = ':)',
-    /*>>smile*/
-
-    toString = {}.toString,
-
-    // TODO :: make the prefixes more granular
-    /*>>prefixes*/
-    // List of property values to set for css tests. See ticket #21
-    prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
-    /*>>prefixes*/
-
-    /*>>domprefixes*/
-    // Following spec is to expose vendor-specific style properties as:
-    //   elem.style.WebkitBorderRadius
-    // and the following would be incorrect:
-    //   elem.style.webkitBorderRadius
-
-    // Webkit ghosts their properties in lowercase but Opera & Moz do not.
-    // Microsoft uses a lowercase `ms` instead of the correct `Ms` in IE8+
-    //   erik.eae.net/archives/2008/03/10/21.48.10/
-
-    // More here: github.com/Modernizr/Modernizr/issues/issue/21
-    omPrefixes = 'Webkit Moz O ms',
-
-    cssomPrefixes = omPrefixes.split(' '),
-
-    domPrefixes = omPrefixes.toLowerCase().split(' '),
-    /*>>domprefixes*/
-
-    /*>>ns*/
-    ns = {'svg': 'http://www.w3.org/2000/svg'},
-    /*>>ns*/
-
-    tests = {},
-    inputs = {},
-    attrs = {},
-
-    classes = [],
-
-    slice = classes.slice,
-
-    featureName, // used in testing loop
-
-
-    /*>>teststyles*/
-    // Inject element with style element and some CSS rules
-    injectElementWithStyles = function( rule, callback, nodes, testnames ) {
-
-      var style, ret, node, docOverflow,
-          div = document.createElement('div'),
-          // After page load injecting a fake body doesn't work so check if body exists
-          body = document.body,
-          // IE6 and 7 won't return offsetWidth or offsetHeight unless it's in the body element, so we fake it.
-          fakeBody = body || document.createElement('body');
-
-      if ( parseInt(nodes, 10) ) {
-          // In order not to give false positives we create a node for each test
-          // This also allows the method to scale for unspecified uses
-          while ( nodes-- ) {
-              node = document.createElement('div');
-              node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
-              div.appendChild(node);
-          }
-      }
-
-      // <style> elements in IE6-9 are considered 'NoScope' elements and therefore will be removed
-      // when injected with innerHTML. To get around this you need to prepend the 'NoScope' element
-      // with a 'scoped' element, in our case the soft-hyphen entity as it won't mess with our measurements.
-      // msdn.microsoft.com/en-us/library/ms533897%28VS.85%29.aspx
-      // Documents served as xml will throw if using &shy; so use xml friendly encoded version. See issue #277
-      style = ['&#173;','<style id="s', mod, '">', rule, '</style>'].join('');
-      div.id = mod;
-      // IE6 will false positive on some tests due to the style element inside the test div somehow interfering offsetHeight, so insert it into body or fakebody.
-      // Opera will act all quirky when injecting elements in documentElement when page is served as xml, needs fakebody too. #270
-      (body ? div : fakeBody).innerHTML += style;
-      fakeBody.appendChild(div);
-      if ( !body ) {
-          //avoid crashing IE8, if background image is used
-          fakeBody.style.background = '';
-          //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
-          fakeBody.style.overflow = 'hidden';
-          docOverflow = docElement.style.overflow;
-          docElement.style.overflow = 'hidden';
-          docElement.appendChild(fakeBody);
-      }
-
-      ret = callback(div, rule);
-      // If this is done after page load we don't want to remove the body so check if body exists
-      if ( !body ) {
-          fakeBody.parentNode.removeChild(fakeBody);
-          docElement.style.overflow = docOverflow;
-      } else {
-          div.parentNode.removeChild(div);
-      }
-
-      return !!ret;
-
-    },
-    /*>>teststyles*/
-
-    /*>>mq*/
-    // adapted from matchMedia polyfill
-    // by Scott Jehl and Paul Irish
-    // gist.github.com/786768
-    testMediaQuery = function( mq ) {
-
-      var matchMedia = window.matchMedia || window.msMatchMedia;
-      if ( matchMedia ) {
-        return matchMedia(mq) && matchMedia(mq).matches || false;
-      }
-
-      var bool;
-
-      injectElementWithStyles('@media ' + mq + ' { #' + mod + ' { position: absolute; } }', function( node ) {
-        bool = (window.getComputedStyle ?
-                  getComputedStyle(node, null) :
-                  node.currentStyle)['position'] == 'absolute';
-      });
-
-      return bool;
-
-     },
-     /*>>mq*/
-
-
-    /*>>hasevent*/
-    //
-    // isEventSupported determines if a given element supports the given event
-    // kangax.github.com/iseventsupported/
-    //
-    // The following results are known incorrects:
-    //   Modernizr.hasEvent("webkitTransitionEnd", elem) // false negative
-    //   Modernizr.hasEvent("textInput") // in Webkit. github.com/Modernizr/Modernizr/issues/333
-    //   ...
-    isEventSupported = (function() {
-
-      var TAGNAMES = {
-        'select': 'input', 'change': 'input',
-        'submit': 'form', 'reset': 'form',
-        'error': 'img', 'load': 'img', 'abort': 'img'
-      };
-
-      function isEventSupported( eventName, element ) {
-
-        element = element || document.createElement(TAGNAMES[eventName] || 'div');
-        eventName = 'on' + eventName;
-
-        // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize", whereas `in` "catches" those
-        var isSupported = eventName in element;
-
-        if ( !isSupported ) {
-          // If it has no `setAttribute` (i.e. doesn't implement Node interface), try generic element
-          if ( !element.setAttribute ) {
-            element = document.createElement('div');
-          }
-          if ( element.setAttribute && element.removeAttribute ) {
-            element.setAttribute(eventName, '');
-            isSupported = is(element[eventName], 'function');
-
-            // If property was created, "remove it" (by setting value to `undefined`)
-            if ( !is(element[eventName], 'undefined') ) {
-              element[eventName] = undefined;
-            }
-            element.removeAttribute(eventName);
-          }
-        }
-
-        element = null;
-        return isSupported;
-      }
-      return isEventSupported;
-    })(),
-    /*>>hasevent*/
-
-    // TODO :: Add flag for hasownprop ? didn't last time
-
-    // hasOwnProperty shim by kangax needed for Safari 2.0 support
-    _hasOwnProperty = ({}).hasOwnProperty, hasOwnProp;
-
-    if ( !is(_hasOwnProperty, 'undefined') && !is(_hasOwnProperty.call, 'undefined') ) {
-      hasOwnProp = function (object, property) {
-        return _hasOwnProperty.call(object, property);
-      };
-    }
-    else {
-      hasOwnProp = function (object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
-        return ((property in object) && is(object.constructor.prototype[property], 'undefined'));
-      };
-    }
-
-    // Adapted from ES5-shim https://github.com/kriskowal/es5-shim/blob/master/es5-shim.js
-    // es5.github.com/#x15.3.4.5
-
-    if (!Function.prototype.bind) {
-      Function.prototype.bind = function bind(that) {
-
-        var target = this;
-
-        if (typeof target != "function") {
-            throw new TypeError();
-        }
-
-        var args = slice.call(arguments, 1),
-            bound = function () {
-
-            if (this instanceof bound) {
-
-              var F = function(){};
-              F.prototype = target.prototype;
-              var self = new F();
-
-              var result = target.apply(
-                  self,
-                  args.concat(slice.call(arguments))
-              );
-              if (Object(result) === result) {
-                  return result;
-              }
-              return self;
-
-            } else {
-
-              return target.apply(
-                  that,
-                  args.concat(slice.call(arguments))
-              );
-
-            }
-
-        };
-
-        return bound;
-      };
-    }
-
-    /**
-     * setCss applies given styles to the Modernizr DOM node.
-     */
-    function setCss( str ) {
-        mStyle.cssText = str;
-    }
-
-    /**
-     * setCssAll extrapolates all vendor-specific css strings.
-     */
-    function setCssAll( str1, str2 ) {
-        return setCss(prefixes.join(str1 + ';') + ( str2 || '' ));
-    }
-
-    /**
-     * is returns a boolean for if typeof obj is exactly type.
-     */
-    function is( obj, type ) {
-        return typeof obj === type;
-    }
-
-    /**
-     * contains returns a boolean for if substr is found within str.
-     */
-    function contains( str, substr ) {
-        return !!~('' + str).indexOf(substr);
-    }
-
-    /*>>testprop*/
-
-    // testProps is a generic CSS / DOM property test.
-
-    // In testing support for a given CSS property, it's legit to test:
-    //    `elem.style[styleName] !== undefined`
-    // If the property is supported it will return an empty string,
-    // if unsupported it will return undefined.
-
-    // We'll take advantage of this quick test and skip setting a style
-    // on our modernizr element, but instead just testing undefined vs
-    // empty string.
-
-    // Because the testing of the CSS property names (with "-", as
-    // opposed to the camelCase DOM properties) is non-portable and
-    // non-standard but works in WebKit and IE (but not Gecko or Opera),
-    // we explicitly reject properties with dashes so that authors
-    // developing in WebKit or IE first don't end up with
-    // browser-specific content by accident.
-
-    function testProps( props, prefixed ) {
-        for ( var i in props ) {
-            var prop = props[i];
-            if ( !contains(prop, "-") && mStyle[prop] !== undefined ) {
-                return prefixed == 'pfx' ? prop : true;
-            }
-        }
-        return false;
-    }
-    /*>>testprop*/
-
-    // TODO :: add testDOMProps
-    /**
-     * testDOMProps is a generic DOM property test; if a browser supports
-     *   a certain property, it won't return undefined for it.
-     */
-    function testDOMProps( props, obj, elem ) {
-        for ( var i in props ) {
-            var item = obj[props[i]];
-            if ( item !== undefined) {
-
-                // return the property name as a string
-                if (elem === false) return props[i];
-
-                // let's bind a function
-                if (is(item, 'function')){
-                  // default to autobind unless override
-                  return item.bind(elem || obj);
-                }
-
-                // return the unbound function or obj or value
-                return item;
-            }
-        }
-        return false;
-    }
-
-    /*>>testallprops*/
-    /**
-     * testPropsAll tests a list of DOM properties we want to check against.
-     *   We specify literally ALL possible (known and/or likely) properties on
-     *   the element including the non-vendor prefixed one, for forward-
-     *   compatibility.
-     */
-    function testPropsAll( prop, prefixed, elem ) {
-
-        var ucProp  = prop.charAt(0).toUpperCase() + prop.slice(1),
-            props   = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
-
-        // did they call .prefixed('boxSizing') or are we just testing a prop?
-        if(is(prefixed, "string") || is(prefixed, "undefined")) {
-          return testProps(props, prefixed);
-
-        // otherwise, they called .prefixed('requestAnimationFrame', window[, elem])
-        } else {
-          props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
-          return testDOMProps(props, prefixed, elem);
-        }
-    }
-    /*>>testallprops*/
-
-
-    /**
-     * Tests
-     * -----
-     */
-
-    // The *new* flexbox
-    // dev.w3.org/csswg/css3-flexbox
-
-    tests['flexbox'] = function() {
-      return testPropsAll('flexWrap');
-    };
-
-    // The *old* flexbox
-    // www.w3.org/TR/2009/WD-css3-flexbox-20090723/
-
-    tests['flexboxlegacy'] = function() {
-        return testPropsAll('boxDirection');
-    };
-
-    // On the S60 and BB Storm, getContext exists, but always returns undefined
-    // so we actually have to call getContext() to verify
-    // github.com/Modernizr/Modernizr/issues/issue/97/
-
-    tests['canvas'] = function() {
-        var elem = document.createElement('canvas');
-        return !!(elem.getContext && elem.getContext('2d'));
-    };
-
-    tests['canvastext'] = function() {
-        return !!(Modernizr['canvas'] && is(document.createElement('canvas').getContext('2d').fillText, 'function'));
-    };
-
-    // webk.it/70117 is tracking a legit WebGL feature detect proposal
-
-    // We do a soft detect which may false positive in order to avoid
-    // an expensive context creation: bugzil.la/732441
-
-    tests['webgl'] = function() {
-        return !!window.WebGLRenderingContext;
-    };
-
-    /*
-     * The Modernizr.touch test only indicates if the browser supports
-     *    touch events, which does not necessarily reflect a touchscreen
-     *    device, as evidenced by tablets running Windows 7 or, alas,
-     *    the Palm Pre / WebOS (touch) phones.
-     *
-     * Additionally, Chrome (desktop) used to lie about its support on this,
-     *    but that has since been rectified: crbug.com/36415
-     *
-     * We also test for Firefox 4 Multitouch Support.
-     *
-     * For more info, see: modernizr.github.com/Modernizr/touch.html
-     */
-
-    tests['touch'] = function() {
-        var bool;
-
-        if(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-          bool = true;
-        } else {
-          injectElementWithStyles(['@media (',prefixes.join('touch-enabled),('),mod,')','{#modernizr{top:9px;position:absolute}}'].join(''), function( node ) {
-            bool = node.offsetTop === 9;
-          });
-        }
-
-        return bool;
-    };
-
-
-    // geolocation is often considered a trivial feature detect...
-    // Turns out, it's quite tricky to get right:
-    //
-    // Using !!navigator.geolocation does two things we don't want. It:
-    //   1. Leaks memory in IE9: github.com/Modernizr/Modernizr/issues/513
-    //   2. Disables page caching in WebKit: webk.it/43956
-    //
-    // Meanwhile, in Firefox < 8, an about:config setting could expose
-    // a false positive that would throw an exception: bugzil.la/688158
-
-    tests['geolocation'] = function() {
-        return 'geolocation' in navigator;
-    };
-
-
-    tests['postmessage'] = function() {
-      return !!window.postMessage;
-    };
-
-
-    // Chrome incognito mode used to throw an exception when using openDatabase
-    // It doesn't anymore.
-    tests['websqldatabase'] = function() {
-      return !!window.openDatabase;
-    };
-
-    // Vendors had inconsistent prefixing with the experimental Indexed DB:
-    // - Webkit's implementation is accessible through webkitIndexedDB
-    // - Firefox shipped moz_indexedDB before FF4b9, but since then has been mozIndexedDB
-    // For speed, we don't test the legacy (and beta-only) indexedDB
-    tests['indexedDB'] = function() {
-      return !!testPropsAll("indexedDB", window);
-    };
-
-    // documentMode logic from YUI to filter out IE8 Compat Mode
-    //   which false positives.
-    tests['hashchange'] = function() {
-      return isEventSupported('hashchange', window) && (document.documentMode === undefined || document.documentMode > 7);
-    };
-
-    // Per 1.6:
-    // This used to be Modernizr.historymanagement but the longer
-    // name has been deprecated in favor of a shorter and property-matching one.
-    // The old API is still available in 1.6, but as of 2.0 will throw a warning,
-    // and in the first release thereafter disappear entirely.
-    tests['history'] = function() {
-      return !!(window.history && history.pushState);
-    };
-
-    tests['draganddrop'] = function() {
-        var div = document.createElement('div');
-        return ('draggable' in div) || ('ondragstart' in div && 'ondrop' in div);
-    };
-
-    // FF3.6 was EOL'ed on 4/24/12, but the ESR version of FF10
-    // will be supported until FF19 (2/12/13), at which time, ESR becomes FF17.
-    // FF10 still uses prefixes, so check for it until then.
-    // for more ESR info, see: mozilla.org/en-US/firefox/organizations/faq/
-    tests['websockets'] = function() {
-        return 'WebSocket' in window || 'MozWebSocket' in window;
-    };
-
-
-    // css-tricks.com/rgba-browser-support/
-    tests['rgba'] = function() {
-        // Set an rgba() color and check the returned value
-
-        setCss('background-color:rgba(150,255,150,.5)');
-
-        return contains(mStyle.backgroundColor, 'rgba');
-    };
-
-    tests['hsla'] = function() {
-        // Same as rgba(), in fact, browsers re-map hsla() to rgba() internally,
-        //   except IE9 who retains it as hsla
-
-        setCss('background-color:hsla(120,40%,100%,.5)');
-
-        return contains(mStyle.backgroundColor, 'rgba') || contains(mStyle.backgroundColor, 'hsla');
-    };
-
-    tests['multiplebgs'] = function() {
-        // Setting multiple images AND a color on the background shorthand property
-        //  and then querying the style.background property value for the number of
-        //  occurrences of "url(" is a reliable method for detecting ACTUAL support for this!
-
-        setCss('background:url(https://),url(https://),red url(https://)');
-
-        // If the UA supports multiple backgrounds, there should be three occurrences
-        //   of the string "url(" in the return value for elemStyle.background
-
-        return (/(url\s*\(.*?){3}/).test(mStyle.background);
-    };
-
-
-
-    // this will false positive in Opera Mini
-    //   github.com/Modernizr/Modernizr/issues/396
-
-    tests['backgroundsize'] = function() {
-        return testPropsAll('backgroundSize');
-    };
-
-    tests['borderimage'] = function() {
-        return testPropsAll('borderImage');
-    };
-
-
-    // Super comprehensive table about all the unique implementations of
-    // border-radius: muddledramblings.com/table-of-css3-border-radius-compliance
-
-    tests['borderradius'] = function() {
-        return testPropsAll('borderRadius');
-    };
-
-    // WebOS unfortunately false positives on this test.
-    tests['boxshadow'] = function() {
-        return testPropsAll('boxShadow');
-    };
-
-    // FF3.0 will false positive on this test
-    tests['textshadow'] = function() {
-        return document.createElement('div').style.textShadow === '';
-    };
-
-
-    tests['opacity'] = function() {
-        // Browsers that actually have CSS Opacity implemented have done so
-        //  according to spec, which means their return values are within the
-        //  range of [0.0,1.0] - including the leading zero.
-
-        setCssAll('opacity:.55');
-
-        // The non-literal . in this regex is intentional:
-        //   German Chrome returns this value as 0,55
-        // github.com/Modernizr/Modernizr/issues/#issue/59/comment/516632
-        return (/^0.55$/).test(mStyle.opacity);
-    };
-
-
-    // Note, Android < 4 will pass this test, but can only animate
-    //   a single property at a time
-    //   goo.gl/v3V4Gp
-    tests['cssanimations'] = function() {
-        return testPropsAll('animationName');
-    };
-
-
-    tests['csscolumns'] = function() {
-        return testPropsAll('columnCount');
-    };
-
-
-    tests['cssgradients'] = function() {
-        /**
-         * For CSS Gradients syntax, please see:
-         * webkit.org/blog/175/introducing-css-gradients/
-         * developer.mozilla.org/en/CSS/-moz-linear-gradient
-         * developer.mozilla.org/en/CSS/-moz-radial-gradient
-         * dev.w3.org/csswg/css3-images/#gradients-
-         */
-
-        var str1 = 'background-image:',
-            str2 = 'gradient(linear,left top,right bottom,from(#9f9),to(white));',
-            str3 = 'linear-gradient(left top,#9f9, white);';
-
-        setCss(
-             // legacy webkit syntax (FIXME: remove when syntax not in use anymore)
-              (str1 + '-webkit- '.split(' ').join(str2 + str1) +
-             // standard syntax             // trailing 'background-image:'
-              prefixes.join(str3 + str1)).slice(0, -str1.length)
-        );
-
-        return contains(mStyle.backgroundImage, 'gradient');
-    };
-
-
-    tests['cssreflections'] = function() {
-        return testPropsAll('boxReflect');
-    };
-
-
-    tests['csstransforms'] = function() {
-        return !!testPropsAll('transform');
-    };
-
-
-    tests['csstransforms3d'] = function() {
-
-        var ret = !!testPropsAll('perspective');
-
-        // Webkit's 3D transforms are passed off to the browser's own graphics renderer.
-        //   It works fine in Safari on Leopard and Snow Leopard, but not in Chrome in
-        //   some conditions. As a result, Webkit typically recognizes the syntax but
-        //   will sometimes throw a false positive, thus we must do a more thorough check:
-        if ( ret && 'webkitPerspective' in docElement.style ) {
-
-          // Webkit allows this media query to succeed only if the feature is enabled.
-          // `@media (transform-3d),(-webkit-transform-3d){ ... }`
-          injectElementWithStyles('@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}', function( node, rule ) {
-            ret = node.offsetLeft === 9 && node.offsetHeight === 3;
-          });
-        }
-        return ret;
-    };
-
-
-    tests['csstransitions'] = function() {
-        return testPropsAll('transition');
-    };
-
-
-    /*>>fontface*/
-    // @font-face detection routine by Diego Perini
-    // javascript.nwbox.com/CSSSupport/
-
-    // false positives:
-    //   WebOS github.com/Modernizr/Modernizr/issues/342
-    //   WP7   github.com/Modernizr/Modernizr/issues/538
-    tests['fontface'] = function() {
-        var bool;
-
-        injectElementWithStyles('@font-face {font-family:"font";src:url("https://")}', function( node, rule ) {
-          var style = document.getElementById('smodernizr'),
-              sheet = style.sheet || style.styleSheet,
-              cssText = sheet ? (sheet.cssRules && sheet.cssRules[0] ? sheet.cssRules[0].cssText : sheet.cssText || '') : '';
-
-          bool = /src/i.test(cssText) && cssText.indexOf(rule.split(' ')[0]) === 0;
-        });
-
-        return bool;
-    };
-    /*>>fontface*/
-
-    // CSS generated content detection
-    tests['generatedcontent'] = function() {
-        var bool;
-
-        injectElementWithStyles(['#',mod,'{font:0/0 a}#',mod,':after{content:"',smile,'";visibility:hidden;font:3px/1 a}'].join(''), function( node ) {
-          bool = node.offsetHeight >= 3;
-        });
-
-        return bool;
-    };
-
-
-
-    // These tests evaluate support of the video/audio elements, as well as
-    // testing what types of content they support.
-    //
-    // We're using the Boolean constructor here, so that we can extend the value
-    // e.g.  Modernizr.video     // true
-    //       Modernizr.video.ogg // 'probably'
-    //
-    // Codec values from : github.com/NielsLeenheer/html5test/blob/9106a8/index.html#L845
-    //                     thx to NielsLeenheer and zcorpan
-
-    // Note: in some older browsers, "no" was a return value instead of empty string.
-    //   It was live in FF3.5.0 and 3.5.1, but fixed in 3.5.2
-    //   It was also live in Safari 4.0.0 - 4.0.4, but fixed in 4.0.5
-
-    tests['video'] = function() {
-        var elem = document.createElement('video'),
-            bool = false;
-
-        // IE9 Running on Windows Server SKU can cause an exception to be thrown, bug #224
-        try {
-            if ( bool = !!elem.canPlayType ) {
-                bool      = new Boolean(bool);
-                bool.ogg  = elem.canPlayType('video/ogg; codecs="theora"')      .replace(/^no$/,'');
-
-                // Without QuickTime, this value will be `undefined`. github.com/Modernizr/Modernizr/issues/546
-                bool.h264 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/,'');
-
-                bool.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/,'');
-            }
-
-        } catch(e) { }
-
-        return bool;
-    };
-
-    tests['audio'] = function() {
-        var elem = document.createElement('audio'),
-            bool = false;
-
-        try {
-            if ( bool = !!elem.canPlayType ) {
-                bool      = new Boolean(bool);
-                bool.ogg  = elem.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,'');
-                bool.mp3  = elem.canPlayType('audio/mpeg;')               .replace(/^no$/,'');
-
-                // Mimetypes accepted:
-                //   developer.mozilla.org/En/Media_formats_supported_by_the_audio_and_video_elements
-                //   bit.ly/iphoneoscodecs
-                bool.wav  = elem.canPlayType('audio/wav; codecs="1"')     .replace(/^no$/,'');
-                bool.m4a  = ( elem.canPlayType('audio/x-m4a;')            ||
-                              elem.canPlayType('audio/aac;'))             .replace(/^no$/,'');
-            }
-        } catch(e) { }
-
-        return bool;
-    };
-
-
-    // In FF4, if disabled, window.localStorage should === null.
-
-    // Normally, we could not test that directly and need to do a
-    //   `('localStorage' in window) && ` test first because otherwise Firefox will
-    //   throw bugzil.la/365772 if cookies are disabled
-
-    // Also in iOS5 Private Browsing mode, attempting to use localStorage.setItem
-    // will throw the exception:
-    //   QUOTA_EXCEEDED_ERRROR DOM Exception 22.
-    // Peculiarly, getItem and removeItem calls do not throw.
-
-    // Because we are forced to try/catch this, we'll go aggressive.
-
-    // Just FWIW: IE8 Compat mode supports these features completely:
-    //   www.quirksmode.org/dom/html5.html
-    // But IE8 doesn't support either with local files
-
-    tests['localstorage'] = function() {
-        try {
-            localStorage.setItem(mod, mod);
-            localStorage.removeItem(mod);
-            return true;
-        } catch(e) {
-            return false;
-        }
-    };
-
-    tests['sessionstorage'] = function() {
-        try {
-            sessionStorage.setItem(mod, mod);
-            sessionStorage.removeItem(mod);
-            return true;
-        } catch(e) {
-            return false;
-        }
-    };
-
-
-    tests['webworkers'] = function() {
-        return !!window.Worker;
-    };
-
-
-    tests['applicationcache'] = function() {
-        return !!window.applicationCache;
-    };
-
-
-    // Thanks to Erik Dahlstrom
-    tests['svg'] = function() {
-        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
-    };
-
-    // specifically for SVG inline in HTML, not within XHTML
-    // test page: paulirish.com/demo/inline-svg
-    tests['inlinesvg'] = function() {
-      var div = document.createElement('div');
-      div.innerHTML = '<svg/>';
-      return (div.firstChild && div.firstChild.namespaceURI) == ns.svg;
-    };
-
-    // SVG SMIL animation
-    tests['smil'] = function() {
-        return !!document.createElementNS && /SVGAnimate/.test(toString.call(document.createElementNS(ns.svg, 'animate')));
-    };
-
-    // This test is only for clip paths in SVG proper, not clip paths on HTML content
-    // demo: srufaculty.sru.edu/david.dailey/svg/newstuff/clipPath4.svg
-
-    // However read the comments to dig into applying SVG clippaths to HTML content here:
-    //   github.com/Modernizr/Modernizr/issues/213#issuecomment-1149491
-    tests['svgclippaths'] = function() {
-        return !!document.createElementNS && /SVGClipPath/.test(toString.call(document.createElementNS(ns.svg, 'clipPath')));
-    };
-
-    /*>>webforms*/
-    // input features and input types go directly onto the ret object, bypassing the tests loop.
-    // Hold this guy to execute in a moment.
-    function webforms() {
-        /*>>input*/
-        // Run through HTML5's new input attributes to see if the UA understands any.
-        // We're using f which is the <input> element created early on
-        // Mike Taylr has created a comprehensive resource for testing these attributes
-        //   when applied to all input types:
-        //   miketaylr.com/code/input-type-attr.html
-        // spec: www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
-
-        // Only input placeholder is tested while textarea's placeholder is not.
-        // Currently Safari 4 and Opera 11 have support only for the input placeholder
-        // Both tests are available in feature-detects/forms-placeholder.js
-        Modernizr['input'] = (function( props ) {
-            for ( var i = 0, len = props.length; i < len; i++ ) {
-                attrs[ props[i] ] = !!(props[i] in inputElem);
-            }
-            if (attrs.list){
-              // safari false positive's on datalist: webk.it/74252
-              // see also github.com/Modernizr/Modernizr/issues/146
-              attrs.list = !!(document.createElement('datalist') && window.HTMLDataListElement);
-            }
-            return attrs;
-        })('autocomplete autofocus list placeholder max min multiple pattern required step'.split(' '));
-        /*>>input*/
-
-        /*>>inputtypes*/
-        // Run through HTML5's new input types to see if the UA understands any.
-        //   This is put behind the tests runloop because it doesn't return a
-        //   true/false like all the other tests; instead, it returns an object
-        //   containing each input type with its corresponding true/false value
-
-        // Big thanks to @miketaylr for the html5 forms expertise. miketaylr.com/
-        Modernizr['inputtypes'] = (function(props) {
-
-            for ( var i = 0, bool, inputElemType, defaultView, len = props.length; i < len; i++ ) {
-
-                inputElem.setAttribute('type', inputElemType = props[i]);
-                bool = inputElem.type !== 'text';
-
-                // We first check to see if the type we give it sticks..
-                // If the type does, we feed it a textual value, which shouldn't be valid.
-                // If the value doesn't stick, we know there's input sanitization which infers a custom UI
-                if ( bool ) {
-
-                    inputElem.value         = smile;
-                    inputElem.style.cssText = 'position:absolute;visibility:hidden;';
-
-                    if ( /^range$/.test(inputElemType) && inputElem.style.WebkitAppearance !== undefined ) {
-
-                      docElement.appendChild(inputElem);
-                      defaultView = document.defaultView;
-
-                      // Safari 2-4 allows the smiley as a value, despite making a slider
-                      bool =  defaultView.getComputedStyle &&
-                              defaultView.getComputedStyle(inputElem, null).WebkitAppearance !== 'textfield' &&
-                              // Mobile android web browser has false positive, so must
-                              // check the height to see if the widget is actually there.
-                              (inputElem.offsetHeight !== 0);
-
-                      docElement.removeChild(inputElem);
-
-                    } else if ( /^(search|tel)$/.test(inputElemType) ){
-                      // Spec doesn't define any special parsing or detectable UI
-                      //   behaviors so we pass these through as true
-
-                      // Interestingly, opera fails the earlier test, so it doesn't
-                      //  even make it here.
-
-                    } else if ( /^(url|email)$/.test(inputElemType) ) {
-                      // Real url and email support comes with prebaked validation.
-                      bool = inputElem.checkValidity && inputElem.checkValidity() === false;
-
-                    } else {
-                      // If the upgraded input compontent rejects the :) text, we got a winner
-                      bool = inputElem.value != smile;
-                    }
-                }
-
-                inputs[ props[i] ] = !!bool;
-            }
-            return inputs;
-        })('search tel url email datetime date month week time datetime-local number range color'.split(' '));
-        /*>>inputtypes*/
-    }
-    /*>>webforms*/
-
-
-    // End of test definitions
-    // -----------------------
-
-
-
-    // Run through all tests and detect their support in the current UA.
-    // todo: hypothetically we could be doing an array of tests and use a basic loop here.
-    for ( var feature in tests ) {
-        if ( hasOwnProp(tests, feature) ) {
-            // run the test, throw the return value into the Modernizr,
-            //   then based on that boolean, define an appropriate className
-            //   and push it into an array of classes we'll join later.
-            featureName  = feature.toLowerCase();
-            Modernizr[featureName] = tests[feature]();
-
-            classes.push((Modernizr[featureName] ? '' : 'no-') + featureName);
-        }
-    }
-
-    /*>>webforms*/
-    // input tests need to run.
-    Modernizr.input || webforms();
-    /*>>webforms*/
-
-
-    /**
-     * addTest allows the user to define their own feature tests
-     * the result will be added onto the Modernizr object,
-     * as well as an appropriate className set on the html element
-     *
-     * @param feature - String naming the feature
-     * @param test - Function returning true if feature is supported, false if not
-     */
-     Modernizr.addTest = function ( feature, test ) {
-       if ( typeof feature == 'object' ) {
-         for ( var key in feature ) {
-           if ( hasOwnProp( feature, key ) ) {
-             Modernizr.addTest( key, feature[ key ] );
-           }
-         }
-       } else {
-
-         feature = feature.toLowerCase();
-
-         if ( Modernizr[feature] !== undefined ) {
-           // we're going to quit if you're trying to overwrite an existing test
-           // if we were to allow it, we'd do this:
-           //   var re = new RegExp("\\b(no-)?" + feature + "\\b");
-           //   docElement.className = docElement.className.replace( re, '' );
-           // but, no rly, stuff 'em.
-           return Modernizr;
-         }
-
-         test = typeof test == 'function' ? test() : test;
-
-         if (typeof enableClasses !== "undefined" && enableClasses) {
-           docElement.className += " mod-" + (test ? '' : 'no-') + feature;
-         }
-         Modernizr[feature] = test;
-
-       }
-
-       return Modernizr; // allow chaining.
-     };
-
-
-    // Reset modElem.cssText to nothing to reduce memory footprint.
-    setCss('');
-    modElem = inputElem = null;
-
-    /*>>shiv*/
-    /**
-     * @preserve HTML5 Shiv prev3.7.1 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
-     */
-    ;(function(window, document) {
-        /*jshint evil:true */
-        /** version */
-        var version = '3.7.0';
-
-        /** Preset options */
-        var options = window.html5 || {};
-
-        /** Used to skip problem elements */
-        var reSkip = /^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i;
-
-        /** Not all elements can be cloned in IE **/
-        var saveClones = /^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i;
-
-        /** Detect whether the browser supports default html5 styles */
-        var supportsHtml5Styles;
-
-        /** Name of the expando, to work with multiple documents or to re-shiv one document */
-        var expando = '_html5shiv';
-
-        /** The id for the the documents expando */
-        var expanID = 0;
-
-        /** Cached data for each document */
-        var expandoData = {};
-
-        /** Detect whether the browser supports unknown elements */
-        var supportsUnknownElements;
-
-        (function() {
-          try {
-            var a = document.createElement('a');
-            a.innerHTML = '<xyz></xyz>';
-            //if the hidden property is implemented we can assume, that the browser supports basic HTML5 Styles
-            supportsHtml5Styles = ('hidden' in a);
-
-            supportsUnknownElements = a.childNodes.length == 1 || (function() {
-              // assign a false positive if unable to shiv
-              (document.createElement)('a');
-              var frag = document.createDocumentFragment();
-              return (
-                typeof frag.cloneNode == 'undefined' ||
-                typeof frag.createDocumentFragment == 'undefined' ||
-                typeof frag.createElement == 'undefined'
-              );
-            }());
-          } catch(e) {
-            // assign a false positive if detection fails => unable to shiv
-            supportsHtml5Styles = true;
-            supportsUnknownElements = true;
-          }
-
-        }());
-
-        /*--------------------------------------------------------------------------*/
-
-        /**
-         * Creates a style sheet with the given CSS text and adds it to the document.
-         * @private
-         * @param {Document} ownerDocument The document.
-         * @param {String} cssText The CSS text.
-         * @returns {StyleSheet} The style element.
-         */
-        function addStyleSheet(ownerDocument, cssText) {
-          var p = ownerDocument.createElement('p'),
-          parent = ownerDocument.getElementsByTagName('head')[0] || ownerDocument.documentElement;
-
-          p.innerHTML = 'x<style>' + cssText + '</style>';
-          return parent.insertBefore(p.lastChild, parent.firstChild);
-        }
-
-        /**
-         * Returns the value of `html5.elements` as an array.
-         * @private
-         * @returns {Array} An array of shived element node names.
-         */
-        function getElements() {
-          var elements = html5.elements;
-          return typeof elements == 'string' ? elements.split(' ') : elements;
-        }
-
-        /**
-         * Returns the data associated to the given document
-         * @private
-         * @param {Document} ownerDocument The document.
-         * @returns {Object} An object of data.
-         */
-        function getExpandoData(ownerDocument) {
-          var data = expandoData[ownerDocument[expando]];
-          if (!data) {
-            data = {};
-            expanID++;
-            ownerDocument[expando] = expanID;
-            expandoData[expanID] = data;
-          }
-          return data;
-        }
-
-        /**
-         * returns a shived element for the given nodeName and document
-         * @memberOf html5
-         * @param {String} nodeName name of the element
-         * @param {Document} ownerDocument The context document.
-         * @returns {Object} The shived element.
-         */
-        function createElement(nodeName, ownerDocument, data){
-          if (!ownerDocument) {
-            ownerDocument = document;
-          }
-          if(supportsUnknownElements){
-            return ownerDocument.createElement(nodeName);
-          }
-          if (!data) {
-            data = getExpandoData(ownerDocument);
-          }
-          var node;
-
-          if (data.cache[nodeName]) {
-            node = data.cache[nodeName].cloneNode();
-          } else if (saveClones.test(nodeName)) {
-            node = (data.cache[nodeName] = data.createElem(nodeName)).cloneNode();
-          } else {
-            node = data.createElem(nodeName);
-          }
-
-          // Avoid adding some elements to fragments in IE < 9 because
-          // * Attributes like `name` or `type` cannot be set/changed once an element
-          //   is inserted into a document/fragment
-          // * Link elements with `src` attributes that are inaccessible, as with
-          //   a 403 response, will cause the tab/window to crash
-          // * Script elements appended to fragments will execute when their `src`
-          //   or `text` property is set
-          return node.canHaveChildren && !reSkip.test(nodeName) && !node.tagUrn ? data.frag.appendChild(node) : node;
-        }
-
-        /**
-         * returns a shived DocumentFragment for the given document
-         * @memberOf html5
-         * @param {Document} ownerDocument The context document.
-         * @returns {Object} The shived DocumentFragment.
-         */
-        function createDocumentFragment(ownerDocument, data){
-          if (!ownerDocument) {
-            ownerDocument = document;
-          }
-          if(supportsUnknownElements){
-            return ownerDocument.createDocumentFragment();
-          }
-          data = data || getExpandoData(ownerDocument);
-          var clone = data.frag.cloneNode(),
-          i = 0,
-          elems = getElements(),
-          l = elems.length;
-          for(;i<l;i++){
-            clone.createElement(elems[i]);
-          }
-          return clone;
-        }
-
-        /**
-         * Shivs the `createElement` and `createDocumentFragment` methods of the document.
-         * @private
-         * @param {Document|DocumentFragment} ownerDocument The document.
-         * @param {Object} data of the document.
-         */
-        function shivMethods(ownerDocument, data) {
-          if (!data.cache) {
-            data.cache = {};
-            data.createElem = ownerDocument.createElement;
-            data.createFrag = ownerDocument.createDocumentFragment;
-            data.frag = data.createFrag();
-          }
-
-
-          ownerDocument.createElement = function(nodeName) {
-            //abort shiv
-            if (!html5.shivMethods) {
-              return data.createElem(nodeName);
-            }
-            return createElement(nodeName, ownerDocument, data);
-          };
-
-          ownerDocument.createDocumentFragment = Function('h,f', 'return function(){' +
-                                                          'var n=f.cloneNode(),c=n.createElement;' +
-                                                          'h.shivMethods&&(' +
-                                                          // unroll the `createElement` calls
-                                                          getElements().join().replace(/[\w\-]+/g, function(nodeName) {
-            data.createElem(nodeName);
-            data.frag.createElement(nodeName);
-            return 'c("' + nodeName + '")';
-          }) +
-            ');return n}'
-                                                         )(html5, data.frag);
-        }
-
-        /*--------------------------------------------------------------------------*/
-
-        /**
-         * Shivs the given document.
-         * @memberOf html5
-         * @param {Document} ownerDocument The document to shiv.
-         * @returns {Document} The shived document.
-         */
-        function shivDocument(ownerDocument) {
-          if (!ownerDocument) {
-            ownerDocument = document;
-          }
-          var data = getExpandoData(ownerDocument);
-
-          if (html5.shivCSS && !supportsHtml5Styles && !data.hasCSS) {
-            data.hasCSS = !!addStyleSheet(ownerDocument,
-                                          // corrects block display not defined in IE6/7/8/9
-                                          'article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}' +
-                                            // adds styling not present in IE6/7/8/9
-                                            'mark{background:#FF0;color:#000}' +
-                                            // hides non-rendered elements
-                                            'template{display:none}'
-                                         );
-          }
-          if (!supportsUnknownElements) {
-            shivMethods(ownerDocument, data);
-          }
-          return ownerDocument;
-        }
-
-        /*--------------------------------------------------------------------------*/
-
-        /**
-         * The `html5` object is exposed so that more elements can be shived and
-         * existing shiving can be detected on iframes.
-         * @type Object
-         * @example
-         *
-         * // options can be changed before the script is included
-         * html5 = { 'elements': 'mark section', 'shivCSS': false, 'shivMethods': false };
-         */
-        var html5 = {
-
-          /**
-           * An array or space separated string of node names of the elements to shiv.
-           * @memberOf html5
-           * @type Array|String
-           */
-          'elements': options.elements || 'abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video',
-
-          /**
-           * current version of html5shiv
-           */
-          'version': version,
-
-          /**
-           * A flag to indicate that the HTML5 style sheet should be inserted.
-           * @memberOf html5
-           * @type Boolean
-           */
-          'shivCSS': (options.shivCSS !== false),
-
-          /**
-           * Is equal to true if a browser supports creating unknown/HTML5 elements
-           * @memberOf html5
-           * @type boolean
-           */
-          'supportsUnknownElements': supportsUnknownElements,
-
-          /**
-           * A flag to indicate that the document's `createElement` and `createDocumentFragment`
-           * methods should be overwritten.
-           * @memberOf html5
-           * @type Boolean
-           */
-          'shivMethods': (options.shivMethods !== false),
-
-          /**
-           * A string to describe the type of `html5` object ("default" or "default print").
-           * @memberOf html5
-           * @type String
-           */
-          'type': 'default',
-
-          // shivs the document according to the specified `html5` object options
-          'shivDocument': shivDocument,
-
-          //creates a shived element
-          createElement: createElement,
-
-          //creates a shived documentFragment
-          createDocumentFragment: createDocumentFragment
-        };
-
-        /*--------------------------------------------------------------------------*/
-
-        // expose html5
-        window.html5 = html5;
-
-        // shiv the document
-        shivDocument(document);
-
-    }(this, document));
-    /*>>shiv*/
-
-    // Assign private properties to the return object with prefix
-    Modernizr._version      = version;
-
-    // expose these for the plugin API. Look in the source for how to join() them against your input
-    /*>>prefixes*/
-    Modernizr._prefixes     = prefixes;
-    /*>>prefixes*/
-    /*>>domprefixes*/
-    Modernizr._domPrefixes  = domPrefixes;
-    Modernizr._cssomPrefixes  = cssomPrefixes;
-    /*>>domprefixes*/
-
-    /*>>mq*/
-    // Modernizr.mq tests a given media query, live against the current state of the window
-    // A few important notes:
-    //   * If a browser does not support media queries at all (eg. oldIE) the mq() will always return false
-    //   * A max-width or orientation query will be evaluated against the current state, which may change later.
-    //   * You must specify values. Eg. If you are testing support for the min-width media query use:
-    //       Modernizr.mq('(min-width:0)')
-    // usage:
-    // Modernizr.mq('only screen and (max-width:768)')
-    Modernizr.mq            = testMediaQuery;
-    /*>>mq*/
-
-    /*>>hasevent*/
-    // Modernizr.hasEvent() detects support for a given event, with an optional element to test on
-    // Modernizr.hasEvent('gesturestart', elem)
-    Modernizr.hasEvent      = isEventSupported;
-    /*>>hasevent*/
-
-    /*>>testprop*/
-    // Modernizr.testProp() investigates whether a given style property is recognized
-    // Note that the property names must be provided in the camelCase variant.
-    // Modernizr.testProp('pointerEvents')
-    Modernizr.testProp      = function(prop){
-        return testProps([prop]);
-    };
-    /*>>testprop*/
-
-    /*>>testallprops*/
-    // Modernizr.testAllProps() investigates whether a given style property,
-    //   or any of its vendor-prefixed variants, is recognized
-    // Note that the property names must be provided in the camelCase variant.
-    // Modernizr.testAllProps('boxSizing')
-    Modernizr.testAllProps  = testPropsAll;
-    /*>>testallprops*/
-
-
-    /*>>teststyles*/
-    // Modernizr.testStyles() allows you to add custom styles to the document and test an element afterwards
-    // Modernizr.testStyles('#modernizr { position:absolute }', function(elem, rule){ ... })
-    Modernizr.testStyles    = injectElementWithStyles;
-    /*>>teststyles*/
-
-
-    /*>>prefixed*/
-    // Modernizr.prefixed() returns the prefixed or nonprefixed property name variant of your input
-    // Modernizr.prefixed('boxSizing') // 'MozBoxSizing'
-
-    // Properties must be passed as dom-style camelcase, rather than `box-sizing` hypentated style.
-    // Return values will also be the camelCase variant, if you need to translate that to hypenated style use:
-    //
-    //     str.replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-');
-
-    // If you're trying to ascertain which transition end event to bind to, you might do something like...
-    //
-    //     var transEndEventNames = {
-    //       'WebkitTransition' : 'webkitTransitionEnd',
-    //       'MozTransition'    : 'transitionend',
-    //       'OTransition'      : 'oTransitionEnd',
-    //       'msTransition'     : 'MSTransitionEnd',
-    //       'transition'       : 'transitionend'
-    //     },
-    //     transEndEventName = transEndEventNames[ Modernizr.prefixed('transition') ];
-
-    Modernizr.prefixed      = function(prop, obj, elem){
-      if(!obj) {
-        return testPropsAll(prop, 'pfx');
-      } else {
-        // Testing DOM property e.g. Modernizr.prefixed('requestAnimationFrame', window) // 'mozRequestAnimationFrame'
-        return testPropsAll(prop, obj, elem);
-      }
-    };
-    /*>>prefixed*/
-
-
-    /*>>cssclasses*/
-    // Remove "no-js" class from <html> element, if it exists:
-    docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2') +
-
-                            // Add the new classes to the <html> element.
-                            (enableClasses ? " mod-js mod-"+classes.join(" mod-") : '');
-    /*>>cssclasses*/
-
-    return Modernizr;
-
-})(this, document);
-
-module.exports = Modernizr;
-},{}],"aviator":[function(require,module,exports){
-// Modules
-var Navigator = require('./navigator');
-
-
-/**
-Only expose a tiny API to keep internal routing safe
-
-@singleton Aviator
-**/
-window.Aviator = {
-
-  /**
-  @property pushStateEnabled
-  @type {Boolean}
-  @default true if the browser supports pushState
-  **/
-  pushStateEnabled: ('pushState' in window.history),
-
-  /**
-  @property linkSelector
-  @type {String}
-  @default 'a.navigate'
-  **/
-  linkSelector: 'a.navigate',
-
-  /**
-  the root of the uri from which routing will append to
-
-  @property root
-  @type {String}
-  @default ''
-  **/
-  root: '',
-
-  /**
-  @property _navigator
-  @type {Navigator}
-
-  @private
-  **/
-  _navigator: new Navigator(),
-
-  /**
-  @method setRoutes
-  @param {Object} routes
-  **/
-  setRoutes: function (routes) {
-    this._navigator.setRoutes(routes);
-  },
-
-  /**
-  dispatches routes to targets and sets up event handlers
-
-  @method dispatch
-  **/
-  dispatch: function () {
-    var navigator = this._navigator;
-
-    navigator.setup({
-      pushStateEnabled: this.pushStateEnabled,
-      linkSelector:     this.linkSelector,
-      root:             this.root
-    });
-
-    navigator.dispatch();
-  },
-
-  /**
-  @method navigate
-  @param {String} uri to navigate to
-  @param {Object} [options]
-  **/
-  navigate: function (uri, options) {
-    this._navigator.navigate(uri, options);
-  },
-
-
-  /**
-  @method serializeQueryParams
-  @param {Object} queryParams
-  @return {String} queryString "?foo=bar&baz[]=boo&baz=[]oob"
-  **/
-  serializeQueryParams: function (queryParams) {
-    return this._navigator.serializeQueryParams(queryParams);
-  },
-
-  /**
-  @method getCurrentRequest
-  @return {String}
-  **/
-  getCurrentRequest: function () {
-    return this._navigator.getCurrentRequest();
-  },
-
-  /**
-  @method getCurrentURI
-  @return {String}
-  **/
-  getCurrentURI: function () {
-    return this._navigator.getCurrentURI();
-  },
-
-  /**
-  @method refresh
-  **/
-  refresh: function () {
-    this._navigator.refresh();
-  },
-
-  /**
-  @method rewriteRouteTo
-  @param {String} newRoute
-  @return {Object}
-  **/
-  rewriteRouteTo: function (newRoute) {
-    var target = {
-      rewrite: function (request) {
-        Aviator.navigate(newRoute, {
-          namedParams: request.namedParams,
-          replace: true
-        });
-      }
-    };
-
-    return {
-      target: target,
-      '/': 'rewrite'
-    };
-  }
-
-};
-
-},{"./navigator":3}],"backbone":[function(require,module,exports){
-//     Backbone.js 1.1.2
-
-//     (c) 2010-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-//     Backbone may be freely distributed under the MIT license.
-//     For all details and documentation:
-//     http://backbonejs.org
-
-(function(root, factory) {
-
-  // Set up Backbone appropriately for the environment. Start with AMD.
-  if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'jquery', 'exports'], function(_, $, exports) {
-      // Export global even in AMD case in case this script is loaded with
-      // others that may still expect a global Backbone.
-      root.Backbone = factory(root, exports, _, $);
-    });
-
-  // Next for Node.js or CommonJS. jQuery may not be needed as a module.
-  } else if (typeof exports !== 'undefined') {
-    var _ = require('underscore');
-    factory(root, exports, _);
-
-  // Finally, as a browser global.
-  } else {
-    root.Backbone = factory(root, {}, root._, (root.jQuery || root.Zepto || root.ender || root.$));
-  }
-
-}(this, function(root, Backbone, _, $) {
-
-  // Initial Setup
-  // -------------
-
-  // Save the previous value of the `Backbone` variable, so that it can be
-  // restored later on, if `noConflict` is used.
-  var previousBackbone = root.Backbone;
-
-  // Create local references to array methods we'll want to use later.
-  var array = [];
-  var push = array.push;
-  var slice = array.slice;
-  var splice = array.splice;
-
-  // Current version of the library. Keep in sync with `package.json`.
-  Backbone.VERSION = '1.1.2';
-
-  // For Backbone's purposes, jQuery, Zepto, Ender, or My Library (kidding) owns
-  // the `$` variable.
-  Backbone.$ = $;
-
-  // Runs Backbone.js in *noConflict* mode, returning the `Backbone` variable
-  // to its previous owner. Returns a reference to this Backbone object.
-  Backbone.noConflict = function() {
-    root.Backbone = previousBackbone;
-    return this;
-  };
-
-  // Turn on `emulateHTTP` to support legacy HTTP servers. Setting this option
-  // will fake `"PATCH"`, `"PUT"` and `"DELETE"` requests via the `_method` parameter and
-  // set a `X-Http-Method-Override` header.
-  Backbone.emulateHTTP = false;
-
-  // Turn on `emulateJSON` to support legacy servers that can't deal with direct
-  // `application/json` requests ... will encode the body as
-  // `application/x-www-form-urlencoded` instead and will send the model in a
-  // form param named `model`.
-  Backbone.emulateJSON = false;
-
-  // Backbone.Events
-  // ---------------
-
-  // A module that can be mixed in to *any object* in order to provide it with
-  // custom events. You may bind with `on` or remove with `off` callback
-  // functions to an event; `trigger`-ing an event fires all callbacks in
-  // succession.
-  //
-  //     var object = {};
-  //     _.extend(object, Backbone.Events);
-  //     object.on('expand', function(){ alert('expanded'); });
-  //     object.trigger('expand');
-  //
-  var Events = Backbone.Events = {
-
-    // Bind an event to a `callback` function. Passing `"all"` will bind
-    // the callback to all events fired.
-    on: function(name, callback, context) {
-      if (!eventsApi(this, 'on', name, [callback, context]) || !callback) return this;
-      this._events || (this._events = {});
-      var events = this._events[name] || (this._events[name] = []);
-      events.push({callback: callback, context: context, ctx: context || this});
-      return this;
-    },
-
-    // Bind an event to only be triggered a single time. After the first time
-    // the callback is invoked, it will be removed.
-    once: function(name, callback, context) {
-      if (!eventsApi(this, 'once', name, [callback, context]) || !callback) return this;
-      var self = this;
-      var once = _.once(function() {
-        self.off(name, once);
-        callback.apply(this, arguments);
-      });
-      once._callback = callback;
-      return this.on(name, once, context);
-    },
-
-    // Remove one or many callbacks. If `context` is null, removes all
-    // callbacks with that function. If `callback` is null, removes all
-    // callbacks for the event. If `name` is null, removes all bound
-    // callbacks for all events.
-    off: function(name, callback, context) {
-      var retain, ev, events, names, i, l, j, k;
-      if (!this._events || !eventsApi(this, 'off', name, [callback, context])) return this;
-      if (!name && !callback && !context) {
-        this._events = void 0;
-        return this;
-      }
-      names = name ? [name] : _.keys(this._events);
-      for (i = 0, l = names.length; i < l; i++) {
-        name = names[i];
-        if (events = this._events[name]) {
-          this._events[name] = retain = [];
-          if (callback || context) {
-            for (j = 0, k = events.length; j < k; j++) {
-              ev = events[j];
-              if ((callback && callback !== ev.callback && callback !== ev.callback._callback) ||
-                  (context && context !== ev.context)) {
-                retain.push(ev);
-              }
-            }
-          }
-          if (!retain.length) delete this._events[name];
-        }
-      }
-
-      return this;
-    },
-
-    // Trigger one or many events, firing all bound callbacks. Callbacks are
-    // passed the same arguments as `trigger` is, apart from the event name
-    // (unless you're listening on `"all"`, which will cause your callback to
-    // receive the true name of the event as the first argument).
-    trigger: function(name) {
-      if (!this._events) return this;
-      var args = slice.call(arguments, 1);
-      if (!eventsApi(this, 'trigger', name, args)) return this;
-      var events = this._events[name];
-      var allEvents = this._events.all;
-      if (events) triggerEvents(events, args);
-      if (allEvents) triggerEvents(allEvents, arguments);
-      return this;
-    },
-
-    // Tell this object to stop listening to either specific events ... or
-    // to every object it's currently listening to.
-    stopListening: function(obj, name, callback) {
-      var listeningTo = this._listeningTo;
-      if (!listeningTo) return this;
-      var remove = !name && !callback;
-      if (!callback && typeof name === 'object') callback = this;
-      if (obj) (listeningTo = {})[obj._listenId] = obj;
-      for (var id in listeningTo) {
-        obj = listeningTo[id];
-        obj.off(name, callback, this);
-        if (remove || _.isEmpty(obj._events)) delete this._listeningTo[id];
-      }
-      return this;
-    }
-
-  };
-
-  // Regular expression used to split event strings.
-  var eventSplitter = /\s+/;
-
-  // Implement fancy features of the Events API such as multiple event
-  // names `"change blur"` and jQuery-style event maps `{change: action}`
-  // in terms of the existing API.
-  var eventsApi = function(obj, action, name, rest) {
-    if (!name) return true;
-
-    // Handle event maps.
-    if (typeof name === 'object') {
-      for (var key in name) {
-        obj[action].apply(obj, [key, name[key]].concat(rest));
-      }
-      return false;
-    }
-
-    // Handle space separated event names.
-    if (eventSplitter.test(name)) {
-      var names = name.split(eventSplitter);
-      for (var i = 0, l = names.length; i < l; i++) {
-        obj[action].apply(obj, [names[i]].concat(rest));
-      }
-      return false;
-    }
-
-    return true;
-  };
-
-  // A difficult-to-believe, but optimized internal dispatch function for
-  // triggering events. Tries to keep the usual cases speedy (most internal
-  // Backbone events have 3 arguments).
-  var triggerEvents = function(events, args) {
-    var ev, i = -1, l = events.length, a1 = args[0], a2 = args[1], a3 = args[2];
-    switch (args.length) {
-      case 0: while (++i < l) (ev = events[i]).callback.call(ev.ctx); return;
-      case 1: while (++i < l) (ev = events[i]).callback.call(ev.ctx, a1); return;
-      case 2: while (++i < l) (ev = events[i]).callback.call(ev.ctx, a1, a2); return;
-      case 3: while (++i < l) (ev = events[i]).callback.call(ev.ctx, a1, a2, a3); return;
-      default: while (++i < l) (ev = events[i]).callback.apply(ev.ctx, args); return;
-    }
-  };
-
-  var listenMethods = {listenTo: 'on', listenToOnce: 'once'};
-
-  // Inversion-of-control versions of `on` and `once`. Tell *this* object to
-  // listen to an event in another object ... keeping track of what it's
-  // listening to.
-  _.each(listenMethods, function(implementation, method) {
-    Events[method] = function(obj, name, callback) {
-      var listeningTo = this._listeningTo || (this._listeningTo = {});
-      var id = obj._listenId || (obj._listenId = _.uniqueId('l'));
-      listeningTo[id] = obj;
-      if (!callback && typeof name === 'object') callback = this;
-      obj[implementation](name, callback, this);
-      return this;
-    };
-  });
-
-  // Aliases for backwards compatibility.
-  Events.bind   = Events.on;
-  Events.unbind = Events.off;
-
-  // Allow the `Backbone` object to serve as a global event bus, for folks who
-  // want global "pubsub" in a convenient place.
-  _.extend(Backbone, Events);
-
-  // Backbone.Model
-  // --------------
-
-  // Backbone **Models** are the basic data object in the framework --
-  // frequently representing a row in a table in a database on your server.
-  // A discrete chunk of data and a bunch of useful, related methods for
-  // performing computations and transformations on that data.
-
-  // Create a new model with the specified attributes. A client id (`cid`)
-  // is automatically generated and assigned for you.
-  var Model = Backbone.Model = function(attributes, options) {
-    var attrs = attributes || {};
-    options || (options = {});
-    this.cid = _.uniqueId('c');
-    this.attributes = {};
-    if (options.collection) this.collection = options.collection;
-    if (options.parse) attrs = this.parse(attrs, options) || {};
-    attrs = _.defaults({}, attrs, _.result(this, 'defaults'));
-    this.set(attrs, options);
-    this.changed = {};
-    this.initialize.apply(this, arguments);
-  };
-
-  // Attach all inheritable methods to the Model prototype.
-  _.extend(Model.prototype, Events, {
-
-    // A hash of attributes whose current and previous value differ.
-    changed: null,
-
-    // The value returned during the last failed validation.
-    validationError: null,
-
-    // The default name for the JSON `id` attribute is `"id"`. MongoDB and
-    // CouchDB users may want to set this to `"_id"`.
-    idAttribute: 'id',
-
-    // Initialize is an empty function by default. Override it with your own
-    // initialization logic.
-    initialize: function(){},
-
-    // Return a copy of the model's `attributes` object.
-    toJSON: function(options) {
-      return _.clone(this.attributes);
-    },
-
-    // Proxy `Backbone.sync` by default -- but override this if you need
-    // custom syncing semantics for *this* particular model.
-    sync: function() {
-      return Backbone.sync.apply(this, arguments);
-    },
-
-    // Get the value of an attribute.
-    get: function(attr) {
-      return this.attributes[attr];
-    },
-
-    // Get the HTML-escaped value of an attribute.
-    escape: function(attr) {
-      return _.escape(this.get(attr));
-    },
-
-    // Returns `true` if the attribute contains a value that is not null
-    // or undefined.
-    has: function(attr) {
-      return this.get(attr) != null;
-    },
-
-    // Set a hash of model attributes on the object, firing `"change"`. This is
-    // the core primitive operation of a model, updating the data and notifying
-    // anyone who needs to know about the change in state. The heart of the beast.
-    set: function(key, val, options) {
-      var attr, attrs, unset, changes, silent, changing, prev, current;
-      if (key == null) return this;
-
-      // Handle both `"key", value` and `{key: value}` -style arguments.
-      if (typeof key === 'object') {
-        attrs = key;
-        options = val;
-      } else {
-        (attrs = {})[key] = val;
-      }
-
-      options || (options = {});
-
-      // Run validation.
-      if (!this._validate(attrs, options)) return false;
-
-      // Extract attributes and options.
-      unset           = options.unset;
-      silent          = options.silent;
-      changes         = [];
-      changing        = this._changing;
-      this._changing  = true;
-
-      if (!changing) {
-        this._previousAttributes = _.clone(this.attributes);
-        this.changed = {};
-      }
-      current = this.attributes, prev = this._previousAttributes;
-
-      // Check for changes of `id`.
-      if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
-
-      // For each `set` attribute, update or delete the current value.
-      for (attr in attrs) {
-        val = attrs[attr];
-        if (!_.isEqual(current[attr], val)) changes.push(attr);
-        if (!_.isEqual(prev[attr], val)) {
-          this.changed[attr] = val;
-        } else {
-          delete this.changed[attr];
-        }
-        unset ? delete current[attr] : current[attr] = val;
-      }
-
-      // Trigger all relevant attribute changes.
-      if (!silent) {
-        if (changes.length) this._pending = options;
-        for (var i = 0, l = changes.length; i < l; i++) {
-          this.trigger('change:' + changes[i], this, current[changes[i]], options);
-        }
-      }
-
-      // You might be wondering why there's a `while` loop here. Changes can
-      // be recursively nested within `"change"` events.
-      if (changing) return this;
-      if (!silent) {
-        while (this._pending) {
-          options = this._pending;
-          this._pending = false;
-          this.trigger('change', this, options);
-        }
-      }
-      this._pending = false;
-      this._changing = false;
-      return this;
-    },
-
-    // Remove an attribute from the model, firing `"change"`. `unset` is a noop
-    // if the attribute doesn't exist.
-    unset: function(attr, options) {
-      return this.set(attr, void 0, _.extend({}, options, {unset: true}));
-    },
-
-    // Clear all attributes on the model, firing `"change"`.
-    clear: function(options) {
-      var attrs = {};
-      for (var key in this.attributes) attrs[key] = void 0;
-      return this.set(attrs, _.extend({}, options, {unset: true}));
-    },
-
-    // Determine if the model has changed since the last `"change"` event.
-    // If you specify an attribute name, determine if that attribute has changed.
-    hasChanged: function(attr) {
-      if (attr == null) return !_.isEmpty(this.changed);
-      return _.has(this.changed, attr);
-    },
-
-    // Return an object containing all the attributes that have changed, or
-    // false if there are no changed attributes. Useful for determining what
-    // parts of a view need to be updated and/or what attributes need to be
-    // persisted to the server. Unset attributes will be set to undefined.
-    // You can also pass an attributes object to diff against the model,
-    // determining if there *would be* a change.
-    changedAttributes: function(diff) {
-      if (!diff) return this.hasChanged() ? _.clone(this.changed) : false;
-      var val, changed = false;
-      var old = this._changing ? this._previousAttributes : this.attributes;
-      for (var attr in diff) {
-        if (_.isEqual(old[attr], (val = diff[attr]))) continue;
-        (changed || (changed = {}))[attr] = val;
-      }
-      return changed;
-    },
-
-    // Get the previous value of an attribute, recorded at the time the last
-    // `"change"` event was fired.
-    previous: function(attr) {
-      if (attr == null || !this._previousAttributes) return null;
-      return this._previousAttributes[attr];
-    },
-
-    // Get all of the attributes of the model at the time of the previous
-    // `"change"` event.
-    previousAttributes: function() {
-      return _.clone(this._previousAttributes);
-    },
-
-    // Fetch the model from the server. If the server's representation of the
-    // model differs from its current attributes, they will be overridden,
-    // triggering a `"change"` event.
-    fetch: function(options) {
-      options = options ? _.clone(options) : {};
-      if (options.parse === void 0) options.parse = true;
-      var model = this;
-      var success = options.success;
-      options.success = function(resp) {
-        if (!model.set(model.parse(resp, options), options)) return false;
-        if (success) success(model, resp, options);
-        model.trigger('sync', model, resp, options);
-      };
-      wrapError(this, options);
-      return this.sync('read', this, options);
-    },
-
-    // Set a hash of model attributes, and sync the model to the server.
-    // If the server returns an attributes hash that differs, the model's
-    // state will be `set` again.
-    save: function(key, val, options) {
-      var attrs, method, xhr, attributes = this.attributes;
-
-      // Handle both `"key", value` and `{key: value}` -style arguments.
-      if (key == null || typeof key === 'object') {
-        attrs = key;
-        options = val;
-      } else {
-        (attrs = {})[key] = val;
-      }
-
-      options = _.extend({validate: true}, options);
-
-      // If we're not waiting and attributes exist, save acts as
-      // `set(attr).save(null, opts)` with validation. Otherwise, check if
-      // the model will be valid when the attributes, if any, are set.
-      if (attrs && !options.wait) {
-        if (!this.set(attrs, options)) return false;
-      } else {
-        if (!this._validate(attrs, options)) return false;
-      }
-
-      // Set temporary attributes if `{wait: true}`.
-      if (attrs && options.wait) {
-        this.attributes = _.extend({}, attributes, attrs);
-      }
-
-      // After a successful server-side save, the client is (optionally)
-      // updated with the server-side state.
-      if (options.parse === void 0) options.parse = true;
-      var model = this;
-      var success = options.success;
-      options.success = function(resp) {
-        // Ensure attributes are restored during synchronous saves.
-        model.attributes = attributes;
-        var serverAttrs = model.parse(resp, options);
-        if (options.wait) serverAttrs = _.extend(attrs || {}, serverAttrs);
-        if (_.isObject(serverAttrs) && !model.set(serverAttrs, options)) {
-          return false;
-        }
-        if (success) success(model, resp, options);
-        model.trigger('sync', model, resp, options);
-      };
-      wrapError(this, options);
-
-      method = this.isNew() ? 'create' : (options.patch ? 'patch' : 'update');
-      if (method === 'patch') options.attrs = attrs;
-      xhr = this.sync(method, this, options);
-
-      // Restore attributes.
-      if (attrs && options.wait) this.attributes = attributes;
-
-      return xhr;
-    },
-
-    // Destroy this model on the server if it was already persisted.
-    // Optimistically removes the model from its collection, if it has one.
-    // If `wait: true` is passed, waits for the server to respond before removal.
-    destroy: function(options) {
-      options = options ? _.clone(options) : {};
-      var model = this;
-      var success = options.success;
-
-      var destroy = function() {
-        model.trigger('destroy', model, model.collection, options);
-      };
-
-      options.success = function(resp) {
-        if (options.wait || model.isNew()) destroy();
-        if (success) success(model, resp, options);
-        if (!model.isNew()) model.trigger('sync', model, resp, options);
-      };
-
-      if (this.isNew()) {
-        options.success();
-        return false;
-      }
-      wrapError(this, options);
-
-      var xhr = this.sync('delete', this, options);
-      if (!options.wait) destroy();
-      return xhr;
-    },
-
-    // Default URL for the model's representation on the server -- if you're
-    // using Backbone's restful methods, override this to change the endpoint
-    // that will be called.
-    url: function() {
-      var base =
-        _.result(this, 'urlRoot') ||
-        _.result(this.collection, 'url') ||
-        urlError();
-      if (this.isNew()) return base;
-      return base.replace(/([^\/])$/, '$1/') + encodeURIComponent(this.id);
-    },
-
-    // **parse** converts a response into the hash of attributes to be `set` on
-    // the model. The default implementation is just to pass the response along.
-    parse: function(resp, options) {
-      return resp;
-    },
-
-    // Create a new model with identical attributes to this one.
-    clone: function() {
-      return new this.constructor(this.attributes);
-    },
-
-    // A model is new if it has never been saved to the server, and lacks an id.
-    isNew: function() {
-      return !this.has(this.idAttribute);
-    },
-
-    // Check if the model is currently in a valid state.
-    isValid: function(options) {
-      return this._validate({}, _.extend(options || {}, { validate: true }));
-    },
-
-    // Run validation against the next complete set of model attributes,
-    // returning `true` if all is well. Otherwise, fire an `"invalid"` event.
-    _validate: function(attrs, options) {
-      if (!options.validate || !this.validate) return true;
-      attrs = _.extend({}, this.attributes, attrs);
-      var error = this.validationError = this.validate(attrs, options) || null;
-      if (!error) return true;
-      this.trigger('invalid', this, error, _.extend(options, {validationError: error}));
-      return false;
-    }
-
-  });
-
-  // Underscore methods that we want to implement on the Model.
-  var modelMethods = ['keys', 'values', 'pairs', 'invert', 'pick', 'omit'];
-
-  // Mix in each Underscore method as a proxy to `Model#attributes`.
-  _.each(modelMethods, function(method) {
-    Model.prototype[method] = function() {
-      var args = slice.call(arguments);
-      args.unshift(this.attributes);
-      return _[method].apply(_, args);
-    };
-  });
-
-  // Backbone.Collection
-  // -------------------
-
-  // If models tend to represent a single row of data, a Backbone Collection is
-  // more analagous to a table full of data ... or a small slice or page of that
-  // table, or a collection of rows that belong together for a particular reason
-  // -- all of the messages in this particular folder, all of the documents
-  // belonging to this particular author, and so on. Collections maintain
-  // indexes of their models, both in order, and for lookup by `id`.
-
-  // Create a new **Collection**, perhaps to contain a specific type of `model`.
-  // If a `comparator` is specified, the Collection will maintain
-  // its models in sort order, as they're added and removed.
-  var Collection = Backbone.Collection = function(models, options) {
-    options || (options = {});
-    if (options.model) this.model = options.model;
-    if (options.comparator !== void 0) this.comparator = options.comparator;
-    this._reset();
-    this.initialize.apply(this, arguments);
-    if (models) this.reset(models, _.extend({silent: true}, options));
-  };
-
-  // Default options for `Collection#set`.
-  var setOptions = {add: true, remove: true, merge: true};
-  var addOptions = {add: true, remove: false};
-
-  // Define the Collection's inheritable methods.
-  _.extend(Collection.prototype, Events, {
-
-    // The default model for a collection is just a **Backbone.Model**.
-    // This should be overridden in most cases.
-    model: Model,
-
-    // Initialize is an empty function by default. Override it with your own
-    // initialization logic.
-    initialize: function(){},
-
-    // The JSON representation of a Collection is an array of the
-    // models' attributes.
-    toJSON: function(options) {
-      return this.map(function(model){ return model.toJSON(options); });
-    },
-
-    // Proxy `Backbone.sync` by default.
-    sync: function() {
-      return Backbone.sync.apply(this, arguments);
-    },
-
-    // Add a model, or list of models to the set.
-    add: function(models, options) {
-      return this.set(models, _.extend({merge: false}, options, addOptions));
-    },
-
-    // Remove a model, or a list of models from the set.
-    remove: function(models, options) {
-      var singular = !_.isArray(models);
-      models = singular ? [models] : _.clone(models);
-      options || (options = {});
-      var i, l, index, model;
-      for (i = 0, l = models.length; i < l; i++) {
-        model = models[i] = this.get(models[i]);
-        if (!model) continue;
-        delete this._byId[model.id];
-        delete this._byId[model.cid];
-        index = this.indexOf(model);
-        this.models.splice(index, 1);
-        this.length--;
-        if (!options.silent) {
-          options.index = index;
-          model.trigger('remove', model, this, options);
-        }
-        this._removeReference(model, options);
-      }
-      return singular ? models[0] : models;
-    },
-
-    // Update a collection by `set`-ing a new list of models, adding new ones,
-    // removing models that are no longer present, and merging models that
-    // already exist in the collection, as necessary. Similar to **Model#set**,
-    // the core operation for updating the data contained by the collection.
-    set: function(models, options) {
-      options = _.defaults({}, options, setOptions);
-      if (options.parse) models = this.parse(models, options);
-      var singular = !_.isArray(models);
-      models = singular ? (models ? [models] : []) : _.clone(models);
-      var i, l, id, model, attrs, existing, sort;
-      var at = options.at;
-      var targetModel = this.model;
-      var sortable = this.comparator && (at == null) && options.sort !== false;
-      var sortAttr = _.isString(this.comparator) ? this.comparator : null;
-      var toAdd = [], toRemove = [], modelMap = {};
-      var add = options.add, merge = options.merge, remove = options.remove;
-      var order = !sortable && add && remove ? [] : false;
-
-      // Turn bare objects into model references, and prevent invalid models
-      // from being added.
-      for (i = 0, l = models.length; i < l; i++) {
-        attrs = models[i] || {};
-        if (attrs instanceof Model) {
-          id = model = attrs;
-        } else {
-          id = attrs[targetModel.prototype.idAttribute || 'id'];
-        }
-
-        // If a duplicate is found, prevent it from being added and
-        // optionally merge it into the existing model.
-        if (existing = this.get(id)) {
-          if (remove) modelMap[existing.cid] = true;
-          if (merge) {
-            attrs = attrs === model ? model.attributes : attrs;
-            if (options.parse) attrs = existing.parse(attrs, options);
-            existing.set(attrs, options);
-            if (sortable && !sort && existing.hasChanged(sortAttr)) sort = true;
-          }
-          models[i] = existing;
-
-        // If this is a new, valid model, push it to the `toAdd` list.
-        } else if (add) {
-          model = models[i] = this._prepareModel(attrs, options);
-          if (!model) continue;
-          toAdd.push(model);
-          this._addReference(model, options);
-        }
-
-        // Do not add multiple models with the same `id`.
-        model = existing || model;
-        if (order && (model.isNew() || !modelMap[model.id])) order.push(model);
-        modelMap[model.id] = true;
-      }
-
-      // Remove nonexistent models if appropriate.
-      if (remove) {
-        for (i = 0, l = this.length; i < l; ++i) {
-          if (!modelMap[(model = this.models[i]).cid]) toRemove.push(model);
-        }
-        if (toRemove.length) this.remove(toRemove, options);
-      }
-
-      // See if sorting is needed, update `length` and splice in new models.
-      if (toAdd.length || (order && order.length)) {
-        if (sortable) sort = true;
-        this.length += toAdd.length;
-        if (at != null) {
-          for (i = 0, l = toAdd.length; i < l; i++) {
-            this.models.splice(at + i, 0, toAdd[i]);
-          }
-        } else {
-          if (order) this.models.length = 0;
-          var orderedModels = order || toAdd;
-          for (i = 0, l = orderedModels.length; i < l; i++) {
-            this.models.push(orderedModels[i]);
-          }
-        }
-      }
-
-      // Silently sort the collection if appropriate.
-      if (sort) this.sort({silent: true});
-
-      // Unless silenced, it's time to fire all appropriate add/sort events.
-      if (!options.silent) {
-        for (i = 0, l = toAdd.length; i < l; i++) {
-          (model = toAdd[i]).trigger('add', model, this, options);
-        }
-        if (sort || (order && order.length)) this.trigger('sort', this, options);
-      }
-
-      // Return the added (or merged) model (or models).
-      return singular ? models[0] : models;
-    },
-
-    // When you have more items than you want to add or remove individually,
-    // you can reset the entire set with a new list of models, without firing
-    // any granular `add` or `remove` events. Fires `reset` when finished.
-    // Useful for bulk operations and optimizations.
-    reset: function(models, options) {
-      options || (options = {});
-      for (var i = 0, l = this.models.length; i < l; i++) {
-        this._removeReference(this.models[i], options);
-      }
-      options.previousModels = this.models;
-      this._reset();
-      models = this.add(models, _.extend({silent: true}, options));
-      if (!options.silent) this.trigger('reset', this, options);
-      return models;
-    },
-
-    // Add a model to the end of the collection.
-    push: function(model, options) {
-      return this.add(model, _.extend({at: this.length}, options));
-    },
-
-    // Remove a model from the end of the collection.
-    pop: function(options) {
-      var model = this.at(this.length - 1);
-      this.remove(model, options);
-      return model;
-    },
-
-    // Add a model to the beginning of the collection.
-    unshift: function(model, options) {
-      return this.add(model, _.extend({at: 0}, options));
-    },
-
-    // Remove a model from the beginning of the collection.
-    shift: function(options) {
-      var model = this.at(0);
-      this.remove(model, options);
-      return model;
-    },
-
-    // Slice out a sub-array of models from the collection.
-    slice: function() {
-      return slice.apply(this.models, arguments);
-    },
-
-    // Get a model from the set by id.
-    get: function(obj) {
-      if (obj == null) return void 0;
-      return this._byId[obj] || this._byId[obj.id] || this._byId[obj.cid];
-    },
-
-    // Get the model at the given index.
-    at: function(index) {
-      return this.models[index];
-    },
-
-    // Return models with matching attributes. Useful for simple cases of
-    // `filter`.
-    where: function(attrs, first) {
-      if (_.isEmpty(attrs)) return first ? void 0 : [];
-      return this[first ? 'find' : 'filter'](function(model) {
-        for (var key in attrs) {
-          if (attrs[key] !== model.get(key)) return false;
-        }
-        return true;
-      });
-    },
-
-    // Return the first model with matching attributes. Useful for simple cases
-    // of `find`.
-    findWhere: function(attrs) {
-      return this.where(attrs, true);
-    },
-
-    // Force the collection to re-sort itself. You don't need to call this under
-    // normal circumstances, as the set will maintain sort order as each item
-    // is added.
-    sort: function(options) {
-      if (!this.comparator) throw new Error('Cannot sort a set without a comparator');
-      options || (options = {});
-
-      // Run sort based on type of `comparator`.
-      if (_.isString(this.comparator) || this.comparator.length === 1) {
-        this.models = this.sortBy(this.comparator, this);
-      } else {
-        this.models.sort(_.bind(this.comparator, this));
-      }
-
-      if (!options.silent) this.trigger('sort', this, options);
-      return this;
-    },
-
-    // Pluck an attribute from each model in the collection.
-    pluck: function(attr) {
-      return _.invoke(this.models, 'get', attr);
-    },
-
-    // Fetch the default set of models for this collection, resetting the
-    // collection when they arrive. If `reset: true` is passed, the response
-    // data will be passed through the `reset` method instead of `set`.
-    fetch: function(options) {
-      options = options ? _.clone(options) : {};
-      if (options.parse === void 0) options.parse = true;
-      var success = options.success;
-      var collection = this;
-      options.success = function(resp) {
-        var method = options.reset ? 'reset' : 'set';
-        collection[method](resp, options);
-        if (success) success(collection, resp, options);
-        collection.trigger('sync', collection, resp, options);
-      };
-      wrapError(this, options);
-      return this.sync('read', this, options);
-    },
-
-    // Create a new instance of a model in this collection. Add the model to the
-    // collection immediately, unless `wait: true` is passed, in which case we
-    // wait for the server to agree.
-    create: function(model, options) {
-      options = options ? _.clone(options) : {};
-      if (!(model = this._prepareModel(model, options))) return false;
-      if (!options.wait) this.add(model, options);
-      var collection = this;
-      var success = options.success;
-      options.success = function(model, resp) {
-        if (options.wait) collection.add(model, options);
-        if (success) success(model, resp, options);
-      };
-      model.save(null, options);
-      return model;
-    },
-
-    // **parse** converts a response into a list of models to be added to the
-    // collection. The default implementation is just to pass it through.
-    parse: function(resp, options) {
-      return resp;
-    },
-
-    // Create a new collection with an identical list of models as this one.
-    clone: function() {
-      return new this.constructor(this.models);
-    },
-
-    // Private method to reset all internal state. Called when the collection
-    // is first initialized or reset.
-    _reset: function() {
-      this.length = 0;
-      this.models = [];
-      this._byId  = {};
-    },
-
-    // Prepare a hash of attributes (or other model) to be added to this
-    // collection.
-    _prepareModel: function(attrs, options) {
-      if (attrs instanceof Model) return attrs;
-      options = options ? _.clone(options) : {};
-      options.collection = this;
-      var model = new this.model(attrs, options);
-      if (!model.validationError) return model;
-      this.trigger('invalid', this, model.validationError, options);
-      return false;
-    },
-
-    // Internal method to create a model's ties to a collection.
-    _addReference: function(model, options) {
-      this._byId[model.cid] = model;
-      if (model.id != null) this._byId[model.id] = model;
-      if (!model.collection) model.collection = this;
-      model.on('all', this._onModelEvent, this);
-    },
-
-    // Internal method to sever a model's ties to a collection.
-    _removeReference: function(model, options) {
-      if (this === model.collection) delete model.collection;
-      model.off('all', this._onModelEvent, this);
-    },
-
-    // Internal method called every time a model in the set fires an event.
-    // Sets need to update their indexes when models change ids. All other
-    // events simply proxy through. "add" and "remove" events that originate
-    // in other collections are ignored.
-    _onModelEvent: function(event, model, collection, options) {
-      if ((event === 'add' || event === 'remove') && collection !== this) return;
-      if (event === 'destroy') this.remove(model, options);
-      if (model && event === 'change:' + model.idAttribute) {
-        delete this._byId[model.previous(model.idAttribute)];
-        if (model.id != null) this._byId[model.id] = model;
-      }
-      this.trigger.apply(this, arguments);
-    }
-
-  });
-
-  // Underscore methods that we want to implement on the Collection.
-  // 90% of the core usefulness of Backbone Collections is actually implemented
-  // right here:
-  var methods = ['forEach', 'each', 'map', 'collect', 'reduce', 'foldl',
-    'inject', 'reduceRight', 'foldr', 'find', 'detect', 'filter', 'select',
-    'reject', 'every', 'all', 'some', 'any', 'include', 'contains', 'invoke',
-    'max', 'min', 'toArray', 'size', 'first', 'head', 'take', 'initial', 'rest',
-    'tail', 'drop', 'last', 'without', 'difference', 'indexOf', 'shuffle',
-    'lastIndexOf', 'isEmpty', 'chain', 'sample'];
-
-  // Mix in each Underscore method as a proxy to `Collection#models`.
-  _.each(methods, function(method) {
-    Collection.prototype[method] = function() {
-      var args = slice.call(arguments);
-      args.unshift(this.models);
-      return _[method].apply(_, args);
-    };
-  });
-
-  // Underscore methods that take a property name as an argument.
-  var attributeMethods = ['groupBy', 'countBy', 'sortBy', 'indexBy'];
-
-  // Use attributes instead of properties.
-  _.each(attributeMethods, function(method) {
-    Collection.prototype[method] = function(value, context) {
-      var iterator = _.isFunction(value) ? value : function(model) {
-        return model.get(value);
-      };
-      return _[method](this.models, iterator, context);
-    };
-  });
-
-  // Backbone.View
-  // -------------
-
-  // Backbone Views are almost more convention than they are actual code. A View
-  // is simply a JavaScript object that represents a logical chunk of UI in the
-  // DOM. This might be a single item, an entire list, a sidebar or panel, or
-  // even the surrounding frame which wraps your whole app. Defining a chunk of
-  // UI as a **View** allows you to define your DOM events declaratively, without
-  // having to worry about render order ... and makes it easy for the view to
-  // react to specific changes in the state of your models.
-
-  // Creating a Backbone.View creates its initial element outside of the DOM,
-  // if an existing element is not provided...
-  var View = Backbone.View = function(options) {
-    this.cid = _.uniqueId('view');
-    options || (options = {});
-    _.extend(this, _.pick(options, viewOptions));
-    this._ensureElement();
-    this.initialize.apply(this, arguments);
-    this.delegateEvents();
-  };
-
-  // Cached regex to split keys for `delegate`.
-  var delegateEventSplitter = /^(\S+)\s*(.*)$/;
-
-  // List of view options to be merged as properties.
-  var viewOptions = ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName', 'events'];
-
-  // Set up all inheritable **Backbone.View** properties and methods.
-  _.extend(View.prototype, Events, {
-
-    // The default `tagName` of a View's element is `"div"`.
-    tagName: 'div',
-
-    // jQuery delegate for element lookup, scoped to DOM elements within the
-    // current view. This should be preferred to global lookups where possible.
-    $: function(selector) {
-      return this.$el.find(selector);
-    },
-
-    // Initialize is an empty function by default. Override it with your own
-    // initialization logic.
-    initialize: function(){},
-
-    // **render** is the core function that your view should override, in order
-    // to populate its element (`this.el`), with the appropriate HTML. The
-    // convention is for **render** to always return `this`.
-    render: function() {
-      return this;
-    },
-
-    // Remove this view by taking the element out of the DOM, and removing any
-    // applicable Backbone.Events listeners.
-    remove: function() {
-      this.$el.remove();
-      this.stopListening();
-      return this;
-    },
-
-    // Change the view's element (`this.el` property), including event
-    // re-delegation.
-    setElement: function(element, delegate) {
-      if (this.$el) this.undelegateEvents();
-      this.$el = element instanceof Backbone.$ ? element : Backbone.$(element);
-      this.el = this.$el[0];
-      if (delegate !== false) this.delegateEvents();
-      return this;
-    },
-
-    // Set callbacks, where `this.events` is a hash of
-    //
-    // *{"event selector": "callback"}*
-    //
-    //     {
-    //       'mousedown .title':  'edit',
-    //       'click .button':     'save',
-    //       'click .open':       function(e) { ... }
-    //     }
-    //
-    // pairs. Callbacks will be bound to the view, with `this` set properly.
-    // Uses event delegation for efficiency.
-    // Omitting the selector binds the event to `this.el`.
-    // This only works for delegate-able events: not `focus`, `blur`, and
-    // not `change`, `submit`, and `reset` in Internet Explorer.
-    delegateEvents: function(events) {
-      if (!(events || (events = _.result(this, 'events')))) return this;
-      this.undelegateEvents();
-      for (var key in events) {
-        var method = events[key];
-        if (!_.isFunction(method)) method = this[events[key]];
-        if (!method) continue;
-
-        var match = key.match(delegateEventSplitter);
-        var eventName = match[1], selector = match[2];
-        method = _.bind(method, this);
-        eventName += '.delegateEvents' + this.cid;
-        if (selector === '') {
-          this.$el.on(eventName, method);
-        } else {
-          this.$el.on(eventName, selector, method);
-        }
-      }
-      return this;
-    },
-
-    // Clears all callbacks previously bound to the view with `delegateEvents`.
-    // You usually don't need to use this, but may wish to if you have multiple
-    // Backbone views attached to the same DOM element.
-    undelegateEvents: function() {
-      this.$el.off('.delegateEvents' + this.cid);
-      return this;
-    },
-
-    // Ensure that the View has a DOM element to render into.
-    // If `this.el` is a string, pass it through `$()`, take the first
-    // matching element, and re-assign it to `el`. Otherwise, create
-    // an element from the `id`, `className` and `tagName` properties.
-    _ensureElement: function() {
-      if (!this.el) {
-        var attrs = _.extend({}, _.result(this, 'attributes'));
-        if (this.id) attrs.id = _.result(this, 'id');
-        if (this.className) attrs['class'] = _.result(this, 'className');
-        var $el = Backbone.$('<' + _.result(this, 'tagName') + '>').attr(attrs);
-        this.setElement($el, false);
-      } else {
-        this.setElement(_.result(this, 'el'), false);
-      }
-    }
-
-  });
-
-  // Backbone.sync
-  // -------------
-
-  // Override this function to change the manner in which Backbone persists
-  // models to the server. You will be passed the type of request, and the
-  // model in question. By default, makes a RESTful Ajax request
-  // to the model's `url()`. Some possible customizations could be:
-  //
-  // * Use `setTimeout` to batch rapid-fire updates into a single request.
-  // * Send up the models as XML instead of JSON.
-  // * Persist models via WebSockets instead of Ajax.
-  //
-  // Turn on `Backbone.emulateHTTP` in order to send `PUT` and `DELETE` requests
-  // as `POST`, with a `_method` parameter containing the true HTTP method,
-  // as well as all requests with the body as `application/x-www-form-urlencoded`
-  // instead of `application/json` with the model in a param named `model`.
-  // Useful when interfacing with server-side languages like **PHP** that make
-  // it difficult to read the body of `PUT` requests.
-  Backbone.sync = function(method, model, options) {
-    var type = methodMap[method];
-
-    // Default options, unless specified.
-    _.defaults(options || (options = {}), {
-      emulateHTTP: Backbone.emulateHTTP,
-      emulateJSON: Backbone.emulateJSON
-    });
-
-    // Default JSON-request options.
-    var params = {type: type, dataType: 'json'};
-
-    // Ensure that we have a URL.
-    if (!options.url) {
-      params.url = _.result(model, 'url') || urlError();
-    }
-
-    // Ensure that we have the appropriate request data.
-    if (options.data == null && model && (method === 'create' || method === 'update' || method === 'patch')) {
-      params.contentType = 'application/json';
-      params.data = JSON.stringify(options.attrs || model.toJSON(options));
-    }
-
-    // For older servers, emulate JSON by encoding the request into an HTML-form.
-    if (options.emulateJSON) {
-      params.contentType = 'application/x-www-form-urlencoded';
-      params.data = params.data ? {model: params.data} : {};
-    }
-
-    // For older servers, emulate HTTP by mimicking the HTTP method with `_method`
-    // And an `X-HTTP-Method-Override` header.
-    if (options.emulateHTTP && (type === 'PUT' || type === 'DELETE' || type === 'PATCH')) {
-      params.type = 'POST';
-      if (options.emulateJSON) params.data._method = type;
-      var beforeSend = options.beforeSend;
-      options.beforeSend = function(xhr) {
-        xhr.setRequestHeader('X-HTTP-Method-Override', type);
-        if (beforeSend) return beforeSend.apply(this, arguments);
-      };
-    }
-
-    // Don't process data on a non-GET request.
-    if (params.type !== 'GET' && !options.emulateJSON) {
-      params.processData = false;
-    }
-
-    // If we're sending a `PATCH` request, and we're in an old Internet Explorer
-    // that still has ActiveX enabled by default, override jQuery to use that
-    // for XHR instead. Remove this line when jQuery supports `PATCH` on IE8.
-    if (params.type === 'PATCH' && noXhrPatch) {
-      params.xhr = function() {
-        return new ActiveXObject("Microsoft.XMLHTTP");
-      };
-    }
-
-    // Make the request, allowing the user to override any Ajax options.
-    var xhr = options.xhr = Backbone.ajax(_.extend(params, options));
-    model.trigger('request', model, xhr, options);
-    return xhr;
-  };
-
-  var noXhrPatch =
-    typeof window !== 'undefined' && !!window.ActiveXObject &&
-      !(window.XMLHttpRequest && (new XMLHttpRequest).dispatchEvent);
-
-  // Map from CRUD to HTTP for our default `Backbone.sync` implementation.
-  var methodMap = {
-    'create': 'POST',
-    'update': 'PUT',
-    'patch':  'PATCH',
-    'delete': 'DELETE',
-    'read':   'GET'
-  };
-
-  // Set the default implementation of `Backbone.ajax` to proxy through to `$`.
-  // Override this if you'd like to use a different library.
-  Backbone.ajax = function() {
-    return Backbone.$.ajax.apply(Backbone.$, arguments);
-  };
-
-  // Backbone.Router
-  // ---------------
-
-  // Routers map faux-URLs to actions, and fire events when routes are
-  // matched. Creating a new one sets its `routes` hash, if not set statically.
-  var Router = Backbone.Router = function(options) {
-    options || (options = {});
-    if (options.routes) this.routes = options.routes;
-    this._bindRoutes();
-    this.initialize.apply(this, arguments);
-  };
-
-  // Cached regular expressions for matching named param parts and splatted
-  // parts of route strings.
-  var optionalParam = /\((.*?)\)/g;
-  var namedParam    = /(\(\?)?:\w+/g;
-  var splatParam    = /\*\w+/g;
-  var escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#\s]/g;
-
-  // Set up all inheritable **Backbone.Router** properties and methods.
-  _.extend(Router.prototype, Events, {
-
-    // Initialize is an empty function by default. Override it with your own
-    // initialization logic.
-    initialize: function(){},
-
-    // Manually bind a single named route to a callback. For example:
-    //
-    //     this.route('search/:query/p:num', 'search', function(query, num) {
-    //       ...
-    //     });
-    //
-    route: function(route, name, callback) {
-      if (!_.isRegExp(route)) route = this._routeToRegExp(route);
-      if (_.isFunction(name)) {
-        callback = name;
-        name = '';
-      }
-      if (!callback) callback = this[name];
-      var router = this;
-      Backbone.history.route(route, function(fragment) {
-        var args = router._extractParameters(route, fragment);
-        router.execute(callback, args);
-        router.trigger.apply(router, ['route:' + name].concat(args));
-        router.trigger('route', name, args);
-        Backbone.history.trigger('route', router, name, args);
-      });
-      return this;
-    },
-
-    // Execute a route handler with the provided parameters.  This is an
-    // excellent place to do pre-route setup or post-route cleanup.
-    execute: function(callback, args) {
-      if (callback) callback.apply(this, args);
-    },
-
-    // Simple proxy to `Backbone.history` to save a fragment into the history.
-    navigate: function(fragment, options) {
-      Backbone.history.navigate(fragment, options);
-      return this;
-    },
-
-    // Bind all defined routes to `Backbone.history`. We have to reverse the
-    // order of the routes here to support behavior where the most general
-    // routes can be defined at the bottom of the route map.
-    _bindRoutes: function() {
-      if (!this.routes) return;
-      this.routes = _.result(this, 'routes');
-      var route, routes = _.keys(this.routes);
-      while ((route = routes.pop()) != null) {
-        this.route(route, this.routes[route]);
-      }
-    },
-
-    // Convert a route string into a regular expression, suitable for matching
-    // against the current location hash.
-    _routeToRegExp: function(route) {
-      route = route.replace(escapeRegExp, '\\$&')
-                   .replace(optionalParam, '(?:$1)?')
-                   .replace(namedParam, function(match, optional) {
-                     return optional ? match : '([^/?]+)';
-                   })
-                   .replace(splatParam, '([^?]*?)');
-      return new RegExp('^' + route + '(?:\\?([\\s\\S]*))?$');
-    },
-
-    // Given a route, and a URL fragment that it matches, return the array of
-    // extracted decoded parameters. Empty or unmatched parameters will be
-    // treated as `null` to normalize cross-browser behavior.
-    _extractParameters: function(route, fragment) {
-      var params = route.exec(fragment).slice(1);
-      return _.map(params, function(param, i) {
-        // Don't decode the search params.
-        if (i === params.length - 1) return param || null;
-        return param ? decodeURIComponent(param) : null;
-      });
-    }
-
-  });
-
-  // Backbone.History
-  // ----------------
-
-  // Handles cross-browser history management, based on either
-  // [pushState](http://diveintohtml5.info/history.html) and real URLs, or
-  // [onhashchange](https://developer.mozilla.org/en-US/docs/DOM/window.onhashchange)
-  // and URL fragments. If the browser supports neither (old IE, natch),
-  // falls back to polling.
-  var History = Backbone.History = function() {
-    this.handlers = [];
-    _.bindAll(this, 'checkUrl');
-
-    // Ensure that `History` can be used outside of the browser.
-    if (typeof window !== 'undefined') {
-      this.location = window.location;
-      this.history = window.history;
-    }
-  };
-
-  // Cached regex for stripping a leading hash/slash and trailing space.
-  var routeStripper = /^[#\/]|\s+$/g;
-
-  // Cached regex for stripping leading and trailing slashes.
-  var rootStripper = /^\/+|\/+$/g;
-
-  // Cached regex for detecting MSIE.
-  var isExplorer = /msie [\w.]+/;
-
-  // Cached regex for removing a trailing slash.
-  var trailingSlash = /\/$/;
-
-  // Cached regex for stripping urls of hash.
-  var pathStripper = /#.*$/;
-
-  // Has the history handling already been started?
-  History.started = false;
-
-  // Set up all inheritable **Backbone.History** properties and methods.
-  _.extend(History.prototype, Events, {
-
-    // The default interval to poll for hash changes, if necessary, is
-    // twenty times a second.
-    interval: 50,
-
-    // Are we at the app root?
-    atRoot: function() {
-      return this.location.pathname.replace(/[^\/]$/, '$&/') === this.root;
-    },
-
-    // Gets the true hash value. Cannot use location.hash directly due to bug
-    // in Firefox where location.hash will always be decoded.
-    getHash: function(window) {
-      var match = (window || this).location.href.match(/#(.*)$/);
-      return match ? match[1] : '';
-    },
-
-    // Get the cross-browser normalized URL fragment, either from the URL,
-    // the hash, or the override.
-    getFragment: function(fragment, forcePushState) {
-      if (fragment == null) {
-        if (this._hasPushState || !this._wantsHashChange || forcePushState) {
-          fragment = decodeURI(this.location.pathname + this.location.search);
-          var root = this.root.replace(trailingSlash, '');
-          if (!fragment.indexOf(root)) fragment = fragment.slice(root.length);
-        } else {
-          fragment = this.getHash();
-        }
-      }
-      return fragment.replace(routeStripper, '');
-    },
-
-    // Start the hash change handling, returning `true` if the current URL matches
-    // an existing route, and `false` otherwise.
-    start: function(options) {
-      if (History.started) throw new Error("Backbone.history has already been started");
-      History.started = true;
-
-      // Figure out the initial configuration. Do we need an iframe?
-      // Is pushState desired ... is it available?
-      this.options          = _.extend({root: '/'}, this.options, options);
-      this.root             = this.options.root;
-      this._wantsHashChange = this.options.hashChange !== false;
-      this._wantsPushState  = !!this.options.pushState;
-      this._hasPushState    = !!(this.options.pushState && this.history && this.history.pushState);
-      var fragment          = this.getFragment();
-      var docMode           = document.documentMode;
-      var oldIE             = (isExplorer.exec(navigator.userAgent.toLowerCase()) && (!docMode || docMode <= 7));
-
-      // Normalize root to always include a leading and trailing slash.
-      this.root = ('/' + this.root + '/').replace(rootStripper, '/');
-
-      if (oldIE && this._wantsHashChange) {
-        var frame = Backbone.$('<iframe src="javascript:0" tabindex="-1">');
-        this.iframe = frame.hide().appendTo('body')[0].contentWindow;
-        this.navigate(fragment);
-      }
-
-      // Depending on whether we're using pushState or hashes, and whether
-      // 'onhashchange' is supported, determine how we check the URL state.
-      if (this._hasPushState) {
-        Backbone.$(window).on('popstate', this.checkUrl);
-      } else if (this._wantsHashChange && ('onhashchange' in window) && !oldIE) {
-        Backbone.$(window).on('hashchange', this.checkUrl);
-      } else if (this._wantsHashChange) {
-        this._checkUrlInterval = setInterval(this.checkUrl, this.interval);
-      }
-
-      // Determine if we need to change the base url, for a pushState link
-      // opened by a non-pushState browser.
-      this.fragment = fragment;
-      var loc = this.location;
-
-      // Transition from hashChange to pushState or vice versa if both are
-      // requested.
-      if (this._wantsHashChange && this._wantsPushState) {
-
-        // If we've started off with a route from a `pushState`-enabled
-        // browser, but we're currently in a browser that doesn't support it...
-        if (!this._hasPushState && !this.atRoot()) {
-          this.fragment = this.getFragment(null, true);
-          this.location.replace(this.root + '#' + this.fragment);
-          // Return immediately as browser will do redirect to new url
-          return true;
-
-        // Or if we've started out with a hash-based route, but we're currently
-        // in a browser where it could be `pushState`-based instead...
-        } else if (this._hasPushState && this.atRoot() && loc.hash) {
-          this.fragment = this.getHash().replace(routeStripper, '');
-          this.history.replaceState({}, document.title, this.root + this.fragment);
-        }
-
-      }
-
-      if (!this.options.silent) return this.loadUrl();
-    },
-
-    // Disable Backbone.history, perhaps temporarily. Not useful in a real app,
-    // but possibly useful for unit testing Routers.
-    stop: function() {
-      Backbone.$(window).off('popstate', this.checkUrl).off('hashchange', this.checkUrl);
-      if (this._checkUrlInterval) clearInterval(this._checkUrlInterval);
-      History.started = false;
-    },
-
-    // Add a route to be tested when the fragment changes. Routes added later
-    // may override previous routes.
-    route: function(route, callback) {
-      this.handlers.unshift({route: route, callback: callback});
-    },
-
-    // Checks the current URL to see if it has changed, and if it has,
-    // calls `loadUrl`, normalizing across the hidden iframe.
-    checkUrl: function(e) {
-      var current = this.getFragment();
-      if (current === this.fragment && this.iframe) {
-        current = this.getFragment(this.getHash(this.iframe));
-      }
-      if (current === this.fragment) return false;
-      if (this.iframe) this.navigate(current);
-      this.loadUrl();
-    },
-
-    // Attempt to load the current URL fragment. If a route succeeds with a
-    // match, returns `true`. If no defined routes matches the fragment,
-    // returns `false`.
-    loadUrl: function(fragment) {
-      fragment = this.fragment = this.getFragment(fragment);
-      return _.any(this.handlers, function(handler) {
-        if (handler.route.test(fragment)) {
-          handler.callback(fragment);
-          return true;
-        }
-      });
-    },
-
-    // Save a fragment into the hash history, or replace the URL state if the
-    // 'replace' option is passed. You are responsible for properly URL-encoding
-    // the fragment in advance.
-    //
-    // The options object can contain `trigger: true` if you wish to have the
-    // route callback be fired (not usually desirable), or `replace: true`, if
-    // you wish to modify the current URL without adding an entry to the history.
-    navigate: function(fragment, options) {
-      if (!History.started) return false;
-      if (!options || options === true) options = {trigger: !!options};
-
-      var url = this.root + (fragment = this.getFragment(fragment || ''));
-
-      // Strip the hash for matching.
-      fragment = fragment.replace(pathStripper, '');
-
-      if (this.fragment === fragment) return;
-      this.fragment = fragment;
-
-      // Don't include a trailing slash on the root.
-      if (fragment === '' && url !== '/') url = url.slice(0, -1);
-
-      // If pushState is available, we use it to set the fragment as a real URL.
-      if (this._hasPushState) {
-        this.history[options.replace ? 'replaceState' : 'pushState']({}, document.title, url);
-
-      // If hash changes haven't been explicitly disabled, update the hash
-      // fragment to store history.
-      } else if (this._wantsHashChange) {
-        this._updateHash(this.location, fragment, options.replace);
-        if (this.iframe && (fragment !== this.getFragment(this.getHash(this.iframe)))) {
-          // Opening and closing the iframe tricks IE7 and earlier to push a
-          // history entry on hash-tag change.  When replace is true, we don't
-          // want this.
-          if(!options.replace) this.iframe.document.open().close();
-          this._updateHash(this.iframe.location, fragment, options.replace);
-        }
-
-      // If you've told us that you explicitly don't want fallback hashchange-
-      // based history, then `navigate` becomes a page refresh.
-      } else {
-        return this.location.assign(url);
-      }
-      if (options.trigger) return this.loadUrl(fragment);
-    },
-
-    // Update the hash location, either replacing the current entry, or adding
-    // a new one to the browser history.
-    _updateHash: function(location, fragment, replace) {
-      if (replace) {
-        var href = location.href.replace(/(javascript:|#).*$/, '');
-        location.replace(href + '#' + fragment);
-      } else {
-        // Some browsers require that `hash` contains a leading #.
-        location.hash = '#' + fragment;
-      }
-    }
-
-  });
-
-  // Create the default Backbone.history.
-  Backbone.history = new History;
-
-  // Helpers
-  // -------
-
-  // Helper function to correctly set up the prototype chain, for subclasses.
-  // Similar to `goog.inherits`, but uses a hash of prototype properties and
-  // class properties to be extended.
-  var extend = function(protoProps, staticProps) {
-    var parent = this;
-    var child;
-
-    // The constructor function for the new subclass is either defined by you
-    // (the "constructor" property in your `extend` definition), or defaulted
-    // by us to simply call the parent's constructor.
-    if (protoProps && _.has(protoProps, 'constructor')) {
-      child = protoProps.constructor;
-    } else {
-      child = function(){ return parent.apply(this, arguments); };
-    }
-
-    // Add static properties to the constructor function, if supplied.
-    _.extend(child, parent, staticProps);
-
-    // Set the prototype chain to inherit from `parent`, without calling
-    // `parent`'s constructor function.
-    var Surrogate = function(){ this.constructor = child; };
-    Surrogate.prototype = parent.prototype;
-    child.prototype = new Surrogate;
-
-    // Add prototype properties (instance properties) to the subclass,
-    // if supplied.
-    if (protoProps) _.extend(child.prototype, protoProps);
-
-    // Set a convenience property in case the parent's prototype is needed
-    // later.
-    child.__super__ = parent.prototype;
-
-    return child;
-  };
-
-  // Set up inheritance for the model, collection, router, view and history.
-  Model.extend = Collection.extend = Router.extend = View.extend = History.extend = extend;
-
-  // Throw an error when a URL is needed, and none is supplied.
-  var urlError = function() {
-    throw new Error('A "url" property or function must be specified');
-  };
-
-  // Wrap an optional error callback with a fallback error event.
-  var wrapError = function(model, options) {
-    var error = options.error;
-    options.error = function(resp) {
-      if (error) error(model, resp, options);
-      model.trigger('error', model, resp, options);
-    };
-  };
-
-  return Backbone;
-
-}));
-
-},{"underscore":undefined}],"baron":[function(require,module,exports){
-(function(window, $, undefined) {
-    'use strict';
-
-    if (!window) return; // Server side
-
-var
-    _baron = baron, // Stored baron value for noConflict usage
-    pos = ['left', 'top', 'right', 'bottom', 'width', 'height'],
-    origin = {
-        v: { // Vertical
-            x: 'Y', pos: pos[1], oppos: pos[3], crossPos: pos[0], crossOpPos: pos[2], size: pos[5], crossSize: pos[4],
-            client: 'clientHeight', crossClient: 'clientWidth', crossScroll: 'scrollWidth', offset: 'offsetHeight', crossOffset: 'offsetWidth', offsetPos: 'offsetTop',
-            scroll: 'scrollTop', scrollSize: 'scrollHeight'
-        },
-        h: { // Horizontal
-            x: 'X', pos: pos[0], oppos: pos[2], crossPos: pos[1], crossOpPos: pos[3], size: pos[4], crossSize: pos[5],
-            client: 'clientWidth', crossClient: 'clientHeight', crossScroll: 'scrollHeight', offset: 'offsetWidth', crossOffset: 'offsetHeight', offsetPos: 'offsetLeft',
-            scroll: 'scrollLeft', scrollSize: 'scrollWidth'
-        }
-    },
-
-    each = function(obj, iterator) {
-        var i = 0;
-
-        if (obj.length === undefined || obj === window) obj = [obj];
-
-        while (obj[i]) {
-            iterator.call(this, obj[i], i);
-            i++;
-        }
-    },
-
-    baron = function(params) {
-        var jQueryMode,
-            roots,
-            $;
-
-        params = params || {};
-        $ = params.$ || $ || window.jQuery;
-        jQueryMode = this instanceof $;  // this - window or jQuery instance
-
-        if (jQueryMode) {
-            params.root = roots = this;
-        } else {
-            roots = $(params.root || params.scroller);
-        }
-
-        var instance = new baron.fn.constructor(roots, params, $);
-
-        if (instance.autoUpdate) {
-            instance.autoUpdate();
-        }
-
-        return instance;
-    };
-
-    // shortcut for getTime
-    function getTime() {
-        return new Date().getTime();
-    }
-
-    baron.fn = {
-        constructor: function(roots, input, $) {
-            var params = validate(input);
-
-            params.$ = $;
-            each.call(this, roots, function(root, i) {
-                var localParams = clone(params);
-
-                if (params.root && params.scroller) {
-                    localParams.scroller = params.$(params.scroller, root);
-                    if (!localParams.scroller.length) {
-                        localParams.scroller = root;
-                    }
-                } else {
-                    localParams.scroller = root;
-                }
-
-                localParams.root = root;
-                this[i] = init(localParams);
-                this.length = i + 1;
-            });
-
-            this.params = params;
-        },
-
-        dispose: function() {
-            var params = this.params;
-
-            if (this[0]) { /* Если есть хотя бы 1 рабочий инстанс */
-                each(this, function(item) {
-                    item.dispose(params);
-                });
-            }
-            this.params = null;
-        },
-
-        update: function() {
-            var i = 0;
-
-            while (this[i]) {
-                this[i].update.apply(this[i], arguments);
-                i++;
-            }
-        },
-
-        baron: function(params) {
-            params.root = [];
-            params.scroller = this.params.scroller;
-
-            each.call(this, this, function(elem) {
-                params.root.push(elem.root);
-            });
-            params.direction = (this.params.direction == 'v') ? 'h' : 'v';
-            params._chain = true;
-
-            return baron(params);
-        }
-    };
-
-    function manageEvents(item, eventManager, mode) {
-        item._eventHandlers = item._eventHandlers || [ // Creating new functions for one baron item only one time
-            {
-                // onScroll:
-                element: item.scroller,
-
-                handler: function(e) {
-                    item.scroll(e);
-                },
-
-                type: 'scroll'
-            }, {
-                // css transitions & animations
-                element: item.root,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'transitionend animationend'
-            }, {
-                // onKeyup (textarea):
-                element: item.scroller,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'keyup'
-            }, {
-                // onMouseDown:
-                element: item.bar,
-
-                handler: function(e) {
-                    e.preventDefault(); // Text selection disabling in Opera... and all other browsers?
-                    item.selection(); // Disable text selection in ie8
-                    item.drag.now = 1; // Save private byte
-                },
-
-                type: 'touchstart mousedown'
-            }, {
-                // onMouseUp:
-                element: document,
-
-                handler: function() {
-                    item.selection(1); // Enable text selection
-                    item.drag.now = 0;
-                },
-
-                type: 'mouseup blur touchend'
-            }, {
-                // onCoordinateReset:
-                element: document,
-
-                handler: function(e) {
-                    if (e.button != 2) { // Not RM
-                        item._pos0(e);
-                    }
-                },
-
-                type: 'touchstart mousedown'
-            }, {
-                // onMouseMove:
-                element: document,
-
-                handler: function(e) {
-                    if (item.drag.now) {
-                        item.drag(e);
-                    }
-                },
-
-                type: 'mousemove touchmove'
-            }, {
-                // onResize:
-                element: window,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'resize'
-            }, {
-                // sizeChange:
-                element: item.root,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'sizeChange'
-            }
-        ];
-
-        each(item._eventHandlers, function(event) {
-            if (event.element) {
-                eventManager(event.element, event.type, event.handler, mode);
-            }
-        });
-
-        // if (item.scroller) {
-        //     event(item.scroller, 'scroll', item._eventHandlers.onScroll, mode);
-        // }
-        // if (item.bar) {
-        //     event(item.bar, 'touchstart mousedown', item._eventHandlers.onMouseDown, mode);
-        // }
-        // event(document, 'mouseup blur touchend', item._eventHandlers.onMouseUp, mode);
-        // event(document, 'touchstart mousedown', item._eventHandlers.onCoordinateReset, mode);
-        // event(document, 'mousemove touchmove', item._eventHandlers.onMouseMove, mode);
-        // event(window, 'resize', item._eventHandlers.onResize, mode);
-        // if (item.root) {
-        //     event(item.root, 'sizeChange', item._eventHandlers.onResize, mode); // Custon event for alternate baron update mechanism
-        // }
-    }
-
-    function manageAttr(node, direction, mode) {
-        var attrName = 'data-baron-' + direction;
-
-        if (mode == 'on') {
-            node.setAttribute(attrName, 'inited');
-        } else if (mode == 'off') {
-            node.removeAttribute(attrName);
-        } else {
-            return node.getAttribute(attrName);
-        }
-    }
-
-    function init(params) {
-        if (manageAttr(params.root, params.direction)) throw new Error('Second baron initialization');
-
-        var out = new item.prototype.constructor(params); // __proto__ of returning object is baron.prototype
-
-        manageEvents(out, params.event, 'on');
-
-        manageAttr(out.root, params.direction, 'on');
-
-        out.update();
-
-        return out;
-    }
-
-    function clone(input) {
-        var output = {};
-
-        input = input || {};
-
-        for (var key in input) {
-            if (input.hasOwnProperty(key)) {
-                output[key] = input[key];
-            }
-        }
-
-        return output;
-    }
-
-    function validate(input) {
-        var output = clone(input);
-
-        output.direction = output.direction || 'v';
-
-        var event = input.event || function(elem, event, func, mode) {
-            output.$(elem)[mode || 'on'](event, func);
-        };
-
-        output.event = function(elems, e, func, mode) {
-            each(elems, function(elem) {
-                event(elem, e, func, mode);
-            });
-        };
-
-        return output;
-    }
-
-    function fire(eventName) {
-        /* jshint validthis:true */
-        if (this.events && this.events[eventName]) {
-            for (var i = 0 ; i < this.events[eventName].length ; i++) {
-                var args = Array.prototype.slice.call( arguments, 1 );
-
-                this.events[eventName][i].apply(this, args);
-            }
-        }
-    }
-
-    var item = {};
-
-    item.prototype = {
-        // underscore.js realization
-        _debounce: function(func, wait) {
-            var self = this,
-                timeout,
-                // args, // right now there is no need for arguments
-                // context, // and for context
-                timestamp;
-                // result; // and for result
-
-            var later = function() {
-                if (self._disposed) {
-                    clearTimeout(timeout);
-                    timeout = self = null;
-                    return;
-                }
-
-                var last = getTime() - timestamp;
-
-                if (last < wait && last >= 0) {
-                    timeout = setTimeout(later, wait - last);
-                } else {
-                    timeout = null;
-                    // result = func.apply(context, args);
-                    func();
-                    // context = args = null;
-                }
-            };
-
-            return function() {
-                // context = this;
-                // args = arguments;
-                timestamp = getTime();
-
-                if (!timeout) {
-                    timeout = setTimeout(later, wait);
-                }
-
-                // return result;
-            };
-        },
-
-        constructor: function(params) {
-            var $,
-                barPos,
-                scrollerPos0,
-                track,
-                resizePauseTimer,
-                scrollPauseTimer,
-                scrollingTimer,
-                pause,
-                scrollLastFire,
-                resizeLastFire,
-                oldBarSize;
-
-            resizeLastFire = scrollLastFire = getTime();
-
-            $ = this.$ = params.$;
-            this.event = params.event;
-            this.events = {};
-
-            function getNode(sel, context) {
-                return $(sel, context)[0]; // Can be undefined
-            }
-
-            // DOM elements
-            this.root = params.root; // Always html node, not just selector
-            this.scroller = getNode(params.scroller); // (params.scroller) ? getNode(params.scroller, this.root) : this.root;
-            this.bar = getNode(params.bar, this.root);
-            track = this.track = getNode(params.track, this.root);
-            if (!this.track && this.bar) {
-                track = this.bar.parentNode;
-            }
-            this.clipper = this.scroller.parentNode;
-
-            // Parameters
-            this.direction = params.direction;
-            this.origin = origin[this.direction];
-            this.barOnCls = params.barOnCls || '_baron';
-            this.scrollingCls = params.scrollingCls;
-            this.barTopLimit = 0;
-            pause = params.pause * 1000 || 0;
-
-            // Updating height or width of bar
-            function setBarSize(size) {
-                /* jshint validthis:true */
-                var barMinSize = this.barMinSize || 20;
-
-                if (size > 0 && size < barMinSize) {
-                    size = barMinSize;
-                }
-
-                if (this.bar) {
-                    $(this.bar).css(this.origin.size, parseInt(size, 10) + 'px');
-                }
-            }
-
-            // Updating top or left bar position
-            function posBar(pos) {
-                /* jshint validthis:true */
-                if (this.bar) {
-                    var was = $(this.bar).css(this.origin.pos),
-                        will = +pos + 'px';
-
-                    if (will && will != was) {
-                        $(this.bar).css(this.origin.pos, will);
-                    }
-                }
-            }
-
-            // Free path for bar
-            function k() {
-                /* jshint validthis:true */
-                return track[this.origin.client] - this.barTopLimit - this.bar[this.origin.offset];
-            }
-
-            // Relative content top position to bar top position
-            function relToPos(r) {
-                /* jshint validthis:true */
-                return r * k.call(this) + this.barTopLimit;
-            }
-
-            // Bar position to relative content position
-            function posToRel(t) {
-                /* jshint validthis:true */
-                return (t - this.barTopLimit) / k.call(this);
-            }
-
-            // Cursor position in main direction in px // Now with iOs support
-            this.cursor = function(e) {
-                return e['client' + this.origin.x] || (((e.originalEvent || e).touches || {})[0] || {})['page' + this.origin.x];
-            };
-
-            // Text selection pos preventing
-            function dontPosSelect() {
-                return false;
-            }
-
-            this.pos = function(x) { // Absolute scroller position in px
-                var ie = 'page' + this.origin.x + 'Offset',
-                    key = (this.scroller[ie]) ? ie : this.origin.scroll;
-
-                if (x !== undefined) this.scroller[key] = x;
-
-                return this.scroller[key];
-            };
-
-            this.rpos = function(r) { // Relative scroller position (0..1)
-                var free = this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client],
-                    x;
-
-                if (r) {
-                    x = this.pos(r * free);
-                } else {
-                    x = this.pos();
-                }
-
-                return x / (free || 1);
-            };
-
-            // Switch on the bar by adding user-defined CSS classname to scroller
-            this.barOn = function(dispose) {
-                if (this.barOnCls) {
-                    if (dispose || this.scroller[this.origin.client] >= this.scroller[this.origin.scrollSize]) {
-                        if ($(this.root).hasClass(this.barOnCls)) $(this.root).removeClass(this.barOnCls);
-                    } else {
-                        if (!$(this.root).hasClass(this.barOnCls)) $(this.root).addClass(this.barOnCls);
-                    }
-                }
-            };
-
-            this._pos0 = function(e) {
-                scrollerPos0 = this.cursor(e) - barPos;
-            };
-
-            this.drag = function(e) {
-                this.scroller[this.origin.scroll] = posToRel.call(this, this.cursor(e) - scrollerPos0) * (this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client]);
-            };
-
-            // Text selection preventing on drag
-            this.selection = function(enable) {
-                this.event(document, 'selectpos selectstart', dontPosSelect, enable ? 'off' : 'on');
-            };
-
-            // onResize & DOM modified handler
-            this.resize = function() {
-                var self = this,
-                    delay = 0;
-
-                if (getTime() - resizeLastFire < pause) {
-                    clearTimeout(resizePauseTimer);
-                    delay = pause;
-                }
-
-                function upd() {
-                    var delta,
-                        client,
-                        offset,
-                        was,
-                        will;
-
-                    // Change a css inline rule only if it is really changing value
-                    // function tryCss(prop, value, ) {
-                    //     var was = $(self.clipper).css(self.origin.crossSize),
-                    //         will = self.clipper[self.origin.crossClient] - delta + 'px';
-                    // };
-
-                    self.barOn();
-
-                    client = self.scroller[self.origin.crossClient];
-                    offset = self.scroller[self.origin.crossOffset];
-                    delta = offset - client;
-
-                    if (offset) { // if there is no size, css should not be set
-                        if (params.freeze && !self.clipper.style[self.origin.crossSize]) { // Sould fire only once
-                            was = $(self.clipper).css(self.origin.crossSize);
-                            will = self.clipper[self.origin.crossClient] - delta + 'px';
-
-                            if (was != will) {
-                                $(self.clipper).css(self.origin.crossSize, will);
-                            }
-                        }
-
-                        was = $(self.clipper).css(self.origin.crossSize);
-                        will = self.clipper[self.origin.crossClient] + delta + 'px';
-
-                        if (was != will) {
-                            $(self.scroller).css(self.origin.crossSize, will);
-                        }
-                    }
-
-                    Array.prototype.unshift.call(arguments, 'resize');
-                    fire.apply(self, arguments);
-
-                    resizeLastFire = getTime();
-                }
-
-                if (delay) {
-                    resizePauseTimer = setTimeout(upd, delay);
-                } else {
-                    upd();
-                }
-            };
-
-            this.updatePositions = function() {
-                var newBarSize,
-                    self = this;
-
-                if (self.bar) {
-                    newBarSize = (track[self.origin.client] - self.barTopLimit) * self.scroller[self.origin.client] / self.scroller[self.origin.scrollSize];
-
-                    // Positioning bar
-                    if (parseInt(oldBarSize, 10) != parseInt(newBarSize, 10)) {
-                        setBarSize.call(self, newBarSize);
-                        oldBarSize = newBarSize;
-                    }
-
-                    barPos = relToPos.call(self, self.rpos());
-
-                    posBar.call(self, barPos);
-                }
-
-                Array.prototype.unshift.call( arguments, 'scroll' );
-                fire.apply(self, arguments);
-
-                scrollLastFire = getTime();
-            };
-
-            // onScroll handler
-            this.scroll = function() {
-                var delay = 0,
-                    self = this;
-
-                if (getTime() - scrollLastFire < pause) {
-                    clearTimeout(scrollPauseTimer);
-                    delay = pause;
-                }
-
-                if (getTime() - scrollLastFire < pause) {
-                    clearTimeout(scrollPauseTimer);
-                    delay = pause;
-                }
-
-                if (delay) {
-                    scrollPauseTimer = setTimeout(function() {
-                        self.updatePositions();
-                    }, delay);
-                } else {
-                    self.updatePositions();
-                }
-
-                if (self.scrollingCls) {
-                    if (!scrollingTimer) {
-                        this.$(this.scroller).addClass(this.scrollingCls);
-                    }
-                    clearTimeout(scrollingTimer);
-                    scrollingTimer = setTimeout(function() {
-                        self.$(self.scroller).removeClass(self.scrollingCls);
-                        scrollingTimer = undefined;
-                    }, 300);
-                }
-
-            };
-
-            return this;
-        },
-
-        update: function(params) {
-            fire.call(this, 'upd', params); // Update all plugins' params
-
-            this.resize(1);
-            this.updatePositions();
-
-            return this;
-        },
-
-        // One instance
-        dispose: function(params) {
-            manageEvents(this, this.event, 'off');
-            manageAttr(this.root, params.direction, 'off');
-            $(this.scroller).css(this.origin.crossSize, '');
-            this.barOn(true);
-            fire.call(this, 'dispose');
-            this._disposed = true;
-        },
-
-        on: function(eventName, func, arg) {
-            var names = eventName.split(' ');
-
-            for (var i = 0 ; i < names.length ; i++) {
-                if (names[i] == 'init') {
-                    func.call(this, arg);
-                } else {
-                    this.events[names[i]] = this.events[names[i]] || [];
-
-                    this.events[names[i]].push(function(userArg) {
-                        func.call(this, userArg || arg);
-                    });
-                }
-            }
-        }
-    };
-
-    baron.fn.constructor.prototype = baron.fn;
-    item.prototype.constructor.prototype = item.prototype;
-
-    // Use when you need "baron" global var for another purposes
-    baron.noConflict = function() {
-        window.baron = _baron; // Restoring original value of "baron" global var
-
-        return baron;
-    };
-
-    baron.version = '0.7.10';
-
-    if ($ && $.fn) { // Adding baron to jQuery as plugin
-        $.fn.baron = baron;
-    }
-
-    window.baron = baron; // Use noConflict method if you need window.baron var for another purposes
-    if (window['module'] && module.exports) {
-        module.exports = baron.noConflict();
-    }
-})(window, window.$);
-
-/* Fixable elements plugin for baron 0.6+ */
-(function(window, undefined) {
-    var fix = function(userParams) {
-        var elements, viewPortSize,
-            params = { // Default params
-                outside: '',
-                inside: '',
-                before: '',
-                after: '',
-                past: '',
-                future: '',
-                radius: 0,
-                minView: 0
-            },
-            topFixHeights = [], // inline style for element
-            topRealHeights = [], // ? something related to negative margins for fixable elements
-            headerTops = [], // offset positions when not fixed
-            scroller = this.scroller,
-            eventManager = this.event,
-            $ = this.$,
-            self = this;
-
-        // i - number of fixing element, pos - fix-position in px, flag - 1: top, 2: bottom
-        // Invocation only in case when fix-state changed
-        function fixElement(i, pos, flag) {
-            var ori = flag == 1 ? 'pos' : 'oppos';
-
-            if (viewPortSize < (params.minView || 0)) { // No headers fixing when no enought space for viewport
-                pos = undefined;
-            }
-
-            // Removing all fixing stuff - we can do this because fixElement triggers only when fixState really changed
-            this.$(elements[i]).css(this.origin.pos, '').css(this.origin.oppos, '').removeClass(params.outside);
-
-            // Fixing if needed
-            if (pos !== undefined) {
-                pos += 'px';
-                this.$(elements[i]).css(this.origin[ori], pos).addClass(params.outside);
-            }
-        }
-
-        function bubbleWheel(e) {
-            try {
-                i = document.createEvent('WheelEvent'); // i - for extra byte
-                // evt.initWebKitWheelEvent(deltaX, deltaY, window, screenX, screenY, clientX, clientY, ctrlKey, altKey, shiftKey, metaKey);
-                i.initWebKitWheelEvent(e.originalEvent.wheelDeltaX, e.originalEvent.wheelDeltaY);
-                scroller.dispatchEvent(i);
-                e.preventDefault();
-            } catch (e) {}
-        }
-
-        function init(_params) {
-            var pos;
-
-            for (var key in _params) {
-                params[key] = _params[key];
-            }
-
-            elements = this.$(params.elements, this.scroller);
-
-            if (elements) {
-                viewPortSize = this.scroller[this.origin.client];
-                for (var i = 0 ; i < elements.length ; i++) {
-                    // Variable header heights
-                    pos = {};
-                    pos[this.origin.size] = elements[i][this.origin.offset];
-                    if (elements[i].parentNode !== this.scroller) {
-                        this.$(elements[i].parentNode).css(pos);
-                    }
-                    pos = {};
-                    pos[this.origin.crossSize] = elements[i].parentNode[this.origin.crossClient];
-                    this.$(elements[i]).css(pos);
-
-                    // Between fixed headers
-                    viewPortSize -= elements[i][this.origin.offset];
-
-                    headerTops[i] = elements[i].parentNode[this.origin.offsetPos]; // No paddings for parentNode
-
-                    // Summary elements height above current
-                    topFixHeights[i] = (topFixHeights[i - 1] || 0); // Not zero because of negative margins
-                    topRealHeights[i] = (topRealHeights[i - 1] || Math.min(headerTops[i], 0));
-
-                    if (elements[i - 1]) {
-                        topFixHeights[i] += elements[i - 1][this.origin.offset];
-                        topRealHeights[i] += elements[i - 1][this.origin.offset];
-                    }
-
-                    if ( !(i == 0 && headerTops[i] == 0)/* && force */) {
-                        this.event(elements[i], 'mousewheel', bubbleWheel, 'off');
-                        this.event(elements[i], 'mousewheel', bubbleWheel);
-                    }
-                }
-
-                if (params.limiter && elements[0]) { // Bottom edge of first header as top limit for track
-                    if (this.track && this.track != this.scroller) {
-                        pos = {};
-                        pos[this.origin.pos] = elements[0].parentNode[this.origin.offset];
-                        this.$(this.track).css(pos);
-                    } else {
-                        this.barTopLimit = elements[0].parentNode[this.origin.offset];
-                    }
-                    // this.barTopLimit = elements[0].parentNode[this.origin.offset];
-                    this.scroll();
-                }
-
-                if (params.limiter === false) { // undefined (in second fix instance) should have no influence on bar limit
-                    this.barTopLimit = 0;
-                }
-            }
-
-            var event = {
-                element: elements,
-
-                handler: function() {
-                    var parent = $(this)[0].parentNode,
-                        top = parent.offsetTop,
-                        num;
-
-                    // finding num -> elements[num] === this
-                    for (var i = 0 ; i < elements.length ; i++ ) {
-                        if (elements[i] === this) num = i;
-                    }
-
-                    var pos = top - topFixHeights[num];
-
-                    if (params.scroll) { // User defined callback
-                        params.scroll({
-                            x1: self.scroller.scrollTop,
-                            x2: pos
-                        });
-                    } else {
-                        self.scroller.scrollTop = pos;
-                    }
-                },
-
-                type: 'click'
-            };
-
-            if (params.clickable) {
-                this._eventHandlers.push(event); // For auto-dispose
-                // eventManager(event.element, event.type, event.handler, 'off');
-                eventManager(event.element, event.type, event.handler, 'on');
-            }
-        }
-
-        this.on('init', init, userParams);
-
-        var fixFlag = [], // 1 - past, 2 - future, 3 - current (not fixed)
-            gradFlag = [];
-        this.on('init scroll', function() {
-            var fixState, hTop, gradState;
-
-            if (elements) {
-                var change;
-
-                // fixFlag update
-                for (var i = 0 ; i < elements.length ; i++) {
-                    fixState = 0;
-                    if (headerTops[i] - this.pos() < topRealHeights[i] + params.radius) {
-                        // Header trying to go up
-                        fixState = 1;
-                        hTop = topFixHeights[i];
-                    } else if (headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize - params.radius) {
-                        // Header trying to go down
-                        fixState = 2;
-                        // console.log('topFixHeights[i] + viewPortSize + topRealHeights[i]', topFixHeights[i], this.scroller[this.origin.client], topRealHeights[i]);
-                        hTop = this.scroller[this.origin.client] - elements[i][this.origin.offset] - topFixHeights[i] - viewPortSize;
-                        // console.log('hTop', hTop, viewPortSize, elements[this.origin.offset], topFixHeights[i]);
-                        //(topFixHeights[i] + viewPortSize + elements[this.origin.offset]) - this.scroller[this.origin.client];
-                    } else {
-                        // Header in viewport
-                        fixState = 3;
-                        hTop = undefined;
-                    }
-
-                    gradState = false;
-                    if (headerTops[i] - this.pos() < topRealHeights[i] || headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize) {
-                        gradState = true;
-                    }
-
-                    if (fixState != fixFlag[i] || gradState != gradFlag[i]) {
-                        fixElement.call(this, i, hTop, fixState);
-                        fixFlag[i] = fixState;
-                        gradFlag[i] = gradState;
-                        change = true;
-                    }
-                }
-
-                // Adding positioning classes (on last top and first bottom header)
-                if (change) { // At leats one change in elements flag structure occured
-                    for (i = 0 ; i < elements.length ; i++) {
-                        if (fixFlag[i] == 1 && params.past) {
-                            this.$(elements[i]).addClass(params.past).removeClass(params.future);
-                        }
-
-                        if (fixFlag[i] == 2 && params.future) {
-                            this.$(elements[i]).addClass(params.future).removeClass(params.past);
-                        }
-
-                        if (fixFlag[i] == 3) {
-                            if (params.future || params.past) this.$(elements[i]).removeClass(params.past).removeClass(params.future);
-                            if (params.inside) this.$(elements[i]).addClass(params.inside);
-                        } else if (params.inside) {
-                            this.$(elements[i]).removeClass(params.inside);
-                        }
-
-                        if (fixFlag[i] != fixFlag[i + 1] && fixFlag[i] == 1 && params.before) {
-                            this.$(elements[i]).addClass(params.before).removeClass(params.after); // Last top fixed header
-                        } else if (fixFlag[i] != fixFlag[i - 1] && fixFlag[i] == 2 && params.after) {
-                            this.$(elements[i]).addClass(params.after).removeClass(params.before); // First bottom fixed header
-                        } else {
-                            this.$(elements[i]).removeClass(params.before).removeClass(params.after);
-                        }
-
-                        if (params.grad) {
-                            if (gradFlag[i]) {
-                                this.$(elements[i]).addClass(params.grad);
-                            } else {
-                                this.$(elements[i]).removeClass(params.grad);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        this.on('resize upd', function(updParams) {
-            init.call(this, updParams && updParams.fix);
-        });
-    };
-
-    baron.fn.fix = function(params) {
-        var i = 0;
-
-        while (this[i]) {
-            fix.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-/* Controls plugin for baron 0.6+ */
-(function(window, undefined) {
-    var controls = function(params) {
-        var forward, backward, track, screen,
-            self = this, // AAAAAA!!!!!11
-            event;
-
-        screen = params.screen || 0.9;
-
-        if (params.forward) {
-            forward = this.$(params.forward, this.clipper);
-
-            event = {
-                element: forward,
-
-                handler: function() {
-                    var y = self.pos() - params.delta || 30;
-
-                    self.pos(y);
-                },
-
-                type: 'click'
-            };
-
-            this._eventHandlers.push(event); // For auto-dispose
-            this.event(event.element, event.type, event.handler, 'on');
-        }
-
-        if (params.backward) {
-            backward = this.$(params.backward, this.clipper);
-
-            event = {
-                element: backward,
-
-                handler: function() {
-                    var y = self.pos() + params.delta || 30;
-
-                    self.pos(y);
-                },
-
-                type: 'click'
-            };
-
-            this._eventHandlers.push(event); // For auto-dispose
-            this.event(event.element, event.type, event.handler, 'on');
-        }
-
-        if (params.track) {
-            if (params.track === true) {
-                track = this.track;
-            } else {
-                track = this.$(params.track, this.clipper)[0];
-            }
-
-            if (track) {
-                event = {
-                    element: track,
-
-                    handler: function(e) {
-                        var x = e['offset' + self.origin.x],
-                            xBar = self.bar[self.origin.offsetPos],
-                            sign = 0;
-
-                        if (x < xBar) {
-                            sign = -1;
-                        } else if (x > xBar + self.bar[self.origin.offset]) {
-                            sign = 1;
-                        }
-
-                        var y = self.pos() + sign * screen * self.scroller[self.origin.client];
-                        self.pos(y);
-                    },
-
-                    type: 'mousedown'
-                };
-
-                this._eventHandlers.push(event); // For auto-dispose
-                this.event(event.element, event.type, event.handler, 'on');
-            }
-        }
-    };
-
-    baron.fn.controls = function(params) {
-        var i = 0;
-
-        while (this[i]) {
-            controls.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-/* Pull to load plugin for baron 0.6+ */
-(function(window, undefined) {
-    var pull = function(params) {
-        var block = this.$(params.block),
-            size = params.size || this.origin.size,
-            limit = params.limit || 80,
-            onExpand = params.onExpand,
-            elements = params.elements || [],
-            inProgress = params.inProgress || '',
-            self = this,
-            _insistence = 0,
-            _zeroXCount = 0,
-            _interval,
-            _timer,
-            _x = 0,
-            _onExpandCalled,
-            _waiting = params.waiting || 500,
-            _on;
-
-        function getSize() {
-            return self.scroller[self.origin.scroll] + self.scroller[self.origin.offset];
-        }
-
-        // Scroller content height
-        function getContentSize() {
-            return self.scroller[self.origin.scrollSize];
-        }
-
-        // Scroller height
-        function getScrollerSize() {
-            return self.scroller[self.origin.client];
-        }
-
-        function step(x, force) {
-            var k = x * 0.0005;
-
-            return Math.floor(force - k * (x + 550));
-        }
-
-        function toggle(on) {
-            _on = on;
-
-            if (on) {
-                update(); // First time with no delay
-                _interval = setInterval(update, 200);
-            } else {
-                clearInterval(_interval);
-            }
-        }
-
-        function update() {
-            var pos = {},
-                height = getSize(),
-                scrollHeight = getContentSize(),
-                dx,
-                op4,
-                scrollInProgress = _insistence == 1;
-
-            op4 = 0; // Возвращающая сила
-            if (_insistence > 0) {
-                op4 = 40;
-            }
-            //if (_insistence > -1) {
-                dx = step(_x, op4);
-                if (height >= scrollHeight - _x && _insistence > -1) {
-                    if (scrollInProgress) {
-                        _x += dx;
-                    }
-                } else {
-                    _x = 0;
-                }
-
-                if (_x < 0) _x = 0;
-
-                pos[size] = _x + 'px';
-                if (getScrollerSize() <= getContentSize()) {
-                    self.$(block).css(pos);
-                    for (var i = 0 ; i < elements.length ; i++) {
-                        self.$(elements[i].self).css(elements[i].property, Math.min(_x / limit * 100, 100) + '%');
-                    }
-                }
-
-                if (inProgress && _x) {
-                    self.$(self.root).addClass(inProgress);
-                }
-
-                if (_x == 0) {
-                    if (params.onCollapse) {
-                        params.onCollapse();
-                    }
-                }
-
-                _insistence = 0;
-                _timer = setTimeout(function() {
-                    _insistence = -1;
-                }, _waiting);
-            //}
-
-            if (onExpand && _x > limit && !_onExpandCalled) {
-                onExpand();
-                _onExpandCalled = true;
-            }
-
-            if (_x == 0) {
-                _zeroXCount++;
-            } else {
-                _zeroXCount = 0;
-            }
-            if (_zeroXCount > 1) {
-                toggle(false);
-                _onExpandCalled = false;
-                if (inProgress) {
-                    self.$(self.root).removeClass(inProgress);
-                }
-            }
-        }
-
-        this.on('init', function() {
-            toggle(true);
-        });
-
-        this.on('dispose', function() {
-            toggle(false);
-        });
-
-        this.event(this.scroller, 'mousewheel DOMMouseScroll', function(e) {
-            var down = e.wheelDelta < 0 || (e.originalEvent && e.originalEvent.wheelDelta < 0) || e.detail > 0;
-
-            if (down) {
-                _insistence = 1;
-                clearTimeout(_timer);
-                if (!_on && getSize() >= getContentSize()) {
-                    toggle(true);
-                }
-            }
-            //  else {
-            //     toggle(false);
-            // }
-        });
-    };
-
-    baron.fn.pull = function(params) {
-        var i = 0;
-
-        while (this[i]) {
-            pull.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-/* Autoupdate plugin for baron 0.6+ */
-(function(window) {
-    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || null;
-
-    var autoUpdate = function() {
-        var self = this;
-        var watcher;
-
-        function actualizeWatcher() {
-            if (!self.root[self.origin.offset]) {
-                startWatch();
-            } else {
-                stopWatch();
-            }
-        }
-
-        // Set interval timeout for watching when root node will be visible
-        function startWatch() {
-            if (watcher) return;
-
-            watcher = setInterval(function() {
-                if (self.root[self.origin.offset]) {
-                    stopWatch();
-                    self.update();
-                }
-            }, 300); // is it good enought for you?)
-        }
-
-        function stopWatch() {
-            clearInterval(watcher);
-            watcher = null;
-        }
-
-        var debouncedUpdater = self._debounce(function() {
-            self.update();
-        }, 300);
-
-        this._observer = new MutationObserver(function() {
-            actualizeWatcher();
-            self.update();
-            debouncedUpdater();
-        });
-
-        this.on('init', function() {
-            self._observer.observe(self.root, {
-                childList: true,
-                subtree: true,
-                characterData: true
-                // attributes: true
-                // No reasons to set attributes to true
-                // The case when root/child node with already properly inited baron toggled to hidden and then back to visible,
-                // and the size of parent was changed during that hidden state, is very rare
-                // Other cases are covered by watcher, and you still can do .update by yourself
-            });
-
-            actualizeWatcher();
-        });
-
-        this.on('dispose', function() {
-            self._observer.disconnect();
-            stopWatch();
-            delete self._observer;
-        });
-    };
-
-    baron.fn.autoUpdate = function(params) {
-        if (!MutationObserver) return this;
-
-        var i = 0;
-
-        while (this[i]) {
-            autoUpdate.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-
-},{}],"bootstrap.tooltip":[function(require,module,exports){
-/* ========================================================================
- * Bootstrap: tooltip.js v3.2.0
- * http://getbootstrap.com/javascript/#tooltip
- * Inspired by the original jQuery.tipsy by Jason Frame
- * ========================================================================
- * Copyright 2011-2014 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- * ======================================================================== */
-
-
-+function ($) {
-  'use strict';
-
-  // TOOLTIP PUBLIC CLASS DEFINITION
-  // ===============================
-
-  var Tooltip = function (element, options) {
-    this.type       =
-    this.options    =
-    this.enabled    =
-    this.timeout    =
-    this.hoverState =
-    this.$element   = null
-
-    this.init('tooltip', element, options)
-  }
-
-  Tooltip.VERSION  = '3.2.0'
-
-  Tooltip.DEFAULTS = {
-    animation: true,
-    placement: 'top',
-    selector: false,
-    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
-    trigger: 'hover focus',
-    title: '',
-    delay: 0,
-    html: false,
-    container: false,
-    viewport: {
-      selector: 'body',
-      padding: 0
-    }
-  }
-
-  Tooltip.prototype.init = function (type, element, options) {
-    this.enabled   = true
-    this.type      = type
-    this.$element  = $(element)
-    this.options   = this.getOptions(options)
-    this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
-
-    var triggers = this.options.trigger.split(' ')
-
-    for (var i = triggers.length; i--;) {
-      var trigger = triggers[i]
-
-      if (trigger == 'click') {
-        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
-      } else if (trigger != 'manual') {
-        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
-        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
-
-        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
-        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
-      }
-    }
-
-    this.options.selector ?
-      (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
-      this.fixTitle()
-  }
-
-  Tooltip.prototype.getDefaults = function () {
-    return Tooltip.DEFAULTS
-  }
-
-  Tooltip.prototype.getOptions = function (options) {
-    options = $.extend({}, this.getDefaults(), this.$element.data(), options)
-
-    if (options.delay && typeof options.delay == 'number') {
-      options.delay = {
-        show: options.delay,
-        hide: options.delay
-      }
-    }
-
-    return options
-  }
-
-  Tooltip.prototype.getDelegateOptions = function () {
-    var options  = {}
-    var defaults = this.getDefaults()
-
-    this._options && $.each(this._options, function (key, value) {
-      if (defaults[key] != value) options[key] = value
-    })
-
-    return options
-  }
-
-  Tooltip.prototype.enter = function (obj) {
-    var self = obj instanceof this.constructor ?
-      obj : $(obj.currentTarget).data('bs.' + this.type)
-
-    if (!self) {
-      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
-      $(obj.currentTarget).data('bs.' + this.type, self)
-    }
-
-    clearTimeout(self.timeout)
-
-    self.hoverState = 'in'
-
-    if (!self.options.delay || !self.options.delay.show) return self.show()
-
-    self.timeout = setTimeout(function () {
-      if (self.hoverState == 'in') self.show()
-    }, self.options.delay.show)
-  }
-
-  Tooltip.prototype.leave = function (obj) {
-    var self = obj instanceof this.constructor ?
-      obj : $(obj.currentTarget).data('bs.' + this.type)
-
-    if (!self) {
-      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
-      $(obj.currentTarget).data('bs.' + this.type, self)
-    }
-
-    clearTimeout(self.timeout)
-
-    self.hoverState = 'out'
-
-    if (!self.options.delay || !self.options.delay.hide) return self.hide()
-
-    self.timeout = setTimeout(function () {
-      if (self.hoverState == 'out') self.hide()
-    }, self.options.delay.hide)
-  }
-
-  Tooltip.prototype.show = function () {
-    var e = $.Event('show.bs.' + this.type)
-
-    if (this.hasContent() && this.enabled) {
-      this.$element.trigger(e)
-
-      var inDom = $.contains(document.documentElement, this.$element[0])
-      if (e.isDefaultPrevented() || !inDom) return
-      var that = this
-
-      var $tip = this.tip()
-
-      var tipId = this.getUID(this.type)
-
-      this.setContent()
-      $tip.attr('id', tipId)
-      this.$element.attr('aria-describedby', tipId)
-
-      if (this.options.animation) $tip.addClass('fade')
-
-      var placement = typeof this.options.placement == 'function' ?
-        this.options.placement.call(this, $tip[0], this.$element[0]) :
-        this.options.placement
-
-      var autoToken = /\s?auto?\s?/i
-      var autoPlace = autoToken.test(placement)
-      if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
-
-      $tip
-        .detach()
-        .css({ top: 0, left: 0, display: 'block' })
-        .addClass(placement)
-        .data('bs.' + this.type, this)
-
-      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
-
-      var pos          = this.getPosition()
-      var actualWidth  = $tip[0].offsetWidth
-      var actualHeight = $tip[0].offsetHeight
-
-      if (autoPlace) {
-        var orgPlacement = placement
-        var $parent      = this.$element.parent()
-        var parentDim    = this.getPosition($parent)
-
-        placement = placement == 'bottom' && pos.top   + pos.height       + actualHeight - parentDim.scroll > parentDim.height ? 'top'    :
-                    placement == 'top'    && pos.top   - parentDim.scroll - actualHeight < 0                                   ? 'bottom' :
-                    placement == 'right'  && pos.right + actualWidth      > parentDim.width                                    ? 'left'   :
-                    placement == 'left'   && pos.left  - actualWidth      < parentDim.left                                     ? 'right'  :
-                    placement
-
-        $tip
-          .removeClass(orgPlacement)
-          .addClass(placement)
-      }
-
-      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
-
-      this.applyPlacement(calculatedOffset, placement)
-
-      var complete = function () {
-        that.$element.trigger('shown.bs.' + that.type)
-        that.hoverState = null
-      }
-
-      $.support.transition && this.$tip.hasClass('fade') ?
-        $tip
-          .one('bsTransitionEnd', complete)
-          .emulateTransitionEnd(150) :
-        complete()
-    }
-  }
-
-  Tooltip.prototype.applyPlacement = function (offset, placement) {
-    var $tip   = this.tip()
-    var width  = $tip[0].offsetWidth
-    var height = $tip[0].offsetHeight
-
-    // manually read margins because getBoundingClientRect includes difference
-    var marginTop = parseInt($tip.css('margin-top'), 10)
-    var marginLeft = parseInt($tip.css('margin-left'), 10)
-
-    // we must check for NaN for ie 8/9
-    if (isNaN(marginTop))  marginTop  = 0
-    if (isNaN(marginLeft)) marginLeft = 0
-
-    offset.top  = offset.top  + marginTop
-    offset.left = offset.left + marginLeft
-
-    // $.fn.offset doesn't round pixel values
-    // so we use setOffset directly with our own function B-0
-    $.offset.setOffset($tip[0], $.extend({
-      using: function (props) {
-        $tip.css({
-          top: Math.round(props.top),
-          left: Math.round(props.left)
-        })
-      }
-    }, offset), 0)
-
-    $tip.addClass('in')
-
-    // check to see if placing tip in new offset caused the tip to resize itself
-    var actualWidth  = $tip[0].offsetWidth
-    var actualHeight = $tip[0].offsetHeight
-
-    if (placement == 'top' && actualHeight != height) {
-      offset.top = offset.top + height - actualHeight
-    }
-
-    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
-
-    if (delta.left) offset.left += delta.left
-    else offset.top += delta.top
-
-    var arrowDelta          = delta.left ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
-    var arrowPosition       = delta.left ? 'left'        : 'top'
-    var arrowOffsetPosition = delta.left ? 'offsetWidth' : 'offsetHeight'
-
-    $tip.offset(offset)
-    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], arrowPosition)
-  }
-
-  Tooltip.prototype.replaceArrow = function (delta, dimension, position) {
-    this.arrow().css(position, delta ? (50 * (1 - delta / dimension) + '%') : '')
-  }
-
-  Tooltip.prototype.setContent = function () {
-    var $tip  = this.tip()
-    var title = this.getTitle()
-
-    $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
-    $tip.removeClass('fade in top bottom left right')
-  }
-
-  Tooltip.prototype.hide = function () {
-    var that = this
-    var $tip = this.tip()
-    var e    = $.Event('hide.bs.' + this.type)
-
-    this.$element.removeAttr('aria-describedby')
-
-    function complete() {
-      if (that.hoverState != 'in') $tip.detach()
-      that.$element.trigger('hidden.bs.' + that.type)
-    }
-
-    this.$element.trigger(e)
-
-    if (e.isDefaultPrevented()) return
-
-    $tip.removeClass('in')
-
-    $.support.transition && this.$tip.hasClass('fade') ?
-      $tip
-        .one('bsTransitionEnd', complete)
-        .emulateTransitionEnd(150) :
-      complete()
-
-    this.hoverState = null
-
-    return this
-  }
-
-  Tooltip.prototype.fixTitle = function () {
-    var $e = this.$element
-    if ($e.attr('title') || typeof ($e.attr('data-original-title')) != 'string') {
-      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
-    }
-  }
-
-  Tooltip.prototype.hasContent = function () {
-    return this.getTitle()
-  }
-
-  Tooltip.prototype.getPosition = function ($element) {
-    $element   = $element || this.$element
-    var el     = $element[0]
-    var isBody = el.tagName == 'BODY'
-    return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : null, {
-      scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop(),
-      width:  isBody ? $(window).width()  : $element.outerWidth(),
-      height: isBody ? $(window).height() : $element.outerHeight()
-    }, isBody ? { top: 0, left: 0 } : $element.offset())
-  }
-
-  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
-    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
-           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
-           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
-        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
-
-  }
-
-  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
-    var delta = { top: 0, left: 0 }
-    if (!this.$viewport) return delta
-
-    var viewportPadding = this.options.viewport && this.options.viewport.padding || 0
-    var viewportDimensions = this.getPosition(this.$viewport)
-
-    if (/right|left/.test(placement)) {
-      var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
-      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
-      if (topEdgeOffset < viewportDimensions.top) { // top overflow
-        delta.top = viewportDimensions.top - topEdgeOffset
-      } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
-        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
-      }
-    } else {
-      var leftEdgeOffset  = pos.left - viewportPadding
-      var rightEdgeOffset = pos.left + viewportPadding + actualWidth
-      if (leftEdgeOffset < viewportDimensions.left) { // left overflow
-        delta.left = viewportDimensions.left - leftEdgeOffset
-      } else if (rightEdgeOffset > viewportDimensions.width) { // right overflow
-        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
-      }
-    }
-
-    return delta
-  }
-
-  Tooltip.prototype.getTitle = function () {
-    var title
-    var $e = this.$element
-    var o  = this.options
-
-    title = $e.attr('data-original-title')
-      || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
-
-    return title
-  }
-
-  Tooltip.prototype.getUID = function (prefix) {
-    do prefix += ~~(Math.random() * 1000000)
-    while (document.getElementById(prefix))
-    return prefix
-  }
-
-  Tooltip.prototype.tip = function () {
-    return (this.$tip = this.$tip || $(this.options.template))
-  }
-
-  Tooltip.prototype.arrow = function () {
-    return (this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow'))
-  }
-
-  Tooltip.prototype.validate = function () {
-    if (!this.$element[0].parentNode) {
-      this.hide()
-      this.$element = null
-      this.options  = null
-    }
-  }
-
-  Tooltip.prototype.enable = function () {
-    this.enabled = true
-  }
-
-  Tooltip.prototype.disable = function () {
-    this.enabled = false
-  }
-
-  Tooltip.prototype.toggleEnabled = function () {
-    this.enabled = !this.enabled
-  }
-
-  Tooltip.prototype.toggle = function (e) {
-    var self = this
-    if (e) {
-      self = $(e.currentTarget).data('bs.' + this.type)
-      if (!self) {
-        self = new this.constructor(e.currentTarget, this.getDelegateOptions())
-        $(e.currentTarget).data('bs.' + this.type, self)
-      }
-    }
-
-    self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
-  }
-
-  Tooltip.prototype.destroy = function () {
-    clearTimeout(this.timeout)
-    this.hide().$element.off('.' + this.type).removeData('bs.' + this.type)
-  }
-
-
-  // TOOLTIP PLUGIN DEFINITION
-  // =========================
-
-  function Plugin(option) {
-    return this.each(function () {
-      var $this   = $(this)
-      var data    = $this.data('bs.tooltip')
-      var options = typeof option == 'object' && option
-
-      if (!data && option == 'destroy') return
-      if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
-      if (typeof option == 'string') data[option]()
-    })
-  }
-
-  var old = $.fn.tooltip
-
-  $.fn.tooltip             = Plugin
-  $.fn.tooltip.Constructor = Tooltip
-
-
-  // TOOLTIP NO CONFLICT
-  // ===================
-
-  $.fn.tooltip.noConflict = function () {
-    $.fn.tooltip = old
-    return this
-  }
-
-}(jQuery);
-
-},{}],"bowser":[function(require,module,exports){
-/*!
-  * Bowser - a browser detector
-  * https://github.com/ded/bowser
-  * MIT License | (c) Dustin Diaz 2014
-  */
-
-!function (name, definition) {
-  if (typeof module != 'undefined' && module.exports) module.exports['browser'] = definition()
-  else if (typeof define == 'function' && define.amd) define(definition)
-  else this[name] = definition()
-}('bowser', function () {
-  /**
-    * See useragents.js for examples of navigator.userAgent
-    */
-
-  var t = true
-
-  function detect(ua) {
-
-    function getFirstMatch(regex) {
-      var match = ua.match(regex);
-      return (match && match.length > 1 && match[1]) || '';
-    }
-
-    var iosdevice = getFirstMatch(/(ipod|iphone|ipad)/i).toLowerCase()
-      , likeAndroid = /like android/i.test(ua)
-      , android = !likeAndroid && /android/i.test(ua)
-      , versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i)
-      , tablet = /tablet/i.test(ua)
-      , mobile = !tablet && /[^-]mobi/i.test(ua)
-      , result
-
-    if (/opera|opr/i.test(ua)) {
-      result = {
-        name: 'Opera'
-      , opera: t
-      , version: versionIdentifier || getFirstMatch(/(?:opera|opr)[\s\/](\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/windows phone/i.test(ua)) {
-      result = {
-        name: 'Windows Phone'
-      , windowsphone: t
-      , msie: t
-      , version: getFirstMatch(/iemobile\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/msie|trident/i.test(ua)) {
-      result = {
-        name: 'Internet Explorer'
-      , msie: t
-      , version: getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/chrome|crios|crmo/i.test(ua)) {
-      result = {
-        name: 'Chrome'
-      , chrome: t
-      , version: getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (iosdevice) {
-      result = {
-        name : iosdevice == 'iphone' ? 'iPhone' : iosdevice == 'ipad' ? 'iPad' : 'iPod'
-      }
-      // WTF: version is not part of user agent in web apps
-      if (versionIdentifier) {
-        result.version = versionIdentifier
-      }
-    }
-    else if (/sailfish/i.test(ua)) {
-      result = {
-        name: 'Sailfish'
-      , sailfish: t
-      , version: getFirstMatch(/sailfish\s?browser\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/seamonkey\//i.test(ua)) {
-      result = {
-        name: 'SeaMonkey'
-      , seamonkey: t
-      , version: getFirstMatch(/seamonkey\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/firefox|iceweasel/i.test(ua)) {
-      result = {
-        name: 'Firefox'
-      , firefox: t
-      , version: getFirstMatch(/(?:firefox|iceweasel)[ \/](\d+(\.\d+)?)/i)
-      }
-      if (/\((mobile|tablet);[^\)]*rv:[\d\.]+\)/i.test(ua)) {
-        result.firefoxos = t
-      }
-    }
-    else if (/silk/i.test(ua)) {
-      result =  {
-        name: 'Amazon Silk'
-      , silk: t
-      , version : getFirstMatch(/silk\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (android) {
-      result = {
-        name: 'Android'
-      , version: versionIdentifier
-      }
-    }
-    else if (/phantom/i.test(ua)) {
-      result = {
-        name: 'PhantomJS'
-      , phantom: t
-      , version: getFirstMatch(/phantomjs\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/blackberry|\bbb\d+/i.test(ua) || /rim\stablet/i.test(ua)) {
-      result = {
-        name: 'BlackBerry'
-      , blackberry: t
-      , version: versionIdentifier || getFirstMatch(/blackberry[\d]+\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/(web|hpw)os/i.test(ua)) {
-      result = {
-        name: 'WebOS'
-      , webos: t
-      , version: versionIdentifier || getFirstMatch(/w(?:eb)?osbrowser\/(\d+(\.\d+)?)/i)
-      };
-      /touchpad\//i.test(ua) && (result.touchpad = t)
-    }
-    else if (/bada/i.test(ua)) {
-      result = {
-        name: 'Bada'
-      , bada: t
-      , version: getFirstMatch(/dolfin\/(\d+(\.\d+)?)/i)
-      };
-    }
-    else if (/tizen/i.test(ua)) {
-      result = {
-        name: 'Tizen'
-      , tizen: t
-      , version: getFirstMatch(/(?:tizen\s?)?browser\/(\d+(\.\d+)?)/i) || versionIdentifier
-      };
-    }
-    else if (/safari/i.test(ua)) {
-      result = {
-        name: 'Safari'
-      , safari: t
-      , version: versionIdentifier
-      }
-    }
-    else result = {}
-
-    // set webkit or gecko flag for browsers based on these engines
-    if (/(apple)?webkit/i.test(ua)) {
-      result.name = result.name || "Webkit"
-      result.webkit = t
-      if (!result.version && versionIdentifier) {
-        result.version = versionIdentifier
-      }
-    } else if (!result.opera && /gecko\//i.test(ua)) {
-      result.name = result.name || "Gecko"
-      result.gecko = t
-      result.version = result.version || getFirstMatch(/gecko\/(\d+(\.\d+)?)/i)
-    }
-
-    // set OS flags for platforms that have multiple browsers
-    if (android || result.silk) {
-      result.android = t
-    } else if (iosdevice) {
-      result[iosdevice] = t
-      result.ios = t
-    }
-
-    // OS version extraction
-    var osVersion = '';
-    if (iosdevice) {
-      osVersion = getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i);
-      osVersion = osVersion.replace(/[_\s]/g, '.');
-    } else if (android) {
-      osVersion = getFirstMatch(/android[ \/-](\d+(\.\d+)*)/i);
-    } else if (result.windowsphone) {
-      osVersion = getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i);
-    } else if (result.webos) {
-      osVersion = getFirstMatch(/(?:web|hpw)os\/(\d+(\.\d+)*)/i);
-    } else if (result.blackberry) {
-      osVersion = getFirstMatch(/rim\stablet\sos\s(\d+(\.\d+)*)/i);
-    } else if (result.bada) {
-      osVersion = getFirstMatch(/bada\/(\d+(\.\d+)*)/i);
-    } else if (result.tizen) {
-      osVersion = getFirstMatch(/tizen[\/\s](\d+(\.\d+)*)/i);
-    }
-    if (osVersion) {
-      result.osversion = osVersion;
-    }
-
-    // device type extraction
-    var osMajorVersion = osVersion.split('.')[0];
-    if (tablet || iosdevice == 'ipad' || (android && (osMajorVersion == 3 || (osMajorVersion == 4 && !mobile))) || result.silk) {
-      result.tablet = t
-    } else if (mobile || iosdevice == 'iphone' || iosdevice == 'ipod' || android || result.blackberry || result.webos || result.bada) {
-      result.mobile = t
-    }
-
-    // Graded Browser Support
-    // http://developer.yahoo.com/yui/articles/gbs
-    if ((result.msie && result.version >= 10) ||
-        (result.chrome && result.version >= 20) ||
-        (result.firefox && result.version >= 20.0) ||
-        (result.safari && result.version >= 6) ||
-        (result.opera && result.version >= 10.0) ||
-        (result.ios && result.osversion && result.osversion.split(".")[0] >= 6) ||
-        (result.blackberry && result.version >= 10.1)
-        ) {
-      result.a = t;
-    }
-    else if ((result.msie && result.version < 10) ||
-        (result.chrome && result.version < 20) ||
-        (result.firefox && result.version < 20.0) ||
-        (result.safari && result.version < 6) ||
-        (result.opera && result.version < 10.0) ||
-        (result.ios && result.osversion && result.osversion.split(".")[0] < 6)
-        ) {
-      result.c = t
-    } else result.x = t
-
-    return result
-  }
-
-  var bowser = detect(typeof navigator !== 'undefined' ? navigator.userAgent : '')
-
-
-  /*
-   * Set our detect method to the main bowser object so we can
-   * reuse it to test other user agents.
-   * This is needed to implement future tests.
-   */
-  bowser._detect = detect;
-
-  return bowser
-});
-
 },{}],"es5-shim":[function(require,module,exports){
 /*!
  * https://github.com/es-shims/es5-shim
@@ -28236,7 +28239,7 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 
 },{}],"eventEmitter":[function(require,module,exports){
 module.exports=require(272)
-},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":272}],"i18next":[function(require,module,exports){
+},{"d:\\work\\taaasty\\git\\web-static\\node_modules\\imagesloaded\\node_modules\\wolfy87-eventemitter\\EventEmitter.js":272}],"i18next":[function(require,module,exports){
 // i18next, v1.7.4
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
@@ -31239,7 +31242,7 @@ var Plugins;
 })(Plugins || (Plugins = {}));
 },{}],"jquery.autosize":[function(require,module,exports){
 /*!
-	Autosize 1.18.15
+	Autosize 1.18.13
 	license: MIT
 	http://www.jacklmoore.com/autosize
 */
@@ -31324,7 +31327,7 @@ var Plugins;
 			}
 
 			// IE8 and lower return 'auto', which parses to NaN, if no min-height is set.
-			minHeight = Math.max(parseFloat($ta.css('minHeight')) - boxOffset || 0, $ta.height());
+			minHeight = Math.max(parseInt($ta.css('minHeight'), 10) - boxOffset || 0, $ta.height());
 
 			$ta.css({
 				overflow: 'hidden',
@@ -31343,17 +31346,17 @@ var Plugins;
 			function setWidth() {
 				var width;
 				var style = window.getComputedStyle ? window.getComputedStyle(ta, null) : false;
-
+				
 				if (style) {
 
 					width = ta.getBoundingClientRect().width;
 
 					if (width === 0 || typeof width !== 'number') {
-						width = parseFloat(style.width);
+						width = parseInt(style.width,10);
 					}
 
 					$.each(['paddingLeft', 'paddingRight', 'borderLeftWidth', 'borderRightWidth'], function(i,val){
-						width -= parseFloat(style[val]);
+						width -= parseInt(style[val],10);
 					});
 				} else {
 					width = $ta.width();
@@ -31368,7 +31371,7 @@ var Plugins;
 				mirrored = ta;
 				mirror.className = options.className;
 				mirror.id = options.id;
-				maxHeight = parseFloat($ta.css('maxHeight'));
+				maxHeight = parseInt($ta.css('maxHeight'), 10);
 
 				// mirror is a duplicate textarea located off-screen that
 				// is automatically updated to contain the same text as the
@@ -31378,7 +31381,7 @@ var Plugins;
 				$.each(typographyStyles, function(i,val){
 					styles[val] = $ta.css(val);
 				});
-
+				
 				$(mirror).css(styles).attr('wrap', $ta.attr('wrap'));
 
 				setWidth();
@@ -31406,8 +31409,8 @@ var Plugins;
 				}
 
 				if (!ta.value && options.placeholder) {
-					// If the textarea is empty, copy the placeholder text into
-					// the mirror control and use that for sizing so that we
+					// If the textarea is empty, copy the placeholder text into 
+					// the mirror control and use that for sizing so that we 
 					// don't end up with placeholder getting trimmed.
 					mirror.value = ($ta.attr("placeholder") || '');
 				} else {
@@ -31416,7 +31419,7 @@ var Plugins;
 
 				mirror.value += options.append || '';
 				mirror.style.overflowY = ta.style.overflowY;
-				original = parseFloat(ta.style.height);
+				original = parseInt(ta.style.height,10);
 
 				// Setting scrollTop to zero is needed in IE8 and lower for the next step to be accurately applied
 				mirror.scrollTop = 0;
@@ -31440,10 +31443,6 @@ var Plugins;
 
 				if (original !== height) {
 					ta.style.height = height + 'px';
-
-					// Trigger a repaint for IE8 for when ta is nested 2 or more levels inside an inline-block
-					mirror.className = mirror.className;
-
 					if (callback) {
 						options.callback.call(ta,ta);
 					}

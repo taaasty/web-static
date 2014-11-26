@@ -16,6 +16,7 @@ window.IndicatorsToolbar_Messages = React.createClass
   render: ->
     indicatorClasses = React.addons.classSet {
       'toolbar__indicator': true
+      'toolbar__indicator--messages': true
       'state--empty': @state.unreadConversationsCount == 0
     }
 
@@ -25,6 +26,7 @@ window.IndicatorsToolbar_Messages = React.createClass
                 <span className="messages-badge">
                   { this.state.unreadConversationsCount }
                 </span>
+                <i className="icon icon--messages"></i>
               </div>`
     else
       return null

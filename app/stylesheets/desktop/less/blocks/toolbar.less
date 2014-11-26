@@ -231,13 +231,34 @@
 }
 
 .toolbar__indicator {
+  position: relative;
   background: transparent;
-  background-color: transparent;
   display: inline-block;
+  line-height: @toolbar-size;
   cursor: pointer;
   border-radius: @toolbar-size;
   .user-select(none);
   .transition(~"width .6s ease, opacity .6s ease");
+
+  .icon {
+    &:extend(.toolbar .icon all);
+  }
+
+  .messages-badge,
+  .notifications-badge {
+    margin-left: .7em;
+    position: absolute;
+    top: -.3em;
+    left: 50%;
+  }
+}
+
+.toolbar__indicator--messages {
+  color: #fff627;
+}
+
+.toolbar__indicator--notifications {
+  color: #61cc67;
 }
 
 // Aside dropdown
