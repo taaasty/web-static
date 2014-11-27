@@ -68,7 +68,7 @@
   user-select: none;
   -webkit-overflow-scrolling: touch;
 
-  &.state--visible {
+  &.__visible {
     display: block;
   }
 }
@@ -87,20 +87,20 @@
   }
 
   // States
-  &.state--active {
+  &.__active {
     .toolbar__popup-link {
       .toolbar-popup-link-hover;
     }
   }
 
-  &.state--highlighted {
+  &.__highlighted {
     .toolbar__popup-link {
       background: @toolbar-item-highlight-bg !important;
       color: #232323;
     }
   }
 
-  &.state--disabled {
+  &.__disabled {
     .toolbar__popup-link {
       background: none !important;
       color: #bbb;

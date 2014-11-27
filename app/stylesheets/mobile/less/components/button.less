@@ -135,7 +135,7 @@ button {
     }
   }
 
-  &.state--expanded {
+  &.__expanded {
     & > .button {
       .border-radius-bottom-right(0);
       .border-radius-bottom-left(0);
@@ -258,12 +258,12 @@ button {
   }
 
   &:active,
-  &.state--active {
+  &.__active {
     background-color: @green-light;
     color: @white;
   }
 
-  &.state--disable {
+  &.__disable {
     background-color: @grey;
     color: @white;
   }
@@ -302,7 +302,7 @@ button {
     vertical-align: middle;
   }
 
-  &.state--active {
+  &.__active {
     color: @green-light;
   }
 }
@@ -327,27 +327,23 @@ button {
   &:extend(.button all);
   .button-common-style(#0174de);
   color: @white !important;
-  text-transform: none;
 }
 
 .fb-auth-button {
   &:extend(.button all);
   .button-common-style(#1746b8);
   color: @white !important;
-  text-transform: none;
 }
 
 .site-auth-button {
   &:extend(.button all);
   .button-common-style(#eeeef0);
   color: @color-base !important;
-  text-transform: none;
 }
 
 .reg-auth-button {
   &:extend(.button all);
   color: inherit;
-  text-transform: none;
 
   &:before {
     border: 1px solid;

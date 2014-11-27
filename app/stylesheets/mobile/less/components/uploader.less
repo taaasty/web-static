@@ -9,7 +9,7 @@
   transition: border .4s ease;
 
   // States
-  &.state--loaded {
+  &.__loaded {
     height: auto;
     border: none;
 
@@ -24,7 +24,7 @@
     }
   }
 
-  &.state--insert {
+  &.__insert {
     .uploader__actions,
     .uploader__form {
       display: block;
@@ -34,10 +34,6 @@
     .uploader__action--rotate {
       display: none;
     }
-  }
-
-  &.state--hidden {
-    display: none;
   }
 }
 

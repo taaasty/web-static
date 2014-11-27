@@ -20,10 +20,10 @@ document.addEventListener "DOMContentLoaded", (->
       # Это нужно делать по transitionEnd
       if html.classList.contains("user-toolbar-open")
         timeoutUserToolbar = setTimeout (->
-          userToolbarPopup.classList.remove "state--visible"
+          userToolbarPopup.classList.remove "__visible"
         ), 500
       else
-        userToolbarPopup.classList.add "state--visible"
+        userToolbarPopup.classList.add "__visible"
 
       html.classList.remove "feed-toolbar-open" if html.classList.contains("feed-toolbar-open")
       html.classList.toggle "user-toolbar-open"
@@ -41,10 +41,10 @@ document.addEventListener "DOMContentLoaded", (->
       # Это нужно делать по transitionEnd
       if html.classList.contains("feed-toolbar-open")
         timeoutFeedToolbar = setTimeout (->
-          feedToolbarPopup.classList.remove "state--visible"
+          feedToolbarPopup.classList.remove "__visible"
         ), 500
       else
-        feedToolbarPopup.classList.add "state--visible"
+        feedToolbarPopup.classList.add "__visible"
 
       html.classList.remove "user-toolbar-open" if html.classList.contains("user-toolbar-open")
       html.classList.toggle "feed-toolbar-open"
@@ -77,7 +77,7 @@ document.addEventListener "DOMContentLoaded", (->
     i = profileActions.length - 1
     while i >= 0
       profileActions[i].addEventListener "click", (->
-        @classList.toggle "state--open"
+        @classList.toggle "__open"
       ), false
       i--
 
@@ -89,7 +89,7 @@ document.addEventListener "DOMContentLoaded", (->
 
     while i >= 0
       metaActions[i].addEventListener "click", (->
-        this.classList.toggle "state--open"
+        this.classList.toggle "__open"
       ), false
       i--
 
@@ -101,7 +101,7 @@ document.addEventListener "DOMContentLoaded", (->
 
     while i >= 0
       commentActions[i].addEventListener "click", (->
-        @classList.toggle "state--open"
+        @classList.toggle "__open"
       ), false
       i--
 

@@ -1,9 +1,7 @@
-.landing-page {
-  height: 100%;
+.auth-page {
   background-color: #323039;
 
   body {
-    height: 100%;
     color: @white;
   }
 }
@@ -202,11 +200,7 @@ a {
 
 // Когда открыт Feed Toolbar
 .feed-toolbar-open {
-  &,
-  body {
-    height: 100%;
-    overflow: hidden;
-  }
+  overflow: hidden;
 
   .page {
     transform: translateX(@toolbar-popup-width);
@@ -231,11 +225,7 @@ a {
 
 // Когда открыт User Toolbar
 .user-toolbar-open {
-  &,
-  body {
-    height: 100%;
-    overflow: hidden;
-  }
+  overflow: hidden;
 
   .page {
     transform: translateX(-@toolbar-popup-width);
@@ -261,11 +251,7 @@ a {
 // Когда развёрнут профиль пользователя
 // TODO: Ускорить анимацию
 .hero-enabled {
-  &,
-  body {
-    height: 100%;
-    overflow: hidden;
-  }
+  overflow-y: hidden;
 
   .toolbar--user .toolbar__toggle,
   .toolbar--feed .toolbar__toggle {

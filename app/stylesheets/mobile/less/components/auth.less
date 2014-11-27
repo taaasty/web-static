@@ -106,6 +106,8 @@
 }
 
 .auth__buttons {
+  margin-top: 18px;
+
   button {
     &:extend(.button--block all);
     margin-top: 10px;
@@ -123,7 +125,7 @@
 }
 
 .auth__field-icon {
-  margin: 6px 0 0 -38px;
+  margin: 10px 0 0 -38px;
   float: left;
   font-size: 26px;
   opacity: .5;
@@ -133,25 +135,12 @@
   .placeholder(rgba(255, 255, 255, .5));
   width: 100%;
   margin: 0;
-  padding: 8px 0;
+  padding: 12px 0;
   border: none;
   border-top: 1px solid rgba(255, 255, 255, .3);
   background: none;
   font: inherit;
+  outline: none !important;
   border-radius: 0;
   -webkit-appearance:none;
-}
-
-.auth__field--horizontal {
-  padding: 0 20px;
-
-  .auth__field-icon {
-    margin: 0;
-    float: none;
-    font-size: 90px;
-  }
-
-  .auth__field-input {
-    border-bottom: 1px solid rgba(255, 255, 255, .3);
-  }
 }
