@@ -13763,7 +13763,6 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
       actions = React.DOM.div({className: "hero__actions"}, 
                    FollowButton({relationship:  this.props.relationship}), 
                    WriteMessageButton({user:  this.props.user}), 
-                   React.DOM.button({className: "profile-settings-button"}, React.DOM.i({className: "icon icon--cogwheel"})), 
                    HeroProfile_DropdownMenu({userId:  this.props.user.id, 
                                              status:  this.props.relationship.state})
                  );
