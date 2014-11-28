@@ -9014,6 +9014,9 @@ a.types-posts__item:hover .types-posts__text {
   background-color: #000000;
   opacity: .3;
 }
+/*****************/
+/*    LEGACY     */
+/*****************/
 .site-app {
   position: relative;
   text-align: left;
@@ -9074,6 +9077,89 @@ a.types-posts__item:hover .types-posts__text {
   }
   .page-header .site-app__cover {
     display: none;
+  }
+}
+/*****************/
+/*      NEW      */
+/*****************/
+.site-apps {
+  position: relative;
+  text-align: left;
+  white-space: nowrap;
+}
+.site-apps__device {
+  display: inline-block;
+  vertical-align: bottom;
+}
+.site-apps__device--iphone {
+  width: 140px;
+  margin-right: 15px;
+  margin-left: 27px;
+  position: relative;
+}
+.site-apps__device--iphone + .site-apps__device--android {
+  margin-left: -80px;
+}
+.site-apps__device--android {
+  width: 118px;
+  margin-right: 15px;
+  margin-left: 27px;
+}
+.site-apps__desc {
+  width: 174px;
+  padding: 4px 0 12px;
+  position: relative;
+  display: inline-block;
+  vertical-align: bottom;
+  white-space: normal;
+  overflow: hidden;
+}
+.site-apps__title {
+  margin-bottom: 10px;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 135%;
+}
+.site-apps__badge {
+  width: 148px;
+  height: 48px;
+  margin: 8px 8px 0 0;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
+  vertical-align: top;
+}
+.site-apps__badge--apple-store {
+  background-image: url("../images//site-apps/badge-apple-store.png");
+}
+.site-apps__badge--google-play {
+  background-image: url("../images//site-apps/badge-google-play.png");
+}
+.page-header .site-apps {
+  position: absolute;
+  left: 70%;
+  bottom: 0;
+  color: #ffffff;
+  z-index: 10;
+}
+.page-header .site-apps__device {
+  display: none;
+}
+@media (min-width: 1150px) {
+  .page-header .site-apps {
+    left: 60%;
+  }
+  .page-header .site-apps__device {
+    display: inline-block;
+  }
+}
+@media (min-width: 1450px) {
+  .page-header .site-apps {
+    left: 58%;
+  }
+  .page-header .site-apps__desc {
+    width: 320px;
   }
 }
 .tooltip {
