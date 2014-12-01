@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.EmailSigninShellbox = React.createClass
+window.EmailSignin = React.createClass
   mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:

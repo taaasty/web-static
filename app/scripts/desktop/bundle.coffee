@@ -103,6 +103,8 @@ require './react/messaging/components/notifications_popup/notifications/empty'
 
 # /*-----  End of Messaging resources  ------*/
 
+require './react/components/common/adaptive_input'
+
 require './react/components/embed'
 require './react/components/tlog_alert'
 
@@ -113,17 +115,18 @@ require './react/components/avatars/user_avatar'
 # =            Authorization resources            =
 # ===============================================*/
 
-require './react/components/shellbox/auth'
-require './react/components/shellbox/authorization/authorization'
-require './react/components/shellbox/authorization/vk'
-require './react/components/shellbox/authorization/facebook'
+require './react/components/auth/auth'
+require './react/components/auth/authorization/authorization'
+require './react/components/auth/authorization/vk'
+require './react/components/auth/authorization/facebook'
 
-require './react/components/shellbox/buttons/vk_auth_button'
-require './react/components/shellbox/buttons/facebook_auth_button'
+require './react/components/auth/buttons/vk_auth_button'
+require './react/components/auth/buttons/facebook_auth_button'
 
-require './react/components/shellbox/email_signin'
-require './react/components/shellbox/email_signup'
-require './react/components/shellbox/recovery'
+require './react/components/auth/email/email'
+# require './react/components/auth/email_signin'
+require './react/components/auth/email_signup'
+require './react/components/auth/recovery'
 
 # /*-----  End of Authorization resources  ------*/
 

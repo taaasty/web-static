@@ -11,11 +11,7 @@ window.ReactApp =
     @popup    = new ReactPopup()
 
     # Есть только у анонимов
-    $('[invite-button]').click => @shellbox.show AuthShellbox
-
-    # TODO Сделать что-то типа $('[static-inviter]').renderReactComponent AuthShellbox(fixed: true)
-    if ic = document.getElementById 'js-static-inviter-container'
-      React.renderComponent AuthShellbox(fixed: true), ic
+    $('[invite-button]').click => @shellbox.show Auth
 
     if user?
       window.messagingService = new MessagingService

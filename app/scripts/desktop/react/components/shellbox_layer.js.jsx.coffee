@@ -36,10 +36,10 @@ window.ShellBox = React.createClass
       context.props.disableShellbox = @disableShellbox
       context.props.enableShellbox  = @enableShellbox
 
-
     return `<div className="shellbox">
               <div className="shellbox__main">
-                <div className="shellbox__cell" onClick={ this.handleClick }>
+                <div className="shellbox__cell"
+                     onClick={ this.handleClick }>
                   { this.props.children }
                 </div>
               </div>
