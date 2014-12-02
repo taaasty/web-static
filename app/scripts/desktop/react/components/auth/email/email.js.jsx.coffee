@@ -13,12 +13,17 @@ window.Email = React.createClass
   mixins: [EmailMixin, ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:
-    email: React.PropTypes.string
+    login:    React.PropTypes.string
+    password: React.PropTypes.string
+
+  getDefaultProps: ->
+    login:    ''
+    password: ''
 
   getInitialState: ->
     formData: {
-      login:    ''
-      password: ''
+      login:    @props.login
+      password: @props.password
     }
     isProcess:       false
     isLoginError:    false

@@ -1,5 +1,8 @@
 EmailConfirmRegister = require '../confirm_register'
 
+INVALID_PASSWORD_MESSAGE = 'user_authenticator/invalid_password'
+INVALID_LOGIN_MESSAGE    = 'user_authenticator/user_not_found'
+
 #TODO: i18n
 LOGIN_LENGTH_ERROR    = 'Введите свой емейл или имя на сайте'
 PASSWORD_LENGTH_ERROR = 'Введите пароль'
@@ -31,33 +34,41 @@ EmailMixin =
         email:    login
         password: password
       success: (data) =>
-        console.log data
         TastyNotifyController.notifySuccess "Добро пожаловать, #{ data.name }! Подождите, я перезагружусь.."
         ReactApp.shellbox.close()
-        # _.defer -> location.reload true
+        _.defer -> location.reload true
       error: (data) =>
         @shake()
 
         if data.responseJSON?
-          @safeUpdateState isPasswordError: true if data.responseJSON.error_code is 'user_authenticator/invalid_password'
-          # @safeUpdateState isLoginError:    true if data.responseJSON.error_code is 'user_authenticator/user_not_found'
-          if data.responseJSON.error_code is 'user_authenticator/user_not_found'
-            @safeUpdateState(isLoginError: true)
-            @handleInvalidLogin()
+          switch data.responseJSON.error_code
+            when INVALID_PASSWORD_MESSAGE then @safeUpdateState(isPasswordError: true)
+            when INVALID_LOGIN_MESSAGE
+              @safeUpdateState(isLoginError: true)
+
+              #FIXME: В ответе data, должен быть ключ proposed_data, если сервер
+              #       предлагает варианты для регистрации
+              data.responseJSON.proposed_data ?= {slug: 'qwerty'} # Mock
+
+              proposedData = data.responseJSON.proposed_data
+
+              if proposedData?
+                return @handleInvalidLogin(proposedSlug: proposedData.slug)
 
         TastyNotifyController.errorResponse data
       complete: =>
-        @safeUpdateState isProcess: false
+        @safeUpdateState(isProcess: false)
 
   handleSubmit: ->
     @resetPasswordErrors()
 
     if @isFormValid() then @login() else @shake()
 
-  handleInvalidLogin: ->
+  handleInvalidLogin: ({proposedSlug}) ->
     ReactApp.shellbox.show EmailConfirmRegister, {
-      login:    @state.formData.login
-      password: @state.formData.password
+      email:        @state.formData.login
+      password:     @state.formData.password
+      proposedSlug: proposedSlug
     }
 
   resetPasswordErrors: ->

@@ -9,7 +9,7 @@ window.RecoveryShellbox = React.createClass
   gotoSelectSignin: ->
     event.preventDefault()
     event.stopPropagation()
-    ReactApp.shellbox.show AuthShellbox
+    ReactApp.shellbox.show Auth
 
   submit: (event)->
     event.preventDefault()
