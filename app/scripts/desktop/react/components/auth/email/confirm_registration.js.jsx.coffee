@@ -6,7 +6,7 @@ ConfirmRegistrationMixin = require '../mixins/confirm_registration'
 MESSAGE = 'Сейчас будет создан новый аккаунт @#{slug}'
 
 EmailConfirmRegistration = React.createClass
-  mixins: [ConfirmRegistrationMixin, RequesterMixin, ComponentManipulationsMixin]
+  mixins: [ConfirmRegistrationMixin, RequesterMixin, ReactShakeMixin, ComponentManipulationsMixin]
 
   propTypes:
     email:        React.PropTypes.string.isRequired
@@ -17,20 +17,22 @@ EmailConfirmRegistration = React.createClass
     isProcess: false
 
   render: ->
-    return `<div className="form-popup shellbox-content">
-              <div className="form-popup__header">
-                <h3 className="form-popup__title">{ this.getMessage() }</h3>
-              </div>
+    return `<div className="form-popup form-popup--confirm">
               <div className="form-popup__body">
-                <form>
-                  <button onClick={ this.handleApproveClick }>
+                <div className="form-popup__lead">{ this.getMessage() }</div>
+                <div className="form-popup__submit">
+                  <button className="button button--large button--green-light button--block button--rectangle"
+                          onClick={ this.handleApproveClick }>
                     Да, зарегистрировать новый аккаунт
                   </button>
-                  или
-                  <a onClick={ this.handleDisapproveClick }>
-                    Я уже был зарегистрирован раньше
-                  </a>
-                </form>
+                </div>
+              </div>
+              <div className="form-popup__footer">
+                <span className="form-popup__footer-or">или</span>
+                <a className="form-popup__footer-item"
+                   onClick={ this.handleDisapproveClick }>
+                  Я уже был зарегистрирован раньше
+                </a>
               </div>
             </div>`
 

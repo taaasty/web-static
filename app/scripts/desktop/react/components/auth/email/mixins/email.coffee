@@ -1,3 +1,5 @@
+EmailConfirmRegistration = require '../confirm_registration'
+
 INVALID_PASSWORD_MESSAGE = 'user_authenticator/invalid_password'
 INVALID_LOGIN_MESSAGE    = 'user_authenticator/user_not_found'
 

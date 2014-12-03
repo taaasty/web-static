@@ -1,7 +1,12 @@
 class window.ReactShellBox
 
   constructor: ->
-    @shellboxContainer = $('<\div>').appendTo('body').get(0)
+    container = document.querySelectorAll('[shellbox-container]')[0]
+
+    unless container
+      container = $('<\div>', {'shellbox-container': ''}).appendTo('body')[0]
+
+    @shellboxContainer = container
 
   show: (react_class, args) ->
     _.defer =>

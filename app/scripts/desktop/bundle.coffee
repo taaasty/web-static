@@ -124,7 +124,6 @@ require './react/components/auth/buttons/vk_auth_button'
 require './react/components/auth/buttons/facebook_auth_button'
 
 require './react/components/auth/email/email'
-require './react/components/auth/social_networks/confirm_registration'
 require './react/components/auth/recovery'
 
 # /*-----  End of Authorization resources  ------*/

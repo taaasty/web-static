@@ -12,21 +12,25 @@ SocialNetworksConfirmRegistration = React.createClass
     proposedSlug: React.PropTypes.string.isRequired
 
   render: ->
-    return `<div className="form-popup shellbox-content">
-              <div className="form-popup__header">
-                <h3 className="form-popup__title">{ this.getMessage() }</h3>
-              </div>
+    return `<div className="form-popup form-popup--confirm">
               <div className="form-popup__body">
                 <form action={ ApiRoutes.confirm_signup_url() }
                       method="post">
-                  <button type="submit">
-                    Да, зарегистрировать новый аккаунтЕГ
-                  </button>
-                  или
-                  <a onClick={ this.handleDisapproveClick }>
-                    Я уже был зарегистрирован раньше
-                  </a>
+                  <div className="form-popup__lead">{ this.getMessage() }</div>
+                  <div className="form-popup__submit">
+                    <button className="button button--large button--green-light button--block button--rectangle"
+                            onClick={ this.handleApproveClick }>
+                      Да, зарегистрировать новый аккаунт
+                    </button>
+                  </div>
                 </form>
+              </div>
+              <div className="form-popup__footer">
+                <span className="form-popup__footer-or">или</span>
+                <a className="form-popup__footer-item"
+                   onClick={ this.handleDisapproveClick }>
+                  Я уже был зарегистрирован раньше
+                </a>
               </div>
             </div>`
 
