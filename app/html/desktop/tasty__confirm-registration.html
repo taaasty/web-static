@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+        <title></title>
+
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+
+        <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
+
+        <!-- Fonts -->
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <!-- end Fonts -->
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="stylesheets/main.css" />
+        <!-- end Styles -->
+
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="bower_components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js scripts/vendor.js -->
+        <!-- bower:js -->
+        <!-- endbower -->
+        <!-- endbuild -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.core.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.widget.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.mouse.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.slider.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.draggable.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.effect.min.js"></script>
+        <script src="javascripts/old/libs/jquery/jquery.ui.effect-slide.min.js"></script>
+        <script src="javascripts/old/libs/jquery.autosize.min.js"></script>
+        <script src="javascripts/old/libs/jquery.caretposition.js"></script>
+        <script src="javascripts/old/libs/jquery.sew.js"></script>
+        <script src="javascripts/old/libs/jquery.timeago.js"></script>
+        <script src="javascripts/old/libs/jquery.timeago.ru.js"></script>
+        <script src="javascripts/old/libs/jsrender.min.js"></script>
+        <script src="javascripts/old/libs/uploaderObject.js"></script>
+        <script src="javascripts/old/libs/cookie.js"></script>
+        <script src="javascripts/old/libs/baron.js"></script>
+        <script src="javascripts/old/libs/jquery.custom-select.js"></script>
+        <script src="javascripts/old/plugins/jquery.collage.js"></script>
+        <script src="javascripts/old/libs/jquery.mousewheel.js"></script>
+        <script src="javascripts/old/libs/jquery.fancybox.pack.js"></script>
+        <script src="javascripts/old/libs/jquery.autosize.input.js"></script>
+        <script src="javascripts/old/libs/jquery.plugin.js"></script>
+        <script src="javascripts/old/libs/jquery.maxlength.js"></script>
+
+        <script src="javascripts/old/plugins/jquery.formradio.js"></script>
+        <script src="javascripts/old/plugins/jquery.dropdown.js"></script>
+        <script src="javascripts/old/plugins/jquery.expander.js"></script>
+        <script src="javascripts/old/plugins/jquery.togglevalue.js"></script>
+
+    </head>
+    <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white not-logged" ng-app='AApp'>
+        <!-- Toolbar - Back -->
+        <a class="toolbar toolbar--back" href="#" style="display: none">
+            <div class="toolbar__toggle">
+                <i class="icon icon--arrow-left"></i>
+            </div>
+            <div class="toolbar__dropdown">
+                <div class="toolbar__dropdown-i">
+                    <span class="toolbar__text">Ко всем записям</span>
+                </div>
+            </div>
+        </a>
+        <!-- end Toolbar - Back -->
+
+        <!-- Toolbar - Close -->
+        <div class="toolbar toolbar--close js-hero-close">
+            <div class="toolbar__toggle">
+                <i class="icon icon--cross"></i>
+            </div>
+        </div>
+        <!-- end Toolbar - Close -->
+
+        <!-- Toolbar - Logo -->
+        <div data-react-class="FeedToolbar" data-react-props='{"friendsUrl": "http://taaasty.ru/friends", "liveUrl": "http://taaasty.ru/live", "bestUrl": "http://taaasty.ru/best", "anonymousUrl": "http://taaasty.ru/anonymous"}'></div>
+        <!-- end Toolbar - Logo -->
+
+        <!-- Toolbar - Userbar -->
+        <div data-react-class="UserToolbar" data-react-props='{"user":{"id":232992,"name":"sergeylaptev","slug":"sergeylaptev","title":"","is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.ru/@sergeylaptev","created_at":"2014-06-18T14:27:22.000+04:00","updated_at":"2014-07-31T10:55:36.000+04:00","total_entries_count":1,"private_entries_count":0,"public_entries_count":1,"is_privacy":false,"email":"imperm3r.main@gmail.com","is_confirmed":true,"available_notifications":false,"authentications":[{"id":5,"provider":"vkontakte","uid":"17202992","name":"Сергей Лаптев","sex":null,"image":"https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg","url":"http://vk.com/imperm3r"}],"api_key":{"access_token":"sergeylaptev_develop","user_id":232992,"expires_at":"2015-01-04T18:07:07.000+04:00"},"design":{"feedColor":"white","headerColor":"black","fontType":"sans","coverAlign":"center","feedOpacity":1.0,"background_url":"images/backgrounds/3.png"},"userpic":{"large_url":"http://taaasty.ru/assets/userpic/fa/f9/232992_large.jpg","thumb128_url":"http://taaasty.ru/assets/userpic/fa/f9/232992_thumb128.jpg","thumb64_url":"http://taaasty.ru/assets/userpic/fa/f9/232992_thumb64.jpg","default_colors":{"background":"#b5c31e","name":"#fff"}}},"newEntryUrl":"http://taaasty.ru/@sergeylaptev/new","myTlogUrl":"http://taaasty.ru/@sergeylaptev","profileUrl":null,"favoritesUri":"http://taaasty.ru/@sergeylaptev/favorites","privateEntriesUrl":"http://taaasty.ru/@sergeylaptev/privates","logoutUrl":"http://taaasty.ru/logout"}'></div>
+        <!-- end Toolbar - Userbar -->
+
+        <!-- Auth Button -->
+        <button class="auth-button js-auth-button" invite-button>войти или зарегистрироваться</button>
+        <!-- end Auth Button -->
+
+        <!-- Calendar -->
+        <div data-react-class="Calendar" data-react-props='{"tlogId":59947,"entry":{"id":19149974,"type":"text","comments_count":5,"created_at":"2014-06-29T21:16:06.000+04:00","updated_at":"2014-06-30T19:08:41.000+04:00","entry_url":"http://mefodei.taaasty.ru/19149974"}}'></div>
+        <!-- end Calendar -->
+
+        <!-- Page -->
+        <div class="page js-preview-design">
+            <div class="page__inner">
+                <div class="page__paper">
+                    <!-- Page Cover -->
+                    <div class="page-cover js-cover" style="background-image:url(images/bg.jpg);"></div>
+                    <!-- end Page Cover -->
+                    <!-- Page Header -->
+                    <header class="page-header">
+                        <!-- Hero -->
+                        <div class="hero js-hero">
+                            <div class="hero__overlay"></div>
+                            <div class="hero__gradient"></div>
+                            <div class="hero__box js-hero-box">
+                                <div class="hero__avatar js-hero-open">
+                                    <span class="avatar avatar--eighth">
+                                        <span class="avatar__text">M</span>
+                                    </span>
+                                </div>
+                                <div class="hero__mask"></div>
+                                <div class="hero__head">
+                                    <div class="hero__title js-hero-open js-hero-title"><span>Madworld</span></div>
+                                </div>
+                                <div class="hero__text js-hero-text"><span>Прекрасная жизнь</span></div>
+                                <div class="hero__actions">
+                                  <div data-react-class="FollowButton" data-react-props='{"tlogId":5881}'> </div>
+                                </div>
+                            </div>
+                            <div class="hero__stats js-hero-stats">
+                                <div class="hero__stats-list">
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link js-subscribed-by-toggle" href="#" title="22 подписчика" data-popup-selector=".js-subscribed-by">
+                                            <strong>22</strong> подписчика
+                                        </a>
+                                    </div>
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link js-subscribed-to-toggle" href="#" title="103 подписан" data-popup-selector=".js-subscribed-to">
+                                            <strong>103</strong> подписан(а)
+                                        </a>
+                                    </div>
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link" href="#" title="92 в избранном">
+                                            <strong>92</strong> в избранном
+                                        </a>
+                                    </div>
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link" href="#" title="0 комментариев">
+                                            <strong>0</strong> комментариев
+                                        </a>
+                                    </div>
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link" href="#" title="22 скрытые">
+                                            <strong>22</strong> скрытые
+                                        </a>
+                                    </div>
+                                    <div class="hero__stats-item">
+                                        <a class="hero__stats-link js-tags-toggle" href="#" title="45 тегов" data-popup-selector=".js-tags">
+                                            <strong>45</strong> тегов
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end Hero -->
+                    </header>
+                    <div class="page-body">
+                      <!-- Content Area -->
+                      <div class="content-area">
+                        <div class="content-area__bg" tlog-body=""></div>
+                        <div class="content-area__inner">
+                            <!-- Flex Container -->
+                            <div class="flex-container">
+                                <button class="add-post-button">Добавить новую запись в свой дневник</button>
+                            </div>
+                            <!-- end Flex Container -->
+                          <article class="post post--image ng-scope" data-id="19187271" data-type="image" ng-controller="Post">
+                          <div class="post__content">
+                            <figure class="image"><img alt="" height="381" src="http://thumbor0.tasty0.ru/cR3S6yo2SujdW9y2KRCSwitXeGQ=/604x381/att/57/65/15900238_234360_19187271_44c72095e92b7e9cd26931f0.jpg" style="width: 604; height: 381" width="604"></figure>
+
+                            <p></p>
+                            <span class="meta-bar">
+                              <span class="meta-item meta-item_comments state--visible">
+                                <span class="meta__content">
+                                  <a class="meta__link" eat-click="" href="http://strawberrypower.taaasty.ru/19187271#comments" ng-click="toggleComments()" title="Комментировать">
+                                    Комментировать
+                                  </a>
+                                </span>
+                                <span class="spinner spinner--8x8 ng-hide" ng-show="loading">
+                                  <span class="spinner__icon"></span>
+                                </span>
+                              </span>
+                              <span class="meta-item meta-items__date">
+                                <span class="meta-item__content"><a href="http://strawberrypower.taaasty.ru/19187271" title="Ссылка на публикацию"><time>Сегоня в 09:21</time></a></span>
+                              </span>
+                              <span class="meta-item meta-item--actions">
+                                <span class="meta-item__content">
+                                  <i class="icon icon--cogwheel"></i>
+                                  <span class="meta-item__dropdown meta-item__dropdown--actions js-horizontal-centering" style="margin-left: -57.5px;">
+                                    <a class="meta-item__dropdown-item" ng-click="subscribe()" title="Подписка на комментарии"><i class="icon icon--comments-subscribe"></i></a>
+                                    <a class="comment__dropdown-item" href="#" ng-click="report()" title="Пожаловаться"><i class="icon icon--exclamation-mark"></i></a>
+                                    <a class="meta-item__dropdown-item" href="#" ng-click="favorite()" title="Избранное"><i class="icon icon--star"></i></a>
+                                  </span>
+                                </span>
+                              </span>
+                            </span>
+
+                          </div>
+                          <section class="comments ng-scope" data-comments-total-count="0" data-comments-visible-count="3" data-id="19187271" data-show-comments-form="true" data-type="image" ng-controller="Comments">
+                          <div class="comments__list" ng-show="visible">
+                            <div class="comments__more ng-hide" ng-show="visibleLoadMore">
+                              <a class="comments__more-link ng-binding" ng-click="loadMore()">Загрузить все 0 комментариев</a>
+                            </div>
+                            <!-- ngRepeat: comment in comments -->
+                            <div class="comments_more ng-hide" ng-click="showForm()" ng-hide="visibleForm">
+                              <a class="comments__more-link">Прокомментировать</a>
+                            </div>
+                            <div class="comment-form" ng-show="visibleForm">
+                              <div class="comment-form__table">
+                                <div class="comment-form__table-cell">
+                                  <form action="" class="ng-pristine ng-valid">
+                                    <span class="comment-form__avatar"><span class="avatar" style="background-color: #ffca00; color: #222"><span class="avatar__text">B</span></span></span>
+                                    <span class="comment-form__field">
+                                      <i class="comment-form__field-bg"></i>
+                                      <textarea class="comment-form__field-textarea js-toggle-value-input ng-pristine ng-valid" for="add-comment-19187271" ng-enter="submit()" ng-model="newComment" placeholder="Напишите комментарий" tastyautosize="" style="overflow: hidden; word-wrap: break-word; height: 20px;"></textarea>
+                                    </span>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          </section>
+
+                          </article>
+
+                          <!--
+                          <div class='return_from_permalink'>
+                            <haml_loud> link_to &quot;&amp;#x2190; обратно в #{current_site.gender(&quot;его&quot;, &quot;её&quot;)} тлог&quot;, tlog_url_for_entry(@entry), :class =&gt; &#39;f56&#39; </haml_loud>
+                          </div>
+                          -->
+
+                          <!-- Pagination -->
+                          <nav class="pagination">
+                            <a class="pagination__item" href="http://strawberrypower.taaasty.ru/">Смотреть все записи</a>
+                          </nav>
+                          <!-- end Pagination -->
+
+                        </div>
+                      </div>
+                      <!-- end Content Area -->
+                    </div>
+                </div>
+            </div>
+            <div id='js-static-inviter-container'></div>
+        </div>
+        <!-- end Page -->
+
+        <!-- Confirm Registration -->
+        <div class="shellbox" style="visibility: visible; opacity: 1;">
+            <div class="shellbox__main">
+                <div class="shellbox__cell">
+                    <div class="form-popup form-popup--confirm">
+                        <div class="form-popup__body">
+                            <div class="form-popup__lead">Сейчас будет создан новый аккаунт @genue</div>
+                            <div class="form-popup__submit">
+                                <button class="button button--large button--green-light button--block button--rectangle">Да, зарегистрировать новый аккаунт</button>
+                            </div>
+                        </div>
+                        <div class="form-popup__footer">
+                            <span class="form-popup__footer-or">или</span>
+                            <a class="form-popup__footer-item" href="#" title="">Я уже был зарегистрирован раньше</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Confirm Registration -->
+
+        <script src="scripts/bundle.js"></script>
+    </body>
+</html>
