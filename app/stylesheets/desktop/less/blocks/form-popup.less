@@ -25,6 +25,14 @@
   .text-overflow();
 }
 
+.form-popup__lead {
+  width: 340px;
+  margin: 0 auto 1em;
+  font-size: 28px;
+  line-height: 130%;
+  font-family: @font-family-base-light;
+}
+
 .form-popup__body {
   background-color: @form-popup-body-bg;
 }
@@ -52,6 +60,12 @@
   &:hover {
     opacity: 1;
   }
+}
+
+.form-popup__footer-or {
+  margin: 30px 0 5px;
+  display: block;
+  opacity: .3;
 }
 
 .form-popup__select {
@@ -115,5 +129,19 @@
 
   &:first-child {
     border-top: none;
+  }
+}
+
+.form-popup--confirm {
+  .form-popup__body {
+    background: none;
+  }
+
+  .form-popup__footer {
+    position: static;
+  }
+
+  .form-popup__lead {
+    color: @white;
   }
 }

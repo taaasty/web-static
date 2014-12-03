@@ -5225,6 +5225,13 @@ a.write-message-button {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.form-popup__lead {
+  width: 340px;
+  margin: 0 auto 1em;
+  font-size: 28px;
+  line-height: 130%;
+  font-family: 'Proxima Nova Light', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
 .form-popup__body {
   background-color: #ffffff;
 }
@@ -5248,6 +5255,11 @@ a.write-message-button {
 }
 .form-popup__footer-item:hover {
   opacity: 1;
+}
+.form-popup__footer-or {
+  margin: 30px 0 5px;
+  display: block;
+  opacity: .3;
 }
 .form-popup__select {
   width: 100%;
@@ -5300,6 +5312,15 @@ a.write-message-button {
 }
 .form-popup__item:first-child {
   border-top: none;
+}
+.form-popup--confirm .form-popup__body {
+  background: none;
+}
+.form-popup--confirm .form-popup__footer {
+  position: static;
+}
+.form-popup--confirm .form-popup__lead {
+  color: #ffffff;
 }
 .form-radio {
   position: relative;
