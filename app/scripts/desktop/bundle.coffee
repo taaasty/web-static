@@ -124,6 +124,7 @@ require './react/components/auth/buttons/vk_auth_button'
 require './react/components/auth/buttons/facebook_auth_button'
 
 require './react/components/auth/email/email'
+require './react/components/auth/social_networks/confirm_registration'
 require './react/components/auth/recovery'
 
 # /*-----  End of Authorization resources  ------*/
@@ -151,6 +152,8 @@ require './react/components/toolbars/user/user'
 require './react/components/toolbars/feed/feed'
 require './react/components/toolbars/close/close'
 require './react/components/toolbars/toolbar_item'
+
+require './react/components/shellboxes/confirm_registration'
 
 require './react/components/voting'
 require './react/components/shellbox_layer'

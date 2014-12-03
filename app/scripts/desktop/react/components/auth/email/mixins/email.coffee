@@ -1,5 +1,3 @@
-EmailConfirmRegister = require '../confirm_register'
-
 INVALID_PASSWORD_MESSAGE = 'user_authenticator/invalid_password'
 INVALID_LOGIN_MESSAGE    = 'user_authenticator/user_not_found'
 
@@ -65,7 +63,7 @@ EmailMixin =
     if @isFormValid() then @login() else @shake()
 
   handleInvalidLogin: ({proposedSlug}) ->
-    ReactApp.shellbox.show EmailConfirmRegister, {
+    ReactApp.shellbox.show EmailConfirmRegistration, {
       email:        @state.formData.login
       password:     @state.formData.password
       proposedSlug: proposedSlug

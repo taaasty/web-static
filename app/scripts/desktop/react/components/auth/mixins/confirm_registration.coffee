@@ -1,6 +1,6 @@
 USER_EXISTS_MESSAGE = 'user_creator/user_exists'
 
-ConfirmRegisterMixin =
+ConfirmRegistrationMixin =
 
   register: ->
     return if @state.isProcess
@@ -37,12 +37,7 @@ ConfirmRegisterMixin =
       password: password
     }
 
-  handleApproveClick: (e) ->
-    e.preventDefault()
-    @register()
+  returnToAuth: ->
+    ReactApp.shellbox.show Auth
 
-  handleDisapproveClick: (e) ->
-    e.preventDefault()
-    @returnToEmail()
-
-module.exports = ConfirmRegisterMixin
+module.exports = ConfirmRegistrationMixin

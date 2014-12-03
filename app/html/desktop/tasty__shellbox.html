@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+        <title></title>
+
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+
+        <link rel="Shortcut Icon" type="image/x-icon" href="favicons/favicon.ico" />
+
+        <!-- Fonts -->
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <!-- end Fonts -->
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="stylesheets/main.css" />
+        <!-- end Styles -->
+    </head>
+    <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white not-logged browserbar-enabled" ng-app='AApp'>
+
+        <!-- Browserbar -->
+        <div class="browserbar">
+            <div class="browserbar__inner">Мы не поддерживаем ваш браузер, обновите его до <a href="#" title="последней версии">последней версии</a></div>
+        </div>
+        <!-- end Browserbar -->
+
+        <!-- Toolbar - Back -->
+        <a class="toolbar toolbar--back" href="#" style="display: none">
+            <div class="toolbar__toggle">
+                <i class="icon icon--arrow-left"></i>
+            </div>
+            <div class="toolbar__dropdown">
+                <div class="toolbar__dropdown-i">
+                    <span class="toolbar__text">Ко всем записям</span>
+                </div>
+            </div>
+        </a>
+        <!-- end Toolbar - Back -->
+
+        <!-- Toolbar - Logo -->
+        <div data-react-class="FeedToolbar" data-react-props='{"friendsUrl": "http://taaasty.ru/friends", "liveUrl": "http://taaasty.ru/live", "bestUrl": "http://taaasty.ru/best", "anonymousUrl": "http://taaasty.ru/anonymous"}'></div>
+        <!-- end Toolbar - Logo -->
+
+        <!-- Toolbar - Indicators -->
+        <div data-react-class="IndicatorsToolbar" data-react-props='
+        {
+            "user": {
+                "id": 232992,
+                "name": "sergeylaptev",
+                "slug": "sergeylaptev",
+                "title": "Тайтл",
+                "is_female": false,
+                "is_daylog": false,
+                "tlog_url":"http://taaasty.ru/@sergeylaptev",
+                "created_at":"2014-06-18T14:27:22.000+04:00",
+                "updated_at":"2014-08-25T09:51:20.000+04:00",
+                "total_entries_count":3,
+                "private_entries_count":0,
+                "public_entries_count":3,
+                "is_privacy":true,
+                "confirmation_email":"imperm3r.main@gmail.com",
+                "email":"imperm3r.main@gmail.com",
+                "is_confirmed":true,
+                "available_notifications":false,
+                "authentications": [{
+                    "id":5,
+                    "provider":"vkontakte",
+                    "uid":"17202992",
+                    "name":"Сергей Лаптев",
+                    "sex":null,
+                    "image":"https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg",
+                    "url":"http://vk.com/imperm3r"
+                }],
+                "api_key": {
+                    "access_token":"sergeylaptev_develop",
+                    "user_id":232992,
+                    "expires_at":"2015-01-04T18:07:07.000+04:00"
+                },
+                "design":{
+                    "feedColor":"white",
+                    "headerColor":"blackonwhite",
+                    "fontType":"sans",
+                    "coverAlign":"center",
+                    "feedOpacity":0.5,
+                    "background_url":"http://taaasty.ru/assets/backgrounds/bd/fd/1881243_2677-ultra-hd-wallpapers-4k-landscape-lake-3840x2160.jpg"
+                },
+                "userpic":{
+                    "original_url":"http://taaasty.ru/assets/userpic/e7/d3/232992_original.jpg",
+                    "large_url":"http://taaasty.ru/assets/userpic/e7/d3/232992_large.jpg",
+                    "thumb128_url":"http://taaasty.ru/assets/userpic/e7/d3/232992_thumb128.jpg",
+                    "thumb64_url":"http://taaasty.ru/assets/userpic/e7/d3/232992_thumb64.jpg",
+                    "thumbor_path":"userpic/e7/d3/232992_thumb64.jpg",
+                    "default_colors":{
+                        "background":"#b5c31e",
+                        "name":"#ffffff"
+                    }
+                }
+            }
+        }'></div>
+        <!-- end Toolbar - Indicators -->
+        <!-- Toolbar - Userbar -->
+        <div data-react-class="UserToolbar" data-react-props='
+        {
+            "user": {
+                "id": 232992,
+                "name": "sergeylaptev",
+                "slug": "sergeylaptev",
+                "title": "Тайтл",
+                "is_female": false,
+                "is_daylog": false,
+                "tlog_url":"http://taaasty.ru/@sergeylaptev",
+                "created_at":"2014-06-18T14:27:22.000+04:00",
+                "updated_at":"2014-08-25T09:51:20.000+04:00",
+                "total_entries_count":3,
+                "private_entries_count":0,
+                "public_entries_count":3,
+                "is_privacy":true,
+                "confirmation_email":"imperm3r.main@gmail.com",
+                "email":"imperm3r.main@gmail.com",
+                "is_confirmed":true,
+                "available_notifications":false,
+                "authentications": [{
+                    "id":5,
+                    "provider":"vkontakte",
+                    "uid":"17202992",
+                    "name":"Сергей Лаптев",
+                    "sex":null,
+                    "image":"https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg",
+                    "url":"http://vk.com/imperm3r"
+                }],
+                "api_key": {
+                    "access_token":"sergeylaptev_develop",
+                    "user_id":232992,
+                    "expires_at":"2015-01-04T18:07:07.000+04:00"
+                },
+                "design":{
+                    "feedColor":"white",
+                    "headerColor":"blackonwhite",
+                    "fontType":"sans",
+                    "coverAlign":"center",
+                    "feedOpacity":0.5,
+                    "background_url":"http://taaasty.ru/assets/backgrounds/bd/fd/1881243_2677-ultra-hd-wallpapers-4k-landscape-lake-3840x2160.jpg"
+                },
+                "userpic":{
+                    "original_url":"http://taaasty.ru/assets/userpic/e7/d3/232992_original.jpg",
+                    "large_url":"http://taaasty.ru/assets/userpic/e7/d3/232992_large.jpg",
+                    "thumb128_url":"http://taaasty.ru/assets/userpic/e7/d3/232992_thumb128.jpg",
+                    "thumb64_url":"http://taaasty.ru/assets/userpic/e7/d3/232992_thumb64.jpg",
+                    "thumbor_path":"userpic/e7/d3/232992_thumb64.jpg",
+                    "default_colors":{
+                        "background":"#b5c31e",
+                        "name":"#ffffff"
+                    }
+                }
+            },
+            "newEntryUrl":"http://taaasty.ru/@sergeylaptev/new",
+            "newAnonymousEntryUrl":"http://taaasty.ru/@sergeylaptev/anonymous/new",
+            "myTlogUrl":"http://taaasty.ru/@sergeylaptev",
+            "profileUrl":null,
+            "favoritesUrl":"http://taaasty.ru/@sergeylaptev/favorites",
+            "privateEntriesUrl":"http://taaasty.ru/@sergeylaptev/privates",
+            "logoutUrl":"http://taaasty.ru/logout"
+        }'></div>
+        <!-- end Toolbar - Userbar -->
+
+        <!-- Auth Button -->
+        <button class="auth-button js-auth-button" invite-button>войти или зарегистрироваться</button>
+        <!-- end Auth Button -->
+
+        <!-- Calendar -->
+        <div data-react-class="Calendar" data-react-props='{"tlogId":37623,"entry":{"id":19149974,"type":"text","comments_count":5,"created_at":"2013-06-29T21:16:06.000+04:00","updated_at":"2014-06-30T19:08:41.000+04:00","entry_url":"http://mefodei.taaasty.ru/19149974"}}'></div>
+        <!-- end Calendar -->
+
+        <!-- Social Share -->
+        <div class="social-share">
+            <button class="social-share-facebook-button" data-original-title="Расшарить&nbsp;в&nbsp;Фейсбуке" data-placement="right" tooltip>F</button>
+            <button class="social-share-vkontakte-button state--active" data-original-title="Расшарить&nbsp;Вконтакте" data-placement="right" tooltip>В</button>
+        </div>
+        <!-- end Social Share -->
+
+        <!-- Page -->
+        <div class="page js-preview-design">
+            <div class="page__inner">
+                <div class="page__paper">
+                    <!-- Page Cover -->
+                    <div class="page-cover js-cover" style="background-image:url(http://taaasty.ru/assets/backgrounds/45/33/1842083_37623_42ce40fdba0cfe3e0cc15f68.jpg);"></div>
+                    <!-- end Page Cover -->
+                    <!-- Page Header -->
+                    <header class="page-header">
+                        <!-- Hero -->
+                        <div data-react-class="HeroProfile" data-react-props='{"user":{"id":90590,"name":"da-bro","slug":"da-bro","title":"road to awe","is_female":true,"is_daylog":true,"tlog_url":"http://taaasty.ru/@da-bro","created_at":"2011-11-10T18:33:48.000+04:00","updated_at":"2014-09-07T10:50:32.000+04:00","total_entries_count":72,"private_entries_count":9,"public_entries_count":63,"is_privacy":false,"userpic":{"original_url":"http://taaasty.ru/assets/userpic/73/24/90590_original.jpg","large_url":"http://taaasty.ru/assets/userpic/73/24/90590_large.jpg","thumb128_url":"http://taaasty.ru/assets/userpic/73/24/90590_thumb128.jpg","thumb64_url":"http://taaasty.ru/assets/userpic/73/24/90590_thumb64.jpg","thumbor_path":"userpic/73/24/90590_original.jpg","symbol":"d","kind":"user","default_colors":{"background":"#44d068","name":"#ffffff"}},"features":{"search":false,"notification":false}},"stats":{"followers_count":8,"followings_count":3,"favorites_count":9,"entries_count":63,"days_count":1092,"comments_count":18,"tags_count":8},"relationship":{"id":23911663,"user_id":90590,"reader_id":232992,"position":1,"state":"friend","user":{"id":90590,"name":"da-bro","slug":"da-bro","title":"road to awe","is_female":true,"is_daylog":true,"tlog_url":"http://taaasty.ru/@da-bro","created_at":"2011-11-10T18:33:48.000+04:00","updated_at":"2014-09-07T10:50:32.000+04:00","total_entries_count":72,"private_entries_count":9,"public_entries_count":63,"is_privacy":false,"userpic":{"original_url":"http://taaasty.ru/assets/userpic/73/24/90590_original.jpg","large_url":"http://taaasty.ru/assets/userpic/73/24/90590_large.jpg","thumb128_url":"http://taaasty.ru/assets/userpic/73/24/90590_thumb128.jpg","thumb64_url":"http://taaasty.ru/assets/userpic/73/24/90590_thumb64.jpg","thumbor_path":"userpic/73/24/90590_original.jpg","symbol":"d","kind":"user","default_colors":{"background":"#44d068","name":"#ffffff"}},"features":{"search":false,"notification":false}}}}'></div>
+                        <!-- end Hero -->
+                    </header>
+                    <!-- end Page Header -->
+                    <!-- Page Body -->
+                    <div class="page-body">
+                        <!-- Content Area -->
+                        <div class="content-area">
+                            <div class="content-area__bg"></div>
+                            <div class="content-area__inner">
+                                <!-- Alert -->
+                                <div class="alert js-alert">
+                                    <div class="alert__close js-alert-close">
+                                        <i class="icon icon--cross"></i>
+                                    </div>
+                                    <div class="alert__text js-alert-text">Здесь отображены ваши скрытые записи. Эта страница доступна только вам.</div>
+                                </div>
+                                <!-- end Alert -->
+                                <!-- Posts -->
+                                <section class="posts">
+                                    <article class="post post--text" data-id="19188650" data-time="2014-07-16T21:24:02+04:00" data-type="text" id="entry-19003612">
+                                        <div class="post__content">
+                                            <span class="privacy-badge"><i class="icon icon--lock"></i></span>
+                                            <p><b><span>Features:</span><br></b></p><p></p><ul><li><span>emoji</span><br></li><li><span>при авторизации через вконтакт вытаскивается имя и аватарка (если еще не установлена)</span><br></li><li><span>в текстовой или анонимной статье обязательно должен быть или заголовок или текст</span><br></li><li><span>переключалка видов фидов</span><br></li><li><span>API: количество кадров в картинка (frames_count)</span><br></li><li><span>API: отмена подтверждения</span><br></li><li><span>front: подробный интерфейс подтверждения емайла</span><br></li><li><span>Рассылка: возможность отписаться от рассылки (ссылка в футере письма)</span><br></li><li><span>Рассылка: уведомление о новом комменте, об упоминании в комментарии</span><br></li><li><span>Рассылка: при регистрации, подтверждение смены емайла, восстановление пароля</span><br></li><li><span>возможность восстановить пароль (контроллер и форма)</span><br></li></ul><p></p><p><b>Improvements</b></p><p></p><ul><li><span>распределение поступающих ошибок на пользовательские (показываются на экране и не журналируются) и системные (попадают в honeybadger)</span><br></li><li><span>коллаж кешируется</span><br></li><li><span>динамические и статические технические старинцы. Номер ошибки на странице (автоматически генерируются при деплое)</span><br></li><li><span>ежесуточной фоновое обновление счетчиков комментариев и статей у пользователей</span><br></li><li><span>емайлы отправляются в фоновой очереди</span><br></li><li><span>картинки аттачатся в емайлы (лучше прохождение антиспамов)</span><br></li><li><span>решена пробелма с редиректами url-ов картинок</span><br></li><li><span>улучшено определение проблем при эмбединге (FetchingError)</span><br></li><li><span>улучена подстановка fallback картинки для нерабочих эмбедов</span><br></li><li><span>улучен alert на фронте</span><br></li><li><span>посты и картинки с ошибками помечаются и повторно не обрабатываются</span><br></li></ul><p></p><p><b>Fixes:</b></p><p></p><ul><li><span>обработка ссылок в постах</span><br></li><li><span>дефолтный фон зависил от имени дневника</span><br></li><li><span>проблема с кодировкой в постах с урлами (из-за кривого обрезания урлов)</span><br></li><li><span>исправил валидацию пользователей</span><br></li><li><span>исправлены редкие ошибки при авторизации через oauth (vkontakte)</span><br></li><li><span>жаловаться на контент могут только зарегистрированные и подтвержденные</span><br></li><li><span>можно публиковать тексты с расширенным utf8 (emoji)</span><br></li><li><span>огонек голосования не показывался в статьях без заголовка</span><br></li></ul><p></p><p><b>Other:</b></p><p></p><ul><li><span>Журнал отправленных писем</span><br></li><li><span>Перед постингов в базу подчищаем кодировку текста</span><br></li><li><span>Отдельный журнал для ошибок в JavaScript-е</span><br></li></ul><p></p>
+                                            <div data-react-class="EntryMetabar" data-react-props='
+                                            {
+                                                "entryId": 19219138,
+                                                "author": {
+                                                    "id": 232992,
+                                                    "name": "sergeylaptev",
+                                                    "slug": "sergeylaptev",
+                                                    "title": "Мой прекрасный тайтл",
+                                                    "is_female": false,
+                                                    "is_daylog": false,
+                                                    "tlog_url": "http://taaasty.ru/@sergeylaptev",
+                                                    "created_at": "2014-06-18T14:27:22.000+04:00",
+                                                    "updated_at": "2014-08-11T21:20:43.000+04:00",
+                                                    "total_entries_count": 1,
+                                                    "private_entries_count": 0,
+                                                    "public_entries_count": 1,
+                                                    "is_privacy": true,
+                                                    "email": "imperm3r.main@gmail.com",
+                                                    "is_confirmed": true,
+                                                    "available_notifications":false,
+                                                    "userpic": {
+                                                        "original_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_original.jpg",
+                                                        "large_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_large.jpg",
+                                                        "thumb128_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_thumb128.jpg",
+                                                        "thumb64_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_thumb64.jpg",
+                                                        "thumbor_path": "userpic/ae/d5/232992_thumb64.jpg",
+                                                        "default_colors": {
+                                                            "background": "#b5c31e",
+                                                            "name": "#ffffff"
+                                                        }
+                                                    }
+                                                },
+                                                "entryUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta",
+                                                "editUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta/edit",
+                                                "successDeleteUrl": "http://taaasty.ru/@lazy-cat",
+                                                "totalCommentsCount": 0,
+                                                "isLogged": true,
+                                                "isEntryPage": false,
+                                                "isFavorited": true,
+                                                "isWatching": true,
+                                                "canEdit": true,
+                                                "canFavorite": true,
+                                                "canWatch": true,
+                                                "canReport": true,
+                                                "canDelete": true,
+                                                "createdAt": "2014-08-11T21:01:56.000+04:00",
+                                                "entryCommentsUrl": "http://taaasty.ru/@sergeylaptev/19219138-hello-world#comments",
+                                                "shouldRemoveFavoriteNode": false
+                                            }'></div>
+                                        </div>
+                                        <div data-react-class="EntryCommentBox" data-react-props='{"entryId":19396465,"entryUrl":"http://taaasty.ru/anonymous/19396465","user":{"id":4409,"tlog_url":"http://taaasty.ru/anonymous/19396465","name":"1","slug":"1","userpic":{"symbol":"1","kind":"anonymous","default_colors":{"background":"#f37420","name":"#ffffff"}}},"totalCommentsCount":6,"isEntryPage":true}'></div>
+                                    </article>
+
+                                    <article class="post post--text" data-id="19188650" data-time="2014-07-16T21:24:02+04:00" data-type="text" id="entry-19003612">
+                                        <div class="post__content">
+                                            <span class="privacy-badge"><i class="icon icon--lock"></i></span>
+                                            <p class="null" id="null">2222Моё настроение скачет как сумасшедшее в последние дни. Временами мне охуеть как нравится всё, что происходит вокруг, но тут же может накатить непонятная апатия и грусть.
+                                            <br>Еще 20 минут назад мне хотелось на стенку лезть от обиды и скуки, а сейчас: на часах 2:30, за окном метель, сугробы, -3 градуса, а я собираюсь в магазин за печеньками. Даже не знаю, норма это или нет. </p>
+                                            <div data-react-class="EntryMetabar" data-react-props='
+                                            {
+                                                "entryId": 19242996,
+                                                "entryUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta",
+                                                "editUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta/edit",
+                                                "successDeleteUrl": "http://taaasty.ru/@lazy-cat",
+                                                "totalCommentsCount": 0,
+                                                "isLogged": true,
+                                                "isEntryPage": false,
+                                                "isFavorited": true,
+                                                "isWatching": true,
+                                                "canEdit": true,
+                                                "canFavorite": true,
+                                                "canWatch": true,
+                                                "canReport": true,
+                                                "canDelete": true,
+                                                "createdAt": "2014-08-11T21:01:56.000+04:00",
+                                                "entryCommentsUrl": "http://taaasty.ru/@sergeylaptev/19219138-hello-world#comments",
+                                                "shouldRemoveFavoriteNode": false
+                                            }'></div>
+                                        </div>
+                                        <div data-react-class="EntryCommentBox" data-react-props='
+                                        {
+                                            "entryId": 19242996,
+                                            "entryUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta",
+                                            "isEntryPage": false,
+                                            "totalCommentsCount": 10,
+                                            "user": {
+                                                "id": 232992,
+                                                "name": "sergeylaptev",
+                                                "slug": "sergeylaptev",
+                                                "title": "Мой прекрасный тайтл",
+                                                "is_female": false,
+                                                "is_daylog": false,
+                                                "tlog_url": "http://taaasty.ru/@sergeylaptev",
+                                                "created_at": "2014-06-18T14:27:22.000+04:00",
+                                                "updated_at": "2014-08-11T21:20:43.000+04:00",
+                                                "total_entries_count": 1,
+                                                "private_entries_count": 0,
+                                                "public_entries_count": 1,
+                                                "is_privacy": true,
+                                                "email": "imperm3r.main@gmail.com",
+                                                "is_confirmed": true,
+                                                "available_notifications":false,
+                                                "userpic": {
+                                                    "original_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_original.jpg",
+                                                    "large_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_large.jpg",
+                                                    "thumb128_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_thumb128.jpg",
+                                                    "thumb64_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_thumb64.jpg",
+                                                    "thumbor_path": "userpic/ae/d5/232992_thumb64.jpg",
+                                                    "default_colors": {
+                                                        "background": "#b5c31e",
+                                                        "name": "#ffffff"
+                                                    }
+                                                }
+                                            }
+                                        }'></div>
+                                    </article>
+
+                                    <article class="post post--text js-post" data-id="19179371" data-time="2014-07-12T21:27:06+04:00">
+                                        <div class="post__content">
+                                            <span data-react-class="Voting" data-react-props='{"entryId":19342160,"isVoted":false,"votes":19,"rating":19,"isVoteable":false}'></span>
+                                            <p>
+                                                Я думала, наша проблема в расстоянии. Наивная дура.
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments state--visible">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="2 комментария">2 комментария</a>
+                                                            <!--<span class="meta-item__dropdown meta-item__dropdown-/-subscribe">
+                                                                <a class="meta-item__dropdown-item js-post-subscribe" href="#" title="Отписаться от комментариев">Отписаться от комментариев</a>
+                                                            </span>-->
+                                                        </span>
+                                                        <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--tags">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link" href="#" title="#новости">#новости</a><span class="meta-item__common">,</span> <a class="meta-item__common meta-item__link" href="#" title="#туман">#туман</a>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions" data-react-class="EntryMetabarDropdownMenu" data-react-props='{"entryId": 19188650, "entryUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta", "editUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta/edit", "successDeleteUrl": "http://taaasty.ru/@lazy-cat", "isFavorited": false, "isWatching": true, "canEdit": true, "canFavorite": true, "canWatch": true, "canReport": true, "canDelete": true}'></span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <section class="comments js-comments">
+                                        <div style="display: none;" class="comments__more js-comments-more">
+                                            <a class="comments__more-link js-comments-more-link" title="Загрузить все 0 комментариев" href="">Загрузить все 0 комментариев</a>
+                                        </div>
+                                        <div class="comments__list js-comments-list">
+                                            <article class="comment">
+                                                <div class="comment__table">
+                                                    <div class="comment__table-cell">
+                                                        <a class="comment__user" href="http://hmeli-synele.mmm-tasty.ru" title="hmeli-synele">
+                                                            <span class="comment__avatar">
+                                                                <span class="avatar avatar--seventh">
+                                                                    <span class="avatar__text">H</span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="comment__username comment__username--bold">hmeli-synele</span>
+                                                        </a> Так выпьем же за это!&nbsp;
+                                                        <span class="comment__meta">
+                                                            <span class="comment__reply js-comment-reply" data-user="hmeli-synele">Ответить</span>
+                                                            <span class="comment__dot">·</span>
+                                                            <a class="comment__date-link" href="#comment-11528585" title="">
+                                                                <time class="comment__date js-comment-date" datetime="2013-05-16T22:40:03">2 месяца назад</time>
+                                                            </a>
+                                                            <span class="comment__dot">·</span>
+                                                            <span class="comment__actions">
+                                                                <i class="icon icon--dots"></i>
+                                                                <span class="comment__dropdown">
+                                                                    <a class="comment__dropdown-item js-comment-link" href="#" title="Ссылка на комментарий"><i class="icon icon--hyperlink"></i>Ссылка на комментарий</a>
+                                                                    <a class="comment__dropdown-item js-comment-complain" href="#" title="Пожаловаться"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                    <a class="comment__dropdown-item js-comment-remove" href="#" title="Удалить комментарий"><i class="icon icon--basket"></i>Удалить комментарий</a>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                            <article class="comment">
+                                                <div class="comment__table">
+                                                    <div class="comment__table-cell">
+                                                        <a class="comment__user" title="GHOST-writer" href="http://GHOST-writer.mmm-tasty.ru">
+                                                            <span class="comment__avatar">
+                                                                <span class="avatar avatar--first">
+                                                                    <span class="avatar__text">G</span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="comment__username comment__username--bold">GHOST-writer</span>
+                                                        </a> hmeli-synele: &nbsp;
+                                                        <span class="comment__meta">
+                                                            <span class="comment__reply js-comment-reply" data-user="GHOST-writer">Ответить</span>
+                                                            <span class="comment__dot">·</span>
+                                                            <a class="comment__date-link" href="#comment-11528650" title="">
+                                                                <time class="comment__date js-comment-date" datetime="2013-05-16T22:40:03">2 месяца назад</time>
+                                                            </a>
+                                                            <span class="comment__dot">·</span>
+                                                            <span class="comment__actions">
+                                                                <i class="icon icon--dots"></i>
+                                                                <span class="comment__dropdown">
+                                                                    <a class="comment__dropdown-item js-comment-link" href="#" title="Ссылка на комментарий"><i class="icon icon--hyperlink"></i>Ссылка на комментарий</a>
+                                                                    <a class="comment__dropdown-item js-comment-complain" href="#" title="Пожаловаться"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                    <a class="comment__dropdown-item js-comment-remove" href="#" title="Удалить комментарий"><i class="icon icon--basket"></i>Удалить комментарий</a>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </div>
+                                        <div class="comment-form">
+                                            <div class="comment-form__table">
+                                                <div class="comment-form__table-cell">
+                                                    <form action="?">
+                                                        <span class="comment-form__avatar">
+                                                            <span class="avatar avatar--eighth">
+                                                                <span class="avatar__text">M</span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="comment-form__field js-toggle-value">
+                                                            <i class="comment-form__field-bg"></i>
+                                                            <label class="comment-form__field-label js-toggle-value-label" for="add-comment-10" style="display: block;">Напишите комментарий</label>
+                                                            <textarea class="comment-form__field-textarea js-comment-textarea js-toggle-value-input js-autoresize js-sew" id="add-comment-10" style="overflow: hidden; word-wrap: break-word; resize: none; height: 20px;"></textarea>
+                                                        </span>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    </article>
+                                    <article class="post post--video js-post" data-id="19175206" data-time="2014-07-10T22:07:50+04:00">
+                                        <div class="post__content">
+                                            <figure class="video">
+                                                <div class="video__cover" style="background-image: url(images/images/image_12.jpg)">
+                                                    <div class="video__overlay"></div>
+                                                </div>
+                                                <div class="video__embed"></div>
+                                            </figure>
+                                            <span class="voting js-vote" title="Голосовать">456</span>
+                                            <p>Видео
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/2/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--tags">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link" href="#" title="#новости">#новости</a><span class="meta-item__common">,</span> <a class="meta-item__common meta-item__link" href="#" title="#туман">#туман</a>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="meta-item__common icon icon--dots"></i>
+                                                            <span class="meta-item__dropdown">
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--image js-post" data-id="19122313" data-time="2014-06-18T01:21:54+04:00">
+                                        <div class="post__content">
+                                            <figure class="image">
+                                                <img src="images/images/image_10.jpg" alt="Как мы ездили на дачу" />
+                                            </figure>
+                                            <span class="privacy-badge"><i class="icon icon--lock"></i></span>
+                                            <p>Как мы ездили на дачу
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/2/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="meta-item__common icon icon--dots"></i>
+                                                            <span class="meta-item__dropdown">
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--text js-post" data-id="19066457" data-time="2014-05-28T17:54:47+04:00">
+                                        <div class="post__content">
+                                            <span class="voting js-vote voted" title="Вы проголосовали">457</span>
+                                            <p>
+                                                Бывают такие моменты, когда хочется, чтоб кто-то был рядом. Но никого нет.
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments state--visible">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="54 комментария">54 комментария</a>
+                                                        </span>
+                                                        <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="meta-item__common icon icon--dots"></i>
+                                                            <span class="meta-item__dropdown">
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--text js-post" data-id="19063698" data-time="2014-05-27T18:58:48+04:00">
+                                        <div class="post__content">
+                                            <span class="voting js-vote voted" title="Вы проголосовали">457</span>
+                                            <p>
+                                                Бывают
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments state--visible">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="54 комментария">54 комментария</a>
+                                                        </span>
+                                                        <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="meta-item__common icon icon--dots"></i>
+                                                            <span class="meta-item__dropdown">
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--text js-post" data-id="19062111" data-time="2014-05-27T00:38:25+04:00">
+                                        <span class="voting js-vote voted" title="Вы проголосовали">45</span>
+                                        <div class="post__content">
+                                            <p>
+                                                Захожу на кухню. Пахнет чаем с клубникой и мятой. Достаю из холодильника шоколад. На полке наш с тобой недопитый мартини. В раковине невымытая посуда. Повсюду следы твоей готовки. Воспоминания. Одежда на полу. Пройдет время, и станет проще. Только сейчас ничего не хочется. Может, только дождя. Сильного.
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="meta-item__common icon icon--dots"></i>
+                                                            <span class="meta-item__dropdown">
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--quote js-post" data-id="19057338" data-time="2014-05-25T15:19:50+04:00">
+                                        <div class="post__content">
+                                            <span class="voting js-vote" title="Вы проголосовали">6</span>
+                                            <blockquote class="blockquote">
+                                                <span class="laquo">&laquo;</span>Если вы делаете что-то прекрасное и возвышенное, а этого никто не замечает не расстраивайтесь: восход солнца это вообще самое прекрасное зрелище на свете, но большинство людей в это время ещё спит<span class="raquo">&raquo;</span>
+                                                <span class="blockquote__caption">&mdash;&nbsp;Петр Алексеев</span>
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="meta-item__common icon icon--dots"></i>
+                                                            <span class="meta-item__dropdown">
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </blockquote>
+                                        </div>
+                                    </article>
+                                    <article class="post post--text js-post" data-id="18989180" data-time="2014-05-05T18:11:14+04:00">
+                                        <header class="post__header">
+                                            <h1 class="post__title"><a class="post__title__link" href="#" title="Маша и Илюша. Шесть дней">Маша и Илюша. Шесть дней</a></h1>
+                                        </header>
+                                        <div class="post__content">
+                                            <span class="voting js-vote" title="Голосовать">6</span>
+                                            <p>Так странно исказилось мое восприятие времени в эти дни. Вроде столько всего происходило, но все это время слилось для меня воедино. Незаметно было, когда начинался день, когда наступала ночь.</p>
+                                            <p>Я поняла много всего. О себе. О нем. Чему-то научилась даже. Открыла что-то новое в себе. Поборола в какой-то мере стеснительность и неуверенность. Почувствовала себя красивой без косметики и прически. Некоторые вещи сделала впервые.</p>
+                                            <p>Наши завтраки, Несквик, походы в магазин, готовка, забавные подколы, фильмы, душ, ванная, пена, разговоры, раскрытые тайны, рисунки на теле маркером... Несмотря на небольшие ссоры, мою раздражительность в начале, мои слезы в день его отлета, это были чудесные шесть дней.</p>
+                                            <p>Теперь каждое мое утро снова будет начинаться без него, вторая половина кровати так и будет пустой, обнимать по ночам я буду край одеяла...</p>
+                                            <p>Никогда не думала, что отношения на расстоянии - это так тяжело.</p>
+                                            <p>
+                                                Что будет дальше, покажет время.
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="meta-item__common icon icon--dots"></i>
+                                                            <span class="meta-item__dropdown">
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                    <article class="post post--image js-post" data-id="19003612" data-time="2014-04-26T00:30:39+04:00">
+                                        <div class="post__content">
+                                          <div data-react-class="ImagesCollageUrl" data-react-props='{"imageUrls":["images/images/image_18.jpg", "images/images/image_19.jpg", "images/images/image_20.jpg", "images/images/image_21.jpg"]}'></div>
+                                            <!--<div class="collage js-collage">-->
+                                                <!--<a class="collage__item js-collage-item js-fancybox" href="images/images/image_18.jpg" data-fancybox-group="1" target="_blank">-->
+                                                    <!--<img class="collage__item-img js-collage-item-img" src="images/images/image_18.jpg" alt="" />-->
+                                                <!--</a><a class="collage__item js-collage-item js-fancybox" href="images/images/image_19.jpg" data-fancybox-group="1" target="_blank">-->
+                                                    <!--<img class="collage__item-img js-collage-item-img" src="images/images/image_19.jpg" alt="" />-->
+                                                <!--</a><a class="collage__item js-collage-item js-fancybox" href="images/images/image_20.jpg" data-fancybox-group="1" target="_blank">-->
+                                                    <!--<img class="collage__item-img js-collage-item-img" src="images/images/image_20.jpg" alt="" />-->
+                                                <!--</a><a class="collage__item js-collage-item js-fancybox" href="images/images/image_21.jpg" data-fancybox-group="1" target="_blank">-->
+                                                    <!--<img class="collage__item-img js-collage-item-img" src="images/images/image_21.jpg" alt="" />-->
+                                                <!--</a>-->
+                                            <!--</div>-->
+                                            <span class="voting js-vote" title="Голосовать">456</span>
+                                            <p>
+                                                Люблю находить странные места возле работы:)
+                                                <span class="meta-bar">
+                                                    <span class="meta-item meta-item--comments">
+                                                        <span class="meta-item__content">
+                                                            <a class="meta-item__common meta-item__link js-comments-toggle" href="entry/1/" title="Комментировать">Комментировать</a>
+                                                        </span>
+                                                        <span class="meta-item__common spinner spinner--8x8 state--hidden js-comments-spinner"><span class="spinner__icon"></span></span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--date">
+                                                        <span class="meta-item__content">
+                                                            <time class="meta-item__common" datetime="2013-05-16T22:40:03">4 дня назад</time>
+                                                        </span>
+                                                    </span>
+                                                    <span class="meta-item meta-item--actions">
+                                                        <span class="meta-item__content">
+                                                            <i class="meta-item__common icon icon--dots"></i>
+                                                            <span class="meta-item__dropdown">
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--pencil"></i>Редактировать</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--star"></i>Добавить в избранное</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a>
+                                                                <a class="meta-item__dropdown-item" href="#"><i class="icon icon--basket"></i>Удалить</a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </article>
+                                </section>
+                                <!-- end Posts -->
+                                <!-- Pagination -->
+                                <div class="pagination">
+                                    <a class="pagination__item pagination__item--prev" href="#" title="Ранее">Ранее</a>
+                                    <a class="pagination__item pagination__item--next" href="#" title="Сейчас">Сейчас</a>
+                                </div>
+                                <!-- end Pagination -->
+                            </div>
+                        </div>
+                        <!-- end Content Area -->
+                    </div>
+                    <!-- end Page Body -->
+                </div>
+            </div>
+            <div id='js-static-inviter-container'></div>
+        </div>
+        <!-- end Page -->
+
+        <div id="js-shellbox-container"></div>
+        <div popup-container></div>
+        <div shellbox-container data-react-class="ConfirmRegistrationShellbox" data-react-props='{
+            "type": "email",
+            "proposedSlug": "qwertyuio"
+        }'></div>
+
+        <script src="scripts/vendor.js"></script>
+        <script src="scripts/client.js"></script>
+    </body>
+</html>

@@ -1,12 +1,12 @@
 ###* @jsx React.DOM ###
 
-ConfirmRegisterMixin = require './mixins/confirm_register'
+ConfirmRegistrationMixin = require '../mixins/confirm_registration'
 
 #TODO: i18n
 MESSAGE = 'Сейчас будет создан новый аккаунт @#{slug}'
 
-EmailConfirmRegister = React.createClass
-  mixins: [ConfirmRegisterMixin, RequesterMixin, ComponentManipulationsMixin]
+EmailConfirmRegistration = React.createClass
+  mixins: [ConfirmRegistrationMixin, RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:
     email:        React.PropTypes.string.isRequired
@@ -37,4 +37,12 @@ EmailConfirmRegister = React.createClass
   getMessage: ->
     MESSAGE.replace /#{.+}/, @props.proposedSlug
 
-module.exports = EmailConfirmRegister
+  handleApproveClick: (e) ->
+    e.preventDefault()
+    @register()
+
+  handleDisapproveClick: (e) ->
+    e.preventDefault()
+    @returnToEmail()
+
+module.exports = EmailConfirmRegistration
