@@ -1,0 +1,37 @@
+.form-field {
+  position: relative;
+}
+
+.form-field__input {
+  width: 100%;
+  position: relative;
+  font-size: @form-field-font-size;
+  line-height: @form-field-line-height;
+  font-family: @font-family-base;
+  vertical-align: top;
+  color: inherit;
+  box-sizing: border-box;
+  box-shadow: none;
+  -webkit-appearance: none;
+}
+
+.form-field__textarea {
+  &:extend(.form-field__input);
+}
+
+// Types
+.form-field--default {
+  .form-field__input,
+  .form-field__textarea {
+    .placeholder(@grey);
+    padding: 10px;
+    border: 1px solid lighten(@grey, 20%);
+    background: none;
+    outline: none !important;
+    border-radius: 5px;
+
+    &:focus {
+      border-color: @grey;
+    }
+  }
+}

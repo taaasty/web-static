@@ -1,0 +1,75 @@
+.switcher {
+  width: @switcher-width;
+  height: @switcher-height;
+  position: relative;
+  display: inline-block;
+  background-color: @switcher-bg;
+  font-size: 13px;
+  line-height: (@switcher-height + 1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  border-radius: @switcher-border-radius;
+  user-select: none;
+}
+
+.switcher__input {
+  position: absolute;
+  opacity: 0;
+
+  &:checked {
+    &  + .switcher__label {
+      .switcher__btn--on {
+        visibility: visible;
+        opacity: 1;
+        transition: visibility 0s ease, opacity .3s ease;
+      }
+
+      .switcher__btn--off {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s ease .3s, opacity .3s ease;
+      }
+    }
+  }
+}
+
+.switcher__label {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+.switcher__btn {
+  width: 50%;
+  height: 100%;
+  display: inline-block;
+  cursor: pointer;
+
+  &:first-child {
+    border-radius: @switcher-border-radius 0 0 @switcher-border-radius;
+  }
+
+  &:last-child {
+    border-radius: 0 @switcher-border-radius @switcher-border-radius 0;
+  }
+}
+
+.switcher__btn--on {
+  background-color: @switcher-btn-active-bg;
+  color: @switcher-btn-active-color;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s ease .3s, opacity .3s ease;
+}
+
+.switcher__btn--off {
+  background-color: @switcher-btn-inactive-bg;
+  color: @switcher-btn-inactive-color;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s ease, opacity .3s ease;
+}

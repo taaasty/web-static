@@ -24,14 +24,12 @@
   }
 }
 
-.tlog-page {}
-
 .post-editor-page {
-  .page {
+  .layout {
     transform: none;
   }
 
-  .page-body {
+  .layout__body {
     padding: 0;
   }
 
@@ -49,6 +47,13 @@
         margin-top: 0;
       }
     }
+  }
+}
+
+.error-page {
+  .layout,
+  .layout__body {
+    height: 100%;
   }
 }
 
@@ -93,9 +98,12 @@ a {
 
 // Светлая тема тлога
 .design-feedcolor-white {
-  .page-body {
-    color: @black;
+  .layout {
     background-color: @white;
+  }
+
+  .layout__body {
+    color: @black;
 
     .link-design {
       &:extend(.link-design-feedcolor-white all);
@@ -109,9 +117,12 @@ a {
 
 // Темная тема тлога
 .design-feedcolor-black {
-  .page-body {
-    color: @white;
+  .layout {
     background-color: #1e1e1e;
+  }
+
+  .layout__body {
+    color: @white;
 
     .link-design {
       &:extend(.link-design-feedcolor-black all);
@@ -202,7 +213,7 @@ a {
 .feed-toolbar-open {
   overflow: hidden;
 
-  .page {
+  .layout {
     transform: translateX(@toolbar-popup-width);
   }
 
@@ -227,7 +238,7 @@ a {
 .user-toolbar-open {
   overflow: hidden;
 
-  .page {
+  .layout {
     transform: translateX(-@toolbar-popup-width);
   }
 

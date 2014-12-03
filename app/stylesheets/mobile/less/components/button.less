@@ -354,3 +354,9 @@ button {
 .outline-auth-button {
   &:extend(.reg-auth-button all);
 }
+
+.manage-subscriptions-button {
+  &:extend(.button all, .button--extra-small all, .button--block all);
+  .button-common-style(@manage-subscriptions-button-bg);
+  color: @white !important;
+}
