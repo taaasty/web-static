@@ -12,6 +12,7 @@ window.ApiRoutes =
 
   # Users
   signup_url:          -> TastySettings.api_host + 'v1/users'
+  confirm_signup_url:  -> TastySettings.api_host + 'v1/users/confirm' #FIXME: Mock url, needed to change this
   update_profile_url:  -> TastySettings.api_host + 'v1/users' # method put
   recovery_url:        -> TastySettings.api_host + 'v1/users/password/recovery'
   request_confirm_url: -> TastySettings.api_host + 'v1/users/confirmation'
