@@ -16,7 +16,7 @@
     "jquery.scrollto": "git@github.com:flesler/jquery.scrollTo.git",
     "jquery.mousewheel": "git@github.com:jquery/jquery-mousewheel.git",
     "jquery-ui": "~1.11.2",
-    "medium-editor": "1.9",
+    "medium-editor": "1.9.13",
     "momentjs": "~2.8.3",
     "mousetrap": "~1.4.6",
     "nanobar": "~0.2.0",
