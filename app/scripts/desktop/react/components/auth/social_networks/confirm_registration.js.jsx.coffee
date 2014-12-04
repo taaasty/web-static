@@ -9,12 +9,13 @@ SocialNetworksConfirmRegistration = React.createClass
   mixins: [ConfirmRegistrationMixin, ReactShakeMixin]
 
   propTypes:
+    postUrl:      React.PropTypes.string.isRequired
     proposedSlug: React.PropTypes.string.isRequired
 
   render: ->
     return `<div className="form-popup form-popup--confirm">
               <div className="form-popup__body">
-                <form action={ ApiRoutes.confirm_signup_url() }
+                <form action={ this.props.postUrl }
                       method="post">
                   <div className="form-popup__lead">{ this.getMessage() }</div>
                   <div className="form-popup__submit">

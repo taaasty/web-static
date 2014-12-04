@@ -5580,12 +5580,13 @@ MESSAGE = 'Сейчас будет создан новый аккаунт @#{slu
 SocialNetworksConfirmRegistration = React.createClass({displayName: 'SocialNetworksConfirmRegistration',
   mixins: [ConfirmRegistrationMixin, ReactShakeMixin],
   propTypes: {
+    postUrl: React.PropTypes.string.isRequired,
     proposedSlug: React.PropTypes.string.isRequired
   },
   render: function() {
     return React.DOM.div({className: "form-popup form-popup--confirm"}, 
               React.DOM.div({className: "form-popup__body"}, 
-                React.DOM.form({action:  ApiRoutes.confirm_signup_url(), 
+                React.DOM.form({action:  this.props.postUrl, 
                       method: "post"}, 
                   React.DOM.div({className: "form-popup__lead"},  this.getMessage() ), 
                   React.DOM.div({className: "form-popup__submit"}, 
@@ -15568,6 +15569,7 @@ SocialNetworksConfirmRegistration = require('../auth/social_networks/confirm_reg
 window.ConfirmRegistrationShellbox = React.createClass({displayName: 'ConfirmRegistrationShellbox',
   propTypes: {
     type: React.PropTypes.oneOf(['email', 'socialNetwork']).isRequired,
+    postUrl: React.PropTypes.string.isRequired,
     email: React.PropTypes.string,
     password: React.PropTypes.string,
     proposedSlug: React.PropTypes.string.isRequired
@@ -15592,6 +15594,7 @@ window.ConfirmRegistrationShellbox = React.createClass({displayName: 'ConfirmReg
     return ShellBox(null, 
               ConfirmRegistration({
                   email:  this.props.email, 
+                  postUrl:  this.props.postUrl, 
                   password:  this.props.password, 
                   proposedSlug:  this.props.proposedSlug})
             );
@@ -20767,9 +20770,6 @@ window.ApiRoutes = {
   },
   signup_url: function() {
     return TastySettings.api_host + 'v1/users';
-  },
-  confirm_signup_url: function() {
-    return TastySettings.api_host + 'v1/users/confirm';
   },
   update_profile_url: function() {
     return TastySettings.api_host + 'v1/users';

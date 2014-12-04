@@ -7,6 +7,7 @@ window.ConfirmRegistrationShellbox = React.createClass
 
   propTypes:
     type:         React.PropTypes.oneOf(['email', 'socialNetwork']).isRequired
+    postUrl:      React.PropTypes.string.isRequired
     email:        React.PropTypes.string
     password:     React.PropTypes.string
     proposedSlug: React.PropTypes.string.isRequired
@@ -23,6 +24,7 @@ window.ConfirmRegistrationShellbox = React.createClass
     return `<ShellBox>
               <ConfirmRegistration
                   email={ this.props.email }
+                  postUrl={ this.props.postUrl }
                   password={ this.props.password }
                   proposedSlug={ this.props.proposedSlug } />
             </ShellBox>`
