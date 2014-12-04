@@ -4487,7 +4487,7 @@ require('./react/application');
 
 
 
-},{"./libs":9,"./locales/locales":10,"./react/application":12,"./react/components/auth/auth":13,"./react/components/auth/authorization/authorization":14,"./react/components/auth/authorization/facebook":15,"./react/components/auth/authorization/vk":16,"./react/components/auth/buttons/facebook_auth_button":17,"./react/components/auth/buttons/vk_auth_button":18,"./react/components/auth/email/email":22,"./react/components/auth/recovery":27,"./react/components/avatars/avatar":29,"./react/components/avatars/user_avatar":30,"./react/components/buttons/load_more":31,"./react/components/calendar/calendar":32,"./react/components/calendar/calendar_header":33,"./react/components/calendar/calendar_marker":34,"./react/components/calendar/calendar_period":35,"./react/components/calendar/calendar_timeline":36,"./react/components/common/adaptive_input":37,"./react/components/design_settings_popup/controls":38,"./react/components/design_settings_popup/controls_items/_progressbar":39,"./react/components/design_settings_popup/controls_items/_radiobutton":40,"./react/components/design_settings_popup/controls_items/align_item":41,"./react/components/design_settings_popup/controls_items/background_item":42,"./react/components/design_settings_popup/controls_items/feed_color_item":43,"./react/components/design_settings_popup/controls_items/font_type_item":44,"./react/components/design_settings_popup/controls_items/header_color_item":45,"./react/components/design_settings_popup/controls_items/opacity_item":46,"./react/components/design_settings_popup/design_settings_popup":47,"./react/components/editable_field":48,"./react/components/embed":49,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":50,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":51,"./react/components/entry_comment_box/comment_form/comment_form":52,"./react/components/entry_comment_box/comment_list/comment":53,"./react/components/entry_comment_box/comment_list/comment_list":54,"./react/components/entry_comment_box/comment_list/comment_manager":55,"./react/components/entry_comment_box/comment_metabar/comment_metabar":56,"./react/components/entry_comment_box/comment_metabar/date":57,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":58,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":59,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":60,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":61,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":62,"./react/components/entry_comment_box/comment_metabar/reply":63,"./react/components/entry_comment_box/entry_comment_box":64,"./react/components/entry_comment_box/load_more":65,"./react/components/entry_comment_box/mixins/comments":66,"./react/components/entry_metabar/author":67,"./react/components/entry_metabar/comment":68,"./react/components/entry_metabar/date":69,"./react/components/entry_metabar/dropdown_menu":70,"./react/components/entry_metabar/dropdown_menu_items/delete_item":71,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":72,"./react/components/entry_metabar/dropdown_menu_items/item":73,"./react/components/entry_metabar/dropdown_menu_items/report_item":74,"./react/components/entry_metabar/dropdown_menu_items/watch_item":75,"./react/components/entry_metabar/entry_metabar":76,"./react/components/entry_metabar/tag":77,"./react/components/entry_metabar/tags":78,"./react/components/feed/bricks":79,"./react/components/feed/feed":80,"./react/components/feed/mixins/base":81,"./react/components/feed/tlog":82,"./react/components/follow_status":83,"./react/components/hero/profile/dropdown_menu":84,"./react/components/hero/profile/dropdown_menu_items/ignore":85,"./react/components/hero/profile/dropdown_menu_items/report":86,"./react/components/hero/profile/popup/followers_popup":87,"./react/components/hero/profile/popup/followings_popup":88,"./react/components/hero/profile/popup/items/follower_item":89,"./react/components/hero/profile/popup/items/following_item":90,"./react/components/hero/profile/popup/items/tag_item":91,"./react/components/hero/profile/popup/popup":92,"./react/components/hero/profile/popup/tags_popup":93,"./react/components/hero/profile/profile":94,"./react/components/hero/profile/profile_avatar":95,"./react/components/hero/profile/profile_head":96,"./react/components/hero/profile/profile_stats":97,"./react/components/hero/profile/profile_stats_item":98,"./react/components/images_collage":99,"./react/components/notifications/tasty_alert":100,"./react/components/notifications/tasty_confirm":101,"./react/components/notifications/tasty_locking_alert":102,"./react/components/notifications/tasty_notify":103,"./react/components/people/item":104,"./react/components/persons_popup/items/follower_relationship":105,"./react/components/persons_popup/items/following_relationship":106,"./react/components/persons_popup/items/guess_relationship":107,"./react/components/persons_popup/items/ignored_relationship":108,"./react/components/persons_popup/items/item":109,"./react/components/persons_popup/items/requested_relationship":110,"./react/components/persons_popup/menu":111,"./react/components/persons_popup/menu_item":112,"./react/components/persons_popup/mixins/panel_mixin":113,"./react/components/persons_popup/panels/followers_panel":114,"./react/components/persons_popup/panels/followings_panel":115,"./react/components/persons_popup/panels/guessed_panel":116,"./react/components/persons_popup/panels/ignored_panel":117,"./react/components/persons_popup/panels/requested_panel":118,"./react/components/persons_popup/persons_popup":119,"./react/components/popup/header":120,"./react/components/popup/layout":121,"./react/components/popup/popup":122,"./react/components/popup/spinner":123,"./react/components/popup_box":124,"./react/components/post_editor/actions/actions":125,"./react/components/post_editor/actions/buttons/privacy":126,"./react/components/post_editor/actions/buttons/vote":127,"./react/components/post_editor/choicer":128,"./react/components/post_editor/demo":129,"./react/components/post_editor/edit_post":130,"./react/components/post_editor/editor_container":131,"./react/components/post_editor/editors/_tasty":132,"./react/components/post_editor/editors/anonymous":133,"./react/components/post_editor/editors/image":134,"./react/components/post_editor/editors/instagram":135,"./react/components/post_editor/editors/mixins/autosave":136,"./react/components/post_editor/editors/music":137,"./react/components/post_editor/editors/quote":138,"./react/components/post_editor/editors/text":139,"./react/components/post_editor/editors/video":140,"./react/components/post_editor/images_mediabox/loaded":141,"./react/components/post_editor/images_mediabox/url_insert":142,"./react/components/post_editor/layout":143,"./react/components/post_editor/mediabox/actions":144,"./react/components/post_editor/mediabox/layout":145,"./react/components/post_editor/mediabox/loading_progress":146,"./react/components/post_editor/mixins/dragging":147,"./react/components/post_editor/mixins/images_form":148,"./react/components/post_editor/mixins/layout":149,"./react/components/post_editor/mixins/persistence":150,"./react/components/post_editor/mixins/video":151,"./react/components/post_editor/new_anonymous_post":152,"./react/components/post_editor/new_post":153,"./react/components/post_editor/video_mediabox/embeded":154,"./react/components/post_editor/video_mediabox/loading":155,"./react/components/post_editor/video_mediabox/url_insert":156,"./react/components/post_editor/video_mediabox/video_mediabox":157,"./react/components/post_editor/welcome_messages/image":158,"./react/components/post_editor/welcome_messages/instagram":159,"./react/components/post_editor/welcome_messages/music":160,"./react/components/post_editor/welcome_messages/video":161,"./react/components/relationship_buttons/follow_button":162,"./react/components/relationship_buttons/follower_button":163,"./react/components/relationship_buttons/guess_button":164,"./react/components/relationship_buttons/ignore_button":165,"./react/components/relationship_buttons/mixins/relationship":166,"./react/components/relationship_buttons/request_button":167,"./react/components/search/button":168,"./react/components/search/field":169,"./react/components/search/search":170,"./react/components/settings_popup/settings_accounts_item":171,"./react/components/settings_popup/settings_avatar":172,"./react/components/settings_popup/settings_email/confirmation":173,"./react/components/settings_popup/settings_email/edit":174,"./react/components/settings_popup/settings_email/establish/edit":175,"./react/components/settings_popup/settings_email/establish/establish":176,"./react/components/settings_popup/settings_email/establish/show":177,"./react/components/settings_popup/settings_email/settings_email":178,"./react/components/settings_popup/settings_email/show":179,"./react/components/settings_popup/settings_header":180,"./react/components/settings_popup/settings_name":181,"./react/components/settings_popup/settings_password_input":182,"./react/components/settings_popup/settings_radio_item":183,"./react/components/settings_popup/settings_title":184,"./react/components/settings_popup/settings_vkontakte":185,"./react/components/settings_popup/toolbar_settings":186,"./react/components/shellbox_layer":187,"./react/components/shellboxes/confirm_registration":188,"./react/components/smart_follow_status":189,"./react/components/spinner":190,"./react/components/tlog_alert":191,"./react/components/toolbars/close/close":192,"./react/components/toolbars/feed/feed":193,"./react/components/toolbars/toolbar_item":194,"./react/components/toolbars/user/user":195,"./react/components/transition/timeout_transition_group":196,"./react/components/voting":197,"./react/controllers/popup":198,"./react/controllers/shellbox":199,"./react/controllers/tasty_alert":200,"./react/controllers/tasty_confirm":201,"./react/controllers/tasty_events":202,"./react/controllers/tasty_locking_alert":203,"./react/controllers/tasty_notify":204,"./react/controllers/tasty_sound":205,"./react/dispatchers/current_user":206,"./react/dispatchers/relationships":207,"./react/entities/normalized_entry":208,"./react/mediators/comments":209,"./react/messaging/actions/conversation":210,"./react/messaging/actions/message":211,"./react/messaging/actions/notification":212,"./react/messaging/actions/popup":213,"./react/messaging/components/buttons/write_message":214,"./react/messaging/components/messages_popup/conversations/conversations":215,"./react/messaging/components/messages_popup/conversations/list/empty":216,"./react/messaging/components/messages_popup/conversations/list/list":217,"./react/messaging/components/messages_popup/conversations/list/list_item":218,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":219,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":220,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":221,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":222,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":223,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":224,"./react/messaging/components/messages_popup/loading_message":225,"./react/messaging/components/messages_popup/messages_popup":226,"./react/messaging/components/messages_popup/thread/message_form/message_form":227,"./react/messaging/components/messages_popup/thread/message_list/empty":228,"./react/messaging/components/messages_popup/thread/message_list/message_list":229,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":230,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":231,"./react/messaging/components/messages_popup/thread/thread":232,"./react/messaging/components/messages_popup/ui/back_button":233,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":234,"./react/messaging/components/notifications_popup/notifications/empty":235,"./react/messaging/components/notifications_popup/notifications/notification":236,"./react/messaging/components/notifications_popup/notifications/notifications":237,"./react/messaging/components/notifications_popup/notifications_popup":238,"./react/messaging/components/toolbars/indicators/indicators":239,"./react/messaging/components/toolbars/indicators/messages":240,"./react/messaging/components/toolbars/indicators/notifications":241,"./react/messaging/dispatchers/messaging":242,"./react/messaging/messaging_requester":243,"./react/messaging/messaging_service":244,"./react/messaging/messaging_testing":245,"./react/messaging/stores/connection_state":246,"./react/messaging/stores/conversations":247,"./react/messaging/stores/messages":248,"./react/messaging/stores/messages_popup_state":249,"./react/messaging/stores/messaging_status":250,"./react/messaging/stores/notifications":251,"./react/mixins/activities":252,"./react/mixins/component_manipulations":253,"./react/mixins/dom_manipulations":254,"./react/mixins/error_timer":255,"./react/mixins/grammar":256,"./react/mixins/positions":257,"./react/mixins/requester":258,"./react/mixins/scroller":259,"./react/mixins/shake":260,"./react/mixins/touch":261,"./react/mixins/unmount":262,"./react/services/entry_normalizer":263,"./react/services/entry_store":264,"./react/services/positions":265,"./react/services/thumbor":266,"./react/services/uuid":267,"./react/stores/current_user":268,"./react/stores/relationships":269,"./resources/fileReceiver":270,"./resources/is_mobile":271,"./resources/tasty":272,"./resources/tasty_utils":273,"./routes/api":274,"./routes/routes":275}],9:[function(require,module,exports){
+},{"./libs":9,"./locales/locales":10,"./react/application":12,"./react/components/auth/auth":13,"./react/components/auth/authorization/authorization":14,"./react/components/auth/authorization/facebook":15,"./react/components/auth/authorization/vk":16,"./react/components/auth/buttons/facebook_auth_button":17,"./react/components/auth/buttons/vk_auth_button":18,"./react/components/auth/email/email":22,"./react/components/auth/recovery":27,"./react/components/avatars/avatar":29,"./react/components/avatars/user_avatar":30,"./react/components/buttons/load_more":31,"./react/components/calendar/calendar":32,"./react/components/calendar/calendar_header":33,"./react/components/calendar/calendar_marker":34,"./react/components/calendar/calendar_period":35,"./react/components/calendar/calendar_timeline":36,"./react/components/common/adaptive_input":37,"./react/components/design_settings_popup/controls":38,"./react/components/design_settings_popup/controls_items/_progressbar":39,"./react/components/design_settings_popup/controls_items/_radiobutton":40,"./react/components/design_settings_popup/controls_items/align_item":41,"./react/components/design_settings_popup/controls_items/background_item":42,"./react/components/design_settings_popup/controls_items/feed_color_item":43,"./react/components/design_settings_popup/controls_items/font_type_item":44,"./react/components/design_settings_popup/controls_items/header_color_item":45,"./react/components/design_settings_popup/controls_items/opacity_item":46,"./react/components/design_settings_popup/design_settings_popup":47,"./react/components/editable_field":48,"./react/components/embed":49,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":50,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":51,"./react/components/entry_comment_box/comment_form/comment_form":52,"./react/components/entry_comment_box/comment_list/comment":53,"./react/components/entry_comment_box/comment_list/comment_list":54,"./react/components/entry_comment_box/comment_list/comment_manager":55,"./react/components/entry_comment_box/comment_metabar/comment_metabar":56,"./react/components/entry_comment_box/comment_metabar/date":57,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":58,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":59,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":60,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":61,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":62,"./react/components/entry_comment_box/comment_metabar/reply":63,"./react/components/entry_comment_box/entry_comment_box":64,"./react/components/entry_comment_box/load_more":65,"./react/components/entry_comment_box/mixins/comments":66,"./react/components/entry_metabar/author":67,"./react/components/entry_metabar/comment":68,"./react/components/entry_metabar/date":69,"./react/components/entry_metabar/dropdown_menu":70,"./react/components/entry_metabar/dropdown_menu_items/delete_item":71,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":72,"./react/components/entry_metabar/dropdown_menu_items/item":73,"./react/components/entry_metabar/dropdown_menu_items/report_item":74,"./react/components/entry_metabar/dropdown_menu_items/watch_item":75,"./react/components/entry_metabar/entry_metabar":76,"./react/components/entry_metabar/tag":77,"./react/components/entry_metabar/tags":78,"./react/components/feed/bricks":79,"./react/components/feed/feed":80,"./react/components/feed/mixins/base":81,"./react/components/feed/tlog":82,"./react/components/follow_status":83,"./react/components/hero/profile/dropdown_menu":85,"./react/components/hero/profile/dropdown_menu_items/ignore":86,"./react/components/hero/profile/dropdown_menu_items/report":87,"./react/components/hero/profile/popup/followers_popup":88,"./react/components/hero/profile/popup/followings_popup":89,"./react/components/hero/profile/popup/items/follower_item":90,"./react/components/hero/profile/popup/items/following_item":91,"./react/components/hero/profile/popup/items/tag_item":92,"./react/components/hero/profile/popup/popup":93,"./react/components/hero/profile/popup/tags_popup":94,"./react/components/hero/profile/profile":95,"./react/components/hero/profile/profile_avatar":96,"./react/components/hero/profile/profile_head":97,"./react/components/hero/profile/profile_stats":98,"./react/components/hero/profile/profile_stats_item":99,"./react/components/images_collage":100,"./react/components/notifications/tasty_alert":101,"./react/components/notifications/tasty_confirm":102,"./react/components/notifications/tasty_locking_alert":103,"./react/components/notifications/tasty_notify":104,"./react/components/people/item":105,"./react/components/persons_popup/items/follower_relationship":106,"./react/components/persons_popup/items/following_relationship":107,"./react/components/persons_popup/items/guess_relationship":108,"./react/components/persons_popup/items/ignored_relationship":109,"./react/components/persons_popup/items/item":110,"./react/components/persons_popup/items/requested_relationship":111,"./react/components/persons_popup/menu":112,"./react/components/persons_popup/menu_item":113,"./react/components/persons_popup/mixins/panel_mixin":114,"./react/components/persons_popup/panels/followers_panel":115,"./react/components/persons_popup/panels/followings_panel":116,"./react/components/persons_popup/panels/guessed_panel":117,"./react/components/persons_popup/panels/ignored_panel":118,"./react/components/persons_popup/panels/requested_panel":119,"./react/components/persons_popup/persons_popup":120,"./react/components/popup/header":121,"./react/components/popup/layout":122,"./react/components/popup/popup":123,"./react/components/popup/spinner":124,"./react/components/popup_box":125,"./react/components/post_editor/actions/actions":126,"./react/components/post_editor/actions/buttons/privacy":127,"./react/components/post_editor/actions/buttons/vote":128,"./react/components/post_editor/choicer":129,"./react/components/post_editor/demo":130,"./react/components/post_editor/edit_post":131,"./react/components/post_editor/editor_container":132,"./react/components/post_editor/editors/_tasty":133,"./react/components/post_editor/editors/anonymous":134,"./react/components/post_editor/editors/image":135,"./react/components/post_editor/editors/instagram":136,"./react/components/post_editor/editors/mixins/autosave":137,"./react/components/post_editor/editors/music":138,"./react/components/post_editor/editors/quote":139,"./react/components/post_editor/editors/text":140,"./react/components/post_editor/editors/video":141,"./react/components/post_editor/images_mediabox/loaded":142,"./react/components/post_editor/images_mediabox/url_insert":143,"./react/components/post_editor/layout":144,"./react/components/post_editor/mediabox/actions":145,"./react/components/post_editor/mediabox/layout":146,"./react/components/post_editor/mediabox/loading_progress":147,"./react/components/post_editor/mixins/dragging":148,"./react/components/post_editor/mixins/images_form":149,"./react/components/post_editor/mixins/layout":150,"./react/components/post_editor/mixins/persistence":151,"./react/components/post_editor/mixins/video":152,"./react/components/post_editor/new_anonymous_post":153,"./react/components/post_editor/new_post":154,"./react/components/post_editor/video_mediabox/embeded":155,"./react/components/post_editor/video_mediabox/loading":156,"./react/components/post_editor/video_mediabox/url_insert":157,"./react/components/post_editor/video_mediabox/video_mediabox":158,"./react/components/post_editor/welcome_messages/image":159,"./react/components/post_editor/welcome_messages/instagram":160,"./react/components/post_editor/welcome_messages/music":161,"./react/components/post_editor/welcome_messages/video":162,"./react/components/relationship_buttons/follow_button":163,"./react/components/relationship_buttons/follower_button":164,"./react/components/relationship_buttons/guess_button":165,"./react/components/relationship_buttons/ignore_button":166,"./react/components/relationship_buttons/mixins/relationship":167,"./react/components/relationship_buttons/request_button":168,"./react/components/search/button":169,"./react/components/search/field":170,"./react/components/search/search":171,"./react/components/settings_popup/settings_accounts_item":172,"./react/components/settings_popup/settings_avatar":173,"./react/components/settings_popup/settings_email/confirmation":174,"./react/components/settings_popup/settings_email/edit":175,"./react/components/settings_popup/settings_email/establish/edit":176,"./react/components/settings_popup/settings_email/establish/establish":177,"./react/components/settings_popup/settings_email/establish/show":178,"./react/components/settings_popup/settings_email/settings_email":179,"./react/components/settings_popup/settings_email/show":180,"./react/components/settings_popup/settings_header":181,"./react/components/settings_popup/settings_name":182,"./react/components/settings_popup/settings_password_input":183,"./react/components/settings_popup/settings_radio_item":184,"./react/components/settings_popup/settings_title":185,"./react/components/settings_popup/settings_vkontakte":186,"./react/components/settings_popup/toolbar_settings":187,"./react/components/shellbox_layer":188,"./react/components/shellboxes/confirm_registration":189,"./react/components/smart_follow_status":190,"./react/components/spinner":191,"./react/components/tlog_alert":192,"./react/components/toolbars/close/close":193,"./react/components/toolbars/feed/feed":194,"./react/components/toolbars/toolbar_item":195,"./react/components/toolbars/user/user":196,"./react/components/transition/timeout_transition_group":197,"./react/components/voting":198,"./react/controllers/popup":199,"./react/controllers/shellbox":200,"./react/controllers/tasty_alert":201,"./react/controllers/tasty_confirm":202,"./react/controllers/tasty_events":203,"./react/controllers/tasty_locking_alert":204,"./react/controllers/tasty_notify":205,"./react/controllers/tasty_sound":206,"./react/dispatchers/current_user":207,"./react/dispatchers/relationships":208,"./react/entities/normalized_entry":209,"./react/mediators/comments":210,"./react/messaging/actions/conversation":211,"./react/messaging/actions/message":212,"./react/messaging/actions/notification":213,"./react/messaging/actions/popup":214,"./react/messaging/components/buttons/write_message":215,"./react/messaging/components/messages_popup/conversations/conversations":216,"./react/messaging/components/messages_popup/conversations/list/empty":217,"./react/messaging/components/messages_popup/conversations/list/list":218,"./react/messaging/components/messages_popup/conversations/list/list_item":219,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":220,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":221,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":222,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":223,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":224,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":225,"./react/messaging/components/messages_popup/loading_message":226,"./react/messaging/components/messages_popup/messages_popup":227,"./react/messaging/components/messages_popup/thread/message_form/message_form":228,"./react/messaging/components/messages_popup/thread/message_list/empty":229,"./react/messaging/components/messages_popup/thread/message_list/message_list":230,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":231,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":232,"./react/messaging/components/messages_popup/thread/thread":233,"./react/messaging/components/messages_popup/ui/back_button":234,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":235,"./react/messaging/components/notifications_popup/notifications/empty":236,"./react/messaging/components/notifications_popup/notifications/notification":237,"./react/messaging/components/notifications_popup/notifications/notifications":238,"./react/messaging/components/notifications_popup/notifications_popup":239,"./react/messaging/components/toolbars/indicators/indicators":240,"./react/messaging/components/toolbars/indicators/messages":241,"./react/messaging/components/toolbars/indicators/notifications":242,"./react/messaging/dispatchers/messaging":243,"./react/messaging/messaging_requester":244,"./react/messaging/messaging_service":245,"./react/messaging/messaging_testing":246,"./react/messaging/stores/connection_state":247,"./react/messaging/stores/conversations":248,"./react/messaging/stores/messages":249,"./react/messaging/stores/messages_popup_state":250,"./react/messaging/stores/messaging_status":251,"./react/messaging/stores/notifications":252,"./react/mixins/activities":253,"./react/mixins/component_manipulations":254,"./react/mixins/dom_manipulations":255,"./react/mixins/error_timer":256,"./react/mixins/grammar":257,"./react/mixins/positions":258,"./react/mixins/requester":259,"./react/mixins/scroller":260,"./react/mixins/shake":261,"./react/mixins/touch":262,"./react/mixins/unmount":263,"./react/services/entry_normalizer":264,"./react/services/entry_store":265,"./react/services/positions":266,"./react/services/thumbor":267,"./react/services/uuid":268,"./react/stores/current_user":269,"./react/stores/relationships":270,"./resources/fileReceiver":271,"./resources/is_mobile":272,"./resources/tasty":273,"./resources/tasty_utils":274,"./routes/api":275,"./routes/routes":276}],9:[function(require,module,exports){
 window._ = require('underscore');
 
 window.$ = window.jQuery = require('jquery');
@@ -4560,7 +4560,7 @@ require('jquery.shapeshift');
 
 
 
-},{"../../bower_components/momentjs/moment":7,"Modernizr":"Modernizr","aviator":"aviator","backbone":"backbone","baron":"baron","bootstrap.tooltip":"bootstrap.tooltip","bowser":"bowser","es5-shim":"es5-shim","eventEmitter":"eventEmitter","flux":276,"i18next":"i18next","imagesloaded":279,"jquery":"jquery","jquery.autosize":"jquery.autosize","jquery.autosize.input":"jquery.autosize.input","jquery.collage":"jquery.collage","jquery.fileupload":"jquery.fileupload","jquery.mousewheel":"jquery.mousewheel","jquery.scrollto":"jquery.scrollto","jquery.shapeshift":"jquery.shapeshift","jquery.ui.core":"jquery.ui.core","jquery.ui.draggable":"jquery.ui.draggable","jquery.ui.mouse":"jquery.ui.mouse","jquery.ui.slider":"jquery.ui.slider","jquery.ui.widget":"jquery.ui.widget","jquery.waypoints":"jquery.waypoints","medium-editor":"medium-editor","mousetrap":"mousetrap","pusher":"pusher","react":"react","react-mixin-manager":"react-mixin-manager","screenviewer":"screenviewer","swfobject":"swfobject","underscore":"underscore","undo":"undo"}],10:[function(require,module,exports){
+},{"../../bower_components/momentjs/moment":7,"Modernizr":"Modernizr","aviator":"aviator","backbone":"backbone","baron":"baron","bootstrap.tooltip":"bootstrap.tooltip","bowser":"bowser","es5-shim":"es5-shim","eventEmitter":"eventEmitter","flux":277,"i18next":"i18next","imagesloaded":280,"jquery":"jquery","jquery.autosize":"jquery.autosize","jquery.autosize.input":"jquery.autosize.input","jquery.collage":"jquery.collage","jquery.fileupload":"jquery.fileupload","jquery.mousewheel":"jquery.mousewheel","jquery.scrollto":"jquery.scrollto","jquery.shapeshift":"jquery.shapeshift","jquery.ui.core":"jquery.ui.core","jquery.ui.draggable":"jquery.ui.draggable","jquery.ui.mouse":"jquery.ui.mouse","jquery.ui.slider":"jquery.ui.slider","jquery.ui.widget":"jquery.ui.widget","jquery.waypoints":"jquery.waypoints","medium-editor":"medium-editor","mousetrap":"mousetrap","pusher":"pusher","react":"react","react-mixin-manager":"react-mixin-manager","screenviewer":"screenviewer","swfobject":"swfobject","underscore":"underscore","undo":"undo"}],10:[function(require,module,exports){
 var i18nLocales, momentLocales;
 
 i18nLocales = {
@@ -9126,6 +9126,27 @@ window.FollowStatus = React.createClass({displayName: 'FollowStatus',
 },{}],84:[function(require,module,exports){
 
 /** @jsx React.DOM */
+var HeroProfile_SettingsButton;
+
+HeroProfile_SettingsButton = React.createClass({displayName: 'HeroProfile_SettingsButton',
+  render: function() {
+    return React.DOM.button({className: "profile-settings-button", 
+            onClick:  this.handleClick}, 
+      React.DOM.i({className: "icon icon--cogwheel"})
+    );
+  },
+  handleClick: function() {
+    return TastyEvents.trigger(TastyEvents.keys.command_settings_open());
+  }
+});
+
+module.exports = HeroProfile_SettingsButton;
+
+
+
+},{}],85:[function(require,module,exports){
+
+/** @jsx React.DOM */
 var DROPDOWN_CLOSED, DROPDOWN_OPENED, MOUSE_LEAVE_TIMEOUT;
 
 MOUSE_LEAVE_TIMEOUT = 300;
@@ -9223,7 +9244,7 @@ window.HeroProfile_DropdownMenu = React.createClass({displayName: 'HeroProfile_D
 
 
 
-},{}],85:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var TITLE;
@@ -9264,7 +9285,7 @@ window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({displayName: 'Her
 
 
 
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var TITLE;
@@ -9303,7 +9324,7 @@ window.HeroProfile_DropdownMenuReportItem = React.createClass({displayName: 'Her
 
 
 
-},{}],87:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroProfileStats_FollowersPopup',
@@ -9392,7 +9413,7 @@ window.HeroProfileStats_FollowersPopup = React.createClass({displayName: 'HeroPr
 
 
 
-},{}],88:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroProfileStats_FollowingsPopup',
@@ -9481,7 +9502,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({displayName: 'HeroP
 
 
 
-},{}],89:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowerItem = React.createClass({displayName: 'HeroProfileStats_FollowerItem',
@@ -9505,7 +9526,7 @@ window.HeroProfileStats_FollowerItem = React.createClass({displayName: 'HeroProf
 
 
 
-},{}],90:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_FollowingItem = React.createClass({displayName: 'HeroProfileStats_FollowingItem',
@@ -9529,7 +9550,7 @@ window.HeroProfileStats_FollowingItem = React.createClass({displayName: 'HeroPro
 
 
 
-},{}],91:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_TagItem = React.createClass({displayName: 'HeroProfileStats_TagItem',
@@ -9550,7 +9571,7 @@ window.HeroProfileStats_TagItem = React.createClass({displayName: 'HeroProfileSt
 
 
 
-},{}],92:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION, MARGIN;
@@ -9631,7 +9652,7 @@ window.HeroProfileStats_Popup = React.createClass({displayName: 'HeroProfileStat
 
 
 
-},{}],93:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfileStats_TagsPopup',
@@ -9719,10 +9740,12 @@ window.HeroProfileStats_TagsPopup = React.createClass({displayName: 'HeroProfile
 
 
 
-},{}],94:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 
 /** @jsx React.DOM */
-var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS;
+var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS, HeroProfile_SettingsButton;
+
+HeroProfile_SettingsButton = require('./buttons/settings');
 
 HERO_CLOSED = 'closed';
 
@@ -9761,15 +9784,22 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
   },
   render: function() {
     var actions, follow_status;
-    if (this.props.relationship != null) {
+    if (this.isCurrentUser()) {
+      actions = React.DOM.div({className: "hero__actions"}, 
+                   React.DOM.button({className: "button button--small button--outline"}, "Это вы"), 
+                   HeroProfile_SettingsButton(null)
+                 );
+    } else if (this.props.relationship != null) {
       actions = React.DOM.div({className: "hero__actions"}, 
                    FollowButton({relationship:  this.props.relationship}), 
                    WriteMessageButton({user:  this.props.user}), 
-                   HeroProfile_DropdownMenu({userId:  this.props.user.id, 
-                                             status:  this.props.relationship.state})
+                   HeroProfile_DropdownMenu({
+                       userId:  this.props.user.id, 
+                       status:  this.props.relationship.state})
                  );
-      follow_status = SmartFollowStatus({tlogId:  this.props.user.id, 
-                                          status:  this.props.relationship.state});
+      follow_status = SmartFollowStatus({
+                           tlogId:  this.props.user.id, 
+                           status:  this.props.relationship.state});
     }
     return React.DOM.div({className: "hero hero-profile"}, 
               CloseToolbar({onClick:  this.close}), 
@@ -9785,6 +9815,9 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
               HeroProfileStats({user:  this.props.user, 
                                 stats:  this.props.stats})
             );
+  },
+  isCurrentUser: function() {
+    return CurrentUserStore.getUser().id === this.props.user.id;
   },
   open: function() {
     var transitionEnd;
@@ -9867,7 +9900,7 @@ window.HeroProfile = React.createClass({displayName: 'HeroProfile',
 
 
 
-},{}],95:[function(require,module,exports){
+},{"./buttons/settings":84}],96:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var HERO_AVATAR_SIZE;
@@ -9892,7 +9925,7 @@ window.HeroProfileAvatar = React.createClass({displayName: 'HeroProfileAvatar',
 
 
 
-},{}],96:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileHead = React.createClass({displayName: 'HeroProfileHead',
@@ -9952,7 +9985,7 @@ window.HeroProfileHeadStatic = React.createClass({displayName: 'HeroProfileHeadS
 
 
 
-},{}],97:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStats = React.createClass({displayName: 'HeroProfileStats',
@@ -10079,7 +10112,7 @@ window.HeroProfileStats = React.createClass({displayName: 'HeroProfileStats',
 
 
 
-},{}],98:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.HeroProfileStatsItem = React.createClass({displayName: 'HeroProfileStatsItem',
@@ -10123,7 +10156,7 @@ window.HeroProfileStatsItem = React.createClass({displayName: 'HeroProfileStatsI
 
 
 
-},{}],99:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FIRST_ROW_RATIO, NEXT_ROWS_RATIO;
@@ -10268,7 +10301,7 @@ window.ImagesCollage_Legacy = React.createClass({displayName: 'ImagesCollage_Leg
 
 
 
-},{}],100:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION;
@@ -10335,7 +10368,7 @@ window.TastyAlert = React.createClass({displayName: 'TastyAlert',
 
 
 
-},{}],101:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION;
@@ -10401,7 +10434,7 @@ window.TastyConfirm = React.createClass({displayName: 'TastyConfirm',
 
 
 
-},{}],102:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_DURATION, START_TIMEOUT;
@@ -10454,7 +10487,7 @@ window.TastyLockingAlert = React.createClass({displayName: 'TastyLockingAlert',
 
 
 
-},{}],103:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEFAULT_TIMEOUT, DEFAULT_TYPE;
@@ -10504,7 +10537,7 @@ window.TastyNotify = React.createClass({displayName: 'TastyNotify',
 
 
 
-},{}],104:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PeopleItem = React.createClass({displayName: 'PeopleItem',
@@ -10542,7 +10575,7 @@ window.PeopleItem = React.createClass({displayName: 'PeopleItem',
 
 
 
-},{}],105:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'PersonsPopup_FollowerRelationship',
@@ -10564,7 +10597,7 @@ window.PersonsPopup_FollowerRelationship = React.createClass({displayName: 'Pers
 
 
 
-},{}],106:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowingRelationship = React.createClass({displayName: 'PersonsPopup_FollowingRelationship',
@@ -10586,7 +10619,7 @@ window.PersonsPopup_FollowingRelationship = React.createClass({displayName: 'Per
 
 
 
-},{}],107:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_GuessRelationship = React.createClass({displayName: 'PersonsPopup_GuessRelationship',
@@ -10610,7 +10643,7 @@ window.PersonsPopup_GuessRelationship = React.createClass({displayName: 'Persons
 
 
 
-},{}],108:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_IgnoredRelationship = React.createClass({displayName: 'PersonsPopup_IgnoredRelationship',
@@ -10632,7 +10665,7 @@ window.PersonsPopup_IgnoredRelationship = React.createClass({displayName: 'Perso
 
 
 
-},{}],109:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_PersonItem',
@@ -10668,7 +10701,7 @@ window.PersonsPopup_PersonItem = React.createClass({displayName: 'PersonsPopup_P
 
 
 
-},{}],110:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_RequestedRelationship = React.createClass({displayName: 'PersonsPopup_RequestedRelationship',
@@ -10691,7 +10724,7 @@ window.PersonsPopup_RequestedRelationship = React.createClass({displayName: 'Per
 
 
 
-},{}],111:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FOLLOWERS, FOLLOWINGS, GUESSED, IGNORED, REQUESTED;
@@ -10796,7 +10829,7 @@ window.PersonsPopup_Menu = React.createClass({displayName: 'PersonsPopup_Menu',
 
 
 
-},{}],112:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_MenuItem = React.createClass({displayName: 'PersonsPopup_MenuItem',
@@ -10824,7 +10857,7 @@ window.PersonsPopup_MenuItem = React.createClass({displayName: 'PersonsPopup_Men
 
 
 
-},{}],113:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EMPTY_LIST, ERROR_STATE, LOADED_STATE, LOADING, LOADING_ERROR, LOADING_STATE;
@@ -11006,7 +11039,7 @@ React.mixins.add('PersonsPopup_PanelMixin', [PersonsPopup_PanelMixin, window.Req
 
 
 
-},{}],114:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPopup_FollowersPanel',
@@ -11026,7 +11059,7 @@ window.PersonsPopup_FollowersPanel = React.createClass({displayName: 'PersonsPop
 
 
 
-},{}],115:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPopup_FollowingsPanel',
@@ -11046,7 +11079,7 @@ window.PersonsPopup_FollowingsPanel = React.createClass({displayName: 'PersonsPo
 
 
 
-},{}],116:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_GuessedPanel = React.createClass({displayName: 'PersonsPopup_GuessedPanel',
@@ -11066,7 +11099,7 @@ window.PersonsPopup_GuessedPanel = React.createClass({displayName: 'PersonsPopup
 
 
 
-},{}],117:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_IgnoredPanel = React.createClass({displayName: 'PersonsPopup_IgnoredPanel',
@@ -11086,7 +11119,7 @@ window.PersonsPopup_IgnoredPanel = React.createClass({displayName: 'PersonsPopup
 
 
 
-},{}],118:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PersonsPopup_RequestedPanel = React.createClass({displayName: 'PersonsPopup_RequestedPanel',
@@ -11106,7 +11139,7 @@ window.PersonsPopup_RequestedPanel = React.createClass({displayName: 'PersonsPop
 
 
 
-},{}],119:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEFAULT_PANEL, PERSON_POPUP_TITLE;
@@ -11192,7 +11225,7 @@ window.PersonsPopup = React.createClass({displayName: 'PersonsPopup',
 
 
 
-},{}],120:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupHeader = React.createClass({displayName: 'PopupHeader',
@@ -11228,7 +11261,7 @@ window.PopupHeader = React.createClass({displayName: 'PopupHeader',
 
 
 
-},{}],121:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupLayout = React.createClass({displayName: 'PopupLayout',
@@ -11262,7 +11295,7 @@ window.PopupLayout = React.createClass({displayName: 'PopupLayout',
 
 
 
-},{}],122:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var NO_TRANSITION_CLASS;
@@ -11350,7 +11383,7 @@ window.Popup = React.createClass({displayName: 'Popup',
 
 
 
-},{}],123:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupSpinner = React.createClass({displayName: 'PopupSpinner',
@@ -11370,7 +11403,7 @@ window.PopupSpinner = React.createClass({displayName: 'PopupSpinner',
 
 
 
-},{}],124:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PopupBox = React.createClass({displayName: 'PopupBox',
@@ -11420,7 +11453,7 @@ window.PopupBox = React.createClass({displayName: 'PopupBox',
 
 
 
-},{}],125:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ENTRY_PRIVACY_ANONYMOUS, ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, ENTRY_PRIVACY_PUBLIC_WITH_VOTING, PREVIEW_BODY_CLASSES, TLOG_TYPE_ANONYMOUS, TLOG_TYPE_PRIVATE, TLOG_TYPE_PUBLIC;
@@ -11546,7 +11579,7 @@ window.PostActions = React.createClass({displayName: 'PostActions',
 
 
 
-},{}],126:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostActions_PrivacyButton = React.createClass({displayName: 'PostActions_PrivacyButton',
@@ -11593,7 +11626,7 @@ window.PostActions_PrivacyButton = React.createClass({displayName: 'PostActions_
 
 
 
-},{}],127:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostActions_VoteButton = React.createClass({displayName: 'PostActions_VoteButton',
@@ -11638,7 +11671,7 @@ window.PostActions_VoteButton = React.createClass({displayName: 'PostActions_Vot
 
 
 
-},{}],128:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CHOICER_ITEMS, CHOICER_TYPES;
@@ -11758,7 +11791,7 @@ window.PostEditor_ChoicerItem = React.createClass({displayName: 'PostEditor_Choi
 
 
 
-},{}],129:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEMO_IDS;
@@ -11847,7 +11880,7 @@ window.PostEditor_Demo = React.createClass({displayName: 'PostEditor_Demo',
 
 
 
-},{}],130:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_EditPost = React.createClass({displayName: 'PostEditor_EditPost',
@@ -11878,7 +11911,7 @@ window.PostEditor_EditPost = React.createClass({displayName: 'PostEditor_EditPos
 
 
 
-},{}],131:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_EditorContainer',
@@ -12006,7 +12039,7 @@ window.PostEditor_EditorContainer = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],132:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDITOR_MODES, EDITOR_OPTIONS;
@@ -12129,7 +12162,7 @@ window.TastyEditor = React.createClass({displayName: 'TastyEditor',
 
 
 
-},{}],133:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_AnonymousEditor = React.createClass({displayName: 'PostEditor_AnonymousEditor',
@@ -12188,7 +12221,7 @@ window.PostEditor_AnonymousEditor = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],134:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var INSERT_MODE, LOADED_MODE, WELCOME_MODE;
@@ -12372,7 +12405,7 @@ window.PostEditor_ImageEditor = React.createClass({displayName: 'PostEditor_Imag
 
 
 
-},{}],135:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_InstagramEditor = React.createClass({displayName: 'PostEditor_InstagramEditor',
@@ -12407,7 +12440,7 @@ window.PostEditor_InstagramEditor = React.createClass({displayName: 'PostEditor_
 
 
 
-},{}],136:[function(require,module,exports){
+},{}],137:[function(require,module,exports){
 var AUTOSAVE_TIME;
 
 AUTOSAVE_TIME = 10000;
@@ -12440,7 +12473,7 @@ window.PostEditor_AutosaveMixin = {
 
 
 
-},{}],137:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_MusicEditor = React.createClass({displayName: 'PostEditor_MusicEditor',
@@ -12475,7 +12508,7 @@ window.PostEditor_MusicEditor = React.createClass({displayName: 'PostEditor_Musi
 
 
 
-},{}],138:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_QuoteEditor = React.createClass({displayName: 'PostEditor_QuoteEditor',
@@ -12529,7 +12562,7 @@ window.PostEditor_QuoteEditor = React.createClass({displayName: 'PostEditor_Quot
 
 
 
-},{}],139:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_TextEditor = React.createClass({displayName: 'PostEditor_TextEditor',
@@ -12589,7 +12622,7 @@ window.PostEditor_TextEditor = React.createClass({displayName: 'PostEditor_TextE
 
 
 
-},{}],140:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_VideoEditor = React.createClass({displayName: 'PostEditor_VideoEditor',
@@ -12624,7 +12657,7 @@ window.PostEditor_VideoEditor = React.createClass({displayName: 'PostEditor_Vide
 
 
 
-},{}],141:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_Loaded',
@@ -12650,7 +12683,7 @@ window.ImagesMediaBox_Loaded = React.createClass({displayName: 'ImagesMediaBox_L
 
 
 
-},{}],142:[function(require,module,exports){
+},{}],143:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ImagesMediaBox_UrlInsert = React.createClass({displayName: 'ImagesMediaBox_UrlInsert',
@@ -12680,7 +12713,7 @@ window.ImagesMediaBox_UrlInsert = React.createClass({displayName: 'ImagesMediaBo
 
 
 
-},{}],143:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_Layout = React.createClass({displayName: 'PostEditor_Layout',
@@ -12710,7 +12743,7 @@ window.PostEditor_Layout = React.createClass({displayName: 'PostEditor_Layout',
 
 
 
-},{}],144:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_Actions = React.createClass({displayName: 'MediaBox_Actions',
@@ -12744,7 +12777,7 @@ window.MediaBox_Actions = React.createClass({displayName: 'MediaBox_Actions',
 
 
 
-},{}],145:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_Layout = React.createClass({displayName: 'MediaBox_Layout',
@@ -12779,7 +12812,7 @@ window.MediaBox_Layout = React.createClass({displayName: 'MediaBox_Layout',
 
 
 
-},{}],146:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_LoadingProgress = React.createClass({displayName: 'MediaBox_LoadingProgress',
@@ -12797,7 +12830,7 @@ window.MediaBox_LoadingProgress = React.createClass({displayName: 'MediaBox_Load
 
 
 
-},{}],147:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 var DRAGOFF_TIMEOUT, DRAG_HOVER_CLASS;
 
 DRAG_HOVER_CLASS = 'state--drag-hover';
@@ -12865,7 +12898,7 @@ window.PostEditor_Dragging = {
 
 
 
-},{}],148:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 var ACCEPT_FILE_TYPES, MAX_FILE_SIZE, MAX_NUMBER_OF_FILES;
 
 ACCEPT_FILE_TYPES = /(\.|\/)(gif|jpe?g|png)$/i;
@@ -13047,7 +13080,7 @@ window.PostEditor_ImagesForm = {
 
 
 
-},{}],149:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.TLOG_TYPES = ['public', 'private', 'anonymous'];
@@ -13104,7 +13137,7 @@ window.PostEditor_LayoutMixin = {
 
 
 
-},{}],150:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 window.PostEditor_PersistenceMixin = {
   propTypes: {
     activitiesHandler: React.PropTypes.object.isRequired,
@@ -13167,7 +13200,7 @@ React.mixins.add('PostEditor_PersistenceMixin', [window.PostEditor_PersistenceMi
 
 
 
-},{}],151:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 window.PostEditor_VideoMixin = {
   propTypes: {
     normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
@@ -13213,7 +13246,7 @@ window.PostEditor_VideoMixin = {
 
 
 
-},{}],152:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.PostEditor_NewAnonymousPost = React.createClass({displayName: 'PostEditor_NewAnonymousPost',
@@ -13236,7 +13269,7 @@ window.PostEditor_NewAnonymousPost = React.createClass({displayName: 'PostEditor
 
 
 
-},{}],153:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var DEFAULT_POST_TYPE;
@@ -13267,7 +13300,7 @@ window.PostEditor_NewPost = React.createClass({displayName: 'PostEditor_NewPost'
 
 
 
-},{}],154:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_Embeded = React.createClass({displayName: 'VideoMediaBox_Embeded',
@@ -13286,7 +13319,7 @@ window.VideoMediaBox_Embeded = React.createClass({displayName: 'VideoMediaBox_Em
 
 
 
-},{}],155:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_Loading = React.createClass({displayName: 'VideoMediaBox_Loading',
@@ -13308,7 +13341,7 @@ window.VideoMediaBox_Loading = React.createClass({displayName: 'VideoMediaBox_Lo
 
 
 
-},{}],156:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.VideoMediaBox_UrlInsert = React.createClass({displayName: 'VideoMediaBox_UrlInsert',
@@ -13341,7 +13374,7 @@ window.VideoMediaBox_UrlInsert = React.createClass({displayName: 'VideoMediaBox_
 
 
 
-},{}],157:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EMBEDED_MODE, INSERT_MODE, LOADING_MODE, WELCOME_MODE;
@@ -13487,7 +13520,7 @@ window.VideoMediaBox = React.createClass({displayName: 'VideoMediaBox',
 
 
 
-},{}],158:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_ImageWelcome = React.createClass({displayName: 'MediaBox_ImageWelcome',
@@ -13521,7 +13554,7 @@ window.MediaBox_ImageWelcome = React.createClass({displayName: 'MediaBox_ImageWe
 
 
 
-},{}],159:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_InstagramWelcome = React.createClass({displayName: 'MediaBox_InstagramWelcome',
@@ -13545,7 +13578,7 @@ window.MediaBox_InstagramWelcome = React.createClass({displayName: 'MediaBox_Ins
 
 
 
-},{}],160:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_MusicWelcome = React.createClass({displayName: 'MediaBox_MusicWelcome',
@@ -13571,7 +13604,7 @@ window.MediaBox_MusicWelcome = React.createClass({displayName: 'MediaBox_MusicWe
 
 
 
-},{}],161:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MediaBox_VideoWelcome = React.createClass({displayName: 'MediaBox_VideoWelcome',
@@ -13597,7 +13630,7 @@ window.MediaBox_VideoWelcome = React.createClass({displayName: 'MediaBox_VideoWe
 
 
 
-},{}],162:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
@@ -13745,7 +13778,7 @@ window.FollowButton = React.createClass({displayName: 'FollowButton',
 
 
 
-},{}],163:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.RelationshipFollowerButton = React.createClass({displayName: 'RelationshipFollowerButton',
@@ -13803,7 +13836,7 @@ window.RelationshipFollowerButton = React.createClass({displayName: 'Relationshi
 
 
 
-},{}],164:[function(require,module,exports){
+},{}],165:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.RelationshipGuessButton = React.createClass({displayName: 'RelationshipGuessButton',
@@ -13840,7 +13873,7 @@ window.RelationshipGuessButton = React.createClass({displayName: 'RelationshipGu
 
 
 
-},{}],165:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var STATE_IGNORED;
@@ -13909,7 +13942,7 @@ window.RelationshipIgnoreButton = React.createClass({displayName: 'RelationshipI
 
 
 
-},{}],166:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 window.RelationshipMixin = {
   componentWillUnmount: function() {
     return this.clearErrorTimer();
@@ -14131,7 +14164,7 @@ React.mixins.add('RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, Reque
 
 
 
-},{}],167:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var APPROVE, ERROR, ERROR_STATE, LOADING, LOADING_STATE, WAITING_STATE;
@@ -14224,7 +14257,7 @@ window.RelationshipRequestButton = React.createClass({displayName: 'Relationship
 
 
 
-},{}],168:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SearchButton = React.createClass({displayName: 'SearchButton',
@@ -14241,7 +14274,7 @@ window.SearchButton = React.createClass({displayName: 'SearchButton',
 
 
 
-},{}],169:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SearchField = React.createClass({displayName: 'SearchField',
@@ -14289,7 +14322,7 @@ window.SearchField = React.createClass({displayName: 'SearchField',
 
 
 
-},{}],170:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CLOSED, OPENED;
@@ -14362,7 +14395,7 @@ window.Search = React.createClass({displayName: 'Search',
 
 
 
-},{}],171:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsAccountsItem = React.createClass({displayName: 'SettingsAccountsItem',
@@ -14421,7 +14454,7 @@ module.experts = window.SettingsAccountsItem = React.createClass({displayName: '
 
 
 
-},{}],172:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsAvatar = React.createClass({displayName: 'SettingsAvatar',
@@ -14474,7 +14507,7 @@ module.experts = window.SettingsAvatar = React.createClass({displayName: 'Settin
 
 
 
-},{}],173:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailConfirmation = React.createClass({displayName: 'SettingsEmailConfirmation',
@@ -14548,7 +14581,7 @@ window.SettingsEmailConfirmation = React.createClass({displayName: 'SettingsEmai
 
 
 
-},{}],174:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailEdit = React.createClass({displayName: 'SettingsEmailEdit',
@@ -14660,7 +14693,7 @@ window.SettingsEmailEdit = React.createClass({displayName: 'SettingsEmailEdit',
 
 
 
-},{}],175:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ENTER_KEYCODE, ESC_KEYCODE;
@@ -14770,7 +14803,7 @@ window.SettingsEmailEstablishEdit = React.createClass({displayName: 'SettingsEma
 
 
 
-},{}],176:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDIT_STATE, SHOW_STATE;
@@ -14816,7 +14849,7 @@ window.SettingsEmailEstablish = React.createClass({displayName: 'SettingsEmailEs
 
 
 
-},{}],177:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailEstablishShow = React.createClass({displayName: 'SettingsEmailEstablishShow',
@@ -14844,7 +14877,7 @@ window.SettingsEmailEstablishShow = React.createClass({displayName: 'SettingsEma
 
 
 
-},{}],178:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EDIT_STATE, ESTABLISH_STATE, SHOW_STATE;
@@ -14929,7 +14962,7 @@ window.SettingsEmail = React.createClass({displayName: 'SettingsEmail',
 
 
 
-},{}],179:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsEmailShow = React.createClass({displayName: 'SettingsEmailShow',
@@ -14986,7 +15019,7 @@ window.SettingsEmailShow = React.createClass({displayName: 'SettingsEmailShow',
 
 
 
-},{}],180:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsHeader = React.createClass({displayName: 'SettingsHeader',
@@ -15033,7 +15066,7 @@ window.SettingsHeader = React.createClass({displayName: 'SettingsHeader',
 
 
 
-},{}],181:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsName = React.createClass({displayName: 'SettingsName',
@@ -15065,7 +15098,7 @@ window.SettingsName = React.createClass({displayName: 'SettingsName',
 
 
 
-},{}],182:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CANCEL_TIMEOUT, KEYCODE_ENTER, KEYCODE_ESC;
@@ -15274,7 +15307,7 @@ module.experts = window.SettingsPasswordItem = React.createClass({displayName: '
 
 
 
-},{}],183:[function(require,module,exports){
+},{}],184:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsRadioItem = React.createClass({displayName: 'SettingsRadioItem',
@@ -15311,7 +15344,7 @@ module.experts = window.SettingsRadioItem = React.createClass({displayName: 'Set
 
 
 
-},{}],184:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SettingsTitle = React.createClass({displayName: 'SettingsTitle',
@@ -15343,7 +15376,7 @@ window.SettingsTitle = React.createClass({displayName: 'SettingsTitle',
 
 
 
-},{}],185:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 
 /** @jsx React.DOM */
 module.experts = window.SettingsVkontakteItem = React.createClass({displayName: 'SettingsVkontakteItem',
@@ -15371,7 +15404,7 @@ module.experts = window.SettingsVkontakteItem = React.createClass({displayName: 
 
 
 
-},{}],186:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ToolbarSettings = React.createClass({displayName: 'ToolbarSettings',
@@ -15482,7 +15515,7 @@ window.ToolbarSettings = React.createClass({displayName: 'ToolbarSettings',
 
 
 
-},{}],187:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ShellBox = React.createClass({displayName: 'ShellBox',
@@ -15555,7 +15588,7 @@ window.ShellBox = React.createClass({displayName: 'ShellBox',
 
 
 
-},{}],188:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EmailConfirmRegistration, SocialNetworksConfirmRegistration;
@@ -15601,7 +15634,7 @@ window.ConfirmRegistrationShellbox = React.createClass({displayName: 'ConfirmReg
 
 
 
-},{"../auth/email/confirm_registration":21,"../auth/social_networks/confirm_registration":28}],189:[function(require,module,exports){
+},{"../auth/email/confirm_registration":21,"../auth/social_networks/confirm_registration":28}],190:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.SmartFollowStatus = React.createClass({displayName: 'SmartFollowStatus',
@@ -15632,7 +15665,7 @@ window.SmartFollowStatus = React.createClass({displayName: 'SmartFollowStatus',
 
 
 
-},{}],190:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.Spinner = React.createClass({displayName: 'Spinner',
@@ -15656,7 +15689,7 @@ window.Spinner = React.createClass({displayName: 'Spinner',
 
 
 
-},{}],191:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var FADE_SPEED;
@@ -15696,7 +15729,7 @@ module.experts = window.TlogAlert = React.createClass({displayName: 'TlogAlert',
 
 
 
-},{}],192:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.CloseToolbar = React.createClass({displayName: 'CloseToolbar',
@@ -15713,7 +15746,7 @@ window.CloseToolbar = React.createClass({displayName: 'CloseToolbar',
 
 
 
-},{}],193:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MOUSE_LEAVE_TIMEOUT, TOOLBAR_CLOSED, TOOLBAR_OPENED_BY_CLICK, TOOLBAR_OPENED_BY_HOVER;
@@ -15839,7 +15872,7 @@ window.FeedToolbar = React.createClass({displayName: 'FeedToolbar',
 
 
 
-},{}],194:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.ToolbarItem = React.createClass({displayName: 'ToolbarItem',
@@ -15889,7 +15922,7 @@ window.ToolbarItem = React.createClass({displayName: 'ToolbarItem',
 
 
 
-},{}],195:[function(require,module,exports){
+},{}],196:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var MOUSE_LEAVE_TIMEOUT, PureRenderMixin, TOOLBAR_CLOSED, TOOLBAR_OPENED_BY_CLICK, TOOLBAR_OPENED_BY_HOVER;
@@ -16127,7 +16160,7 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
 
 
 
-},{}],196:[function(require,module,exports){
+},{}],197:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EVENT_NAME_MAP, ReactTransitionGroup, TICK, TimeoutTransitionGroupChild, animationAllowed, animationSupported, detectEvents, endEvents;
@@ -16296,7 +16329,7 @@ window.TimeoutTransitionGroup = React.createClass({displayName: 'TimeoutTransiti
 
 
 
-},{}],197:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var PureRenderMixin;
@@ -16393,7 +16426,7 @@ window.Voting = React.createClass({displayName: 'Voting',
 
 
 
-},{}],198:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 window.ReactPopup = (function() {
   function ReactPopup() {
     this.popupContainer = $('<\div>').appendTo('body').get(0);
@@ -16421,7 +16454,7 @@ window.ReactPopup = (function() {
 
 
 
-},{}],199:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 window.ReactShellBox = (function() {
   function ReactShellBox() {
     var container;
@@ -16456,7 +16489,7 @@ window.ReactShellBox = (function() {
 
 
 
-},{}],200:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 window.TastyAlertController = {
   show: function(_arg) {
     var buttonColor, buttonText, container, message, onAccept, regex, title;
@@ -16488,7 +16521,7 @@ window.TastyAlertController = {
 
 
 
-},{}],201:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 window.TastyConfirmController = {
   show: function(_arg) {
     var acceptButtonColor, acceptButtonText, container, message, messageWithoutBR, onAccept, regex, rejectButtonText;
@@ -16521,7 +16554,7 @@ window.TastyConfirmController = {
 
 
 
-},{}],202:[function(require,module,exports){
+},{}],203:[function(require,module,exports){
 window.TastyEvents = new EventEmitter();
 
 TastyEvents.keys = {
@@ -16571,7 +16604,7 @@ TastyEvents.keys = {
 
 
 
-},{}],203:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 window.TastyLockingAlertController = {
   show: function(_arg) {
     var action, container, message, regex, title;
@@ -16601,7 +16634,7 @@ window.TastyLockingAlertController = {
 
 
 
-},{}],204:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
 window.TastyNotifyController = {
   _notificationList: [],
   notify: function(type, text, timeout) {
@@ -16672,7 +16705,7 @@ TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() 
 
 
 
-},{}],205:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
 
 window.TastySoundController = {
@@ -16699,7 +16732,7 @@ INCOMING_NOTIFICATION = TastySoundController._buildAudioElement('incoming_messag
 
 
 
-},{}],206:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
   SERVER_ACTION: 'SERVER_ACTION',
   TYPE_SETUP: 'setup',
@@ -16714,7 +16747,7 @@ window.CurrentUserDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],207:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     var payload;
@@ -16736,7 +16769,7 @@ window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],208:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 window.NormalizedEntry = (function() {
   function NormalizedEntry(data) {
     _.extend(this, data);
@@ -16748,7 +16781,7 @@ window.NormalizedEntry = (function() {
 
 
 
-},{}],209:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 var CLOSED_STATE, COMMENT_CREATE_STATE, COMMENT_EDIT_STATE;
 
 CLOSED_STATE = 'closed';
@@ -16884,7 +16917,7 @@ window.commentsMediator = new CommentsMediator();
 
 
 
-},{}],210:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 window.ConversationActions = {
   clickConversation: function(conversationId) {
     return MessagingDispatcher.handleViewAction({
@@ -16920,7 +16953,7 @@ window.ConversationActions = {
 
 
 
-},{}],211:[function(require,module,exports){
+},{}],212:[function(require,module,exports){
 window.MessageActions = {
   newMessage: function(_arg) {
     var content, conversationId, uuid;
@@ -16958,7 +16991,7 @@ window.MessageActions = {
 
 
 
-},{}],212:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 window.NotificationActions = {
   readNotification: function(notificationId) {
     console.log('читаем уведомление', notificationId);
@@ -16968,7 +17001,7 @@ window.NotificationActions = {
 
 
 
-},{}],213:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 window.PopupActions = {
   closeMessagesPopup: function() {
     messagingService.closeMessagesPopup();
@@ -16995,7 +17028,7 @@ window.PopupActions = {
 
 
 
-},{}],214:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var TITLE;
@@ -17024,7 +17057,7 @@ window.WriteMessageButton = React.createClass({displayName: 'WriteMessageButton'
 
 
 
-},{}],215:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_Conversations = React.createClass({displayName: 'MessagesPopup_Conversations',
@@ -17045,7 +17078,7 @@ window.MessagesPopup_Conversations = React.createClass({displayName: 'MessagesPo
 
 
 
-},{}],216:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsListEmpty = React.createClass({displayName: 'MessagesPopup_ConversationsListEmpty',
@@ -17060,7 +17093,7 @@ window.MessagesPopup_ConversationsListEmpty = React.createClass({displayName: 'M
 
 
 
-},{}],217:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsList = React.createClass({displayName: 'MessagesPopup_ConversationsList',
@@ -17113,7 +17146,7 @@ window.MessagesPopup_ConversationsList = React.createClass({displayName: 'Messag
 
 
 
-},{}],218:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'MessagesPopup_ConversationsListItem',
@@ -17188,7 +17221,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({displayName: 'Me
 
 
 
-},{}],219:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CLOSE_STATE, OPEN_STATE;
@@ -17254,7 +17287,7 @@ window.MessagesPopup_Chooser = React.createClass({displayName: 'MessagesPopup_Ch
 
 
 
-},{}],220:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var BUTTON_TEXT;
@@ -17275,7 +17308,7 @@ window.MessagesPopup_ChooserButton = React.createClass({displayName: 'MessagesPo
 
 
 
-},{}],221:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ChooserDropdown = React.createClass({displayName: 'MessagesPopup_ChooserDropdown',
@@ -17336,7 +17369,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass({displayName: 'Messages
 
 
 
-},{}],222:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
@@ -17456,7 +17489,7 @@ window.MessagesPopup_ChooserResults = React.createClass({displayName: 'MessagesP
 
 
 
-},{}],223:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ChooserResultsItem = React.createClass({displayName: 'MessagesPopup_ChooserResultsItem',
@@ -17490,7 +17523,7 @@ window.MessagesPopup_ChooserResultsItem = React.createClass({displayName: 'Messa
 
 
 
-},{}],224:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CHOOSER_STATE, PROCESS_STATE;
@@ -17541,7 +17574,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass({displayName: 'Me
 
 
 
-},{}],225:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_LoadingMessage = React.createClass({displayName: 'MessagesPopup_LoadingMessage',
@@ -17571,7 +17604,7 @@ window.MessagesPopup_LoadingMessage = React.createClass({displayName: 'MessagesP
 
 
 
-},{}],226:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, ENTER_TIMEOUT, LEAVE_TIMEOUT, MESSAGES_POPUP_TITLE, MESSAGES_THREAD_TITLE, THREAD_STATE;
@@ -17679,7 +17712,7 @@ window.MessagesPopup = React.createClass({displayName: 'MessagesPopup',
 
 
 
-},{}],227:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_ThreadMessageForm = React.createClass({displayName: 'MessagesPopup_ThreadMessageForm',
@@ -17737,7 +17770,7 @@ window.MessagesPopup_ThreadMessageForm = React.createClass({displayName: 'Messag
 
 
 
-},{}],228:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_MessageListEmpty = React.createClass({displayName: 'MessagesPopup_MessageListEmpty',
@@ -17750,7 +17783,7 @@ window.MessagesPopup_MessageListEmpty = React.createClass({displayName: 'Message
 
 
 
-},{}],229:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var savedScrollHeight;
@@ -17861,7 +17894,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass({displayName: 'Messag
 
 
 
-},{}],230:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE;
@@ -17957,7 +17990,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({displayName: 'Me
 
 
 
-},{}],231:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
@@ -18081,7 +18114,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass({displayNa
 
 
 
-},{}],232:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_Thread = React.createClass({displayName: 'MessagesPopup_Thread',
@@ -18113,7 +18146,7 @@ window.MessagesPopup_Thread = React.createClass({displayName: 'MessagesPopup_Thr
 
 
 
-},{}],233:[function(require,module,exports){
+},{}],234:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.MessagesPopup_UIBackButton = React.createClass({displayName: 'MessagesPopup_UIBackButton',
@@ -18130,7 +18163,7 @@ window.MessagesPopup_UIBackButton = React.createClass({displayName: 'MessagesPop
 
 
 
-},{}],234:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var BUTTON_TEXT;
@@ -18153,7 +18186,7 @@ window.MessagesPopup_UICreateNewConversationButton = React.createClass({displayN
 
 
 
-},{}],235:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup_NotificationsEmpty = React.createClass({displayName: 'NotificationsPopup_NotificationsEmpty',
@@ -18164,7 +18197,7 @@ window.NotificationsPopup_NotificationsEmpty = React.createClass({displayName: '
 
 
 
-},{}],236:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var IMAGE_SIZE;
@@ -18247,7 +18280,7 @@ window.NotificationsPopup_Notification = React.createClass({displayName: 'Notifi
 
 
 
-},{}],237:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup_Notifications = React.createClass({displayName: 'NotificationsPopup_Notifications',
@@ -18290,7 +18323,7 @@ window.NotificationsPopup_Notifications = React.createClass({displayName: 'Notif
 
 
 
-},{}],238:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup',
@@ -18322,7 +18355,7 @@ window.NotificationsPopup = React.createClass({displayName: 'NotificationsPopup'
 
 
 
-},{}],239:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 
 /** @jsx React.DOM */
 var ADVANCED_STATE, BASIC_STATE, MOUSE_LEAVE_TIMEOUT;
@@ -18453,7 +18486,7 @@ window.IndicatorsToolbar = React.createClass({displayName: 'IndicatorsToolbar',
 
 
 
-},{}],240:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsToolbar_Messages',
@@ -18504,7 +18537,7 @@ window.IndicatorsToolbar_Messages = React.createClass({displayName: 'IndicatorsT
 
 
 
-},{}],241:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 
 /** @jsx React.DOM */
 window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'IndicatorsToolbar_Notifications',
@@ -18559,7 +18592,7 @@ window.IndicatorsToolbar_Notifications = React.createClass({displayName: 'Indica
 
 
 
-},{}],242:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 window.MessagingDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     return this.dispatch({
@@ -18655,7 +18688,7 @@ window.MessagingDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],243:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 window.MessagingRequester = (function() {
   function MessagingRequester(_arg) {
     this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
@@ -18746,7 +18779,7 @@ window.MessagingRequester = (function() {
 
 
 
-},{}],244:[function(require,module,exports){
+},{}],245:[function(require,module,exports){
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 window.MessagingService = (function() {
@@ -19014,7 +19047,7 @@ window.MessagingService = (function() {
 
 
 
-},{}],245:[function(require,module,exports){
+},{}],246:[function(require,module,exports){
 window.MessagingMock = {
   message: function() {
     var conversation, recipient, sender;
@@ -19054,7 +19087,7 @@ window.MessagingMock = {
 
 
 
-},{}],246:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 var CONNECTION_EVENT, _connectionState;
 
 CONNECTION_EVENT = 'connectionStateUpdated';
@@ -19098,7 +19131,7 @@ ConnectionStateStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],247:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 var CHANGE_EVENT, _conversations;
 
 CHANGE_EVENT = 'change';
@@ -19219,7 +19252,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],248:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 var CHANGE_EVENT, _allMessagesLoaded, _messages;
 
 CHANGE_EVENT = 'change';
@@ -19373,7 +19406,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(function(payload) {
 
 
 
-},{}],249:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
 
 CHANGE_EVENT = 'change';
@@ -19450,7 +19483,7 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
 
 
 
-},{}],250:[function(require,module,exports){
+},{}],251:[function(require,module,exports){
 var CHANGE_EVENT, _messagingStatus;
 
 CHANGE_EVENT = 'change';
@@ -19494,7 +19527,7 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],251:[function(require,module,exports){
+},{}],252:[function(require,module,exports){
 var CHANGE_EVENT, _notifications;
 
 CHANGE_EVENT = 'change';
@@ -19598,7 +19631,7 @@ NotificationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],252:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 var BaseMixin, ERROR_TIMEOUT, ram, rau;
 
 ERROR_TIMEOUT = 1000;
@@ -19680,7 +19713,7 @@ React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
 
 
-},{}],253:[function(require,module,exports){
+},{}],254:[function(require,module,exports){
 window.ComponentManipulationsMixin = {
   safeUpdate: function(func) {
     if (!this._isUnmounted()) {
@@ -19699,7 +19732,7 @@ window.ComponentManipulationsMixin = {
 
 
 
-},{}],254:[function(require,module,exports){
+},{}],255:[function(require,module,exports){
 var ENTRY_DELETE_ANIMATION_SPEED;
 
 ENTRY_DELETE_ANIMATION_SPEED = 300;
@@ -19724,7 +19757,7 @@ window.DOMManipulationsMixin = {
 
 
 
-},{}],255:[function(require,module,exports){
+},{}],256:[function(require,module,exports){
 var ERROR_TIMEOUT;
 
 ERROR_TIMEOUT = 1000;
@@ -19752,7 +19785,7 @@ window.ErrorTimerMixin = {
 
 
 
-},{}],256:[function(require,module,exports){
+},{}],257:[function(require,module,exports){
 window.ReactGrammarMixin = {
   declension: function(number, titles) {
     var cases;
@@ -19787,7 +19820,7 @@ window.ReactGrammarMixin = {
 
 
 
-},{}],257:[function(require,module,exports){
+},{}],258:[function(require,module,exports){
 var COMPONENT_WIDTH, REPOSITION_TIMEOUT;
 
 REPOSITION_TIMEOUT = 500;
@@ -19854,7 +19887,7 @@ window.ReactPositionsMixin = {
 
 
 
-},{}],258:[function(require,module,exports){
+},{}],259:[function(require,module,exports){
 var Nanobar, nanobar, oldXHR;
 
 Nanobar = require('nanobar');
@@ -19934,7 +19967,7 @@ window.RequesterMixin = {
 
 
 
-},{"nanobar":"nanobar"}],259:[function(require,module,exports){
+},{"nanobar":"nanobar"}],260:[function(require,module,exports){
 window.ScrollerMixin = {
   componentDidMount: function() {
     $(document).on('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
@@ -19984,7 +20017,7 @@ window.ScrollerMixin = {
 
 
 
-},{}],260:[function(require,module,exports){
+},{}],261:[function(require,module,exports){
 window.ReactShakeMixin = {
   shake: function() {
     var animationEnd, form;
@@ -19998,7 +20031,7 @@ window.ReactShakeMixin = {
 
 
 
-},{}],261:[function(require,module,exports){
+},{}],262:[function(require,module,exports){
 window.TouchMixin = {
   componentWillMount: function() {
     if (isMobile()) {
@@ -20010,7 +20043,7 @@ window.TouchMixin = {
 
 
 
-},{}],262:[function(require,module,exports){
+},{}],263:[function(require,module,exports){
 window.ReactUnmountMixin = {
   unmount: function() {
     return _.defer((function(_this) {
@@ -20023,7 +20056,7 @@ window.ReactUnmountMixin = {
 
 
 
-},{}],263:[function(require,module,exports){
+},{}],264:[function(require,module,exports){
 window.EntryNormalizer = {
   normalize: function(entryData) {
     var attr;
@@ -20065,7 +20098,7 @@ window.EntryNormalizer = {
 
 
 
-},{}],264:[function(require,module,exports){
+},{}],265:[function(require,module,exports){
 var STORAGE_PREFIX;
 
 STORAGE_PREFIX = 'entries';
@@ -20131,7 +20164,7 @@ window.EntryStore = {
 
 
 
-},{}],265:[function(require,module,exports){
+},{}],266:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
 
 MOVE_OFFSET = 100;
@@ -20177,7 +20210,7 @@ window.PositionsService = {
 
 
 
-},{}],266:[function(require,module,exports){
+},{}],267:[function(require,module,exports){
 window.ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
   image_url: function(url, style) {
@@ -20192,7 +20225,7 @@ window.ThumborService = {
 
 
 
-},{}],267:[function(require,module,exports){
+},{}],268:[function(require,module,exports){
 window.UuidService = {
   generate: function() {
     var s4;
@@ -20205,7 +20238,7 @@ window.UuidService = {
 
 
 
-},{}],268:[function(require,module,exports){
+},{}],269:[function(require,module,exports){
 var CHANGE_EVENT, currentUser;
 
 CHANGE_EVENT = 'change';
@@ -20251,7 +20284,7 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 
 
 
-},{}],269:[function(require,module,exports){
+},{}],270:[function(require,module,exports){
 var CHANGE_EVENT, SUMMARY_CHANGE_EVENT, _relationships;
 
 CHANGE_EVENT = 'changed';
@@ -20471,7 +20504,7 @@ RelationshipsStore.dispatchToken = RelationshipsDispatcher.register(function(pay
 
 
 
-},{}],270:[function(require,module,exports){
+},{}],271:[function(require,module,exports){
 var defaults,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -20610,7 +20643,7 @@ window.FileReceiver = (function() {
 
 
 
-},{}],271:[function(require,module,exports){
+},{}],272:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -20619,7 +20652,7 @@ window.isMobile = function() {
 
 
 
-},{}],272:[function(require,module,exports){
+},{}],273:[function(require,module,exports){
 $(function() {
   var height;
   if (typeof Modernizr !== "undefined" && Modernizr !== null ? Modernizr.touch : void 0) {
@@ -20671,7 +20704,7 @@ window.Tasty = {
 
 
 
-},{}],273:[function(require,module,exports){
+},{}],274:[function(require,module,exports){
 window.TastyUtils = {
   showFlashes: function(flashes) {
     if (flashes == null) {
@@ -20737,7 +20770,7 @@ window.TastyUtils = {
 
 
 
-},{}],274:[function(require,module,exports){
+},{}],275:[function(require,module,exports){
 window.ApiRoutes = {
   omniauth_url: function(provider) {
     return TastySettings.host + 'auth/' + provider;
@@ -20875,7 +20908,7 @@ window.ApiRoutes = {
 
 
 
-},{}],275:[function(require,module,exports){
+},{}],276:[function(require,module,exports){
 var Routes;
 
 Routes = {
@@ -20903,7 +20936,7 @@ window.Routes = window.Routes || Routes;
 
 
 
-},{}],276:[function(require,module,exports){
+},{}],277:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -20915,7 +20948,7 @@ window.Routes = window.Routes || Routes;
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":277}],277:[function(require,module,exports){
+},{"./lib/Dispatcher":278}],278:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -21167,7 +21200,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":278}],278:[function(require,module,exports){
+},{"./invariant":279}],279:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -21222,7 +21255,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],279:[function(require,module,exports){
+},{}],280:[function(require,module,exports){
 /*!
  * imagesLoaded v3.1.8
  * JavaScript is all like "You images are done yet or what?"
@@ -21559,7 +21592,7 @@ function makeArray( obj ) {
 
 });
 
-},{"eventie":280,"wolfy87-eventemitter":281}],280:[function(require,module,exports){
+},{"eventie":281,"wolfy87-eventemitter":282}],281:[function(require,module,exports){
 /*!
  * eventie v1.0.5
  * event binding helper
@@ -21643,7 +21676,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( this );
 
-},{}],281:[function(require,module,exports){
+},{}],282:[function(require,module,exports){
 /*!
  * EventEmitter v4.2.9 - git.io/ee
  * Oliver Caldwell
@@ -28641,8 +28674,8 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 }));
 
 },{}],"eventEmitter":[function(require,module,exports){
-module.exports=require(281)
-},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":281}],"i18next":[function(require,module,exports){
+module.exports=require(282)
+},{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":282}],"i18next":[function(require,module,exports){
 // i18next, v1.7.4
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license

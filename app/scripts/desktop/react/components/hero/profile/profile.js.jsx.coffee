@@ -1,5 +1,7 @@
 ###* @jsx React.DOM ###
 
+HeroProfile_SettingsButton = require './buttons/settings'
+
 HERO_CLOSED = 'closed'
 HERO_OPENED = 'opened'
 HERO_OPENED_CLASS = 'hero-enabled'
@@ -37,17 +39,22 @@ window.HeroProfile = React.createClass
     TastyEvents.off TastyEvents.keys.command_hero_close(), @close
 
   render: ->
-    # <button className="profile-settings-button"><i className="icon icon--cogwheel"></i></button>
-
-    if @props.relationship?
+    if @isCurrentUser()
+      actions = `<div className="hero__actions">
+                   <button className="button button--small button--outline">Это вы</button>
+                   <HeroProfile_SettingsButton />
+                 </div>`
+    else if @props.relationship?
       actions = `<div className="hero__actions">
                    <FollowButton relationship={ this.props.relationship } />
                    <WriteMessageButton user={ this.props.user } />
-                   <HeroProfile_DropdownMenu userId={ this.props.user.id }
-                                             status={ this.props.relationship.state } />
+                   <HeroProfile_DropdownMenu
+                       userId={ this.props.user.id }
+                       status={ this.props.relationship.state } />
                  </div>`
-      follow_status = `<SmartFollowStatus tlogId={ this.props.user.id }
-                                          status={ this.props.relationship.state } />`
+      follow_status = `<SmartFollowStatus
+                           tlogId={ this.props.user.id }
+                           status={ this.props.relationship.state } />`
 
     return `<div className="hero hero-profile">
               <CloseToolbar onClick={ this.close } />
@@ -63,6 +70,9 @@ window.HeroProfile = React.createClass
               <HeroProfileStats user={ this.props.user }
                                 stats={ this.props.stats } />
             </div>`
+
+  isCurrentUser: ->
+    CurrentUserStore.getUser().id == @props.user.id
 
   open: ->
     transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' +
