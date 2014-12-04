@@ -5269,13 +5269,15 @@ module.exports = EmailPasswordField;
 
 
 },{}],25:[function(require,module,exports){
-var EmailConfirmRegistration, EmailMixin, INVALID_LOGIN_MESSAGE, INVALID_PASSWORD_MESSAGE, LOGIN_LENGTH_ERROR, PASSWORD_LENGTH_ERROR;
+var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWORD_MESSAGE, INVALID_SLUG_MESSAGE, LOGIN_LENGTH_ERROR, PASSWORD_LENGTH_ERROR;
 
 EmailConfirmRegistration = require('../confirm_registration');
 
 INVALID_PASSWORD_MESSAGE = 'user_authenticator/invalid_password';
 
-INVALID_LOGIN_MESSAGE = 'user_authenticator/user_not_found';
+INVALID_EMAIL_MESSAGE = 'user_authenticator/user_by_email_not_found';
+
+INVALID_SLUG_MESSAGE = 'user_authenticator/user_by_slug_not_found';
 
 LOGIN_LENGTH_ERROR = 'Введите свой емейл или имя на сайте';
 
@@ -5319,7 +5321,7 @@ EmailMixin = {
       })(this),
       error: (function(_this) {
         return function(data) {
-          var proposedData, _base;
+          var proposedData;
           _this.shake();
           if (data.responseJSON != null) {
             switch (data.responseJSON.error_code) {
@@ -5328,16 +5330,12 @@ EmailMixin = {
                   isPasswordError: true
                 });
                 break;
-              case INVALID_LOGIN_MESSAGE:
+              case INVALID_EMAIL_MESSAGE:
+              case INVALID_SLUG_MESSAGE:
+                proposedData = data.responseJSON.proposed_data;
                 _this.safeUpdateState({
                   isLoginError: true
                 });
-                if ((_base = data.responseJSON).proposed_data == null) {
-                  _base.proposed_data = {
-                    slug: 'qwerty'
-                  };
-                }
-                proposedData = data.responseJSON.proposed_data;
                 if (proposedData != null) {
                   return _this.handleInvalidLogin({
                     proposedSlug: proposedData.slug

@@ -1,7 +1,8 @@
 EmailConfirmRegistration = require '../confirm_registration'
 
 INVALID_PASSWORD_MESSAGE = 'user_authenticator/invalid_password'
-INVALID_LOGIN_MESSAGE    = 'user_authenticator/user_not_found'
+INVALID_EMAIL_MESSAGE    = 'user_authenticator/user_by_email_not_found'
+INVALID_SLUG_MESSAGE     = 'user_authenticator/user_by_slug_not_found'
 
 #TODO: i18n
 LOGIN_LENGTH_ERROR    = 'Введите свой емейл или имя на сайте'
@@ -43,14 +44,10 @@ EmailMixin =
         if data.responseJSON?
           switch data.responseJSON.error_code
             when INVALID_PASSWORD_MESSAGE then @safeUpdateState(isPasswordError: true)
-            when INVALID_LOGIN_MESSAGE
-              @safeUpdateState(isLoginError: true)
-
-              #FIXME: В ответе data, должен быть ключ proposed_data, если сервер
-              #       предлагает варианты для регистрации
-              data.responseJSON.proposed_data ?= {slug: 'qwerty'} # Mock
-
+            when INVALID_EMAIL_MESSAGE, INVALID_SLUG_MESSAGE
               proposedData = data.responseJSON.proposed_data
+
+              @safeUpdateState(isLoginError: true)
 
               if proposedData?
                 return @handleInvalidLogin(proposedSlug: proposedData.slug)
