@@ -20050,8 +20050,8 @@ window.EntryNormalizer = {
           };
         case 'quote':
           return {
-            data1: entryData.text,
-            data2: entryData.source
+            data1: entryData.source,
+            data2: entryData.text
           };
         default:
           return typeof console.error === "function" ? console.error("Unknown entry type " + entryData.type) : void 0;
