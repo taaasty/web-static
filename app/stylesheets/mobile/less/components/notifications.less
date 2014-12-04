@@ -1,3 +1,9 @@
+.notifications {
+  font-size: @notifications-font-size;
+  line-height: @notifications-line-height;
+  text-size-adjust: none;
+}
+
 .notifications__list {
   .list-style-none();
   width: 100%;
@@ -8,8 +14,6 @@
 .notification {
   position: relative;
   border-bottom: 1px solid @notification-divider-bg;
-  font-size: @font-size-xs;
-  line-height: @line-height-xs;
 
   &.__unread {
     .notification__read-state {

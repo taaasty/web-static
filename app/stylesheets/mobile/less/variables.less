@@ -27,6 +27,7 @@
 @font-family-base-light: 'Proxima Nova Light', Arial, 'Helvetica Neue', Helvetica, sans-serif;
 @font-family-monospace: monospace;
 
+// TODO: Основной размер шрифта для мобильной лучше выбрать 16px/22px
 @font-size-xxs: 12px;
 @font-size-xs: 14px;
 @font-size-sm: 16px;
@@ -36,6 +37,7 @@
 
 @line-height-xxs: 1.5em; // 12px/18px
 @line-height-xs: 1.429em; // 14px/20px
+@line-height-sm: 1.375em; // 16px/22px
 @line-height-base: 1.223em;
 
 // Icons
@@ -218,6 +220,9 @@
 @subscriptions-divider-bg: @color-divider;
 
 // Notifications
+@notifications-font-size: @font-size-sm;
+@notifications-line-height: @line-height-sm;
+
 @notification-unread-color-base: @color-base;
 @notification-unread-color-grey: darken(@grey, 10%);
 
@@ -228,13 +233,19 @@
 
 @notification-hover-bg: @notification-divider-bg;
 
-
 // Messages
-@zindex-messages: 5000;
-@zindex-messages-hero: 5001;
+@messages-font-size: @font-size-sm;
+@messages-line-height: @line-height-sm;
 
-@messages-popup-width: 340px;
+@messages-dialog-divider-bg: @color-divider;
+@messages-dialog-active-bg: @messages-dialog-divider-bg;
 
-@messages-border-radius: 0;
+@messages-avatar-size: 42px;
 
-@messages-chooser-dropdown-bg: @dropdown-popup-bg;
+@messages-counter-bg: #2ba26a;
+
+@messages-chooser-bg: @dropdown-popup-bg;
+@messages-chooser-divider-bg: rgba(255, 255, 255, .1);
+
+@message-to-bubble-bg: #32a16c;
+@message-from-bubble-bg: #f1f1f1;

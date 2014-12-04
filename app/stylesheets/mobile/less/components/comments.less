@@ -124,8 +124,7 @@
 }
 
 .comment-form__submit {
-  margin: 0 0 0 -100%;
-  padding: 13px @indent-base 12px;
+  padding: (@indent-base + 1) @indent-base @indent-base;
   position: relative;
   float: right;
   border: none;
@@ -136,7 +135,8 @@
 }
 
 .comment-form__field {
-  padding-right: 32px;
+  padding-right: @indent-base*2;
+  overflow: hidden;
 }
 
 .comment-form__field-textarea {
@@ -144,7 +144,7 @@
   width: 100%;
   max-height: 200px;
   height: @comments-line-height;
-  padding: 13px @indent-base 12px;
+  padding: (@indent-base + 1) @indent-base @indent-base;
   border: none;
   background: none;
   font: inherit;
