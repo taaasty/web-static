@@ -107,10 +107,22 @@
   &:extend(.button all, .button--green all);
 }
 
+// Thread Overlay
+.messages__thread-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #111;
+  opacity: .5;
+}
+
 // Message List
 .messages__list {
   &:extend(.grid-full);
   min-height: 200px;
+  position: relative;
 }
 
 .messages__list-cell {
@@ -404,6 +416,7 @@
 .messages__section--thread {
   .messages__body {
     background-color: #646a6c;
+    background-size: cover;
   }
 }
 
