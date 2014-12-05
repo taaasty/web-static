@@ -24,8 +24,6 @@ window.MessagesPopup_ChooserResults = React.createClass
 
   render: ->
     switch @state.currentState
-      when LOADING_STATE
-        content = null
 
       when LOADED_STATE
         that = @
