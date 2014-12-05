@@ -2251,6 +2251,9 @@ body {
   -webkit-transition: width 1s ease, opacity .6s ease, background-color .2s ease;
   transition: width 1s ease, opacity .6s ease, background-color .2s ease;
 }
+.toolbar__indicators.state--basic .icon {
+  visibility: hidden;
+}
 .toolbar__indicator {
   position: relative;
   background: transparent;
