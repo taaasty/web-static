@@ -25,9 +25,7 @@ window.MessagesPopup_ChooserResults = React.createClass
   render: ->
     switch @state.currentState
       when LOADING_STATE
-        content = `<div className="messages__chooser-loading">
-                     <Spinner size={ 31 } />
-                   </div>`
+        content = null
 
       when LOADED_STATE
         that = @
