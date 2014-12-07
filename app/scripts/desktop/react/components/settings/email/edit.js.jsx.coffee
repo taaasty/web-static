@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.SettingsEmailEdit = React.createClass
+SettingsEmailEdit = React.createClass
 
   propTypes:
     email:        React.PropTypes.any.isRequired
@@ -92,3 +92,5 @@ window.SettingsEmailEdit = React.createClass
       e.preventDefault()
     else
       @props.onCancelEdit()
+
+module.exports = SettingsEmailEdit

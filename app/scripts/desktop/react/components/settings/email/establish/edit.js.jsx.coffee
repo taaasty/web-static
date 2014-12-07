@@ -3,7 +3,7 @@
 ENTER_KEYCODE = 13
 ESC_KEYCODE   = 27
 
-window.SettingsEmailEstablishEdit = React.createClass
+SettingsEmailEstablishEdit = React.createClass
 
   propTypes:
     onSubmitEstablish: React.PropTypes.func.isRequired
@@ -87,3 +87,5 @@ window.SettingsEmailEstablishEdit = React.createClass
       e.preventDefault()
     else
       @props.onCancelEstablish()
+
+module.exports = SettingsEmailEstablishEdit

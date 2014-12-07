@@ -1,17 +1,21 @@
 ###* @jsx React.DOM ###
 
+SettingsEmailShow      = require './show'
+SettingsEmailEdit      = require './edit'
+SettingsEmailEstablish = require './establish/establish'
+
 SHOW_STATE      = 'show'
 EDIT_STATE      = 'edit'
 ESTABLISH_STATE = 'establish'
 
-window.SettingsEmail = React.createClass
+SettingsEmail = React.createClass
   mixins: [RequesterMixin]
 
   propTypes:
     email:             React.PropTypes.any.isRequired
-    confirmationEmail: React.PropTypes.any.isRequired
-    isConfirmed:       React.PropTypes.bool.isRequired
-    saveCallback:      React.PropTypes.func.isRequired
+    confirmationEmail: React.PropTypes.any
+    confirmed:         React.PropTypes.bool.isRequired
+    onUpdate:          React.PropTypes.func.isRequired
 
   getInitialState: ->
     currentState: if @props.email then SHOW_STATE else ESTABLISH_STATE
@@ -21,7 +25,7 @@ window.SettingsEmail = React.createClass
       when SHOW_STATE
         settingsEmail = `<SettingsEmailShow email={ this.props.email }
                                             confirmationEmail={ this.props.confirmationEmail }
-                                            isConfirmed={ this.props.isConfirmed }
+                                            confirmed={ this.props.confirmed }
                                             onClickEdit={ this.activateEditState }
                                             onClickCancel={ this.makeCancelRequest } />`
       when ESTABLISH_STATE
@@ -40,7 +44,7 @@ window.SettingsEmail = React.createClass
   isEstablishing: -> @state.currentState is ESTABLISH_STATE
 
   onSubmit: (newEmail) ->
-    @props.saveCallback 'email', newEmail
+    @props.onUpdate 'email', newEmail
     @activateShowState()
 
   makeCancelRequest: ->
@@ -48,6 +52,8 @@ window.SettingsEmail = React.createClass
       url:  ApiRoutes.request_confirm_url()
       method: 'DELETE'
       success: =>
-        @props.saveCallback 'confirmation_email', null
+        @props.onUpdate 'confirmation_email', null
       error: (data) =>
         TastyNotifyController.errorResponse data
+
+module.exports = SettingsEmail

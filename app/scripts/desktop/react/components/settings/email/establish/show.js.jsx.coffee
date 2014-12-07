@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.SettingsEmailEstablishShow = React.createClass
+SettingsEmailEstablishShow = React.createClass
 
   propTypes:
     onClickEstablish: React.PropTypes.func.isRequired
@@ -22,3 +22,5 @@ window.SettingsEmailEstablishShow = React.createClass
     e.preventDefault()
 
     @props.onClickEstablish()
+
+module.exports = SettingsEmailEstablishShow

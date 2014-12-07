@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-window.SettingsEmailConfirmation = React.createClass
+SettingsEmailConfirmation = React.createClass
   mixins: [
     ReactShakeMixin, RequesterMixin, ErrorTimerMixin
     ComponentManipulationsMixin
@@ -8,8 +8,8 @@ window.SettingsEmailConfirmation = React.createClass
 
   propTypes:
     email:             React.PropTypes.any.isRequired
-    confirmationEmail: React.PropTypes.any.isRequired
-    isConfirmed:       React.PropTypes.bool.isRequired
+    confirmationEmail: React.PropTypes.any
+    confirmed:         React.PropTypes.bool.isRequired
 
   getInitialState: ->
     isError:   false
@@ -47,3 +47,5 @@ window.SettingsEmailConfirmation = React.createClass
         @shake()
         TastyNotifyController.errorResponse data
       complete: => @safeUpdateState isProcess: false
+
+module.exports = SettingsEmailConfirmation

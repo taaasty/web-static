@@ -1,8 +1,9 @@
-window.CurrentUserDispatcher = _.extend new Dispatcher(),
-  SERVER_ACTION: 'SERVER_ACTION'
+BaseDispatcher = require './_base'
 
-  TYPE_SETUP: 'setup'
+window.CurrentUserDispatcher = _.extend new BaseDispatcher(),
 
   # Устанавливается однажды при запуске системы
   setupUser: (user) ->
-    @dispatch source: @SERVER_ACTION, type: @TYPE_SETUP, user: user
+    @handleServerAction
+      type: 'setup'
+      user: user

@@ -27,7 +27,7 @@ module.exports = {
           entries: src + '/scripts/desktop.local.coffee'
           dest: build + '/scripts'
           outputName: 'client.js'
-          extensions: ['.coffee', '.js.jsx.coffee']
+          extensions: ['.coffee', '.jsx.coffee', '.js.jsx.coffee']
         }
       }
       less: {

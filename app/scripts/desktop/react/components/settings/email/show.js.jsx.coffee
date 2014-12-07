@@ -1,12 +1,14 @@
 ###* @jsx React.DOM ###
 
-window.SettingsEmailShow = React.createClass
+SettingsEmailConfirmation = require './confirmation'
+
+SettingsEmailShow = React.createClass
   mixins: [ReactShakeMixin]
 
   propTypes:
     email:             React.PropTypes.any.isRequired
-    confirmationEmail: React.PropTypes.any.isRequired
-    isConfirmed:       React.PropTypes.bool.isRequired
+    confirmationEmail: React.PropTypes.any
+    confirmed:         React.PropTypes.bool.isRequired
     onClickEdit:       React.PropTypes.func.isRequired
     onClickCancel:     React.PropTypes.func.isRequired
 
@@ -35,7 +37,7 @@ window.SettingsEmailShow = React.createClass
                 </p>
                 <SettingsEmailConfirmation email={ email }
                                            confirmationEmail={ this.props.confirmationEmail }
-                                           isConfirmed={ this.props.isConfirmed } />
+                                           confirmed={ this.props.confirmed } />
               </div>
             </div>`
 
@@ -51,3 +53,5 @@ window.SettingsEmailShow = React.createClass
     e.preventDefault()
 
     @props.onClickCancel()
+
+module.exports = SettingsEmailShow

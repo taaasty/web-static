@@ -1,9 +1,12 @@
 ###* @jsx React.DOM ###
 
+SettingsEmailEstablishShow = require './show'
+SettingsEmailEstablishEdit = require './edit'
+
 SHOW_STATE = 'show'
 EDIT_STATE = 'edit'
 
-window.SettingsEmailEstablish = React.createClass
+SettingsEmailEstablish = React.createClass
 
   propTypes:
     onSubmitEstablish: React.PropTypes.func.isRequired
@@ -23,3 +26,5 @@ window.SettingsEmailEstablish = React.createClass
 
   isEditing: -> @state.currentState is EDIT_STATE
   isShowing: -> @state.currentState is SHOW_STATE
+
+module.exports = SettingsEmailEstablish

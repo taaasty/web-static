@@ -128,24 +128,31 @@ require './react/components/auth/recovery'
 
 # /*-----  End of Authorization resources  ------*/
 
-require './react/components/settings_popup/settings_email/settings_email'
-require './react/components/settings_popup/settings_email/edit'
-require './react/components/settings_popup/settings_email/show'
-require './react/components/settings_popup/settings_email/confirmation'
+# /*==========================================
+# =            Settings resources            =
+# ==========================================*/
 
-require './react/components/settings_popup/settings_email/establish/establish'
-require './react/components/settings_popup/settings_email/establish/edit'
-require './react/components/settings_popup/settings_email/establish/show'
+require './react/components/settings/settings'
 
-require './react/components/settings_popup/settings_avatar'
-require './react/components/settings_popup/settings_name'
-require './react/components/settings_popup/settings_title'
-require './react/components/settings_popup/settings_accounts_item'
-require './react/components/settings_popup/settings_header'
-require './react/components/settings_popup/settings_password_input'
-require './react/components/settings_popup/settings_radio_item'
-require './react/components/settings_popup/settings_vkontakte'
-require './react/components/settings_popup/toolbar_settings'
+# require './react/components/settings/settings_email/settings_email'
+# require './react/components/settings/settings_email/edit'
+# require './react/components/settings/settings_email/show'
+# require './react/components/settings/settings_email/confirmation'
+
+# require './react/components/settings/settings_email/establish/establish'
+# require './react/components/settings/settings_email/establish/edit'
+# require './react/components/settings/settings_email/establish/show'
+
+# require './react/components/settings/settings_avatar'
+# require './react/components/settings/settings_name'
+# require './react/components/settings/settings_title'
+# require './react/components/settings/settings_accounts_item'
+# require './react/components/settings/settings_header'
+# require './react/components/settings/settings_password_input'
+# require './react/components/settings/settings_radio_item'
+# require './react/components/settings/settings_vkontakte'
+
+# /*-----  End of Settings resources  ------*/
 
 require './react/components/toolbars/user/user'
 require './react/components/toolbars/feed/feed'

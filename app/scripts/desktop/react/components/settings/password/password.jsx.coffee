@@ -1,14 +1,16 @@
 ###* @jsx React.DOM ###
 
+#TODO: Separate on state subcomponents (show/edit)
+
 KEYCODE_ESC = 27
 KEYCODE_ENTER = 13
 CANCEL_TIMEOUT = 500
 
-module.experts = window.SettingsPasswordItem = React.createClass
+SettingsPassword = React.createClass
   mixins: [ReactShakeMixin]
 
   propTypes:
-    saveCallback: React.PropTypes.func.isRequired
+    onUpdate: React.PropTypes.func.isRequired
 
   getInitialState: ->
     isEditing: false
@@ -39,7 +41,7 @@ module.experts = window.SettingsPasswordItem = React.createClass
   save: ->
     return unless @validate()
 
-    @props.saveCallback 'password', @refs.password.state.value
+    @props.onUpdate 'password', @refs.password.state.value
     @setState isEditing: false
 
   clickSave: (event)->
@@ -163,3 +165,5 @@ module.experts = window.SettingsPasswordItem = React.createClass
                 </div>
               </div>
             </div>`
+
+module.exports = SettingsPassword

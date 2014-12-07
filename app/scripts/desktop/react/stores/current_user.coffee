@@ -1,16 +1,16 @@
-CHANGE_EVENT = 'change'
+BaseStore = require './_base'
 
 currentUser = null
 
-window.CurrentUserStore = _.extend {}, EventEmitter.prototype, {
+window.CurrentUserStore = _.extend new BaseStore(), {
 
-  emitChange:           -> @emit CHANGE_EVENT
-  addChangeListener:    (callback) -> @on  CHANGE_EVENT, callback
-  removeChangeListener: (callback) -> @off CHANGE_EVENT, callback
-  isLogged:             -> currentUser?
-  getUser:              -> currentUser
-  getAccessToken:       -> currentUser.api_key.access_token
-  getUserpic:           -> currentUser.userpic
+  isLogged:       -> currentUser?
+  getUser:        -> currentUser
+  getAccessToken: -> currentUser.api_key.access_token
+  getUserpic:     -> currentUser.userpic
+
+  updateUser: (data) ->
+    _.extend currentUser, data
 
   _setupUser: (user) ->
     currentUser = user
@@ -18,10 +18,15 @@ window.CurrentUserStore = _.extend {}, EventEmitter.prototype, {
 }
 
 CurrentUserStore.dispatchToken = CurrentUserDispatcher.register (payload) ->
+  action = payload.action
 
-  switch payload.type
-    # TODO updateUserpic, updateNames (title, slug, name), updateBackground, updateDesign
-    when CurrentUserDispatcher.TYPE_SETUP
-      CurrentUserStore._setupUser payload.user
+  switch action.type
+    when 'setup'
+      CurrentUserStore._setupUser action.user
       CurrentUserStore.emitChange()
-      break
+    when 'userUpdated'
+      CurrentUserStore.updateUser action.user
+      CurrentUserStore.emitChange()
+    when 'userpicUpdated'
+      CurrentUserStore.updateUser(userpic: action.userpic)
+      CurrentUserStore.emitChange()
