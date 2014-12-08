@@ -68,7 +68,7 @@ window.Settings = React.createClass
               key="availableNotifications"
               onChange={ this.updateAvailableNotifications } />
 
-          <SettingsPassword onUpdate={ this.saveChanges } />
+          <SettingsPassword onUpdate={ this.updatePassword } />
 
           <SettingsAccounts
               user={ this.state.user }

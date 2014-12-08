@@ -27,7 +27,6 @@ gulp.task 'clientDesktopScripts', ->
     .external 'react-mixin-manager'
     .external 'reactUjs'
     .external 'underscore'
-    .external 'backbone'
     .external 'baron'
     .external 'mousetrap'
     .external 'bowser'

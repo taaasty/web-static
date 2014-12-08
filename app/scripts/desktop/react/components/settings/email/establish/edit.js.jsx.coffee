@@ -63,7 +63,7 @@ SettingsEmailEstablishEdit = React.createClass
   handleInputKeyDown: (e) ->
     newEmail = e.target.value
 
-    switch e.keyCode
+    switch e.key
       when 'Enter'
         e.preventDefault()
         @props.onSubmit newEmail

@@ -1,5 +1,7 @@
 ###* @jsx React.DOM ###
 
+#TODO: Refactor
+
 SettingsAccounts = React.createClass
 
   propTypes:

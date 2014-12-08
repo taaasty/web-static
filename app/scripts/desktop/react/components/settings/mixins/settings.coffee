@@ -8,8 +8,12 @@ SettingsMixin =
     CurrentUserViewActions.updateSlug {
       slug: slug
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess 'Псевдоним успешно изменено', 2000
-      complete:   => @decrementActivities()
+      success: (data) ->
+        TastyLockingAlertController.show
+          title: 'Внимание!'
+          message: "Сейчас будет произведён переход по новому адресу вашего тлога (#{data.tlog_url})"
+          action: -> window.location = data.tlog_url
+      complete: => @decrementActivities()
     }
 
   updateTitle: (title) ->
@@ -42,6 +46,16 @@ SettingsMixin =
       beforeSend: => @incrementActivities()
       success:    => TastyNotifyController.notifySuccess 'Настройки пола успешно изменены', 2000
       complete:   => @decrementActivities()
+    }
+
+  updatePassword: ({password, success}) ->
+    CurrentUserViewActions.updatePassword {
+      password: password
+      beforeSend: => @incrementActivities()
+      success: =>
+        TastyNotifyController.notifySuccess 'Пароль успешно изменён', 2000
+        success?()
+      complete: => @decrementActivities()
     }
 
   updateAvailableNotifications: (availableNotifications) ->

@@ -52,6 +52,13 @@ CurrentUserViewActions =
     }
     @update options
 
+  updatePassword: (options = {}) ->
+    _.extend options, {
+      data:
+        password: options.password
+    }
+    @update options
+
   cancelEmailConfirmation: ({beforeSend, success, error, complete}) ->
     CurrentUserResource.cancelEmailConfirmation {
       beforeSend: beforeSend

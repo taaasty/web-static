@@ -49,7 +49,7 @@ module.exports = {
         bundle: {
           baseDir: src
           entries: './scripts/desktop.production.coffee'
-          extensions: ['.coffee', '.js.jsx.coffee']
+          extensions: ['.coffee', '.jsx.coffee', '.js.jsx.coffee']
           dest: dist + '/scripts/'
           outputName: 'bundle.js'
         }
