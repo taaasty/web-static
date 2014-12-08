@@ -1,76 +1,97 @@
 ###* @jsx React.DOM ###
 
+LOADING_STATE = 'loading'
+READY_STATE = 'ready'
+
 window.ScreenViewer = React.createClass
   PropTypes:
-    mainText: React.PropTypes.string
-    items:    React.PropTypes.array.isRequired
+    text: React.PropTypes.string
+    sourceImages: React.PropTypes.array.isRequired
 
   getInitialState: ->
-    index: 0
-    indexLoadableItem: 0
-    loadedItems: []
-
-    numberLoadableSlide: 0
-    currentImage: null
+    currentState: LOADING_STATE
     images: []
-    isStarted: false
 
-  componentWillMount: ->
-    @images = []
-    #@loadImages()
-    @_loadImage()
+  componentDidMount: ->
+    _.each @props.sourceImages, (sourceImage) =>
+      image = new Image
+      image.src = sourceImage.imgSrc
+      image.onload = =>
+        images = @state.images
+        images.push({
+          imgSrc: sourceImage.imgSrc,
+          tlogUrl: sourceImage.tlogUrl,
+          userName: sourceImage.userName
+        })
+        @setState images: images
+        @setState currentState: READY_STATE
 
   render: ->
-    srcImg = @state.currentImage
-    #console.log @state.numberLoadableSlide
-    console.log @state
-    console.log srcImg
+    viewerContent = switch @state.currentState
+      when LOADING_STATE
+        `<ScreenViewer_Loader/>`
+      when READY_STATE
+        `<ScreenViewer_Showing images={ this.state.images } />`
+      else console.warn "Неизвестное состояние #{@state.currentState}"
 
     return `<div className="screen-viewer">
-              <ScreenViewerItem srcImg={ srcImg }
-                                userName="volosojui"
-                                tlogUrl="@volosojui">
-              </ScreenViewerItem>
+              <div className='screen-viewer__spacer' />
+              { viewerContent }
             </div>`
 
-  _loadImages: ->
+
+window.ScreenViewer_Showing = React.createClass
+  propTypes:
+    images: React.PropTypes.array.isRequired
+
+  getInitialState: ->
+    indexCurrentImage: 0
+    currentImage: @props.images[0]
+
+  componentDidMount: ->
+    @startShow()
+
+  render: ->
+    `<ScreenViewer_Item imgSrc={ this.state.currentImage.imgSrc }
+                        userName={ this.state.currentImage.userName }
+                        tlogUrl={ this.state.currentImage.tlogUrl } />`
 
 
-  loadImages: ->
-    context = this
+  startShow: ->
+    console.log @state.indexCurrentImage
+    @setState currentImage: @props.images[@state.indexCurrentImage]
 
-    if @state.numberLoadableSlide < @props.items.length
 
-      currentSrcImg = @props.items[@state.numberLoadableSlide].srcImg
+window.ScreenViewer_Item = React.createClass
+  propTypes:
+    imgSrc:   React.PropTypes.string.isRequired
+    tlogUrl:  React.PropTypes.string.isRequired
+    userName: React.PropTypes.string.isRequired
 
-      # Загружаем картинку
-      # arg1 - ссылка на картинку
-      # arg1 - колбэк, если картинка успешно загрузилась
-      ScreenViewerController.loadImage currentSrcImg, ->
-        context.images.push(currentSrcImg)
+  render: ->
+    style = "background-image": "url(#{@props.imgSrc})"
 
-        #console.log currentSrcImg
+    return `<div className='screen-viewer__item state--active'>
+              <div style={ style }
+                   className='screen-viewer__bg'>
+              </div>
+              <div className='screen-viewer__user'>
+                <a href={ this.props.tlogUrl }
+                   title={ this.props.userName }>Фотография – { this.props.userName }</a>
+              </div>
+            </div>`
 
-        context.setState currentImage: currentSrcImg
 
-        #context.setState isStarted: true
+window.ScreenViewer_Loader = React.createClass
+  render: ->
+    return `<div className='screen-viewer__loader'>
+              <Spinner size={ 24 } />
+            </div>`
 
-        if nextLoadableSlide < context.props.items.length -1
-          nextLoadableSlide = context.state.numberLoadableSlide + 1
-          context.setState numberLoadableSlide: nextLoadableSlide
 
-        context.loadImages()
+window.ScreenViewer_Text = React.createClass
+  propTypes:
+    text: React.PropTypes.string
 
-  _loadImage: ->
-    self = @
-
-    currentItem = @props.items[@state.indexLoadableItem]
-    console.log currentItem
-
-    _loadedItems = self.state.loadedItems
-
-    ScreenViewerController._loadImage currentItem.srcImg, ->
-      console.log 'laod'
-      _loadedItems.push currentItem
-      _loadedItems.push {'1': 'log'}
-      self.setState loadedItems: _loadedItems
+  render: ->
+    return `<div className='screen-viewer__title'>{ text }</div>`

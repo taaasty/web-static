@@ -1,3 +1,8 @@
+.screen-viewer-container {
+  width: 100%;
+  height: 100%;
+}
+
 .screen-viewer {
   width: 100%;
   height: 100%;
@@ -5,13 +10,6 @@
   font-family: @font-family-base;
   color: @white;
   overflow: hidden;
-
-  &:before {
-    content: "";
-    height: 100%;
-    display: inline-block;
-    vertical-align: middle;
-  }
 
   &.state--ready {
     .screen-viewer__item.state--current {
@@ -33,6 +31,12 @@
       transition: transform 1s ease, opacity 1s ease;
     }
   }
+}
+
+.screen-viewer__spacer {
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .screen-viewer__box {
