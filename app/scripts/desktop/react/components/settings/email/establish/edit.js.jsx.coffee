@@ -1,22 +1,17 @@
 ###* @jsx React.DOM ###
 
-ENTER_KEYCODE = 13
-ESC_KEYCODE   = 27
-
 SettingsEmailEstablishEdit = React.createClass
 
   propTypes:
-    onSubmitEstablish: React.PropTypes.func.isRequired
-    onCancelEstablish: React.PropTypes.func.isRequired
+    onSubmit:     React.PropTypes.func.isRequired
+    onEditCancel: React.PropTypes.func.isRequired
 
   getInitialState: ->
     hasInput: false
 
   componentDidMount: ->
-    @$establishButton = $( @refs.establishButton.getDOMNode() )
-    @$emailField      = $( @refs.email.getDOMNode() )
-
-    @$emailField.focus()
+    emailField = @refs.email.getDOMNode()
+    emailField.focus()
 
   render: ->
     buttonClasses = React.addons.classSet {
@@ -29,63 +24,51 @@ SettingsEmailEstablishEdit = React.createClass
               <div className="settings__right">
                 <button ref="establishButton"
                         className={ buttonClasses }
-                        onClick={ this.onClickEstablish }>
-                  <span className="button__text">{ this.getEstablishButtonTitle() }</span>
+                        onMouseDown={ this.handleButtonMouseDown }
+                        onClick={ this.handleButtonClick }>
+                  <span className="button__text">{ this.getButtonTitle() }</span>
                 </button>
               </div>
               <div className="settings__left">
                 <h3 className="settings__title">Емейл</h3>
                 <div className="form-field form-field--default">
                   <input ref="email"
-                         onChange={ this.onChange }
-                         onKeyDown={ this.onKeyDown }
-                         onFocus={ this.onFocus }
-                         onBlur={ this.onBlur }
+                         onChange={ this.handleInputChange }
+                         onKeyDown={ this.handleInputKeyDown }
+                         onBlur={ this.props.onEditCancel }
                          className="form-field__input" />
                   <div className="form-field__bg" />
                 </div>
               </div>
             </div>`
 
-  getEstablishButtonTitle: -> if @state.hasInput then 'установить' else 'отмена'
+  getButtonTitle: ->
+    if @state.hasInput then 'установить' else 'отмена'
 
-  onClickEstablish: (e) ->
+  handleButtonClick: (e) ->
     e.preventDefault()
 
-    email = @$emailField.val()
+  handleButtonMouseDown: (e) ->
+    emailField = @refs.email.getDOMNode()
+    newEmail   = emailField.value
 
-    if @state.hasInput then @props.onSubmitEstablish(email) else @props.onCancelEstablish()
+    if @state.hasInput then @props.onSubmit(newEmail) else @props.onEditCancel()
 
-  onChange: ->
-    newEmail = @$emailField.val()
+  handleInputChange: (e) ->
+    newEmail = e.target.value
     hasInput = newEmail.length >= 5
 
-    @setState hasInput: hasInput
+    @setState(hasInput: hasInput)
 
-  onKeyDown: (e) ->
-    newEmail = @$emailField.val()
+  handleInputKeyDown: (e) ->
+    newEmail = e.target.value
 
-    switch e.which
-      when ESC_KEYCODE
+    switch e.keyCode
+      when 'Enter'
         e.preventDefault()
-        @props.onCancelEstablish()
-      when ENTER_KEYCODE
+        @props.onSubmit newEmail
+      when 'Escape'
         e.preventDefault()
-        @props.onSubmitEstablish newEmail
-
-  onFocus: ->
-    # После фокуса, переводим курсор в конец строки
-    valueLength = @$emailField.val().length
-
-    if @$emailField.get(0).setSelectionRange?
-      @$emailField.get(0).setSelectionRange valueLength, valueLength
-    else
-      @$emailField.val @$emailField.val()
-
-  onBlur: (e) ->
-    if e.relatedTarget is @$establishButton.get 0
-      e.preventDefault()
-    else
-      @props.onCancelEstablish()
+        @props.onEditCancel()
 
 module.exports = SettingsEmailEstablishEdit

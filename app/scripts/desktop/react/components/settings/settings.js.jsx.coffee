@@ -57,8 +57,9 @@ window.Settings = React.createClass
           <SettingsEmail
               email={ this.state.user.email }
               confirmationEmail={ this.state.user.confirmation_email }
-              confirmed={ this.state.user.is_confirmed }
-              onUpdate={ this.saveChanges } />
+              onUpdate={ this.updateEmail }
+              onCancel={ this.cancelEmailConfirmation }
+              onResend={ this.resendEmailConfirmation } />
 
           <SettingsRadioItem
               title="Уведомления"

@@ -1,51 +1,49 @@
 ###* @jsx React.DOM ###
 
+SHOW_STATE    = 'show'
+SENT_STATE    = 'sent'
+SENDING_STATE = 'sending'
+ERROR_STATE   = 'error'
+
 SettingsEmailConfirmation = React.createClass
-  mixins: [
-    ReactShakeMixin, RequesterMixin, ErrorTimerMixin
-    ComponentManipulationsMixin
-  ]
 
   propTypes:
     email:             React.PropTypes.any.isRequired
     confirmationEmail: React.PropTypes.any
-    confirmed:         React.PropTypes.bool.isRequired
+    onResend:          React.PropTypes.func.isRequired
 
   getInitialState: ->
-    isError:   false
-    isProcess: false
-
-  componentWillUnmount: -> @clearErrorTimer()
+    currentState: SHOW_STATE
+    errorMessage: ''
 
   render: ->
-    if @isConfirmation()
-      if @state.isError
-        message = `<p className="settings__error">Ошибка</p>`
-      else if @state.isProcess
-        message = `<p className="settings__error">Отправляем письмо..</p>`
-      else if @state.isSent
-        message = `<p className="settings__error">Отправлено письмо на электронный ящик (проверьте в папке «Спам»).</p>`
-      else
-        message = `<p className="settings__error">Емейл не подтвержден. <a onClick={this.clickConfirm} title="Отправить">Отправить</a> подтверждение снова (или проверьте в папке «Спам»)</p>`
-    else
-      null
+    message = switch @state.currentState
+      when SHOW_STATE
+       `<span>
+          Емейл не подтвержден. <a title="Отправить" onClick={ this.handleClick }>Отправить</a> подтверждение снова (или проверьте в папке «Спам»)
+        </span>`
+      when SENDING_STATE then 'Отправляем письмо..'
+      when SENT_STATE    then 'Отправлено письмо на электронный ящик (проверьте в папке «Спам»).'
+      when ERROR_STATE   then 'Ошибка: ' + @state.errorMessage
+      else console.warn 'Unknown currentState of SettingsEmailConfirmation component', @state.currentState
 
-  isConfirmation: -> !!@props.confirmationEmail && @props.confirmationEmail != @props.email
+    return `<p className="settings__error">{ message }</p>`
 
-  clickConfirm: ->
-    @setState isProcess: true
+  isConfirmation: -> @props.confirmationEmail? && @props.confirmationEmail isnt @props.email
 
-    @createRequest
-      url: ApiRoutes.request_confirm_url()
-      method: 'POST'
-      dataType: 'JSON'
-      success: (data) =>
-        @safeUpdateState isSent: true
-        TastyNotifyController.notify 'success', "Вам на почту отправлена ссылка для восстановления пароля"
+  activateSendingState: -> @setState(currentState: SENDING_STATE)
+  activateSentState:    -> @setState(currentState: SENT_STATE)
+  activateErrorState:   -> @setState(currentState: ERROR_STATE)
+
+  handleClick: ->
+    @props.onResend {
+      beforeSend: @activateSendingState
+      success: @activateSentState
       error: (data) =>
-        @startErrorTimer()
-        @shake()
-        TastyNotifyController.errorResponse data
-      complete: => @safeUpdateState isProcess: false
+        @setState {
+          currentState: ERROR_STATE
+          errorMessage: data.responseJSON.error
+        }
+    }
 
 module.exports = SettingsEmailConfirmation

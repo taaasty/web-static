@@ -9,13 +9,13 @@ EDIT_STATE      = 'edit'
 ESTABLISH_STATE = 'establish'
 
 SettingsEmail = React.createClass
-  mixins: [RequesterMixin]
 
   propTypes:
     email:             React.PropTypes.any.isRequired
     confirmationEmail: React.PropTypes.any
-    confirmed:         React.PropTypes.bool.isRequired
     onUpdate:          React.PropTypes.func.isRequired
+    onCancel:          React.PropTypes.func.isRequired
+    onResend:          React.PropTypes.func.isRequired
 
   getInitialState: ->
     currentState: if @props.email then SHOW_STATE else ESTABLISH_STATE
@@ -23,37 +23,31 @@ SettingsEmail = React.createClass
   render: ->
     switch @state.currentState
       when SHOW_STATE
-        settingsEmail = `<SettingsEmailShow email={ this.props.email }
-                                            confirmationEmail={ this.props.confirmationEmail }
-                                            confirmed={ this.props.confirmed }
-                                            onClickEdit={ this.activateEditState }
-                                            onClickCancel={ this.makeCancelRequest } />`
+        `<SettingsEmailShow
+             email={ this.props.email }
+             confirmationEmail={ this.props.confirmationEmail }
+             onEditStart={ this.activateEditState }
+             onCancel={ this.handleCancel }
+             onResend={ this.props.onResend } />`
       when ESTABLISH_STATE
-        settingsEmail = `<SettingsEmailEstablish onSubmitEstablish={ this.onSubmit } />`
+        `<SettingsEmailEstablish onSubmit={ this.handleSubmit } />`
       when EDIT_STATE
-        settingsEmail = `<SettingsEmailEdit email={ this.props.email }
-                                            onCancelEdit={ this.activateShowState }
-                                            onSubmitEdit={ this.onSubmit }
-                                            onBlurEdit={ this.activateShowState } />`
+        `<SettingsEmailEdit
+             email={ this.props.email }
+             onEditCancel={ this.activateShowState }
+             onSubmit={ this.handleSubmit } />`
+      else console.warn 'Unknown currentState of SettingsEmail component', @state.currentState
 
   activateEditState: -> @setState(currentState: EDIT_STATE)
   activateShowState: -> @setState(currentState: SHOW_STATE)
 
-  isEditing:      -> @state.currentState is EDIT_STATE
-  isShowing:      -> @state.currentState is SHOW_STATE
-  isEstablishing: -> @state.currentState is ESTABLISH_STATE
+  handleSubmit: (newEmail) ->
+    @props.onUpdate {
+      email: newEmail
+      success: @activateShowState
+    }
 
-  onSubmit: (newEmail) ->
-    @props.onUpdate 'email', newEmail
-    @activateShowState()
-
-  makeCancelRequest: ->
-    @createRequest
-      url:  ApiRoutes.request_confirm_url()
-      method: 'DELETE'
-      success: =>
-        @props.onUpdate 'confirmation_email', null
-      error: (data) =>
-        TastyNotifyController.errorResponse data
-
+  handleCancel: ->
+    @props.onCancel(success: @activateShowState)
+    
 module.exports = SettingsEmail

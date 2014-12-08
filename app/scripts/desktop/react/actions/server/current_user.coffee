@@ -10,4 +10,8 @@ CurrentUserServerActions =
       type: 'userpicUpdated'
       userpic: userpic
 
+  cancelEmailConfirmation: ->
+    CurrentUserDispatcher.handleServerAction
+      type: 'confirmationEmailCanceled'
+
 module.exports = CurrentUserServerActions

@@ -45,14 +45,39 @@ CurrentUserViewActions =
     }
     @update options
 
+  updateEmail: (options = {}) ->
+    _.extend options, {
+      data:
+        email: options.email
+    }
+    @update options
+
+  cancelEmailConfirmation: ({beforeSend, success, error, complete}) ->
+    CurrentUserResource.cancelEmailConfirmation {
+      beforeSend: beforeSend
+      success: ->
+        CurrentUserServerActions.cancelEmailConfirmation()
+        success?()
+      error: error
+      complete: complete
+    }
+
+  resendEmailConfirmation: ({beforeSend, success, error, complete}) ->
+    CurrentUserResource.resendEmailConfirmation {
+      beforeSend: beforeSend
+      success: success
+      error: error
+      complete: complete
+    }
+
   update: ({data, beforeSend, success, error, complete}) ->
     CurrentUserResource.update {
       data: data
       beforeSend: beforeSend
-      success: (user) =>
+      success: (user) ->
         CurrentUserServerActions.updateUser user
         success?(user)
-      error: (data) =>
+      error: (data) ->
         TastyNotifyController.errorResponse data
         error?(data)
       complete: complete

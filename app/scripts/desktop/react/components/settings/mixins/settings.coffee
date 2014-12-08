@@ -1,3 +1,5 @@
+#TODO: i18n для всех сообщений
+
 CurrentUserViewActions = require '../../../actions/view/current_user'
 
 SettingsMixin =
@@ -6,6 +8,7 @@ SettingsMixin =
     CurrentUserViewActions.updateSlug {
       slug: slug
       beforeSend: => @incrementActivities()
+      success:    => TastyNotifyController.notifySuccess 'Псевдоним успешно изменено', 2000
       complete:   => @decrementActivities()
     }
 
@@ -13,6 +16,7 @@ SettingsMixin =
     CurrentUserViewActions.updateTitle {
       title: title
       beforeSend: => @incrementActivities()
+      success:    => TastyNotifyController.notifySuccess 'Описание тлога успешно изменено', 2000
       complete:   => @decrementActivities()
     }
 
@@ -20,6 +24,7 @@ SettingsMixin =
     CurrentUserViewActions.updatePrivacy {
       privacy: privacy
       beforeSend: => @incrementActivities()
+      success:    => TastyNotifyController.notifySuccess 'Приватность тлога успешно изменена', 2000
       complete:   => @decrementActivities()
     }
 
@@ -27,6 +32,7 @@ SettingsMixin =
     CurrentUserViewActions.updateDaylog {
       daylog: daylog
       beforeSend: => @incrementActivities()
+      success:    => TastyNotifyController.notifySuccess 'Настройки тлогодня успешно изменены', 2000
       complete:   => @decrementActivities()
     }
 
@@ -34,6 +40,7 @@ SettingsMixin =
     CurrentUserViewActions.updateFemale {
       female: female
       beforeSend: => @incrementActivities()
+      success:    => TastyNotifyController.notifySuccess 'Настройки пола успешно изменены', 2000
       complete:   => @decrementActivities()
     }
 
@@ -41,38 +48,37 @@ SettingsMixin =
     CurrentUserViewActions.updateAvailableNotifications {
       availableNotifications: availableNotifications
       beforeSend: => @incrementActivities()
+      success:    => TastyNotifyController.notifySuccess 'Настройки уведомлений успешно изменены', 2000
       complete:   => @decrementActivities()
     }
 
-  saveChanges: (key, value) ->
-    console.log 'save', key, value
-  #   @incrementActivities()
+  updateEmail: ({email, success}) ->
+    CurrentUserViewActions.updateEmail {
+      email: email
+      beforeSend: => @incrementActivities()
+      success: =>
+        success?()
+        TastyNotifyController.notifySuccess 'На указанный адрес отправлено письмо для активации', 2000
+      complete:   => @decrementActivities()
+    }
 
-  #   @setState isProcess: true
+  cancelEmailConfirmation: ->
+    CurrentUserViewActions.cancelEmailConfirmation {
+      beforeSend: => @incrementActivities()
+      success:    => TastyNotifyController.notifySuccess 'Запрос на изменение емейла успешно отменён', 2000
+      complete:   => @decrementActivities()
+    }
 
-  #   data = {}
-  #   data[key] = value
-
-  #   @createRequest
-  #     url:  ApiRoutes.update_profile_url()
-  #     data: data
-  #     dataType: 'JSON'
-  #     method:   'PUT'
-  #     success: (data) =>
-  #       TastyEvents.trigger TastyEvents.keys.user_property_changed( key, @props.user.id ), [value]
-
-  #       if key is 'slug'
-  #         TastyLockingAlertController.show
-  #           title:   'Внимание!'
-  #           message: "Сейчас будет произведён переход по новому адресу вашего тлога (#{ data.tlog_url })"
-  #           action:  -> window.location = data.tlog_url
-
-  #       @props.user.set data
-  #     error: (data) =>
-  #       @shake()
-  #       TastyNotifyController.errorResponse data
-  #     complete: =>
-  #       @safeUpdateState isProcess: false
-  #       @decrementActivities()
+  resendEmailConfirmation: ({beforeSend, error, success}) ->
+    CurrentUserViewActions.resendEmailConfirmation {
+      beforeSend: =>
+        @incrementActivities()
+        beforeSend?()
+      error: error
+      success: ->
+        TastyNotifyController.notifySuccess 'Запрос на изменение емейла отправлен повторно', 2000
+        success?()
+      complete: => @decrementActivities()
+    }
 
 module.exports = SettingsMixin

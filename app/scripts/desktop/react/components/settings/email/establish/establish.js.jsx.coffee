@@ -9,22 +9,22 @@ EDIT_STATE = 'edit'
 SettingsEmailEstablish = React.createClass
 
   propTypes:
-    onSubmitEstablish: React.PropTypes.func.isRequired
+    onSubmit: React.PropTypes.func.isRequired
 
   getInitialState: ->
     currentState: SHOW_STATE
 
   render: ->
-    if @isShowing()
-      `<SettingsEmailEstablishShow onClickEstablish={ this.enableEditMode } />`
-    else
-      `<SettingsEmailEstablishEdit onSubmitEstablish={ this.props.onSubmitEstablish }
-                                   onCancelEstablish={ this.enableShowMode } />`
+    switch @state.currentState
+      when SHOW_STATE
+        `<SettingsEmailEstablishShow onEditStart={ this.activateEditState } />`
+      when EDIT_STATE
+        `<SettingsEmailEstablishEdit
+             onSubmit={ this.props.onSubmit }
+             onEditCancel={ this.activateShowState } />`
+      else console.warn 'Unknown currentState of SettingsEmailEstablish component', @state.currentState
 
-  enableEditMode: -> @setState currentState: EDIT_STATE
-  enableShowMode: -> @setState currentState: SHOW_STATE
-
-  isEditing: -> @state.currentState is EDIT_STATE
-  isShowing: -> @state.currentState is SHOW_STATE
+  activateShowState: -> @setState(currentState: SHOW_STATE)
+  activateEditState: -> @setState(currentState: EDIT_STATE)
 
 module.exports = SettingsEmailEstablish

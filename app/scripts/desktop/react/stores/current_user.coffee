@@ -30,3 +30,6 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register (payload) ->
     when 'userpicUpdated'
       CurrentUserStore.updateUser(userpic: action.userpic)
       CurrentUserStore.emitChange()
+    when 'confirmationEmailCanceled'
+      CurrentUserStore.updateUser(confirmation_email: null)
+      CurrentUserStore.emitChange()

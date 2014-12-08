@@ -3,12 +3,12 @@
 SettingsEmailEstablishShow = React.createClass
 
   propTypes:
-    onClickEstablish: React.PropTypes.func.isRequired
+    onEditStart: React.PropTypes.func.isRequired
 
   render: ->
    `<div className="settings__item settings__item--full">
       <div className="settings__right">
-        <button onClick={ this.onClickEstablish } className="button button--outline">
+        <button onClick={ this.props.onEditStart } className="button button--outline">
           <span className="button__text">Установить</span>
         </button>
       </div>
@@ -17,10 +17,5 @@ SettingsEmailEstablishShow = React.createClass
         <p className="settings__desc">Укажите емейл для того, чтобы получать уведомления</p>
       </div>
     </div>`
-
-  onClickEstablish: (e) ->
-    e.preventDefault()
-
-    @props.onClickEstablish()
 
 module.exports = SettingsEmailEstablishShow

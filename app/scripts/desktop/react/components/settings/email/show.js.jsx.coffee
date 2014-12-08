@@ -8,21 +8,25 @@ SettingsEmailShow = React.createClass
   propTypes:
     email:             React.PropTypes.any.isRequired
     confirmationEmail: React.PropTypes.any
-    confirmed:         React.PropTypes.bool.isRequired
-    onClickEdit:       React.PropTypes.func.isRequired
-    onClickCancel:     React.PropTypes.func.isRequired
+    onEditStart:       React.PropTypes.func.isRequired
+    onCancel:          React.PropTypes.func.isRequired
+    onResend:          React.PropTypes.func.isRequired
 
   render: ->
     if @isConfirmation()
-      email  = @props.confirmationEmail
+      email = @props.confirmationEmail
       button = `<button className="button button--outline"
-                        onClick={ this.onClickCancel }>
+                        onClick={ this.handleCancelClick }>
                   <span className="button__text">Отменить</span>
                 </button>`
+      confirmation = `<SettingsEmailConfirmation
+                          email={ email }
+                          confirmationEmail={ this.props.confirmationEmail }
+                          onResend={ this.props.onResend } />`
     else
       email  = @props.email
       button = `<button className="button button--outline"
-                        onClick={ this.onClickEdit }>
+                        onClick={ this.handleEditClick }>
                   <span className="button__text">Изменить</span>
                 </button>`
 
@@ -35,23 +39,19 @@ SettingsEmailShow = React.createClass
                 <p className="settings__desc">
                   { email }
                 </p>
-                <SettingsEmailConfirmation email={ email }
-                                           confirmationEmail={ this.props.confirmationEmail }
-                                           confirmed={ this.props.confirmed } />
+                { confirmation }
               </div>
             </div>`
 
   isConfirmation: ->
-    !!@props.confirmationEmail && @props.confirmationEmail != @props.email
+    @props.confirmationEmail? && @props.confirmationEmail isnt @props.email
 
-  onClickEdit: (e) ->
+  handleEditClick: (e) ->
     e.preventDefault()
+    @props.onEditStart()
 
-    @props.onClickEdit()
-
-  onClickCancel: (e) ->
+  handleCancelClick: (e) ->
     e.preventDefault()
-
-    @props.onClickCancel()
+    @props.onCancel()
 
 module.exports = SettingsEmailShow
