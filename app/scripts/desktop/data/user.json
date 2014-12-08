@@ -1,44 +1,61 @@
 {
-  "id": 13,
-  "name": "imperm3r",
-  "slug": "imperm3r",
-  "title": null,
+  "id": 232992,
+  "name": "sergeylaptev",
+  "slug": "sergeylaptev",
+  "title": "",
   "is_female": false,
   "is_daylog": false,
-  "tlog_url": "http://yagr.3000.vkontraste.ru/",
-  "created_at": "2007-03-26T10:49:19.000+04:00",
-  "updated_at": "2014-07-14T11:22:10.000+04:00",
-  "email": "greshilov@yandex.ru",
+  "tlog_url": "http://taaasty.ru/@sergeylaptev",
+  "created_at": "2014-06-18T14:27:22.000+04:00",
+  "updated_at": "2014-12-07T17:35:36.000+03:00",
+  "total_entries_count": 2,
+  "private_entries_count": 0,
+  "public_entries_count": 3,
   "is_privacy": true,
+  "confirmation_email": "kasjdlkwqjlkejlkqwjek@mail.ru",
+  "email": "iamsergeylaptev@gmail.com",
   "is_confirmed": true,
-  "available_notifications": false,
-  "authentications": [],
+  "available_notifications": true,
+  "authentications": [
+    {
+      "id": 5,
+      "provider": "vkontakte",
+      "uid": "17202995",
+      "name": "Сергей Лаптев",
+      "sex": null,
+      "image": "https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg",
+      "url": "http://vk.com/durov"
+    }
+  ],
   "api_key": {
-    "access_token": "sergeylaptev_develop",
-    "user_id": 17,
-    "expires_at": "2015-01-10T11:22:34.000+04:00"
+    "access_token": "mysupertoken",
+    "user_id": 232992,
+    "expires_at": "2015-01-04T18:07:07.000+03:00"
   },
   "design": {
-    "feedColor": "white",
+    "feedColor": "black",
     "headerColor": "black",
-    "fontType": "serif",
+    "fontType": "sans",
     "coverAlign": "center",
-    "feedOpacity": 1,
-    "background_url": "http://taaasty.ru/assets/backgrounds/da/9c/1881243_1881243_03012_treesbythewater_3840x2160.jpg"
+    "feedOpacity": 0.67,
+    "background_url": "http://taaasty.ru/assets/backgrounds/8d/4b/1881243_4k_wallpaper_231.jpg",
+    "backgroundBrightness": 75
   },
   "userpic": {
-    "large_url": "http://3000.vkontraste.ru/assets/userpic/26/d8/13_large.jpg",
-    "original_url": "http://3000.vkontraste.ru/assets/userpic/26/d8/13_original.jpg",
-    "thumb64_url": "http://3000.vkontraste.ru/assets/userpic/26/d8/13_thumb64.jpg",
-    "thumb128_url": "http://3000.vkontraste.ru/assets/userpic/26/d8/13_thumb128.jpg",
-    "thumbor_path": "userpic/26/d8/13_original.jpg",
+    "original_url": "http://taaasty.ru/assets/userpic/22/36/232992_original.jpeg",
+    "large_url": "http://taaasty.ru/assets/userpic/22/36/232992_large.jpeg",
+    "thumb128_url": "http://taaasty.ru/assets/userpic/22/36/232992_thumb128.jpeg",
+    "thumb64_url": "http://taaasty.ru/assets/userpic/22/36/232992_thumb64.jpeg",
+    "thumbor_path": "userpic/22/36/232992_original.jpeg",
+    "symbol": "s",
+    "kind": "user",
     "default_colors": {
       "background": "#b5c31e",
       "name": "#ffffff"
     }
   },
   "features": {
-    "chat": true,
-    "search": true
+    "search": true,
+    "notification": false
   }
 }

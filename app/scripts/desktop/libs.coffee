@@ -1,6 +1,5 @@
 window._                 = require 'underscore'
 window.$ = window.jQuery = require 'jquery'
-window.Backbone          = require 'backbone'
 window.MouseTrap         = require 'mousetrap'
 window.React             = require 'react'
 window.Dispatcher        = require('flux').Dispatcher

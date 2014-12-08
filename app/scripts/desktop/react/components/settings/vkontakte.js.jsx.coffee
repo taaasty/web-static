@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 
-module.experts = window.SettingsVkontakteItem = React.createClass
+SettingsVkontakte = React.createClass
+
   propTypes:
     user:   React.PropTypes.object.isRequired
 
@@ -21,4 +22,4 @@ module.experts = window.SettingsVkontakteItem = React.createClass
         </div>
     </div>`
 
-
+module.exports = SettingsVkontakte

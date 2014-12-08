@@ -28,7 +28,6 @@ gulp.task 'desktopScripts', ->
     .require './bower_components/react-mixin-manager/react-mixin-manager',  { expose: 'react-mixin-manager' }
     .require './scripts/desktop/react/resources/react_ujs',                 { expose: 'reactUjs' }
     .require './bower_components/underscore/underscore',                    { expose: 'underscore' }
-    .require './bower_components/backbone/backbone',                        { expose: 'backbone' }
     .require './bower_components/baron/baron',                              { expose: 'baron' }
     .require './bower_components/mousetrap/mousetrap',                      { expose: 'mousetrap' }
     .require './bower_components/bowser/bowser',                            { expose: 'bowser' }

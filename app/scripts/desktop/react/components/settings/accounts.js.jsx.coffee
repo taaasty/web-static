@@ -1,9 +1,12 @@
 ###* @jsx React.DOM ###
 
-module.experts = window.SettingsAccountsItem = React.createClass
+#TODO: Refactor
+
+SettingsAccounts = React.createClass
+
   propTypes:
+    user:     React.PropTypes.object.isRequired
     accounts: React.PropTypes.array.isRequired
-    user:     React.PropTypes.instanceOf(Backbone.Model).isRequired
 
   render: ->
     anotherAccounts = null
@@ -19,17 +22,20 @@ module.experts = window.SettingsAccountsItem = React.createClass
             </a>
           </div>
           <div className="account__info">
-            <div className="account__avatar"> <Avatar name={this.props.user.get('name')} userpic={this.props.user.get('userpic')}/> </div>
+            <div className="account__avatar">
+              <Avatar
+                  userpic={ this.props.user.userpic }
+                  name={ this.props.user.name } />
+            </div>
             <div className="account__desc">
-              <div className="account__name">{this.props.user.get('name')}</div>
+              <div className="account__name">{ this.props.user.name }</div>
               <div className="account__status">Активный дневник</div>
             </div>
           </div>
         </div>
-        {anotherAccounts}
+        { anotherAccounts }
       </div>
-    </div>
-    `
+    </div>`
 
   anotherAccount: ->
     `<div className="account">
@@ -49,8 +55,6 @@ module.experts = window.SettingsAccountsItem = React.createClass
           <div className="account__status">Нажмите чтобы переключиться</div>
         </div>
       </div>
-    </div>
-    `
+    </div>`
 
-
-
+module.exports = SettingsAccounts

@@ -26,7 +26,6 @@ gulp.task 'vendorDesktopScripts', ->
     .require './react-mixin-manager/react-mixin-manager',        { expose: 'react-mixin-manager' }
     .require '../scripts/desktop/react/resources/react_ujs',     { expose: 'reactUjs' }
     .require './underscore/underscore',                          { expose: 'underscore' }
-    .require './backbone/backbone',                              { expose: 'backbone' }
     .require './baron/baron',                                    { expose: 'baron' }
     .require './mousetrap/mousetrap',                            { expose: 'mousetrap' }
     .require './bowser/bowser',                                  { expose: 'bowser' }

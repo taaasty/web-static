@@ -1,26 +1,32 @@
 ###* @jsx React.DOM ###
 
-window.SettingsEmailShow = React.createClass
+SettingsEmailConfirmation = require './confirmation'
+
+SettingsEmailShow = React.createClass
   mixins: [ReactShakeMixin]
 
   propTypes:
     email:             React.PropTypes.any.isRequired
-    confirmationEmail: React.PropTypes.any.isRequired
-    isConfirmed:       React.PropTypes.bool.isRequired
-    onClickEdit:       React.PropTypes.func.isRequired
-    onClickCancel:     React.PropTypes.func.isRequired
+    confirmationEmail: React.PropTypes.any
+    onEditStart:       React.PropTypes.func.isRequired
+    onCancel:          React.PropTypes.func.isRequired
+    onResend:          React.PropTypes.func.isRequired
 
   render: ->
     if @isConfirmation()
-      email  = @props.confirmationEmail
+      email = @props.confirmationEmail
       button = `<button className="button button--outline"
-                        onClick={ this.onClickCancel }>
+                        onClick={ this.handleCancelClick }>
                   <span className="button__text">Отменить</span>
                 </button>`
+      confirmation = `<SettingsEmailConfirmation
+                          email={ email }
+                          confirmationEmail={ this.props.confirmationEmail }
+                          onResend={ this.props.onResend } />`
     else
       email  = @props.email
       button = `<button className="button button--outline"
-                        onClick={ this.onClickEdit }>
+                        onClick={ this.handleEditClick }>
                   <span className="button__text">Изменить</span>
                 </button>`
 
@@ -33,21 +39,19 @@ window.SettingsEmailShow = React.createClass
                 <p className="settings__desc">
                   { email }
                 </p>
-                <SettingsEmailConfirmation email={ email }
-                                           confirmationEmail={ this.props.confirmationEmail }
-                                           isConfirmed={ this.props.isConfirmed } />
+                { confirmation }
               </div>
             </div>`
 
   isConfirmation: ->
-    !!@props.confirmationEmail && @props.confirmationEmail != @props.email
+    @props.confirmationEmail? && @props.confirmationEmail isnt @props.email
 
-  onClickEdit: (e) ->
+  handleEditClick: (e) ->
     e.preventDefault()
+    @props.onEditStart()
 
-    @props.onClickEdit()
-
-  onClickCancel: (e) ->
+  handleCancelClick: (e) ->
     e.preventDefault()
+    @props.onCancel()
 
-    @props.onClickCancel()
+module.exports = SettingsEmailShow

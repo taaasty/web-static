@@ -2,6 +2,9 @@ ERROR_TIMEOUT = 1000
 
 window.ErrorTimerMixin =
 
+  componentWillUnmount: ->
+    @clearErrorTimer()
+
   clearErrorTimer: ->
     clearTimeout @errorTimer if @errorTimer
 
