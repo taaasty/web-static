@@ -19,7 +19,7 @@ window.PostEditor_ImagesForm =
     return @saveAsAjax()          if @state.imageUrl?
     return @fileUploader.submit() if @fileUploader?
 
-    TastyNotifyController.notify 'error', 'Вы не загрузили изображения'
+    TastyNotifyController.notifyError 'Вы не загрузили изображения'
 
   saveAsAjax: ->
     @incrementActivities()
@@ -47,7 +47,7 @@ window.PostEditor_ImagesForm =
     imageFiles = data.files.filter (file) => file.type.match ACCEPT_FILE_TYPES
 
     if imageFiles.length == 0
-      return TastyNotifyController.notify 'error', 'Среди указанных вами файлов нет ни одного изображения'
+      return TastyNotifyController.notifyError 'Среди указанных вами файлов нет ни одного изображения'
 
     @fileUploader = data
 

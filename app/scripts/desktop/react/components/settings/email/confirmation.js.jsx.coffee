@@ -36,14 +36,12 @@ SettingsEmailConfirmation = React.createClass
   activateErrorState:   -> @setState(currentState: ERROR_STATE)
 
   handleClick: ->
-    @props.onResend {
+    @props.onResend
       beforeSend: @activateSendingState
       success: @activateSentState
       error: (data) =>
-        @setState {
+        @setState
           currentState: ERROR_STATE
           errorMessage: data.responseJSON.error
-        }
-    }
 
 module.exports = SettingsEmailConfirmation

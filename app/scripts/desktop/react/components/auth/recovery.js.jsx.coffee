@@ -20,7 +20,7 @@ window.RecoveryShellbox = React.createClass
 
     if slug.length < 1
       @shake()
-      TastyNotifyController.notify 'error', 'Введите Электронную Почту или адрес дневника'
+      TastyNotifyController.notifyError 'Введите Электронную Почту или адрес дневника'
       return
 
     @setState inProcess: true
