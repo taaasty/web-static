@@ -1,1 +1,1 @@
-# Here will be required some libs
+window.React = require 'react'

@@ -1,4 +1,5 @@
 window.Tasty =
+
   start: ({ user, flashes }) ->
     # if user?
       # headers['X-User-Token']     = user.api_key.access_token

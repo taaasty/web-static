@@ -26,7 +26,7 @@ gulp.task 'desktopScripts', ->
     .require './bower_components/jquery.shapeshift/core/jquery.shapeshift', { expose: 'jquery.shapeshift' }
     .require './bower_components/react/react-with-addons',                  { expose: 'react' }
     .require './bower_components/react-mixin-manager/react-mixin-manager',  { expose: 'react-mixin-manager' }
-    .require './scripts/desktop/react/resources/react_ujs',                 { expose: 'reactUjs' }
+    .require './scripts/shared/libs/react_ujs',                             { expose: 'reactUjs' }
     .require './bower_components/underscore/underscore',                    { expose: 'underscore' }
     .require './bower_components/baron/baron',                              { expose: 'baron' }
     .require './bower_components/mousetrap/mousetrap',                      { expose: 'mousetrap' }
