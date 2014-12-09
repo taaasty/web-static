@@ -24,7 +24,7 @@ gulp.task 'vendorDesktopScripts', ->
     .require './jquery.shapeshift/core/jquery.shapeshift',       { expose: 'jquery.shapeshift' }
     .require './react/react-with-addons',                        { expose: 'react' }
     .require './react-mixin-manager/react-mixin-manager',        { expose: 'react-mixin-manager' }
-    .require '../scripts/desktop/react/resources/react_ujs',     { expose: 'reactUjs' }
+    .require '../scripts/shared/libs/react_ujs',                 { expose: 'reactUjs' }
     .require './underscore/underscore',                          { expose: 'underscore' }
     .require './baron/baron',                                    { expose: 'baron' }
     .require './mousetrap/mousetrap',                            { expose: 'mousetrap' }
