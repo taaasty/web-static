@@ -42,10 +42,9 @@ SettingsEmail = React.createClass
   activateShowState: -> @setState(currentState: SHOW_STATE)
 
   handleSubmit: (newEmail) ->
-    @props.onUpdate {
+    @props.onUpdate
       email: newEmail
       success: @activateShowState
-    }
 
   handleCancel: ->
     @props.onCancel(success: @activateShowState)

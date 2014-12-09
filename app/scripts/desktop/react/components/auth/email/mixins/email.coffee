@@ -5,23 +5,30 @@ INVALID_EMAIL_MESSAGE    = 'user_authenticator/user_by_email_not_found'
 INVALID_SLUG_MESSAGE     = 'user_authenticator/user_by_slug_not_found'
 
 #TODO: i18n
-LOGIN_LENGTH_ERROR    = 'Введите свой емейл или имя на сайте'
-PASSWORD_LENGTH_ERROR = 'Введите пароль'
+LOGIN_EMPTY_ERROR         = 'Вы забыли ввести логин'
+LOGIN_MIN_LENGTH_ERROR    = 'Логин должен содержать не менее 3 символов'
+PASSWORD_EMPTY_ERROR      = 'Вы забыли ввести пароль'
+PASSWORD_MIN_LENGTH_ERROR = 'Пароль должен содержать не менее 3 символов'
 
 EmailMixin =
 
-  isFormValid: ->
+  isValid: ->
     { login, password } = @state.formData
 
-    if login.length < 3
-      TastyNotifyController.errorResponse LOGIN_LENGTH_ERROR
-      return false
-
-    if password.length < 3
-      TastyNotifyController.errorResponse PASSWORD_LENGTH_ERROR
-      return false
-
-    true
+    switch
+      when login.length == 0
+        TastyNotifyController.notify 'error', LOGIN_EMPTY_ERROR
+        return false
+      when login.length < 3
+        TastyNotifyController.notify 'error', LOGIN_MIN_LENGTH_ERROR
+        return false
+      when password.length == 0
+        TastyNotifyController.notify 'error', PASSWORD_EMPTY_ERROR
+        return false
+      when password.length < 3
+        TastyNotifyController.notify 'error', PASSWORD_MIN_LENGTH_ERROR
+        return false
+      else return true
 
   login: ->
     { login, password } = @state.formData
@@ -59,7 +66,7 @@ EmailMixin =
   handleSubmit: ->
     @resetPasswordErrors()
 
-    if @isFormValid() then @login() else @shake()
+    if @isValid() then @login() else @shake()
 
   handleInvalidLogin: ({proposedSlug}) ->
     ReactApp.shellbox.show EmailConfirmRegistration, {

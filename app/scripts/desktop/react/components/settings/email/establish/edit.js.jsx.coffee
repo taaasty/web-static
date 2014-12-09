@@ -14,11 +14,10 @@ SettingsEmailEstablishEdit = React.createClass
     emailField.focus()
 
   render: ->
-    buttonClasses = React.addons.classSet {
+    buttonClasses = React.addons.classSet
       'button':          true
       'button--yellow':  @state.hasInput
       'button--outline': !@state.hasInput
-    }
 
     return `<div className="settings__item settings__item--full">
               <div className="settings__right">
