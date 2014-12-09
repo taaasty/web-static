@@ -56,7 +56,8 @@ gulp.task 'clientDesktopScripts', ->
              .on 'end', ->
                bundleLogger.end config.outputName
 
-  bundler = watchify bundler
-  bundler.on 'update', bundle
+  if global.isWatching
+    bundler = watchify bundler
+    bundler.on 'update', bundle
 
   return bundle()

@@ -8,12 +8,14 @@ requireDir './gulp/tasks', { recurse: true }
 gulp.task 'dist', ['clean'], ->
   gulp.start 'minifyDesktopScripts', 'minifyDesktopStyles', 'minifyMobileScripts', 'minifyMobileStyles'
 
+gulp.task 'build', ['clean'], (cb) ->
+  runSequence ['buildDesktop', 'buildMobile'], cb
+
 gulp.task 'buildDesktop', ['clean'], (cb) ->
   runSequence ['vendorDesktopScripts', 'clientDesktopScripts', 'desktopLess', 'desktopHtml', 'assets'], cb
 
 gulp.task 'buildMobile', ['clean'], (cb) ->
   runSequence ['vendorMobileScripts', 'clientMobileScripts', 'mobileLess', 'mobileHtml'], cb
 
-# gulp.task 'buildMobile', ['vendorMobileScripts', 'clientMobileScripts', 'htmlMobile', 'lessMobile']
-gulp.task 'server', ['buildDesktop', 'buildMobile'], ->
+gulp.task 'server', ['setWatch', 'build'], ->
   gulp.start 'watch'

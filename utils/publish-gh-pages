@@ -6,10 +6,9 @@ git rm -rf ./app
 git rm -rf ./utils
 #git clean -fd -e dist
 git clean -fd
-mv dist/* ./
-rm -fr ./node_modules
+mv build/* ./
+# rm -fr ./node_modules
 #shopt -s dotglob
 git add .
 git commit -am 'build gh-pages'
 git push -u -f origin gh-pages:gh-pages
-
