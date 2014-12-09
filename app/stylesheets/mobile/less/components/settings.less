@@ -1,0 +1,164 @@
+// Styles
+.settings {
+  font-size: @font-size-xs;
+  line-height: 1.214em;
+
+  .form-field {
+    margin-top: 15px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+.settings__hero {
+  position: relative;
+  background-size: cover;
+  color: @white;
+  font-size: 0;
+  text-align: center;
+  overflow: hidden;
+  transition: height .2s ease;
+
+  &:after {
+    content: "";
+    height: 266px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.settings__hero__overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #151515;
+  opacity: .6;
+}
+
+.settings__hero__box {
+  .inline-block();
+  width: 98%;
+  padding: 20px 0;
+  position: relative;
+}
+
+.settings__hero__avatar {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 16px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+
+  .form-choose-file {
+    margin: -.5em 0 0 -.5em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 42px;
+    line-height: 1;
+    color: @grey;
+  }
+
+  .form-choose-file__text {
+    border: none;
+  }
+}
+
+.settings__hero__avatar-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: @black;
+  opacity: .76;
+}
+
+.settings__hero__textarea {
+  width: 100%;
+  height: 1.375em;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: center;
+  vertical-align: top;
+  resize: none;
+}
+
+.settings__hero__name {
+  font-size: 30px;
+  line-height: 34px;
+
+  .editable-field {
+    font-size: inherit;
+  }
+}
+
+.settings__hero__text {
+  margin: 0 25px;
+  position: relative;
+  font-size: @font-size-sm;
+  line-height: 1.375em;
+}
+
+.settings__body {
+  padding: 0 @indent-base;
+}
+
+.settings__item {
+  .clearfix();
+  padding: 20px 0 22px;
+  border-top: 1px solid @settings-divider-bg;
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.settings__left {
+  overflow: hidden;
+}
+
+.settings__right {
+  margin-left: 15px;
+  float: right;
+  text-align: right;
+}
+
+.settings__title {
+  margin: 0 0 8px;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
+  font-family: @font-family-base-light;
+}
+
+.settings__desc {
+  margin: 0;
+  color: darken(@grey, 10%); // #999
+}
+
+.settings__error {
+  color: #e96666;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+
+    &:active {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}
+
+.settings__submit {
+  &:extend(.button all, .button--green all, .button--block all);
+}

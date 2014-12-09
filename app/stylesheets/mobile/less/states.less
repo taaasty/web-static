@@ -1,0 +1,413 @@
+.auth-page {
+  background-color: #323039;
+
+  body {
+    color: @white;
+  }
+}
+
+.feed-page {
+  .hero {
+    height: 200px;
+  }
+
+  .hero__overlay {
+    opacity: .6;
+  }
+
+  .hero__title {
+    font-size: 30px;
+  }
+
+  .post {
+    font-family: @font-family-sans-serif;
+  }
+}
+
+.post-editor-page {
+  .layout {
+    transform: none;
+  }
+
+  .layout__body {
+    padding: 0;
+  }
+
+  .post--image {
+    &:first-child {
+      .media-image {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .post--video {
+    &:first-child {
+      .media-video {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.messages-page {
+  .hero__avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .follow-status {
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.error-page {
+  .layout,
+  .layout__body {
+    height: 100%;
+  }
+}
+
+// Настройки дизайна тлога
+
+/* Вспомогательные классы, как placeholder selectors в sass (используем только для расширения)
+ *
+ * ----------------------------------------------------------------------
+ * | .link-design, .link-design-default, .link-design-default-active,   |
+ * | .link-design-feedcolor-white, .link-design-feedcolor-white-active, |
+ * | .link-design-feedcolor-black, .link-design-feedcolor-black-active  |
+ * ----------------------------------------------------------------------
+ */
+
+a {
+  &:extend(.link-design all);
+}
+
+.link-design-default {
+  color: @grey;
+}
+
+.link-design-default-active {
+  color: darken(@grey, 14%);
+}
+
+.link-design-feedcolor-white {
+  &:extend(.link-design-default all);
+}
+
+.link-design-feedcolor-white-active {
+  &:extend(.link-design-default-active all);
+}
+
+.link-design-feedcolor-black {
+  color: #777;
+}
+
+.link-design-feedcolor-black-active {
+  color: lighten(#777, 14%);
+}
+
+// Светлая тема тлога
+.design-feedcolor-white {
+  .layout {
+    background-color: @white;
+  }
+
+  .layout__body {
+    color: @black;
+
+    .link-design {
+      &:extend(.link-design-feedcolor-white all);
+    }
+
+    .link-design:active {
+      &:extend(.link-design-feedcolor-white-active all);
+    }
+  }
+}
+
+// Темная тема тлога
+.design-feedcolor-black {
+  .layout {
+    background-color: #1e1e1e;
+  }
+
+  .layout__body {
+    color: @white;
+
+    .link-design {
+      &:extend(.link-design-feedcolor-black all);
+    }
+
+    .link-design:active {
+      &:extend(.link-design-feedcolor-black-active all);
+    }
+  }
+
+  .meta {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .meta-item {
+    padding-right: 6px;
+    padding-left: 6px;
+    border: 1px solid #323232;
+    border-radius: @border-radius-small;
+  }
+}
+
+// Шрифт тлога - с засечками
+.design-fonttype-serif {
+  .post {
+    font-family: @font-family-serif;
+  }
+}
+
+// Шрифт тлога - без засечек
+.design-fonttype-sans {
+  .post {
+    font-family: @font-family-sans-serif;
+  }
+}
+
+// Темы для шапки тлога
+.design-headercolor-black {
+  .hero {
+    color: @black;
+  }
+}
+
+.design-headercolor-white {
+  .hero {
+    color: @white;
+  }
+}
+
+.design-headercolor-blackonwhite {
+  .hero {
+    color: @black;
+  }
+
+  .hero__title {
+    span {
+      background: @white;
+    }
+  }
+
+  .hero__text {
+    span {
+      background: @white;
+    }
+  }
+}
+
+.design-headercolor-whiteonblack {
+  .hero {
+    color: @white;
+  }
+
+  .hero__title {
+    span {
+      background: @black;
+    }
+  }
+
+  .hero__text {
+    span {
+      background: @black;
+    }
+  }
+}
+
+// Когда открыт Feed Toolbar
+.feed-toolbar-open {
+  overflow: hidden;
+
+  .layout {
+    transform: translateX(@toolbar-popup-width);
+  }
+
+  .toolbar--feed {
+    .toolbar__toggle {
+      transform: translateX(@toolbar-popup-width);
+
+      .icon {
+        .toolbar-active;
+      }
+    }
+  }
+
+  .toolbar--user {
+    .toolbar__toggle {
+      transform: translateX(@toolbar-popup-width);
+    }
+  }
+}
+
+// Когда открыт User Toolbar
+.user-toolbar-open {
+  overflow: hidden;
+
+  .layout {
+    transform: translateX(-@toolbar-popup-width);
+  }
+
+  .toolbar--user {
+    .toolbar__toggle {
+      transform: translateX(-@toolbar-popup-width);
+
+      .icon {
+        .toolbar-active;
+      }
+    }
+  }
+
+  .toolbar--feed {
+    .toolbar__toggle {
+      transform: translateX(-@toolbar-popup-width);
+    }
+  }
+}
+
+// Когда развёрнут профиль пользователя
+// TODO: Ускорить анимацию
+.hero-enabled {
+  overflow-y: hidden;
+
+  .toolbar--user .toolbar__toggle,
+  .toolbar--feed .toolbar__toggle {
+    top: -85px !important;
+    opacity: 0 !important;
+  }
+
+  .hero {
+    color: @white !important;
+    transition: height .4s ease, color .4s ease;
+
+    .follow-status {
+      right: -@follow-status-size/2;
+      bottom: 0;
+    }
+  }
+
+  .hero__close {
+    left: @indent-base;
+    transition: left .4s ease .2s;
+  }
+
+  .hero__overlay {
+    opacity: .8;
+    transition: opacity .4s ease .2s;
+  }
+
+  .hero__content {
+    padding-bottom: 80px;
+  }
+
+  .hero__avatar {
+    width: 0;
+    height: 0;
+    cursor: inherit;
+    opacity: 1;
+    transition: width .4s ease, height .4s ease, opacity .4s ease .2s;
+
+    .avatar__text {
+      font-size: 0;
+    }
+  }
+
+  .hero__title {
+    font-size: 32px;
+    cursor: text;
+    opacity: 1;
+    transition: font-size .4s ease, opacity .6s ease;
+    animation: hero-animate-open .6s 1 ease;
+
+    span {
+      background: transparent !important;
+    }
+  }
+
+  .hero__text {
+    opacity: .4;
+    transition: font-size .4s ease, opacity .6s ease;
+
+    span {
+      background: transparent !important;
+    }
+  }
+
+  .hero__gradient,
+  .hero__stats {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform .4s ease .2s, visibility 0s ease, opacity .4s ease .2s;
+  }
+
+  .hero__text,
+  .hero__actions {
+    max-height: 400px;
+    visibility: visible;
+    transition: max-height .4s ease, padding .4s ease, visibility 0s ease, opacity .4s ease .2s;
+  }
+
+  .hero__text {
+    max-height: 2.444em;
+    overflow: hidden;
+    opacity: .4;
+  }
+
+  .hero__actions {
+    padding-top: 20px;
+    opacity: 1;
+  }
+
+  @media only screen and (min-height: 360px) {
+    .hero__avatar {
+      width: 100px;
+      height: 100px;
+
+      .follow-status {
+        right: 5px;
+        bottom: 5px;
+      }
+
+      .avatar__text {
+        font-size: 34px;
+      }
+    }
+
+    .hero__title {
+      font-size: 34px;
+    }
+  }
+
+  @media only screen and (min-height: 520px) {
+    .hero {
+      .follow-status {
+        right: 14px;
+        bottom: 14px;
+      }
+    }
+
+    .hero__avatar {
+      width: 178px;
+      height: 178px;
+
+      .avatar__text {
+        font-size: 36px;
+      }
+    }
+
+    .hero__title {
+      font-size: 36px;
+    }
+
+    .hero__stats {
+      padding-bottom: 30px;
+    }
+  }
+}

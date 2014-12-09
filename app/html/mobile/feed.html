@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="feed-page">
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=1, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="stylesheets/main.css" />
+  </head>
+  <body>
+    <!-- Feed Toolbar -->
+    <nav class="toolbar toolbar--feed">
+      <div class="toolbar__toggle"><i class="icon icon--ribbon"></i></div>
+      <div class="toolbar__popup">
+        <ul class="toolbar__popup-list">
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Подписки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--wave"></i>Прямой эфир</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--fire"></i>Лучшее</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--anonymous"></i>Анонимки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Люди</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- end Feed Toolbar -->
+
+    <!-- User Toolbar -->
+    <nav class="toolbar toolbar--user">
+      <div class="toolbar__toggle"><i class="icon icon--menu"></i></div>
+      <div class="toolbar__popup">
+        <ul class="toolbar__popup-list">
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--plus"></i>Новая запись</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--diary"></i>Мой дневник</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--profile"></i>Профиль</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--anonymous"></i>Новая анонимка</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--lock"></i>Скрытые записи</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--messages"></i>Сообщения</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Друзья</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--drawing"></i>Дизайн дневника</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--cogwheel"></i>Настройки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--logout"></i>Выйти</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- end User Toolbar -->
+
+    <!-- Layout -->
+    <div class="layout">
+      <!-- Layout Header -->
+      <div class="layout__header">
+        <!-- Hero -->
+        <div class="hero" style="background-image: url(../images/bg.jpg);">
+          <div class="hero__close"><i class="icon icon--cross"></i></div>
+          <div class="hero__overlay"></div>
+          <div class="hero__gradient"></div>
+          <div class="hero__content">
+            <div class="hero__head">
+              <div class="hero__title"><span>Прямой эфир</span></div>
+              <div class="hero__smalltext"><span>678 записей за 24 часа</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- end Hero -->
+      </div>
+      <!-- end Layout Header -->
+      <!-- Layout Body -->
+      <div class="layout__body">
+        <!-- Posts -->
+        <div class="posts">
+          <!-- Post -->
+          <div class="post post--text">
+            <div class="post__header">
+              <h1 class="post__title">Вот бы скемнибудь подружится.</h1>
+            </div>
+            <div class="post__content">
+              <p>Где вы, ато скушно...</p>
+            </div>
+            <div class="post__meta">
+              <div class="meta-voting voted">18</div>
+              <div class="meta-comments">345</div>
+              <a class="meta-author" href="#">
+                <span class="meta-author__avatar">
+                  <span class="avatar" style="background-color:#f37420;color:#fff;">
+                    <span class="avatar__text">L</span>
+                  </span>
+                </span> @last-boyscout
+              </a>
+              <div class="meta-actions">
+                <div class="meta-actions__dropdown-popup">
+                  <ul class="meta-actions__dropdown-popup-list">
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--pencil"></i>Редактировать</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--star"></i>Добавить в избранное</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--basket"></i>Удалить</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end Post -->
+          <!-- Post -->
+          <div class="post post--text">
+            <div class="post__content">
+              <p><b><span>Features:</span><br></b></p><p></p><ul><li><span>emoji</span><br></li><li><span>при авторизации через вконтакт вытаскивается имя и аватарка (если еще не установлена)</span><br></li><li><span>в текстовой или анонимной статье обязательно должен быть или заголовок или текст</span><br></li><li><span>переключалка видов фидов</span><br></li><li><span>API: количество кадров в картинка (frames_count)</span><br></li><li><span>API: отмена подтверждения</span><br></li><li><span>front: подробный интерфейс подтверждения емайла</span><br></li><li><span>Рассылка: возможность отписаться от рассылки (ссылка в футере письма)</span><br></li><li><span>Рассылка: уведомление о новом комменте, об упоминании в комментарии</span><br></li><li><span>Рассылка: при регистрации, подтверждение смены емайла, восстановление пароля</span><br></li><li><span>возможность восстановить пароль (контроллер и форма)</span><br></li></ul><p></p><p><b>Improvements</b></p><p></p><ul><li><span>распределение поступающих ошибок на пользовательские (показываются на экране и не журналируются) и системные (попадают в honeybadger)</span><br></li><li><span>коллаж кешируется</span><br></li><li><span>динамические и статические технические старинцы. Номер ошибки на странице (автоматически генерируются при деплое)</span><br></li><li><span>ежесуточной фоновое обновление счетчиков комментариев и статей у пользователей</span><br></li><li><span>емайлы отправляются в фоновой очереди</span><br></li><li><span>картинки аттачатся в емайлы (лучше прохождение антиспамов)</span><br></li><li><span>решена пробелма с редиректами url-ов картинок</span><br></li><li><span>улучшено определение проблем при эмбединге (FetchingError)</span><br></li><li><span>улучена подстановка fallback картинки для нерабочих эмбедов</span><br></li><li><span>улучен alert на фронте</span><br></li><li><span>посты и картинки с ошибками помечаются и повторно не обрабатываются</span><br></li></ul><p></p><p><b>Fixes:</b></p><p></p><ul><li><span>обработка ссылок в постах</span><br></li><li><span>дефолтный фон зависил от имени дневника</span><br></li><li><span>проблема с кодировкой в постах с урлами (из-за кривого обрезания урлов)</span><br></li><li><span>исправил валидацию пользователей</span><br></li><li><span>исправлены редкие ошибки при авторизации через oauth (vkontakte)</span><br></li><li><span>жаловаться на контент могут только зарегистрированные и подтвержденные</span><br></li><li><span>можно публиковать тексты с расширенным utf8 (emoji)</span><br></li><li><span>огонек голосования не показывался в статьях без заголовка</span><br></li></ul><p></p><p><b>Other:</b></p><p></p><ul><li><span>Журнал отправленных писем</span><br></li><li><span>Перед постингов в базу подчищаем кодировку текста</span><br></li><li><span>Отдельный журнал для ошибок в JavaScript-е</span><br></li></ul><p></p>
+            </div>
+            <div class="post__meta">
+              <div class="meta-voting unvotable">11</div>
+              <div class="meta-comments">56</div>
+              <a class="meta-author" href="#">
+                <span class="meta-author__avatar">
+                  <span class="avatar" style="background-color:#ffca00;color:#222;">
+                    <span class="avatar__text">J</span>
+                  </span>
+                </span> @jpeg
+              </a>
+              <div class="meta-actions">
+                <div class="meta-actions__dropdown-popup">
+                  <ul class="meta-actions__dropdown-popup-list">
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--pencil"></i>Редактировать</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--star"></i>Добавить в избранное</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--basket"></i>Удалить</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end Post -->
+          <!-- Post -->
+          <div class="post post--image">
+            <div class="post__content">
+              <div class="media-image"><img alt="" height="381" src="http://thumbor0.tasty0.ru/cR3S6yo2SujdW9y2KRCSwitXeGQ=/604x381/att/57/65/15900238_234360_19187271_44c72095e92b7e9cd26931f0.jpg" style="width: 604; height: 381" width="604" /></div>
+              <p>Здесь, на границе, листопад.<br /> И хоть в округе одни дикари,<br /> А ты — за тысячу миль отсюда,<br /> Две чашки всегда на моём столе.</p>
+            </div>
+            <div class="post__meta">
+              <div class="meta-voting">18</div>
+              <div class="meta-comments">345</div>
+              <a class="meta-author" href="#">
+                <span class="meta-author__avatar">
+                  <span class="avatar" style="background-color:#b5c31e;color:#fff;">
+                    <span class="avatar__text">3</span>
+                  </span>
+                </span> @3ebc
+              </a>
+              <div class="meta-actions">
+                <div class="meta-actions__dropdown-popup">
+                  <ul class="meta-actions__dropdown-popup-list">
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--pencil"></i>Редактировать</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--star"></i>Добавить в избранное</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--basket"></i>Удалить</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="post__comments">
+              <!-- Comments -->
+              <div class="comments">
+                <div class="comments__more">
+                  <span class="comments__more-link">Загрузить оставшиеся 21 комментарий adsf asdf</span>
+                </div>
+                <div class="comments__list">
+                  <div class="comment">
+                    <div class="comment__content">
+                      <a class="comment__user" href="http://taaasty.ru/@kem" title="kem" target="_blank">
+                        <span class="comment__avatar">
+                          <span class="avatar" style="background-image:url(http://thumbor0.tasty0.ru/unsafe/64x64/userpic/cf/8a/148627_original.jpg);">
+                            <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/64x64/userpic/cf/8a/148627_original.jpg" alt="kem" />
+                          </span>
+                        </span>
+                        <span class="comment__username">kem</span>
+                      </a> <span class="comment__text">Скажите пожалуйста, как добавлять запись с голосовалкой?)</span> <a class="comment__date" href="http://taaasty.ru/@news/19364812-android-app#comment-11819938">7 ноября</a>
+                      <div class="comment__actions">
+                        <i class="icon icon--dots"></i>
+                        <div class="comment__dropdown-popup">
+                          <ul class="comment__dropdown-popup-list">
+                            <li class="comment__dropdown-popup-item">
+                              <a class="comment__dropdown-popup-link" href="http://taaasty.ru/@news/19364812-android-app#comment-11816303" title="Ссылка на комментарий"><i class="icon icon--hyperlink"></i>Ссылка на комментарий</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="comment">
+                    <div class="comment__content">
+                      <a class="comment__user" href="http://taaasty.ru/@olithexx" title="olithexx" target="_blank">
+                        <span class="comment__avatar">
+                          <span class="avatar" style="background-image:url(http://thumbor0.tasty0.ru/unsafe/64x64/userpic/a7/71/111079_original.png);">
+                            <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/64x64/userpic/a7/71/111079_original.png" alt="olithexx" />
+                          </span>
+                        </span><span class="comment__username">olithexx</span>
+                      </a> <span class="comment__text">У одной меня видимо не раьотают настройки</span> <a class="comment__date" href="http://taaasty.ru/@news/19364812-android-app#comment-11819938">7 ноября</a>
+                      <div class="comment__actions">
+                        <i class="icon icon--dots"></i>
+                        <div class="comment__dropdown-popup">
+                          <ul class="comment__dropdown-popup-list">
+                            <li class="comment__dropdown-popup-item">
+                              <a class="comment__dropdown-popup-link" href="http://taaasty.ru/@news/19364812-android-app#comment-11816303" title="Ссылка на комментарий"><i class="icon icon--hyperlink"></i>Ссылка на комментарий</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <form class="comment-form">
+                  <button class="comment-form__submit">Отпр</button>
+                  <div class="comment-form__field">
+                    <textarea class="comment-form__field-textarea" placeholder="Добавить комментарий"></textarea>
+                  </div>
+                </form>
+              </div>
+              <!-- end Comments -->
+            </div>
+          </div>
+          <!-- end Post -->
+          <!-- Post -->
+          <div class="post post--video">
+            <div class="post__content">
+              <div class="media-video" style="height: 300px;">
+                <div class="media-video__cover" style="background-image: url(http://thumbor0.tasty0.ru/kcM-pNbeipALU-UdGOBzPkSR6eI=/712x418/att/e0/4d/16553161_95149_19444900_75a8f9da-658d-499b-8c8c-28ea79350779.jpg)">
+                  <div class="media-video__overlay"></div>
+                </div>
+                <div class="media-video__embed"></div>
+              </div>
+            </div>
+            <div class="post__meta">
+              <div class="meta-voting">544</div>
+              <div class="meta-comments">1024</div>
+              <a class="meta-author" href="#">
+                <span class="meta-author__avatar">
+                  <span class="avatar" style="background-color:#f37420;color:#fff;">
+                    <span class="avatar__text">L</span>
+                  </span>
+                </span> @last-boyscout
+              </a>
+              <div class="meta-actions">
+                <div class="meta-actions__dropdown-popup">
+                  <ul class="meta-actions__dropdown-popup-list">
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--pencil"></i>Редактировать</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--star"></i>Добавить в избранное</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--basket"></i>Удалить</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end Post -->
+          <!-- Post -->
+          <div class="post post--quote">
+            <div class="post__content">
+              <blockquote class="blockquote">
+                <span class="laquo">&laquo;</span>Если вы делаете что-то прекрасное и возвышенное, а этого никто не замечает не расстраивайтесь: восход солнца это вообще самое прекрасное зрелище на свете, но большинство людей в это время ещё спит<span class="raquo">&raquo;</span>
+                <div class="blockquote__caption">Петр Алексеев</div>
+              </blockquote>
+            </div>
+            <div class="post__meta">
+              <div class="meta-voting voted">12</div>
+              <div class="meta-comments">26</div>
+              <a class="meta-author" href="#">
+                <span class="meta-author__avatar">
+                  <span class="avatar" style="background-color:#f37420;color:#fff;">
+                    <span class="avatar__text">L</span>
+                  </span>
+                </span> @last-boyscout
+              </a>
+              <div class="meta-actions">
+                <div class="meta-actions__dropdown-popup">
+                  <ul class="meta-actions__dropdown-popup-list">
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--pencil"></i>Редактировать</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--hyperlink"></i>Ссылка на запись</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--star"></i>Добавить в избранное</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--comments-subscribe"></i>Подписаться на комментарии</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a></li>
+                    <li class="meta-actions__dropdown-popup-item"><a class="meta-actions__dropdown-popup-link" href="#"><i class="icon icon--basket"></i>Удалить</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end Post -->
+        </div>
+        <!-- end Posts -->
+      </div>
+      <!-- end Layout Body -->
+    </div>
+    <!-- end Layout -->
+
+    <script src="scripts/vendor.js"></script>
+    <script src="scripts/client.js"></script>
+  </body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="settings-page">
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=1, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="stylesheets/main.css" />
+  </head>
+  <body>
+    <!-- Feed Toolbar -->
+    <nav class="toolbar toolbar--feed">
+      <div class="toolbar__toggle"><i class="icon icon--ribbon"></i></div>
+      <div class="toolbar__popup">
+        <ul class="toolbar__popup-list">
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Подписки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--wave"></i>Прямой эфир</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--fire"></i>Лучшее</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--anonymous"></i>Анонимки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Люди</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- end Feed Toolbar -->
+
+    <!-- User Toolbar -->
+    <nav class="toolbar toolbar--user">
+      <div class="toolbar__toggle"><i class="icon icon--menu"></i></div>
+      <div class="toolbar__popup">
+        <ul class="toolbar__popup-list">
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--plus"></i>Новая запись</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--diary"></i>Мой дневник</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--profile"></i>Профиль</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--anonymous"></i>Новая анонимка</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--lock"></i>Скрытые записи</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--messages"></i>Сообщения</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Друзья</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--drawing"></i>Дизайн дневника</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--cogwheel"></i>Настройки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--logout"></i>Выйти</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- end User Toolbar -->
+
+    <!-- Layout -->
+    <div class="layout">
+      <!-- Layout Body -->
+      <div class="layout__body">
+        <!-- Settings -->
+        <div class="settings">
+          <form action="?">
+            <div class="settings__header">
+              <div class="settings__hero" style="background-image:url(http://taaasty.ru/assets/backgrounds/67/9d/1814095_079F4585-797D-4509-85C4-DDC462567EAB.jpg);">
+                <div class="settings__hero__overlay"></div>
+                <div class="settings__hero__box">
+                  <div class="settings__hero__avatar">
+                    <span class="avatar" style="background-image:url(http://thumbor0.tasty0.ru/unsafe/220x220/userpic/1d/3d/189424_original.jpg);">
+                      <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/220x220/userpic/1d/3d/189424_original.jpg" alt="volosojui" />
+                    </span>
+                    <span class="settings__hero__avatar-overlay">
+                      <span class="form-choose-file">
+                        <span class="form-choose-file__text">
+                          <i class="icon icon--pencil"></i>
+                        </span><input class="form-choose-file__input" type="file" accept="image/*" name="file" />
+                      </span>
+                    </span>
+                  </div>
+                  <div class="settings__hero__name">
+                    <textarea class="settings__hero__textarea" maxlength="140" placeholder="Ваш псевдоним">volosojui</textarea>
+                  </div>
+                  <div class="settings__hero__text">
+                    <textarea class="settings__hero__textarea" maxlength="140" placeholder="Небольшое описание тлога"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="settings__body">
+              <div class="settings__item">
+                <div class="settings__right">
+                  <div class="switcher">
+                    <input id="is_privacy" class="switcher__input" type="checkbox" />
+                    <label class="switcher__label" for="is_privacy">
+                      <span class="switcher__btn switcher__btn--on">Да</span><span class="switcher__btn switcher__btn--off">Нет</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="settings__left">
+                  <h3 class="settings__title">Закрытый дневник?</h3>
+                  <p class="settings__desc">Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам конечно.</p>
+                </div>
+              </div>
+              <div class="settings__item">
+                <div class="settings__right">
+                  <div class="switcher">
+                    <input id="is_daylog" class="switcher__input" type="checkbox" />
+                    <label class="switcher__label" for="is_daylog">
+                      <span class="switcher__btn switcher__btn--on">Да</span><span class="switcher__btn switcher__btn--off">Нет</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="settings__left">
+                  <h3 class="settings__title">Тлогодень</h3>
+                  <p class="settings__desc">Это режим отображения, когда на странице показываются записи только за один день.</p>
+                </div>
+              </div>
+              <div class="settings__item">
+                <div class="settings__right">
+                  <div class="switcher">
+                    <input id="is_female" class="switcher__input" type="checkbox" />
+                    <label class="switcher__label" for="is_female">
+                      <span class="switcher__btn switcher__btn--on">Да</span><span class="switcher__btn switcher__btn--off">Нет</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="settings__left">
+                  <h3 class="settings__title">Вы - девушка</h3>
+                  <p class="settings__desc">На Тейсти сложилось так, что 7 из 10 пользователей – это девушки. Поэтому по-умолчанию для всех именно такая настройка.</p>
+                </div>
+              </div>
+              <div class="settings__item">
+                <div class="settings__left">
+                  <h3 class="settings__title">Емейл</h3>
+                  <div class="form-field form-field--default form-field--light">
+                    <input class="form-field__input" type="email" placeholder="Ваш емейл" value="alessandro.kalinin@gmail.com" />
+                  </div>
+                </div>
+              </div>
+              <div class="settings__item">
+                <div class="settings__right">
+                  <div class="switcher">
+                    <input id="available_notifications" class="switcher__input" type="checkbox">
+                    <label class="switcher__label" for="available_notifications">
+                      <span class="switcher__btn switcher__btn--on">Да</span><span class="switcher__btn switcher__btn--off">Нет</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="settings__left">
+                  <h3 class="settings__title">Уведомления</h3>
+                  <p class="settings__desc">Отправлять мне емейл уведомления обо всех новых комментариях, подписчиках и личных сообщениях?</p>
+                </div>
+              </div>
+              <div class="settings__item">
+                <div class="settings__left">
+                  <h3 class="settings__title">Пароль</h3>
+                  <p class="settings__desc">Используйте сложный пароль для авторизации и обеспечения сохранности данных.</p>
+                  <div class="form-field form-field--default">
+                    <input class="form-field__input" type="password" placeholder="Новый пароль" />
+                  </div>
+                  <div class="form-field form-field--default">
+                    <input class="form-field__input" type="password" placeholder="Новый пароль еще раз" />
+                  </div>
+                </div>
+              </div>
+              <div class="settings__item">
+                <!-- Accounts -->
+                <div class="accounts">
+                  <div class="account __active">
+                    <div class="account__actions">
+                      <a class="account__logout" href="http://taaasty.ru//logout" data-method="delete">Выйти</a>
+                    </div>
+                    <div class="account__info">
+                      <div class="account__avatar">
+                        <span class="avatar" style="background-image:url(http://thumbor0.tasty0.ru/unsafe/220x220/userpic/1d/3d/189424_original.jpg);">
+                          <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/220x220/userpic/1d/3d/189424_original.jpg" alt="volosojui" />
+                        </span>
+                      </div>
+                      <div class="account__desc">
+                        <div class="account__name">volosojui</div>
+                        <div class="account__status">Активный дневник</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end Accounts -->
+              </div>
+              <div class="settings__item">
+                <button class="settings__submit">Сохранить</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- end Settings -->
+      </div>
+      <!-- end Layout Body -->
+    </div>
+    <!-- end Layout -->
+
+    <script src="scripts/vendor.js"></script>
+    <script src="scripts/client.js"></script>
+  </body>
+</html>

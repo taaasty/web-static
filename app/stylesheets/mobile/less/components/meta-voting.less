@@ -1,0 +1,22 @@
+.meta-voting {
+  &:extend(.meta-item all);
+  .ico-fire-reg;
+
+  &.voted {
+    color: @yellow !important;
+
+    .ico-fire-fill-reg;
+  }
+
+  &.unvotable {
+    .ico-fire-fill-reg;
+  }
+
+  &.votable {
+    &:active {
+      color: @yellow !important;
+
+      .ico-fire-fill-reg;
+    }
+  }
+}

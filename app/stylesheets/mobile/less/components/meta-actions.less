@@ -1,0 +1,32 @@
+.meta-actions {
+  &:extend(.meta-item all);
+  .ico-dots;
+  position: relative;
+
+  &.__open {
+    &:extend(.link-design-default-active all, .link-design:active all);
+  }
+}
+
+.meta-actions__dropdown-popup {
+  &:extend(.dropdown-popup all);
+  right: 0;
+  left: auto;
+
+  &:after {
+    right: 10px;
+    left: auto;
+  }
+}
+
+.meta-actions__dropdown-popup-list {
+  &:extend(.dropdown-popup__list all);
+}
+
+.meta-actions__dropdown-popup-item {
+  &:extend(.dropdown-popup__item all);
+}
+
+.meta-actions__dropdown-popup-link {
+  &:extend(.dropdown-popup__link all);
+}

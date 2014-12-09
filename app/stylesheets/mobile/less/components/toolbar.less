@@ -1,0 +1,184 @@
+// Mixins
+.toolbar-active(@color: @yellow) {
+  color: @color;
+}
+
+.toolbar-popup-link-hover() {
+  background-color: @yellow;
+  color: #232323;
+  opacity: .95;
+}
+
+.toolbar-transition-all() {
+  transition: all .4s ease;
+}
+
+// Styles
+.toolbar {
+  color: @white;
+
+  .icon {
+    display: inline-block;
+    font-size: 24px;
+    vertical-align: middle;
+    transition: color .4s ease;
+  }
+
+  .icon--menu {
+    font-size: 28px;
+  }
+
+  .icon--ribbon {
+    font-size: 32px;
+  }
+}
+
+// Activator
+.toolbar__toggle {
+  .toolbar-transition-all();
+  width: @toolbar-size;
+  height: @toolbar-size;
+  position: fixed;
+  top: @indent-base;
+  background: @toolbar-bg-base;
+  background-color: @toolbar-bg;
+  text-align: center;
+  line-height: @toolbar-size;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: @zindex-toolbar;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+// Popup
+.toolbar__popup {
+  width: @toolbar-popup-width;
+  height: 100%;
+  position: fixed;
+  // visibility: hidden тормозит систему, поэтому прячем через display: none
+  display: none;
+  top: 0;
+  background: @toolbar-popup-bg;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: left;
+  overflow-x: hidden;
+  overflow-y: auto;
+  user-select: none;
+  -webkit-overflow-scrolling: touch;
+
+  &.__visible {
+    display: block;
+  }
+}
+
+.toolbar__popup-list {
+  .list-style-none();
+}
+
+.toolbar__popup-item {
+  white-space: nowrap;
+
+  .icon {
+    width: 1em;
+    margin-right: .6em;
+    transition: none;
+  }
+
+  // States
+  &.__active {
+    .toolbar__popup-link {
+      .toolbar-popup-link-hover;
+    }
+  }
+
+  &.__highlighted {
+    .toolbar__popup-link {
+      background: @toolbar-item-highlight-bg !important;
+      color: #232323;
+    }
+  }
+
+  &.__disabled {
+    .toolbar__popup-link {
+      background: none !important;
+      color: #bbb;
+      opacity: .92;
+    }
+  }
+}
+
+.toolbar__popup-link {
+  padding: 10px 20px 9px;
+  display: block;
+  color: #bbb;
+  opacity: .92;
+
+  a& {
+    &:hover {
+      .toolbar-popup-link-hover;
+    }
+
+    &:active {
+      background-color: lighten(@yellow, 10%);
+      opacity: 1;
+    }
+  }
+}
+
+// Types
+.toolbar--left {
+  .toolbar__toggle {
+    left: @indent-base;
+  }
+
+  .toolbar__popup {
+    left: 0;
+  }
+}
+
+.toolbar--right {
+  .toolbar__toggle {
+    right: @indent-base;
+  }
+
+  .toolbar__popup {
+    right: 0;
+  }
+}
+
+.toolbar--feed {
+  &:extend(.toolbar--left all);
+}
+
+.toolbar--user {
+  &:extend(.toolbar--right all);
+}
+
+.toolbar--close {
+  left: -85px;
+  opacity: 0;
+}
+
+// Keyframes
+@-webkit-keyframes toolbar-indicators-animate {
+  0%   { opacity: 0; }
+  20%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes toolbar-indicators-animate {
+  0%   { opacity: 0; }
+  20%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-o-keyframes toolbar-indicators-animate {
+  0%   { opacity: 0; }
+  20%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes toolbar-indicators-animate {
+  0%   { opacity: 0; }
+  20%  { opacity: 0; }
+  100% { opacity: 1; }
+}

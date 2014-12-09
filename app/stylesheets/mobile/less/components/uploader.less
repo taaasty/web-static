@@ -1,0 +1,171 @@
+.uploader {
+  height: @uploader-height;
+  border: 1px solid @uploader-border-color;
+  background-color: @uploader-bg;
+  position: relative;
+  font-family: @font-family-base;
+  text-align: center;
+  box-sizing: border-box;
+  transition: border .4s ease;
+
+  // States
+  &.__loaded {
+    height: auto;
+    border: none;
+
+    .uploader__form,
+    .uploader__info {
+      display: none;
+    }
+
+    .uploader__actions,
+    .uploader__display {
+      display: block;
+    }
+  }
+
+  &.__insert {
+    .uploader__actions,
+    .uploader__form {
+      display: block;
+    }
+
+    .uploader__info,
+    .uploader__action--rotate {
+      display: none;
+    }
+  }
+}
+
+.uploader__info {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.uploader__text {
+  width: 70%;
+  max-width: 600px;
+  position: relative;
+  display: inline-block;
+  font-size: 120%;
+  line-height: 1.4;
+  font-family: @font-family-base-light;
+  vertical-align: middle;
+  color: @uploader-text-color;
+}
+
+.uploader__strong {
+  font-family: @font-family-base;
+  font-weight: bold;
+  color: @grey !important;
+}
+
+.uploader__form {
+  position: absolute;
+  display: none;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: @white;
+  cursor: text;
+
+  &:before {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.uploader__form-input {
+  width: 90%;
+  padding: 12px 0;
+  border: none;
+  background: @white;
+  font: inherit;
+  color: @black;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  .placeholder(@uploader-input-placeholder-color);
+}
+
+.uploader__loader {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+}
+
+.uploader__loader-fill {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: @uploader-loader-fill-bg;
+}
+
+.uploader__actions {
+  position: absolute;
+  display: none;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  user-select: none;
+}
+
+.uploader__action {
+  padding: .556em;
+  position: absolute;
+  right: @indent-base;
+  background-color: @white;
+  font-size: 100%;
+  line-height: 1;
+  font-family: @icons-name;
+  color: @grey;
+  cursor: pointer;
+  border-radius: 50%;
+
+  .icon {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &:active {
+    &:extend(.link-design-default-active all);
+  }
+}
+
+.uploader__action--delete {
+  top: @indent-base;
+}
+
+.uploader__action--rotate {
+  padding: .304em;
+  bottom: @indent-base;
+  font-size: 130%;
+}
+
+.uploader__display {
+  display: none;
+  overflow: hidden;
+
+  .collage {
+    margin-bottom: 0;
+  }
+}

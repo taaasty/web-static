@@ -1,0 +1,80 @@
+.posts--edit {
+  position: relative;
+}
+
+// Post
+.post {
+  margin-bottom: 15px;
+  padding: @indent-base;
+  position: relative;
+  font-family: @font-family-serif;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.post__title {
+  &:extend(.text-content h1 all);
+  margin-top: 0;
+}
+
+.post__content {
+  &:extend(.text-content all);
+  margin-bottom: 1em;
+
+  .media-image,
+  .media-video {
+    margin-right: -@indent-base;
+    margin-left: -@indent-base;
+  }
+
+  .collage {
+    margin: 0 -@indent-base 1em;
+  }
+}
+
+.post__meta {
+  &:extend(.meta all);
+  margin-top: -4px;
+
+  .meta-actions {
+    float: right;
+  }
+}
+
+.post__comments {
+  margin-top: 16px;
+}
+
+// Типы постов
+.post--image {
+  &:first-child {
+    .media-image {
+      margin-top: -@indent-base;
+    }
+  }
+}
+
+.post--video {
+  &:first-child {
+    .media-video {
+      margin-top: -@indent-base;
+    }
+  }
+}
+
+.post--code {
+  .post__content {
+    font-family: @font-family-monospace;
+  }
+}
+
+.convo {
+  [class^=person_] {
+    margin: .4em 0;
+    font-size: .9em;
+
+    span {
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+  }
+}

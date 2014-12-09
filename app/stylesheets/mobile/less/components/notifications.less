@@ -1,0 +1,105 @@
+.notifications {
+  font-size: @notifications-font-size;
+  line-height: @notifications-line-height;
+  text-size-adjust: none;
+}
+
+.notifications__list {
+  .list-style-none();
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.notification {
+  position: relative;
+  border-bottom: 1px solid @notification-divider-bg;
+
+  &.__unread {
+    .notification__read-state {
+      background-color: #64c467;
+    }
+
+    .notification__user,
+    .notification__action-text {
+      color: @notification-unread-color-base;
+    }
+
+    .notification__text {
+      color: @notification-unread-color-grey;
+    }
+  }
+}
+
+.notification__inner {
+  &:extend(.clearfix all);
+  padding: @indent-base;
+}
+
+.notification__link {
+  display: block;
+
+  &:active {
+    background-color: @notification-hover-bg;
+    color: inherit !important;
+  }
+}
+
+.notification__desc {
+  overflow: hidden;
+}
+
+.notification__image {
+  width: 70px;
+  margin-left: 15px;
+  float: right;
+
+  img {
+    width: 100%;
+  }
+}
+
+.notification__spacer {
+  .inline-block();
+  height: 42px;
+}
+
+.notification__content {
+  .inline-block(); // TODO: Сделать такой же класс, чтобы можно было от его расширяться
+}
+
+.notification__user {
+  font-weight: bold;
+}
+
+.notification__user,
+.notification__action-text {
+  color: @notification-read-color-base;
+}
+
+.notification__text {
+  color: @notification-read-color-grey;
+}
+
+.notification__read-state {
+  width: 6px;
+  height: 6px;
+  margin: 18px -100% 0 0;
+  position: relative;
+  float: left;
+  left: -9px;
+  border-radius: 50%;
+}
+
+.notification__user-avatar {
+  width: 42px;
+  height: 42px;
+  margin-right: 6px;
+  float: left;
+}
+
+.notifications__empty {
+  padding: 40px 20px;
+  color: @white;
+  text-align: center;
+}

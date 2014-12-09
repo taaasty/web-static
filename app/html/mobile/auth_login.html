@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="auth-page">
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=1, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="stylesheets/main.css" />
+  </head>
+  <body>
+    <!-- Auth -->
+    <div class="auth">
+      <div class="auth__grid-table">
+        <div class="auth__grid-cell">
+          <div class="auth__bg" style="background-image: url(../images/images/Polly-73.jpg);"></div>
+          <div class="auth__section">
+            <div class="auth__header">
+              <div class="auth__header-error">Неправильный логин или пароль</div>
+              <div class="auth__header-title">Вход</div>
+            </div>
+            <div class="auth__body">
+              <form action="?">
+                <div class="auth__field">
+                  <label class="auth__field-icon" for="auth-email-nick"><i class="icon icon--profile"></i></label>
+                  <input id="auth-email-nick" class="auth__field-input" type="email" placeholder="Электронная почта или ник" />
+                </div>
+                <div class="auth__field">
+                  <label class="auth__field-icon" for="auth-password"><i class="icon icon--lock"></i></label>
+                  <input id="auth-password" class="auth__field-input" type="password" placeholder="Пароль" />
+                </div>
+                <div class="auth__buttons">
+                  <button class="outline-auth-button">Войти</button>
+                </div>
+              </form>
+            </div>
+            <div class="auth__footer">
+              <a class="auth__footer-link" href="#" title="Я еще не зарегистрирован">Я еще не зарегистрирован</a><span class="auth__footer-sep">&middot;</span><a class="auth__footer-link" href="#" title="Я забыл пароль">Я забыл пароль</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end Auth -->
+
+    <script src="scripts/vendor.js"></script>
+    <script src="scripts/client.js"></script>
+  </body>
+</html>
