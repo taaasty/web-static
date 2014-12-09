@@ -1,22 +1,23 @@
 ###* @jsx React.DOM ###
 
+CurrentUserServerActions = require '../../actions/server/current_user'
+
 DESIGN_SETTINGS_POPUP_TITLE = 'Управление дизайном'
 
 window.DesignSettingsPopup = React.createClass
   mixins: ['ReactActivitiesMixin', RequesterMixin, ReactShakeMixin, ReactUnmountMixin]
 
-  propTypes:
-    user: React.PropTypes.object.isRequired
-
   getInitialState: ->
-    isDragged: false
+    _.extend @getStateFromStore(), isDragged: false
 
   componentDidMount: ->
     @$designSettings = $( @refs.designSettings.getDOMNode() )
 
+    CurrentUserStore.addChangeListener @_onStoreChange
     $(window).on 'beforeunload', @onPageClose
 
   componentWillUnmount: ->
+    CurrentUserStore.removeChangeListener @_onStoreChange
     $(window).off 'beforeunload', @onPageClose
 
   render: ->
@@ -45,8 +46,8 @@ window.DesignSettingsPopup = React.createClass
                   </div>
                 </div>
 
-                <DesignSettingsPopup_Controls design={ this.props.user.get('design') }
-                                              userId={ this.props.user.get('id') }
+                <DesignSettingsPopup_Controls design={ this.state.user.design }
+                                              userId={ this.state.user.id }
                                               activitiesHandler={ this.activitiesHandler }
                                               saveCallback={ this.save }
                                               onBackgroundChanged={ this._updateUserDesign } />
@@ -62,7 +63,7 @@ window.DesignSettingsPopup = React.createClass
     @incrementActivities()
 
     @createRequest
-      url: ApiRoutes.design_settings_url @props.user.get('id')
+      url: ApiRoutes.design_settings_url @state.user.id
       data: data
       method: 'PUT'
       success: (newDesign) =>
@@ -84,10 +85,10 @@ window.DesignSettingsPopup = React.createClass
       @unmount()
 
   _updateUserDesign: (design) ->
-    newUser = @props.user
+    newUser = @state.user
     newUser.design = design
 
-    @props.user.set newUser
+    CurrentUserServerActions.updateUser newUser
 
   onDragEnter: ->
     @setState isDragged: true unless @state.isDragged
@@ -102,3 +103,9 @@ window.DesignSettingsPopup = React.createClass
   onPageClose: (e) ->
     if @hasActivities()
       'Некоторые настройки ещё не успели сохраниться. Вы уверены, что хотите выйти?'
+
+  getStateFromStore: ->
+    user: CurrentUserStore.getUser()
+
+  _onStoreChange: ->
+    @setState @getStateFromStore()
