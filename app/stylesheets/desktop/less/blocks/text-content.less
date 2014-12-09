@@ -56,12 +56,63 @@
     list-style-type: square;
   }
 
-  ol {
-    list-style-type: decimal;
-  }
-
   li {
     margin: .4em 0;
+    position: relative;
+  }
+
+  & > ol {
+    & > li {
+      list-style-type: decimal;
+
+      &:before {
+        position: absolute;
+        top: -99999px !important;
+        left: -99999px !important;
+      }
+    }
+  }
+
+  ol {
+    counter-reset: listFirst;
+  }
+
+  ol li {
+    &:before {
+      counter-increment: listFirst;
+      content: counter(listFirst) ". ";
+      width: 70px;
+      position: absolute;
+      top: 0;
+      left: -80px;
+      text-align: right;
+    }
+  }
+
+  ol ol {
+    counter-reset: listSecond;
+  }
+
+  ol ol li {
+    list-style-type: none !important;
+    list-style-type: decimal;
+
+    &:before {
+      counter-increment: listSecond;
+      content: counter(listFirst) "." counter(listSecond) ". ";
+      display: block;
+    }
+  }
+
+  ol ol ol {
+    counter-reset: listThird;
+  }
+
+  ol ol ol li {
+    &:before {
+      counter-increment: listThird;
+      content: counter(listFirst) "." counter(listSecond) "." counter(listThird) ". ";
+    }
   }
 
   a {
