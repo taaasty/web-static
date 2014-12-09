@@ -15,11 +15,10 @@ SettingsPasswordEdit = React.createClass
     @cancelTimeout = null
 
   render: ->
-    buttonClasses = React.addons.classSet {
+    buttonClasses = React.addons.classSet
       'button':          true
       'button--yellow':  @state.hasInput
       'button--outline': !@state.hasInput
-    }
 
     return `<div className="settings__item setting_item--full">
               <div className="settings__right">
@@ -66,7 +65,7 @@ SettingsPasswordEdit = React.createClass
       when password.length == 0, passwordConfirm.length == 0
         TastyNotifyController.notify 'error', 'Введите пароль чтобы сохранить или нажмите ESC чтобы отказаться'
         return false
-      when password.length < 4, passwordConfirm.length < 4
+      when password.length < 3, passwordConfirm.length < 3
         TastyNotifyController.notify 'error', 'Пароль должен содержать не менее 3 символов'
         return false
       when password isnt passwordConfirm
