@@ -28,9 +28,8 @@ SettingsPassword = React.createClass
   activateEditState: -> @setState(currentState: EDIT_STATE)
 
   handleSubmit: (newPassword) ->
-    @props.onUpdate {
+    @props.onUpdate
       password: newPassword
       success: @activateShowState
-    }
 
 module.exports = SettingsPassword

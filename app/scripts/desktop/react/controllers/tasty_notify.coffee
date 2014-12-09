@@ -17,6 +17,9 @@ window.TastyNotifyController =
   notifySuccess: (text, timeout = 5000) ->
     @notify 'success', text, timeout
 
+  notifyError: (text, timeout = 5000) ->
+    @notify 'error', text, timeout
+
   errorResponse: (response, timeout = 5000) ->
     return if response.statusText is 'abort'
 

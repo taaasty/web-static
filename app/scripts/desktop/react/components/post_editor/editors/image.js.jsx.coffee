@@ -133,6 +133,6 @@ window.PostEditor_ImageEditor = React.createClass
       @activateLoadedMode()
       @setState { imageUrl, images }
     image.onerror = =>
-      TastyNotifyController.notify 'error', "Изображения #{ imageUrl } не существует."
+      TastyNotifyController.notifyError "Изображения #{ imageUrl } не существует."
 
     image.src = imageUrl
