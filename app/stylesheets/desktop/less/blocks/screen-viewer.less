@@ -10,21 +10,16 @@
   font-family: @font-family-base;
   color: @white;
   overflow: hidden;
+  user-select: none;
 
-  &.state--ready {
-    .screen-viewer__item.state--current {
+  &.__ready {
+    .screen-viewer__item.__active {
       z-index: @zindex-screen-viewer-item-active;
       opacity: 1;
       transition: opacity .6s ease 0s;
     }
 
-    .screen-viewer__loader {
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity .4s ease, visibility 0s ease .4s;
-    }
-
-    .screen-viewer__text {
+    .screen-viewer__title {
       visibility: visible;
       opacity: 1;
       transform: translate(0px, 0px);
@@ -34,9 +29,8 @@
 }
 
 .screen-viewer__spacer {
+  .inline-block-middle;
   height: 100%;
-  display: inline-block;
-  vertical-align: middle;
 }
 
 .screen-viewer__box {
@@ -66,23 +60,13 @@
   left: 0;
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  text-align: center;
   background-size: cover;
-  .scale(1.1);
-  transition: transform 0s linear .8s;
+  text-align: center;
   backface-visibility: hidden;
 
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    display: none;
-    visibility: hidden;
-  }
-
-  .screen-viewer__item.state--current & {
-    .scale(1);
-    transition-duration: 10s;
-    transition-delay: 0s;
+  &.__animate {
+    transition: transform 10s ease;
+    animation: animate-screen-viewer-item 10s 1 ease;
   }
 }
 
@@ -103,7 +87,7 @@
   }
 }
 
-.screen-viewer__text {
+.screen-viewer__title {
   width: 768px;
   margin-left: 5%;
   position: absolute;
@@ -129,10 +113,33 @@
   z-index: @zindex-screen-viewer-loader;
 }
 
+
+
 // Media Queries
 @media (max-width: 1050px) {
-  .screen-viewer__text {
+  .screen-viewer__title {
     width: 60%;
     font-size: 62px;
   }
+}
+
+// Animation
+@-webkit-keyframes animate-screen-viewer-item {
+  0%   { -webkit-transform: scale(1.1); }
+  100% { -webkit-transform: scale(1); }
+}
+
+@-moz-keyframes animate-screen-viewer-item {
+  0%   { -moz-transform: scale(1.1); }
+  100% { -moz-transform: scale(1); }
+}
+
+@-o-keyframes animate-screen-viewer-item {
+  0%   { -o-transform: scale(1.1); }
+  100% { -o-transform: scale(1); }
+}
+
+@keyframes animate-screen-viewer-item {
+  0%   { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }

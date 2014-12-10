@@ -1,18 +1,42 @@
 ###* @jsx React.DOM ###
 
-LOADING_STATE = 'loading'
-READY_STATE = 'ready'
+STATE_LOADING = 'loading'
+STATE_READY = 'ready'
+
+SLIDESHOW_DELAY = 8000
+
 
 window.ScreenViewer = React.createClass
-  PropTypes:
-    text: React.PropTypes.string
+  propTypes:
+    title:         React.PropTypes.string
     sourceImages: React.PropTypes.array.isRequired
 
   getInitialState: ->
-    currentState: LOADING_STATE
-    images: []
+    currentState: STATE_LOADING
+    images:       []
 
   componentDidMount: ->
+    @loadImages()
+
+  render: ->
+    viewerContent = switch @state.currentState
+      when STATE_LOADING then `<ScreenViewer_Loader />`
+      when STATE_READY then `<ScreenViewer_Slideshow images={ this.state.images } />`
+      else console.warn "Неизвестное состояние #{@state.currentState}"
+
+    if @props.title?
+      viewerTitle = `<ScreenViewer_Title title={ this.props.title } />`
+
+    if @state.currentState is STATE_READY
+      readyClass = '__ready'
+
+    return `<div className={ 'screen-viewer ' + readyClass }>
+              <div className='screen-viewer__spacer' />
+              { viewerContent }
+              { viewerTitle }
+            </div>`
+
+  loadImages: ->
     _.each @props.sourceImages, (sourceImage) =>
       image = new Image
       image.src = sourceImage.imgSrc
@@ -23,43 +47,45 @@ window.ScreenViewer = React.createClass
           tlogUrl: sourceImage.tlogUrl,
           userName: sourceImage.userName
         })
-        @setState images: images
-        @setState currentState: READY_STATE
 
-  render: ->
-    viewerContent = switch @state.currentState
-      when LOADING_STATE
-        `<ScreenViewer_Loader/>`
-      when READY_STATE
-        `<ScreenViewer_Showing images={ this.state.images } />`
-      else console.warn "Неизвестное состояние #{@state.currentState}"
-
-    return `<div className="screen-viewer">
-              <div className='screen-viewer__spacer' />
-              { viewerContent }
-            </div>`
+        @setState {
+          images:       images
+          currentState: STATE_READY
+        }
 
 
-window.ScreenViewer_Showing = React.createClass
+window.ScreenViewer_Slideshow = React.createClass
   propTypes:
     images: React.PropTypes.array.isRequired
 
   getInitialState: ->
-    indexCurrentImage: 0
+    index:        0
     currentImage: @props.images[0]
 
   componentDidMount: ->
-    @startShow()
+    @startTimeout()
 
   render: ->
     `<ScreenViewer_Item imgSrc={ this.state.currentImage.imgSrc }
                         userName={ this.state.currentImage.userName }
                         tlogUrl={ this.state.currentImage.tlogUrl } />`
 
+  startTimeout: ->
+    setTimeout (=>
+      @nextImage()
+      @startTimeout()
+    ), SLIDESHOW_DELAY
 
-  startShow: ->
-    console.log @state.indexCurrentImage
-    @setState currentImage: @props.images[@state.indexCurrentImage]
+  nextImage: ->
+    if @state.index == @props.images.length - 1
+      nextIndex = 0
+    else
+      nextIndex = @state.index + 1
+
+    @setState {
+      index:        nextIndex
+      currentImage: @props.images[nextIndex]
+    }
 
 
 window.ScreenViewer_Item = React.createClass
@@ -71,7 +97,7 @@ window.ScreenViewer_Item = React.createClass
   render: ->
     style = "background-image": "url(#{@props.imgSrc})"
 
-    return `<div className='screen-viewer__item state--active'>
+    return `<div className='screen-viewer__item __active'>
               <div style={ style }
                    className='screen-viewer__bg'>
               </div>
@@ -84,14 +110,14 @@ window.ScreenViewer_Item = React.createClass
 
 window.ScreenViewer_Loader = React.createClass
   render: ->
-    return `<div className='screen-viewer__loader'>
-              <Spinner size={ 24 } />
-            </div>`
+    `<div className='screen-viewer__loader'>
+      <Spinner size={ 24 } />
+    </div>`
 
 
-window.ScreenViewer_Text = React.createClass
+window.ScreenViewer_Title = React.createClass
   propTypes:
-    text: React.PropTypes.string
+    title: React.PropTypes.string
 
   render: ->
-    return `<div className='screen-viewer__title'>{ text }</div>`
+    `<div className='screen-viewer__title'>{ this.props.title }</div>`
