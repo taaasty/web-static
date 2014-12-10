@@ -8,6 +8,6 @@ require './react/application'
 
 # /*==========  Pages  ==========*/
 
-require './react/components/pages/entry'
+require './react/components/pages/post'
 
 # /*-----  End of Components  ------*/

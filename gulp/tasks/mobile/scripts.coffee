@@ -11,7 +11,7 @@ gulp.task 'mobileScripts', ->
     basedir: config.baseDir
     entries: config.entries
     extensions: config.extensions
-  }).require './bower_components/react/react-with-addons',   expose: 'react'
+  }).require './bower_components/react/react',               expose: 'react'
     .require './scripts/shared/libs/react_ujs',              expose: 'reactUjs'
     .require './bower_components/eventEmitter/EventEmitter', expose: 'eventEmitter'
 

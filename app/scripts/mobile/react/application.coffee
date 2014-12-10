@@ -1,5 +1,5 @@
 ReactUjs = require 'reactUjs'
-console.log ReactUjs
+
 ReactApp =
 
   start: ({ user }) ->
