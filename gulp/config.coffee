@@ -86,7 +86,7 @@ module.exports = {
           entries: src + '/scripts/mobile.local.coffee'
           dest: build + '/mobile/scripts'
           outputName: 'client.js'
-          extensions: ['.coffee', '.js.jsx.coffee']
+          extensions: ['.coffee', '.jsx.coffee', '.js.jsx.coffee']
         }
       }
       less: {
@@ -104,7 +104,7 @@ module.exports = {
         bundle: {
           baseDir: src
           entries: './scripts/mobile.production.coffee'
-          extensions: ['.coffee', '.js.jsx.coffee']
+          extensions: ['.coffee', '.jsx.coffee', '.js.jsx.coffee']
           dest: dist + '/scripts/'
           outputName: 'mobile_bundle.js'
         }

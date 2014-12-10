@@ -10,7 +10,9 @@ gulp.task 'vendorMobileScripts', ->
     cache: {}, packageCache: {}
     basedir: config.baseDir
     extensions: config.extensions
-  })
+  }).require './react/react-with-addons',        expose: 'react'
+    .require '../scripts/shared/libs/react_ujs', expose: 'reactUjs'
+    .require './eventEmitter/EventEmitter',      expose: 'eventEmitter'
 
   bundle = ->
     bundleLogger.start config.outputName

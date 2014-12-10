@@ -3,7 +3,7 @@ PROPS_ATTR      = 'data-react-props'
 
 findReactDOMNodes = ->
   SELECTOR = '[' + CLASS_NAME_ATTR + ']'
-  $(SELECTOR)
+  if $? then $(SELECTOR) else document.querySelectorAll SELECTOR
 
 mountReactComponents = ->
   nodes = findReactDOMNodes()
@@ -29,10 +29,7 @@ unmountReactComponents = ->
     ++i
 
 initialize = ->
-  # $(mountReactComponents) // Previous way of executing mounting
   mountReactComponents()
-  $(document).on 'page:change', mountReactComponents
-  $(window).unload unmountReactComponents
 
 module.exports = {
   initialize: initialize
