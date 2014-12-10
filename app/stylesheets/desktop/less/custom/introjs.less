@@ -1,0 +1,294 @@
+.introjs-overlay {
+  position: absolute;
+  z-index: 999999;
+  background-color: #000;
+  opacity: 0;
+  background: -moz-radial-gradient(center,ellipse cover,rgba(0,0,0,0.4) 0,rgba(0,0,0,0.9) 100%);
+  background: -webkit-gradient(radial,center center,0px,center center,100%,color-stop(0%,rgba(0,0,0,0.4)),color-stop(100%,rgba(0,0,0,0.9)));
+  background: -webkit-radial-gradient(center,ellipse cover,rgba(0,0,0,0.4) 0,rgba(0,0,0,0.9) 100%);
+  background: -o-radial-gradient(center,ellipse cover,rgba(0,0,0,0.4) 0,rgba(0,0,0,0.9) 100%);
+  background: -ms-radial-gradient(center,ellipse cover,rgba(0,0,0,0.4) 0,rgba(0,0,0,0.9) 100%);
+  background: radial-gradient(center,ellipse cover,rgba(0,0,0,0.4) 0,rgba(0,0,0,0.9) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66000000',endColorstr='#e6000000',GradientType=1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+      -ms-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
+}
+
+.introjs-fixParent {
+  z-index: auto !important;
+  opacity: 1.0 !important;
+  /*position: absolute !important;*/
+  -webkit-transform: none !important;
+     -moz-transform: none !important;
+      -ms-transform: none !important;
+       -o-transform: none !important;
+          transform: none !important;
+}
+
+.introjs-showElement,
+tr.introjs-showElement > td,
+tr.introjs-showElement > th {
+  z-index: 9999999 !important;
+}
+
+.introjs-disableInteraction {
+  z-index: 99999999 !important;
+  position: absolute;
+}
+
+.introjs-relativePosition,
+tr.introjs-showElement > td,
+tr.introjs-showElement > th {
+  position: relative;
+
+  &.social-share,
+  &.toolbar--nav {
+    position: absolute;
+  }
+}
+
+
+.introjs-helperLayer {
+  position: absolute;
+  z-index: 9999998;
+  background-color: #FFF;
+  background-color: rgba(255,255,255,.5);
+  box-shadow: 0 0 40px rgba(255,255,255,.5);
+  border-radius: 4px;
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+      -ms-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
+}
+
+.introjs-tooltipReferenceLayer {
+  position: absolute;
+  z-index: 10000000;
+  background-color: transparent;
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+      -ms-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
+}
+
+.introjs-helperLayer *,
+.introjs-helperLayer *:before,
+.introjs-helperLayer *:after {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+      -ms-box-sizing: content-box;
+       -o-box-sizing: content-box;
+          box-sizing: content-box;
+}
+
+.introjs-helperNumberLayer {
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  z-index: 9999999999 !important;
+  padding: 2px;
+  font-family: Arial, verdana, tahoma;
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.3);
+  background: #ff3019; /* Old browsers */
+  background: -webkit-linear-gradient(top, #ff3019 0%, #cf0404 100%); /* Chrome10+,Safari5.1+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ff3019), color-stop(100%, #cf0404)); /* Chrome,Safari4+ */
+  background:    -moz-linear-gradient(top, #ff3019 0%, #cf0404 100%); /* FF3.6+ */
+  background:     -ms-linear-gradient(top, #ff3019 0%, #cf0404 100%); /* IE10+ */
+  background:      -o-linear-gradient(top, #ff3019 0%, #cf0404 100%); /* Opera 11.10+ */
+  background:         linear-gradient(to bottom, #ff3019 0%, #cf0404 100%);  /* W3C */
+  width: 20px;
+  height:20px;
+  line-height: 20px;
+  border: 3px solid white;
+  border-radius: 50%;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3019', endColorstr='#cf0404', GradientType=0); /* IE6-9 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(direction=135, strength=2, color=ff0000); /* IE10 text shadows */
+  box-shadow: 0 2px 5px rgba(0,0,0,.4);
+}
+
+.introjs-arrow {
+  border: 7px solid #fff;
+  content: "";
+  position: absolute;
+
+  &.top {
+    top: -14px;
+    left: 36px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: @introjs-tooltip-bg;
+    border-left-color: transparent;
+  }
+
+  &.right {
+    top: 36px;
+    right: -14px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: @introjs-tooltip-bg;
+  }
+
+  &.bottom {
+    bottom: -14px;
+    left: 36px;
+    border-top-color: @introjs-tooltip-bg;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+
+  &.left {
+    top: 36px;
+    left: -14px;
+    border-top-color: transparent;
+    border-right-color: @introjs-tooltip-bg;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+  &.top-right {
+    top: -14px;
+    right: 36px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: @introjs-tooltip-bg;
+    border-left-color: transparent;
+  }
+  &.top-middle {
+    top: -14px;
+    left: 50%;
+    margin-left: -7px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: @introjs-tooltip-bg;
+    border-left-color: transparent;
+  }
+  &.right-bottom {
+    bottom: 36px;
+    right: -14px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: @introjs-tooltip-bg;
+  }
+  &.left-bottom {
+    left: -14px;
+    bottom: 36px;
+    border-top-color: transparent;
+    border-right-color: @introjs-tooltip-bg;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+}
+
+.introjs-tooltip {
+  width: @introjs-tooltip-width;
+  margin-bottom: -40px;
+  position: absolute;
+  background-color: @introjs-tooltip-bg;
+  font-family: @font-family-base;
+  border-radius: @introjs-tooltip-border-radius;
+  -webkit-transition: opacity 0.1s ease-out;
+     -moz-transition: opacity 0.1s ease-out;
+      -ms-transition: opacity 0.1s ease-out;
+       -o-transition: opacity 0.1s ease-out;
+          transition: opacity 0.1s ease-out;
+  .user-select(none);
+
+  &[style*="top"] {
+    margin-top: -30px;
+  }
+
+  &[style*="bottom"] {
+    margin-bottom: -30px;
+  }
+}
+
+.introjs-tooltipbuttons {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.introjs-button {
+  &:extend(.button all, .button--large all, .button--green-lighter all, .button--block all, .button--rectangle all);
+  height: 54px;
+  background-image: none;
+  line-height: 55px;
+  text-shadow: none;
+  box-shadow: none;
+  .border-radius-bottom-right(@introjs-tooltip-border-radius);
+  .border-radius-bottom-left(@introjs-tooltip-border-radius);
+}
+
+.introjs-disabled,
+.introjs-skipbutton,
+.introjs-prevbutton {
+  display: none;
+}
+
+.introjs-disabled {
+  background: #eee !important;
+  color: @black !important;
+  cursor: default;
+}
+
+.introjs-bullets {
+  display: none;
+  text-align: center;
+}
+
+.introjs-progress {
+  width: 100%;
+  height: @introjs-tooltip-progress-height;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  border-radius: @introjs-tooltip-border-radius @introjs-tooltip-border-radius 0 0;
+}
+
+.introjs-progressbar {
+  float: left;
+  width: 0%;
+  height: 100%;
+  font-size: 10px;
+  line-height: 10px;
+  text-align: center;
+  background-color: @introjs-tooltip-progressbar-bg;
+}
+
+.introjsFloatingElement {
+  position: absolute;
+  height: 0;
+  width: 0;
+  left: 50%;
+  top: 50%;
+}
+
+.introjs-tooltiptext {
+  padding: (@introjs-tooltip-padding + @introjs-tooltip-progress-height) @introjs-tooltip-padding @introjs-tooltip-padding;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.introjs-tooltiptitle {
+  margin-bottom: 10px;
+  font-family: @font-family-base-light;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.introjs-visible {
+  display: block !important;
+}

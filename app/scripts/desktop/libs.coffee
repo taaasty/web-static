@@ -12,6 +12,7 @@ window.Modernizr         = require 'Modernizr'
 window.imagesLoaded      = require 'imagesloaded'
 window.MediumEditor      = require 'medium-editor'
 window.Undo              = require 'undo'
+window.introJs           = require 'introJs'
 require 'aviator'
 
 require 'swfobject'

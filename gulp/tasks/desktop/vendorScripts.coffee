@@ -35,6 +35,7 @@ gulp.task 'vendorDesktopScripts', ->
     .require './bootstrap/js/tooltip',                           { expose: 'bootstrap.tooltip' }
     .require '../scripts/desktop/shims/modernizr',               { expose: 'Modernizr' }
     .require '../scripts/desktop/shims/swf/swfobject',           { expose: 'swfobject' }
+    .require './intro.js/intro',                                 { expose: 'introJs' }
     .require './es5-shim/es5-shim',                              { expose: 'es5-shim' }
     .require './jquery.mousewheel/jquery.mousewheel',            { expose: 'jquery.mousewheel' }
     .require './jquery.scrollto/jquery.scrollTo',                { expose: 'jquery.scrollto' }

@@ -36,6 +36,7 @@ gulp.task 'clientDesktopScripts', ->
     .external 'bootstrap.tooltip'
     .external 'Modernizr'
     .external 'swfobject'
+    .external 'introJs'
     .external 'es5-shim'
     .external 'jquery.mousewheel'
     .external 'jquery.scrollto'
