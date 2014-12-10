@@ -72,7 +72,8 @@ window.HeroProfile = React.createClass
             </div>`
 
   isCurrentUser: ->
-    CurrentUserStore.getUser().id == @props.user.id
+    if CurrentUserStore.isLogged()
+      CurrentUserStore.getUser().id == @props.user.id
 
   open: ->
     transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' +

@@ -78,7 +78,8 @@ window.IndicatorsToolbar = React.createClass
   _onUserToolbarOpen: ->
     clearTimeout @timeout if @timeout
 
-    PopupActions.closeNotificationsPopup() if messagingService.isNotificationsPopupShown()
+    if CurrentUserStore.isLogged()
+      PopupActions.closeNotificationsPopup() if messagingService.isNotificationsPopupShown()
 
     @activateAdvancedState()
 
@@ -86,9 +87,10 @@ window.IndicatorsToolbar = React.createClass
     @activateBasicState() unless @state.isHovered
 
   _onDocumentClick: (e) ->
-    unless $(e.target).closest('.toolbar__indicators').length && @isAdvancedState()
-      PopupActions.closeNotificationsPopup()
-      @activateBasicState()
+    if CurrentUserStore.isLogged()
+      unless $(e.target).closest('.toolbar__indicators').length && @isAdvancedState()
+        PopupActions.closeNotificationsPopup()
+        @activateBasicState()
 
   _onStoreChange: ->
     @setState @getStateFromStore()
