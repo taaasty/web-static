@@ -8,22 +8,17 @@ UserToolbarList = React.createClass
   mixins: [UserToolbarListMixin]
 
   propTypes:
-    myTlogUrl:            PropTypes.string.isRequired
-    newEntryUrl:          PropTypes.string
-    newAnonymousEntryUrl: PropTypes.string
-    favoritesUrl:         PropTypes.string
-    privateEntriesUrl:    PropTypes.string
-    logoutUrl:            PropTypes.string
+    userSlug: PropTypes.string
 
   render: ->
    `<ul className="toolbar__popup-list">
       <ToolbarItem
           title="Новая запись"
-          href={ this.props.newEntryUrl }
+          href={ Routes.new_entry_url(this.props.userSlug) }
           icon="icon--plus" />
       <ToolbarItem
           title="Мой дневник"
-          href={ this.props.myTlogUrl }
+          href={ Routes.new_anonymous_entry_url(this.props.userSlug) }
           icon="icon--diary" />
       <ToolbarItem
           title="Профиль"
@@ -31,15 +26,15 @@ UserToolbarList = React.createClass
           onSelect={ this.showProfile } />
       <ToolbarItem
           title="Избранное"
-          href={ this.props.favoritesUrl }
+          href={ Routes.my_tlog_url(this.props.userSlug) }
           icon="icon--star" />
       <ToolbarItem
           title="Новая анонимка"
-          href={ this.props.newAnonymousEntryUrl }
+          href={ Routes.new_anonymous_entry_url(this.props.userSlug) }
           icon="icon--anonymous" />
       <ToolbarItem
           title="Скрытые записи"
-          href={ this.props.privateEntriesUrl }
+          href={ Routes.private_entries_url(this.props.userSlug) }
           icon="icon--lock" />
       <ToolbarItem
           title="Сообщения"
@@ -59,7 +54,7 @@ UserToolbarList = React.createClass
           onSelect={ this.showSettings } />
       <ToolbarItem
           title="Выйти"
-          href={ this.props.logoutUrl }
+          href={ Routes.logout_path(this.props.userSlug) }
           icon="icon--logout" />
     </ul>`
 

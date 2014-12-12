@@ -1,84 +1,99 @@
 ###* @jsx React.DOM ###
 
+HeroAvatar      = require './avatar'
+HeroHead        = require './head'
+HeroActions     = require './actions'
+HeroStats       = require './stats'
+HeroCloseButton = require './buttons/close'
+{ PropTypes } = React
+
+CLOSE_STATE = 'close'
+OPEN_STATE  = 'open'
+
+_screenOrientation = window.orientation
+_initialHeroHeight = null
+_openHeroHeight    = null
+
 Hero = React.createClass
 
+  propTypes:
+    user:         PropTypes.object.isRequired
+    stats:        PropTypes.object.isRequired
+    relationship: PropTypes.object
+
+  getInitialState: ->
+    currentState: CLOSE_STATE
+
+  componentDidMount: ->
+    _initialHeroHeight = @getDOMNode().offsetHeight
+
+    window.addEventListener 'resize', @onResize
+
+  componentWillUnmount: ->
+    window.removeEventListener 'resize', @onResize
+
   render: ->
-   `<div className="hero" style={{ 'background-image': 'url(../images/bg.jpg)' }}>
-      <div className="hero__close">
-        <i className="icon icon--cross" />
-      </div>
-      <div className="hero__overlay" />
-      <div className="hero__gradient" />
-      <div className="hero__content">
-        <div className="hero__avatar">
-          <span className="follow-status">
-            <i className="follow-status__icon" />
-          </span>
-          <span className="avatar" style={{ 'background-color': '#eb4656', 'color': '#fff' }}>
-            <span className="avatar__text">8</span>
-          </span>
-        </div>
-        <div className="hero__head">
-          <div className="hero__title">
-            <span>88mm</span>
-          </div>
-          <div className="hero__text">
-            <span>
-              sun-makes-my-day sun-makes-my-day sun-makes-my-day sun-makes-my-day sun-makes-my-day sun-makes-my-day
-            </span>
-          </div>
-        </div>
-        <div className="hero__actions">
-          <button className="follow-button">
-            Подписаться
-          </button>
-          <button className="profile-settings-button">
-            <i className="icon icon--cogwheel" />
-          </button>
-          <button className="write-message-button">
-            <i className="icon icon--letter" />
-          </button>
-          <div className="hero__user-actions">
-            <button className="action-menu-button">
-              <i className="icon icon--dots" />
-            </button>
-            <div className="hero__dropdown-popup __top">
-              <ul className="hero__dropdown-popup-list">
-                <li className="hero__dropdown-popup-item">
-                  <a className="hero__dropdown-popup-link" href="#">
-                    <i className="icon icon--not-allowed" />
-                    <span>Заблокировать</span>
-                  </a>
-                </li>
-                <li className="hero__dropdown-popup-item">
-                  <a className="hero__dropdown-popup-link" href="#">
-                    <i className="icon icon--exclamation-mark" />
-                    <span>Пожаловаться</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="hero__stats">
-        <div className="hero__stats-list">
-          <div className="hero__stats-item">
-            <a className="hero__stats-link" href="#" title="356 записей">
-              <strong className="hero__stats-value">356</strong> <span className="hero__stats-label">записей</span>
-            </a>
-          </div>
-          <div className="hero__stats-item hero__stats-item-handler">
-            <strong className="hero__stats-value">45</strong> <span className="hero__stats-label">подписан</span>
-          </div>
-          <div className="hero__stats-item hero__stats-item-handler">
-            <strong className="hero__stats-value">356</strong> <span className="hero__stats-label">подписчиков</span>
-          </div>
-          <div className="hero__stats-item">
-            <strong className="hero__stats-value">12</strong> <span className="hero__stats-label">дней тут</span>
-          </div>
-        </div>
-      </div>
-    </div>`
+    return `<div style={ this._getHeroStyles() }
+                 className="hero">
+              <HeroCloseButton onClick={ this.close } />
+              <div className="hero__overlay" />
+              <div className="hero__gradient" />
+              <div className="hero__content">
+                <HeroAvatar
+                    user={ this.props.user }
+                    relationship={ this.props.relationship }
+                    onClick={ this.handleAvatarClick } />
+                <HeroHead user={ this.props.user } />
+                <HeroActions
+                    user={ this.props.user }
+                    relationship={ this.props.relationship } />
+              </div>
+              <HeroStats
+                  user={ this.props.user }
+                  stats={ this.props.stats } />
+            </div>`
+
+  isOpenState: -> @state.currentState is OPEN_STATE
+
+  activateOpenState:  -> @setState(currentState: OPEN_STATE)
+  activateCloseState: -> @setState(currentState: CLOSE_STATE)
+
+  open: ->
+    html            = document.querySelector 'html'
+    _openHeroHeight = window.innerHeight
+
+    html.classList.add 'hero-enabled'
+    html.style.height = _openHeroHeight + 'px'
+    document.body.scrollTop = document.documentElement.scrollTop = 0
+
+    @activateOpenState()
+
+  close: ->
+    html = document.querySelector 'html'
+    html.classList.remove 'hero-enabled'
+
+    @activateCloseState()
+
+  _getHeroStyles: ->
+    #TODO: Get optimized background through ThumborService
+    backgroundUrl = @props.user.design?.background_url
+
+    height = if @isOpenState() then _openHeroHeight else _initialHeroHeight
+
+    'background-image': "url(#{ backgroundUrl })"
+    'height': height
+
+  handleAvatarClick: ->
+    @open() unless @isOpenState()
+
+  onResize: ->
+    html = document.querySelector 'html'
+
+    if _screenOrientation isnt window.orientation
+      _screenOrientation = window.orientation
+      _openHeroHeight    = window.innerHeight
+
+      html.style.height = _openHeroHeight + 'px'
+      @forceUpdate()
 
 module.exports = Hero

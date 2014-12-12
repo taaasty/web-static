@@ -51,35 +51,35 @@ document.addEventListener "DOMContentLoaded", (->
   #   ), false
 
   # Профиль
-  profile = document.querySelector(".hero")
-  profileActivator = document.querySelector(".hero__avatar")
-  profileClose = document.querySelector(".hero__close")
+  # profile = document.querySelector(".hero")
+  # profileActivator = document.querySelector(".hero__avatar")
+  # profileClose = document.querySelector(".hero__close")
 
-  if profileActivator?
-    cacheProfileHeight = profile.offsetHeight
+  # if profileActivator?
+  #   cacheProfileHeight = profile.offsetHeight
 
-    profile.style.height = cacheProfileHeight + "px"
+  #   profile.style.height = cacheProfileHeight + "px"
 
-    profileActivator.addEventListener "click", (->
-      profile.style.height = window.innerHeight + "px"
-      html.classList.add "hero-enabled"
-    ), false
+  #   profileActivator.addEventListener "click", (->
+  #     profile.style.height = window.innerHeight + "px"
+  #     html.classList.add "hero-enabled"
+  #   ), false
 
-  if profileClose?
-    profileClose.addEventListener "click", (->
-      profile.style.height = cacheProfileHeight + "px"
-      html.classList.remove "hero-enabled"
-    ), false
+  # if profileClose?
+  #   profileClose.addEventListener "click", (->
+  #     profile.style.height = cacheProfileHeight + "px"
+  #     html.classList.remove "hero-enabled"
+  #   ), false
 
-  profileActions = document.querySelectorAll(".hero__user-actions");
+  # profileActions = document.querySelectorAll(".hero__user-actions");
 
-  if profileActions?
-    i = profileActions.length - 1
-    while i >= 0
-      profileActions[i].addEventListener "click", (->
-        @classList.toggle "__open"
-      ), false
-      i--
+  # if profileActions?
+  #   i = profileActions.length - 1
+  #   while i >= 0
+  #     profileActions[i].addEventListener "click", (->
+  #       @classList.toggle "__open"
+  #     ), false
+  #     i--
 
   # Мета
   metaActions = document.querySelectorAll(".meta-actions")

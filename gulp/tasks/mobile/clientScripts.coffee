@@ -12,6 +12,7 @@ gulp.task 'clientMobileScripts', ->
     entries: config.entries
     extensions: config.extensions
   }).external 'react'
+    .external 'react/lib/cx'
     .external 'reactUjs'
     .external 'eventEmitter'
 

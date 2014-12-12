@@ -95,7 +95,7 @@ module.exports = {
         outputName: 'main.css'
       }
       html: {
-        src: src + '/html/mobile/*.html'
+        src: src + '/html/mobile/**/*.html'
         dest: build + '/mobile'
       }
     }

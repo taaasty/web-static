@@ -6,16 +6,13 @@ ToolbarItem = require '../_item'
 FeedToolbarList = React.createClass
 
   propTypes:
-    friendsUrl:   PropTypes.string
-    liveUrl:      PropTypes.string.isRequired
-    bestUrl:      PropTypes.string.isRequired
-    anonymousUrl: PropTypes.string.isRequired
+    userSlug: PropTypes.string
 
   render: ->
-    if @props.friendsUrl
+    if @props.userSlug?
       friends = `<ToolbarItem
                      title="Подписки"
-                     href={ this.props.friendsUrl }
+                     href={ Routes.friends_feed_path() }
                      icon="icon--friends"
                      key="friends" />`
 
@@ -23,17 +20,17 @@ FeedToolbarList = React.createClass
               { friends }
               <ToolbarItem
                   title="Прямой эфир"
-                  href={ this.props.liveUrl }
+                  href={ Routes.live_feed_path() }
                   icon="icon--wave"
                   key="live" />
               <ToolbarItem
                   title="Лучшее"
-                  href={ this.props.bestUrl }
+                  href={ Routes.best_feed_path() }
                   icon="icon--fire"
                   key="best" />
               <ToolbarItem
                   title="Анонимки"
-                  href={ this.props.anonymousUrl }
+                  href={ Routes.anonymous_feed_path() }
                   icon="icon--anonymous"
                   key="anonymous" />
               <ToolbarItem

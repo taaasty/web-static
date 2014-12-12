@@ -13,9 +13,6 @@ window.ReactApp =
     # Есть только у анонимов
     $('[invite-button]').click => @shellbox.show Auth
 
-    if ic = document.getElementById 'js-static-inviter-container'
-      React.renderComponent Auth(fixed: true), ic
-
     if user?
       window.messagingService = new MessagingService
         user: CurrentUserStore.getUser()

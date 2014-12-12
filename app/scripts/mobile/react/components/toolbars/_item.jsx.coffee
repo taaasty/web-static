@@ -1,5 +1,6 @@
 ###* @jsx React.DOM ###
 
+cx = require 'react/lib/cx'
 { PropTypes } = React
 
 ToolbarItem = React.createClass
@@ -17,17 +18,16 @@ ToolbarItem = React.createClass
     disabled: false
 
   render: ->
-    toolbarItemClasses = React.addons.classSet {
+    toolbarItemClasses = cx
       'toolbar__popup-item': true
-      'state--active': @props.active
-      'state--disabled': @props.disabled
-    }
+      '__active':   @props.active
+      '__disabled': @props.disabled
 
     return `<li className={ toolbarItemClasses }>
               <a href={ this.props.href }
                  className="toolbar__popup-link"
                  onClick={ this.handleSelect }>
-                <i className={ "icon " + this.props.icon } />
+                <i className={ 'icon ' + this.props.icon } />
                 { this.props.title }
               </a>
             </li>`

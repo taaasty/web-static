@@ -5,8 +5,15 @@ Routes =
   tlog_favorite_entries_path: (slug) -> '/@' + slug + '/favorites'
   tag_path: (tag) -> '/tags/' + tag
 
-  friends_feed_path: -> '/friends/'
-  live_feed_path:    -> '/live/'
-  people_path:       -> '/people/'
+  friends_feed_path:                  -> TastySettings.host + '/friends'
+  live_feed_path:                     -> TastySettings.host + '/live'
+  best_feed_path:                     -> TastySettings.host + '/best'
+  anonymous_feed_path:                -> TastySettings.host + '/anonymous'
+  people_path:                        -> TastySettings.host + '/people'
+  new_entry_url:           (userSlug) -> TastySettings.host + '/~' + userSlug + '/new'
+  new_anonymous_entry_url: (userSlug) -> TastySettings.host + '/~' + userSlug + '/anonymous/new'
+  my_tlog_url:             (userSlug) -> TastySettings.host + '/~' + userSlug
+  favorites_url:           (userSlug) -> TastySettings.host + '/~' + userSlug + '/favorites'
+  private_entries_url:     (userSlug) -> TastySettings.host + '/~' + userSlug + '/privates'
 
 window.Routes = window.Routes || Routes

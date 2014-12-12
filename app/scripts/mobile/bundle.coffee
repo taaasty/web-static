@@ -4,6 +4,12 @@ require '../shared/routes/api'
 require './resources/tasty'
 require './react/application'
 
+# /*================================
+# =            Services            =
+# ================================*/
+
+require '../shared/react/services/thumbor'
+
 # /*==================================
 # =            Components            =
 # ==================================*/

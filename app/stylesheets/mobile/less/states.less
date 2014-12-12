@@ -280,7 +280,11 @@ a {
 // Когда развёрнут профиль пользователя
 // TODO: Ускорить анимацию
 .hero-enabled {
-  overflow-y: hidden;
+  overflow: hidden;
+
+  body {
+    overflow: hidden;  
+  }
 
   .toolbar--user .toolbar__toggle,
   .toolbar--feed .toolbar__toggle {
