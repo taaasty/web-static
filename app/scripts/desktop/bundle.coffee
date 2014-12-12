@@ -138,10 +138,11 @@ require './react/components/auth/recovery'
 
 require './react/components/settings/settings'
 
-require './react/components/toolbars/user/user'
-require './react/components/toolbars/feed/feed'
+require './react/components/toolbars/user/mixins/user'
+require './react/components/toolbars/user/mixins/list'
+require '../shared/react/components/toolbars/user'
+require '../shared/react/components/toolbars/feed'
 require './react/components/toolbars/close/close'
-require './react/components/toolbars/toolbar_item'
 
 require './react/components/shellboxes/confirm_registration'
 

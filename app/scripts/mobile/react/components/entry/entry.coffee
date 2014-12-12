@@ -1,9 +1,11 @@
 ###* @jsx React.DOM ###
 
-Post = React.createClass
+{ PropTypes } = React
+
+Entry = React.createClass
 
   propTypes:
-    type: React.PropTypes.string
+    type: PropTypes.string
 
   render: ->
     `<div className="post post--image">
@@ -121,4 +123,4 @@ Post = React.createClass
       </div>
     </div>`
 
-module.exports = Post
+module.exports = Entry
