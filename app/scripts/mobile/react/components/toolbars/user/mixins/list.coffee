@@ -1,4 +1,4 @@
-window.UserToolbarListMixin =
+UserToolbarListMixin =
 
   showProfile: ->
     console.log 'showProfile'
@@ -14,3 +14,5 @@ window.UserToolbarListMixin =
 
   showMessages: ->
     console.log 'showMessages'
+
+module.exports = UserToolbarListMixin

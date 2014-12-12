@@ -1,4 +1,4 @@
-window.UserToolbarListMixin =
+UserToolbarListMixin =
 
   componentDidMount: ->
     TastyEvents.on TastyEvents.keys.command_settings_open(),        @showSettings
@@ -65,3 +65,5 @@ window.UserToolbarListMixin =
   redirectToProfile: ->
     localStorage.setItem 'displayDesignSettings', true
     window.location = @props.myTlogUrl
+
+module.exports = UserToolbarListMixin

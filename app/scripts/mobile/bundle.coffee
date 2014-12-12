@@ -1,20 +1,15 @@
 require './resources/libs'
+require '../shared/routes/routes'
+require '../shared/routes/api'
 require './resources/tasty'
 require './react/application'
-
-# /*==============================
-# =            Mixins            =
-# ==============================*/
-
-require './react/components/toolbars/user/mixins/user'
-require './react/components/toolbars/user/mixins/list'
 
 # /*==================================
 # =            Components            =
 # ==================================*/
 
-require '../shared/react/components/toolbars/user'
-require '../shared/react/components/toolbars/feed'
+require './react/components/toolbars/user'
+require './react/components/toolbars/feed'
 
 # /*=============================
 # =            Pages            =

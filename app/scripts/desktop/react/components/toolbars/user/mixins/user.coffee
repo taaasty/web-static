@@ -1,4 +1,4 @@
-window.UserToolbarMixin =
+UserToolbarMixin = 
 
   componentWillUpdate: (nextProps, nextState) ->
     if @state.currentState isnt nextState.currentState
@@ -7,3 +7,5 @@ window.UserToolbarMixin =
           TastyEvents.emit TastyEvents.keys.user_toolbar_opened()
         when @isClosedState()
           TastyEvents.emit TastyEvents.keys.user_toolbar_closed()
+
+module.exports = UserToolbarMixin

@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 
-ToolbarItem = require '../_item'
+ToolbarItem          = require '../_item'
+UserToolbarListMixin = require './mixins/list'
 { PropTypes } = React
 
 UserToolbarList = React.createClass

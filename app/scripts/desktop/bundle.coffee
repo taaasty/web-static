@@ -1,7 +1,7 @@
 require './libs'
 require './locales/locales'
-require './routes/routes'
-require './routes/api'
+require '../shared/routes/routes'
+require '../shared/routes/api'
 require './resources/is_mobile'
 require './resources/fileReceiver'
 require './resources/tasty'
@@ -138,10 +138,8 @@ require './react/components/auth/recovery'
 
 require './react/components/settings/settings'
 
-require './react/components/toolbars/user/mixins/user'
-require './react/components/toolbars/user/mixins/list'
-require '../shared/react/components/toolbars/user'
-require '../shared/react/components/toolbars/feed'
+require './react/components/toolbars/user'
+require './react/components/toolbars/feed'
 require './react/components/toolbars/close/close'
 
 require './react/components/shellboxes/confirm_registration'

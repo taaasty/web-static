@@ -1,12 +1,16 @@
 ###* @jsx React.DOM ###
 
-UserToolbarList = require './user/list'
-ToolbarMixin    = require './mixins/toolbar'
+UserToolbarList  = require './user/list'
+ToolbarMixin     = require './mixins/toolbar'
+UserToolbarMixin = require './user/mixins/user'
 { PropTypes }       = React
 { PureRenderMixin } = React.addons
 
 window.UserToolbar = React.createClass
-  mixins: [ToolbarMixin, UserToolbarMixin]
+  mixins: [
+    ToolbarMixin, UserToolbarMixin, ComponentManipulationsMixin, ScrollerMixin
+    PureRenderMixin
+  ]
 
   propTypes:
     myTlogUrl:            PropTypes.string.isRequired
@@ -20,7 +24,7 @@ window.UserToolbar = React.createClass
     toolbarClasses = React.addons.classSet
       'toolbar':        true
       'toolbar--right': true
-      'toolbar--nav':   true
+      'toolbar--user':  true
       'state--open':    !@isClosedState()
 
     return `<nav className={ toolbarClasses }

@@ -6,7 +6,7 @@ ToolbarMixin    = require './mixins/toolbar'
 { PureRenderMixin } = React.addons
 
 window.FeedToolbar = React.createClass
-  mixins: [ToolbarMixin]
+  mixins: [ToolbarMixin, ComponentManipulationsMixin, ScrollerMixin]
 
   propTypes:
     friendsUrl:   PropTypes.string
@@ -15,11 +15,10 @@ window.FeedToolbar = React.createClass
     anonymousUrl: PropTypes.string.isRequired
 
   render: ->
-    toolbarClasses = React.addons.classSet {
-      'toolbar':      true
-      'toolbar--nav': true
-      'state--open':  !@isClosedState()
-    }
+    toolbarClasses = React.addons.classSet
+      'toolbar':       true
+      'toolbar--feed': true
+      'state--open':   !@isClosedState()
 
     return `<nav className={ toolbarClasses }
                  onClick={ this.handleClick }
@@ -28,7 +27,7 @@ window.FeedToolbar = React.createClass
               <div className="toolbar__toggle">
                 <i className="icon icon--ribbon" />
               </div>
-              <div className="toolbar__popup" data-element="dropdown-menu">
+              <div className="toolbar__popup">
                 <div ref="scroller"
                      className="scroller scroller--dark scroller--toolbar">
                   <div className="scroller__pane js-scroller-pane">

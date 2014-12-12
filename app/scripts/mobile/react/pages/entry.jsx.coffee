@@ -1,8 +1,8 @@
 ###* @jsx React.DOM ###
 
-Hero        = require '../components/hero/hero'
-Entry       = require '../components/entry/entry'
-Pagination  = require '../components/pagination/pagination'
+Hero           = require '../components/hero/hero'
+Entry          = require '../components/entry/entry'
+Pagination     = require '../components/pagination/pagination'
 { PropTypes } = React
 
 window.EntryPage = React.createClass
@@ -12,10 +12,12 @@ window.EntryPage = React.createClass
 
   render: ->
    `<div>
-      <UserToolbar />
       <FeedToolbar />
+      <UserToolbar />
       <div className="layout">
-        <div className="layout__header"><Hero /></div>
+        <div className="layout__header">
+          <Hero />
+        </div>
         <div className="layout__body">
           <Entry />
           <Pagination />
