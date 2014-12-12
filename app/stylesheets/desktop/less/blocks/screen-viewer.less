@@ -17,6 +17,10 @@
       z-index: @zindex-screen-viewer-item-active;
       opacity: 1;
       transition: opacity .6s ease 0s;
+
+      .screen-viewer__bg {
+        animation: animate-screen-viewer-item 10s 1 ease;
+      }
     }
 
     .screen-viewer__title {
@@ -31,14 +35,6 @@
 .screen-viewer__spacer {
   .inline-block-middle;
   height: 100%;
-}
-
-.screen-viewer__box {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .screen-viewer__item {
@@ -63,11 +59,7 @@
   background-size: cover;
   text-align: center;
   backface-visibility: hidden;
-
-  &.__animate {
-    transition: transform 10s ease;
-    animation: animate-screen-viewer-item 10s 1 ease;
-  }
+  transition: transform 10s ease;
 }
 
 .screen-viewer__user {

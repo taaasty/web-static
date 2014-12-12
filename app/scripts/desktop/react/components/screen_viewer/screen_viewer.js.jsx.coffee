@@ -1,14 +1,16 @@
 ###* @jsx React.DOM ###
 
-STATE_LOADING = 'loading'
-STATE_READY = 'ready'
+STATE_LOADING    = 'loading'
+STATE_READY      = 'ready'
 
-SLIDESHOW_DELAY = 8000
+CLASSNAME_READY  = '__ready'
+CLASSNAME_ACTIVE = '__active'
 
+DELAY_SLIDESHOW  = 8000
 
 window.ScreenViewer = React.createClass
   propTypes:
-    title:         React.PropTypes.string
+    title:        React.PropTypes.string
     sourceImages: React.PropTypes.array.isRequired
 
   getInitialState: ->
@@ -22,13 +24,15 @@ window.ScreenViewer = React.createClass
     viewerContent = switch @state.currentState
       when STATE_LOADING then `<ScreenViewer_Loader />`
       when STATE_READY then `<ScreenViewer_Slideshow images={ this.state.images } />`
-      else console.warn "Неизвестное состояние #{@state.currentState}"
+      else console.warn 'Неизвестное состояние #{@state.currentState}'
 
     if @props.title?
       viewerTitle = `<ScreenViewer_Title title={ this.props.title } />`
 
     if @state.currentState is STATE_READY
-      readyClass = '__ready'
+      readyClass = CLASSNAME_READY
+    else
+      readyClass = ''
 
     return `<div className={ 'screen-viewer ' + readyClass }>
               <div className='screen-viewer__spacer' />
@@ -43,9 +47,10 @@ window.ScreenViewer = React.createClass
       image.onload = =>
         images = @state.images
         images.push({
-          imgSrc: sourceImage.imgSrc,
-          tlogUrl: sourceImage.tlogUrl,
-          userName: sourceImage.userName
+          isAnimate: false
+          imgSrc:    sourceImage.imgSrc,
+          tlogUrl:   sourceImage.tlogUrl,
+          userName:  sourceImage.userName
         })
 
         @setState {
@@ -66,15 +71,23 @@ window.ScreenViewer_Slideshow = React.createClass
     @startTimeout()
 
   render: ->
-    `<ScreenViewer_Item imgSrc={ this.state.currentImage.imgSrc }
-                        userName={ this.state.currentImage.userName }
-                        tlogUrl={ this.state.currentImage.tlogUrl } />`
+    items = @props.images.map (image, index) =>
+      isActive = @state.index == index
+      return `<ScreenViewer_Item key={ index }
+                                 isActive={ isActive }
+                                 imgSrc={ image.imgSrc }
+                                 userName={ image.userName }
+                                 tlogUrl={ image.tlogUrl } />`
+
+    return `<div className="screen-viewer__slideshow">
+              { items }
+            </div>`
 
   startTimeout: ->
     setTimeout (=>
       @nextImage()
       @startTimeout()
-    ), SLIDESHOW_DELAY
+    ), DELAY_SLIDESHOW
 
   nextImage: ->
     if @state.index == @props.images.length - 1
@@ -82,28 +95,30 @@ window.ScreenViewer_Slideshow = React.createClass
     else
       nextIndex = @state.index + 1
 
-    @setState {
-      index:        nextIndex
-      currentImage: @props.images[nextIndex]
-    }
+    @setState index: nextIndex
 
 
 window.ScreenViewer_Item = React.createClass
   propTypes:
+    isActive: React.PropTypes.bool.isRequired
     imgSrc:   React.PropTypes.string.isRequired
     tlogUrl:  React.PropTypes.string.isRequired
     userName: React.PropTypes.string.isRequired
 
   render: ->
+    classActive = if @props.isActive then CLASSNAME_ACTIVE else ''
+
     style = "background-image": "url(#{@props.imgSrc})"
 
-    return `<div className='screen-viewer__item __active'>
+    return `<div className={ 'screen-viewer__item ' + classActive }>
               <div style={ style }
                    className='screen-viewer__bg'>
               </div>
               <div className='screen-viewer__user'>
                 <a href={ this.props.tlogUrl }
-                   title={ this.props.userName }>Фотография – { this.props.userName }</a>
+                   title={ this.props.userName }>
+                    Фотография – { this.props.userName }
+                </a>
               </div>
             </div>`
 
