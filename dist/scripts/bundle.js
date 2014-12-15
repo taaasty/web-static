@@ -4738,7 +4738,7 @@ ReactUjs = require('reactUjs');
 
 window.ReactApp = {
   start: function(_arg) {
-    var UserRouteTarget, user;
+    var UserRouteTarget, ic, user;
     user = _arg.user;
     console.log('ReactApp start');
     ReactUjs.initialize();
@@ -4749,6 +4749,11 @@ window.ReactApp = {
         return _this.shellbox.show(Auth);
       };
     })(this));
+    if (ic = document.getElementById('js-static-inviter-container')) {
+      React.renderComponent(Auth({
+        fixed: true
+      }), ic);
+    }
     if (user != null) {
       window.messagingService = new MessagingService({
         user: CurrentUserStore.getUser()
@@ -27653,7 +27658,7 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 },{}],"eventEmitter":[function(require,module,exports){
 module.exports=require(292)
 },{"/Users/sergeylaptev/Desktop/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":292}],"i18next":[function(require,module,exports){
-// i18next, v1.7.5
+// i18next, v1.7.7
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
 // http://i18next.com
@@ -28537,6 +28542,12 @@ module.exports=require(292)
         f.extend(o, options);
         delete o.fixLng; /* passed in each time */
     
+        // override functions: .log(), .detectLanguage(), etc
+        if (o.functions) {
+            delete o.functions;
+            f.extend(f, options.functions);
+        }
+    
         // create namespace object if namespace is passed in as string
         if (typeof o.ns == 'string') {
             o.ns = { namespaces: [o.ns], defaultNs: o.ns};
@@ -29163,6 +29174,7 @@ module.exports=require(292)
         if (needsPlural(options, lngs[0])) {
             optionWithoutCount = f.extend({ lngs: [lngs[0]]}, options);
             delete optionWithoutCount.count;
+            delete optionWithoutCount.lng;
             optionWithoutCount.defaultValue = o.pluralNotFound;
     
             var pluralKey;
@@ -29190,10 +29202,13 @@ module.exports=require(292)
                 // remove failed lng
                 var clone = lngs.slice();
                 clone.shift();
-                options = f.extend(options, { lngs: clone }); 
+                options = f.extend(options, { lngs: clone });
+                delete options.lng;
                 // retry with fallbacks
                 translated = translate(ns + o.nsseparator + key, options);
                 if (translated != o.pluralNotFound) return translated;
+            } else {
+                return translated;
             }
         }
     
@@ -29267,7 +29282,7 @@ module.exports=require(292)
                 for (var y = 0, lenY = o.fallbackNS.length; y < lenY; y++) {
                     found = _find(o.fallbackNS[y] + o.nsseparator + key, options);
     
-                    if (found) {
+                    if (found || (found==="" && o.fallbackOnEmpty === false)) {
                         /* compare value without namespace */
                         var foundValue = found.indexOf(o.nsseparator) > -1 ? found.split(o.nsseparator)[1] : found
                           , notFoundValue = notFound.indexOf(o.nsseparator) > -1 ? notFound.split(o.nsseparator)[1] : notFound;
@@ -31143,7 +31158,7 @@ var Plugins;
 })(Plugins || (Plugins = {}));
 },{}],"jquery.autosize":[function(require,module,exports){
 /*!
-	Autosize 1.18.15
+	Autosize 1.18.17
 	license: MIT
 	http://www.jacklmoore.com/autosize
 */
@@ -31242,23 +31257,18 @@ var Plugins;
 				$ta.css('resize', 'horizontal');
 			}
 
-			// The mirror width must exactly match the textarea width, so using getBoundingClientRect because it doesn't round the sub-pixel value.
-			// window.getComputedStyle, getBoundingClientRect returning a width are unsupported, but also unneeded in IE8 and lower.
+			// getComputedStyle is preferred here because it preserves sub-pixel values, while jQuery's .width() rounds to an integer.
 			function setWidth() {
 				var width;
-				var style = window.getComputedStyle ? window.getComputedStyle(ta, null) : false;
+				var style = window.getComputedStyle ? window.getComputedStyle(ta, null) : null;
 
 				if (style) {
-
-					width = ta.getBoundingClientRect().width;
-
-					if (width === 0 || typeof width !== 'number') {
-						width = parseFloat(style.width);
+					width = parseFloat(style.width);
+					if (style.boxSizing === 'border-box' || style.webkitBoxSizing === 'border-box' || style.mozBoxSizing === 'border-box') {
+						$.each(['paddingLeft', 'paddingRight', 'borderLeftWidth', 'borderRightWidth'], function(i,val){
+							width -= parseFloat(style[val]);
+						});
 					}
-
-					$.each(['paddingLeft', 'paddingRight', 'borderLeftWidth', 'borderRightWidth'], function(i,val){
-						width -= parseFloat(style[val]);
-					});
 				} else {
 					width = $ta.width();
 				}
@@ -31301,7 +31311,7 @@ var Plugins;
 			// Using mainly bare JS in this function because it is going
 			// to fire very often while typing, and needs to very efficient.
 			function adjust() {
-				var height, original;
+				var height, originalHeight;
 
 				if (mirrored !== ta) {
 					initMirror();
@@ -31320,7 +31330,7 @@ var Plugins;
 
 				mirror.value += options.append || '';
 				mirror.style.overflowY = ta.style.overflowY;
-				original = parseFloat(ta.style.height);
+				originalHeight = parseFloat(ta.style.height) || 0;
 
 				// Setting scrollTop to zero is needed in IE8 and lower for the next step to be accurately applied
 				mirror.scrollTop = 0;
@@ -31342,7 +31352,7 @@ var Plugins;
 
 				height += boxOffset;
 
-				if (original !== height) {
+				if (Math.abs(originalHeight - height) > 1/100) {
 					ta.style.height = height + 'px';
 
 					// Trigger a repaint for IE8 for when ta is nested 2 or more levels inside an inline-block
@@ -53944,7 +53954,7 @@ module.exports = {
 },{}],"react":[function(require,module,exports){
 (function (global){
 /**
- * React (with addons) v0.11.0
+ * React (with addons) v0.11.2
  */
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.React=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 /**
@@ -57658,6 +57668,7 @@ var HTMLDOMPropertyConfig = {
     loop: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
     max: null,
     maxLength: MUST_USE_ATTRIBUTE,
+    media: MUST_USE_ATTRIBUTE,
     mediaGroup: null,
     method: null,
     min: null,
@@ -57665,6 +57676,7 @@ var HTMLDOMPropertyConfig = {
     muted: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
     name: null,
     noValidate: HAS_BOOLEAN_VALUE,
+    open: null,
     pattern: null,
     placeholder: null,
     poster: null,
@@ -57685,11 +57697,12 @@ var HTMLDOMPropertyConfig = {
     selected: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
     shape: null,
     size: MUST_USE_ATTRIBUTE | HAS_POSITIVE_NUMERIC_VALUE,
+    sizes: MUST_USE_ATTRIBUTE,
     span: HAS_POSITIVE_NUMERIC_VALUE,
     spellCheck: null,
     src: null,
     srcDoc: MUST_USE_PROPERTY,
-    srcSet: null,
+    srcSet: MUST_USE_ATTRIBUTE,
     start: HAS_NUMERIC_VALUE,
     step: null,
     style: null,
@@ -58224,8 +58237,20 @@ var ReactServerRendering = _dereq_("./ReactServerRendering");
 var ReactTextComponent = _dereq_("./ReactTextComponent");
 
 var onlyChild = _dereq_("./onlyChild");
+var warning = _dereq_("./warning");
 
 ReactDefaultInjection.inject();
+
+// Specifying arguments isn't necessary since we just use apply anyway, but it
+// makes it clear for those actually consuming this API.
+function createDescriptor(type, props, children) {
+  var args = Array.prototype.slice.call(arguments, 1);
+  return type.apply(null, args);
+}
+
+if ("production" !== "development") {
+  var _warnedForDeprecation = false;
+}
 
 var React = {
   Children: {
@@ -58240,10 +58265,18 @@ var React = {
     EventPluginUtils.useTouchEvents = shouldUseTouch;
   },
   createClass: ReactCompositeComponent.createClass,
-  createDescriptor: function(type, props, children) {
-    var args = Array.prototype.slice.call(arguments, 1);
-    return type.apply(null, args);
+  createDescriptor: function() {
+    if ("production" !== "development") {
+      ("production" !== "development" ? warning(
+        _warnedForDeprecation,
+        'React.createDescriptor is deprecated and will be removed in the ' +
+        'next version of React. Use React.createElement instead.'
+      ) : null);
+      _warnedForDeprecation = true;
+    }
+    return createDescriptor.apply(this, arguments);
   },
+  createElement: createDescriptor,
   constructAndRenderComponent: ReactMount.constructAndRenderComponent,
   constructAndRenderComponentByID: ReactMount.constructAndRenderComponentByID,
   renderComponent: ReactPerf.measure(
@@ -58312,11 +58345,11 @@ if ("production" !== "development") {
 
 // Version exists only in the open-source version of React, not in Facebook's
 // internal version.
-React.version = '0.11.0';
+React.version = '0.11.2';
 
 module.exports = React;
 
-},{"./DOMPropertyOperations":12,"./EventPluginUtils":20,"./ExecutionEnvironment":22,"./ReactChildren":34,"./ReactComponent":35,"./ReactCompositeComponent":38,"./ReactContext":39,"./ReactCurrentOwner":40,"./ReactDOM":41,"./ReactDOMComponent":43,"./ReactDefaultInjection":53,"./ReactDescriptor":56,"./ReactInstanceHandles":64,"./ReactMount":67,"./ReactMultiChild":68,"./ReactPerf":71,"./ReactPropTypes":75,"./ReactServerRendering":79,"./ReactTextComponent":83,"./onlyChild":149}],30:[function(_dereq_,module,exports){
+},{"./DOMPropertyOperations":12,"./EventPluginUtils":20,"./ExecutionEnvironment":22,"./ReactChildren":34,"./ReactComponent":35,"./ReactCompositeComponent":38,"./ReactContext":39,"./ReactCurrentOwner":40,"./ReactDOM":41,"./ReactDOMComponent":43,"./ReactDefaultInjection":53,"./ReactDescriptor":56,"./ReactInstanceHandles":64,"./ReactMount":67,"./ReactMultiChild":68,"./ReactPerf":71,"./ReactPropTypes":75,"./ReactServerRendering":79,"./ReactTextComponent":83,"./onlyChild":149,"./warning":158}],30:[function(_dereq_,module,exports){
 /**
  * Copyright 2013-2014 Facebook, Inc.
  *
@@ -60589,7 +60622,15 @@ var ReactCompositeComponentMixin = {
   replaceState: function(completeState, callback) {
     validateLifeCycleOnReplaceState(this);
     this._pendingState = completeState;
-    ReactUpdates.enqueueUpdate(this, callback);
+    if (this._compositeLifeCycleState !== CompositeLifeCycle.MOUNTING) {
+      // If we're in a componentWillMount handler, don't enqueue a rerender
+      // because ReactUpdates assumes we're in a browser context (which is wrong
+      // for server rendering) and we're about to do a render anyway.
+      // TODO: The callback here is ignored when setState is called from
+      // componentWillMount. Either fix it or disallow doing so completely in
+      // favor of getInitialState.
+      ReactUpdates.enqueueUpdate(this, callback);
+    }
   },
 
   /**
@@ -61345,6 +61386,7 @@ var ReactDOM = mapObject({
   del: false,
   details: false,
   dfn: false,
+  dialog: false,
   div: false,
   dl: false,
   dt: false,
@@ -61392,6 +61434,7 @@ var ReactDOM = mapObject({
   output: false,
   p: false,
   param: true,
+  picture: false,
   pre: false,
   progress: false,
   q: false,
@@ -70434,7 +70477,7 @@ var MouseEventInterface = {
   shiftKey: null,
   altKey: null,
   metaKey: null,
-  getEventModifierState: getEventModifierState,
+  getModifierState: getEventModifierState,
   button: function(event) {
     // Webkit, Firefox, IE9+
     // which:  1 2 3
@@ -72029,10 +72072,10 @@ module.exports = getEventKey;
  */
 
 var modifierKeyToProp = {
-  'alt': 'altKey',
-  'control': 'ctrlKey',
-  'meta': 'metaKey',
-  'shift': 'shiftKey'
+  'Alt': 'altKey',
+  'Control': 'ctrlKey',
+  'Meta': 'metaKey',
+  'Shift': 'shiftKey'
 };
 
 // IE8 does not implement getModifierState so we simply map it to the only
@@ -72045,8 +72088,8 @@ function modifierStateGetter(keyArg) {
   if (nativeEvent.getModifierState) {
     return nativeEvent.getModifierState(keyArg);
   }
-  var keyProp = modifierKeyToProp[keyArg.toLowerCase()];
-  return keyProp && nativeEvent[keyProp];
+  var keyProp = modifierKeyToProp[keyArg];
+  return keyProp ? !!nativeEvent[keyProp] : false;
 }
 
 function getEventModifierState(nativeEvent) {
@@ -73573,7 +73616,15 @@ if (ExecutionEnvironment.canUseDOM) {
         // Recover leading whitespace by temporarily prepending any character.
         // \uFEFF has the potential advantage of being zero-width/invisible.
         node.innerHTML = '\uFEFF' + html;
-        node.firstChild.deleteData(0, 1);
+
+        // deleteData leaves an empty `TextNode` which offsets the index of all
+        // children. Definitely want to avoid this.
+        var textNode = node.firstChild;
+        if (textNode.data.length === 1) {
+          node.removeChild(textNode);
+        } else {
+          textNode.deleteData(0, 1);
+        }
       } else {
         node.innerHTML = html;
       }
