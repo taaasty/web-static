@@ -226,22 +226,25 @@ a {
   overflow: hidden;
 
   .layout {
-    transform: translateX(@toolbar-popup-width);
+    left: @toolbar-popup-width;
+    //transform: translateX(@toolbar-popup-width);
   }
 
   .toolbar--feed {
     .toolbar__toggle {
-      transform: translateX(@toolbar-popup-width);
+      //transform: translateX(@toolbar-popup-width);
+      left: @indent-base + @toolbar-popup-width;
 
       .icon {
-        .toolbar-active;
+        .toolbar-toogle-active;
       }
     }
   }
 
   .toolbar--user {
     .toolbar__toggle {
-      transform: translateX(@toolbar-popup-width);
+      //transform: translateX(@toolbar-popup-width);
+      display: none;
     }
   }
 }
@@ -251,22 +254,25 @@ a {
   overflow: hidden;
 
   .layout {
-    transform: translateX(-@toolbar-popup-width);
+    left: -@toolbar-popup-width;
+    //transform: translateX(-@toolbar-popup-width);
   }
 
   .toolbar--user {
     .toolbar__toggle {
-      transform: translateX(-@toolbar-popup-width);
+      //transform: translateX(-@toolbar-popup-width);
+      right: (@indent-base + @toolbar-popup-width);
 
       .icon {
-        .toolbar-active;
+        .toolbar-toogle-active;
       }
     }
   }
 
   .toolbar--feed {
     .toolbar__toggle {
-      transform: translateX(-@toolbar-popup-width);
+      //transform: translateX(-@toolbar-popup-width);
+      display: none;
     }
   }
 }
@@ -278,13 +284,11 @@ a {
 
   .toolbar--user .toolbar__toggle,
   .toolbar--feed .toolbar__toggle {
-    top: -85px !important;
-    opacity: 0 !important;
+    display: none;
   }
 
   .hero {
     color: @white !important;
-    transition: height .4s ease, color .4s ease;
 
     .follow-status {
       right: -@follow-status-size/2;
@@ -293,13 +297,11 @@ a {
   }
 
   .hero__close {
-    left: @indent-base;
-    transition: left .4s ease .2s;
+    display: block;
   }
 
   .hero__overlay {
     opacity: .8;
-    transition: opacity .4s ease .2s;
   }
 
   .hero__content {
@@ -310,8 +312,6 @@ a {
     width: 0;
     height: 0;
     cursor: inherit;
-    opacity: 1;
-    transition: width .4s ease, height .4s ease, opacity .4s ease .2s;
 
     .avatar__text {
       font-size: 0;
@@ -321,9 +321,6 @@ a {
   .hero__title {
     font-size: 32px;
     cursor: text;
-    opacity: 1;
-    transition: font-size .4s ease, opacity .6s ease;
-    animation: hero-animate-open .6s 1 ease;
 
     span {
       background: transparent !important;
@@ -331,38 +328,21 @@ a {
   }
 
   .hero__text {
-    opacity: .4;
-    transition: font-size .4s ease, opacity .6s ease;
-
     span {
       background: transparent !important;
     }
   }
 
   .hero__gradient,
-  .hero__stats {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-    transition: transform .4s ease .2s, visibility 0s ease, opacity .4s ease .2s;
-  }
-
+  .hero__stats,
   .hero__text,
   .hero__actions {
-    max-height: 400px;
-    visibility: visible;
-    transition: max-height .4s ease, padding .4s ease, visibility 0s ease, opacity .4s ease .2s;
+    display: block;
   }
 
   .hero__text {
-    max-height: 2.444em;
     overflow: hidden;
     opacity: .4;
-  }
-
-  .hero__actions {
-    padding-top: 20px;
-    opacity: 1;
   }
 
   @media only screen and (min-height: 360px) {

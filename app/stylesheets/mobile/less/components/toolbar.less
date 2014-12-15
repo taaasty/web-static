@@ -1,16 +1,12 @@
 // Mixins
-.toolbar-active(@color: @yellow) {
+.toolbar-toogle-active(@color: @yellow) {
   color: @color;
 }
 
-.toolbar-popup-link-hover() {
-  background-color: @yellow;
+.toolbar-popup-link-active() {
+  background-color: lighten(@yellow, 10%);
   color: #232323;
-  opacity: .95;
-}
-
-.toolbar-transition-all() {
-  transition: all .4s ease;
+  opacity: 1;
 }
 
 // Styles
@@ -21,7 +17,6 @@
     display: inline-block;
     font-size: 24px;
     vertical-align: middle;
-    transition: color .4s ease;
   }
 
   .icon--menu {
@@ -35,7 +30,6 @@
 
 // Activator
 .toolbar__toggle {
-  .toolbar-transition-all();
   width: @toolbar-size;
   height: @toolbar-size;
   position: fixed;
@@ -47,8 +41,6 @@
   cursor: pointer;
   border-radius: 50%;
   z-index: @zindex-toolbar;
-  opacity: 1;
-  transform: translateX(0);
 }
 
 // Popup
@@ -83,13 +75,12 @@
   .icon {
     width: 1em;
     margin-right: .6em;
-    transition: none;
   }
 
   // States
   &.__active {
     .toolbar__popup-link {
-      .toolbar-popup-link-hover;
+      .toolbar-popup-link-active;
     }
   }
 
@@ -116,13 +107,8 @@
   opacity: .92;
 
   a& {
-    &:hover {
-      .toolbar-popup-link-hover;
-    }
-
     &:active {
-      background-color: lighten(@yellow, 10%);
-      opacity: 1;
+      .toolbar-popup-link-active;
     }
   }
 }
@@ -157,8 +143,7 @@
 }
 
 .toolbar--close {
-  left: -85px;
-  opacity: 0;
+  display: none;
 }
 
 // Keyframes
