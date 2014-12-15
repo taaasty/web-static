@@ -1,7 +1,9 @@
 .auth-page {
+  height: 100%;
   background-color: #323039;
 
   body {
+    height: 100%;
     color: @white;
   }
 }
@@ -63,6 +65,12 @@
 }
 
 .error-page {
+  height: 100%;
+
+  body {
+    height: 100%;
+  }
+
   .layout,
   .layout__body {
     height: 100%;
@@ -225,6 +233,10 @@ a {
 .feed-toolbar-open {
   overflow: hidden;
 
+  body {
+    overflow: hidden;
+  }
+
   .layout {
     left: @toolbar-popup-width;
     //transform: translateX(@toolbar-popup-width);
@@ -253,6 +265,10 @@ a {
 .user-toolbar-open {
   overflow: hidden;
 
+  body {
+    overflow: hidden;
+  }
+
   .layout {
     left: -@toolbar-popup-width;
     //transform: translateX(-@toolbar-popup-width);
@@ -278,12 +294,11 @@ a {
 }
 
 // Когда развёрнут профиль пользователя
-// TODO: Ускорить анимацию
 .hero-enabled {
   overflow: hidden;
 
   body {
-    overflow: hidden;  
+    overflow: hidden;
   }
 
   .toolbar--user .toolbar__toggle,
