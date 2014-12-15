@@ -32,8 +32,4 @@ window.UserToolbar = React.createClass
     html.classList.remove 'feed-toolbar-open' if html.classList.contains 'feed-toolbar-open'
     html.classList.toggle 'user-toolbar-open'
 
-    if @isOpenState()
-      #FIXME: layout transitionEnd
-      @timeout = setTimeout @activateCloseState, 500
-    else
-      @activateOpenState()
+    if @isOpenState() then @activateCloseState() else @activateOpenState()

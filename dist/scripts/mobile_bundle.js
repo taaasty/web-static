@@ -21529,7 +21529,7 @@ window.FeedToolbar = React.createClass({displayName: 'FeedToolbar',
     }
     html.classList.toggle('feed-toolbar-open');
     if (this.isOpenState()) {
-      return this.timeout = setTimeout(this.activateCloseState, 500);
+      return this.activateCloseState();
     } else {
       return this.activateOpenState();
     }
@@ -21674,7 +21674,7 @@ window.UserToolbar = React.createClass({displayName: 'UserToolbar',
     }
     html.classList.toggle('user-toolbar-open');
     if (this.isOpenState()) {
-      return this.timeout = setTimeout(this.activateCloseState, 500);
+      return this.activateCloseState();
     } else {
       return this.activateOpenState();
     }
