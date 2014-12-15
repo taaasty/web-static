@@ -7,7 +7,6 @@
   text-align: center;
   overflow: hidden;
   user-select: none;
-  transition: height .4s ease .2s;
 
   &:before {
     content: "";
@@ -24,7 +23,7 @@
 
 .hero__close {
   &:extend(.toolbar__toggle);
-  left: -385px;
+  display: none;
 
   .icon {
     &:extend(.toolbar .icon);
@@ -43,30 +42,24 @@
   left: 0;
   background-color: @hero-overlay-bg;
   opacity: .3;
-  transition: opacity .4s ease;
 }
 
 .hero__gradient {
   width: 100%;
   height: 300px;
   position: absolute;
+  display: none;
   bottom: 0;
   left: 0;
-  visibility: hidden;
   background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.5) 100%);
-  opacity: 0;
-  transform: translateY(80%);
-  transition: transform .4s ease, visibility 0s ease .4s, opacity .4s ease;
 }
 
 .hero__content {
+  .inline-block;
   width: 90%;
   max-width: 540px;
   padding: 20px 0;
   position: relative;
-  display: inline-block;
-  vertical-align: middle;
-  transition: padding-top .4s ease, padding-bottom .4s ease;
 }
 
 .hero__avatar {
@@ -75,13 +68,10 @@
   margin: 0 auto;
   position: relative;
   display: block;
-  opacity: 1;
-  transition: width .4s ease .2s, height .4s ease .2s, opacity .3s ease;
 
   .avatar__text {
     font-size: 36px;
     font-family: @font-family-base-light;
-    transition: margin-top .3s ease, top .3s ease, font-size .3s ease;
   }
 }
 
@@ -95,20 +85,15 @@
   font-size: 26px;
   line-height: 1.231em;
   font-family: @font-family-base-light;
-  transition: font-size .4s ease .2s, opacity .6s ease;
-  animation: hero-animate-close .6s 1 ease;
 }
 
 .hero__text,
 .hero__actions {
-  max-height: 0;
-  visibility: hidden;
-  opacity: 0;
+  display: none;
 }
 
 .hero__text {
-  transition: max-height .4s ease .2s, font-size .4s ease .2s, visibility 0s ease .6s, opacity .3s ease;
-  animation: hero-animate-close .6s 1 ease;
+  opacity: .4;
 }
 
 .hero__smalltext {
@@ -117,8 +102,7 @@
 }
 
 .hero__actions {
-  padding-top: 0;
-  transition: max-height .4s ease .2s, padding .4s ease .2s, visibility 0s ease .6s, opacity .3s ease;
+  padding-top: 20px;
 
   button {
     margin: 0 5px;
@@ -151,11 +135,8 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  visibility: hidden;
+  display: none;
   text-align: center;
-  opacity: 0;
-  transform: translateY(150%);
-  transition: transform .4s ease, visibility 0s ease .4s, opacity .4s ease;
 }
 
 .hero__stats-item {
@@ -187,43 +168,4 @@
 .hero__stats-link {
   display: block;
   color: @white;
-}
-
-// Keyframes
-@-webkit-keyframes hero-animate-open {
-  20%  { opacity: 0; }
-  100% { opacity: 1; }
-}
-@-moz-keyframes hero-animate-open {
-  20%  { opacity: 0; }
-  100% { opacity: 1; }
-}
-@-o-keyframes hero-animate-open {
-  20%  { opacity: 0; }
-  100% { opacity: 1; }
-}
-@keyframes hero-animate-open {
-  20%  { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-@-webkit-keyframes hero-animate-close {
-  20%  { opacity: 1; }
-  50%  { opacity: 0; }
-  100% { opacity: 1; }
-}
-@-moz-keyframes hero-animate-close {
-  20%  { opacity: 1; }
-  50%  { opacity: 0; }
-  100% { opacity: 1; }
-}
-@-o-keyframes hero-animate-close {
-  20%  { opacity: 1; }
-  50%  { opacity: 0; }
-  100% { opacity: 1; }
-}
-@keyframes hero-animate-close {
-  20%  { opacity: 1; }
-  50%  { opacity: 0; }
-  100% { opacity: 1; }
 }
