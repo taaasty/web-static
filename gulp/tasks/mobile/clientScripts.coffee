@@ -11,7 +11,10 @@ gulp.task 'clientMobileScripts', ->
     cache: {}, packageCache: {}
     entries: config.entries
     extensions: config.extensions
-  })
+  }).external 'react'
+    .external 'react/lib/cx'
+    .external 'reactUjs'
+    .external 'eventEmitter'
 
   bundle = ->
     bundleLogger.start config.outputName

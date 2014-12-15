@@ -1,7 +1,7 @@
 require './libs'
 require './locales/locales'
-require './routes/routes'
-require './routes/api'
+require '../shared/routes/routes'
+require '../shared/routes/api'
 require './resources/is_mobile'
 require './resources/fileReceiver'
 require './resources/tasty'
@@ -12,7 +12,7 @@ require './react/entities/normalized_entry'
 require './react/services/positions'
 require './react/services/entry_store'
 require './react/services/entry_normalizer'
-require './react/services/thumbor'
+require '../shared/react/services/thumbor'
 require './react/services/uuid'
 
 # /*===============================
@@ -138,10 +138,9 @@ require './react/components/auth/recovery'
 
 require './react/components/settings/settings'
 
-require './react/components/toolbars/user/user'
-require './react/components/toolbars/feed/feed'
+require './react/components/toolbars/user'
+require './react/components/toolbars/feed'
 require './react/components/toolbars/close/close'
-require './react/components/toolbars/toolbar_item'
 
 require './react/components/shellboxes/confirm_registration'
 
