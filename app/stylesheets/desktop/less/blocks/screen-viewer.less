@@ -1,3 +1,8 @@
+.screen-viewer-container {
+  width: 100%;
+  height: 100%;
+}
+
 .screen-viewer {
   width: 100%;
   height: 100%;
@@ -5,28 +10,20 @@
   font-family: @font-family-base;
   color: @white;
   overflow: hidden;
+  user-select: none;
 
-  &:before {
-    content: "";
-    height: 100%;
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  &.state--ready {
-    .screen-viewer__item.state--current {
+  &.__ready {
+    .screen-viewer__item.__active {
       z-index: @zindex-screen-viewer-item-active;
       opacity: 1;
       transition: opacity .6s ease 0s;
+
+      .screen-viewer__bg {
+        animation: animate-screen-viewer-item 10s 1 ease;
+      }
     }
 
-    .screen-viewer__loader {
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity .4s ease, visibility 0s ease .4s;
-    }
-
-    .screen-viewer__text {
+    .screen-viewer__title {
       visibility: visible;
       opacity: 1;
       transform: translate(0px, 0px);
@@ -35,12 +32,9 @@
   }
 }
 
-.screen-viewer__box {
-  width: 100%;
+.screen-viewer__spacer {
+  .inline-block-middle;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .screen-viewer__item {
@@ -62,24 +56,10 @@
   left: 0;
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  text-align: center;
   background-size: cover;
-  .scale(1.1);
-  transition: transform 0s linear .8s;
+  text-align: center;
   backface-visibility: hidden;
-
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    display: none;
-    visibility: hidden;
-  }
-
-  .screen-viewer__item.state--current & {
-    .scale(1);
-    transition-duration: 10s;
-    transition-delay: 0s;
-  }
+  transition: transform 10s ease;
 }
 
 .screen-viewer__user {
@@ -99,7 +79,7 @@
   }
 }
 
-.screen-viewer__text {
+.screen-viewer__title {
   width: 768px;
   margin-left: 5%;
   position: absolute;
@@ -125,10 +105,33 @@
   z-index: @zindex-screen-viewer-loader;
 }
 
+
+
 // Media Queries
 @media (max-width: 1050px) {
-  .screen-viewer__text {
+  .screen-viewer__title {
     width: 60%;
     font-size: 62px;
   }
+}
+
+// Animation
+@-webkit-keyframes animate-screen-viewer-item {
+  0%   { -webkit-transform: scale(1.1); }
+  100% { -webkit-transform: scale(1); }
+}
+
+@-moz-keyframes animate-screen-viewer-item {
+  0%   { -moz-transform: scale(1.1); }
+  100% { -moz-transform: scale(1); }
+}
+
+@-o-keyframes animate-screen-viewer-item {
+  0%   { -o-transform: scale(1.1); }
+  100% { -o-transform: scale(1); }
+}
+
+@keyframes animate-screen-viewer-item {
+  0%   { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
