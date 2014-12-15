@@ -2111,6 +2111,7 @@ a.toolbar__popup-link:active {
   margin: 0 auto;
   position: relative;
   display: block;
+  cursor: pointer;
 }
 .hero__avatar .avatar__text {
   font-size: 36px;
