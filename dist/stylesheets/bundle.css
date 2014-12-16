@@ -1755,19 +1755,21 @@ body {
   }
 }
 @-webkit-keyframes animate-screen-viewer-item {
-  0% {
-    -webkit-transform: scale(1.1);
-  }
-  100% {
-    -webkit-transform: scale(1);
-  }
-}
-@keyframes animate-screen-viewer-item {
-  0% {
+  from {
     -webkit-transform: scale(1.1);
             transform: scale(1.1);
   }
-  100% {
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes animate-screen-viewer-item {
+  from {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  to {
     -webkit-transform: scale(1);
             transform: scale(1);
   }
