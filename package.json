@@ -8,8 +8,7 @@
   },
   "browserify": {
     "transform": [
-      "coffeeify",
-      "reactify",
+      "coffee-reactify",
       "browserify-shim"
     ]
   },
@@ -29,6 +28,7 @@
     "browser-sync": "^1.5.8",
     "browserify": "^6.1.0",
     "browserify-shim": "^3.8.0",
+    "coffee-reactify": "^1.0.3",
     "coffee-script": "^1.8.0",
     "coffeeify": "^0.7.0",
     "del": "^0.1.3",
