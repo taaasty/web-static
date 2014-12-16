@@ -54447,7 +54447,10 @@ unmountReactComponents = function() {
 };
 
 initialize = function() {
-  return mountReactComponents();
+  mountReactComponents();
+  if (typeof $ !== "undefined" && $ !== null) {
+    return $(document).on('page:change', mountReactComponents);
+  }
 };
 
 module.exports = {

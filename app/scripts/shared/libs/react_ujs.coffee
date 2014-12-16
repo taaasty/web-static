@@ -30,6 +30,7 @@ unmountReactComponents = ->
 
 initialize = ->
   mountReactComponents()
+  $(document).on 'page:change', mountReactComponents if $?
 
 module.exports = {
   initialize: initialize
