@@ -388,23 +388,19 @@ a:hover {
 }
 html,
 body {
-  height: 100%;
   padding: 0;
   margin: 0;
 }
 .layout {
   background: #ffffff;
   position: relative;
-  -webkit-transform: translateX(0);
-      -ms-transform: translateX(0);
-          transform: translateX(0);
-  -webkit-transition: -webkit-transform .4s ease;
-          transition: transform .4s ease;
 }
 .auth-page {
+  height: 100%;
   background-color: #323039;
 }
 .auth-page body {
+  height: 100%;
   color: #ffffff;
 }
 .feed-page .hero {
@@ -441,6 +437,12 @@ body {
 .messages-page .follow-status {
   right: 0;
   bottom: 0;
+}
+.error-page {
+  height: 100%;
+}
+.error-page body {
+  height: 100%;
 }
 .error-page .layout,
 .error-page .layout__body {
@@ -587,31 +589,43 @@ body {
 .feed-toolbar-open {
   overflow: hidden;
 }
+.feed-toolbar-open body {
+  overflow: hidden;
+}
 .feed-toolbar-open .layout {
   left: 240px;
 }
-.feed-toolbar-open .toolbar--feed .toolbar__toggle {
+.feed-toolbar-open .toolbar--feed .toolbar__toggle,
+.feed-toolbar-open .toolbar--feed .hero__close {
   left: 252px;
 }
-.feed-toolbar-open .toolbar--feed .toolbar__toggle .icon {
+.feed-toolbar-open .toolbar--feed .toolbar__toggle .icon,
+.feed-toolbar-open .toolbar--feed .hero__close .icon {
   color: #f8c700;
 }
-.feed-toolbar-open .toolbar--user .toolbar__toggle {
+.feed-toolbar-open .toolbar--user .toolbar__toggle,
+.feed-toolbar-open .toolbar--user .hero__close {
   display: none;
 }
 .user-toolbar-open {
   overflow: hidden;
 }
+.user-toolbar-open body {
+  overflow: hidden;
+}
 .user-toolbar-open .layout {
   left: -240px;
 }
-.user-toolbar-open .toolbar--user .toolbar__toggle {
+.user-toolbar-open .toolbar--user .toolbar__toggle,
+.user-toolbar-open .toolbar--user .hero__close {
   right: 252px;
 }
-.user-toolbar-open .toolbar--user .toolbar__toggle .icon {
+.user-toolbar-open .toolbar--user .toolbar__toggle .icon,
+.user-toolbar-open .toolbar--user .hero__close .icon {
   color: #f8c700;
 }
-.user-toolbar-open .toolbar--feed .toolbar__toggle {
+.user-toolbar-open .toolbar--feed .toolbar__toggle,
+.user-toolbar-open .toolbar--feed .hero__close {
   display: none;
 }
 .hero-enabled {
@@ -621,7 +635,9 @@ body {
   overflow: hidden;
 }
 .hero-enabled .toolbar--user .toolbar__toggle,
-.hero-enabled .toolbar--feed .toolbar__toggle {
+.hero-enabled .toolbar--feed .toolbar__toggle,
+.hero-enabled .toolbar--user .hero__close,
+.hero-enabled .toolbar--feed .hero__close {
   display: none;
 }
 .hero-enabled .hero {
@@ -2009,7 +2025,9 @@ a.toolbar__popup-link:active {
   opacity: 1;
 }
 .toolbar--left .toolbar__toggle,
-.toolbar--feed .toolbar__toggle {
+.toolbar--feed .toolbar__toggle,
+.toolbar--left .hero__close,
+.hero__close {
   left: 12px;
 }
 .toolbar--left .toolbar__popup,
@@ -2017,7 +2035,8 @@ a.toolbar__popup-link:active {
   left: 0;
 }
 .toolbar--right .toolbar__toggle,
-.toolbar--user .toolbar__toggle {
+.toolbar--user .toolbar__toggle,
+.toolbar--right .hero__close {
   right: 12px;
 }
 .toolbar--right .toolbar__popup,
