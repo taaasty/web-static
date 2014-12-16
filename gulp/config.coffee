@@ -40,7 +40,7 @@ module.exports = {
         dest: build
       }
       assets: {
-        src: src + '/assets/**/*.{ttf,woff,eof,eot,svg}'
+        src: src + '/assets/**/*.*'
         dest: build + '/assets'
       }
     }
