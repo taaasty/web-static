@@ -13,7 +13,6 @@
 
 .comments__more-link {
   &:extend(.link-design-default all, .link-design all);
-  .text-overflow();
   display: block;
 
   &:active {
@@ -62,6 +61,7 @@
 }
 
 .comment__date {
+  white-space: nowrap;
   font-size: @font-size-xs;
 
   &:before {
