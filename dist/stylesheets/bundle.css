@@ -3282,7 +3282,6 @@ a.toolbar__popup-link:active {
   position: relative;
 }
 .post {
-  /*margin-bottom: 42px;*/
   margin-bottom: 58px;
   position: relative;
 }
@@ -3323,10 +3322,6 @@ a.toolbar__popup-link:active {
 }
 .post__content p img {
   width: 100%;
-}
-.post__content img {
-  width: 100%;
-  height: auto;
 }
 .post__content figure,
 .post__content .image,
@@ -3597,10 +3592,6 @@ a.toolbar__popup-link:active {
 .image {
   position: relative;
   text-align: center;
-}
-.image img {
-  width: 100%;
-  height: auto;
 }
 .video {
   height: 400px;
@@ -9822,9 +9813,6 @@ tr.introjs-showElement > th.toolbar--nav {
 }
 .collage {
   overflow: hidden;
-}
-.post__content img {
-  width: 100%;
 }
 .video {
   text-align: center;
