@@ -1806,6 +1806,29 @@ a.outline-auth-button {
   background-color: #f8c700;
   color: #000000 !important;
 }
+.alert {
+  padding: 1em 12px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #e1e1e1;
+  font-size: 14px;
+  line-height: 1.429em;
+  text-align: center;
+  z-index: 5000;
+  -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+          text-size-adjust: 100%;
+}
+.alert--success {
+  background-color: #24b166;
+  color: #ffffff;
+}
+.alert--error {
+  background-color: #eb4656;
+  color: #ffffff;
+}
 .auth {
   height: 100%;
   position: relative;
