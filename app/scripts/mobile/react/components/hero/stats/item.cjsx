@@ -1,7 +1,8 @@
 cx = require 'react/lib/cx'
 { PropTypes } = React
 
-HeroStatsItem = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroStatsItem'
 
   propTypes:
     count:   PropTypes.number.isRequired
@@ -45,5 +46,3 @@ HeroStatsItem = React.createClass
     if @props.onClick
       e.preventDefault()
       @props.onClick()
-
-module.exports = HeroStatsItem

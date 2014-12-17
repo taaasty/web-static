@@ -12,7 +12,8 @@ _screenOrientation = window.orientation
 _initialHeroHeight = null
 _openHeroHeight    = null
 
-Hero = React.createClass
+module.exports = React.createClass
+  displayName: 'Hero'
 
   propTypes:
     user:         PropTypes.object.isRequired
@@ -93,5 +94,3 @@ Hero = React.createClass
 
       html.style.height = _openHeroHeight + 'px'
       @forceUpdate()
-
-module.exports = Hero

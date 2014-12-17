@@ -2,7 +2,8 @@ HeroActions_User        = require './actions/user'
 HeroActions_CurrentUser = require './actions/current_user'
 { PropTypes } = React
 
-HeroActions = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroActions'
 
   propTypes:
     user:         PropTypes.object.isRequired
@@ -16,5 +17,3 @@ HeroActions = React.createClass
 
   isCurrentUser: ->
     !@props.relationship
-
-module.exports = HeroActions

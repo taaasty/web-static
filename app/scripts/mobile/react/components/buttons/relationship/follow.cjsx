@@ -24,7 +24,8 @@ SUBSCRIBED_TITLE     = 'Подписан'
 REQUESTED_TITLE      = 'Ждём одобрения'
 IGNORED_TITLE        = 'Заблокирован'
 
-FollowButton = React.createClass
+module.exports = React.createClass
+  displayName: 'FollowButton'
   mixins: [RelationshipButtonMixin]
 
   propTypes:
@@ -73,5 +74,3 @@ FollowButton = React.createClass
       when GUESSED_STATUS   then @follow()
       when NONE_STATUS      then @follow()
       else console.warn 'Unknown follow status of FollowButton component', @state.relationship.state
-
-module.exports = FollowButton

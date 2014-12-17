@@ -2,7 +2,8 @@ HeroStatsItem = require './stats/item'
 { declension } = require '../../../../shared/helpers/grammar'
 { PropTypes }  = React
 
-HeroStats = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroStats'
 
   propTypes:
     stats: PropTypes.object.isRequired
@@ -51,5 +52,3 @@ HeroStats = React.createClass
       when 'followers'  then declension(@props.stats.followers_count, ['подписчик', 'подписчика', 'подписчиков'])
       when 'days'       then declension(@props.stats.days_count, ['день', 'дня', 'дней']) + ' на тейсти'
       else console.warn 'Unknown type of stats of HeroStats component', type
-
-module.exports = HeroStats

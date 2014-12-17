@@ -1,9 +1,9 @@
 FeedToolbarList = require './feed/list'
 ToolbarMixin    = require './mixins/toolbar'
-BrowserHelpers  = require '../../../../shared/helpers/browser'
 { PropTypes } = React
 
-window.FeedToolbar = React.createClass
+module.exports = React.createClass
+  displayName: 'FeedToolbar'
   mixins: [ToolbarMixin]
 
   propTypes:
@@ -25,8 +25,6 @@ window.FeedToolbar = React.createClass
 
   toggleOpenState: ->
     html = document.querySelector 'html'
-
-    clearTimeout @timeout if @timeout?
 
     html.classList.remove 'user-toolbar-open' if html.classList.contains 'user-toolbar-open'
     html.classList.toggle 'feed-toolbar-open'

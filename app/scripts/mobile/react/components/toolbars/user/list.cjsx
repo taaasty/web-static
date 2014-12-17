@@ -2,7 +2,8 @@ ToolbarItem          = require '../_item'
 UserToolbarListMixin = require './mixins/list'
 { PropTypes } = React
 
-UserToolbarList = React.createClass
+module.exports = React.createClass
+  displayName: 'UserToolbarList'
   mixins: [UserToolbarListMixin]
 
   propTypes:
@@ -55,5 +56,3 @@ UserToolbarList = React.createClass
           href={ Routes.logout_path(this.props.userSlug) }
           icon="icon--logout" />
     </ul>
-
-module.exports = UserToolbarList

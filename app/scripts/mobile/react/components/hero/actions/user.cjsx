@@ -6,7 +6,8 @@ HeroActions_DropdownMenu = require './dropdown_menu'
 #TODO: i18n
 BUTTON_TITLE = 'Это вы'
 
-HeroActions_User = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroActions_User'
 
   propTypes:
     relationship: PropTypes.object.isRequired
@@ -19,5 +20,3 @@ HeroActions_User = React.createClass
           userId={ this.props.relationship.user.id }
           status={ this.props.relationship.state } />
     </div>
-
-module.exports = HeroActions_User
