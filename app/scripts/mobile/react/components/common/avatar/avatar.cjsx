@@ -1,7 +1,8 @@
 cx = require 'react/lib/cx'
 { PropTypes } = React
 
-Avatar = React.createClass
+module.exports = React.createClass
+  displayName: 'Avatar'
 
   propTypes:
     name:    PropTypes.string.isRequired
@@ -49,5 +50,3 @@ Avatar = React.createClass
 
   isAnonymous: -> @props.userpic.kind is 'anonymous'
   isUser:      -> @props.userpic.kind is 'user'
-
-module.exports = Avatar

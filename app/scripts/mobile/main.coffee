@@ -82,16 +82,16 @@ document.addEventListener "DOMContentLoaded", (->
   #     i--
 
   # Мета
-  metaActions = document.querySelectorAll(".meta-actions")
+  # metaActions = document.querySelectorAll(".meta-actions")
 
-  if metaActions?
-    i = metaActions.length - 1
+  # if metaActions?
+  #   i = metaActions.length - 1
 
-    while i >= 0
-      metaActions[i].addEventListener "click", (->
-        this.classList.toggle "__open"
-      ), false
-      i--
+  #   while i >= 0
+  #     metaActions[i].addEventListener "click", (->
+  #       this.classList.toggle "__open"
+  #     ), false
+  #     i--
 
   # Комментарии
   commentActions = document.querySelectorAll(".comment__actions")

@@ -3,7 +3,8 @@
 #TODO: i18n
 TITLE = 'Пожаловаться'
 
-HeroActions_DropdownMenuReportItem = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroActions_DropdownMenuReportItem'
 
   propTypes:
     userId: PropTypes.number.isRequired
@@ -18,5 +19,3 @@ HeroActions_DropdownMenuReportItem = React.createClass
     </li>
 
   report: -> console.log 'report'
-
-module.exports = HeroActions_DropdownMenuReportItem

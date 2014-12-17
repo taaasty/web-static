@@ -5,7 +5,8 @@ FollowStatus = require '../common/follow_status/follow_status'
 
 HERO_AVATAR_SIZE = 220
 
-HeroAvatar = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroAvatar'
 
   propTypes:
     user:         PropTypes.object.isRequired
@@ -29,5 +30,3 @@ HeroAvatar = React.createClass
 
   isCurrentUser: ->
     !@props.relationship
-
-module.exports = HeroAvatar
