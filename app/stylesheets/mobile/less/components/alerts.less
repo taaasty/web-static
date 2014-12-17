@@ -1,0 +1,23 @@
+.alert {
+  padding: 1em @indent-base;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: @alert-default-bg;
+  font-size: @alert-font-size;
+  line-height: @alert-line-height;
+  text-align: center;
+  z-index: @zindex-alert;
+  text-size-adjust: 100%;
+}
+
+.alert--success {
+  background-color: @alert-success-bg;
+  color: @white;
+}
+
+.alert--error {
+  background-color: @alert-error-bg;
+  color: @white;
+}
