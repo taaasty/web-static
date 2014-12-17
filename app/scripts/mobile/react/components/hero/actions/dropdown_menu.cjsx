@@ -6,7 +6,8 @@ HeroActions_DropdownMenu_Popup = require './dropdown_menu/popup'
 CLOSE_STATE = 'close'
 OPEN_STATE  = 'open'
 
-HeroActions_DropdownMenu = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroActions_DropdownMenu'
 
   propTypes:
     userId: PropTypes.number.isRequired
@@ -37,5 +38,3 @@ HeroActions_DropdownMenu = React.createClass
 
   toggleOpenState: ->
     if @isOpenState() then @activateCloseState() else @activateOpenState()
-
-module.exports = HeroActions_DropdownMenu

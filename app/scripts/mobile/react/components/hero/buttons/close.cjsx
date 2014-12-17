@@ -1,6 +1,7 @@
 { PropTypes } = React
 
-HeroCloseButton = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroCloseButton'
 
   propTypes:
     onClick: PropTypes.func.isRequired
@@ -10,5 +11,3 @@ HeroCloseButton = React.createClass
          onClick={ this.props.onClick }>
       <i className="icon icon--cross" />
     </div>
-
-module.exports = HeroCloseButton

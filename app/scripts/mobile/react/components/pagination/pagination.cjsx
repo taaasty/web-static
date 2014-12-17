@@ -1,4 +1,5 @@
-Pagination = React.createClass
+module.exports = React.createClass
+  displayName: 'Pagination'
 
   render: ->
     <div className="pagination">
@@ -7,5 +8,3 @@ Pagination = React.createClass
         Смотреть все записи
       </a>
     </div>
-
-module.exports = Pagination

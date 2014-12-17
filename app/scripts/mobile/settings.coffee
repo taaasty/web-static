@@ -1,8 +1,8 @@
 TastySettings =
   version:  'v0.0.1'
   env:      'static-development'
-  host:     'http://taaasty.ru/'
-  api_host: 'http://taaasty.ru/api/'
+  host:     'http://taaasty.ru'
+  api_host: 'http://taaasty.ru/api'
 
 console.log 'Tasty mobile version', TastySettings.version
 

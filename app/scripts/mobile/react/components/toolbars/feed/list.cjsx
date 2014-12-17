@@ -1,7 +1,8 @@
 ToolbarItem = require '../_item'
 { PropTypes } = React
 
-FeedToolbarList = React.createClass
+module.exports = React.createClass
+  displayName: 'FeedToolbarList'
 
   propTypes:
     userSlug: PropTypes.string
@@ -37,5 +38,3 @@ FeedToolbarList = React.createClass
                  icon="icon--friends"
                  key="people" />
            </ul>
-
-module.exports = FeedToolbarList

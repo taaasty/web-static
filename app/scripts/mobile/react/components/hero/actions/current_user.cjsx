@@ -4,7 +4,8 @@ SettingsButton = require '../../buttons/user/settings'
 #TODO: i18n
 BUTTON_TITLE = 'Это вы'
 
-HeroActions_CurrentUser = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroActions_CurrentUser'
 
   render: ->
     <div className="hero__actions">
@@ -13,5 +14,3 @@ HeroActions_CurrentUser = React.createClass
       </button>
       <SettingsButton />
     </div>
-
-module.exports = HeroActions_CurrentUser

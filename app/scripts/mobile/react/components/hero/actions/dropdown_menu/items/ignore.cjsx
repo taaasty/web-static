@@ -3,7 +3,8 @@
 #TODO: i18n
 TITLE = 'Заблокировать'
 
-HeroActions_DropdownMenuIgnoreItem = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroActions_DropdownMenuIgnoreItem'
 
   propTypes:
     userId: PropTypes.number.isRequired
@@ -18,5 +19,3 @@ HeroActions_DropdownMenuIgnoreItem = React.createClass
     </li>
 
   ignore: -> console.log 'ignore'
-
-module.exports = HeroActions_DropdownMenuIgnoreItem
