@@ -4,7 +4,8 @@ HeroActions_DropdownMenuReportItem = require './items/report'
 
 IGNORED_STATUS = 'ignored'
 
-HeroActions_DropdownMenu_Popup = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroActions_DropdownMenu_Popup'
 
   propTypes:
     arrangement: PropTypes.string
@@ -15,17 +16,15 @@ HeroActions_DropdownMenu_Popup = React.createClass
     arrangement: 'bottom'
 
   render: ->
-    <div className={ 'hero__dropdown-popup __' + this.props.arrangement }>
-      { this._renderPopupList() }
+    <div className={ 'hero__dropdown-popup __' + @props.arrangement }>
+      { @_renderPopupList() }
     </div>
 
   _renderPopupList: ->
     if @props.status isnt IGNORED_STATUS
-      ignoreItem = <HeroActions_DropdownMenuIgnoreItem userId={ this.props.userId } />
+      ignoreItem = <HeroActions_DropdownMenuIgnoreItem userId={ @props.userId } />
 
     return <ul className="hero__dropdown-popup-list">
              { ignoreItem }
-             <HeroActions_DropdownMenuReportItem userId={ this.props.userId } />
+             <HeroActions_DropdownMenuReportItem userId={ @props.userId } />
            </ul>
-
-module.exports = HeroActions_DropdownMenu_Popup

@@ -1,4 +1,5 @@
 require './resources/libs'
+require './locales/locales'
 require '../shared/routes/routes'
 require '../shared/routes/api'
 require './resources/tasty'

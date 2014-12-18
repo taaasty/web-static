@@ -1,3 +1,4 @@
+BrowserHelpers  = require '../../../../shared/helpers/browser'
 HeroAvatar      = require './avatar'
 HeroHead        = require './head'
 HeroActions     = require './actions'
@@ -8,16 +9,15 @@ HeroCloseButton = require './buttons/close'
 CLOSE_STATE = 'close'
 OPEN_STATE  = 'open'
 
-_screenOrientation = window.orientation
+_screenOrientation = null
 _initialHeroHeight = null
 _openHeroHeight    = null
 
-Hero = React.createClass
+module.exports = React.createClass
+  displayName: 'Hero'
 
   propTypes:
-    user:         PropTypes.object.isRequired
-    stats:        PropTypes.object.isRequired
-    relationship: PropTypes.object
+    tlog: PropTypes.object.isRequired
 
   getInitialState: ->
     currentState: CLOSE_STATE
@@ -31,24 +31,24 @@ Hero = React.createClass
     window.removeEventListener 'resize', @onResize
 
   render: ->
-    <div style={ this._getHeroStyles() }
+    <div style={ @_getHeroStyles() }
          className="hero">
-      <HeroCloseButton onClick={ this.close } />
+      <HeroCloseButton onClick={ @close } />
       <div className="hero__overlay" />
       <div className="hero__gradient" />
       <div className="hero__content">
         <HeroAvatar
-            user={ this.props.user }
-            relationship={ this.props.relationship }
-            onClick={ this.handleAvatarClick } />
-        <HeroHead user={ this.props.user } />
+            user={ @props.tlog.author }
+            relationship={ @props.tlog.my_relationship }
+            onClick={ @handleAvatarClick } />
+        <HeroHead user={ @props.tlog.author } />
         <HeroActions
-            user={ this.props.user }
-            relationship={ this.props.relationship } />
+            user={ @props.tlog.author }
+            relationship={ @props.tlog.my_relationship } />
       </div>
       <HeroStats
-          user={ this.props.user }
-          stats={ this.props.stats } />
+          user={ @props.tlog.author }
+          stats={ @props.tlog.stats } />
     </div>
 
   isOpenState: -> @state.currentState is OPEN_STATE
@@ -57,11 +57,11 @@ Hero = React.createClass
   activateCloseState: -> @setState(currentState: CLOSE_STATE)
 
   open: ->
-    html            = document.querySelector 'html'
-    _openHeroHeight = window.innerHeight
-
+    html = document.querySelector 'html'
     html.classList.add 'hero-enabled'
-    html.style.height = _openHeroHeight + 'px'
+
+    _openHeroHeight = window.innerHeight
+    document.body.style.height = _openHeroHeight + 'px'
     document.body.scrollTop = document.documentElement.scrollTop = 0
 
     @activateOpenState()
@@ -70,12 +70,14 @@ Hero = React.createClass
     html = document.querySelector 'html'
     html.classList.remove 'hero-enabled'
 
+    _screenOrientation = null
+    document.body.style.height = ''
+
     @activateCloseState()
 
   _getHeroStyles: ->
     #TODO: Get optimized background through ThumborService
-    backgroundUrl = @props.user.design?.background_url
-
+    backgroundUrl = @props.tlog.design?.background_url
     height = if @isOpenState() then _openHeroHeight else _initialHeroHeight
 
     'background-image': "url(#{ backgroundUrl })"
@@ -86,12 +88,11 @@ Hero = React.createClass
 
   onResize: ->
     html = document.querySelector 'html'
+    currentOrientation = BrowserHelpers.getCurrentOrientation()
 
-    if _screenOrientation isnt window.orientation
-      _screenOrientation = window.orientation
+    if @isOpenState() and _screenOrientation isnt currentOrientation
+      _screenOrientation = currentOrientation
       _openHeroHeight    = window.innerHeight
 
-      html.style.height = _openHeroHeight + 'px'
+      document.body.style.height = _openHeroHeight + 'px'
       @forceUpdate()
-
-module.exports = Hero

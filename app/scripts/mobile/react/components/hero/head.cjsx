@@ -1,6 +1,7 @@
 { PropTypes } = React
 
-HeroHead = React.createClass
+module.exports = React.createClass
+  displayName: 'HeroHead'
 
   propTypes:
     user: PropTypes.shape(
@@ -13,14 +14,12 @@ HeroHead = React.createClass
     <div className="hero__head">
       <div className="hero__title">
         <span>
-          <a href={ this.props.user.tlog_url }>
-            { this.props.user.slug }
+          <a href={ @props.user.tlog_url }>
+            { @props.user.slug }
           </a>
         </span>
       </div>
       <div className="hero__text">
-        <span dangerouslySetInnerHTML={{ __html: this.props.user.title }} />
+        <span dangerouslySetInnerHTML={{ __html: @props.user.title }} />
       </div>
     </div>
-
-module.exports = HeroHead

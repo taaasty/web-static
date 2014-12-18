@@ -1,32 +1,32 @@
+cx              = require 'react/lib/cx'
 FeedToolbarList = require './feed/list'
 ToolbarMixin    = require './mixins/toolbar'
-BrowserHelpers  = require '../../../../shared/helpers/browser'
 { PropTypes } = React
 
-window.FeedToolbar = React.createClass
+module.exports = React.createClass
+  displayName: 'FeedToolbar'
   mixins: [ToolbarMixin]
 
   propTypes:
-    userSlug: PropTypes.string
+    user: PropTypes.object
 
   render: ->
-    if @isOpenState()
-      list = <div className="toolbar__popup __visible">
-               <FeedToolbarList userSlug={ this.props.userSlug } />
-             </div>
+    toolbarClasses = cx
+      'toolbar__popup': true
+      '__visible': @isOpenState()
 
     return <nav className="toolbar toolbar--feed">
              <div className="toolbar__toggle"
-                  onClick={ this.toggleOpenState }>
+                  onClick={ @toggleOpenState }>
                <i className="icon icon--ribbon" />
              </div>
-             { list }
+             <div className={ toolbarClasses }>
+               <FeedToolbarList user={ @props.user } />
+             </div>
            </nav>
 
   toggleOpenState: ->
     html = document.querySelector 'html'
-
-    clearTimeout @timeout if @timeout?
 
     html.classList.remove 'user-toolbar-open' if html.classList.contains 'user-toolbar-open'
     html.classList.toggle 'feed-toolbar-open'

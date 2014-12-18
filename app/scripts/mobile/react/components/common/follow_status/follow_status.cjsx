@@ -1,6 +1,7 @@
 { PropTypes } = React
 
-FollowStatus = React.createClass
+module.exports = React.createClass
+  displayName: 'FollowStatus'
 
   propTypes:
     status: PropTypes.string.isRequired
@@ -9,5 +10,3 @@ FollowStatus = React.createClass
     <span className={ "follow-status __" + this.props.status }>
       <i className="follow-status__icon" />
     </span>
-
-module.exports = FollowStatus
