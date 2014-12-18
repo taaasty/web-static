@@ -5,10 +5,10 @@ module.exports = React.createClass
   displayName: 'FeedToolbarList'
 
   propTypes:
-    userSlug: PropTypes.string
+    user: PropTypes.object
 
   render: ->
-    if @props.userSlug?
+    if @props.user?
       friends = <ToolbarItem
                     title="Подписки"
                     href={ Routes.friends_feed_path() }

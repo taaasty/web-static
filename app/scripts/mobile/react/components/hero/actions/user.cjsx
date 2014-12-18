@@ -14,9 +14,9 @@ module.exports = React.createClass
 
   render: ->
     <div className="hero__actions">
-      <FollowButton relationship={ this.props.relationship } />
-      <WriteMessageButton user={ this.props.relationship.user } />
+      <FollowButton relationship={ @props.relationship } />
+      <WriteMessageButton user={ @props.relationship.user } />
       <HeroActions_DropdownMenu
-          userId={ this.props.relationship.user.id }
-          status={ this.props.relationship.state } />
+          userId={ @props.relationship.user.id }
+          status={ @props.relationship.state } />
     </div>

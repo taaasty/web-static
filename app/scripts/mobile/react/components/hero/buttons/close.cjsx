@@ -8,6 +8,6 @@ module.exports = React.createClass
 
   render: ->
     <div className="hero__close"
-         onClick={ this.props.onClick }>
+         onClick={ @props.onClick }>
       <i className="icon icon--cross" />
     </div>

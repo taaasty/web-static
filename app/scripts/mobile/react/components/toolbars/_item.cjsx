@@ -23,11 +23,11 @@ module.exports = React.createClass
       '__disabled': @props.disabled
 
     return <li className={ toolbarItemClasses }>
-             <a href={ this.props.href }
+             <a href={ @props.href }
                 className="toolbar__popup-link"
-                onClick={ this.handleSelect }>
-               <i className={ 'icon ' + this.props.icon } />
-               { this.props.title }
+                onClick={ @handleSelect }>
+               <i className={ 'icon ' + @props.icon } />
+               { @props.title }
              </a>
            </li>
 

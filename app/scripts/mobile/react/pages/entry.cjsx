@@ -11,25 +11,22 @@ window.EntryPage = React.createClass
   mixins: [PageMixin]
 
   propTypes:
-    appData: PropTypes.object.isRequired
+    currentUser: PropTypes.object
+    tlog:        PropTypes.object.isRequired
+    entry:       PropTypes.object.isRequired
 
   render: ->
-    userSlug = @props.appData.entities.user?.slug
-    entry    = @props.appData.entry
-    heroData = @props.appData.hero
-
-    return <div>
-             <FeedToolbar userSlug={ userSlug } />
-             <UserToolbar userSlug={ userSlug } />
-             <div className="layout">
-               <div className="layout__header">
-                 <Hero user={ heroData.user }
-                       stats={ heroData.stats }
-                       relationship={ heroData.relationship } />
-               </div>
-               <div className="layout__body">
-                 <Entry entry={ entry } />
-                 <Pagination />
-               </div>
-             </div>
-           </div>
+    <div>
+      <FeedToolbar user={ @props.currentUser } />
+      <UserToolbar user={ @props.currentUser } />
+      <div className="layout">
+        <div className="layout__header">
+          <Hero tlog={ @props.tlog } />
+        </div>
+        <div className="layout__body">
+          <Entry entry={ @props.entry }
+                 user={ @props.currentUser } />
+          <Pagination />
+        </div>
+      </div>
+    </div>

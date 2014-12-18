@@ -11,7 +11,7 @@ module.exports = React.createClass
 
   render: ->
     <li className="hero__dropdown-popup-item"
-        onClick={ this.report }>
+        onClick={ @report }>
       <a className="hero__dropdown-popup-link" href="#">
         <i className="icon icon--exclamation-mark" />
         <span>{ TITLE }</span>

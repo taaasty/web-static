@@ -7,52 +7,52 @@ module.exports = React.createClass
   mixins: [UserToolbarListMixin]
 
   propTypes:
-    userSlug: PropTypes.string
+    user: PropTypes.object
 
   render: ->
     <ul className="toolbar__popup-list">
       <ToolbarItem
           title="Новая запись"
-          href={ Routes.new_entry_url(this.props.userSlug) }
+          href={ Routes.new_entry_url(@props.user.slug) }
           icon="icon--plus" />
       <ToolbarItem
           title="Мой дневник"
-          href={ Routes.new_anonymous_entry_url(this.props.userSlug) }
+          href={ Routes.new_anonymous_entry_url(@props.user.slug) }
           icon="icon--diary" />
       <ToolbarItem
           title="Профиль"
           icon="icon--profile"
-          onSelect={ this.showProfile } />
+          onSelect={ @showProfile } />
       <ToolbarItem
           title="Избранное"
-          href={ Routes.my_tlog_url(this.props.userSlug) }
+          href={ Routes.my_tlog_url(@props.user.slug) }
           icon="icon--star" />
       <ToolbarItem
           title="Новая анонимка"
-          href={ Routes.new_anonymous_entry_url(this.props.userSlug) }
+          href={ Routes.new_anonymous_entry_url(@props.user.slug) }
           icon="icon--anonymous" />
       <ToolbarItem
           title="Скрытые записи"
-          href={ Routes.private_entries_url(this.props.userSlug) }
+          href={ Routes.private_entries_url(@props.user.slug) }
           icon="icon--lock" />
       <ToolbarItem
           title="Сообщения"
           icon="icon--messages"
-          onSelect={ this.showMessages } />
+          onSelect={ @showMessages } />
       <ToolbarItem
           title="Друзья"
           icon="icon--friends"
-          onSelect={ this.showFriends } />
+          onSelect={ @showFriends } />
       <ToolbarItem
           title="Дизайн дневника"
           icon="icon--drawing"
-          onSelect={ this.showDesignSettings } />
+          onSelect={ @showDesignSettings } />
       <ToolbarItem
           title="Настройки"
           icon="icon--cogwheel"
-          onSelect={ this.showSettings } />
+          onSelect={ @showSettings } />
       <ToolbarItem
           title="Выйти"
-          href={ Routes.logout_path(this.props.userSlug) }
+          href={ Routes.logout_path(@props.user.slug) }
           icon="icon--logout" />
     </ul>

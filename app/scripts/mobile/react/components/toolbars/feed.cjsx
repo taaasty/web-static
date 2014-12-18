@@ -1,3 +1,4 @@
+cx              = require 'react/lib/cx'
 FeedToolbarList = require './feed/list'
 ToolbarMixin    = require './mixins/toolbar'
 { PropTypes } = React
@@ -7,20 +8,21 @@ module.exports = React.createClass
   mixins: [ToolbarMixin]
 
   propTypes:
-    userSlug: PropTypes.string
+    user: PropTypes.object
 
   render: ->
-    if @isOpenState()
-      list = <div className="toolbar__popup __visible">
-               <FeedToolbarList userSlug={ this.props.userSlug } />
-             </div>
+    toolbarClasses = cx
+      'toolbar__popup': true
+      '__visible': @isOpenState()
 
     return <nav className="toolbar toolbar--feed">
              <div className="toolbar__toggle"
-                  onClick={ this.toggleOpenState }>
+                  onClick={ @toggleOpenState }>
                <i className="icon icon--ribbon" />
              </div>
-             { list }
+             <div className={ toolbarClasses }>
+               <FeedToolbarList user={ @props.user } />
+             </div>
            </nav>
 
   toggleOpenState: ->

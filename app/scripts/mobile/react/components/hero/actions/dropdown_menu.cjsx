@@ -23,12 +23,12 @@ module.exports = React.createClass
       '__open': @isOpenState()
 
     return <div className={ menuClasses }
-                onClick={ this.toggleOpenState }>
+                onClick={ @toggleOpenState }>
              <ActionMenuButton />
              <HeroActions_DropdownMenu_Popup
                  arrangement="top"
-                 userId={ this.props.userId }
-                 status={ this.props.status } />
+                 userId={ @props.userId }
+                 status={ @props.status } />
            </div>
 
   isOpenState: -> @state.currentState is OPEN_STATE

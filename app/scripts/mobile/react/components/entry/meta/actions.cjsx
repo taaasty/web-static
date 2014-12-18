@@ -29,4 +29,5 @@ module.exports = React.createClass
   activateCloseState: -> @setState(currentState: CLOSE_STATE)
   activateOpenState:  -> @setState(currentState: OPEN_STATE)
 
-  toggleOpenState: -> if @isOpenState() then @activateCloseState() else @activateOpenState()
+  toggleOpenState: ->
+    if @isOpenState() then @activateCloseState() else @activateOpenState()

@@ -13,7 +13,7 @@ module.exports = React.createClass
     if @isCurrentUser()
       <HeroActions_CurrentUser />
     else
-      <HeroActions_User relationship={ this.props.relationship } />
+      <HeroActions_User relationship={ @props.relationship } />
 
   isCurrentUser: ->
     !@props.relationship

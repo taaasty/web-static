@@ -11,7 +11,7 @@ module.exports = React.createClass
 
   render: ->
     <li className="hero__dropdown-popup-item"
-        onClick={ this.ignore }>
+        onClick={ @ignore }>
       <a className="hero__dropdown-popup-link" href="#">
         <i className="icon icon--not-allowed" />
         <span>{ TITLE }</span>
