@@ -1,0 +1,86 @@
+.inviter {
+  position: relative;
+  background-color: @inviter-bg;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: @white;
+  text-align: center;
+
+  a {
+    color: inherit;
+  }
+}
+
+.inviter__content {
+  padding: @indent-base;
+  position: relative;
+}
+
+.inviter__logo {
+  padding: 10px 0;
+
+  .icon--ribbon {
+    font-size: 50px;
+  }
+}
+
+.inviter__overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: @inviter-bg;
+  opacity: .5;
+}
+
+.inviter__title {
+  max-width: 294px;
+  margin: 0 auto 1em;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 30px;
+}
+
+.inviter__text {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.inviter__actions {
+  margin-bottom: 15px;
+
+  .vk-auth-button,
+  .fb-auth-button,
+  .site-auth-button {
+    margin: 10px 4px;
+  }
+}
+
+.inviter__stats {
+  width: 100%;
+  padding: 30px 0;
+  opacity: .62;
+}
+
+.inviter__stats-item {
+  min-width: 210px;
+  padding: 0 10px;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 1.2;
+  vertical-align: middle;
+
+  strong {
+    display: block;
+    font-size: 28px;
+    font-weight: normal;
+  }
+
+  .tilde {
+    position: relative;
+    top: .23em;
+  }
+}
