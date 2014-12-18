@@ -2605,6 +2605,7 @@ a.toolbar__popup-link:active {
   top: 10px;
   right: 0;
   white-space: nowrap;
+  cursor: pointer;
 }
 .comment__actions > .icon {
   font-size: 20px;

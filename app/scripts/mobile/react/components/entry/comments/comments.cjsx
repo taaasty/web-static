@@ -1,5 +1,6 @@
 EntryComments_LoadMoreButton = require './buttons/load_more'
 EntryComments_CommentList    = require './comment_list'
+EntryComments_CommentForm    = require './comment_form'
 { PropTypes } = React
 
 module.exports = React.createClass
@@ -15,21 +16,20 @@ module.exports = React.createClass
       <div className="comments">
         { @_getLoadMoreButton() }
         { @_getCommentList() }
-        <form className="comment-form">
-          <button className="comment-form__submit">Отпр</button>
-          <div className="comment-form__field">
-            <textarea className="comment-form__field-textarea" placeholder="Добавить комментарий" />
-          </div>
-        </form>
+        { @_getCommentForm() }
       </div>
     </div>
 
   _getLoadMoreButton: ->
-    # if @state.totalCount > @state.comments.length
-    <EntryComments_LoadMoreButton totalCount={ @props.commentsInfo.total_count } />
+    if @props.commentsInfo.total_count > @props.commentsInfo.comments.length
+      <EntryComments_LoadMoreButton totalCount={ @props.commentsInfo.total_count } />
 
   _getCommentList: ->
-    # if @state.comments.length > 0
-    <EntryComments_CommentList
-        comments={ @props.commentsInfo.comments }
-        entryUrl={ @props.entryUrl } />
+    if @props.commentsInfo.comments.length
+      <EntryComments_CommentList
+          comments={ @props.commentsInfo.comments }
+          entryUrl={ @props.entryUrl } />
+
+  _getCommentForm: ->
+    if @props.user?
+      <EntryComments_CommentForm user={ @props.user } />

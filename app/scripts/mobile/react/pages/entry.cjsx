@@ -26,7 +26,7 @@ window.EntryPage = React.createClass
         <div className="layout__body">
           <Entry entry={ @props.entry }
                  user={ @props.currentUser } />
-          <Pagination />
+          <Pagination tlogUrl={ @props.tlog.tlog_url } />
         </div>
       </div>
     </div>

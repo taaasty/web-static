@@ -2,22 +2,22 @@ PageMixin =
 
   getDefaultProps: ->
     currentUser:
-      created_at: '2012-02-21T16:28:55.000+04:00'
-      features:
-        notification: false
-        search: false
-      id: 110184
-      is_daylog: false
-      is_female: true
-      is_privacy: false
-      name: 'dragonfly'
-      private_entries_count: 10
-      public_entries_count: 348
-      slug: 'dragonfly'
-      title: 'тлог депрессивной малолетки'
-      tlog_url: 'http://taaasty.ru/~dragonfly'
-      total_entries_count: 358
-      updated_at: '2014-12-01T21:16:45.000+03:00'
+      api_key:
+        access_token: 'my_super_key'
+        expires_at: '2015-01-04T18:07:07.000+03:00'
+        user_id: 232992
+      authentications: [{
+        id: 5
+        image: 'https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg'
+        name: 'Сергей Лаптев'
+        provider: 'vkontakte'
+        sex: null
+        uid: '17202995'
+        url: 'http://vk.com/my_super_key'
+      }]
+      available_notifications: true
+      confirmation_email: null
+      created_at: '2014-06-18T14:27:22.000+04:00'
       design:
         backgroundBrightness: 75
         background_url: 'http://taaasty.ru/assets/backgrounds/cf/78/1881243_4k_Resolution_Game_Wallpaper__12_fullsize.jpeg'
@@ -26,17 +26,34 @@ PageMixin =
         feedOpacity: 0.62
         fontType: 'sans'
         headerColor: 'white'
+      email: 'iamsergeylaptev@gmail.com'
+      features:
+        notification: false
+        search: true
+      id: 232992
+      is_confirmed: true
+      is_daylog: false
+      is_female: false
+      is_privacy: true
+      name: 'sergeylaptev'
+      private_entries_count: 0
+      public_entries_count: 3
+      slug: 'sergeylaptev'
+      title: 'To be continued...'
+      tlog_url: 'http://taaasty.ru/~sergeylaptev'
+      total_entries_count: 3
+      updated_at: '2014-12-17T11:54:20.000+03:00'
       userpic:
         default_colors:
-          background: '#44d068'
+          background: '#b5c31e'
           name: '#ffffff'
         kind: 'user'
-        large_url: 'http://taaasty.ru/assets/userpic/5f/28/110184_large.gif'
-        original_url: 'http://taaasty.ru/assets/userpic/5f/28/110184_original.gif'
-        symbol: 'd'
-        thumb64_url: 'http://taaasty.ru/assets/userpic/5f/28/110184_thumb64.gif'
-        thumb128_url: 'http://taaasty.ru/assets/userpic/5f/28/110184_thumb128.gif'
-        thumbor_path: 'userpic/5f/28/110184_original.gif'
+        large_url: 'http://taaasty.ru/assets/userpic/22/36/232992_large.jpeg'
+        original_url: 'http://taaasty.ru/assets/userpic/22/36/232992_original.jpeg'
+        symbol: 's'
+        thumb64_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb64.jpeg'
+        thumb128_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb128.jpeg'
+        thumbor_path: 'userpic/22/36/232992_original.jpeg'
     tlog:
       id: 110184
       title: 'тлог депрессивной малолетки'
