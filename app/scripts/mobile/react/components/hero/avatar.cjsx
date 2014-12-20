@@ -9,9 +9,9 @@ module.exports = React.createClass
   displayName: 'HeroAvatar'
 
   propTypes:
-    user:         PropTypes.object.isRequired
-    relationship: PropTypes.object
-    onClick:      PropTypes.func.isRequired
+    user:    PropTypes.object.isRequired
+    status:  PropTypes.string.isRequired
+    onClick: PropTypes.func.isRequired
 
   render: ->
     <div className="hero__avatar"
@@ -25,8 +25,8 @@ module.exports = React.createClass
   renderFollowStatus: ->
     if !@isCurrentUser()
       <FollowStatus
-          tlogId={ this.props.user.id }
-          status={ this.props.relationship.state } />
+          userId={ this.props.user.id }
+          status={ this.props.status } />
 
   isCurrentUser: ->
-    !@props.relationship
+    !@props.status

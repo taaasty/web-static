@@ -11,9 +11,10 @@ gulp.task 'vendorMobileScripts', ->
     basedir: config.baseDir
     extensions: config.extensions
   }).require '../../node_modules/react',         expose: 'react'
-    .require '../../node_modules/react/lib/cx',  expose: 'react/lib/cx'
     .require '../scripts/shared/libs/react_ujs', expose: 'reactUjs'
     .require './eventEmitter/EventEmitter',      expose: 'eventEmitter'
+    .require './reqwest/reqwest',                expose: 'reqwest'
+    .require './underscore/underscore',          expose: 'underscore'
 
   bundle = ->
     bundleLogger.start config.outputName

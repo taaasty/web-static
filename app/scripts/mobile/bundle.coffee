@@ -5,21 +5,20 @@ require '../shared/routes/api'
 require './resources/tasty'
 require './react/application'
 
-# /*================================
-# =            Services            =
-# ================================*/
+# /*==========  Services  ==========*/
 
 require '../shared/react/services/thumbor'
 
-# /*==================================
-# =            Components            =
-# ==================================*/
+# /*==========  Components  ==========*/
 
 require './react/components/toolbars/user'
 require './react/components/toolbars/feed'
 
-# /*=============================
-# =            Pages            =
-# =============================*/
+# /*==========  Pages  ==========*/
 
 require './react/pages/entry'
+
+# /*==========  Stores  ==========*/
+
+require './react/stores/current_user'
+require './react/stores/relationships'

@@ -6,14 +6,16 @@ module.exports = React.createClass
   displayName: 'HeroActions'
 
   propTypes:
-    user:         PropTypes.object.isRequired
-    relationship: PropTypes.object
+    user:   PropTypes.object.isRequired
+    status: PropTypes.string.isRequired
 
   render: ->
     if @isCurrentUser()
       <HeroActions_CurrentUser />
     else
-      <HeroActions_User relationship={ @props.relationship } />
+      <HeroActions_User
+          user={ @props.user }
+          status={ @props.status } />
 
   isCurrentUser: ->
-    !@props.relationship
+    !@props.status

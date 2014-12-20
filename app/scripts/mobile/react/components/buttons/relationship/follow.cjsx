@@ -1,5 +1,8 @@
-cx = require 'react/lib/cx'
+_                       = require 'underscore'
+cx                      = require 'react/lib/cx'
+RelationshipsStore      = require '../../../stores/relationships'
 RelationshipButtonMixin = require './mixins/relationship'
+ComponentMixin          = require '../../../mixins/component'
 { PropTypes } = React
 
 SHOW_STATE    = 'show'
@@ -26,14 +29,20 @@ IGNORED_TITLE        = 'Заблокирован'
 
 module.exports = React.createClass
   displayName: 'FollowButton'
-  mixins: [RelationshipButtonMixin]
+  mixins: [RelationshipButtonMixin, ComponentMixin]
 
   propTypes:
-    relationship: PropTypes.object.isRequired
+    user:   PropTypes.object.isRequired
+    status: PropTypes.string.isRequired
 
   getInitialState: ->
-    currentState: SHOW_STATE
-    relationship: @props.relationship
+    _.extend @getStateFromStore(), currentState: SHOW_STATE
+
+  componentDidMount: ->
+    RelationshipsStore.addChangeListener @onStoreChange
+
+  componentWillUnmount: ->
+    RelationshipsStore.removeChangeListener @onStoreChange
 
   render: ->
     buttonClasses = cx
@@ -46,31 +55,43 @@ module.exports = React.createClass
              { this._getTitle() }
            </button>
 
-  isShowState: -> @state.currentState is SHOW_STATE
+  isShowState:  -> @state.currentState is SHOW_STATE
+  isErrorState: -> @state.currentState is ERROR_STATE
 
-  isFollowStatus: -> @state.relationship.state is FRIEND_STATUS
-  isTlogPrivate:  -> @state.relationship.user.is_privacy
+  isFollowStatus: -> @state.status is FRIEND_STATUS
+  isTlogPrivate:  -> @props.user.is_privacy
+
+  activateProcessState: -> @safeUpdateState(currentState: PROCESS_STATE)
+  activateErrorState:   -> @safeUpdateState(currentState: ERROR_STATE)
+  activateShowState:    -> @safeUpdateState(currentState: SHOW_STATE)
 
   _getTitle: ->
     switch @state.currentState
       when ERROR_STATE   then return ERROR_TITLE
       when PROCESS_STATE then return PROCESS_TITLE
 
-    followStatus = @state.relationship.state
-
-    switch followStatus
+    switch @state.status
       when FRIEND_STATUS    then SUBSCRIBED_TITLE
       when REQUESTED_STATUS then REQUESTED_TITLE
       when IGNORED_STATUS   then IGNORED_TITLE
       when GUESSED_STATUS, NONE_STATUS
         if @isTlogPrivate() then SEND_REQUEST_TITLE else SUBSCRIBE_TITLE
-      else console.warn 'Unknown follow status of FollowButton component', followStatus
+      else console.warn 'Unknown follow status of FollowButton component', @state.status
 
   handleClick: ->
-    switch @state.relationship.state
-      when FRIEND_STATUS    then @unfollow()
-      when REQUESTED_STATUS then @cancel()
-      when IGNORED_STATUS   then @cancel()
-      when GUESSED_STATUS   then @follow()
-      when NONE_STATUS      then @follow()
-      else console.warn 'Unknown follow status of FollowButton component', @state.relationship.state
+    userId = @props.user.id
+
+    if @isShowState()
+      switch @state.status
+        when FRIEND_STATUS    then @unfollow userId
+        when REQUESTED_STATUS then @cancel userId
+        when IGNORED_STATUS   then @cancel userId
+        when GUESSED_STATUS   then @follow userId
+        when NONE_STATUS      then @follow userId
+        else console.warn 'Unknown follow status of FollowButton component', @state.status
+
+  getStateFromStore: ->
+    status: RelationshipsStore.getStatus(@props.user.id) || @props.status
+
+  onStoreChange: ->
+    @setState @getStateFromStore()

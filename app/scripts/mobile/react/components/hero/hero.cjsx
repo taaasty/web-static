@@ -39,12 +39,12 @@ module.exports = React.createClass
       <div className="hero__content">
         <HeroAvatar
             user={ @props.tlog.author }
-            relationship={ @props.tlog.my_relationship }
+            status={ @props.tlog.my_relationship }
             onClick={ @handleAvatarClick } />
         <HeroHead user={ @props.tlog.author } />
         <HeroActions
             user={ @props.tlog.author }
-            relationship={ @props.tlog.my_relationship } />
+            status={ @props.tlog.my_relationship } />
       </div>
       <HeroStats
           user={ @props.tlog.author }

@@ -15,20 +15,19 @@ module.exports = React.createClass
 
   getInitialState: ->
     currentState: CLOSE_STATE
-    status: @props.status
 
   render: ->
     menuClasses = cx
       'hero__user-actions': true
       '__open': @isOpenState()
 
-    return <div className={ menuClasses }
-                onClick={ @toggleOpenState }>
-             <ActionMenuButton />
+    return <div className={ menuClasses }>
+             <ActionMenuButton onClick={ @toggleOpenState } />
              <HeroActions_DropdownMenu_Popup
                  arrangement="top"
                  userId={ @props.userId }
-                 status={ @props.status } />
+                 status={ @props.status }
+                 onClose={ @activateCloseState } />
            </div>
 
   isOpenState: -> @state.currentState is OPEN_STATE

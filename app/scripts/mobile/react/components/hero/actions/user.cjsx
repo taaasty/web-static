@@ -10,13 +10,16 @@ module.exports = React.createClass
   displayName: 'HeroActions_User'
 
   propTypes:
-    relationship: PropTypes.object.isRequired
+    user:   PropTypes.object.isRequired
+    status: PropTypes.string.isRequired
 
   render: ->
     <div className="hero__actions">
-      <FollowButton relationship={ @props.relationship } />
-      <WriteMessageButton user={ @props.relationship.user } />
+      <FollowButton
+          user={ @props.user }
+          status={ @props.status } />
+      <WriteMessageButton user={ @props.user } />
       <HeroActions_DropdownMenu
-          userId={ @props.relationship.user.id }
-          status={ @props.relationship.state } />
+          userId={ @props.user.id }
+          status={ @props.status } />
     </div>
