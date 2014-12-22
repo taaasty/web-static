@@ -16,29 +16,29 @@ module.exports = React.createClass
       'hero__stats-item-handler': @props.onClick
 
     return <div className={ itemClasses }
-                onClick={ this.handleClick }>
-             { this.renderItem() }
+                onClick={ @handleClick }>
+             { @renderItem() }
            </div>
 
   renderItem: ->
     if @props.href
-      <a href={ this.props.href }
-         title={ this.props.count + ' ' + this.props.title }
+      <a href={ @props.href }
+         title={ @props.count + ' ' + @props.title }
          className="hero__stats-link">
         <strong className="hero__stats-value">
-          { this.props.count }
+          { @props.count }
         </strong>
         <span>
-          { this.props.title }
+          { @props.title }
         </span>
       </a>
     else
       <span>
         <strong className="hero__stats-value">
-          { this.props.count }
+          { @props.count }
         </strong>
         <span>
-          { this.props.title }
+          { @props.title }
         </span>
       </span>
 

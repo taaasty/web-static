@@ -24,39 +24,41 @@ post = ({url, data}) ->
       'X-Requested-With': 'XMLHttpRequest'
 
 Api =
-  follow: (userId) ->
-    url = ApiRoutes.change_my_relationship_url userId, 'follow'
-    key = Constants.api.FOLLOW_USER
 
-    abortPendingRequests key
-    _pendingRequests[key] = post {url}
+  relationship:
+    follow: (userId) ->
+      url = ApiRoutes.change_my_relationship_url userId, 'follow'
+      key = Constants.api.FOLLOW_USER
 
-  unfollow: (userId) ->
-    url = ApiRoutes.change_my_relationship_url userId, 'unfollow'
-    key = Constants.api.UNFOLLOW_USER
+      abortPendingRequests key
+      _pendingRequests[key] = post {url}
 
-    abortPendingRequests key
-    _pendingRequests[key] = post {url}
+    unfollow: (userId) ->
+      url = ApiRoutes.change_my_relationship_url userId, 'unfollow'
+      key = Constants.api.UNFOLLOW_USER
 
-  cancel: (userId) ->
-    url = ApiRoutes.change_my_relationship_url userId, 'cancel'
-    key = Constants.api.CANCEL_USER
+      abortPendingRequests key
+      _pendingRequests[key] = post {url}
 
-    abortPendingRequests key
-    _pendingRequests[key] = post {url}
+    cancel: (userId) ->
+      url = ApiRoutes.change_my_relationship_url userId, 'cancel'
+      key = Constants.api.CANCEL_USER
 
-  ignore: (userId) ->
-    url = ApiRoutes.change_my_relationship_url userId, 'ignore'
-    key = Constants.api.IGNORE_USER
+      abortPendingRequests key
+      _pendingRequests[key] = post {url}
 
-    abortPendingRequests key
-    _pendingRequests[key] = post {url}
+    ignore: (userId) ->
+      url = ApiRoutes.change_my_relationship_url userId, 'ignore'
+      key = Constants.api.IGNORE_USER
 
-  report: (userId) ->
-    url = ApiRoutes.tlog_report userId
-    key = Constants.api.REPORT_USER
+      abortPendingRequests key
+      _pendingRequests[key] = post {url}
 
-    abortPendingRequests key
-    _pendingRequests[key] = post {url} 
+    report: (userId) ->
+      url = ApiRoutes.tlog_report userId
+      key = Constants.api.REPORT_USER
+
+      abortPendingRequests key
+      _pendingRequests[key] = post {url} 
 
 module.exports = Api

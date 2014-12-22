@@ -32,7 +32,7 @@ module.exports = React.createClass
       return <span style={ avatarStyles }
                    className={ avatarClasses }>
                <img src={ avatarUrl }
-                    alt={ this.props.name }
+                    alt={ @props.name }
                     className="avatar__img" />
              </span>
     else
@@ -42,7 +42,7 @@ module.exports = React.createClass
 
       return <span style={ avatarStyles }
                    className={ avatarClasses }
-                   title={ this.props.name }>
+                   title={ @props.name }>
                <span className="avatar__text">
                  { avatarSymbol }
                </span>

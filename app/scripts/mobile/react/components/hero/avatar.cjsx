@@ -15,18 +15,18 @@ module.exports = React.createClass
 
   render: ->
     <div className="hero__avatar"
-         onClick={ this.props.onClick }>
-      { this.renderFollowStatus() }
+         onClick={ @props.onClick }>
+      { @renderFollowStatus() }
       <UserAvatar
-          user={ this.props.user }
+          user={ @props.user }
           size={ HERO_AVATAR_SIZE } />
     </div>
 
   renderFollowStatus: ->
     if !@isCurrentUser()
       <FollowStatus
-          userId={ this.props.user.id }
-          status={ this.props.status } />
+          userId={ @props.user.id }
+          status={ @props.status } />
 
   isCurrentUser: ->
     !@props.status

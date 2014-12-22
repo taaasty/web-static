@@ -51,8 +51,8 @@ module.exports = React.createClass
 
     return <button
                className={ buttonClasses }
-               onClick={ this.handleClick }>
-             { this._getTitle() }
+               onClick={ @handleClick }>
+             { @_getTitle() }
            </button>
 
   isShowState:  -> @state.currentState is SHOW_STATE

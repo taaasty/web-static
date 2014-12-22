@@ -8,35 +8,35 @@ REPORT_SUCCESS_MESSAGE = 'Жалоба на пользователя приня�
 RelationshipViewActions =
 
   follow: (userId) ->
-    Api.follow userId
+    Api.relationship.follow userId
       .then (relationship) ->
         RelationshipServerActions.updateRelationship {userId, relationship}
       .fail (xhr) =>
         NotifyController.errorResponse xhr
 
   unfollow: (userId) ->
-    Api.unfollow userId
+    Api.relationship.unfollow userId
       .then (relationship) ->
         RelationshipServerActions.updateRelationship {userId, relationship}
       .fail (xhr) =>
         NotifyController.errorResponse xhr
 
   cancel: (userId) ->
-    Api.cancel userId
+    Api.relationship.cancel userId
       .then (relationship) ->
         RelationshipServerActions.updateRelationship {userId, relationship}
       .fail (xhr) =>
         NotifyController.errorResponse xhr
 
   ignore: (userId) ->
-    Api.ignore userId
+    Api.relationship.ignore userId
       .then (relationship) ->
         RelationshipServerActions.updateRelationship {userId, relationship}
       .fail (xhr) =>
         NotifyController.errorResponse xhr
 
   report: (userId) ->
-    Api.report userId
+    Api.relationship.report userId
       .then ->
         NotifyController.notifySuccess REPORT_SUCCESS_MESSAGE
       .fail (xhr) =>

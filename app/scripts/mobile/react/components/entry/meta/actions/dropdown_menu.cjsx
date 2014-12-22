@@ -14,7 +14,7 @@ module.exports = React.createClass
 
   render: ->
     <div className="meta-actions__dropdown-popup">
-      { this.renderPopupList() }
+      { @renderPopupList() }
     </div>
 
   renderPopupList: ->
