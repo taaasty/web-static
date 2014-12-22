@@ -113,6 +113,13 @@ module.exports = {
           dest: dist + '/scripts'
           outputName: 'mobile_bundle.min.js'
         }
+        components: {
+          baseDir: src
+          entries: './scripts/mobile/components.js'
+          extensions: ['.cjsx', '.coffee']
+          dest: dist + '/scripts/'
+          outputName: 'mobile_components.js'
+        }
       }
       styles: {
         bundle: {

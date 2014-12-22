@@ -1,0 +1,1 @@
+EntryPage = require('./react/pages/entry');
