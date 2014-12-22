@@ -1,4 +1,6 @@
-ImageEntry = require './image/image'
+TextEntry    = require './text/text'
+ImageEntry   = require './image/image'
+UnknownEntry = require './unknown/unknown'
 { PropTypes } = React
 
 TEXT_TYPE  = 'text'
@@ -21,4 +23,7 @@ module.exports = React.createClass
         <ImageEntry
             entry={ @props.entry }
             user={ @props.user } />
-      else console.warn 'Unknown type of entry', @props.entry.type
+      else
+        <UnknownEntry
+            entry={ @props.entry }
+            user={ @props.user } />

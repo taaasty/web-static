@@ -2,7 +2,6 @@ require './resources/libs'
 require './locales/locales'
 require '../shared/routes/routes'
 require '../shared/routes/api'
-require './resources/tasty'
 require './react/application'
 
 # /*==========  Services  ==========*/
@@ -22,3 +21,5 @@ require './react/pages/entry'
 
 require './react/stores/current_user'
 require './react/stores/relationships'
+
+ReactApp.start()
