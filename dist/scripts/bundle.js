@@ -21855,136 +21855,136 @@ window.ThumborService = {
 },{}],289:[function(require,module,exports){
 window.ApiRoutes = {
   omniauth_url: function(provider) {
-    return TastySettings.host + 'auth/' + provider;
+    return TastySettings.host + '/auth/' + provider;
   },
   iframely_url: function() {
-    return TastySettings.api_host + 'v1/embeding/iframely.json';
+    return TastySettings.api_host + '/v1/embeding/iframely.json';
   },
   pusher_auth_url: function() {
-    return TastySettings.api_host + 'v1/messenger/auth';
+    return TastySettings.api_host + '/v1/messenger/auth';
   },
   calendar_url: function(tlogId) {
-    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/calendar';
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/calendar';
   },
   votes_url: function(entryId) {
-    return TastySettings.api_host + 'v1/entries/' + entryId + '/votes';
+    return TastySettings.api_host + '/v1/entries/' + entryId + '/votes';
   },
   embed_url: function() {
-    return TastySettings.api_host + 'v1/embed';
+    return TastySettings.api_host + '/v1/embed';
   },
   design_settings_url: function(slug) {
-    return TastySettings.api_host + 'v1/design_settings/' + slug;
+    return TastySettings.api_host + '/v1/design_settings/' + slug;
   },
   design_settings_cover_url: function(slug) {
-    return TastySettings.api_host + 'v1/design_settings/' + slug + '/cover';
+    return TastySettings.api_host + '/v1/design_settings/' + slug + '/cover';
   },
   signin_url: function() {
-    return TastySettings.api_host + 'v1/sessions';
+    return TastySettings.api_host + '/v1/sessions';
   },
   signup_url: function() {
-    return TastySettings.api_host + 'v1/users';
+    return TastySettings.api_host + '/v1/users';
   },
   update_profile_url: function() {
-    return TastySettings.api_host + 'v1/users';
+    return TastySettings.api_host + '/v1/users';
   },
   recovery_url: function() {
-    return TastySettings.api_host + 'v1/users/password/recovery';
+    return TastySettings.api_host + '/v1/users/password/recovery';
   },
   request_confirm_url: function() {
-    return TastySettings.api_host + 'v1/users/confirmation';
+    return TastySettings.api_host + '/v1/users/confirmation';
   },
   userpic_url: function() {
-    return TastySettings.api_host + 'v1/users/userpic';
+    return TastySettings.api_host + '/v1/users/userpic';
   },
   users_predict: function() {
-    return TastySettings.api_host + 'v1/users/predict';
+    return TastySettings.api_host + '/v1/users/predict';
   },
   create_entry_url: function(type) {
-    return TastySettings.api_host + 'v1/entries/' + type;
+    return TastySettings.api_host + '/v1/entries/' + type;
   },
   update_entry_url: function(entryId, entryType) {
-    return TastySettings.api_host + 'v1/entries/' + entryType + '/' + entryId;
+    return TastySettings.api_host + '/v1/entries/' + entryType + '/' + entryId;
   },
   update_images_url: function(entryId) {
-    return TastySettings.api_host + 'v1/entries/image/' + entryId + '/images';
+    return TastySettings.api_host + '/v1/entries/image/' + entryId + '/images';
   },
   entry_url: function(entryId) {
-    return TastySettings.api_host + 'v1/entries/' + entryId;
+    return TastySettings.api_host + '/v1/entries/' + entryId;
   },
   favorites_url: function() {
-    return TastySettings.api_host + 'v1/favorites';
+    return TastySettings.api_host + '/v1/favorites';
   },
   watching_url: function() {
-    return TastySettings.api_host + 'v1/watching';
+    return TastySettings.api_host + '/v1/watching';
   },
   report_url: function(entryId) {
     return TastySettings.api_host + '/v1/entries/' + entryId + '/report';
   },
   relationships_summary_url: function() {
-    return TastySettings.api_host + 'v1/relationships/summary';
+    return TastySettings.api_host + '/v1/relationships/summary';
   },
   relationships_to_url: function(state) {
-    return TastySettings.api_host + 'v1/relationships/to/' + state;
+    return TastySettings.api_host + '/v1/relationships/to/' + state;
   },
   relationships_by_url: function(state) {
-    return TastySettings.api_host + 'v1/relationships/by/' + state;
+    return TastySettings.api_host + '/v1/relationships/by/' + state;
   },
   relationships_by_id_url: function(tlogId) {
-    return TastySettings.api_host + 'v1/relationships/by/' + tlogId;
+    return TastySettings.api_host + '/v1/relationships/by/' + tlogId;
   },
   unfollow_from_yourself_url: function(tlogId) {
-    return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId;
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId;
   },
   relationships_by_tlog_approve_url: function(tlogId) {
-    return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/approve';
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/approve';
   },
   relationships_by_tlog_disapprove_url: function(tlogId) {
-    return TastySettings.api_host + 'v1/relationships/by/tlog/' + tlogId + '/disapprove';
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/disapprove';
   },
   tlog_followers: function(tlogId) {
-    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/followers';
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followers';
   },
   tlog_followings: function(tlogId) {
-    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/followings';
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followings';
   },
   tlog_tags: function(tlogId) {
-    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/tags';
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/tags';
   },
   tlog_report: function(tlogId) {
-    return TastySettings.api_host + 'v1/tlog/' + tlogId + '/report';
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/report';
   },
   get_my_relationship_url: function(tlogId) {
-    return TastySettings.api_host + 'v1/relationships/to/tlog/' + tlogId;
+    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId;
   },
   comments_url: function(entryId) {
-    return TastySettings.api_host + 'v1/comments';
+    return TastySettings.api_host + '/v1/comments';
   },
   comments_edit_delete_url: function(commentId) {
-    return TastySettings.api_host + 'v1/comments/' + commentId;
+    return TastySettings.api_host + '/v1/comments/' + commentId;
   },
   comments_report_url: function(commentId) {
-    return TastySettings.api_host + 'v1/comments/' + commentId + '/report';
+    return TastySettings.api_host + '/v1/comments/' + commentId + '/report';
   },
   change_my_relationship_url: function(tlogId, state) {
-    return TastySettings.api_host + 'v1/relationships/to/tlog/' + tlogId + '/' + state;
+    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId + '/' + state;
   },
   messenger_ready_url: function() {
-    return TastySettings.api_host + 'v1/messenger/ready';
+    return TastySettings.api_host + '/v1/messenger/ready';
   },
   messenger_new_conversation_url: function(slug) {
-    return TastySettings.api_host + 'v1/messenger/conversations/by_slug/' + slug;
+    return TastySettings.api_host + '/v1/messenger/conversations/by_slug/' + slug;
   },
   messenger_new_message_url: function(conversationId) {
-    return TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages';
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
   },
   messenger_load_messages_url: function(conversationId) {
-    return TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages';
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
   },
   messenger_read_messages_url: function(conversationId) {
-    return TastySettings.api_host + 'v1/messenger/conversations/by_id/' + conversationId + '/messages/read';
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages/read';
   },
   notifications_read_url: function(notificationId) {
-    return TastySettings.api_host + 'v1/messenger/notifications/' + notificationId + '/read';
+    return TastySettings.api_host + '/v1/messenger/notifications/' + notificationId + '/read';
   }
 };
 

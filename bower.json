@@ -30,8 +30,6 @@
     "intro.js": "1.0.0"
   },
   "devDependencies": {
-    "momentjs": "~2.8.3",
-    "reqwest": "~1.1.5",
-    "react": "0.11.2"
+    "reqwest": "~1.1.5"
   }
 }

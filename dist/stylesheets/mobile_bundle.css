@@ -2182,6 +2182,9 @@ a.toolbar__popup-link:active {
 .hero__actions button {
   margin: 0 5px;
 }
+.hero__dropdown-popup-item {
+  cursor: pointer;
+}
 .hero__stats {
   width: 100%;
   padding: 0 0 20px;
@@ -2586,6 +2589,11 @@ a.toolbar__popup-link:active {
   float: left;
   margin: -10px 0 0 -54px;
 }
+.comment__user,
+.comment__text,
+.comment__date {
+  margin-right: .25em;
+}
 .comment__username {
   font-weight: bold;
 }
@@ -2595,6 +2603,7 @@ a.toolbar__popup-link:active {
 }
 .comment__date:before {
   content: "\2014";
+  margin-right: .25em;
 }
 .comment__image {
   max-width: 300px;
