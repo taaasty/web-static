@@ -309,5 +309,116 @@ PageMixin =
         to_comment_id: null
         order: 'desc'
         total_count: 2
+    # entry: #Video
+    #   author:
+    #     created_at: '2014-12-22T12:45:07.000+04:00'
+    #     features:
+    #       notification: false
+    #       search: true
+    #     id: 19
+    #     is_daylog: false
+    #     is_female: true
+    #     is_privacy: false
+    #     name: 'sergeylaptev2'
+    #     private_entries_count: 0
+    #     public_entries_count: 0
+    #     slug: 'sergeylaptev2'
+    #     title: ''
+    #     tlog_url: 'http://3000.vkontraste.ru/~sergeylaptev2'
+    #     total_entries_count: 4
+    #     updated_at: '2014-12-22T15:04:01.000+04:00'
+    #     userpic:
+    #       default_colors:
+    #         background: '#b5c31e'
+    #         name: '#ffffff'
+    #       kind: 'user'
+    #       symbol: 's'
+    #   can_delete: true
+    #   can_edit: true
+    #   can_favorite: true
+    #   can_report: false
+    #   can_vote: false
+    #   can_watch: true
+    #   comments_count: 0
+    #   comments_info:
+    #     comments: []
+    #     from_comment_id: null
+    #     order: 'desc'
+    #     to_comment_id: null
+    #     total_count: 0
+    #   cover_url: 'https://i.ytimg.com/vi/vdhrVFNX104/mqdefault.jpg'
+    #   created_at: '2014-12-22T15:04:01.000+04:00'
+    #   entry_url: 'http://3000.vkontraste.ru/~sergeylaptev2/54-kommentarii-k-video-ostavlyat-zdes-http-www-games-tv-ru-tv-view-ob_anonse'
+    #   id: 54
+    #   iframely:
+    #     html: '<div style="left: 0px; width: 100%; height: 0px; position: relative; padding-bottom: 56.2493%;"><iframe src="https://www.youtube.com/embed/vdhrVFNX104?wmode=transparent&#x26;rel=0&#x26;autohide=1&#x26;showinfo=0&#x26;enablejsapi=1" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute;"></iframe></div>'
+    #     links:
+    #       icon: [{
+    #         href: 'https://s.ytimg.com/yts/img/favicon_32-vflWoMFGx.png'
+    #         media:
+    #           height: 32
+    #           width: 32
+    #         rel: ['icon', 'ssl']
+    #         type: 'image/png'
+    #       }]
+    #       player: [{
+    #         href: 'https://www.youtube.com/embed/vdhrVFNX104?wmode=transparent&rel=0&autohide=1&showinfo=0&enablejsapi=1'
+    #         html: '<div style="left: 0px; width: 100%; height: 0px; position: relative; padding-bottom: 56.2493%;"><iframe src="https://www.youtube.com/embed/vdhrVFNX104?wmode=transparent&#x26;rel=0&#x26;autohide=1&#x26;showinfo=0&#x26;enablejsapi=1" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute;"></iframe></div>'
+    #         media:
+    #           'aspect-ratio': 1.7778
+    #         rel: ['player', 'html5', 'ssl']
+    #         type: 'text/html'
+    #       }, {
+    #         href: 'https://www.youtube.com/embed/vdhrVFNX104?wmode=transparent&rel=0&autohide=1&showinfo=0&enablejsapi=1&autoplay=1'
+    #         html: '<div style="left: 0px; width: 100%; height: 0px; position: relative; padding-bottom: 56.2493%;"><iframe src="https://www.youtube.com/embed/vdhrVFNX104?wmode=transparent&#x26;rel=0&#x26;autohide=1&#x26;showinfo=0&#x26;enablejsapi=1&#x26;autoplay=1" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute;"></iframe></div>'
+    #         media: {
+    #           'aspect-ratio': 1.7778
+    #         }
+    #         rel: ['player', 'html5', 'autoplay', 'ssl']
+    #         type: 'text/html'
+    #       }]
+    #       thumbnail: [{
+    #         href: 'https://i.ytimg.com/vi/vdhrVFNX104/mqdefault.jpg'
+    #         media:
+    #           height: 180
+    #           width: 320
+    #         rel: ['thumbnail', 'ssl']
+    #         type: 'image/jpeg'
+    #       }, {
+    #         href: 'https://i.ytimg.com/vi/vdhrVFNX104/maxresdefault.jpg'
+    #         media:
+    #           height: 720
+    #           width: 1280
+    #         rel: ['thumbnail', 'ssl']
+    #         type: 'image/jpeg'
+    #       }]
+    #     meta:
+    #       author: 'Games-TV'
+    #       category: 'Gaming'
+    #       date: '2014-12-22T10:14:12.000Z'
+    #       description: 'Комментарии к видео оставлять здесь - http://www.games-tv.ru/tv/view/ob_anonse_stalker_apocalypse↵↵Больше видео ищите на http://www.games-tv.ru/ ↵Подписывайтесь на наш канал - http://www.youtube.com/user/gamestvrussia↵Наша страничка Facebook - http://www.facebook.com/GamesTV↵Наш твиттер - http://twitter.com/gamestvrussia↵Наш инстаграм - http://instagram.com/gamestv↵Наш Twitch - http://www.twitch.tv/gamestvrussia'
+    #       dislikes: '51'
+    #       duration: '256'
+    #       likes: '581'
+    #       media: 'player'
+    #       site: 'YouTube'
+    #       title: 'Мнение - Об анонсе STALKER Apocalypse'
+    #       views: '301'
+    #     rel: ['player', 'html5', 'ssl']
+    #     url: 'http://www.youtube.com/watch?v=vdhrVFNX104'
+    #   is_favorited: false
+    #   is_voteable: true
+    #   is_watching: true
+    #   privacy: 'live'
+    #   rating:
+    #     entry_id: 54
+    #     is_voteable: false
+    #     is_voted: false
+    #     rating: 0
+    #     votes: 0
+    #   title: 'Комментарии к видео оставлять здесь - <a href="http://www.games-tv.ru/tv/view/ob_anonse_stalker_apocalypse" target="_blank" rel="nofollow">http://www.games-tv.ru/tv/view/ob_anonse_stalker_apocalypse</a><br /><br />Больше видео ищите на <a href="http://www.games-tv.ru/" target="_blank" rel="nofollow">http://www.games-tv.ru/</a> ↵<br/>Подписывайтесь на наш канал - <a href="http://www.youtube.com/user/gamestvrussia" target="_blank" rel="nofollow">http://www.youtube.com/user/gamestvrussia</a>↵<br/>Наша страничка Facebook - <a href="http://www.facebook.com/GamesTV" target="_blank" rel="nofollow">http://www.facebook.com/GamesTV</a>↵<br/>Наш твиттер - <a href="http://twitter.com/gamestvrussia" target="_blank" rel="nofollow">http://twitter.com/gamestvrussia</a>↵<br/>Наш инстаграм - <a href="http://instagram.com/gamestv" target="_blank" rel="nofollow">http://instagram.com/gamestv</a>↵<br/>Наш Twitch - <a href="http://www.twitch.tv/gamestvrussia" target="_blank" rel="nofollow">http://www.twitch.tv/gamestvrussia</a>'
+    #   type: 'video'
+    #   updated_at: '2014-12-22T15:04:01.000+04:00'
+    #   video_url: 'http://www.youtube.com/watch?v=vdhrVFNX104'
 
 module.exports = PageMixin

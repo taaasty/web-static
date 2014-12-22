@@ -2258,8 +2258,6 @@ a.toolbar__popup-link:active {
   text-align: center;
 }
 .media-video__embed {
-  position: absolute;
-  display: none;
   z-index: 2;
   top: 0;
 }

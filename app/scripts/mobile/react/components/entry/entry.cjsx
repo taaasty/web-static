@@ -1,12 +1,14 @@
 TextEntry    = require './text/text'
 ImageEntry   = require './image/image'
+VideoEntry   = require './video/video'
 UnknownEntry = require './unknown/unknown'
 { PropTypes } = React
 
 TEXT_TYPE  = 'text'
 IMAGE_TYPE = 'image'
+VIDEO_TYPE = 'video'
 
-module.exports = React.createClass
+Entry = React.createClass
   displayName: 'Entry'
 
   propTypes:
@@ -14,16 +16,14 @@ module.exports = React.createClass
     user:  PropTypes.object
 
   render: ->
-    switch @props.entry.type
-      when TEXT_TYPE
-        <TextEntry
-            entry={ @props.entry }
-            user={ @props.user } />
-      when IMAGE_TYPE
-        <ImageEntry
-            entry={ @props.entry }
-            user={ @props.user } />
-      else
-        <UnknownEntry
-            entry={ @props.entry }
-            user={ @props.user } />
+    Entry = switch @props.entry.type
+      when TEXT_TYPE  then TextEntry
+      when IMAGE_TYPE then ImageEntry
+      when VIDEO_TYPE then VideoEntry
+      else UnknownEntry
+
+    return <Entry
+               entry={ @props.entry }
+               user={ @props.user } />
+
+module.exports = Entry
