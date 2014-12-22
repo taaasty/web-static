@@ -1,10 +1,8 @@
 ReactUjs = require 'reactUjs'
 
-ReactApp =
+window.ReactApp =
 
-  start: ({ user }) ->
+  start: ->
     console.log 'ReactApp start'
 
     ReactUjs.initialize()
-
-window.ReactApp = ReactApp

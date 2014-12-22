@@ -14,6 +14,7 @@ module.exports = React.createClass
     <div className="post post--image">
       <ImageEntryContent
           title={ @props.entry.title }
+          imageUrl={ @props.entry.image_url }
           imageAttachments={ @props.entry.image_attachments } />
       <EntryMeta entry={ @props.entry } />
       <EntryComments

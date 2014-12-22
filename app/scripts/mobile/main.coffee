@@ -1,7 +1,7 @@
 require './settings'
 require './bundle'
 
-Tasty.start {}
+# ReactApp.start()
 
 document.addEventListener "DOMContentLoaded", (->
   document.addEventListener "touchstart", (->), true
