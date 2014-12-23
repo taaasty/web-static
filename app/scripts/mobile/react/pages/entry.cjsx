@@ -7,7 +7,7 @@ Pagination       = require '../components/pagination/pagination'
 PageMixin        = require './mixins/page'
 { PropTypes } = React
 
-window.EntryPage = React.createClass
+EntryPage = React.createClass
   displayName: 'EntryPage'
   mixins: [PageMixin]
 
@@ -37,3 +37,5 @@ window.EntryPage = React.createClass
         </div>
       </div>
     </div>
+
+module.exports = EntryPage

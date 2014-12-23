@@ -1,12 +1,12 @@
 require './resources/libs'
 require './locales/locales'
-require '../shared/routes/routes'
-require '../shared/routes/api'
+window.Routes    = require '../shared/routes/routes'
+window.ApiRoutes = require '../shared/routes/api'
 require './react/application'
 
 # /*==========  Services  ==========*/
 
-require '../shared/react/services/thumbor'
+window.ThumborService = require '../shared/react/services/thumbor'
 
 # /*==========  Components  ==========*/
 
@@ -15,7 +15,7 @@ require './react/components/toolbars/feed'
 
 # /*==========  Pages  ==========*/
 
-require './react/pages/entry'
+window.EntryPage = require './react/pages/entry'
 
 # /*==========  Stores  ==========*/
 

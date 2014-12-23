@@ -16,4 +16,4 @@ Routes =
   favorites_url:           (userSlug) -> TastySettings.host + '/~' + userSlug + '/favorites'
   private_entries_url:     (userSlug) -> TastySettings.host + '/~' + userSlug + '/privates'
 
-window.Routes = window.Routes || Routes
+module.exports = Routes

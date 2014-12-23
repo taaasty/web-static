@@ -23407,19 +23407,19 @@ require('./resources/libs');
 
 require('./locales/locales');
 
-require('../shared/routes/routes');
+window.Routes = require('../shared/routes/routes');
 
-require('../shared/routes/api');
+window.ApiRoutes = require('../shared/routes/api');
 
 require('./react/application');
 
-require('../shared/react/services/thumbor');
+window.ThumborService = require('../shared/react/services/thumbor');
 
 require('./react/components/toolbars/user');
 
 require('./react/components/toolbars/feed');
 
-require('./react/pages/entry');
+window.EntryPage = require('./react/pages/entry');
 
 require('./react/stores/current_user');
 
@@ -23539,9 +23539,7 @@ module.exports = RelationshipViewActions;
 
 
 },{"../../api/api":9,"../../controllers/notify":72,"../server/relationship":7}],9:[function(require,module,exports){
-var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, post, reqwest, userToken, _pendingRequests;
-
-reqwest = require('reqwest');
+var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, post, userToken, _pendingRequests;
 
 Constants = require('../constants/constants');
 
@@ -23631,7 +23629,7 @@ module.exports = Api;
 
 
 
-},{"../constants/constants":70,"../stores/current_user":78,"reqwest":"reqwest"}],10:[function(require,module,exports){
+},{"../constants/constants":70,"../stores/current_user":78}],10:[function(require,module,exports){
 var ReactUjs;
 
 ReactUjs = require('reactUjs');
@@ -26215,7 +26213,7 @@ module.exports = ComponentMixin;
 
 
 },{}],75:[function(require,module,exports){
-var CurrentUserStore, Entry, FeedToolbar, Hero, PageMixin, Pagination, PropTypes, UserToolbar;
+var CurrentUserStore, Entry, EntryPage, FeedToolbar, Hero, PageMixin, Pagination, PropTypes, UserToolbar;
 
 CurrentUserStore = require('../stores/current_user');
 
@@ -26233,7 +26231,7 @@ PageMixin = require('./mixins/page');
 
 PropTypes = React.PropTypes;
 
-window.EntryPage = React.createClass({
+EntryPage = React.createClass({
   displayName: 'EntryPage',
   mixins: [PageMixin],
   propTypes: {
@@ -26265,6 +26263,8 @@ window.EntryPage = React.createClass({
     }))));
   }
 });
+
+module.exports = EntryPage;
 
 
 
@@ -26614,7 +26614,7 @@ BaseStore = require('./_base');
 _currentUser = null;
 
 extendByMockData = function(user) {
-  if (localStorage.getItem('userLogged') === 'true') {
+  if ((typeof localStorage !== "undefined" && localStorage !== null ? localStorage.getItem('userLogged') : void 0) === 'true') {
     if (localStorage.getItem('userToken')) {
       user.api_key.access_token = localStorage.getItem('userToken');
     }
@@ -26696,13 +26696,15 @@ RelationshipsStore.dispatchToken = AppDispatcher.register(function(payload) {
 },{"../constants/constants":70,"../dispatcher/dispatcher":73,"./_base":77,"underscore":"underscore"}],80:[function(require,module,exports){
 window.React = require('react');
 
+window.reqwest = require('reqwest');
+
 window.EventEmitter = require('eventEmitter');
 
 window.moment = require('../../../bower_components/momentjs/moment');
 
 
 
-},{"../../../bower_components/momentjs/moment":3,"eventEmitter":"eventEmitter","react":"react"}],81:[function(require,module,exports){
+},{"../../../bower_components/momentjs/moment":3,"eventEmitter":"eventEmitter","react":"react","reqwest":"reqwest"}],81:[function(require,module,exports){
 var BrowserHelpers;
 
 BrowserHelpers = {
@@ -26791,7 +26793,9 @@ module.exports = GrammarHelpers;
 
 
 },{}],83:[function(require,module,exports){
-window.ThumborService = {
+var ThumborService;
+
+ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
   image_url: function(url, style) {
     if (TastySettings.env === 'static-development') {
@@ -26803,10 +26807,14 @@ window.ThumborService = {
   }
 };
 
+module.exports = ThumborService;
+
 
 
 },{}],84:[function(require,module,exports){
-window.ApiRoutes = {
+var ApiRoutes;
+
+ApiRoutes = {
   omniauth_url: function(provider) {
     return TastySettings.host + '/auth/' + provider;
   },
@@ -26941,6 +26949,8 @@ window.ApiRoutes = {
   }
 };
 
+module.exports = ApiRoutes;
+
 
 
 },{}],85:[function(require,module,exports){
@@ -26988,7 +26998,7 @@ Routes = {
   }
 };
 
-window.Routes = window.Routes || Routes;
+module.exports = Routes;
 
 
 

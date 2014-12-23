@@ -1,4 +1,3 @@
-reqwest          = require 'reqwest'
 Constants        = require '../constants/constants'
 CurrentUserStore = require '../stores/current_user'
 

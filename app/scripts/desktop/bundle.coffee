@@ -1,7 +1,7 @@
 require './libs'
 require './locales/locales'
-require '../shared/routes/routes'
-require '../shared/routes/api'
+window.Routes    = require '../shared/routes/routes'
+window.ApiRoutes = require '../shared/routes/api'
 require './resources/is_mobile'
 require './resources/fileReceiver'
 require './resources/tasty'
@@ -12,7 +12,7 @@ require './react/entities/normalized_entry'
 require './react/services/positions'
 require './react/services/entry_store'
 require './react/services/entry_normalizer'
-require '../shared/react/services/thumbor'
+window.ThumborService = require '../shared/react/services/thumbor'
 require './react/services/uuid'
 
 # /*===============================
