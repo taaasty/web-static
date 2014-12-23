@@ -1,4 +1,4 @@
-window.ApiRoutes =
+ApiRoutes =
   omniauth_url:    (provider) -> TastySettings.host + '/auth/' + provider
   iframely_url:               -> TastySettings.api_host + '/v1/embeding/iframely.json'
   pusher_auth_url:            -> TastySettings.api_host + '/v1/messenger/auth'
@@ -60,3 +60,5 @@ window.ApiRoutes =
 
   # Notifications
   notifications_read_url: (notificationId) -> TastySettings.api_host + '/v1/messenger/notifications/' + notificationId + '/read'
+
+module.exports = ApiRoutes

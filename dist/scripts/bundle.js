@@ -3973,9 +3973,9 @@ require('./libs');
 
 require('./locales/locales');
 
-require('../shared/routes/routes');
+window.Routes = require('../shared/routes/routes');
 
-require('../shared/routes/api');
+window.ApiRoutes = require('../shared/routes/api');
 
 require('./resources/is_mobile');
 
@@ -3993,7 +3993,7 @@ require('./react/services/entry_store');
 
 require('./react/services/entry_normalizer');
 
-require('../shared/react/services/thumbor');
+window.ThumborService = require('../shared/react/services/thumbor');
 
 require('./react/services/uuid');
 
@@ -21838,7 +21838,9 @@ window.TastyUtils = {
 
 
 },{}],288:[function(require,module,exports){
-window.ThumborService = {
+var ThumborService;
+
+ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
   image_url: function(url, style) {
     if (TastySettings.env === 'static-development') {
@@ -21850,10 +21852,14 @@ window.ThumborService = {
   }
 };
 
+module.exports = ThumborService;
+
 
 
 },{}],289:[function(require,module,exports){
-window.ApiRoutes = {
+var ApiRoutes;
+
+ApiRoutes = {
   omniauth_url: function(provider) {
     return TastySettings.host + '/auth/' + provider;
   },
@@ -21988,6 +21994,8 @@ window.ApiRoutes = {
   }
 };
 
+module.exports = ApiRoutes;
+
 
 
 },{}],290:[function(require,module,exports){
@@ -22035,7 +22043,7 @@ Routes = {
   }
 };
 
-window.Routes = window.Routes || Routes;
+module.exports = Routes;
 
 
 

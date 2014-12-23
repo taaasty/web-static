@@ -5,7 +5,7 @@ _currentUser = null
 
 extendByMockData = (user) ->
   # Some mock data for better development process
-  if localStorage.getItem('userLogged') is 'true'
+  if localStorage?.getItem('userLogged') is 'true'
     if localStorage.getItem 'userToken'
       user.api_key.access_token = localStorage.getItem 'userToken'
 
