@@ -1,5 +1,4 @@
-React        = require('react');
-EventEmitter = require('eventEmitter');
-moment       = require('../../bower_components/momentjs/moment');
+require('./settings');
+require('./bundle');
 
 EntryPage = require('./react/pages/entry');
