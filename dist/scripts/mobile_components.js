@@ -7,7 +7,6 @@ ApiRoutes      = require('../shared/routes/api');
 ThumborService = require('../shared/react/services/thumbor');
 TastySettings  = require('./settings');
 EntryPage      = require('./react/pages/entry');
-console.log(React.renderComponentToString(EntryPage()));
 },{"../../bower_components/momentjs/moment":2,"../shared/react/services/thumbor":79,"../shared/routes/api":80,"../shared/routes/routes":81,"./react/pages/entry":71,"./settings":76,"eventEmitter":"eventEmitter","react":"react"}],2:[function(require,module,exports){
 (function (global){
 //! moment.js
@@ -26475,8 +26474,6 @@ TastySettings = {
   host: 'http://taaasty.ru',
   api_host: 'http://taaasty.ru/api'
 };
-
-console.log('Tasty mobile version', TastySettings.version);
 
 if ((typeof localStorage !== "undefined" && localStorage !== null ? (_ref = localStorage.getItem('host')) != null ? _ref.length : void 0 : void 0) > 0) {
   TastySettings.host = localStorage.getItem('host');
