@@ -26215,7 +26215,7 @@ module.exports = ComponentMixin;
 
 
 },{}],75:[function(require,module,exports){
-var CurrentUserStore, Entry, FeedToolbar, Hero, PageMixin, Pagination, PropTypes, UserToolbar;
+var CurrentUserStore, Entry, EntryPage, FeedToolbar, Hero, PageMixin, Pagination, PropTypes, UserToolbar;
 
 CurrentUserStore = require('../stores/current_user');
 
@@ -26233,7 +26233,7 @@ PageMixin = require('./mixins/page');
 
 PropTypes = React.PropTypes;
 
-window.EntryPage = React.createClass({
+EntryPage = React.createClass({
   displayName: 'EntryPage',
   mixins: [PageMixin],
   propTypes: {
@@ -26265,6 +26265,8 @@ window.EntryPage = React.createClass({
     }))));
   }
 });
+
+module.exports = EntryPage;
 
 
 
