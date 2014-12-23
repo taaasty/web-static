@@ -1,3 +1,5 @@
+cloneWithProps = require 'react/lib/cloneWithProps'
+
 WELCOME_MODE = 'welcome'
 EMBEDED_MODE = 'embeded'
 INSERT_MODE  = 'insert'
@@ -21,9 +23,7 @@ window.VideoMediaBox = React.createClass
     switch @state.currentState
       when WELCOME_MODE
         children = React.Children.map @props.children, (child) =>
-          React.addons.cloneWithProps child, {
-            onClick: @activateInsertMode
-          }
+          cloneWithProps child, onClick: @activateInsertMode
 
         mediaBox = <div>{ children }</div>
 

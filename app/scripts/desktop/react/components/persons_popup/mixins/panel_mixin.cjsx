@@ -1,3 +1,6 @@
+cx = require 'react/lib/cx'
+
+#TODO: Refactor. Every panel type should have separate component instead of generic one 
 #TODO: i18n
 LOADING_ERROR = 'Ошибка загрузки.'
 LOADING       = 'Загружаю..'
@@ -10,9 +13,7 @@ LOADING_STATE = 'loading'
 window.PersonsPopup_PanelMixin =
 
   getInitialState: ->
-    _.extend @getStateFromStore(), {
-      currentState: LOADING_STATE
-    }
+    _.extend @getStateFromStore(), currentState: LOADING_STATE
 
   componentWillMount: ->
     @loadPanelData()
@@ -24,16 +25,11 @@ window.PersonsPopup_PanelMixin =
     RelationshipsStore.removeChangeListener @onStoreChange
 
   render: ->
-    panelClasses = React.addons.classSet {
-      'tabs-panel': true
-    }
-
     if @hasRelationships()
       relationships = @state.relationships.map (relationship) =>
-        @itemClass {
+        @itemClass
           relationship: relationship
           key: relationship.id
-        }
 
       panelContent = <ul className="persons">{ relationships }</ul>
     else
@@ -54,7 +50,7 @@ window.PersonsPopup_PanelMixin =
     unless @isAllRelationshipsLoaded()
       loadMoreButton = <LoadMoreButton onClick={ this.loadMoreData } />
 
-    return <div className={ panelClasses }>
+    return <div className="tabs-panel">
              <div className="scroller scroller--persons" ref="scroller">
                <div className="scroller__pane js-scroller-pane">
                  { panelContent }

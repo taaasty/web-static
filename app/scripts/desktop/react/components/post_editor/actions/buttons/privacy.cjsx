@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.PostActions_PrivacyButton = React.createClass
 
   propTypes:
@@ -14,11 +16,10 @@ window.PostActions_PrivacyButton = React.createClass
     @$button.tooltip 'destroy'
 
   render: ->
-    iconClasses = React.addons.classSet {
+    iconClasses = cx
       'icon': true
       'icon--unlock': !@props.private
       'icon--lock': @props.private
-    }
 
     return <button className="button button--outline-grey post-settings-button"
                    data-original-title={ this._getTooltipTitle() }

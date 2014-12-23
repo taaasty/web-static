@@ -2,7 +2,7 @@
   "id": 232992,
   "name": "sergeylaptev",
   "slug": "sergeylaptev",
-  "title": "",
+  "title": null,
   "is_female": false,
   "is_daylog": false,
   "tlog_url": "http://taaasty.ru/@sergeylaptev",
@@ -42,11 +42,11 @@
     "backgroundBrightness": 75
   },
   "userpic": {
-    "original_url": "http://taaasty.ru/assets/userpic/22/36/232992_original.jpeg",
-    "large_url": "http://taaasty.ru/assets/userpic/22/36/232992_large.jpeg",
-    "thumb128_url": "http://taaasty.ru/assets/userpic/22/36/232992_thumb128.jpeg",
-    "thumb64_url": "http://taaasty.ru/assets/userpic/22/36/232992_thumb64.jpeg",
-    "thumbor_path": "userpic/22/36/232992_original.jpeg",
+    "original_url": "http://taaasty.ru/assets/userpic/ee/0b/232992_original.jpeg",
+    "large_url": "http://taaasty.ru/assets/userpic/ee/0b/232992_large.jpeg",
+    "thumb128_url": "http://taaasty.ru/assets/userpic/ee/0b/232992_thumb128.jpeg",
+    "thumb64_url": "http://taaasty.ru/assets/userpic/ee/0b/232992_thumb64.jpeg",
+    "thumbor_path": "userpic/ee/0b/232992_original.jpeg",
     "symbol": "s",
     "kind": "user",
     "default_colors": {

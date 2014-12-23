@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 MOUSE_LEAVE_TIMEOUT = 300
 DROPDOWN_CLOSED = 'closed'
 DROPDOWN_OPENED_BY_HOVER = 'openedByHover'
@@ -32,13 +34,12 @@ window.EntryMetabarDropdownMenu = React.createClass
 
   render: ->
     actionList = []
-    menuClasses = React.addons.classSet {
+    menuClasses = cx
       'meta-item__dropdown': true
       'state--open'        : @isOpen() || @hasActivities()
       'position-top'       : @isPositionTop()
-    }
 
-    menuStyles = 'margin-top': @_getTopPosition()
+    menuStyles = marginTop: @_getTopPosition()
 
     if @props.canEdit
       actionList.push <EntryMetabarDropdownMenuItem title="Редактировать"

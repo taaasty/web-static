@@ -75,25 +75,28 @@ window.HeroProfileStats = React.createClass
       else console.log "Неизвестный тип статистики профиля #{type}"
 
   handleFollowersClick: ($el) ->
-    React.renderComponent (
-      <HeroProfileStats_Popup title="Подписчики"
-                              toggle={ $el }>
+    React.render (
+      <HeroProfileStats_Popup
+          title="Подписчики"
+          toggle={ $el }>
         <HeroProfileStats_FollowersPopup tlogId={ this.props.user.id } />
       </HeroProfileStats_Popup>
     ), @container
 
   handleFollowingsClick: ($el) ->
-    React.renderComponent (
-      <HeroProfileStats_Popup title="Подписки"
-                              toggle={ $el }>
+    React.render (
+      <HeroProfileStats_Popup
+          title="Подписки"
+          toggle={ $el }>
         <HeroProfileStats_FollowingsPopup tlogId={ this.props.user.id } />
       </HeroProfileStats_Popup>
     ), @container
 
   handleTagsClick: ($el) ->
-    React.renderComponent (
-      <HeroProfileStats_Popup title="Теги"
-                              toggle={ $el }>
+    React.render (
+      <HeroProfileStats_Popup
+          title="Теги"
+          toggle={ $el }>
         <HeroProfileStats_TagsPopup tlogId={ this.props.user.id } />
       </HeroProfileStats_Popup>
     ), @container

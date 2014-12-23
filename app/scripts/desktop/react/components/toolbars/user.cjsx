@@ -1,8 +1,9 @@
+cx               = require 'react/lib/cx'
 UserToolbarList  = require './user/list'
 ToolbarMixin     = require './mixins/toolbar'
 UserToolbarMixin = require './user/mixins/user'
-{ PropTypes }       = React
-{ PureRenderMixin } = React.addons
+PureRenderMixin  = require 'react/lib/ReactComponentWithPureRenderMixin'
+{ PropTypes } = React
 
 window.UserToolbar = React.createClass
   mixins: [
@@ -19,7 +20,7 @@ window.UserToolbar = React.createClass
     logoutUrl:            PropTypes.string
 
   render: ->
-    toolbarClasses = React.addons.classSet
+    toolbarClasses = cx
       'toolbar':        true
       'toolbar--right': true
       'toolbar--user':  true

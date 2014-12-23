@@ -1,5 +1,7 @@
+PureRenderMixin = require 'react/lib/ReactComponentWithPureRenderMixin'
+
 window.ImagesMediaBox_UrlInsert = React.createClass
-  mixins: [React.addons.PureRenderMixin]
+  mixins: [PureRenderMixin]
 
   propTypes:
     imageUrl: React.PropTypes.string

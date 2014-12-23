@@ -110,205 +110,205 @@ PageMixin =
       stats:
         comments_count: 546
         days_count: 1026
-        entries_count: 348
+        entries_count: 0
         favorites_count: 313
-        followers_count: 13
+        followers_count: 176907
         followings_count: 15
         tags_count: 0
       my_relationship: 'none'
       his_relationship: 'none'
-    # entry: #Text
-    #   author:
-    #     created_at: "2014-12-04T12:35:55.000+04:00"
-    #     features:
-    #       notification: false
-    #       search: true
-    #     id: 18
-    #     is_daylog: false
-    #     is_female: true
-    #     is_privacy: false
-    #     name: "danil-pismenny-7359"
-    #     private_entries_count: 0
-    #     public_entries_count: 0
-    #     slug: "danil-pismenny-7359"
-    #     title: ""
-    #     tlog_url: "http://3000.vkontraste.ru/~danil-pismenny-7359"
-    #     total_entries_count: 2
-    #     updated_at: "2014-12-15T16:04:07.000+04:00"
-    #     userpic:
-    #       default_colors:
-    #         background: "#44d068"
-    #         name: "#ffffff"
-    #       kind: "user"
-    #       symbol: "d"
-    #   can_delete: false
-    #   can_edit: false
-    #   can_favorite: true
-    #   can_report: false
-    #   can_vote: false
-    #   can_watch: true
-    #   comments_count: 0
-    #   comments_info:
-    #     comments: []
-    #     from_comment_id: null
-    #     order: "desc"
-    #     to_comment_id: null
-    #     total_count: 0
-    #   created_at: "2014-12-13T16:37:33.000+04:00"
-    #   entry_url: "http://3000.vkontraste.ru/~danil-pismenny-7359/49-test"
-    #   id: 49
-    #   is_favorited: false
-    #   is_voteable: true
-    #   is_watching: false
-    #   privacy: "live"
-    #   rating:
-    #     entry_id: 49
-    #     is_voteable: false
-    #     is_voted: false
-    #     rating: 0
-    #     votes: 0
-    #   text: "test"
-    #   title: "test"
-    #   type: "text"
-    #   updated_at: "2014-12-13T16:37:33.000+04:00"
-    entry: #Image
-      id: 19475471
-      type: 'image'
+    entry: #Text
       author:
-        id: 232992
-        name: 'sergeylaptev'
-        slug: 'sergeylaptev'
-        title: 'To be continued...'
-        is_female: false
-        is_daylog: false
-        tlog_url: 'http://taaasty.ru/~sergeylaptev'
-        created_at: '2014-06-18T14:27:22.000+04:00'
-        updated_at: '2014-12-16T14:12:05.000+03:00'
-        total_entries_count: 3
-        private_entries_count: 0
-        public_entries_count: 3
-        is_privacy: true
-        design:
-          feedColor: 'black'
-          headerColor: 'white'
-          fontType: 'sans'
-          coverAlign: 'justify'
-          feedOpacity: 0.62
-          background_url: 'http://taaasty.ru/assets/backgrounds/cf/78/1881243_4k_Resolution_Game_Wallpaper__12_fullsize.jpeg'
-          backgroundBrightness: 75
-        userpic:
-          original_url: 'http://taaasty.ru/assets/userpic/22/36/232992_original.jpeg'
-          large_url: 'http://taaasty.ru/assets/userpic/22/36/232992_large.jpeg'
-          thumb128_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb128.jpeg'
-          thumb64_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb64.jpeg'
-          thumbor_path: 'userpic/22/36/232992_original.jpeg'
-          symbol: 's'
-          kind: 'user'
-          default_colors:
-            background: '#b5c31e'
-            name: '#ffffff'
+        created_at: "2014-12-04T12:35:55.000+04:00"
         features:
-          search: true
           notification: false
-      comments_count: 2
-      created_at: '2014-11-30T01:13:26.000+03:00'
-      updated_at: '2014-12-16T14:02:59.000+03:00'
-      entry_url: 'http://taaasty.ru/~sergeylaptev/19475471-net-nichego-prekrasnee-horoshey-knigi-pered-snom'
-      is_voteable: false
-      privacy: 'public'
+          search: true
+        id: 18
+        is_daylog: false
+        is_female: true
+        is_privacy: false
+        name: "danil-pismenny-7359"
+        private_entries_count: 0
+        public_entries_count: 0
+        slug: "danil-pismenny-7359"
+        title: ""
+        tlog_url: "http://3000.vkontraste.ru/~danil-pismenny-7359"
+        total_entries_count: 2
+        updated_at: "2014-12-15T16:04:07.000+04:00"
+        userpic:
+          default_colors:
+            background: "#44d068"
+            name: "#ffffff"
+          kind: "user"
+          symbol: "d"
+      can_delete: false
+      can_edit: false
+      can_favorite: true
       can_report: false
-      can_edit: true
-      can_delete: true
       can_vote: false
-      is_favorited: false
-      is_watching: false # Пока не добавлено
-      can_favorite: true # Пока не добавлено
-      can_watch: true    # Пока не добавлено
-      rating:
-        votes: 0
-        rating: 0
-        entry_id: 19475471
-        is_voted: false
-        is_voteable: false
-      image_url: null
-      title: 'Нет ничего прекраснее хорошей книги перед сном.'
-      via: null
-      image_attachments: [
-        {
-          id: 16642488
-          created_at: '2014-11-30T01:13:26.000+03:00'
-          image:
-            url: 'http://taaasty.ru/assets/att/56/a2/16642488_232992_19475471_ddd2c710-bd34-4cea-9268-7c09b98b71c2.jpg'
-            path: 'att/56/a2/16642488_232992_19475471_ddd2c710-bd34-4cea-9268-7c09b98b71c2.jpg'
-            geometry:
-              width: 2368
-              height: 3200
-            title: null
-            source: 'image_attachment'
-          content_type: 'image/jpeg'
-          frames_count: 1
-        }
-      ]
+      can_watch: true
+      comments_count: 0
       comments_info:
-        comments: [{
-          id: 11851524
-          user:
-            id: 148737
-            tlog_url: 'http://taaasty.ru/~RayProud'
-            name: 'RayProud'
-            slug: 'RayProud'
-            userpic:
-              original_url: 'http://taaasty.ru/assets/userpic/5c/33/148737_original.jpg'
-              large_url: 'http://taaasty.ru/assets/userpic/5c/33/148737_large.jpg'
-              thumb128_url: 'http://taaasty.ru/assets/userpic/5c/33/148737_thumb128.jpg'
-              thumb64_url: 'http://taaasty.ru/assets/userpic/5c/33/148737_thumb64.jpg'
-              thumbor_path: 'userpic/5c/33/148737_original.jpg'
-              symbol: 'R'
-              kind: 'user'
-              default_colors:
-                background: '#ffca00'
-                name: '#222222'
-          text: 'Все вокруг меня читают \"Совершенный код\". Это знак.'
-          comment_html: 'Все вокруг меня читают \"Совершенный код\". Это знак.'
-          comment: 'Все вокруг меня читают \"Совершенный код\". Это знак.'
-          created_at: '2014-11-30T23:35:10.000+03:00'
-          updated_at: '2014-11-30T23:35:10.000+03:00'
-          is_disabled: false
-          can_edit: false
-          can_report: true
-          can_delete: false
-        }, {
-          id: 11851580
-          user:
-            id: 2
-            tlog_url: 'http://taaasty.ru/~genue'
-            name: 'genue'
-            slug: 'genue'
-            userpic:
-              original_url: 'http://taaasty.ru/assets/userpic/9c/98/2_original.jpg'
-              large_url: 'http://taaasty.ru/assets/userpic/9c/98/2_large.jpg'
-              thumb128_url: 'http://taaasty.ru/assets/userpic/9c/98/2_thumb128.jpg'
-              thumb64_url: 'http://taaasty.ru/assets/userpic/9c/98/2_thumb64.jpg'
-              thumbor_path: 'userpic/9c/98/2_original.jpg'
-              symbol: 'g'
-              kind: 'user'
-              default_colors:
-                background: '#7648de'
-                name: '#ffffff'
-          text: 'Хаха'
-          comment_html: 'Хаха'
-          comment: 'Хаха'
-          created_at: '2014-11-30T23:59:23.000+03:00'
-          updated_at: '2014-11-30T23:59:23.000+03:00'
-          is_disabled: false
-          can_edit: false
-          can_report: true
-          can_delete: false
-        }]
+        comments: []
         from_comment_id: null
+        order: "desc"
         to_comment_id: null
-        order: 'desc'
-        total_count: 2
+        total_count: 0
+      created_at: "2014-12-13T16:37:33.000+04:00"
+      entry_url: "http://3000.vkontraste.ru/~danil-pismenny-7359/49-test"
+      id: 49
+      is_favorited: false
+      is_voteable: true
+      is_watching: false
+      privacy: "live"
+      rating:
+        entry_id: 49
+        is_voteable: false
+        is_voted: false
+        rating: 0
+        votes: 0
+      text: "<p>ok</p><p><br></p>"
+      title: "test"
+      type: "text"
+      updated_at: "2014-12-13T16:37:33.000+04:00"
+    # entry: #Image
+    #   id: 19475471
+    #   type: 'image'
+    #   author:
+    #     id: 232992
+    #     name: 'sergeylaptev'
+    #     slug: 'sergeylaptev'
+    #     title: 'To be continued...'
+    #     is_female: false
+    #     is_daylog: false
+    #     tlog_url: 'http://taaasty.ru/~sergeylaptev'
+    #     created_at: '2014-06-18T14:27:22.000+04:00'
+    #     updated_at: '2014-12-16T14:12:05.000+03:00'
+    #     total_entries_count: 3
+    #     private_entries_count: 0
+    #     public_entries_count: 3
+    #     is_privacy: true
+    #     design:
+    #       feedColor: 'black'
+    #       headerColor: 'white'
+    #       fontType: 'sans'
+    #       coverAlign: 'justify'
+    #       feedOpacity: 0.62
+    #       background_url: 'http://taaasty.ru/assets/backgrounds/cf/78/1881243_4k_Resolution_Game_Wallpaper__12_fullsize.jpeg'
+    #       backgroundBrightness: 75
+    #     userpic:
+    #       original_url: 'http://taaasty.ru/assets/userpic/22/36/232992_original.jpeg'
+    #       large_url: 'http://taaasty.ru/assets/userpic/22/36/232992_large.jpeg'
+    #       thumb128_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb128.jpeg'
+    #       thumb64_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb64.jpeg'
+    #       thumbor_path: 'userpic/22/36/232992_original.jpeg'
+    #       symbol: 's'
+    #       kind: 'user'
+    #       default_colors:
+    #         background: '#b5c31e'
+    #         name: '#ffffff'
+    #     features:
+    #       search: true
+    #       notification: false
+    #   comments_count: 2
+    #   created_at: '2014-11-30T01:13:26.000+03:00'
+    #   updated_at: '2014-12-16T14:02:59.000+03:00'
+    #   entry_url: 'http://taaasty.ru/~sergeylaptev/19475471-net-nichego-prekrasnee-horoshey-knigi-pered-snom'
+    #   is_voteable: false
+    #   privacy: 'public'
+    #   can_report: false
+    #   can_edit: true
+    #   can_delete: true
+    #   can_vote: false
+    #   is_favorited: false
+    #   is_watching: false # Пока не добавлено
+    #   can_favorite: true # Пока не добавлено
+    #   can_watch: true    # Пока не добавлено
+    #   rating:
+    #     votes: 0
+    #     rating: 0
+    #     entry_id: 19475471
+    #     is_voted: false
+    #     is_voteable: false
+    #   image_url: null
+    #   title: 'Нет ничего прекраснее хорошей книги перед сном.'
+    #   via: null
+    #   image_attachments: [
+    #     {
+    #       id: 16642488
+    #       created_at: '2014-11-30T01:13:26.000+03:00'
+    #       image:
+    #         url: 'http://taaasty.ru/assets/att/56/a2/16642488_232992_19475471_ddd2c710-bd34-4cea-9268-7c09b98b71c2.jpg'
+    #         path: 'att/56/a2/16642488_232992_19475471_ddd2c710-bd34-4cea-9268-7c09b98b71c2.jpg'
+    #         geometry:
+    #           width: 2368
+    #           height: 3200
+    #         title: null
+    #         source: 'image_attachment'
+    #       content_type: 'image/jpeg'
+    #       frames_count: 1
+    #     }
+    #   ]
+    #   comments_info:
+    #     comments: [{
+    #       id: 11851524
+    #       user:
+    #         id: 148737
+    #         tlog_url: 'http://taaasty.ru/~RayProud'
+    #         name: 'RayProud'
+    #         slug: 'RayProud'
+    #         userpic:
+    #           original_url: 'http://taaasty.ru/assets/userpic/5c/33/148737_original.jpg'
+    #           large_url: 'http://taaasty.ru/assets/userpic/5c/33/148737_large.jpg'
+    #           thumb128_url: 'http://taaasty.ru/assets/userpic/5c/33/148737_thumb128.jpg'
+    #           thumb64_url: 'http://taaasty.ru/assets/userpic/5c/33/148737_thumb64.jpg'
+    #           thumbor_path: 'userpic/5c/33/148737_original.jpg'
+    #           symbol: 'R'
+    #           kind: 'user'
+    #           default_colors:
+    #             background: '#ffca00'
+    #             name: '#222222'
+    #       text: 'Все вокруг меня читают \"Совершенный код\". Это знак.'
+    #       comment_html: 'Все вокруг меня читают \"Совершенный код\". Это знак.'
+    #       comment: 'Все вокруг меня читают \"Совершенный код\". Это знак.'
+    #       created_at: '2014-11-30T23:35:10.000+03:00'
+    #       updated_at: '2014-11-30T23:35:10.000+03:00'
+    #       is_disabled: false
+    #       can_edit: false
+    #       can_report: true
+    #       can_delete: false
+    #     }, {
+    #       id: 11851580
+    #       user:
+    #         id: 2
+    #         tlog_url: 'http://taaasty.ru/~genue'
+    #         name: 'genue'
+    #         slug: 'genue'
+    #         userpic:
+    #           original_url: 'http://taaasty.ru/assets/userpic/9c/98/2_original.jpg'
+    #           large_url: 'http://taaasty.ru/assets/userpic/9c/98/2_large.jpg'
+    #           thumb128_url: 'http://taaasty.ru/assets/userpic/9c/98/2_thumb128.jpg'
+    #           thumb64_url: 'http://taaasty.ru/assets/userpic/9c/98/2_thumb64.jpg'
+    #           thumbor_path: 'userpic/9c/98/2_original.jpg'
+    #           symbol: 'g'
+    #           kind: 'user'
+    #           default_colors:
+    #             background: '#7648de'
+    #             name: '#ffffff'
+    #       text: 'Хаха'
+    #       comment_html: 'Хаха'
+    #       comment: 'Хаха'
+    #       created_at: '2014-11-30T23:59:23.000+03:00'
+    #       updated_at: '2014-11-30T23:59:23.000+03:00'
+    #       is_disabled: false
+    #       can_edit: false
+    #       can_report: true
+    #       can_delete: false
+    #     }]
+    #     from_comment_id: null
+    #     to_comment_id: null
+    #     order: 'desc'
+    #     total_count: 2
     # entry: #Video
     #   author:
     #     created_at: '2014-12-22T12:45:07.000+04:00'

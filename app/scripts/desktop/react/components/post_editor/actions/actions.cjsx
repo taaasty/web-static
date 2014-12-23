@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 ENTRY_PRIVACY_PRIVATE   = TLOG_TYPE_PRIVATE   = 'private'
 ENTRY_PRIVACY_PUBLIC    = TLOG_TYPE_PUBLIC    = 'public'
 ENTRY_PRIVACY_ANONYMOUS = TLOG_TYPE_ANONYMOUS = 'anonymous'
@@ -24,16 +26,14 @@ window.PostActions = React.createClass
              .addClass    PREVIEW_BODY_CLASSES[nextProps.previewMode]
 
   render: ->
-    previewButtonClasses = React.addons.classSet {
+    previewButtonClasses = cx
       'button':        true
       'button--grey':  true
       'state--active': @props.previewMode
-    }
 
-    postActionsClasses = React.addons.classSet {
+    postActionsClasses = cx
       'post-actions':   true
       'state--loading': @props.isLoading
-    }
 
     privacyButton = <div className="post-action post-action--button">
                        <PostActions_PrivacyButton isVoteEnabled={ this.isPostPublicWithVoting() }

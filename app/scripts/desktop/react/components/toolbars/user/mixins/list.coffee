@@ -32,10 +32,11 @@ UserToolbarListMixin =
     unless container
       container = $('<\div>', {'popup-persons-container': ''}).appendTo('body').get 0
 
-    React.renderComponent PersonsPopup({
-      panelName: panelName
-      userId:    userId
-    }), container
+    React.render (
+      <PersonsPopup
+          panelName={ panelName }
+          userId={ userId } />
+    ), container
 
   showFriendsRequested: (userId) ->
     @showFriends 'requested', userId
@@ -54,7 +55,9 @@ UserToolbarListMixin =
         acceptButtonColor: 'green'
         onAccept:          @redirectToProfile
     else
-      React.renderComponent DesignSettingsPopup(), container
+      React.render (
+        <DesignSettingsPopup />
+      ), container
 
   showSettings: ->
     ReactApp.popup.show Settings, title: 'Настройки'

@@ -1,3 +1,5 @@
+update = require 'react/lib/update'
+
 FIRST_ROW_RATIO = 2.5
 NEXT_ROWS_RATIO = 4
 
@@ -11,10 +13,10 @@ window.ImagesCollageUrl = React.createClass
       image.src = url
       image
 
-    ImagesCollage images: images
+    <ImagesCollage images={ images } />
 
 window.ImagesCollage = React.createClass
-  #mixins: [React.addons.PureRenderMixin]
+
   propTypes:
     images:     React.PropTypes.array.isRequired
     waitForAll: React.PropTypes.bool
@@ -61,7 +63,7 @@ window.ImagesCollage = React.createClass
       imagesLoaded(image).on 'done', (instance) =>
         return unless @isMounted()
         if currentInitialId == @state.initialId
-          @setState images: React.addons.update @state.images, {$push: [image]}
+          @setState images: update @state.images, {$push: [image]}
         else
           console.debug? 'later image loaded', currentInitialId, @state.initialId
 
@@ -80,7 +82,7 @@ window.ImagesCollage = React.createClass
 
 
 window.ImagesCollage_Legacy = React.createClass
-  #mixins: [React.addons.PureRenderMixin]
+
   propTypes:
     images: React.PropTypes.array.isRequired
 

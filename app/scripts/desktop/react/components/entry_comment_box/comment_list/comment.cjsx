@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.EntryCommentBox_Comment = React.createClass
 
   propTypes:
@@ -10,10 +12,9 @@ window.EntryCommentBox_Comment = React.createClass
   componentDidMount: -> @_scrollToComment() if @props.isShared
 
   render: ->
-    commentClasses = React.addons.classSet {
-      comment: true
+    commentClasses = cx
+      'comment': true
       'state--highlighted': @props.isShared
-    }
 
     return <article className={ commentClasses }>
              <div className="comment__table">

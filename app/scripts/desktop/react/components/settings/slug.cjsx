@@ -1,4 +1,5 @@
 SettingsSlug = React.createClass
+  displayName: 'SettingsSlug'
 
   propTypes:
     slug:     React.PropTypes.string.isRequired

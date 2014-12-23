@@ -14,6 +14,9 @@ window.TastyLockingAlertController =
       unless container
         container = $('<\div>', {'tasty-alert-container': ''}).appendTo('body')[0]
 
-      React.renderComponent TastyLockingAlert(
-        {title, message, action}
+      React.render (
+        <TastyLockingAlert
+            title={ title }
+            message={ message }
+            action={ action } />
       ), container

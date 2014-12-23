@@ -3,6 +3,7 @@ SettingsSlug   = require './slug'
 SettingsTitle  = require './title'
 
 SettingsHeader = React.createClass
+  displayName: 'SettingsHeader'
 
   propTypes:
     user:              React.PropTypes.object.isRequired
@@ -52,6 +53,6 @@ SettingsHeader = React.createClass
   _getHeroStyles: ->
     backgroundUrl = @props.user.design.background_url
 
-    'background-image': "url(#{backgroundUrl})"
+    backgroundImage: "url(#{backgroundUrl})"
 
 module.exports = SettingsHeader

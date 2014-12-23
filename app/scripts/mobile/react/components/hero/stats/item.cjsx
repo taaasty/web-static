@@ -1,4 +1,5 @@
-cx = require 'react/lib/cx'
+cx            = require 'react/lib/cx'
+NumberHelpers = require '../../../../../shared/helpers/number'
 { PropTypes } = React
 
 module.exports = React.createClass
@@ -21,12 +22,14 @@ module.exports = React.createClass
            </div>
 
   renderItem: ->
+    count = NumberHelpers.reduceNumber @props.count
+
     if @props.href
       <a href={ @props.href }
          title={ @props.count + ' ' + @props.title }
          className="hero__stats-link">
         <strong className="hero__stats-value">
-          { @props.count }
+          { count }
         </strong>
         <span>
           { @props.title }
@@ -35,7 +38,7 @@ module.exports = React.createClass
     else
       <span>
         <strong className="hero__stats-value">
-          { @props.count }
+          { count }
         </strong>
         <span>
           { @props.title }

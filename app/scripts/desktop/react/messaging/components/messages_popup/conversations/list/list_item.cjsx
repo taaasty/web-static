@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.MessagesPopup_ConversationsListItem = React.createClass
   mixins: [ReactGrammarMixin]
 
@@ -7,10 +9,9 @@ window.MessagesPopup_ConversationsListItem = React.createClass
   render: ->
     online = <span className="messages__user-online" /> if @props.conversation.online
 
-    listItemClasses = React.addons.classSet {
+    listItemClasses = cx
       'messages__dialog': true
       'state--read': !@hasUnreadMessages()
-    }
 
     if @props.conversation.last_message?
       lastMessageText = <span dangerouslySetInnerHTML={{ __html: this._getLastMessageText() }} />

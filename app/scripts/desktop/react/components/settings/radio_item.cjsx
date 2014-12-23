@@ -1,10 +1,11 @@
 SettingsRadioItem = React.createClass
+  displayName: 'SettingsRadioItem'
 
   propTypes:
     title:       React.PropTypes.string.isRequired
     description: React.PropTypes.string.isRequired
     checked:     React.PropTypes.bool
-    key:         React.PropTypes.string.isRequired
+    id:          React.PropTypes.string.isRequired
     onChange:    React.PropTypes.func.isRequired
 
   getDefaultProps: ->
@@ -16,10 +17,10 @@ SettingsRadioItem = React.createClass
         <div className="switcher">
           <input type="checkbox"
                  checked={ this.props.checked }
-                 id={ this.props.key }
+                 id={ this.props.id }
                  className="switcher__input"
                  onChange={ this.handleChange } />
-          <label htmlFor={ this.props.key }
+          <label htmlFor={ this.props.id }
                  className="switcher__label">
             <span className="switcher__btn switcher__btn--on">Да</span>
             <span className="switcher__btn switcher__btn--off">Нет</span>

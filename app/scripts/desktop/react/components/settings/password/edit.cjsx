@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 CANCEL_TIMEOUT = 500
 
 SettingsPasswordEdit = React.createClass
@@ -13,7 +15,7 @@ SettingsPasswordEdit = React.createClass
     @cancelTimeout = null
 
   render: ->
-    buttonClasses = React.addons.classSet
+    buttonClasses = cx
       'button':          true
       'button--yellow':  @state.hasInput
       'button--outline': !@state.hasInput

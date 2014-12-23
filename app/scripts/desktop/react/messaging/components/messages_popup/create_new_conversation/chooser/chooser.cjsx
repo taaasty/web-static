@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 OPEN_STATE  = 'openState'
 CLOSE_STATE = 'closeState'
 
@@ -10,10 +12,9 @@ window.MessagesPopup_Chooser = React.createClass
     currentState: OPEN_STATE
 
   render: ->
-    chooserClasses = React.addons.classSet {
+    chooserClasses = cx
       'messages__chooser': true
       'state--open': @isOpenState()
-    }
 
     switch @state.currentState
       when CLOSE_STATE

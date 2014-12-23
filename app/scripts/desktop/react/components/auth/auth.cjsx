@@ -1,15 +1,16 @@
+cx = require 'react/lib/cx'
+
 window.Auth = React.createClass
 
   propTypes:
     fixed: React.PropTypes.bool
 
   render: ->
-    inviterClasses = React.addons.classSet {
+    inviterClasses = cx
       'inviter': true
       'inviter--fixed': @props.fixed
-    }
 
-    boxStyle = 'background-image': 'url(http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg)'
+    boxStyle = backgroundImage: 'url("http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg")'
 
     return <div className={ inviterClasses }>
              <div style={ boxStyle }

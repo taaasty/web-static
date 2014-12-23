@@ -8,9 +8,12 @@ class window.ReactShellBox
 
     @shellboxContainer = container
 
-  show: (react_class, args) ->
-    _.defer =>
-      React.renderComponent ShellBox(null, react_class(args)), @shellboxContainer
+  show: (reactClass, args) ->
+    React.render (
+      <ShellBox>
+        <reactClass {...args} />
+      </ShellBox>
+    ), @shellboxContainer
 
   close: ->
     _.defer =>

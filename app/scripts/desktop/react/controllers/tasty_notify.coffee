@@ -5,11 +5,12 @@ window.TastyNotifyController =
   notify: (type, text, timeout = 5000) ->
     container = $('<\div>').appendTo('body').get(0)
 
-    notification = React.renderComponent TastyNotify(
-      type:    type
-      text:    text
-      timeout: timeout
-      onClose: @_removeNotification.bind @
+    notification = React.render (
+      <TastyNotify
+          type={ type }
+          text={ text }
+          timeout={ timeout }
+          onClose={ @_removeNotification.bind(@) } />
     ), container
 
     @_notificationList.push notification

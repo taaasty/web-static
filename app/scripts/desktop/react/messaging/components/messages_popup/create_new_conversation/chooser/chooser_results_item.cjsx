@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.MessagesPopup_ChooserResultsItem = React.createClass
 
   propTypes:
@@ -6,10 +8,9 @@ window.MessagesPopup_ChooserResultsItem = React.createClass
     onClick:       React.PropTypes.func.isRequired
 
   render: ->
-    itemClasses = React.addons.classSet {
+    itemClasses = cx
       'messages__chooser-result': true
       'state--active': @props.selected
-    }
 
     return <div className={ itemClasses }
                 onClick={ this.handleClick }>

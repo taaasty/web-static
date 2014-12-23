@@ -1,3 +1,4 @@
+cx                       = require 'react/lib/cx'
 CurrentUserServerActions = require '../../actions/server/current_user'
 
 DESIGN_SETTINGS_POPUP_TITLE = 'Управление дизайном'
@@ -19,10 +20,9 @@ window.DesignSettingsPopup = React.createClass
     $(window).off 'beforeunload', @onPageClose
 
   render: ->
-    designSettingsClasses = React.addons.classSet {
+    designSettingsClasses = cx
       'settings-design': true
       'state--drag-hover': @state.isDragged
-    }
 
     return <Popup hasActivities={ this.hasActivities() }
                   title={ DESIGN_SETTINGS_POPUP_TITLE }

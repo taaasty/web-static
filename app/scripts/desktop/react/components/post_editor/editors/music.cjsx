@@ -1,14 +1,15 @@
+cx = require 'react/lib/cx'
+
 window.PostEditor_MusicEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin
             PostEditor_VideoMixin]
 
   render: ->
-    musicEditorClasses = React.addons.classSet {
+    musicEditorClasses = cx
       'post':        true
       'post--video': true
       'post--edit':  true
       'state--loading': @hasActivities()
-    }
 
     return <article className={ musicEditorClasses }>
              <div className="post__content">

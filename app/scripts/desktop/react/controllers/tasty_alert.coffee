@@ -14,6 +14,11 @@ window.TastyAlertController =
       unless container
         container = $('<\div>', {'tasty-alert-container': ''}).appendTo('body')[0]
 
-      React.renderComponent TastyAlert(
-        {title, message, buttonText, buttonColor, onAccept}
+      React.render (
+        <TastyAlert
+            title={ title }
+            message={ message }
+            buttonText={ buttonText }
+            buttonColor={ buttonColor }
+            onAccept={ onAccept } />
       ), container

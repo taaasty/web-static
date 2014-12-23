@@ -15,7 +15,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
   componentWillUnmount: -> @_unbindCoverUpload()
 
   render: ->
-    backgroundStyles = 'background-image': 'url(' + @state.backgroundUrl + ')'
+    backgroundStyles = backgroundImage: 'url(' + @state.backgroundUrl + ')'
 
     return <div className="settings-design__control settings-design__control--cover">
              <DesignSettingsPopup_ControlsProgressbar progress={ this.state.progress } />

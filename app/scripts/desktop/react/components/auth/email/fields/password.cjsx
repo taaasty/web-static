@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 #TODO: i18n
 PLACEHOLDER = 'Пароль'
 
@@ -10,7 +12,7 @@ EmailPasswordField = React.createClass
     onChange:   React.PropTypes.func.isRequired
 
   render: ->
-    fieldClasses = React.addons.classSet
+    fieldClasses = cx
       'form-field':         true
       'form-field--simple': true
       'form-field--error':  @props.isError

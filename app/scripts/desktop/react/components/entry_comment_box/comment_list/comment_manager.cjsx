@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.EntryCommentBox_CommentManager = React.createClass
 
   propTypes:
@@ -25,10 +27,9 @@ window.EntryCommentBox_CommentManager = React.createClass
                                                         onEditEnd={ this.onEditEnd }
                                                         onCancel={ this.onCancel } />
     else
-      commentClasses = React.addons.classSet {
-        comment: true
+      commentClasses = cx
+        'comment': true
         'state--highlighted': @props.isShared
-      }
 
       comment = <EntryCommentBox_Comment comment={ this.state.comment }
                                          entryId={ this.props.entryId }

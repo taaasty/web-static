@@ -1,7 +1,7 @@
+cx              = require 'react/lib/cx'
 FeedToolbarList = require './feed/list'
 ToolbarMixin    = require './mixins/toolbar'
-{ PropTypes }       = React
-{ PureRenderMixin } = React.addons
+{ PropTypes } = React
 
 window.FeedToolbar = React.createClass
   mixins: [ToolbarMixin, ComponentManipulationsMixin, ScrollerMixin]
@@ -13,7 +13,7 @@ window.FeedToolbar = React.createClass
     anonymousUrl: PropTypes.string.isRequired
 
   render: ->
-    toolbarClasses = React.addons.classSet
+    toolbarClasses = cx
       'toolbar':      true
       'toolbar--nav': true
       'state--open':  !@isClosedState()

@@ -27,7 +27,7 @@ module.exports = React.createClass
 
     if avatarUrl?
       avatarUrl    = ThumborService.image_url avatarUrl, @props.size + 'x' + @props.size
-      avatarStyles = "background-image": "url(#{ avatarUrl })"
+      avatarStyles = backgroundImage: "url(#{ avatarUrl })"
 
       return <span style={ avatarStyles }
                    className={ avatarClasses }>
@@ -37,8 +37,8 @@ module.exports = React.createClass
              </span>
     else
       avatarStyles =
-        'background-color': @props.userpic.default_colors.background
-        'color': @props.userpic.default_colors.name
+        backgroundColor: @props.userpic.default_colors.background
+        color:           @props.userpic.default_colors.name
 
       return <span style={ avatarStyles }
                    className={ avatarClasses }
