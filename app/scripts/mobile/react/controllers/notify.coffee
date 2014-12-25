@@ -31,11 +31,12 @@ NotifyController =
 
     closeNotification()
 
-    notification = React.renderComponent Notify(
-      type:    type
-      text:    text
-      timeout: timeout
-      onClose: closeNotification
+    notification = React.render (
+      <Notify
+          type={ type }
+          text={ text }
+          timeout={ timeout }
+          onClose={ closeNotification } />
     ), container
 
     _pendingNotification = notification

@@ -1,5 +1,6 @@
 { PropTypes } = React
 
+#TODO: i18n
 TITLE = 'Ссылка на запись'
 
 module.exports = React.createClass

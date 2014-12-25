@@ -117,60 +117,60 @@ PageMixin =
         tags_count: 0
       my_relationship: 'none'
       his_relationship: 'none'
-    entry: #Text
-      author:
-        created_at: "2014-12-04T12:35:55.000+04:00"
-        features:
-          notification: false
-          search: true
-        id: 18
-        is_daylog: false
-        is_female: true
-        is_privacy: false
-        name: "danil-pismenny-7359"
-        private_entries_count: 0
-        public_entries_count: 0
-        slug: "danil-pismenny-7359"
-        title: ""
-        tlog_url: "http://3000.vkontraste.ru/~danil-pismenny-7359"
-        total_entries_count: 2
-        updated_at: "2014-12-15T16:04:07.000+04:00"
-        userpic:
-          default_colors:
-            background: "#44d068"
-            name: "#ffffff"
-          kind: "user"
-          symbol: "d"
-      can_delete: false
-      can_edit: false
-      can_favorite: true
-      can_report: false
-      can_vote: false
-      can_watch: true
-      comments_count: 0
-      comments_info:
-        comments: []
-        from_comment_id: null
-        order: "desc"
-        to_comment_id: null
-        total_count: 0
-      created_at: "2014-12-13T16:37:33.000+04:00"
-      entry_url: "http://3000.vkontraste.ru/~danil-pismenny-7359/49-test"
-      id: 49
-      is_favorited: false
-      is_voteable: true
-      is_watching: false
-      privacy: "live"
-      rating:
-        entry_id: 49
-        is_voteable: false
-        is_voted: false
-        rating: 0
-        votes: 0
-      text: "<p>ok</p><p><br></p>"
-      title: "test"
-      type: "text"
-      updated_at: "2014-12-13T16:37:33.000+04:00"
+    # entry: #Text
+    #   author:
+    #     created_at: "2014-12-04T12:35:55.000+04:00"
+    #     features:
+    #       notification: false
+    #       search: true
+    #     id: 18
+    #     is_daylog: false
+    #     is_female: true
+    #     is_privacy: false
+    #     name: "danil-pismenny-7359"
+    #     private_entries_count: 0
+    #     public_entries_count: 0
+    #     slug: "danil-pismenny-7359"
+    #     title: ""
+    #     tlog_url: "http://3000.vkontraste.ru/~danil-pismenny-7359"
+    #     total_entries_count: 2
+    #     updated_at: "2014-12-15T16:04:07.000+04:00"
+    #     userpic:
+    #       default_colors:
+    #         background: "#44d068"
+    #         name: "#ffffff"
+    #       kind: "user"
+    #       symbol: "d"
+    #   can_delete: false
+    #   can_edit: false
+    #   can_favorite: true
+    #   can_report: false
+    #   can_vote: false
+    #   can_watch: true
+    #   comments_count: 0
+    #   comments_info:
+    #     comments: []
+    #     from_comment_id: null
+    #     order: "desc"
+    #     to_comment_id: null
+    #     total_count: 0
+    #   created_at: "2014-12-13T16:37:33.000+04:00"
+    #   entry_url: "http://3000.vkontraste.ru/~danil-pismenny-7359/49-test"
+    #   id: 49
+    #   is_favorited: false
+    #   is_voteable: true
+    #   is_watching: false
+    #   privacy: "live"
+    #   rating:
+    #     entry_id: 49
+    #     is_voteable: false
+    #     is_voted: false
+    #     rating: 0
+    #     votes: 0
+    #   text: "<p>ok</p><p><br></p>"
+    #   title: "test"
+    #   type: "text"
+    #   updated_at: "2014-12-13T16:37:33.000+04:00"
     # entry: #Image
     #   id: 19475471
     #   type: 'image'
@@ -420,5 +420,103 @@ PageMixin =
     #   type: 'video'
     #   updated_at: '2014-12-22T15:04:01.000+04:00'
     #   video_url: 'http://www.youtube.com/watch?v=vdhrVFNX104'
+    entry: #Quote
+        author:
+            created_at: "2014-12-24T12:48:05.000+03:00"
+            features:
+                notification: false
+                search: true
+            id: 1
+            is_daylog: false
+            is_female: true
+            is_privacy: false
+            name: "sergeylaptev"
+            private_entries_count: 0
+            public_entries_count: 0
+            slug: "sergeylaptev"
+            title: null
+            tlog_url: "http://localhost:3000/~sergeylaptev"
+            total_entries_count: 4
+            updated_at: "2014-12-25T12:03:31.000+03:00"
+            userpic:
+                default_colors:
+                    background: "#b5c31e"
+                    name: "#ffffff"
+                kind: "user"
+                symbol: "s"
+        can_delete: true
+        can_edit: true
+        can_favorite: true
+        can_report: true
+        can_vote: true
+        can_watch: true
+        comments_count: 2
+        comments_info:
+            comments: [{
+                can_delete: true
+                can_edit: false
+                can_report: false
+                comment: ":D"
+                comment_html: ":D"
+                created_at: "2014-12-25T12:03:38.000+03:00"
+                id: 3
+                is_disabled: false
+                text: ":D"
+                updated_at: "2014-12-25T12:03:38.000+03:00"
+                user:
+                    id: 1
+                    name: "sergeylaptev"
+                    slug: "sergeylaptev"
+                    tlog_url: "http://localhost:3000/~sergeylaptev"
+                    userpic:
+                        default_colors:
+                            background: "#b5c31e"
+                            name: "#ffffff"
+                        kind: "user"
+                        symbol: "s"
+            }, {
+                can_delete: true
+                can_edit: false
+                can_report: false
+                comment: "Cool"
+                comment_html: "Cool"
+                created_at: "2014-12-25T12:13:44.000+03:00"
+                id: 4
+                is_disabled: false
+                text: "Cool"
+                updated_at: "2014-12-25T12:13:44.000+03:00"
+                user:
+                    id: 3
+                    name: "robocop"
+                    slug: "robocop"
+                    tlog_url: "http://localhost:3000/~robocop"
+                    userpic:
+                        default_colors:
+                            background: "#ffca00"
+                            name: "#222222"
+                        kind: "user"
+                        symbol: "r"
+            }]
+            from_comment_id: null
+            order: "desc"
+            to_comment_id: null
+            total_count: 2
+        created_at: "2014-12-25T12:03:31.000+03:00"
+        entry_url: "http://localhost:3000/~sergeylaptev/4-tsitatko"
+        id: 19539689 # 4
+        is_favorited: false
+        is_voteable: true
+        is_watching: true
+        privacy: "live"
+        rating:
+            entry_id: 4
+            is_voteable: false
+            is_voted: false
+            rating: 6
+            votes: 1
+        source: "Афтор"
+        text: "Цитатко"
+        type: "quote"
+        updated_at: "2014-12-25T12:13:44.000+03:00"
 
 module.exports = PageMixin

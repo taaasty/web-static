@@ -23,22 +23,31 @@ module.exports = React.createClass
                    key="link" />
 
     if @props.entry.can_edit
-      #FIXME: Edit url
       editItem = <EntryMetaActions_DropdownMenuEditItem
-                     editUrl={ @props.entry.entry_url }
+                     editUrl={ Routes.entry_edit_url @props.entry.author.slug, @props.entry.id }
                      key="edit" />
 
     if @props.entry.can_favorite
-      favoriteItem = <EntryMetaActions_DropdownMenuFavoriteItem key="favorite" />
+      favoriteItem = <EntryMetaActions_DropdownMenuFavoriteItem
+                         entryId={ @props.entry.id }
+                         favorited={ @props.entry.is_favorited }
+                         key="favorite" />
 
     if @props.entry.can_watch
-      watchItem = <EntryMetaActions_DropdownMenuWatchItem key="watch" />
+      watchItem = <EntryMetaActions_DropdownMenuWatchItem
+                      entryId={ @props.entry.id }
+                      watching={ @props.entry.is_watching }
+                      key="watch" />
 
     if @props.entry.can_report
-      reportItem = <EntryMetaActions_DropdownMenuReportItem key="report" />
+      reportItem = <EntryMetaActions_DropdownMenuReportItem
+                       entryId={ @props.entry.id }
+                       key="report" />
 
     if @props.entry.can_delete
-      deleteItem = <EntryMetaActions_DropdownMenuDeleteItem key="delete" />
+      deleteItem = <EntryMetaActions_DropdownMenuDeleteItem
+                       entryId={ @props.entry.id }
+                       key="delete" />
 
     return <ul className="meta-actions__dropdown-popup-list">
              { [editItem, linkItem, favoriteItem, watchItem, reportItem, deleteItem] }
