@@ -503,14 +503,14 @@ PageMixin =
             total_count: 2
         created_at: "2014-12-25T12:03:31.000+03:00"
         entry_url: "http://localhost:3000/~sergeylaptev/4-tsitatko"
-        id: 19539689 # 4
+        id: 19535659 # 4
         is_favorited: false
         is_voteable: true
         is_watching: true
         privacy: "live"
         rating:
             entry_id: 4
-            is_voteable: false
+            is_voteable: true
             is_voted: false
             rating: 6
             votes: 1

@@ -1,6 +1,6 @@
 QuoteEntryContent = require './content'
-EntryMeta        = require '../meta/meta'
-EntryComments    = require '../comments/comments'
+EntryMeta         = require '../meta/meta'
+EntryComments     = require '../comments/comments'
 { PropTypes } = React
 
 QuoteEntry = React.createClass
@@ -23,4 +23,3 @@ QuoteEntry = React.createClass
     </div>
 
 module.exports = QuoteEntry
-

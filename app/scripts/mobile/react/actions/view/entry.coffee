@@ -3,6 +3,7 @@ NotifyController = require '../../controllers/notify'
 
 REPORT_SUCCESS_MESSAGE = 'Жалоба на пост успешно отправлена'
 DELETE_SUCCESS_MESSAGE = 'Пост успешно удалён'
+VOTE_SUCCESS_MESSAGE   = 'Голос за пост отдан'
 
 EntryViewActions =
 
@@ -37,6 +38,14 @@ EntryViewActions =
     Api.entry.delete entryId
       .then ->
         NotifyController.notifySuccess DELETE_SUCCESS_MESSAGE
+      .fail (xhr) ->
+        NotifyController.errorResponse xhr
+
+  vote: (entryId) ->
+    Api.entry.vote entryId
+      .then (rating) ->
+        NotifyController.notifySuccess VOTE_SUCCESS_MESSAGE
+        rating
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 

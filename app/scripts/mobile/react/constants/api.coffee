@@ -12,5 +12,6 @@ ApiConstants =
   STOP_WATCH:            'STOP_WATCH'
   REPORT:                'REPORT'
   DELETE:                'DELETE'
+  VOTE:                  'VOTE'
 
 module.exports = ApiConstants

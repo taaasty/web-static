@@ -1,3 +1,4 @@
+EntryMetaVoting  = require './voting'
 EntryMetaActions = require './actions'
 { PropTypes } = React
 
@@ -15,8 +16,7 @@ module.exports = React.createClass
     </div>
 
   renderVoting: ->
-    #TODO: Voting component
     if @props.entry.is_voteable
-      <div className="meta-voting">
-        { @props.entry.rating.votes }
-      </div>
+      <EntryMetaVoting
+          rating={ @props.entry.rating }
+          entryId={ @props.entry.id } />
