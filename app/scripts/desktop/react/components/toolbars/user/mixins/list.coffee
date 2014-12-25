@@ -4,6 +4,8 @@ UserToolbarListMixin =
     TastyEvents.on TastyEvents.keys.command_settings_open(),        @showSettings
     TastyEvents.on TastyEvents.keys.command_requested_open(),       @showFriendsRequested
     TastyEvents.on TastyEvents.keys.command_design_settings_open(), @showDesignSettings
+    TastyEvents.on TastyEvents.keys.command_vkontakte_open(),       @showFriendsVkontakte
+    TastyEvents.on TastyEvents.keys.command_facebook_open(),        @showFriendsFacebook
 
     if localStorage.getItem 'displayDesignSettings'
       @showDesignSettings()
@@ -15,6 +17,8 @@ UserToolbarListMixin =
     TastyEvents.off TastyEvents.keys.command_settings_open(),        @showSettings
     TastyEvents.off TastyEvents.keys.command_requested_open(),       @showFriendsRequested
     TastyEvents.off TastyEvents.keys.command_design_settings_open(), @showDesignSettings
+    TastyEvents.off TastyEvents.keys.command_vkontakte_open(),       @showFriendsVkontakte
+    TastyEvents.off TastyEvents.keys.command_facebook_open(),        @showFriendsFacebook
 
   showProfile: ->
     slug = CurrentUserStore.getUser().slug
@@ -40,6 +44,12 @@ UserToolbarListMixin =
 
   showFriendsRequested: (userId) ->
     @showFriends 'requested', userId
+
+  showFriendsVkontakte: ->
+    @showFriends 'vkontakte'
+
+  showFriendsFacebook:  ->
+    @showFriends 'facebook'
 
   showDesignSettings: ->
     url = window.location.href
