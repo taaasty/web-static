@@ -9,7 +9,14 @@ module.exports = React.createClass
 
   render: ->
     <div className="post__meta">
-      <div className="meta-voting">{ @props.entry.rating.votes }</div>
+      { @renderVoting() }
       <div className="meta-comments">{ @props.entry.comments_count }</div>
       <EntryMetaActions entry={ @props.entry } />
     </div>
+
+  renderVoting: ->
+    #TODO: Voting component
+    if @props.entry.is_voteable
+      <div className="meta-voting">
+        { @props.entry.rating.votes }
+      </div>

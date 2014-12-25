@@ -22187,6 +22187,9 @@ Routes = {
   },
   private_entries_url: function(userSlug) {
     return '/~' + userSlug + '/privates';
+  },
+  entry_edit_url: function(userSlug, entryId) {
+    return '/~' + userSlug + '/edit' + '/' + entryId;
   }
 };
 

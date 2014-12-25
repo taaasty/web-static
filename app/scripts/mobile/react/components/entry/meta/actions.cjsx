@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+cx                            = require 'react/lib/cx'
 EntryMetaActions_DropdownMenu = require './actions/dropdown_menu'
 { PropTypes } = React
 
