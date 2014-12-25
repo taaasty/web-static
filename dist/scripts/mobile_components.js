@@ -3322,7 +3322,9 @@ postRequest = function(_arg) {
     timeout: TIMEOUT,
     headers: {
       'X-User-Token': userToken(),
-      'X-Requested-With': 'XMLHttpRequest'
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-Tasty-Client-Name': 'web_mobile',
+      'X-Tasty-Client-Version': TastySettings.version
     }
   });
 };
@@ -3337,7 +3339,9 @@ deleteRequest = function(_arg) {
     timeout: TIMEOUT,
     headers: {
       'X-User-Token': userToken(),
-      'X-Requested-With': 'XMLHttpRequest'
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-Tasty-Client-Name': 'web_mobile',
+      'X-Tasty-Client-Version': TastySettings.version
     }
   });
 };
@@ -6789,11 +6793,13 @@ RelationshipsStore.dispatchToken = AppDispatcher.register(function(payload) {
 var TastySettings, _ref, _ref1;
 
 TastySettings = {
-  version: 'v0.0.1',
+  version: 'static-development',
   env: 'static-development',
   host: 'http://taaasty.ru',
   api_host: 'http://taaasty.ru/api'
 };
+
+console.log('TastyVersion', TastySettings.version);
 
 if ((typeof localStorage !== "undefined" && localStorage !== null ? (_ref = localStorage.getItem('host')) != null ? _ref.length : void 0 : void 0) > 0) {
   TastySettings.host = localStorage.getItem('host');
@@ -7081,6 +7087,12 @@ ApiRoutes = {
   },
   notifications_read_url: function(notificationId) {
     return TastySettings.api_host + '/v1/messenger/notifications/' + notificationId + '/read';
+  },
+  suggestions_vkontakte: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/vkontakte';
+  },
+  suggestions_facebook: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/facebook';
   }
 };
 

@@ -8498,32 +8498,6 @@ a.types-posts__item:hover .types-posts__text {
   </div>
   <ul class="persons">...</ul>
 */
-/*
-  Second Tab Panel
-
-  =================
-
-  <div class="grid-full">
-      <div class="grid-full__middle">
-          <div class="popup__text popup__text--soc">
-              Вы еще не привязали свой аккаунт Вконтакте <button class="vk-auth-button">Найти друзей Вконтакте</button>
-          </div>
-      </div>
-  </div>
-*/
-/*
-  Third Tab Panel
-
-  =================
-
-  <div class="grid-full">
-      <div class="grid-full__middle">
-          <div class="popup__text popup__text--soc">
-              Вы еще не привязали свой аккаунт Facebook <button class="fb-auth-button">Найти друзей Вконтакте</button>
-          </div>
-      </div>
-  </div>
-*/
 .nav-types {
   position: fixed;
   bottom: 20px;

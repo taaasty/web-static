@@ -4,7 +4,26 @@ currentUser = null
 
 window.CurrentUserStore = _.extend new BaseStore(), {
 
-  isLogged:       -> currentUser?
+  isLogged: -> currentUser?
+
+  hasVkontakteAuth: ->
+    authentications = currentUser?.authentications
+
+    if authentications?
+      for authentication in authentications when authentication.provider is 'vkontakte'
+        return true
+
+    false
+
+  hasFacebookAuth: ->
+    authentications = currentUser?.authentications
+
+    if authentications?
+      for authentication in authentications when authentication.provider is 'facebook'
+        return true
+
+    false
+
   getUser:        -> currentUser
   getAccessToken: -> currentUser.api_key.access_token
   getUserpic:     -> currentUser.userpic

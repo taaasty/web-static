@@ -14,9 +14,7 @@ window.PersonsPopup = React.createClass
     panelName: DEFAULT_PANEL
 
   getInitialState: ->
-    _.extend @getStateFromStores(), {
-      currentTab: @props.panelName
-    }
+    _.extend @getStateFromStores(), currentTab: @props.panelName
 
   componentDidMount: ->
     CurrentUserStore.addChangeListener @onStoresChange
@@ -27,23 +25,33 @@ window.PersonsPopup = React.createClass
     RelationshipsStore.removeChangeListener @onStoresChange
 
   render: ->
-    currentPanel = @_getCurrentPanel()
+    <Popup
+        hasActivities={ @hasActivities() }
+        title={ PERSON_POPUP_TITLE }
+        isDraggable={ true }
+        colorScheme="dark"
+        className="popup--persons">
 
-    return <Popup
-               hasActivities={ this.hasActivities() }
-               title={ PERSON_POPUP_TITLE }
-               isDraggable={ true }
-               colorScheme="dark"
-               className="popup--persons">
+      <PersonsPopup_Menu
+          user={ @state.user }
+          currentTab={ @state.currentTab }
+          onSelect={ @selectTab } />
 
-             <PersonsPopup_Menu
-                 user={ this.state.user }
-                 currentTab={ this.state.currentTab }
-                 onSelect={ this.selectTab } />
+      { @renderCurrentPanel() }
 
-             { currentPanel }
+    </Popup>
 
-           </Popup>
+  renderCurrentPanel: ->
+    CurrentPanel = switch @state.currentTab
+      when 'requested'  then PersonsPopup_RequestedPanel
+      when 'followings' then PersonsPopup_FollowingsPanel
+      when 'followers'  then PersonsPopup_FollowersPanel
+      when 'ignored'    then PersonsPopup_IgnoredPanel
+      when 'vkontakte'  then PersonsPopup_VkontaktePanel
+      when 'facebook'   then PersonsPopup_FacebookPanel
+      else console.debug? 'Unknown type of current tab', @state.currentTab
+
+    return <CurrentPanel activitiesHandler={ this.activitiesHandler } />
 
 # Temporarily exclude guessed tab
 # <PersonsPopup_GuessesPanel isActive={ this.state.currentTab == 'guesses' }
@@ -51,55 +59,11 @@ window.PersonsPopup = React.createClass
 #                            activitiesHandler={ this.activitiesHandler }
 #                            onLoad={ onLoad.bind(this, 'guesses') } />
 
-# Old version of render. It will be here for couple days, until we realize which
-# way of panel daisplaying more optimal
-# render: ->
-#   if @isProfilePrivate()
-#     requestedPanel = `<PersonsPopup_RequestedPanel
-#                           isActive={ this.state.currentTab == 'requested' }
-#                           activitiesHandler={ this.activitiesHandler } />`
-
-#   return `<Popup
-#               hasActivities={ this.hasActivities() }
-#               title={ PERSON_POPUP_TITLE }
-#               isDraggable={ true }
-#               colorScheme="dark"
-#               className="popup--persons">
-
-#             <PersonsPopup_Menu
-#                 user={ this.state.user }
-#                 currentTab={ this.state.currentTab }
-#                 onSelect={ this.selectTab } />
-
-#             <PersonsPopup_FollowingsPanel
-#                 isActive={ this.state.currentTab == 'followings' }
-#                 activitiesHandler={ this.activitiesHandler } />
-
-#             <PersonsPopup_FollowersPanel
-#                 isActive={ this.state.currentTab == 'followers' }
-#                 activitiesHandler={ this.activitiesHandler } />
-
-#             { requestedPanel }
-
-#             <PersonsPopup_IgnoredPanel
-#                 isActive={ this.state.currentTab == 'ignored' }
-#                 activitiesHandler={ this.activitiesHandler } />
-
-#           </Popup>`
-
   isProfilePrivate: ->
     @state.user.is_privacy is true
 
   selectTab: (type) ->
     @setState(currentTab: type)
-
-  _getCurrentPanel: ->
-    switch @state.currentTab
-      when 'requested'  then <PersonsPopup_RequestedPanel activitiesHandler={ this.activitiesHandler } />
-      when 'followings' then <PersonsPopup_FollowingsPanel activitiesHandler={ this.activitiesHandler } />
-      when 'followers'  then <PersonsPopup_FollowersPanel activitiesHandler={ this.activitiesHandler } />
-      when 'ignored'    then <PersonsPopup_IgnoredPanel activitiesHandler={ this.activitiesHandler } />
-      else console.warn 'Unknown type of current tab', @state.currentTab
 
   getStateFromStores: ->
     user:          CurrentUserStore.getUser()
