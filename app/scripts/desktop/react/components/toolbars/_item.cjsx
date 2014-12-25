@@ -1,3 +1,4 @@
+cx = require 'react/lib/cx'
 { PropTypes } = React
 
 ToolbarItem = React.createClass
@@ -15,11 +16,10 @@ ToolbarItem = React.createClass
     disabled: false
 
   render: ->
-    toolbarItemClasses = React.addons.classSet {
+    toolbarItemClasses = cx
       'toolbar__popup-item': true
       'state--active': @props.active
       'state--disabled': @props.disabled
-    }
 
     return <li className={ toolbarItemClasses }>
              <a href={ this.props.href }

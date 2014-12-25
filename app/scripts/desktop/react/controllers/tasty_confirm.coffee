@@ -9,8 +9,15 @@ window.TastyConfirmController =
         onAccept.call() if _.isFunction(onAccept)
     else
       container = document.querySelectorAll('[tasty-confirm-container]')[0]
+
       unless container
         container = $('<\div>', {'tasty-confirm-container': ''}).appendTo('body')[0]
-      React.renderComponent TastyConfirm(
-        {message, acceptButtonText, rejectButtonText, acceptButtonColor, onAccept}
+
+      React.render (
+        <TastyConfirm
+            message={ message }
+            acceptButtonText={ acceptButtonText }
+            rejectButtonText={ rejectButtonText }
+            acceptButtonColor={ acceptButtonColor }
+            onAccept={ onAccept } />
       ), container

@@ -3,9 +3,8 @@ window.AuthorizationShellbox = React.createClass
   render: ->
     entriesCount = @_getEntriesCount()
     usersCount   = @_getUsersCount()
-    boxStyle = {
-      'background-image': "url(http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg)"
-    }
+    boxStyle =
+      backgroundImage: "url(http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg)"
 
     return <div className="inviter">
              <div className="inviter__box" style={ boxStyle }>

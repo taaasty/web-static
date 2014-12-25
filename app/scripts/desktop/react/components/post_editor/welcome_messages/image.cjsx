@@ -1,5 +1,7 @@
+PureRenderMixin = require 'react/lib/ReactComponentWithPureRenderMixin'
+
 window.MediaBox_ImageWelcome = React.createClass
-  mixins: [React.addons.PureRenderMixin]
+  mixins: [PureRenderMixin]
 
   propTypes:
     onClick: React.PropTypes.func.isRequired

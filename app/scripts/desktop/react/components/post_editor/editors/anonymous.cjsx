@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.PostEditor_AnonymousEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin]
 
@@ -5,12 +7,11 @@ window.PostEditor_AnonymousEditor = React.createClass
     normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
 
   render: ->
-    anonymousEditorClasses = React.addons.classSet {
+    anonymousEditorClasses = cx
       'post':           true
       'post--text':     true
       'post--edit':     true
       'state--loading': @hasActivities()
-    }
 
     return <article className={ anonymousEditorClasses }>
              <header className="post__header">

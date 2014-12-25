@@ -107,7 +107,7 @@ ScreenViewer_Item = React.createClass
   render: ->
     activeClass = if @props.active then CLASSNAME_ACTIVE else ''
 
-    style = "background-image": "url(#{@props.imgSrc})"
+    style = backgroundImage: "url(#{@props.imgSrc})"
 
     return <div className={ 'screen-viewer__item ' + activeClass }>
              <div style={ style }

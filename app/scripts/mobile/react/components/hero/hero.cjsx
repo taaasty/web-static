@@ -80,8 +80,8 @@ module.exports = React.createClass
     backgroundUrl = @props.tlog.design?.background_url
     height = if @isOpenState() then _openHeroHeight else _initialHeroHeight
 
-    'background-image': "url(#{ backgroundUrl })"
-    'height': height
+    backgroundImage: "url(#{ backgroundUrl })"
+    height: height
 
   handleAvatarClick: ->
     @open() unless @isOpenState()

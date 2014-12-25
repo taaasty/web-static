@@ -1,5 +1,8 @@
+cx              = require 'react/lib/cx'
+PureRenderMixin = require 'react/lib/ReactComponentWithPureRenderMixin'
+
 window.MediaBox_Layout = React.createClass
-  mixins: [React.addons.PureRenderMixin]
+  mixins: [PureRenderMixin]
 
   propTypes:
     children: React.PropTypes.renderable.isRequired
@@ -33,7 +36,7 @@ window.MediaBox_Layout = React.createClass
 
     classes["state--#{ @props.state }"] = true if @props.state?
 
-    mediaBoxClasses = React.addons.classSet classes
+    mediaBoxClasses = cx classes
 
     return <figure className={ this.props.type }>
              <div className={ mediaBoxClasses }

@@ -4,6 +4,7 @@ PERSON_POPUP_TITLE = 'Управление подписками'
 DEFAULT_PANEL = 'followings'
 
 window.PersonsPopup = React.createClass
+  displayName: 'PersonsPopup'
   mixins: ['ReactActivitiesMixin', RequesterMixin]
 
   propTypes:

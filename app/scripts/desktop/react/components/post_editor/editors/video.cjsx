@@ -1,14 +1,15 @@
+cx = require 'react/lib/cx'
+
 window.PostEditor_VideoEditor = React.createClass
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin
             PostEditor_VideoMixin]
 
   render: ->
-    videoEditorClasses = React.addons.classSet {
+    videoEditorClasses = cx
       'post':        true
       'post--video': true
       'post--edit':  true
       'state--loading': @hasActivities()
-    }
 
     return <article className={ videoEditorClasses }>
              <div className="post__content">

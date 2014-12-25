@@ -1,5 +1,7 @@
+LinkedStateMixin = require 'react/lib/LinkedStateMixin'
+
 window.MessagesPopup_ChooserDropdown = React.createClass
-  mixins: [React.addons.LinkedStateMixin]
+  mixins: [LinkedStateMixin]
 
   propTypes:
     onCancel: React.PropTypes.func.isRequired

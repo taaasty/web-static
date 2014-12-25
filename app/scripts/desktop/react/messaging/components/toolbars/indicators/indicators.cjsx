@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 MOUSE_LEAVE_TIMEOUT = 800
 BASIC_STATE    = 'basic'
 ADVANCED_STATE = 'advanced'
@@ -26,11 +28,10 @@ window.IndicatorsToolbar = React.createClass
     TastyEvents.off TastyEvents.keys.user_toolbar_opened(), @_onUserToolbarOpen
 
   render: ->
-    indicatorsClasses = React.addons.classSet {
+    indicatorsClasses = cx
       'toolbar__indicators': true
       'state--advanced': @isAdvancedState()
       'state--basic':    @isBasicState()
-    }
 
     if ConnectionStateStore.CONNECTED_STATE
       indicators = <div className={ indicatorsClasses }
@@ -60,10 +61,9 @@ window.IndicatorsToolbar = React.createClass
   handleMouseEnter: ->
     clearTimeout @timeout if @timeout
 
-    @setState {
+    @setState
       isHovered: true
       currentState: ADVANCED_STATE
-    }
 
   handleMouseLeave: ->
     @safeUpdateState { isHovered: false }

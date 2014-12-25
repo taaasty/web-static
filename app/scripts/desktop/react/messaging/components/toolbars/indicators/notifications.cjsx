@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.IndicatorsToolbar_Notifications = React.createClass
 
   propTypes:
@@ -16,11 +18,10 @@ window.IndicatorsToolbar_Notifications = React.createClass
     MessagingStatusStore.removeChangeListener @_onStoreChange
 
   render: ->
-    indicatorClasses = React.addons.classSet {
+    indicatorClasses = cx
       'toolbar__indicator': true
       'toolbar__indicator--notifications': true
       'state--empty': @state.unreadNotificationsCount == 0
-    }
 
     if @hasUnreadNotifications()
       return <div className={ indicatorClasses }

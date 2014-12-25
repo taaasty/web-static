@@ -3,8 +3,12 @@ class window.ReactPopup
   constructor: ->
     @popupContainer = $('<\div>').appendTo('body').get(0)
 
-  show: (react_class, args) ->
-    _.defer => React.renderComponent PopupBox(args, react_class(args)), @popupContainer
+  show: (reactClass, args) ->
+    React.render (
+      <PopupBox {...args}>
+        <reactClass {...args} />
+      </PopupBox>
+    ), @popupContainer
 
   close: ->
     _.defer => React.unmountComponentAtNode @popupContainer

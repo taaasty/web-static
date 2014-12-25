@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 KEYCODE_ENTER = 13
 
 window.EditableField = React.createClass
@@ -25,11 +27,10 @@ window.EditableField = React.createClass
       }
 
   render: ->
-    editableFieldClasses = React.addons.classSet {
+    editableFieldClasses = cx
       'editable-field': true
       'state--empty':   @isEmpty()
       'state--focus':   @state.isFocus
-    }
 
     return <div className={ editableFieldClasses }>
              <div className="editable-field__control-wrap">
@@ -70,7 +71,7 @@ window.EditableField = React.createClass
     # По нажатию на enter выходим из редактирования (либо организуем сохранение на сервер)
     if e.which == KEYCODE_ENTER
       $(e.target).trigger 'blur'
-      return false
+      e.preventDefault()
 
     _.defer =>
       value = @refs.value.getDOMNode()

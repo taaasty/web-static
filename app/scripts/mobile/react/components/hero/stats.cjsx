@@ -18,24 +18,24 @@ module.exports = React.createClass
     @props.user.is_privacy
 
   _renderStatsList: ->
-    if @props.stats.entries_count
+    if @props.stats.entries_count?
       url = @props.user.tlog_url unless @isTlogPrivate()
       entries = <HeroStatsItem
                     href={ url }
                     count={ @props.stats.entries_count }
                     title={ @getTitle('entries') }
                     key="entries" />
-    if @props.stats.followings_count
+    if @props.stats.followings_count?
       followings = <HeroStatsItem
                        count={ @props.stats.followings_count }
                        title={ @getTitle('followings') }
                        key="followings" />
-    if @props.stats.followers_count
+    if @props.stats.followers_count?
       followers = <HeroStatsItem
                       count={ @props.stats.followers_count }
                       title={ @getTitle('followers') }
                       key="followers" />
-    if @props.stats.days_count
+    if @props.stats.days_count?
       days = <HeroStatsItem
                  count={ @props.stats.days_count }
                  title={ @getTitle('days') }

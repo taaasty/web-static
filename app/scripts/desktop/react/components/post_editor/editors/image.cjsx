@@ -1,10 +1,13 @@
+cx              = require 'react/lib/cx'
+PureRenderMixin = require 'react/lib/ReactComponentWithPureRenderMixin'
+
 WELCOME_MODE  = 'welcome'
 LOADED_MODE   = 'loaded'
 INSERT_MODE   = 'insert'
 
 window.PostEditor_ImageEditor = React.createClass
   mixins: ['ReactActivitiesUser', PostEditor_ImagesForm, PostEditor_Dragging
-            PostEditor_AutosaveMixin, RequesterMixin, React.addons.PureRenderMixin
+            PostEditor_AutosaveMixin, RequesterMixin, PureRenderMixin
             ComponentManipulationsMixin]
 
   propTypes:
@@ -17,13 +20,12 @@ window.PostEditor_ImageEditor = React.createClass
     imageUrl:     @entryImageUrl()
 
   render: ->
-    imageEditorClasses = React.addons.classSet {
+    imageEditorClasses = cx
       'post':        true
       'post--image': true
       'post--edit':  true
       'state--loading': @hasActivities()
       'state--insert':  @isInsertMode()
-    }
 
     switch @state.currentState
       when WELCOME_MODE

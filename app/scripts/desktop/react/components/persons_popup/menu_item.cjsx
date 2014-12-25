@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.PersonsPopup_MenuItem = React.createClass
 
   propTypes:
@@ -6,10 +8,9 @@ window.PersonsPopup_MenuItem = React.createClass
     onClick:  React.PropTypes.func.isRequired
 
   render: ->
-    menuItemClasses = React.addons.classSet {
+    menuItemClasses = cx
       'tabs-nav__link': true
       'state--active':  @props.isActive
-    }
 
     return <li className="tabs-nav__item">
              <a title={ this.props.title }

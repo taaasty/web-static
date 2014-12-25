@@ -3,7 +3,7 @@ PROPS_ATTR      = 'data-react-props'
 
 findReactDOMNodes = ->
   SELECTOR = '[' + CLASS_NAME_ATTR + ']'
-  if $? then $(SELECTOR) else document.querySelectorAll SELECTOR
+  if jQuery? then $(SELECTOR) else document.querySelectorAll SELECTOR
 
 mountReactComponents = ->
   nodes = findReactDOMNodes()
@@ -13,11 +13,12 @@ mountReactComponents = ->
     node = nodes[i]
     className = node.getAttribute CLASS_NAME_ATTR
 
-    component = window[className] || eval.call(window, className)
-    if component?
+    constructor = window[className] || eval.call(window, className)
+    if constructor?
       propsJson = node.getAttribute PROPS_ATTR
-      props     = propsJson && JSON.parse(propsJson)
-      React.renderComponent component(props), node
+      props     = propsJson && JSON.parse propsJson
+
+      React.render React.createElement(constructor, props), node
     ++i
 
 unmountReactComponents = ->
@@ -30,8 +31,7 @@ unmountReactComponents = ->
 
 initialize = ->
   mountReactComponents()
-  $(document).on 'page:change', mountReactComponents if $?
+  $(document).on 'page:change', mountReactComponents if jQuery?
 
-module.exports = {
+module.exports =
   initialize: initialize
-}

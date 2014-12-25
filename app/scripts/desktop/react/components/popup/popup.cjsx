@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 NO_TRANSITION_CLASS = "no--transition"
 
 window.Popup = React.createClass
@@ -30,16 +32,15 @@ window.Popup = React.createClass
     Mousetrap.unbind 'esc', @close
 
   render: ->
-    classes = {
+    classes =
       'popup':         true
       'popup--dark':   @props.colorScheme is 'dark'
       'popup--light':  @props.colorScheme is 'light'
       'popup--center': true
-    }
 
     classes[@props.className] = true if @props.className?
 
-    popupClasses = React.addons.classSet classes
+    popupClasses = cx classes
 
     return <div className={ popupClasses }
                 style={ this.initialPositionStyle() }>

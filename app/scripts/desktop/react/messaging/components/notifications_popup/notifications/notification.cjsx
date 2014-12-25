@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 IMAGE_SIZE = 50
 
 window.NotificationsPopup_Notification = React.createClass
@@ -9,10 +11,10 @@ window.NotificationsPopup_Notification = React.createClass
     NotificationActions.readNotification @props.notification.id if @isUnread()
 
   render: ->
-    notificationClasses = React.addons.classSet {
+    notificationClasses = cx
       'notification':  true
       'state--unread': @isUnread()
-    }
+
     userSlug   = @props.notification.sender.slug
     actionText = @props.notification.action_text
     text       = @props.notification.text

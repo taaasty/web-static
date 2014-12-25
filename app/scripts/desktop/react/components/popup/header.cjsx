@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.PopupHeader = React.createClass
 
   propTypes:
@@ -11,10 +13,9 @@ window.PopupHeader = React.createClass
     isDraggable: false
 
   render: ->
-    headBoxClasses = React.addons.classSet {
+    headBoxClasses = cx
       'popup__headbox': true
       'cursor--move': @props.isDraggable
-    }
 
     return <div className="popup__header">
              <div className={ headBoxClasses }>

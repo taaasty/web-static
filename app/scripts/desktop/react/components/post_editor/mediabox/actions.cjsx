@@ -1,5 +1,7 @@
+PureRenderMixin = require 'react/lib/ReactComponentWithPureRenderMixin'
+
 window.MediaBox_Actions = React.createClass
-  mixins: [React.addons.PureRenderMixin]
+  mixins: [PureRenderMixin]
 
   propTypes:
     onRotate: React.PropTypes.func

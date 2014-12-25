@@ -1,14 +1,12 @@
 SettingsTitle = React.createClass
+  displayName: 'SettingsTitle'
 
   propTypes:
     title:    React.PropTypes.string
     onChange: React.PropTypes.func.isRequired
 
-  getDefaultProps: ->
-    title: ''
-
   getInitialState: ->
-    title: @props.title
+    title: @props.title || ''
 
   render: ->
     <div className="settings__hero__text">

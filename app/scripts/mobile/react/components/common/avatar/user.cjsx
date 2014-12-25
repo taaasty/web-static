@@ -9,7 +9,6 @@ module.exports = React.createClass
     size: PropTypes.number
 
   render: ->
-    Avatar
-      name:    @props.user.name
-      userpic: @props.user.userpic
-      size:    @props.size
+    <Avatar name={ @props.user.name }
+            userpic={ @props.user.userpic }
+            size={ @props.size } />

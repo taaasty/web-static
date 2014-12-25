@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 CHOICER_TYPES = ['text', 'image', 'instagram', 'music', 'video','quote']
 CHOICER_ITEMS =
   text:
@@ -30,10 +32,9 @@ window.PostEditor_Choicer = React.createClass
     onChangeType: React.PropTypes.func
 
   render: ->
-    choicerClasses = React.addons.classSet {
+    choicerClasses = cx
       'nav-types': true
       'state--loading': @props.isLoading
-    }
 
     if @props.onChangeType?
       choicesItems = CHOICER_TYPES.map (type) => @getItemForType type
@@ -50,13 +51,13 @@ window.PostEditor_Choicer = React.createClass
 
     choicerItemData = CHOICER_ITEMS[type]
 
-    PostEditor_ChoicerItem
-      title:     choicerItemData.title
-      icon:      choicerItemData.icon
-      isActive:  @props.currentType == type
-      isLoading: @props.isLoading
-      onClick:   onSelect.bind(@, type)
-      key:       type
+    <PostEditor_ChoicerItem
+        title={ choicerItemData.title }
+        icon={ choicerItemData.icon }
+        isActive={ @props.currentType == type }
+        isLoading={ @props.isLoading }
+        onClick={ onSelect.bind(@, type) }
+        key={ type } />
 
 window.PostEditor_ChoicerItem = React.createClass
 
@@ -76,12 +77,11 @@ window.PostEditor_ChoicerItem = React.createClass
     @$button.tooltip 'destroy'
 
   render: ->
-    choicerItemClasses = React.addons.classSet {
+    choicerItemClasses = cx
       'button': true
       'button--circle': true
       'state--disable': @props.isLoading
       'state--active' : @props.isActive
-    }
 
     return <button data-original-title={ this.props.title }
                    className={ choicerItemClasses }

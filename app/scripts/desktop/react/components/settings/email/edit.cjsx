@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 SettingsEmailEdit = React.createClass
 
   propTypes:
@@ -13,7 +15,7 @@ SettingsEmailEdit = React.createClass
     hasInput: @props.email.length >= 5
 
   render: ->
-    buttonClasses = React.addons.classSet
+    buttonClasses = cx
       'button':          true
       'button--yellow':  @state.hasInput
       'button--outline': !@state.hasInput

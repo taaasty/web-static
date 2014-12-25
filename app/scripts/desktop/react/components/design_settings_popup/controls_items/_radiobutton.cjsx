@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.DesignSettingsPopup_ControlsRadioButton = React.createClass
 
   propTypes:
@@ -10,10 +12,9 @@ window.DesignSettingsPopup_ControlsRadioButton = React.createClass
     onChange:  React.PropTypes.func.isRequired
 
   render: ->
-    labelClasses = React.addons.classSet {
+    labelClasses = cx
       'form-radio':         true
       'form-radio--active': @props.isActive
-    }
 
     labelClasses += @_getSpecificButtonClass()
 

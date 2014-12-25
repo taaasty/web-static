@@ -1,4 +1,7 @@
-module.experts = window.ImagesCollage_Images = React.createClass
+cx = require 'react/lib/cx'
+
+window.ImagesCollage_Images = React.createClass
+
   propTypes:
     images: React.PropTypes.array.isRequired #Of(Image)
     width:  React.PropTypes.number.isRequired
@@ -284,7 +287,8 @@ module.experts = window.ImagesCollage_Images = React.createClass
 
     #return
 
-module.experts = window.ImagesCollage_Image = React.createClass
+window.ImagesCollage_Image = React.createClass
+
   propTypes:
     isLastInRow:  React.PropTypes.bool
     key:          React.PropTypes.number.isRequired
@@ -301,7 +305,7 @@ module.experts = window.ImagesCollage_Image = React.createClass
     itemClasses = {}
     itemClasses[@props.itemClass] = true
     itemClasses[@props.lastItemClass] = @props.isLastInRow
-    cx = React.addons.classSet itemClasses
+    cx = cx itemClasses
 
     <a className={cx} href={this.props.src} data-fancybox-group={this.props.key} target="_blank">
       <img className={this.props.imageClass} src={this.props.image.src} width={this.props.image.width} height={this.props.image.height} alt={this.props.alt} />

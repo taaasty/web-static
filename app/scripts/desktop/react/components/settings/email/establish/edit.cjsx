@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 SettingsEmailEstablishEdit = React.createClass
 
   propTypes:
@@ -12,7 +14,7 @@ SettingsEmailEstablishEdit = React.createClass
     emailField.focus()
 
   render: ->
-    buttonClasses = React.addons.classSet
+    buttonClasses = cx
       'button':          true
       'button--yellow':  @state.hasInput
       'button--outline': !@state.hasInput

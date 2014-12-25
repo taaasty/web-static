@@ -1,4 +1,5 @@
 window.UserAvatar = React.createClass
+  displayName: 'UserAvatar'
 
   propTypes:
     user: React.PropTypes.object.isRequired
@@ -14,14 +15,13 @@ window.UserAvatar = React.createClass
     TastyEvents.off TastyEvents.keys.user_property_changed( 'avatar', @props.user.id ), @_updateUserpic
 
   render: ->
-    Avatar {
-      name:    @state.user.name
-      userpic: @state.user.userpic
-      size:    @props.size
-    }
+    <Avatar
+        name={ @state.user.name }
+        userpic={ @state.user.userpic }
+        size={ @props.size } />
 
   _updateUserpic: (userpic) ->
     newUser = @state.user
     newUser.userpic = userpic
 
-    @setState user: newUser
+    @setState(user: newUser)

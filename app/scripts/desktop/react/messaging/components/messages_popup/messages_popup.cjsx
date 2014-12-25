@@ -6,6 +6,8 @@ THREAD_STATE                  = 'thread'
 ENTER_TIMEOUT = 300
 LEAVE_TIMEOUT = 300
 
+#TODO: Restore TimeoutTransitionGroup after upgrate to 0.12.2
+
 window.MessagesPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
 
@@ -46,11 +48,7 @@ window.MessagesPopup = React.createClass
 
              <div className="messages">
                { backButton }
-               <TimeoutTransitionGroup enterTimeout={ ENTER_TIMEOUT }
-                                       leaveTimeout={ LEAVE_TIMEOUT }
-                                       transitionName={ transitionName }>
-                 { content }
-               </TimeoutTransitionGroup>
+               { content }
              </div>
 
            </Popup>
@@ -67,16 +65,14 @@ window.MessagesPopup = React.createClass
     if @isThreadState()
       conversation  = ConversationsStore.getConversation @state.currentConversationId
       recipientSlug = conversation.recipient.slug
-      popupTitle    = MESSAGES_THREAD_TITLE.replace(/#{.+}/, recipientSlug)
+      popupTitle    = MESSAGES_THREAD_TITLE.replace /#{.+}/, recipientSlug
     else
       popupTitle = MESSAGES_POPUP_TITLE
 
     popupTitle
 
   handleBackButtonClick: ->
-    MessagingDispatcher.handleViewAction {
-      type: 'clickBackButton'
-    }
+    MessagingDispatcher.handleViewAction(type: 'clickBackButton')
 
   _onStoreChange: ->
     @setState @getStateFromStore()

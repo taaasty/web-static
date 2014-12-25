@@ -7,8 +7,7 @@ TextEntryContent = React.createClass
     text: PropTypes.string.isRequired
 
   render: ->
-    <div className="post__content">
-      <p>{ @props.text }</p>
-    </div>
+    <div className="post__content"
+         dangerouslySetInnerHTML={{ __html: @props.text }} />
 
 module.exports = TextEntryContent

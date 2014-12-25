@@ -142,11 +142,11 @@ class window.MessagingService
 
   openMessagesPopup: ->
     unless @isMessagesPopupShown()
-      @messagesPopup = React.renderComponent MessagesPopup(), @messagesContainer
+      @messagesPopup = React.render <MessagesPopup />, @messagesContainer
 
   openNotificationsPopup: ->
     unless @isNotificationsPopupShown()
-      @notificationsPopup = React.renderComponent NotificationsPopup(), @notificationsContainer
+      @notificationsPopup = React.render <NotificationsPopup />, @notificationsContainer
 
   toggleMessagesPopup: ->
     if @isMessagesPopupShown() then @closeMessagesPopup() else @openMessagesPopup()

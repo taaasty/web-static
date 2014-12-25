@@ -1,23 +1,21 @@
-ReactTransitionGroup = React.addons.TransitionGroup
+ReactTransitionGroup = require 'react/lib/ReactTransitionGroup'
+
 TICK = 17
 
-EVENT_NAME_MAP = {
-  transitionend: {
-    'transition':       'transitionend'
-    'WebkitTransition': 'webkitTransitionEnd'
-    'MozTransition':    'mozTransitionEnd'
-    'OTransition':      'oTransitionEnd'
-    'msTransition':     'MSTransitionEnd'
-  }
+EVENT_NAME_MAP =
+  transitionend:
+    transition:       'transitionend'
+    WebkitTransition: 'webkitTransitionEnd'
+    MozTransition:    'mozTransitionEnd'
+    OTransition:      'oTransitionEnd'
+    msTransition:     'MSTransitionEnd'
 
-  animationend: {
-    'animation':       'animationend'
-    'WebkitAnimation': 'webkitAnimationEnd'
-    'MozAnimation':    'mozAnimationEnd'
-    'OAnimation':      'oAnimationEnd'
-    'msAnimation':     'MSAnimationEnd'
-  }
-}
+  animationend:
+    animation:       'animationend'
+    WebkitAnimation: 'webkitAnimationEnd'
+    MozAnimation:    'mozAnimationEnd'
+    OAnimation:      'oAnimationEnd'
+    msAnimation:     'MSAnimationEnd'
 
 endEvents = []
 
@@ -25,8 +23,8 @@ endEvents = []
   testEl = document.createElement 'div'
   style  = testEl.style
 
-  delete EVENT_NAME_MAP.animationend.animation   unless "AnimationEvent" of window
-  delete EVENT_NAME_MAP.transitionend.transition unless "TransitionEvent" of window
+  delete EVENT_NAME_MAP.animationend.animation   unless 'AnimationEvent' of window
+  delete EVENT_NAME_MAP.transitionend.transition unless 'TransitionEvent' of window
 
   for baseEventName of EVENT_NAME_MAP
     if EVENT_NAME_MAP.hasOwnProperty baseEventName
@@ -125,17 +123,16 @@ window.TimeoutTransitionGroup = React.createClass
     transitionLeave: true
 
   _wrapChild: (child) ->
-    TimeoutTransitionGroupChild {
-      enterTimeout: @props.enterTimeout
-      leaveTimeout: @props.leaveTimeout
-      name:         @props.transitionName
-      enter:        @props.transitionEnter
-      leave:        @props.transitionLeave
-    }, child
+    <TimeoutTransitionGroupChild
+        enterTimeout={@props.enterTimeout}
+        leaveTimeout={@props.leaveTimeout}
+        name={@props.transitionName}
+        enter={@props.transitionEnter}
+        leave={@props.transitionLeave}>
+      {child}
+    </TimeoutTransitionGroupChild>
 
   render: ->
-    @transferPropsTo(
-      <ReactTransitionGroup childFactory={ this._wrapChild }>
-         { this.props.children }
-       </ReactTransitionGroup>
-    )
+    <ReactTransitionGroup
+        {...@props}
+        childFactory={@_wrapChild} />

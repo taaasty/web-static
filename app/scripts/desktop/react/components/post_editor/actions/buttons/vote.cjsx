@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.PostActions_VoteButton = React.createClass
 
   propTypes:
@@ -13,11 +15,10 @@ window.PostActions_VoteButton = React.createClass
     @$button.tooltip 'destroy'
 
   render: ->
-    iconClasses = React.addons.classSet {
+    iconClasses = cx
       'icon': true
       'post-settings-voting': true
       'post-settings-voted': @props.enabled
-    }
 
     return <button className="button button--outline-grey post-settings-button"
                    data-original-title={ this._getTooltipTitle() }

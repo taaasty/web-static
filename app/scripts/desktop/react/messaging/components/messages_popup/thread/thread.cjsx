@@ -1,4 +1,5 @@
 window.MessagesPopup_Thread = React.createClass
+  displayName: 'MessagesPopup_Thread'
 
   propTypes:
     conversationId: React.PropTypes.number.isRequired
@@ -8,9 +9,8 @@ window.MessagesPopup_Thread = React.createClass
 
   render: ->
     backgroundUrl = @state.conversation.recipient.design.background_url
-    threadStyles  = {
-      'background-image': "url(#{ backgroundUrl })"
-    }
+    threadStyles  =
+      backgroundImage: "url(#{ backgroundUrl })"
 
     return <div className="messages__section messages__section--thread">
              <div className="messages__body" style={ threadStyles }>

@@ -17,7 +17,7 @@ module.exports = React.createClass
           icon="icon--plus" />
       <ToolbarItem
           title="Мой дневник"
-          href={ Routes.new_anonymous_entry_url(@props.user.slug) }
+          href={ Routes.my_tlog_url(@props.user.slug) }
           icon="icon--diary" />
       <ToolbarItem
           title="Профиль"
@@ -25,7 +25,7 @@ module.exports = React.createClass
           onSelect={ @showProfile } />
       <ToolbarItem
           title="Избранное"
-          href={ Routes.my_tlog_url(@props.user.slug) }
+          href={ Routes.favorites_url(@props.user.slug) }
           icon="icon--star" />
       <ToolbarItem
           title="Новая анонимка"

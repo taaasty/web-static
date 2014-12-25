@@ -1,3 +1,5 @@
+cx = require 'react/lib/cx'
+
 window.Avatar = React.createClass
 
   propTypes:
@@ -17,14 +19,13 @@ window.Avatar = React.createClass
   render: ->
     avatarUrl     = @props.userpic.original_url || @props.userpic.large_url
     avatarSymbol  = @props.userpic.symbol
-    avatarClasses = React.addons.classSet {
-      'avatar': true
-      'anonymous_char': @isAnonymous()
-    }
+    avatarClasses = cx
+      avatar: true
+      anonymous_char: @isAnonymous()
 
     if avatarUrl?
       avatarUrl    = ThumborService.image_url avatarUrl, @props.size + 'x' + @props.size
-      avatarStyles = "background-image": "url(#{ avatarUrl })"
+      avatarStyles = backgroundImage: "url('#{ avatarUrl }')"
 
       return <span style={ avatarStyles }
                    className={ avatarClasses }>
@@ -33,10 +34,9 @@ window.Avatar = React.createClass
                     className="avatar__img" />
              </span>
     else
-      avatarStyles = {
-        'background-color': @props.userpic.default_colors.background
-        'color': @props.userpic.default_colors.name
-      }
+      avatarStyles =
+        backgroundColor: @props.userpic.default_colors.background
+        color: @props.userpic.default_colors.name
 
       return <span style={ avatarStyles }
                    className={ avatarClasses }
