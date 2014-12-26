@@ -1,0 +1,43 @@
+// Mixins
+.spinner-sizes(@i: length(@spinner-sizes)) when (@i > 0) {
+  @size: e(extract(@spinner-sizes, @i));
+  @border-width: e(extract(@spinner-border-widths, @i));
+
+  .spinner--@{size}x@{size} {
+    .spinner__icon {
+      width: ~"@{size}px";
+      height: ~"@{size}px";
+      border-width: ~"@{border-width}px";
+    }
+  }
+
+  .spinner-sizes((@i - 1));
+}
+
+// Styles
+.spinner {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0;
+  line-height: 0;
+  font-family: a;
+}
+
+.spinner__icon {
+  display: inline-block;
+  border-style: solid;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: spinner .4s linear infinite;
+}
+
+// Sizes
+.spinner-sizes;
+
+// Animation
+@keyframes spinner {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
