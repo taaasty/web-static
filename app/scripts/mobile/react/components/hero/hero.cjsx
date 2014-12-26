@@ -31,7 +31,7 @@ module.exports = React.createClass
     window.removeEventListener 'resize', @onResize
 
   render: ->
-    <div style={ @_getHeroStyles() }
+    <div style={ @getHeroStyles() }
          className="hero">
       <HeroCloseButton onClick={ @close } />
       <div className="hero__overlay" />
@@ -75,7 +75,7 @@ module.exports = React.createClass
 
     @activateCloseState()
 
-  _getHeroStyles: ->
+  getHeroStyles: ->
     #TODO: Get optimized background through ThumborService
     backgroundUrl = @props.tlog.design?.background_url
     height = if @isOpenState() then _openHeroHeight else _initialHeroHeight

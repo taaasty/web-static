@@ -9,15 +9,15 @@ module.exports = React.createClass
     commentId: PropTypes.number.isRequired
 
   render: ->
-    <a href={ @_getCommentUrl() }
+    <a href={ @getCommentUrl() }
        className="comment__date">
-      { @_getFormattedData() }
+      { @getFormattedData() }
     </a>
 
-  _getCommentUrl: ->
+  getCommentUrl: ->
     @props.entryUrl + '#comment-' + @props.commentId
 
-  _getFormattedData: ->
+  getFormattedData: ->
     now = moment()
     createdAt = moment @props.date
 

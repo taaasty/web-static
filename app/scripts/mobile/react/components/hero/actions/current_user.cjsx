@@ -1,10 +1,10 @@
-SettingsButton = require '../../buttons/user/settings'
+HeroActions_SettingsButton = require './buttons/settings'
 { PropTypes } = React
 
 #TODO: i18n
 BUTTON_TITLE = 'Это вы'
 
-module.exports = React.createClass
+HeroActions_CurrentUser = React.createClass
   displayName: 'HeroActions_CurrentUser'
 
   render: ->
@@ -12,5 +12,7 @@ module.exports = React.createClass
       <button className="follow-button">
         { BUTTON_TITLE }
       </button>
-      <SettingsButton />
+      <HeroActions_SettingsButton />
     </div>
+
+module.exports = HeroActions_CurrentUser

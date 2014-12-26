@@ -2,7 +2,7 @@ EntryMetaVoting  = require './voting'
 EntryMetaActions = require './actions'
 { PropTypes } = React
 
-module.exports = React.createClass
+EntryMeta = React.createClass
   displayName: 'EntryMeta'
 
   propTypes:
@@ -20,3 +20,5 @@ module.exports = React.createClass
       <EntryMetaVoting
           rating={ @props.entry.rating }
           entryId={ @props.entry.id } />
+
+module.exports = EntryMeta

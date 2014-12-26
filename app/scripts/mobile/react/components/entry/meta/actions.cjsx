@@ -1,11 +1,12 @@
 cx                            = require 'react/lib/cx'
+EntryMetaActions_Button       = require './actions/buttons/button'
 EntryMetaActions_DropdownMenu = require './actions/dropdown_menu'
 { PropTypes } = React
 
 OPEN_STATE  = 'open'
 CLOSE_STATE = 'close'
 
-module.exports = React.createClass
+EntryMetaActions = React.createClass
   displayName: 'EntryMetaActions'
 
   propTypes:
@@ -19,8 +20,8 @@ module.exports = React.createClass
       'meta-actions': true
       '__open': @isOpenState()
 
-    return <div className={ actionsClasses }
-                onClick={ @toggleOpenState }>
+    return <div className={ actionsClasses }>
+             <EntryMetaActions_Button onClick={ @toggleOpenState } />
              <EntryMetaActions_DropdownMenu entry={ @props.entry } />
            </div>
 
@@ -31,3 +32,5 @@ module.exports = React.createClass
 
   toggleOpenState: ->
     if @isOpenState() then @activateCloseState() else @activateOpenState()
+
+module.exports = EntryMetaActions

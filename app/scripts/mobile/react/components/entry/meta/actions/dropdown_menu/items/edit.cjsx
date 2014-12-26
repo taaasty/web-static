@@ -3,8 +3,8 @@
 #TODO: i18n
 TITLE = 'Редактировать'
 
-module.exports = React.createClass
-  displayName: 'EntryMetaActions_DropdownMenuEditItem'
+EntryMetaActions_DropdownMenu_EditItem = React.createClass
+  displayName: 'EntryMetaActions_DropdownMenu_EditItem'
 
   propTypes:
     editUrl: PropTypes.string.isRequired
@@ -17,3 +17,5 @@ module.exports = React.createClass
         <span>{ TITLE }</span>
       </a>
     </li>
+
+module.exports = EntryMetaActions_DropdownMenu_EditItem

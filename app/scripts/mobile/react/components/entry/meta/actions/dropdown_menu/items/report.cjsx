@@ -5,8 +5,8 @@ EntryViewActions = require '../../../../../../actions/view/entry'
 TITLE           = 'Пожаловаться'
 CONFIRM_MESSAGE = 'Вы действительно хотите пожаловаться на пост?'
 
-module.exports = React.createClass
-  displayName: 'EntryMetaActions_DropdownMenuReportItem'
+EntryMetaActions_DropdownMenu_ReportItem = React.createClass
+  displayName: 'EntryMetaActions_DropdownMenu_ReportItem'
 
   propTypes:
     entryId: PropTypes.number.isRequired
@@ -23,7 +23,7 @@ module.exports = React.createClass
   report: ->
     EntryViewActions.report @props.entryId
 
-  handleClick: (e) ->
-    e.preventDefault()
-    e.stopPropagation()
+  handleClick: ->
     @report() if confirm CONFIRM_MESSAGE
+
+module.exports = EntryMetaActions_DropdownMenu_ReportItem

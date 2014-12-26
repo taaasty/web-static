@@ -3,7 +3,9 @@ EntryComments_CommentList    = require './comment_list'
 EntryComments_CommentForm    = require './comment_form'
 { PropTypes } = React
 
-module.exports = React.createClass
+#TODO: CommentsStore?
+
+EntryComments = React.createClass
   displayName: 'EntryComments'
 
   propTypes:
@@ -14,22 +16,24 @@ module.exports = React.createClass
   render: ->
     <div className="post__comments">
       <div className="comments">
-        { @_getLoadMoreButton() }
-        { @_getCommentList() }
-        { @_getCommentForm() }
+        { @renderLoadMoreButton() }
+        { @renderCommentList() }
+        { @renderCommentForm() }
       </div>
     </div>
 
-  _getLoadMoreButton: ->
+  renderLoadMoreButton: ->
     if @props.commentsInfo.total_count > @props.commentsInfo.comments.length
       <EntryComments_LoadMoreButton totalCount={ @props.commentsInfo.total_count } />
 
-  _getCommentList: ->
+  renderCommentList: ->
     if @props.commentsInfo.comments.length
       <EntryComments_CommentList
           comments={ @props.commentsInfo.comments }
           entryUrl={ @props.entryUrl } />
 
-  _getCommentForm: ->
+  renderCommentForm: ->
     if @props.user?
       <EntryComments_CommentForm user={ @props.user } />
+
+module.exports = EntryComments

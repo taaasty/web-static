@@ -52,7 +52,7 @@ module.exports = React.createClass
     return <button
                className={ buttonClasses }
                onClick={ @handleClick }>
-             { @_getTitle() }
+             { @getTitle() }
            </button>
 
   isShowState:  -> @state.currentState is SHOW_STATE
@@ -65,7 +65,7 @@ module.exports = React.createClass
   activateErrorState:   -> @safeUpdateState(currentState: ERROR_STATE)
   activateShowState:    -> @safeUpdateState(currentState: SHOW_STATE)
 
-  _getTitle: ->
+  getTitle: ->
     switch @state.currentState
       when ERROR_STATE   then return ERROR_TITLE
       when PROCESS_STATE then return PROCESS_TITLE
