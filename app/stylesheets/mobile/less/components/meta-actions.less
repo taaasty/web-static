@@ -1,10 +1,22 @@
 .meta-actions {
   &:extend(.meta-item all);
-  .ico-dots;
   position: relative;
 
   &.__open {
     &:extend(.link-design-default-active all, .link-design:active all);
+  }
+}
+
+.meta-actions__button {
+  &:extend(.meta-item-activator all);
+  .inline-block;
+  width: auto;
+  height: auto;
+  background: none;
+  font: inherit;
+
+  .icon {
+    &:extend(.meta-item-icon all);
   }
 }
 

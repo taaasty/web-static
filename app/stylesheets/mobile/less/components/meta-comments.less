@@ -1,5 +1,7 @@
 .meta-comments {
-  &:extend(.meta-item all);
+  &:extend(.meta-item all, .meta-item-activator all);
+
+  &:before {&:extend(.meta-item-icon all);}
   .ico-messages;
 
   &:before {

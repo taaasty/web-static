@@ -1,7 +1,26 @@
+// Placeholders
+.meta-item-icon {
+  .inline-block();
+  .icon;
+  margin: -.25em 0 -.15em;
+  font-size: 1.429em;
+}
+
+.meta-item-activator {
+  &:extend(.link-design-default all, .link-design all);
+  padding: 4px 6px;
+  border: 1px solid transparent;
+
+  &:active {
+    &:extend(.link-design-default-active all);
+  }
+}
+
+// Styles
 .meta {
   &:extend(.clearfix);
   .user-select(none);
-  margin: 0 -4px;
+  margin: 0 -6px;
 
   .meta-item {
     margin-right: 10px;
@@ -9,22 +28,10 @@
 }
 
 .meta-item {
-  &:extend(.link-design-default all, .link-design all);
-  .inline-block();
-  padding: 4px;
+  .inline-block;
+  margin-right: 4px;
   font-family: @font-family-base;
   font-size: @meta-font-size;
   line-height: @meta-line-height;
   white-space: nowrap;
-
-  &:before {
-    .inline-block();
-    .icon;
-    margin: -.25em 0 -.15em;
-    font-size: 1.429em;
-  }
-
-  &:active {
-    &:extend(.link-design-default-active all);
-  }
 }
