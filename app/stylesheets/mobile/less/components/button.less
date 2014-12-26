@@ -23,12 +23,12 @@
   &:extend(.button all, .button--extra-small all);
   color: @hero-button-color;
 
-  &:before {
+  &:after {
     border: 1px solid @hero-button-border-color;
   }
 
   &:hover {
-    &:before {
+    &:after {
       border-color: @hero-button-border-color-hover;
       color: @hero-button-color-hover;
     }
@@ -74,7 +74,6 @@ button {
   box-sizing: border-box;
   border-radius: @button-border-radius;
   user-select: none;
-  transition: all .3s ease;
   .button-size(@button-middle-height, @button-middle-padding-horizontal, @button-middle-font-size);
 
   // Button Link
@@ -83,7 +82,7 @@ button {
   }
 
   // Border Button
-  &:before {
+  &:after {
     content: "";
     position: absolute;
     display: block;
@@ -345,7 +344,7 @@ button {
   &:extend(.button all);
   color: inherit;
 
-  &:before {
+  &:after {
     border: 1px solid;
     opacity: .3;
   }

@@ -82,20 +82,29 @@
 }
 
 .comment__actions {
-  &:extend(.link-design-default all, .link-design all);
   position: absolute;
   top: 10px;
-  right: 0;
+  right: -1px;
   white-space: nowrap;
-  cursor: pointer;
+}
 
-  & > .icon {
+.comment__actions-button {
+  &:extend(.link-design-default all, .link-design all);
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 4px 6px;
+  border: none;
+  background: none;
+  font: inherit;
+
+  .icon {
     font-size: 20px;
     line-height: 1;
     vertical-align: middle;
   }
 
-  &.__open {
+  .__open & {
     &:extend(.link-design-default-active all, .link-design:active all);
   }
 }
@@ -103,7 +112,7 @@
 // Comment Dropdown
 .comment__dropdown-popup {
   &:extend(.dropdown-popup all);
-  right: -@indent-base/2;
+  right: 0;
   left: auto;
 
   &:after {
