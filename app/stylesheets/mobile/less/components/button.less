@@ -10,10 +10,6 @@
 .button-common-style(@background) {
   background-color: @background;
 
-  &:hover {
-    background-color: lighten(@background, 6%);
-  }
-
   &:active {
     background-color: darken(@background, 6%);
   }
@@ -27,7 +23,7 @@
     border: 1px solid @hero-button-border-color;
   }
 
-  &:hover {
+  &:active {
     &:after {
       border-color: @hero-button-border-color-hover;
       color: @hero-button-color-hover;
@@ -41,7 +37,7 @@
   padding: 0;
   color: rgba(255, 255, 255, .6);
 
-  &:hover {
+  &:active {
     color: @white;
   }
 }
@@ -91,7 +87,6 @@ button {
     bottom: 0;
     left: 0;
     border-radius: @button-border-radius;
-    transition: border .3s ease, opacity .3s ease;
   }
 
   // Icons
@@ -249,7 +244,6 @@ button {
   color: @grey;
   letter-spacing: 0;
   border-radius: 50%;
-  transition: background .3s ease;
 
   .icon {
     margin: 2px;
