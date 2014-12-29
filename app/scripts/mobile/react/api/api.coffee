@@ -19,8 +19,10 @@ postRequest = ({url, data}) ->
     data: data
     timeout: TIMEOUT
     headers:
-      'X-User-Token':     userToken()
-      'X-Requested-With': 'XMLHttpRequest'
+      'X-User-Token':           userToken()
+      'X-Requested-With':       'XMLHttpRequest'
+      'X-Tasty-Client-Name':    'web_mobile'
+      'X-Tasty-Client-Version': TastySettings.version
 
 deleteRequest = ({url, data}) ->
   reqwest
@@ -29,8 +31,10 @@ deleteRequest = ({url, data}) ->
     data: data
     timeout: TIMEOUT
     headers:
-      'X-User-Token':     userToken()
-      'X-Requested-With': 'XMLHttpRequest'
+      'X-User-Token':           userToken()
+      'X-Requested-With':       'XMLHttpRequest'
+      'X-Tasty-Client-Name':    'web_mobile'
+      'X-Tasty-Client-Version': TastySettings.version
 
 Api =
 

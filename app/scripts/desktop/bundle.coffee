@@ -208,6 +208,8 @@ require './react/components/persons_popup/panels/followers_panel'
 require './react/components/persons_popup/panels/guessed_panel'
 require './react/components/persons_popup/panels/requested_panel'
 require './react/components/persons_popup/panels/ignored_panel'
+require './react/components/persons_popup/panels/vkontakte'
+require './react/components/persons_popup/panels/facebook'
 
 require './react/components/people/item'
 
