@@ -9820,6 +9820,10 @@ tr.introjs-showElement > th.toolbar--nav {
 .medium-editor-placeholder:after {
   white-space: pre;
 }
+.medium-editor-toolbar,
+.medium-editor-toolbar li button {
+  background-color: #242424;
+}
 .popover {
   position: absolute;
   z-index: 10000;
