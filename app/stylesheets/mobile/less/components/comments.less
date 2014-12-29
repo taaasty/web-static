@@ -14,6 +14,7 @@
 .comments__more-link {
   &:extend(.link-design-default all, .link-design all);
   display: block;
+  cursor: pointer;
 
   &:active {
     &:extend(.link-design-default-active all);
@@ -22,6 +23,10 @@
 
 .comments__list {
   margin-bottom: 10px;
+}
+
+.comments__loader {
+  text-align: center;
 }
 
 // Comment
@@ -90,6 +95,7 @@
 
 .comment__actions-button {
   &:extend(.link-design-default all, .link-design all);
+  cursor: pointer;
   width: auto;
   height: auto;
   margin: 0;

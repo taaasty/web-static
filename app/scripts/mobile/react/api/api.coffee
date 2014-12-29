@@ -12,6 +12,16 @@ abortPendingRequests = (key) ->
 userToken = ->
   CurrentUserStore.getAccessToken()
 
+getRequest = ({url, data}) ->
+  reqwest
+    url: url
+    method: 'GET'
+    data: data
+    timeout: TIMEOUT
+    headers:
+      'X-User-Token':     userToken()
+      'X-Requested-With': 'XMLHttpRequest'
+
 postRequest = ({url, data}) ->
   reqwest
     url: url
@@ -123,5 +133,16 @@ Api =
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest {url}
+
+    loadComments: (entryId, toCommentId, limit) ->
+      url = ApiRoutes.comments_url()
+      key = Constants.api.LOAD_COMMENTS
+      data =
+        entry_id:      entryId
+        to_comment_id: toCommentId
+        limit:         limit
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest {url, data}
 
 module.exports = Api

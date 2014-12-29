@@ -1,6 +1,6 @@
-#TODO: React's keyMirror
+keyMirror = require 'react/lib/keyMirror'
 
-RelationshipConstants =
-  UPDATE_RELATIONSHIP: 'UPDATE_RELATIONSHIP'
+RelationshipConstants = keyMirror
+  UPDATE_RELATIONSHIP: null
 
 module.exports = RelationshipConstants

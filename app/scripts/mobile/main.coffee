@@ -93,16 +93,16 @@ document.addEventListener "DOMContentLoaded", (->
   #     ), false
   #     i--
 
-  # Комментарии
-  commentActions = document.querySelectorAll(".comment__actions")
+  # # Комментарии
+  # commentActions = document.querySelectorAll(".comment__actions")
 
-  if commentActions?
-    i = commentActions.length - 1
+  # if commentActions?
+  #   i = commentActions.length - 1
 
-    while i >= 0
-      commentActions[i].addEventListener "click", (->
-        @classList.toggle "__open"
-      ), false
-      i--
+  #   while i >= 0
+  #     commentActions[i].addEventListener "click", (->
+  #       @classList.toggle "__open"
+  #     ), false
+  #     i--
 
 ), false

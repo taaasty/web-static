@@ -10,9 +10,9 @@ EntryMeta = React.createClass
 
   render: ->
     <div className="post__meta">
+      <EntryMetaActions entry={ @props.entry } />
       { @renderVoting() }
       <div className="meta-comments">{ @props.entry.comments_count }</div>
-      <EntryMetaActions entry={ @props.entry } />
     </div>
 
   renderVoting: ->

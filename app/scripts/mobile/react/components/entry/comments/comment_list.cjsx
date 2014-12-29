@@ -1,20 +1,22 @@
-EntryComments_CommentListItem = require './comment_list/item'
+Comment = require './comment_list/comment'
 { PropTypes } = React
 
-module.exports = React.createClass
-  displayName: 'EntryComments_CommentList'
+CommentList = React.createClass
+  displayName: 'CommentList'
 
   propTypes:
     comments: PropTypes.array.isRequired
-    entryUrl: PropTypes.string.isRequired
+    entry:    PropTypes.object.isRequired
 
   render: ->
     commentList = @props.comments.map (comment) =>
-      <EntryComments_CommentListItem
+      <Comment
           comment={ comment }
-          entryUrl={ @props.entryUrl }
+          entry={ @props.entry }
           key={ comment.id } />
 
     return <div className="comments__list">
              { commentList }
            </div>
+
+module.exports = CommentList

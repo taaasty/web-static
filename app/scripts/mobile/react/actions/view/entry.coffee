@@ -49,4 +49,9 @@ EntryViewActions =
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
+  loadComments: (entryId, toCommentId, limit) ->
+    Api.entry.loadComments entryId, toCommentId, limit
+      .fail (xhr) ->
+        NotifyController.errorResponse xhr
+
 module.exports = EntryViewActions

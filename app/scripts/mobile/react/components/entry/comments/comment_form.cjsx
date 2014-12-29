@@ -4,8 +4,8 @@
 BUTTON_TITLE      = 'Отпр'
 FIELD_PLACEHOLDER = 'Добавить комментарий'
 
-module.exports = React.createClass
-  displayName: 'EntryComments_CommentForm'
+CommentForm = React.createClass
+  displayName: 'CommentForm'
 
   propTypes:
     user: PropTypes.object.isRequired
@@ -27,3 +27,5 @@ module.exports = React.createClass
   handleClick: (e) ->
     e.preventDefault()
     console.log 'submit'
+
+module.exports = CommentForm
