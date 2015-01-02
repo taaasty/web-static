@@ -1,3 +1,4 @@
+assign           = require 'react/lib/Object.assign'
 EntryViewActions = require '../../../../actions/view/entry'
 
 CommentsMixin =
@@ -79,6 +80,32 @@ CommentsMixin =
             comments:   newComments
             totalCount: commentsInfo.total_count
       .fail @activateErrorState
+
+  removeComment: (comment) ->
+    newComments = @state.comments[..]
+
+    for newComment, i in newComments when newComment is comment
+      newComments.splice i, 1
+    
+    @safeUpdateState
+      comments: newComments
+      totalCount: @state.totalCount - 1
+
+  addComment: (comment) ->
+    newComments = @state.comments.concat comment
+
+    @safeUpdateState
+      comments: newComments
+      totalCount: @state.totalCount + 1
+
+  editComment: (comment) ->
+    newComments = @state.comments[..]
+
+    for newComment in newComments when newComment.id is comment.id
+      assign newComment, comment
+      break
+
+    @safeUpdateState(comments: newComments)
 
   # loadMoreComments: ->
   #   @setState isLoadMoreError: false, isLoadMoreLoading: true

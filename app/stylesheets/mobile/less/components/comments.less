@@ -72,7 +72,6 @@
 }
 
 .comment__date {
-  white-space: nowrap;
   font-size: @font-size-xs;
 
   &:before {
@@ -148,6 +147,17 @@
 
 .comment-form__submit {
   padding: (@indent-base + 1) @indent-base @indent-base;
+  position: relative;
+  float: right;
+  border: none;
+  background: @white;
+  font: inherit;
+  line-height: @comments-line-height;
+  color: #22d877;
+}
+
+.comment-form__cancel {
+  padding: (@indent-base + 1) @indent-base @indent-base 0;
   position: relative;
   float: right;
   border: none;

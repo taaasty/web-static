@@ -11,8 +11,10 @@ CommentActions = React.createClass
   displayName: 'CommentActions'
 
   propTypes:
-    entry:   PropTypes.object.isRequired
-    comment: PropTypes.object.isRequired
+    entry:       PropTypes.object.isRequired
+    comment:     PropTypes.object.isRequired
+    onDelete:    PropTypes.func.isRequired
+    onEditStart: PropTypes.func.isRequired
 
   getInitialState: ->
     currentState: CLOSE_STATE
@@ -24,9 +26,7 @@ CommentActions = React.createClass
 
     <div className={ actionsClasses }>
       <CommentActionsButton onClick={ @toggleOpenState } />
-      <CommentActionsDropdownMenu
-          comment={ @props.comment }
-          entry={ @props.entry } />
+      <CommentActionsDropdownMenu {...@props} />
     </div>
 
   isOpenState: -> @state.currentState is OPEN_STATE

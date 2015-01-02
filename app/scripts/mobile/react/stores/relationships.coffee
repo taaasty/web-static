@@ -1,4 +1,4 @@
-_             = require 'underscore'
+assign        = require 'react/lib/Object.assign'
 BaseStore     = require './_base'
 Constants     = require '../constants/constants'
 AppDispatcher = require '../dispatcher/dispatcher'
@@ -8,7 +8,7 @@ _relationships = {}
 updateStatus = ({userId, status}) ->
   _relationships[userId] = status
 
-RelationshipsStore = _.extend new BaseStore(),
+RelationshipsStore = assign new BaseStore(),
 
   getStatus: (userId) ->
     _relationships[userId]
@@ -20,7 +20,7 @@ RelationshipsStore.dispatchToken = AppDispatcher.register (payload) ->
 
   switch action.type
     when Constants.relationship.UPDATE_RELATIONSHIP
-      {userId, relationship} = action
+      { userId, relationship } = action
 
       updateStatus
         userId: userId

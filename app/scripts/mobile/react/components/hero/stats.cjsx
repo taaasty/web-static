@@ -2,24 +2,21 @@ HeroStatsItem = require './stats/item'
 { declension } = require '../../../../shared/helpers/grammar'
 { PropTypes }  = React
 
-module.exports = React.createClass
+HeroStats = React.createClass
   displayName: 'HeroStats'
 
   propTypes:
-    stats: PropTypes.object.isRequired
-    user:  PropTypes.object.isRequired
+    stats:  PropTypes.object.isRequired
+    author: PropTypes.object.isRequired
 
   render: ->
     <div className="hero__stats">
-      { @_renderStatsList() }
+      { @renderStatsList() }
     </div>
 
-  isTlogPrivate: ->
-    @props.user.is_privacy
-
-  _renderStatsList: ->
+  renderStatsList: ->
     if @props.stats.entries_count?
-      url = @props.user.tlog_url unless @isTlogPrivate()
+      url = @props.author.tlog_url unless @isTlogPrivate()
       entries = <HeroStatsItem
                     href={ url }
                     count={ @props.stats.entries_count }
@@ -45,6 +42,9 @@ module.exports = React.createClass
              { [entries, followings, followers, days] }
            </div>
 
+  isTlogPrivate: ->
+    @props.author.is_privacy
+
   getTitle: (type) ->
     switch type
       when 'entries'    then declension(@props.stats.entries_count, ['пост', 'поста', 'постов'])
@@ -52,3 +52,5 @@ module.exports = React.createClass
       when 'followers'  then declension(@props.stats.followers_count, ['подписчик', 'подписчика', 'подписчиков'])
       when 'days'       then declension(@props.stats.days_count, ['день', 'дня', 'дней']) + ' на тейсти'
       else console.warn 'Unknown type of stats of HeroStats component', type
+
+module.exports = HeroStats

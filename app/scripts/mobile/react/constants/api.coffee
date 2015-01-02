@@ -14,5 +14,9 @@ ApiConstants = keyMirror
   DELETE:                null
   VOTE:                  null
   LOAD_COMMENTS:         null
+  DELETE_COMMENT:        null
+  REPORT_COMMENT:        null
+  CREATE_COMMENT:        null
+  EDIT_COMMENT:          null
 
 module.exports = ApiConstants

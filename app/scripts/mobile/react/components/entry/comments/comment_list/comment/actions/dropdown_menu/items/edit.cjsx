@@ -7,11 +7,11 @@ CommentActionsDropdownMenuEditItem = React.createClass
   displayName: 'CommentActionsDropdownMenuEditItem'
 
   propTypes:
-    entryId:   PropTypes.number.isRequired
-    commentId: PropTypes.number.isRequired
+    onEditStart: PropTypes.func.isRequired
 
   render: ->
-    <li className="comment__dropdown-popup-item">
+    <li className="comment__dropdown-popup-item"
+        onClick={ @props.onEditStart }>
       <a className="comment__dropdown-popup-link"
          title={ LINK_TEXT }>
         <i className="icon icon--pencil" />

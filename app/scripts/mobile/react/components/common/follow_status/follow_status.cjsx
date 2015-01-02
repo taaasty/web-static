@@ -18,9 +18,11 @@ module.exports = React.createClass
     RelationshipsStore.removeChangeListener @onStoreChange
 
   render: ->
-    <span className={ 'follow-status __' + @state.status }>
-      <i className="follow-status__icon" />
-    </span>
+    if @state.status?
+      <span className={ 'follow-status __' + @state.status }>
+        <i className="follow-status__icon" />
+      </span>
+    else null
 
   getStateFromStore: ->
     status: RelationshipsStore.getStatus(@props.userId) || @props.status

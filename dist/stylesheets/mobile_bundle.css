@@ -685,7 +685,7 @@ body {
     font-size: 34px;
   }
 }
-@media only screen and (min-height: 520px) {
+@media only screen and (min-height: 570px) {
   .hero-enabled .hero .follow-status {
     right: 14px;
     bottom: 14px;
@@ -2492,6 +2492,9 @@ a.toolbar__popup-link:active {
   line-height: 20px;
   white-space: nowrap;
 }
+.meta-voting {
+  cursor: pointer;
+}
 .meta-voting:before {
   content: "\e643";
 }
@@ -2511,6 +2514,7 @@ a.toolbar__popup-link:active {
   content: "\e644";
 }
 .meta-comments {
+  cursor: pointer;
   margin-right: 12px;
 }
 .meta-comments:before {
@@ -2612,7 +2616,6 @@ a.toolbar__popup-link:active {
   font-weight: bold;
 }
 .comment__date {
-  white-space: nowrap;
   font-size: 14px;
 }
 .comment__date:before {
@@ -2659,6 +2662,16 @@ a.toolbar__popup-link:active {
 }
 .comment-form__submit {
   padding: 13px 12px 12px;
+  position: relative;
+  float: right;
+  border: none;
+  background: #ffffff;
+  font: inherit;
+  line-height: 22px;
+  color: #22d877;
+}
+.comment-form__cancel {
+  padding: 13px 12px 12px 0;
   position: relative;
   float: right;
   border: none;

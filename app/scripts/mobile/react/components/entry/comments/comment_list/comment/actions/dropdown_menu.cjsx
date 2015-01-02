@@ -8,8 +8,10 @@ CommentActionsDropdownMenu = React.createClass
   displayName: 'CommentActionsDropdownMenu'
 
   propTypes:
-    entry:   PropTypes.object.isRequired
-    comment: PropTypes.object.isRequired
+    entry:       PropTypes.object.isRequired
+    comment:     PropTypes.object.isRequired
+    onDelete:    PropTypes.func.isRequired
+    onEditStart: PropTypes.func.isRequired
 
   render: ->
     <div className="comment__dropdown-popup">
@@ -29,13 +31,13 @@ CommentActionsDropdownMenu = React.createClass
 
     if @props.comment.can_edit
       editItem = <CommentActionsDropdownMenuEditItem
-                     entryId={ @props.entry.id }
-                     commentId={ @props.comment.id }
+                     onEditStart={ @props.onEditStart }
                      key="edit" />
 
     if @props.comment.can_delete
       deleteItem = <CommentActionsDropdownMenuDeleteItem
                        commentId={ @props.comment.id }
+                       onDelete={ @props.onDelete }
                        key="delete" />
 
     return <ul className="comment__dropdown-popup-list">

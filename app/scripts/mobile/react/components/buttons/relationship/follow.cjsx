@@ -1,4 +1,4 @@
-_                       = require 'underscore'
+assign                  = require 'react/lib/Object.assign'
 cx                      = require 'react/lib/cx'
 RelationshipsStore      = require '../../../stores/relationships'
 RelationshipButtonMixin = require './mixins/relationship'
@@ -36,7 +36,7 @@ module.exports = React.createClass
     status: PropTypes.string.isRequired
 
   getInitialState: ->
-    _.extend @getStateFromStore(), currentState: SHOW_STATE
+    assign @getStateFromStore(), currentState: SHOW_STATE
 
   componentDidMount: ->
     RelationshipsStore.addChangeListener @onStoreChange
@@ -49,11 +49,12 @@ module.exports = React.createClass
       'follow-button': true
       '__active': @isFollowStatus() && @isShowState()
 
-    return <button
-               className={ buttonClasses }
-               onClick={ @handleClick }>
-             { @getTitle() }
-           </button>
+    if @state.status?
+      <button className={ buttonClasses }
+              onClick={ @handleClick }>
+        { @getTitle() }
+      </button>
+    else null
 
   isShowState:  -> @state.currentState is SHOW_STATE
   isErrorState: -> @state.currentState is ERROR_STATE

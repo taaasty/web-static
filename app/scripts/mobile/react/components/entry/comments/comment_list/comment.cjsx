@@ -8,8 +8,10 @@ Comment = React.createClass
   displayName: 'Comment'
 
   propTypes:
-    comment: PropTypes.object.isRequired
-    entry:   PropTypes.object.isRequired
+    comment:     PropTypes.object.isRequired
+    entry:       PropTypes.object.isRequired
+    onDelete:    PropTypes.func.isRequired
+    onEditStart: PropTypes.func.isRequired
 
   render: ->
     <div className="comment">
@@ -20,9 +22,7 @@ Comment = React.createClass
             date={ @props.comment.created_at }
             commentId={ @props.comment.id }
             entryUrl={ @props.entry.entry_url } />
-        <CommentActions
-            entry={ @props.entry }
-            comment={ @props.comment } />
+        <CommentActions {...@props} />
       </div>
     </div>
 
