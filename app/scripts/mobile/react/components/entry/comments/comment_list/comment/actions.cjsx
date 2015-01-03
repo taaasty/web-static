@@ -1,4 +1,5 @@
 cx                         = require 'react/lib/cx'
+ClickOutsideMixin          = require '../../../../../mixins/clickOutside'
 CommentActionsButton       = require './actions/buttons/button'
 CommentActionsDropdownMenu = require './actions/dropdown_menu'
 UserAvatar                 = require '../../../../common/avatar/user'
@@ -9,6 +10,7 @@ CLOSE_STATE = 'close'
 
 CommentActions = React.createClass
   displayName: 'CommentActions'
+  mixins: [ClickOutsideMixin]
 
   propTypes:
     entry:       PropTypes.object.isRequired

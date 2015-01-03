@@ -1,4 +1,5 @@
 cx                            = require 'react/lib/cx'
+ClickOutsideMixin             = require '../../../mixins/clickOutside'
 EntryMetaActions_Button       = require './actions/buttons/button'
 EntryMetaActions_DropdownMenu = require './actions/dropdown_menu'
 { PropTypes } = React
@@ -8,6 +9,7 @@ CLOSE_STATE = 'close'
 
 EntryMetaActions = React.createClass
   displayName: 'EntryMetaActions'
+  mixins: [ClickOutsideMixin]
 
   propTypes:
     entry: PropTypes.object.isRequired

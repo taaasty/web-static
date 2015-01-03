@@ -1,4 +1,5 @@
 cx                              = require 'react/lib/cx'
+ClickOutsideMixin               = require '../../../mixins/clickOutside'
 HeroActions_DropdownMenu_Button = require './dropdown_menu/buttons/button'
 HeroActions_DropdownMenu_Popup  = require './dropdown_menu/popup'
 { PropTypes } = React
@@ -8,6 +9,7 @@ OPEN_STATE  = 'open'
 
 HeroActions_DropdownMenu = React.createClass
   displayName: 'HeroActions_DropdownMenu'
+  mixins: [ClickOutsideMixin]
 
   propTypes:
     userId: PropTypes.number.isRequired

@@ -1,8 +1,8 @@
+CommentsMixin     = require './mixins/comments'
+ComponentMixin    = require '../../../mixins/component'
 CommentList       = require './comment_list'
 CommentCreateForm = require './comment_form/create'
 CommentsLoadMore  = require './load_more'
-CommentsMixin     = require './mixins/comments'
-ComponentMixin    = require '../../../mixins/component'
 { PropTypes } = React
 
 LOAD_MORE_COMMENTS_LIMIT = 50
