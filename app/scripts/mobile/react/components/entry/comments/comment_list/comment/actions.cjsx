@@ -28,7 +28,7 @@ CommentActions = React.createClass
 
     <div className={ actionsClasses }>
       <CommentActionsButton onClick={ @toggleOpenState } />
-      <CommentActionsDropdownMenu {...@props} />
+      <CommentActionsDropdownMenu {...@props} visible={ @isOpenState() } />
     </div>
 
   isOpenState: -> @state.currentState is OPEN_STATE

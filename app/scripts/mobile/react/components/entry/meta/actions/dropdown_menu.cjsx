@@ -1,3 +1,4 @@
+DropdownMenuMixin                          = require '../../../../mixins/dropdownMenu'
 EntryMetaActions_DropdownMenu_LinkItem     = require './dropdown_menu/items/link'
 EntryMetaActions_DropdownMenu_EditItem     = require './dropdown_menu/items/edit'
 EntryMetaActions_DropdownMenu_FavoriteItem = require './dropdown_menu/items/favorite'
@@ -8,12 +9,15 @@ EntryMetaActions_DropdownMenu_ReportItem   = require './dropdown_menu/items/repo
 
 EntryMetaActions_DropdownMenu = React.createClass
   displayName: 'EntryMetaActions_DropdownMenu'
+  mixins: [DropdownMenuMixin]
 
   propTypes:
-    entry: PropTypes.object.isRequired
+    entry:   PropTypes.object.isRequired
+    visible: PropTypes.bool.isRequired
 
   render: ->
-    <div className="meta-actions__dropdown-popup">
+    <div className={ @getPopupClasses('meta-actions__dropdown-popup') }
+         style={ @getPopupStyles() }>
       { @renderPopupList() }
     </div>
 

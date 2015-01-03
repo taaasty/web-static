@@ -24,7 +24,9 @@ EntryMetaActions = React.createClass
 
     return <div className={ actionsClasses }>
              <EntryMetaActions_Button onClick={ @toggleOpenState } />
-             <EntryMetaActions_DropdownMenu entry={ @props.entry } />
+             <EntryMetaActions_DropdownMenu
+                 entry={ @props.entry }
+                 visible={ @isOpenState() } />
            </div>
 
   isOpenState: -> @state.currentState is OPEN_STATE

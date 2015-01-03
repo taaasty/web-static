@@ -1,3 +1,4 @@
+DropdownMenuMixin                    = require '../../../../../../mixins/dropdownMenu'
 CommentActionsDropdownMenuLinkItem   = require './dropdown_menu/items/link'
 CommentActionsDropdownMenuEditItem   = require './dropdown_menu/items/edit'
 CommentActionsDropdownMenuDeleteItem = require './dropdown_menu/items/delete'
@@ -6,6 +7,7 @@ CommentActionsDropdownMenuReportItem = require './dropdown_menu/items/report'
 
 CommentActionsDropdownMenu = React.createClass
   displayName: 'CommentActionsDropdownMenu'
+  mixins: [DropdownMenuMixin]
 
   propTypes:
     entry:       PropTypes.object.isRequired
@@ -14,7 +16,8 @@ CommentActionsDropdownMenu = React.createClass
     onEditStart: PropTypes.func.isRequired
 
   render: ->
-    <div className="comment__dropdown-popup">
+    <div className={ @getPopupClasses('comment__dropdown-popup') }
+         style={ @getPopupStyles() }>
       { @renderPopupList() }
     </div>
 
