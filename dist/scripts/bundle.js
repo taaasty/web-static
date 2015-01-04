@@ -15409,8 +15409,13 @@ SettingsEmail = React.createClass({
   },
   getInitialState: function() {
     return {
-      currentState: this.props.email ? SHOW_STATE : ESTABLISH_STATE
+      currentState: this.getCurrentStateFromProps(this.props)
     };
+  },
+  componentWillReceiveProps: function(nextProps) {
+    return this.setState({
+      currentState: this.getCurrentStateFromProps(nextProps)
+    });
   },
   render: function() {
     switch (this.state.currentState) {
@@ -15445,6 +15450,13 @@ SettingsEmail = React.createClass({
     return this.setState({
       currentState: SHOW_STATE
     });
+  },
+  getCurrentStateFromProps: function(props) {
+    if ((props.email != null) || (props.confirmationEmail != null)) {
+      return SHOW_STATE;
+    } else {
+      return ESTABLISH_STATE;
+    }
   },
   handleSubmit: function(newEmail) {
     return this.props.onUpdate({
@@ -15696,7 +15708,7 @@ SettingsEmailShow = React.createClass({
     }, email), confirmation));
   },
   isConfirmation: function() {
-    return (this.props.confirmationEmail != null) && this.props.confirmationEmail !== this.props.email;
+    return this.props.confirmationEmail != null;
   },
   handleEditClick: function(e) {
     e.preventDefault();
