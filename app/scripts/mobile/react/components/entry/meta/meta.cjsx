@@ -2,7 +2,7 @@ EntryMetaVoting  = require './voting'
 EntryMetaActions = require './actions'
 { PropTypes } = React
 
-module.exports = React.createClass
+EntryMeta = React.createClass
   displayName: 'EntryMeta'
 
   propTypes:
@@ -10,9 +10,9 @@ module.exports = React.createClass
 
   render: ->
     <div className="post__meta">
+      <EntryMetaActions entry={ @props.entry } />
       { @renderVoting() }
       <div className="meta-comments">{ @props.entry.comments_count }</div>
-      <EntryMetaActions entry={ @props.entry } />
     </div>
 
   renderVoting: ->
@@ -20,3 +20,5 @@ module.exports = React.createClass
       <EntryMetaVoting
           rating={ @props.entry.rating }
           entryId={ @props.entry.id } />
+
+module.exports = EntryMeta

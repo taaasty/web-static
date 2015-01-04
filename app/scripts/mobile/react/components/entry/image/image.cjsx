@@ -18,7 +18,7 @@ module.exports = React.createClass
           imageAttachments={ @props.entry.image_attachments } />
       <EntryMeta entry={ @props.entry } />
       <EntryComments
-          entryUrl={ @props.entry.entry_url }
+          entry={ @props.entry }
           commentsInfo={ @props.entry.comments_info }
           user={ @props.user } />
     </div>

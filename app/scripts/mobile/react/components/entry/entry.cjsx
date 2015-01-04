@@ -1,8 +1,9 @@
-TextEntry    = require './text/text'
-ImageEntry   = require './image/image'
-VideoEntry   = require './video/video'
-QuoteEntry   = require './quote/quote'
-UnknownEntry = require './unknown/unknown'
+CurrentUserMixin = require '../../mixins/currentUser'
+TextEntry        = require './text/text'
+ImageEntry       = require './image/image'
+VideoEntry       = require './video/video'
+QuoteEntry       = require './quote/quote'
+UnknownEntry     = require './unknown/unknown'
 { PropTypes } = React
 
 TEXT_TYPE  = 'text'
@@ -12,10 +13,10 @@ QUOTE_TYPE = 'quote'
 
 Entry = React.createClass
   displayName: 'Entry'
+  mixins: [CurrentUserMixin]
 
   propTypes:
     entry: PropTypes.object.isRequired
-    user:  PropTypes.object
 
   render: ->
     Entry = switch @props.entry.type
@@ -26,6 +27,6 @@ Entry = React.createClass
       else UnknownEntry
 
     return <Entry entry={ @props.entry }
-                  user={ @props.user } />
+                  user={ @state.user } />
 
 module.exports = Entry

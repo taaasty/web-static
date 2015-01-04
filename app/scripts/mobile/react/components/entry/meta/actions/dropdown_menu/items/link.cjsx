@@ -3,8 +3,8 @@
 #TODO: i18n
 TITLE = 'Ссылка на запись'
 
-module.exports = React.createClass
-  displayName: 'EntryMetaActions_DropdownMenuLinkItem'
+EntryMetaActions_DropdownMenu_LinkItem = React.createClass
+  displayName: 'EntryMetaActions_DropdownMenu_LinkItem'
 
   propTypes:
     entryUrl: PropTypes.string.isRequired
@@ -17,3 +17,5 @@ module.exports = React.createClass
         <span>{ TITLE }</span>
       </a>
     </li>
+
+module.exports = EntryMetaActions_DropdownMenu_LinkItem

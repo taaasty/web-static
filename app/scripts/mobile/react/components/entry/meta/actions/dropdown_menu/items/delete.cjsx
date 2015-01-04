@@ -5,8 +5,8 @@ EntryViewActions = require '../../../../../../actions/view/entry'
 TITLE           = 'Удалить'
 CONFIRM_MESSAGE = 'Вы действительно хотите удалить запись?\nЕё нельзя будет восстановить.'
 
-module.exports = React.createClass
-  displayName: 'EntryMetaActions_DropdownMenuDeleteItem'
+EntryMetaActions_DropdownMenu_DeleteItem = React.createClass
+  displayName: 'EntryMetaActions_DropdownMenu_DeleteItem'
 
   propTypes:
     entryId: PropTypes.number.isRequired
@@ -24,7 +24,7 @@ module.exports = React.createClass
     #TODO: Redirect after success delete
     EntryViewActions.delete @props.entryId
 
-  handleClick: (e) ->
-    e.preventDefault()
-    e.stopPropagation()
+  handleClick: ->
     @delete() if confirm CONFIRM_MESSAGE
+
+module.exports = EntryMetaActions_DropdownMenu_DeleteItem

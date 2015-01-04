@@ -5,8 +5,8 @@ EntryViewActions = require '../../../../../../actions/view/entry'
 START_WATCH_TITLE = 'Подписаться на комментарии'
 STOP_WATCH_TITLE  = 'Отписаться от комментариев'
 
-module.exports = React.createClass
-  displayName: 'EntryMetaActions_DropdownMenuWatchItem'
+EntryMetaActions_DropdownMenu_WatchItem = React.createClass
+  displayName: 'EntryMetaActions_DropdownMenu_WatchItem'
 
   propTypes:
     entryId:  PropTypes.number.isRequired
@@ -37,7 +37,7 @@ module.exports = React.createClass
     EntryViewActions.stopWatch @props.entryId
       .then => @setState(watching: false)
 
-  handleClick: (e) ->
-    e.preventDefault()
-    e.stopPropagation()
+  handleClick: ->
     if @isWatching() then @stopWatch() else @startWatch()
+
+module.exports = EntryMetaActions_DropdownMenu_WatchItem

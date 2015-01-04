@@ -3,7 +3,7 @@ FeedToolbarList = require './feed/list'
 ToolbarMixin    = require './mixins/toolbar'
 { PropTypes } = React
 
-module.exports = React.createClass
+FeedToolbar = React.createClass
   displayName: 'FeedToolbar'
   mixins: [ToolbarMixin]
 
@@ -32,3 +32,5 @@ module.exports = React.createClass
     html.classList.toggle 'feed-toolbar-open'
 
     if @isOpenState() then @activateCloseState() else @activateOpenState()
+
+module.exports = FeedToolbar

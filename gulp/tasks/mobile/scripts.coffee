@@ -15,7 +15,6 @@ gulp.task 'mobileScripts', ->
     .require './scripts/shared/libs/react_ujs',              expose: 'reactUjs'
     .require './bower_components/eventEmitter/EventEmitter', expose: 'eventEmitter'
     .require './bower_components/reqwest/reqwest',           expose: 'reqwest'
-    .require './bower_components/underscore/underscore',     expose: 'underscore'
 
   bundle = ->
     bundleLogger.start config.outputName

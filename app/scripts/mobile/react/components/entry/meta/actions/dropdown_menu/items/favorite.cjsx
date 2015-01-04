@@ -6,8 +6,8 @@ EntryViewActions = require '../../../../../../actions/view/entry'
 ADD_TO_FAVORITES_TITLE      = 'Добавить в избранное'
 REMOVE_FROM_FAVORITES_TITLE = 'Удалить из избранного'
 
-module.exports = React.createClass
-  displayName: 'EntryMetaActions_DropdownMenuFavoriteItem'
+EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass
+  displayName: 'EntryMetaActions_DropdownMenu_FavoriteItem'
 
   propTypes:
     favorited: PropTypes.bool.isRequired
@@ -43,7 +43,7 @@ module.exports = React.createClass
     EntryViewActions.removeFromFavorites @props.entryId
       .then => @setState(favorited: false)
 
-  handleClick: (e) ->
-    e.preventDefault()
-    e.stopPropagation()
+  handleClick: ->
     if @isFavorited() then @removeFromFavorites() else @addToFavorites()
+
+module.exports = EntryMetaActions_DropdownMenu_FavoriteItem

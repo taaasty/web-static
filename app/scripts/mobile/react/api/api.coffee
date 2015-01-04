@@ -12,10 +12,30 @@ abortPendingRequests = (key) ->
 userToken = ->
   CurrentUserStore.getAccessToken()
 
+getRequest = ({url, data}) ->
+  reqwest
+    url: url
+    method: 'GET'
+    data: data
+    timeout: TIMEOUT
+    headers:
+      'X-User-Token':     userToken()
+      'X-Requested-With': 'XMLHttpRequest'
+
 postRequest = ({url, data}) ->
   reqwest
     url: url
     method: 'POST'
+    data: data
+    timeout: TIMEOUT
+    headers:
+      'X-User-Token':     userToken()
+      'X-Requested-With': 'XMLHttpRequest'
+
+putRequest = ({url, data}) ->
+  reqwest
+    url: url
+    method: 'PUT'
     data: data
     timeout: TIMEOUT
     headers:
@@ -123,5 +143,48 @@ Api =
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest {url}
+
+    loadComments: (entryId, toCommentId, limit) ->
+      url  = ApiRoutes.comments_url()
+      key  = Constants.api.LOAD_COMMENTS
+      data =
+        entry_id:      entryId
+        to_comment_id: toCommentId
+        limit:         limit
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest {url, data}
+
+    deleteComment: (commentId) ->
+      url = ApiRoutes.comments_edit_delete_url commentId
+      key = Constants.api.DELETE_COMMENT
+
+      abortPendingRequests key
+      _pendingRequests[key] = deleteRequest {url}
+
+    reportComment: (commentId) ->
+      url = ApiRoutes.comments_report_url commentId
+      key = Constants.api.REPORT_COMMENT
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest {url}
+
+    createComment: (entryId, text) ->
+      url  = ApiRoutes.comments_url()
+      key  = Constants.api.CREATE_COMMENT
+      data =
+        entry_id: entryId
+        text:     text
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest {url, data}
+
+    editComment: (commentId, text) ->
+      url  = ApiRoutes.comments_edit_delete_url commentId
+      key  = Constants.api.EDIT_COMMENT
+      data = {text}
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest {url, data}
 
 module.exports = Api

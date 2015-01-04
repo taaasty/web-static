@@ -1,20 +1,26 @@
-EntryComments_CommentListItem = require './comment_list/item'
+CommentManager = require './comment_list/comment_manager'
 { PropTypes } = React
 
-module.exports = React.createClass
-  displayName: 'EntryComments_CommentList'
+CommentList = React.createClass
+  displayName: 'CommentList'
 
   propTypes:
-    comments: PropTypes.array.isRequired
-    entryUrl: PropTypes.string.isRequired
+    comments:        PropTypes.array.isRequired
+    entry:           PropTypes.object.isRequired
+    onCommentDelete: PropTypes.func.isRequired
+    onCommentEdit:   PropTypes.func.isRequired
 
   render: ->
     commentList = @props.comments.map (comment) =>
-      <EntryComments_CommentListItem
+      <CommentManager
           comment={ comment }
-          entryUrl={ @props.entryUrl }
+          entry={ @props.entry }
+          onDelete={ @props.onCommentDelete.bind(null, comment) }
+          onEdit={ @props.onCommentEdit }
           key={ comment.id } />
 
     return <div className="comments__list">
              { commentList }
            </div>
+
+module.exports = CommentList

@@ -1,10 +1,10 @@
-CurrentUserStore = require '../stores/current_user'
-FeedToolbar      = require '../components/toolbars/feed'
-UserToolbar      = require '../components/toolbars/user'
-Hero             = require '../components/hero/hero'
-Entry            = require '../components/entry/entry'
-Pagination       = require '../components/pagination/pagination'
-PageMixin        = require './mixins/page'
+CurrentUserStore   = require '../stores/current_user'
+FeedToolbarManager = require '../components/toolbars/feedManager'
+UserToolbarManager = require '../components/toolbars/userManager'
+Hero               = require '../components/hero/hero'
+Entry              = require '../components/entry/entry'
+Pagination         = require '../components/pagination/pagination'
+PageMixin          = require './mixins/page'
 { PropTypes } = React
 
 EntryPage = React.createClass
@@ -24,15 +24,14 @@ EntryPage = React.createClass
 
   render: ->
     <div>
-      <FeedToolbar user={ @props.currentUser } />
-      <UserToolbar user={ @props.currentUser } />
+      <FeedToolbarManager />
+      <UserToolbarManager />
       <div className="layout">
         <div className="layout__header">
           <Hero tlog={ @props.tlog } />
         </div>
         <div className="layout__body">
-          <Entry entry={ @props.entry }
-                 user={ @props.currentUser } />
+          <Entry entry={ @props.entry } />
           <Pagination tlogUrl={ @props.tlog.tlog_url } />
         </div>
       </div>

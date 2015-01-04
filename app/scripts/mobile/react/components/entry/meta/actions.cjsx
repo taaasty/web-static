@@ -1,12 +1,15 @@
 cx                            = require 'react/lib/cx'
+ClickOutsideMixin             = require '../../../mixins/clickOutside'
+EntryMetaActions_Button       = require './actions/buttons/button'
 EntryMetaActions_DropdownMenu = require './actions/dropdown_menu'
 { PropTypes } = React
 
 OPEN_STATE  = 'open'
 CLOSE_STATE = 'close'
 
-module.exports = React.createClass
+EntryMetaActions = React.createClass
   displayName: 'EntryMetaActions'
+  mixins: [ClickOutsideMixin]
 
   propTypes:
     entry: PropTypes.object.isRequired
@@ -19,9 +22,11 @@ module.exports = React.createClass
       'meta-actions': true
       '__open': @isOpenState()
 
-    return <div className={ actionsClasses }
-                onClick={ @toggleOpenState }>
-             <EntryMetaActions_DropdownMenu entry={ @props.entry } />
+    return <div className={ actionsClasses }>
+             <EntryMetaActions_Button onClick={ @toggleOpenState } />
+             <EntryMetaActions_DropdownMenu
+                 entry={ @props.entry }
+                 visible={ @isOpenState() } />
            </div>
 
   isOpenState: -> @state.currentState is OPEN_STATE
@@ -31,3 +36,5 @@ module.exports = React.createClass
 
   toggleOpenState: ->
     if @isOpenState() then @activateCloseState() else @activateOpenState()
+
+module.exports = EntryMetaActions

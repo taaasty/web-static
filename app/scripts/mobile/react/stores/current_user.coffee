@@ -1,4 +1,4 @@
-_         = require 'underscore'
+assign    = require 'react/lib/Object.assign'
 BaseStore = require './_base'
 
 _currentUser = null
@@ -14,7 +14,7 @@ extendByMockData = (user) ->
 
   user
 
-CurrentUserStore = _.extend new BaseStore(),
+window.CurrentUserStore = assign new BaseStore(),
 
   initialize: (user) ->
     if user?
@@ -26,7 +26,7 @@ CurrentUserStore = _.extend new BaseStore(),
       console.debug? 'Без пользователя'
 
   isLogged: ->
-    currentUser?
+    _currentUser?
 
   getUser: ->
     _currentUser

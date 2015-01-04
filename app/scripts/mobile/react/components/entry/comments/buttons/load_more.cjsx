@@ -1,16 +1,16 @@
-{ PropTypes } = React
+{ PropTypes }  = React
 
-module.exports = React.createClass
-  displayName: 'EntryComments_LoadMoreButton'
+CommentsLoadMoreButton = React.createClass
+  displayName: 'CommentsLoadMoreButton'
 
   propTypes:
-    totalCount:  PropTypes.number.isRequired
-    loadedCount: PropTypes.number
-    limit:       PropTypes.number
+    title:   PropTypes.string.isRequired
+    onClick: PropTypes.func.isRequired
 
   render: ->
-    <div className="comments__more">
-      <span className="comments__more-link">
-        Загрузить оставшиеся 21 комментарий adsf asdf
-      </span>
-    </div>
+    <span className="comments__more-link"
+          onClick={ @props.onClick }>
+      { @props.title }
+    </span>
+
+module.exports = CommentsLoadMoreButton

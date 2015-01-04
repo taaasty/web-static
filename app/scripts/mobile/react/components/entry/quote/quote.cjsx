@@ -17,7 +17,7 @@ QuoteEntry = React.createClass
           source={ @props.entry.source } />
       <EntryMeta entry={ @props.entry } />
       <EntryComments
-          entryUrl={ @props.entry.entry_url }
+          entry={ @props.entry }
           commentsInfo={ @props.entry.comments_info }
           user={ @props.user } />
     </div>

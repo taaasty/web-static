@@ -21990,12 +21990,8 @@ var ThumborService;
 ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
   image_url: function(url, style) {
-    if (TastySettings.env === 'static-development') {
-      return url;
-    } else {
-      url = url.replace(/^.*\/assets\//, '');
-      return this.thumbor_url + ("unsafe/" + style + "/") + url;
-    }
+    url = url.replace(/^.*\/assets\//, '');
+    return this.thumbor_url + ("unsafe/" + style + "/") + url;
   }
 };
 

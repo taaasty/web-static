@@ -3,7 +3,7 @@ UserToolbarList = require './user/list'
 ToolbarMixin    = require './mixins/toolbar'
 { PropTypes } = React
 
-module.exports = React.createClass
+UserToolbar = React.createClass
   displayName: 'UserToolbar'
   mixins: [ToolbarMixin]
 
@@ -32,3 +32,5 @@ module.exports = React.createClass
     html.classList.toggle 'user-toolbar-open'
 
     if @isOpenState() then @activateCloseState() else @activateOpenState()
+
+module.exports = UserToolbar

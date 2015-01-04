@@ -1,7 +1,7 @@
 { PropTypes } = React
 
-module.exports = React.createClass
-  displayName: 'EntryComments_CommentListItem_Date'
+CommentDate = React.createClass
+  displayName: 'CommentDate'
 
   propTypes:
     date:      PropTypes.string.isRequired
@@ -9,15 +9,15 @@ module.exports = React.createClass
     commentId: PropTypes.number.isRequired
 
   render: ->
-    <a href={ @_getCommentUrl() }
+    <a href={ @getCommentUrl() }
        className="comment__date">
-      { @_getFormattedData() }
+      { @getFormattedDate() }
     </a>
 
-  _getCommentUrl: ->
+  getCommentUrl: ->
     @props.entryUrl + '#comment-' + @props.commentId
 
-  _getFormattedData: ->
+  getFormattedDate: ->
     now = moment()
     createdAt = moment @props.date
 
@@ -39,3 +39,5 @@ module.exports = React.createClass
         else
           # Если комментарий оставлен в этом году, то вид: "9 августа"
           createdAt.format 'D MMMM'
+
+module.exports = CommentDate

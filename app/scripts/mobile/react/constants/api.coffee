@@ -1,17 +1,22 @@
-#TODO: React's keyMirror
+keyMirror = require 'react/lib/keyMirror'
 
-ApiConstants =
-  FOLLOW_USER:           'FOLLOW_USER'
-  UNFOLLOW_USER:         'UNFOLLOW_USER'
-  CANCEL_USER:           'CANCEL_USER'
-  IGNORE_USER:           'IGNORE_USER'
-  REPORT_USER:           'REPORT_USER'
-  ADD_TO_FAVORITES:      'ADD_TO_FAVORITES'
-  REMOVE_FROM_FAVORITES: 'REMOVE_FROM_FAVORITES'
-  START_WATCH:           'START_WATCH'
-  STOP_WATCH:            'STOP_WATCH'
-  REPORT:                'REPORT'
-  DELETE:                'DELETE'
-  VOTE:                  'VOTE'
+ApiConstants = keyMirror
+  FOLLOW_USER:           null
+  UNFOLLOW_USER:         null
+  CANCEL_USER:           null
+  IGNORE_USER:           null
+  REPORT_USER:           null
+  ADD_TO_FAVORITES:      null
+  REMOVE_FROM_FAVORITES: null
+  START_WATCH:           null
+  STOP_WATCH:            null
+  REPORT:                null
+  DELETE:                null
+  VOTE:                  null
+  LOAD_COMMENTS:         null
+  DELETE_COMMENT:        null
+  REPORT_COMMENT:        null
+  CREATE_COMMENT:        null
+  EDIT_COMMENT:          null
 
 module.exports = ApiConstants

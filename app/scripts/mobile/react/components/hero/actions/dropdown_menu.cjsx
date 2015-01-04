@@ -1,13 +1,15 @@
-cx                             = require 'react/lib/cx'
-ActionMenuButton               = require '../../buttons/user/action_menu'
-HeroActions_DropdownMenu_Popup = require './dropdown_menu/popup'
+cx                              = require 'react/lib/cx'
+ClickOutsideMixin               = require '../../../mixins/clickOutside'
+HeroActions_DropdownMenu_Button = require './dropdown_menu/buttons/button'
+HeroActions_DropdownMenu_Popup  = require './dropdown_menu/popup'
 { PropTypes } = React
 
 CLOSE_STATE = 'close'
 OPEN_STATE  = 'open'
 
-module.exports = React.createClass
+HeroActions_DropdownMenu = React.createClass
   displayName: 'HeroActions_DropdownMenu'
+  mixins: [ClickOutsideMixin]
 
   propTypes:
     userId: PropTypes.number.isRequired
@@ -22,7 +24,7 @@ module.exports = React.createClass
       '__open': @isOpenState()
 
     return <div className={ menuClasses }>
-             <ActionMenuButton onClick={ @toggleOpenState } />
+             <HeroActions_DropdownMenu_Button onClick={ @toggleOpenState } />
              <HeroActions_DropdownMenu_Popup
                  arrangement="top"
                  userId={ @props.userId }
@@ -37,3 +39,5 @@ module.exports = React.createClass
 
   toggleOpenState: ->
     if @isOpenState() then @activateCloseState() else @activateOpenState()
+
+module.exports = HeroActions_DropdownMenu

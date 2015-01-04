@@ -1,9 +1,10 @@
-BrowserHelpers  = require '../../../../shared/helpers/browser'
-HeroAvatar      = require './avatar'
-HeroHead        = require './head'
-HeroActions     = require './actions'
-HeroStats       = require './stats'
-HeroCloseButton = require './buttons/close'
+BrowserHelpers   = require '../../../../shared/helpers/browser'
+HeroAvatar       = require './avatar'
+HeroHead         = require './head'
+HeroActions      = require './actions'
+HeroStats        = require './stats'
+HeroCloseButton  = require './buttons/close'
+CurrentUserMixin = require '../../mixins/currentUser'
 { PropTypes } = React
 
 CLOSE_STATE = 'close'
@@ -13,8 +14,9 @@ _screenOrientation = null
 _initialHeroHeight = null
 _openHeroHeight    = null
 
-module.exports = React.createClass
+Hero = React.createClass
   displayName: 'Hero'
+  mixins: [CurrentUserMixin]
 
   propTypes:
     tlog: PropTypes.object.isRequired
@@ -31,23 +33,25 @@ module.exports = React.createClass
     window.removeEventListener 'resize', @onResize
 
   render: ->
-    <div style={ @_getHeroStyles() }
+    <div style={ @getHeroStyles() }
          className="hero">
       <HeroCloseButton onClick={ @close } />
       <div className="hero__overlay" />
       <div className="hero__gradient" />
       <div className="hero__content">
         <HeroAvatar
-            user={ @props.tlog.author }
+            user={ @state.user }
+            author={ @props.tlog.author }
             status={ @props.tlog.my_relationship }
             onClick={ @handleAvatarClick } />
-        <HeroHead user={ @props.tlog.author } />
+        <HeroHead author={ @props.tlog.author } />
         <HeroActions
-            user={ @props.tlog.author }
+            user={ @state.user }
+            author={ @props.tlog.author }
             status={ @props.tlog.my_relationship } />
       </div>
       <HeroStats
-          user={ @props.tlog.author }
+          author={ @props.tlog.author }
           stats={ @props.tlog.stats } />
     </div>
 
@@ -75,7 +79,7 @@ module.exports = React.createClass
 
     @activateCloseState()
 
-  _getHeroStyles: ->
+  getHeroStyles: ->
     #TODO: Get optimized background through ThumborService
     backgroundUrl = @props.tlog.design?.background_url
     height = if @isOpenState() then _openHeroHeight else _initialHeroHeight
@@ -96,3 +100,5 @@ module.exports = React.createClass
 
       document.body.style.height = _openHeroHeight + 'px'
       @forceUpdate()
+
+module.exports = Hero

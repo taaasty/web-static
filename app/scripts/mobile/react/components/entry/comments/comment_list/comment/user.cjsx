@@ -1,8 +1,8 @@
 UserAvatar = require '../../../../common/avatar/user'
 { PropTypes } = React
 
-module.exports = React.createClass
-  displayName: 'EntryComments_CommentListItem_User'
+CommentUser = React.createClass
+  displayName: 'CommentUser'
 
   propTypes:
     user: PropTypes.object.isRequired
@@ -21,3 +21,5 @@ module.exports = React.createClass
         { @props.user.slug }
       </span>
     </a>
+
+module.exports = CommentUser

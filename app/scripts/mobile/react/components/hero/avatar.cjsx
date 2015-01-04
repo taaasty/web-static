@@ -9,8 +9,9 @@ module.exports = React.createClass
   displayName: 'HeroAvatar'
 
   propTypes:
-    user:    PropTypes.object.isRequired
-    status:  PropTypes.string.isRequired
+    user:    PropTypes.object
+    author:  PropTypes.object.isRequired
+    status:  PropTypes.string
     onClick: PropTypes.func.isRequired
 
   render: ->
@@ -18,15 +19,18 @@ module.exports = React.createClass
          onClick={ @props.onClick }>
       { @renderFollowStatus() }
       <UserAvatar
-          user={ @props.user }
+          user={ @props.author }
           size={ HERO_AVATAR_SIZE } />
     </div>
 
   renderFollowStatus: ->
-    if !@isCurrentUser()
+    unless @isCurrentUser() || !@isLogged()
       <FollowStatus
-          userId={ @props.user.id }
+          userId={ @props.author.id }
           status={ @props.status } />
 
+  isLogged: ->
+    @props.user?
+
   isCurrentUser: ->
-    !@props.status
+    @props.user?.id == @props.author.id

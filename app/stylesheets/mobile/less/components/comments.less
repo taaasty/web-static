@@ -14,6 +14,7 @@
 .comments__more-link {
   &:extend(.link-design-default all, .link-design all);
   display: block;
+  cursor: pointer;
 
   &:active {
     &:extend(.link-design-default-active all);
@@ -22,6 +23,10 @@
 
 .comments__list {
   margin-bottom: 10px;
+}
+
+.comments__loader {
+  text-align: center;
 }
 
 // Comment
@@ -67,7 +72,6 @@
 }
 
 .comment__date {
-  white-space: nowrap;
   font-size: @font-size-xs;
 
   &:before {
@@ -90,6 +94,7 @@
 
 .comment__actions-button {
   &:extend(.link-design-default all, .link-design all);
+  cursor: pointer;
   width: auto;
   height: auto;
   margin: 0;
@@ -142,6 +147,17 @@
 
 .comment-form__submit {
   padding: (@indent-base + 1) @indent-base @indent-base;
+  position: relative;
+  float: right;
+  border: none;
+  background: @white;
+  font: inherit;
+  line-height: @comments-line-height;
+  color: #22d877;
+}
+
+.comment-form__cancel {
+  padding: (@indent-base + 1) @indent-base @indent-base 0;
   position: relative;
   float: right;
   border: none;
