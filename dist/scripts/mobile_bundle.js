@@ -3425,7 +3425,7 @@ module.exports = RelationshipViewActions;
 
 
 },{"../../api/api":10,"../../controllers/notify":94,"../server/relationship":7}],10:[function(require,module,exports){
-var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, deleteRequest, getRequest, postRequest, putRequest, userToken, _pendingRequests;
+var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _pendingRequests;
 
 Constants = require('../constants/constants');
 
@@ -3446,64 +3446,39 @@ userToken = function() {
   return CurrentUserStore.getAccessToken();
 };
 
-getRequest = function(_arg) {
-  var data, url;
-  url = _arg.url, data = _arg.data;
+request = function(method, url, data) {
+  var headers;
+  headers = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-Tasty-Client-Name': 'web_mobile',
+    'X-Tasty-Client-Version': TastySettings.version
+  };
+  if (userToken()) {
+    headers['X-User-Token'] = userToken();
+  }
   return reqwest({
     url: url,
-    method: 'GET',
+    method: method,
     data: data,
     timeout: TIMEOUT,
-    headers: {
-      'X-User-Token': userToken(),
-      'X-Requested-With': 'XMLHttpRequest'
-    }
+    headers: headers
   });
 };
 
-postRequest = function(_arg) {
-  var data, url;
-  url = _arg.url, data = _arg.data;
-  return reqwest({
-    url: url,
-    method: 'POST',
-    data: data,
-    timeout: TIMEOUT,
-    headers: {
-      'X-User-Token': userToken(),
-      'X-Requested-With': 'XMLHttpRequest'
-    }
-  });
+getRequest = function(url, data) {
+  return request('GET', url, data);
 };
 
-putRequest = function(_arg) {
-  var data, url;
-  url = _arg.url, data = _arg.data;
-  return reqwest({
-    url: url,
-    method: 'PUT',
-    data: data,
-    timeout: TIMEOUT,
-    headers: {
-      'X-User-Token': userToken(),
-      'X-Requested-With': 'XMLHttpRequest'
-    }
-  });
+postRequest = function(url, data) {
+  return request('POST', url, data);
 };
 
-deleteRequest = function(_arg) {
-  var data, url;
-  url = _arg.url, data = _arg.data;
-  return reqwest({
-    url: url,
-    method: 'DELETE',
-    data: data,
-    timeout: TIMEOUT,
-    headers: {
-      'X-User-Token': userToken(),
-      'X-Requested-With': 'XMLHttpRequest'
-    }
-  });
+putRequest = function(url, data) {
+  return request('PUT', url, data);
+};
+
+deleteRequest = function(url, data) {
+  return request('DELETE', url, data);
 };
 
 Api = {
@@ -3513,45 +3488,35 @@ Api = {
       url = ApiRoutes.change_my_relationship_url(userId, 'follow');
       key = Constants.api.FOLLOW_USER;
       abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest({
-        url: url
-      });
+      return _pendingRequests[key] = postRequest(url);
     },
     unfollow: function(userId) {
       var key, url;
       url = ApiRoutes.change_my_relationship_url(userId, 'unfollow');
       key = Constants.api.UNFOLLOW_USER;
       abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest({
-        url: url
-      });
+      return _pendingRequests[key] = postRequest(url);
     },
     cancel: function(userId) {
       var key, url;
       url = ApiRoutes.change_my_relationship_url(userId, 'cancel');
       key = Constants.api.CANCEL_USER;
       abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest({
-        url: url
-      });
+      return _pendingRequests[key] = postRequest(url);
     },
     ignore: function(userId) {
       var key, url;
       url = ApiRoutes.change_my_relationship_url(userId, 'ignore');
       key = Constants.api.IGNORE_USER;
       abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest({
-        url: url
-      });
+      return _pendingRequests[key] = postRequest(url);
     },
     report: function(userId) {
       var key, url;
       url = ApiRoutes.tlog_report(userId);
       key = Constants.api.REPORT_USER;
       abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest({
-        url: url
-      });
+      return _pendingRequests[key] = postRequest(url);
     }
   },
   entry: {
@@ -3563,10 +3528,7 @@ Api = {
         entry_id: entryId
       };
       abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest({
-        url: url,
-        data: data
-      });
+      return _pendingRequests[key] = postRequest(url, data);
     },
     removeFromFavorites: function(entryId) {
       var data, key, url;
@@ -3576,10 +3538,7 @@ Api = {
         entry_id: entryId
       };
       abortPendingRequests(key);
-      return _pendingRequests[key] = deleteRequest({
-        url: url,
-        data: data
-      });
+      return _pendingRequests[key] = deleteRequest(url, data);
     },
     startWatch: function(entryId) {
       var data, key, url;
@@ -3589,10 +3548,7 @@ Api = {
         entry_id: entryId
       };
       abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest({
-        url: url,
-        data: data
-      });
+      return _pendingRequests[key] = postRequest(url, data);
     },
     stopWatch: function(entryId) {
       var data, key, url;
@@ -3602,37 +3558,28 @@ Api = {
         entry_id: entryId
       };
       abortPendingRequests(key);
-      return _pendingRequests[key] = deleteRequest({
-        url: url,
-        data: data
-      });
+      return _pendingRequests[key] = deleteRequest(url, data);
     },
     report: function(entryId) {
       var key, url;
       url = ApiRoutes.report_url(entryId);
       key = Constants.api.REPORT;
       abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest({
-        url: url
-      });
+      return _pendingRequests[key] = postRequest(url);
     },
     "delete": function(entryId) {
       var key, url;
       url = ApiRoutes.entry_url(entryId);
       key = Constants.api.DELETE;
       abortPendingRequests(key);
-      return _pendingRequests[key] = deleteRequest({
-        url: url
-      });
+      return _pendingRequests[key] = deleteRequest(url);
     },
     vote: function(entryId) {
       var key, url;
       url = ApiRoutes.votes_url(entryId);
       key = Constants.api.VOTE;
       abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest({
-        url: url
-      });
+      return _pendingRequests[key] = postRequest(url);
     },
     loadComments: function(entryId, toCommentId, limit) {
       var data, key, url;
@@ -3644,28 +3591,21 @@ Api = {
         limit: limit
       };
       abortPendingRequests(key);
-      return _pendingRequests[key] = getRequest({
-        url: url,
-        data: data
-      });
+      return _pendingRequests[key] = getRequest(url, data);
     },
     deleteComment: function(commentId) {
       var key, url;
       url = ApiRoutes.comments_edit_delete_url(commentId);
       key = Constants.api.DELETE_COMMENT;
       abortPendingRequests(key);
-      return _pendingRequests[key] = deleteRequest({
-        url: url
-      });
+      return _pendingRequests[key] = deleteRequest(url);
     },
     reportComment: function(commentId) {
       var key, url;
       url = ApiRoutes.comments_report_url(commentId);
       key = Constants.api.REPORT_COMMENT;
       abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest({
-        url: url
-      });
+      return _pendingRequests[key] = postRequest(url);
     },
     createComment: function(entryId, text) {
       var data, key, url;
@@ -3676,10 +3616,7 @@ Api = {
         text: text
       };
       abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest({
-        url: url,
-        data: data
-      });
+      return _pendingRequests[key] = postRequest(url, data);
     },
     editComment: function(commentId, text) {
       var data, key, url;
@@ -3689,10 +3626,7 @@ Api = {
         text: text
       };
       abortPendingRequests(key);
-      return _pendingRequests[key] = putRequest({
-        url: url,
-        data: data
-      });
+      return _pendingRequests[key] = putRequest(url, data);
     }
   }
 };
@@ -4285,8 +4219,8 @@ BUTTON_TITLE = 'Изм';
 FIELD_PLACEHOLDER = 'Отредактировать комментарий';
 
 CommentEditForm = React.createClass({
-  mixins: [ComponentMixin],
   displayName: 'CommentEditForm',
+  mixins: [ComponentMixin],
   propTypes: {
     entryId: PropTypes.number.isRequired,
     comment: PropTypes.object.isRequired,
@@ -5023,18 +4957,23 @@ CommentsLoadMore = React.createClass({
     onClick: PropTypes.func.isRequired
   },
   render: function() {
-    var content;
-    content = this.props.loading ? React.createElement("div", {
-      "className": "comments__loader"
-    }, React.createElement(Spinner, {
-      "size": 14.
-    })) : React.createElement(CommentsLoadMoreButton, {
-      "title": this.getTitle(),
-      "onClick": this.props.onClick
-    });
     return React.createElement("div", {
       "className": "comments__more"
-    }, content);
+    }, this.renderContent());
+  },
+  renderContent: function() {
+    if (this.props.loading) {
+      return React.createElement("div", {
+        "className": "comments__loader"
+      }, React.createElement(Spinner, {
+        "size": 14.
+      }));
+    } else {
+      return React.createElement(CommentsLoadMoreButton, {
+        "title": this.getTitle(),
+        "onClick": this.props.onClick
+      });
+    }
   },
   getTitle: function() {
     var possibleCount, remainingCount, remainingDeclension;
@@ -7976,7 +7915,7 @@ module.exports = BaseStore;
 
 
 },{}],103:[function(require,module,exports){
-var AppDispatcher, BaseStore, Constants, assign, deleteComment, initializeComments, pushComment, unshiftComments, updateComment, _comments;
+var AppDispatcher, BaseStore, CommentsStore, Constants, assign, deleteComment, initializeComments, pushComment, unshiftComments, updateComment, _comments;
 
 assign = require('react/lib/Object.assign');
 
@@ -8046,7 +7985,7 @@ deleteComment = function(entryId, commentId) {
   };
 };
 
-window.CommentsStore = assign(new BaseStore(), {
+CommentsStore = assign(new BaseStore(), {
   getComments: function(entryId) {
     var _ref;
     return (_ref = _comments[entryId]) != null ? _ref.items : void 0;
@@ -8089,7 +8028,7 @@ CommentsStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 },{"../constants/constants":91,"../dispatcher/dispatcher":95,"./_base":102,"react/lib/Object.assign":142}],104:[function(require,module,exports){
-var BaseStore, assign, extendByMockData, _currentUser;
+var BaseStore, CurrentUserStore, assign, extendByMockData, _currentUser;
 
 assign = require('react/lib/Object.assign');
 
@@ -8109,7 +8048,7 @@ extendByMockData = function(user) {
   return user;
 };
 
-window.CurrentUserStore = assign(new BaseStore(), {
+CurrentUserStore = assign(new BaseStore(), {
   initialize: function(user) {
     if (user != null) {
       user = extendByMockData(user);
@@ -8126,7 +8065,7 @@ window.CurrentUserStore = assign(new BaseStore(), {
     return _currentUser;
   },
   getAccessToken: function() {
-    return _currentUser.api_key.access_token;
+    return _currentUser != null ? _currentUser.api_key.access_token : void 0;
   }
 });
 

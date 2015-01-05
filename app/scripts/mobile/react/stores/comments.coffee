@@ -43,7 +43,7 @@ deleteComment = (entryId, commentId) ->
     items: newComments
     totalCount: newTotalCount
 
-window.CommentsStore = assign new BaseStore(),
+CommentsStore = assign new BaseStore(),
 
   getComments: (entryId) ->
     _comments[entryId]?.items

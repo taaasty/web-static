@@ -16,7 +16,7 @@ extendByMockData = (user) ->
 
   user
 
-window.CurrentUserStore = assign new BaseStore(),
+CurrentUserStore = assign new BaseStore(),
 
   initialize: (user) ->
     if user?
@@ -34,6 +34,6 @@ window.CurrentUserStore = assign new BaseStore(),
     _currentUser
 
   getAccessToken: ->
-    _currentUser.api_key.access_token
+    _currentUser?.api_key.access_token
 
 module.exports = CurrentUserStore

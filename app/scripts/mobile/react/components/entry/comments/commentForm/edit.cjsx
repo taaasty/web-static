@@ -11,8 +11,8 @@ BUTTON_TITLE      = 'Изм'
 FIELD_PLACEHOLDER = 'Отредактировать комментарий'
 
 CommentEditForm = React.createClass
-  mixins: [ComponentMixin]
   displayName: 'CommentEditForm'
+  mixins: [ComponentMixin]
 
   propTypes:
     entryId:      PropTypes.number.isRequired

@@ -14,18 +14,19 @@ CommentsLoadMore = React.createClass
     onClick:     PropTypes.func.isRequired
 
   render: ->
-    content = if @props.loading
+    <div className="comments__more">
+      { @renderContent() }
+    </div>
+
+  renderContent: ->
+    if @props.loading
       <div className="comments__loader">
         <Spinner size={ 14 } />
       </div>
     else
-       <CommentsLoadMoreButton
-           title={ @getTitle() }
-           onClick={ @props.onClick } />
-
-    <div className="comments__more">
-      { content }
-    </div>
+      <CommentsLoadMoreButton
+          title={ @getTitle() }
+          onClick={ @props.onClick } />
 
   getTitle: ->
     remainingCount      = @props.totalCount - @props.loadedCount
