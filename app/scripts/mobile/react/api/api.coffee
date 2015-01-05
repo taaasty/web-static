@@ -1,5 +1,5 @@
 Constants        = require '../constants/constants'
-CurrentUserStore = require '../stores/current_user'
+CurrentUserStore = require '../stores/currentUser'
 
 TIMEOUT = 10000
 _pendingRequests = {}

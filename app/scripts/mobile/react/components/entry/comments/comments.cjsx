@@ -1,8 +1,11 @@
+EntryViewActions  = require '../../../actions/view/entry'
+CommentsStore     = require '../../../stores/comments'
 CommentsMixin     = require './mixins/comments'
 ComponentMixin    = require '../../../mixins/component'
-CommentList       = require './comment_list'
-CommentCreateForm = require './comment_form/create'
-CommentsLoadMore  = require './load_more'
+ConnectStoreMixin = require '../../../mixins/connectStore'
+CommentList       = require './commentList'
+CommentCreateForm = require './commentForm/create'
+CommentsLoadMore  = require './loadMore'
 { PropTypes } = React
 
 LOAD_MORE_COMMENTS_LIMIT = 50
@@ -12,7 +15,7 @@ ERROR_STATE   = 'error'
 
 EntryComments = React.createClass
   displayName: 'EntryComments'
-  mixins: [CommentsMixin, ComponentMixin]
+  mixins: [ConnectStoreMixin(CommentsStore), CommentsMixin, ComponentMixin]
 
   propTypes:
     entry:        PropTypes.object.isRequired
@@ -25,8 +28,13 @@ EntryComments = React.createClass
 
   getInitialState: ->
     currentState: SHOW_STATE
-    comments:     @props.commentsInfo.comments
-    totalCount:   @props.commentsInfo.total_count
+
+  componentWillMount: ->
+    EntryViewActions.initializeComments(
+      @props.entry.id
+      @props.commentsInfo.comments
+      @props.commentsInfo.total_count
+    )
 
   render: ->
     <div className="post__comments">
@@ -50,20 +58,22 @@ EntryComments = React.createClass
     if @state.comments.length
       <CommentList
           comments={ @state.comments }
-          entry={ @props.entry }
-          onCommentDelete={ @removeComment }
-          onCommentEdit={ @editComment } />
+          entry={ @props.entry } />
 
   renderCommentForm: ->
     if @props.user?
-      <CommentCreateForm
-          entryId={ @props.entry.id }
-          onCommentAdd={ @addComment } />
+      <CommentCreateForm entryId={ @props.entry.id } />
 
   isLoadingState: -> @state.currentState is LOADING_STATE
 
   activateShowState:    -> @safeUpdateState(currentState: SHOW_STATE)
   activateLoadingState: -> @safeUpdateState(currentState: LOADING_STATE)
   activateErrorState:   -> @safeUpdateState(currentState: ERROR_STATE)
+
+  getStateFromStore: ->
+    entryId = @props.entry.id
+
+    comments:   CommentsStore.getComments(entryId)   || @props.commentsInfo.comments
+    totalCount: CommentsStore.getTotalCount(entryId) || @props.commentsInfo.total_count
 
 module.exports = EntryComments

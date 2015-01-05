@@ -1,5 +1,6 @@
-Api              = require '../../api/api'
-NotifyController = require '../../controllers/notify'
+Api                = require '../../api/api'
+NotifyController   = require '../../controllers/notify'
+EntryServerActions = require '../server/entry'
 
 REPORT_SUCCESS_MESSAGE         = 'Жалоба на пост успешно отправлена'
 DELETE_SUCCESS_MESSAGE         = 'Пост успешно удалён'
@@ -51,16 +52,24 @@ EntryViewActions =
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
+  initializeComments: (entryId, comments, totalCount) ->
+    EntryServerActions.initializeComments entryId, comments, totalCount
+
   loadComments: (entryId, toCommentId, limit) ->
     Api.entry.loadComments entryId, toCommentId, limit
+      .then (commentsInfo) =>
+        comments   = commentsInfo.comments
+        totalCount = commentsInfo.total_count
+
+        EntryServerActions.loadComments entryId, comments, totalCount
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
-  deleteComment: (commentId) ->
+  deleteComment: (entryId, commentId) ->
     Api.entry.deleteComment commentId
       .then (response) ->
+        EntryServerActions.deleteComment entryId, commentId
         NotifyController.notifySuccess COMMENT_DELETE_SUCCESS_MESSAGE
-        response
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
@@ -73,11 +82,15 @@ EntryViewActions =
 
   createComment: (entryId, text) ->
     Api.entry.createComment entryId, text
+      .then (comment) ->
+        EntryServerActions.createComment entryId, comment
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
-  editComment: (commentId, text) ->
+  editComment: (entryId, commentId, text) ->
     Api.entry.editComment commentId, text
+      .then (comment) ->
+        EntryServerActions.editComment entryId, comment
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 

@@ -1,10 +1,10 @@
 DropdownMenuMixin                          = require '../../../../mixins/dropdownMenu'
-EntryMetaActions_DropdownMenu_LinkItem     = require './dropdown_menu/items/link'
-EntryMetaActions_DropdownMenu_EditItem     = require './dropdown_menu/items/edit'
-EntryMetaActions_DropdownMenu_FavoriteItem = require './dropdown_menu/items/favorite'
-EntryMetaActions_DropdownMenu_WatchItem    = require './dropdown_menu/items/watch'
-EntryMetaActions_DropdownMenu_DeleteItem   = require './dropdown_menu/items/delete'
-EntryMetaActions_DropdownMenu_ReportItem   = require './dropdown_menu/items/report'
+EntryMetaActions_DropdownMenu_LinkItem     = require './dropdownMenu/items/link'
+EntryMetaActions_DropdownMenu_EditItem     = require './dropdownMenu/items/edit'
+EntryMetaActions_DropdownMenu_FavoriteItem = require './dropdownMenu/items/favorite'
+EntryMetaActions_DropdownMenu_WatchItem    = require './dropdownMenu/items/watch'
+EntryMetaActions_DropdownMenu_DeleteItem   = require './dropdownMenu/items/delete'
+EntryMetaActions_DropdownMenu_ReportItem   = require './dropdownMenu/items/report'
 { PropTypes } = React
 
 EntryMetaActions_DropdownMenu = React.createClass

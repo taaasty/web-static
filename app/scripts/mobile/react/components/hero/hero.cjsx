@@ -1,10 +1,11 @@
-BrowserHelpers   = require '../../../../shared/helpers/browser'
-HeroAvatar       = require './avatar'
-HeroHead         = require './head'
-HeroActions      = require './actions'
-HeroStats        = require './stats'
-HeroCloseButton  = require './buttons/close'
-CurrentUserMixin = require '../../mixins/currentUser'
+CurrentUserStore  = require '../../stores/currentUser'
+ConnectStoreMixin = require '../../mixins/connectStore'
+BrowserHelpers    = require '../../../../shared/helpers/browser'
+HeroAvatar        = require './avatar'
+HeroHead          = require './head'
+HeroActions       = require './actions'
+HeroStats         = require './stats'
+HeroCloseButton   = require './buttons/close'
 { PropTypes } = React
 
 CLOSE_STATE = 'close'
@@ -16,7 +17,7 @@ _openHeroHeight    = null
 
 Hero = React.createClass
   displayName: 'Hero'
-  mixins: [CurrentUserMixin]
+  mixins: [ConnectStoreMixin(CurrentUserStore)]
 
   propTypes:
     tlog: PropTypes.object.isRequired
@@ -100,5 +101,8 @@ Hero = React.createClass
 
       document.body.style.height = _openHeroHeight + 'px'
       @forceUpdate()
+
+  getStateFromStore: ->
+    user: CurrentUserStore.getUser()
 
 module.exports = Hero

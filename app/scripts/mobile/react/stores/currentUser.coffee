@@ -1,6 +1,8 @@
 assign    = require 'react/lib/Object.assign'
 BaseStore = require './_base'
 
+#TODO: Login, logout actions
+
 _currentUser = null
 
 extendByMockData = (user) ->

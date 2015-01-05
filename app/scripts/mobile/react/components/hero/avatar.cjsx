@@ -1,6 +1,6 @@
 #TODO: Shared UserAvatar
 UserAvatar   = require '../common/avatar/user'
-FollowStatus = require '../common/follow_status/follow_status'
+FollowStatus = require '../common/followStatus/followStatus'
 { PropTypes } = React
 
 HERO_AVATAR_SIZE = 220

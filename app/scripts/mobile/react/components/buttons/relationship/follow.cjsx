@@ -1,8 +1,8 @@
-assign                  = require 'react/lib/Object.assign'
 cx                      = require 'react/lib/cx'
 RelationshipsStore      = require '../../../stores/relationships'
 RelationshipButtonMixin = require './mixins/relationship'
 ComponentMixin          = require '../../../mixins/component'
+ConnectStoreMixin       = require '../../../mixins/connectStore'
 { PropTypes } = React
 
 SHOW_STATE    = 'show'
@@ -29,20 +29,14 @@ IGNORED_TITLE        = 'Заблокирован'
 
 module.exports = React.createClass
   displayName: 'FollowButton'
-  mixins: [RelationshipButtonMixin, ComponentMixin]
+  mixins: [ConnectStoreMixin(RelationshipsStore), RelationshipButtonMixin, ComponentMixin]
 
   propTypes:
     user:   PropTypes.object.isRequired
     status: PropTypes.string.isRequired
 
   getInitialState: ->
-    assign @getStateFromStore(), currentState: SHOW_STATE
-
-  componentDidMount: ->
-    RelationshipsStore.addChangeListener @onStoreChange
-
-  componentWillUnmount: ->
-    RelationshipsStore.removeChangeListener @onStoreChange
+    currentState: SHOW_STATE
 
   render: ->
     buttonClasses = cx
@@ -93,6 +87,3 @@ module.exports = React.createClass
 
   getStateFromStore: ->
     status: RelationshipsStore.getStatus(@props.user.id) || @props.status
-
-  onStoreChange: ->
-    @setState @getStateFromStore()

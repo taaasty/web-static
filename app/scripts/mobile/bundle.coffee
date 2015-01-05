@@ -19,7 +19,8 @@ window.EntryPage = require './react/pages/entry'
 
 # /*==========  Stores  ==========*/
 
-require './react/stores/current_user'
+require './react/stores/currentUser'
 require './react/stores/relationships'
+require './react/stores/comments'
 
 ReactApp.start()

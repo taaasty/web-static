@@ -1,8 +1,8 @@
 DropdownMenuMixin                    = require '../../../../../../mixins/dropdownMenu'
-CommentActionsDropdownMenuLinkItem   = require './dropdown_menu/items/link'
-CommentActionsDropdownMenuEditItem   = require './dropdown_menu/items/edit'
-CommentActionsDropdownMenuDeleteItem = require './dropdown_menu/items/delete'
-CommentActionsDropdownMenuReportItem = require './dropdown_menu/items/report'
+CommentActionsDropdownMenuLinkItem   = require './dropdownMenu/items/link'
+CommentActionsDropdownMenuEditItem   = require './dropdownMenu/items/edit'
+CommentActionsDropdownMenuDeleteItem = require './dropdownMenu/items/delete'
+CommentActionsDropdownMenuReportItem = require './dropdownMenu/items/report'
 { PropTypes } = React
 
 CommentActionsDropdownMenu = React.createClass
@@ -12,7 +12,6 @@ CommentActionsDropdownMenu = React.createClass
   propTypes:
     entry:       PropTypes.object.isRequired
     comment:     PropTypes.object.isRequired
-    onDelete:    PropTypes.func.isRequired
     onEditStart: PropTypes.func.isRequired
 
   render: ->
@@ -39,8 +38,8 @@ CommentActionsDropdownMenu = React.createClass
 
     if @props.comment.can_delete
       deleteItem = <CommentActionsDropdownMenuDeleteItem
+                       entryId={ @props.entry.id }
                        commentId={ @props.comment.id }
-                       onDelete={ @props.onDelete }
                        key="delete" />
 
     return <ul className="comment__dropdown-popup-list">

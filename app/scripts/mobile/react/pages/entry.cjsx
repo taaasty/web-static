@@ -1,4 +1,4 @@
-CurrentUserStore   = require '../stores/current_user'
+CurrentUserStore   = require '../stores/currentUser'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
 Hero               = require '../components/hero/hero'

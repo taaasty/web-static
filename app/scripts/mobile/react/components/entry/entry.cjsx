@@ -1,9 +1,10 @@
-CurrentUserMixin = require '../../mixins/currentUser'
-TextEntry        = require './text/text'
-ImageEntry       = require './image/image'
-VideoEntry       = require './video/video'
-QuoteEntry       = require './quote/quote'
-UnknownEntry     = require './unknown/unknown'
+CurrentUserStore  = require '../../stores/currentUser'
+ConnectStoreMixin = require '../../mixins/connectStore'
+TextEntry         = require './text/text'
+ImageEntry        = require './image/image'
+VideoEntry        = require './video/video'
+QuoteEntry        = require './quote/quote'
+UnknownEntry      = require './unknown/unknown'
 { PropTypes } = React
 
 TEXT_TYPE  = 'text'
@@ -13,7 +14,7 @@ QUOTE_TYPE = 'quote'
 
 Entry = React.createClass
   displayName: 'Entry'
-  mixins: [CurrentUserMixin]
+  mixins: [ConnectStoreMixin(CurrentUserStore)]
 
   propTypes:
     entry: PropTypes.object.isRequired
@@ -28,5 +29,8 @@ Entry = React.createClass
 
     return <Entry entry={ @props.entry }
                   user={ @state.user } />
+
+  getStateFromStore: ->
+    user: CurrentUserStore.getUser()
 
 module.exports = Entry

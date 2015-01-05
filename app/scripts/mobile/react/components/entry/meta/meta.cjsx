@@ -1,5 +1,6 @@
-EntryMetaVoting  = require './voting'
-EntryMetaActions = require './actions'
+EntryMetaVoting   = require './voting'
+EntryMetaActions  = require './actions'
+EntryMetaComments = require './comments'
 { PropTypes } = React
 
 EntryMeta = React.createClass
@@ -12,7 +13,9 @@ EntryMeta = React.createClass
     <div className="post__meta">
       <EntryMetaActions entry={ @props.entry } />
       { @renderVoting() }
-      <div className="meta-comments">{ @props.entry.comments_count }</div>
+      <EntryMetaComments
+          entryId={ @props.entry.id }
+          commentsCount={ @props.entry.comments_count } />
     </div>
 
   renderVoting: ->

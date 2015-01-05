@@ -1,5 +1,5 @@
 Spinner                = require '../../common/spinner/spinner'
-CommentsLoadMoreButton = require './buttons/load_more'
+CommentsLoadMoreButton = require './buttons/loadMore'
 { declension } = require '../../../../../shared/helpers/grammar'
 { PropTypes }  = React
 

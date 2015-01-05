@@ -1,7 +1,7 @@
 cx                              = require 'react/lib/cx'
 ClickOutsideMixin               = require '../../../mixins/clickOutside'
-HeroActions_DropdownMenu_Button = require './dropdown_menu/buttons/button'
-HeroActions_DropdownMenu_Popup  = require './dropdown_menu/popup'
+HeroActions_DropdownMenu_Button = require './dropdownMenu/buttons/button'
+HeroActions_DropdownMenu_Popup  = require './dropdownMenu/popup'
 { PropTypes } = React
 
 CLOSE_STATE = 'close'

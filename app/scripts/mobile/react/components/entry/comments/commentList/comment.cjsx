@@ -10,7 +10,6 @@ Comment = React.createClass
   propTypes:
     comment:     PropTypes.object.isRequired
     entry:       PropTypes.object.isRequired
-    onDelete:    PropTypes.func.isRequired
     onEditStart: PropTypes.func.isRequired
 
   render: ->
