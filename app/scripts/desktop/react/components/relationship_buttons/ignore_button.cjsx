@@ -13,7 +13,9 @@ window.RelationshipIgnoreButton = React.createClass
     isProcess:    false
 
   render: ->
-    <button className="follow-button"
+    # Inline-block need to prevent AdBlock social buttons hiding
+    <button style={{ display: 'inline-block!important' }}
+            className="follow-button"
             onClick={ this.onClick }
             onMouseOver={ this.onMouseOver }
             onMouseLeave={ this.onMouseLeave }>

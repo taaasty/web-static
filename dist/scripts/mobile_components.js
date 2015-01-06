@@ -3715,6 +3715,9 @@ module.exports = React.createClass({
     });
     if (this.state.status != null) {
       return React.createElement("button", {
+        "style": {
+          display: 'inline-block!important'
+        },
         "className": buttonClasses,
         "onClick": this.handleClick
       }, this.getTitle());

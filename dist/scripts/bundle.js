@@ -14161,6 +14161,9 @@ window.FollowButton = React.createClass({
       rootClass = 'state--active';
     }
     return React.createElement("button", {
+      "style": {
+        display: 'inline-block!important'
+      },
       "className": 'follow-button ' + rootClass,
       "onClick": this.onClick,
       "onMouseOver": this.onMouseOver,
@@ -14381,6 +14384,9 @@ window.RelationshipIgnoreButton = React.createClass({
   },
   render: function() {
     return React.createElement("button", {
+      "style": {
+        display: 'inline-block!important'
+      },
       "className": "follow-button",
       "onClick": this.onClick,
       "onMouseOver": this.onMouseOver,

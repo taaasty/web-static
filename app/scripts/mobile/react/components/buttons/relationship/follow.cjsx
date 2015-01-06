@@ -44,7 +44,9 @@ module.exports = React.createClass
       '__active': @isFollowStatus() && @isShowState()
 
     if @state.status?
-      <button className={ buttonClasses }
+      # Inline-block need to prevent AdBlock social buttons hiding
+      <button style={{ display: 'inline-block!important' }}
+              className={ buttonClasses }
               onClick={ @handleClick }>
         { @getTitle() }
       </button>
