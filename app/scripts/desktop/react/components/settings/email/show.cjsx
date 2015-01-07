@@ -14,17 +14,17 @@ SettingsEmailShow = React.createClass
     if @isConfirmation()
       email = @props.confirmationEmail
       button = <button className="button button--outline"
-                       onClick={ this.handleCancelClick }>
+                       onClick={ @handleCancelClick }>
                  <span className="button__text">Отменить</span>
                </button>
       confirmation = <SettingsEmailConfirmation
                          email={ email }
-                         confirmationEmail={ this.props.confirmationEmail }
-                         onResend={ this.props.onResend } />
+                         confirmationEmail={ @props.confirmationEmail }
+                         onResend={ @props.onResend } />
     else
       email  = @props.email
       button = <button className="button button--outline"
-                       onClick={ this.handleEditClick }>
+                       onClick={ @handleEditClick }>
                  <span className="button__text">Изменить</span>
                </button>
 
@@ -38,7 +38,7 @@ SettingsEmailShow = React.createClass
            </div>
 
   isConfirmation: ->
-    @props.confirmationEmail? && @props.confirmationEmail isnt @props.email
+    @props.confirmationEmail?
 
   handleEditClick: (e) ->
     e.preventDefault()

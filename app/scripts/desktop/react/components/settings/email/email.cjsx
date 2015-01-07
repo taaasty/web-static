@@ -16,28 +16,34 @@ SettingsEmail = React.createClass
     onResend:          React.PropTypes.func.isRequired
 
   getInitialState: ->
-    currentState: if @props.email then SHOW_STATE else ESTABLISH_STATE
+    currentState: @getCurrentStateFromProps @props
+
+  componentWillReceiveProps: (nextProps) ->
+    @setState(currentState: @getCurrentStateFromProps nextProps)
 
   render: ->
     switch @state.currentState
       when SHOW_STATE
         <SettingsEmailShow
-            email={ this.props.email }
-            confirmationEmail={ this.props.confirmationEmail }
-            onEditStart={ this.activateEditState }
-            onCancel={ this.handleCancel }
-            onResend={ this.props.onResend } />
+            email={ @props.email }
+            confirmationEmail={ @props.confirmationEmail }
+            onEditStart={ @activateEditState }
+            onCancel={ @handleCancel }
+            onResend={ @props.onResend } />
       when ESTABLISH_STATE
-        <SettingsEmailEstablish onSubmit={ this.handleSubmit } />
+        <SettingsEmailEstablish onSubmit={ @handleSubmit } />
       when EDIT_STATE
         <SettingsEmailEdit
-             email={ this.props.email }
-             onEditCancel={ this.activateShowState }
-             onSubmit={ this.handleSubmit } />
+             email={ @props.email }
+             onEditCancel={ @activateShowState }
+             onSubmit={ @handleSubmit } />
       else console.warn 'Unknown currentState of SettingsEmail component', @state.currentState
 
   activateEditState: -> @setState(currentState: EDIT_STATE)
   activateShowState: -> @setState(currentState: SHOW_STATE)
+
+  getCurrentStateFromProps: (props) ->
+    if props.email? || props.confirmationEmail? then SHOW_STATE else ESTABLISH_STATE
 
   handleSubmit: (newEmail) ->
     @props.onUpdate
