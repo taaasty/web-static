@@ -2559,6 +2559,9 @@ a.toolbar__popup-link:active {
   right: 10px;
   left: auto;
 }
+.meta-actions__dropdown-popup-item {
+  cursor: pointer;
+}
 .comments {
   font-size: 16px;
   line-height: 22px;
@@ -2654,6 +2657,9 @@ a.toolbar__popup-link:active {
 .comment__dropdown-popup:after {
   right: 10px;
   left: auto;
+}
+.comment__dropdown-popup-item {
+  cursor: pointer;
 }
 .comment-form {
   margin-right: -12px;
