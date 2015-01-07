@@ -1,7 +1,7 @@
 cx                         = require 'react/lib/cx'
 ClickOutsideMixin          = require '../../../../../mixins/clickOutside'
 CommentActionsButton       = require './actions/buttons/button'
-CommentActionsDropdownMenu = require './actions/dropdown_menu'
+CommentActionsDropdownMenu = require './actions/dropdownMenu'
 UserAvatar                 = require '../../../../common/avatar/user'
 { PropTypes } = React
 
@@ -15,7 +15,6 @@ CommentActions = React.createClass
   propTypes:
     entry:       PropTypes.object.isRequired
     comment:     PropTypes.object.isRequired
-    onDelete:    PropTypes.func.isRequired
     onEditStart: PropTypes.func.isRequired
 
   getInitialState: ->

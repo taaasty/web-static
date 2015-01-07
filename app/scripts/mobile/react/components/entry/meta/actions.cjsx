@@ -1,7 +1,7 @@
 cx                            = require 'react/lib/cx'
 ClickOutsideMixin             = require '../../../mixins/clickOutside'
 EntryMetaActions_Button       = require './actions/buttons/button'
-EntryMetaActions_DropdownMenu = require './actions/dropdown_menu'
+EntryMetaActions_DropdownMenu = require './actions/dropdownMenu'
 { PropTypes } = React
 
 OPEN_STATE  = 'open'

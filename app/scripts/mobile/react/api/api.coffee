@@ -1,5 +1,5 @@
 Constants        = require '../constants/constants'
-CurrentUserStore = require '../stores/current_user'
+CurrentUserStore = require '../stores/currentUser'
 
 TIMEOUT = 10000
 _pendingRequests = {}
@@ -12,45 +12,25 @@ abortPendingRequests = (key) ->
 userToken = ->
   CurrentUserStore.getAccessToken()
 
-getRequest = ({url, data}) ->
-  reqwest
-    url: url
-    method: 'GET'
-    data: data
-    timeout: TIMEOUT
-    headers:
-      'X-User-Token':     userToken()
-      'X-Requested-With': 'XMLHttpRequest'
+request = (method, url, data) ->
+  headers =
+    'X-Requested-With': 'XMLHttpRequest'
+    'X-Tasty-Client-Name': 'web_mobile'
+    'X-Tasty-Client-Version': TastySettings.version
 
-postRequest = ({url, data}) ->
-  reqwest
-    url: url
-    method: 'POST'
-    data: data
-    timeout: TIMEOUT
-    headers:
-      'X-User-Token':     userToken()
-      'X-Requested-With': 'XMLHttpRequest'
+  headers['X-User-Token'] = userToken() if userToken()
 
-putRequest = ({url, data}) ->
   reqwest
     url: url
-    method: 'PUT'
+    method: method
     data: data
     timeout: TIMEOUT
-    headers:
-      'X-User-Token':     userToken()
-      'X-Requested-With': 'XMLHttpRequest'
+    headers: headers
 
-deleteRequest = ({url, data}) ->
-  reqwest
-    url: url
-    method: 'DELETE'
-    data: data
-    timeout: TIMEOUT
-    headers:
-      'X-User-Token':     userToken()
-      'X-Requested-With': 'XMLHttpRequest'
+getRequest =    (url, data) -> request 'GET', url, data
+postRequest =   (url, data) -> request 'POST', url, data
+putRequest =    (url, data) -> request 'PUT', url, data
+deleteRequest = (url, data) -> request 'DELETE', url, data
 
 Api =
 
@@ -60,35 +40,35 @@ Api =
       key = Constants.api.FOLLOW_USER
 
       abortPendingRequests key
-      _pendingRequests[key] = postRequest {url}
+      _pendingRequests[key] = postRequest url
 
     unfollow: (userId) ->
       url = ApiRoutes.change_my_relationship_url userId, 'unfollow'
       key = Constants.api.UNFOLLOW_USER
 
       abortPendingRequests key
-      _pendingRequests[key] = postRequest {url}
+      _pendingRequests[key] = postRequest url
 
     cancel: (userId) ->
       url = ApiRoutes.change_my_relationship_url userId, 'cancel'
       key = Constants.api.CANCEL_USER
 
       abortPendingRequests key
-      _pendingRequests[key] = postRequest {url}
+      _pendingRequests[key] = postRequest url
 
     ignore: (userId) ->
       url = ApiRoutes.change_my_relationship_url userId, 'ignore'
       key = Constants.api.IGNORE_USER
 
       abortPendingRequests key
-      _pendingRequests[key] = postRequest {url}
+      _pendingRequests[key] = postRequest url
 
     report: (userId) ->
       url = ApiRoutes.tlog_report userId
       key = Constants.api.REPORT_USER
 
       abortPendingRequests key
-      _pendingRequests[key] = postRequest {url}
+      _pendingRequests[key] = postRequest url
 
   entry:
     addToFavorites: (entryId) ->
@@ -97,7 +77,7 @@ Api =
       data = entry_id: entryId
 
       abortPendingRequests key
-      _pendingRequests[key] = postRequest {url, data}
+      _pendingRequests[key] = postRequest url, data
 
     removeFromFavorites: (entryId) ->
       url  = ApiRoutes.favorites_url()
@@ -105,7 +85,7 @@ Api =
       data = entry_id: entryId
 
       abortPendingRequests key
-      _pendingRequests[key] = deleteRequest {url, data}
+      _pendingRequests[key] = deleteRequest url, data
 
     startWatch: (entryId) ->
       url  = ApiRoutes.watching_url()
@@ -113,7 +93,7 @@ Api =
       data = entry_id: entryId
 
       abortPendingRequests key
-      _pendingRequests[key] = postRequest {url, data}
+      _pendingRequests[key] = postRequest url, data
 
     stopWatch: (entryId) ->
       url  = ApiRoutes.watching_url()
@@ -121,28 +101,28 @@ Api =
       data = entry_id: entryId
 
       abortPendingRequests key
-      _pendingRequests[key] = deleteRequest {url, data}
+      _pendingRequests[key] = deleteRequest url, data
 
     report: (entryId) ->
       url = ApiRoutes.report_url entryId
       key = Constants.api.REPORT
 
       abortPendingRequests key
-      _pendingRequests[key] = postRequest {url}
+      _pendingRequests[key] = postRequest url
 
     delete: (entryId) ->
       url  = ApiRoutes.entry_url entryId
       key  = Constants.api.DELETE
 
       abortPendingRequests key
-      _pendingRequests[key] = deleteRequest {url}
+      _pendingRequests[key] = deleteRequest url
 
     vote: (entryId) ->
       url = ApiRoutes.votes_url entryId
       key = Constants.api.VOTE
 
       abortPendingRequests key
-      _pendingRequests[key] = postRequest {url}
+      _pendingRequests[key] = postRequest url
 
     loadComments: (entryId, toCommentId, limit) ->
       url  = ApiRoutes.comments_url()
@@ -153,21 +133,21 @@ Api =
         limit:         limit
 
       abortPendingRequests key
-      _pendingRequests[key] = getRequest {url, data}
+      _pendingRequests[key] = getRequest url, data
 
     deleteComment: (commentId) ->
       url = ApiRoutes.comments_edit_delete_url commentId
       key = Constants.api.DELETE_COMMENT
 
       abortPendingRequests key
-      _pendingRequests[key] = deleteRequest {url}
+      _pendingRequests[key] = deleteRequest url
 
     reportComment: (commentId) ->
       url = ApiRoutes.comments_report_url commentId
       key = Constants.api.REPORT_COMMENT
 
       abortPendingRequests key
-      _pendingRequests[key] = postRequest {url}
+      _pendingRequests[key] = postRequest url
 
     createComment: (entryId, text) ->
       url  = ApiRoutes.comments_url()
@@ -177,7 +157,7 @@ Api =
         text:     text
 
       abortPendingRequests key
-      _pendingRequests[key] = postRequest {url, data}
+      _pendingRequests[key] = postRequest url, data
 
     editComment: (commentId, text) ->
       url  = ApiRoutes.comments_edit_delete_url commentId
@@ -185,6 +165,6 @@ Api =
       data = {text}
 
       abortPendingRequests key
-      _pendingRequests[key] = putRequest {url, data}
+      _pendingRequests[key] = putRequest url, data
 
 module.exports = Api

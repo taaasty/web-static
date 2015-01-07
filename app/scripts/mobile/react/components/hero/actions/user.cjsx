@@ -1,6 +1,6 @@
 FollowButton                   = require '../../buttons/relationship/follow'
-HeroActions_WriteMessageButton = require './buttons/write_message'
-HeroActions_DropdownMenu       = require './dropdown_menu'
+HeroActions_WriteMessageButton = require './buttons/writeMessage'
+HeroActions_DropdownMenu       = require './dropdownMenu'
 { PropTypes } = React
 
 #TODO: i18n

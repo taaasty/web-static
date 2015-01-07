@@ -1,5 +1,5 @@
 HeroActions_User        = require './actions/user'
-HeroActions_CurrentUser = require './actions/current_user'
+HeroActions_CurrentUser = require './actions/currentUser'
 { PropTypes } = React
 
 HeroActions = React.createClass

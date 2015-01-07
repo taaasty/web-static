@@ -1,12 +1,15 @@
-CurrentUserStore = require '../../stores/current_user'
-CurrentUserMixin = require '../../mixins/currentUser'
-FeedToolbar      = require './feed'
+CurrentUserStore  = require '../../stores/currentUser'
+ConnectStoreMixin = require '../../mixins/connectStore'
+FeedToolbar       = require './feed'
 
 FeedToolbarManager = React.createClass
   displayName: 'FeedToolbarManager'
-  mixins: [CurrentUserMixin]
+  mixins: [ConnectStoreMixin(CurrentUserStore)]
 
   render: ->
     <FeedToolbar user={ @state.user } />
+
+  getStateFromStore: ->
+    user: CurrentUserStore.getUser()
 
 module.exports = FeedToolbarManager

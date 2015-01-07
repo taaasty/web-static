@@ -1,4 +1,5 @@
 RelationshipsStore                 = require '../../../../stores/relationships'
+ConnectStoreMixin                  = require '../../../../mixins/connectStore'
 HeroActions_DropdownMenuIgnoreItem = require './items/ignore'
 HeroActions_DropdownMenuReportItem = require './items/report'
 { PropTypes } = React
@@ -7,6 +8,7 @@ IGNORED_STATUS = 'ignored'
 
 module.exports = React.createClass
   displayName: 'HeroActions_DropdownMenu_Popup'
+  mixins: [ConnectStoreMixin(RelationshipsStore)]
 
   propTypes:
     arrangement: PropTypes.string
@@ -16,15 +18,6 @@ module.exports = React.createClass
 
   getDefaultProps: ->
     arrangement: 'bottom'
-
-  getInitialState: ->
-    @getStateFromStore()
-
-  componentDidMount: ->
-    RelationshipsStore.addChangeListener @onStoreChange
-
-  componentWillUnmount: ->
-    RelationshipsStore.removeChangeListener @onStoreChange
 
   render: ->
     <div className={ 'hero__dropdown-popup __' + @props.arrangement }>
@@ -46,6 +39,3 @@ module.exports = React.createClass
 
   getStateFromStore: ->
     status: RelationshipsStore.getStatus(@props.userId) || @props.status
-
-  onStoreChange: ->
-    @setState @getStateFromStore()

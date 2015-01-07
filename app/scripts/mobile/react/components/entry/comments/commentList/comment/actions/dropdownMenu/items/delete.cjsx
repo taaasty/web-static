@@ -9,8 +9,8 @@ CommentActionsDropdownMenuDeleteItem = React.createClass
   displayName: 'CommentActionsDropdownMenuDeleteItem'
 
   propTypes:
+    entryId:   PropTypes.number.isRequired
     commentId: PropTypes.number.isRequired
-    onDelete:  PropTypes.func.isRequired
 
   render: ->
     <li className="comment__dropdown-popup-item"
@@ -23,8 +23,9 @@ CommentActionsDropdownMenuDeleteItem = React.createClass
     </li>
 
   delete: ->
-    EntryViewActions.deleteComment @props.commentId
-      .then @props.onDelete
+    { entryId, commentId } = @props
+
+    EntryViewActions.deleteComment entryId, commentId
 
   handleClick: ->
     @delete() if confirm CONFIRM_MESSAGE

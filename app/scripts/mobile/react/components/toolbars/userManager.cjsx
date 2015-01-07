@@ -1,12 +1,16 @@
-CurrentUserStore = require '../../stores/current_user'
-CurrentUserMixin = require '../../mixins/currentUser'
-UserToolbar      = require './user'
+CurrentUserStore  = require '../../stores/currentUser'
+ConnectStoreMixin = require '../../mixins/connectStore'
+UserToolbar       = require './user'
 
 UserToolbarManager = React.createClass
   displayName: 'UserToolbarManager'
-  mixins: [CurrentUserMixin]
+  mixins: [ConnectStoreMixin(CurrentUserStore)]
 
   render: ->
-    if @isLogged() then <UserToolbar user={ @state.user } /> else null
+    if @state.logged then <UserToolbar user={ @state.user } /> else null
+
+  getStateFromStore: ->
+    user:   CurrentUserStore.getUser()
+    logged: CurrentUserStore.isLogged()
 
 module.exports = UserToolbarManager
