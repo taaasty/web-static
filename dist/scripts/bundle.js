@@ -16351,7 +16351,7 @@ window.Settings = React.createClass({
       "className": "settings__body"
     }, React.createElement(SettingsRadioItem, {
       "title": "Закрытый дневник?",
-      "description": "Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам конечно.",
+      "description": "Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам, конечно.",
       "checked": this.state.user.is_privacy,
       "id": "isPrivacy",
       "onChange": this.updatePrivacy
@@ -16363,7 +16363,7 @@ window.Settings = React.createClass({
       "onChange": this.updateDaylog
     }), React.createElement(SettingsRadioItem, {
       "title": "Вы - девушка",
-      "description": "На Тейсти сложилось так, что 7 из 10 пользователей – это девушки. Поэтому по-умолчанию для всех именно такая настройка.",
+      "description": "На Тейсти сложилось так, что 7 из 10 пользователей – это девушки. Поэтому по умолчанию для всех именно такая настройка.",
       "checked": this.state.user.is_female,
       "id": "isFemale",
       "onChange": this.updateFemale
@@ -16375,7 +16375,7 @@ window.Settings = React.createClass({
       "onResend": this.resendEmailConfirmation
     }), React.createElement(SettingsRadioItem, {
       "title": "Уведомления",
-      "description": "Отправлять мне емейл уведомления обо всех новых комментариях, подписчиках и личных сообщениях?",
+      "description": "Отправлять мне емейл-уведомления обо всех новых комментариях, подписчиках и личных сообщениях?",
       "checked": this.state.user.available_notifications,
       "id": "availableNotifications",
       "onChange": this.updateAvailableNotifications

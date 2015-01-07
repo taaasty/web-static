@@ -33,7 +33,7 @@ window.Settings = React.createClass
         <div className="settings__body">
           <SettingsRadioItem
               title="Закрытый дневник?"
-              description="Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам конечно."
+              description="Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам, конечно."
               checked={ @state.user.is_privacy }
               id="isPrivacy"
               onChange={ @updatePrivacy } />
@@ -47,7 +47,7 @@ window.Settings = React.createClass
 
           <SettingsRadioItem
               title="Вы - девушка"
-              description="На Тейсти сложилось так, что 7 из 10 пользователей – это девушки. Поэтому по-умолчанию для всех именно такая настройка."
+              description="На Тейсти сложилось так, что 7 из 10 пользователей – это девушки. Поэтому по умолчанию для всех именно такая настройка."
               checked={ @state.user.is_female }
               id="isFemale"
               onChange={ @updateFemale } />
@@ -61,7 +61,7 @@ window.Settings = React.createClass
 
           <SettingsRadioItem
               title="Уведомления"
-              description="Отправлять мне емейл уведомления обо всех новых комментариях, подписчиках и личных сообщениях?"
+              description="Отправлять мне емейл-уведомления обо всех новых комментариях, подписчиках и личных сообщениях?"
               checked={ @state.user.available_notifications }
               id="availableNotifications"
               onChange={ @updateAvailableNotifications } />
