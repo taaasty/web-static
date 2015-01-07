@@ -26,7 +26,9 @@ window.FollowButton = React.createClass
     if @isFollow() && !@state.isError && !@state.isProcess
       rootClass = 'state--active'
 
-    return <button className={ 'follow-button ' + rootClass }
+    # Inline-block need to prevent AdBlock social buttons hiding
+    return <button style={{ display: 'inline-block!important' }}
+                   className={ 'follow-button ' + rootClass }
                    onClick={ this.onClick }
                    onMouseOver={ this.onMouseOver }
                    onMouseLeave={ this.onMouseLeave }>
