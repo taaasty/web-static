@@ -20383,12 +20383,10 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
   switch (action.type) {
     case 'postNewConversation':
       ConversationsStore.unshiftConversations([action.conversation]);
-      ConversationsStore.preloadConversationsImages([action.conversation]);
       ConversationsStore.emitChange();
       break;
     case 'conversationsLoaded':
       ConversationsStore.unshiftConversations(action.conversations);
-      ConversationsStore.preloadConversationsImages(action.conversations);
       ConversationsStore.sortByDesc();
       ConversationsStore.emitChange();
       break;
@@ -20397,7 +20395,6 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
         ConversationsStore.updateConversation(action.conversation);
       } else {
         ConversationsStore.unshiftConversations([action.conversation]);
-        ConversationsStore.preloadConversationsImages([action.conversation]);
       }
       ConversationsStore.sortByDesc();
       ConversationsStore.emitChange();
