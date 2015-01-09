@@ -15,8 +15,7 @@ CommentActionsDropdownMenu = React.createClass
     onEditStart: PropTypes.func.isRequired
 
   render: ->
-    <div className={ @getPopupClasses('comment__dropdown-popup') }
-         style={ @getPopupStyles() }>
+    <div className={ @getPopupClasses('comment__dropdown-popup') }>
       { @renderPopupList() }
     </div>
 

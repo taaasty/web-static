@@ -15,28 +15,29 @@ getViewportWH = ->
 
 DropdownMenuMixin =
 
-  getPopupStyles: ->
-    styles = {}
-
-    unless @props.visible
-      styles =
-        display:    'block'
-        position:   'absolute'
-        visibility: 'hidden'
-
   getPopupClasses: (baseClasses = '') ->
-    isNotEnoughSpace = =>
-      menu           = @getDOMNode()
-      menuSize       = getSize menu
-      menuOffsetTop  = menu.getBoundingClientRect().top
-      viewportHeight = getViewportWH()[1]
-
-      if viewportHeight - REVERSE_MARGIN < menuOffsetTop + menuSize[1] then true else false
-
     popupClasses = baseClasses
 
-    if @isMounted()
-      popupClasses += ' __top' if isNotEnoughSpace()
+    if @isMounted() && @props.visible
+      menu        = @getDOMNode()
+      menuOffsets = menu.getBoundingClientRect()
+      viewportWH  = getViewportWH()
+
+      isNotEnoughBottomSpace = =>
+        menuSize       = getSize menu
+        menuOffsetTop  = menuOffsets.top
+        viewportHeight = viewportWH[1]
+
+        if viewportHeight - REVERSE_MARGIN < menuOffsetTop + menuSize[1] then true else false
+
+      isNotEnoughRightSpace = =>
+        menuOffsetRight = menuOffsets.right
+        viewportWidth   = viewportWH[0]
+
+        if viewportWidth - REVERSE_MARGIN < menuOffsetRight then true else false
+
+      popupClasses += ' __top'   if isNotEnoughBottomSpace()
+      popupClasses += ' __right' if isNotEnoughRightSpace()
 
     popupClasses
 

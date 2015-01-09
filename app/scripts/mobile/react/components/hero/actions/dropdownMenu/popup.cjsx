@@ -1,5 +1,6 @@
 RelationshipsStore                 = require '../../../../stores/relationships'
 ConnectStoreMixin                  = require '../../../../mixins/connectStore'
+DropdownMenuMixin                  = require '../../../../mixins/dropdownMenu'
 HeroActions_DropdownMenuIgnoreItem = require './items/ignore'
 HeroActions_DropdownMenuReportItem = require './items/report'
 { PropTypes } = React
@@ -8,10 +9,11 @@ IGNORED_STATUS = 'ignored'
 
 module.exports = React.createClass
   displayName: 'HeroActions_DropdownMenu_Popup'
-  mixins: [ConnectStoreMixin(RelationshipsStore)]
+  mixins: [ConnectStoreMixin(RelationshipsStore), DropdownMenuMixin]
 
   propTypes:
     arrangement: PropTypes.string
+    visible:     PropTypes.bool.isRequired
     userId:      PropTypes.number.isRequired
     status:      PropTypes.string.isRequired
     onClose:     PropTypes.func.isRequired
@@ -20,7 +22,7 @@ module.exports = React.createClass
     arrangement: 'bottom'
 
   render: ->
-    <div className={ 'hero__dropdown-popup __' + @props.arrangement }>
+    <div className={ @getPopupClasses('hero__dropdown-popup __' + @props.arrangement) }>
       { @_renderPopupList() }
     </div>
 
