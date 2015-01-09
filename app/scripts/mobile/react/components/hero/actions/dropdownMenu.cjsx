@@ -27,6 +27,7 @@ HeroActions_DropdownMenu = React.createClass
              <HeroActions_DropdownMenu_Button onClick={ @toggleOpenState } />
              <HeroActions_DropdownMenu_Popup
                  arrangement="top"
+                 visible={ @isOpenState() }
                  userId={ @props.userId }
                  status={ @props.status }
                  onClose={ @activateCloseState } />

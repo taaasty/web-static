@@ -1753,6 +1753,20 @@ a.outline-auth-button {
   border-width: 7px 7px 0;
   border-color: rgba(51, 51, 51, 0.93) transparent transparent;
 }
+.dropdown-popup.__right,
+.hero__dropdown-popup.__right,
+.meta-actions__dropdown-popup.__right,
+.comment__dropdown-popup.__right {
+  left: auto;
+  right: 10%;
+}
+.dropdown-popup.__right:after,
+.hero__dropdown-popup.__right:after,
+.meta-actions__dropdown-popup.__right:after,
+.comment__dropdown-popup.__right:after {
+  right: 11px;
+  left: auto;
+}
 .__open > .dropdown-popup,
 .__open > .hero__dropdown-popup,
 .__open > .meta-actions__dropdown-popup,

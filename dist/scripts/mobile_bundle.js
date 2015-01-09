@@ -4473,8 +4473,7 @@ CommentActionsDropdownMenu = React.createClass({
   },
   render: function() {
     return React.createElement("div", {
-      "className": this.getPopupClasses('comment__dropdown-popup'),
-      "style": this.getPopupStyles()
+      "className": this.getPopupClasses('comment__dropdown-popup')
     }, this.renderPopupList());
   },
   renderPopupList: function() {
@@ -5282,8 +5281,7 @@ EntryMetaActions_DropdownMenu = React.createClass({
   },
   render: function() {
     return React.createElement("div", {
-      "className": this.getPopupClasses('meta-actions__dropdown-popup'),
-      "style": this.getPopupStyles()
+      "className": this.getPopupClasses('meta-actions__dropdown-popup')
     }, this.renderPopupList());
   },
   renderPopupList: function() {
@@ -6217,6 +6215,7 @@ HeroActions_DropdownMenu = React.createClass({
       "onClick": this.toggleOpenState
     }), React.createElement(HeroActions_DropdownMenu_Popup, {
       "arrangement": "top",
+      "visible": this.isOpenState(),
       "userId": this.props.userId,
       "status": this.props.status,
       "onClose": this.activateCloseState
@@ -6337,11 +6336,13 @@ module.exports = React.createClass({
 
 
 },{"../../../../../actions/view/relationship":9}],72:[function(require,module,exports){
-var ConnectStoreMixin, HeroActions_DropdownMenuIgnoreItem, HeroActions_DropdownMenuReportItem, IGNORED_STATUS, PropTypes, RelationshipsStore;
+var ConnectStoreMixin, DropdownMenuMixin, HeroActions_DropdownMenuIgnoreItem, HeroActions_DropdownMenuReportItem, IGNORED_STATUS, PropTypes, RelationshipsStore;
 
 RelationshipsStore = require('../../../../stores/relationships');
 
 ConnectStoreMixin = require('../../../../mixins/connectStore');
+
+DropdownMenuMixin = require('../../../../mixins/dropdownMenu');
 
 HeroActions_DropdownMenuIgnoreItem = require('./items/ignore');
 
@@ -6353,9 +6354,10 @@ IGNORED_STATUS = 'ignored';
 
 module.exports = React.createClass({
   displayName: 'HeroActions_DropdownMenu_Popup',
-  mixins: [ConnectStoreMixin(RelationshipsStore)],
+  mixins: [ConnectStoreMixin(RelationshipsStore), DropdownMenuMixin],
   propTypes: {
     arrangement: PropTypes.string,
+    visible: PropTypes.bool.isRequired,
     userId: PropTypes.number.isRequired,
     status: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired
@@ -6367,7 +6369,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return React.createElement("div", {
-      "className": 'hero__dropdown-popup __' + this.props.arrangement
+      "className": this.getPopupClasses('hero__dropdown-popup __' + this.props.arrangement)
     }, this._renderPopupList());
   },
   _renderPopupList: function() {
@@ -6394,7 +6396,7 @@ module.exports = React.createClass({
 
 
 
-},{"../../../../mixins/connectStore":98,"../../../../stores/relationships":105,"./items/ignore":70,"./items/report":71}],73:[function(require,module,exports){
+},{"../../../../mixins/connectStore":98,"../../../../mixins/dropdownMenu":99,"../../../../stores/relationships":105,"./items/ignore":70,"./items/report":71}],73:[function(require,module,exports){
 var BUTTON_TITLE, FollowButton, HeroActions_DropdownMenu, HeroActions_User, HeroActions_WriteMessageButton, PropTypes;
 
 FollowButton = require('../../buttons/relationship/follow');
@@ -7529,40 +7531,46 @@ getViewportWH = function() {
 };
 
 DropdownMenuMixin = {
-  getPopupStyles: function() {
-    var styles;
-    styles = {};
-    if (!this.props.visible) {
-      return styles = {
-        display: 'block',
-        position: 'absolute',
-        visibility: 'hidden'
-      };
-    }
-  },
   getPopupClasses: function(baseClasses) {
-    var isNotEnoughSpace, popupClasses;
+    var isNotEnoughBottomSpace, isNotEnoughRightSpace, menu, menuOffsets, popupClasses, viewportWH;
     if (baseClasses == null) {
       baseClasses = '';
     }
-    isNotEnoughSpace = (function(_this) {
-      return function() {
-        var menu, menuOffsetTop, menuSize, viewportHeight;
-        menu = _this.getDOMNode();
-        menuSize = getSize(menu);
-        menuOffsetTop = menu.getBoundingClientRect().top;
-        viewportHeight = getViewportWH()[1];
-        if (viewportHeight - REVERSE_MARGIN < menuOffsetTop + menuSize[1]) {
-          return true;
-        } else {
-          return false;
-        }
-      };
-    })(this);
     popupClasses = baseClasses;
-    if (this.isMounted()) {
-      if (isNotEnoughSpace()) {
+    if (this.isMounted() && this.props.visible) {
+      menu = this.getDOMNode();
+      menuOffsets = menu.getBoundingClientRect();
+      viewportWH = getViewportWH();
+      isNotEnoughBottomSpace = (function(_this) {
+        return function() {
+          var menuOffsetTop, menuSize, viewportHeight;
+          menuSize = getSize(menu);
+          menuOffsetTop = menuOffsets.top;
+          viewportHeight = viewportWH[1];
+          if (viewportHeight - REVERSE_MARGIN < menuOffsetTop + menuSize[1]) {
+            return true;
+          } else {
+            return false;
+          }
+        };
+      })(this);
+      isNotEnoughRightSpace = (function(_this) {
+        return function() {
+          var menuOffsetRight, viewportWidth;
+          menuOffsetRight = menuOffsets.right;
+          viewportWidth = viewportWH[0];
+          if (viewportWidth - REVERSE_MARGIN < menuOffsetRight) {
+            return true;
+          } else {
+            return false;
+          }
+        };
+      })(this);
+      if (isNotEnoughBottomSpace()) {
         popupClasses += ' __top';
+      }
+      if (isNotEnoughRightSpace()) {
+        popupClasses += ' __right';
       }
     }
     return popupClasses;

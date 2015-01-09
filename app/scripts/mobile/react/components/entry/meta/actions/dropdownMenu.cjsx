@@ -16,8 +16,7 @@ EntryMetaActions_DropdownMenu = React.createClass
     visible: PropTypes.bool.isRequired
 
   render: ->
-    <div className={ @getPopupClasses('meta-actions__dropdown-popup') }
-         style={ @getPopupStyles() }>
+    <div className={ @getPopupClasses('meta-actions__dropdown-popup') }>
       { @renderPopupList() }
     </div>
 
