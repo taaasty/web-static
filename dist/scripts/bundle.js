@@ -22005,8 +22005,14 @@ var ThumborService;
 ThumborService = {
   thumbor_url: 'http://thumbor0.tasty0.ru/',
   image_url: function(url, style) {
-    url = url.replace(/^.*\/assets\//, '');
-    return this.thumbor_url + ("unsafe/" + style + "/") + url;
+    switch (TastySettings.env) {
+      case 'static-development':
+      case 'development':
+        return url;
+      default:
+        url = url.replace(/^.*\/assets\//, '');
+        return this.thumbor_url + ("unsafe/" + style + "/") + url;
+    }
   }
 };
 

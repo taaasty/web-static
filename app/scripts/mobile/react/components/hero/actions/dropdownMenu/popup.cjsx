@@ -7,7 +7,7 @@ HeroActions_DropdownMenuReportItem = require './items/report'
 
 IGNORED_STATUS = 'ignored'
 
-module.exports = React.createClass
+HeroActions_DropdownMenu_Popup = React.createClass
   displayName: 'HeroActions_DropdownMenu_Popup'
   mixins: [ConnectStoreMixin(RelationshipsStore), DropdownMenuMixin]
 
@@ -41,3 +41,5 @@ module.exports = React.createClass
 
   getStateFromStore: ->
     status: RelationshipsStore.getStatus(@props.userId) || @props.status
+
+module.exports = HeroActions_DropdownMenu_Popup
