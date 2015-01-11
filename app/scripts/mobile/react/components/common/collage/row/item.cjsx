@@ -9,12 +9,21 @@ CollageItem = React.createClass
   render: ->
     <div className="collage__item"
          style={ @getStyles() }>
-      <img src={ @props.image.payload.url } />
+      <img src={ @getImageUrl() }
+           style={ @getStyles() } />
     </div>
 
   getStyles: ->
-    { width, height } = @props.image
+    { widthCollage, heightCollage, marginCollage } = @props.image
 
-    { width }
+    { width: widthCollage, height: heightCollage, margin: marginCollage }
+
+  getImageUrl: ->
+    { widthCollage, heightCollage, marginCollage } = @props.image
+
+    if widthCollage && heightCollage
+      ThumborService.image_url @props.image.payload.url, widthCollage + 'x' + heightCollage
+    else
+      @props.image.payload.url
 
 module.exports = CollageItem

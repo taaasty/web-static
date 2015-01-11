@@ -27,10 +27,14 @@
   }
 
   .collage {
-    margin: 0 -@indent-base 1em;
+    overflow: hidden;
 
     .collage__item {
       float: left;
+    }
+
+    &:after {
+      clear: both;
     }
   }
 

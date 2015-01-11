@@ -1,59 +1,61 @@
 assign = require 'react/lib/Object.assign'
 
-min = (arr, prop) ->
-  currentMin = arr[0][prop]
-
-  arr.forEach (value) ->
-    currentMin = value[prop] if value[prop] < currentMin
-
-  currentMin
-
-max = (arr, prop) ->
-  currentMax = arr[0][prop]
-
-  arr.forEach (value) ->
-    currentMax = value[prop] if value[prop] > currentMax
-
-  currentMax
+#TODO: refactor;
+#TODO: probably will be better rewrite width & height values of cloned images
+#      instead of creating *Collage keys.
 
 CollageMixin =
 
   processImages: (images) ->
-    newImages   = @calculateImagesRatio images
-    maxRatioSum = max(newImages, 'ratio') # * @props.countInARow
-    minRatioSum = min newImages, 'ratio'
+    rows = []
+    rowIndex = 0
+    rowWidth = 0
+    newImages = @calculateImagesRatio images
 
-    rows  = []
-    index = 0
+    newImages.forEach (image, i) =>
+      assign image,
+        widthCollage:  @getItemNewWidth image, 150
+        heightCollage: 150
+        marginCollage: @props.margin
 
-    while newImages.length
-      rows[index] = []
-      currRatioSum = 0
+      if i == 0 || rowWidth + image.widthCollage < @props.width
+        rows[rowIndex] ?= []
+        rows[rowIndex].push image
+        rowWidth += image.widthCollage + image.marginCollage * 2
+      else
+        @stretchRow rows[rowIndex], rowWidth
+        rows[rowIndex + 1] = [image]
+        rowWidth = image.widthCollage + image.marginCollage * 2
+        rowIndex++
 
-      while maxRatioSum - currRatioSum >= minRatioSum # While space in a row greater than the narrowest image
-        for image in newImages
-          if maxRatioSum - currRatioSum >= image.ratio # If we still have enought space for image then add it
-            rows[index].push image
-            currRatioSum += image.ratio
-            newImages = newImages.filter (img) -> img isnt image
-            break
-
-        if newImages.length then minRatioSum = min newImages, 'ratio' else break
-
-      widthPerRatio = @props.width / currRatioSum # Calculating scale for the row
-
-      for image in rows[index]
-        assign image,
-          width: image.ratio * widthPerRatio
-          widthPercentage: @props.width / 100 * (image.ratio * widthPerRatio)
-          height: image.width / image.ratio
-
-      index++
+      if i == newImages.length - 1
+        @stretchRow rows[rowIndex], rowWidth
 
     rows
 
+  stretchRow: (row, rowWidth) ->
+    rowHeight        = row[0].heightCollage + row[0].marginCollage * 2
+    requiredWidth    = @props.width
+    requiredHeight   = rowHeight / rowWidth * requiredWidth
+    resultWidth      = 0
+    lastElementWidth = 0
+
+    row.forEach (image, i) =>
+      assign image,
+        widthCollage:  @getItemNewWidth image, (requiredHeight - @props.margin * 2)
+        heightCollage: requiredHeight - @props.margin * 2
+
+      resultWidth += image.widthCollage + image.marginCollage * 2
+
+    lastElementWidth = row[row.length - 1].widthCollage + row[row.length - 1].marginCollage * 2 + (requiredWidth - resultWidth) - @props.margin * 2
+    row[row.length - 1].widthCollage = lastElementWidth
+
+  getItemNewWidth: (item, newHeight) ->
+    Math.round newHeight * item.ratio
+
   calculateImagesRatio: (images) ->
     imagesWithRatio = JSON.parse JSON.stringify images
+
     imagesWithRatio.forEach (image) ->
       image.ratio = image.width / image.height
 

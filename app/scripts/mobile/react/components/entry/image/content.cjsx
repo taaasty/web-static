@@ -19,14 +19,9 @@ ImageEntryContent = React.createClass
     </div>
 
   renderEntryImage: ->
-    media = @props.imageUrl || @props.imageAttachments
-
-    #TODO: Images Collage
-    #TODO: Thumbor optimizations
-
-    content = switch Object::toString.call media
-      when '[object String]' then <img src={ media } />
-      when '[object Array]'  then <ImageEntryAttachments imageAttachments={ media } />
+    content = switch
+      when @props.imageUrl         then <img src={ @props.imageUrl } />
+      when @props.imageAttachments then <ImageEntryAttachments imageAttachments={ @props.imageAttachments } />
       else ENTRY_WITHOUT_IMAGE_MESSAGE
 
     return <div className="media-image">
