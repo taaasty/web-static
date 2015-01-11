@@ -3,7 +3,7 @@ EntryMeta         = require '../meta/meta'
 EntryComments     = require '../comments/comments'
 { PropTypes } = React
 
-module.exports = React.createClass
+ImageEntry = React.createClass
   displayName: 'ImageEntry'
 
   propTypes:
@@ -22,3 +22,5 @@ module.exports = React.createClass
           commentsInfo={ @props.entry.comments_info }
           user={ @props.user } />
     </div>
+
+module.exports = ImageEntry

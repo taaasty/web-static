@@ -1,9 +1,10 @@
+ImageEntryAttachments = require './attachments'
 { PropTypes } = React
 
 #TODO: i18n
 ENTRY_WITHOUT_IMAGE_MESSAGE = 'У данного поста нет изображения.'
 
-module.exports = React.createClass
+ImageEntryContent = React.createClass
   displayName: 'ImageEntryContent'
 
   propTypes:
@@ -18,18 +19,13 @@ module.exports = React.createClass
     </div>
 
   renderEntryImage: ->
-    image = @props.imageUrl || @props.imageAttachments[0]?.image
-
-    #TODO: Images Collage
-    #TODO: Thumbor optimizations
-
-    content = switch typeof image
-      when 'string' then <img src={ image } />
-      when 'object' then <img src={ image.url }
-                              width={ image.geometry.width }
-                              height={ image.geometry.height } />
+    content = switch
+      when @props.imageUrl         then <img src={ @props.imageUrl } />
+      when @props.imageAttachments then <ImageEntryAttachments imageAttachments={ @props.imageAttachments } />
       else ENTRY_WITHOUT_IMAGE_MESSAGE
 
     return <div className="media-image">
              { content }
            </div>
+
+module.exports = ImageEntryContent

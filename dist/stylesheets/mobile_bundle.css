@@ -2750,7 +2750,13 @@ a.toolbar__popup-link:active {
   margin-left: -12px;
 }
 .post__content .collage {
-  margin: 0 -12px 1em;
+  overflow: hidden;
+}
+.post__content .collage .collage__item {
+  float: left;
+}
+.post__content .collage:after {
+  clear: both;
 }
 .post__content a {
   border-bottom: none;

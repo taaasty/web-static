@@ -2,7 +2,7 @@ RelationshipsStore = require '../../../stores/relationships'
 ConnectStoreMixin  = require '../../../mixins/connectStore'
 { PropTypes } = React
 
-module.exports = React.createClass
+FollowStatus = React.createClass
   displayName: 'FollowStatus'
   mixins: [ConnectStoreMixin(RelationshipsStore)]
 
@@ -19,3 +19,5 @@ module.exports = React.createClass
 
   getStateFromStore: ->
     status: RelationshipsStore.getStatus(@props.userId) || @props.status
+
+module.exports = FollowStatus
