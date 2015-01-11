@@ -27,7 +27,7 @@ SUBSCRIBED_TITLE     = 'Подписан'
 REQUESTED_TITLE      = 'Ждём одобрения'
 IGNORED_TITLE        = 'Заблокирован'
 
-module.exports = React.createClass
+FollowButton = React.createClass
   displayName: 'FollowButton'
   mixins: [ConnectStoreMixin(RelationshipsStore), RelationshipButtonMixin, ComponentMixin]
 
@@ -89,3 +89,5 @@ module.exports = React.createClass
 
   getStateFromStore: ->
     status: RelationshipsStore.getStatus(@props.user.id) || @props.status
+
+module.exports = FollowButton

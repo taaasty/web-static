@@ -2,7 +2,7 @@ cx            = require 'react/lib/cx'
 NumberHelpers = require '../../../../../shared/helpers/number'
 { PropTypes } = React
 
-module.exports = React.createClass
+HeroStatsItem = React.createClass
   displayName: 'HeroStatsItem'
 
   propTypes:
@@ -49,3 +49,5 @@ module.exports = React.createClass
     if @props.onClick
       e.preventDefault()
       @props.onClick()
+
+module.exports = HeroStatsItem

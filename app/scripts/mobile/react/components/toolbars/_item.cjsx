@@ -1,7 +1,7 @@
 cx = require 'react/lib/cx'
 { PropTypes } = React
 
-module.exports = React.createClass
+ToolbarItem = React.createClass
   displayName: 'ToolbarItem'
 
   propTypes:
@@ -35,3 +35,5 @@ module.exports = React.createClass
     if !@props.href && !@props.disabled
       e.preventDefault()
       @props.onSelect()
+
+module.exports = ToolbarItem
