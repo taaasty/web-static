@@ -21,7 +21,6 @@ ImageEntryContent = React.createClass
   renderEntryImage: ->
     media = @props.imageUrl || @props.imageAttachments
 
-    #TODO: Images Collage
     #TODO: Thumbor optimizations
 
     content = switch Object::toString.call media
