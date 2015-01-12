@@ -1,10 +1,8 @@
+EntryMeta     = require './meta/meta'
+EntryComments = require './comments/comments'
+EntryContent  = require './content/content'
 CurrentUserStore  = require '../../stores/currentUser'
 ConnectStoreMixin = require '../../mixins/connectStore'
-TextEntry         = require './text/text'
-ImageEntry        = require './image/image'
-VideoEntry        = require './video/video'
-QuoteEntry        = require './quote/quote'
-UnknownEntry      = require './unknown/unknown'
 { PropTypes } = React
 
 TEXT_TYPE  = 'text'
@@ -20,15 +18,25 @@ Entry = React.createClass
     entry: PropTypes.object.isRequired
 
   render: ->
-    Entry = switch @props.entry.type
-      when TEXT_TYPE  then TextEntry
-      when IMAGE_TYPE then ImageEntry
-      when VIDEO_TYPE then VideoEntry
-      when QUOTE_TYPE then QuoteEntry
-      else UnknownEntry
+    <div className={ @getEntryClasses() }>
+      <EntryContent entry={ @props.entry } />
+      <EntryMeta entry={ @props.entry } />
+      <EntryComments
+          entry={ @props.entry }
+          commentsInfo={ @props.entry.comments_info }
+          user={ @state.user } />
+    </div>
 
-    return <Entry entry={ @props.entry }
-                  user={ @state.user } />
+  getEntryClasses: ->
+    # Small hack, depends on layout
+    typeClass = switch @props.entry.type
+      when TEXT_TYPE  then 'text'
+      when IMAGE_TYPE then 'image'
+      when VIDEO_TYPE then 'video'
+      when QUOTE_TYPE then 'quote'
+      else 'text'
+
+    'post post--' + typeClass
 
   getStateFromStore: ->
     user: CurrentUserStore.getUser()
