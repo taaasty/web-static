@@ -10,25 +10,37 @@
   text-align: center;
   cursor: default;
   z-index: @zindex-follow-status;
-  opacity: .94;
   border-radius: 50%;
 
   .icon {
+    position: relative;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1;
     vertical-align: middle;
 
     .ico-plus;
   }
 
+  .spinner {
+    top: -1px;
+  }
+
   .hero & {
-    left: 310px;
-    top: 105px;
+    left: 305px;
+    top: 100px;
     transition-property: top, left;
     transition-timing-function: ease;
     transition-duration: 0.4s;
     transition-delay: 0.2s;
+  }
+
+  &.state--none {
+    cursor: pointer;
+
+    .icon {
+      top: -1px;
+    }
   }
 
   &.state--friend {
@@ -63,4 +75,25 @@
     }
   }
 
+  &.state--process {
+    background-color: @follow-status-process-bg;
+
+    .icon {
+      .ico-plus;
+    }
+  }
+
+  &.state--error {
+    background-color: @follow-status-error-bg;
+
+    .icon {
+      font-size: 17px;
+      top: -2px;
+
+      // TODO: Нужно будет добавить иконку в набор тейсти-иконок
+      &:before {
+        content: "!"
+      }
+    }
+  }
 }
