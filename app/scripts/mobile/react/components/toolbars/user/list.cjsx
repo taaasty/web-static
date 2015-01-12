@@ -22,7 +22,7 @@ UserToolbarList = React.createClass
       <ToolbarItem
           title="Профиль"
           icon="icon--profile"
-          onSelect={ @showProfile } />
+          href={ Routes.userProfile(@props.user.slug) } />
       <ToolbarItem
           title="Избранное"
           href={ Routes.favorites_url(@props.user.slug) }
@@ -46,11 +46,11 @@ UserToolbarList = React.createClass
       <ToolbarItem
           title="Дизайн дневника"
           icon="icon--drawing"
-          onSelect={ @showDesignSettings } />
+          href={ Routes.userDesignSettings(@props.user.slug) } />
       <ToolbarItem
           title="Настройки"
           icon="icon--cogwheel"
-          onSelect={ @showSettings } />
+          href={ Routes.userSettings(@props.user.slug) } />
       <ToolbarItem
           title="Выйти"
           href={ Routes.logout_path(@props.user.slug) }

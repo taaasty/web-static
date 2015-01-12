@@ -6265,7 +6265,9 @@ HeroActions = React.createClass({
       return null;
     }
     if (this.isCurrentUser()) {
-      return React.createElement(HeroActions_CurrentUser, null);
+      return React.createElement(HeroActions_CurrentUser, {
+        "user": this.props.user
+      });
     } else {
       return React.createElement(HeroActions_User, {
         "user": this.props.author,
@@ -6287,16 +6289,25 @@ module.exports = HeroActions;
 
 
 },{"./actions/currentUser":66,"./actions/user":72}],64:[function(require,module,exports){
-var HeroActions_SettingsButton;
+var HeroActions_SettingsButton, PropTypes;
+
+PropTypes = React.PropTypes;
 
 HeroActions_SettingsButton = React.createClass({
   displayName: 'HeroActions_SettingsButton',
+  propTypes: {
+    slug: PropTypes.string.isRequired
+  },
   render: function() {
     return React.createElement("button", {
-      "className": "profile-settings-button"
+      "className": "profile-settings-button",
+      "onClick": this.handleClick
     }, React.createElement("i", {
       "className": "icon icon--cogwheel"
     }));
+  },
+  handleClick: function() {
+    return window.location = Routes.userSettings(this.props.slug);
   }
 });
 
@@ -6311,10 +6322,14 @@ HeroActions_WriteMessageButton = React.createClass({
   displayName: 'HeroActions_WriteMessageButton',
   render: function() {
     return React.createElement("button", {
-      "className": "write-message-button"
+      "className": "write-message-button",
+      "onClick": this.handleClick
     }, React.createElement("i", {
       "className": "icon icon--letter"
     }));
+  },
+  handleClick: function() {
+    return alert('Ещё не работает');
   }
 });
 
@@ -6333,12 +6348,17 @@ BUTTON_TITLE = 'Это вы';
 
 HeroActions_CurrentUser = React.createClass({
   displayName: 'HeroActions_CurrentUser',
+  propTypes: {
+    user: PropTypes.object.isRequired
+  },
   render: function() {
     return React.createElement("div", {
       "className": "hero__actions"
     }, React.createElement("button", {
       "className": "follow-button"
-    }, BUTTON_TITLE), React.createElement(HeroActions_SettingsButton, null));
+    }, BUTTON_TITLE), React.createElement(HeroActions_SettingsButton, {
+      "slug": this.props.user.slug
+    }));
   }
 });
 
@@ -7326,7 +7346,7 @@ UserToolbarList = React.createClass({
     }), React.createElement(ToolbarItem, {
       "title": "Профиль",
       "icon": "icon--profile",
-      "onSelect": this.showProfile
+      "href": Routes.userProfile(this.props.user.slug)
     }), React.createElement(ToolbarItem, {
       "title": "Избранное",
       "href": Routes.favorites_url(this.props.user.slug),
@@ -7350,11 +7370,11 @@ UserToolbarList = React.createClass({
     }), React.createElement(ToolbarItem, {
       "title": "Дизайн дневника",
       "icon": "icon--drawing",
-      "onSelect": this.showDesignSettings
+      "href": Routes.userDesignSettings(this.props.user.slug)
     }), React.createElement(ToolbarItem, {
       "title": "Настройки",
       "icon": "icon--cogwheel",
-      "onSelect": this.showSettings
+      "href": Routes.userSettings(this.props.user.slug)
     }), React.createElement(ToolbarItem, {
       "title": "Выйти",
       "href": Routes.logout_path(this.props.user.slug),
@@ -7371,20 +7391,11 @@ module.exports = UserToolbarList;
 var UserToolbarListMixin;
 
 UserToolbarListMixin = {
-  showProfile: function() {
-    return console.log('showProfile');
-  },
   showFriends: function(panelName, userId) {
-    return console.log('showFriends');
-  },
-  showDesignSettings: function() {
-    return console.log('showDesignSettings');
-  },
-  showSettings: function() {
-    return console.log('showSettings');
+    return alert('Ещё не работает');
   },
   showMessages: function() {
-    return console.log('showMessages');
+    return alert('Ещё не работает');
   }
 };
 
@@ -8669,6 +8680,15 @@ Routes = {
   },
   entry_edit_url: function(userSlug, entryId) {
     return '/~' + userSlug + '/edit' + '/' + entryId;
+  },
+  userProfile: function(userSlug) {
+    return '/~' + userSlug + '/profile';
+  },
+  userSettings: function(userSlug) {
+    return '/~' + userSlug + '/settings';
+  },
+  userDesignSettings: function(userSlug) {
+    return '/~' + userSlug + '/design_settings';
   }
 };
 

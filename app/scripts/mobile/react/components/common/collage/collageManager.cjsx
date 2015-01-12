@@ -23,7 +23,6 @@ CollageManager = React.createClass
   componentDidMount: ->
     @updateWidthState()
 
-    # Doesn't need to update width state if we have onlu one image
     window.addEventListener 'resize', @updateWidthState
 
   componentWillUnmount: ->

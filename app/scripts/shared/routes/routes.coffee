@@ -17,4 +17,8 @@ Routes =
   private_entries_url:     (userSlug) -> '/~' + userSlug + '/privates'
   entry_edit_url: (userSlug, entryId) -> '/~' + userSlug + '/edit' + '/' + entryId
 
+  userProfile:        (userSlug) -> '/~' + userSlug + '/profile'
+  userSettings:       (userSlug) -> '/~' + userSlug + '/settings'
+  userDesignSettings: (userSlug) -> '/~' + userSlug + '/design_settings'
+
 module.exports = Routes

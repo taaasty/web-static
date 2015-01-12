@@ -14,7 +14,7 @@ HeroActions = React.createClass
     return null unless @isLogged()
 
     if @isCurrentUser()
-      <HeroActions_CurrentUser />
+      <HeroActions_CurrentUser user={ @props.user } />
     else
       <HeroActions_User
           user={ @props.author }
