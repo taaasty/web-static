@@ -7,9 +7,10 @@ Collage = React.createClass
   mixins: [CollageMixin]
 
   propTypes:
-    images: PropTypes.array.isRequired
-    width:  PropTypes.number.isRequired
-    margin: PropTypes.number.isRequired
+    images:       PropTypes.array.isRequired
+    width:        PropTypes.number.isRequired
+    margin:       PropTypes.number.isRequired
+    minRowHeight: PropTypes.number.isRequired
 
   render: ->
     <div className="collage">
@@ -21,10 +22,12 @@ Collage = React.createClass
 
     switch
       when images.length == 0 then []
-      when images.length == 1 then <CollageRow row={ @props.images } />
+      when images.length == 1
+        rows = @makeRows images
+        <CollageRow row={ rows[0] } />
       when images.length >= 2
-        processedImages = @processImages images
-        processedImages.map (row, i) ->
+        rows = @makeRows images
+        rows.map (row, i) ->
           <CollageRow row={ row } key={ i } />
       else []
 

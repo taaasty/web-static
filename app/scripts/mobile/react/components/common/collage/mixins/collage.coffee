@@ -6,26 +6,28 @@ assign = require 'react/lib/Object.assign'
 
 CollageMixin =
 
-  processImages: (images) ->
-    rows = []
-    rowIndex = 0
-    rowWidth = 0
-    newImages = @calculateImagesRatio images
+  makeRows: (images) ->
+    rows      = []
+    rowIndex  = 0
+    rowWidth  = 0
+    newImages = JSON.parse JSON.stringify images
+
+    @calculateImagesRatio newImages
 
     newImages.forEach (image, i) =>
       assign image,
-        widthCollage:  @getItemNewWidth image, 150
-        heightCollage: 150
-        marginCollage: @props.margin
+        width:  @getItemNewWidth image, @props.minRowHeight
+        height: @props.minRowHeight
+        margin: @props.margin
 
-      if i == 0 || rowWidth + image.widthCollage < @props.width
+      if i == 0 || rowWidth + image.width < @props.width
         rows[rowIndex] ?= []
         rows[rowIndex].push image
-        rowWidth += image.widthCollage + image.marginCollage * 2
+        rowWidth += image.width + image.margin * 2
       else
         @stretchRow rows[rowIndex], rowWidth
         rows[rowIndex + 1] = [image]
-        rowWidth = image.widthCollage + image.marginCollage * 2
+        rowWidth = image.width + image.margin * 2
         rowIndex++
 
       if i == newImages.length - 1
@@ -34,31 +36,25 @@ CollageMixin =
     rows
 
   stretchRow: (row, rowWidth) ->
-    rowHeight        = row[0].heightCollage + row[0].marginCollage * 2
-    requiredWidth    = @props.width
-    requiredHeight   = rowHeight / rowWidth * requiredWidth
-    resultWidth      = 0
-    lastElementWidth = 0
+    rowHeight      = row[0].height + row[0].margin * 2
+    requiredHeight = Math.round(rowHeight / rowWidth * @props.width)
+    resultWidth    = 0
+    lastElement    = row[row.length - 1]
 
     row.forEach (image, i) =>
       assign image,
-        widthCollage:  @getItemNewWidth image, (requiredHeight - @props.margin * 2)
-        heightCollage: requiredHeight - @props.margin * 2
+        width:  @getItemNewWidth image, (requiredHeight - @props.margin * 2)
+        height: requiredHeight - @props.margin * 2
 
-      resultWidth += image.widthCollage + image.marginCollage * 2
+      resultWidth += image.width + image.margin * 2
 
-    lastElementWidth = row[row.length - 1].widthCollage + row[row.length - 1].marginCollage * 2 + (requiredWidth - resultWidth) - @props.margin * 2
-    row[row.length - 1].widthCollage = lastElementWidth
+    lastElement.width = lastElement.width + lastElement.margin * 2 + (@props.width - resultWidth) - @props.margin * 2
 
   getItemNewWidth: (item, newHeight) ->
     Math.round newHeight * item.ratio
 
   calculateImagesRatio: (images) ->
-    imagesWithRatio = JSON.parse JSON.stringify images
-
-    imagesWithRatio.forEach (image) ->
+    images.forEach (image) ->
       image.ratio = image.width / image.height
-
-    imagesWithRatio
 
 module.exports = CollageMixin

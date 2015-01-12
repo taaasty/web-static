@@ -1,18 +1,21 @@
 Collage = require './collage'
 { PropTypes } = React
 
-MARGIN = 3
+MARGIN         = 0
+MIN_ROW_HEIGHT = 150
 
 CollageManager = React.createClass
   displayName: 'CollageManager'
 
   propTypes:
-    images: PropTypes.array.isRequired
-    width:  PropTypes.number
-    margin: PropTypes.number
+    images:       PropTypes.array.isRequired
+    width:        PropTypes.number
+    margin:       PropTypes.number
+    minRowHeight: PropTypes.number
 
   getDefaultProps: ->
-    margin: MARGIN
+    margin:       MARGIN
+    minRowHeight: MIN_ROW_HEIGHT
 
   getInitialState: ->
     width: @props.width || null
@@ -21,10 +24,10 @@ CollageManager = React.createClass
     @updateWidthState()
 
     # Doesn't need to update width state if we have onlu one image
-    window.addEventListener 'resize', @updateWidthState if @props.images.length > 1
+    window.addEventListener 'resize', @updateWidthState
 
   componentWillUnmount: ->
-    window.removeEventListener 'resize', @updateWidthState if @props.images.length > 1
+    window.removeEventListener 'resize', @updateWidthState
 
   render: ->
     #We can get access to parentNode when returning span instead of null
@@ -37,6 +40,6 @@ CollageManager = React.createClass
     #For now we will use width of parent
     parentWidth = @getDOMNode().parentNode.offsetWidth
 
-    @setState(width: parentWidth - @props.margin * 2)
+    @setState(width: parentWidth + @props.margin * 2)
 
 module.exports = CollageManager

@@ -13,13 +13,13 @@ ImageEntryAttachments = React.createClass
   getImages: ->
     @props.imageAttachments.map (imageAttachment) ->
       image    = imageAttachment.image
-      newImage = payload: {}
-
-      for key, value of image
-        if key isnt 'geometry'
-          newImage.payload[key] = value
-        else
-          newImage[k] = v for k, v of image[key]
+      newImage =
+        width:  image.geometry.width
+        height: image.geometry.height
+        payload:
+          id:    imageAttachment.id
+          url:   image.url
+          title: image.title
 
       newImage
 

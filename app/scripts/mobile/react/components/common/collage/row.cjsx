@@ -14,6 +14,10 @@ CollageRow = React.createClass
 
   renderRowItems: ->
     @props.row.map (image) ->
-      <CollageRowItem image={ image } key={ image.payload.path } />  
+      <CollageRowItem
+          width={ image.width }
+          height={ image.height }
+          imageUrl={ image.payload.url }
+          key={ image.payload.id } />  
 
 module.exports = CollageRow

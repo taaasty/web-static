@@ -4001,7 +4001,8 @@ Collage = React.createClass({
   propTypes: {
     images: PropTypes.array.isRequired,
     width: PropTypes.number.isRequired,
-    margin: PropTypes.number.isRequired
+    margin: PropTypes.number.isRequired,
+    minRowHeight: PropTypes.number.isRequired
   },
   render: function() {
     return React.createElement("div", {
@@ -4009,18 +4010,19 @@ Collage = React.createClass({
     }, this.renderItems());
   },
   renderItems: function() {
-    var images, processedImages;
+    var images, rows;
     images = this.props.images;
     switch (false) {
       case images.length !== 0:
         return [];
       case images.length !== 1:
+        rows = this.makeRows(images);
         return React.createElement(CollageRow, {
-          "row": this.props.images
+          "row": rows[0]
         });
       case !(images.length >= 2):
-        processedImages = this.processImages(images);
-        return processedImages.map(function(row, i) {
+        rows = this.makeRows(images);
+        return rows.map(function(row, i) {
           return React.createElement(CollageRow, {
             "row": row,
             "key": i
@@ -4037,24 +4039,28 @@ module.exports = Collage;
 
 
 },{"./mixins/collage":19,"./row":20}],18:[function(require,module,exports){
-var Collage, CollageManager, MARGIN, PropTypes;
+var Collage, CollageManager, MARGIN, MIN_ROW_HEIGHT, PropTypes;
 
 Collage = require('./collage');
 
 PropTypes = React.PropTypes;
 
-MARGIN = 3;
+MARGIN = 0;
+
+MIN_ROW_HEIGHT = 150;
 
 CollageManager = React.createClass({
   displayName: 'CollageManager',
   propTypes: {
     images: PropTypes.array.isRequired,
     width: PropTypes.number,
-    margin: PropTypes.number
+    margin: PropTypes.number,
+    minRowHeight: PropTypes.number
   },
   getDefaultProps: function() {
     return {
-      margin: MARGIN
+      margin: MARGIN,
+      minRowHeight: MIN_ROW_HEIGHT
     };
   },
   getInitialState: function() {
@@ -4064,14 +4070,10 @@ CollageManager = React.createClass({
   },
   componentDidMount: function() {
     this.updateWidthState();
-    if (this.props.images.length > 1) {
-      return window.addEventListener('resize', this.updateWidthState);
-    }
+    return window.addEventListener('resize', this.updateWidthState);
   },
   componentWillUnmount: function() {
-    if (this.props.images.length > 1) {
-      return window.removeEventListener('resize', this.updateWidthState);
-    }
+    return window.removeEventListener('resize', this.updateWidthState);
   },
   render: function() {
     if (this.hasWidth()) {
@@ -4089,7 +4091,7 @@ CollageManager = React.createClass({
     var parentWidth;
     parentWidth = this.getDOMNode().parentNode.offsetWidth;
     return this.setState({
-      width: parentWidth - this.props.margin * 2
+      width: parentWidth + this.props.margin * 2
     });
   }
 });
@@ -4104,29 +4106,30 @@ var CollageMixin, assign;
 assign = require('react/lib/Object.assign');
 
 CollageMixin = {
-  processImages: function(images) {
+  makeRows: function(images) {
     var newImages, rowIndex, rowWidth, rows;
     rows = [];
     rowIndex = 0;
     rowWidth = 0;
-    newImages = this.calculateImagesRatio(images);
+    newImages = JSON.parse(JSON.stringify(images));
+    this.calculateImagesRatio(newImages);
     newImages.forEach((function(_this) {
       return function(image, i) {
         assign(image, {
-          widthCollage: _this.getItemNewWidth(image, 150),
-          heightCollage: 150,
-          marginCollage: _this.props.margin
+          width: _this.getItemNewWidth(image, _this.props.minRowHeight),
+          height: _this.props.minRowHeight,
+          margin: _this.props.margin
         });
-        if (i === 0 || rowWidth + image.widthCollage < _this.props.width) {
+        if (i === 0 || rowWidth + image.width < _this.props.width) {
           if (rows[rowIndex] == null) {
             rows[rowIndex] = [];
           }
           rows[rowIndex].push(image);
-          rowWidth += image.widthCollage + image.marginCollage * 2;
+          rowWidth += image.width + image.margin * 2;
         } else {
           _this.stretchRow(rows[rowIndex], rowWidth);
           rows[rowIndex + 1] = [image];
-          rowWidth = image.widthCollage + image.marginCollage * 2;
+          rowWidth = image.width + image.margin * 2;
           rowIndex++;
         }
         if (i === newImages.length - 1) {
@@ -4137,34 +4140,29 @@ CollageMixin = {
     return rows;
   },
   stretchRow: function(row, rowWidth) {
-    var lastElementWidth, requiredHeight, requiredWidth, resultWidth, rowHeight;
-    rowHeight = row[0].heightCollage + row[0].marginCollage * 2;
-    requiredWidth = this.props.width;
-    requiredHeight = rowHeight / rowWidth * requiredWidth;
+    var lastElement, requiredHeight, resultWidth, rowHeight;
+    rowHeight = row[0].height + row[0].margin * 2;
+    requiredHeight = Math.round(rowHeight / rowWidth * this.props.width);
     resultWidth = 0;
-    lastElementWidth = 0;
+    lastElement = row[row.length - 1];
     row.forEach((function(_this) {
       return function(image, i) {
         assign(image, {
-          widthCollage: _this.getItemNewWidth(image, requiredHeight - _this.props.margin * 2),
-          heightCollage: requiredHeight - _this.props.margin * 2
+          width: _this.getItemNewWidth(image, requiredHeight - _this.props.margin * 2),
+          height: requiredHeight - _this.props.margin * 2
         });
-        return resultWidth += image.widthCollage + image.marginCollage * 2;
+        return resultWidth += image.width + image.margin * 2;
       };
     })(this));
-    lastElementWidth = row[row.length - 1].widthCollage + row[row.length - 1].marginCollage * 2 + (requiredWidth - resultWidth) - this.props.margin * 2;
-    return row[row.length - 1].widthCollage = lastElementWidth;
+    return lastElement.width = lastElement.width + lastElement.margin * 2 + (this.props.width - resultWidth) - this.props.margin * 2;
   },
   getItemNewWidth: function(item, newHeight) {
     return Math.round(newHeight * item.ratio);
   },
   calculateImagesRatio: function(images) {
-    var imagesWithRatio;
-    imagesWithRatio = JSON.parse(JSON.stringify(images));
-    imagesWithRatio.forEach(function(image) {
+    return images.forEach(function(image) {
       return image.ratio = image.width / image.height;
     });
-    return imagesWithRatio;
   }
 };
 
@@ -4192,8 +4190,10 @@ CollageRow = React.createClass({
   renderRowItems: function() {
     return this.props.row.map(function(image) {
       return React.createElement(CollageRowItem, {
-        "image": image,
-        "key": image.payload.path
+        "width": image.width,
+        "height": image.height,
+        "imageUrl": image.payload.url,
+        "key": image.payload.id
       });
     });
   }
@@ -4211,34 +4211,49 @@ PropTypes = React.PropTypes;
 CollageItem = React.createClass({
   displayName: 'CollageItem',
   propTypes: {
-    image: PropTypes.object.isRequired
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    margin: PropTypes.number,
+    imageUrl: PropTypes.string.isRequired
+  },
+  getInitialState: function() {
+    return {
+      width: this.props.width,
+      height: this.props.height
+    };
   },
   render: function() {
     return React.createElement("div", {
-      "className": "collage__item",
-      "style": this.getStyles()
+      "style": this.getContainerStyles(),
+      "className": "collage__item"
     }, React.createElement("img", {
-      "src": this.getImageUrl(),
-      "style": this.getStyles()
+      "style": this.getImageStyles(),
+      "src": this.getImageUrl()
     }));
   },
-  getStyles: function() {
-    var heightCollage, marginCollage, widthCollage, _ref;
-    _ref = this.props.image, widthCollage = _ref.widthCollage, heightCollage = _ref.heightCollage, marginCollage = _ref.marginCollage;
+  getContainerStyles: function() {
+    var height, margin, width, _ref;
+    _ref = this.props, width = _ref.width, height = _ref.height, margin = _ref.margin;
     return {
-      width: widthCollage,
-      height: heightCollage,
-      margin: marginCollage
+      width: width,
+      height: height,
+      margin: margin
+    };
+  },
+  getImageStyles: function() {
+    var height, margin, width, _ref;
+    _ref = this.props, width = _ref.width, height = _ref.height, margin = _ref.margin;
+    return {
+      width: width,
+      height: height
     };
   },
   getImageUrl: function() {
-    var heightCollage, marginCollage, widthCollage, _ref;
-    _ref = this.props.image, widthCollage = _ref.widthCollage, heightCollage = _ref.heightCollage, marginCollage = _ref.marginCollage;
-    if (widthCollage && heightCollage) {
-      return ThumborService.image_url(this.props.image.payload.url, widthCollage + 'x' + heightCollage);
-    } else {
-      return this.props.image.payload.url;
-    }
+    var height, width, _ref;
+    _ref = this.state, width = _ref.width, height = _ref.height;
+    width *= window.devicePixelRatio;
+    height *= window.devicePixelRatio;
+    return ThumborService.image_url(this.props.imageUrl, width + 'x' + height);
   }
 });
 
@@ -5365,23 +5380,17 @@ ImageEntryAttachments = React.createClass({
   },
   getImages: function() {
     return this.props.imageAttachments.map(function(imageAttachment) {
-      var image, k, key, newImage, v, value, _ref;
+      var image, newImage;
       image = imageAttachment.image;
       newImage = {
-        payload: {}
-      };
-      for (key in image) {
-        value = image[key];
-        if (key !== 'geometry') {
-          newImage.payload[key] = value;
-        } else {
-          _ref = image[key];
-          for (k in _ref) {
-            v = _ref[k];
-            newImage[k] = v;
-          }
+        width: image.geometry.width,
+        height: image.geometry.height,
+        payload: {
+          id: imageAttachment.id,
+          url: image.url,
+          title: image.title
         }
-      }
+      };
       return newImage;
     });
   }
