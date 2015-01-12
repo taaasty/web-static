@@ -147,8 +147,6 @@ require './react/components/shellboxes/confirm_registration'
 require './react/components/voting'
 require './react/components/shellbox_layer'
 require './react/components/buttons/load_more'
-require './react/components/follow_status'
-require './react/components/smart_follow_status'
 
 require './react/components/relationship_buttons/mixins/relationship'
 require './react/components/relationship_buttons/follow_button'
@@ -156,6 +154,9 @@ require './react/components/relationship_buttons/follower_button'
 require './react/components/relationship_buttons/ignore_button'
 require './react/components/relationship_buttons/request_button'
 require './react/components/relationship_buttons/guess_button'
+
+require './react/components/follow_status'
+require './react/components/smart_follow_status'
 
 require './react/components/editable_field'
 
