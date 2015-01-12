@@ -2025,6 +2025,7 @@ a.outline-auth-button {
 }
 .toolbar__popup-item {
   white-space: nowrap;
+  cursor: pointer;
 }
 .toolbar__popup-item .icon {
   width: 1em;

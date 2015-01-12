@@ -8735,32 +8735,35 @@ a.types-posts__item:hover .types-posts__text {
   top: .833em;
 }
 .follow-status {
-  width: 22px;
-  height: 22px;
+  width: 31px;
+  height: 31px;
   position: absolute;
   right: -4px;
   bottom: -4px;
-  background-color: #bbbbbb;
-  line-height: 22px;
+  background-color: #959595;
+  line-height: 31px;
   color: #ffffff;
   text-align: center;
   cursor: default;
   z-index: 150;
-  opacity: .94;
   border-radius: 50%;
 }
 .follow-status .icon {
+  position: relative;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1;
   vertical-align: middle;
 }
 .follow-status .icon:before {
   content: "\e601";
 }
+.follow-status .spinner {
+  top: -1px;
+}
 .hero .follow-status {
-  left: 310px;
-  top: 105px;
+  left: 305px;
+  top: 100px;
   -webkit-transition-property: top, left;
           transition-property: top, left;
   -webkit-transition-timing-function: ease;
@@ -8769,6 +8772,12 @@ a.types-posts__item:hover .types-posts__text {
           transition-duration: 0.4s;
   -webkit-transition-delay: 0.2s;
           transition-delay: 0.2s;
+}
+.follow-status.state--none {
+  cursor: pointer;
+}
+.follow-status.state--none .icon {
+  top: -1px;
 }
 .follow-status.state--friend {
   background-color: #38a870;
@@ -8793,6 +8802,22 @@ a.types-posts__item:hover .types-posts__text {
 }
 .follow-status.state--requested .icon:before {
   content: "\e601";
+}
+.follow-status.state--process {
+  background-color: #959595;
+}
+.follow-status.state--process .icon:before {
+  content: "\e601";
+}
+.follow-status.state--error {
+  background-color: #f3534b;
+}
+.follow-status.state--error .icon {
+  font-size: 17px;
+  top: -2px;
+}
+.follow-status.state--error .icon:before {
+  content: "!";
 }
 .logo {
   width: 200px;

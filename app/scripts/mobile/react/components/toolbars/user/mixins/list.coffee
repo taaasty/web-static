@@ -1,18 +1,9 @@
 UserToolbarListMixin =
 
-  showProfile: ->
-    console.log 'showProfile'
-
   showFriends: (panelName, userId) ->
-    console.log 'showFriends'
-
-  showDesignSettings: ->
-    console.log 'showDesignSettings'
-
-  showSettings: ->
-    console.log 'showSettings'
+    alert 'Ещё не работает'
 
   showMessages: ->
-    console.log 'showMessages'
+    alert 'Ещё не работает'
 
 module.exports = UserToolbarListMixin

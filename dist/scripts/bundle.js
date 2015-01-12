@@ -4157,10 +4157,6 @@ require('./react/components/shellbox_layer');
 
 require('./react/components/buttons/load_more');
 
-require('./react/components/follow_status');
-
-require('./react/components/smart_follow_status');
-
 require('./react/components/relationship_buttons/mixins/relationship');
 
 require('./react/components/relationship_buttons/follow_button');
@@ -4172,6 +4168,10 @@ require('./react/components/relationship_buttons/ignore_button');
 require('./react/components/relationship_buttons/request_button');
 
 require('./react/components/relationship_buttons/guess_button');
+
+require('./react/components/follow_status');
+
+require('./react/components/smart_follow_status');
 
 require('./react/components/editable_field');
 
@@ -9401,16 +9401,83 @@ window.FeedTlog = React.createClass({
 
 
 },{}],85:[function(require,module,exports){
+var CLASS_PREFIX_STATE, STATE_ERROR, STATE_PROCESS, TOOLTIP_TEXT_ERROR, TOOLTIP_TEXT_FRIEND, TOOLTIP_TEXT_IGNORED, TOOLTIP_TEXT_NONE, TOOLTIP_TEXT_PROCESS, TOOLTIP_TEXT_REQUESTED;
+
+CLASS_PREFIX_STATE = 'state--';
+
+STATE_ERROR = 'error';
+
+STATE_PROCESS = 'process';
+
+TOOLTIP_TEXT_NONE = 'Подписаться на тлог';
+
+TOOLTIP_TEXT_FRIEND = 'Вы подписаны на данный тлог';
+
+TOOLTIP_TEXT_IGNORED = 'Вам отказано в подписке на данный тлог';
+
+TOOLTIP_TEXT_REQUESTED = 'В ожидании';
+
+TOOLTIP_TEXT_PROCESS = 'Отправка запроса';
+
+TOOLTIP_TEXT_ERROR = 'Ошибка';
+
 window.FollowStatus = React.createClass({
   propTypes: {
-    status: React.PropTypes.string.isRequired
+    status: React.PropTypes.string.isRequired,
+    error: React.PropTypes.bool,
+    process: React.PropTypes.bool,
+    onClick: React.PropTypes.func
+  },
+  componentDidMount: function() {
+    var $followStatus;
+    $followStatus = $(this.getDOMNode());
+    return $followStatus.tooltip({
+      placement: 'bottom',
+      trigger: 'click hover'
+    });
+  },
+  componentWillUnmount: function() {
+    var $followStatus;
+    $followStatus = $(this.getDOMNode());
+    return $followStatus.tooltip('destroy');
   },
   render: function() {
+    var content, stateClass, tooltipText;
+    tooltipText = (function() {
+      switch (this.props.status) {
+        case 'none':
+          return TOOLTIP_TEXT_NONE;
+        case 'friend':
+          return TOOLTIP_TEXT_FRIEND;
+        case 'ignored':
+          return TOOLTIP_TEXT_IGNORED;
+        case 'requested':
+          return TOOLTIP_TEXT_REQUESTED;
+        default:
+          return console.warn('Неизвестный статус', this.props.status);
+      }
+    }).call(this);
+    content = React.createElement("i", {
+      "className": 'icon'
+    });
+    if (this.props.process) {
+      content = React.createElement(Spinner, {
+        "size": 15.
+      });
+    }
+    stateClass = this.props.status;
+    if (this.props.error) {
+      stateClass = STATE_ERROR;
+    }
+    if (this.props.process) {
+      stateClass = STATE_PROCESS;
+    }
+    stateClass = CLASS_PREFIX_STATE + stateClass;
     return React.createElement("span", {
-      "className": "follow-status state--" + this.props.status
-    }, React.createElement("i", {
-      "className": "icon"
-    }));
+      "data-original-title": tooltipText,
+      "className": 'follow-status ' + stateClass,
+      "onClick": this.props.onClick
+    }, content);
   }
 });
 
@@ -16594,13 +16661,19 @@ window.ConfirmRegistrationShellbox = React.createClass({
 
 },{"../auth/email/confirm_registration":23,"../auth/social_networks/confirm_registration":30}],195:[function(require,module,exports){
 window.SmartFollowStatus = React.createClass({
+  mixins: ['RelationshipMixin'],
   propTypes: {
     status: React.PropTypes.string.isRequired,
     tlogId: React.PropTypes.number.isRequired
   },
   getInitialState: function() {
     return {
-      status: this.props.status
+      relationship: {
+        user_id: this.props.tlogId
+      },
+      status: this.props.status,
+      isError: false,
+      isProcess: false
     };
   },
   componentDidMount: function() {
@@ -16611,8 +16684,16 @@ window.SmartFollowStatus = React.createClass({
   },
   render: function() {
     return React.createElement(FollowStatus, {
-      "status": this.state.status
+      "status": this.state.status,
+      "error": this.state.isError,
+      "process": this.state.isProcess,
+      "onClick": this.handleClick
     });
+  },
+  handleClick: function() {
+    if (this.state.status === 'none' && !this.state.isError && !this.state.isProcess) {
+      return this.follow();
+    }
   },
   updateFollowStatus: function(newStatus) {
     return this.setState({
@@ -22207,6 +22288,15 @@ Routes = {
   },
   entry_edit_url: function(userSlug, entryId) {
     return '/~' + userSlug + '/edit' + '/' + entryId;
+  },
+  userProfile: function(userSlug) {
+    return '/~' + userSlug + '/profile';
+  },
+  userSettings: function(userSlug) {
+    return '/~' + userSlug + '/settings';
+  },
+  userDesignSettings: function(userSlug) {
+    return '/~' + userSlug + '/design_settings';
   }
 };
 
