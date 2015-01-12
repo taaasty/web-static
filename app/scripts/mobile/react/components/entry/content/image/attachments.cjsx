@@ -1,4 +1,4 @@
-CollageManager = require '../../common/collage/collageManager'
+CollageManager = require '../../../common/collage/collageManager'
 { PropTypes } = React
 
 ImageEntryAttachments = React.createClass
