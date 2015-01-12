@@ -20,15 +20,19 @@ EmailLoginField = React.createClass
     return <div className="form-popup__item">
              <div className={ fieldClasses }>
                <AdaptiveInput
-                   value={ this.props.value }
+                   ref="input"
+                   value={ @props.value }
                    placeholder={ PLACEHOLDER }
                    autoFocus={ true }
                    required={ true }
-                   disabled={ this.props.isDisabled }
+                   disabled={ @props.isDisabled }
                    className="form-field__input"
-                   onChange={ this.props.onChange } />
+                   onChange={ @props.onChange } />
                <div className="form-field__bg" />
              </div>
            </div>
+
+  getValue: ->
+    @refs.input.getValue()
 
 module.exports = EmailLoginField
