@@ -1,7 +1,7 @@
 Avatar = require './avatar'
 { PropTypes } = React
 
-module.exports = React.createClass
+UserAvatar = React.createClass
   displayName: 'UserAvatar'
 
   propTypes:
@@ -12,3 +12,5 @@ module.exports = React.createClass
     <Avatar name={ @props.user.name }
             userpic={ @props.user.userpic }
             size={ @props.size } />
+
+module.exports = UserAvatar

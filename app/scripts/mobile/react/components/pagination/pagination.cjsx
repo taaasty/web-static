@@ -2,7 +2,7 @@
 
 TITLE = 'Смотреть все записи'
 
-module.exports = React.createClass
+Pagination = React.createClass
   displayName: 'Pagination'
 
   propTypes:
@@ -15,3 +15,5 @@ module.exports = React.createClass
         { TITLE }
       </a>
     </div>
+
+module.exports = Pagination
