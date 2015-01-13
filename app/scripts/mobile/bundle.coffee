@@ -16,6 +16,7 @@ require './react/components/toolbars/feed'
 # /*==========  Pages  ==========*/
 
 window.EntryPage = require './react/pages/entry'
+window.TlogPage  = require './react/pages/tlog'
 
 # /*==========  Stores  ==========*/
 

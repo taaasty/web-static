@@ -1,4 +1,4 @@
-PageMixin =
+EntryPageMixin =
 
   getDefaultProps: ->
     currentUser:
@@ -519,4 +519,4 @@ PageMixin =
         type: "quote"
         updated_at: "2014-12-25T12:13:44.000+03:00"
 
-module.exports = PageMixin
+module.exports = EntryPageMixin

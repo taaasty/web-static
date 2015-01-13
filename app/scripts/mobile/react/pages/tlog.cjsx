@@ -2,19 +2,20 @@ CurrentUserStore   = require '../stores/currentUser'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
 Hero               = require '../components/hero/hero'
-Entry              = require '../components/entry/entry'
-EntryPagination    = require '../components/pagination/entry'
-# EntryPageMixin     = require './mixins/entry'
+Tlog               = require '../components/tlog/tlog'
+TlogPagination     = require '../components/pagination/tlog'
+TlogPageMixin      = require './mixins/tlog'
 { PropTypes } = React
 
-EntryPage = React.createClass
-  displayName: 'EntryPage'
-  # mixins: [EntryPageMixin]
+TlogPage = React.createClass
+  displayName: 'TlogPage'
+  mixins: [TlogPageMixin]
 
   propTypes:
     currentUser: PropTypes.object
     tlog:        PropTypes.object.isRequired
-    entry:       PropTypes.object.isRequired
+    entries:     PropTypes.array.isRequired
+    pagination:  PropTypes.object.isRequired
 
   componentWillMount: ->
     # Temporarily initialize CurrentUserStore here. Later on it will be set at
@@ -31,10 +32,13 @@ EntryPage = React.createClass
           <Hero tlog={ @props.tlog } />
         </div>
         <div className="layout__body">
-          <Entry entry={ @props.entry } />
-          <EntryPagination tlogUrl={ @props.tlog.tlog_url } />
+          <Tlog entries={ @props.entries } />
+          <TlogPagination
+              slug={ @props.tlog.author.slug }
+              currentPage={ @props.pagination.currentPage }
+              totalPagesCount={ @props.pagination.totalPagesCount } />
         </div>
       </div>
     </div>
 
-module.exports = EntryPage
+module.exports = TlogPage

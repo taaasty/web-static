@@ -22312,6 +22312,9 @@ Routes = {
   },
   userDesignSettings: function(userSlug) {
     return '/~' + userSlug + '/design_settings';
+  },
+  pagination: function(userSlug, page) {
+    return '/~' + userSlug + '/page/' + page;
   }
 };
 
