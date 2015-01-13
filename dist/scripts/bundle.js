@@ -5291,11 +5291,13 @@ window.Email = React.createClass({
     }, TITLE)), React.createElement("div", {
       "className": "form-popup__body"
     }, React.createElement("form", null, React.createElement(EmailLoginField, {
+      "ref": "login",
       "value": this.state.formData.login,
       "isDisabled": this.state.isProcess,
       "isError": this.state.isLoginError,
       "onChange": this.handleLoginChange
     }), React.createElement(EmailPasswordField, {
+      "ref": "password",
       "value": this.state.formData.password,
       "isDisabled": this.state.isProcess,
       "isError": this.state.isPasswordError,
@@ -5336,6 +5338,7 @@ EmailLoginField = React.createClass({
     }, React.createElement("div", {
       "className": fieldClasses
     }, React.createElement(AdaptiveInput, {
+      "ref": "input",
       "value": this.props.value,
       "placeholder": PLACEHOLDER,
       "autoFocus": true,
@@ -5346,6 +5349,9 @@ EmailLoginField = React.createClass({
     }), React.createElement("div", {
       "className": "form-field__bg"
     })));
+  },
+  getValue: function() {
+    return this.refs.input.getValue();
   }
 });
 
@@ -5379,6 +5385,7 @@ EmailPasswordField = React.createClass({
     }, React.createElement("div", {
       "className": fieldClasses
     }, React.createElement(AdaptiveInput, {
+      "ref": "input",
       "type": "password",
       "value": this.props.value,
       "placeholder": PLACEHOLDER,
@@ -5389,6 +5396,9 @@ EmailPasswordField = React.createClass({
     }), React.createElement("div", {
       "className": "form-field__bg"
     })));
+  },
+  getValue: function() {
+    return this.refs.input.getValue();
   }
 });
 
@@ -5413,8 +5423,9 @@ PASSWORD_EMPTY_ERROR = 'Вы забыли ввести пароль';
 
 EmailMixin = {
   isValid: function() {
-    var login, password, _ref;
-    _ref = this.state.formData, login = _ref.login, password = _ref.password;
+    var login, password;
+    login = this.refs.login.getValue();
+    password = this.refs.password.getValue();
     switch (false) {
       case login.length !== 0:
         TastyNotifyController.notifyError(LOGIN_EMPTY_ERROR);
@@ -5427,8 +5438,9 @@ EmailMixin = {
     }
   },
   login: function() {
-    var login, password, _ref;
-    _ref = this.state.formData, login = _ref.login, password = _ref.password;
+    var login, password;
+    login = this.refs.login.getValue();
+    password = this.refs.password.getValue();
     this.setState({
       isProcess: true
     });
@@ -6267,6 +6279,9 @@ window.AdaptiveInput = React.createClass({
       "className": this.props.className,
       "onChange": this.handleChange
     });
+  },
+  getValue: function() {
+    return this.getDOMNode().value;
   },
   handleChange: function() {
     return this.props.onChange(this.getDOMNode().value);

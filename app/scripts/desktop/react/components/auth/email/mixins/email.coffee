@@ -11,7 +11,8 @@ PASSWORD_EMPTY_ERROR = 'Вы забыли ввести пароль'
 EmailMixin =
 
   isValid: ->
-    { login, password } = @state.formData
+    login    = @refs.login.getValue()
+    password = @refs.password.getValue()
 
     switch
       when login.length == 0
@@ -23,7 +24,8 @@ EmailMixin =
       else return true
 
   login: ->
-    { login, password } = @state.formData
+    login    = @refs.login.getValue()
+    password = @refs.password.getValue()
 
     @setState(isProcess: true)
 

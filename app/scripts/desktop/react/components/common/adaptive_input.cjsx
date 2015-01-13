@@ -27,5 +27,8 @@ window.AdaptiveInput = React.createClass
            className={ this.props.className }
            onChange={ this.handleChange } />
 
+  getValue: ->
+    @getDOMNode().value
+
   handleChange: ->
     @props.onChange @getDOMNode().value

@@ -19,10 +19,9 @@ window.Email = React.createClass
     password: ''
 
   getInitialState: ->
-    formData: {
+    formData:
       login:    @props.login
       password: @props.password
-    }
     isProcess:       false
     isLoginError:    false
     isPasswordError: false
@@ -37,19 +36,21 @@ window.Email = React.createClass
              <div className="form-popup__body">
                <form>
                  <EmailLoginField
-                     value={ this.state.formData.login }
-                     isDisabled={ this.state.isProcess }
-                     isError={ this.state.isLoginError }
-                     onChange={ this.handleLoginChange } />
+                     ref="login"
+                     value={ @state.formData.login }
+                     isDisabled={ @state.isProcess }
+                     isError={ @state.isLoginError }
+                     onChange={ @handleLoginChange } />
                  <EmailPasswordField
-                     value={ this.state.formData.password }
-                     isDisabled={ this.state.isProcess }
-                     isError={ this.state.isPasswordError }
-                     onChange={ this.handlePasswordChange } />
+                     ref="password"
+                     value={ @state.formData.password }
+                     isDisabled={ @state.isProcess }
+                     isError={ @state.isPasswordError }
+                     onChange={ @handlePasswordChange } />
                  <EmailSubmitButton
-                     isProcess={ this.state.isProcess }
-                     isDisabled={ this.state.isProcess }
-                     onSubmit={ this.handleSubmit } />
+                     isProcess={ @state.isProcess }
+                     isDisabled={ @state.isProcess }
+                     onSubmit={ @handleSubmit } />
                </form>
              </div>
              { footer }

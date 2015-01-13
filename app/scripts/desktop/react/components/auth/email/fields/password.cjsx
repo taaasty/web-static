@@ -20,15 +20,19 @@ EmailPasswordField = React.createClass
     return <div className="form-popup__item">
              <div className={ fieldClasses }>
                <AdaptiveInput
+                   ref="input"
                    type="password"
-                   value={ this.props.value }
+                   value={ @props.value }
                    placeholder={ PLACEHOLDER }
                    required={ true }
-                   disabled={ this.props.isDisabled }
+                   disabled={ @props.isDisabled }
                    className="form-field__input"
-                   onChange={ this.props.onChange } />
+                   onChange={ @props.onChange } />
                <div className="form-field__bg" />
              </div>
            </div>
+
+  getValue: ->
+    @refs.input.getValue()
 
 module.exports = EmailPasswordField
