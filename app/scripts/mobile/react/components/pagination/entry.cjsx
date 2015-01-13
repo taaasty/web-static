@@ -2,8 +2,8 @@
 
 TITLE = 'Смотреть все записи'
 
-Pagination = React.createClass
-  displayName: 'Pagination'
+EntryPagination = React.createClass
+  displayName: 'EntryPagination'
 
   propTypes:
     tlogUrl: PropTypes.string.isRequired
@@ -16,4 +16,4 @@ Pagination = React.createClass
       </a>
     </div>
 
-module.exports = Pagination
+module.exports = EntryPagination

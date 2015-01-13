@@ -21,4 +21,6 @@ Routes =
   userSettings:       (userSlug) -> '/~' + userSlug + '/settings'
   userDesignSettings: (userSlug) -> '/~' + userSlug + '/design_settings'
 
+  pagination: (userSlug, page) -> '/~' + userSlug + '/page/' + page
+
 module.exports = Routes

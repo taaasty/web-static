@@ -34,8 +34,9 @@ CollageItem = React.createClass
     { width, height } = @state
 
     #FIXME: Probably will be better if pixelRation will compute in ThumborService
-    width  *= window.devicePixelRatio
-    height *= window.devicePixelRatio
+    if window.devicePixelRatio?
+      width  *= window.devicePixelRatio
+      height *= window.devicePixelRatio
 
     ThumborService.image_url @props.imageUrl, width + 'x' + height
 
