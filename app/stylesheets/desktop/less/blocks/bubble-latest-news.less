@@ -1,0 +1,133 @@
+.bubble-latest-news {
+  max-width: 324px;
+  position: absolute;
+  display: inline-block;
+  padding: 8px 14px;
+  top: 30px;
+  left: 130px;
+  font-size: @bubble-latest-news-font-size;
+  line-height: @bubble-latest-news-line-height;
+  color: @bubble-latest-news-color;
+  user-select: none;
+  z-index: @zindex-bubble-latest-news;
+
+  a {
+    color: inherit;
+  }
+}
+
+.bubble-latest-news__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.bubble-latest-news__text {
+  position: relative;
+}
+
+.bubble-latest-news__bg-top,
+.bubble-latest-news__bg-left,
+.bubble-latest-news__bg-right,
+.bubble-latest-news__bg-bottom {
+  position: absolute;
+  font-size: 0;
+  line-height: 0;
+  border-width: 0;
+}
+
+.bubble-latest-news__bg-top {
+  height: @bubble-latest-news-border-radius - @bubble-latest-news-border-width;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-top: @bubble-latest-news-border-width solid;
+  border-right: @bubble-latest-news-border-width solid;
+  border-left: @bubble-latest-news-border-width solid;
+  border-radius: @bubble-latest-news-border-radius @bubble-latest-news-border-radius 0 0;
+}
+
+.bubble-latest-news__bg-bottom {
+  height: @bubble-latest-news-border-radius;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  &:before {
+    content: "";
+    width: 35px;
+    height: @bubble-latest-news-border-radius - @bubble-latest-news-border-width;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-bottom: @bubble-latest-news-border-width solid;
+    border-left: @bubble-latest-news-border-width solid;
+    border-radius: 0 0 0 @bubble-latest-news-border-radius;
+  }
+
+  &:after {
+    content: "";
+    height: @bubble-latest-news-border-radius - @bubble-latest-news-border-width;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 49px;
+    border-right: @bubble-latest-news-border-width solid;
+    border-bottom: @bubble-latest-news-border-width solid;
+    border-radius: 0 0 @bubble-latest-news-border-radius 0;
+  }
+}
+
+.bubble-latest-news__bg-left {
+  width: 0;
+  top: @bubble-latest-news-border-radius;
+  bottom: @bubble-latest-news-border-radius;
+  left: 0;
+  border-left: 1px solid;
+}
+
+.bubble-latest-news__bg-right {
+  width: 0;
+  top: @bubble-latest-news-border-radius;
+  bottom: @bubble-latest-news-border-radius;
+  right: 0;
+  border-right: @bubble-latest-news-border-width solid;
+}
+
+.bubble-latest-news__bg-arrow {
+  width: 12px;
+  height: 12px;
+  margin-top: -@bubble-latest-news-border-width;
+  position: absolute;
+  top: 100%;
+  left: 36px;
+  border-left: @bubble-latest-news-border-width solid;
+  overflow: hidden;
+
+  &:after {
+    content: "";
+    height: 18px;
+    position: absolute;
+    left: -1px;
+    bottom: 0;
+    border-right: @bubble-latest-news-border-width solid;
+    transform-origin: 0 100%;
+    transform: rotate(47deg);
+  }
+}
+
+.bubble-latest-news__bg-top,
+.bubble-latest-news__bg-left,
+.bubble-latest-news__bg-right,
+.bubble-latest-news__bg-bottom:before,
+.bubble-latest-news__bg-bottom:after,
+.bubble-latest-news__bg-arrow,
+.bubble-latest-news__bg-arrow:after {
+  border-color: @bubble-latest-news-border-color;
+
+  .bubble-latest-news__link:hover & {
+    border-color: @bubble-latest-news-border-color-hover;
+  }
+}
