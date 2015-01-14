@@ -454,3 +454,43 @@
   20%  { opacity: 0; }
   100% { opacity: 1; }
 }
+
+
+
+
+
+// ======= EXPERIMENT ======== //
+.toolbar--main {
+  padding: 0;
+  top: 0;
+  left: 0;
+  background: none;
+
+  .toolbar__popup {
+    width: auto;
+    height: 100%;
+    margin-top: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    visibility: visible;
+    overflow-y: auto;
+    border-radius: 0;
+    transform: translate(0, 0);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .toolbar__popup-link {
+    padding-right: 16px;
+    padding-left: 16px;
+
+    .icon {
+      margin-right: 0;
+    }
+  }
+
+  .toolbar__popup-text {
+    display: none;
+  }
+}
