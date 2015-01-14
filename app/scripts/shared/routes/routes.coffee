@@ -1,4 +1,5 @@
 Routes =
+
   ## TODO Это не path, это url!
   logout_path: -> '/logout'
 
@@ -21,6 +22,7 @@ Routes =
   userSettings:       (userSlug) -> '/~' + userSlug + '/settings'
   userDesignSettings: (userSlug) -> '/~' + userSlug + '/design_settings'
 
-  pagination: (userSlug, page) -> '/~' + userSlug + '/page/' + page
+  tlogPagination:   (userSlug, page) -> '/~' + userSlug + '/page/' + page
+  daylogPagination: (userSlug, page) -> '/~' + userSlug + '/' + page
 
 module.exports = Routes

@@ -4,12 +4,11 @@ cx = require 'react/lib/cx'
 #TODO: i18n
 TITLE = 'Ранее'
 
-TlogPaginationPrev = React.createClass
-  displayName: 'TlogPaginationPrev'
+PaginationPrev = React.createClass
+  displayName: 'PaginationPrev'
 
   propTypes:
-    page:   PropTypes.number.isRequired
-    slug:   PropTypes.string.isRequired
+    href:   PropTypes.string.isRequired
     single: PropTypes.bool
 
   getDefaultProps: ->
@@ -21,9 +20,9 @@ TlogPaginationPrev = React.createClass
       'pagination__item--prev': !@props.single
 
     return <a className={ prevClasses }
-              href={ Routes.pagination(@props.slug, @props.page) }
+              href={ @props.href }
               title={ TITLE }>
              { TITLE }
            </a>
 
-module.exports = TlogPaginationPrev
+module.exports = PaginationPrev

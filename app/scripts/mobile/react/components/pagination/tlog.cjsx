@@ -1,8 +1,6 @@
-TlogPaginationPrev = require './items/prev'
-TlogPaginationNext = require './items/next'
+PaginationPrev = require './items/prev'
+PaginationNext = require './items/next'
 { PropTypes } = React
-
-TITLE = 'Смотреть все записи'
 
 TlogPagination = React.createClass
   displayName: 'TlogPagination'
@@ -20,35 +18,31 @@ TlogPagination = React.createClass
   renderPaginationItems: ->
     { currentPage, totalPagesCount, slug } = @props
 
+    paginationItems = []
+
     switch
-      when currentPage == 1 and totalPagesCount == 1 then []
       when currentPage == 1 and totalPagesCount > 1
-        <TlogPaginationPrev
-            page={ currentPage + 1 }
-            slug={ slug }
-            single={ true } />
+        paginationItems.push <PaginationPrev
+                                 href={ Routes.tlogPagination(@props.slug, currentPage + 1) }
+                                 single={ true } />
       when totalPagesCount > currentPage > 1
-        [
-          <TlogPaginationPrev
-              page={ currentPage + 1 }
-              slug={ slug }
+        paginationItems.push [
+          <PaginationPrev
+              href={ Routes.tlogPagination(@props.slug, currentPage + 1) }
               key="prev" />
-          <TlogPaginationNext
-              page={ currentPage - 1 }
-              slug={ slug }
+          <PaginationNext
+              href={ Routes.tlogPagination(@props.slug, currentPage - 1) }
               key="next" />
         ]
       when currentPage > totalPagesCount
-        <TlogPaginationNext
-              page={ totalPagesCount }
-              slug={ slug }
-              single={ true }
-              key="next" />
+        paginationItems.push <PaginationNext
+                                 href={ Routes.tlogPagination(@props.slug, totalPagesCount) }
+                                 single={ true } />
       when currentPage == totalPagesCount
-        <TlogPaginationNext
-            page={ currentPage - 1 }
-            slug={ slug }
-            single={ true } />
-      else []
+        paginationItems.push <PaginationNext
+                                 href={ Routes.tlogPagination(@props.slug, currentPage - 1) }
+                                 single={ true } />
+
+    paginationItems
 
 module.exports = TlogPagination

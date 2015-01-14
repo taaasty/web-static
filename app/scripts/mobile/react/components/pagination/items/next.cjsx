@@ -4,12 +4,11 @@ cx = require 'react/lib/cx'
 #TODO: i18n
 TITLE = 'Позже'
 
-TlogPaginationNext = React.createClass
-  displayName: 'TlogPaginationNext'
+PaginationNext = React.createClass
+  displayName: 'PaginationNext'
 
   propTypes:
-    page:   PropTypes.number.isRequired
-    slug:   PropTypes.string.isRequired
+    href:   PropTypes.string.isRequired
     single: PropTypes.bool
 
   getDefaultProps: ->
@@ -21,9 +20,9 @@ TlogPaginationNext = React.createClass
       'pagination__item--next': !@props.single
 
     return <a className={ nextClasses }
-              href={ Routes.pagination(@props.slug, @props.page) }
+              href={ @props.href }
               title={ TITLE }>
              { TITLE }
            </a>
 
-module.exports = TlogPaginationNext
+module.exports = PaginationNext
