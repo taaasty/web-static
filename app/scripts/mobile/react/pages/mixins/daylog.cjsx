@@ -1,4 +1,4 @@
-DaylogPageMixin =
+TlogDaylogPageMixin =
 
   getDefaultProps: ->
     currentUser:
@@ -580,4 +580,4 @@ DaylogPageMixin =
       prevDay: '2014/12/25'
       nextDay: '2015/12/26'
 
-module.exports = DaylogPageMixin
+module.exports = TlogDaylogPageMixin
