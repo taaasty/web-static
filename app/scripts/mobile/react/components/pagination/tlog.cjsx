@@ -32,14 +32,18 @@ TlogPagination = React.createClass
           <TlogPaginationPrev
               page={ currentPage + 1 }
               slug={ slug }
-              single={ false } 
               key="prev" />
           <TlogPaginationNext
               page={ currentPage - 1 }
               slug={ slug }
-              single={ false } 
               key="next" />
         ]
+      when currentPage > totalPagesCount
+        <TlogPaginationNext
+              page={ totalPagesCount }
+              slug={ slug }
+              single={ true }
+              key="next" />
       when currentPage == totalPagesCount
         <TlogPaginationNext
             page={ currentPage - 1 }

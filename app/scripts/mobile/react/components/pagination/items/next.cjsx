@@ -10,7 +10,10 @@ TlogPaginationNext = React.createClass
   propTypes:
     page:   PropTypes.number.isRequired
     slug:   PropTypes.string.isRequired
-    single: PropTypes.bool.isRequired
+    single: PropTypes.bool
+
+  getDefaultProps: ->
+    single: false
 
   render: ->
     nextClasses = cx

@@ -1,6 +1,7 @@
-CurrentUserStore  = require '../../stores/currentUser'
-ConnectStoreMixin = require '../../mixins/connectStore'
-Entry             = require '../entry/entry'
+CurrentUserStore     = require '../../stores/currentUser'
+ConnectStoreMixin    = require '../../mixins/connectStore'
+TlogEmptyPageMessage = require './emptyPageMessage'
+Entry                = require '../entry/entry'
 { PropTypes } = React
 
 Tlog = React.createClass
@@ -16,8 +17,11 @@ Tlog = React.createClass
     </div>
 
   renderEntryList: ->
-    @props.entries.map (entry) ->
-      <Entry entry={ entry } key={ entry.id } />
+    if @props.entries.length
+      @props.entries.map (entry) ->
+        <Entry entry={ entry } key={ entry.id } />
+    else
+      <TlogEmptyPageMessage />
 
   getStateFromStore: ->
     user: CurrentUserStore.getUser()
