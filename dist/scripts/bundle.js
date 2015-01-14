@@ -22313,8 +22313,11 @@ Routes = {
   userDesignSettings: function(userSlug) {
     return '/~' + userSlug + '/design_settings';
   },
-  pagination: function(userSlug, page) {
+  tlogPagination: function(userSlug, page) {
     return '/~' + userSlug + '/page/' + page;
+  },
+  daylogPagination: function(userSlug, page) {
+    return '/~' + userSlug + '/' + page;
   }
 };
 
