@@ -1,4 +1,4 @@
-TlogPageMixin =
+TlogRegularPageMixin =
 
   getDefaultProps: ->
     currentUser:
@@ -580,4 +580,4 @@ TlogPageMixin =
       currentPage: 2
       totalPagesCount: 10
 
-module.exports = TlogPageMixin
+module.exports = TlogRegularPageMixin

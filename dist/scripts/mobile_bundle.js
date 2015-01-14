@@ -3142,9 +3142,9 @@ require('./react/components/toolbars/feed');
 
 window.EntryPage = require('./react/pages/entry');
 
-window.TlogPage = require('./react/pages/tlog');
+window.TlogRegularPage = require('./react/pages/tlogRegular');
 
-window.DaylogPage = require('./react/pages/daylog');
+window.TlogDaylogPage = require('./react/pages/tlogDaylog');
 
 require('./react/stores/currentUser');
 
@@ -3156,7 +3156,7 @@ ReactApp.start();
 
 
 
-},{"../shared/react/services/thumbor":121,"../shared/routes/api":122,"../shared/routes/routes":123,"./locales/locales":5,"./react/application":11,"./react/components/toolbars/feed":92,"./react/components/toolbars/user":96,"./react/pages/daylog":110,"./react/pages/entry":111,"./react/pages/tlog":112,"./react/stores/comments":114,"./react/stores/currentUser":115,"./react/stores/relationships":116,"./resources/libs":117}],5:[function(require,module,exports){
+},{"../shared/react/services/thumbor":121,"../shared/routes/api":122,"../shared/routes/routes":123,"./locales/locales":5,"./react/application":11,"./react/components/toolbars/feed":92,"./react/components/toolbars/user":96,"./react/pages/entry":110,"./react/pages/tlogDaylog":111,"./react/pages/tlogRegular":112,"./react/stores/comments":114,"./react/stores/currentUser":115,"./react/stores/relationships":116,"./resources/libs":117}],5:[function(require,module,exports){
 var momentLocales;
 
 momentLocales = {
@@ -7319,30 +7319,32 @@ TlogPagination = React.createClass({
       case !(currentPage === 1 && totalPagesCount > 1):
         paginationItems.push(React.createElement(PaginationPrev, {
           "href": Routes.tlogPagination(this.props.slug, currentPage + 1),
-          "single": true
+          "single": true,
+          "key": "prev"
         }));
         break;
       case !((totalPagesCount > currentPage && currentPage > 1)):
-        paginationItems.push([
-          React.createElement(PaginationPrev, {
-            "href": Routes.tlogPagination(this.props.slug, currentPage + 1),
-            "key": "prev"
-          }), React.createElement(PaginationNext, {
-            "href": Routes.tlogPagination(this.props.slug, currentPage - 1),
-            "key": "next"
-          })
-        ]);
+        paginationItems.push(React.createElement(PaginationPrev, {
+          "href": Routes.tlogPagination(this.props.slug, currentPage + 1),
+          "key": "prev"
+        }));
+        paginationItems.push(React.createElement(PaginationNext, {
+          "href": Routes.tlogPagination(this.props.slug, currentPage - 1),
+          "key": "next"
+        }));
         break;
       case !(currentPage > totalPagesCount):
         paginationItems.push(React.createElement(PaginationNext, {
           "href": Routes.tlogPagination(this.props.slug, totalPagesCount),
-          "single": true
+          "single": true,
+          "key": "next"
         }));
         break;
       case currentPage !== totalPagesCount:
         paginationItems.push(React.createElement(PaginationNext, {
           "href": Routes.tlogPagination(this.props.slug, currentPage - 1),
-          "single": true
+          "single": true,
+          "key": "next"
         }));
     }
     return paginationItems;
@@ -8164,57 +8166,6 @@ module.exports = DropdownMenuMixin;
 
 
 },{}],110:[function(require,module,exports){
-var CurrentUserStore, Daylog, DaylogPage, DaylogPagination, FeedToolbarManager, Hero, PropTypes, UserToolbarManager;
-
-CurrentUserStore = require('../stores/currentUser');
-
-FeedToolbarManager = require('../components/toolbars/feedManager');
-
-UserToolbarManager = require('../components/toolbars/userManager');
-
-Hero = require('../components/hero/hero');
-
-Daylog = require('../components/daylog/daylog');
-
-DaylogPagination = require('../components/pagination/daylog');
-
-PropTypes = React.PropTypes;
-
-DaylogPage = React.createClass({
-  displayName: 'DaylogPage',
-  propTypes: {
-    currentUser: PropTypes.object,
-    tlog: PropTypes.object.isRequired,
-    entries: PropTypes.array.isRequired,
-    pagination: PropTypes.object.isRequired
-  },
-  componentWillMount: function() {
-    return CurrentUserStore.initialize(this.props.currentUser);
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement("div", {
-      "className": "layout"
-    }, React.createElement("div", {
-      "className": "layout__header"
-    }, React.createElement(Hero, {
-      "tlog": this.props.tlog
-    })), React.createElement("div", {
-      "className": "layout__body"
-    }, React.createElement(Daylog, {
-      "entries": this.props.entries
-    }), React.createElement(DaylogPagination, {
-      "slug": this.props.tlog.author.slug,
-      "prevDay": this.props.pagination.prevDay,
-      "nextDay": this.props.pagination.nextDay
-    }))));
-  }
-});
-
-module.exports = DaylogPage;
-
-
-
-},{"../components/daylog/daylog":24,"../components/hero/hero":81,"../components/pagination/daylog":84,"../components/toolbars/feedManager":94,"../components/toolbars/userManager":99,"../stores/currentUser":115}],111:[function(require,module,exports){
 var CurrentUserStore, Entry, EntryPage, EntryPagination, FeedToolbarManager, Hero, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -8262,8 +8213,59 @@ module.exports = EntryPage;
 
 
 
-},{"../components/entry/entry":55,"../components/hero/hero":81,"../components/pagination/entry":85,"../components/toolbars/feedManager":94,"../components/toolbars/userManager":99,"../stores/currentUser":115}],112:[function(require,module,exports){
-var CurrentUserStore, FeedToolbarManager, Hero, PropTypes, Tlog, TlogPage, TlogPagination, UserToolbarManager;
+},{"../components/entry/entry":55,"../components/hero/hero":81,"../components/pagination/entry":85,"../components/toolbars/feedManager":94,"../components/toolbars/userManager":99,"../stores/currentUser":115}],111:[function(require,module,exports){
+var CurrentUserStore, Daylog, DaylogPagination, FeedToolbarManager, Hero, PropTypes, TlogDaylogPage, UserToolbarManager;
+
+CurrentUserStore = require('../stores/currentUser');
+
+FeedToolbarManager = require('../components/toolbars/feedManager');
+
+UserToolbarManager = require('../components/toolbars/userManager');
+
+Hero = require('../components/hero/hero');
+
+Daylog = require('../components/daylog/daylog');
+
+DaylogPagination = require('../components/pagination/daylog');
+
+PropTypes = React.PropTypes;
+
+TlogDaylogPage = React.createClass({
+  displayName: 'TlogDaylogPage',
+  propTypes: {
+    currentUser: PropTypes.object,
+    tlog: PropTypes.object.isRequired,
+    entries: PropTypes.array.isRequired,
+    pagination: PropTypes.object.isRequired
+  },
+  componentWillMount: function() {
+    return CurrentUserStore.initialize(this.props.currentUser);
+  },
+  render: function() {
+    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement("div", {
+      "className": "layout"
+    }, React.createElement("div", {
+      "className": "layout__header"
+    }, React.createElement(Hero, {
+      "tlog": this.props.tlog
+    })), React.createElement("div", {
+      "className": "layout__body"
+    }, React.createElement(Daylog, {
+      "entries": this.props.entries
+    }), React.createElement(DaylogPagination, {
+      "slug": this.props.tlog.author.slug,
+      "prevDay": this.props.pagination.prevDay,
+      "nextDay": this.props.pagination.nextDay
+    }))));
+  }
+});
+
+module.exports = TlogDaylogPage;
+
+
+
+},{"../components/daylog/daylog":24,"../components/hero/hero":81,"../components/pagination/daylog":84,"../components/toolbars/feedManager":94,"../components/toolbars/userManager":99,"../stores/currentUser":115}],112:[function(require,module,exports){
+var CurrentUserStore, FeedToolbarManager, Hero, PropTypes, Tlog, TlogPagination, TlogRegularPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
 
@@ -8279,8 +8281,8 @@ TlogPagination = require('../components/pagination/tlog');
 
 PropTypes = React.PropTypes;
 
-TlogPage = React.createClass({
-  displayName: 'TlogPage',
+TlogRegularPage = React.createClass({
+  displayName: 'TlogRegularPage',
   propTypes: {
     currentUser: PropTypes.object,
     tlog: PropTypes.object.isRequired,
@@ -8309,7 +8311,7 @@ TlogPage = React.createClass({
   }
 });
 
-module.exports = TlogPage;
+module.exports = TlogRegularPage;
 
 
 

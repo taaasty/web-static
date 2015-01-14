@@ -24,25 +24,25 @@ TlogPagination = React.createClass
       when currentPage == 1 and totalPagesCount > 1
         paginationItems.push <PaginationPrev
                                  href={ Routes.tlogPagination(@props.slug, currentPage + 1) }
-                                 single={ true } />
+                                 single={ true }
+                                 key="prev" />
       when totalPagesCount > currentPage > 1
-        paginationItems.push [
-          <PaginationPrev
-              href={ Routes.tlogPagination(@props.slug, currentPage + 1) }
-              key="prev" />
-          <PaginationNext
-              href={ Routes.tlogPagination(@props.slug, currentPage - 1) }
-              key="next" />
-        ]
+        paginationItems.push <PaginationPrev
+                                 href={ Routes.tlogPagination(@props.slug, currentPage + 1) }
+                                 key="prev" />
+        paginationItems.push <PaginationNext
+                                 href={ Routes.tlogPagination(@props.slug, currentPage - 1) }
+                                 key="next" />
       when currentPage > totalPagesCount
         paginationItems.push <PaginationNext
                                  href={ Routes.tlogPagination(@props.slug, totalPagesCount) }
-                                 single={ true } />
+                                 single={ true }
+                                 key="next" />
       when currentPage == totalPagesCount
         paginationItems.push <PaginationNext
                                  href={ Routes.tlogPagination(@props.slug, currentPage - 1) }
-                                 single={ true } />
-
+                                 single={ true }
+                                 key="next" />
     paginationItems
 
 module.exports = TlogPagination

@@ -1,15 +1,15 @@
-CurrentUserStore   = require '../stores/currentUser'
-FeedToolbarManager = require '../components/toolbars/feedManager'
-UserToolbarManager = require '../components/toolbars/userManager'
-Hero               = require '../components/hero/hero'
-Tlog               = require '../components/tlog/tlog'
-TlogPagination     = require '../components/pagination/tlog'
-# TlogPageMixin      = require './mixins/tlog'
+CurrentUserStore    = require '../stores/currentUser'
+FeedToolbarManager  = require '../components/toolbars/feedManager'
+UserToolbarManager  = require '../components/toolbars/userManager'
+Hero                = require '../components/hero/hero'
+Daylog              = require '../components/daylog/daylog'
+DaylogPagination    = require '../components/pagination/daylog'
+# TlogDaylogPageMixin = require './mixins/daylog'
 { PropTypes } = React
 
-TlogPage = React.createClass
-  displayName: 'TlogPage'
-  # mixins: [TlogPageMixin]
+TlogDaylogPage = React.createClass
+  displayName: 'TlogDaylogPage'
+  # mixins: [TlogDaylogPageMixin]
 
   propTypes:
     currentUser: PropTypes.object
@@ -32,13 +32,13 @@ TlogPage = React.createClass
           <Hero tlog={ @props.tlog } />
         </div>
         <div className="layout__body">
-          <Tlog entries={ @props.entries } />
-          <TlogPagination
+          <Daylog entries={ @props.entries } />
+          <DaylogPagination
               slug={ @props.tlog.author.slug }
-              currentPage={ @props.pagination.currentPage }
-              totalPagesCount={ @props.pagination.totalPagesCount } />
+              prevDay={ @props.pagination.prevDay }
+              nextDay={ @props.pagination.nextDay } />
         </div>
       </div>
     </div>
 
-module.exports = TlogPage
+module.exports = TlogDaylogPage
