@@ -1,0 +1,134 @@
+.bubble-latest-news {
+  max-width: 324px;
+  position: absolute;
+  display: inline-block;
+  padding: 8px 14px;
+  top: 30px;
+  left: 130px;
+  font-size: 15px;
+  line-height: 135%;
+  color: @white;
+  border-radius: @border-radius-large;
+  user-select: none;
+  z-index: @zindex-bubble-latest-news;
+
+  a {
+    color: inherit;
+  }
+}
+
+.bubble-latest-news__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.bubble-latest-news__text {
+  position: relative;
+}
+
+.bubble-latest-news__bg-top,
+.bubble-latest-news__bg-left,
+.bubble-latest-news__bg-right,
+.bubble-latest-news__bg-bottom {
+  position: absolute;
+  font-size: 0;
+  line-height: 0;
+  border-width: 0;
+}
+
+.bubble-latest-news__bg-top {
+  height: 5px;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  border-left: 1px solid;
+  border-radius: 6px 6px 0 0;
+}
+
+.bubble-latest-news__bg-bottom {
+  height: 6px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  &:before {
+    content: "";
+    width: 35px;
+    height: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    border-radius: 0 0 0 6px;
+  }
+
+  &:after {
+    content: "";
+    height: 5px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 49px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    border-radius: 0 0 6px 0;
+  }
+}
+
+.bubble-latest-news__bg-left {
+  width: 0;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  border-left: 1px solid;
+}
+
+.bubble-latest-news__bg-right {
+  width: 0;
+  top: 6px;
+  bottom: 6px;
+  right: 0;
+  border-right: 1px solid;
+}
+
+.bubble-latest-news__bg-arrow {
+  width: 12px;
+  height: 12px;
+  margin-top: -1px;
+  position: absolute;
+  top: 100%;
+  left: 36px;
+  border-left: 1px solid;
+  overflow: hidden;
+
+  &:after {
+    content: "";
+    height: 18px;
+    position: absolute;
+    left: -1px;
+    bottom: 0;
+    border-right: 1px solid;
+    transform-origin: 0 100%;
+    transform: rotate(47deg);
+  }
+}
+
+.bubble-latest-news__bg-top,
+.bubble-latest-news__bg-left,
+.bubble-latest-news__bg-right,
+.bubble-latest-news__bg-bottom:before,
+.bubble-latest-news__bg-bottom:after,
+.bubble-latest-news__bg-arrow,
+.bubble-latest-news__bg-arrow:after {
+  border-color: rgba(255, 255, 255, .4);
+
+  .bubble-latest-news__link:hover & {
+    border-color: rgba(255, 255, 255, .5);
+  }
+}
