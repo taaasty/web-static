@@ -4,12 +4,12 @@ UserToolbarManager = require '../components/toolbars/userManager'
 Hero               = require '../components/hero/hero'
 Tlog               = require '../components/tlog/tlog'
 TlogPagination     = require '../components/pagination/tlog'
-TlogPageMixin      = require './mixins/tlog'
+# TlogPageMixin      = require './mixins/tlog'
 { PropTypes } = React
 
 TlogPage = React.createClass
   displayName: 'TlogPage'
-  mixins: [TlogPageMixin]
+  # mixins: [TlogPageMixin]
 
   propTypes:
     currentUser: PropTypes.object
