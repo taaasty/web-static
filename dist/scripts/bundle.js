@@ -11978,19 +11978,28 @@ var PropTypes, SuggestionListMixin;
 PropTypes = React.PropTypes;
 
 SuggestionListMixin = {
-  mixins: [ReactGrammarMixin],
+  mixins: [ReactGrammarMixin, ScrollerMixin],
   propTypes: {
     suggestions: PropTypes.array.isRequired,
     suggestionsCount: PropTypes.number.isRequired
   },
   render: function() {
-    return React.createElement("div", null, React.createElement("div", {
+    return React.createElement("div", {
+      "className": "scroller scroller--persons",
+      "ref": "scroller"
+    }, React.createElement("div", {
+      "className": "scroller__pane js-scroller-pane"
+    }, React.createElement("div", {
       "className": "persons-headline"
     }, this.renderSubscribeAllButton(), React.createElement("div", {
       "className": "persons-headline__left"
     }, this.getSuggestionsCountMessage())), React.createElement("ul", {
       "className": "persons"
-    }, this.renderSuggestionsList()));
+    }, this.renderSuggestionsList())), React.createElement("div", {
+      "className": "scroller__track js-scroller-track"
+    }, React.createElement("div", {
+      "className": "scroller__bar js-scroller-bar"
+    })));
   },
   renderSuggestionsList: function() {
     var ListItem;

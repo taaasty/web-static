@@ -1,23 +1,28 @@
 { PropTypes } = React
 
 SuggestionListMixin =
-  mixins: [ReactGrammarMixin]
+  mixins: [ReactGrammarMixin, ScrollerMixin]
 
   propTypes:
     suggestions:      PropTypes.array.isRequired
     suggestionsCount: PropTypes.number.isRequired
 
   render: ->
-    <div>
-      <div className="persons-headline">
-        { @renderSubscribeAllButton() }
-        <div className="persons-headline__left">
-          { @getSuggestionsCountMessage() }
+    <div className="scroller scroller--persons" ref="scroller">
+      <div className="scroller__pane js-scroller-pane">
+        <div className="persons-headline">
+          { @renderSubscribeAllButton() }
+          <div className="persons-headline__left">
+            { @getSuggestionsCountMessage() }
+          </div>
         </div>
+        <ul className="persons">
+          { @renderSuggestionsList() }
+        </ul>
       </div>
-      <ul className="persons">
-        { @renderSuggestionsList() }
-      </ul>
+      <div className="scroller__track js-scroller-track">
+        <div className="scroller__bar js-scroller-bar" />
+      </div>
     </div>
 
   renderSuggestionsList: ->
