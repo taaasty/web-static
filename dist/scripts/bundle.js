@@ -11984,8 +11984,6 @@ SuggestionListMixin = {
     suggestionsCount: PropTypes.number.isRequired
   },
   render: function() {
-    var SubscribeAllButton;
-    SubscribeAllButton = this.subscribeAllButton();
     return React.createElement("div", null, React.createElement("div", {
       "className": "persons-headline"
     }, this.renderSubscribeAllButton(), React.createElement("div", {
@@ -12007,6 +12005,8 @@ SuggestionListMixin = {
     })(this));
   },
   renderSubscribeAllButton: function() {
+    var SubscribeAllButton;
+    SubscribeAllButton = this.subscribeAllButton();
     if (this.props.suggestions.length > 1) {
       return React.createElement("div", {
         "className": "persons-headline__right"

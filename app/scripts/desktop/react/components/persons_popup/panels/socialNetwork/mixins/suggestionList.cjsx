@@ -8,8 +8,6 @@ SuggestionListMixin =
     suggestionsCount: PropTypes.number.isRequired
 
   render: ->
-    SubscribeAllButton = @subscribeAllButton()
-
     <div>
       <div className="persons-headline">
         { @renderSubscribeAllButton() }
@@ -31,6 +29,8 @@ SuggestionListMixin =
           key={ suggestion.user.id } />
 
   renderSubscribeAllButton: ->
+    SubscribeAllButton = @subscribeAllButton()
+
     if @props.suggestions.length > 1
       <div className="persons-headline__right">
         <SubscribeAllButton />
