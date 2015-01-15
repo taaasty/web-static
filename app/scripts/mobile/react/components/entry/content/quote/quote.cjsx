@@ -13,10 +13,14 @@ QuoteEntryContent = React.createClass
         <span className="laquo">«</span>
         <span>{ @props.text }</span>
         <span className="raquo">»</span>
-        <div className="blockquote__caption">
-          { @props.source }
-        </div>
+        { @renderCaption() }
       </blockquote>
     </div>
+
+  renderCaption: ->
+    if @props.source
+      <div className="blockquote__caption">
+        { @props.source }
+      </div>
 
 module.exports = QuoteEntryContent

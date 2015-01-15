@@ -5570,9 +5570,14 @@ QuoteEntryContent = React.createClass({
       "className": "laquo"
     }, "\u00ab"), React.createElement("span", null, this.props.text), React.createElement("span", {
       "className": "raquo"
-    }, "\u00bb"), React.createElement("div", {
-      "className": "blockquote__caption"
-    }, this.props.source)));
+    }, "\u00bb"), this.renderCaption()));
+  },
+  renderCaption: function() {
+    if (this.props.source) {
+      return React.createElement("div", {
+        "className": "blockquote__caption"
+      }, this.props.source);
+    }
   }
 });
 
