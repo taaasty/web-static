@@ -2,7 +2,7 @@ window.PersonsPopup_FollowersPanel = React.createClass
   mixins: ['PersonsPopup_PanelMixin']
 
   relationshipType: 'followers'
-  itemClass: PersonsPopup_FollowerRelationship
+  itemClass: -> PersonsPopup_FollowerRelationship
 
   relationUrl: ->
     ApiRoutes.relationships_by_url 'friend'

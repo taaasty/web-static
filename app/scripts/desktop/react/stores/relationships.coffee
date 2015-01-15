@@ -1,28 +1,30 @@
 CHANGE_EVENT         = 'changed'
 SUMMARY_CHANGE_EVENT = 'summary:changed'
 
-_relationships = {
-  followings: {
+_relationships =
+  followings:
     items:      null
     totalCount: null
-  }
-  followers: {
+  followers:
     items:      null
     totalCount: null
-  }
-  guessed: {
+  guessed:
     items:      null
     totalCount: null
-  }
-  requested: {
+  requested:
     items:      null
     totalCount: null
-  }
-  ignored: {
+  ignored:
     items:      null
     totalCount: null
-  }
-}
+  vkontakte:
+    suggestions:
+      items:      null
+      totalCount: null
+  facebook:
+    suggestions:
+      items:      null
+      totalCount: null
 
 window.RelationshipsStore = _.extend {}, EventEmitter.prototype, {
 
@@ -45,6 +47,12 @@ window.RelationshipsStore = _.extend {}, EventEmitter.prototype, {
   getGuessedTotalCount:    -> _relationships.guessed.totalCount
   getIgnoredTotalCount:    -> _relationships.ignored.totalCount
   getRequestedTotalCount:  -> _relationships.requested.totalCount
+
+  getVkontakteSuggestions:           -> _relationships.vkontakte.suggestions.items
+  getVkontakteSuggestionsTotalCount: -> _relationships.vkontakte.suggestions.totalCount
+
+  getFacebookSuggestions:           -> _relationships.facebook.suggestions.items
+  getFacebookSuggestionsTotalCount: -> _relationships.facebook.suggestions.totalCount
 
   isSummaryLoaded: ->
     for relationship, value of _relationships when value.totalCount is null
@@ -92,6 +100,20 @@ window.RelationshipsStore = _.extend {}, EventEmitter.prototype, {
 
     _relationships[type].items = newRelationships
 
+  pushSuggestions: (type, suggestions) ->
+    unless _relationships[type]
+      return console.warn 'Unknown type of relationship', type
+
+    _relationships[type].suggestions.items      = suggestions
+    _relationships[type].suggestions.totalCount = suggestions.length
+
+  cleanSuggestions: (type) ->
+    unless _relationships[type]
+      return console.warn 'Unknown type of relationship', type
+
+    _relationships[type].suggestions.items      = []
+    _relationships[type].suggestions.totalCount = 0
+
   approveRequest: (relationship) ->
     relationships = _relationships['requested'].items
 
@@ -128,28 +150,28 @@ RelationshipsStore.dispatchToken = RelationshipsDispatcher.register (payload) ->
     when 'summaryLoaded'
       RelationshipsStore.updateSummary action.summary
       RelationshipsStore.emitSummaryChange()
-      break
     when 'relationshipsLoaded'
       _relationships[action.relationship].items = []
       RelationshipsStore.pushRelationships action.relationship, action.items
       RelationshipsStore.emitChange()
-      break
+    when 'suggestionsLoaded'
+      RelationshipsStore.pushSuggestions action.source, action.suggestions
+      RelationshipsStore.emitChange()
+    when 'suggestionsSubscribed'
+      RelationshipsStore.cleanSuggestions action.source
+      RelationshipsStore.emitChange()
     when 'moreRelationshipsLoaded'
       RelationshipsStore.pushRelationships action.relationship, action.items
       RelationshipsStore.emitChange()
-      break
     when 'requestedRelationshipApproved'
       RelationshipsStore.approveRequest action.relationship
       RelationshipsStore.emitSummaryChange()
       RelationshipsStore.emitChange()
-      break
     when 'requestedRelationshipDisapproved'
       RelationshipsStore.disapproveRequest action.relationship
       RelationshipsStore.emitSummaryChange()
       RelationshipsStore.emitChange()
-      break
     when 'relationshipUnfollowedFromYourself'
       RelationshipsStore.unfollowFromYourself action.relationship
       RelationshipsStore.emitSummaryChange()
       RelationshipsStore.emitChange()
-      break

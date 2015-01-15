@@ -25,11 +25,11 @@ window.PersonsPopup_PanelMixin =
     RelationshipsStore.removeChangeListener @onStoreChange
 
   render: ->
+    Item = @itemClass()
+
     if @hasRelationships()
       relationships = @state.relationships.map (relationship) =>
-        @itemClass
-          relationship: relationship
-          key: relationship.id
+        <Item relationship={ relationship } key={ relationship.id } />
 
       panelContent = <ul className="persons">{ relationships }</ul>
     else
@@ -85,11 +85,10 @@ window.PersonsPopup_PanelMixin =
         if options?.success
           options.success(data)
         else
-          RelationshipsDispatcher.handleServerAction {
+          RelationshipsDispatcher.handleServerAction
             type: 'relationshipsLoaded'
             relationship: @relationshipType
             items: data.relationships
-          }
       error: (data) =>
         @activateErrorState()
         TastyNotifyController.errorResponse data
@@ -101,14 +100,12 @@ window.PersonsPopup_PanelMixin =
     return if @isLoadingState()
 
     lastLoadedPosition = @state.relationships[@state.relationships.length - 1].position
-    @loadPanelData lastLoadedPosition, {
+    @loadPanelData lastLoadedPosition,
       success: (data) =>
-        RelationshipsDispatcher.handleServerAction {
+        RelationshipsDispatcher.handleServerAction
           type: 'moreRelationshipsLoaded'
           relationship: @relationshipType
           items: data.relationships
-        }
-    }
 
   onStoreChange: ->
     @setState @getStateFromStore()

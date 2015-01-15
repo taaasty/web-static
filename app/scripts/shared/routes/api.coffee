@@ -61,4 +61,7 @@ ApiRoutes =
   # Notifications
   notifications_read_url: (notificationId) -> TastySettings.api_host + '/v1/messenger/notifications/' + notificationId + '/read'
 
+  suggestions_vkontakte: -> TastySettings.api_host + '/v1/relationships/suggestions/vkontakte'
+  suggestions_facebook:  -> TastySettings.api_host + '/v1/relationships/suggestions/facebook'
+
 module.exports = ApiRoutes

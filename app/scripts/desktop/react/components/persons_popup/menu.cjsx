@@ -1,11 +1,14 @@
-#TODO: Вынести состояния в константы, а тексты в i18n
+#TODO: i18n
 FOLLOWINGS = 'Вы подписаны'
 FOLLOWERS  = 'Подписчики'
 REQUESTED  = 'Заявки'
 GUESSED    = 'Рекомендации'
 IGNORED    = 'Заблокированы'
+VKONTAKTE  = 'Вконтакте'
+FACEBOOK   = 'Facebook'
 
 window.PersonsPopup_Menu = React.createClass
+  displayName: 'PersonsPopup_Menu'
   mixins: [RequesterMixin]
 
   propTypes:
@@ -28,32 +31,42 @@ window.PersonsPopup_Menu = React.createClass
   render: ->
     if @isProfilePrivate()
       requestedMenuItem = <PersonsPopup_MenuItem
-                             isActive={ this.props.currentTab == 'requested' }
-                             totalCount={ this.state.requestedTotalCount }
-                             title={ REQUESTED }
-                             onClick={ this.props.onSelect.bind(null, 'requested') } />
+                              isActive={ @props.currentTab == 'requested' }
+                              totalCount={ @state.requestedTotalCount }
+                              title={ REQUESTED }
+                              onClick={ @props.onSelect.bind(null, 'requested') } />
 
     return <nav className="tabs-nav tabs-nav--white">
              <ul className="tabs-nav__list">
                <PersonsPopup_MenuItem 
-                   isActive={ this.props.currentTab == "followings" }
-                   totalCount={ this.state.followingsTotalCount }
+                   isActive={ @props.currentTab == 'followings' }
+                   totalCount={ @state.followingsTotalCount }
                    title={ FOLLOWINGS }
-                   onClick={ this.props.onSelect.bind(null, 'followings') } />
+                   onClick={ @props.onSelect.bind(null, 'followings') } />
 
                <PersonsPopup_MenuItem
-                   isActive={ this.props.currentTab == "followers" }
-                   totalCount={ this.state.followersTotalCount }
+                   isActive={ @props.currentTab == 'followers' }
+                   totalCount={ @state.followersTotalCount }
                    title={ FOLLOWERS }
-                   onClick={ this.props.onSelect.bind(null, 'followers') } />
+                   onClick={ @props.onSelect.bind(null, 'followers') } />
 
                { requestedMenuItem }
 
                <PersonsPopup_MenuItem
-                   isActive={ this.props.currentTab == "ignored" }
-                   totalCount={ this.state.ignoredTotalCount }
+                   isActive={ @props.currentTab == 'ignored' }
+                   totalCount={ @state.ignoredTotalCount }
                    title={ IGNORED }
-                   onClick={ this.props.onSelect.bind(null, 'ignored') } />
+                   onClick={ @props.onSelect.bind(null, 'ignored') } />
+
+               <PersonsPopup_MenuItem
+                   isActive={ @props.currentTab == 'vkontakte' }
+                   title={ VKONTAKTE }
+                   onClick={ @props.onSelect.bind(null, 'vkontakte') } />
+
+               <PersonsPopup_MenuItem
+                   isActive={ @props.currentTab == 'facebook' }
+                   title={ FACEBOOK }
+                   onClick={ @props.onSelect.bind(null, 'facebook') } />
              </ul>
            </nav>
 
@@ -82,7 +95,7 @@ window.PersonsPopup_Menu = React.createClass
     followingsTotalCount: RelationshipsStore.getFollowingsTotalCount()
     guessedTotalCount:    RelationshipsStore.getGuessedTotalCount()
     ignoredTotalCount:    RelationshipsStore.getIgnoredTotalCount()
-    requestedTotalCount:   RelationshipsStore.getRequestedTotalCount()
+    requestedTotalCount:  RelationshipsStore.getRequestedTotalCount()
 
   onStoreChange: ->
     @setState @getStateFromStore()

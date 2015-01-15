@@ -1,6 +1,7 @@
 cx = require 'react/lib/cx'
 
 window.PersonsPopup_MenuItem = React.createClass
+  displayName: 'PersonsPopup_MenuItem'
 
   propTypes:
     title:    React.PropTypes.string.isRequired
@@ -13,10 +14,10 @@ window.PersonsPopup_MenuItem = React.createClass
       'state--active':  @props.isActive
 
     return <li className="tabs-nav__item">
-             <a title={ this.props.title }
+             <a title={ @props.title }
                 className={ menuItemClasses }
-                onClick={ this.props.onClick }>
-               { this.props.title }
-               <span className="tabs-nav__count"> { this.props.totalCount }</span>
+                onClick={ @props.onClick }>
+               { @props.title }
+               <span className="tabs-nav__count"> { @props.totalCount }</span>
              </a>
            </li>

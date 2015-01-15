@@ -8368,6 +8368,12 @@ ApiRoutes = {
   },
   notifications_read_url: function(notificationId) {
     return TastySettings.api_host + '/v1/messenger/notifications/' + notificationId + '/read';
+  },
+  suggestions_vkontakte: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/vkontakte';
+  },
+  suggestions_facebook: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/facebook';
   }
 };
 

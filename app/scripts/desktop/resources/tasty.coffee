@@ -21,15 +21,14 @@ $ ->
   # но backbone такого обращния не понимает
   #window.wiselinks = new Wiselinks $('#js-wiselinks-content')
 
-
 # Эта функция запускается из рельс в конце html. Ей в качестве параметра
 # передается user
-#
+
 window.Tasty =
-  start: ({ user, flashes }) ->
+  start: ({user, flashes}) ->
     #console.debug? "Залогинен пользователь", user.slug if user?
     #new GuidePopup()
-    #
+
     #TastyData.user = new Backbone.Model options.user if options.user?
 
     # нет необходимости, jquery_ujs это делает сам
@@ -37,9 +36,12 @@ window.Tasty =
     headers = {}
 
     if user?
-      headers['X-User-Token']     = user.api_key.access_token
-      headers['X-Requested-With'] = 'XMLHttpRequest'
+      headers['X-User-Token'] = user.api_key.access_token
       CurrentUserDispatcher.setupUser user
+
+    headers['X-Requested-With']       = 'XMLHttpRequest'
+    headers['X-Tasty-Client-Name']    = 'web_desktop'
+    headers['X-Tasty-Client-Version'] = TastySettings.version
 
     TastyUtils.showFlashes flashes
 

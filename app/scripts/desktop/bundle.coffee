@@ -209,6 +209,8 @@ require './react/components/persons_popup/panels/followers_panel'
 require './react/components/persons_popup/panels/guessed_panel'
 require './react/components/persons_popup/panels/requested_panel'
 require './react/components/persons_popup/panels/ignored_panel'
+require './react/components/persons_popup/panels/socialNetwork/vkontakte'
+require './react/components/persons_popup/panels/socialNetwork/facebook'
 
 require './react/components/people/item'
 

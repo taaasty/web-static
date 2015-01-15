@@ -7340,7 +7340,7 @@ TlogPagination = React.createClass({
           "key": "next"
         }));
         break;
-      case currentPage !== totalPagesCount:
+      case !(currentPage === totalPagesCount && currentPage !== 1):
         paginationItems.push(React.createElement(PaginationNext, {
           "href": Routes.tlogPagination(this.props.slug, currentPage - 1),
           "single": true,
@@ -8838,6 +8838,12 @@ ApiRoutes = {
   },
   notifications_read_url: function(notificationId) {
     return TastySettings.api_host + '/v1/messenger/notifications/' + notificationId + '/read';
+  },
+  suggestions_vkontakte: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/vkontakte';
+  },
+  suggestions_facebook: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/facebook';
   }
 };
 
