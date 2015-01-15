@@ -6,8 +6,8 @@ VkontakteSuggestionsItem = React.createClass
     suggestion: PropTypes.object.isRequired
 
   render: ->
-    <PersonsPopup_PersonItem user={ this.props.suggestion.user }>
-      <FollowButton relationship={ this.props.suggestion } />
+    <PersonsPopup_PersonItem user={ @props.suggestion.user }>
+      <FollowButton relationship={ @props.suggestion } />
     </PersonsPopup_PersonItem>
 
 module.exports = VkontakteSuggestionsItem

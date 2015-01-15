@@ -107,6 +107,13 @@ window.RelationshipsStore = _.extend {}, EventEmitter.prototype, {
     _relationships[type].suggestions.items      = suggestions
     _relationships[type].suggestions.totalCount = suggestions.length
 
+  cleanSuggestions: (type) ->
+    unless _relationships[type]
+      return console.warn 'Unknown type of relationship', type
+
+    _relationships[type].suggestions.items      = []
+    _relationships[type].suggestions.totalCount = 0
+
   approveRequest: (relationship) ->
     relationships = _relationships['requested'].items
 
@@ -149,6 +156,9 @@ RelationshipsStore.dispatchToken = RelationshipsDispatcher.register (payload) ->
       RelationshipsStore.emitChange()
     when 'suggestionsLoaded'
       RelationshipsStore.pushSuggestions action.source, action.suggestions
+      RelationshipsStore.emitChange()
+    when 'suggestionsSubscribed'
+      RelationshipsStore.cleanSuggestions action.source
       RelationshipsStore.emitChange()
     when 'moreRelationshipsLoaded'
       RelationshipsStore.pushRelationships action.relationship, action.items

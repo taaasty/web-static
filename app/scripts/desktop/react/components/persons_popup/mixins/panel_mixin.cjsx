@@ -25,11 +25,11 @@ window.PersonsPopup_PanelMixin =
     RelationshipsStore.removeChangeListener @onStoreChange
 
   render: ->
+    Item = @itemClass()
+
     if @hasRelationships()
       relationships = @state.relationships.map (relationship) =>
-        @itemClass
-          relationship: relationship
-          key: relationship.id
+        <Item relationship={ relationship } key={ relationship.id } />
 
       panelContent = <ul className="persons">{ relationships }</ul>
     else

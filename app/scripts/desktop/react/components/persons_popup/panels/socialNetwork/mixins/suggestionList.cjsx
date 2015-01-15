@@ -1,11 +1,6 @@
-VkontakteSuggestionsItem = require '../../../items/vkontakte_suggestion'
 { PropTypes } = React
 
-#TODO: i18n
-SUBSCRIBE_ALL_BUTTON_TEXT = 'Подписаться на всех'
-
-VkontakteSuggestionsList = React.createClass
-  displayName: 'VkontakteSuggestionsList'
+SuggestionListMixin =
   mixins: [ReactGrammarMixin]
 
   propTypes:
@@ -13,13 +8,11 @@ VkontakteSuggestionsList = React.createClass
     suggestionsCount: PropTypes.number.isRequired
 
   render: ->
-    # <div className="persons-headline__right">
-    #   <button className="manage-persons-button">
-    #     { SUBSCRIBE_ALL_BUTTON_TEXT }
-    #   </button>
-    # </div>
+    SubscribeAllButton = @subscribeAllButton()
+
     <div>
       <div className="persons-headline">
+        { @renderSubscribeAllButton() }
         <div className="persons-headline__left">
           { @getSuggestionsCountMessage() }
         </div>
@@ -30,12 +23,20 @@ VkontakteSuggestionsList = React.createClass
     </div>
 
   renderSuggestionsList: ->
+    ListItem = @listItem()
+
     @props.suggestions.map (suggestion) =>
-      <VkontakteSuggestionsItem
+      <ListItem
           suggestion={ suggestion }
           key={ suggestion.user.id } />
+
+  renderSubscribeAllButton: ->
+    if @props.suggestions.length > 1
+      <div className="persons-headline__right">
+        <SubscribeAllButton />
+      </div>
 
   getSuggestionsCountMessage: ->
     'Мы нашли ' + @props.suggestionsCount + ' ' + @declension(@props.suggestionsCount, ['друга', 'друга', 'друзей'])
 
-module.exports = VkontakteSuggestionsList
+module.exports = SuggestionListMixin

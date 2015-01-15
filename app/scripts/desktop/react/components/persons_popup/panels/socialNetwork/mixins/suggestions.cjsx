@@ -1,23 +1,23 @@
-VkontakteSuggestionsList  = require './suggestions/list'
-VkontakteSuggestionsEmpty = require './suggestions/empty'
 { PropTypes } = React
 
-VkontakteSuggestions = React.createClass
-  displayName: 'VkontakteSuggestions'
+SuggestionsMixin =
 
   propTypes:
     suggestions:      PropTypes.array
     suggestionsCount: PropTypes.number
 
   render: ->
+    ListComponent  = @listComponent()
+    EmptyComponent = @emptyComponent()
+
     if @hasSuggestions()
-      <VkontakteSuggestionsList
+      <ListComponent
           suggestions={ @props.suggestions }
           suggestionsCount={ @props.suggestionsCount } />
     else
-      <VkontakteSuggestionsEmpty />
+      <EmptyComponent />
 
   hasSuggestions: ->
     @props.suggestionsCount > 0
 
-module.exports = VkontakteSuggestions
+module.exports = SuggestionsMixin
