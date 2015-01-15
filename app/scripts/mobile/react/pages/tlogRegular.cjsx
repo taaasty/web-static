@@ -1,10 +1,10 @@
 CurrentUserStore     = require '../stores/currentUser'
 FeedToolbarManager   = require '../components/toolbars/feedManager'
 UserToolbarManager   = require '../components/toolbars/userManager'
-Hero                 = require '../components/hero/hero'
+HeroTlog             = require '../components/hero/tlog'
 Tlog                 = require '../components/tlog/tlog'
 TlogPagination       = require '../components/pagination/tlog'
-# TlogRegularPageMixin = require './mixins/tlog'
+# TlogRegularPageMixin = require './mixins/tlogRegular'
 { PropTypes } = React
 
 TlogRegularPage = React.createClass
@@ -29,7 +29,7 @@ TlogRegularPage = React.createClass
       <UserToolbarManager />
       <div className="layout">
         <div className="layout__header">
-          <Hero tlog={ @props.tlog } />
+          <HeroTlog tlog={ @props.tlog } />
         </div>
         <div className="layout__body">
           <Tlog entries={ @props.entries } />

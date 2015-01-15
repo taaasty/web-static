@@ -1,5 +1,5 @@
 cx            = require 'react/lib/cx'
-NumberHelpers = require '../../../../../shared/helpers/number'
+NumberHelpers = require '../../../../../../shared/helpers/number'
 { PropTypes } = React
 
 HeroStatsItem = React.createClass

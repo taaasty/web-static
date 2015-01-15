@@ -10,10 +10,14 @@ Avatar = React.createClass
     size:    PropTypes.number
 
   # Известные размеры:
-  # - settings: 110
-  # - comment:  35
-  # - hero:     220
-  # - brick:    35
+  ## Desktop:
+  ## - settings: 110
+  ## - comment:  35
+  ## - hero:     220
+  ## - brick:    35
+  ## Mobile:
+  ## - comment:   42
+  ## - entryMeta: 28
 
   getDefaultProps: ->
     size: 220 # Этого размера картинки хватает на все аватары
@@ -26,8 +30,11 @@ Avatar = React.createClass
       'anonymous_char': @isAnonymous()
 
     if avatarUrl?
-      avatarUrl    = ThumborService.image_url avatarUrl, @props.size + 'x' + @props.size
-      avatarStyles = backgroundImage: "url(#{ avatarUrl })"
+      avatarUrl    = ThumborService.imageUrl
+        url: avatarUrl
+        path: @props.userpic.thumbor_path
+        size: @props.size + 'x' + @props.size
+      avatarStyles = backgroundImage: "url('#{ avatarUrl }')"
 
       return <span style={ avatarStyles }
                    className={ avatarClasses }>

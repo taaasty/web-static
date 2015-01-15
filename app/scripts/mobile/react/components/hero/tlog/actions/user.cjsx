@@ -1,4 +1,4 @@
-FollowButton                   = require '../../buttons/relationship/follow'
+FollowButton                   = require '../../../buttons/relationship/follow'
 HeroActions_WriteMessageButton = require './buttons/writeMessage'
 HeroActions_DropdownMenu       = require './dropdownMenu'
 { PropTypes } = React

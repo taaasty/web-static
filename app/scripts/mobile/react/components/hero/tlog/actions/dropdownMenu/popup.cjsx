@@ -1,6 +1,6 @@
-RelationshipsStore                 = require '../../../../stores/relationships'
-ConnectStoreMixin                  = require '../../../../mixins/connectStore'
-DropdownMenuMixin                  = require '../../../../mixins/dropdownMenu'
+RelationshipsStore                 = require '../../../../../stores/relationships'
+ConnectStoreMixin                  = require '../../../../../mixins/connectStore'
+DropdownMenuMixin                  = require '../../../../../mixins/dropdownMenu'
 HeroActions_DropdownMenuIgnoreItem = require './items/ignore'
 HeroActions_DropdownMenuReportItem = require './items/report'
 { PropTypes } = React

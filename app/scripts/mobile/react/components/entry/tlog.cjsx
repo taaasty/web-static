@@ -1,6 +1,6 @@
-EntryMeta     = require './meta/meta'
-EntryComments = require './comments/comments'
-EntryContent  = require './content/content'
+EntryTlogMeta     = require './tlog/meta'
+EntryComments     = require './comments/comments'
+EntryContent      = require './content/content'
 CurrentUserStore  = require '../../stores/currentUser'
 ConnectStoreMixin = require '../../mixins/connectStore'
 { PropTypes } = React
@@ -10,8 +10,8 @@ IMAGE_TYPE = 'image'
 VIDEO_TYPE = 'video'
 QUOTE_TYPE = 'quote'
 
-Entry = React.createClass
-  displayName: 'Entry'
+EntryTlog = React.createClass
+  displayName: 'EntryTlog'
   mixins: [ConnectStoreMixin(CurrentUserStore)]
 
   propTypes:
@@ -20,7 +20,7 @@ Entry = React.createClass
   render: ->
     <div className={ @getEntryClasses() }>
       <EntryContent entry={ @props.entry } />
-      <EntryMeta entry={ @props.entry } />
+      <EntryTlogMeta entry={ @props.entry } />
       <EntryComments
           entry={ @props.entry }
           commentsInfo={ @props.entry.comments_info }
@@ -41,4 +41,4 @@ Entry = React.createClass
   getStateFromStore: ->
     user: CurrentUserStore.getUser()
 
-module.exports = Entry
+module.exports = EntryTlog

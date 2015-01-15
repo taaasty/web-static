@@ -1,5 +1,5 @@
 HeroStatsItem = require './stats/item'
-{ declension } = require '../../../../shared/helpers/grammar'
+{ declension } = require '../../../../../shared/helpers/grammar'
 { PropTypes }  = React
 
 HeroStats = React.createClass

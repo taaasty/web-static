@@ -24,7 +24,10 @@ window.Avatar = React.createClass
       anonymous_char: @isAnonymous()
 
     if avatarUrl?
-      avatarUrl    = ThumborService.image_url avatarUrl, @props.size + 'x' + @props.size
+      avatarUrl = ThumborService.imageUrl
+        url: avatarUrl
+        path: @props.userpic.thumbor_path
+        size: @props.size + 'x' + @props.size
       avatarStyles = backgroundImage: "url('#{ avatarUrl }')"
 
       return <span style={ avatarStyles }

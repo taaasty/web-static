@@ -1,11 +1,11 @@
 ThumborService =
-  thumbor_url: 'http://thumbor0.tasty0.ru/'
+  thumborUrl: 'http://thumbor0.tasty0.ru'
 
-  image_url:  (url, style) ->
+  imageUrl: ({url, path, size}) ->
     switch TastySettings.env
       when 'static-development', 'development' then url
+      # when 'development' then url
       else
-        url = url.replace /^.*\/assets\//, ''
-        @thumbor_url + "unsafe/#{ style }/" + url
-
+        @thumborUrl + "/unsafe/#{ size }/filters:no_upscale()/" + path
+# filters:no_upscale()
 module.exports = ThumborService

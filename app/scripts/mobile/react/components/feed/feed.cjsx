@@ -1,9 +1,8 @@
-TlogEmptyPageMessage = require './emptyPageMessage'
-EntryTlog            = require '../entry/tlog'
+FeedEmptyPageMessage = require './emptyPageMessage'
+EntryFeed            = require '../entry/feed'
 { PropTypes } = React
 
-Tlog = React.createClass
-  displayName: 'Tlog'
+Feed = React.createClass
 
   propTypes:
     entries: PropTypes.array.isRequired
@@ -16,8 +15,8 @@ Tlog = React.createClass
   renderEntryList: ->
     if @props.entries.length
       @props.entries.map (entry) ->
-        <EntryTlog entry={ entry } key={ entry.id } />
+        <EntryFeed entry={ entry } key={ entry.id } />
     else
-      <TlogEmptyPageMessage />
+      <FeedEmptyPageMessage />
 
-module.exports = Tlog
+module.exports = Feed

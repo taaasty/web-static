@@ -1,4 +1,4 @@
-RelationshipViewActions = require '../../../../../actions/view/relationship'
+RelationshipViewActions = require '../../../../../../actions/view/relationship'
 { PropTypes } = React
 
 #TODO: i18n
