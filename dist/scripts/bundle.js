@@ -20696,8 +20696,9 @@ window.MessagingRequester = (function() {
   MessagingRequester.prototype.markAsReadMessage = function(conversationId, messageId) {
     return $.ajax({
       url: ApiRoutes.messenger_read_messages_url(conversationId),
-      method: 'PUT',
+      method: 'POST',
       data: {
+        _method: 'PUT',
         socket_id: this.socket_id,
         ids: messageId
       }
@@ -20707,8 +20708,9 @@ window.MessagingRequester = (function() {
   MessagingRequester.prototype.markAsReadNotification = function(notificationId) {
     return $.ajax({
       url: ApiRoutes.notifications_read_url(notificationId),
-      method: 'PUT',
+      method: 'POST',
       data: {
+        _method: 'PUT',
         socket_id: this.socket_id,
         id: notificationId
       }
