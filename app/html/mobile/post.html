@@ -39,48 +39,9 @@
     </nav>
     <!-- end Feed Toolbar -->
 
-    <!-- User Toolbar -->
-    <nav class="toolbar toolbar--user">
-      <div class="toolbar__toggle"><i class="icon icon--menu"></i></div>
-      <div class="toolbar__popup">
-        <ul class="toolbar__popup-list">
-          <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--plus"></i>Новая запись</a>
-          </li>
-          <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--diary"></i>Мой дневник</a>
-          </li>
-          <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--profile"></i>Профиль</a>
-          </li>
-          <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное</a>
-          </li>
-          <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--anonymous"></i>Новая анонимка</a>
-          </li>
-          <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--lock"></i>Скрытые записи</a>
-          </li>
-          <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--messages"></i>Сообщения</a>
-          </li>
-          <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Друзья</a>
-          </li>
-          <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--drawing"></i>Дизайн дневника</a>
-          </li>
-          <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--cogwheel"></i>Настройки</a>
-          </li>
-          <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--logout"></i>Выйти</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <!-- end User Toolbar -->
+    <!-- Auth Button -->
+    <button class="auth-button">Войти</button>
+    <!-- end Auth Button -->
 
     <!-- Layout -->
     <div class="layout">
@@ -233,6 +194,28 @@
       <!-- end Layout Body -->
     </div>
     <!-- end Layout -->
+
+    <!-- Auth -->
+    <div class="auth">
+      <div class="auth__grid-table">
+        <div class="auth__grid-cell">
+          <div class="auth__bg" style="background-image: url(../images/images/Polly-73.jpg);"></div>
+          <div class="auth__section">
+            <div class="auth__body">
+              <div class="auth__logo"><i class="icon icon--ribbon"></i></div>
+              <h1 class="auth__lead">Это&nbsp;<strong>дневник</strong>, в&nbsp;который хочется писать каждый день</h1>
+              <div class="auth__buttons">
+                <button class="vk-auth-button">Войти с помощью Вконтакте</button>
+                <button class="fb-auth-button">Войти с помощью Facebook</button>
+                <button class="site-auth-button">Войти с помощью эл. почты</button>
+                <button class="reg-auth-button">или зарегистрироваться</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end Auth -->
 
     <script src="scripts/vendor.js"></script>
     <script src="scripts/client.js"></script>

@@ -11,14 +11,35 @@
   position: relative;
 }
 
-// Message Body
+// Header
+.messages__header {
+  padding: 12px;
+  background-color: @messages-header-bg;
+  text-align: center;
+  user-select: none;
+}
+
+// Body
 .messages__body {
   position: relative;
 }
 
-// Message Footer
+// Footer
 .messages__footer {
   text-align: center;
+}
+
+// Title
+.messages__title {
+  width: 66%;
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 18px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: @messages-header-color;
+  vertical-align: middle;
 }
 
 // Message Dialogs
