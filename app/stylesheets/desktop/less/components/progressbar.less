@@ -1,3 +1,4 @@
+// old
 .settings-design--progressbar {
   height: 3px;
   background-color: @design-settings-progressbar-color;
@@ -6,4 +7,26 @@
   left: 0;
   width: 50%;
   transition: width .4s ease, opacity 1s ease;
+}
+
+// new
+.progressbar {
+	width: 100%;
+	height: @progressbar-height;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+
+  &.__hidden {
+		opacity: 1;
+  }
+}
+
+.progressbar__bg {
+	width: 0%;
+	height: 100%;
+	background-color: @progressbar-bg;
+	transition: width .4s ease,
 }

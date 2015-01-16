@@ -31,12 +31,12 @@
 }
 
 .scroller__bar {
-  position: absolute;
-  z-index: 1;
-  right: 0;
   width: 4px;
+  position: absolute;
+  right: 0;
   background: #eee;
   opacity: .36;
+  z-index: 1;
   border-radius: 4px;
   transition: opacity .3s ease;
 
@@ -92,6 +92,62 @@
   .scroller__pane {
     max-height: 100%;
   }
+}
+
+.scroller--design {
+  height: 100%;
+
+  &:before,
+  &:after {
+    content: "";
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    left: 0;
+    background-image: linear-gradient(180deg, #333 0%, transparent 100%);
+    pointer-events: none;
+    z-index: @zindex-popup + 1;
+  }
+
+  &:before {
+    top: 0;
+  }
+
+  &:after {
+    bottom: 0;
+    transform: rotate(180deg);
+  }
+
+  & > .scroller__pane {
+    height: 100%;
+  }
+
+  & > .scroller__track {
+    z-index: @zindex-popup + 2;
+  }
+}
+
+.scroller--control {
+  height: 100%;
+  position: static;
+  overflow: visible;
+
+  .scroller__track {
+    height: 4px;
+    display: block;
+    width: auto;
+    top: auto;
+    right: 0;
+    bottom: -4px;
+    left: 0;
+  }
+
+  .scroller__bar {
+      width: auto;
+      height: 4px;
+      bottom: 0;
+      right: auto;
+    }
 }
 
 // Responsive height of toolbar's scroller

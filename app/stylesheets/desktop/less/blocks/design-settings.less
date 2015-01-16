@@ -1,0 +1,539 @@
+.design-settings {
+  position: relative;
+  background-color: @design-settings-bg;
+  border-radius: 0 0 @design-settings-border-radius @design-settings-border-radius;
+  transition: background-color .3s ease;
+  overflow: hidden;
+  user-select: none;
+
+  &.__draghover {
+    background: @design-settings-draghover-bg-base;
+    background-color: @design-settings-draghover-bg;
+
+    .design-settings__dragzone {
+      display: block;
+      z-index: 2;
+    }
+
+    .design-settings__options {
+      z-index: -1;
+      opacity: 0;
+    }
+  }
+
+  &.__disabled {
+    .design-settings__cover {
+      &:after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: @black;
+        z-index: 10;
+        opacity: .6;
+      }
+    }
+
+    .form-upload {
+      color: inherit;
+    }
+
+    .form-upload__text {
+      border: none;
+    }
+
+    .form-upload__input {
+      cursor: default;
+    }
+  }
+
+  .form-radiogroup {
+    width: 100%;
+  }
+
+  .form-radiogroup--covers {
+    .design-settings__cover {
+      margin: 6px;
+    }
+  }
+
+  .form-range {
+    &:extend(.form-range--yellow all);
+    width: 142px;
+    margin-top: -2px;
+  }
+
+  .form-range-value {
+    margin-top: -.6em;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    color: @yellow;
+  }
+}
+
+// Dragzone
+.design-settings__dragzone {
+  position: absolute;
+  display: none;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
+
+.design-settings__dragzone-table {
+  &:extend(.grid-full all);
+}
+
+.design-settings__dragzone-cell {
+  &:extend(.grid-full__middle all);
+}
+
+.design-settings__dragzone-text {
+  padding: 15px;
+}
+
+// Alert
+.design-settings__alert {
+  &:extend(.grid-full all);
+  height: 135px !important;
+  position: relative;
+  background-color: #2a2a2a;
+  color: #fff;
+  text-align: center;
+}
+
+.design-settings__alert-in {
+  &:extend(.grid-full__middle all);
+  padding: (@design-settings-indent + 3) @design-settings-indent;
+}
+
+.design-settings__alert-clear {
+  padding: 6px 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 10px;
+  line-height: 13px;
+  cursor: pointer;
+}
+
+.design-settings__alert-text {
+  max-height: 44px;
+  font-size: 15px;
+  line-height: 22px;
+  overflow: hidden;
+}
+
+.design-settings__alert-button {
+  &:extend(.button all);
+  .button-size(32px, 15px, 11px);
+  margin-top: 8px;
+  background-color: #2ac67e;
+  color: #fff !important;
+
+  &:hover {
+    background-color: lighten(#2ac67e, 6%);
+  }
+}
+
+// Control Groups
+.design-settings__groups {
+  height: 100%;
+  margin-top: -135px;
+  padding-top: 135px;
+  padding-bottom: 50px;
+  box-sizing: border-box;
+
+  & + .design-settings__button {
+    margin-top: -50px;
+  }
+}
+
+.design-settings__group {
+  .clearfix;
+
+  & + & {
+    border-top: 1px solid @design-settings-divider-border-color;
+  }
+}
+
+.design-settings__group-header {
+  width: 80px;
+  padding: (@design-settings-indent + 2) @design-settings-indent;
+  float: left;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.design-settings__group-content {
+  margin-left: 110px;
+}
+
+// Controls
+.design-settings__options {
+  position: relative;
+  opacity: 1;
+  transition: opacity .4s ease;
+}
+
+.design-settings__option {
+  cursor: default;
+  overflow: hidden;
+
+  & + & {
+    &:before {
+      content: "";
+      height: 0;
+      margin-left: @design-settings-indent;
+      display: block;
+      border-top: 1px solid @design-settings-divider-border-color;
+    }
+  }
+
+  &:extend(.ds-animation-content all);
+}
+
+.design-settings__option-content {
+  height: @design-settings-option-height;
+  margin: 8px @design-settings-indent;
+  position: relative;
+}
+
+// State
+.design-settings__state {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  color: @yellow;
+}
+
+.design-settings__state-i {
+  .inline-block-middle;
+}
+
+// Types of the States
+.design-settings__state--circlebtn {
+  .font-null;
+  padding: 4px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+
+  .design-settings__state-i {
+    width: 4px;
+    height: 4px;
+    border: 8px solid transparent;
+    vertical-align: top;
+    border-radius: 50%;
+  }
+}
+
+.design-settings__state--font {
+  margin-top: -.6em;
+  font-size: 26px;
+  line-height: 1;
+}
+
+// Text
+.design-settings__text {
+  .inline-block-middle;
+  margin-right: 14px;
+}
+
+// Covers
+.design-settings__covers {
+  .inline-block-middle;
+
+  .design-settings__cover {
+    margin-right: 10px;
+  }
+}
+
+.design-settings__cover {
+  .inline-block-middle;
+  width: @design-settings-cover-size;
+  height: @design-settings-cover-size;
+  position: relative;
+  background-color: rgba(red(@white), green(@white), blue(@white), .05);
+  background-position: 50% 50%;
+  background-size: cover;
+  border-radius: 50%;
+
+  .form-upload {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .4);
+    line-height: @design-settings-cover-size;
+    color: #bbb;
+    text-align: center;
+    border-radius: 50%;
+
+    .icon {
+      font-size: 16px;
+      vertical-align: middle;
+    }
+  }
+}
+
+.design-settings__color-picker {
+  .inline-block-middle;
+  position: relative;
+
+  /*.color-picker {
+    margin: 6px;
+  }*/
+
+  .pay {
+    position: absolute;
+    top: -0.2em;
+    right: -0.2em;
+    z-index: 1;
+  }
+}
+
+.design-settings__slider {
+  height: 100%;
+  position: relative;
+
+  &.__inited {
+    padding: 0 15px;
+
+    .design-settings__slider-btn,
+    .design-settings__slider-main:before,
+    .design-settings__slider-main:after {
+      display: block;
+      opacity: 1;
+      transition: opacity .4s ease;
+    }
+  }
+
+  &.__leftlimit {
+    .design-settings__slider-btn--left,
+    .design-settings__slider-main:before {
+      opacity: 0;
+    }
+
+    .design-settings__slider-btn--left {
+      cursor: default;
+    }
+  }
+
+  &.__rightlimit {
+    .design-settings__slider-btn--right,
+    .design-settings__slider-main:after {
+      opacity: 0;
+    }
+
+    .design-settings__slider-btn--right {
+      cursor: default;
+    }
+  }
+}
+
+.design-settings__slider-main {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+
+  &:before,
+  &:after {
+    content: "";
+    width: 20px;
+    height: 100%;
+    position: absolute;
+    display: none;
+    top: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &:before {
+    left: 0;
+    background-image: linear-gradient(-90deg, transparent 0%, @design-settings-bg 100%);
+  }
+
+  &:after {
+    right: 0;
+    background-image: linear-gradient(90deg, transparent 0%, @design-settings-bg 100%);
+  }
+}
+
+.design-settings__slider-list {
+  height: 100%;
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  transition: transform .6s ease;
+}
+
+.design-settings__slider-btn {
+  width: 20px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: none;
+  cursor: pointer;
+
+  &:before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    margin-top: -5px;
+    position: absolute;
+    top: 50%;
+  }
+}
+
+.design-settings__slider-btn--left {
+  left: -4px;
+
+  &:before {
+    left: 6px;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    transform: rotate(-45deg);
+  }
+}
+
+.design-settings__slider-btn--right {
+  right: -4px;
+
+  &:before {
+    right: 6px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    transform: rotate(45deg);
+  }
+}
+
+.design-settings__button {
+  position: relative;
+
+  button {
+    border-bottom-right-radius: @design-settings-border-radius;
+    border-bottom-left-radius: @design-settings-border-radius;
+  }
+}
+
+.design-settings-save-button {
+  &:extend(.button all, .button--rectangle, .button--block);
+  .button-common-style(#2ac67e);
+  height: 50px;
+  line-height: 50px;
+  color: #fff;
+}
+
+// Helpers of Design Settings
+// -- Absolute -- */
+.ds-absolute-left,
+.ds-absolute-right {
+  position: absolute;
+  top: 50%;
+}
+
+.ds-absolute-left {
+  left: 0;
+}
+
+.ds-absolute-right {
+  right: 0;
+}
+
+.design-settings__color-picker.ds-absolute-left,
+.design-settings__color-picker.ds-absolute-right {
+  margin-top: -16px;
+}
+
+.form-radiogroup--circlebtns.ds-absolute-left,
+.form-radiogroup--circlebtns.ds-absolute-right,
+.design-settings__state--circlebtn.ds-absolute-left,
+.design-settings__state--circlebtn.ds-absolute-right {
+  margin-top: -16px;
+}
+
+.design-settings__covers.ds-absolute-left,
+.design-settings__covers.ds-absolute-right,
+.design-settings__cover.ds-absolute-left,
+.design-settings__cover.ds-absolute-right,
+.form-radiogroup--covers ~ .design-settings__user-choice.ds-absolute-left,
+.form-radiogroup--covers ~ .design-settings__user-choice.ds-absolute-right {
+  margin-top: -@design-settings-cover-size/2;
+}
+
+.form-radiogroup--covers.ds-absolute-left,
+.form-radiogroup--covers.ds-absolute-right {
+  margin-top: -@design-settings-cover-size/2 - 6;
+}
+
+.design-settings__text.ds-absolute-left,
+.design-settings__text.ds-absolute-right,
+.form-radiogroup--dotted.ds-absolute-left,
+.form-radiogroup--dotted.ds-absolute-right,
+.form-radiogroup--font.ds-absolute-left,
+.form-radiogroup--font.ds-absolute-right {
+  margin-top: -.6em;
+}
+
+.design-settings__text.ds-absolute-right {
+  margin-right: 0;
+}
+
+// -- Animation -- */
+.ds-animation-content {
+  &:hover,
+  &.__hover {
+    .ds-fadeout-down {
+      opacity: 0;
+      transform: translate(0, 20px);
+    }
+
+    .ds-fadein-down {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+
+    .ds-fadeout-right {
+      opacity: 0;
+      transform: translate(20px, 0);
+    }
+
+    .ds-fadein-left {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+}
+
+.ds-fadeout-down,
+.ds-fadein-down,
+.ds-fadeout-right,
+.ds-fadein-left {
+  transition: all .15s ease;
+}
+
+.ds-fadeout-down {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.ds-fadein-down {
+  opacity: 0;
+  transform: translate(0, -20px);
+}
+
+.ds-fadeout-right {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.ds-fadein-left {
+  opacity: 0;
+  transform: translate(20px, 0);
+}

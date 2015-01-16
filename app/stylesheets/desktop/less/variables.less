@@ -13,11 +13,44 @@
 @bg-selection: #b9c3ca;
 
 // Fonts
-@font-family-serif: 'PT Serif', Georgia, serif;
-@font-family-sans-serif: 'PT Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+@font-family-serif: @font-family-ptserif;
+@font-family-sans-serif: @font-family-ptsans;
 @font-family-base: 'Proxima Nova', Arial, 'Helvetica Neue', Helvetica, sans-serif;
 @font-family-base-light: 'Proxima Nova Light', Arial, 'Helvetica Neue', Helvetica, sans-serif;
 @font-family-monospace: monospace;
+
+// -- Google Fonts -- //
+@font-family-ptserif: 'PT Serif', Georgia, serif;
+@font-family-ptsans: 'PT Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+@font-family-notoserif: 'Noto Serif', serif;
+@font-family-comfortaa: 'Comfortaa', cursive;
+@font-family-roboto: 'Roboto', sans-serif;
+@font-family-lora: 'Lora', serif;
+@font-family-philosopher: 'Philosopher', sans-serif;
+
+// -- Webfont -- //
+@font-family-airbornepilot: 'Airborne pilot';
+@font-family-amaranth: 'Amaranth';
+@font-family-beermoney: 'Beer money';
+@font-family-dancingscript: 'Dancing Script';
+@font-family-greatvibes: 'Great Vibes';
+@font-family-veles: 'Veles';
+@font-family-zion: 'ZionTrain';
+@font-family-nautilus: 'Nautilus Pompilius';
+@font-family-ospdin: 'OSP-DIN';
+@font-family-pecita: 'Pecita';
+@font-family-poetsen: 'PoetsenOne';
+@font-family-yessireebob: 'Yes siree bob';
+
+@font-family-ptmono: 'PT Mono';
+@font-family-berenisadfpro: 'Berenis ADF Pro';
+@font-family-djserif: 'DejaVu Serif Condensed';
+@font-family-heuristica: 'Heuristica';
+@font-family-permian: 'Permian Slab Serif';
+@font-family-robotoslab: 'Roboto Slab';
+@font-family-lionel: 'Lionelofparis';
+@font-family-clearsans: 'Clear Sans';
+@font-family-museocyr: 'Museo Sans Cyr';
 
 @font-size-base: 18px;
 @font-size-small: ceil((@font-size-base * 0.65)); // ~14px
@@ -84,8 +117,9 @@
 @zindex-messages: @zindex-popup;
 @zindex-messages-hero: 5001;
 @zindex-form-select: 5500;
+@zindex-tooltip: 5500;
+@zindex-color-picker-popup: 5500;
 @zindex-notice: 6000;
-@zindex-tooltip: 1070;
 
 // Components
 @border-radius-base:  4px;
@@ -160,8 +194,12 @@
 
 @toolbar-item-highlight-bg: #f5f5f5;
 
-// Progressbars
+// Progressbars (old)
 @design-settings-progressbar-color: #24df88;
+
+// Progressbars (new)
+@progressbar-height: 3px;
+@progressbar-bg: #24df88;
 
 // Menu
 @menu-font-size: 17px;
@@ -392,6 +430,9 @@
 
 @form-field-error-color: #f00;
 
+// Form Radio Buttons
+@form-radiobtn-cover-size: @design-settings-cover-size;
+
 // Form Popup
 @form-popop-width: 495px;
 
@@ -441,13 +482,30 @@
 
 @messages-chooser-dropdown-bg: @popover-bg;
 
-// Design
+// Design (old)
 @design-popup-width: 250px;
 
 @design-border-radius: @popup-border-radius;
 
 @design-drag-hover-bg-base: #444;
 @design-drag-hover-bg: rgba(red(@design-drag-hover-bg-base), green(@design-drag-hover-bg-base), blue(@design-drag-hover-bg-base), .95);
+
+// Design Settings (new)
+@design-settings-width: 450px;
+@design-settings-indent: 15px;
+
+@design-settings-border-radius: @popup-border-radius;
+
+@design-settings-bg: @settings-bg-base;
+
+@design-settings-draghover-bg-base: #444;
+@design-settings-draghover-bg: rgba(red(@design-drag-hover-bg-base), green(@design-drag-hover-bg-base), blue(@design-drag-hover-bg-base), .95);
+
+@design-settings-divider-border-color: rgba(red(@white), green(@white), blue(@white), .08);
+
+@design-settings-option-height: 40px;
+
+@design-settings-cover-size: 40px;
 
 // Hero
 @hero-overlay-bg: #202020;
@@ -475,7 +533,7 @@
 @follow-status-error-bg: @follow-status-ignored-bg;
 
 // Pay
-@pay-bg: #ffca00;
+@pay-bg: #f8c700;
 @pay-color: @black;
 
 // Filter Nav
@@ -552,3 +610,12 @@
 
 @bubble-latest-news-border-color: rgba(255, 255, 255, .4);
 @bubble-latest-news-border-color-hover: rgba(255, 255, 255, .5);
+
+// Color Picker
+@color-picker-size: 18px;
+
+@color-picker-popup-width: 244px; // 230px;
+@color-picker-popup-border-radius: 4px;
+
+@color-picker-popup-bg-base: #2a2a2a;
+@color-picker-popup-bg: rgba(red(@color-picker-popup-bg-base), green(@color-picker-popup-bg-base), blue(@color-picker-popup-bg-base), .93);
