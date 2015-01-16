@@ -3429,7 +3429,9 @@ module.exports = RelationshipViewActions;
 
 
 },{"../../api/api":10,"../../controllers/notify":104,"../server/relationship":7}],10:[function(require,module,exports){
-var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _pendingRequests;
+var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, assign, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _pendingRequests;
+
+assign = require('react/lib/Object.assign');
 
 Constants = require('../constants/constants');
 
@@ -3450,8 +3452,11 @@ userToken = function() {
   return CurrentUserStore.getAccessToken();
 };
 
-request = function(method, url, data) {
-  var headers;
+request = function(_method, url, data) {
+  var headers, method;
+  if (data == null) {
+    data = {};
+  }
   headers = {
     'X-Requested-With': 'XMLHttpRequest',
     'X-Tasty-Client-Name': 'web_mobile',
@@ -3460,6 +3465,21 @@ request = function(method, url, data) {
   if (userToken()) {
     headers['X-User-Token'] = userToken();
   }
+  method = (function() {
+    switch (_method) {
+      case 'GET':
+        return 'GET';
+      case 'POST':
+      case 'PUT':
+      case 'DELETE':
+        return 'POST';
+      default:
+        return 'GET';
+    }
+  })();
+  assign(data, {
+    _method: _method
+  });
   return reqwest({
     url: url,
     method: method,
@@ -3639,7 +3659,7 @@ module.exports = Api;
 
 
 
-},{"../constants/constants":101,"../stores/currentUser":115}],11:[function(require,module,exports){
+},{"../constants/constants":101,"../stores/currentUser":115,"react/lib/Object.assign":153}],11:[function(require,module,exports){
 var ReactUjs;
 
 ReactUjs = require('reactUjs');

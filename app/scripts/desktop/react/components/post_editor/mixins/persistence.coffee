@@ -20,11 +20,12 @@ window.PostEditor_PersistenceMixin =
 
     editorData         = @_getEditorData()
     editorData.privacy = entryPrivacy unless entryPrivacy is 'anonymous'
+    editorData._method = @savingMethod()
 
     @createRequest
       url: @savingUrl()
       data: editorData
-      method: @savingMethod()
+      method: 'POST'
       success: (newEntry) =>
         @safeUpdateState {
           entry: newEntry

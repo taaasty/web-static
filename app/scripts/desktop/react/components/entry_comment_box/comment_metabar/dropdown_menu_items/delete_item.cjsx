@@ -25,7 +25,9 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass
   deleteComment: ->
     @createRequest
       url: ApiRoutes.comments_edit_delete_url @props.commentId
-      method: 'DELETE'
+      method: 'POST'
+      data:
+        _method: 'DELETE'
       success: =>
         TastyNotifyController.notify 'success', 'Комментарий успешно удалён'
         @props.onDelete() if @props.onDelete?

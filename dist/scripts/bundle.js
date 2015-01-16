@@ -6969,12 +6969,13 @@ window.DesignSettingsPopup = React.createClass({
     var data;
     data = {};
     data[key] = value;
+    data._method = 'PUT';
     console.log('save design', key, value);
     this.incrementActivities();
     return this.createRequest({
       url: ApiRoutes.design_settings_url(this.state.user.id),
       data: data,
-      method: 'PUT',
+      method: 'POST',
       success: (function(_this) {
         return function(newDesign) {
           _this._updateUserDesign(newDesign);
@@ -7446,8 +7447,9 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({
     });
     return this.createRequest({
       url: ApiRoutes.comments_edit_delete_url(this.props.comment.id),
-      method: 'PUT',
+      method: 'POST',
       data: {
+        _method: 'PUT',
         text: text
       },
       success: (function(_this) {
@@ -8033,7 +8035,10 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
   deleteComment: function() {
     return this.createRequest({
       url: ApiRoutes.comments_edit_delete_url(this.props.commentId),
-      method: 'DELETE',
+      method: 'POST',
+      data: {
+        _method: 'DELETE'
+      },
       success: (function(_this) {
         return function() {
           TastyNotifyController.notify('success', 'Комментарий успешно удалён');
@@ -8774,7 +8779,10 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
     this.incrementActivities();
     return this.createRequest({
       url: ApiRoutes.entry_url(this.props.entryId),
-      method: 'DELETE',
+      method: 'POST',
+      data: {
+        _method: 'DELETE'
+      },
       success: (function(_this) {
         return function() {
           return _this.removeEntryFromDOM(_this.props.entryId);
@@ -8876,8 +8884,9 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({
   removeFromFavorites: function() {
     return this.createRequest({
       url: ApiRoutes.favorites_url(),
-      method: 'DELETE',
+      method: 'POST',
       data: {
+        _method: 'DELETE',
         entry_id: this.props.entryId
       },
       success: (function(_this) {
@@ -9037,8 +9046,9 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
   removeFromWatching: function() {
     return this.createRequest({
       url: ApiRoutes.watching_url(),
-      method: 'DELETE',
+      method: 'POST',
       data: {
+        _method: 'DELETE',
         entry_id: this.props.entryId
       },
       success: (function(_this) {
@@ -14140,7 +14150,9 @@ window.PostEditor_Dragging = {
 
 
 },{}],168:[function(require,module,exports){
-var ACCEPT_FILE_TYPES, MAX_FILE_SIZE, MAX_NUMBER_OF_FILES;
+var ACCEPT_FILE_TYPES, MAX_FILE_SIZE, MAX_NUMBER_OF_FILES, assign;
+
+assign = require('react/lib/Object.assign');
 
 ACCEPT_FILE_TYPES = /(\.|\/)(gif|jpe?g|png)$/i;
 
@@ -14182,11 +14194,15 @@ window.PostEditor_ImagesForm = {
     return TastyNotifyController.notifyError('Вы не загрузили изображения');
   },
   saveAsAjax: function() {
+    var data;
+    data = assign(this._getEditorData(), {
+      _method: this._getSaveMethod()
+    });
     this.incrementActivities();
     return this.createRequest({
       url: this._getSaveUrl(),
-      method: this._getSaveMethod(),
-      data: this._getEditorData(),
+      method: 'POST',
+      data: data,
       success: (function(_this) {
         return function(newEntry) {
           _this.safeUpdateState({
@@ -14321,7 +14337,7 @@ window.PostEditor_ImagesForm = {
 
 
 
-},{}],169:[function(require,module,exports){
+},{"react/lib/Object.assign":342}],169:[function(require,module,exports){
 window.TLOG_TYPES = ['public', 'private', 'anonymous'];
 
 window.PostEditor_LayoutMixin = {
@@ -14407,10 +14423,11 @@ window.PostEditor_PersistenceMixin = {
     if (entryPrivacy !== 'anonymous') {
       editorData.privacy = entryPrivacy;
     }
+    editorData._method = this.savingMethod();
     return this.createRequest({
       url: this.savingUrl(),
       data: editorData,
-      method: this.savingMethod(),
+      method: 'POST',
       success: (function(_this) {
         return function(newEntry) {
           _this.safeUpdateState({
@@ -15241,7 +15258,10 @@ window.RelationshipMixin = {
   unfollowFromYourself: function(options) {
     return this.createRequest({
       url: ApiRoutes.unfollow_from_yourself_url(this.props.relationship.reader_id),
-      method: 'DELETE',
+      method: 'POST',
+      data: {
+        _method: 'DELETE'
+      },
       success: function() {
         return options != null ? typeof options.success === "function" ? options.success() : void 0 : void 0;
       },
@@ -21985,9 +22005,10 @@ CurrentUserResource = {
   update: function(_arg) {
     var beforeSend, complete, data, error, success;
     data = _arg.data, beforeSend = _arg.beforeSend, success = _arg.success, error = _arg.error, complete = _arg.complete;
+    data._method = 'PUT';
     return $.ajax({
       url: ApiRoutes.update_profile_url(),
-      method: 'PUT',
+      method: 'POST',
       data: data,
       beforeSend: beforeSend,
       success: success,
@@ -22000,7 +22021,10 @@ CurrentUserResource = {
     beforeSend = _arg.beforeSend, success = _arg.success, error = _arg.error, complete = _arg.complete;
     return $.ajax({
       url: ApiRoutes.request_confirm_url(),
-      method: 'DELETE',
+      method: 'POST',
+      data: {
+        _method: 'DELETE'
+      },
       beforeSend: beforeSend,
       success: success,
       error: error,

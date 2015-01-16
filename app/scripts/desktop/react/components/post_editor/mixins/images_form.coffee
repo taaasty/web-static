@@ -1,3 +1,5 @@
+assign = require 'react/lib/Object.assign'
+
 ACCEPT_FILE_TYPES   = /(\.|\/)(gif|jpe?g|png)$/i
 MAX_FILE_SIZE       = 10*1000*1000
 MAX_NUMBER_OF_FILES = 6
@@ -22,12 +24,13 @@ window.PostEditor_ImagesForm =
     TastyNotifyController.notifyError 'Вы не загрузили изображения'
 
   saveAsAjax: ->
+    data = assign @_getEditorData(), _method: @_getSaveMethod()
     @incrementActivities()
 
     @createRequest
-      url:    @_getSaveUrl()
-      method: @_getSaveMethod()
-      data:   @_getEditorData()
+      url: @_getSaveUrl()
+      method: 'POST'
+      data: data
       success: (newEntry) =>
         @safeUpdateState {
           entry: newEntry

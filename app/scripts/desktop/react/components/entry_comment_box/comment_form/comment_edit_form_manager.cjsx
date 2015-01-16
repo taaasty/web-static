@@ -24,8 +24,9 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass
 
     @createRequest
       url: ApiRoutes.comments_edit_delete_url @props.comment.id
-      method: 'PUT'
+      method: 'POST'
       data:
+        _method: 'PUT'
         text: text
       success: (comment) =>
         @props.onEditEnd comment

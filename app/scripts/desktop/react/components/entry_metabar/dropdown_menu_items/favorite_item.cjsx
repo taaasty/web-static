@@ -56,8 +56,9 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
   removeFromFavorites: ->
     @createRequest
       url: ApiRoutes.favorites_url()
-      method: 'DELETE'
+      method: 'POST'
       data:
+        _method: 'DELETE'
         entry_id: @props.entryId
       success: =>
         if @props.shouldRemoveFavoriteNode
