@@ -353,3 +353,27 @@ button {
   .button-common-style(@manage-subscriptions-button-bg);
   color: @white !important;
 }
+
+.auth-button {
+  &:extend(.button all, .button--extra-small all, .button--green all);
+  margin-top: 5px;
+  position: fixed;
+  top: @indent-base;
+  right: @indent-base;
+  z-index: @zindex-auth-button;
+}
+
+.load-more-button {
+  &:extend(.button all, .button--block all, .button--rectangle all);
+  height: @load-more-button-height;
+  background-color: @load-more-button-bg;
+  font-size: @load-more-button-font-size;
+  line-height: @load-more-button-line-height;
+  letter-spacing: 0;
+  text-transform: none;
+  color: @load-more-button-color !important;
+
+  &:active {
+    background-color: lighten(@load-more-button-bg, 6%);
+  }
+}
