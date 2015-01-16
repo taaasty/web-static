@@ -42,15 +42,17 @@ class window.MessagingRequester
   markAsReadMessage: (conversationId, messageId) ->
     $.ajax
       url: ApiRoutes.messenger_read_messages_url conversationId
-      method: 'PUT'
+      method: 'POST'
       data:
+        _method: 'PUT'
         socket_id: @socket_id
         ids: messageId
 
   markAsReadNotification: (notificationId) ->
     $.ajax
       url: ApiRoutes.notifications_read_url notificationId
-      method: 'PUT'
+      method: 'POST'
       data:
+        _method: 'PUT'
         socket_id: @socket_id
         id: notificationId

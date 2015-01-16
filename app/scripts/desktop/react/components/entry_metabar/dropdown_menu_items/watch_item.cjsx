@@ -48,8 +48,9 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass
   removeFromWatching: ->
     @createRequest
       url: ApiRoutes.watching_url()
-      method: 'DELETE'
+      method: 'POST'
       data:
+        _method: 'DELETE'
         entry_id: @props.entryId
       success: =>
         @safeUpdateState isWatching: false

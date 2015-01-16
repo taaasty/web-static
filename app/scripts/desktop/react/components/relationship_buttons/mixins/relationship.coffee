@@ -37,7 +37,9 @@ window.RelationshipMixin =
   unfollowFromYourself: (options) ->
     @createRequest
       url: ApiRoutes.unfollow_from_yourself_url @props.relationship.reader_id
-      method: 'DELETE'
+      method: 'POST'
+      data:
+        _method: 'DELETE'
       success: ->
         options?.success?()
       error: (data) =>

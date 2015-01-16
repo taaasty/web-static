@@ -55,6 +55,7 @@ window.DesignSettingsPopup = React.createClass
   save: (key, value) ->
     data      = {}
     data[key] = value
+    data._method = 'PUT'
 
     console.log 'save design', key, value
     @incrementActivities()
@@ -62,7 +63,7 @@ window.DesignSettingsPopup = React.createClass
     @createRequest
       url: ApiRoutes.design_settings_url @state.user.id
       data: data
-      method: 'PUT'
+      method: 'POST'
       success: (newDesign) =>
         @_updateUserDesign newDesign
 

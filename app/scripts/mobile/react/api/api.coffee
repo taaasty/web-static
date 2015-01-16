@@ -1,3 +1,4 @@
+assign           = require 'react/lib/Object.assign'
 Constants        = require '../constants/constants'
 CurrentUserStore = require '../stores/currentUser'
 
@@ -12,13 +13,20 @@ abortPendingRequests = (key) ->
 userToken = ->
   CurrentUserStore.getAccessToken()
 
-request = (method, url, data) ->
+request = (_method, url, data = {}) ->
   headers =
     'X-Requested-With': 'XMLHttpRequest'
     'X-Tasty-Client-Name': 'web_mobile'
     'X-Tasty-Client-Version': TastySettings.version
 
   headers['X-User-Token'] = userToken() if userToken()
+
+  method = switch _method
+    when 'GET'                   then 'GET'
+    when 'POST', 'PUT', 'DELETE' then 'POST'
+    else 'GET'
+
+  assign data, { _method }
 
   reqwest
     url: url
