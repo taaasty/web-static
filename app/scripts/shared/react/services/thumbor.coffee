@@ -7,5 +7,5 @@ ThumborService =
       # when 'development' then url
       else
         @thumborUrl + "/unsafe/#{ size }/filters:no_upscale()/" + path
-# filters:no_upscale()
+
 module.exports = ThumborService

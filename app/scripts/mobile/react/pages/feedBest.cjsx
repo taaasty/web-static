@@ -1,14 +1,14 @@
 CurrentUserStore   = require '../stores/currentUser'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
-HeroFeedLive       = require '../components/hero/feed/live'
-FeedLive           = require '../components/feed/live'
-FeedLivePageMixin  = require './mixins/feedLive'
+HeroFeedBest       = require '../components/hero/feed/best'
+FeedBest           = require '../components/feed/best'
+FeedBestPageMixin  = require './mixins/feedBest'
 { PropTypes } = React
 
-FeedLivePage = React.createClass
-  displayName: 'FeedLivePage'
-  mixins: [FeedLivePageMixin]
+FeedBestPage = React.createClass
+  displayName: 'FeedBestPage'
+  mixins: [FeedBestPageMixin]
 
   propTypes:
     currentUser: PropTypes.object
@@ -27,14 +27,14 @@ FeedLivePage = React.createClass
       <UserToolbarManager />
       <div className="layout">
         <div className="layout__header">
-          <HeroFeedLive
+          <HeroFeedBest
               backgroundUrl={ @props.feed.backgroundUrl }
               entriesCount={ @props.feed.entriesCount } />
         </div>
         <div className="layout__body">
-          <FeedLive entries={ @props.entries } />
+          <FeedBest entries={ @props.entries } />
         </div>
       </div>
     </div>
 
-module.exports = FeedLivePage
+module.exports = FeedBestPage

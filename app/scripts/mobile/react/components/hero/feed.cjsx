@@ -1,15 +1,13 @@
 { declension } = require '../../../../shared/helpers/grammar'
 { PropTypes } = React
 
-#TODO: i18n
-TITLE = 'Прямой эфир'
-
 HeroFeed = React.createClass
   displayName: 'HeroFeed'
 
   propTypes:
-    background:   PropTypes.object.isRequired
-    entriesCount: PropTypes.number.isRequired
+    title:         PropTypes.string.isRequired
+    backgroundUrl: PropTypes.string.isRequired
+    entriesCount:  PropTypes.number.isRequired
 
   render: ->
     <div style={ @getHeroStyles() }
@@ -18,7 +16,7 @@ HeroFeed = React.createClass
       <div className="hero__content">
         <div className="hero__head">
           <div className="hero__title">
-            <span>{ TITLE }</span>
+            <span>{ @props.title }</span>
           </div>
           <div className="hero__smalltext">
             <span>{ @getEntriesCount() }</span>
@@ -28,10 +26,7 @@ HeroFeed = React.createClass
     </div>
 
   getHeroStyles: ->
-    #TODO: Get optimized background through ThumborService
-    backgroundUrl = @props.background.url
-
-    backgroundImage: "url('#{ backgroundUrl }')"
+    backgroundImage: "url('#{ @props.backgroundUrl }')"
 
   getEntriesCount: ->
     entriesCountDeclension = declension @props.entriesCount, ['запись', 'записи', 'записей']

@@ -23053,6 +23053,15 @@ ApiRoutes = {
   },
   suggestions_facebook: function() {
     return TastySettings.api_host + '/v1/relationships/suggestions/facebook';
+  },
+  feedLive: function() {
+    return TastySettings.api_host + '/v1/feeds/live';
+  },
+  feedBest: function() {
+    return TastySettings.api_host + '/v1/feeds/best';
+  },
+  feedFriends: function() {
+    return TastySettings.api_host + '/v1/my_feeds/friends';
   }
 };
 

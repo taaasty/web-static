@@ -1,5 +1,5 @@
 EntryFeedMeta     = require './feed/meta'
-EntryComments     = require './comments/comments'
+# EntryComments     = require './comments/comments'
 EntryContent      = require './content/content'
 CurrentUserStore  = require '../../stores/currentUser'
 ConnectStoreMixin = require '../../mixins/connectStore'
@@ -21,11 +21,11 @@ EntryFeed = React.createClass
     <div className={ @getEntryClasses() }>
       <EntryContent entry={ @props.entry } />
       <EntryFeedMeta entry={ @props.entry } />
-      <EntryComments
-          entry={ @props.entry }
-          commentsInfo={ @props.entry.comments_info }
-          user={ @state.user } />
     </div>
+    # <EntryComments
+    #     entry={ @props.entry }
+    #     commentsInfo={ @props.entry.comments_info }
+    #     user={ @state.user } />
 
   getEntryClasses: ->
     # Small hack, depends on layout

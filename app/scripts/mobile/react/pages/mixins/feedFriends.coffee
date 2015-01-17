@@ -1,4 +1,4 @@
-FeedLivePageMixin =
+FeedFriendsPageMixin =
 
   getDefaultProps: ->
     currentUser:
@@ -98,7 +98,7 @@ FeedLivePageMixin =
         total_count: 0
       created_at: "2015-01-16T19:30:05.000+03:00"
       entry_url: "http://taaasty.com/~hyperwax/19616804"
-      id: 19619777
+      id: 19617454
       image_attachments: [
         content_type: "image/jpeg"
         created_at: "2015-01-16T19:30:05.000+03:00"
@@ -133,4 +133,4 @@ FeedLivePageMixin =
       backgroundUrl: 'http://taaasty.com/images/hero-cover.jpg'
       entriesCount: 41
 
-module.exports = FeedLivePageMixin
+module.exports = FeedFriendsPageMixin

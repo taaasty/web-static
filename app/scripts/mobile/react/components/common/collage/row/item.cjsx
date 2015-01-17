@@ -27,7 +27,7 @@ CollageItem = React.createClass
     { width, height, margin }
 
   getImageStyles: ->
-    { width, height, margin } = @props
+    { width, height } = @props
 
     { width, height }
 

@@ -1,6 +1,7 @@
 MESSAGE = 'В ленте нет записей'
 
-FeedEmptyMessage = React.createClass
+FeedEmptyPageMessage = React.createClass
+  displayName: 'FeedEmptyPageMessage'
 
   render: ->
     <div className="post">
@@ -13,4 +14,4 @@ FeedEmptyMessage = React.createClass
       </div>
     </div>
 
-module.exports = FeedEmptyMessage
+module.exports = FeedEmptyPageMessage
