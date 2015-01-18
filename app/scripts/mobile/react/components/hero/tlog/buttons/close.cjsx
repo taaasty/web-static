@@ -1,7 +1,7 @@
 { PropTypes } = React
 
-HeroCloseButton = React.createClass
-  displayName: 'HeroCloseButton'
+HeroTlogCloseButton = React.createClass
+  displayName: 'HeroTlogCloseButton'
 
   propTypes:
     onClick: PropTypes.func.isRequired
@@ -12,4 +12,4 @@ HeroCloseButton = React.createClass
       <i className="icon icon--cross" />
     </div>
 
-module.exports = HeroCloseButton
+module.exports = HeroTlogCloseButton

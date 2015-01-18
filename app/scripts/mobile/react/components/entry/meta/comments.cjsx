@@ -1,5 +1,5 @@
 CommentsStore     = require '../../../stores/comments'
-ConnectStoreMixin = require '../../../mixins/connectStore'
+ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 { PropTypes } = React
 
 EntryMetaComments = React.createClass

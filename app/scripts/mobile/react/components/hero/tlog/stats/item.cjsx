@@ -2,8 +2,8 @@ cx            = require 'react/lib/cx'
 NumberHelpers = require '../../../../../../shared/helpers/number'
 { PropTypes } = React
 
-HeroStatsItem = React.createClass
-  displayName: 'HeroStatsItem'
+HeroTlogStatsItem = React.createClass
+  displayName: 'HeroTlogStatsItem'
 
   propTypes:
     count:   PropTypes.number.isRequired
@@ -50,4 +50,4 @@ HeroStatsItem = React.createClass
       e.preventDefault()
       @props.onClick()
 
-module.exports = HeroStatsItem
+module.exports = HeroTlogStatsItem

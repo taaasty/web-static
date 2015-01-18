@@ -1,7 +1,7 @@
 { PropTypes } = React
 
-HeroHead = React.createClass
-  displayName: 'HeroHead'
+HeroTlogHead = React.createClass
+  displayName: 'HeroTlogHead'
 
   propTypes:
     author: PropTypes.object.isRequired
@@ -20,4 +20,4 @@ HeroHead = React.createClass
       </div>
     </div>
 
-module.exports = HeroHead
+module.exports = HeroTlogHead

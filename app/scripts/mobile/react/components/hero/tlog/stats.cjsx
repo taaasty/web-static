@@ -1,9 +1,9 @@
-HeroStatsItem = require './stats/item'
+HeroTlogStatsItem = require './stats/item'
 { declension } = require '../../../../../shared/helpers/grammar'
 { PropTypes }  = React
 
-HeroStats = React.createClass
-  displayName: 'HeroStats'
+HeroTlogStats = React.createClass
+  displayName: 'HeroTlogStats'
 
   propTypes:
     stats:  PropTypes.object.isRequired
@@ -17,23 +17,23 @@ HeroStats = React.createClass
   renderStatsList: ->
     if @props.stats.entries_count?
       url = @props.author.tlog_url unless @isTlogPrivate()
-      entries = <HeroStatsItem
+      entries = <HeroTlogStatsItem
                     href={ url }
                     count={ @props.stats.entries_count }
                     title={ @getTitle('entries') }
                     key="entries" />
     if @props.stats.followings_count?
-      followings = <HeroStatsItem
+      followings = <HeroTlogStatsItem
                        count={ @props.stats.followings_count }
                        title={ @getTitle('followings') }
                        key="followings" />
     if @props.stats.followers_count?
-      followers = <HeroStatsItem
+      followers = <HeroTlogStatsItem
                       count={ @props.stats.followers_count }
                       title={ @getTitle('followers') }
                       key="followers" />
     if @props.stats.days_count?
-      days = <HeroStatsItem
+      days = <HeroTlogStatsItem
                  count={ @props.stats.days_count }
                  title={ @getTitle('days') }
                  key="days" />
@@ -51,6 +51,6 @@ HeroStats = React.createClass
       when 'followings' then declension(@props.stats.followings_count, ['подписка', 'подписки', 'подписок'])
       when 'followers'  then declension(@props.stats.followers_count, ['подписчик', 'подписчика', 'подписчиков'])
       when 'days'       then declension(@props.stats.days_count, ['день', 'дня', 'дней']) + ' на тейсти'
-      else console.warn 'Unknown type of stats of HeroStats component', type
+      else console.warn 'Unknown type of stats of HeroTlogStats component', type
 
-module.exports = HeroStats
+module.exports = HeroTlogStats

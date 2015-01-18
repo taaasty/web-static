@@ -4,8 +4,8 @@ RelationshipViewActions = require '../../../../../../actions/view/relationship'
 #TODO: i18n
 TITLE = 'Пожаловаться'
 
-HeroActions_DropdownMenuReportItem = React.createClass
-  displayName: 'HeroActions_DropdownMenuReportItem'
+HeroTlogActions_DropdownMenuReportItem = React.createClass
+  displayName: 'HeroTlogActions_DropdownMenuReportItem'
 
   propTypes:
     userId:   PropTypes.number.isRequired
@@ -24,4 +24,4 @@ HeroActions_DropdownMenuReportItem = React.createClass
     RelationshipViewActions.report @props.userId
       .always @props.onReport
 
-module.exports = HeroActions_DropdownMenuReportItem
+module.exports = HeroTlogActions_DropdownMenuReportItem

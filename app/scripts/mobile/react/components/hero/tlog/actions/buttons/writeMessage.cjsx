@@ -1,5 +1,5 @@
-HeroActions_WriteMessageButton = React.createClass
-  displayName: 'HeroActions_WriteMessageButton'
+HeroTlogActions_WriteMessageButton = React.createClass
+  displayName: 'HeroTlogActions_WriteMessageButton'
 
   render: ->
     <button className="write-message-button"
@@ -10,4 +10,4 @@ HeroActions_WriteMessageButton = React.createClass
   handleClick: -> 
     alert 'Ещё не работает'
 
-module.exports = HeroActions_WriteMessageButton
+module.exports = HeroTlogActions_WriteMessageButton

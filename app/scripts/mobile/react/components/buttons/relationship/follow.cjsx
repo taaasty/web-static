@@ -2,7 +2,7 @@ cx                      = require 'react/lib/cx'
 RelationshipsStore      = require '../../../stores/relationships'
 RelationshipButtonMixin = require './mixins/relationship'
 ComponentMixin          = require '../../../mixins/component'
-ConnectStoreMixin       = require '../../../mixins/connectStore'
+ConnectStoreMixin       = require '../../../../../shared/react/mixins/connectStore'
 { PropTypes } = React
 
 SHOW_STATE    = 'show'

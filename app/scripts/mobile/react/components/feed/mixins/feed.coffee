@@ -23,7 +23,7 @@ FeedMixin =
   activateErrorState:   -> @safeUpdateState(currentState: ERROR_STATE)
 
   getStateFromStore: ->
-    entries:          FeedStore.getEntries() || @props.entries
+    entries:          FeedStore.getEntries()
     everythingLoaded: FeedStore.isEverythingLoaded()
 
 module.exports = FeedMixin

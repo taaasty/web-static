@@ -2,7 +2,7 @@ EntryViewActions  = require '../../../actions/view/entry'
 CommentsStore     = require '../../../stores/comments'
 CommentsMixin     = require './mixins/comments'
 ComponentMixin    = require '../../../mixins/component'
-ConnectStoreMixin = require '../../../mixins/connectStore'
+ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 CommentList       = require './commentList'
 CommentCreateForm = require './commentForm/create'
 CommentsLoadMore  = require './loadMore'
@@ -73,7 +73,7 @@ EntryComments = React.createClass
   getStateFromStore: ->
     entryId = @props.entry.id
 
-    comments:   CommentsStore.getComments(entryId)   || @props.commentsInfo.comments
-    totalCount: CommentsStore.getTotalCount(entryId) || @props.commentsInfo.total_count
+    comments:   CommentsStore.getComments entryId
+    totalCount: CommentsStore.getTotalCount entryId
 
 module.exports = EntryComments

@@ -1,11 +1,5 @@
 { PropTypes } = React
 
-# Известные размеры:
-# - 8x8
-# - 15x15
-# - 24x24
-# - 30x30
-
 Spinner = React.createClass
 
   propTypes:

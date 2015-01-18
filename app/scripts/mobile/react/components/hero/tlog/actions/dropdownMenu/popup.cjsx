@@ -1,14 +1,14 @@
 RelationshipsStore                 = require '../../../../../stores/relationships'
-ConnectStoreMixin                  = require '../../../../../mixins/connectStore'
-DropdownMenuMixin                  = require '../../../../../mixins/dropdownMenu'
-HeroActions_DropdownMenuIgnoreItem = require './items/ignore'
-HeroActions_DropdownMenuReportItem = require './items/report'
+ConnectStoreMixin                      = require '../../../../../../../shared/react/mixins/connectStore'
+DropdownMenuMixin                      = require '../../../../../mixins/dropdownMenu'
+HeroTlogActions_DropdownMenuIgnoreItem = require './items/ignore'
+HeroTlogActions_DropdownMenuReportItem = require './items/report'
 { PropTypes } = React
 
 IGNORED_STATUS = 'ignored'
 
-HeroActions_DropdownMenu_Popup = React.createClass
-  displayName: 'HeroActions_DropdownMenu_Popup'
+HeroTlogActions_DropdownMenu_Popup = React.createClass
+  displayName: 'HeroTlogActions_DropdownMenu_Popup'
   mixins: [ConnectStoreMixin(RelationshipsStore), DropdownMenuMixin]
 
   propTypes:
@@ -28,13 +28,13 @@ HeroActions_DropdownMenu_Popup = React.createClass
 
   _renderPopupList: ->
     if @state.status isnt IGNORED_STATUS
-      ignoreItem = <HeroActions_DropdownMenuIgnoreItem
+      ignoreItem = <HeroTlogActions_DropdownMenuIgnoreItem
                        userId={ @props.userId }
                        onIgnore={ @props.onClose } />
 
     return <ul className="hero__dropdown-popup-list">
              { ignoreItem }
-             <HeroActions_DropdownMenuReportItem
+             <HeroTlogActions_DropdownMenuReportItem
                  userId={ @props.userId }
                  onReport={ @props.onClose } />
            </ul>
@@ -42,4 +42,4 @@ HeroActions_DropdownMenu_Popup = React.createClass
   getStateFromStore: ->
     status: RelationshipsStore.getStatus(@props.userId) || @props.status
 
-module.exports = HeroActions_DropdownMenu_Popup
+module.exports = HeroTlogActions_DropdownMenu_Popup

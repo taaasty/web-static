@@ -1,7 +1,7 @@
 { PropTypes } = React
 
-HeroActions_SettingsButton = React.createClass
-  displayName: 'HeroActions_SettingsButton'
+HeroTlogActions_SettingsButton = React.createClass
+  displayName: 'HeroTlogActions_SettingsButton'
 
   propTypes:
     slug: PropTypes.string.isRequired
@@ -15,4 +15,4 @@ HeroActions_SettingsButton = React.createClass
   handleClick: ->
     window.location = Routes.userSettings @props.slug
 
-module.exports = HeroActions_SettingsButton
+module.exports = HeroTlogActions_SettingsButton

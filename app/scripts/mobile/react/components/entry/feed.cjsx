@@ -2,7 +2,7 @@ EntryFeedMeta     = require './feed/meta'
 # EntryComments     = require './comments/comments'
 EntryContent      = require './content/content'
 CurrentUserStore  = require '../../stores/currentUser'
-ConnectStoreMixin = require '../../mixins/connectStore'
+ConnectStoreMixin = require '../../../../shared/react/mixins/connectStore'
 { PropTypes } = React
 
 TEXT_TYPE  = 'text'

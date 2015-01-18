@@ -4,8 +4,8 @@ RelationshipViewActions = require '../../../../../../actions/view/relationship'
 #TODO: i18n
 TITLE = 'Заблокировать'
 
-HeroActions_DropdownMenuIgnoreItem = React.createClass
-  displayName: 'HeroActions_DropdownMenuIgnoreItem'
+HeroTlogActions_DropdownMenuIgnoreItem = React.createClass
+  displayName: 'HeroTlogActions_DropdownMenuIgnoreItem'
 
   propTypes:
     userId:   PropTypes.number.isRequired
@@ -24,4 +24,4 @@ HeroActions_DropdownMenuIgnoreItem = React.createClass
     RelationshipViewActions.ignore @props.userId
       .then @props.onIgnore
 
-module.exports = HeroActions_DropdownMenuIgnoreItem
+module.exports = HeroTlogActions_DropdownMenuIgnoreItem

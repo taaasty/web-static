@@ -10,7 +10,7 @@ ApiRoutes      = require('../shared/routes/api');
 ThumborService = require('../shared/react/services/thumbor');
 TastySettings  = require('./settings');
 EntryPage      = require('./react/pages/entry');
-},{"../../bower_components/momentjs/locale/ru":2,"../../bower_components/momentjs/moment":3,"../shared/react/services/thumbor":109,"../shared/routes/api":110,"../shared/routes/routes":111,"./react/pages/entry":100,"./settings":105,"eventEmitter":"eventEmitter","react":"react"}],2:[function(require,module,exports){
+},{"../../bower_components/momentjs/locale/ru":2,"../../bower_components/momentjs/moment":3,"../shared/react/services/thumbor":109,"../shared/routes/api":110,"../shared/routes/routes":111,"./react/pages/entry":99,"./settings":104,"eventEmitter":"eventEmitter","react":"react"}],2:[function(require,module,exports){
 (function (global){
 // moment.js locale configuration
 // locale : russian (ru)
@@ -3657,7 +3657,7 @@ module.exports = Api;
 
 
 
-},{"../constants/constants":90,"../stores/currentUser":103,"react/lib/Object.assign":141}],9:[function(require,module,exports){
+},{"../constants/constants":90,"../stores/currentUser":102,"react/lib/Object.assign":141}],9:[function(require,module,exports){
 var Notify, PropTypes, TIMEOUT, TYPE;
 
 PropTypes = React.PropTypes;
@@ -3710,7 +3710,7 @@ RelationshipButtonMixin = require('./mixins/relationship');
 
 ComponentMixin = require('../../../mixins/component');
 
-ConnectStoreMixin = require('../../../mixins/connectStore');
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
 
 PropTypes = React.PropTypes;
 
@@ -3864,7 +3864,7 @@ module.exports = FollowButton;
 
 
 
-},{"../../../mixins/component":97,"../../../mixins/connectStore":98,"../../../stores/relationships":104,"./mixins/relationship":11,"react/lib/cx":220}],11:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":108,"../../../mixins/component":97,"../../../stores/relationships":103,"./mixins/relationship":11,"react/lib/cx":220}],11:[function(require,module,exports){
 var RelationshipButtonMixin, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../actions/view/relationship');
@@ -4282,7 +4282,7 @@ var ConnectStoreMixin, FollowStatus, PropTypes, RelationshipsStore;
 
 RelationshipsStore = require('../../../stores/relationships');
 
-ConnectStoreMixin = require('../../../mixins/connectStore');
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
 
 PropTypes = React.PropTypes;
 
@@ -4315,7 +4315,7 @@ module.exports = FollowStatus;
 
 
 
-},{"../../../mixins/connectStore":98,"../../../stores/relationships":104}],20:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":108,"../../../stores/relationships":103}],20:[function(require,module,exports){
 var PropTypes, Spinner;
 
 PropTypes = React.PropTypes;
@@ -4811,7 +4811,7 @@ module.exports = CommentActionsDropdownMenu;
 
 
 
-},{"../../../../../../mixins/dropdownMenu":99,"./dropdownMenu/items/delete":30,"./dropdownMenu/items/edit":31,"./dropdownMenu/items/link":32,"./dropdownMenu/items/report":33}],30:[function(require,module,exports){
+},{"../../../../../../mixins/dropdownMenu":98,"./dropdownMenu/items/delete":30,"./dropdownMenu/items/edit":31,"./dropdownMenu/items/link":32,"./dropdownMenu/items/report":33}],30:[function(require,module,exports){
 var CONFIRM_MESSAGE, CommentActionsDropdownMenuDeleteItem, EntryViewActions, LINK_TEXT, PropTypes;
 
 EntryViewActions = require('../../../../../../../../actions/view/entry');
@@ -5132,7 +5132,7 @@ CommentsMixin = require('./mixins/comments');
 
 ComponentMixin = require('../../../mixins/component');
 
-ConnectStoreMixin = require('../../../mixins/connectStore');
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
 
 CommentList = require('./commentList');
 
@@ -5227,8 +5227,8 @@ EntryComments = React.createClass({
     var entryId;
     entryId = this.props.entry.id;
     return {
-      comments: CommentsStore.getComments(entryId) || this.props.commentsInfo.comments,
-      totalCount: CommentsStore.getTotalCount(entryId) || this.props.commentsInfo.total_count
+      comments: CommentsStore.getComments(entryId),
+      totalCount: CommentsStore.getTotalCount(entryId)
     };
   }
 });
@@ -5237,7 +5237,7 @@ module.exports = EntryComments;
 
 
 
-},{"../../../actions/view/entry":6,"../../../mixins/component":97,"../../../mixins/connectStore":98,"../../../stores/comments":102,"./commentForm/create":23,"./commentList":25,"./loadMore":39,"./mixins/comments":40}],39:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":108,"../../../actions/view/entry":6,"../../../mixins/component":97,"../../../stores/comments":101,"./commentForm/create":23,"./commentList":25,"./loadMore":39,"./mixins/comments":40}],39:[function(require,module,exports){
 var CommentsLoadMore, CommentsLoadMoreButton, PropTypes, Spinner, declension;
 
 Spinner = require('../../common/spinner/spinner');
@@ -5293,7 +5293,7 @@ module.exports = CommentsLoadMore;
 
 
 
-},{"../../../../../shared/helpers/grammar":107,"../../common/spinner/spinner":20,"./buttons/loadMore":21}],40:[function(require,module,exports){
+},{"../../../../../shared/helpers/grammar":106,"../../common/spinner/spinner":20,"./buttons/loadMore":21}],40:[function(require,module,exports){
 var CommentsMixin, EntryViewActions;
 
 EntryViewActions = require('../../../../actions/view/entry');
@@ -5811,7 +5811,7 @@ module.exports = EntryMetaActions_DropdownMenu;
 
 
 
-},{"../../../../mixins/dropdownMenu":99,"./dropdownMenu/items/delete":53,"./dropdownMenu/items/edit":54,"./dropdownMenu/items/favorite":55,"./dropdownMenu/items/link":56,"./dropdownMenu/items/report":57,"./dropdownMenu/items/watch":58}],53:[function(require,module,exports){
+},{"../../../../mixins/dropdownMenu":98,"./dropdownMenu/items/delete":53,"./dropdownMenu/items/edit":54,"./dropdownMenu/items/favorite":55,"./dropdownMenu/items/link":56,"./dropdownMenu/items/report":57,"./dropdownMenu/items/watch":58}],53:[function(require,module,exports){
 var CONFIRM_MESSAGE, EntryMetaActions_DropdownMenu_DeleteItem, EntryViewActions, PropTypes, TITLE;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -6106,7 +6106,7 @@ var CommentsStore, ConnectStoreMixin, EntryMetaComments, PropTypes;
 
 CommentsStore = require('../../../stores/comments');
 
-ConnectStoreMixin = require('../../../mixins/connectStore');
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
 
 PropTypes = React.PropTypes;
 
@@ -6135,7 +6135,7 @@ module.exports = EntryMetaComments;
 
 
 
-},{"../../../mixins/connectStore":98,"../../../stores/comments":102}],60:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":108,"../../../stores/comments":101}],60:[function(require,module,exports){
 var ComponentMixin, EntryMetaVoting, EntryViewActions, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -6213,7 +6213,7 @@ EntryContent = require('./content/content');
 
 CurrentUserStore = require('../../stores/currentUser');
 
-ConnectStoreMixin = require('../../mixins/connectStore');
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
 
 PropTypes = React.PropTypes;
 
@@ -6273,7 +6273,7 @@ module.exports = EntryTlog;
 
 
 
-},{"../../mixins/connectStore":98,"../../stores/currentUser":103,"./comments/comments":38,"./content/content":41,"./tlog/meta":62}],62:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":108,"../../stores/currentUser":102,"./comments/comments":38,"./content/content":41,"./tlog/meta":62}],62:[function(require,module,exports){
 var EntryMetaActions, EntryMetaComments, EntryMetaVoting, EntryTlogMeta, PropTypes;
 
 EntryMetaVoting = require('../meta/voting');
@@ -6314,23 +6314,23 @@ module.exports = EntryTlogMeta;
 
 
 },{"../meta/actions":50,"../meta/comments":59,"../meta/voting":60}],63:[function(require,module,exports){
-var BrowserHelpers, CLOSE_STATE, ConnectStoreMixin, CurrentUserStore, HeroActions, HeroAvatar, HeroCloseButton, HeroHead, HeroStats, HeroTlog, OPEN_STATE, PropTypes, _initialHeroHeight, _openHeroHeight, _screenOrientation;
+var BrowserHelpers, CLOSE_STATE, ConnectStoreMixin, CurrentUserStore, HeroTlog, HeroTlogActions, HeroTlogAvatar, HeroTlogCloseButton, HeroTlogHead, HeroTlogStats, OPEN_STATE, PropTypes, _initialHeroHeight, _openHeroHeight, _screenOrientation;
 
 CurrentUserStore = require('../../stores/currentUser');
 
-ConnectStoreMixin = require('../../mixins/connectStore');
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
 
 BrowserHelpers = require('../../../../shared/helpers/browser');
 
-HeroAvatar = require('./tlog/avatar');
+HeroTlogAvatar = require('./tlog/avatar');
 
-HeroHead = require('./tlog/head');
+HeroTlogHead = require('./tlog/head');
 
-HeroActions = require('./tlog/actions');
+HeroTlogActions = require('./tlog/actions');
 
-HeroStats = require('./tlog/stats');
+HeroTlogStats = require('./tlog/stats');
 
-HeroCloseButton = require('./tlog/buttons/close');
+HeroTlogCloseButton = require('./tlog/buttons/close');
 
 PropTypes = React.PropTypes;
 
@@ -6366,7 +6366,7 @@ HeroTlog = React.createClass({
     return React.createElement("div", {
       "style": this.getHeroStyles(),
       "className": "hero"
-    }, React.createElement(HeroCloseButton, {
+    }, React.createElement(HeroTlogCloseButton, {
       "onClick": this.close
     }), React.createElement("div", {
       "className": "hero__overlay"
@@ -6374,18 +6374,18 @@ HeroTlog = React.createClass({
       "className": "hero__gradient"
     }), React.createElement("div", {
       "className": "hero__content"
-    }, React.createElement(HeroAvatar, {
+    }, React.createElement(HeroTlogAvatar, {
       "user": this.state.user,
       "author": this.props.tlog.author,
       "status": this.props.tlog.my_relationship,
       "onClick": this.handleAvatarClick
-    }), React.createElement(HeroHead, {
+    }), React.createElement(HeroTlogHead, {
       "author": this.props.tlog.author
-    }), React.createElement(HeroActions, {
+    }), React.createElement(HeroTlogActions, {
       "user": this.state.user,
       "author": this.props.tlog.author,
       "status": this.props.tlog.my_relationship
-    })), React.createElement(HeroStats, {
+    })), React.createElement(HeroTlogStats, {
       "author": this.props.tlog.author,
       "stats": this.props.tlog.stats
     }));
@@ -6456,17 +6456,17 @@ module.exports = HeroTlog;
 
 
 
-},{"../../../../shared/helpers/browser":106,"../../mixins/connectStore":98,"../../stores/currentUser":103,"./tlog/actions":64,"./tlog/avatar":74,"./tlog/buttons/close":75,"./tlog/head":76,"./tlog/stats":77}],64:[function(require,module,exports){
-var HeroActions, HeroActions_CurrentUser, HeroActions_User, PropTypes;
+},{"../../../../shared/helpers/browser":105,"../../../../shared/react/mixins/connectStore":108,"../../stores/currentUser":102,"./tlog/actions":64,"./tlog/avatar":74,"./tlog/buttons/close":75,"./tlog/head":76,"./tlog/stats":77}],64:[function(require,module,exports){
+var HeroTlogActions, HeroTlogActions_CurrentUser, HeroTlogActions_User, PropTypes;
 
-HeroActions_User = require('./actions/user');
+HeroTlogActions_User = require('./actions/user');
 
-HeroActions_CurrentUser = require('./actions/currentUser');
+HeroTlogActions_CurrentUser = require('./actions/currentUser');
 
 PropTypes = React.PropTypes;
 
-HeroActions = React.createClass({
-  displayName: 'HeroActions',
+HeroTlogActions = React.createClass({
+  displayName: 'HeroTlogActions',
   propTypes: {
     user: PropTypes.object,
     author: PropTypes.object.isRequired,
@@ -6477,11 +6477,11 @@ HeroActions = React.createClass({
       return null;
     }
     if (this.isCurrentUser()) {
-      return React.createElement(HeroActions_CurrentUser, {
+      return React.createElement(HeroTlogActions_CurrentUser, {
         "user": this.props.user
       });
     } else {
-      return React.createElement(HeroActions_User, {
+      return React.createElement(HeroTlogActions_User, {
         "user": this.props.author,
         "status": this.props.status
       });
@@ -6496,17 +6496,17 @@ HeroActions = React.createClass({
   }
 });
 
-module.exports = HeroActions;
+module.exports = HeroTlogActions;
 
 
 
 },{"./actions/currentUser":67,"./actions/user":73}],65:[function(require,module,exports){
-var HeroActions_SettingsButton, PropTypes;
+var HeroTlogActions_SettingsButton, PropTypes;
 
 PropTypes = React.PropTypes;
 
-HeroActions_SettingsButton = React.createClass({
-  displayName: 'HeroActions_SettingsButton',
+HeroTlogActions_SettingsButton = React.createClass({
+  displayName: 'HeroTlogActions_SettingsButton',
   propTypes: {
     slug: PropTypes.string.isRequired
   },
@@ -6523,15 +6523,15 @@ HeroActions_SettingsButton = React.createClass({
   }
 });
 
-module.exports = HeroActions_SettingsButton;
+module.exports = HeroTlogActions_SettingsButton;
 
 
 
 },{}],66:[function(require,module,exports){
-var HeroActions_WriteMessageButton;
+var HeroTlogActions_WriteMessageButton;
 
-HeroActions_WriteMessageButton = React.createClass({
-  displayName: 'HeroActions_WriteMessageButton',
+HeroTlogActions_WriteMessageButton = React.createClass({
+  displayName: 'HeroTlogActions_WriteMessageButton',
   render: function() {
     return React.createElement("button", {
       "className": "write-message-button",
@@ -6545,21 +6545,21 @@ HeroActions_WriteMessageButton = React.createClass({
   }
 });
 
-module.exports = HeroActions_WriteMessageButton;
+module.exports = HeroTlogActions_WriteMessageButton;
 
 
 
 },{}],67:[function(require,module,exports){
-var BUTTON_TITLE, HeroActions_CurrentUser, HeroActions_SettingsButton, PropTypes;
+var BUTTON_TITLE, HeroTlogActions_CurrentUser, HeroTlogActions_SettingsButton, PropTypes;
 
-HeroActions_SettingsButton = require('./buttons/settings');
+HeroTlogActions_SettingsButton = require('./buttons/settings');
 
 PropTypes = React.PropTypes;
 
 BUTTON_TITLE = 'Это вы';
 
-HeroActions_CurrentUser = React.createClass({
-  displayName: 'HeroActions_CurrentUser',
+HeroTlogActions_CurrentUser = React.createClass({
+  displayName: 'HeroTlogActions_CurrentUser',
   propTypes: {
     user: PropTypes.object.isRequired
   },
@@ -6568,26 +6568,26 @@ HeroActions_CurrentUser = React.createClass({
       "className": "hero__actions"
     }, React.createElement("button", {
       "className": "follow-button"
-    }, BUTTON_TITLE), React.createElement(HeroActions_SettingsButton, {
+    }, BUTTON_TITLE), React.createElement(HeroTlogActions_SettingsButton, {
       "slug": this.props.user.slug
     }));
   }
 });
 
-module.exports = HeroActions_CurrentUser;
+module.exports = HeroTlogActions_CurrentUser;
 
 
 
 },{"./buttons/settings":65}],68:[function(require,module,exports){
-var CLOSE_STATE, ClickOutsideMixin, HeroActions_DropdownMenu, HeroActions_DropdownMenu_Button, HeroActions_DropdownMenu_Popup, OPEN_STATE, PropTypes, cx;
+var CLOSE_STATE, ClickOutsideMixin, HeroTlogActions_DropdownMenu, HeroTlogActions_DropdownMenu_Button, HeroTlogActions_DropdownMenu_Popup, OPEN_STATE, PropTypes, cx;
 
 cx = require('react/lib/cx');
 
 ClickOutsideMixin = require('../../../../mixins/clickOutside');
 
-HeroActions_DropdownMenu_Button = require('./dropdownMenu/buttons/button');
+HeroTlogActions_DropdownMenu_Button = require('./dropdownMenu/buttons/button');
 
-HeroActions_DropdownMenu_Popup = require('./dropdownMenu/popup');
+HeroTlogActions_DropdownMenu_Popup = require('./dropdownMenu/popup');
 
 PropTypes = React.PropTypes;
 
@@ -6595,8 +6595,8 @@ CLOSE_STATE = 'close';
 
 OPEN_STATE = 'open';
 
-HeroActions_DropdownMenu = React.createClass({
-  displayName: 'HeroActions_DropdownMenu',
+HeroTlogActions_DropdownMenu = React.createClass({
+  displayName: 'HeroTlogActions_DropdownMenu',
   mixins: [ClickOutsideMixin],
   propTypes: {
     userId: PropTypes.number.isRequired,
@@ -6615,9 +6615,9 @@ HeroActions_DropdownMenu = React.createClass({
     });
     return React.createElement("div", {
       "className": menuClasses
-    }, React.createElement(HeroActions_DropdownMenu_Button, {
+    }, React.createElement(HeroTlogActions_DropdownMenu_Button, {
       "onClick": this.toggleOpenState
-    }), React.createElement(HeroActions_DropdownMenu_Popup, {
+    }), React.createElement(HeroTlogActions_DropdownMenu_Popup, {
       "arrangement": "top",
       "visible": this.isOpenState(),
       "userId": this.props.userId,
@@ -6647,17 +6647,17 @@ HeroActions_DropdownMenu = React.createClass({
   }
 });
 
-module.exports = HeroActions_DropdownMenu;
+module.exports = HeroTlogActions_DropdownMenu;
 
 
 
 },{"../../../../mixins/clickOutside":96,"./dropdownMenu/buttons/button":69,"./dropdownMenu/popup":72,"react/lib/cx":220}],69:[function(require,module,exports){
-var HeroActions_DropdownMenu_Button, PropTypes;
+var HeroTlogActions_DropdownMenu_Button, PropTypes;
 
 PropTypes = React.PropTypes;
 
-HeroActions_DropdownMenu_Button = React.createClass({
-  displayName: 'HeroActions_DropdownMenu_Button',
+HeroTlogActions_DropdownMenu_Button = React.createClass({
+  displayName: 'HeroTlogActions_DropdownMenu_Button',
   propTypes: {
     onClick: PropTypes.func.isRequired
   },
@@ -6671,12 +6671,12 @@ HeroActions_DropdownMenu_Button = React.createClass({
   }
 });
 
-module.exports = HeroActions_DropdownMenu_Button;
+module.exports = HeroTlogActions_DropdownMenu_Button;
 
 
 
 },{}],70:[function(require,module,exports){
-var HeroActions_DropdownMenuIgnoreItem, PropTypes, RelationshipViewActions, TITLE;
+var HeroTlogActions_DropdownMenuIgnoreItem, PropTypes, RelationshipViewActions, TITLE;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
 
@@ -6684,8 +6684,8 @@ PropTypes = React.PropTypes;
 
 TITLE = 'Заблокировать';
 
-HeroActions_DropdownMenuIgnoreItem = React.createClass({
-  displayName: 'HeroActions_DropdownMenuIgnoreItem',
+HeroTlogActions_DropdownMenuIgnoreItem = React.createClass({
+  displayName: 'HeroTlogActions_DropdownMenuIgnoreItem',
   propTypes: {
     userId: PropTypes.number.isRequired,
     onIgnore: PropTypes.func.isRequired
@@ -6705,12 +6705,12 @@ HeroActions_DropdownMenuIgnoreItem = React.createClass({
   }
 });
 
-module.exports = HeroActions_DropdownMenuIgnoreItem;
+module.exports = HeroTlogActions_DropdownMenuIgnoreItem;
 
 
 
 },{"../../../../../../actions/view/relationship":7}],71:[function(require,module,exports){
-var HeroActions_DropdownMenuReportItem, PropTypes, RelationshipViewActions, TITLE;
+var HeroTlogActions_DropdownMenuReportItem, PropTypes, RelationshipViewActions, TITLE;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
 
@@ -6718,8 +6718,8 @@ PropTypes = React.PropTypes;
 
 TITLE = 'Пожаловаться';
 
-HeroActions_DropdownMenuReportItem = React.createClass({
-  displayName: 'HeroActions_DropdownMenuReportItem',
+HeroTlogActions_DropdownMenuReportItem = React.createClass({
+  displayName: 'HeroTlogActions_DropdownMenuReportItem',
   propTypes: {
     userId: PropTypes.number.isRequired,
     onReport: PropTypes.func.isRequired
@@ -6739,29 +6739,29 @@ HeroActions_DropdownMenuReportItem = React.createClass({
   }
 });
 
-module.exports = HeroActions_DropdownMenuReportItem;
+module.exports = HeroTlogActions_DropdownMenuReportItem;
 
 
 
 },{"../../../../../../actions/view/relationship":7}],72:[function(require,module,exports){
-var ConnectStoreMixin, DropdownMenuMixin, HeroActions_DropdownMenuIgnoreItem, HeroActions_DropdownMenuReportItem, HeroActions_DropdownMenu_Popup, IGNORED_STATUS, PropTypes, RelationshipsStore;
+var ConnectStoreMixin, DropdownMenuMixin, HeroTlogActions_DropdownMenuIgnoreItem, HeroTlogActions_DropdownMenuReportItem, HeroTlogActions_DropdownMenu_Popup, IGNORED_STATUS, PropTypes, RelationshipsStore;
 
 RelationshipsStore = require('../../../../../stores/relationships');
 
-ConnectStoreMixin = require('../../../../../mixins/connectStore');
+ConnectStoreMixin = require('../../../../../../../shared/react/mixins/connectStore');
 
 DropdownMenuMixin = require('../../../../../mixins/dropdownMenu');
 
-HeroActions_DropdownMenuIgnoreItem = require('./items/ignore');
+HeroTlogActions_DropdownMenuIgnoreItem = require('./items/ignore');
 
-HeroActions_DropdownMenuReportItem = require('./items/report');
+HeroTlogActions_DropdownMenuReportItem = require('./items/report');
 
 PropTypes = React.PropTypes;
 
 IGNORED_STATUS = 'ignored';
 
-HeroActions_DropdownMenu_Popup = React.createClass({
-  displayName: 'HeroActions_DropdownMenu_Popup',
+HeroTlogActions_DropdownMenu_Popup = React.createClass({
+  displayName: 'HeroTlogActions_DropdownMenu_Popup',
   mixins: [ConnectStoreMixin(RelationshipsStore), DropdownMenuMixin],
   propTypes: {
     arrangement: PropTypes.string,
@@ -6783,14 +6783,14 @@ HeroActions_DropdownMenu_Popup = React.createClass({
   _renderPopupList: function() {
     var ignoreItem;
     if (this.state.status !== IGNORED_STATUS) {
-      ignoreItem = React.createElement(HeroActions_DropdownMenuIgnoreItem, {
+      ignoreItem = React.createElement(HeroTlogActions_DropdownMenuIgnoreItem, {
         "userId": this.props.userId,
         "onIgnore": this.props.onClose
       });
     }
     return React.createElement("ul", {
       "className": "hero__dropdown-popup-list"
-    }, ignoreItem, React.createElement(HeroActions_DropdownMenuReportItem, {
+    }, ignoreItem, React.createElement(HeroTlogActions_DropdownMenuReportItem, {
       "userId": this.props.userId,
       "onReport": this.props.onClose
     }));
@@ -6802,25 +6802,25 @@ HeroActions_DropdownMenu_Popup = React.createClass({
   }
 });
 
-module.exports = HeroActions_DropdownMenu_Popup;
+module.exports = HeroTlogActions_DropdownMenu_Popup;
 
 
 
-},{"../../../../../mixins/connectStore":98,"../../../../../mixins/dropdownMenu":99,"../../../../../stores/relationships":104,"./items/ignore":70,"./items/report":71}],73:[function(require,module,exports){
-var BUTTON_TITLE, FollowButton, HeroActions_DropdownMenu, HeroActions_User, HeroActions_WriteMessageButton, PropTypes;
+},{"../../../../../../../shared/react/mixins/connectStore":108,"../../../../../mixins/dropdownMenu":98,"../../../../../stores/relationships":103,"./items/ignore":70,"./items/report":71}],73:[function(require,module,exports){
+var BUTTON_TITLE, FollowButton, HeroTlogActions_DropdownMenu, HeroTlogActions_User, HeroTlogActions_WriteMessageButton, PropTypes;
 
 FollowButton = require('../../../buttons/relationship/follow');
 
-HeroActions_WriteMessageButton = require('./buttons/writeMessage');
+HeroTlogActions_WriteMessageButton = require('./buttons/writeMessage');
 
-HeroActions_DropdownMenu = require('./dropdownMenu');
+HeroTlogActions_DropdownMenu = require('./dropdownMenu');
 
 PropTypes = React.PropTypes;
 
 BUTTON_TITLE = 'Это вы';
 
-HeroActions_User = React.createClass({
-  displayName: 'HeroActions_User',
+HeroTlogActions_User = React.createClass({
+  displayName: 'HeroTlogActions_User',
   propTypes: {
     user: PropTypes.object.isRequired,
     status: PropTypes.string.isRequired
@@ -6831,21 +6831,21 @@ HeroActions_User = React.createClass({
     }, React.createElement(FollowButton, {
       "user": this.props.user,
       "status": this.props.status
-    }), React.createElement(HeroActions_WriteMessageButton, {
+    }), React.createElement(HeroTlogActions_WriteMessageButton, {
       "user": this.props.user
-    }), React.createElement(HeroActions_DropdownMenu, {
+    }), React.createElement(HeroTlogActions_DropdownMenu, {
       "userId": this.props.user.id,
       "status": this.props.status
     }));
   }
 });
 
-module.exports = HeroActions_User;
+module.exports = HeroTlogActions_User;
 
 
 
 },{"../../../buttons/relationship/follow":10,"./buttons/writeMessage":66,"./dropdownMenu":68}],74:[function(require,module,exports){
-var FollowStatus, HERO_AVATAR_SIZE, HeroAvatar, PropTypes, UserAvatar;
+var FollowStatus, HERO_AVATAR_SIZE, HeroTlogAvatar, PropTypes, UserAvatar;
 
 UserAvatar = require('../../common/avatar/user');
 
@@ -6855,8 +6855,8 @@ PropTypes = React.PropTypes;
 
 HERO_AVATAR_SIZE = 220;
 
-HeroAvatar = React.createClass({
-  displayName: 'HeroAvatar',
+HeroTlogAvatar = React.createClass({
+  displayName: 'HeroTlogAvatar',
   propTypes: {
     user: PropTypes.object,
     author: PropTypes.object.isRequired,
@@ -6889,17 +6889,17 @@ HeroAvatar = React.createClass({
   }
 });
 
-module.exports = HeroAvatar;
+module.exports = HeroTlogAvatar;
 
 
 
 },{"../../common/avatar/user":13,"../../common/followStatus/followStatus":19}],75:[function(require,module,exports){
-var HeroCloseButton, PropTypes;
+var HeroTlogCloseButton, PropTypes;
 
 PropTypes = React.PropTypes;
 
-HeroCloseButton = React.createClass({
-  displayName: 'HeroCloseButton',
+HeroTlogCloseButton = React.createClass({
+  displayName: 'HeroTlogCloseButton',
   propTypes: {
     onClick: PropTypes.func.isRequired
   },
@@ -6913,17 +6913,17 @@ HeroCloseButton = React.createClass({
   }
 });
 
-module.exports = HeroCloseButton;
+module.exports = HeroTlogCloseButton;
 
 
 
 },{}],76:[function(require,module,exports){
-var HeroHead, PropTypes;
+var HeroTlogHead, PropTypes;
 
 PropTypes = React.PropTypes;
 
-HeroHead = React.createClass({
-  displayName: 'HeroHead',
+HeroTlogHead = React.createClass({
+  displayName: 'HeroTlogHead',
   propTypes: {
     author: PropTypes.object.isRequired
   },
@@ -6944,21 +6944,21 @@ HeroHead = React.createClass({
   }
 });
 
-module.exports = HeroHead;
+module.exports = HeroTlogHead;
 
 
 
 },{}],77:[function(require,module,exports){
-var HeroStats, HeroStatsItem, PropTypes, declension;
+var HeroTlogStats, HeroTlogStatsItem, PropTypes, declension;
 
-HeroStatsItem = require('./stats/item');
+HeroTlogStatsItem = require('./stats/item');
 
 declension = require('../../../../../shared/helpers/grammar').declension;
 
 PropTypes = React.PropTypes;
 
-HeroStats = React.createClass({
-  displayName: 'HeroStats',
+HeroTlogStats = React.createClass({
+  displayName: 'HeroTlogStats',
   propTypes: {
     stats: PropTypes.object.isRequired,
     author: PropTypes.object.isRequired
@@ -6974,7 +6974,7 @@ HeroStats = React.createClass({
       if (!this.isTlogPrivate()) {
         url = this.props.author.tlog_url;
       }
-      entries = React.createElement(HeroStatsItem, {
+      entries = React.createElement(HeroTlogStatsItem, {
         "href": url,
         "count": this.props.stats.entries_count,
         "title": this.getTitle('entries'),
@@ -6982,21 +6982,21 @@ HeroStats = React.createClass({
       });
     }
     if (this.props.stats.followings_count != null) {
-      followings = React.createElement(HeroStatsItem, {
+      followings = React.createElement(HeroTlogStatsItem, {
         "count": this.props.stats.followings_count,
         "title": this.getTitle('followings'),
         "key": "followings"
       });
     }
     if (this.props.stats.followers_count != null) {
-      followers = React.createElement(HeroStatsItem, {
+      followers = React.createElement(HeroTlogStatsItem, {
         "count": this.props.stats.followers_count,
         "title": this.getTitle('followers'),
         "key": "followers"
       });
     }
     if (this.props.stats.days_count != null) {
-      days = React.createElement(HeroStatsItem, {
+      days = React.createElement(HeroTlogStatsItem, {
         "count": this.props.stats.days_count,
         "title": this.getTitle('days'),
         "key": "days"
@@ -7020,17 +7020,17 @@ HeroStats = React.createClass({
       case 'days':
         return declension(this.props.stats.days_count, ['день', 'дня', 'дней']) + ' на тейсти';
       default:
-        return console.warn('Unknown type of stats of HeroStats component', type);
+        return console.warn('Unknown type of stats of HeroTlogStats component', type);
     }
   }
 });
 
-module.exports = HeroStats;
+module.exports = HeroTlogStats;
 
 
 
-},{"../../../../../shared/helpers/grammar":107,"./stats/item":78}],78:[function(require,module,exports){
-var HeroStatsItem, NumberHelpers, PropTypes, cx;
+},{"../../../../../shared/helpers/grammar":106,"./stats/item":78}],78:[function(require,module,exports){
+var HeroTlogStatsItem, NumberHelpers, PropTypes, cx;
 
 cx = require('react/lib/cx');
 
@@ -7038,8 +7038,8 @@ NumberHelpers = require('../../../../../../shared/helpers/number');
 
 PropTypes = React.PropTypes;
 
-HeroStatsItem = React.createClass({
-  displayName: 'HeroStatsItem',
+HeroTlogStatsItem = React.createClass({
+  displayName: 'HeroTlogStatsItem',
   propTypes: {
     count: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
@@ -7082,11 +7082,11 @@ HeroStatsItem = React.createClass({
   }
 });
 
-module.exports = HeroStatsItem;
+module.exports = HeroTlogStatsItem;
 
 
 
-},{"../../../../../../shared/helpers/number":108,"react/lib/cx":220}],79:[function(require,module,exports){
+},{"../../../../../../shared/helpers/number":107,"react/lib/cx":220}],79:[function(require,module,exports){
 var EntryPagination, PropTypes, TITLE;
 
 PropTypes = React.PropTypes;
@@ -7276,7 +7276,7 @@ var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
 
-ConnectStoreMixin = require('../../mixins/connectStore');
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
 
 FeedToolbar = require('./feed');
 
@@ -7299,7 +7299,7 @@ module.exports = FeedToolbarManager;
 
 
 
-},{"../../mixins/connectStore":98,"../../stores/currentUser":103,"./feed":81}],84:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":108,"../../stores/currentUser":102,"./feed":81}],84:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, ToolbarMixin;
 
 CLOSE_STATE = 'close';
@@ -7477,7 +7477,7 @@ var ConnectStoreMixin, CurrentUserStore, UserToolbar, UserToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
 
-ConnectStoreMixin = require('../../mixins/connectStore');
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
 
 UserToolbar = require('./user');
 
@@ -7505,7 +7505,7 @@ module.exports = UserToolbarManager;
 
 
 
-},{"../../mixins/connectStore":98,"../../stores/currentUser":103,"./user":85}],89:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":108,"../../stores/currentUser":102,"./user":85}],89:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -7775,30 +7775,6 @@ module.exports = ComponentMixin;
 
 
 },{}],98:[function(require,module,exports){
-var ConnectStoreMixin;
-
-ConnectStoreMixin = function(listenableStore) {
-  return {
-    getInitialState: function() {
-      return this.getStateFromStore();
-    },
-    componentDidMount: function() {
-      return listenableStore.addChangeListener(this.onStoreChange);
-    },
-    componentWillUnmount: function() {
-      return listenableStore.removeChangeListener(this.onStoreChange);
-    },
-    onStoreChange: function() {
-      return this.setState(this.getStateFromStore());
-    }
-  };
-};
-
-module.exports = ConnectStoreMixin;
-
-
-
-},{}],99:[function(require,module,exports){
 var DropdownMenuMixin, REVERSE_MARGIN, getSize, getViewportWH;
 
 REVERSE_MARGIN = 5;
@@ -7869,7 +7845,7 @@ module.exports = DropdownMenuMixin;
 
 
 
-},{}],100:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 var CurrentUserStore, EntryPage, EntryPagination, EntryTlog, FeedToolbarManager, HeroTlog, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -7917,7 +7893,7 @@ module.exports = EntryPage;
 
 
 
-},{"../components/entry/tlog":61,"../components/hero/tlog":63,"../components/pagination/entry":79,"../components/toolbars/feedManager":83,"../components/toolbars/userManager":88,"../stores/currentUser":103}],101:[function(require,module,exports){
+},{"../components/entry/tlog":61,"../components/hero/tlog":63,"../components/pagination/entry":79,"../components/toolbars/feedManager":83,"../components/toolbars/userManager":88,"../stores/currentUser":102}],100:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -7951,7 +7927,7 @@ module.exports = BaseStore;
 
 
 
-},{}],102:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 var AppDispatcher, BaseStore, CommentsStore, Constants, assign, deleteComment, initializeComments, pushComment, unshiftComments, updateComment, _comments;
 
 assign = require('react/lib/Object.assign');
@@ -8064,7 +8040,7 @@ CommentsStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":90,"../dispatcher/dispatcher":95,"./_base":101,"react/lib/Object.assign":141}],103:[function(require,module,exports){
+},{"../constants/constants":90,"../dispatcher/dispatcher":95,"./_base":100,"react/lib/Object.assign":141}],102:[function(require,module,exports){
 var BaseStore, CurrentUserStore, assign, extendByMockData, _currentUser;
 
 assign = require('react/lib/Object.assign');
@@ -8110,7 +8086,7 @@ module.exports = CurrentUserStore;
 
 
 
-},{"./_base":101,"react/lib/Object.assign":141}],104:[function(require,module,exports){
+},{"./_base":100,"react/lib/Object.assign":141}],103:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, RelationshipsStore, assign, updateStatus, _relationships;
 
 assign = require('react/lib/Object.assign');
@@ -8153,7 +8129,7 @@ RelationshipsStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":90,"../dispatcher/dispatcher":95,"./_base":101,"react/lib/Object.assign":141}],105:[function(require,module,exports){
+},{"../constants/constants":90,"../dispatcher/dispatcher":95,"./_base":100,"react/lib/Object.assign":141}],104:[function(require,module,exports){
 var TastySettings, _ref, _ref1;
 
 TastySettings = {
@@ -8177,7 +8153,7 @@ module.exports = TastySettings;
 
 
 
-},{}],106:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 var BrowserHelpers;
 
 BrowserHelpers = {
@@ -8226,7 +8202,7 @@ module.exports = BrowserHelpers;
 
 
 
-},{}],107:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 var GrammarHelpers;
 
 GrammarHelpers = {
@@ -8265,7 +8241,7 @@ module.exports = GrammarHelpers;
 
 
 
-},{}],108:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 var NumberHelpers;
 
 NumberHelpers = {
@@ -8294,6 +8270,30 @@ NumberHelpers = {
 };
 
 module.exports = NumberHelpers;
+
+
+
+},{}],108:[function(require,module,exports){
+var ConnectStoreMixin;
+
+ConnectStoreMixin = function(listenableStore) {
+  return {
+    getInitialState: function() {
+      return this.getStateFromStore();
+    },
+    componentWillMount: function() {
+      return listenableStore.addChangeListener(this.onStoreChange);
+    },
+    componentWillUnmount: function() {
+      return listenableStore.removeChangeListener(this.onStoreChange);
+    },
+    onStoreChange: function() {
+      return this.setState(this.getStateFromStore());
+    }
+  };
+};
+
+module.exports = ConnectStoreMixin;
 
 
 

@@ -3,7 +3,7 @@ BaseStore     = require './_base'
 Constants     = require '../constants/constants'
 AppDispatcher = require '../dispatcher/dispatcher'
 
-_entries         = []
+_entries          = []
 _everythingLoaded = false
 
 initializeFeed = (entries) ->
@@ -15,11 +15,7 @@ pushEntries = (entries) ->
 
 window.FeedStore = assign new BaseStore(),
 
-  getEntries: ->
-    # This condition needed to return null when we try get value with initial data
-    # By default _entries is empty array, and when Feed component will try to get
-    # entries from store, he will get null, therefore it will use entries from props
-    if _entries.length then _entries else null
+  getEntries: -> _entries
 
   isEverythingLoaded: -> _everythingLoaded
 

@@ -1,13 +1,13 @@
-FollowButton                   = require '../../../buttons/relationship/follow'
-HeroActions_WriteMessageButton = require './buttons/writeMessage'
-HeroActions_DropdownMenu       = require './dropdownMenu'
+FollowButton                       = require '../../../buttons/relationship/follow'
+HeroTlogActions_WriteMessageButton = require './buttons/writeMessage'
+HeroTlogActions_DropdownMenu       = require './dropdownMenu'
 { PropTypes } = React
 
 #TODO: i18n
 BUTTON_TITLE = 'Это вы'
 
-HeroActions_User = React.createClass
-  displayName: 'HeroActions_User'
+HeroTlogActions_User = React.createClass
+  displayName: 'HeroTlogActions_User'
 
   propTypes:
     user:   PropTypes.object.isRequired
@@ -18,10 +18,10 @@ HeroActions_User = React.createClass
       <FollowButton
           user={ @props.user }
           status={ @props.status } />
-      <HeroActions_WriteMessageButton user={ @props.user } />
-      <HeroActions_DropdownMenu
+      <HeroTlogActions_WriteMessageButton user={ @props.user } />
+      <HeroTlogActions_DropdownMenu
           userId={ @props.user.id }
           status={ @props.status } />
     </div>
 
-module.exports = HeroActions_User
+module.exports = HeroTlogActions_User

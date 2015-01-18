@@ -22874,7 +22874,7 @@ ConnectStoreMixin = function(listenableStore) {
     getInitialState: function() {
       return this.getStateFromStore();
     },
-    componentDidMount: function() {
+    componentWillMount: function() {
       return listenableStore.addChangeListener(this.onStoreChange);
     },
     componentWillUnmount: function() {

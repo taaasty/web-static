@@ -1,7 +1,7 @@
 { PropTypes } = React
 
-HeroActions_DropdownMenu_Button = React.createClass
-  displayName: 'HeroActions_DropdownMenu_Button'
+HeroTlogActions_DropdownMenu_Button = React.createClass
+  displayName: 'HeroTlogActions_DropdownMenu_Button'
 
   propTypes:
     onClick: PropTypes.func.isRequired
@@ -12,4 +12,4 @@ HeroActions_DropdownMenu_Button = React.createClass
       <i className="icon icon--dots" />
     </button>
 
-module.exports = HeroActions_DropdownMenu_Button
+module.exports = HeroTlogActions_DropdownMenu_Button

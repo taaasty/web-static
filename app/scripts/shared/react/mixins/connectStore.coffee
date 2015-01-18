@@ -3,7 +3,7 @@ ConnectStoreMixin = (listenableStore) ->
   getInitialState: ->
     @getStateFromStore()
 
-  componentDidMount: ->
+  componentWillMount: ->
     listenableStore.addChangeListener @onStoreChange
 
   componentWillUnmount: ->

@@ -1,9 +1,9 @@
-HeroActions_User        = require './actions/user'
-HeroActions_CurrentUser = require './actions/currentUser'
+HeroTlogActions_User        = require './actions/user'
+HeroTlogActions_CurrentUser = require './actions/currentUser'
 { PropTypes } = React
 
-HeroActions = React.createClass
-  displayName: 'HeroActions'
+HeroTlogActions = React.createClass
+  displayName: 'HeroTlogActions'
 
   propTypes:
     user:   PropTypes.object
@@ -14,9 +14,9 @@ HeroActions = React.createClass
     return null unless @isLogged()
 
     if @isCurrentUser()
-      <HeroActions_CurrentUser user={ @props.user } />
+      <HeroTlogActions_CurrentUser user={ @props.user } />
     else
-      <HeroActions_User
+      <HeroTlogActions_User
           user={ @props.author }
           status={ @props.status } />
 
@@ -26,4 +26,4 @@ HeroActions = React.createClass
   isCurrentUser: ->
     @props.user?.id == @props.author.id
 
-module.exports = HeroActions
+module.exports = HeroTlogActions

@@ -1,11 +1,11 @@
-CurrentUserStore  = require '../../stores/currentUser'
-ConnectStoreMixin = require '../../mixins/connectStore'
-BrowserHelpers    = require '../../../../shared/helpers/browser'
-HeroAvatar        = require './tlog/avatar'
-HeroHead          = require './tlog/head'
-HeroActions       = require './tlog/actions'
-HeroStats         = require './tlog/stats'
-HeroCloseButton   = require './tlog/buttons/close'
+CurrentUserStore    = require '../../stores/currentUser'
+ConnectStoreMixin   = require '../../../../shared/react/mixins/connectStore'
+BrowserHelpers      = require '../../../../shared/helpers/browser'
+HeroTlogAvatar      = require './tlog/avatar'
+HeroTlogHead        = require './tlog/head'
+HeroTlogActions     = require './tlog/actions'
+HeroTlogStats       = require './tlog/stats'
+HeroTlogCloseButton = require './tlog/buttons/close'
 { PropTypes } = React
 
 CLOSE_STATE = 'close'
@@ -36,22 +36,22 @@ HeroTlog = React.createClass
   render: ->
     <div style={ @getHeroStyles() }
          className="hero">
-      <HeroCloseButton onClick={ @close } />
+      <HeroTlogCloseButton onClick={ @close } />
       <div className="hero__overlay" />
       <div className="hero__gradient" />
       <div className="hero__content">
-        <HeroAvatar
+        <HeroTlogAvatar
             user={ @state.user }
             author={ @props.tlog.author }
             status={ @props.tlog.my_relationship }
             onClick={ @handleAvatarClick } />
-        <HeroHead author={ @props.tlog.author } />
-        <HeroActions
+        <HeroTlogHead author={ @props.tlog.author } />
+        <HeroTlogActions
             user={ @state.user }
             author={ @props.tlog.author }
             status={ @props.tlog.my_relationship } />
       </div>
-      <HeroStats
+      <HeroTlogStats
           author={ @props.tlog.author }
           stats={ @props.tlog.stats } />
     </div>
