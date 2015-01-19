@@ -1,5 +1,5 @@
 CurrentUserStore  = require '../../stores/currentUser'
-ConnectStoreMixin = require '../../mixins/connectStore'
+ConnectStoreMixin = require '../../../../shared/react/mixins/connectStore'
 UserToolbar       = require './user'
 
 UserToolbarManager = React.createClass

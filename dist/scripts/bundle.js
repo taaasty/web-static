@@ -5807,7 +5807,11 @@ window.Avatar = React.createClass({
       anonymous_char: this.isAnonymous()
     });
     if (avatarUrl != null) {
-      avatarUrl = ThumborService.image_url(avatarUrl, this.props.size + 'x' + this.props.size);
+      avatarUrl = ThumborService.imageUrl({
+        url: avatarUrl,
+        path: this.props.userpic.thumbor_path,
+        size: this.props.size + 'x' + this.props.size
+      });
       avatarStyles = {
         backgroundImage: "url('" + avatarUrl + "')"
       };
@@ -20180,7 +20184,11 @@ window.NotificationsPopup_Notification = React.createClass({
   },
   _getNotificationImage: function() {
     var aspectRatio, geometry, imageStyles, url;
-    url = ThumborService.image_url(this.props.notification.image.url, IMAGE_SIZE + 'x' + IMAGE_SIZE);
+    url = ThumborService.imageUrl({
+      url: this.props.notification.image.url,
+      path: this.props.notification.image.path,
+      size: IMAGE_SIZE + 'x' + IMAGE_SIZE
+    });
     geometry = this.props.notification.image.geometry;
     aspectRatio = this.calculateAspectRatioFit(geometry.width, geometry.height, IMAGE_SIZE, IMAGE_SIZE);
     imageStyles = {
@@ -22866,7 +22874,7 @@ ConnectStoreMixin = function(listenableStore) {
     getInitialState: function() {
       return this.getStateFromStore();
     },
-    componentDidMount: function() {
+    componentWillMount: function() {
       return listenableStore.addChangeListener(this.onStoreChange);
     },
     componentWillUnmount: function() {
@@ -22886,15 +22894,16 @@ module.exports = ConnectStoreMixin;
 var ThumborService;
 
 ThumborService = {
-  thumbor_url: 'http://thumbor0.tasty0.ru/',
-  image_url: function(url, style) {
+  thumborUrl: 'http://thumbor0.tasty0.ru',
+  imageUrl: function(_arg) {
+    var path, size, url;
+    url = _arg.url, path = _arg.path, size = _arg.size;
     switch (TastySettings.env) {
       case 'static-development':
       case 'development':
         return url;
       default:
-        url = url.replace(/^.*\/assets\//, '');
-        return this.thumbor_url + ("unsafe/" + style + "/") + url;
+        return this.thumborUrl + ("/unsafe/" + size + "/filters:no_upscale()/") + path;
     }
   }
 };
@@ -23044,6 +23053,15 @@ ApiRoutes = {
   },
   suggestions_facebook: function() {
     return TastySettings.api_host + '/v1/relationships/suggestions/facebook';
+  },
+  feedLive: function() {
+    return TastySettings.api_host + '/v1/feeds/live';
+  },
+  feedBest: function() {
+    return TastySettings.api_host + '/v1/feeds/best';
+  },
+  feedFriends: function() {
+    return TastySettings.api_host + '/v1/my_feeds/friends';
   }
 };
 

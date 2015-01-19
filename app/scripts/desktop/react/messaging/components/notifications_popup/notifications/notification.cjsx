@@ -45,7 +45,10 @@ window.NotificationsPopup_Notification = React.createClass
   isUnread: -> @props.notification.read_at is null
 
   _getNotificationImage: ->
-    url         = ThumborService.image_url @props.notification.image.url, IMAGE_SIZE + 'x' + IMAGE_SIZE
+    url = ThumborService.imageUrl
+      url:  @props.notification.image.url
+      path: @props.notification.image.path
+      size: IMAGE_SIZE + 'x' + IMAGE_SIZE
     geometry    = @props.notification.image.geometry
     aspectRatio = @calculateAspectRatioFit(geometry.width, geometry.height, IMAGE_SIZE, IMAGE_SIZE)
     imageStyles = {

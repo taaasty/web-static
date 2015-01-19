@@ -373,6 +373,9 @@ body {
   line-height: 1.223em;
   font-family: 'Proxima Nova', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   color: #000000;
+  -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+          text-size-adjust: 100%;
 }
 input,
 textarea,
@@ -621,6 +624,7 @@ body {
 }
 .hero-enabled .toolbar--user .toolbar__toggle,
 .hero-enabled .toolbar--feed .toolbar__toggle,
+.hero-enabled .auth-button,
 .hero-enabled .toolbar--user .hero__close,
 .hero-enabled .toolbar--feed .hero__close {
   display: none;
@@ -1013,6 +1017,8 @@ button {
 .site-auth-button,
 .reg-auth-button,
 .manage-subscriptions-button,
+.auth-button,
+.load-more-button,
 .follow-button,
 .account__logout,
 .settings__submit,
@@ -1053,6 +1059,8 @@ a.fb-auth-button,
 a.site-auth-button,
 a.reg-auth-button,
 a.manage-subscriptions-button,
+a.auth-button,
+a.load-more-button,
 a.follow-button,
 a.account__logout,
 a.settings__submit,
@@ -1069,6 +1077,8 @@ a.outline-auth-button {
 .site-auth-button:after,
 .reg-auth-button:after,
 .manage-subscriptions-button:after,
+.auth-button:after,
+.load-more-button:after,
 .follow-button:after,
 .account__logout:after,
 .settings__submit:after,
@@ -1092,6 +1102,8 @@ a.outline-auth-button {
 .site-auth-button .icon,
 .reg-auth-button .icon,
 .manage-subscriptions-button .icon,
+.auth-button .icon,
+.load-more-button .icon,
 .follow-button .icon,
 .account__logout .icon,
 .settings__submit .icon,
@@ -1112,6 +1124,8 @@ a.outline-auth-button {
 .site-auth-button .icon--cross,
 .reg-auth-button .icon--cross,
 .manage-subscriptions-button .icon--cross,
+.auth-button .icon--cross,
+.load-more-button .icon--cross,
 .follow-button .icon--cross,
 .account__logout .icon--cross,
 .settings__submit .icon--cross,
@@ -1128,6 +1142,8 @@ a.outline-auth-button {
 .site-auth-button .spinner,
 .reg-auth-button .spinner,
 .manage-subscriptions-button .spinner,
+.auth-button .spinner,
+.load-more-button .spinner,
 .follow-button .spinner,
 .account__logout .spinner,
 .settings__submit .spinner,
@@ -1149,6 +1165,8 @@ a.outline-auth-button {
 .button-group > .site-auth-button:not(:first-of-type),
 .button-group > .reg-auth-button:not(:first-of-type),
 .button-group > .manage-subscriptions-button:not(:first-of-type),
+.button-group > .auth-button:not(:first-of-type),
+.button-group > .load-more-button:not(:first-of-type),
 .button-group > .follow-button:not(:first-of-type),
 .button-group > .account__logout:not(:first-of-type),
 .button-group > .settings__submit:not(:first-of-type),
@@ -1167,6 +1185,8 @@ a.outline-auth-button {
 .button-group > .site-auth-button:not(:last-of-type),
 .button-group > .reg-auth-button:not(:last-of-type),
 .button-group > .manage-subscriptions-button:not(:last-of-type),
+.button-group > .auth-button:not(:last-of-type),
+.button-group > .load-more-button:not(:last-of-type),
 .button-group > .follow-button:not(:last-of-type),
 .button-group > .account__logout:not(:last-of-type),
 .button-group > .settings__submit:not(:last-of-type),
@@ -1184,6 +1204,8 @@ a.outline-auth-button {
 .button-group > .site-auth-button:not(:first-of-type):not(:last-of-type),
 .button-group > .reg-auth-button:not(:first-of-type):not(:last-of-type),
 .button-group > .manage-subscriptions-button:not(:first-of-type):not(:last-of-type),
+.button-group > .auth-button:not(:first-of-type):not(:last-of-type),
+.button-group > .load-more-button:not(:first-of-type):not(:last-of-type),
 .button-group > .follow-button:not(:first-of-type):not(:last-of-type),
 .button-group > .account__logout:not(:first-of-type):not(:last-of-type),
 .button-group > .settings__submit:not(:first-of-type):not(:last-of-type),
@@ -1200,6 +1222,8 @@ a.outline-auth-button {
 .button-group.__expanded > .site-auth-button,
 .button-group.__expanded > .reg-auth-button,
 .button-group.__expanded > .manage-subscriptions-button,
+.button-group.__expanded > .auth-button,
+.button-group.__expanded > .load-more-button,
 .button-group.__expanded > .follow-button,
 .button-group.__expanded > .account__logout,
 .button-group.__expanded > .settings__submit,
@@ -1229,6 +1253,8 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child) .site-auth-button,
 .button-group-dropdown:not(:first-child) .reg-auth-button,
 .button-group-dropdown:not(:first-child) .manage-subscriptions-button,
+.button-group-dropdown:not(:first-child) .auth-button,
+.button-group-dropdown:not(:first-child) .load-more-button,
 .button-group-dropdown:not(:first-child) .follow-button,
 .button-group-dropdown:not(:first-child) .account__logout,
 .button-group-dropdown:not(:first-child) .settings__submit,
@@ -1246,6 +1272,8 @@ a.outline-auth-button {
 .button-group-dropdown:not(:last-child) .site-auth-button,
 .button-group-dropdown:not(:last-child) .reg-auth-button,
 .button-group-dropdown:not(:last-child) .manage-subscriptions-button,
+.button-group-dropdown:not(:last-child) .auth-button,
+.button-group-dropdown:not(:last-child) .load-more-button,
 .button-group-dropdown:not(:last-child) .follow-button,
 .button-group-dropdown:not(:last-child) .account__logout,
 .button-group-dropdown:not(:last-child) .settings__submit,
@@ -1263,6 +1291,8 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child):not(:last-child) .site-auth-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .reg-auth-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .manage-subscriptions-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .auth-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .load-more-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .follow-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .account__logout,
 .button-group-dropdown:not(:first-child):not(:last-child) .settings__submit,
@@ -1275,6 +1305,7 @@ a.outline-auth-button {
 .action-menu-button,
 .profile-settings-button,
 .manage-subscriptions-button,
+.auth-button,
 .follow-button,
 .write-message-button {
   height: 32px;
@@ -1305,12 +1336,14 @@ a.outline-auth-button {
   background-color: #f1382e;
 }
 .button--green,
+.auth-button,
 .settings__submit,
 .messages__button {
   color: #ffffff !important;
   background-color: #32a16c;
 }
 .button--green:active,
+.auth-button:active,
 .settings__submit:active,
 .messages__button:active {
   background-color: #2b8a5c;
@@ -1350,11 +1383,13 @@ a.outline-auth-button {
 .button--yellow:active {
   background-color: #d9ae00;
 }
-.button--rectangle {
+.button--rectangle,
+.load-more-button {
   border-radius: 0;
 }
 .button--block,
 .manage-subscriptions-button,
+.load-more-button,
 .auth__buttons button,
 .settings__submit,
 .messages__section--dialogs .messages__button {
@@ -1491,6 +1526,25 @@ a.outline-auth-button {
 }
 .manage-subscriptions-button:active {
   background-color: #2f9b67;
+}
+.auth-button {
+  margin-top: 5px;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 150;
+}
+.load-more-button {
+  height: 66px;
+  background-color: #262626;
+  font-size: 16px;
+  line-height: 66px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #b2b2b2 !important;
+}
+.load-more-button:active {
+  background-color: #363636;
 }
 .spinner {
   position: relative;
@@ -1825,9 +1879,6 @@ a.outline-auth-button {
   line-height: 1.429em;
   text-align: center;
   z-index: 5000;
-  -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-          text-size-adjust: 100%;
 }
 .alert--success {
   background-color: #24b166;
@@ -1841,6 +1892,7 @@ a.outline-auth-button {
   height: 100%;
   position: relative;
   text-align: center;
+  color: #ffffff;
 }
 .auth a {
   color: inherit;
@@ -3020,9 +3072,6 @@ a.toolbar__popup-link:active {
   line-height: 22px;
   text-align: center;
 }
-.layout__body .pagination {
-  margin-bottom: -12px;
-}
 .pagination__item {
   width: 100%;
   margin-top: -1px;
@@ -3051,7 +3100,7 @@ a.pagination__item:active {
   float: right;
 }
 .loader {
-  padding: 40px 0;
+  padding: 16px 0;
   text-align: center;
 }
 .switcher {
@@ -3474,9 +3523,6 @@ a.pagination__item:active {
 .notifications {
   font-size: 16px;
   line-height: 1.375em;
-  -webkit-text-size-adjust: none;
-      -ms-text-size-adjust: none;
-          text-size-adjust: none;
 }
 .notifications__list {
   margin: 0;
@@ -3573,11 +3619,31 @@ a.pagination__item:active {
 .messages__section {
   position: relative;
 }
+.messages__header {
+  padding: 12px;
+  background-color: #f5f5f5;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
 .messages__body {
   position: relative;
 }
 .messages__footer {
   text-align: center;
+}
+.messages__title {
+  width: 66%;
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 18px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: #616161;
+  vertical-align: middle;
 }
 .messages__dialog {
   padding: 12px 50px 12px 66px;
@@ -3993,6 +4059,79 @@ a.pagination__item:active {
   transition: 0.3s ease;
 }
 /*-----  End of Animations  ------*/
+.inviter {
+  position: relative;
+  background-color: #383838;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #ffffff;
+  text-align: center;
+}
+.inviter a {
+  color: inherit;
+}
+.inviter__content {
+  padding: 12px;
+  position: relative;
+}
+.inviter__logo {
+  padding: 10px 0;
+}
+.inviter__logo .icon--ribbon {
+  font-size: 50px;
+}
+.inviter__overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #383838;
+  opacity: .5;
+}
+.inviter__title {
+  max-width: 294px;
+  margin: 0 auto 1em;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 30px;
+}
+.inviter__text {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 22px;
+}
+.inviter__actions {
+  margin-bottom: 15px;
+}
+.inviter__actions .vk-auth-button,
+.inviter__actions .fb-auth-button,
+.inviter__actions .site-auth-button {
+  margin: 10px 4px;
+}
+.inviter__stats {
+  width: 100%;
+  padding: 30px 0;
+  opacity: .62;
+}
+.inviter__stats-item {
+  min-width: 210px;
+  padding: 0 10px;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 1.2;
+  vertical-align: middle;
+}
+.inviter__stats-item strong {
+  display: block;
+  font-size: 28px;
+  font-weight: normal;
+}
+.inviter__stats-item .tilde {
+  position: relative;
+  top: .23em;
+}
 .error {
   height: 100%;
 }

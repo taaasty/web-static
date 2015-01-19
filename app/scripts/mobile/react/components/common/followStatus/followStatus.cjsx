@@ -1,5 +1,5 @@
 RelationshipsStore = require '../../../stores/relationships'
-ConnectStoreMixin  = require '../../../mixins/connectStore'
+ConnectStoreMixin  = require '../../../../../shared/react/mixins/connectStore'
 { PropTypes } = React
 
 FollowStatus = React.createClass

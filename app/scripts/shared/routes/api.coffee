@@ -64,4 +64,8 @@ ApiRoutes =
   suggestions_vkontakte: -> TastySettings.api_host + '/v1/relationships/suggestions/vkontakte'
   suggestions_facebook:  -> TastySettings.api_host + '/v1/relationships/suggestions/facebook'
 
+  feedLive:    -> TastySettings.api_host + '/v1/feeds/live'
+  feedBest:    -> TastySettings.api_host + '/v1/feeds/best'
+  feedFriends: -> TastySettings.api_host + '/v1/my_feeds/friends'
+
 module.exports = ApiRoutes

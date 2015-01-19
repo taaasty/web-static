@@ -20,8 +20,8 @@ ImageEntryContent = React.createClass
 
   renderEntryImage: ->
     content = switch
-      when @props.imageUrl         then <img src={ @props.imageUrl } />
       when @props.imageAttachments then <ImageEntryAttachments imageAttachments={ @props.imageAttachments } />
+      when @props.imageUrl         then <img src={ @props.imageUrl } />
       else ENTRY_WITHOUT_IMAGE_MESSAGE
 
     return <div className="media-image">

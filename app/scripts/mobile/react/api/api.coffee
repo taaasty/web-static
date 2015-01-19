@@ -175,4 +175,35 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = putRequest url, data
 
+  feed:
+    loadLiveEntries: (sinceEntryId, limit) ->
+      url  = ApiRoutes.feedLive()
+      key  = Constants.api.LOAD_FEED_ENTRIES
+      data =
+        since_entry_id: sinceEntryId
+        limit:          limit
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
+    loadBestEntries: (sinceEntryId, limit) ->
+      url  = ApiRoutes.feedBest()
+      key  = Constants.api.LOAD_FEED_ENTRIES
+      data =
+        since_entry_id: sinceEntryId
+        limit:          limit
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
+    loadFriendsEntries: (sinceEntryId, limit) ->
+      url  = ApiRoutes.feedFriends()
+      key  = Constants.api.LOAD_FEED_ENTRIES
+      data =
+        since_entry_id: sinceEntryId
+        limit:          limit
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
 module.exports = Api

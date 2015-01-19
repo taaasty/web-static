@@ -19,6 +19,7 @@ ImageEntryAttachments = React.createClass
         payload:
           id:    imageAttachment.id
           url:   image.url
+          path:  image.path
           title: image.title
 
       newImage

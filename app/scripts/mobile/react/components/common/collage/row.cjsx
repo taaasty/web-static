@@ -17,6 +17,7 @@ CollageRow = React.createClass
       <CollageRowItem
           width={ image.width }
           height={ image.height }
+          imagePath={ image.payload.path }
           imageUrl={ image.payload.url }
           key={ image.payload.id } />  
 
