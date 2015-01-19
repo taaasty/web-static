@@ -17172,9 +17172,11 @@ window.Settings = React.createClass({
 
 
 },{"./accounts":192,"./email/email":196,"./header":201,"./mixins/settings":202,"./password/password":204,"./radio_item":206,"react/lib/LinkedStateMixin":338}],208:[function(require,module,exports){
-var PropTypes, SettingsSlug;
+var EMPTY_SLUG_MESSAGE, PropTypes, SettingsSlug;
 
 PropTypes = React.PropTypes;
+
+EMPTY_SLUG_MESSAGE = 'Название тлога не может быть пустым';
 
 SettingsSlug = React.createClass({
   displayName: 'SettingsSlug',
@@ -17203,6 +17205,7 @@ SettingsSlug = React.createClass({
       });
       return this.props.onChange(slug);
     } else {
+      TastyNotifyController.notifyError(EMPTY_SLUG_MESSAGE, 2000);
       return this.forceUpdate();
     }
   }
