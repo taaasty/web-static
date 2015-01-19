@@ -4800,7 +4800,7 @@ module.exports = CommentList;
 
 
 
-},{"./commentList/commentManager":44}],33:[function(require,module,exports){
+},{"./commentList/commentManager":34}],33:[function(require,module,exports){
 var Comment, CommentActions, CommentDate, CommentText, CommentUser, PropTypes;
 
 CommentUser = require('./comment/user');
@@ -4841,7 +4841,67 @@ module.exports = Comment;
 
 
 
-},{"./comment/actions":34,"./comment/date":41,"./comment/text":42,"./comment/user":43}],34:[function(require,module,exports){
+},{"./comment/actions":35,"./comment/date":42,"./comment/text":43,"./comment/user":44}],34:[function(require,module,exports){
+var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
+
+Comment = require('./comment');
+
+CommentEditForm = require('../commentForm/edit');
+
+ComponentMixin = require('../../../../mixins/component');
+
+PropTypes = React.PropTypes;
+
+SHOW_STATE = 'show';
+
+EDIT_STATE = 'edit';
+
+CommentManager = React.createClass({
+  displayName: 'CommentManager',
+  mixins: [ComponentMixin],
+  propTypes: {
+    comment: PropTypes.object.isRequired,
+    entry: PropTypes.object.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: SHOW_STATE
+    };
+  },
+  render: function() {
+    switch (this.state.currentState) {
+      case SHOW_STATE:
+        return React.createElement(Comment, React.__spread({}, this.props, {
+          "onEditStart": this.activateEditState
+        }));
+      case EDIT_STATE:
+        return React.createElement(CommentEditForm, {
+          "entryId": this.props.entry.id,
+          "comment": this.props.comment,
+          "onEditFinish": this.activateShowState,
+          "onEditCancel": this.activateShowState
+        });
+      default:
+        return typeof console.warn === "function" ? console.warn('Unknown currentState of CommentManager component', this.state.currentState) : void 0;
+    }
+  },
+  activateEditState: function() {
+    return this.safeUpdateState({
+      currentState: EDIT_STATE
+    });
+  },
+  activateShowState: function() {
+    return this.safeUpdateState({
+      currentState: SHOW_STATE
+    });
+  }
+});
+
+module.exports = CommentManager;
+
+
+
+},{"../../../../mixins/component":125,"../commentForm/edit":31,"./comment":33}],35:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, CommentActions, CommentActionsButton, CommentActionsDropdownMenu, OPEN_STATE, PropTypes, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -4913,7 +4973,7 @@ module.exports = CommentActions;
 
 
 
-},{"../../../../../mixins/clickOutside":124,"../../../../common/avatar/user":18,"./actions/buttons/button":35,"./actions/dropdownMenu":36,"react/lib/cx":257}],35:[function(require,module,exports){
+},{"../../../../../mixins/clickOutside":124,"../../../../common/avatar/user":18,"./actions/buttons/button":36,"./actions/dropdownMenu":37,"react/lib/cx":257}],36:[function(require,module,exports){
 var CommentActionsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -4937,7 +4997,7 @@ module.exports = CommentActionsButton;
 
 
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 var CommentActionsDropdownMenu, CommentActionsDropdownMenuDeleteItem, CommentActionsDropdownMenuEditItem, CommentActionsDropdownMenuLinkItem, CommentActionsDropdownMenuReportItem, DropdownMenuMixin, PropTypes;
 
 DropdownMenuMixin = require('../../../../../../mixins/dropdownMenu');
@@ -5001,7 +5061,7 @@ module.exports = CommentActionsDropdownMenu;
 
 
 
-},{"../../../../../../mixins/dropdownMenu":126,"./dropdownMenu/items/delete":37,"./dropdownMenu/items/edit":38,"./dropdownMenu/items/link":39,"./dropdownMenu/items/report":40}],37:[function(require,module,exports){
+},{"../../../../../../mixins/dropdownMenu":126,"./dropdownMenu/items/delete":38,"./dropdownMenu/items/edit":39,"./dropdownMenu/items/link":40,"./dropdownMenu/items/report":41}],38:[function(require,module,exports){
 var CONFIRM_MESSAGE, CommentActionsDropdownMenuDeleteItem, EntryViewActions, LINK_TEXT, PropTypes;
 
 EntryViewActions = require('../../../../../../../../actions/view/entry');
@@ -5045,7 +5105,7 @@ module.exports = CommentActionsDropdownMenuDeleteItem;
 
 
 
-},{"../../../../../../../../actions/view/entry":9}],38:[function(require,module,exports){
+},{"../../../../../../../../actions/view/entry":9}],39:[function(require,module,exports){
 var CommentActionsDropdownMenuEditItem, LINK_TEXT, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5074,7 +5134,7 @@ module.exports = CommentActionsDropdownMenuEditItem;
 
 
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 var CommentActionsDropdownMenuLinkItem, LINK_TEXT, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5107,7 +5167,7 @@ module.exports = CommentActionsDropdownMenuLinkItem;
 
 
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 var CONFIRM_MESSAGE, CommentActionsDropdownMenuReportItem, EntryViewActions, LINK_TEXT, PropTypes;
 
 EntryViewActions = require('../../../../../../../../actions/view/entry');
@@ -5148,7 +5208,7 @@ module.exports = CommentActionsDropdownMenuReportItem;
 
 
 
-},{"../../../../../../../../actions/view/entry":9}],41:[function(require,module,exports){
+},{"../../../../../../../../actions/view/entry":9}],42:[function(require,module,exports){
 var CommentDate, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5194,7 +5254,7 @@ module.exports = CommentDate;
 
 
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 var CommentText, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5218,7 +5278,7 @@ module.exports = CommentText;
 
 
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 var CommentUser, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -5251,67 +5311,7 @@ module.exports = CommentUser;
 
 
 
-},{"../../../../common/avatar/user":18}],44:[function(require,module,exports){
-var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
-
-Comment = require('./comment');
-
-CommentEditForm = require('../commentForm/edit');
-
-ComponentMixin = require('../../../../mixins/component');
-
-PropTypes = React.PropTypes;
-
-SHOW_STATE = 'show';
-
-EDIT_STATE = 'edit';
-
-CommentManager = React.createClass({
-  displayName: 'CommentManager',
-  mixins: [ComponentMixin],
-  propTypes: {
-    comment: PropTypes.object.isRequired,
-    entry: PropTypes.object.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: SHOW_STATE
-    };
-  },
-  render: function() {
-    switch (this.state.currentState) {
-      case SHOW_STATE:
-        return React.createElement(Comment, React.__spread({}, this.props, {
-          "onEditStart": this.activateEditState
-        }));
-      case EDIT_STATE:
-        return React.createElement(CommentEditForm, {
-          "entryId": this.props.entry.id,
-          "comment": this.props.comment,
-          "onEditFinish": this.activateShowState,
-          "onEditCancel": this.activateShowState
-        });
-      default:
-        return typeof console.warn === "function" ? console.warn('Unknown currentState of CommentManager component', this.state.currentState) : void 0;
-    }
-  },
-  activateEditState: function() {
-    return this.safeUpdateState({
-      currentState: EDIT_STATE
-    });
-  },
-  activateShowState: function() {
-    return this.safeUpdateState({
-      currentState: SHOW_STATE
-    });
-  }
-});
-
-module.exports = CommentManager;
-
-
-
-},{"../../../../mixins/component":125,"../commentForm/edit":31,"./comment":33}],45:[function(require,module,exports){
+},{"../../../../common/avatar/user":18}],45:[function(require,module,exports){
 var CommentCreateForm, CommentList, CommentsLoadMore, CommentsMixin, CommentsStore, ComponentMixin, ConnectStoreMixin, ERROR_STATE, EntryComments, EntryViewActions, LOADING_STATE, LOAD_MORE_COMMENTS_LIMIT, PropTypes, SHOW_STATE;
 
 EntryViewActions = require('../../../actions/view/entry');
@@ -8252,7 +8252,35 @@ module.exports = FeedToolbar;
 
 
 
-},{"./feed/list":110,"./mixins/toolbar":112,"react/lib/cx":257}],110:[function(require,module,exports){
+},{"./feed/list":111,"./mixins/toolbar":112,"react/lib/cx":257}],110:[function(require,module,exports){
+var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
+
+CurrentUserStore = require('../../stores/currentUser');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+FeedToolbar = require('./feed');
+
+FeedToolbarManager = React.createClass({
+  displayName: 'FeedToolbarManager',
+  mixins: [ConnectStoreMixin(CurrentUserStore)],
+  render: function() {
+    return React.createElement(FeedToolbar, {
+      "user": this.state.user
+    });
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser()
+    };
+  }
+});
+
+module.exports = FeedToolbarManager;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":145,"../../stores/currentUser":138,"./feed":109}],111:[function(require,module,exports){
 var FeedToolbarList, PropTypes, ToolbarItem;
 
 ToolbarItem = require('../_item');
@@ -8304,35 +8332,7 @@ module.exports = FeedToolbarList;
 
 
 
-},{"../_item":108}],111:[function(require,module,exports){
-var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
-
-CurrentUserStore = require('../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-FeedToolbar = require('./feed');
-
-FeedToolbarManager = React.createClass({
-  displayName: 'FeedToolbarManager',
-  mixins: [ConnectStoreMixin(CurrentUserStore)],
-  render: function() {
-    return React.createElement(FeedToolbar, {
-      "user": this.state.user
-    });
-  },
-  getStateFromStore: function() {
-    return {
-      user: CurrentUserStore.getUser()
-    };
-  }
-});
-
-module.exports = FeedToolbarManager;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":145,"../../stores/currentUser":138,"./feed":109}],112:[function(require,module,exports){
+},{"../_item":108}],112:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, ToolbarMixin;
 
 CLOSE_STATE = 'close';
@@ -8419,7 +8419,40 @@ module.exports = UserToolbar;
 
 
 
-},{"./mixins/toolbar":112,"./user/list":114,"react/lib/cx":257}],114:[function(require,module,exports){
+},{"./mixins/toolbar":112,"./user/list":115,"react/lib/cx":257}],114:[function(require,module,exports){
+var ConnectStoreMixin, CurrentUserStore, UserToolbar, UserToolbarManager;
+
+CurrentUserStore = require('../../stores/currentUser');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+UserToolbar = require('./user');
+
+UserToolbarManager = React.createClass({
+  displayName: 'UserToolbarManager',
+  mixins: [ConnectStoreMixin(CurrentUserStore)],
+  render: function() {
+    if (this.state.logged) {
+      return React.createElement(UserToolbar, {
+        "user": this.state.user
+      });
+    } else {
+      return null;
+    }
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser(),
+      logged: CurrentUserStore.isLogged()
+    };
+  }
+});
+
+module.exports = UserToolbarManager;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":145,"../../stores/currentUser":138,"./user":113}],115:[function(require,module,exports){
 var PropTypes, ToolbarItem, UserToolbarList, UserToolbarListMixin;
 
 ToolbarItem = require('../_item');
@@ -8489,7 +8522,7 @@ module.exports = UserToolbarList;
 
 
 
-},{"../_item":108,"./mixins/list":115}],115:[function(require,module,exports){
+},{"../_item":108,"./mixins/list":116}],116:[function(require,module,exports){
 var UserToolbarListMixin;
 
 UserToolbarListMixin = {
@@ -8505,40 +8538,7 @@ module.exports = UserToolbarListMixin;
 
 
 
-},{}],116:[function(require,module,exports){
-var ConnectStoreMixin, CurrentUserStore, UserToolbar, UserToolbarManager;
-
-CurrentUserStore = require('../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-UserToolbar = require('./user');
-
-UserToolbarManager = React.createClass({
-  displayName: 'UserToolbarManager',
-  mixins: [ConnectStoreMixin(CurrentUserStore)],
-  render: function() {
-    if (this.state.logged) {
-      return React.createElement(UserToolbar, {
-        "user": this.state.user
-      });
-    } else {
-      return null;
-    }
-  },
-  getStateFromStore: function() {
-    return {
-      user: CurrentUserStore.getUser(),
-      logged: CurrentUserStore.isLogged()
-    };
-  }
-});
-
-module.exports = UserToolbarManager;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":145,"../../stores/currentUser":138,"./user":113}],117:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -8926,7 +8926,7 @@ module.exports = EntryPage;
 
 
 
-},{"../components/entry/tlog":71,"../components/hero/tlog":85,"../components/pagination/entry":102,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138}],128:[function(require,module,exports){
+},{"../components/entry/tlog":71,"../components/hero/tlog":85,"../components/pagination/entry":102,"../components/toolbars/feedManager":110,"../components/toolbars/userManager":114,"../stores/currentUser":138}],128:[function(require,module,exports){
 var CurrentUserStore, FeedBest, FeedBestPage, FeedBestPageMixin, FeedToolbarManager, HeroFeedBest, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -8974,7 +8974,7 @@ module.exports = FeedBestPage;
 
 
 
-},{"../components/feed/feedBest":76,"../components/hero/feedBest":82,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138,"./mixins/feedBest":131}],129:[function(require,module,exports){
+},{"../components/feed/feedBest":76,"../components/hero/feedBest":82,"../components/toolbars/feedManager":110,"../components/toolbars/userManager":114,"../stores/currentUser":138,"./mixins/feedBest":131}],129:[function(require,module,exports){
 var CurrentUserStore, FeedFriends, FeedFriendsPage, FeedFriendsPageMixin, FeedToolbarManager, HeroFeedFriends, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -9022,7 +9022,7 @@ module.exports = FeedFriendsPage;
 
 
 
-},{"../components/feed/feedFriends":77,"../components/hero/feedFriends":83,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138,"./mixins/feedFriends":132}],130:[function(require,module,exports){
+},{"../components/feed/feedFriends":77,"../components/hero/feedFriends":83,"../components/toolbars/feedManager":110,"../components/toolbars/userManager":114,"../stores/currentUser":138,"./mixins/feedFriends":132}],130:[function(require,module,exports){
 var CurrentUserStore, FeedLive, FeedLivePage, FeedLivePageMixin, FeedToolbarManager, HeroFeedLive, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -9070,7 +9070,7 @@ module.exports = FeedLivePage;
 
 
 
-},{"../components/feed/feedLive":78,"../components/hero/feedLive":84,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138,"./mixins/feedLive":133}],131:[function(require,module,exports){
+},{"../components/feed/feedLive":78,"../components/hero/feedLive":84,"../components/toolbars/feedManager":110,"../components/toolbars/userManager":114,"../stores/currentUser":138,"./mixins/feedLive":133}],131:[function(require,module,exports){
 var FeedBestPageMixin;
 
 FeedBestPageMixin = {
@@ -9619,7 +9619,7 @@ module.exports = TlogDaylogPage;
 
 
 
-},{"../components/daylog/daylog":26,"../components/hero/tlog":85,"../components/pagination/daylog":101,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138}],135:[function(require,module,exports){
+},{"../components/daylog/daylog":26,"../components/hero/tlog":85,"../components/pagination/daylog":101,"../components/toolbars/feedManager":110,"../components/toolbars/userManager":114,"../stores/currentUser":138}],135:[function(require,module,exports){
 var CurrentUserStore, FeedToolbarManager, HeroTlog, PropTypes, Tlog, TlogPagination, TlogRegularPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -9670,7 +9670,7 @@ module.exports = TlogRegularPage;
 
 
 
-},{"../components/hero/tlog":85,"../components/pagination/tlog":105,"../components/tlog/tlog":107,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138}],136:[function(require,module,exports){
+},{"../components/hero/tlog":85,"../components/pagination/tlog":105,"../components/tlog/tlog":107,"../components/toolbars/feedManager":110,"../components/toolbars/userManager":114,"../stores/currentUser":138}],136:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };

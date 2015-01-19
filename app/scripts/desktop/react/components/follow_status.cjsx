@@ -7,7 +7,9 @@ STATE_PROCESS = 'process'
 TOOLTIP_TEXT_NONE      = 'Подписаться на тлог'
 TOOLTIP_TEXT_FRIEND    = 'Вы подписаны на данный тлог'
 TOOLTIP_TEXT_IGNORED   = 'Вам отказано в подписке на данный тлог'
+TOOLTIP_TEXT_GUESSED   = 'Рекомендуем подписаться'
 TOOLTIP_TEXT_REQUESTED = 'В ожидании'
+
 TOOLTIP_TEXT_PROCESS   = 'Отправка запроса'
 TOOLTIP_TEXT_ERROR     = 'Ошибка'
 
@@ -33,6 +35,7 @@ window.FollowStatus = React.createClass
       when 'none'      then TOOLTIP_TEXT_NONE
       when 'friend'    then TOOLTIP_TEXT_FRIEND
       when 'ignored'   then TOOLTIP_TEXT_IGNORED
+      when 'guessed'   then TOOLTIP_TEXT_GUESSED
       when 'requested' then TOOLTIP_TEXT_REQUESTED
       else console.warn 'Неизвестный статус', @props.status
 
