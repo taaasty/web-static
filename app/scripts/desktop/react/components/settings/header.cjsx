@@ -16,36 +16,19 @@ SettingsHeader = React.createClass
 
   render: ->
     <div className="settings__header">
-      <div style={ this._getHeroStyles() }
+      <div style={ @_getHeroStyles() }
            className="settings__hero">
         <div className="settings__hero__overlay" />
         <div className="settings__hero__box">
-          <div className="settings__hero__avatar">
-
-            <UserAvatar
-                user={ this.props.user }
-                size={ 110 } />
-
-            <span className="settings__hero__avatar-overlay">
-              <span className="form-upload form-upload--icon">
-                <span className="form-upload__text">
-                  <i className="icon icon--pencil" />
-                </span>
-
-                <SettingsAvatar
-                    user={ this.props.user }
-                    activitiesHandler={ this.props.activitiesHandler } />
-
-              </span>
-            </span>
-          </div>
-
+          <SettingsAvatar
+              user={ @props.user }
+              activitiesHandler={ @props.activitiesHandler } />
           <SettingsSlug
-              slug={ this.props.user.slug }
-              onChange={ this.props.onSlugChange } />
+              slug={ @props.user.slug }
+              onChange={ @props.onSlugChange } />
           <SettingsTitle
-              title={ this.props.user.title }
-              onChange={ this.props.onTitleChange } />
+              title={ @props.user.title }
+              onChange={ @props.onTitleChange } />
         </div>
       </div>
     </div>

@@ -5721,6 +5721,9 @@ a.write-message-button {
   font-size: 70px;
   cursor: pointer;
   opacity: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
 }
 .form-upload--cover {
   vertical-align: top;
@@ -6808,6 +6811,7 @@ a.types-posts__item:hover .types-posts__text {
   border-radius: 50%;
   -webkit-transition: opacity .3s ease;
           transition: opacity .3s ease;
+  cursor: pointer;
 }
 .settings__hero__name {
   font-size: 30px;

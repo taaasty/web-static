@@ -15912,17 +15912,20 @@ module.exports = SettingsAccounts;
 
 
 },{}],193:[function(require,module,exports){
-var CurrentUserServerActions, SettingsAvatar;
+var CurrentUserServerActions, PropTypes, SettingsAvatar;
 
 CurrentUserServerActions = require('../../actions/server/current_user');
+
+PropTypes = React.PropTypes;
 
 SettingsAvatar = React.createClass({
   mixins: ['ReactActivitiesUser'],
   propTypes: {
-    user: React.PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    activitiesHandler: PropTypes.object.isRequired
   },
   componentDidMount: function() {
-    return $(this.getDOMNode()).fileupload({
+    return $(this.refs.avatarInput.getDOMNode()).fileupload({
       url: ApiRoutes.userpic_url(),
       replaceFileInput: false,
       start: (function(_this) {
@@ -15950,15 +15953,29 @@ SettingsAvatar = React.createClass({
     });
   },
   componentWillUnmount: function() {
-    return $(this.getDOMNode()).fileupload('destroy');
+    return $(this.refs.avatarInput.getDOMNode()).fileupload('destroy');
   },
   render: function() {
-    return React.createElement("input", {
-      "className": "form-upload__input",
+    return React.createElement("div", {
+      "className": "settings__hero__avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.user,
+      "size": 110.
+    }), React.createElement("span", {
+      "className": "settings__hero__avatar-overlay"
+    }, React.createElement("input", {
+      "ref": "avatarInput",
       "type": "file",
+      "name": "file",
       "accept": "image/*",
-      "name": "file"
-    });
+      "className": "form-upload__input"
+    }), React.createElement("span", {
+      "className": "form-upload form-upload--icon"
+    }, React.createElement("span", {
+      "className": "form-upload__text"
+    }, React.createElement("i", {
+      "className": "icon icon--pencil"
+    })))));
   }
 });
 
@@ -16530,23 +16547,10 @@ SettingsHeader = React.createClass({
       "className": "settings__hero__overlay"
     }), React.createElement("div", {
       "className": "settings__hero__box"
-    }, React.createElement("div", {
-      "className": "settings__hero__avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.user,
-      "size": 110.
-    }), React.createElement("span", {
-      "className": "settings__hero__avatar-overlay"
-    }, React.createElement("span", {
-      "className": "form-upload form-upload--icon"
-    }, React.createElement("span", {
-      "className": "form-upload__text"
-    }, React.createElement("i", {
-      "className": "icon icon--pencil"
-    })), React.createElement(SettingsAvatar, {
+    }, React.createElement(SettingsAvatar, {
       "user": this.props.user,
       "activitiesHandler": this.props.activitiesHandler
-    })))), React.createElement(SettingsSlug, {
+    }), React.createElement(SettingsSlug, {
       "slug": this.props.user.slug,
       "onChange": this.props.onSlugChange
     }), React.createElement(SettingsTitle, {
