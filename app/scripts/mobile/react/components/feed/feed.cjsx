@@ -1,5 +1,5 @@
-FeedEmptyPageMessage = require './feed/emptyPageMessage'
-FeedLoadMore         = require './feed/loadMore'
+FeedEmptyPageMessage = require './emptyPageMessage'
+FeedLoadMore         = require './loadMore'
 EntryFeed            = require '../entry/feed'
 { PropTypes } = React
 

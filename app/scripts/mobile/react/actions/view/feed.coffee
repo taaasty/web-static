@@ -1,5 +1,5 @@
-Api                = require '../../api/api'
-NotifyController   = require '../../controllers/notify'
+Api               = require '../../api/api'
+NotifyController  = require '../../controllers/notify'
 FeedServerActions = require '../server/feed'
 
 FeedViewActions =

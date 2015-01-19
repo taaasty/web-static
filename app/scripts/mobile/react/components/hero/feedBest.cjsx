@@ -1,11 +1,11 @@
-HeroFeed = require '../feed'
+HeroFeed = require './feed'
 { PropTypes } = React
 
 #TODO: i18n
-HERO_TITLE = 'Прямой эфир'
+HERO_TITLE = 'Лучшее'
 
-HeroFeedLive = React.createClass
-  displayName: 'HeroFeedLive'
+HeroFeedBest = React.createClass
+  displayName: 'HeroFeedBest'
 
   propTypes:
     backgroundUrl: PropTypes.string.isRequired
@@ -14,4 +14,4 @@ HeroFeedLive = React.createClass
   render: ->
     <HeroFeed {...@props} title={ HERO_TITLE } />
 
-module.exports = HeroFeedLive
+module.exports = HeroFeedBest

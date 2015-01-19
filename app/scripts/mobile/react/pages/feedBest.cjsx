@@ -1,8 +1,8 @@
 CurrentUserStore   = require '../stores/currentUser'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
-HeroFeedBest       = require '../components/hero/feed/best'
-FeedBest           = require '../components/feed/best'
+HeroFeedBest       = require '../components/hero/feedBest'
+FeedBest           = require '../components/feed/feedBest'
 FeedBestPageMixin  = require './mixins/feedBest'
 { PropTypes } = React
 

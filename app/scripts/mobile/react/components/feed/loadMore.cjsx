@@ -1,4 +1,4 @@
-Spinner            = require '../../common/spinner/spinner'
+Spinner            = require '../common/spinner/spinner'
 FeedLoadMoreButton = require './buttons/loadMore'
 { PropTypes }  = React
 

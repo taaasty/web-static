@@ -6645,56 +6645,59 @@ module.exports = EntryTlogMeta;
 
 
 },{"../meta/actions":59,"../meta/comments":69,"../meta/voting":70}],73:[function(require,module,exports){
-var ComponentMixin, ConnectStoreMixin, Feed, FeedBest, FeedMixin, FeedStore, FeedViewActions, PropTypes;
-
-FeedStore = require('../../stores/feed');
-
-ComponentMixin = require('../../mixins/component');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-FeedMixin = require('./mixins/feed');
-
-FeedViewActions = require('../../actions/view/feed');
-
-Feed = require('./feed');
+var FeedLoadMoreButton, PropTypes, TEXT;
 
 PropTypes = React.PropTypes;
 
-FeedBest = React.createClass({
-  displayName: 'FeedBest',
-  mixins: [ConnectStoreMixin(FeedStore), FeedMixin, ComponentMixin],
+TEXT = 'Загрузить еще';
+
+FeedLoadMoreButton = React.createClass({
+  displayName: 'FeedLoadMoreButton',
   propTypes: {
-    entries: PropTypes.array.isRequired,
-    limit: PropTypes.number
+    onClick: PropTypes.func.isRequired
   },
   render: function() {
-    return React.createElement(Feed, {
-      "entries": this.state.entries,
-      "loading": this.isLoadingState(),
-      "everythingLoaded": this.state.everythingLoaded,
-      "onLoadMore": this.loadMoreEntries
-    });
-  },
-  loadMoreEntries: function() {
-    var limit, sinceEntryId;
-    sinceEntryId = this.state.entries[this.state.entries.length - 1].id;
-    limit = this.props.limit;
-    this.activateLoadingState();
-    return FeedViewActions.loadBestEntries(sinceEntryId, limit).then(this.activateShowState).fail(this.activateErrorState);
+    return React.createElement("button", {
+      "className": "load-more-button",
+      "onClick": this.props.onClick
+    }, TEXT);
   }
 });
 
-module.exports = FeedBest;
+module.exports = FeedLoadMoreButton;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":145,"../../actions/view/feed":10,"../../mixins/component":125,"../../stores/feed":139,"./feed":74,"./mixins/feed":80}],74:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
+var FeedEmptyPageMessage, MESSAGE;
+
+MESSAGE = 'В ленте нет записей';
+
+FeedEmptyPageMessage = React.createClass({
+  displayName: 'FeedEmptyPageMessage',
+  render: function() {
+    return React.createElement("div", {
+      "className": "post"
+    }, React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement("div", {
+      "className": "post__header"
+    }, React.createElement("h1", {
+      "className": "post__title"
+    }, MESSAGE))));
+  }
+});
+
+module.exports = FeedEmptyPageMessage;
+
+
+
+},{}],75:[function(require,module,exports){
 var EntryFeed, Feed, FeedEmptyPageMessage, FeedLoadMore, PropTypes;
 
-FeedEmptyPageMessage = require('./feed/emptyPageMessage');
+FeedEmptyPageMessage = require('./emptyPageMessage');
 
-FeedLoadMore = require('./feed/loadMore');
+FeedLoadMore = require('./loadMore');
 
 EntryFeed = require('../entry/feed');
 
@@ -6739,94 +6742,52 @@ module.exports = Feed;
 
 
 
-},{"../entry/feed":57,"./feed/emptyPageMessage":76,"./feed/loadMore":77}],75:[function(require,module,exports){
-var FeedLoadMoreButton, PropTypes, TEXT;
+},{"../entry/feed":57,"./emptyPageMessage":74,"./loadMore":79}],76:[function(require,module,exports){
+var ComponentMixin, ConnectStoreMixin, Feed, FeedBest, FeedMixin, FeedStore, FeedViewActions, PropTypes;
+
+FeedStore = require('../../stores/feed');
+
+ComponentMixin = require('../../mixins/component');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+FeedMixin = require('./mixins/feed');
+
+FeedViewActions = require('../../actions/view/feed');
+
+Feed = require('./feed');
 
 PropTypes = React.PropTypes;
 
-TEXT = 'Загрузить еще';
-
-FeedLoadMoreButton = React.createClass({
-  displayName: 'FeedLoadMoreButton',
+FeedBest = React.createClass({
+  displayName: 'FeedBest',
+  mixins: [ConnectStoreMixin(FeedStore), FeedMixin, ComponentMixin],
   propTypes: {
-    onClick: PropTypes.func.isRequired
+    entries: PropTypes.array.isRequired,
+    limit: PropTypes.number
   },
   render: function() {
-    return React.createElement("button", {
-      "className": "load-more-button",
-      "onClick": this.props.onClick
-    }, TEXT);
+    return React.createElement(Feed, {
+      "entries": this.state.entries,
+      "loading": this.isLoadingState(),
+      "everythingLoaded": this.state.everythingLoaded,
+      "onLoadMore": this.loadMoreEntries
+    });
+  },
+  loadMoreEntries: function() {
+    var limit, sinceEntryId;
+    sinceEntryId = this.state.entries[this.state.entries.length - 1].id;
+    limit = this.props.limit;
+    this.activateLoadingState();
+    return FeedViewActions.loadBestEntries(sinceEntryId, limit).then(this.activateShowState).fail(this.activateErrorState);
   }
 });
 
-module.exports = FeedLoadMoreButton;
+module.exports = FeedBest;
 
 
 
-},{}],76:[function(require,module,exports){
-var FeedEmptyPageMessage, MESSAGE;
-
-MESSAGE = 'В ленте нет записей';
-
-FeedEmptyPageMessage = React.createClass({
-  displayName: 'FeedEmptyPageMessage',
-  render: function() {
-    return React.createElement("div", {
-      "className": "post"
-    }, React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("div", {
-      "className": "post__header"
-    }, React.createElement("h1", {
-      "className": "post__title"
-    }, MESSAGE))));
-  }
-});
-
-module.exports = FeedEmptyPageMessage;
-
-
-
-},{}],77:[function(require,module,exports){
-var FeedLoadMore, FeedLoadMoreButton, PropTypes, Spinner;
-
-Spinner = require('../../common/spinner/spinner');
-
-FeedLoadMoreButton = require('./buttons/loadMore');
-
-PropTypes = React.PropTypes;
-
-FeedLoadMore = React.createClass({
-  displayName: 'FeedLoadMore',
-  propTypes: {
-    loading: PropTypes.bool.isRequired,
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "feed__more"
-    }, this.renderContent());
-  },
-  renderContent: function() {
-    if (this.props.loading) {
-      return React.createElement("div", {
-        "className": "loader"
-      }, React.createElement(Spinner, {
-        "size": 30.
-      }));
-    } else {
-      return React.createElement(FeedLoadMoreButton, {
-        "onClick": this.props.onClick
-      });
-    }
-  }
-});
-
-module.exports = FeedLoadMore;
-
-
-
-},{"../../common/spinner/spinner":25,"./buttons/loadMore":75}],78:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":145,"../../actions/view/feed":10,"../../mixins/component":125,"../../stores/feed":139,"./feed":75,"./mixins/feed":80}],77:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedFriends, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -6871,7 +6832,7 @@ module.exports = FeedFriends;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":145,"../../actions/view/feed":10,"../../mixins/component":125,"../../stores/feed":139,"./feed":74,"./mixins/feed":80}],79:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":145,"../../actions/view/feed":10,"../../mixins/component":125,"../../stores/feed":139,"./feed":75,"./mixins/feed":80}],78:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedLive, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -6916,7 +6877,46 @@ module.exports = FeedLive;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":145,"../../actions/view/feed":10,"../../mixins/component":125,"../../stores/feed":139,"./feed":74,"./mixins/feed":80}],80:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":145,"../../actions/view/feed":10,"../../mixins/component":125,"../../stores/feed":139,"./feed":75,"./mixins/feed":80}],79:[function(require,module,exports){
+var FeedLoadMore, FeedLoadMoreButton, PropTypes, Spinner;
+
+Spinner = require('../common/spinner/spinner');
+
+FeedLoadMoreButton = require('./buttons/loadMore');
+
+PropTypes = React.PropTypes;
+
+FeedLoadMore = React.createClass({
+  displayName: 'FeedLoadMore',
+  propTypes: {
+    loading: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "feed__more"
+    }, this.renderContent());
+  },
+  renderContent: function() {
+    if (this.props.loading) {
+      return React.createElement("div", {
+        "className": "loader"
+      }, React.createElement(Spinner, {
+        "size": 30.
+      }));
+    } else {
+      return React.createElement(FeedLoadMoreButton, {
+        "onClick": this.props.onClick
+      });
+    }
+  }
+});
+
+module.exports = FeedLoadMore;
+
+
+
+},{"../common/spinner/spinner":25,"./buttons/loadMore":73}],80:[function(require,module,exports){
 var ERROR_STATE, FeedMixin, FeedViewActions, LOADING_STATE, LOAD_MORE_ENTRIES_LIMIT, SHOW_STATE;
 
 FeedViewActions = require('../../../actions/view/feed');
@@ -7022,7 +7022,7 @@ module.exports = HeroFeed;
 },{"../../../../shared/helpers/grammar":143}],82:[function(require,module,exports){
 var HERO_TITLE, HeroFeed, HeroFeedBest, PropTypes;
 
-HeroFeed = require('../feed');
+HeroFeed = require('./feed');
 
 PropTypes = React.PropTypes;
 
@@ -7045,10 +7045,10 @@ module.exports = HeroFeedBest;
 
 
 
-},{"../feed":81}],83:[function(require,module,exports){
+},{"./feed":81}],83:[function(require,module,exports){
 var HERO_TITLE, HeroFeed, HeroFeedFriends, PropTypes;
 
-HeroFeed = require('../feed');
+HeroFeed = require('./feed');
 
 PropTypes = React.PropTypes;
 
@@ -7071,10 +7071,10 @@ module.exports = HeroFeedFriends;
 
 
 
-},{"../feed":81}],84:[function(require,module,exports){
+},{"./feed":81}],84:[function(require,module,exports){
 var HERO_TITLE, HeroFeed, HeroFeedLive, PropTypes;
 
-HeroFeed = require('../feed');
+HeroFeed = require('./feed');
 
 PropTypes = React.PropTypes;
 
@@ -7097,7 +7097,7 @@ module.exports = HeroFeedLive;
 
 
 
-},{"../feed":81}],85:[function(require,module,exports){
+},{"./feed":81}],85:[function(require,module,exports){
 var BrowserHelpers, CLOSE_STATE, ConnectStoreMixin, CurrentUserStore, HeroTlog, HeroTlogActions, HeroTlogAvatar, HeroTlogCloseButton, HeroTlogHead, HeroTlogStats, OPEN_STATE, PropTypes, _initialHeroHeight, _openHeroHeight, _screenOrientation;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -8935,9 +8935,9 @@ FeedToolbarManager = require('../components/toolbars/feedManager');
 
 UserToolbarManager = require('../components/toolbars/userManager');
 
-HeroFeedBest = require('../components/hero/feed/best');
+HeroFeedBest = require('../components/hero/feedBest');
 
-FeedBest = require('../components/feed/best');
+FeedBest = require('../components/feed/feedBest');
 
 FeedBestPageMixin = require('./mixins/feedBest');
 
@@ -8974,7 +8974,7 @@ module.exports = FeedBestPage;
 
 
 
-},{"../components/feed/best":73,"../components/hero/feed/best":82,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138,"./mixins/feedBest":131}],129:[function(require,module,exports){
+},{"../components/feed/feedBest":76,"../components/hero/feedBest":82,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138,"./mixins/feedBest":131}],129:[function(require,module,exports){
 var CurrentUserStore, FeedFriends, FeedFriendsPage, FeedFriendsPageMixin, FeedToolbarManager, HeroFeedFriends, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -8983,9 +8983,9 @@ FeedToolbarManager = require('../components/toolbars/feedManager');
 
 UserToolbarManager = require('../components/toolbars/userManager');
 
-HeroFeedFriends = require('../components/hero/feed/friends');
+HeroFeedFriends = require('../components/hero/feedFriends');
 
-FeedFriends = require('../components/feed/friends');
+FeedFriends = require('../components/feed/feedFriends');
 
 FeedFriendsPageMixin = require('./mixins/feedFriends');
 
@@ -9022,7 +9022,7 @@ module.exports = FeedFriendsPage;
 
 
 
-},{"../components/feed/friends":78,"../components/hero/feed/friends":83,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138,"./mixins/feedFriends":132}],130:[function(require,module,exports){
+},{"../components/feed/feedFriends":77,"../components/hero/feedFriends":83,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138,"./mixins/feedFriends":132}],130:[function(require,module,exports){
 var CurrentUserStore, FeedLive, FeedLivePage, FeedLivePageMixin, FeedToolbarManager, HeroFeedLive, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -9031,9 +9031,9 @@ FeedToolbarManager = require('../components/toolbars/feedManager');
 
 UserToolbarManager = require('../components/toolbars/userManager');
 
-HeroFeedLive = require('../components/hero/feed/live');
+HeroFeedLive = require('../components/hero/feedLive');
 
-FeedLive = require('../components/feed/live');
+FeedLive = require('../components/feed/feedLive');
 
 FeedLivePageMixin = require('./mixins/feedLive');
 
@@ -9070,7 +9070,7 @@ module.exports = FeedLivePage;
 
 
 
-},{"../components/feed/live":79,"../components/hero/feed/live":84,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138,"./mixins/feedLive":133}],131:[function(require,module,exports){
+},{"../components/feed/feedLive":78,"../components/hero/feedLive":84,"../components/toolbars/feedManager":111,"../components/toolbars/userManager":116,"../stores/currentUser":138,"./mixins/feedLive":133}],131:[function(require,module,exports){
 var FeedBestPageMixin;
 
 FeedBestPageMixin = {
