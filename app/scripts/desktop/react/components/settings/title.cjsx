@@ -11,14 +11,16 @@ SettingsTitle = React.createClass
   render: ->
     <div className="settings__hero__text">
       <EditableField
-          defaultValue={ this.state.title }
+          defaultValue={ @state.title }
           placeholder="Введите небольшое описание вашего тлога"
-          onEditEnd={ this.onEditEnd } />
+          onEditEnd={ @handleEditEnd } />
     </div>
 
-  onEditEnd: (title) ->
+  handleEditEnd: (title) ->
     if title isnt @props.title
       @setState(title: title)
       @props.onChange title
+    else
+      @forceUpdate()
 
 module.exports = SettingsTitle

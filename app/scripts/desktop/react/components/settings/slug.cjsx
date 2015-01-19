@@ -1,9 +1,11 @@
+{ PropTypes } = React
+
 SettingsSlug = React.createClass
   displayName: 'SettingsSlug'
 
   propTypes:
-    slug:     React.PropTypes.string.isRequired
-    onChange: React.PropTypes.func.isRequired
+    slug:     PropTypes.string.isRequired
+    onChange: PropTypes.func.isRequired
 
   getInitialState: ->
     slug: @props.slug
@@ -11,14 +13,16 @@ SettingsSlug = React.createClass
   render: ->
     <div className="settings__hero__name">
       <EditableField
-          defaultValue={ this.state.slug }
+          defaultValue={ @state.slug }
           placeholder="Введите ваш псевдоним"
-          onEditEnd={ this.handleEditEnd } />
+          onEditEnd={ @handleEditEnd } />
     </div>
 
   handleEditEnd: (slug) ->
-    if slug && slug isnt @props.slug
+    if slug && slug isnt @state.slug
       @setState(slug: slug)
       @props.onChange slug
+    else
+      @forceUpdate()
 
 module.exports = SettingsSlug
