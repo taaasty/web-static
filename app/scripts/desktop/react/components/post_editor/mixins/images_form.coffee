@@ -18,10 +18,7 @@ window.PostEditor_ImagesForm =
   entryUpdatedAt: -> @props.normalizedEntry.updatedAt
 
   saveEntry: ->
-    return @saveAsAjax()          if @state.imageUrl?
-    return @fileUploader.submit() if @fileUploader?
-
-    TastyNotifyController.notifyError 'Вы не загрузили изображения'
+    if @fileUploader? then @fileUploader.submit() else @saveAsAjax()
 
   saveAsAjax: ->
     data = assign @_getEditorData(), _method: @_getSaveMethod()
@@ -32,10 +29,10 @@ window.PostEditor_ImagesForm =
       method: 'POST'
       data: data
       success: (newEntry) =>
-        @safeUpdateState {
+        @safeUpdateState
           entry: newEntry
           type:  newEntry.type
-        }
+
         EntryStore.removeNormalizedEntry @props.normalizedEntry
         @props.doneCallback newEntry
       error: (data) =>
@@ -60,10 +57,9 @@ window.PostEditor_ImagesForm =
 
       image
 
-    @setState {
+    @setState
       images:   images
       imageUrl: null
-    }
 
     @activateLoadedMode()
 

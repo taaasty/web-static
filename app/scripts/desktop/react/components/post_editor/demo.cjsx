@@ -1,7 +1,7 @@
 window.PostEditor_NewDemo = window.PostEditor_NewPost
 
 DEMO_IDS =
-  image: 19322364
+  image: 19615711
 
 window.PostEditor_Demo = React.createClass
   mixins: ['ReactActivitiesMixin', RequesterMixin, ComponentManipulationsMixin]

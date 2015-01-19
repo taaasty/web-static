@@ -12995,7 +12995,7 @@ var DEMO_IDS;
 window.PostEditor_NewDemo = window.PostEditor_NewPost;
 
 DEMO_IDS = {
-  image: 19322364
+  image: 19615711
 };
 
 window.PostEditor_Demo = React.createClass({
@@ -14189,13 +14189,11 @@ window.PostEditor_ImagesForm = {
     return this.props.normalizedEntry.updatedAt;
   },
   saveEntry: function() {
-    if (this.state.imageUrl != null) {
-      return this.saveAsAjax();
-    }
     if (this.fileUploader != null) {
       return this.fileUploader.submit();
+    } else {
+      return this.saveAsAjax();
     }
-    return TastyNotifyController.notifyError('Вы не загрузили изображения');
   },
   saveAsAjax: function() {
     var data;
