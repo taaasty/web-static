@@ -1,9 +1,10 @@
-cx = require 'react/lib/cx'
+cx               = require 'react/lib/cx'
+LinkedStateMixin = require 'react/lib/LinkedStateMixin'
 
 KEYCODE_ENTER = 13
 
 window.EditableField = React.createClass
-  mixins: [RequesterMixin]
+  mixins: [LinkedStateMixin]
 
   propTypes:
     maxLength:    React.PropTypes.number
@@ -15,16 +16,18 @@ window.EditableField = React.createClass
     maxLength: 140
 
   getInitialState: ->
+    value: @props.defaultValue
     isFocus: false
+
+  componentWillReceiveProps: (nextProps) ->
+    @setState(value: nextProps.defaultValue)
 
   componentDidMount: ->
     @$textarea = $( @refs.textarea.getDOMNode() )
 
     # require jquery.autosize.min.js
     if $.fn.autosize
-      @$textarea.autosize {
-        append: '' # По-умолчанию в конец строки добавляет \n. Отключаем, чтобы при инициализации правильно высчитывалась высота
-      }
+      @$textarea.autosize(append: '') # По-умолчанию в конец строки добавляет \n. Отключаем, чтобы при инициализации правильно высчитывалась высота
 
   render: ->
     editableFieldClasses = cx
@@ -36,7 +39,7 @@ window.EditableField = React.createClass
              <div className="editable-field__control-wrap">
                <textarea ref="textarea"
                          maxLength={ this.props.maxLength }
-                         defaultValue={ this.props.defaultValue }
+                         valueLink={ @linkState('value') }
                          className="editable-field__control"
                          onBlur={ this.onBlur }
                          onKeyDown={ this.onChange }
@@ -46,7 +49,7 @@ window.EditableField = React.createClass
                <span className="editable-field__placeholder">{ this.props.placeholder }</span>
                <span ref="value"
                      className="editable-field__value">
-                 { this.props.defaultValue }
+                 { @state.value }
                </span>
                <span className="editable-field__button"
                      onClick={ this.onFocus }>
