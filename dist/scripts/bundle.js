@@ -7052,14 +7052,16 @@ window.DesignSettingsPopup = React.createClass({
 
 
 },{"../../actions/server/current_user":12,"react/lib/cx":427}],50:[function(require,module,exports){
-var KEYCODE_ENTER, cx;
+var KEYCODE_ENTER, LinkedStateMixin, cx;
 
 cx = require('react/lib/cx');
+
+LinkedStateMixin = require('react/lib/LinkedStateMixin');
 
 KEYCODE_ENTER = 13;
 
 window.EditableField = React.createClass({
-  mixins: [RequesterMixin],
+  mixins: [LinkedStateMixin],
   propTypes: {
     maxLength: React.PropTypes.number,
     defaultValue: React.PropTypes.string,
@@ -7073,8 +7075,14 @@ window.EditableField = React.createClass({
   },
   getInitialState: function() {
     return {
+      value: this.props.defaultValue,
       isFocus: false
     };
+  },
+  componentWillReceiveProps: function(nextProps) {
+    return this.setState({
+      value: nextProps.defaultValue
+    });
   },
   componentDidMount: function() {
     this.$textarea = $(this.refs.textarea.getDOMNode());
@@ -7098,7 +7106,7 @@ window.EditableField = React.createClass({
     }, React.createElement("textarea", {
       "ref": "textarea",
       "maxLength": this.props.maxLength,
-      "defaultValue": this.props.defaultValue,
+      "valueLink": this.linkState('value'),
       "className": "editable-field__control",
       "onBlur": this.onBlur,
       "onKeyDown": this.onChange,
@@ -7110,7 +7118,7 @@ window.EditableField = React.createClass({
     }, this.props.placeholder), React.createElement("span", {
       "ref": "value",
       "className": "editable-field__value"
-    }, this.props.defaultValue), React.createElement("span", {
+    }, this.state.value), React.createElement("span", {
       "className": "editable-field__button",
       "onClick": this.onFocus
     }, React.createElement("i", {
@@ -7161,7 +7169,7 @@ window.EditableField = React.createClass({
 
 
 
-},{"react/lib/cx":427}],51:[function(require,module,exports){
+},{"react/lib/LinkedStateMixin":338,"react/lib/cx":427}],51:[function(require,module,exports){
 window.EmbedComponent = React.createClass({
   propTypes: {
     autoplay: React.PropTypes.bool.isRequired,
@@ -17164,13 +17172,15 @@ window.Settings = React.createClass({
 
 
 },{"./accounts":192,"./email/email":196,"./header":201,"./mixins/settings":202,"./password/password":204,"./radio_item":206,"react/lib/LinkedStateMixin":338}],208:[function(require,module,exports){
-var SettingsSlug;
+var PropTypes, SettingsSlug;
+
+PropTypes = React.PropTypes;
 
 SettingsSlug = React.createClass({
   displayName: 'SettingsSlug',
   propTypes: {
-    slug: React.PropTypes.string.isRequired,
-    onChange: React.PropTypes.func.isRequired
+    slug: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
   },
   getInitialState: function() {
     return {
@@ -17187,11 +17197,13 @@ SettingsSlug = React.createClass({
     }));
   },
   handleEditEnd: function(slug) {
-    if (slug && slug !== this.props.slug) {
+    if (slug && slug !== this.state.slug) {
       this.setState({
         slug: slug
       });
       return this.props.onChange(slug);
+    } else {
+      return this.forceUpdate();
     }
   }
 });
@@ -17220,15 +17232,17 @@ SettingsTitle = React.createClass({
     }, React.createElement(EditableField, {
       "defaultValue": this.state.title,
       "placeholder": "Введите небольшое описание вашего тлога",
-      "onEditEnd": this.onEditEnd
+      "onEditEnd": this.handleEditEnd
     }));
   },
-  onEditEnd: function(title) {
+  handleEditEnd: function(title) {
     if (title !== this.props.title) {
       this.setState({
         title: title
       });
       return this.props.onChange(title);
+    } else {
+      return this.forceUpdate();
     }
   }
 });
