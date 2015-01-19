@@ -24,8 +24,10 @@ window.SmartFollowStatus = React.createClass
                            onClick={ this.handleClick }/>
 
   handleClick: ->
-    if @state.status is 'none' && !@state.isError && !@state.isProcess
-      @follow()
+    if !@state.isError && !@state.isProcess
+      switch @state.status
+        when 'none'    then follow()
+        when 'guessed' then follow()
 
   updateFollowStatus: (newStatus) ->
     @setState status: newStatus

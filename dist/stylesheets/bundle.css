@@ -8771,6 +8771,7 @@ a.types-posts__item:hover .types-posts__text {
 }
 .follow-status.state--guessed {
   background-color: #fda432;
+  cursor: pointer;
 }
 .follow-status.state--guessed .icon:before {
   content: "\e601";
