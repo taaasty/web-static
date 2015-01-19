@@ -90,4 +90,5 @@ window.EditableField = React.createClass
 
   getValue: ->
     textarea = @refs.textarea.getDOMNode()
-    textarea.value.replace /\n/g, ''
+    textareaValue = textarea.value.replace /\n/g, ''
+    textareaValue.trim()

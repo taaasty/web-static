@@ -7161,9 +7161,10 @@ window.EditableField = React.createClass({
     return this.props.defaultValue.trim() === '';
   },
   getValue: function() {
-    var textarea;
+    var textarea, textareaValue;
     textarea = this.refs.textarea.getDOMNode();
-    return textarea.value.replace(/\n/g, '');
+    textareaValue = textarea.value.replace(/\n/g, '');
+    return textareaValue.trim();
   }
 });
 
