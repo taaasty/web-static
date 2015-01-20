@@ -118,3 +118,23 @@
 .icon--menu {
   margin-top: -2px;
 }
+
+// Нужно заменить на шрифтовую иконку
+.icon--mobile {
+  position: relative;
+  text-align: center;
+
+  &:before {
+    content: "";
+    display: inline-block;
+    width: .462em;
+    height: .615em;
+    border-top: .115em solid;
+    border-left: .05em solid;
+    border-right: .05em solid;
+    border-bottom: .18em solid;
+    border-radius: .077em;
+    vertical-align: top;
+    line-height: 1;
+  }
+}

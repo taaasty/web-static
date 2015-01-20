@@ -115,6 +115,7 @@
 }
 
 // Types
+// -- Toolbar -- //
 .toolbar--left {
   .toolbar__toggle {
     left: @indent-base;
@@ -145,6 +146,38 @@
 
 .toolbar--close {
   display: none;
+}
+
+// -- Popup -- //
+.toolbar__popup--complex {
+  padding-bottom: 40px; // Необходимо менять, если меняется количество дополнительных пунктов
+  box-sizing: border-box;
+
+  .toolbar__popup-list {
+      &:first-child {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}
+
+// -- Popup List -- //
+.toolbar__popup-list--additional {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: @toolbar-popup-bg;
+  font-size: @font-size-xs;
+  line-height: @line-height-xs;
+  text-align: center;
+
+  .toolbar__popup-link {
+    background-color: transparent !important;
+    color: #bbb !important;
+  }
 }
 
 // Keyframes
