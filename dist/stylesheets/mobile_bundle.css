@@ -2130,6 +2130,30 @@ a.toolbar__popup-link:active {
 .toolbar--close {
   display: none;
 }
+.toolbar__popup--complex {
+  padding-bottom: 40px;
+  box-sizing: border-box;
+}
+.toolbar__popup--complex .toolbar__popup-list:first-child {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.toolbar__popup-list--additional {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #222222;
+  font-size: 14px;
+  line-height: 1.429em;
+  text-align: center;
+}
+.toolbar__popup-list--additional .toolbar__popup-link {
+  background-color: transparent !important;
+  color: #bbb !important;
+}
 @-webkit-keyframes toolbar-indicators-animate {
   0% {
     opacity: 0;
