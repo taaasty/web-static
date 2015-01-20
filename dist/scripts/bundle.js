@@ -6733,10 +6733,181 @@ module.exports = Route;
 
         subtract : createAdder(-1, 'subtract'),
 
+<<<<<<< HEAD
         diff : function (input, units, asFloat) {
             var that = makeAs(input, this),
                 zoneDiff = (this.zone() - that.zone()) * 6e4,
                 diff, output, daysAdjust;
+=======
+CommentsMixin = {
+  getInitialState: function() {
+    return {
+      comments: [],
+      totalCount: null,
+      sharedCommentId: null,
+      isPostError: false,
+      isLoadError: false,
+      isLoadMoreError: false,
+      isPostLoading: false,
+      isLoadLoading: false,
+      isLoadMoreLoading: false
+    };
+  },
+  componentDidMount: function() {
+    var fromId;
+    if (fromId = this._getCommentIdFromHash()) {
+      return this.loadCommentListFromCommentId(fromId);
+    } else if (this._getFirstLoadLimit() > 0) {
+      return this.loadCommentList();
+    }
+  },
+  loadCommentList: function() {
+    this.setState({
+      isLoadError: false,
+      isLoadLoading: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.comments_url(),
+      data: {
+        entry_id: this.props.entryId,
+        limit: this._getFirstLoadLimit()
+      },
+      success: (function(_this) {
+        return function(data) {
+          return _this.safeUpdate(function() {
+            _this.setState({
+              comments: data.comments,
+              totalCount: data.total_count
+            });
+            return $(document).trigger('domChanged');
+          });
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            isLoadError: true
+          });
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            isLoadLoading: false
+          });
+        };
+      })(this)
+    });
+  },
+  loadCommentListFromCommentId: function(id) {
+    this.setState({
+      isLoadError: false,
+      isLoadLoading: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.comments_url(),
+      data: {
+        entry_id: this.props.entryId,
+        limit: 999
+      },
+      success: (function(_this) {
+        return function(data) {
+          return _this.safeUpdate(function() {
+            _this.setState({
+              comments: data.comments,
+              totalCount: data.total_count,
+              sharedCommentId: id
+            });
+            return $(document).trigger('domChanged');
+          });
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            isLoadError: true
+          });
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            isLoadLoading: false
+          });
+        };
+      })(this)
+    });
+  },
+  loadMoreComments: function() {
+    this.setState({
+      isLoadMoreError: false,
+      isLoadMoreLoading: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.comments_url(),
+      data: {
+        entry_id: this.props.entryId,
+        limit: this.props.limit,
+        to_comment_id: this.state.comments[0].id
+      },
+      success: (function(_this) {
+        return function(data) {
+          return _this.safeUpdate(function() {
+            var newComments;
+            newComments = data.comments.concat(_this.state.comments);
+            _this.setState({
+              comments: newComments,
+              totalCount: data.total_count
+            });
+            return $(document).trigger('domChanged');
+          });
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            isLoadMoreError: true
+          });
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            isLoadMoreLoading: false
+          });
+        };
+      })(this)
+    });
+  },
+  removeComment: function(comment) {
+    var newComments;
+    newComments = _.without(this.state.comments, comment);
+    return this.setState({
+      comments: newComments,
+      totalCount: this.state.totalCount - 1
+    });
+  },
+  _getFirstLoadLimit: function() {
+    if (!this.props.isEntryPage) {
+      if (this.props.totalCommentsCount > 5) {
+        return 3;
+      } else {
+        return this.props.totalCommentsCount;
+      }
+    } else {
+      return 50;
+    }
+  },
+  _getCommentIdFromHash: function() {
+    var hash, _ref;
+    hash = window.location.hash;
+    return parseInt((_ref = hash.match(/^#comment-(\d+)/)) != null ? _ref[1] : void 0);
+  }
+};
+>>>>>>> Display all comments when share one [deliver #80962324]
 
             units = normalizeUnits(units);
 

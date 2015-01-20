@@ -22,10 +22,9 @@ CommentsMixin =
 
     @createRequest
       url: ApiRoutes.comments_url()
-      data: {
+      data:
         entry_id: @props.entryId
         limit:    @_getFirstLoadLimit()
-      }
       success: (data) =>
         @safeUpdate =>
           @setState {
@@ -44,11 +43,9 @@ CommentsMixin =
 
     @createRequest
       url: ApiRoutes.comments_url()
-      data: {
-        entry_id:        @props.entryId
-        from_comment_id: id - 1
-        limit:           999
-      }
+      data:
+        entry_id: @props.entryId
+        limit:    999
       success: (data) =>
         @safeUpdate =>
           @setState {
