@@ -62,3 +62,8 @@ UserToolbarList = React.createClass
     </ul>
 
 module.exports = UserToolbarList
+
+# <ToolbarItem
+#   title="Мобильная версия"
+#   href={ this.props.mobileUrl }
+#   icon="icon--mobile" />
