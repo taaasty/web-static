@@ -1,7 +1,12 @@
 CLASS_PREFIX_STATE = 'state--'
 
-STATE_ERROR   = 'error'
-STATE_PROCESS = 'process'
+STATE_NONE      = 'none'
+STATE_FRIEND    = 'friend'
+STATE_IGNORED   = 'ignored'
+STATE_GUESSED   = 'guessed'
+STATE_REQUESTED = 'requested'
+STATE_ERROR     = 'error'
+STATE_PROCESS   = 'process'
 
 #TODO: i18n
 TOOLTIP_TEXT_NONE      = 'Подписаться на тлог'
@@ -32,11 +37,11 @@ window.FollowStatus = React.createClass
 
   render: ->
     tooltipText = switch @props.status
-      when 'none'      then TOOLTIP_TEXT_NONE
-      when 'friend'    then TOOLTIP_TEXT_FRIEND
-      when 'ignored'   then TOOLTIP_TEXT_IGNORED
-      when 'guessed'   then TOOLTIP_TEXT_GUESSED
-      when 'requested' then TOOLTIP_TEXT_REQUESTED
+      when STATE_NONE      then TOOLTIP_TEXT_NONE
+      when STATE_FRIEND    then TOOLTIP_TEXT_FRIEND
+      when STATE_IGNORED   then TOOLTIP_TEXT_IGNORED
+      when STATE_GUESSED   then TOOLTIP_TEXT_GUESSED
+      when STATE_REQUESTED then TOOLTIP_TEXT_REQUESTED
       else console.warn 'Неизвестный статус', @props.status
 
     content = <i className='icon'></i>

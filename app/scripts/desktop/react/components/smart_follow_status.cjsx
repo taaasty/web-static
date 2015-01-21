@@ -1,3 +1,6 @@
+STATE_NONE    = 'none'
+STATE_GUESSED = 'guessed'
+
 window.SmartFollowStatus = React.createClass
   mixins: ['RelationshipMixin']
 
@@ -26,8 +29,7 @@ window.SmartFollowStatus = React.createClass
   handleClick: ->
     if !@state.isError && !@state.isProcess
       switch @state.status
-        when 'none'    then follow()
-        when 'guessed' then follow()
+        when STATE_NONE, STATE_GUESSED then @follow()
 
   updateFollowStatus: (newStatus) ->
     @setState status: newStatus
