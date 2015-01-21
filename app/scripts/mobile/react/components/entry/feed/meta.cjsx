@@ -8,6 +8,7 @@ EntryFeedMeta = React.createClass
   displayName: 'EntryFeedMeta'
 
   propTypes:
+    flux:  PropTypes.object.isRequired
     entry: PropTypes.object.isRequired
 
   render: ->
@@ -15,7 +16,7 @@ EntryFeedMeta = React.createClass
       <EntryMetaActions entry={ @props.entry } />
       { @renderVoting() }
       <EntryMetaComments
-          entryId={ @props.entry.id }
+          flux={ @props.flux }
           commentsCount={ @props.entry.comments_count } />
       <EntryMetaAuthor author={ @props.entry.author } />
     </div>

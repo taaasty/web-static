@@ -1,6 +1,8 @@
-EntryViewActions = require '../../../../actions/view/entry'
-CommentForm      = require '../commentForm'
-ComponentMixin   = require '../../../../mixins/component'
+Fluxxor        = require 'fluxxor'
+FluxMixin      = Fluxxor.FluxMixin(React)
+CommentForm    = require '../commentForm'
+ComponentMixin = require '../../../../mixins/component'
+
 { PropTypes } = React
 
 SHOW_STATE    = 'show'
@@ -12,7 +14,7 @@ FIELD_PLACEHOLDER = 'Добавить комментарий'
 
 CommentCreateForm = React.createClass
   displayName: 'CommentCreateForm'
-  mixins: [ComponentMixin]
+  mixins: [FluxMixin, ComponentMixin]
 
   propTypes:
     entryId: PropTypes.number.isRequired
@@ -41,7 +43,7 @@ CommentCreateForm = React.createClass
   createComment: (text) ->
     return unless @isValid text
 
-    EntryViewActions.createComment @props.entryId, text
+    @getFlux().actions.createComment @props.entryId, text
       .then @clearForm
       .always @activateShowState
 

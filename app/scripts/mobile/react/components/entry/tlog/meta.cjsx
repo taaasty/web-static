@@ -14,7 +14,7 @@ EntryTlogMeta = React.createClass
       <EntryMetaActions entry={ @props.entry } />
       { @renderVoting() }
       <EntryMetaComments
-          entryId={ @props.entry.id }
+          flux={ @props.flux }
           commentsCount={ @props.entry.comments_count } />
     </div>
 

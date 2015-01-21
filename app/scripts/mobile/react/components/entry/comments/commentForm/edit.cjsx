@@ -1,6 +1,7 @@
-EntryViewActions = require '../../../../actions/view/entry'
-CommentForm      = require '../commentForm'
-ComponentMixin   = require '../../../../mixins/component'
+Fluxxor        = require 'fluxxor'
+FluxMixin      = Fluxxor.FluxMixin(React)
+CommentForm    = require '../commentForm'
+ComponentMixin = require '../../../../mixins/component'
 { PropTypes } = React
 
 SHOW_STATE    = 'show'
@@ -12,7 +13,7 @@ FIELD_PLACEHOLDER = 'Отредактировать комментарий'
 
 CommentEditForm = React.createClass
   displayName: 'CommentEditForm'
-  mixins: [ComponentMixin]
+  mixins: [FluxMixin, ComponentMixin]
 
   propTypes:
     entryId:      PropTypes.number.isRequired
@@ -46,7 +47,7 @@ CommentEditForm = React.createClass
     entryId   = @props.entryId
     commentId = @props.comment.id
 
-    EntryViewActions.editComment entryId, commentId, text
+    @getFlux().actions.editComment entryId, commentId, text
       .then @props.onEditFinish
       .always @activateShowState
 
