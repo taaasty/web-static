@@ -11,6 +11,7 @@ CommentManager = React.createClass
   mixins: [ComponentMixin]
 
   propTypes:
+    flux:    PropTypes.object.isRequired
     comment: PropTypes.object.isRequired
     entry:   PropTypes.object.isRequired
 
@@ -21,6 +22,7 @@ CommentManager = React.createClass
     switch @state.currentState
       when SHOW_STATE then <Comment {...@props} onEditStart={ @activateEditState } />
       when EDIT_STATE then <CommentEditForm
+                               flux={ @props.flux }
                                entryId={ @props.entry.id }
                                comment={ @props.comment }
                                onEditFinish={ @activateShowState }

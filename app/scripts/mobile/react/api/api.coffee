@@ -180,8 +180,9 @@ Api =
       url  = ApiRoutes.feedLive()
       key  = Constants.api.LOAD_FEED_ENTRIES
       data =
-        since_entry_id: sinceEntryId
-        limit:          limit
+        since_entry_id:        sinceEntryId
+        limit:                 limit
+        include_comments_info: 1
 
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
@@ -190,8 +191,9 @@ Api =
       url  = ApiRoutes.feedBest()
       key  = Constants.api.LOAD_FEED_ENTRIES
       data =
-        since_entry_id: sinceEntryId
-        limit:          limit
+        since_entry_id:        sinceEntryId
+        limit:                 limit
+        include_comments_info: 1
 
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
@@ -200,8 +202,9 @@ Api =
       url  = ApiRoutes.feedFriends()
       key  = Constants.api.LOAD_FEED_ENTRIES
       data =
-        since_entry_id: sinceEntryId
-        limit:          limit
+        since_entry_id:        sinceEntryId
+        limit:                 limit
+        include_comments_info: 1
 
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data

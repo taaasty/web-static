@@ -13,6 +13,7 @@ CommentActions = React.createClass
   mixins: [ClickOutsideMixin]
 
   propTypes:
+    flux:        PropTypes.object.isRequired
     entry:       PropTypes.object.isRequired
     comment:     PropTypes.object.isRequired
     onEditStart: PropTypes.func.isRequired

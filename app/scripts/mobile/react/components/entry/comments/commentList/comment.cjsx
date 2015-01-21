@@ -8,6 +8,7 @@ Comment = React.createClass
   displayName: 'Comment'
 
   propTypes:
+    flux:        PropTypes.object.isRequired
     comment:     PropTypes.object.isRequired
     entry:       PropTypes.object.isRequired
     onEditStart: PropTypes.func.isRequired

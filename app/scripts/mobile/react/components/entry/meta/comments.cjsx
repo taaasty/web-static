@@ -1,13 +1,14 @@
-CommentsStore     = require '../../../stores/comments'
-ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
+Fluxxor         = require 'fluxxor'
+FluxMixin       = Fluxxor.FluxMixin(React)
+StoreWatchMixin = Fluxxor.StoreWatchMixin
 { PropTypes } = React
 
 EntryMetaComments = React.createClass
   displayName: 'EntryMetaComments'
-  mixins: [ConnectStoreMixin(CommentsStore)]
+  mixins: [StoreWatchMixin('CommentsStore'), FluxMixin]
 
   propTypes:
-    entryId:       PropTypes.number.isRequired
+    flux:          PropTypes.object.isRequired
     commentsCount: PropTypes.number.isRequired
 
   render: ->
@@ -15,9 +16,7 @@ EntryMetaComments = React.createClass
       { @state.commentsCount }
     </div>
 
-  getStateFromStore: ->
-    { entryId, commentsCount } = @props
-
-    commentsCount: CommentsStore.getTotalCount(entryId) || commentsCount
+  getStateFromFlux: ->
+    commentsCount: @getFlux().store('CommentsStore').getTotalCount()
 
 module.exports = EntryMetaComments

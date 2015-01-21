@@ -1,3 +1,6 @@
+Fluxxor           = require 'fluxxor'
+CommentsStore     = require '../../stores/comments'
+CommentsActions   = require '../../actions/comments'
 EntryTlogMeta     = require './tlog/meta'
 EntryComments     = require './comments/comments'
 EntryContent      = require './content/content'
@@ -17,11 +20,23 @@ EntryTlog = React.createClass
   propTypes:
     entry: PropTypes.object.isRequired
 
+  componentWillMount: ->
+    actions = CommentsActions
+    stores  = CommentsStore: new CommentsStore()
+
+    @flux = new Fluxxor.Flux stores, actions
+
+  componentWillUnmount: ->
+    @flux = null
+
   render: ->
     <div className={ @getEntryClasses() }>
       <EntryContent entry={ @props.entry } />
-      <EntryTlogMeta entry={ @props.entry } />
+      <EntryTlogMeta
+          flux={ @flux }
+          entry={ @props.entry } />
       <EntryComments
+          flux={ @flux }
           entry={ @props.entry }
           commentsInfo={ @props.entry.comments_info }
           user={ @state.user } />

@@ -1,84 +1,75 @@
-assign        = require 'react/lib/Object.assign'
-BaseStore     = require './_base'
-Constants     = require '../constants/constants'
-AppDispatcher = require '../dispatcher/dispatcher'
+assign    = require 'react/lib/Object.assign'
+Fluxxor   = require 'fluxxor'
+Constants = require '../constants/constants'
 
-_comments = {}
+CommentsStore = Fluxxor.createStore
 
-initializeComments = (entryId, comments, totalCount) ->
-  _comments[entryId] =
-    items: comments
-    totalCount: totalCount
+  getComments:   (entryId) -> @_comments
+  getTotalCount: (entryId) -> @_totalCount
 
-unshiftComments = (entryId, comments, totalCount) ->
-  _comments[entryId] =
-    items: comments.concat _comments[entryId].items
-    totalCount: totalCount
+  initialize: ->
+    @_comments   = []
+    @_totalCount = 0
 
-pushComment = (entryId, comment) ->
-  newTotalCount = _comments[entryId].totalCount + 1
-  newComments   = _comments[entryId].items[..]
-  newComments.push comment
+    @bindActions(
+      Constants.entry.INITIALIZE_COMMENTS, @onInitializeComments
+      Constants.entry.LOAD_COMMENTS,       @onLoadComments
+      Constants.entry.CREATE_COMMENT,      @onCreateComment
+      Constants.entry.EDIT_COMMENT,        @onEditComment
+      Constants.entry.DELETE_COMMENT,      @onDeleteComment
+    )
 
-  _comments[entryId] =
-    items: newComments
-    totalCount: newTotalCount
+  initializeComments: (comments, totalCount) ->
+    @_comments   = comments
+    @_totalCount = totalCount
 
-updateComment = (entryId, comment) ->
-  comments = _comments[entryId].items
+  updateTotalCount: (totalCount) ->
+    @_totalCount = totalCount
 
-  for item in comments when item.id == comment.id
-    assign item, comment
-    break
+  unshiftComments: (comments) ->
+    @_comments = comments.concat @_comments
 
-deleteComment = (entryId, commentId) ->
-  newTotalCount = _comments[entryId].totalCount - 1
-  newComments   = _comments[entryId].items[..]
+  pushComment: (comment) ->
+    newComments = @_comments[..]
+    newComments.push comment
 
-  for newComment, i in newComments when newComment.id == commentId
-    newComments.splice i, 1
-    break
+    @_comments = newComments
 
-  _comments[entryId] =
-    items: newComments
-    totalCount: newTotalCount
+  updateComment: (comment) ->
+    for _comment in @_comments when _comment.id == comment.id
+      assign _comment, comment
+      break
 
-CommentsStore = assign new BaseStore(),
+  deleteComment: (commentId) ->
+    newComments = @_comments[..]
 
-  getComments: (entryId) ->
-    _comments[entryId]?.items
+    for newComment, i in newComments when newComment.id == commentId
+      newComments.splice i, 1
+      break
 
-  getTotalCount: (entryId) ->
-    _comments[entryId]?.totalCount
+    @_comments = newComments
+
+  onInitializeComments: ({comments, totalCount}) ->
+    @initializeComments comments, totalCount
+    @emit 'change'
+
+  onLoadComments: ({comments, totalCount}) ->
+    @unshiftComments comments
+    @updateTotalCount totalCount
+    @emit 'change'
+
+  onCreateComment: ({comment}) ->
+    @pushComment comment
+    @updateTotalCount @_totalCount + 1
+    @emit 'change'
+
+  onEditComment: ({comment}) ->
+    @updateComment comment
+    @emit 'change'
+
+  onDeleteComment: ({commentId}) ->
+    @deleteComment commentId
+    @updateTotalCount @_totalCount - 1
+    @emit 'change'
 
 module.exports = CommentsStore
-
-CommentsStore.dispatchToken = AppDispatcher.register (payload) ->
-  action = payload.action
-
-  switch action.type
-    when Constants.entry.INITIALIZE_COMMENTS
-      { entryId, comments, totalCount } = action
-
-      initializeComments entryId, comments, totalCount
-      CommentsStore.emitChange()
-    when Constants.entry.LOAD_COMMENTS
-      { entryId, comments, totalCount } = action
-
-      unshiftComments entryId, comments, totalCount
-      CommentsStore.emitChange()
-    when Constants.entry.DELETE_COMMENT
-      { entryId, commentId } = action
-
-      deleteComment entryId, commentId
-      CommentsStore.emitChange()
-    when Constants.entry.CREATE_COMMENT
-      { entryId, comment } = action
-
-      pushComment entryId, comment
-      CommentsStore.emitChange()
-    when Constants.entry.EDIT_COMMENT
-      { entryId, comment } = action
-
-      updateComment entryId, comment
-      CommentsStore.emitChange()

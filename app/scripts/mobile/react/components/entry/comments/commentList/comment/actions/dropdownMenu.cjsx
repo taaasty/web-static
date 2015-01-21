@@ -10,6 +10,7 @@ CommentActionsDropdownMenu = React.createClass
   mixins: [DropdownMenuMixin]
 
   propTypes:
+    flux:        PropTypes.object.isRequired
     entry:       PropTypes.object.isRequired
     comment:     PropTypes.object.isRequired
     onEditStart: PropTypes.func.isRequired
@@ -27,6 +28,7 @@ CommentActionsDropdownMenu = React.createClass
 
     if @props.comment.can_report
       reportItem = <CommentActionsDropdownMenuReportItem
+                       flux={ @props.flux }
                        commentId={ @props.comment.id }
                        key="report" />
 
@@ -37,6 +39,7 @@ CommentActionsDropdownMenu = React.createClass
 
     if @props.comment.can_delete
       deleteItem = <CommentActionsDropdownMenuDeleteItem
+                       flux={ @props.flux }
                        entryId={ @props.entry.id }
                        commentId={ @props.comment.id }
                        key="delete" />

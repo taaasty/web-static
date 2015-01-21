@@ -1,8 +1,8 @@
-EntryViewActions  = require '../../../actions/view/entry'
-CommentsStore     = require '../../../stores/comments'
+Fluxxor           = require 'fluxxor'
+FluxMixin         = Fluxxor.FluxMixin(React)
+StoreWatchMixin   = Fluxxor.StoreWatchMixin
 CommentsMixin     = require './mixins/comments'
 ComponentMixin    = require '../../../mixins/component'
-ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 CommentList       = require './commentList'
 CommentCreateForm = require './commentForm/create'
 CommentsLoadMore  = require './loadMore'
@@ -15,26 +15,32 @@ ERROR_STATE   = 'error'
 
 EntryComments = React.createClass
   displayName: 'EntryComments'
-  mixins: [ConnectStoreMixin(CommentsStore), CommentsMixin, ComponentMixin]
+  mixins: [StoreWatchMixin('CommentsStore'), CommentsMixin, ComponentMixin, FluxMixin]
 
   propTypes:
+    flux:         PropTypes.object.isRequired
     entry:        PropTypes.object.isRequired
-    commentsInfo: PropTypes.object.isRequired
+    commentsInfo: PropTypes.object
     user:         PropTypes.object
     limit:        PropTypes.number
 
   getDefaultProps: ->
     limit: LOAD_MORE_COMMENTS_LIMIT
 
-  getInitialState: ->
-    currentState: SHOW_STATE
+  componentDidMount: ->
+    if @props.commentsInfo?
+      @getFlux().actions.initializeComments(
+        @props.commentsInfo.comments
+        @props.commentsInfo.total_count
+      )
 
-  componentWillMount: ->
-    EntryViewActions.initializeComments(
-      @props.entry.id
-      @props.commentsInfo.comments
-      @props.commentsInfo.total_count
-    )
+  getStateFromFlux: ->
+    store = @getFlux().store 'CommentsStore'
+
+    return {
+      comments:   store.getComments()
+      totalCount: store.getTotalCount()
+    }
 
   render: ->
     <div className="post__comments">
@@ -57,23 +63,20 @@ EntryComments = React.createClass
   renderCommentList: ->
     if @state.comments.length
       <CommentList
+          flux={ @props.flux }
           comments={ @state.comments }
           entry={ @props.entry } />
 
   renderCommentForm: ->
     if @props.user?
-      <CommentCreateForm entryId={ @props.entry.id } />
+      <CommentCreateForm
+          entryId={ @props.entry.id }
+          flux={ @props.flux } />
 
   isLoadingState: -> @state.currentState is LOADING_STATE
 
   activateShowState:    -> @safeUpdateState(currentState: SHOW_STATE)
   activateLoadingState: -> @safeUpdateState(currentState: LOADING_STATE)
   activateErrorState:   -> @safeUpdateState(currentState: ERROR_STATE)
-
-  getStateFromStore: ->
-    entryId = @props.entry.id
-
-    comments:   CommentsStore.getComments entryId
-    totalCount: CommentsStore.getTotalCount entryId
 
 module.exports = EntryComments

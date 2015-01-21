@@ -1,5 +1,8 @@
+Fluxxor           = require 'fluxxor'
+CommentsStore     = require '../../stores/comments'
+CommentsActions   = require '../../actions/comments'
 EntryFeedMeta     = require './feed/meta'
-# EntryComments     = require './comments/comments'
+EntryComments     = require './comments/comments'
 EntryContent      = require './content/content'
 CurrentUserStore  = require '../../stores/currentUser'
 ConnectStoreMixin = require '../../../../shared/react/mixins/connectStore'
@@ -17,15 +20,27 @@ EntryFeed = React.createClass
   propTypes:
     entry: PropTypes.object.isRequired
 
+  componentWillMount: ->
+    actions = CommentsActions
+    stores  = CommentsStore: new CommentsStore()
+
+    @flux = new Fluxxor.Flux stores, actions
+
+  componentWillUnmount: ->
+    @flux = null
+
   render: ->
     <div className={ @getEntryClasses() }>
       <EntryContent entry={ @props.entry } />
-      <EntryFeedMeta entry={ @props.entry } />
+      <EntryFeedMeta
+          flux={ @flux }
+          entry={ @props.entry } />
+      <EntryComments
+          flux={ @flux }
+          entry={ @props.entry }
+          commentsInfo={ @props.entry.comments_info }
+          user={ @state.user } />
     </div>
-    # <EntryComments
-    #     entry={ @props.entry }
-    #     commentsInfo={ @props.entry.comments_info }
-    #     user={ @state.user } />
 
   getEntryClasses: ->
     # Small hack, depends on layout

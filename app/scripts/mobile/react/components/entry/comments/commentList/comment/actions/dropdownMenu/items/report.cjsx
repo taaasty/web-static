@@ -1,4 +1,5 @@
-EntryViewActions = require '../../../../../../../../actions/view/entry'
+Fluxxor   = require 'fluxxor'
+FluxMixin = Fluxxor.FluxMixin(React)
 { PropTypes } = React
 
 #TODO: i18n
@@ -7,8 +8,10 @@ CONFIRM_MESSAGE = 'Вы действительно хотите пожалова
 
 CommentActionsDropdownMenuReportItem = React.createClass
   displayName: 'CommentActionsDropdownMenuReportItem'
+  mixins: [FluxMixin]
 
   propTypes:
+    flux:      PropTypes.object.isRequired
     commentId: PropTypes.number.isRequired
 
   render: ->
@@ -22,7 +25,7 @@ CommentActionsDropdownMenuReportItem = React.createClass
     </li>
 
   report: ->
-    EntryViewActions.reportComment @props.commentId
+    @getFlux().actions.reportComment @props.commentId
 
   handleClick: ->
     @report() if confirm CONFIRM_MESSAGE

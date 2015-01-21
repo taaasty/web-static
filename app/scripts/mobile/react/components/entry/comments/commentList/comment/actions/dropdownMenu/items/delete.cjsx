@@ -1,4 +1,5 @@
-EntryViewActions = require '../../../../../../../../actions/view/entry'
+Fluxxor   = require 'fluxxor'
+FluxMixin = Fluxxor.FluxMixin(React)
 { PropTypes } = React
 
 #TODO: i18n
@@ -7,8 +8,10 @@ CONFIRM_MESSAGE = 'Вы действительно хотите удалить �
 
 CommentActionsDropdownMenuDeleteItem = React.createClass
   displayName: 'CommentActionsDropdownMenuDeleteItem'
+  mixins: [FluxMixin]
 
   propTypes:
+    flux:      PropTypes.object.isRequired
     entryId:   PropTypes.number.isRequired
     commentId: PropTypes.number.isRequired
 
@@ -25,7 +28,7 @@ CommentActionsDropdownMenuDeleteItem = React.createClass
   delete: ->
     { entryId, commentId } = @props
 
-    EntryViewActions.deleteComment entryId, commentId
+    @getFlux().actions.deleteComment entryId, commentId
 
   handleClick: ->
     @delete() if confirm CONFIRM_MESSAGE

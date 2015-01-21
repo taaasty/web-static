@@ -1,5 +1,3 @@
-EntryViewActions = require '../../../../actions/view/entry'
-
 CommentsMixin =
 
   loadMoreComments: ->
@@ -9,7 +7,7 @@ CommentsMixin =
 
     @activateLoadingState()
 
-    EntryViewActions.loadComments entryId, toCommentId, limit
+    @getFlux().actions.loadComments entryId, toCommentId, limit
       .then @activateShowState
       .fail @activateErrorState
 
