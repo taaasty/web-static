@@ -10,7 +10,6 @@ AuthManager = React.createClass
     unless @state.logged then <Auth /> else null
 
   getStateFromStore: ->
-    user:   CurrentUserStore.getUser()
     logged: CurrentUserStore.isLogged()
 
 module.exports = AuthManager

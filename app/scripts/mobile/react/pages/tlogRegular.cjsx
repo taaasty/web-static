@@ -1,9 +1,11 @@
-CurrentUserStore     = require '../stores/currentUser'
-FeedToolbarManager   = require '../components/toolbars/feedManager'
-UserToolbarManager   = require '../components/toolbars/userManager'
-HeroTlog             = require '../components/hero/tlog'
-Tlog                 = require '../components/tlog/tlog'
-TlogPagination       = require '../components/pagination/tlog'
+CurrentUserStore   = require '../stores/currentUser'
+FeedToolbarManager = require '../components/toolbars/feedManager'
+UserToolbarManager = require '../components/toolbars/userManager'
+HeroTlog           = require '../components/hero/tlog'
+Tlog               = require '../components/tlog/tlog'
+TlogPagination     = require '../components/pagination/tlog'
+AuthManager        = require '../components/auth/authManager'
+AuthButtonManager  = require '../components/buttons/auth/authManager'
 # TlogRegularPageMixin = require './mixins/tlogRegular'
 { PropTypes } = React
 
@@ -27,6 +29,7 @@ TlogRegularPage = React.createClass
     <div>
       <FeedToolbarManager />
       <UserToolbarManager />
+      <AuthButtonManager />
       <div className="layout">
         <div className="layout__header">
           <HeroTlog tlog={ @props.tlog } />
@@ -39,6 +42,7 @@ TlogRegularPage = React.createClass
               totalPagesCount={ @props.pagination.totalPagesCount } />
         </div>
       </div>
+      <AuthManager />
     </div>
 
 module.exports = TlogRegularPage

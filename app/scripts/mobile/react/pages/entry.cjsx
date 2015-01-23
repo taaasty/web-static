@@ -5,6 +5,7 @@ HeroTlog           = require '../components/hero/tlog'
 EntryTlog          = require '../components/entry/tlog'
 EntryPagination    = require '../components/pagination/entry'
 AuthManager        = require '../components/auth/authManager'
+AuthButtonManager  = require '../components/buttons/auth/authManager'
 # EntryPageMixin     = require './mixins/entry'
 { PropTypes } = React
 
@@ -27,6 +28,7 @@ EntryPage = React.createClass
     <div>
       <FeedToolbarManager />
       <UserToolbarManager />
+      <AuthButtonManager />
       <div className="layout">
         <div className="layout__header">
           <HeroTlog tlog={ @props.tlog } />

@@ -23,9 +23,6 @@ restorePageName = ->
 
 ScreenController =
 
-  getOldPageName: ->
-    _oldPageName
-
   show: (reactClass, props, pageName) ->
     container    = getContainer()
     appContainer = document.getElementById 'App'

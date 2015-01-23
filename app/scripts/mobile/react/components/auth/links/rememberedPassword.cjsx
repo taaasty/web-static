@@ -1,4 +1,4 @@
-ScreenController  = require '../../../controllers/screen'
+ScreenController = require '../../../controllers/screen'
 
 #TODO: i18n
 TEXT = 'Я всё вспомнил, верните меня'
