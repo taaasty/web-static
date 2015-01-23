@@ -1,3 +1,6 @@
+ScreenController = require '../../../controllers/screen'
+AuthEmailSignIn  = require '../authEmailSignIn'
+
 #TODO: i18n
 BUTTON_TEXT = 'Войти с помощью эл. почты'
 
@@ -11,7 +14,7 @@ AuthEmailSignInButton = React.createClass
     </button>
 
   handleClick: ->
-    #FIXME: Route transitionTo
-    # window.location = ApiRoutes.omniauth_url 'facebook'
+    #FIXME: Route transitionTo AuthEmailSignIn
+    ScreenController.show AuthEmailSignIn, {}, 'auth-page'
 
 module.exports = AuthEmailSignInButton

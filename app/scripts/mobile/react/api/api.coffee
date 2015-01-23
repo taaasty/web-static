@@ -209,4 +209,15 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
 
+  sessions:
+    login: (login, password) ->
+      url  = ApiRoutes.signin_url()
+      key  = Constants.api.LOGIN
+      data =
+        email:    login
+        password: password
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
+
 module.exports = Api

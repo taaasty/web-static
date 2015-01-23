@@ -19,5 +19,6 @@ ApiConstants = keyMirror
   CREATE_COMMENT:        null
   EDIT_COMMENT:          null
   LOAD_FEED_ENTRIES:     null
+  LOGIN:                 null
 
 module.exports = ApiConstants
