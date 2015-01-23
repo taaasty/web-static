@@ -1,21 +1,21 @@
-NotifyController         = require '../../controllers/notify'
-SessionsViewActions      = require '../../actions/view/sessions'
-ComponentMixin           = require '../../mixins/component'
-AuthEmailLoginField      = require './fields/emailLogin'
-AuthEmailPasswordField   = require './fields/emailPassword'
-AuthEmailSubmitButton    = require './buttons/emailSubmit'
-AuthNotRegisteredYetLink = require './links/notRegisteredYet'
-AuthForgotPasswordLink   = require './links/forgotPassword'
+NotifyController          = require '../../controllers/notify'
+SessionsViewActions       = require '../../actions/view/sessions'
+ComponentMixin            = require '../../mixins/component'
+AuthEmailEmailField       = require './fields/emailEmail'
+AuthEmailPasswordField    = require './fields/emailPassword'
+AuthEmailNicknameField    = require './fields/emailNickname'
+AuthEmailSubmitButton     = require './buttons/emailSubmit'
+AuthAlreadyRegisteredLink = require './links/alreadyRegistered'
 
 #TODO: i18n
-HEADER_TITLE                = 'Вход'
-FORGOT_PASSWORD_BUTTON_TEXT = 'Я забыл пароль'
-EMPTY_LOGIN_ERROR           = 'Вы забыли ввести логин'
-EMPTY_PASSWORD_ERROR        = 'Вы забыли ввести пароль'
+HEADER_TITLE         = 'Регистрация'
+EMPTY_EMAIL_ERROR    = 'Вы забыли ввести электронную почту'
+EMPTY_PASSWORD_ERROR = 'Вы забыли ввести пароль'
+EMPTY_NICKNAME_ERROR = 'Вы забыли ввести ник'
 
 #FIXME: Remove from global when implement react-router
-window.AuthEmailSignIn = React.createClass
-  displayName: 'AuthEmailSignIn'
+window.AuthEmailSignUp = React.createClass
+  displayName: 'AuthEmailSignUp'
   mixins: [ComponentMixin]
 
   getInitialState: ->
@@ -33,17 +33,16 @@ window.AuthEmailSignIn = React.createClass
             </div>
             <div className="auth__body">
               <form onSubmit={ @handleSubmit }>
-                <AuthEmailLoginField ref="loginField" />
+                <AuthEmailEmailField ref="emailField" />
                 <AuthEmailPasswordField ref="passwordField" />
+                <AuthEmailNicknameField ref="nicknameField" />
                 <div className="auth__buttons">
                   <AuthEmailSubmitButton loading={ @state.loading } />
                 </div>
               </form>
             </div>
             <div className="auth__footer">
-              <AuthNotRegisteredYetLink />
-              <span className="auth__footer-sep">&middot;</span>
-              <AuthForgotPasswordLink />
+              <AuthAlreadyRegisteredLink />
             </div>
           </div>
         </div>
@@ -54,33 +53,34 @@ window.AuthEmailSignIn = React.createClass
   deactivateLoadingState: -> @safeUpdateState(loading: false)
 
   isValid: ->
-    login    = @refs.loginField.getValue()
+    email    = @refs.emailField.getValue()
     password = @refs.passwordField.getValue()
 
     switch
-      when login.length == 0
-        NotifyController.notifyError EMPTY_LOGIN_ERROR
+      when email.length == 0
+        NotifyController.notifyError EMPTY_EMAIL_ERROR
         false
       when password.length == 0
         NotifyController.notifyError EMPTY_PASSWORD_ERROR
         false
       else true
 
-  signIn: ->
-    login    = @refs.loginField.getValue()
+  signUp: ->
+    email    = @refs.emailField.getValue()
     password = @refs.passwordField.getValue()
+    nickname = @refs.nicknameField.getValue()
 
     @activateLoadingState()
 
-    SessionsViewActions.signIn login, password
-      .then =>
+    SessionsViewActions.signUp email, password, nickname
+      .then (user) =>
         setTimeout (->
-          window.location.reload true
+          window.location.href = user.tlog_url
         ), 0
       .always @deactivateLoadingState
 
   handleSubmit: (e) ->
     e.preventDefault()
-    @signIn() if @isValid() && !@state.loading
+    @signUp() if @isValid() && !@state.loading
 
-module.exports = AuthEmailSignIn
+module.exports = AuthEmailSignUp

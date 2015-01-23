@@ -3,20 +3,26 @@ AuthFacebookButton    = require './buttons/facebook'
 AuthEmailSignInButton = require './buttons/emailSignIn'
 AuthEmailSignUpButton = require './buttons/emailSignUp'
 
-Auth = React.createClass
+#TODO: i18n
+TITLE = 'Это&nbsp;<strong>дневник</strong>, в&nbsp;который хочется писать каждый день'
+
+#FIXME: Remove from global when implement react-router
+window.Auth = React.createClass
   displayName: 'Auth'
 
   render: ->
     <div className="auth">
       <div className="auth__grid-table">
         <div className="auth__grid-cell">
-          <div className="auth__bg" style={{ backgroundImage: 'url(../../images/images/Polly-73.jpg)' }} />
+          <div style={{ backgroundImage: 'url(../../images/images/Polly-73.jpg)' }}
+               className="auth__bg" />
           <div className="auth__section">
             <div className="auth__body">
               <div className="auth__logo">
                 <i className="icon icon--ribbon" />
               </div>
-              <h1 className="auth__lead">Это&nbsp;<strong>дневник</strong>, в&nbsp;который хочется писать каждый день</h1>
+              <h1 className="auth__lead"
+                  dangerouslySetInnerHTML={{ __html: TITLE }} />
               <div className="auth__buttons">
                 <AuthVkontakteButton />
                 <AuthFacebookButton />

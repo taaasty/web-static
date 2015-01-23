@@ -10,8 +10,9 @@ window.ThumborService = require '../shared/react/services/thumbor'
 
 # /*==========  Components  ==========*/
 
-require './react/components/toolbars/user'
-require './react/components/toolbars/feed'
+require './react/components/auth/auth'
+require './react/components/auth/authEmailSignIn'
+require './react/components/auth/authEmailSignUp'
 
 # /*==========  Pages  ==========*/
 

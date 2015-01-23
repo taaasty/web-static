@@ -13,14 +13,18 @@ getContainer = ->
 
 switchPageName = (pageName) ->
   oldClassName = document.documentElement.className
-  _oldPageName = oldClassName.match /.*-page/
+  _oldPageName = oldClassName.match(/.*-page/) if _oldPageName is null
   document.documentElement.className = oldClassName.replace /.*-page/, pageName
 
 restorePageName = ->
   oldClassName = document.documentElement.className
   document.documentElement.className = oldClassName.replace /.*-page/, _oldPageName
+  _oldPageName = null
 
-window.ScreenController =
+ScreenController =
+
+  getOldPageName: ->
+    _oldPageName
 
   show: (reactClass, props, pageName) ->
     container    = getContainer()

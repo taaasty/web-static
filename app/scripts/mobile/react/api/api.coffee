@@ -210,12 +210,31 @@ Api =
       _pendingRequests[key] = getRequest url, data
 
   sessions:
-    login: (login, password) ->
+    signIn: (login, password) ->
       url  = ApiRoutes.signin_url()
-      key  = Constants.api.LOGIN
+      key  = Constants.api.SIGN_IN
       data =
         email:    login
         password: password
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
+
+    signUp: (email, password, nickname) ->
+      url  = ApiRoutes.signup_url()
+      key  = Constants.api.SIGN_UP
+      data =
+        email:    email
+        password: password
+        slug:     nickname
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
+
+    recover: (login) ->
+      url  = ApiRoutes.recovery_url()
+      key  = Constants.api.RECOVER
+      data = slug_or_email: login
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest url, data
