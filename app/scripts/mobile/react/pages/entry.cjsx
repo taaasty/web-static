@@ -4,6 +4,7 @@ UserToolbarManager = require '../components/toolbars/userManager'
 HeroTlog           = require '../components/hero/tlog'
 EntryTlog          = require '../components/entry/tlog'
 EntryPagination    = require '../components/pagination/entry'
+AuthManager        = require '../components/auth/authManager'
 # EntryPageMixin     = require './mixins/entry'
 { PropTypes } = React
 
@@ -35,6 +36,7 @@ EntryPage = React.createClass
           <EntryPagination tlogUrl={ @props.tlog.tlog_url } />
         </div>
       </div>
+      <AuthManager />
     </div>
 
 module.exports = EntryPage
