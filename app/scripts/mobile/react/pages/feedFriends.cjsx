@@ -3,6 +3,8 @@ FeedToolbarManager   = require '../components/toolbars/feedManager'
 UserToolbarManager   = require '../components/toolbars/userManager'
 HeroFeedFriends      = require '../components/hero/feedFriends'
 FeedFriends          = require '../components/feed/feedFriends'
+AuthManager          = require '../components/auth/authManager'
+AuthButtonManager    = require '../components/buttons/auth/authManager'
 FeedFriendsPageMixin = require './mixins/feedFriends'
 { PropTypes } = React
 
@@ -25,6 +27,7 @@ FeedFriendsPage = React.createClass
     <div>
       <FeedToolbarManager />
       <UserToolbarManager />
+      <AuthButtonManager />
       <div className="layout">
         <div className="layout__header">
           <HeroFeedFriends
@@ -35,6 +38,7 @@ FeedFriendsPage = React.createClass
           <FeedFriends entries={ @props.entries } />
         </div>
       </div>
+      <AuthManager />
     </div>
 
 module.exports = FeedFriendsPage

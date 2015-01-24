@@ -1,59 +1,6 @@
 FeedBestPageMixin =
 
   getDefaultProps: ->
-    currentUser:
-      api_key:
-        access_token: 'my_super_key'
-        expires_at: '2015-01-04T18:07:07.000+03:00'
-        user_id: 232992
-      authentications: [{
-        id: 5
-        image: 'https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg'
-        name: 'Сергей Лаптев'
-        provider: 'vkontakte'
-        sex: null
-        uid: '17202995'
-        url: 'http://vk.com/my_super_key'
-      }]
-      available_notifications: true
-      confirmation_email: null
-      created_at: '2014-06-18T14:27:22.000+04:00'
-      design:
-        backgroundBrightness: 75
-        background_url: 'http://taaasty.ru/assets/backgrounds/cf/78/1881243_4k_Resolution_Game_Wallpaper__12_fullsize.jpeg'
-        coverAlign: 'justify'
-        feedColor: 'black'
-        feedOpacity: 0.62
-        fontType: 'sans'
-        headerColor: 'white'
-      email: 'iamsergeylaptev@gmail.com'
-      features:
-        notification: false
-        search: true
-      id: 232992
-      is_confirmed: true
-      is_daylog: false
-      is_female: false
-      is_privacy: true
-      name: 'sergeylaptev'
-      private_entries_count: 0
-      public_entries_count: 3
-      slug: 'sergeylaptev'
-      title: 'To be continued...'
-      tlog_url: 'http://taaasty.ru/~sergeylaptev'
-      total_entries_count: 3
-      updated_at: '2014-12-17T11:54:20.000+03:00'
-      userpic:
-        default_colors:
-          background: '#b5c31e'
-          name: '#ffffff'
-        kind: 'user'
-        large_url: 'http://taaasty.ru/assets/userpic/22/36/232992_large.jpeg'
-        original_url: 'http://taaasty.ru/assets/userpic/22/36/232992_original.jpeg'
-        symbol: 's'
-        thumb64_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb64.jpeg'
-        thumb128_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb128.jpeg'
-        thumbor_path: 'userpic/22/36/232992_original.jpeg'
     entries: [{
       author:
         created_at: "2014-11-08T14:07:32.000+03:00"

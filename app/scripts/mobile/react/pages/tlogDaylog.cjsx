@@ -1,9 +1,11 @@
-CurrentUserStore    = require '../stores/currentUser'
-FeedToolbarManager  = require '../components/toolbars/feedManager'
-UserToolbarManager  = require '../components/toolbars/userManager'
-HeroTlog            = require '../components/hero/tlog'
-Daylog              = require '../components/daylog/daylog'
-DaylogPagination    = require '../components/pagination/daylog'
+CurrentUserStore   = require '../stores/currentUser'
+FeedToolbarManager = require '../components/toolbars/feedManager'
+UserToolbarManager = require '../components/toolbars/userManager'
+HeroTlog           = require '../components/hero/tlog'
+Daylog             = require '../components/daylog/daylog'
+DaylogPagination   = require '../components/pagination/daylog'
+AuthManager        = require '../components/auth/authManager'
+AuthButtonManager  = require '../components/buttons/auth/authManager'
 # TlogDaylogPageMixin = require './mixins/tlogDaylog'
 { PropTypes } = React
 
@@ -27,6 +29,7 @@ TlogDaylogPage = React.createClass
     <div>
       <FeedToolbarManager />
       <UserToolbarManager />
+      <AuthButtonManager />
       <div className="layout">
         <div className="layout__header">
           <HeroTlog tlog={ @props.tlog } />
@@ -39,6 +42,7 @@ TlogDaylogPage = React.createClass
               nextDay={ @props.pagination.nextDay } />
         </div>
       </div>
+      <AuthManager />
     </div>
 
 module.exports = TlogDaylogPage
