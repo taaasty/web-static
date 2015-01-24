@@ -1,46 +1,23 @@
-Fluxxor           = require 'fluxxor'
-FluxMixin         = Fluxxor.FluxMixin(React)
-StoreWatchMixin   = Fluxxor.StoreWatchMixin
-CommentsMixin     = require './mixins/comments'
-ComponentMixin    = require '../../../mixins/component'
 CommentList       = require './commentList'
 CommentCreateForm = require './commentForm/create'
-CommentsLoadMore  = require './loadMore'
+CommentsLoadMore  = require './commentsLoadMore'
 { PropTypes } = React
-
-LOAD_MORE_COMMENTS_LIMIT = 50
-SHOW_STATE    = 'show'
-LOADING_STATE = 'load'
-ERROR_STATE   = 'error'
 
 EntryComments = React.createClass
   displayName: 'EntryComments'
-  mixins: [StoreWatchMixin('CommentsStore'), CommentsMixin, ComponentMixin, FluxMixin]
 
   propTypes:
-    flux:         PropTypes.object.isRequired
-    entry:        PropTypes.object.isRequired
-    commentsInfo: PropTypes.object
-    user:         PropTypes.object
-    limit:        PropTypes.number
-
-  getDefaultProps: ->
-    limit: LOAD_MORE_COMMENTS_LIMIT
-
-  componentDidMount: ->
-    if @props.commentsInfo?
-      @getFlux().actions.initializeComments(
-        @props.commentsInfo.comments
-        @props.commentsInfo.total_count
-      )
-
-  getStateFromFlux: ->
-    store = @getFlux().store 'CommentsStore'
-
-    return {
-      comments:   store.getComments()
-      totalCount: store.getTotalCount()
-    }
+    user:               PropTypes.object
+    entry:              PropTypes.object.isRequired
+    comments:           PropTypes.array.isRequired
+    commentsCount:      PropTypes.number.isRequired
+    loading:            PropTypes.bool.isRequired
+    loadPerTime:        PropTypes.number
+    onCommentsLoadMore: PropTypes.func.isRequired
+    onCommentCreate:    PropTypes.func.isRequired
+    onCommentEdit:      PropTypes.func.isRequired
+    onCommentDelete:    PropTypes.func.isRequired
+    onCommentReport:    PropTypes.func.isRequired
 
   render: ->
     <div className="post__comments">
@@ -52,31 +29,28 @@ EntryComments = React.createClass
     </div>
 
   renderLoadMore: ->
-    if @state.totalCount > @state.comments.length
+    if @props.commentsCount > @props.comments.length
       <CommentsLoadMore
-          totalCount={ @state.totalCount }
-          loadedCount={ @state.comments.length }
+          totalCount={ @props.commentsCount }
+          loadedCount={ @props.comments.length }
+          loading={ @props.loading }
           limit={ @props.limit }
-          loading={ @isLoadingState() }
-          onClick={ @loadMoreComments } />
+          onCommentsLoadMore={ @props.onCommentsLoadMore } />
 
   renderCommentList: ->
-    if @state.comments.length
+    if @props.comments.length
       <CommentList
-          flux={ @props.flux }
-          comments={ @state.comments }
-          entry={ @props.entry } />
+          comments={ @props.comments }
+          entry={ @props.entry }
+          onCommentEdit={ @props.onCommentEdit }
+          onCommentDelete={ @props.onCommentDelete }
+          onCommentReport={ @props.onCommentReport } />
 
   renderCommentForm: ->
     if @props.user?
       <CommentCreateForm
           entryId={ @props.entry.id }
-          flux={ @props.flux } />
-
-  isLoadingState: -> @state.currentState is LOADING_STATE
-
-  activateShowState:    -> @safeUpdateState(currentState: SHOW_STATE)
-  activateLoadingState: -> @safeUpdateState(currentState: LOADING_STATE)
-  activateErrorState:   -> @safeUpdateState(currentState: ERROR_STATE)
+          loading={ @props.loading }
+          onCommentCreate={ @props.onCommentCreate } />
 
 module.exports = EntryComments

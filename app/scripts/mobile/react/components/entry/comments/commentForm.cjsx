@@ -10,9 +10,12 @@ CommentForm = React.createClass
     text:        PropTypes.string
     buttonTitle: PropTypes.string.isRequired
     placeholder: PropTypes.string.isRequired
-    disabled:    PropTypes.bool.isRequired
+    disabled:    PropTypes.bool
     onSubmit:    React.PropTypes.func.isRequired
     onCancel:    React.PropTypes.func
+
+  getDefaultProps: ->
+    disabled: false
 
   render: ->
     <form className="comment-form">
@@ -44,7 +47,7 @@ CommentForm = React.createClass
 
   handleSubmit: (e) ->
     e.preventDefault()
-    value = @refs.textField.getDOMNode().value
+    value = @refs.textField.getDOMNode().value.trim()
 
     @props.onSubmit(value) unless @props.disabled
 

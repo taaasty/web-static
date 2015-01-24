@@ -1,57 +1,39 @@
-Fluxxor           = require 'fluxxor'
-CommentsStore     = require '../../stores/comments'
-CommentsActions   = require '../../actions/comments'
 EntryFeedMeta     = require './feed/meta'
 EntryComments     = require './comments/comments'
 EntryContent      = require './content/content'
 CurrentUserStore  = require '../../stores/currentUser'
 ConnectStoreMixin = require '../../../../shared/react/mixins/connectStore'
+ComponentMixin    = require '../../mixins/component'
+EntryMixin        = require './mixins/entry'
 { PropTypes } = React
-
-TEXT_TYPE  = 'text'
-IMAGE_TYPE = 'image'
-VIDEO_TYPE = 'video'
-QUOTE_TYPE = 'quote'
 
 EntryFeed = React.createClass
   displayName: 'EntryFeed'
-  mixins: [ConnectStoreMixin(CurrentUserStore)]
+  mixins: [ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin]
 
   propTypes:
-    entry: PropTypes.object.isRequired
-
-  componentWillMount: ->
-    actions = CommentsActions
-    stores  = CommentsStore: new CommentsStore()
-
-    @flux = new Fluxxor.Flux stores, actions
-
-  componentWillUnmount: ->
-    @flux = null
+    entry:       PropTypes.object.isRequired
+    loadPerTime: PropTypes.number
 
   render: ->
     <div className={ @getEntryClasses() }>
       <EntryContent entry={ @props.entry } />
       <EntryFeedMeta
-          flux={ @flux }
-          entry={ @props.entry } />
-      <EntryComments
-          flux={ @flux }
           entry={ @props.entry }
-          commentsInfo={ @props.entry.comments_info }
-          user={ @state.user } />
+          commentsCount={ @state.commentsCount } />
+      <EntryComments
+          user={ @state.user }
+          entry={ @props.entry }
+          comments={ @state.comments }
+          commentsCount={ @state.commentsCount }
+          loading={ @isLoadingState() }
+          loadPerTime={ @props.loadPerTime }
+          onCommentsLoadMore={ @loadMoreComments }
+          onCommentCreate={ @createComment }
+          onCommentEdit={ @editComment }
+          onCommentDelete={ @deleteComment }
+          onCommentReport={ @reportComment } />
     </div>
-
-  getEntryClasses: ->
-    # Small hack, depends on layout
-    typeClass = switch @props.entry.type
-      when TEXT_TYPE  then 'text'
-      when IMAGE_TYPE then 'image'
-      when VIDEO_TYPE then 'video'
-      when QUOTE_TYPE then 'quote'
-      else 'text'
-
-    'post post--' + typeClass
 
   getStateFromStore: ->
     user: CurrentUserStore.getUser()
