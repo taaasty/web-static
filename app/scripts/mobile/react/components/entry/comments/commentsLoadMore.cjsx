@@ -7,11 +7,11 @@ CommentsLoadMore = React.createClass
   displayName: 'CommentsLoadMore'
 
   propTypes:
-    totalCount:  PropTypes.number.isRequired
-    loadedCount: PropTypes.number
-    limit:       PropTypes.number
-    loading:     PropTypes.bool.isRequired
-    onClick:     PropTypes.func.isRequired
+    totalCount:         PropTypes.number.isRequired
+    loadedCount:        PropTypes.number
+    limit:              PropTypes.number
+    loading:            PropTypes.bool.isRequired
+    onCommentsLoadMore: PropTypes.func.isRequired
 
   render: ->
     <div className="comments__more">
@@ -26,7 +26,7 @@ CommentsLoadMore = React.createClass
     else
       <CommentsLoadMoreButton
           title={ @getTitle() }
-          onClick={ @props.onClick } />
+          onClick={ @props.onCommentsLoadMore } />
 
   getTitle: ->
     remainingCount      = @props.totalCount - @props.loadedCount

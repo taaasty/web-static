@@ -3,8 +3,6 @@ EntryViewActions = require '../../../actions/view/entry'
 ComponentMixin   = require '../../../mixins/component'
 { PropTypes } = React
 
-#FIXME: Quantity of votes from EntryStore via props, instead of direct setState
-
 EntryMetaVoting = React.createClass
   displayName: 'EntryMetaVoting'
   mixins: [ComponentMixin]

@@ -10,10 +10,11 @@ CommentActionsDropdownMenu = React.createClass
   mixins: [DropdownMenuMixin]
 
   propTypes:
-    flux:        PropTypes.object.isRequired
-    entry:       PropTypes.object.isRequired
-    comment:     PropTypes.object.isRequired
-    onEditStart: PropTypes.func.isRequired
+    entry:           PropTypes.object.isRequired
+    comment:         PropTypes.object.isRequired
+    onEditStart:     PropTypes.func.isRequired
+    onCommentDelete: PropTypes.func.isRequired
+    onCommentReport: PropTypes.func.isRequired
 
   render: ->
     <div className={ @getPopupClasses('comment__dropdown-popup') }>
@@ -28,8 +29,8 @@ CommentActionsDropdownMenu = React.createClass
 
     if @props.comment.can_report
       reportItem = <CommentActionsDropdownMenuReportItem
-                       flux={ @props.flux }
                        commentId={ @props.comment.id }
+                       onCommentReport={ @props.onCommentReport }
                        key="report" />
 
     if @props.comment.can_edit
@@ -39,9 +40,8 @@ CommentActionsDropdownMenu = React.createClass
 
     if @props.comment.can_delete
       deleteItem = <CommentActionsDropdownMenuDeleteItem
-                       flux={ @props.flux }
-                       entryId={ @props.entry.id }
                        commentId={ @props.comment.id }
+                       onCommentDelete={ @props.onCommentDelete }
                        key="delete" />
 
     return <ul className="comment__dropdown-popup-list">

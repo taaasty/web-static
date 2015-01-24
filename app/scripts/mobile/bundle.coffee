@@ -27,6 +27,6 @@ window.FeedFriendsPage = require './react/pages/feedFriends'
 
 require './react/stores/currentUser'
 require './react/stores/relationships'
-require './react/stores/comments'
+require './react/stores/feed'
 
 ReactApp.start()

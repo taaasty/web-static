@@ -1,5 +1,3 @@
-Fluxxor   = require 'fluxxor'
-FluxMixin = Fluxxor.FluxMixin(React)
 { PropTypes } = React
 
 #TODO: i18n
@@ -8,11 +6,10 @@ CONFIRM_MESSAGE = 'Вы действительно хотите пожалова
 
 CommentActionsDropdownMenuReportItem = React.createClass
   displayName: 'CommentActionsDropdownMenuReportItem'
-  mixins: [FluxMixin]
 
   propTypes:
-    flux:      PropTypes.object.isRequired
-    commentId: PropTypes.number.isRequired
+    commentId:       PropTypes.number.isRequired
+    onCommentReport: PropTypes.func.isRequired
 
   render: ->
     <li className="comment__dropdown-popup-item"
@@ -25,7 +22,7 @@ CommentActionsDropdownMenuReportItem = React.createClass
     </li>
 
   report: ->
-    @getFlux().actions.reportComment @props.commentId
+    @props.onCommentReport @props.commentId
 
   handleClick: ->
     @report() if confirm CONFIRM_MESSAGE

@@ -5,16 +5,20 @@ CommentList = React.createClass
   displayName: 'CommentList'
 
   propTypes:
-    flux:     PropTypes.object.isRequired
-    comments: PropTypes.array.isRequired
-    entry:    PropTypes.object.isRequired
+    entry:           PropTypes.object.isRequired
+    comments:        PropTypes.array.isRequired
+    onCommentEdit:   PropTypes.func.isRequired
+    onCommentDelete: PropTypes.func.isRequired
+    onCommentReport: PropTypes.func.isRequired
 
   render: ->
     commentList = @props.comments.map (comment) =>
       <CommentManager
-          flux={ @props.flux }
-          comment={ comment }
           entry={ @props.entry }
+          comment={ comment }
+          onCommentEdit={ @props.onCommentEdit }
+          onCommentDelete={ @props.onCommentDelete }
+          onCommentReport={ @props.onCommentReport }
           key={ comment.id } />
 
     return <div className="comments__list">

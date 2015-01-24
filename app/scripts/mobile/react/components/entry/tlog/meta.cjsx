@@ -7,15 +7,14 @@ EntryTlogMeta = React.createClass
   displayName: 'EntryTlogMeta'
 
   propTypes:
-    entry: PropTypes.object.isRequired
+    entry:         PropTypes.object.isRequired
+    commentsCount: PropTypes.number.isRequired
 
   render: ->
     <div className="post__meta">
       <EntryMetaActions entry={ @props.entry } />
       { @renderVoting() }
-      <EntryMetaComments
-          flux={ @props.flux }
-          commentsCount={ @props.entry.comments_count } />
+      <EntryMetaComments commentsCount={ @props.commentsCount } />
     </div>
 
   renderVoting: ->

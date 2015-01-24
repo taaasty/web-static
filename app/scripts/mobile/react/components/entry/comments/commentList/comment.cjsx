@@ -8,10 +8,11 @@ Comment = React.createClass
   displayName: 'Comment'
 
   propTypes:
-    flux:        PropTypes.object.isRequired
-    comment:     PropTypes.object.isRequired
-    entry:       PropTypes.object.isRequired
-    onEditStart: PropTypes.func.isRequired
+    entry:           PropTypes.object.isRequired
+    comment:         PropTypes.object.isRequired
+    onEditStart:     PropTypes.func.isRequired
+    onCommentDelete: PropTypes.func.isRequired
+    onCommentReport: PropTypes.func.isRequired
 
   render: ->
     <div className="comment">
