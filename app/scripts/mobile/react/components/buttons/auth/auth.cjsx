@@ -1,7 +1,6 @@
 ScreenController = require '../../../controllers/screen'
 
-#TODO: i18n
-TEXT = 'Войти'
+TEXT = -> t 'signin_button'
 
 AuthButton = React.createClass
   displayName: 'AuthButton'
@@ -9,7 +8,7 @@ AuthButton = React.createClass
   render: ->
     <button className="auth-button"
             onClick={ @handleClick }>
-      { TEXT }
+      { TEXT() }
     </button>
 
   handleClick: ->

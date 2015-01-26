@@ -15,17 +15,16 @@ IGNORED_STATUS   = 'ignored'
 GUESSED_STATUS   = 'guessed'
 NONE_STATUS      = 'none'
 
-#TODO: i18n
-ERROR_TITLE          = 'Ошибка'
-PROCESS_TITLE        = 'В процессе..'
-SUBSCRIBE_TITLE      = 'Подписаться'
-UNSUBSCRIBE_TITLE    = 'Отписаться'
-CANCEL_REQUEST_TITLE = 'Отменить запрос'
-UNBLOCK_TITLE        = 'Разблокировать'
-SEND_REQUEST_TITLE   = 'Отправить запрос'
-SUBSCRIBED_TITLE     = 'Подписан'
-REQUESTED_TITLE      = 'Ждём одобрения'
-IGNORED_TITLE        = 'Заблокирован'
+ERROR_TITLE          = -> t 'follow_button_error'
+PROCESS_TITLE        = -> t 'follow_button_process'
+SUBSCRIBE_TITLE      = -> t 'follow_button_subscribe'
+UNSUBSCRIBE_TITLE    = -> t 'follow_button_unsubscribe'
+CANCEL_REQUEST_TITLE = -> t 'follow_button_cancel'
+UNBLOCK_TITLE        = -> t 'follow_button_unblock'
+SEND_REQUEST_TITLE   = -> t 'follow_button_send_request'
+SUBSCRIBED_TITLE     = -> t 'follow_button_subscribed'
+REQUESTED_TITLE      = -> t 'follow_button_requested'
+IGNORED_TITLE        = -> t 'follow_button_ignored'
 
 FollowButton = React.createClass
   displayName: 'FollowButton'
@@ -64,15 +63,15 @@ FollowButton = React.createClass
 
   getTitle: ->
     switch @state.currentState
-      when ERROR_STATE   then return ERROR_TITLE
-      when PROCESS_STATE then return PROCESS_TITLE
+      when ERROR_STATE   then return ERROR_TITLE()
+      when PROCESS_STATE then return PROCESS_TITLE()
 
     switch @state.status
-      when FRIEND_STATUS    then SUBSCRIBED_TITLE
-      when REQUESTED_STATUS then REQUESTED_TITLE
-      when IGNORED_STATUS   then IGNORED_TITLE
+      when FRIEND_STATUS    then SUBSCRIBED_TITLE()
+      when REQUESTED_STATUS then REQUESTED_TITLE()
+      when IGNORED_STATUS   then IGNORED_TITLE()
       when GUESSED_STATUS, NONE_STATUS
-        if @isTlogPrivate() then SEND_REQUEST_TITLE else SUBSCRIBE_TITLE
+        if @isTlogPrivate() then SEND_REQUEST_TITLE() else SUBSCRIBE_TITLE()
       else console.warn 'Unknown follow status of FollowButton component', @state.status
 
   handleClick: ->

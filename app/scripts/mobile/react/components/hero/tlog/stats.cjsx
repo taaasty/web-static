@@ -1,6 +1,10 @@
 HeroTlogStatsItem = require './stats/item'
-{ declension } = require '../../../../../shared/helpers/grammar'
 { PropTypes }  = React
+
+STATS_ENTRIES_COUNT    = (count) -> t 'stats_entries_count', count
+STATS_FOLLOWINGS_COUNT = (count) -> t 'stats_followings_count', count
+STATS_FOLLOWERS_COUNT  = (count) -> t 'stats_followers_count', count
+STATS_DAYS_COUNT       = (count) -> t 'stats_days_count', count
 
 HeroTlogStats = React.createClass
   displayName: 'HeroTlogStats'
@@ -47,10 +51,10 @@ HeroTlogStats = React.createClass
 
   getTitle: (type) ->
     switch type
-      when 'entries'    then declension(@props.stats.entries_count, ['пост', 'поста', 'постов'])
-      when 'followings' then declension(@props.stats.followings_count, ['подписка', 'подписки', 'подписок'])
-      when 'followers'  then declension(@props.stats.followers_count, ['подписчик', 'подписчика', 'подписчиков'])
-      when 'days'       then declension(@props.stats.days_count, ['день', 'дня', 'дней']) + ' на тейсти'
+      when 'entries'    then STATS_ENTRIES_COUNT @props.stats.entries_count
+      when 'followings' then STATS_FOLLOWINGS_COUNT @props.stats.followings_count
+      when 'followers'  then STATS_FOLLOWERS_COUNT @props.stats.followers_count
+      when 'days'       then STATS_DAYS_COUNT @props.stats.days_count
       else console.warn 'Unknown type of stats of HeroTlogStats component', type
 
 module.exports = HeroTlogStats

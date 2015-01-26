@@ -1,5 +1,4 @@
-#TODO: i18n
-BUTTON_TEXT = 'Войти с помощью Facebook'
+BUTTON_TEXT = -> t 'facebook_signin_button'
 
 AuthFacebookButton = React.createClass
   displayName: 'AuthFacebookButton'
@@ -7,7 +6,7 @@ AuthFacebookButton = React.createClass
   render: ->
     <button className="fb-auth-button"
             onClick={ @handleClick }>
-      { BUTTON_TEXT }
+      { BUTTON_TEXT() }
     </button>
 
   handleClick: ->

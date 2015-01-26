@@ -7,7 +7,6 @@
     "bootstrap": "~3.2.0",
     "bowser": "~0.7.2",
     "eventEmitter": "~4.2.9",
-    "i18next": "~1.7.3",
     "jquery": "~2.1.1",
     "jquery-autosize": "~1.18.13",
     "jquery-waypoints": "~2.0.5",

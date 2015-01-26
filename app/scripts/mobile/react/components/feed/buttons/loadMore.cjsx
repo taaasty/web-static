@@ -1,7 +1,6 @@
 { PropTypes } = React
 
-#TODO: i18n
-TEXT = 'Загрузить еще'
+TEXT = -> t 'feed_load_more_button'
 
 FeedLoadMoreButton = React.createClass
   displayName: 'FeedLoadMoreButton'
@@ -12,7 +11,7 @@ FeedLoadMoreButton = React.createClass
   render: ->
     <button className="load-more-button"
             onClick={ @props.onClick }>
-      { TEXT }
+      { TEXT() }
     </button>
 
 module.exports = FeedLoadMoreButton

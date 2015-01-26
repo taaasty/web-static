@@ -42,6 +42,11 @@ deleteRequest = (url, data) -> request 'DELETE', url, data
 
 Api =
 
+  locales:
+    load: (locale) ->
+      url = TastySettings.localesPath + '/' + locale + '.json'
+      getRequest url
+
   relationship:
     follow: (userId) ->
       url = ApiRoutes.change_my_relationship_url userId, 'follow'

@@ -1,8 +1,7 @@
 Api              = require '../../api/api'
 NotifyController = require '../../controllers/notify'
 
-#TODO: i18n
-RECOVERY_MAIL_SENT_MESSAGE = 'Вам на почту отправлена ссылка для восстановления пароля'
+RECOVERY_MAIL_SENT_MESSAGE = -> t 'recovery_mail_sent'
 
 SessionsViewActions =
 
@@ -25,7 +24,7 @@ SessionsViewActions =
   recover: (login) ->
     Api.sessions.recover login
       .then ->
-        NotifyController.notifySuccess RECOVERY_MAIL_SENT_MESSAGE
+        NotifyController.notifySuccess RECOVERY_MAIL_SENT_MESSAGE()
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 

@@ -1,5 +1,4 @@
-#TODO: i18n
-MESSAGE = 'Нет публикаций за эту дату.'
+MESSAGE = -> t 'daylog_empty_page'
 
 DaylogEmptyPageMessage = React.createClass
   displayName: 'DaylogEmptyPageMessage'
@@ -9,7 +8,7 @@ DaylogEmptyPageMessage = React.createClass
       <div className="post__content">
         <div className="post__header">
           <h1 className="post__title">
-            { MESSAGE }
+            { MESSAGE() }
           </h1>
         </div>
       </div>
