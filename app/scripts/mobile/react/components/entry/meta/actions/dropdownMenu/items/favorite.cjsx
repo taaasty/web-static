@@ -1,10 +1,9 @@
-i18n             = require 'i18next'
 cx               = require 'react/lib/cx'
 EntryViewActions = require '../../../../../../actions/view/entry'
 { PropTypes } = React
 
-ADD_TO_FAVORITES_TITLE      = -> i18n.t 'add_to_favorites_entry_item'
-REMOVE_FROM_FAVORITES_TITLE = -> i18n.t 'remove_from_favorites_entry_item'
+ADD_TO_FAVORITES_TITLE      = -> t 'add_to_favorites_entry_item'
+REMOVE_FROM_FAVORITES_TITLE = -> t 'remove_from_favorites_entry_item'
 
 EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass
   displayName: 'EntryMetaActions_DropdownMenu_FavoriteItem'

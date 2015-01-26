@@ -1,7 +1,6 @@
-i18n             = require 'i18next'
 ScreenController = require '../../../controllers/screen'
 
-TEXT = -> i18n.t 'remembered_password_link'
+TEXT = -> t 'remembered_password_link'
 
 AuthRememberedPasswordLink = React.createClass
   displayName: 'AuthRememberedPasswordLink'

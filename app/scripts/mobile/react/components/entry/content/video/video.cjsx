@@ -1,7 +1,6 @@
-i18n = require 'i18next'
 { PropTypes } = React
 
-MEDIA_NOT_FOUND_MESSAGE = -> i18n.t 'empty_video_entry'
+MEDIA_NOT_FOUND_MESSAGE = -> t 'empty_video_entry'
 
 VideoEntryContent = React.createClass
   displayName: 'VideoEntryContent'

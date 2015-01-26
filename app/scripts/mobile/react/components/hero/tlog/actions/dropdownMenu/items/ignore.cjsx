@@ -1,8 +1,7 @@
-i18n                    = require 'i18next'
 RelationshipViewActions = require '../../../../../../actions/view/relationship'
 { PropTypes } = React
 
-TITLE = -> i18n.t 'ignore_tlog_item'
+TITLE = -> t 'ignore_tlog_item'
 
 HeroTlogActions_DropdownMenuIgnoreItem = React.createClass
   displayName: 'HeroTlogActions_DropdownMenuIgnoreItem'

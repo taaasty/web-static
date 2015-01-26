@@ -1,6 +1,4 @@
-i18n = require 'i18next'
-
-BUTTON_TEXT = -> i18n.t 'facebook_signin_button'
+BUTTON_TEXT = -> t 'facebook_signin_button'
 
 AuthFacebookButton = React.createClass
   displayName: 'AuthFacebookButton'

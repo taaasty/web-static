@@ -1,8 +1,7 @@
-i18n                           = require 'i18next'
 HeroTlogActions_SettingsButton = require './buttons/settings'
 { PropTypes } = React
 
-BUTTON_TITLE = -> i18n.t 'current_user_button'
+BUTTON_TITLE = -> t 'current_user_button'
 
 HeroTlogActions_CurrentUser = React.createClass
   displayName: 'HeroTlogActions_CurrentUser'

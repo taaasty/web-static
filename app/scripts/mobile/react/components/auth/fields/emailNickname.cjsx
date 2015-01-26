@@ -1,6 +1,4 @@
-i18n = require 'i18next'
-
-INPUT_PLACEHOLDER_TEXT = -> i18n.t 'nickname_field_placeholder'
+INPUT_PLACEHOLDER_TEXT = -> t 'nickname_field_placeholder'
 
 AuthEmailNicknameField = React.createClass
   displayName: 'AuthEmailNicknameField'

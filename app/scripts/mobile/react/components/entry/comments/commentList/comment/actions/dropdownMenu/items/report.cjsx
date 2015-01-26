@@ -1,8 +1,7 @@
-i18n = require 'i18next'
 { PropTypes } = React
 
-LINK_TEXT       = -> i18n.t 'report_comment_item'
-CONFIRM_MESSAGE = -> i18n.t 'report_comment_confirm'
+LINK_TEXT       = -> t 'report_comment_item'
+CONFIRM_MESSAGE = -> t 'report_comment_confirm'
 
 CommentActionsDropdownMenuReportItem = React.createClass
   displayName: 'CommentActionsDropdownMenuReportItem'

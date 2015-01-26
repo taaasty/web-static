@@ -1,7 +1,6 @@
-i18n = require 'i18next'
 { PropTypes } = React
 
-CANCEL_BUTTON_TITLE = -> i18n.t 'edit_comment_cancel_button'
+CANCEL_BUTTON_TITLE = -> t 'edit_comment_cancel_button'
 
 CommentForm = React.createClass
   displayName: 'CommentForm'

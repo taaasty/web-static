@@ -1,9 +1,8 @@
-i18n             = require 'i18next'
 EntryViewActions = require '../../../../../../actions/view/entry'
 { PropTypes } = React
 
-START_WATCH_TITLE = -> i18n.t 'start_watch_entry_item'
-STOP_WATCH_TITLE  = -> i18n.t 'stop_watch_entry_item'
+START_WATCH_TITLE = -> t 'start_watch_entry_item'
+STOP_WATCH_TITLE  = -> t 'stop_watch_entry_item'
 
 EntryMetaActions_DropdownMenu_WatchItem = React.createClass
   displayName: 'EntryMetaActions_DropdownMenu_WatchItem'

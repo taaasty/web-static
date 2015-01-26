@@ -1,8 +1,7 @@
-i18n              = require 'i18next'
 ScreenController  = require '../../../controllers/screen'
 AuthEmailRecovery = require '../authEmailRecovery'
 
-TEXT = -> i18n.t 'forgot_password_link'
+TEXT = -> t 'forgot_password_link'
 
 AuthForgotPasswordLink = React.createClass
   displayName: 'AuthForgotPasswordLink'

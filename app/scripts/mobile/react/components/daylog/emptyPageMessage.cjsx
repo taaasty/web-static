@@ -1,6 +1,4 @@
-i18n = require 'i18next'
-
-MESSAGE = -> i18n.t 'daylog_empty_page'
+MESSAGE = -> t 'daylog_empty_page'
 
 DaylogEmptyPageMessage = React.createClass
   displayName: 'DaylogEmptyPageMessage'

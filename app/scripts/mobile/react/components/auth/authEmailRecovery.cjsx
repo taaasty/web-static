@@ -1,4 +1,3 @@
-i18n                       = require 'i18next'
 ScreenController           = require '../../controllers/screen'
 NotifyController           = require '../../controllers/notify'
 SessionsViewActions        = require '../../actions/view/sessions'
@@ -7,8 +6,8 @@ AuthEmailLoginField        = require './fields/emailLogin'
 AuthEmailResetButton       = require './buttons/emailReset'
 AuthRememberedPasswordLink = require './links/rememberedPassword'
 
-HEADER_TITLE      = -> i18n.t 'email_recovery_header_title'
-EMPTY_LOGIN_ERROR = -> i18n.t 'empty_login_error'
+HEADER_TITLE      = -> t 'email_recovery_header_title'
+EMPTY_LOGIN_ERROR = -> t 'empty_login_error'
 
 AuthEmailRecovery = React.createClass
   displayName: 'AuthEmailRecovery'

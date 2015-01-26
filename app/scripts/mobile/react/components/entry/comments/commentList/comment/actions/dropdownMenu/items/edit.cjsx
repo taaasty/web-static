@@ -1,7 +1,6 @@
-i18n = require 'i18next'
 { PropTypes } = React
 
-LINK_TEXT = -> i18n.t 'edit_comment_item'
+LINK_TEXT = -> t 'edit_comment_item'
 
 CommentActionsDropdownMenuEditItem = React.createClass
   displayName: 'CommentActionsDropdownMenuEditItem'

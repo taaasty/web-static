@@ -1,10 +1,9 @@
-i18n                  = require 'i18next'
 AuthVkontakteButton   = require './buttons/vkontakte'
 AuthFacebookButton    = require './buttons/facebook'
 AuthEmailSignInButton = require './buttons/emailSignIn'
 AuthEmailSignUpButton = require './buttons/emailSignUp'
 
-TITLE = -> i18n.t 'auth'
+TITLE = -> t 'auth'
 
 #FIXME: Remove from global when implement react-router
 window.Auth = React.createClass

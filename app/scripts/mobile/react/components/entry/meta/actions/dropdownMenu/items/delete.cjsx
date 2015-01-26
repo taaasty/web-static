@@ -1,9 +1,8 @@
-i18n             = require 'i18next'
 EntryViewActions = require '../../../../../../actions/view/entry'
 { PropTypes } = React
 
-TITLE           = -> i18n.t 'delete_entry_item'
-CONFIRM_MESSAGE = -> i18n.t 'delete_entry_confirm'
+TITLE           = -> t 'delete_entry_item'
+CONFIRM_MESSAGE = -> t 'delete_entry_confirm'
 
 EntryMetaActions_DropdownMenu_DeleteItem = React.createClass
   displayName: 'EntryMetaActions_DropdownMenu_DeleteItem'

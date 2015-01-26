@@ -1,10 +1,9 @@
-i18n           = require 'i18next'
 CommentForm    = require '../commentForm'
 ComponentMixin = require '../../../../mixins/component'
 { PropTypes } = React
 
-BUTTON_TITLE      = -> i18n.t 'create_comment_button'
-FIELD_PLACEHOLDER = -> i18n.t 'create_comment_placeholder'
+BUTTON_TITLE      = -> t 'create_comment_button'
+FIELD_PLACEHOLDER = -> t 'create_comment_placeholder'
 
 CommentCreateForm = React.createClass
   displayName: 'CommentCreateForm'

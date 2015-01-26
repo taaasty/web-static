@@ -1,10 +1,9 @@
-i18n                   = require 'i18next'
 Spinner                = require '../../common/spinner/spinner'
 CommentsLoadMoreButton = require './buttons/loadMore'
 { PropTypes }  = React
 
-LOAD_MORE_COMMENTS           = (count) -> i18n.t "load_more_comments", {count}
-LOAD_MORE_COMMENTS_REMAINING = (count) -> i18n.t "load_more_comments_remaining", {count}
+LOAD_MORE_COMMENTS           = (count) -> t 'load_more_comments', count
+LOAD_MORE_COMMENTS_REMAINING = (count) -> t 'load_more_comments_remaining', count
 
 CommentsLoadMore = React.createClass
   displayName: 'CommentsLoadMore'

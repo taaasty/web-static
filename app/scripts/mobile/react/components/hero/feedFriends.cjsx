@@ -1,8 +1,7 @@
-i18n     = require 'i18next'
 HeroFeed = require './feed'
 { PropTypes } = React
 
-HERO_TITLE = -> i18n.t 'feed_friends'
+HERO_TITLE = -> t 'feed_friends'
 
 HeroFeedFriends = React.createClass
   displayName: 'HeroFeedFriends'

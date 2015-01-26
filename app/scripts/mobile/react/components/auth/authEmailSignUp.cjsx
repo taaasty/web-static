@@ -1,4 +1,3 @@
-i18n                      = require 'i18next'
 NotifyController          = require '../../controllers/notify'
 SessionsViewActions       = require '../../actions/view/sessions'
 ComponentMixin            = require '../../mixins/component'
@@ -8,9 +7,9 @@ AuthEmailNicknameField    = require './fields/emailNickname'
 AuthEmailSubmitButton     = require './buttons/emailSubmit'
 AuthAlreadyRegisteredLink = require './links/alreadyRegistered'
 
-HEADER_TITLE         = -> i18n.t 'email_signup_header'
-EMPTY_EMAIL_ERROR    = -> i18n.t 'empty_email_error'
-EMPTY_PASSWORD_ERROR = -> i18n.t 'empty_password_error'
+HEADER_TITLE         = -> t 'email_signup_header'
+EMPTY_EMAIL_ERROR    = -> t 'empty_email_error'
+EMPTY_PASSWORD_ERROR = -> t 'empty_password_error'
 
 #FIXME: Remove from global when implement react-router
 window.AuthEmailSignUp = React.createClass

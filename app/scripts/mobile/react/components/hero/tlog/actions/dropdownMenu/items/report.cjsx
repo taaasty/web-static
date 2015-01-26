@@ -1,8 +1,7 @@
-i18n                    = require 'i18next'
 RelationshipViewActions = require '../../../../../../actions/view/relationship'
 { PropTypes } = React
 
-TITLE = -> i18n.t 'report_tlog_item'
+TITLE = -> t 'report_tlog_item'
 
 HeroTlogActions_DropdownMenuReportItem = React.createClass
   displayName: 'HeroTlogActions_DropdownMenuReportItem'

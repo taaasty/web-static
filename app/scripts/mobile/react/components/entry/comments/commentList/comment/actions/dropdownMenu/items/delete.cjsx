@@ -1,8 +1,7 @@
-i18n = require 'i18next'
 { PropTypes } = React
 
-LINK_TEXT       = -> i18n.t 'delete_comment_item'
-CONFIRM_MESSAGE = -> i18n.t 'delete_comment_confirm'
+LINK_TEXT       = -> t 'delete_comment_item'
+CONFIRM_MESSAGE = -> t 'delete_comment_confirm'
 
 CommentActionsDropdownMenuDeleteItem = React.createClass
   displayName: 'CommentActionsDropdownMenuDeleteItem'
