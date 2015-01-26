@@ -10972,9 +10972,11 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({
 
 
 },{}],54:[function(require,module,exports){
-var REPLIES_LIMIT;
+var CLASS_HIDDEN, REPLIES_LIMIT;
 
 REPLIES_LIMIT = 5;
+
+CLASS_HIDDEN = 'state--hidden';
 
 window.EntryCommentBox_CommentForm = React.createClass({
   propTypes: {
@@ -10990,10 +10992,12 @@ window.EntryCommentBox_CommentForm = React.createClass({
     };
   },
   componentDidMount: function() {
-    return this._initAutosize();
+    this._initAutosize();
+    return this.$commentFormSubmit = $(this.refs.commentFormSubmit.getDOMNode());
   },
   componentDidUpdate: function() {
-    return this.$commentFormField.trigger('autosize.resize');
+    this.$commentFormField.trigger('autosize.resize');
+    return this.$commentFormSubmit.toggleClass(CLASS_HIDDEN, this.isEmptyField());
   },
   componentWillUnmount: function() {
     return this.$commentFormField.trigger('autosize.destroy');
@@ -11020,20 +11024,25 @@ window.EntryCommentBox_CommentForm = React.createClass({
       "className": "comment-form__table-cell"
     }, React.createElement("form", null, React.createElement("span", {
       "className": "comment-form__avatar"
-    }, avatar), React.createElement("span", {
-      "className": "comment-form__field"
-    }, React.createElement("button", {
+    }, avatar), React.createElement("button", {
+      "ref": "commentFormSubmit",
       "className": "comment-form__submit",
-      "onSubmit": this.onSubmit
-    }, "Ok"), React.createElement("textarea", {
+      "onClick": this.onSubmit
+    }, "Ok"), React.createElement("span", {
+      "className": "comment-form__field"
+    }, React.createElement("textarea", {
       "ref": "commentFormField",
       "placeholder": "Комментарий. SHIFT + ENTER новая строка",
       "defaultValue": this.props.text,
       "disabled": this.props.isLoading,
       "className": "comment-form__field-textarea",
       "onFocus": this.onFocus,
+      "onBlur": this.onBlur,
       "onKeyDown": this.onKeyDown
     }))))));
+  },
+  isEmptyField: function() {
+    return this.$commentFormField.val().trim() === '';
   },
   addReply: function(name) {
     var newText, postfix, replies;
@@ -11076,10 +11085,14 @@ window.EntryCommentBox_CommentForm = React.createClass({
     var valueLength;
     valueLength = this.$commentFormField.val().length;
     if (this.$commentFormField.get(0).setSelectionRange !== void 0) {
-      return this.$commentFormField.get(0).setSelectionRange(valueLength, valueLength);
+      this.$commentFormField.get(0).setSelectionRange(valueLength, valueLength);
     } else {
-      return this.$commentFormField.val(this.$commentFormField.val());
+      this.$commentFormField.val(this.$commentFormField.val());
     }
+    return this.$commentFormSubmit.removeClass(CLASS_HIDDEN);
+  },
+  onBlur: function() {
+    return this.$commentFormSubmit.toggleClass(CLASS_HIDDEN, this.isEmptyField());
   },
   onKeyDown: function(e) {
     if (e.which === 13 && this.$commentFormField.val().match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey) {
@@ -11090,7 +11103,8 @@ window.EntryCommentBox_CommentForm = React.createClass({
       return this.props.onCancel();
     }
   },
-  onSubmit: function() {
+  onSubmit: function(e) {
+    e.preventDefault();
     return this._submitComment();
   },
   _initAutosize: function() {

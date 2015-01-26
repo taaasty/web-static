@@ -1,5 +1,7 @@
 REPLIES_LIMIT = 5
 
+CLASS_HIDDEN = 'state--hidden'
+
 window.EntryCommentBox_CommentForm = React.createClass
 
   propTypes:
@@ -12,9 +14,13 @@ window.EntryCommentBox_CommentForm = React.createClass
   getDefaultProps: ->
     disabled: false
 
-  componentDidMount: -> @_initAutosize()
+  componentDidMount: ->
+    @_initAutosize()
+    @$commentFormSubmit = $( @refs.commentFormSubmit.getDOMNode() )
 
-  componentDidUpdate: -> @$commentFormField.trigger 'autosize.resize'
+  componentDidUpdate: ->
+    @$commentFormField.trigger 'autosize.resize'
+    @$commentFormSubmit.toggleClass CLASS_HIDDEN, @isEmptyField()
 
   componentWillUnmount: -> @$commentFormField.trigger 'autosize.destroy'
 
@@ -29,21 +35,25 @@ window.EntryCommentBox_CommentForm = React.createClass
                <div className="comment-form__table-cell">
                  <form>
                    <span className="comment-form__avatar">{ avatar }</span>
+                   <button ref="commentFormSubmit"
+                           className="comment-form__submit"
+                           onClick={ this.onSubmit }>Ok</button>
                    <span className="comment-form__field">
-                     <button className="comment-form__submit"
-                             onSubmit={ this.onSubmit }>Ok</button>
                      <textarea ref="commentFormField"
                                placeholder="Комментарий. SHIFT + ENTER новая строка"
                                defaultValue={ this.props.text }
                                disabled={ this.props.isLoading }
                                className="comment-form__field-textarea"
                                onFocus={ this.onFocus }
+                               onBlur={ this.onBlur }
                                onKeyDown={ this.onKeyDown } />
                    </span>
                  </form>
                </div>
              </div>
            </div>
+
+  isEmptyField: -> @$commentFormField.val().trim() is ''
 
   addReply: (name) ->
     name    = '@' + name
@@ -81,6 +91,11 @@ window.EntryCommentBox_CommentForm = React.createClass
     else
       @$commentFormField.val @$commentFormField.val()
 
+    @$commentFormSubmit.removeClass CLASS_HIDDEN
+
+  onBlur: ->
+    @$commentFormSubmit.toggleClass CLASS_HIDDEN, @isEmptyField()
+
   onKeyDown: (e) ->
     # Нажат Enter, введёный текст содержит какие-то символы, без Shift, Ctrl и Alt
     if e.which == 13 && @$commentFormField.val().match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey
@@ -90,7 +105,8 @@ window.EntryCommentBox_CommentForm = React.createClass
     # Нажат Esc
     @props.onCancel() if e.which == 27
 
-  onSubmit: ->
+  onSubmit: (e) ->
+    e.preventDefault()
     @_submitComment()
 
   _initAutosize: ->
