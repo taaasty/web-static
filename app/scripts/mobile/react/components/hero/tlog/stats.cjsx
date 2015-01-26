@@ -1,11 +1,10 @@
-i18n              = require 'i18next'
 HeroTlogStatsItem = require './stats/item'
 { PropTypes }  = React
 
-STATS_ENTRIES_COUNT    = (count) -> i18n.t 'stats_entries_count', {count}
-STATS_FOLLOWINGS_COUNT = (count) -> i18n.t 'stats_followings_count', {count}
-STATS_FOLLOWERS_COUNT  = (count) -> i18n.t 'stats_followers_count', {count}
-STATS_DAYS_COUNT       = (count) -> i18n.t 'stats_days_count', {count}
+STATS_ENTRIES_COUNT    = (count) -> t 'stats_entries_count', count
+STATS_FOLLOWINGS_COUNT = (count) -> t 'stats_followings_count', count
+STATS_FOLLOWERS_COUNT  = (count) -> t 'stats_followers_count', count
+STATS_DAYS_COUNT       = (count) -> t 'stats_days_count', count
 
 HeroTlogStats = React.createClass
   displayName: 'HeroTlogStats'

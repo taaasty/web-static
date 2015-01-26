@@ -1,6 +1,4 @@
-i18n = require 'i18next'
-
-MESSAGE = -> i18n.t 'tlog_empty_page'
+MESSAGE = -> t 'tlog_empty_page'
 
 TlogEmptyPageMessage = React.createClass
   displayName: 'TlogEmptyPageMessage'

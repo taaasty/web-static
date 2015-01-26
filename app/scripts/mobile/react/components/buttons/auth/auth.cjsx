@@ -1,7 +1,6 @@
-i18n             = require 'i18next'
 ScreenController = require '../../../controllers/screen'
 
-TEXT = -> i18n.t 'signin_button'
+TEXT = -> t 'signin_button'
 
 AuthButton = React.createClass
   displayName: 'AuthButton'

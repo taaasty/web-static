@@ -1,7 +1,6 @@
-i18n             = require 'i18next'
 ScreenController = require '../../../controllers/screen'
 
-TEXT = -> i18n.t 'not_registered_yet_link'
+TEXT = -> t 'not_registered_yet_link'
 
 AuthNotRegisteredYetLink = React.createClass
   displayName: 'AuthNotRegisteredYetLink'

@@ -1,7 +1,6 @@
-i18n = require 'i18next'
 { PropTypes } = React
 
-TITLE = -> i18n.t 'edit_entry_item'
+TITLE = -> t 'edit_entry_item'
 
 EntryMetaActions_DropdownMenu_EditItem = React.createClass
   displayName: 'EntryMetaActions_DropdownMenu_EditItem'

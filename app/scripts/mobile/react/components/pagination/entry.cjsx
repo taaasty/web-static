@@ -1,7 +1,6 @@
-i18n = require 'i18next'
 { PropTypes } = React
 
-BUTTON_TITLE = -> i18n.t 'pagination_all_entries'
+BUTTON_TITLE = -> t 'pagination_all_entries'
 
 EntryPagination = React.createClass
   displayName: 'EntryPagination'

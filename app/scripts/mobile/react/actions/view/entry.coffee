@@ -1,12 +1,11 @@
-i18n             = require 'i18next'
 Api              = require '../../api/api'
 NotifyController = require '../../controllers/notify'
 
-REPORT_SUCCESS_MESSAGE         = -> i18n.t 'report_entry_success'
-DELETE_SUCCESS_MESSAGE         = -> i18n.t 'delete_entry_success'
-VOTE_SUCCESS_MESSAGE           = -> i18n.t 'vote_entry_success'
-COMMENT_REPORT_SUCCESS_MESSAGE = -> i18n.t 'report_comment_success'
-COMMENT_DELETE_SUCCESS_MESSAGE = -> i18n.t 'delete_comment_success'
+REPORT_SUCCESS_MESSAGE         = -> t 'report_entry_success'
+DELETE_SUCCESS_MESSAGE         = -> t 'delete_entry_success'
+VOTE_SUCCESS_MESSAGE           = -> t 'vote_entry_success'
+COMMENT_REPORT_SUCCESS_MESSAGE = -> t 'report_comment_success'
+COMMENT_DELETE_SUCCESS_MESSAGE = -> t 'delete_comment_success'
 
 EntryViewActions =
 

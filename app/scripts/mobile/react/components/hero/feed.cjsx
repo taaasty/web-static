@@ -1,7 +1,6 @@
-i18n = require 'i18next'
 { PropTypes } = React
 
-ENTRIES_COUNT = (count) -> i18n.t 'feed_entries_count', {count}
+ENTRIES_COUNT = (count) -> t 'feed_entries_count', count
 
 HeroFeed = React.createClass
   displayName: 'HeroFeed'

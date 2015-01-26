@@ -1,8 +1,7 @@
-i18n = require 'i18next'
 UnknownEntryHeader = require './header'
 { PropTypes } = React
 
-MESSAGE = -> i18n.t 'unknown_entry_type'
+MESSAGE = -> t 'unknown_entry_type'
 
 UnknownEntryContent = React.createClass
   displayName: 'UnknownEntryContent'

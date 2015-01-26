@@ -1,8 +1,7 @@
-i18n    = require 'i18next'
 Spinner = require '../../common/spinner/spinner'
 { PropTypes } = React
 
-BUTTON_TEXT = -> i18n.t 'email_submit_button'
+BUTTON_TEXT = -> t 'email_submit_button'
 
 AuthEmailSubmitButton = React.createClass
   displayName: 'AuthEmailSubmitButton'

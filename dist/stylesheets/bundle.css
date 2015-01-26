@@ -2855,7 +2855,13 @@ a.toolbar__popup-link:active {
   }
 }
 .comments {
+<<<<<<< HEAD
   margin: -11px -44px 40px 0;
+=======
+  width: 535px;
+  margin-top: -11px;
+  margin-bottom: 40px;
+>>>>>>> Mobile i18n with Polyglot.js [deliver #86283014]
   padding-left: 85px;
   font-size: 14px;
   line-height: 18px;
@@ -3080,6 +3086,7 @@ a.toolbar__popup-link:active {
 .comment-form {
   border-top: 10px solid transparent;
 }
+<<<<<<< HEAD
 .comment-form__table {
   padding-left: 0;
 }
@@ -3087,6 +3094,10 @@ a.toolbar__popup-link:active {
   padding-top: 0;
   position: relative;
   padding-left: 45px;
+=======
+.comment-form__table-cell {
+  padding-top: 0;
+>>>>>>> Mobile i18n with Polyglot.js [deliver #86283014]
 }
 .comment-form__avatar {
   /*top: 9px;*/
@@ -3099,6 +3110,7 @@ a.toolbar__popup-link:active {
   box-sizing: border-box;
   opacity: .4;
 }
+<<<<<<< HEAD
 .comment-form__submit {
   padding: 8px 10px 7px;
   position: absolute;
@@ -3112,6 +3124,8 @@ a.toolbar__popup-link:active {
   cursor: pointer;
   border-radius: 5px;
 }
+=======
+>>>>>>> Mobile i18n with Polyglot.js [deliver #86283014]
 .comment-form__field {
   padding-right: 20px;
   display: block;

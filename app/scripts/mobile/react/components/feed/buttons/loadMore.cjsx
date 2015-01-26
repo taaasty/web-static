@@ -1,7 +1,6 @@
-i18n = require 'i18next'
 { PropTypes } = React
 
-TEXT = -> i18n.t 'feed_load_more_button'
+TEXT = -> t 'feed_load_more_button'
 
 FeedLoadMoreButton = React.createClass
   displayName: 'FeedLoadMoreButton'

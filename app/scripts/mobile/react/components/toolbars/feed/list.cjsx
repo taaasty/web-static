@@ -1,12 +1,11 @@
-i18n        = require 'i18next'
 ToolbarItem = require '../_item'
 { PropTypes } = React
 
-FRIENDS_ITEM   = -> i18n.t 'feed_friends'
-LIVE_ITEM      = -> i18n.t 'feed_live'
-ANONYMOUS_ITEM = -> i18n.t 'feed_anonymous'
-BEST_ITEM      = -> i18n.t 'feed_best'
-PEOPLE_ITEM    = -> i18n.t 'feed_people'
+FRIENDS_ITEM   = -> t 'feed_friends'
+LIVE_ITEM      = -> t 'feed_live'
+ANONYMOUS_ITEM = -> t 'feed_anonymous'
+BEST_ITEM      = -> t 'feed_best'
+PEOPLE_ITEM    = -> t 'feed_people'
 
 FeedToolbarList = React.createClass
   displayName: 'FeedToolbarList'

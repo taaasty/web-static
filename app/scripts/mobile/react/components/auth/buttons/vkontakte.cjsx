@@ -1,6 +1,4 @@
-i18n = require 'i18next'
-
-BUTTON_TEXT = -> i18n.t 'vkontakte_signin_button'
+BUTTON_TEXT = -> t 'vkontakte_signin_button'
 
 AuthVkontakteButton = React.createClass
   displayName: 'AuthVkontakteButton'

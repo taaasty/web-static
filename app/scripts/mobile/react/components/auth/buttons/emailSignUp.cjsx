@@ -1,7 +1,6 @@
-i18n             = require 'i18next'
 ScreenController = require '../../../controllers/screen'
 
-BUTTON_TEXT = -> i18n.t 'email_signup_button'
+BUTTON_TEXT = -> t 'email_signup_button'
 
 AuthEmailSignUpButton = React.createClass
   displayName: 'AuthEmailSignUpButton'

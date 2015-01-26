@@ -1,9 +1,8 @@
-i18n             = require 'i18next'
 EntryViewActions = require '../../../../../../actions/view/entry'
 { PropTypes } = React
 
-TITLE           = -> i18n.t 'report_entry_item'
-CONFIRM_MESSAGE = -> i18n.t 'report_entry_confirm'
+TITLE           = -> t 'report_entry_item'
+CONFIRM_MESSAGE = -> t 'report_entry_confirm'
 
 EntryMetaActions_DropdownMenu_ReportItem = React.createClass
   displayName: 'EntryMetaActions_DropdownMenu_ReportItem'

@@ -1,8 +1,7 @@
-i18n = require 'i18next'
-cx   = require 'react/lib/cx'
+cx = require 'react/lib/cx'
 { PropTypes } = React
 
-TITLE = -> i18n.t 'pagination_prev'
+TITLE = -> t 'pagination_prev'
 
 PaginationPrev = React.createClass
   displayName: 'PaginationPrev'

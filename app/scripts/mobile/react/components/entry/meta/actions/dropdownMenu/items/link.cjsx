@@ -1,7 +1,6 @@
-i18n = require 'i18next'
 { PropTypes } = React
 
-TITLE = -> i18n.t 'link_entry_item'
+TITLE = -> t 'link_entry_item'
 
 EntryMetaActions_DropdownMenu_LinkItem = React.createClass
   displayName: 'EntryMetaActions_DropdownMenu_LinkItem'

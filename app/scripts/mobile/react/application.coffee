@@ -1,4 +1,5 @@
-i18n     = require 'i18next'
+Api      = require './api/api'
+Polyglot = require 'node-polyglot'
 ReactUjs = require 'reactUjs'
 
 window.ReactApp =
@@ -6,10 +7,12 @@ window.ReactApp =
   start: ->
     console.log 'ReactApp start'
 
-    i18n.init
-      lng: 'ru'
-      setJqueryExt: false
-      resGetPath: TastySettings.localesPath + '/__lng__.json'
-    , ->
-      #render react page only when locale loaded
-      ReactUjs.initialize()
+    Api.locales.load TastySettings.localeLang
+      .then (locale) ->
+        polyglot = new Polyglot
+          locale:  TastySettings.localeLang
+          phrases: locale
+
+        window.t = polyglot.t.bind polyglot
+
+        ReactUjs.initialize()

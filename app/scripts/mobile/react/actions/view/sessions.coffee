@@ -1,8 +1,7 @@
-i18n             = require 'i18next'
 Api              = require '../../api/api'
 NotifyController = require '../../controllers/notify'
 
-RECOVERY_MAIL_SENT_MESSAGE = -> i18n.t 'recovery_mail_sent'
+RECOVERY_MAIL_SENT_MESSAGE = -> t 'recovery_mail_sent'
 
 SessionsViewActions =
 
