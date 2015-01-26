@@ -11068,8 +11068,11 @@ window.EntryCommentBox_CommentForm = React.createClass({
       "onKeyDown": this.onKeyDown
     }))))));
   },
+  getValue: function() {
+    return this.refs.commentFormField.getDOMNode().value;
+  },
   isEmpty: function() {
-    return this.refs.commentFormField.getDOMNode().value.trim() === '';
+    return this.getValue().trim() === '';
   },
   addReply: function(name) {
     var newText, postfix, replies;
@@ -11106,7 +11109,7 @@ window.EntryCommentBox_CommentForm = React.createClass({
     return text.replace(regExp, '');
   },
   _submitComment: function() {
-    return this.props.onSubmit(this.refs.commentFormField.getDOMNode().value);
+    return this.props.onSubmit(this.getValue());
   },
   onFocus: function() {
     var valueLength;

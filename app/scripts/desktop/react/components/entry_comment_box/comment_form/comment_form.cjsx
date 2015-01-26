@@ -48,7 +48,9 @@ window.EntryCommentBox_CommentForm = React.createClass
              </div>
            </div>
 
-  isEmpty: -> @refs.commentFormField.getDOMNode().value.trim() is ''
+  getValue: -> @refs.commentFormField.getDOMNode().value
+
+  isEmpty: -> @getValue().trim() is ''
 
   addReply: (name) ->
     name    = '@' + name
@@ -75,7 +77,7 @@ window.EntryCommentBox_CommentForm = React.createClass
     text.replace regExp, ''
 
   _submitComment: ->
-    @props.onSubmit @refs.commentFormField.getDOMNode().value
+    @props.onSubmit @getValue()
 
   onFocus: ->
     # После фокуса, переводим курсор в конец строки
