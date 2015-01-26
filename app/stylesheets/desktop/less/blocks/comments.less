@@ -1,8 +1,6 @@
 // Block Comments
 .comments {
-  width: 535px;
-  margin-top: -11px;
-  margin-bottom: 40px;
+  margin: -11px -44px 40px 0;
   padding-left: 85px;
   font-size: @comments-font-size;
   line-height: @comments-line-height;
@@ -39,8 +37,6 @@
 .comment {
   margin-bottom: 6px;
   padding: 6px;
-  //padding-right: 180px;
-  //padding-left: 45px;
   position: relative;
   border: 1px solid transparent;
   border-radius: 3px;
@@ -76,21 +72,16 @@
 }
 
 .comment__table {
-  //width: 100%;
   min-height: @comments-line-height * 2;
   padding-right: 174px;
   padding-left: 45px;
   position: relative;
-  //height: 36px;
-  //display: table;
 }
 
 .comment__table-cell {
-  //width: 100%;
-  //display: table-cell;
   word-wrap: break-word;
-  //vertical-align: top;
   padding-top: 10px;
+
   img {
     max-width: @brick-width;
     max-height: 900px;
@@ -102,7 +93,6 @@
   max-width: @brick-width;
   max-height: 900px;
 }
-
 
 .comment__user {
   opacity: 1 !important;
@@ -216,11 +206,14 @@
 
 .comment-form__table {
   &:extend(.comment__table);
+  padding-left: 0;
 }
 
 .comment-form__table-cell {
   &:extend(.comment__table-cell);
   padding-top: 0;
+  position: relative;
+  padding-left: 45px;
 }
 
 .comment-form__user {
@@ -239,6 +232,20 @@
   float: left;
   box-sizing: border-box;
   opacity: .4;
+}
+
+.comment-form__submit {
+  padding: 8px 10px 7px;
+  position: absolute;
+  top: 0;
+  left: 352px;
+  border: none;
+  background: #2ac67e;
+  font: inherit;
+  line-height: 20px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: @comment-textarea-border-radius;
 }
 
 .comment-form__field {

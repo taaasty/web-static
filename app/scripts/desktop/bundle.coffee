@@ -266,6 +266,7 @@ require './react/components/entry_comment_box/comment_metabar/reply'
 require './react/components/entry_comment_box/comment_form/comment_form'
 require './react/components/entry_comment_box/comment_form/comment_create_form_manager'
 require './react/components/entry_comment_box/comment_form/comment_edit_form_manager'
+require './react/components/entry_comment_box/comment_form/buttons/submit'
 require './react/components/entry_comment_box/load_more'
 
 require './react/components/post_editor/actions/actions'
