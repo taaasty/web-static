@@ -1,7 +1,5 @@
 REPLIES_LIMIT = 5
 
-CLASS_HIDDEN = 'state--hidden'
-
 window.EntryCommentBox_CommentForm = React.createClass
 
   propTypes:
@@ -11,16 +9,14 @@ window.EntryCommentBox_CommentForm = React.createClass
     onCancel:  React.PropTypes.func.isRequired
     isLoading: React.PropTypes.bool
 
-  getDefaultProps: ->
-    disabled: false
+  getInitialState: ->
+    visibleSubmit: (@props.text? && typeof @props.text isnt "undefined" && @props.text isnt "")
 
-  componentDidMount: ->
-    @_initAutosize()
-    @$commentFormSubmit = $( @refs.commentFormSubmit.getDOMNode() )
+  getDefaultProps: -> disabled: false
 
-  componentDidUpdate: ->
-    @$commentFormField.trigger 'autosize.resize'
-    @$commentFormSubmit.toggleClass CLASS_HIDDEN, @isEmptyField()
+  componentDidMount: -> @_initAutosize()
+
+  componentDidUpdate: -> @$commentFormField.trigger 'autosize.resize'
 
   componentWillUnmount: -> @$commentFormField.trigger 'autosize.destroy'
 
@@ -35,9 +31,8 @@ window.EntryCommentBox_CommentForm = React.createClass
                <div className="comment-form__table-cell">
                  <form>
                    <span className="comment-form__avatar">{ avatar }</span>
-                   <button ref="commentFormSubmit"
-                           className="comment-form__submit"
-                           onClick={ this.onSubmit }>Ok</button>
+                   <EntryCommentBox_CommentFormSubmit visible={ this.state.visibleSubmit }
+                                                      onClick={ this.onSubmit } />
                    <span className="comment-form__field">
                      <textarea ref="commentFormField"
                                placeholder="Комментарий. SHIFT + ENTER новая строка"
@@ -53,7 +48,7 @@ window.EntryCommentBox_CommentForm = React.createClass
              </div>
            </div>
 
-  isEmptyField: -> @$commentFormField.val().trim() is ''
+  isEmpty: -> @refs.commentFormField.getDOMNode().value.trim() is ''
 
   addReply: (name) ->
     name    = '@' + name
@@ -80,7 +75,7 @@ window.EntryCommentBox_CommentForm = React.createClass
     text.replace regExp, ''
 
   _submitComment: ->
-    @props.onSubmit @$commentFormField.val()
+    @props.onSubmit @refs.commentFormField.getDOMNode().value
 
   onFocus: ->
     # После фокуса, переводим курсор в конец строки
@@ -91,10 +86,10 @@ window.EntryCommentBox_CommentForm = React.createClass
     else
       @$commentFormField.val @$commentFormField.val()
 
-    @$commentFormSubmit.removeClass CLASS_HIDDEN
+    @setState visibleSubmit: true
 
   onBlur: ->
-    @$commentFormSubmit.toggleClass CLASS_HIDDEN, @isEmptyField()
+    @setState visibleSubmit: !@isEmpty()
 
   onKeyDown: (e) ->
     # Нажат Enter, введёный текст содержит какие-то символы, без Shift, Ctrl и Alt
