@@ -1,5 +1,6 @@
-#TODO: i18n
-INPUT_PLACEHOLDER_TEXT = 'Пароль'
+i18n = require 'i18next'
+
+INPUT_PLACEHOLDER_TEXT = -> i18n.t 'password_field'
 
 AuthEmailPasswordField = React.createClass
   displayName: 'AuthEmailPasswordField'
@@ -12,7 +13,7 @@ AuthEmailPasswordField = React.createClass
       </label>
       <input ref="input"
              type="password"
-             placeholder={ INPUT_PLACEHOLDER_TEXT }
+             placeholder={ INPUT_PLACEHOLDER_TEXT() }
              id="auth-password"
              className="auth__field-input" />
     </div>

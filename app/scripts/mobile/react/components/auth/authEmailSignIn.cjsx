@@ -1,3 +1,4 @@
+i18n                     = require 'i18next'
 NotifyController         = require '../../controllers/notify'
 SessionsViewActions      = require '../../actions/view/sessions'
 ComponentMixin           = require '../../mixins/component'
@@ -7,11 +8,9 @@ AuthEmailSubmitButton    = require './buttons/emailSubmit'
 AuthNotRegisteredYetLink = require './links/notRegisteredYet'
 AuthForgotPasswordLink   = require './links/forgotPassword'
 
-#TODO: i18n
-HEADER_TITLE                = 'Вход'
-FORGOT_PASSWORD_BUTTON_TEXT = 'Я забыл пароль'
-EMPTY_LOGIN_ERROR           = 'Вы забыли ввести логин'
-EMPTY_PASSWORD_ERROR        = 'Вы забыли ввести пароль'
+HEADER_TITLE         = -> i18n.t 'email_signin_header'
+EMPTY_LOGIN_ERROR    = -> i18n.t 'empty_login_error'
+EMPTY_PASSWORD_ERROR = -> i18n.t 'empty_password_error'
 
 #FIXME: Remove from global when implement react-router
 window.AuthEmailSignIn = React.createClass
@@ -29,7 +28,7 @@ window.AuthEmailSignIn = React.createClass
                className="auth__bg" />
           <div className="auth__section">
             <div className="auth__header">
-              <div className="auth__header-title">{ HEADER_TITLE }</div>
+              <div className="auth__header-title">{ HEADER_TITLE() }</div>
             </div>
             <div className="auth__body">
               <form onSubmit={ @handleSubmit }>
@@ -59,10 +58,10 @@ window.AuthEmailSignIn = React.createClass
 
     switch
       when login.length == 0
-        NotifyController.notifyError EMPTY_LOGIN_ERROR
+        NotifyController.notifyError EMPTY_LOGIN_ERROR()
         false
       when password.length == 0
-        NotifyController.notifyError EMPTY_PASSWORD_ERROR
+        NotifyController.notifyError EMPTY_PASSWORD_ERROR()
         false
       else true
 

@@ -34,7 +34,7 @@ EntryComments = React.createClass
           totalCount={ @props.commentsCount }
           loadedCount={ @props.comments.length }
           loading={ @props.loading }
-          limit={ @props.limit }
+          loadPerTime={ @props.loadPerTime }
           onCommentsLoadMore={ @props.onCommentsLoadMore } />
 
   renderCommentList: ->

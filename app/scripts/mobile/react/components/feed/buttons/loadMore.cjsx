@@ -1,7 +1,7 @@
+i18n = require 'i18next'
 { PropTypes } = React
 
-#TODO: i18n
-TEXT = 'Загрузить еще'
+TEXT = -> i18n.t 'feed_load_more_button'
 
 FeedLoadMoreButton = React.createClass
   displayName: 'FeedLoadMoreButton'
@@ -12,7 +12,7 @@ FeedLoadMoreButton = React.createClass
   render: ->
     <button className="load-more-button"
             onClick={ @props.onClick }>
-      { TEXT }
+      { TEXT() }
     </button>
 
 module.exports = FeedLoadMoreButton

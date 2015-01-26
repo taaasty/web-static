@@ -1,17 +1,17 @@
+i18n              = require 'i18next'
 ScreenController  = require '../../../controllers/screen'
 AuthEmailRecovery = require '../authEmailRecovery'
 
-#TODO: i18n
-TEXT = 'Я забыл пароль'
+TEXT = -> i18n.t 'forgot_password_link'
 
 AuthForgotPasswordLink = React.createClass
   displayName: 'AuthForgotPasswordLink'
 
   render: ->
-    <a title={ TEXT }
+    <a title={ TEXT() }
        className="auth__footer-link"
        onClick={ @handleClick }>
-      { TEXT }
+      { TEXT() }
     </a>
 
   handleClick: ->

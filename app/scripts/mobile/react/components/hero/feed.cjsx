@@ -1,5 +1,7 @@
-{ declension } = require '../../../../shared/helpers/grammar'
+i18n = require 'i18next'
 { PropTypes } = React
+
+ENTRIES_COUNT = (count) -> i18n.t 'feed_entries_count', {count}
 
 HeroFeed = React.createClass
   displayName: 'HeroFeed'
@@ -19,7 +21,7 @@ HeroFeed = React.createClass
             <span>{ @props.title }</span>
           </div>
           <div className="hero__smalltext">
-            <span>{ @getEntriesCount() }</span>
+            <span>{ ENTRIES_COUNT(@props.entriesCount) }</span>
           </div>
         </div>
       </div>
@@ -27,10 +29,5 @@ HeroFeed = React.createClass
 
   getHeroStyles: ->
     backgroundImage: "url('#{ @props.backgroundUrl }')"
-
-  getEntriesCount: ->
-    entriesCountDeclension = declension @props.entriesCount, ['запись', 'записи', 'записей']
-
-    "#{ @props.entriesCount } #{ entriesCountDeclension } за 24 часа"
 
 module.exports = HeroFeed

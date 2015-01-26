@@ -1,7 +1,7 @@
+i18n = require 'i18next'
 { PropTypes } = React
 
-#TODO: i18n
-MEDIA_NOT_FOUND_MESSAGE = 'Упс. Для данного поста не найдены медиа-данные'
+MEDIA_NOT_FOUND_MESSAGE = -> i18n.t 'empty_video_entry'
 
 VideoEntryContent = React.createClass
   displayName: 'VideoEntryContent'
@@ -22,7 +22,7 @@ VideoEntryContent = React.createClass
            dangerouslySetInnerHTML={{ __html: @props.iframely.html }} />
     else
       <div className="media-video__embed">
-        { MEDIA_NOT_FOUND_MESSAGE }
+        { MEDIA_NOT_FOUND_MESSAGE() }
       </div>
 
 module.exports = VideoEntryContent

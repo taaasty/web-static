@@ -1,8 +1,8 @@
+i18n                           = require 'i18next'
 HeroTlogActions_SettingsButton = require './buttons/settings'
 { PropTypes } = React
 
-#TODO: i18n
-BUTTON_TITLE = 'Это вы'
+BUTTON_TITLE = -> i18n.t 'current_user_button'
 
 HeroTlogActions_CurrentUser = React.createClass
   displayName: 'HeroTlogActions_CurrentUser'
@@ -13,7 +13,7 @@ HeroTlogActions_CurrentUser = React.createClass
   render: ->
     <div className="hero__actions">
       <button className="follow-button">
-        { BUTTON_TITLE }
+        { BUTTON_TITLE() }
       </button>
       <HeroTlogActions_SettingsButton slug={ @props.user.slug } />
     </div>

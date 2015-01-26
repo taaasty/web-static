@@ -1,5 +1,6 @@
-#TODO: i18n
-INPUT_PLACEHOLDER_TEXT = 'Электронная почта или ник'
+i18n = require 'i18next'
+
+INPUT_PLACEHOLDER_TEXT = -> i18n.t 'login_field_placeholder'
 
 AuthEmailLoginField = React.createClass
   displayName: 'AuthEmailLoginField'
@@ -12,7 +13,7 @@ AuthEmailLoginField = React.createClass
       </label>
       <input ref="input"
              type="text"
-             placeholder={ INPUT_PLACEHOLDER_TEXT }
+             placeholder={ INPUT_PLACEHOLDER_TEXT() }
              id="auth-email-nick"
              className="auth__field-input" />
     </div>

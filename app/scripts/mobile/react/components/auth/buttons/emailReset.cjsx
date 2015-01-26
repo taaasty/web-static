@@ -1,8 +1,8 @@
+i18n    = require 'i18next'
 Spinner = require '../../common/spinner/spinner'
 { PropTypes } = React
 
-#TODO: i18n
-BUTTON_TEXT = 'Сбросить пароль'
+BUTTON_TEXT = -> i18n.t 'reset_password_button'
 
 AuthEmailResetButton = React.createClass
   displayName: 'AuthEmailResetButton'
@@ -12,7 +12,7 @@ AuthEmailResetButton = React.createClass
 
   render: ->
     <button className="outline-auth-button">
-      { @renderSpinner() } { BUTTON_TEXT }
+      { @renderSpinner() } { BUTTON_TEXT() }
     </button>
 
   renderSpinner: ->
