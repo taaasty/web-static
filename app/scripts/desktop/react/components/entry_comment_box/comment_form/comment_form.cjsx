@@ -30,7 +30,8 @@ window.EntryCommentBox_CommentForm = React.createClass
                  <form>
                    <span className="comment-form__avatar">{ avatar }</span>
                    <span className="comment-form__field">
-                     <i className="comment-form__field-bg" />
+                     <button className="comment-form__submit"
+                             onSubmit={ this.onSubmit }>Ok</button>
                      <textarea ref="commentFormField"
                                placeholder="Комментарий. SHIFT + ENTER новая строка"
                                defaultValue={ this.props.text }
@@ -68,6 +69,9 @@ window.EntryCommentBox_CommentForm = React.createClass
 
     text.replace regExp, ''
 
+  _submitComment: ->
+    @props.onSubmit @$commentFormField.val()
+
   onFocus: ->
     # После фокуса, переводим курсор в конец строки
     valueLength = @$commentFormField.val().length
@@ -81,10 +85,13 @@ window.EntryCommentBox_CommentForm = React.createClass
     # Нажат Enter, введёный текст содержит какие-то символы, без Shift, Ctrl и Alt
     if e.which == 13 && @$commentFormField.val().match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey
       e.preventDefault()
-      @props.onSubmit @$commentFormField.val()
+      @_submitComment()
 
     # Нажат Esc
     @props.onCancel() if e.which == 27
+
+  onSubmit: ->
+    @_submitComment()
 
   _initAutosize: ->
     @$commentFormField = $( @refs.commentFormField.getDOMNode() )

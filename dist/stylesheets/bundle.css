@@ -2855,9 +2855,7 @@ a.toolbar__popup-link:active {
   }
 }
 .comments {
-  width: 535px;
-  margin-top: -11px;
-  margin-bottom: 40px;
+  margin: -11px -44px 40px 0;
   padding-left: 85px;
   font-size: 14px;
   line-height: 18px;
@@ -3082,8 +3080,13 @@ a.toolbar__popup-link:active {
 .comment-form {
   border-top: 10px solid transparent;
 }
+.comment-form__table {
+  padding-left: 0;
+}
 .comment-form__table-cell {
   padding-top: 0;
+  position: relative;
+  padding-left: 45px;
 }
 .comment-form__avatar {
   /*top: 9px;*/
@@ -3095,6 +3098,19 @@ a.toolbar__popup-link:active {
   float: left;
   box-sizing: border-box;
   opacity: .4;
+}
+.comment-form__submit {
+  padding: 8px 10px 7px;
+  position: absolute;
+  top: 0;
+  left: 352px;
+  border: none;
+  background: #2ac67e;
+  font: inherit;
+  line-height: 20px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
 }
 .comment-form__field {
   padding-right: 20px;
