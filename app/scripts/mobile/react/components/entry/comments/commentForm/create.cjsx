@@ -1,10 +1,10 @@
+i18n           = require 'i18next'
 CommentForm    = require '../commentForm'
 ComponentMixin = require '../../../../mixins/component'
 { PropTypes } = React
 
-#TODO: i18n
-BUTTON_TITLE      = 'Отпр'
-FIELD_PLACEHOLDER = 'Добавить комментарий'
+BUTTON_TITLE      = -> i18n.t 'create_comment_button'
+FIELD_PLACEHOLDER = -> i18n.t 'create_comment_placeholder'
 
 CommentCreateForm = React.createClass
   displayName: 'CommentCreateForm'
@@ -17,8 +17,8 @@ CommentCreateForm = React.createClass
   render: ->
     <CommentForm
         ref="commentForm"
-        buttonTitle={ BUTTON_TITLE }
-        placeholder={ FIELD_PLACEHOLDER }
+        buttonTitle={ BUTTON_TITLE() }
+        placeholder={ FIELD_PLACEHOLDER() }
         disabled={ @props.loading }
         onSubmit={ @createComment } />
 

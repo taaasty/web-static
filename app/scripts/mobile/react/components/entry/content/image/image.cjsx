@@ -1,8 +1,8 @@
+i18n = require 'i18next'
 ImageEntryAttachments = require './attachments'
 { PropTypes } = React
 
-#TODO: i18n
-ENTRY_WITHOUT_IMAGE_MESSAGE = 'У данного поста нет изображения.'
+ENTRY_WITHOUT_IMAGE_MESSAGE = -> i18n.t 'empty_image_entry'
 
 ImageEntryContent = React.createClass
   displayName: 'ImageEntryContent'
@@ -22,7 +22,7 @@ ImageEntryContent = React.createClass
     content = switch
       when @props.imageAttachments then <ImageEntryAttachments imageAttachments={ @props.imageAttachments } />
       when @props.imageUrl         then <img src={ @props.imageUrl } />
-      else ENTRY_WITHOUT_IMAGE_MESSAGE
+      else ENTRY_WITHOUT_IMAGE_MESSAGE()
 
     return <div className="media-image">
              { content }

@@ -15,7 +15,7 @@ gulp.task 'buildDesktop', ['clean'], (cb) ->
   runSequence ['vendorDesktopScripts', 'clientDesktopScripts', 'desktopLess', 'desktopHtml', 'assets'], cb
 
 gulp.task 'buildMobile', ['clean'], (cb) ->
-  runSequence ['vendorMobileScripts', 'clientMobileScripts', 'mobileLess', 'mobileHtml'], cb
+  runSequence ['vendorMobileScripts', 'clientMobileScripts', 'mobileLess', 'mobileHtml', 'mobileLocales'], cb
 
 gulp.task 'server', ['setWatch', 'build'], ->
   gulp.start 'watch'

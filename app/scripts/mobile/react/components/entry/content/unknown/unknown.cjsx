@@ -1,8 +1,8 @@
+i18n = require 'i18next'
 UnknownEntryHeader = require './header'
 { PropTypes } = React
 
-#TODO: i18n
-MESSAGE = 'Неизвестный тип поста'
+MESSAGE = -> i18n.t 'unknown_entry_type'
 
 UnknownEntryContent = React.createClass
   displayName: 'UnknownEntryContent'
@@ -14,7 +14,7 @@ UnknownEntryContent = React.createClass
     <div>
       <UnknownEntryHeader title={ @props.title } />
       <div className="post__content">
-        <p>{ MESSAGE }</p>
+        <p>{ MESSAGE() }</p>
       </div>
     </div>
 

@@ -1,8 +1,8 @@
+i18n = require 'i18next'
 { PropTypes } = React
 
-#TODO: i18n
-LINK_TEXT       = 'Удалить комментарий'
-CONFIRM_MESSAGE = 'Вы действительно хотите удалить комментарий?'
+LINK_TEXT       = -> i18n.t 'delete_comment_item'
+CONFIRM_MESSAGE = -> i18n.t 'delete_comment_confirm'
 
 CommentActionsDropdownMenuDeleteItem = React.createClass
   displayName: 'CommentActionsDropdownMenuDeleteItem'
@@ -15,9 +15,9 @@ CommentActionsDropdownMenuDeleteItem = React.createClass
     <li className="comment__dropdown-popup-item"
         onClick={ @handleClick }>
       <a className="comment__dropdown-popup-link"
-         title={ LINK_TEXT }>
+         title={ LINK_TEXT() }>
         <i className="icon icon--basket" />
-        <span>{ LINK_TEXT }</span>
+        <span>{ LINK_TEXT() }</span>
       </a>
     </li>
 
@@ -25,6 +25,6 @@ CommentActionsDropdownMenuDeleteItem = React.createClass
     @props.onCommentDelete @props.commentId
 
   handleClick: ->
-    @delete() if confirm CONFIRM_MESSAGE
+    @delete() if confirm CONFIRM_MESSAGE()
     
 module.exports = CommentActionsDropdownMenuDeleteItem

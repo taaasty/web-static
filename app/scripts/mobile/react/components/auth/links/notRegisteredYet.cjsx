@@ -1,16 +1,16 @@
+i18n             = require 'i18next'
 ScreenController = require '../../../controllers/screen'
 
-#TODO: i18n
-TEXT = 'Я еще не зарегистрирован'
+TEXT = -> i18n.t 'not_registered_yet_link'
 
 AuthNotRegisteredYetLink = React.createClass
   displayName: 'AuthNotRegisteredYetLink'
 
   render: ->
-    <a title={ TEXT }
+    <a title={ TEXT() }
        className="auth__footer-link"
        onClick={ @handleClick }>
-      { TEXT }
+      { TEXT() }
     </a>
 
   handleClick: ->

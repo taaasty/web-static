@@ -15,6 +15,7 @@ gulp.task 'clientMobileScripts', ->
     .external 'reactUjs'
     .external 'eventEmitter'
     .external 'reqwest'
+    .external 'i18next'
 
   bundle = ->
     bundleLogger.start config.outputName

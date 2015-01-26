@@ -1,6 +1,7 @@
+i18n = require 'i18next'
 { PropTypes } = React
 
-TITLE = 'Смотреть все записи'
+BUTTON_TITLE = -> i18n.t 'pagination_all_entries'
 
 EntryPagination = React.createClass
   displayName: 'EntryPagination'
@@ -12,7 +13,7 @@ EntryPagination = React.createClass
     <div className="pagination">
       <a className="pagination__item"
          href={ @props.tlogUrl }>
-        { TITLE }
+        { BUTTON_TITLE() }
       </a>
     </div>
 

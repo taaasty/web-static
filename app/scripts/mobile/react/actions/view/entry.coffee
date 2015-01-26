@@ -1,12 +1,12 @@
+i18n             = require 'i18next'
 Api              = require '../../api/api'
 NotifyController = require '../../controllers/notify'
 
-#TODO: i18n
-REPORT_SUCCESS_MESSAGE         = 'Жалоба на пост успешно отправлена'
-DELETE_SUCCESS_MESSAGE         = 'Пост успешно удалён'
-VOTE_SUCCESS_MESSAGE           = 'Голос за пост отдан'
-COMMENT_REPORT_SUCCESS_MESSAGE = 'Жалоба на пост успешно отправлена'
-COMMENT_DELETE_SUCCESS_MESSAGE = 'Комментарий успешно удалён'
+REPORT_SUCCESS_MESSAGE         = -> i18n.t 'report_entry_success'
+DELETE_SUCCESS_MESSAGE         = -> i18n.t 'delete_entry_success'
+VOTE_SUCCESS_MESSAGE           = -> i18n.t 'vote_entry_success'
+COMMENT_REPORT_SUCCESS_MESSAGE = -> i18n.t 'report_comment_success'
+COMMENT_DELETE_SUCCESS_MESSAGE = -> i18n.t 'delete_comment_success'
 
 EntryViewActions =
 
@@ -33,21 +33,21 @@ EntryViewActions =
   report: (entryId) ->
     Api.entry.report entryId
       .then ->
-        NotifyController.notifySuccess REPORT_SUCCESS_MESSAGE
+        NotifyController.notifySuccess REPORT_SUCCESS_MESSAGE()
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
   delete: (entryId) ->
     Api.entry.delete entryId
       .then ->
-        NotifyController.notifySuccess DELETE_SUCCESS_MESSAGE
+        NotifyController.notifySuccess DELETE_SUCCESS_MESSAGE()
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
   vote: (entryId) ->
     Api.entry.vote entryId
       .then (rating) ->
-        NotifyController.notifySuccess VOTE_SUCCESS_MESSAGE
+        NotifyController.notifySuccess VOTE_SUCCESS_MESSAGE()
         rating
       .fail (xhr) ->
         NotifyController.errorResponse xhr
@@ -70,14 +70,14 @@ EntryViewActions =
   deleteComment: (entryId, commentId) ->
     Api.entry.deleteComment commentId
       .then ->
-        NotifyController.notifySuccess COMMENT_DELETE_SUCCESS_MESSAGE
+        NotifyController.notifySuccess COMMENT_DELETE_SUCCESS_MESSAGE()
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
   reportComment: (commentId) ->
     Api.entry.reportComment commentId
       .then ->
-        NotifyController.notifySuccess COMMENT_REPORT_SUCCESS_MESSAGE
+        NotifyController.notifySuccess COMMENT_REPORT_SUCCESS_MESSAGE()
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
