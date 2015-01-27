@@ -7,11 +7,11 @@ window.ReactApp =
   start: ->
     console.log 'ReactApp start'
 
-    Api.locales.load TastySettings.localeLang
-      .then (locale) ->
+    Api.locales.load TastySettings.locale
+      .then (phrases) ->
         polyglot = new Polyglot
-          locale:  TastySettings.localeLang
-          phrases: locale
+          locale:  TastySettings.locale
+          phrases: phrases
 
         window.t = polyglot.t.bind polyglot
 

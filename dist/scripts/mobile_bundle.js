@@ -3816,11 +3816,11 @@ ReactUjs = require('reactUjs');
 window.ReactApp = {
   start: function() {
     console.log('ReactApp start');
-    return Api.locales.load(TastySettings.localeLang).then(function(locale) {
+    return Api.locales.load(TastySettings.locale).then(function(phrases) {
       var polyglot;
       polyglot = new Polyglot({
-        locale: TastySettings.localeLang,
-        phrases: locale
+        locale: TastySettings.locale,
+        phrases: phrases
       });
       window.t = polyglot.t.bind(polyglot);
       return ReactUjs.initialize();

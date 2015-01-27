@@ -4,7 +4,7 @@ TastySettings =
   host:        'http://taaasty.ru'
   api_host:    'http://taaasty.ru/api'
   localesPath: '../locales/i18n' # For backend path should be absolute like http://taaasty.com/locales
-  localeLang:  'ru'
+  locale:      'ru'
 
 console.log 'TastyVersion', TastySettings.version
 
