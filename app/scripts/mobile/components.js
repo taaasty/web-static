@@ -8,7 +8,7 @@ Polyglot  = require('node-polyglot');
 phrasesRu = require('./locales/i18n/ru');
 
 polyglot = new Polyglot({
-  locale:  'ru',
+  locale:  TastySettings.locale,
   phrases: phrasesRu
 });
 
