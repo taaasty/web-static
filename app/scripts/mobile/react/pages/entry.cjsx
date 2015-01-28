@@ -1,4 +1,5 @@
 CurrentUserStore   = require '../stores/currentUser'
+PageMixin          = require './mixins/page'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
 HeroTlog           = require '../components/hero/tlog'
@@ -6,12 +7,11 @@ EntryTlog          = require '../components/entry/tlog'
 EntryPagination    = require '../components/pagination/entry'
 AuthManager        = require '../components/auth/authManager'
 AuthButtonManager  = require '../components/buttons/auth/authManager'
-# EntryPageMixin     = require './mixins/entry'
 { PropTypes } = React
 
 EntryPage = React.createClass
   displayName: 'EntryPage'
-  # mixins: [EntryPageMixin]
+  mixins: [PageMixin]
 
   propTypes:
     currentUser: PropTypes.object
@@ -26,19 +26,11 @@ EntryPage = React.createClass
 
   render: ->
     <div>
-      <FeedToolbarManager />
-      <UserToolbarManager />
-      <AuthButtonManager />
       <div className="layout">
         <div className="layout__header">
           <HeroTlog tlog={ @props.tlog } />
         </div>
-        <div className="layout__body">
-          <EntryTlog entry={ @props.entry } />
-          <EntryPagination tlogUrl={ @props.tlog.tlog_url } />
-        </div>
       </div>
-      <AuthManager />
     </div>
 
 module.exports = EntryPage

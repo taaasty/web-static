@@ -1,18 +1,13 @@
-Api      = require './api/api'
-Polyglot = require 'node-polyglot'
-ReactUjs = require 'reactUjs'
+Api            = require './api/api'
+ReactUjs       = require 'reactUjs'
+window.Phrases = {}
 
 window.ReactApp =
 
-  start: ->
+  start: (locale = TastySettings.locale) ->
     console.log 'ReactApp start'
 
-    Api.locales.load TastySettings.locale
+    Api.locales.load locale
       .then (phrases) ->
-        polyglot = new Polyglot
-          locale:  TastySettings.locale
-          phrases: phrases
-
-        window.t = polyglot.t.bind polyglot
-
+        Phrases[locale] = phrases
         ReactUjs.initialize()

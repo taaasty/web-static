@@ -1,10 +1,6 @@
+TMessage          = require '../../TBundle/TMessage'
 HeroTlogStatsItem = require './stats/item'
 { PropTypes }  = React
-
-STATS_ENTRIES_COUNT    = (count) -> t 'stats_entries_count', count
-STATS_FOLLOWINGS_COUNT = (count) -> t 'stats_followings_count', count
-STATS_FOLLOWERS_COUNT  = (count) -> t 'stats_followers_count', count
-STATS_DAYS_COUNT       = (count) -> t 'stats_days_count', count
 
 HeroTlogStats = React.createClass
   displayName: 'HeroTlogStats'
@@ -51,10 +47,10 @@ HeroTlogStats = React.createClass
 
   getTitle: (type) ->
     switch type
-      when 'entries'    then STATS_ENTRIES_COUNT @props.stats.entries_count
-      when 'followings' then STATS_FOLLOWINGS_COUNT @props.stats.followings_count
-      when 'followers'  then STATS_FOLLOWERS_COUNT @props.stats.followers_count
-      when 'days'       then STATS_DAYS_COUNT @props.stats.days_count
+      when 'entries'    then <TMessage message="stats_entries_count" count={ @props.stats.entries_count } />
+      when 'followings' then <TMessage message="stats_followings_count" count={ @props.stats.followings_count } />
+      when 'followers'  then <TMessage message="stats_followers_count" count={ @props.stats.followers_count } />
+      when 'days'       then <TMessage message="stats_days_count" count={ @props.stats.days_count } />
       else console.warn 'Unknown type of stats of HeroTlogStats component', type
 
 module.exports = HeroTlogStats

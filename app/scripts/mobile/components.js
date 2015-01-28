@@ -1,21 +1,15 @@
-EventEmitter   = require('eventEmitter');
-React          = require('react');
+React        = require('react');
+moment       = require('../../bower_components/momentjs/moment');
+EventEmitter = require('eventEmitter');
 
-moment         = require('../../bower_components/momentjs/moment');
 moment.locale('ru', require('../../bower_components/momentjs/locale/ru'));
 
-Polyglot  = require('node-polyglot');
-phrasesRu = require('./locales/i18n/ru');
+Phrases = {
+  ru: require('./locales/i18n/ru')
+};
 
-polyglot = new Polyglot({
-  locale:  TastySettings.locale,
-  phrases: phrasesRu
-});
-
-t = polyglot.t.bind(polyglot);
-
+// TastySettings  = require('./settings');
 Routes         = require('../shared/routes/routes');
 ApiRoutes      = require('../shared/routes/api');
 ThumborService = require('../shared/react/services/thumbor');
-TastySettings  = require('./settings');
 EntryPage      = require('./react/pages/entry');
