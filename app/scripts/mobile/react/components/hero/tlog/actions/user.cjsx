@@ -3,9 +3,6 @@ HeroTlogActions_WriteMessageButton = require './buttons/writeMessage'
 HeroTlogActions_DropdownMenu       = require './dropdownMenu'
 { PropTypes } = React
 
-#TODO: i18n
-BUTTON_TITLE = 'Это вы'
-
 HeroTlogActions_User = React.createClass
   displayName: 'HeroTlogActions_User'
 

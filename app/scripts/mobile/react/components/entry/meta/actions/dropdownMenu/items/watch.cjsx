@@ -1,9 +1,8 @@
 EntryViewActions = require '../../../../../../actions/view/entry'
 { PropTypes } = React
 
-#TODO: i18n
-START_WATCH_TITLE = 'Подписаться на комментарии'
-STOP_WATCH_TITLE  = 'Отписаться от комментариев'
+START_WATCH_TITLE = -> t 'start_watch_entry_item'
+STOP_WATCH_TITLE  = -> t 'stop_watch_entry_item'
 
 EntryMetaActions_DropdownMenu_WatchItem = React.createClass
   displayName: 'EntryMetaActions_DropdownMenu_WatchItem'
@@ -27,7 +26,7 @@ EntryMetaActions_DropdownMenu_WatchItem = React.createClass
   isWatching: -> @state.watching
 
   getTitle: ->
-    if @isWatching() then STOP_WATCH_TITLE else START_WATCH_TITLE
+    if @isWatching() then STOP_WATCH_TITLE() else START_WATCH_TITLE()
 
   startWatch: ->
     EntryViewActions.startWatch @props.entryId

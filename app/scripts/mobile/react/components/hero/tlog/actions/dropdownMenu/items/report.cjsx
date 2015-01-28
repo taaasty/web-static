@@ -1,8 +1,7 @@
 RelationshipViewActions = require '../../../../../../actions/view/relationship'
 { PropTypes } = React
 
-#TODO: i18n
-TITLE = 'Пожаловаться'
+TITLE = -> t 'report_tlog_item'
 
 HeroTlogActions_DropdownMenuReportItem = React.createClass
   displayName: 'HeroTlogActions_DropdownMenuReportItem'
@@ -16,7 +15,7 @@ HeroTlogActions_DropdownMenuReportItem = React.createClass
         onClick={ @report }>
       <a className="hero__dropdown-popup-link">
         <i className="icon icon--exclamation-mark" />
-        <span>{ TITLE }</span>
+        <span>{ TITLE() }</span>
       </a>
     </li>
 

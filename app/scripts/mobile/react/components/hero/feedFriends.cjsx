@@ -1,8 +1,7 @@
 HeroFeed = require './feed'
 { PropTypes } = React
 
-#TODO: i18n
-HERO_TITLE = 'Подписки'
+HERO_TITLE = -> t 'feed_friends'
 
 HeroFeedFriends = React.createClass
   displayName: 'HeroFeedFriends'
@@ -12,6 +11,6 @@ HeroFeedFriends = React.createClass
     entriesCount:  PropTypes.number.isRequired
 
   render: ->
-    <HeroFeed {...@props} title={ HERO_TITLE } />
+    <HeroFeed {...@props} title={ HERO_TITLE() } />
 
 module.exports = HeroFeedFriends

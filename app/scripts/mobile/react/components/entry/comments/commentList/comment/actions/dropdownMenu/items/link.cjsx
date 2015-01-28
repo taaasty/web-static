@@ -1,7 +1,6 @@
 { PropTypes } = React
 
-#TODO: i18n
-LINK_TEXT = 'Ссылка на комментарий'
+LINK_TEXT = -> t 'link_comment_item'
 
 CommentActionsDropdownMenuLinkItem = React.createClass
   displayName: 'CommentActionsDropdownMenuLinkItem'
@@ -13,10 +12,10 @@ CommentActionsDropdownMenuLinkItem = React.createClass
   render: ->
     <li className="comment__dropdown-popup-item">
       <a className="comment__dropdown-popup-link"
-         title={ LINK_TEXT }
+         title={ LINK_TEXT() }
          href={ @getCommentUrl() }>
         <i className="icon icon--hyperlink" />
-        <span>{ LINK_TEXT }</span>
+        <span>{ LINK_TEXT() }</span>
       </a>
     </li>
 

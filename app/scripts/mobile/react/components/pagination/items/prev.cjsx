@@ -1,8 +1,7 @@
 cx = require 'react/lib/cx'
 { PropTypes } = React
 
-#TODO: i18n
-TITLE = 'Ранее'
+TITLE = -> t 'pagination_prev'
 
 PaginationPrev = React.createClass
   displayName: 'PaginationPrev'
@@ -21,8 +20,8 @@ PaginationPrev = React.createClass
 
     return <a className={ prevClasses }
               href={ @props.href }
-              title={ TITLE }>
-             { TITLE }
+              title={ TITLE() }>
+             { TITLE() }
            </a>
 
 module.exports = PaginationPrev

@@ -1,8 +1,13 @@
-ReactUjs = require 'reactUjs'
+Api            = require './api/api'
+ReactUjs       = require 'reactUjs'
+window.Phrases = {}
 
 window.ReactApp =
 
-  start: ->
+  start: (locale = TastySettings.locale) ->
     console.log 'ReactApp start'
 
-    ReactUjs.initialize()
+    Api.locales.load locale
+      .then (phrases) ->
+        Phrases[locale] = phrases
+        ReactUjs.initialize()

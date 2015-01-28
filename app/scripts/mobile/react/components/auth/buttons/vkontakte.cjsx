@@ -1,5 +1,4 @@
-#TODO: i18n
-BUTTON_TEXT = 'Войти с помощью Вконтакте'
+BUTTON_TEXT = -> t 'vkontakte_signin_button'
 
 AuthVkontakteButton = React.createClass
   displayName: 'AuthVkontakteButton'
@@ -7,7 +6,7 @@ AuthVkontakteButton = React.createClass
   render: ->
     <button className="vk-auth-button"
             onClick={ @handleClick }>
-      { BUTTON_TEXT }
+      { BUTTON_TEXT() }
     </button>
 
   handleClick: ->

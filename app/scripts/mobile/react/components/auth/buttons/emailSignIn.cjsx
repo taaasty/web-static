@@ -1,8 +1,7 @@
 ScreenController = require '../../../controllers/screen'
 AuthEmailSignIn  = require '../authEmailSignIn'
 
-#TODO: i18n
-BUTTON_TEXT = 'Войти с помощью эл. почты'
+BUTTON_TEXT = -> t 'email_signin_button'
 
 AuthEmailSignInButton = React.createClass
   displayName: 'AuthEmailSignInButton'
@@ -10,7 +9,7 @@ AuthEmailSignInButton = React.createClass
   render: ->
     <button className="site-auth-button"
             onClick={ @handleClick }>
-      { BUTTON_TEXT }
+      { BUTTON_TEXT() }
     </button>
 
   handleClick: ->

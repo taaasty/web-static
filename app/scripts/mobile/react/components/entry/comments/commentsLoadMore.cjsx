@@ -1,7 +1,9 @@
 Spinner                = require '../../common/spinner/spinner'
 CommentsLoadMoreButton = require './buttons/loadMore'
-{ declension } = require '../../../../../shared/helpers/grammar'
 { PropTypes }  = React
+
+LOAD_MORE_COMMENTS           = (count) -> t 'load_more_comments', count
+LOAD_MORE_COMMENTS_REMAINING = (count) -> t 'load_more_comments_remaining', count
 
 CommentsLoadMore = React.createClass
   displayName: 'CommentsLoadMore'
@@ -9,7 +11,7 @@ CommentsLoadMore = React.createClass
   propTypes:
     totalCount:         PropTypes.number.isRequired
     loadedCount:        PropTypes.number
-    limit:              PropTypes.number
+    loadPerTime:        PropTypes.number
     loading:            PropTypes.bool.isRequired
     onCommentsLoadMore: PropTypes.func.isRequired
 
@@ -29,13 +31,12 @@ CommentsLoadMore = React.createClass
           onClick={ @props.onCommentsLoadMore } />
 
   getTitle: ->
-    remainingCount      = @props.totalCount - @props.loadedCount
-    possibleCount       = @props.loadedCount + @props.limit
-    remainingDeclension = declension remainingCount, ['комментарий', 'комментария', 'комментариев']
+    remainingCount = @props.totalCount - @props.loadedCount
+    possibleCount  = @props.loadedCount + @props.loadPerTime
 
     if possibleCount < @props.totalCount
-      "Загрузить еще #{ @props.limit } комментариев"
+      LOAD_MORE_COMMENTS @props.loadPerTime
     else
-      "Загрузить оставшиеся #{ remainingCount } #{ remainingDeclension }"
+      LOAD_MORE_COMMENTS_REMAINING remainingCount
 
 module.exports = CommentsLoadMore

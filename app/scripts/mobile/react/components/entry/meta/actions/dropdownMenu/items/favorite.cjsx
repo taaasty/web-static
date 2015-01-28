@@ -2,9 +2,8 @@ cx               = require 'react/lib/cx'
 EntryViewActions = require '../../../../../../actions/view/entry'
 { PropTypes } = React
 
-#TODO: i18n
-ADD_TO_FAVORITES_TITLE      = 'Добавить в избранное'
-REMOVE_FROM_FAVORITES_TITLE = 'Удалить из избранного'
+ADD_TO_FAVORITES_TITLE      = -> t 'add_to_favorites_entry_item'
+REMOVE_FROM_FAVORITES_TITLE = -> t 'remove_from_favorites_entry_item'
 
 EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass
   displayName: 'EntryMetaActions_DropdownMenu_FavoriteItem'
@@ -33,7 +32,7 @@ EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass
   isFavorited: -> @state.favorited
 
   getTitle: ->
-    if @isFavorited() then REMOVE_FROM_FAVORITES_TITLE else ADD_TO_FAVORITES_TITLE
+    if @isFavorited() then REMOVE_FROM_FAVORITES_TITLE() else ADD_TO_FAVORITES_TITLE()
 
   addToFavorites: ->
     EntryViewActions.addToFavorites @props.entryId

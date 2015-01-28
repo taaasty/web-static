@@ -1,5 +1,5 @@
+TMessage          = require '../../TBundle/TMessage'
 HeroTlogStatsItem = require './stats/item'
-{ declension } = require '../../../../../shared/helpers/grammar'
 { PropTypes }  = React
 
 HeroTlogStats = React.createClass
@@ -47,10 +47,10 @@ HeroTlogStats = React.createClass
 
   getTitle: (type) ->
     switch type
-      when 'entries'    then declension(@props.stats.entries_count, ['пост', 'поста', 'постов'])
-      when 'followings' then declension(@props.stats.followings_count, ['подписка', 'подписки', 'подписок'])
-      when 'followers'  then declension(@props.stats.followers_count, ['подписчик', 'подписчика', 'подписчиков'])
-      when 'days'       then declension(@props.stats.days_count, ['день', 'дня', 'дней']) + ' на тейсти'
+      when 'entries'    then <TMessage message="stats_entries_count" count={ @props.stats.entries_count } />
+      when 'followings' then <TMessage message="stats_followings_count" count={ @props.stats.followings_count } />
+      when 'followers'  then <TMessage message="stats_followers_count" count={ @props.stats.followers_count } />
+      when 'days'       then <TMessage message="stats_days_count" count={ @props.stats.days_count } />
       else console.warn 'Unknown type of stats of HeroTlogStats component', type
 
 module.exports = HeroTlogStats

@@ -6,9 +6,8 @@ AuthEmailLoginField        = require './fields/emailLogin'
 AuthEmailResetButton       = require './buttons/emailReset'
 AuthRememberedPasswordLink = require './links/rememberedPassword'
 
-#TODO: i18n
-HEADER_TITLE      = 'Забыли пароль'
-EMPTY_LOGIN_ERROR = 'Вы забыли ввести логин'
+HEADER_TITLE      = -> t 'email_recovery_header_title'
+EMPTY_LOGIN_ERROR = -> t 'empty_login_error'
 
 AuthEmailRecovery = React.createClass
   displayName: 'AuthEmailRecovery'
@@ -25,7 +24,7 @@ AuthEmailRecovery = React.createClass
                className="auth__bg" />
           <div className="auth__section">
             <div className="auth__header">
-              <div className="auth__header-title">{ HEADER_TITLE }</div>
+              <div className="auth__header-title">{ HEADER_TITLE() }</div>
             </div>
             <div className="auth__body">
               <form onSubmit={ @handleSubmit }>
@@ -50,7 +49,7 @@ AuthEmailRecovery = React.createClass
     login = @refs.loginField.getValue()
 
     if login.length == 0
-      NotifyController.notifyError EMPTY_LOGIN_ERROR
+      NotifyController.notifyError EMPTY_LOGIN_ERROR()
       false
     else true
 

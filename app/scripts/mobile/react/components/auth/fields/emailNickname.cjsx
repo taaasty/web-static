@@ -1,5 +1,4 @@
-#TODO: i18n
-INPUT_PLACEHOLDER_TEXT = 'Ник'
+INPUT_PLACEHOLDER_TEXT = -> t 'nickname_field_placeholder'
 
 AuthEmailNicknameField = React.createClass
   displayName: 'AuthEmailNicknameField'
@@ -12,7 +11,7 @@ AuthEmailNicknameField = React.createClass
       </label>
       <input ref="input"
              type="text"
-             placeholder={ INPUT_PLACEHOLDER_TEXT }
+             placeholder={ INPUT_PLACEHOLDER_TEXT() }
              id="auth-nick"
              className="auth__field-input" />
     </div>

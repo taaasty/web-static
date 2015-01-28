@@ -1,5 +1,4 @@
-#TODO: i18n
-MESSAGE = 'На этой странице нет записей'
+MESSAGE = -> t 'tlog_empty_page'
 
 TlogEmptyPageMessage = React.createClass
   displayName: 'TlogEmptyPageMessage'
@@ -9,7 +8,7 @@ TlogEmptyPageMessage = React.createClass
       <div className="post__content">
         <div className="post__header">
           <h1 className="post__title">
-            { MESSAGE }
+            { MESSAGE() }
           </h1>
         </div>
       </div>

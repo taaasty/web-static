@@ -1,9 +1,8 @@
 EntryViewActions = require '../../../../../../actions/view/entry'
 { PropTypes } = React
 
-#TODO: i18n
-TITLE           = 'Пожаловаться'
-CONFIRM_MESSAGE = 'Вы действительно хотите пожаловаться на пост?'
+TITLE           = -> t 'report_entry_item'
+CONFIRM_MESSAGE = -> t 'report_entry_confirm'
 
 EntryMetaActions_DropdownMenu_ReportItem = React.createClass
   displayName: 'EntryMetaActions_DropdownMenu_ReportItem'
@@ -16,7 +15,7 @@ EntryMetaActions_DropdownMenu_ReportItem = React.createClass
       <a className="meta-actions__dropdown-popup-link"
          onClick={ @handleClick }>
         <i className="icon icon--exclamation-mark" />
-        <span>{ TITLE }</span>
+        <span>{ TITLE() }</span>
       </a>
     </li>
 
@@ -24,6 +23,6 @@ EntryMetaActions_DropdownMenu_ReportItem = React.createClass
     EntryViewActions.report @props.entryId
 
   handleClick: ->
-    @report() if confirm CONFIRM_MESSAGE
+    @report() if confirm CONFIRM_MESSAGE()
 
 module.exports = EntryMetaActions_DropdownMenu_ReportItem
