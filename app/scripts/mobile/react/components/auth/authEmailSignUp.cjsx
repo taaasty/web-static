@@ -8,7 +8,7 @@ AuthEmailSubmitButton     = require './buttons/emailSubmit'
 AuthAlreadyRegisteredLink = require './links/alreadyRegistered'
 
 #FIXME: Remove from global when implement react-router
-window.AuthEmailSignUp = React.createClass
+global.AuthEmailSignUp = React.createClass
   displayName: 'AuthEmailSignUp'
   mixins: [ComponentMixin]
 

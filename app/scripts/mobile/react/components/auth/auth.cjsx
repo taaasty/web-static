@@ -4,7 +4,7 @@ AuthEmailSignInButton = require './buttons/emailSignIn'
 AuthEmailSignUpButton = require './buttons/emailSignUp'
 
 #FIXME: Remove from global when implement react-router
-window.Auth = React.createClass
+global.Auth = React.createClass
   displayName: 'Auth'
 
   render: ->

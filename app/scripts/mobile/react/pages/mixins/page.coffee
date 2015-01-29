@@ -9,6 +9,6 @@ PageMixin =
     locale: TastySettings.locale
 
   componentWillMount: ->
-    # i18n.setLng @props.locale
+    i18n.setLng @props.locale
 
 module.exports = PageMixin

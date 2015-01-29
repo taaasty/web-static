@@ -1,3 +1,4 @@
+window       = undefined
 React        = require('react');
 moment       = require('../../bower_components/momentjs/moment');
 EventEmitter = require('eventEmitter');
@@ -12,7 +13,6 @@ Phrases = {
 
 i18n.init({resStore: Phrases});
 
-TastySettings  = require('./settings');
 Routes         = require('../shared/routes/routes');
 ApiRoutes      = require('../shared/routes/api');
 ThumborService = require('../shared/react/services/thumbor');

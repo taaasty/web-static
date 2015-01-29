@@ -8,7 +8,7 @@ AuthNotRegisteredYetLink = require './links/notRegisteredYet'
 AuthForgotPasswordLink   = require './links/forgotPassword'
 
 #FIXME: Remove from global when implement react-router
-window.AuthEmailSignIn = React.createClass
+global.AuthEmailSignIn = React.createClass
   displayName: 'AuthEmailSignIn'
   mixins: [ComponentMixin]
 
