@@ -1,9 +1,6 @@
 EntryViewActions = require '../../../../../../actions/view/entry'
 { PropTypes } = React
 
-TITLE           = -> t 'delete_entry_item'
-CONFIRM_MESSAGE = -> t 'delete_entry_confirm'
-
 EntryMetaActions_DropdownMenu_DeleteItem = React.createClass
   displayName: 'EntryMetaActions_DropdownMenu_DeleteItem'
 
@@ -15,7 +12,7 @@ EntryMetaActions_DropdownMenu_DeleteItem = React.createClass
       <a className="meta-actions__dropdown-popup-link"
          onClick={ @handleClick }>
         <i className="icon icon--basket" />
-        <span>{ TITLE() }</span>
+        <span>{ i18n.t('delete_entry_item') }</span>
       </a>
     </li>
 
@@ -24,6 +21,6 @@ EntryMetaActions_DropdownMenu_DeleteItem = React.createClass
     EntryViewActions.delete @props.entryId
 
   handleClick: ->
-    @delete() if confirm CONFIRM_MESSAGE()
+    @delete() if confirm i18n.t 'delete_entry_confirm'
 
 module.exports = EntryMetaActions_DropdownMenu_DeleteItem

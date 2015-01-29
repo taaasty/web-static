@@ -1,14 +1,18 @@
 React        = require('react');
 moment       = require('../../bower_components/momentjs/moment');
 EventEmitter = require('eventEmitter');
+i18n         = require('i18next');
 
 moment.locale('ru', require('../../bower_components/momentjs/locale/ru'));
 
 Phrases = {
-  ru: require('./locales/i18n/ru')
+  dev: { translation: require('./locales/i18n/dev') },
+  ru: { translation: require('./locales/i18n/ru') }
 };
 
-// TastySettings  = require('./settings');
+i18n.init({resStore: Phrases});
+
+TastySettings  = require('./settings');
 Routes         = require('../shared/routes/routes');
 ApiRoutes      = require('../shared/routes/api');
 ThumborService = require('../shared/react/services/thumbor');

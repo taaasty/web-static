@@ -1,4 +1,3 @@
-TMessage                       = require '../../../TBundle/TMessage'
 HeroTlogActions_SettingsButton = require './buttons/settings'
 { PropTypes } = React
 
@@ -11,7 +10,7 @@ HeroTlogActions_CurrentUser = React.createClass
   render: ->
     <div className="hero__actions">
       <button className="follow-button">
-        <TMessage message="current_user_button" />
+        { i18n.t('current_user_button') }
       </button>
       <HeroTlogActions_SettingsButton slug={ @props.user.slug } />
     </div>

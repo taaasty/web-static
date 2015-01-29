@@ -7,10 +7,6 @@ AuthEmailSubmitButton    = require './buttons/emailSubmit'
 AuthNotRegisteredYetLink = require './links/notRegisteredYet'
 AuthForgotPasswordLink   = require './links/forgotPassword'
 
-HEADER_TITLE         = -> t 'email_signin_header'
-EMPTY_LOGIN_ERROR    = -> t 'empty_login_error'
-EMPTY_PASSWORD_ERROR = -> t 'empty_password_error'
-
 #FIXME: Remove from global when implement react-router
 window.AuthEmailSignIn = React.createClass
   displayName: 'AuthEmailSignIn'
@@ -27,7 +23,9 @@ window.AuthEmailSignIn = React.createClass
                className="auth__bg" />
           <div className="auth__section">
             <div className="auth__header">
-              <div className="auth__header-title">{ HEADER_TITLE() }</div>
+              <div className="auth__header-title">
+                { i18n.t('email_signin_header') }
+              </div>
             </div>
             <div className="auth__body">
               <form onSubmit={ @handleSubmit }>
@@ -57,10 +55,10 @@ window.AuthEmailSignIn = React.createClass
 
     switch
       when login.length == 0
-        NotifyController.notifyError EMPTY_LOGIN_ERROR()
+        NotifyController.notifyError i18n.t 'empty_login_error'
         false
       when password.length == 0
-        NotifyController.notifyError EMPTY_PASSWORD_ERROR()
+        NotifyController.notifyError i18n.t 'empty_password_error'
         false
       else true
 

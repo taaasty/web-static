@@ -1,14 +1,12 @@
 Api              = require '../../api/api'
 NotifyController = require '../../controllers/notify'
 
-RECOVERY_MAIL_SENT_MESSAGE = -> t 'recovery_mail_sent'
-
 SessionsViewActions =
 
   signIn: (login, password) ->
     Api.sessions.signIn login, password
       .then (user) ->
-        NotifyController.notifySuccess "Добро пожаловать, #{ user.slug }! Подождите, я перезагружусь.."
+        NotifyController.notifySuccess i18n.t 'signin_success', userSlug: user.slug
         user
       .fail (xhr) ->
         NotifyController.errorResponse xhr
@@ -16,7 +14,7 @@ SessionsViewActions =
   signUp: (email, password, nickname) ->
     Api.sessions.signUp email, password, nickname
       .then (user) ->
-        NotifyController.notifySuccess "Добро пожаловать, #{ user.slug }! Подождите, я перезагружусь.."
+        NotifyController.notifySuccess i18n.t 'signup_success', userSlug: user.slug
         user
       .fail (xhr) ->
         NotifyController.errorResponse xhr
@@ -24,7 +22,7 @@ SessionsViewActions =
   recover: (login) ->
     Api.sessions.recover login
       .then ->
-        NotifyController.notifySuccess RECOVERY_MAIL_SENT_MESSAGE()
+        NotifyController.notifySuccess i18n.t 'recovery_mail_sent'
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 

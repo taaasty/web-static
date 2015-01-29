@@ -2,8 +2,6 @@ Api                       = require '../../api/api'
 NotifyController          = require '../../controllers/notify'
 RelationshipServerActions = require '../server/relationship'
 
-REPORT_SUCCESS_MESSAGE = -> t 'report_user_success'
-
 RelationshipViewActions =
 
   follow: (userId) ->
@@ -37,7 +35,7 @@ RelationshipViewActions =
   report: (userId) ->
     Api.relationship.report userId
       .then ->
-        NotifyController.notifySuccess REPORT_SUCCESS_MESSAGE()
+        NotifyController.notifySuccess i18n.t 'report_user_success'
       .fail (xhr) =>
         NotifyController.errorResponse xhr
 

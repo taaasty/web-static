@@ -1,15 +1,12 @@
 ScreenController = require '../../../controllers/screen'
 
-TEXT = -> t 'remembered_password_link'
-
 AuthRememberedPasswordLink = React.createClass
   displayName: 'AuthRememberedPasswordLink'
 
   render: ->
-    <a title={ TEXT() }
-       className="auth__footer-link"
+    <a className="auth__footer-link"
        onClick={ @handleClick }>
-      { TEXT() }
+      { i18n.t('remembered_password_link') }
     </a>
 
   handleClick: ->

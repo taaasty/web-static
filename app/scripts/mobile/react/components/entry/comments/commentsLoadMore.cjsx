@@ -2,9 +2,6 @@ Spinner                = require '../../common/spinner/spinner'
 CommentsLoadMoreButton = require './buttons/loadMore'
 { PropTypes }  = React
 
-LOAD_MORE_COMMENTS           = (count) -> t 'load_more_comments', count
-LOAD_MORE_COMMENTS_REMAINING = (count) -> t 'load_more_comments_remaining', count
-
 CommentsLoadMore = React.createClass
   displayName: 'CommentsLoadMore'
 
@@ -35,8 +32,8 @@ CommentsLoadMore = React.createClass
     possibleCount  = @props.loadedCount + @props.loadPerTime
 
     if possibleCount < @props.totalCount
-      LOAD_MORE_COMMENTS @props.loadPerTime
+      i18n.t 'load_more_comments', count: @props.loadPerTime
     else
-      LOAD_MORE_COMMENTS_REMAINING remainingCount
+      i18n.t 'load_more_comments_remaining', count: remainingCount
 
 module.exports = CommentsLoadMore

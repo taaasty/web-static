@@ -26,11 +26,19 @@ EntryPage = React.createClass
 
   render: ->
     <div>
+      <FeedToolbarManager />
+      <UserToolbarManager />
+      <AuthButtonManager />
       <div className="layout">
         <div className="layout__header">
           <HeroTlog tlog={ @props.tlog } />
         </div>
+        <div className="layout__body">
+          <EntryTlog entry={ @props.entry } />
+          <EntryPagination tlogUrl={ @props.tlog.tlog_url } />
+        </div>
       </div>
+      <AuthManager />
     </div>
 
 module.exports = EntryPage

@@ -1,8 +1,6 @@
 ImageEntryAttachments = require './attachments'
 { PropTypes } = React
 
-ENTRY_WITHOUT_IMAGE_MESSAGE = -> t 'empty_image_entry'
-
 ImageEntryContent = React.createClass
   displayName: 'ImageEntryContent'
 
@@ -21,7 +19,7 @@ ImageEntryContent = React.createClass
     content = switch
       when @props.imageAttachments then <ImageEntryAttachments imageAttachments={ @props.imageAttachments } />
       when @props.imageUrl         then <img src={ @props.imageUrl } />
-      else ENTRY_WITHOUT_IMAGE_MESSAGE()
+      else i18n.t 'empty_image_entry'
 
     return <div className="media-image">
              { content }

@@ -1,14 +1,12 @@
 ScreenController = require '../../../controllers/screen'
 
-BUTTON_TEXT = -> t 'email_signup_button'
-
 AuthEmailSignUpButton = React.createClass
   displayName: 'AuthEmailSignUpButton'
 
   render: ->
     <button className="reg-auth-button"
             onClick={ @handleClick }>
-      { BUTTON_TEXT() }
+      { i18n.t('email_signup_button') }
     </button>
 
   handleClick: ->

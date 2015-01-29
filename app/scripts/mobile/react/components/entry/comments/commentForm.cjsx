@@ -1,7 +1,5 @@
 { PropTypes } = React
 
-CANCEL_BUTTON_TITLE = -> t 'edit_comment_cancel_button'
-
 CommentForm = React.createClass
   displayName: 'CommentForm'
 
@@ -38,7 +36,7 @@ CommentForm = React.createClass
     if @props.onCancel?
       <button className="comment-form__cancel"
               onClick={ @handleCancel }>
-        { CANCEL_BUTTON_TITLE() }
+        { i18n.t('edit_comment_cancel_button') }
       </button>
 
   clearForm: ->

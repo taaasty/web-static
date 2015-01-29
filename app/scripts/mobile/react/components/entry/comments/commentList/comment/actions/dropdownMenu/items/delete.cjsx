@@ -1,8 +1,5 @@
 { PropTypes } = React
 
-LINK_TEXT       = -> t 'delete_comment_item'
-CONFIRM_MESSAGE = -> t 'delete_comment_confirm'
-
 CommentActionsDropdownMenuDeleteItem = React.createClass
   displayName: 'CommentActionsDropdownMenuDeleteItem'
 
@@ -13,10 +10,9 @@ CommentActionsDropdownMenuDeleteItem = React.createClass
   render: ->
     <li className="comment__dropdown-popup-item"
         onClick={ @handleClick }>
-      <a className="comment__dropdown-popup-link"
-         title={ LINK_TEXT() }>
+      <a className="comment__dropdown-popup-link">
         <i className="icon icon--basket" />
-        <span>{ LINK_TEXT() }</span>
+        <span>{ i18n.t('delete_comment_item') }</span>
       </a>
     </li>
 
@@ -24,6 +20,6 @@ CommentActionsDropdownMenuDeleteItem = React.createClass
     @props.onCommentDelete @props.commentId
 
   handleClick: ->
-    @delete() if confirm CONFIRM_MESSAGE()
+    @delete() if confirm i18n.t 'delete_comment_confirm'
     
 module.exports = CommentActionsDropdownMenuDeleteItem

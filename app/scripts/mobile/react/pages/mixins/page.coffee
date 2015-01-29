@@ -2,13 +2,13 @@
 
 PageMixin =
 
-  childContextTypes:
+  propTypes:
     locale: PropTypes.string
-
-  getChildContext: ->
-    locale: @props.locale || @context.locale
 
   getDefaultProps: ->
     locale: TastySettings.locale
+
+  componentWillMount: ->
+    # i18n.setLng @props.locale
 
 module.exports = PageMixin

@@ -131,6 +131,6 @@ FeedFriendsPageMixin =
     }]
     feed:
       backgroundUrl: 'http://taaasty.com/images/hero-cover.jpg'
-      entriesCount: 45
+      entriesCount: 42
 
 module.exports = FeedFriendsPageMixin

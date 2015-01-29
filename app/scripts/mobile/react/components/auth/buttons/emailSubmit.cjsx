@@ -1,8 +1,6 @@
 Spinner = require '../../common/spinner/spinner'
 { PropTypes } = React
 
-BUTTON_TEXT = -> t 'email_submit_button'
-
 AuthEmailSubmitButton = React.createClass
   displayName: 'AuthEmailSubmitButton'
 
@@ -11,7 +9,7 @@ AuthEmailSubmitButton = React.createClass
 
   render: ->
     <button className="outline-auth-button">
-      { @renderSpinner() } { BUTTON_TEXT() }
+      { @renderSpinner() } { i18n.t('email_submit_button') }
     </button>
 
   renderSpinner: ->

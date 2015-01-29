@@ -1,8 +1,5 @@
 { PropTypes } = React
 
-LINK_TEXT       = -> t 'report_comment_item'
-CONFIRM_MESSAGE = -> t 'report_comment_confirm'
-
 CommentActionsDropdownMenuReportItem = React.createClass
   displayName: 'CommentActionsDropdownMenuReportItem'
 
@@ -13,10 +10,9 @@ CommentActionsDropdownMenuReportItem = React.createClass
   render: ->
     <li className="comment__dropdown-popup-item"
         onClick={ @handleClick }>
-      <a className="comment__dropdown-popup-link"
-         title={ LINK_TEXT() }>
+      <a className="comment__dropdown-popup-link">
         <i className="icon icon--exclamation-mark" />
-        <span>{ LINK_TEXT() }</span>
+        <span>{ i18n.t('report_comment_item') }</span>
       </a>
     </li>
 
@@ -24,6 +20,6 @@ CommentActionsDropdownMenuReportItem = React.createClass
     @props.onCommentReport @props.commentId
 
   handleClick: ->
-    @report() if confirm CONFIRM_MESSAGE()
+    @report() if confirm i18n.t 'report_comment_confirm'
 
 module.exports = CommentActionsDropdownMenuReportItem

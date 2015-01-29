@@ -7,7 +7,7 @@ HeroTlogStatsItem = React.createClass
 
   propTypes:
     count:   PropTypes.number.isRequired
-    title:   PropTypes.element.isRequired
+    title:   PropTypes.string.isRequired
     href:    PropTypes.string
     onClick: PropTypes.func
 
