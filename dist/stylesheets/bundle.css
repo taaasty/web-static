@@ -135,7 +135,6 @@
   -webkit-animation: pop-upwards 160ms forwards linear;
   -ms-animation: pop-upwards 160ms forwards linear;
   animation: pop-upwards 160ms forwards linear;
-  -webkit-transition: top 0.075s ease-out, left 0.075s ease-out;
   transition: top 0.075s ease-out, left 0.075s ease-out;
 }
 .medium-editor-action-bold {
@@ -199,11 +198,9 @@
 .medium-editor-toolbar {
   border: 1px solid #000;
   background-color: #242424;
-  background: -webkit-linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.75));
   background: linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.75));
   border-radius: 5px;
   box-shadow: 0 0 3px #000;
-  -webkit-transition: top 0.075s ease-out, left 0.075s ease-out;
   transition: top 0.075s ease-out, left 0.075s ease-out;
 }
 .medium-editor-toolbar li button {
@@ -215,10 +212,8 @@
   border-left: 1px solid rgba(255, 255, 255, 0.1);
   background-color: #242424;
   color: #fff;
-  background: -webkit-linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.89));
   background: linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.89));
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-transition: background-color 0.2s ease-in;
   transition: background-color 0.2s ease-in;
 }
 .medium-editor-toolbar li button:hover {
@@ -236,7 +231,6 @@
 .medium-editor-toolbar li .medium-editor-button-active {
   background-color: #000;
   color: #fff;
-  background: -webkit-linear-gradient(bottom, #242424, rgba(0, 0, 0, 0.89));
   background: linear-gradient(bottom, #242424, rgba(0, 0, 0, 0.89));
 }
 .medium-editor-toolbar-form-anchor {
@@ -769,7 +763,6 @@ button {
 }
 a {
   text-decoration: none;
-  -webkit-transition: border-color .4s ease, background .4s ease, opacity .4s ease, color .4s ease;
   transition: border-color .4s ease, background .4s ease, opacity .4s ease, color .4s ease;
 }
 a:hover {
@@ -792,7 +785,6 @@ a:hover {
   padding-top: 0;
   position: relative;
   overflow: hidden;
-  -webkit-transition: padding-top .4s ease;
   transition: padding-top .4s ease;
 }
 .page__inner {
@@ -808,14 +800,12 @@ a:hover {
   background-position: 0 0;
   background-attachment: fixed;
   z-index: 1;
-  -webkit-transition: opacity .3s ease, visibility 0s ease;
-          transition: opacity .3s ease, visibility 0s ease;
+  transition: opacity .3s ease, visibility 0s ease;
 }
 .page-header {
   min-height: 247px;
   position: relative;
-  -webkit-transition: height .6s ease;
-          transition: height .6s ease;
+  transition: height .6s ease;
 }
 .page-body {
   position: relative;
@@ -836,7 +826,7 @@ html .state--faved {
   opacity: 1 !important;
 }
 body {
-  -webkit-transition: -webkit-filter 0.4s ease, background-color 0.4s ease;
+  transition: -webkit-filter 0.4s ease, background-color 0.4s ease, filter 0.4s ease, background-color 0.4s ease;
   transition: filter 0.4s ease, background-color 0.4s ease;
 }
 .no-scroll {
@@ -846,8 +836,7 @@ body {
   display: none !important;
 }
 .no--transition {
-  -webkit-transition: none !important;
-          transition: none !important;
+  transition: none !important;
 }
 .cursor--move {
   cursor: move;
@@ -909,12 +898,11 @@ body {
   -webkit-transform: translate(0, -35px);
   -ms-transform: translate(0, -35px);
   transform: translate(0, -35px);
-  -webkit-transition: -webkit-transform .3s ease;
+  transition: -webkit-transform .3s ease;
   transition: transform .3s ease;
 }
 .layout--feed .hero__title,
 .layout--feed .hero__text {
-  -webkit-transition: none !important;
   transition: none !important;
   -webkit-animation: none !important;
   -ms-animation: none !important;
@@ -1203,20 +1191,17 @@ body {
 .hero-enabled .toolbar--close {
   left: 20px;
   opacity: 1;
-  -webkit-transition: left .4s ease .2s;
-          transition: left .4s ease .2s;
+  transition: left .4s ease .2s;
 }
 .hero-enabled .hero {
   margin-bottom: 40px;
   color: #ffffff !important;
   overflow: hidden;
-  -webkit-transition: height .4s ease, color .4s ease;
-          transition: height .4s ease, color .4s ease;
+  transition: height .4s ease, color .4s ease;
 }
 .hero-enabled .hero__overlay {
   opacity: .8;
-  -webkit-transition: opacity .4s ease .2s;
-          transition: opacity .4s ease .2s;
+  transition: opacity .4s ease .2s;
 }
 .hero-enabled .hero__box {
   padding-bottom: 100px;
@@ -1226,8 +1211,7 @@ body {
   height: 200px;
   cursor: inherit;
   opacity: 1;
-  -webkit-transition: width .4s ease, height .4s ease, opacity .4s ease .2s;
-          transition: width .4s ease, height .4s ease, opacity .4s ease .2s;
+  transition: width .4s ease, height .4s ease, opacity .4s ease .2s;
 }
 .hero-enabled .hero__avatar .avatar__text {
   font-size: 100px;
@@ -1236,7 +1220,6 @@ body {
   font-size: 56px;
   cursor: text;
   opacity: 1;
-  -webkit-transition: font-size .4s ease, opacity .6s ease;
   transition: font-size .4s ease, opacity .6s ease;
   -webkit-animation: hero-animate-open .6s 1 ease;
   -ms-animation: hero-animate-open .6s 1 ease;
@@ -1248,7 +1231,6 @@ body {
 .hero-enabled .hero__text {
   font-size: 18px;
   opacity: 1;
-  -webkit-transition: font-size .4s ease, opacity .6s ease;
   transition: font-size .4s ease, opacity .6s ease;
   -webkit-animation: hero-animate-open .6s 1 ease;
   -ms-animation: hero-animate-open .6s 1 ease;
@@ -1262,7 +1244,6 @@ body {
   bottom: 0;
   visibility: visible;
   opacity: 1;
-  -webkit-transition: bottom .4s ease .2s, visibility 0s ease, opacity .4s ease .2s;
   transition: bottom .4s ease .2s, visibility 0s ease, opacity .4s ease .2s;
 }
 .hero-enabled .hero__actions {
@@ -1270,7 +1251,6 @@ body {
   padding-top: 20px;
   visibility: visible;
   opacity: 1;
-  -webkit-transition: max-height .4s ease, padding .4s ease, visibility 0s ease, opacity .4s ease .2s;
   transition: max-height .4s ease, padding .4s ease, visibility 0s ease, opacity .4s ease .2s;
 }
 .hero-enabled .hero .follow-status {
@@ -1328,8 +1308,7 @@ body {
   visibility: visible;
   z-index: 200;
   opacity: 1;
-  -webkit-transition: visibility 0s ease, opacity .3s ease;
-          transition: visibility 0s ease, opacity .3s ease;
+  transition: visibility 0s ease, opacity .3s ease;
 }
 /*.edited-post-text .post--text.post--edit, // Пока комментируем, если будет всё ок, то вообще удалим и
 .edited-post-quote .post--quote.post--edit, // тогда можно будет избавится классов edited-post-...
@@ -1348,8 +1327,7 @@ body {
 .shellbox-enabled .shellbox {
   visibility: visible;
   opacity: 1;
-  -webkit-transition: visibility 0s ease 0s, opacity .4s ease 0s;
-          transition: visibility 0s ease 0s, opacity .4s ease 0s;
+  transition: visibility 0s ease 0s, opacity .4s ease 0s;
 }
 .guide-popup-enabled {
   overflow: hidden;
@@ -1377,8 +1355,7 @@ body {
 .tlog-mode-minimal .hero {
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: opacity .3s ease, visibility 0s ease .3s;
-          transition: opacity .3s ease, visibility 0s ease .3s;
+  transition: opacity .3s ease, visibility 0s ease .3s;
 }
 .tlog-mode-minimal .page-body {
   color: #000000 !important;
@@ -1678,8 +1655,7 @@ body {
 .screen-viewer.__ready .screen-viewer__item.__active {
   z-index: 5;
   opacity: 1;
-  -webkit-transition: opacity .6s ease 0s;
-          transition: opacity .6s ease 0s;
+  transition: opacity .6s ease 0s;
 }
 .screen-viewer.__ready .screen-viewer__item.__active .screen-viewer__bg {
   -webkit-animation: animate-screen-viewer-item 10s 1 ease;
@@ -1691,8 +1667,8 @@ body {
   -webkit-transform: translate(0px, 0px);
       -ms-transform: translate(0px, 0px);
           transform: translate(0px, 0px);
-  -webkit-transition: -webkit-transform 1s ease, opacity 1s ease;
-          transition: transform 1s ease, opacity 1s ease;
+  transition: -webkit-transform 1s ease, opacity 1s ease;
+  transition: transform 1s ease, opacity 1s ease;
 }
 .screen-viewer__spacer {
   display: inline-block;
@@ -1707,8 +1683,7 @@ body {
   left: 0;
   z-index: 4;
   opacity: 0;
-  -webkit-transition: opacity 0s ease .6s;
-          transition: opacity 0s ease .6s;
+  transition: opacity 0s ease .6s;
 }
 .screen-viewer__bg {
   width: 100%;
@@ -1722,8 +1697,8 @@ body {
   text-align: center;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
-  -webkit-transition: -webkit-transform 10s ease;
-          transition: transform 10s ease;
+  transition: -webkit-transform 10s ease;
+  transition: transform 10s ease;
 }
 .screen-viewer__user {
   position: absolute;
@@ -1825,8 +1800,7 @@ body {
   vertical-align: top;
   cursor: pointer;
   border-radius: 50%;
-  -webkit-transition: border-color 0.4s ease;
-          transition: border-color 0.4s ease;
+  transition: border-color 0.4s ease;
 }
 .guide-popup__nav-item.state--active {
   border-color: #ffffff;
@@ -1843,8 +1817,7 @@ body {
   text-indent: -9999px;
   vertical-align: top;
   border-radius: 50%;
-  -webkit-transition: background-color 0.4s ease;
-          transition: background-color 0.4s ease;
+  transition: background-color 0.4s ease;
 }
 .guide-popup__pages {
   position: absolute;
@@ -1862,8 +1835,7 @@ body {
   left: 0;
   z-index: 5000;
   opacity: 0;
-  -webkit-transition: opacity .6s ease, left .3s ease;
-          transition: opacity .6s ease, left .3s ease;
+  transition: opacity .6s ease, left .3s ease;
 }
 .guide-popup__page.state--active {
   z-index: 5002;
@@ -1878,8 +1850,7 @@ body {
 .guide-popup__page .toolbar .toolbar__item,
 .guide-popup__page .toolbar .toolbar__item.state--disabled {
   opacity: 0 !important;
-  -webkit-transition: opacity .3s ease .3s;
-          transition: opacity .3s ease .3s;
+  transition: opacity .3s ease .3s;
 }
 .guide-popup__page.state--active .toolbar .toolbar__item.state--active {
   opacity: 1 !important;
@@ -1889,7 +1860,6 @@ body {
   left: 0 !important;
 }
 .guide-popup__page[data-media-id="1"].state--active .guide-popup__footnote {
-  -webkit-transition-delay: 0.3s;
   transition-delay: 0.3s;
 }
 .guide-popup__page.is--before {
@@ -1923,8 +1893,7 @@ body {
   border-bottom: 1px solid;
   text-decoration: none;
   color: #ffffff;
-  -webkit-transition: border-color 0.4s ease, color 0.4s ease;
-          transition: border-color 0.4s ease, color 0.4s ease;
+  transition: border-color 0.4s ease, color 0.4s ease;
 }
 .guide-popup__text a:hover {
   border-bottom-color: transparent;
@@ -1958,7 +1927,7 @@ body {
   line-height: 20px;
   color: #ffffff;
   opacity: 0;
-  -webkit-transition: -webkit-transform .3s ease 0s, opacity .3s ease 0;
+  transition: -webkit-transform .3s ease 0s, opacity .3s ease 0;
   transition: transform .3s ease 0s, opacity .3s ease 0;
 }
 .guide-popup__footnote .guide-popup__footnote-line {
@@ -2070,8 +2039,7 @@ body {
   left: 0;
   z-index: 5001;
   opacity: 0;
-  -webkit-transition: opacity .6s ease, left .3s ease;
-          transition: opacity .6s ease, left .3s ease;
+  transition: opacity .6s ease, left .3s ease;
 }
 .guide-popup__media-item.state--active {
   z-index: 5002;
@@ -2130,8 +2098,7 @@ body {
           user-select: none;
   border-radius: 56px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-transition: all .3s ease;
-          transition: all .3s ease;
+  transition: all .3s ease;
   /*&.state--expanded {
     .touch & {
       .icon--menu {
@@ -2152,8 +2119,7 @@ body {
   display: inline-block;
   font-size: 26px;
   vertical-align: middle;
-  -webkit-transition: color .4s ease;
-          transition: color .4s ease;
+  transition: color .4s ease;
 }
 .toolbar .icon--menu {
   font-size: 32px;
@@ -2179,8 +2145,7 @@ body {
 }
 .toolbar.state--open .toolbar__dropdown {
   max-width: 600px;
-  -webkit-transition: all .3s ease;
-          transition: all .3s ease;
+  transition: all .3s ease;
 }
 .toolbar.state--open .toolbar__popup {
   visibility: visible;
@@ -2188,7 +2153,7 @@ body {
   -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
-  -webkit-transition: -webkit-transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
+  transition: -webkit-transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
   transition: transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
 }
 .toolbar.state--open-indicators .toolbar__indicators,
@@ -2210,16 +2175,14 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .toolbar.state--active {
-  -webkit-transition: all .3s ease;
-          transition: all .3s ease;
+  transition: all .3s ease;
 }
 .toolbar.state--active .icon--menu {
   color: #f8c700;
 }
 .toolbar.state--active .toolbar__dropdown {
   max-width: 600px;
-  -webkit-transition: all .3s ease;
-          transition: all .3s ease;
+  transition: all .3s ease;
 }
 .toolbar.state--animation .toolbar__indicators {
   -webkit-animation: toolbar-indicators-animate .6s 1 ease;
@@ -2258,7 +2221,6 @@ body {
           user-select: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   right: 70px;
-  -webkit-transition: margin .3s ease, top .3s ease, right .3s ease, opacity .6s ease;
   transition: margin .3s ease, top .3s ease, right .3s ease, opacity .6s ease;
 }
 .toolbar__indicators.state--advanced {
@@ -2274,13 +2236,11 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .toolbar__indicators.state--advanced .toolbar__indicator.state--empty {
-  -webkit-transition: width .3s ease, opacity .6s ease, background-color .2s ease;
   transition: width .3s ease, opacity .6s ease, background-color .2s ease;
 }
 .toolbar__indicators.state--basic .toolbar__indicator.state--empty {
   opacity: 0;
   width: 0;
-  -webkit-transition: width 1s ease, opacity .6s ease, background-color .2s ease;
   transition: width 1s ease, opacity .6s ease, background-color .2s ease;
 }
 .toolbar__indicators.state--basic .icon {
@@ -2298,7 +2258,6 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  -webkit-transition: width .6s ease, opacity .6s ease;
   transition: width .6s ease, opacity .6s ease;
 }
 .toolbar__indicator .messages-badge,
@@ -2320,8 +2279,7 @@ body {
   float: left;
   list-style-type: none;
   overflow: hidden;
-  -webkit-transition: all .3s ease;
-          transition: all .3s ease;
+  transition: all .3s ease;
 }
 .toolbar__dropdown-i {
   float: right;
@@ -2397,7 +2355,7 @@ a.toolbar__item:hover .icon {
   -webkit-transform: translate(0, -10px);
   -ms-transform: translate(0, -10px);
   transform: translate(0, -10px);
-  -webkit-transition: -webkit-transform .3s ease .1s, visibility 0s ease .4s, opacity .3s ease .1s;
+  transition: -webkit-transform .3s ease .1s, visibility 0s ease .4s, opacity .3s ease .1s;
   transition: transform .3s ease .1s, visibility 0s ease .4s, opacity .3s ease .1s;
 }
 .toolbar__popup-item {
@@ -2406,8 +2364,7 @@ a.toolbar__item:hover .icon {
 .toolbar__popup-item .icon {
   width: 1em;
   margin-right: .6em;
-  -webkit-transition: none;
-          transition: none;
+  transition: none;
 }
 .toolbar__popup-item.state--active .toolbar__popup-link {
   background-color: #f8c700;
@@ -2504,8 +2461,8 @@ a.toolbar__popup-link:active {
   -webkit-transform: translate(0, 10px);
       -ms-transform: translate(0, 10px);
           transform: translate(0, 10px);
-  -webkit-transition: -webkit-transform .3s ease, visibility 0s ease .3s, opacity .3s ease;
-          transition: transform .3s ease, visibility 0s ease .3s, opacity .3s ease;
+  transition: -webkit-transform .3s ease, visibility 0s ease .3s, opacity .3s ease;
+  transition: transform .3s ease, visibility 0s ease .3s, opacity .3s ease;
 }
 .dropdown-popup .icon {
   width: 1em;
@@ -2523,8 +2480,8 @@ a.toolbar__popup-link:active {
   -webkit-transform: translate(0, 0);
       -ms-transform: translate(0, 0);
           transform: translate(0, 0);
-  -webkit-transition: -webkit-transform .3s ease, visibility 0s ease .0s, opacity .3s ease;
-          transition: transform .3s ease, visibility 0s ease .0s, opacity .3s ease;
+  transition: -webkit-transform .3s ease, visibility 0s ease .0s, opacity .3s ease;
+  transition: transform .3s ease, visibility 0s ease .0s, opacity .3s ease;
 }
 .dropdown-popup__link {
   height: 40px;
@@ -2568,7 +2525,7 @@ a.toolbar__popup-link:active {
   z-index: 150;
   opacity: 0;
   border-radius: 4px;
-  -webkit-transition: -webkit-transform .3s ease .2s, visibility 0s ease .5s, opacity .3s ease .2s;
+  transition: -webkit-transform .3s ease .2s, visibility 0s ease .5s, opacity .3s ease .2s;
   transition: transform .3s ease .2s, visibility 0s ease .5s, opacity .3s ease .2s;
 }
 .action-dropdown .icon {
@@ -2623,7 +2580,7 @@ a.toolbar__popup-link:active {
 .action-dropdown.state--open {
   visibility: visible;
   opacity: 1;
-  -webkit-transition: -webkit-transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
+  transition: -webkit-transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
   transition: transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
 }
 .action-dropdown.position-top {
@@ -2652,8 +2609,7 @@ a.toolbar__popup-link:active {
   text-align: center;
   overflow: hidden;
   z-index: 1;
-  -webkit-transition: height .4s ease .2s;
-          transition: height .4s ease .2s;
+  transition: height .4s ease .2s;
 }
 .hero a {
   color: inherit;
@@ -2673,8 +2629,7 @@ a.toolbar__popup-link:active {
   left: 0;
   background-color: #202020;
   opacity: 0;
-  -webkit-transition: opacity .4s ease;
-          transition: opacity .4s ease;
+  transition: opacity .4s ease;
 }
 .hero__box {
   width: 540px;
@@ -2682,7 +2637,6 @@ a.toolbar__popup-link:active {
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  -webkit-transition: padding-top .4s ease, padding-bottom .4s ease;
   transition: padding-top .4s ease, padding-bottom .4s ease;
 }
 .hero__avatar {
@@ -2698,12 +2652,10 @@ a.toolbar__popup-link:active {
   background-size: cover;
   border-radius: 50%;
   box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.2);
-  -webkit-transition: width .4s ease .2s, height .4s ease .2s, opacity .3s ease;
-          transition: width .4s ease .2s, height .4s ease .2s, opacity .3s ease;
+  transition: width .4s ease .2s, height .4s ease .2s, opacity .3s ease;
 }
 .hero__avatar .avatar__text {
   font-size: 40px;
-  -webkit-transition: margin-top .3s ease, top .3s ease, font-size .3s ease;
   transition: margin-top .3s ease, top .3s ease, font-size .3s ease;
 }
 .hero__title {
@@ -2713,7 +2665,6 @@ a.toolbar__popup-link:active {
   font-size: 46px;
   line-height: 1.217em;
   letter-spacing: -1px;
-  -webkit-transition: font-size .4s ease .2s, opacity .6s ease;
   transition: font-size .4s ease .2s, opacity .6s ease;
   -webkit-animation: hero-animate-close .6s 1 ease;
   -ms-animation: hero-animate-close .6s 1 ease;
@@ -2725,7 +2676,6 @@ a.toolbar__popup-link:active {
 .hero__text {
   font-size: 16px;
   line-height: 21px;
-  -webkit-transition: font-size .4s ease .2s, opacity .6s ease;
   transition: font-size .4s ease .2s, opacity .6s ease;
   -webkit-animation: hero-animate-close .6s 1 ease;
   -ms-animation: hero-animate-close .6s 1 ease;
@@ -2747,10 +2697,8 @@ a.toolbar__popup-link:active {
   bottom: -100%;
   left: 0;
   visibility: hidden;
-  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
   opacity: 0;
-  -webkit-transition: bottom .4s ease, visibility 0s ease .4s, opacity .4s ease;
   transition: bottom .4s ease, visibility 0s ease .4s, opacity .4s ease;
 }
 .hero__actions {
@@ -2758,7 +2706,6 @@ a.toolbar__popup-link:active {
   padding-top: 0;
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: max-height .4s ease .2s, padding .4s ease .2s, visibility 0s ease .6s, opacity .3s ease;
   transition: max-height .4s ease .2s, padding .4s ease .2s, visibility 0s ease .6s, opacity .3s ease;
 }
 .hero__actions button {
@@ -2773,7 +2720,6 @@ a.toolbar__popup-link:active {
   visibility: hidden;
   text-align: center;
   opacity: 0;
-  -webkit-transition: bottom .4s ease, visibility 0s ease .4s, opacity .4s ease;
   transition: bottom .4s ease, visibility 0s ease .4s, opacity .4s ease;
 }
 .hero__stats strong {
@@ -2888,8 +2834,7 @@ a.toolbar__popup-link:active {
   position: relative;
   border: 1px solid transparent;
   border-radius: 3px;
-  -webkit-transition: border .3s ease;
-          transition: border .3s ease;
+  transition: border .3s ease;
 }
 .comment:hover .comment__meta > * {
   opacity: .4;
@@ -2949,8 +2894,7 @@ a.toolbar__popup-link:active {
 }
 .comment__username {
   opacity: .4;
-  -webkit-transition: opacity .4s ease;
-          transition: opacity .4s ease;
+  transition: opacity .4s ease;
 }
 .comment__user:hover .comment__username {
   opacity: .7;
@@ -2974,8 +2918,7 @@ a.toolbar__popup-link:active {
 }
 .comment__meta > * {
   opacity: 0;
-  -webkit-transition: opacity .4s ease;
-          transition: opacity .4s ease;
+  transition: opacity .4s ease;
 }
 .comment__meta > * > .icon {
   cursor: default;
@@ -3015,7 +2958,7 @@ a.toolbar__popup-link:active {
   z-index: 150;
   opacity: 0;
   border-radius: 4px;
-  -webkit-transition: -webkit-transform .3s ease .2s, visibility 0s ease .5s, opacity .3s ease .2s;
+  transition: -webkit-transform .3s ease .2s, visibility 0s ease .5s, opacity .3s ease .2s;
   transition: transform .3s ease .2s, visibility 0s ease .5s, opacity .3s ease .2s;
 }
 .comment__dropdown .icon {
@@ -3070,8 +3013,8 @@ a.toolbar__popup-link:active {
 .comment__dropdown.state--open {
   visibility: visible;
   opacity: 1;
-  -webkit-transition: -webkit-transform .3s ease, visibility 0s ease .0s, opacity .3s ease;
-          transition: transform .3s ease, visibility 0s ease .0s, opacity .3s ease;
+  transition: -webkit-transform .3s ease, visibility 0s ease .0s, opacity .3s ease;
+  transition: transform .3s ease, visibility 0s ease .0s, opacity .3s ease;
 }
 .comment__dropdown-item {
   font-size: 12px;
@@ -3146,8 +3089,7 @@ a.toolbar__popup-link:active {
   line-height: 20px;
   vertical-align: top;
   z-index: 2;
-  -webkit-transition: all .2s ease;
-          transition: all .2s ease;
+  transition: all .2s ease;
   border-radius: 5px;
 }
 .comment-form__field-textarea::-moz-placeholder {
@@ -3190,8 +3132,7 @@ a.toolbar__popup-link:active {
   color: #000000;
   cursor: pointer;
   opacity: .2;
-  -webkit-transition: opacity .4s ease;
-          transition: opacity .4s ease;
+  transition: opacity .4s ease;
 }
 .alert__close:hover {
   opacity: .3;
@@ -3253,8 +3194,7 @@ a.toolbar__popup-link:active {
   right: 18px;
   cursor: pointer;
   z-index: 5000;
-  -webkit-transition: all .2s ease;
-          transition: all .2s ease;
+  transition: all .2s ease;
 }
 .confirmation__close .icon {
   width: 26px;
@@ -3376,7 +3316,6 @@ a.toolbar__popup-link:active {
   right: 0;
   left: 0;
   color: #ffffff;
-  background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.23) 0%, rgba(0,0,0,0.18) 70%, rgba(0,0,0,0) 100%);
   background-image: linear-gradient(top, rgba(0,0,0,0.23) 0%, rgba(0,0,0,0.18) 70%, rgba(0,0,0,0) 100%);
 }
 .post__content .video {
@@ -3492,8 +3431,7 @@ a.toolbar__popup-link:active {
   text-align: right;
   z-index: 110;
   opacity: 1;
-  -webkit-transition: all .4s ease;
-          transition: all .4s ease;
+  transition: all .4s ease;
 }
 .post-actions.state--loading .post-action--button {
   opacity: .5;
@@ -3838,8 +3776,7 @@ a.toolbar__popup-link:active {
   font-family: 'Proxima Nova', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   text-align: center;
   box-sizing: border-box;
-  -webkit-transition: border .4s ease;
-          transition: border .4s ease;
+  transition: border .4s ease;
 }
 .media-box.state--loaded {
   height: auto;
@@ -4060,8 +3997,7 @@ a.toolbar__popup-link:active {
 .meta-item__common,
 .meta-item:before {
   opacity: .4;
-  -webkit-transition: opacity .4s ease, color .4s ease;
-          transition: opacity .4s ease, color .4s ease;
+  transition: opacity .4s ease, color .4s ease;
 }
 .meta-item__common.icon {
   cursor: default;
@@ -4084,7 +4020,7 @@ a.toolbar__popup-link:active {
   z-index: 150;
   opacity: 0;
   border-radius: 4px;
-  -webkit-transition: -webkit-transform .3s ease .2s, visibility 0s ease .5s, opacity .3s ease .2s;
+  transition: -webkit-transform .3s ease .2s, visibility 0s ease .5s, opacity .3s ease .2s;
   transition: transform .3s ease .2s, visibility 0s ease .5s, opacity .3s ease .2s;
 }
 .meta-item__dropdown .icon {
@@ -4139,7 +4075,7 @@ a.toolbar__popup-link:active {
 .meta-item__dropdown.state--open {
   visibility: visible;
   opacity: 1;
-  -webkit-transition: -webkit-transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
+  transition: -webkit-transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
   transition: transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
 }
 .meta-item__dropdown.position-top:after {
@@ -4339,8 +4275,7 @@ a.toolbar__popup-link:active {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  -webkit-transition: all .3s ease;
-          transition: all .3s ease;
+  transition: all .3s ease;
 }
 a.button,
 a.approve-button,
@@ -4388,8 +4323,7 @@ a.write-message-button {
   bottom: 0;
   left: 0;
   border-radius: 3px;
-  -webkit-transition: border .3s ease, opacity .3s ease;
-          transition: border .3s ease, opacity .3s ease;
+  transition: border .3s ease, opacity .3s ease;
 }
 .button .icon,
 .approve-button .icon,
@@ -4836,8 +4770,7 @@ a.write-message-button {
   color: #b7b7b7;
   letter-spacing: 0;
   border-radius: 50%;
-  -webkit-transition: background .3s ease;
-          transition: background .3s ease;
+  transition: background .3s ease;
 }
 .button--circle .icon {
   margin: 2px;
@@ -4864,8 +4797,7 @@ a.write-message-button {
   opacity: .3;
   z-index: 200;
   border-radius: 0;
-  -webkit-transition: all .3s ease;
-          transition: all .3s ease;
+  transition: all .3s ease;
 }
 .back-button:before {
   content: "\e603";
@@ -4908,8 +4840,7 @@ a.write-message-button {
   content: "\e643";
 }
 .post-settings-button .post-settings-voting:before {
-  -webkit-transition: color .4s ease;
-          transition: color .4s ease;
+  transition: color .4s ease;
 }
 .post-settings-button .post-settings-voting.post-settings-voted:before,
 .post-settings-button .post-settings-voting:hover:before {
@@ -4936,8 +4867,7 @@ a.write-message-button {
   color: #c2c2c2;
   letter-spacing: 0;
   border-radius: 50%;
-  -webkit-transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
-          transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
   /*.icon {
     margin: 2px;
@@ -4967,8 +4897,7 @@ a.write-message-button {
   color: #c2c2c2;
   letter-spacing: 0;
   border-radius: 50%;
-  -webkit-transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
-          transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
   /*.icon {
     margin: 2px;
@@ -5132,8 +5061,7 @@ a.write-message-button {
   font-family: 'tastyicons';
   color: #000000;
   opacity: 0;
-  -webkit-transition: opacity .4s ease;
-          transition: opacity .4s ease;
+  transition: opacity .4s ease;
 }
 .form-checkbox__icon:before {
   content: "D";
@@ -5154,8 +5082,7 @@ a.write-message-button {
   opacity: 1;
   box-sizing: border-box;
   box-shadow: none;
-  -webkit-transition: opacity .4s ease;
-          transition: opacity .4s ease;
+  transition: opacity .4s ease;
 }
 .form-field__bg {
   position: absolute;
@@ -5182,8 +5109,7 @@ a.write-message-button {
 }
 .form-field--default .form-field__bg {
   border-radius: 5px;
-  -webkit-transition: border-color 0.4s ease, opacity 0.4s ease;
-          transition: border-color 0.4s ease, opacity 0.4s ease;
+  transition: border-color 0.4s ease, opacity 0.4s ease;
 }
 .form-field--default .form-field__input::-webkit-input-placeholder,
 .form-field--default .form-field__textarea::-webkit-input-placeholder {
@@ -5377,8 +5303,7 @@ a.write-message-button {
   vertical-align: bottom;
   color: #3f3f3f;
   cursor: pointer;
-  -webkit-transition: background-color 0.3s ease, color 0.3s ease;
-          transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 .form-popup__select-item.is--vkontakte {
   background-color: #4d75a3;
@@ -5430,8 +5355,7 @@ a.write-message-button {
   position: relative;
   display: inline-block;
   cursor: pointer;
-  -webkit-transition: all .4s ease;
-          transition: all .4s ease;
+  transition: all .4s ease;
 }
 .form-radio__inner {
   position: relative;
@@ -5564,8 +5488,7 @@ a.write-message-button {
   border: 1px solid;
   opacity: .1;
   border-radius: 4px;
-  -webkit-transition: border-color 0.4s ease, opacity 0.4s ease;
-          transition: border-color 0.4s ease, opacity 0.4s ease;
+  transition: border-color 0.4s ease, opacity 0.4s ease;
 }
 .form-radiogroup--buttons .form-radio:first-child {
   margin-left: 0;
@@ -5597,13 +5520,11 @@ a.write-message-button {
   font-family: 'tastyicons';
   vertical-align: middle;
   opacity: .5;
-  -webkit-transition: opacity .4s ease;
-          transition: opacity .4s ease;
+  transition: opacity .4s ease;
 }
 .form-radiogroup--buttons .form-radio__text {
   opacity: .5;
-  -webkit-transition: opacity .4s ease;
-          transition: opacity .4s ease;
+  transition: opacity .4s ease;
 }
 .form-radiogroup--buttons .form-radio--regular .form-radio__box:before {
   content: "B";
@@ -5721,8 +5642,7 @@ a.write-message-button {
   white-space: nowrap;
   cursor: pointer;
   overflow: hidden;
-  -webkit-transition: color .4s ease;
-          transition: color .4s ease;
+  transition: color .4s ease;
 }
 .form-select__item:first-child {
   border-top: none;
@@ -5744,8 +5664,7 @@ a.write-message-button {
 .form-upload__text {
   display: inline-block;
   border-bottom: 1px solid;
-  -webkit-transition: all .4s ease;
-          transition: all .4s ease;
+  transition: all .4s ease;
 }
 .form-upload__input {
   position: absolute;
@@ -5791,24 +5710,21 @@ a.write-message-button {
 .editable-field.state--focus .editable-field__control-wrap {
   visibility: visible;
   opacity: 1;
-  -webkit-transition: visibility 0s ease, opacity 0s ease;
-          transition: visibility 0s ease, opacity 0s ease;
+  transition: visibility 0s ease, opacity 0s ease;
 }
 .editable-field.state--editing .editable-field__content,
 .editable-field.state--focus .editable-field__content {
   display: none;
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: visibility 0s ease, opacity 0s ease;
-          transition: visibility 0s ease, opacity 0s ease;
+  transition: visibility 0s ease, opacity 0s ease;
 }
 .editable-field__control-wrap {
   padding-top: 1px;
   line-height: 23px;
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: visibility 0s ease .3s, opacity .3s ease;
-          transition: visibility 0s ease .3s, opacity .3s ease;
+  transition: visibility 0s ease .3s, opacity .3s ease;
 }
 .editable-field__control {
   width: 100%;
@@ -5832,8 +5748,7 @@ a.write-message-button {
   visibility: visible;
   opacity: 1;
   box-sizing: border-box;
-  -webkit-transition: visibility 0s ease, opacity .3s ease;
-          transition: visibility 0s ease, opacity .3s ease;
+  transition: visibility 0s ease, opacity .3s ease;
 }
 .editable-field__placeholder {
   display: none;
@@ -5853,8 +5768,7 @@ a.write-message-button {
   cursor: pointer;
   vertical-align: middle;
   opacity: .3;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
 .editable-field__button .icon {
   vertical-align: middle;
@@ -5880,8 +5794,7 @@ a.write-message-button {
 }
 .settings-design {
   position: relative;
-  -webkit-transition: background-color 0.3s ease;
-          transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   border-radius: 0 0 5px 5px;
   overflow: hidden;
   /** Absolute **/
@@ -5956,8 +5869,7 @@ a.write-message-button {
 .settings-design .animate--down,
 .settings-design .animate--up,
 .settings-design .animate--right {
-  -webkit-transition: all .15s ease;
-          transition: all .15s ease;
+  transition: all .15s ease;
 }
 .settings-design .animate--down {
   top: 50%;
@@ -5985,8 +5897,7 @@ a.write-message-button {
   left: 0;
   text-align: center;
   opacity: 0;
-  -webkit-transition: opacity .4s ease;
-          transition: opacity .4s ease;
+  transition: opacity .4s ease;
 }
 .settings-design__drop-text {
   margin-top: -1.5em;
@@ -5997,8 +5908,7 @@ a.write-message-button {
 }
 .settings-design__controls {
   position: relative;
-  -webkit-transition: opacity .4s ease;
-          transition: opacity .4s ease;
+  transition: opacity .4s ease;
 }
 .settings-design__control {
   padding: 15px;
@@ -6215,8 +6125,7 @@ a.write-message-button {
   cursor: pointer;
   vertical-align: top;
   opacity: .8;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
 .popup__toggle:hover {
   opacity: 1;
@@ -6230,8 +6139,7 @@ a.write-message-button {
   right: 0;
   cursor: pointer;
   opacity: .8;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
 .popup__close:hover {
   opacity: 1;
@@ -6252,7 +6160,7 @@ a.write-message-button {
   -webkit-transform: translate(0, 10px);
   -ms-transform: translate(0, 10px);
   transform: translate(0, 10px);
-  -webkit-transition: -webkit-transform .3s ease, visibility 0s ease .3s, opacity .3s ease;
+  transition: -webkit-transform .3s ease, visibility 0s ease .3s, opacity .3s ease;
   transition: transform .3s ease, visibility 0s ease .3s, opacity .3s ease;
 }
 .state--expanded .popup__dropdown {
@@ -6261,7 +6169,7 @@ a.write-message-button {
   -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
-  -webkit-transition: -webkit-transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
+  transition: -webkit-transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
   transition: transform .3s ease, visibility 0s ease 0s, opacity .3s ease;
 }
 .popup__dropdown:after {
@@ -6329,8 +6237,7 @@ a.write-message-button {
 }
 .popup--settings-design {
   width: 270px;
-  -webkit-transition: top .3s ease, left .3s ease;
-          transition: top .3s ease, left .3s ease;
+  transition: top .3s ease, left .3s ease;
 }
 .popup--subscribed-by,
 .popup--subscribed-to {
@@ -6551,8 +6458,7 @@ a.write-message-button {
   background: #eee;
   opacity: .36;
   border-radius: 4px;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
 .scroller__bar:hover {
   opacity: .5;
@@ -6656,8 +6562,7 @@ a.write-message-button {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  -webkit-transition: visibility 0s ease .4s, opacity .4s ease;
-          transition: visibility 0s ease .4s, opacity .4s ease;
+  transition: visibility 0s ease .4s, opacity .4s ease;
 }
 .types-posts:after {
   content: "";
@@ -6688,8 +6593,7 @@ a.write-message-button {
   display: inline-block;
   font-size: 54px;
   color: #6a6c71;
-  -webkit-transition: color .4s ease;
-          transition: color .4s ease;
+  transition: color .4s ease;
 }
 a.types-posts__item:hover {
   background-color: #333;
@@ -6727,8 +6631,7 @@ a.types-posts__item:hover .types-posts__text {
   text-transform: uppercase;
   color: #000000;
   opacity: .5;
-  -webkit-transition: color .4s ease;
-          transition: color .4s ease;
+  transition: color .4s ease;
 }
 @media (min-width: 1000px) {
   .types-posts__item {
@@ -6774,8 +6677,7 @@ a.types-posts__item:hover .types-posts__text {
   text-align: center;
   overflow: hidden;
   background-size: cover;
-  -webkit-transition: height .2s ease;
-          transition: height .2s ease;
+  transition: height .2s ease;
 }
 .settings__hero:after {
   content: "";
@@ -6824,8 +6726,7 @@ a.types-posts__item:hover .types-posts__text {
   left: 50%;
   font-size: 42px;
   opacity: .6;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
 .settings__hero__avatar .form-upload:hover {
   opacity: .8;
@@ -6842,8 +6743,7 @@ a.types-posts__item:hover .types-posts__text {
   background: #000000;
   opacity: 0;
   border-radius: 50%;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
   cursor: pointer;
 }
 .settings__hero__name {
@@ -6985,8 +6885,7 @@ a.types-posts__item:hover .types-posts__text {
 }
 .brick .meta-item__dropdown,
 .meta-item__content:hover .brick .meta-item__dropdown {
-  -webkit-transition: none;
-          transition: none;
+  transition: none;
 }
 .brick .meta-item--comments .meta-item__link.state--active {
   opacity: 1;
@@ -7090,19 +6989,16 @@ a.types-posts__item:hover .types-posts__text {
   right: 0;
   bottom: 0;
   left: 0;
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, #ffffff 36%);
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 36%);
   opacity: 0;
   border-radius: 0 0 4px 4px;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
   pointer-events: none;
 }
 .brick:hover .brick__meta {
   opacity: 1;
 }
 .brick__media + .brick__meta {
-  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 6%, rgba(0, 0, 0, 0.58) 100%);
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 6%, rgba(0, 0, 0, 0.58) 100%);
   color: #ffffff;
 }
@@ -7123,15 +7019,12 @@ a.types-posts__item:hover .types-posts__text {
 }
 /**** Isotope CSS3 transitions ****/
 .isotope {
-  -webkit-transition-property: height, width;
   transition-property: height, width;
-  -webkit-transition-duration: .8s;
   transition-duration: .8s;
 }
 .isotope .isotope-item {
-  -webkit-transition-property: -webkit-transform, opacity;
+  transition-property: -webkit-transform, opacity;
   transition-property: transform, opacity;
-  -webkit-transition-duration: .8s;
   transition-duration: .8s;
 }
 .isotope .isotope-item:hover {
@@ -7141,13 +7034,11 @@ a.types-posts__item:hover .types-posts__text {
 .isotope.no-transition,
 .isotope.no-transition .isotope-item,
 .isotope .isotope-item.no-transition {
-  -webkit-transition-duration: 0s;
   transition-duration: 0s;
 }
 /* End: Recommended Isotope styles */
 /* disable CSS transitions for containers with infinite scrolling*/
 .isotope.infinite-scrolling {
-  -webkit-transition: none;
   transition: none;
 }
 .search {
@@ -7161,8 +7052,7 @@ a.types-posts__item:hover .types-posts__text {
   overflow: hidden;
   opacity: .45;
   border-radius: 2em;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
   z-index: 10;
 }
 .page-header .search {
@@ -7179,8 +7069,7 @@ a.types-posts__item:hover .types-posts__text {
   display: inline-block;
   vertical-align: top;
   overflow: hidden;
-  -webkit-transition: max-width 0.3s ease;
-          transition: max-width 0.3s ease;
+  transition: max-width 0.3s ease;
 }
 .search.state--active .search__form {
   max-width: 154px;
@@ -7218,8 +7107,7 @@ a.types-posts__item:hover .types-posts__text {
   text-align: center;
   vertical-align: top;
   cursor: pointer;
-  -webkit-transition: background .3s ease, color .3s ease;
-          transition: background .3s ease, color .3s ease;
+  transition: background .3s ease, color .3s ease;
 }
 .search__button .icon {
   font-size: 15px;
@@ -7520,8 +7408,7 @@ a.types-posts__item:hover .types-posts__text {
   cursor: pointer;
   z-index: 5002;
   opacity: .8;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
 .messages__back:hover {
   opacity: 1;
@@ -7607,8 +7494,7 @@ a.types-posts__item:hover .types-posts__text {
   clear: both;
   font-size: 12px;
   color: #888;
-  -webkit-transition: color .5s ease;
-          transition: color .5s ease;
+  transition: color .5s ease;
 }
 .messages__hero {
   height: 134px;
@@ -7805,8 +7691,7 @@ a.types-posts__item:hover .types-posts__text {
   text-overflow: ellipsis;
   overflow: hidden;
   opacity: .6;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
 .messages__hint {
   font-size: 12px;
@@ -7952,7 +7837,6 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 .thread-leave {
@@ -7965,7 +7849,6 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: translate(-100%, 0);
   -ms-transform: translate(-100%, 0);
   transform: translate(-100%, 0);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 .conversations-enter {
@@ -7978,7 +7861,6 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 .conversations-leave {
@@ -7991,7 +7873,6 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: translate(100%, 0);
   -ms-transform: translate(100%, 0);
   transform: translate(100%, 0);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 .new-conversation-enter {
@@ -8004,7 +7885,6 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 .new-conversation-leave {
@@ -8017,7 +7897,6 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: translate(0, -100%);
   -ms-transform: translate(0, -100%);
   transform: translate(0, -100%);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 /*-----  End of Animations  ------*/
@@ -8171,8 +8050,8 @@ a.types-posts__item:hover .types-posts__text {
   top: auto;
   left: auto;
   opacity: 1;
-  -webkit-transition: -webkit-transform 0.3s ease, opacity 0.3s ease;
-          transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: -webkit-transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 .shellbox {
   width: 100%;
@@ -8186,8 +8065,7 @@ a.types-posts__item:hover .types-posts__text {
   z-index: 5000;
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: visibility 0s ease .4s, opacity .4s ease 0s;
-          transition: visibility 0s ease .4s, opacity .4s ease 0s;
+  transition: visibility 0s ease .4s, opacity .4s ease 0s;
 }
 .shellbox__main {
   width: 100%;
@@ -8216,7 +8094,7 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: rotateX(0deg);
   -ms-transform: rotateX(0deg);
   transform: rotateX(0deg);
-  -webkit-transition: -webkit-transform .3s ease, opacity .3s ease;
+  transition: -webkit-transform .3s ease, opacity .3s ease;
   transition: transform .3s ease, opacity .3s ease;
 }
 .shellbox--auth.is--select .form-popup--select {
@@ -8227,7 +8105,7 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: rotateX(0deg);
   -ms-transform: rotateX(0deg);
   transform: rotateX(0deg);
-  -webkit-transition: -webkit-transform .3s ease, opacity .3s ease;
+  transition: -webkit-transform .3s ease, opacity .3s ease;
   transition: transform .3s ease, opacity .3s ease;
 }
 .shellbox--auth.is--login .form-popup--login {
@@ -8238,7 +8116,7 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: rotateX(0deg);
   -ms-transform: rotateX(0deg);
   transform: rotateX(0deg);
-  -webkit-transition: -webkit-transform .3s ease, opacity .3s ease;
+  transition: -webkit-transform .3s ease, opacity .3s ease;
   transition: transform .3s ease, opacity .3s ease;
 }
 .shellbox--auth.is--reg .form-popup--reg {
@@ -8249,7 +8127,7 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: rotateX(0deg);
   -ms-transform: rotateX(0deg);
   transform: rotateX(0deg);
-  -webkit-transition: -webkit-transform .3s ease, opacity .3s ease;
+  transition: -webkit-transform .3s ease, opacity .3s ease;
   transition: transform .3s ease, opacity .3s ease;
 }
 .shellbox--auth.is--recovery .form-popup--recovery {
@@ -8260,7 +8138,7 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: rotateX(0deg);
   -ms-transform: rotateX(0deg);
   transform: rotateX(0deg);
-  -webkit-transition: -webkit-transform .3s ease, opacity .3s ease;
+  transition: -webkit-transform .3s ease, opacity .3s ease;
   transition: transform .3s ease, opacity .3s ease;
 }
 .switcher {
@@ -8289,14 +8167,12 @@ a.types-posts__item:hover .types-posts__text {
 .switcher__input:checked + .switcher__label .switcher__btn--on {
   visibility: visible;
   opacity: 1;
-  -webkit-transition: visibility 0s ease, opacity .3s ease;
-          transition: visibility 0s ease, opacity .3s ease;
+  transition: visibility 0s ease, opacity .3s ease;
 }
 .switcher__input:checked + .switcher__label .switcher__btn--off {
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: visibility 0s ease .3s, opacity .3s ease;
-          transition: visibility 0s ease .3s, opacity .3s ease;
+  transition: visibility 0s ease .3s, opacity .3s ease;
 }
 .switcher__label {
   width: 100%;
@@ -8321,16 +8197,14 @@ a.types-posts__item:hover .types-posts__text {
   color: #1e1d1d;
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: visibility 0s ease .3s, opacity .3s ease;
-          transition: visibility 0s ease .3s, opacity .3s ease;
+  transition: visibility 0s ease .3s, opacity .3s ease;
 }
 .switcher__btn--off {
   background-color: #3b3b3b;
   color: #ffffff;
   visibility: visible;
   opacity: 1;
-  -webkit-transition: visibility 0s ease, opacity .3s ease;
-          transition: visibility 0s ease, opacity .3s ease;
+  transition: visibility 0s ease, opacity .3s ease;
 }
 .account {
   margin-bottom: 15px;
@@ -8372,15 +8246,13 @@ a.types-posts__item:hover .types-posts__text {
   line-height: 26px;
   font-family: 'Proxima Nova Light', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   opacity: .17;
-  -webkit-transition: opacity .3s linear;
-          transition: opacity .3s linear;
+  transition: opacity .3s linear;
 }
 .account__status {
   font-size: 14px;
   line-height: 17px;
   opacity: .07;
-  -webkit-transition: opacity .3s linear;
-          transition: opacity .3s linear;
+  transition: opacity .3s linear;
 }
 .tabs-nav {
   width: 164px;
@@ -8433,8 +8305,7 @@ a.types-posts__item:hover .types-posts__text {
 .person {
   padding: 8px 18px;
   cursor: default;
-  -webkit-transition: background .3s linear;
-          transition: background .3s linear;
+  transition: background .3s linear;
 }
 .person:hover {
   background-color: rgba(35, 35, 35, 0.9);
@@ -8541,8 +8412,7 @@ a.types-posts__item:hover .types-posts__text {
   left: 20px;
   z-index: 200;
   opacity: 1;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
 .nav-types.state--loading .button,
 .nav-types.state--loading .approve-button,
@@ -8563,8 +8433,7 @@ a.types-posts__item:hover .types-posts__text {
 .nav-types.state--loading .introjs-button,
 .nav-types.state--loading .write-message-button {
   opacity: 0.3;
-  -webkit-transition: opacity .3s ease;
-          transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
 .nav-types.state--loading .button.state--active,
 .nav-types.state--loading .approve-button.state--active,
@@ -8632,8 +8501,7 @@ a.types-posts__item:hover .types-posts__text {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  -webkit-transition: background .4s ease, opacity .4s ease, color .4s ease;
-          transition: background .4s ease, opacity .4s ease, color .4s ease;
+  transition: background .4s ease, opacity .4s ease, color .4s ease;
   /** Types **/
 }
 .voting:before {
@@ -8652,8 +8520,7 @@ a.types-posts__item:hover .types-posts__text {
   display: inline-block;
   font-size: 20px;
   vertical-align: middle;
-  -webkit-transition: color .4s ease;
-          transition: color .4s ease;
+  transition: color .4s ease;
   opacity: .9;
 }
 .voting:before {
@@ -8716,8 +8583,7 @@ a.types-posts__item:hover .types-posts__text {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  -webkit-transition: background .4s ease, opacity .4s ease, color .4s ease;
-          transition: background .4s ease, opacity .4s ease, color .4s ease;
+  transition: background .4s ease, opacity .4s ease, color .4s ease;
   /** Types **/
 }
 .privacy-badge .icon {
@@ -8726,8 +8592,7 @@ a.types-posts__item:hover .types-posts__text {
   display: inline-block;
   font-size: 20px;
   vertical-align: middle;
-  -webkit-transition: color .4s ease;
-          transition: color .4s ease;
+  transition: color .4s ease;
   opacity: .9;
 }
 .privacy-badge .icon--lock {
@@ -8775,14 +8640,10 @@ a.types-posts__item:hover .types-posts__text {
 .hero .follow-status {
   left: 305px;
   top: 100px;
-  -webkit-transition-property: top, left;
-          transition-property: top, left;
-  -webkit-transition-timing-function: ease;
-          transition-timing-function: ease;
-  -webkit-transition-duration: 0.4s;
-          transition-duration: 0.4s;
-  -webkit-transition-delay: 0.2s;
-          transition-delay: 0.2s;
+  transition-property: top, left;
+  transition-timing-function: ease;
+  transition-duration: 0.4s;
+  transition-delay: 0.2s;
 }
 .follow-status.state--none {
   cursor: pointer;
@@ -9309,8 +9170,7 @@ a.types-posts__item:hover .types-posts__text {
   overflow: hidden;
   z-index: 310;
   opacity: 0;
-  -webkit-transition: top .4s ease, opacity .4s ease;
-          transition: top .4s ease, opacity .4s ease;
+  transition: top .4s ease, opacity .4s ease;
 }
 .browserbar a {
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
@@ -9336,8 +9196,7 @@ a.types-posts__item:hover .types-posts__text {
 }
 .browserbar-enabled:not(.hero-enabled) .page {
   padding-top: 50px;
-  -webkit-transition: padding-top 0.2s ease 0.2s;
-          transition: padding-top 0.2s ease 0.2s;
+  transition: padding-top 0.2s ease 0.2s;
 }
 .social-share {
   margin-top: -68px;
@@ -9552,8 +9411,7 @@ a.types-posts__item:hover .types-posts__text {
       -ms-user-select: none;
           user-select: none;
   border-radius: 26.5px;
-  -webkit-transition: width 0.3s ease-in-out;
-          transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
 }
 .calendar .calendar__period-marker--current {
   width: 7px;
@@ -9690,8 +9548,7 @@ a.types-posts__item:hover .types-posts__text {
   top: 0;
   left: 0;
   width: 50%;
-  -webkit-transition: width .4s ease, opacity 1s ease;
-          transition: width .4s ease, opacity 1s ease;
+  transition: width .4s ease, opacity 1s ease;
 }
 /*.pagination {
   &:extend(.layout-constrain all);
@@ -9715,13 +9572,10 @@ a.pagination__item:hover {
   z-index: 999999;
   background-color: #000;
   opacity: 0;
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(100%, rgba(0, 0, 0, 0.9)));
-  background: -webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.9) 100%);
   background: radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.9) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66000000', endColorstr='#e6000000', GradientType=1);
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: alpha(opacity=50);
-  -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 .introjs-fixParent {
@@ -9761,14 +9615,12 @@ tr.introjs-showElement > th.toolbar--nav {
   background-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
   border-radius: 4px;
-  -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 .introjs-tooltipReferenceLayer {
   position: absolute;
   z-index: 10000000;
   background-color: transparent;
-  -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 .introjs-helperLayer *,
@@ -9792,9 +9644,7 @@ tr.introjs-showElement > th.toolbar--nav {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   background: #ff3019;
   /* Old browsers */
-  background: -webkit-linear-gradient(top, #ff3019 0%, #cf0404 100%);
   /* Chrome10+,Safari5.1+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ff3019), color-stop(100%, #cf0404));
   /* Chrome,Safari4+ */
   /* FF3.6+ */
   /* IE10+ */
@@ -9889,7 +9739,6 @@ tr.introjs-showElement > th.toolbar--nav {
   background-color: #fafafa;
   font-family: 'Proxima Nova', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   border-radius: 2px;
-  -webkit-transition: opacity 0.1s ease-out;
   transition: opacity 0.1s ease-out;
   -webkit-touch-callout: none;
   -webkit-user-select: none;

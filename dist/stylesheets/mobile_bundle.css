@@ -850,7 +850,6 @@ body {
   -webkit-animation: pop-upwards 160ms forwards linear;
   -ms-animation: pop-upwards 160ms forwards linear;
   animation: pop-upwards 160ms forwards linear;
-  -webkit-transition: top 0.075s ease-out, left 0.075s ease-out;
   transition: top 0.075s ease-out, left 0.075s ease-out;
 }
 .medium-editor-action-bold {
@@ -914,11 +913,9 @@ body {
 .medium-editor-toolbar {
   border: 1px solid #000;
   background-color: #242424;
-  background: -webkit-linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.75));
   background: linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.75));
   border-radius: 5px;
   box-shadow: 0 0 3px #000;
-  -webkit-transition: top 0.075s ease-out, left 0.075s ease-out;
   transition: top 0.075s ease-out, left 0.075s ease-out;
 }
 .medium-editor-toolbar li button {
@@ -930,10 +927,8 @@ body {
   border-left: 1px solid rgba(255, 255, 255, 0.1);
   background-color: #242424;
   color: #fff;
-  background: -webkit-linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.89));
   background: linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.89));
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-transition: background-color 0.2s ease-in;
   transition: background-color 0.2s ease-in;
 }
 .medium-editor-toolbar li button:hover {
@@ -951,7 +946,6 @@ body {
 .medium-editor-toolbar li .medium-editor-button-active {
   background-color: #000;
   color: #fff;
-  background: -webkit-linear-gradient(bottom, #242424, rgba(0, 0, 0, 0.89));
   background: linear-gradient(bottom, #242424, rgba(0, 0, 0, 0.89));
 }
 .medium-editor-toolbar-form-anchor {
@@ -2224,7 +2218,6 @@ a.toolbar__popup-link:active {
   display: none;
   bottom: 0;
   left: 0;
-  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
 }
 .hero__content {
@@ -2946,8 +2939,7 @@ a.toolbar__popup-link:active {
   font-family: 'Proxima Nova', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   text-align: center;
   box-sizing: border-box;
-  -webkit-transition: border .4s ease;
-          transition: border .4s ease;
+  transition: border .4s ease;
 }
 .uploader.__loaded {
   height: auto;
@@ -3156,14 +3148,12 @@ a.pagination__item:active {
 .switcher__input:checked + .switcher__label .switcher__btn--on {
   visibility: visible;
   opacity: 1;
-  -webkit-transition: visibility 0s ease, opacity .3s ease;
-          transition: visibility 0s ease, opacity .3s ease;
+  transition: visibility 0s ease, opacity .3s ease;
 }
 .switcher__input:checked + .switcher__label .switcher__btn--off {
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: visibility 0s ease .3s, opacity .3s ease;
-          transition: visibility 0s ease .3s, opacity .3s ease;
+  transition: visibility 0s ease .3s, opacity .3s ease;
 }
 .switcher__label {
   width: 100%;
@@ -3188,16 +3178,14 @@ a.pagination__item:active {
   color: #1e1d1d;
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: visibility 0s ease .3s, opacity .3s ease;
-          transition: visibility 0s ease .3s, opacity .3s ease;
+  transition: visibility 0s ease .3s, opacity .3s ease;
 }
 .switcher__btn--off {
   background-color: rgba(0, 0, 0, 0.45);
   color: #ffffff;
   visibility: visible;
   opacity: 1;
-  -webkit-transition: visibility 0s ease, opacity .3s ease;
-          transition: visibility 0s ease, opacity .3s ease;
+  transition: visibility 0s ease, opacity .3s ease;
 }
 .account {
   margin-top: 15px;
@@ -3257,14 +3245,12 @@ a.pagination__item:active {
 }
 .account__logout {
   color: inherit !important;
-  -webkit-transition: none;
-          transition: none;
+  transition: none;
 }
 .account__logout:after {
   border: 1px solid;
   opacity: .1;
-  -webkit-transition: none;
-          transition: none;
+  transition: none;
 }
 .account__logout:active:after {
   opacity: .5;
@@ -3286,8 +3272,7 @@ a.pagination__item:active {
   font-size: 0;
   text-align: center;
   overflow: hidden;
-  -webkit-transition: height .2s ease;
-          transition: height .2s ease;
+  transition: height .2s ease;
 }
 .settings__hero:after {
   content: "";
@@ -3489,8 +3474,7 @@ a.pagination__item:active {
 }
 .subscriptions__user {
   padding: 12px;
-  -webkit-transition: background .3s linear;
-          transition: background .3s linear;
+  transition: background .3s linear;
 }
 .subscriptions__user button {
   margin-left: 5px;
@@ -4017,7 +4001,6 @@ a.pagination__item:active {
   -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 .thread-leave {
@@ -4030,7 +4013,6 @@ a.pagination__item:active {
   -webkit-transform: translate(-100%, 0);
   -ms-transform: translate(-100%, 0);
   transform: translate(-100%, 0);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 .conversations-enter {
@@ -4043,7 +4025,6 @@ a.pagination__item:active {
   -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 .conversations-leave {
@@ -4056,7 +4037,6 @@ a.pagination__item:active {
   -webkit-transform: translate(100%, 0);
   -ms-transform: translate(100%, 0);
   transform: translate(100%, 0);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 .new-conversation-enter {
@@ -4069,7 +4049,6 @@ a.pagination__item:active {
   -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 .new-conversation-leave {
@@ -4082,7 +4061,6 @@ a.pagination__item:active {
   -webkit-transform: translate(0, -100%);
   -ms-transform: translate(0, -100%);
   transform: translate(0, -100%);
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
 /*-----  End of Animations  ------*/

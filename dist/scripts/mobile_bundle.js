@@ -3,11440 +3,7 @@ require('./mobile/bundle');
 
 
 
-},{"./mobile/bundle":4}],2:[function(require,module,exports){
-(function (global){
-// moment.js locale configuration
-// locale : russian (ru)
-// author : Viktorminator : https://github.com/Viktorminator
-// Author : Menelion Elensúle : https://github.com/Oire
-
-(function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['moment'], factory); // AMD
-    } else if (typeof exports === 'object') {
-        module.exports = factory(require('../moment')); // Node
-    } else {
-        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
-    }
-}(function (moment) {
-    function plural(word, num) {
-        var forms = word.split('_');
-        return num % 10 === 1 && num % 100 !== 11 ? forms[0] : (num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? forms[1] : forms[2]);
-    }
-
-    function relativeTimeWithPlural(number, withoutSuffix, key) {
-        var format = {
-            'mm': withoutSuffix ? 'минута_минуты_минут' : 'минуту_минуты_минут',
-            'hh': 'час_часа_часов',
-            'dd': 'день_дня_дней',
-            'MM': 'месяц_месяца_месяцев',
-            'yy': 'год_года_лет'
-        };
-        if (key === 'm') {
-            return withoutSuffix ? 'минута' : 'минуту';
-        }
-        else {
-            return number + ' ' + plural(format[key], +number);
-        }
-    }
-
-    function monthsCaseReplace(m, format) {
-        var months = {
-            'nominative': 'январь_февраль_март_апрель_май_июнь_июль_август_сентябрь_октябрь_ноябрь_декабрь'.split('_'),
-            'accusative': 'января_февраля_марта_апреля_мая_июня_июля_августа_сентября_октября_ноября_декабря'.split('_')
-        },
-
-        nounCase = (/D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/).test(format) ?
-            'accusative' :
-            'nominative';
-
-        return months[nounCase][m.month()];
-    }
-
-    function monthsShortCaseReplace(m, format) {
-        var monthsShort = {
-            'nominative': 'янв_фев_март_апр_май_июнь_июль_авг_сен_окт_ноя_дек'.split('_'),
-            'accusative': 'янв_фев_мар_апр_мая_июня_июля_авг_сен_окт_ноя_дек'.split('_')
-        },
-
-        nounCase = (/D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/).test(format) ?
-            'accusative' :
-            'nominative';
-
-        return monthsShort[nounCase][m.month()];
-    }
-
-    function weekdaysCaseReplace(m, format) {
-        var weekdays = {
-            'nominative': 'воскресенье_понедельник_вторник_среда_четверг_пятница_суббота'.split('_'),
-            'accusative': 'воскресенье_понедельник_вторник_среду_четверг_пятницу_субботу'.split('_')
-        },
-
-        nounCase = (/\[ ?[Вв] ?(?:прошлую|следующую|эту)? ?\] ?dddd/).test(format) ?
-            'accusative' :
-            'nominative';
-
-        return weekdays[nounCase][m.day()];
-    }
-
-    return moment.defineLocale('ru', {
-        months : monthsCaseReplace,
-        monthsShort : monthsShortCaseReplace,
-        weekdays : weekdaysCaseReplace,
-        weekdaysShort : 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
-        weekdaysMin : 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
-        monthsParse : [/^янв/i, /^фев/i, /^мар/i, /^апр/i, /^ма[й|я]/i, /^июн/i, /^июл/i, /^авг/i, /^сен/i, /^окт/i, /^ноя/i, /^дек/i],
-        longDateFormat : {
-            LT : 'HH:mm',
-            LTS : 'LT:ss',
-            L : 'DD.MM.YYYY',
-            LL : 'D MMMM YYYY г.',
-            LLL : 'D MMMM YYYY г., LT',
-            LLLL : 'dddd, D MMMM YYYY г., LT'
-        },
-        calendar : {
-            sameDay: '[Сегодня в] LT',
-            nextDay: '[Завтра в] LT',
-            lastDay: '[Вчера в] LT',
-            nextWeek: function () {
-                return this.day() === 2 ? '[Во] dddd [в] LT' : '[В] dddd [в] LT';
-            },
-            lastWeek: function (now) {
-                if (now.week() !== this.week()) {
-                    switch (this.day()) {
-                    case 0:
-                        return '[В прошлое] dddd [в] LT';
-                    case 1:
-                    case 2:
-                    case 4:
-                        return '[В прошлый] dddd [в] LT';
-                    case 3:
-                    case 5:
-                    case 6:
-                        return '[В прошлую] dddd [в] LT';
-                    }
-                } else {
-                    if (this.day() === 2) {
-                        return '[Во] dddd [в] LT';
-                    } else {
-                        return '[В] dddd [в] LT';
-                    }
-                }
-            },
-            sameElse: 'L'
-        },
-        relativeTime : {
-            future : 'через %s',
-            past : '%s назад',
-            s : 'несколько секунд',
-            m : relativeTimeWithPlural,
-            mm : relativeTimeWithPlural,
-            h : 'час',
-            hh : relativeTimeWithPlural,
-            d : 'день',
-            dd : relativeTimeWithPlural,
-            M : 'месяц',
-            MM : relativeTimeWithPlural,
-            y : 'год',
-            yy : relativeTimeWithPlural
-        },
-
-        meridiemParse: /ночи|утра|дня|вечера/i,
-        isPM : function (input) {
-            return /^(дня|вечера)$/.test(input);
-        },
-
-        meridiem : function (hour, minute, isLower) {
-            if (hour < 4) {
-                return 'ночи';
-            } else if (hour < 12) {
-                return 'утра';
-            } else if (hour < 17) {
-                return 'дня';
-            } else {
-                return 'вечера';
-            }
-        },
-
-        ordinalParse: /\d{1,2}-(й|го|я)/,
-        ordinal: function (number, period) {
-            switch (period) {
-            case 'M':
-            case 'd':
-            case 'DDD':
-                return number + '-й';
-            case 'D':
-                return number + '-го';
-            case 'w':
-            case 'W':
-                return number + '-я';
-            default:
-                return number;
-            }
-        },
-
-        week : {
-            dow : 1, // Monday is the first day of the week.
-            doy : 7  // The week that contains Jan 1st is the first week of the year.
-        }
-    });
-}));
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../moment":3}],3:[function(require,module,exports){
-(function (global){
-//! moment.js
-//! version : 2.8.4
-//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
-//! license : MIT
-//! momentjs.com
-
-(function (undefined) {
-    /************************************
-        Constants
-    ************************************/
-
-    var moment,
-        VERSION = '2.8.4',
-        // the global-scope this is NOT the global object in Node.js
-        globalScope = typeof global !== 'undefined' ? global : this,
-        oldGlobalMoment,
-        round = Math.round,
-        hasOwnProperty = Object.prototype.hasOwnProperty,
-        i,
-
-        YEAR = 0,
-        MONTH = 1,
-        DATE = 2,
-        HOUR = 3,
-        MINUTE = 4,
-        SECOND = 5,
-        MILLISECOND = 6,
-
-        // internal storage for locale config files
-        locales = {},
-
-        // extra moment internal properties (plugins register props here)
-        momentProperties = [],
-
-        // check for nodeJS
-        hasModule = (typeof module !== 'undefined' && module && module.exports),
-
-        // ASP.NET json date format regex
-        aspNetJsonRegex = /^\/?Date\((\-?\d+)/i,
-        aspNetTimeSpanJsonRegex = /(\-)?(?:(\d*)\.)?(\d+)\:(\d+)(?:\:(\d+)\.?(\d{3})?)?/,
-
-        // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
-        // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
-        isoDurationRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/,
-
-        // format tokens
-        formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|x|X|zz?|ZZ?|.)/g,
-        localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g,
-
-        // parsing token regexes
-        parseTokenOneOrTwoDigits = /\d\d?/, // 0 - 99
-        parseTokenOneToThreeDigits = /\d{1,3}/, // 0 - 999
-        parseTokenOneToFourDigits = /\d{1,4}/, // 0 - 9999
-        parseTokenOneToSixDigits = /[+\-]?\d{1,6}/, // -999,999 - 999,999
-        parseTokenDigits = /\d+/, // nonzero number of digits
-        parseTokenWord = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i, // any word (or two) characters or numbers including two/three word month in arabic.
-        parseTokenTimezone = /Z|[\+\-]\d\d:?\d\d/gi, // +00:00 -00:00 +0000 -0000 or Z
-        parseTokenT = /T/i, // T (ISO separator)
-        parseTokenOffsetMs = /[\+\-]?\d+/, // 1234567890123
-        parseTokenTimestampMs = /[\+\-]?\d+(\.\d{1,3})?/, // 123456789 123456789.123
-
-        //strict parsing regexes
-        parseTokenOneDigit = /\d/, // 0 - 9
-        parseTokenTwoDigits = /\d\d/, // 00 - 99
-        parseTokenThreeDigits = /\d{3}/, // 000 - 999
-        parseTokenFourDigits = /\d{4}/, // 0000 - 9999
-        parseTokenSixDigits = /[+-]?\d{6}/, // -999,999 - 999,999
-        parseTokenSignedNumber = /[+-]?\d+/, // -inf - inf
-
-        // iso 8601 regex
-        // 0000-00-00 0000-W00 or 0000-W00-0 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000 or +00)
-        isoRegex = /^\s*(?:[+-]\d{6}|\d{4})-(?:(\d\d-\d\d)|(W\d\d$)|(W\d\d-\d)|(\d\d\d))((T| )(\d\d(:\d\d(:\d\d(\.\d+)?)?)?)?([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/,
-
-        isoFormat = 'YYYY-MM-DDTHH:mm:ssZ',
-
-        isoDates = [
-            ['YYYYYY-MM-DD', /[+-]\d{6}-\d{2}-\d{2}/],
-            ['YYYY-MM-DD', /\d{4}-\d{2}-\d{2}/],
-            ['GGGG-[W]WW-E', /\d{4}-W\d{2}-\d/],
-            ['GGGG-[W]WW', /\d{4}-W\d{2}/],
-            ['YYYY-DDD', /\d{4}-\d{3}/]
-        ],
-
-        // iso time formats and regexes
-        isoTimes = [
-            ['HH:mm:ss.SSSS', /(T| )\d\d:\d\d:\d\d\.\d+/],
-            ['HH:mm:ss', /(T| )\d\d:\d\d:\d\d/],
-            ['HH:mm', /(T| )\d\d:\d\d/],
-            ['HH', /(T| )\d\d/]
-        ],
-
-        // timezone chunker '+10:00' > ['10', '00'] or '-1530' > ['-15', '30']
-        parseTimezoneChunker = /([\+\-]|\d\d)/gi,
-
-        // getter and setter names
-        proxyGettersAndSetters = 'Date|Hours|Minutes|Seconds|Milliseconds'.split('|'),
-        unitMillisecondFactors = {
-            'Milliseconds' : 1,
-            'Seconds' : 1e3,
-            'Minutes' : 6e4,
-            'Hours' : 36e5,
-            'Days' : 864e5,
-            'Months' : 2592e6,
-            'Years' : 31536e6
-        },
-
-        unitAliases = {
-            ms : 'millisecond',
-            s : 'second',
-            m : 'minute',
-            h : 'hour',
-            d : 'day',
-            D : 'date',
-            w : 'week',
-            W : 'isoWeek',
-            M : 'month',
-            Q : 'quarter',
-            y : 'year',
-            DDD : 'dayOfYear',
-            e : 'weekday',
-            E : 'isoWeekday',
-            gg: 'weekYear',
-            GG: 'isoWeekYear'
-        },
-
-        camelFunctions = {
-            dayofyear : 'dayOfYear',
-            isoweekday : 'isoWeekday',
-            isoweek : 'isoWeek',
-            weekyear : 'weekYear',
-            isoweekyear : 'isoWeekYear'
-        },
-
-        // format function strings
-        formatFunctions = {},
-
-        // default relative time thresholds
-        relativeTimeThresholds = {
-            s: 45,  // seconds to minute
-            m: 45,  // minutes to hour
-            h: 22,  // hours to day
-            d: 26,  // days to month
-            M: 11   // months to year
-        },
-
-        // tokens to ordinalize and pad
-        ordinalizeTokens = 'DDD w W M D d'.split(' '),
-        paddedTokens = 'M D H h m s w W'.split(' '),
-
-        formatTokenFunctions = {
-            M    : function () {
-                return this.month() + 1;
-            },
-            MMM  : function (format) {
-                return this.localeData().monthsShort(this, format);
-            },
-            MMMM : function (format) {
-                return this.localeData().months(this, format);
-            },
-            D    : function () {
-                return this.date();
-            },
-            DDD  : function () {
-                return this.dayOfYear();
-            },
-            d    : function () {
-                return this.day();
-            },
-            dd   : function (format) {
-                return this.localeData().weekdaysMin(this, format);
-            },
-            ddd  : function (format) {
-                return this.localeData().weekdaysShort(this, format);
-            },
-            dddd : function (format) {
-                return this.localeData().weekdays(this, format);
-            },
-            w    : function () {
-                return this.week();
-            },
-            W    : function () {
-                return this.isoWeek();
-            },
-            YY   : function () {
-                return leftZeroFill(this.year() % 100, 2);
-            },
-            YYYY : function () {
-                return leftZeroFill(this.year(), 4);
-            },
-            YYYYY : function () {
-                return leftZeroFill(this.year(), 5);
-            },
-            YYYYYY : function () {
-                var y = this.year(), sign = y >= 0 ? '+' : '-';
-                return sign + leftZeroFill(Math.abs(y), 6);
-            },
-            gg   : function () {
-                return leftZeroFill(this.weekYear() % 100, 2);
-            },
-            gggg : function () {
-                return leftZeroFill(this.weekYear(), 4);
-            },
-            ggggg : function () {
-                return leftZeroFill(this.weekYear(), 5);
-            },
-            GG   : function () {
-                return leftZeroFill(this.isoWeekYear() % 100, 2);
-            },
-            GGGG : function () {
-                return leftZeroFill(this.isoWeekYear(), 4);
-            },
-            GGGGG : function () {
-                return leftZeroFill(this.isoWeekYear(), 5);
-            },
-            e : function () {
-                return this.weekday();
-            },
-            E : function () {
-                return this.isoWeekday();
-            },
-            a    : function () {
-                return this.localeData().meridiem(this.hours(), this.minutes(), true);
-            },
-            A    : function () {
-                return this.localeData().meridiem(this.hours(), this.minutes(), false);
-            },
-            H    : function () {
-                return this.hours();
-            },
-            h    : function () {
-                return this.hours() % 12 || 12;
-            },
-            m    : function () {
-                return this.minutes();
-            },
-            s    : function () {
-                return this.seconds();
-            },
-            S    : function () {
-                return toInt(this.milliseconds() / 100);
-            },
-            SS   : function () {
-                return leftZeroFill(toInt(this.milliseconds() / 10), 2);
-            },
-            SSS  : function () {
-                return leftZeroFill(this.milliseconds(), 3);
-            },
-            SSSS : function () {
-                return leftZeroFill(this.milliseconds(), 3);
-            },
-            Z    : function () {
-                var a = -this.zone(),
-                    b = '+';
-                if (a < 0) {
-                    a = -a;
-                    b = '-';
-                }
-                return b + leftZeroFill(toInt(a / 60), 2) + ':' + leftZeroFill(toInt(a) % 60, 2);
-            },
-            ZZ   : function () {
-                var a = -this.zone(),
-                    b = '+';
-                if (a < 0) {
-                    a = -a;
-                    b = '-';
-                }
-                return b + leftZeroFill(toInt(a / 60), 2) + leftZeroFill(toInt(a) % 60, 2);
-            },
-            z : function () {
-                return this.zoneAbbr();
-            },
-            zz : function () {
-                return this.zoneName();
-            },
-            x    : function () {
-                return this.valueOf();
-            },
-            X    : function () {
-                return this.unix();
-            },
-            Q : function () {
-                return this.quarter();
-            }
-        },
-
-        deprecations = {},
-
-        lists = ['months', 'monthsShort', 'weekdays', 'weekdaysShort', 'weekdaysMin'];
-
-    // Pick the first defined of two or three arguments. dfl comes from
-    // default.
-    function dfl(a, b, c) {
-        switch (arguments.length) {
-            case 2: return a != null ? a : b;
-            case 3: return a != null ? a : b != null ? b : c;
-            default: throw new Error('Implement me');
-        }
-    }
-
-    function hasOwnProp(a, b) {
-        return hasOwnProperty.call(a, b);
-    }
-
-    function defaultParsingFlags() {
-        // We need to deep clone this object, and es5 standard is not very
-        // helpful.
-        return {
-            empty : false,
-            unusedTokens : [],
-            unusedInput : [],
-            overflow : -2,
-            charsLeftOver : 0,
-            nullInput : false,
-            invalidMonth : null,
-            invalidFormat : false,
-            userInvalidated : false,
-            iso: false
-        };
-    }
-
-    function printMsg(msg) {
-        if (moment.suppressDeprecationWarnings === false &&
-                typeof console !== 'undefined' && console.warn) {
-            console.warn('Deprecation warning: ' + msg);
-        }
-    }
-
-    function deprecate(msg, fn) {
-        var firstTime = true;
-        return extend(function () {
-            if (firstTime) {
-                printMsg(msg);
-                firstTime = false;
-            }
-            return fn.apply(this, arguments);
-        }, fn);
-    }
-
-    function deprecateSimple(name, msg) {
-        if (!deprecations[name]) {
-            printMsg(msg);
-            deprecations[name] = true;
-        }
-    }
-
-    function padToken(func, count) {
-        return function (a) {
-            return leftZeroFill(func.call(this, a), count);
-        };
-    }
-    function ordinalizeToken(func, period) {
-        return function (a) {
-            return this.localeData().ordinal(func.call(this, a), period);
-        };
-    }
-
-    while (ordinalizeTokens.length) {
-        i = ordinalizeTokens.pop();
-        formatTokenFunctions[i + 'o'] = ordinalizeToken(formatTokenFunctions[i], i);
-    }
-    while (paddedTokens.length) {
-        i = paddedTokens.pop();
-        formatTokenFunctions[i + i] = padToken(formatTokenFunctions[i], 2);
-    }
-    formatTokenFunctions.DDDD = padToken(formatTokenFunctions.DDD, 3);
-
-
-    /************************************
-        Constructors
-    ************************************/
-
-    function Locale() {
-    }
-
-    // Moment prototype object
-    function Moment(config, skipOverflow) {
-        if (skipOverflow !== false) {
-            checkOverflow(config);
-        }
-        copyConfig(this, config);
-        this._d = new Date(+config._d);
-    }
-
-    // Duration Constructor
-    function Duration(duration) {
-        var normalizedInput = normalizeObjectUnits(duration),
-            years = normalizedInput.year || 0,
-            quarters = normalizedInput.quarter || 0,
-            months = normalizedInput.month || 0,
-            weeks = normalizedInput.week || 0,
-            days = normalizedInput.day || 0,
-            hours = normalizedInput.hour || 0,
-            minutes = normalizedInput.minute || 0,
-            seconds = normalizedInput.second || 0,
-            milliseconds = normalizedInput.millisecond || 0;
-
-        // representation for dateAddRemove
-        this._milliseconds = +milliseconds +
-            seconds * 1e3 + // 1000
-            minutes * 6e4 + // 1000 * 60
-            hours * 36e5; // 1000 * 60 * 60
-        // Because of dateAddRemove treats 24 hours as different from a
-        // day when working around DST, we need to store them separately
-        this._days = +days +
-            weeks * 7;
-        // It is impossible translate months into days without knowing
-        // which months you are are talking about, so we have to store
-        // it separately.
-        this._months = +months +
-            quarters * 3 +
-            years * 12;
-
-        this._data = {};
-
-        this._locale = moment.localeData();
-
-        this._bubble();
-    }
-
-    /************************************
-        Helpers
-    ************************************/
-
-
-    function extend(a, b) {
-        for (var i in b) {
-            if (hasOwnProp(b, i)) {
-                a[i] = b[i];
-            }
-        }
-
-        if (hasOwnProp(b, 'toString')) {
-            a.toString = b.toString;
-        }
-
-        if (hasOwnProp(b, 'valueOf')) {
-            a.valueOf = b.valueOf;
-        }
-
-        return a;
-    }
-
-    function copyConfig(to, from) {
-        var i, prop, val;
-
-        if (typeof from._isAMomentObject !== 'undefined') {
-            to._isAMomentObject = from._isAMomentObject;
-        }
-        if (typeof from._i !== 'undefined') {
-            to._i = from._i;
-        }
-        if (typeof from._f !== 'undefined') {
-            to._f = from._f;
-        }
-        if (typeof from._l !== 'undefined') {
-            to._l = from._l;
-        }
-        if (typeof from._strict !== 'undefined') {
-            to._strict = from._strict;
-        }
-        if (typeof from._tzm !== 'undefined') {
-            to._tzm = from._tzm;
-        }
-        if (typeof from._isUTC !== 'undefined') {
-            to._isUTC = from._isUTC;
-        }
-        if (typeof from._offset !== 'undefined') {
-            to._offset = from._offset;
-        }
-        if (typeof from._pf !== 'undefined') {
-            to._pf = from._pf;
-        }
-        if (typeof from._locale !== 'undefined') {
-            to._locale = from._locale;
-        }
-
-        if (momentProperties.length > 0) {
-            for (i in momentProperties) {
-                prop = momentProperties[i];
-                val = from[prop];
-                if (typeof val !== 'undefined') {
-                    to[prop] = val;
-                }
-            }
-        }
-
-        return to;
-    }
-
-    function absRound(number) {
-        if (number < 0) {
-            return Math.ceil(number);
-        } else {
-            return Math.floor(number);
-        }
-    }
-
-    // left zero fill a number
-    // see http://jsperf.com/left-zero-filling for performance comparison
-    function leftZeroFill(number, targetLength, forceSign) {
-        var output = '' + Math.abs(number),
-            sign = number >= 0;
-
-        while (output.length < targetLength) {
-            output = '0' + output;
-        }
-        return (sign ? (forceSign ? '+' : '') : '-') + output;
-    }
-
-    function positiveMomentsDifference(base, other) {
-        var res = {milliseconds: 0, months: 0};
-
-        res.months = other.month() - base.month() +
-            (other.year() - base.year()) * 12;
-        if (base.clone().add(res.months, 'M').isAfter(other)) {
-            --res.months;
-        }
-
-        res.milliseconds = +other - +(base.clone().add(res.months, 'M'));
-
-        return res;
-    }
-
-    function momentsDifference(base, other) {
-        var res;
-        other = makeAs(other, base);
-        if (base.isBefore(other)) {
-            res = positiveMomentsDifference(base, other);
-        } else {
-            res = positiveMomentsDifference(other, base);
-            res.milliseconds = -res.milliseconds;
-            res.months = -res.months;
-        }
-
-        return res;
-    }
-
-    // TODO: remove 'name' arg after deprecation is removed
-    function createAdder(direction, name) {
-        return function (val, period) {
-            var dur, tmp;
-            //invert the arguments, but complain about it
-            if (period !== null && !isNaN(+period)) {
-                deprecateSimple(name, 'moment().' + name  + '(period, number) is deprecated. Please use moment().' + name + '(number, period).');
-                tmp = val; val = period; period = tmp;
-            }
-
-            val = typeof val === 'string' ? +val : val;
-            dur = moment.duration(val, period);
-            addOrSubtractDurationFromMoment(this, dur, direction);
-            return this;
-        };
-    }
-
-    function addOrSubtractDurationFromMoment(mom, duration, isAdding, updateOffset) {
-        var milliseconds = duration._milliseconds,
-            days = duration._days,
-            months = duration._months;
-        updateOffset = updateOffset == null ? true : updateOffset;
-
-        if (milliseconds) {
-            mom._d.setTime(+mom._d + milliseconds * isAdding);
-        }
-        if (days) {
-            rawSetter(mom, 'Date', rawGetter(mom, 'Date') + days * isAdding);
-        }
-        if (months) {
-            rawMonthSetter(mom, rawGetter(mom, 'Month') + months * isAdding);
-        }
-        if (updateOffset) {
-            moment.updateOffset(mom, days || months);
-        }
-    }
-
-    // check if is an array
-    function isArray(input) {
-        return Object.prototype.toString.call(input) === '[object Array]';
-    }
-
-    function isDate(input) {
-        return Object.prototype.toString.call(input) === '[object Date]' ||
-            input instanceof Date;
-    }
-
-    // compare two arrays, return the number of differences
-    function compareArrays(array1, array2, dontConvert) {
-        var len = Math.min(array1.length, array2.length),
-            lengthDiff = Math.abs(array1.length - array2.length),
-            diffs = 0,
-            i;
-        for (i = 0; i < len; i++) {
-            if ((dontConvert && array1[i] !== array2[i]) ||
-                (!dontConvert && toInt(array1[i]) !== toInt(array2[i]))) {
-                diffs++;
-            }
-        }
-        return diffs + lengthDiff;
-    }
-
-    function normalizeUnits(units) {
-        if (units) {
-            var lowered = units.toLowerCase().replace(/(.)s$/, '$1');
-            units = unitAliases[units] || camelFunctions[lowered] || lowered;
-        }
-        return units;
-    }
-
-    function normalizeObjectUnits(inputObject) {
-        var normalizedInput = {},
-            normalizedProp,
-            prop;
-
-        for (prop in inputObject) {
-            if (hasOwnProp(inputObject, prop)) {
-                normalizedProp = normalizeUnits(prop);
-                if (normalizedProp) {
-                    normalizedInput[normalizedProp] = inputObject[prop];
-                }
-            }
-        }
-
-        return normalizedInput;
-    }
-
-    function makeList(field) {
-        var count, setter;
-
-        if (field.indexOf('week') === 0) {
-            count = 7;
-            setter = 'day';
-        }
-        else if (field.indexOf('month') === 0) {
-            count = 12;
-            setter = 'month';
-        }
-        else {
-            return;
-        }
-
-        moment[field] = function (format, index) {
-            var i, getter,
-                method = moment._locale[field],
-                results = [];
-
-            if (typeof format === 'number') {
-                index = format;
-                format = undefined;
-            }
-
-            getter = function (i) {
-                var m = moment().utc().set(setter, i);
-                return method.call(moment._locale, m, format || '');
-            };
-
-            if (index != null) {
-                return getter(index);
-            }
-            else {
-                for (i = 0; i < count; i++) {
-                    results.push(getter(i));
-                }
-                return results;
-            }
-        };
-    }
-
-    function toInt(argumentForCoercion) {
-        var coercedNumber = +argumentForCoercion,
-            value = 0;
-
-        if (coercedNumber !== 0 && isFinite(coercedNumber)) {
-            if (coercedNumber >= 0) {
-                value = Math.floor(coercedNumber);
-            } else {
-                value = Math.ceil(coercedNumber);
-            }
-        }
-
-        return value;
-    }
-
-    function daysInMonth(year, month) {
-        return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
-    }
-
-    function weeksInYear(year, dow, doy) {
-        return weekOfYear(moment([year, 11, 31 + dow - doy]), dow, doy).week;
-    }
-
-    function daysInYear(year) {
-        return isLeapYear(year) ? 366 : 365;
-    }
-
-    function isLeapYear(year) {
-        return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-    }
-
-    function checkOverflow(m) {
-        var overflow;
-        if (m._a && m._pf.overflow === -2) {
-            overflow =
-                m._a[MONTH] < 0 || m._a[MONTH] > 11 ? MONTH :
-                m._a[DATE] < 1 || m._a[DATE] > daysInMonth(m._a[YEAR], m._a[MONTH]) ? DATE :
-                m._a[HOUR] < 0 || m._a[HOUR] > 24 ||
-                    (m._a[HOUR] === 24 && (m._a[MINUTE] !== 0 ||
-                                           m._a[SECOND] !== 0 ||
-                                           m._a[MILLISECOND] !== 0)) ? HOUR :
-                m._a[MINUTE] < 0 || m._a[MINUTE] > 59 ? MINUTE :
-                m._a[SECOND] < 0 || m._a[SECOND] > 59 ? SECOND :
-                m._a[MILLISECOND] < 0 || m._a[MILLISECOND] > 999 ? MILLISECOND :
-                -1;
-
-            if (m._pf._overflowDayOfYear && (overflow < YEAR || overflow > DATE)) {
-                overflow = DATE;
-            }
-
-            m._pf.overflow = overflow;
-        }
-    }
-
-    function isValid(m) {
-        if (m._isValid == null) {
-            m._isValid = !isNaN(m._d.getTime()) &&
-                m._pf.overflow < 0 &&
-                !m._pf.empty &&
-                !m._pf.invalidMonth &&
-                !m._pf.nullInput &&
-                !m._pf.invalidFormat &&
-                !m._pf.userInvalidated;
-
-            if (m._strict) {
-                m._isValid = m._isValid &&
-                    m._pf.charsLeftOver === 0 &&
-                    m._pf.unusedTokens.length === 0 &&
-                    m._pf.bigHour === undefined;
-            }
-        }
-        return m._isValid;
-    }
-
-    function normalizeLocale(key) {
-        return key ? key.toLowerCase().replace('_', '-') : key;
-    }
-
-    // pick the locale from the array
-    // try ['en-au', 'en-gb'] as 'en-au', 'en-gb', 'en', as in move through the list trying each
-    // substring from most specific to least, but move to the next array item if it's a more specific variant than the current root
-    function chooseLocale(names) {
-        var i = 0, j, next, locale, split;
-
-        while (i < names.length) {
-            split = normalizeLocale(names[i]).split('-');
-            j = split.length;
-            next = normalizeLocale(names[i + 1]);
-            next = next ? next.split('-') : null;
-            while (j > 0) {
-                locale = loadLocale(split.slice(0, j).join('-'));
-                if (locale) {
-                    return locale;
-                }
-                if (next && next.length >= j && compareArrays(split, next, true) >= j - 1) {
-                    //the next array item is better than a shallower substring of this one
-                    break;
-                }
-                j--;
-            }
-            i++;
-        }
-        return null;
-    }
-
-    function loadLocale(name) {
-        var oldLocale = null;
-        if (!locales[name] && hasModule) {
-            try {
-                oldLocale = moment.locale();
-                require('./locale/' + name);
-                // because defineLocale currently also sets the global locale, we want to undo that for lazy loaded locales
-                moment.locale(oldLocale);
-            } catch (e) { }
-        }
-        return locales[name];
-    }
-
-    // Return a moment from input, that is local/utc/zone equivalent to model.
-    function makeAs(input, model) {
-        var res, diff;
-        if (model._isUTC) {
-            res = model.clone();
-            diff = (moment.isMoment(input) || isDate(input) ?
-                    +input : +moment(input)) - (+res);
-            // Use low-level api, because this fn is low-level api.
-            res._d.setTime(+res._d + diff);
-            moment.updateOffset(res, false);
-            return res;
-        } else {
-            return moment(input).local();
-        }
-    }
-
-    /************************************
-        Locale
-    ************************************/
-
-
-    extend(Locale.prototype, {
-
-        set : function (config) {
-            var prop, i;
-            for (i in config) {
-                prop = config[i];
-                if (typeof prop === 'function') {
-                    this[i] = prop;
-                } else {
-                    this['_' + i] = prop;
-                }
-            }
-            // Lenient ordinal parsing accepts just a number in addition to
-            // number + (possibly) stuff coming from _ordinalParseLenient.
-            this._ordinalParseLenient = new RegExp(this._ordinalParse.source + '|' + /\d{1,2}/.source);
-        },
-
-        _months : 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
-        months : function (m) {
-            return this._months[m.month()];
-        },
-
-        _monthsShort : 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
-        monthsShort : function (m) {
-            return this._monthsShort[m.month()];
-        },
-
-        monthsParse : function (monthName, format, strict) {
-            var i, mom, regex;
-
-            if (!this._monthsParse) {
-                this._monthsParse = [];
-                this._longMonthsParse = [];
-                this._shortMonthsParse = [];
-            }
-
-            for (i = 0; i < 12; i++) {
-                // make the regex if we don't have it already
-                mom = moment.utc([2000, i]);
-                if (strict && !this._longMonthsParse[i]) {
-                    this._longMonthsParse[i] = new RegExp('^' + this.months(mom, '').replace('.', '') + '$', 'i');
-                    this._shortMonthsParse[i] = new RegExp('^' + this.monthsShort(mom, '').replace('.', '') + '$', 'i');
-                }
-                if (!strict && !this._monthsParse[i]) {
-                    regex = '^' + this.months(mom, '') + '|^' + this.monthsShort(mom, '');
-                    this._monthsParse[i] = new RegExp(regex.replace('.', ''), 'i');
-                }
-                // test the regex
-                if (strict && format === 'MMMM' && this._longMonthsParse[i].test(monthName)) {
-                    return i;
-                } else if (strict && format === 'MMM' && this._shortMonthsParse[i].test(monthName)) {
-                    return i;
-                } else if (!strict && this._monthsParse[i].test(monthName)) {
-                    return i;
-                }
-            }
-        },
-
-        _weekdays : 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
-        weekdays : function (m) {
-            return this._weekdays[m.day()];
-        },
-
-        _weekdaysShort : 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
-        weekdaysShort : function (m) {
-            return this._weekdaysShort[m.day()];
-        },
-
-        _weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
-        weekdaysMin : function (m) {
-            return this._weekdaysMin[m.day()];
-        },
-
-        weekdaysParse : function (weekdayName) {
-            var i, mom, regex;
-
-            if (!this._weekdaysParse) {
-                this._weekdaysParse = [];
-            }
-
-            for (i = 0; i < 7; i++) {
-                // make the regex if we don't have it already
-                if (!this._weekdaysParse[i]) {
-                    mom = moment([2000, 1]).day(i);
-                    regex = '^' + this.weekdays(mom, '') + '|^' + this.weekdaysShort(mom, '') + '|^' + this.weekdaysMin(mom, '');
-                    this._weekdaysParse[i] = new RegExp(regex.replace('.', ''), 'i');
-                }
-                // test the regex
-                if (this._weekdaysParse[i].test(weekdayName)) {
-                    return i;
-                }
-            }
-        },
-
-        _longDateFormat : {
-            LTS : 'h:mm:ss A',
-            LT : 'h:mm A',
-            L : 'MM/DD/YYYY',
-            LL : 'MMMM D, YYYY',
-            LLL : 'MMMM D, YYYY LT',
-            LLLL : 'dddd, MMMM D, YYYY LT'
-        },
-        longDateFormat : function (key) {
-            var output = this._longDateFormat[key];
-            if (!output && this._longDateFormat[key.toUpperCase()]) {
-                output = this._longDateFormat[key.toUpperCase()].replace(/MMMM|MM|DD|dddd/g, function (val) {
-                    return val.slice(1);
-                });
-                this._longDateFormat[key] = output;
-            }
-            return output;
-        },
-
-        isPM : function (input) {
-            // IE8 Quirks Mode & IE7 Standards Mode do not allow accessing strings like arrays
-            // Using charAt should be more compatible.
-            return ((input + '').toLowerCase().charAt(0) === 'p');
-        },
-
-        _meridiemParse : /[ap]\.?m?\.?/i,
-        meridiem : function (hours, minutes, isLower) {
-            if (hours > 11) {
-                return isLower ? 'pm' : 'PM';
-            } else {
-                return isLower ? 'am' : 'AM';
-            }
-        },
-
-        _calendar : {
-            sameDay : '[Today at] LT',
-            nextDay : '[Tomorrow at] LT',
-            nextWeek : 'dddd [at] LT',
-            lastDay : '[Yesterday at] LT',
-            lastWeek : '[Last] dddd [at] LT',
-            sameElse : 'L'
-        },
-        calendar : function (key, mom, now) {
-            var output = this._calendar[key];
-            return typeof output === 'function' ? output.apply(mom, [now]) : output;
-        },
-
-        _relativeTime : {
-            future : 'in %s',
-            past : '%s ago',
-            s : 'a few seconds',
-            m : 'a minute',
-            mm : '%d minutes',
-            h : 'an hour',
-            hh : '%d hours',
-            d : 'a day',
-            dd : '%d days',
-            M : 'a month',
-            MM : '%d months',
-            y : 'a year',
-            yy : '%d years'
-        },
-
-        relativeTime : function (number, withoutSuffix, string, isFuture) {
-            var output = this._relativeTime[string];
-            return (typeof output === 'function') ?
-                output(number, withoutSuffix, string, isFuture) :
-                output.replace(/%d/i, number);
-        },
-
-        pastFuture : function (diff, output) {
-            var format = this._relativeTime[diff > 0 ? 'future' : 'past'];
-            return typeof format === 'function' ? format(output) : format.replace(/%s/i, output);
-        },
-
-        ordinal : function (number) {
-            return this._ordinal.replace('%d', number);
-        },
-        _ordinal : '%d',
-        _ordinalParse : /\d{1,2}/,
-
-        preparse : function (string) {
-            return string;
-        },
-
-        postformat : function (string) {
-            return string;
-        },
-
-        week : function (mom) {
-            return weekOfYear(mom, this._week.dow, this._week.doy).week;
-        },
-
-        _week : {
-            dow : 0, // Sunday is the first day of the week.
-            doy : 6  // The week that contains Jan 1st is the first week of the year.
-        },
-
-        _invalidDate: 'Invalid date',
-        invalidDate: function () {
-            return this._invalidDate;
-        }
-    });
-
-    /************************************
-        Formatting
-    ************************************/
-
-
-    function removeFormattingTokens(input) {
-        if (input.match(/\[[\s\S]/)) {
-            return input.replace(/^\[|\]$/g, '');
-        }
-        return input.replace(/\\/g, '');
-    }
-
-    function makeFormatFunction(format) {
-        var array = format.match(formattingTokens), i, length;
-
-        for (i = 0, length = array.length; i < length; i++) {
-            if (formatTokenFunctions[array[i]]) {
-                array[i] = formatTokenFunctions[array[i]];
-            } else {
-                array[i] = removeFormattingTokens(array[i]);
-            }
-        }
-
-        return function (mom) {
-            var output = '';
-            for (i = 0; i < length; i++) {
-                output += array[i] instanceof Function ? array[i].call(mom, format) : array[i];
-            }
-            return output;
-        };
-    }
-
-    // format date using native date object
-    function formatMoment(m, format) {
-        if (!m.isValid()) {
-            return m.localeData().invalidDate();
-        }
-
-        format = expandFormat(format, m.localeData());
-
-        if (!formatFunctions[format]) {
-            formatFunctions[format] = makeFormatFunction(format);
-        }
-
-        return formatFunctions[format](m);
-    }
-
-    function expandFormat(format, locale) {
-        var i = 5;
-
-        function replaceLongDateFormatTokens(input) {
-            return locale.longDateFormat(input) || input;
-        }
-
-        localFormattingTokens.lastIndex = 0;
-        while (i >= 0 && localFormattingTokens.test(format)) {
-            format = format.replace(localFormattingTokens, replaceLongDateFormatTokens);
-            localFormattingTokens.lastIndex = 0;
-            i -= 1;
-        }
-
-        return format;
-    }
-
-
-    /************************************
-        Parsing
-    ************************************/
-
-
-    // get the regex to find the next token
-    function getParseRegexForToken(token, config) {
-        var a, strict = config._strict;
-        switch (token) {
-        case 'Q':
-            return parseTokenOneDigit;
-        case 'DDDD':
-            return parseTokenThreeDigits;
-        case 'YYYY':
-        case 'GGGG':
-        case 'gggg':
-            return strict ? parseTokenFourDigits : parseTokenOneToFourDigits;
-        case 'Y':
-        case 'G':
-        case 'g':
-            return parseTokenSignedNumber;
-        case 'YYYYYY':
-        case 'YYYYY':
-        case 'GGGGG':
-        case 'ggggg':
-            return strict ? parseTokenSixDigits : parseTokenOneToSixDigits;
-        case 'S':
-            if (strict) {
-                return parseTokenOneDigit;
-            }
-            /* falls through */
-        case 'SS':
-            if (strict) {
-                return parseTokenTwoDigits;
-            }
-            /* falls through */
-        case 'SSS':
-            if (strict) {
-                return parseTokenThreeDigits;
-            }
-            /* falls through */
-        case 'DDD':
-            return parseTokenOneToThreeDigits;
-        case 'MMM':
-        case 'MMMM':
-        case 'dd':
-        case 'ddd':
-        case 'dddd':
-            return parseTokenWord;
-        case 'a':
-        case 'A':
-            return config._locale._meridiemParse;
-        case 'x':
-            return parseTokenOffsetMs;
-        case 'X':
-            return parseTokenTimestampMs;
-        case 'Z':
-        case 'ZZ':
-            return parseTokenTimezone;
-        case 'T':
-            return parseTokenT;
-        case 'SSSS':
-            return parseTokenDigits;
-        case 'MM':
-        case 'DD':
-        case 'YY':
-        case 'GG':
-        case 'gg':
-        case 'HH':
-        case 'hh':
-        case 'mm':
-        case 'ss':
-        case 'ww':
-        case 'WW':
-            return strict ? parseTokenTwoDigits : parseTokenOneOrTwoDigits;
-        case 'M':
-        case 'D':
-        case 'd':
-        case 'H':
-        case 'h':
-        case 'm':
-        case 's':
-        case 'w':
-        case 'W':
-        case 'e':
-        case 'E':
-            return parseTokenOneOrTwoDigits;
-        case 'Do':
-            return strict ? config._locale._ordinalParse : config._locale._ordinalParseLenient;
-        default :
-            a = new RegExp(regexpEscape(unescapeFormat(token.replace('\\', '')), 'i'));
-            return a;
-        }
-    }
-
-    function timezoneMinutesFromString(string) {
-        string = string || '';
-        var possibleTzMatches = (string.match(parseTokenTimezone) || []),
-            tzChunk = possibleTzMatches[possibleTzMatches.length - 1] || [],
-            parts = (tzChunk + '').match(parseTimezoneChunker) || ['-', 0, 0],
-            minutes = +(parts[1] * 60) + toInt(parts[2]);
-
-        return parts[0] === '+' ? -minutes : minutes;
-    }
-
-    // function to convert string input to date
-    function addTimeToArrayFromToken(token, input, config) {
-        var a, datePartArray = config._a;
-
-        switch (token) {
-        // QUARTER
-        case 'Q':
-            if (input != null) {
-                datePartArray[MONTH] = (toInt(input) - 1) * 3;
-            }
-            break;
-        // MONTH
-        case 'M' : // fall through to MM
-        case 'MM' :
-            if (input != null) {
-                datePartArray[MONTH] = toInt(input) - 1;
-            }
-            break;
-        case 'MMM' : // fall through to MMMM
-        case 'MMMM' :
-            a = config._locale.monthsParse(input, token, config._strict);
-            // if we didn't find a month name, mark the date as invalid.
-            if (a != null) {
-                datePartArray[MONTH] = a;
-            } else {
-                config._pf.invalidMonth = input;
-            }
-            break;
-        // DAY OF MONTH
-        case 'D' : // fall through to DD
-        case 'DD' :
-            if (input != null) {
-                datePartArray[DATE] = toInt(input);
-            }
-            break;
-        case 'Do' :
-            if (input != null) {
-                datePartArray[DATE] = toInt(parseInt(
-                            input.match(/\d{1,2}/)[0], 10));
-            }
-            break;
-        // DAY OF YEAR
-        case 'DDD' : // fall through to DDDD
-        case 'DDDD' :
-            if (input != null) {
-                config._dayOfYear = toInt(input);
-            }
-
-            break;
-        // YEAR
-        case 'YY' :
-            datePartArray[YEAR] = moment.parseTwoDigitYear(input);
-            break;
-        case 'YYYY' :
-        case 'YYYYY' :
-        case 'YYYYYY' :
-            datePartArray[YEAR] = toInt(input);
-            break;
-        // AM / PM
-        case 'a' : // fall through to A
-        case 'A' :
-            config._isPm = config._locale.isPM(input);
-            break;
-        // HOUR
-        case 'h' : // fall through to hh
-        case 'hh' :
-            config._pf.bigHour = true;
-            /* falls through */
-        case 'H' : // fall through to HH
-        case 'HH' :
-            datePartArray[HOUR] = toInt(input);
-            break;
-        // MINUTE
-        case 'm' : // fall through to mm
-        case 'mm' :
-            datePartArray[MINUTE] = toInt(input);
-            break;
-        // SECOND
-        case 's' : // fall through to ss
-        case 'ss' :
-            datePartArray[SECOND] = toInt(input);
-            break;
-        // MILLISECOND
-        case 'S' :
-        case 'SS' :
-        case 'SSS' :
-        case 'SSSS' :
-            datePartArray[MILLISECOND] = toInt(('0.' + input) * 1000);
-            break;
-        // UNIX OFFSET (MILLISECONDS)
-        case 'x':
-            config._d = new Date(toInt(input));
-            break;
-        // UNIX TIMESTAMP WITH MS
-        case 'X':
-            config._d = new Date(parseFloat(input) * 1000);
-            break;
-        // TIMEZONE
-        case 'Z' : // fall through to ZZ
-        case 'ZZ' :
-            config._useUTC = true;
-            config._tzm = timezoneMinutesFromString(input);
-            break;
-        // WEEKDAY - human
-        case 'dd':
-        case 'ddd':
-        case 'dddd':
-            a = config._locale.weekdaysParse(input);
-            // if we didn't get a weekday name, mark the date as invalid
-            if (a != null) {
-                config._w = config._w || {};
-                config._w['d'] = a;
-            } else {
-                config._pf.invalidWeekday = input;
-            }
-            break;
-        // WEEK, WEEK DAY - numeric
-        case 'w':
-        case 'ww':
-        case 'W':
-        case 'WW':
-        case 'd':
-        case 'e':
-        case 'E':
-            token = token.substr(0, 1);
-            /* falls through */
-        case 'gggg':
-        case 'GGGG':
-        case 'GGGGG':
-            token = token.substr(0, 2);
-            if (input) {
-                config._w = config._w || {};
-                config._w[token] = toInt(input);
-            }
-            break;
-        case 'gg':
-        case 'GG':
-            config._w = config._w || {};
-            config._w[token] = moment.parseTwoDigitYear(input);
-        }
-    }
-
-    function dayOfYearFromWeekInfo(config) {
-        var w, weekYear, week, weekday, dow, doy, temp;
-
-        w = config._w;
-        if (w.GG != null || w.W != null || w.E != null) {
-            dow = 1;
-            doy = 4;
-
-            // TODO: We need to take the current isoWeekYear, but that depends on
-            // how we interpret now (local, utc, fixed offset). So create
-            // a now version of current config (take local/utc/offset flags, and
-            // create now).
-            weekYear = dfl(w.GG, config._a[YEAR], weekOfYear(moment(), 1, 4).year);
-            week = dfl(w.W, 1);
-            weekday = dfl(w.E, 1);
-        } else {
-            dow = config._locale._week.dow;
-            doy = config._locale._week.doy;
-
-            weekYear = dfl(w.gg, config._a[YEAR], weekOfYear(moment(), dow, doy).year);
-            week = dfl(w.w, 1);
-
-            if (w.d != null) {
-                // weekday -- low day numbers are considered next week
-                weekday = w.d;
-                if (weekday < dow) {
-                    ++week;
-                }
-            } else if (w.e != null) {
-                // local weekday -- counting starts from begining of week
-                weekday = w.e + dow;
-            } else {
-                // default to begining of week
-                weekday = dow;
-            }
-        }
-        temp = dayOfYearFromWeeks(weekYear, week, weekday, doy, dow);
-
-        config._a[YEAR] = temp.year;
-        config._dayOfYear = temp.dayOfYear;
-    }
-
-    // convert an array to a date.
-    // the array should mirror the parameters below
-    // note: all values past the year are optional and will default to the lowest possible value.
-    // [year, month, day , hour, minute, second, millisecond]
-    function dateFromConfig(config) {
-        var i, date, input = [], currentDate, yearToUse;
-
-        if (config._d) {
-            return;
-        }
-
-        currentDate = currentDateArray(config);
-
-        //compute day of the year from weeks and weekdays
-        if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
-            dayOfYearFromWeekInfo(config);
-        }
-
-        //if the day of the year is set, figure out what it is
-        if (config._dayOfYear) {
-            yearToUse = dfl(config._a[YEAR], currentDate[YEAR]);
-
-            if (config._dayOfYear > daysInYear(yearToUse)) {
-                config._pf._overflowDayOfYear = true;
-            }
-
-            date = makeUTCDate(yearToUse, 0, config._dayOfYear);
-            config._a[MONTH] = date.getUTCMonth();
-            config._a[DATE] = date.getUTCDate();
-        }
-
-        // Default to current date.
-        // * if no year, month, day of month are given, default to today
-        // * if day of month is given, default month and year
-        // * if month is given, default only year
-        // * if year is given, don't default anything
-        for (i = 0; i < 3 && config._a[i] == null; ++i) {
-            config._a[i] = input[i] = currentDate[i];
-        }
-
-        // Zero out whatever was not defaulted, including time
-        for (; i < 7; i++) {
-            config._a[i] = input[i] = (config._a[i] == null) ? (i === 2 ? 1 : 0) : config._a[i];
-        }
-
-        // Check for 24:00:00.000
-        if (config._a[HOUR] === 24 &&
-                config._a[MINUTE] === 0 &&
-                config._a[SECOND] === 0 &&
-                config._a[MILLISECOND] === 0) {
-            config._nextDay = true;
-            config._a[HOUR] = 0;
-        }
-
-        config._d = (config._useUTC ? makeUTCDate : makeDate).apply(null, input);
-        // Apply timezone offset from input. The actual zone can be changed
-        // with parseZone.
-        if (config._tzm != null) {
-            config._d.setUTCMinutes(config._d.getUTCMinutes() + config._tzm);
-        }
-
-        if (config._nextDay) {
-            config._a[HOUR] = 24;
-        }
-    }
-
-    function dateFromObject(config) {
-        var normalizedInput;
-
-        if (config._d) {
-            return;
-        }
-
-        normalizedInput = normalizeObjectUnits(config._i);
-        config._a = [
-            normalizedInput.year,
-            normalizedInput.month,
-            normalizedInput.day || normalizedInput.date,
-            normalizedInput.hour,
-            normalizedInput.minute,
-            normalizedInput.second,
-            normalizedInput.millisecond
-        ];
-
-        dateFromConfig(config);
-    }
-
-    function currentDateArray(config) {
-        var now = new Date();
-        if (config._useUTC) {
-            return [
-                now.getUTCFullYear(),
-                now.getUTCMonth(),
-                now.getUTCDate()
-            ];
-        } else {
-            return [now.getFullYear(), now.getMonth(), now.getDate()];
-        }
-    }
-
-    // date from string and format string
-    function makeDateFromStringAndFormat(config) {
-        if (config._f === moment.ISO_8601) {
-            parseISO(config);
-            return;
-        }
-
-        config._a = [];
-        config._pf.empty = true;
-
-        // This array is used to make a Date, either with `new Date` or `Date.UTC`
-        var string = '' + config._i,
-            i, parsedInput, tokens, token, skipped,
-            stringLength = string.length,
-            totalParsedInputLength = 0;
-
-        tokens = expandFormat(config._f, config._locale).match(formattingTokens) || [];
-
-        for (i = 0; i < tokens.length; i++) {
-            token = tokens[i];
-            parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0];
-            if (parsedInput) {
-                skipped = string.substr(0, string.indexOf(parsedInput));
-                if (skipped.length > 0) {
-                    config._pf.unusedInput.push(skipped);
-                }
-                string = string.slice(string.indexOf(parsedInput) + parsedInput.length);
-                totalParsedInputLength += parsedInput.length;
-            }
-            // don't parse if it's not a known token
-            if (formatTokenFunctions[token]) {
-                if (parsedInput) {
-                    config._pf.empty = false;
-                }
-                else {
-                    config._pf.unusedTokens.push(token);
-                }
-                addTimeToArrayFromToken(token, parsedInput, config);
-            }
-            else if (config._strict && !parsedInput) {
-                config._pf.unusedTokens.push(token);
-            }
-        }
-
-        // add remaining unparsed input length to the string
-        config._pf.charsLeftOver = stringLength - totalParsedInputLength;
-        if (string.length > 0) {
-            config._pf.unusedInput.push(string);
-        }
-
-        // clear _12h flag if hour is <= 12
-        if (config._pf.bigHour === true && config._a[HOUR] <= 12) {
-            config._pf.bigHour = undefined;
-        }
-        // handle am pm
-        if (config._isPm && config._a[HOUR] < 12) {
-            config._a[HOUR] += 12;
-        }
-        // if is 12 am, change hours to 0
-        if (config._isPm === false && config._a[HOUR] === 12) {
-            config._a[HOUR] = 0;
-        }
-        dateFromConfig(config);
-        checkOverflow(config);
-    }
-
-    function unescapeFormat(s) {
-        return s.replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function (matched, p1, p2, p3, p4) {
-            return p1 || p2 || p3 || p4;
-        });
-    }
-
-    // Code from http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
-    function regexpEscape(s) {
-        return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    }
-
-    // date from string and array of format strings
-    function makeDateFromStringAndArray(config) {
-        var tempConfig,
-            bestMoment,
-
-            scoreToBeat,
-            i,
-            currentScore;
-
-        if (config._f.length === 0) {
-            config._pf.invalidFormat = true;
-            config._d = new Date(NaN);
-            return;
-        }
-
-        for (i = 0; i < config._f.length; i++) {
-            currentScore = 0;
-            tempConfig = copyConfig({}, config);
-            if (config._useUTC != null) {
-                tempConfig._useUTC = config._useUTC;
-            }
-            tempConfig._pf = defaultParsingFlags();
-            tempConfig._f = config._f[i];
-            makeDateFromStringAndFormat(tempConfig);
-
-            if (!isValid(tempConfig)) {
-                continue;
-            }
-
-            // if there is any input that was not parsed add a penalty for that format
-            currentScore += tempConfig._pf.charsLeftOver;
-
-            //or tokens
-            currentScore += tempConfig._pf.unusedTokens.length * 10;
-
-            tempConfig._pf.score = currentScore;
-
-            if (scoreToBeat == null || currentScore < scoreToBeat) {
-                scoreToBeat = currentScore;
-                bestMoment = tempConfig;
-            }
-        }
-
-        extend(config, bestMoment || tempConfig);
-    }
-
-    // date from iso format
-    function parseISO(config) {
-        var i, l,
-            string = config._i,
-            match = isoRegex.exec(string);
-
-        if (match) {
-            config._pf.iso = true;
-            for (i = 0, l = isoDates.length; i < l; i++) {
-                if (isoDates[i][1].exec(string)) {
-                    // match[5] should be 'T' or undefined
-                    config._f = isoDates[i][0] + (match[6] || ' ');
-                    break;
-                }
-            }
-            for (i = 0, l = isoTimes.length; i < l; i++) {
-                if (isoTimes[i][1].exec(string)) {
-                    config._f += isoTimes[i][0];
-                    break;
-                }
-            }
-            if (string.match(parseTokenTimezone)) {
-                config._f += 'Z';
-            }
-            makeDateFromStringAndFormat(config);
-        } else {
-            config._isValid = false;
-        }
-    }
-
-    // date from iso format or fallback
-    function makeDateFromString(config) {
-        parseISO(config);
-        if (config._isValid === false) {
-            delete config._isValid;
-            moment.createFromInputFallback(config);
-        }
-    }
-
-    function map(arr, fn) {
-        var res = [], i;
-        for (i = 0; i < arr.length; ++i) {
-            res.push(fn(arr[i], i));
-        }
-        return res;
-    }
-
-    function makeDateFromInput(config) {
-        var input = config._i, matched;
-        if (input === undefined) {
-            config._d = new Date();
-        } else if (isDate(input)) {
-            config._d = new Date(+input);
-        } else if ((matched = aspNetJsonRegex.exec(input)) !== null) {
-            config._d = new Date(+matched[1]);
-        } else if (typeof input === 'string') {
-            makeDateFromString(config);
-        } else if (isArray(input)) {
-            config._a = map(input.slice(0), function (obj) {
-                return parseInt(obj, 10);
-            });
-            dateFromConfig(config);
-        } else if (typeof(input) === 'object') {
-            dateFromObject(config);
-        } else if (typeof(input) === 'number') {
-            // from milliseconds
-            config._d = new Date(input);
-        } else {
-            moment.createFromInputFallback(config);
-        }
-    }
-
-    function makeDate(y, m, d, h, M, s, ms) {
-        //can't just apply() to create a date:
-        //http://stackoverflow.com/questions/181348/instantiating-a-javascript-object-by-calling-prototype-constructor-apply
-        var date = new Date(y, m, d, h, M, s, ms);
-
-        //the date constructor doesn't accept years < 1970
-        if (y < 1970) {
-            date.setFullYear(y);
-        }
-        return date;
-    }
-
-    function makeUTCDate(y) {
-        var date = new Date(Date.UTC.apply(null, arguments));
-        if (y < 1970) {
-            date.setUTCFullYear(y);
-        }
-        return date;
-    }
-
-    function parseWeekday(input, locale) {
-        if (typeof input === 'string') {
-            if (!isNaN(input)) {
-                input = parseInt(input, 10);
-            }
-            else {
-                input = locale.weekdaysParse(input);
-                if (typeof input !== 'number') {
-                    return null;
-                }
-            }
-        }
-        return input;
-    }
-
-    /************************************
-        Relative Time
-    ************************************/
-
-
-    // helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
-    function substituteTimeAgo(string, number, withoutSuffix, isFuture, locale) {
-        return locale.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
-    }
-
-    function relativeTime(posNegDuration, withoutSuffix, locale) {
-        var duration = moment.duration(posNegDuration).abs(),
-            seconds = round(duration.as('s')),
-            minutes = round(duration.as('m')),
-            hours = round(duration.as('h')),
-            days = round(duration.as('d')),
-            months = round(duration.as('M')),
-            years = round(duration.as('y')),
-
-            args = seconds < relativeTimeThresholds.s && ['s', seconds] ||
-                minutes === 1 && ['m'] ||
-                minutes < relativeTimeThresholds.m && ['mm', minutes] ||
-                hours === 1 && ['h'] ||
-                hours < relativeTimeThresholds.h && ['hh', hours] ||
-                days === 1 && ['d'] ||
-                days < relativeTimeThresholds.d && ['dd', days] ||
-                months === 1 && ['M'] ||
-                months < relativeTimeThresholds.M && ['MM', months] ||
-                years === 1 && ['y'] || ['yy', years];
-
-        args[2] = withoutSuffix;
-        args[3] = +posNegDuration > 0;
-        args[4] = locale;
-        return substituteTimeAgo.apply({}, args);
-    }
-
-
-    /************************************
-        Week of Year
-    ************************************/
-
-
-    // firstDayOfWeek       0 = sun, 6 = sat
-    //                      the day of the week that starts the week
-    //                      (usually sunday or monday)
-    // firstDayOfWeekOfYear 0 = sun, 6 = sat
-    //                      the first week is the week that contains the first
-    //                      of this day of the week
-    //                      (eg. ISO weeks use thursday (4))
-    function weekOfYear(mom, firstDayOfWeek, firstDayOfWeekOfYear) {
-        var end = firstDayOfWeekOfYear - firstDayOfWeek,
-            daysToDayOfWeek = firstDayOfWeekOfYear - mom.day(),
-            adjustedMoment;
-
-
-        if (daysToDayOfWeek > end) {
-            daysToDayOfWeek -= 7;
-        }
-
-        if (daysToDayOfWeek < end - 7) {
-            daysToDayOfWeek += 7;
-        }
-
-        adjustedMoment = moment(mom).add(daysToDayOfWeek, 'd');
-        return {
-            week: Math.ceil(adjustedMoment.dayOfYear() / 7),
-            year: adjustedMoment.year()
-        };
-    }
-
-    //http://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
-    function dayOfYearFromWeeks(year, week, weekday, firstDayOfWeekOfYear, firstDayOfWeek) {
-        var d = makeUTCDate(year, 0, 1).getUTCDay(), daysToAdd, dayOfYear;
-
-        d = d === 0 ? 7 : d;
-        weekday = weekday != null ? weekday : firstDayOfWeek;
-        daysToAdd = firstDayOfWeek - d + (d > firstDayOfWeekOfYear ? 7 : 0) - (d < firstDayOfWeek ? 7 : 0);
-        dayOfYear = 7 * (week - 1) + (weekday - firstDayOfWeek) + daysToAdd + 1;
-
-        return {
-            year: dayOfYear > 0 ? year : year - 1,
-            dayOfYear: dayOfYear > 0 ?  dayOfYear : daysInYear(year - 1) + dayOfYear
-        };
-    }
-
-    /************************************
-        Top Level Functions
-    ************************************/
-
-    function makeMoment(config) {
-        var input = config._i,
-            format = config._f,
-            res;
-
-        config._locale = config._locale || moment.localeData(config._l);
-
-        if (input === null || (format === undefined && input === '')) {
-            return moment.invalid({nullInput: true});
-        }
-
-        if (typeof input === 'string') {
-            config._i = input = config._locale.preparse(input);
-        }
-
-        if (moment.isMoment(input)) {
-            return new Moment(input, true);
-        } else if (format) {
-            if (isArray(format)) {
-                makeDateFromStringAndArray(config);
-            } else {
-                makeDateFromStringAndFormat(config);
-            }
-        } else {
-            makeDateFromInput(config);
-        }
-
-        res = new Moment(config);
-        if (res._nextDay) {
-            // Adding is smart enough around DST
-            res.add(1, 'd');
-            res._nextDay = undefined;
-        }
-
-        return res;
-    }
-
-    moment = function (input, format, locale, strict) {
-        var c;
-
-        if (typeof(locale) === 'boolean') {
-            strict = locale;
-            locale = undefined;
-        }
-        // object construction must be done this way.
-        // https://github.com/moment/moment/issues/1423
-        c = {};
-        c._isAMomentObject = true;
-        c._i = input;
-        c._f = format;
-        c._l = locale;
-        c._strict = strict;
-        c._isUTC = false;
-        c._pf = defaultParsingFlags();
-
-        return makeMoment(c);
-    };
-
-    moment.suppressDeprecationWarnings = false;
-
-    moment.createFromInputFallback = deprecate(
-        'moment construction falls back to js Date. This is ' +
-        'discouraged and will be removed in upcoming major ' +
-        'release. Please refer to ' +
-        'https://github.com/moment/moment/issues/1407 for more info.',
-        function (config) {
-            config._d = new Date(config._i + (config._useUTC ? ' UTC' : ''));
-        }
-    );
-
-    // Pick a moment m from moments so that m[fn](other) is true for all
-    // other. This relies on the function fn to be transitive.
-    //
-    // moments should either be an array of moment objects or an array, whose
-    // first element is an array of moment objects.
-    function pickBy(fn, moments) {
-        var res, i;
-        if (moments.length === 1 && isArray(moments[0])) {
-            moments = moments[0];
-        }
-        if (!moments.length) {
-            return moment();
-        }
-        res = moments[0];
-        for (i = 1; i < moments.length; ++i) {
-            if (moments[i][fn](res)) {
-                res = moments[i];
-            }
-        }
-        return res;
-    }
-
-    moment.min = function () {
-        var args = [].slice.call(arguments, 0);
-
-        return pickBy('isBefore', args);
-    };
-
-    moment.max = function () {
-        var args = [].slice.call(arguments, 0);
-
-        return pickBy('isAfter', args);
-    };
-
-    // creating with utc
-    moment.utc = function (input, format, locale, strict) {
-        var c;
-
-        if (typeof(locale) === 'boolean') {
-            strict = locale;
-            locale = undefined;
-        }
-        // object construction must be done this way.
-        // https://github.com/moment/moment/issues/1423
-        c = {};
-        c._isAMomentObject = true;
-        c._useUTC = true;
-        c._isUTC = true;
-        c._l = locale;
-        c._i = input;
-        c._f = format;
-        c._strict = strict;
-        c._pf = defaultParsingFlags();
-
-        return makeMoment(c).utc();
-    };
-
-    // creating with unix timestamp (in seconds)
-    moment.unix = function (input) {
-        return moment(input * 1000);
-    };
-
-    // duration
-    moment.duration = function (input, key) {
-        var duration = input,
-            // matching against regexp is expensive, do it on demand
-            match = null,
-            sign,
-            ret,
-            parseIso,
-            diffRes;
-
-        if (moment.isDuration(input)) {
-            duration = {
-                ms: input._milliseconds,
-                d: input._days,
-                M: input._months
-            };
-        } else if (typeof input === 'number') {
-            duration = {};
-            if (key) {
-                duration[key] = input;
-            } else {
-                duration.milliseconds = input;
-            }
-        } else if (!!(match = aspNetTimeSpanJsonRegex.exec(input))) {
-            sign = (match[1] === '-') ? -1 : 1;
-            duration = {
-                y: 0,
-                d: toInt(match[DATE]) * sign,
-                h: toInt(match[HOUR]) * sign,
-                m: toInt(match[MINUTE]) * sign,
-                s: toInt(match[SECOND]) * sign,
-                ms: toInt(match[MILLISECOND]) * sign
-            };
-        } else if (!!(match = isoDurationRegex.exec(input))) {
-            sign = (match[1] === '-') ? -1 : 1;
-            parseIso = function (inp) {
-                // We'd normally use ~~inp for this, but unfortunately it also
-                // converts floats to ints.
-                // inp may be undefined, so careful calling replace on it.
-                var res = inp && parseFloat(inp.replace(',', '.'));
-                // apply sign while we're at it
-                return (isNaN(res) ? 0 : res) * sign;
-            };
-            duration = {
-                y: parseIso(match[2]),
-                M: parseIso(match[3]),
-                d: parseIso(match[4]),
-                h: parseIso(match[5]),
-                m: parseIso(match[6]),
-                s: parseIso(match[7]),
-                w: parseIso(match[8])
-            };
-        } else if (typeof duration === 'object' &&
-                ('from' in duration || 'to' in duration)) {
-            diffRes = momentsDifference(moment(duration.from), moment(duration.to));
-
-            duration = {};
-            duration.ms = diffRes.milliseconds;
-            duration.M = diffRes.months;
-        }
-
-        ret = new Duration(duration);
-
-        if (moment.isDuration(input) && hasOwnProp(input, '_locale')) {
-            ret._locale = input._locale;
-        }
-
-        return ret;
-    };
-
-    // version number
-    moment.version = VERSION;
-
-    // default format
-    moment.defaultFormat = isoFormat;
-
-    // constant that refers to the ISO standard
-    moment.ISO_8601 = function () {};
-
-    // Plugins that add properties should also add the key here (null value),
-    // so we can properly clone ourselves.
-    moment.momentProperties = momentProperties;
-
-    // This function will be called whenever a moment is mutated.
-    // It is intended to keep the offset in sync with the timezone.
-    moment.updateOffset = function () {};
-
-    // This function allows you to set a threshold for relative time strings
-    moment.relativeTimeThreshold = function (threshold, limit) {
-        if (relativeTimeThresholds[threshold] === undefined) {
-            return false;
-        }
-        if (limit === undefined) {
-            return relativeTimeThresholds[threshold];
-        }
-        relativeTimeThresholds[threshold] = limit;
-        return true;
-    };
-
-    moment.lang = deprecate(
-        'moment.lang is deprecated. Use moment.locale instead.',
-        function (key, value) {
-            return moment.locale(key, value);
-        }
-    );
-
-    // This function will load locale and then set the global locale.  If
-    // no arguments are passed in, it will simply return the current global
-    // locale key.
-    moment.locale = function (key, values) {
-        var data;
-        if (key) {
-            if (typeof(values) !== 'undefined') {
-                data = moment.defineLocale(key, values);
-            }
-            else {
-                data = moment.localeData(key);
-            }
-
-            if (data) {
-                moment.duration._locale = moment._locale = data;
-            }
-        }
-
-        return moment._locale._abbr;
-    };
-
-    moment.defineLocale = function (name, values) {
-        if (values !== null) {
-            values.abbr = name;
-            if (!locales[name]) {
-                locales[name] = new Locale();
-            }
-            locales[name].set(values);
-
-            // backwards compat for now: also set the locale
-            moment.locale(name);
-
-            return locales[name];
-        } else {
-            // useful for testing
-            delete locales[name];
-            return null;
-        }
-    };
-
-    moment.langData = deprecate(
-        'moment.langData is deprecated. Use moment.localeData instead.',
-        function (key) {
-            return moment.localeData(key);
-        }
-    );
-
-    // returns locale data
-    moment.localeData = function (key) {
-        var locale;
-
-        if (key && key._locale && key._locale._abbr) {
-            key = key._locale._abbr;
-        }
-
-        if (!key) {
-            return moment._locale;
-        }
-
-        if (!isArray(key)) {
-            //short-circuit everything else
-            locale = loadLocale(key);
-            if (locale) {
-                return locale;
-            }
-            key = [key];
-        }
-
-        return chooseLocale(key);
-    };
-
-    // compare moment object
-    moment.isMoment = function (obj) {
-        return obj instanceof Moment ||
-            (obj != null && hasOwnProp(obj, '_isAMomentObject'));
-    };
-
-    // for typechecking Duration objects
-    moment.isDuration = function (obj) {
-        return obj instanceof Duration;
-    };
-
-    for (i = lists.length - 1; i >= 0; --i) {
-        makeList(lists[i]);
-    }
-
-    moment.normalizeUnits = function (units) {
-        return normalizeUnits(units);
-    };
-
-    moment.invalid = function (flags) {
-        var m = moment.utc(NaN);
-        if (flags != null) {
-            extend(m._pf, flags);
-        }
-        else {
-            m._pf.userInvalidated = true;
-        }
-
-        return m;
-    };
-
-    moment.parseZone = function () {
-        return moment.apply(null, arguments).parseZone();
-    };
-
-    moment.parseTwoDigitYear = function (input) {
-        return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
-    };
-
-    /************************************
-        Moment Prototype
-    ************************************/
-
-
-    extend(moment.fn = Moment.prototype, {
-
-        clone : function () {
-            return moment(this);
-        },
-
-        valueOf : function () {
-            return +this._d + ((this._offset || 0) * 60000);
-        },
-
-        unix : function () {
-            return Math.floor(+this / 1000);
-        },
-
-        toString : function () {
-            return this.clone().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ');
-        },
-
-        toDate : function () {
-            return this._offset ? new Date(+this) : this._d;
-        },
-
-        toISOString : function () {
-            var m = moment(this).utc();
-            if (0 < m.year() && m.year() <= 9999) {
-                if ('function' === typeof Date.prototype.toISOString) {
-                    // native implementation is ~50x faster, use it when we can
-                    return this.toDate().toISOString();
-                } else {
-                    return formatMoment(m, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
-                }
-            } else {
-                return formatMoment(m, 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
-            }
-        },
-
-        toArray : function () {
-            var m = this;
-            return [
-                m.year(),
-                m.month(),
-                m.date(),
-                m.hours(),
-                m.minutes(),
-                m.seconds(),
-                m.milliseconds()
-            ];
-        },
-
-        isValid : function () {
-            return isValid(this);
-        },
-
-        isDSTShifted : function () {
-            if (this._a) {
-                return this.isValid() && compareArrays(this._a, (this._isUTC ? moment.utc(this._a) : moment(this._a)).toArray()) > 0;
-            }
-
-            return false;
-        },
-
-        parsingFlags : function () {
-            return extend({}, this._pf);
-        },
-
-        invalidAt: function () {
-            return this._pf.overflow;
-        },
-
-        utc : function (keepLocalTime) {
-            return this.zone(0, keepLocalTime);
-        },
-
-        local : function (keepLocalTime) {
-            if (this._isUTC) {
-                this.zone(0, keepLocalTime);
-                this._isUTC = false;
-
-                if (keepLocalTime) {
-                    this.add(this._dateTzOffset(), 'm');
-                }
-            }
-            return this;
-        },
-
-        format : function (inputString) {
-            var output = formatMoment(this, inputString || moment.defaultFormat);
-            return this.localeData().postformat(output);
-        },
-
-        add : createAdder(1, 'add'),
-
-        subtract : createAdder(-1, 'subtract'),
-
-        diff : function (input, units, asFloat) {
-            var that = makeAs(input, this),
-                zoneDiff = (this.zone() - that.zone()) * 6e4,
-                diff, output, daysAdjust;
-
-            units = normalizeUnits(units);
-
-            if (units === 'year' || units === 'month') {
-                // average number of days in the months in the given dates
-                diff = (this.daysInMonth() + that.daysInMonth()) * 432e5; // 24 * 60 * 60 * 1000 / 2
-                // difference in months
-                output = ((this.year() - that.year()) * 12) + (this.month() - that.month());
-                // adjust by taking difference in days, average number of days
-                // and dst in the given months.
-                daysAdjust = (this - moment(this).startOf('month')) -
-                    (that - moment(that).startOf('month'));
-                // same as above but with zones, to negate all dst
-                daysAdjust -= ((this.zone() - moment(this).startOf('month').zone()) -
-                        (that.zone() - moment(that).startOf('month').zone())) * 6e4;
-                output += daysAdjust / diff;
-                if (units === 'year') {
-                    output = output / 12;
-                }
-            } else {
-                diff = (this - that);
-                output = units === 'second' ? diff / 1e3 : // 1000
-                    units === 'minute' ? diff / 6e4 : // 1000 * 60
-                    units === 'hour' ? diff / 36e5 : // 1000 * 60 * 60
-                    units === 'day' ? (diff - zoneDiff) / 864e5 : // 1000 * 60 * 60 * 24, negate dst
-                    units === 'week' ? (diff - zoneDiff) / 6048e5 : // 1000 * 60 * 60 * 24 * 7, negate dst
-                    diff;
-            }
-            return asFloat ? output : absRound(output);
-        },
-
-        from : function (time, withoutSuffix) {
-            return moment.duration({to: this, from: time}).locale(this.locale()).humanize(!withoutSuffix);
-        },
-
-        fromNow : function (withoutSuffix) {
-            return this.from(moment(), withoutSuffix);
-        },
-
-        calendar : function (time) {
-            // We want to compare the start of today, vs this.
-            // Getting start-of-today depends on whether we're zone'd or not.
-            var now = time || moment(),
-                sod = makeAs(now, this).startOf('day'),
-                diff = this.diff(sod, 'days', true),
-                format = diff < -6 ? 'sameElse' :
-                    diff < -1 ? 'lastWeek' :
-                    diff < 0 ? 'lastDay' :
-                    diff < 1 ? 'sameDay' :
-                    diff < 2 ? 'nextDay' :
-                    diff < 7 ? 'nextWeek' : 'sameElse';
-            return this.format(this.localeData().calendar(format, this, moment(now)));
-        },
-
-        isLeapYear : function () {
-            return isLeapYear(this.year());
-        },
-
-        isDST : function () {
-            return (this.zone() < this.clone().month(0).zone() ||
-                this.zone() < this.clone().month(5).zone());
-        },
-
-        day : function (input) {
-            var day = this._isUTC ? this._d.getUTCDay() : this._d.getDay();
-            if (input != null) {
-                input = parseWeekday(input, this.localeData());
-                return this.add(input - day, 'd');
-            } else {
-                return day;
-            }
-        },
-
-        month : makeAccessor('Month', true),
-
-        startOf : function (units) {
-            units = normalizeUnits(units);
-            // the following switch intentionally omits break keywords
-            // to utilize falling through the cases.
-            switch (units) {
-            case 'year':
-                this.month(0);
-                /* falls through */
-            case 'quarter':
-            case 'month':
-                this.date(1);
-                /* falls through */
-            case 'week':
-            case 'isoWeek':
-            case 'day':
-                this.hours(0);
-                /* falls through */
-            case 'hour':
-                this.minutes(0);
-                /* falls through */
-            case 'minute':
-                this.seconds(0);
-                /* falls through */
-            case 'second':
-                this.milliseconds(0);
-                /* falls through */
-            }
-
-            // weeks are a special case
-            if (units === 'week') {
-                this.weekday(0);
-            } else if (units === 'isoWeek') {
-                this.isoWeekday(1);
-            }
-
-            // quarters are also special
-            if (units === 'quarter') {
-                this.month(Math.floor(this.month() / 3) * 3);
-            }
-
-            return this;
-        },
-
-        endOf: function (units) {
-            units = normalizeUnits(units);
-            if (units === undefined || units === 'millisecond') {
-                return this;
-            }
-            return this.startOf(units).add(1, (units === 'isoWeek' ? 'week' : units)).subtract(1, 'ms');
-        },
-
-        isAfter: function (input, units) {
-            var inputMs;
-            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
-            if (units === 'millisecond') {
-                input = moment.isMoment(input) ? input : moment(input);
-                return +this > +input;
-            } else {
-                inputMs = moment.isMoment(input) ? +input : +moment(input);
-                return inputMs < +this.clone().startOf(units);
-            }
-        },
-
-        isBefore: function (input, units) {
-            var inputMs;
-            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
-            if (units === 'millisecond') {
-                input = moment.isMoment(input) ? input : moment(input);
-                return +this < +input;
-            } else {
-                inputMs = moment.isMoment(input) ? +input : +moment(input);
-                return +this.clone().endOf(units) < inputMs;
-            }
-        },
-
-        isSame: function (input, units) {
-            var inputMs;
-            units = normalizeUnits(units || 'millisecond');
-            if (units === 'millisecond') {
-                input = moment.isMoment(input) ? input : moment(input);
-                return +this === +input;
-            } else {
-                inputMs = +moment(input);
-                return +(this.clone().startOf(units)) <= inputMs && inputMs <= +(this.clone().endOf(units));
-            }
-        },
-
-        min: deprecate(
-                 'moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548',
-                 function (other) {
-                     other = moment.apply(null, arguments);
-                     return other < this ? this : other;
-                 }
-         ),
-
-        max: deprecate(
-                'moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548',
-                function (other) {
-                    other = moment.apply(null, arguments);
-                    return other > this ? this : other;
-                }
-        ),
-
-        // keepLocalTime = true means only change the timezone, without
-        // affecting the local hour. So 5:31:26 +0300 --[zone(2, true)]-->
-        // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist int zone
-        // +0200, so we adjust the time as needed, to be valid.
-        //
-        // Keeping the time actually adds/subtracts (one hour)
-        // from the actual represented time. That is why we call updateOffset
-        // a second time. In case it wants us to change the offset again
-        // _changeInProgress == true case, then we have to adjust, because
-        // there is no such time in the given timezone.
-        zone : function (input, keepLocalTime) {
-            var offset = this._offset || 0,
-                localAdjust;
-            if (input != null) {
-                if (typeof input === 'string') {
-                    input = timezoneMinutesFromString(input);
-                }
-                if (Math.abs(input) < 16) {
-                    input = input * 60;
-                }
-                if (!this._isUTC && keepLocalTime) {
-                    localAdjust = this._dateTzOffset();
-                }
-                this._offset = input;
-                this._isUTC = true;
-                if (localAdjust != null) {
-                    this.subtract(localAdjust, 'm');
-                }
-                if (offset !== input) {
-                    if (!keepLocalTime || this._changeInProgress) {
-                        addOrSubtractDurationFromMoment(this,
-                                moment.duration(offset - input, 'm'), 1, false);
-                    } else if (!this._changeInProgress) {
-                        this._changeInProgress = true;
-                        moment.updateOffset(this, true);
-                        this._changeInProgress = null;
-                    }
-                }
-            } else {
-                return this._isUTC ? offset : this._dateTzOffset();
-            }
-            return this;
-        },
-
-        zoneAbbr : function () {
-            return this._isUTC ? 'UTC' : '';
-        },
-
-        zoneName : function () {
-            return this._isUTC ? 'Coordinated Universal Time' : '';
-        },
-
-        parseZone : function () {
-            if (this._tzm) {
-                this.zone(this._tzm);
-            } else if (typeof this._i === 'string') {
-                this.zone(this._i);
-            }
-            return this;
-        },
-
-        hasAlignedHourOffset : function (input) {
-            if (!input) {
-                input = 0;
-            }
-            else {
-                input = moment(input).zone();
-            }
-
-            return (this.zone() - input) % 60 === 0;
-        },
-
-        daysInMonth : function () {
-            return daysInMonth(this.year(), this.month());
-        },
-
-        dayOfYear : function (input) {
-            var dayOfYear = round((moment(this).startOf('day') - moment(this).startOf('year')) / 864e5) + 1;
-            return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
-        },
-
-        quarter : function (input) {
-            return input == null ? Math.ceil((this.month() + 1) / 3) : this.month((input - 1) * 3 + this.month() % 3);
-        },
-
-        weekYear : function (input) {
-            var year = weekOfYear(this, this.localeData()._week.dow, this.localeData()._week.doy).year;
-            return input == null ? year : this.add((input - year), 'y');
-        },
-
-        isoWeekYear : function (input) {
-            var year = weekOfYear(this, 1, 4).year;
-            return input == null ? year : this.add((input - year), 'y');
-        },
-
-        week : function (input) {
-            var week = this.localeData().week(this);
-            return input == null ? week : this.add((input - week) * 7, 'd');
-        },
-
-        isoWeek : function (input) {
-            var week = weekOfYear(this, 1, 4).week;
-            return input == null ? week : this.add((input - week) * 7, 'd');
-        },
-
-        weekday : function (input) {
-            var weekday = (this.day() + 7 - this.localeData()._week.dow) % 7;
-            return input == null ? weekday : this.add(input - weekday, 'd');
-        },
-
-        isoWeekday : function (input) {
-            // behaves the same as moment#day except
-            // as a getter, returns 7 instead of 0 (1-7 range instead of 0-6)
-            // as a setter, sunday should belong to the previous week.
-            return input == null ? this.day() || 7 : this.day(this.day() % 7 ? input : input - 7);
-        },
-
-        isoWeeksInYear : function () {
-            return weeksInYear(this.year(), 1, 4);
-        },
-
-        weeksInYear : function () {
-            var weekInfo = this.localeData()._week;
-            return weeksInYear(this.year(), weekInfo.dow, weekInfo.doy);
-        },
-
-        get : function (units) {
-            units = normalizeUnits(units);
-            return this[units]();
-        },
-
-        set : function (units, value) {
-            units = normalizeUnits(units);
-            if (typeof this[units] === 'function') {
-                this[units](value);
-            }
-            return this;
-        },
-
-        // If passed a locale key, it will set the locale for this
-        // instance.  Otherwise, it will return the locale configuration
-        // variables for this instance.
-        locale : function (key) {
-            var newLocaleData;
-
-            if (key === undefined) {
-                return this._locale._abbr;
-            } else {
-                newLocaleData = moment.localeData(key);
-                if (newLocaleData != null) {
-                    this._locale = newLocaleData;
-                }
-                return this;
-            }
-        },
-
-        lang : deprecate(
-            'moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.',
-            function (key) {
-                if (key === undefined) {
-                    return this.localeData();
-                } else {
-                    return this.locale(key);
-                }
-            }
-        ),
-
-        localeData : function () {
-            return this._locale;
-        },
-
-        _dateTzOffset : function () {
-            // On Firefox.24 Date#getTimezoneOffset returns a floating point.
-            // https://github.com/moment/moment/pull/1871
-            return Math.round(this._d.getTimezoneOffset() / 15) * 15;
-        }
-    });
-
-    function rawMonthSetter(mom, value) {
-        var dayOfMonth;
-
-        // TODO: Move this out of here!
-        if (typeof value === 'string') {
-            value = mom.localeData().monthsParse(value);
-            // TODO: Another silent failure?
-            if (typeof value !== 'number') {
-                return mom;
-            }
-        }
-
-        dayOfMonth = Math.min(mom.date(),
-                daysInMonth(mom.year(), value));
-        mom._d['set' + (mom._isUTC ? 'UTC' : '') + 'Month'](value, dayOfMonth);
-        return mom;
-    }
-
-    function rawGetter(mom, unit) {
-        return mom._d['get' + (mom._isUTC ? 'UTC' : '') + unit]();
-    }
-
-    function rawSetter(mom, unit, value) {
-        if (unit === 'Month') {
-            return rawMonthSetter(mom, value);
-        } else {
-            return mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value);
-        }
-    }
-
-    function makeAccessor(unit, keepTime) {
-        return function (value) {
-            if (value != null) {
-                rawSetter(this, unit, value);
-                moment.updateOffset(this, keepTime);
-                return this;
-            } else {
-                return rawGetter(this, unit);
-            }
-        };
-    }
-
-    moment.fn.millisecond = moment.fn.milliseconds = makeAccessor('Milliseconds', false);
-    moment.fn.second = moment.fn.seconds = makeAccessor('Seconds', false);
-    moment.fn.minute = moment.fn.minutes = makeAccessor('Minutes', false);
-    // Setting the hour should keep the time, because the user explicitly
-    // specified which hour he wants. So trying to maintain the same hour (in
-    // a new timezone) makes sense. Adding/subtracting hours does not follow
-    // this rule.
-    moment.fn.hour = moment.fn.hours = makeAccessor('Hours', true);
-    // moment.fn.month is defined separately
-    moment.fn.date = makeAccessor('Date', true);
-    moment.fn.dates = deprecate('dates accessor is deprecated. Use date instead.', makeAccessor('Date', true));
-    moment.fn.year = makeAccessor('FullYear', true);
-    moment.fn.years = deprecate('years accessor is deprecated. Use year instead.', makeAccessor('FullYear', true));
-
-    // add plural methods
-    moment.fn.days = moment.fn.day;
-    moment.fn.months = moment.fn.month;
-    moment.fn.weeks = moment.fn.week;
-    moment.fn.isoWeeks = moment.fn.isoWeek;
-    moment.fn.quarters = moment.fn.quarter;
-
-    // add aliased format methods
-    moment.fn.toJSON = moment.fn.toISOString;
-
-    /************************************
-        Duration Prototype
-    ************************************/
-
-
-    function daysToYears (days) {
-        // 400 years have 146097 days (taking into account leap year rules)
-        return days * 400 / 146097;
-    }
-
-    function yearsToDays (years) {
-        // years * 365 + absRound(years / 4) -
-        //     absRound(years / 100) + absRound(years / 400);
-        return years * 146097 / 400;
-    }
-
-    extend(moment.duration.fn = Duration.prototype, {
-
-        _bubble : function () {
-            var milliseconds = this._milliseconds,
-                days = this._days,
-                months = this._months,
-                data = this._data,
-                seconds, minutes, hours, years = 0;
-
-            // The following code bubbles up values, see the tests for
-            // examples of what that means.
-            data.milliseconds = milliseconds % 1000;
-
-            seconds = absRound(milliseconds / 1000);
-            data.seconds = seconds % 60;
-
-            minutes = absRound(seconds / 60);
-            data.minutes = minutes % 60;
-
-            hours = absRound(minutes / 60);
-            data.hours = hours % 24;
-
-            days += absRound(hours / 24);
-
-            // Accurately convert days to years, assume start from year 0.
-            years = absRound(daysToYears(days));
-            days -= absRound(yearsToDays(years));
-
-            // 30 days to a month
-            // TODO (iskren): Use anchor date (like 1st Jan) to compute this.
-            months += absRound(days / 30);
-            days %= 30;
-
-            // 12 months -> 1 year
-            years += absRound(months / 12);
-            months %= 12;
-
-            data.days = days;
-            data.months = months;
-            data.years = years;
-        },
-
-        abs : function () {
-            this._milliseconds = Math.abs(this._milliseconds);
-            this._days = Math.abs(this._days);
-            this._months = Math.abs(this._months);
-
-            this._data.milliseconds = Math.abs(this._data.milliseconds);
-            this._data.seconds = Math.abs(this._data.seconds);
-            this._data.minutes = Math.abs(this._data.minutes);
-            this._data.hours = Math.abs(this._data.hours);
-            this._data.months = Math.abs(this._data.months);
-            this._data.years = Math.abs(this._data.years);
-
-            return this;
-        },
-
-        weeks : function () {
-            return absRound(this.days() / 7);
-        },
-
-        valueOf : function () {
-            return this._milliseconds +
-              this._days * 864e5 +
-              (this._months % 12) * 2592e6 +
-              toInt(this._months / 12) * 31536e6;
-        },
-
-        humanize : function (withSuffix) {
-            var output = relativeTime(this, !withSuffix, this.localeData());
-
-            if (withSuffix) {
-                output = this.localeData().pastFuture(+this, output);
-            }
-
-            return this.localeData().postformat(output);
-        },
-
-        add : function (input, val) {
-            // supports only 2.0-style add(1, 's') or add(moment)
-            var dur = moment.duration(input, val);
-
-            this._milliseconds += dur._milliseconds;
-            this._days += dur._days;
-            this._months += dur._months;
-
-            this._bubble();
-
-            return this;
-        },
-
-        subtract : function (input, val) {
-            var dur = moment.duration(input, val);
-
-            this._milliseconds -= dur._milliseconds;
-            this._days -= dur._days;
-            this._months -= dur._months;
-
-            this._bubble();
-
-            return this;
-        },
-
-        get : function (units) {
-            units = normalizeUnits(units);
-            return this[units.toLowerCase() + 's']();
-        },
-
-        as : function (units) {
-            var days, months;
-            units = normalizeUnits(units);
-
-            if (units === 'month' || units === 'year') {
-                days = this._days + this._milliseconds / 864e5;
-                months = this._months + daysToYears(days) * 12;
-                return units === 'month' ? months : months / 12;
-            } else {
-                // handle milliseconds separately because of floating point math errors (issue #1867)
-                days = this._days + Math.round(yearsToDays(this._months / 12));
-                switch (units) {
-                    case 'week': return days / 7 + this._milliseconds / 6048e5;
-                    case 'day': return days + this._milliseconds / 864e5;
-                    case 'hour': return days * 24 + this._milliseconds / 36e5;
-                    case 'minute': return days * 24 * 60 + this._milliseconds / 6e4;
-                    case 'second': return days * 24 * 60 * 60 + this._milliseconds / 1000;
-                    // Math.floor prevents floating point math errors here
-                    case 'millisecond': return Math.floor(days * 24 * 60 * 60 * 1000) + this._milliseconds;
-                    default: throw new Error('Unknown unit ' + units);
-                }
-            }
-        },
-
-        lang : moment.fn.lang,
-        locale : moment.fn.locale,
-
-        toIsoString : deprecate(
-            'toIsoString() is deprecated. Please use toISOString() instead ' +
-            '(notice the capitals)',
-            function () {
-                return this.toISOString();
-            }
-        ),
-
-        toISOString : function () {
-            // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
-            var years = Math.abs(this.years()),
-                months = Math.abs(this.months()),
-                days = Math.abs(this.days()),
-                hours = Math.abs(this.hours()),
-                minutes = Math.abs(this.minutes()),
-                seconds = Math.abs(this.seconds() + this.milliseconds() / 1000);
-
-            if (!this.asSeconds()) {
-                // this is the same as C#'s (Noda) and python (isodate)...
-                // but not other JS (goog.date)
-                return 'P0D';
-            }
-
-            return (this.asSeconds() < 0 ? '-' : '') +
-                'P' +
-                (years ? years + 'Y' : '') +
-                (months ? months + 'M' : '') +
-                (days ? days + 'D' : '') +
-                ((hours || minutes || seconds) ? 'T' : '') +
-                (hours ? hours + 'H' : '') +
-                (minutes ? minutes + 'M' : '') +
-                (seconds ? seconds + 'S' : '');
-        },
-
-        localeData : function () {
-            return this._locale;
-        }
-    });
-
-    moment.duration.fn.toString = moment.duration.fn.toISOString;
-
-    function makeDurationGetter(name) {
-        moment.duration.fn[name] = function () {
-            return this._data[name];
-        };
-    }
-
-    for (i in unitMillisecondFactors) {
-        if (hasOwnProp(unitMillisecondFactors, i)) {
-            makeDurationGetter(i.toLowerCase());
-        }
-    }
-
-    moment.duration.fn.asMilliseconds = function () {
-        return this.as('ms');
-    };
-    moment.duration.fn.asSeconds = function () {
-        return this.as('s');
-    };
-    moment.duration.fn.asMinutes = function () {
-        return this.as('m');
-    };
-    moment.duration.fn.asHours = function () {
-        return this.as('h');
-    };
-    moment.duration.fn.asDays = function () {
-        return this.as('d');
-    };
-    moment.duration.fn.asWeeks = function () {
-        return this.as('weeks');
-    };
-    moment.duration.fn.asMonths = function () {
-        return this.as('M');
-    };
-    moment.duration.fn.asYears = function () {
-        return this.as('y');
-    };
-
-    /************************************
-        Default Locale
-    ************************************/
-
-
-    // Set default locale, other locale will inherit from English.
-    moment.locale('en', {
-        ordinalParse: /\d{1,2}(th|st|nd|rd)/,
-        ordinal : function (number) {
-            var b = number % 10,
-                output = (toInt(number % 100 / 10) === 1) ? 'th' :
-                (b === 1) ? 'st' :
-                (b === 2) ? 'nd' :
-                (b === 3) ? 'rd' : 'th';
-            return number + output;
-        }
-    });
-
-    /* EMBED_LOCALES */
-
-    /************************************
-        Exposing Moment
-    ************************************/
-
-    function makeGlobal(shouldDeprecate) {
-        /*global ender:false */
-        if (typeof ender !== 'undefined') {
-            return;
-        }
-        oldGlobalMoment = globalScope.moment;
-        if (shouldDeprecate) {
-            globalScope.moment = deprecate(
-                    'Accessing Moment through the global scope is ' +
-                    'deprecated, and will be removed in an upcoming ' +
-                    'release.',
-                    moment);
-        } else {
-            globalScope.moment = moment;
-        }
-    }
-
-    // CommonJS module is defined
-    if (hasModule) {
-        module.exports = moment;
-    } else if (typeof define === 'function' && define.amd) {
-        define('moment', function (require, exports, module) {
-            if (module.config && module.config() && module.config().noGlobal === true) {
-                // release the global variable
-                globalScope.moment = oldGlobalMoment;
-            }
-
-            return moment;
-        });
-        makeGlobal(true);
-    } else {
-        makeGlobal();
-    }
-}).call(this);
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],4:[function(require,module,exports){
-require('./resources/libs');
-
-require('./locales/locales');
-
-window.Routes = require('../shared/routes/routes');
-
-window.ApiRoutes = require('../shared/routes/api');
-
-require('./react/application');
-
-window.ThumborService = require('../shared/react/services/thumbor');
-
-require('./react/components/auth/auth');
-
-require('./react/components/auth/authEmailSignIn');
-
-require('./react/components/auth/authEmailSignUp');
-
-window.EntryPage = require('./react/pages/entry');
-
-window.TlogRegularPage = require('./react/pages/tlogRegular');
-
-window.TlogDaylogPage = require('./react/pages/tlogDaylog');
-
-window.FeedLivePage = require('./react/pages/feedLive');
-
-window.FeedBestPage = require('./react/pages/feedBest');
-
-window.FeedFriendsPage = require('./react/pages/feedFriends');
-
-require('./react/stores/currentUser');
-
-require('./react/stores/relationships');
-
-require('./react/stores/feed');
-
-ReactApp.start();
-
-
-
-},{"../shared/react/services/thumbor":167,"../shared/routes/api":168,"../shared/routes/routes":169,"./locales/locales":5,"./react/application":13,"./react/components/auth/auth":15,"./react/components/auth/authEmailSignIn":17,"./react/components/auth/authEmailSignUp":18,"./react/pages/entry":149,"./react/pages/feedBest":150,"./react/pages/feedFriends":151,"./react/pages/feedLive":152,"./react/pages/tlogDaylog":157,"./react/pages/tlogRegular":158,"./react/stores/currentUser":160,"./react/stores/feed":161,"./react/stores/relationships":162,"./resources/libs":163}],5:[function(require,module,exports){
-var momentLocales;
-
-momentLocales = {
-  'ru': require('../../../bower_components/momentjs/locale/ru')
-};
-
-window.moment.locale('ru', momentLocales.ru);
-
-
-
-},{"../../../bower_components/momentjs/locale/ru":2}],6:[function(require,module,exports){
-var AppDispatcher, Constants, FeedServerActions;
-
-Constants = require('../../constants/constants');
-
-AppDispatcher = require('../../dispatcher/dispatcher');
-
-FeedServerActions = {
-  initializeFeed: function(entries) {
-    return AppDispatcher.handleServerAction({
-      type: Constants.feed.INITIALIZE_FEED,
-      entries: entries
-    });
-  },
-  loadEntries: function(entries) {
-    return AppDispatcher.handleServerAction({
-      type: Constants.feed.LOAD_ENTRIES,
-      entries: entries
-    });
-  }
-};
-
-module.exports = FeedServerActions;
-
-
-
-},{"../../constants/constants":139,"../../dispatcher/dispatcher":145}],7:[function(require,module,exports){
-var AppDispatcher, Constants, RelationshipServerActions;
-
-Constants = require('../../constants/constants');
-
-AppDispatcher = require('../../dispatcher/dispatcher');
-
-RelationshipServerActions = {
-  updateRelationship: function(_arg) {
-    var relationship, userId;
-    userId = _arg.userId, relationship = _arg.relationship;
-    return AppDispatcher.handleServerAction({
-      type: Constants.relationship.UPDATE_RELATIONSHIP,
-      userId: userId,
-      relationship: relationship
-    });
-  }
-};
-
-module.exports = RelationshipServerActions;
-
-
-
-},{"../../constants/constants":139,"../../dispatcher/dispatcher":145}],8:[function(require,module,exports){
-var Api, EntryViewActions, NotifyController;
-
-Api = require('../../api/api');
-
-NotifyController = require('../../controllers/notify');
-
-EntryViewActions = {
-  addToFavorites: function(entryId) {
-    return Api.entry.addToFavorites(entryId).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  removeFromFavorites: function(entryId) {
-    return Api.entry.removeFromFavorites(entryId).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  startWatch: function(entryId) {
-    return Api.entry.startWatch(entryId).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  stopWatch: function(entryId) {
-    return Api.entry.stopWatch(entryId).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  report: function(entryId) {
-    return Api.entry.report(entryId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('report_entry_success'));
-    }).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  "delete": function(entryId) {
-    return Api.entry["delete"](entryId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('delete_entry_success'));
-    }).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  vote: function(entryId) {
-    return Api.entry.vote(entryId).then(function(rating) {
-      NotifyController.notifySuccess(i18n.t('vote_entry_success'));
-      return rating;
-    }).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  loadComments: function(entryId, toCommentId, limit) {
-    return Api.entry.loadComments(entryId, toCommentId, limit).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  createComment: function(entryId, text) {
-    return Api.entry.createComment(entryId, text).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  editComment: function(entryId, commentId, text) {
-    return Api.entry.editComment(commentId, text).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  deleteComment: function(entryId, commentId) {
-    return Api.entry.deleteComment(commentId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('report_comment_success'));
-    }).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  reportComment: function(commentId) {
-    return Api.entry.reportComment(commentId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('delete_comment_success'));
-    }).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  }
-};
-
-module.exports = EntryViewActions;
-
-
-
-},{"../../api/api":12,"../../controllers/notify":143}],9:[function(require,module,exports){
-var Api, FeedServerActions, FeedViewActions, NotifyController;
-
-Api = require('../../api/api');
-
-NotifyController = require('../../controllers/notify');
-
-FeedServerActions = require('../server/feed');
-
-FeedViewActions = {
-  initializeFeed: function(entries) {
-    return FeedServerActions.initializeFeed(entries);
-  },
-  loadLiveEntries: function(sinceEntryId, limit) {
-    return Api.feed.loadLiveEntries(sinceEntryId, limit).then((function(_this) {
-      return function(response) {
-        return FeedServerActions.loadEntries(response.entries);
-      };
-    })(this)).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  loadBestEntries: function(sinceEntryId, limit) {
-    return Api.feed.loadBestEntries(sinceEntryId, limit).then((function(_this) {
-      return function(response) {
-        return FeedServerActions.loadEntries(response.entries);
-      };
-    })(this)).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  loadFriendsEntries: function(sinceEntryId, limit) {
-    return Api.feed.loadFriendsEntries(sinceEntryId, limit).then((function(_this) {
-      return function(response) {
-        return FeedServerActions.loadEntries(response.entries);
-      };
-    })(this)).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  }
-};
-
-module.exports = FeedViewActions;
-
-
-
-},{"../../api/api":12,"../../controllers/notify":143,"../server/feed":6}],10:[function(require,module,exports){
-var Api, NotifyController, RelationshipServerActions, RelationshipViewActions;
-
-Api = require('../../api/api');
-
-NotifyController = require('../../controllers/notify');
-
-RelationshipServerActions = require('../server/relationship');
-
-RelationshipViewActions = {
-  follow: function(userId) {
-    return Api.relationship.follow(userId).then(function(relationship) {
-      return RelationshipServerActions.updateRelationship({
-        userId: userId,
-        relationship: relationship
-      });
-    }).fail((function(_this) {
-      return function(xhr) {
-        return NotifyController.errorResponse(xhr);
-      };
-    })(this));
-  },
-  unfollow: function(userId) {
-    return Api.relationship.unfollow(userId).then(function(relationship) {
-      return RelationshipServerActions.updateRelationship({
-        userId: userId,
-        relationship: relationship
-      });
-    }).fail((function(_this) {
-      return function(xhr) {
-        return NotifyController.errorResponse(xhr);
-      };
-    })(this));
-  },
-  cancel: function(userId) {
-    return Api.relationship.cancel(userId).then(function(relationship) {
-      return RelationshipServerActions.updateRelationship({
-        userId: userId,
-        relationship: relationship
-      });
-    }).fail((function(_this) {
-      return function(xhr) {
-        return NotifyController.errorResponse(xhr);
-      };
-    })(this));
-  },
-  ignore: function(userId) {
-    return Api.relationship.ignore(userId).then(function(relationship) {
-      return RelationshipServerActions.updateRelationship({
-        userId: userId,
-        relationship: relationship
-      });
-    }).fail((function(_this) {
-      return function(xhr) {
-        return NotifyController.errorResponse(xhr);
-      };
-    })(this));
-  },
-  report: function(userId) {
-    return Api.relationship.report(userId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('report_user_success'));
-    }).fail((function(_this) {
-      return function(xhr) {
-        return NotifyController.errorResponse(xhr);
-      };
-    })(this));
-  }
-};
-
-module.exports = RelationshipViewActions;
-
-
-
-},{"../../api/api":12,"../../controllers/notify":143,"../server/relationship":7}],11:[function(require,module,exports){
-var Api, NotifyController, SessionsViewActions;
-
-Api = require('../../api/api');
-
-NotifyController = require('../../controllers/notify');
-
-SessionsViewActions = {
-  signIn: function(login, password) {
-    return Api.sessions.signIn(login, password).then(function(user) {
-      NotifyController.notifySuccess(i18n.t('signin_success', {
-        userSlug: user.slug
-      }));
-      return user;
-    }).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  signUp: function(email, password, nickname) {
-    return Api.sessions.signUp(email, password, nickname).then(function(user) {
-      NotifyController.notifySuccess(i18n.t('signup_success', {
-        userSlug: user.slug
-      }));
-      return user;
-    }).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  },
-  recover: function(login) {
-    return Api.sessions.recover(login).then(function() {
-      return NotifyController.notifySuccess(i18n.t('recovery_mail_sent'));
-    }).fail(function(xhr) {
-      return NotifyController.errorResponse(xhr);
-    });
-  }
-};
-
-module.exports = SessionsViewActions;
-
-
-
-},{"../../api/api":12,"../../controllers/notify":143}],12:[function(require,module,exports){
-var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, assign, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _pendingRequests;
-
-assign = require('react/lib/Object.assign');
-
-Constants = require('../constants/constants');
-
-CurrentUserStore = require('../stores/currentUser');
-
-TIMEOUT = 10000;
-
-_pendingRequests = {};
-
-abortPendingRequests = function(key) {
-  if (_pendingRequests[key]) {
-    _pendingRequests[key].abort();
-    return _pendingRequests[key] = null;
-  }
-};
-
-userToken = function() {
-  return CurrentUserStore.getAccessToken();
-};
-
-request = function(_method, url, data) {
-  var headers, method;
-  if (data == null) {
-    data = {};
-  }
-  headers = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-Tasty-Client-Name': 'web_mobile',
-    'X-Tasty-Client-Version': TastySettings.version
-  };
-  if (userToken()) {
-    headers['X-User-Token'] = userToken();
-  }
-  method = (function() {
-    switch (_method) {
-      case 'GET':
-        return 'GET';
-      case 'POST':
-      case 'PUT':
-      case 'DELETE':
-        return 'POST';
-      default:
-        return 'GET';
-    }
-  })();
-  assign(data, {
-    _method: _method
-  });
-  return reqwest({
-    url: url,
-    method: method,
-    data: data,
-    timeout: TIMEOUT,
-    headers: headers
-  });
-};
-
-getRequest = function(url, data) {
-  return request('GET', url, data);
-};
-
-postRequest = function(url, data) {
-  return request('POST', url, data);
-};
-
-putRequest = function(url, data) {
-  return request('PUT', url, data);
-};
-
-deleteRequest = function(url, data) {
-  return request('DELETE', url, data);
-};
-
-Api = {
-  locales: {
-    load: function(locale) {
-      var url;
-      url = TastySettings.localesPath + '/' + locale + '.json';
-      return getRequest(url);
-    }
-  },
-  relationship: {
-    follow: function(userId) {
-      var key, url;
-      url = ApiRoutes.change_my_relationship_url(userId, 'follow');
-      key = Constants.api.FOLLOW_USER;
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url);
-    },
-    unfollow: function(userId) {
-      var key, url;
-      url = ApiRoutes.change_my_relationship_url(userId, 'unfollow');
-      key = Constants.api.UNFOLLOW_USER;
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url);
-    },
-    cancel: function(userId) {
-      var key, url;
-      url = ApiRoutes.change_my_relationship_url(userId, 'cancel');
-      key = Constants.api.CANCEL_USER;
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url);
-    },
-    ignore: function(userId) {
-      var key, url;
-      url = ApiRoutes.change_my_relationship_url(userId, 'ignore');
-      key = Constants.api.IGNORE_USER;
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url);
-    },
-    report: function(userId) {
-      var key, url;
-      url = ApiRoutes.tlog_report(userId);
-      key = Constants.api.REPORT_USER;
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url);
-    }
-  },
-  entry: {
-    addToFavorites: function(entryId) {
-      var data, key, url;
-      url = ApiRoutes.favorites_url();
-      key = Constants.api.ADD_TO_FAVORITES;
-      data = {
-        entry_id: entryId
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url, data);
-    },
-    removeFromFavorites: function(entryId) {
-      var data, key, url;
-      url = ApiRoutes.favorites_url();
-      key = Constants.api.REMOVE_FROM_FAVORITES;
-      data = {
-        entry_id: entryId
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = deleteRequest(url, data);
-    },
-    startWatch: function(entryId) {
-      var data, key, url;
-      url = ApiRoutes.watching_url();
-      key = Constants.api.START_WATCH;
-      data = {
-        entry_id: entryId
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url, data);
-    },
-    stopWatch: function(entryId) {
-      var data, key, url;
-      url = ApiRoutes.watching_url();
-      key = Constants.api.STOP_WATCH;
-      data = {
-        entry_id: entryId
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = deleteRequest(url, data);
-    },
-    report: function(entryId) {
-      var key, url;
-      url = ApiRoutes.report_url(entryId);
-      key = Constants.api.REPORT;
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url);
-    },
-    "delete": function(entryId) {
-      var key, url;
-      url = ApiRoutes.entry_url(entryId);
-      key = Constants.api.DELETE;
-      abortPendingRequests(key);
-      return _pendingRequests[key] = deleteRequest(url);
-    },
-    vote: function(entryId) {
-      var key, url;
-      url = ApiRoutes.votes_url(entryId);
-      key = Constants.api.VOTE;
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url);
-    },
-    loadComments: function(entryId, toCommentId, limit) {
-      var data, key, url;
-      url = ApiRoutes.comments_url();
-      key = Constants.api.LOAD_COMMENTS;
-      data = {
-        entry_id: entryId,
-        to_comment_id: toCommentId,
-        limit: limit
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = getRequest(url, data);
-    },
-    deleteComment: function(commentId) {
-      var key, url;
-      url = ApiRoutes.comments_edit_delete_url(commentId);
-      key = Constants.api.DELETE_COMMENT;
-      abortPendingRequests(key);
-      return _pendingRequests[key] = deleteRequest(url);
-    },
-    reportComment: function(commentId) {
-      var key, url;
-      url = ApiRoutes.comments_report_url(commentId);
-      key = Constants.api.REPORT_COMMENT;
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url);
-    },
-    createComment: function(entryId, text) {
-      var data, key, url;
-      url = ApiRoutes.comments_url();
-      key = Constants.api.CREATE_COMMENT;
-      data = {
-        entry_id: entryId,
-        text: text
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url, data);
-    },
-    editComment: function(commentId, text) {
-      var data, key, url;
-      url = ApiRoutes.comments_edit_delete_url(commentId);
-      key = Constants.api.EDIT_COMMENT;
-      data = {
-        text: text
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = putRequest(url, data);
-    }
-  },
-  feed: {
-    loadLiveEntries: function(sinceEntryId, limit) {
-      var data, key, url;
-      url = ApiRoutes.feedLive();
-      key = Constants.api.LOAD_FEED_ENTRIES;
-      data = {
-        since_entry_id: sinceEntryId,
-        limit: limit,
-        include_comments_info: 1
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = getRequest(url, data);
-    },
-    loadBestEntries: function(sinceEntryId, limit) {
-      var data, key, url;
-      url = ApiRoutes.feedBest();
-      key = Constants.api.LOAD_FEED_ENTRIES;
-      data = {
-        since_entry_id: sinceEntryId,
-        limit: limit,
-        include_comments_info: 1
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = getRequest(url, data);
-    },
-    loadFriendsEntries: function(sinceEntryId, limit) {
-      var data, key, url;
-      url = ApiRoutes.feedFriends();
-      key = Constants.api.LOAD_FEED_ENTRIES;
-      data = {
-        since_entry_id: sinceEntryId,
-        limit: limit,
-        include_comments_info: 1
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = getRequest(url, data);
-    }
-  },
-  sessions: {
-    signIn: function(login, password) {
-      var data, key, url;
-      url = ApiRoutes.signin_url();
-      key = Constants.api.SIGN_IN;
-      data = {
-        email: login,
-        password: password
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url, data);
-    },
-    signUp: function(email, password, nickname) {
-      var data, key, url;
-      url = ApiRoutes.signup_url();
-      key = Constants.api.SIGN_UP;
-      data = {
-        email: email,
-        password: password,
-        slug: nickname
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url, data);
-    },
-    recover: function(login) {
-      var data, key, url;
-      url = ApiRoutes.recovery_url();
-      key = Constants.api.RECOVER;
-      data = {
-        slug_or_email: login
-      };
-      abortPendingRequests(key);
-      return _pendingRequests[key] = postRequest(url, data);
-    }
-  }
-};
-
-module.exports = Api;
-
-
-
-},{"../constants/constants":139,"../stores/currentUser":160,"react/lib/Object.assign":200}],13:[function(require,module,exports){
-var ReactUjs;
-
-window.i18n = require('i18next');
-
-ReactUjs = require('reactUjs');
-
-window.ReactApp = {
-  start: function(locale) {
-    if (locale == null) {
-      locale = TastySettings.locale;
-    }
-    console.log('ReactApp start');
-    return i18n.init({
-      resGetPath: TastySettings.localesPath + '/__lng__.json'
-    }, function() {
-      console.log('Locales loaded');
-      return ReactUjs.initialize();
-    });
-  }
-};
-
-
-
-},{"i18next":"i18next","reactUjs":"reactUjs"}],14:[function(require,module,exports){
-var Notify, PropTypes, TIMEOUT, TYPE;
-
-PropTypes = React.PropTypes;
-
-TYPE = 'success';
-
-TIMEOUT = 3000;
-
-Notify = React.createClass({
-  displayName: 'Notify',
-  propTypes: {
-    text: PropTypes.string.isRequired,
-    type: PropTypes.string,
-    timeout: PropTypes.number,
-    onClose: PropTypes.func.isRequired
-  },
-  getDefaultProps: function() {
-    return {
-      type: TYPE,
-      timeout: TIMEOUT
-    };
-  },
-  componentDidMount: function() {
-    return this.timeout = setTimeout(this.props.onClose, this.props.timeout);
-  },
-  componentWillUnmount: function() {
-    if (this.timeout != null) {
-      return clearTimeout(this.timeout);
-    }
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "alert alert--" + this.props.type
-    }, this.props.text);
-  }
-});
-
-module.exports = Notify;
-
-
-
-},{}],15:[function(require,module,exports){
-(function (global){
-var AuthEmailSignInButton, AuthEmailSignUpButton, AuthFacebookButton, AuthVkontakteButton;
-
-AuthVkontakteButton = require('./buttons/vkontakte');
-
-AuthFacebookButton = require('./buttons/facebook');
-
-AuthEmailSignInButton = require('./buttons/emailSignIn');
-
-AuthEmailSignUpButton = require('./buttons/emailSignUp');
-
-global.Auth = React.createClass({
-  displayName: 'Auth',
-  render: function() {
-    return React.createElement("div", {
-      "className": "auth"
-    }, React.createElement("div", {
-      "className": "auth__grid-table"
-    }, React.createElement("div", {
-      "className": "auth__grid-cell"
-    }, React.createElement("div", {
-      "style": {
-        backgroundImage: 'url(../../images/images/Polly-73.jpg)'
-      },
-      "className": "auth__bg"
-    }), React.createElement("div", {
-      "className": "auth__section"
-    }, React.createElement("div", {
-      "className": "auth__body"
-    }, React.createElement("div", {
-      "className": "auth__logo"
-    }, React.createElement("i", {
-      "className": "icon icon--ribbon"
-    })), React.createElement("h1", {
-      "className": "auth__lead",
-      "dangerouslySetInnerHTML": {
-        __html: i18n.t('auth')
-      }
-    }), React.createElement("div", {
-      "className": "auth__buttons"
-    }, React.createElement(AuthVkontakteButton, null), React.createElement(AuthFacebookButton, null), React.createElement(AuthEmailSignInButton, null), React.createElement(AuthEmailSignUpButton, null)))))));
-  }
-});
-
-module.exports = Auth;
-
-
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./buttons/emailSignIn":21,"./buttons/emailSignUp":22,"./buttons/facebook":24,"./buttons/vkontakte":25}],16:[function(require,module,exports){
-var AuthEmailLoginField, AuthEmailRecovery, AuthEmailResetButton, AuthRememberedPasswordLink, ComponentMixin, NotifyController, ScreenController, SessionsViewActions;
-
-ScreenController = require('../../controllers/screen');
-
-NotifyController = require('../../controllers/notify');
-
-SessionsViewActions = require('../../actions/view/sessions');
-
-ComponentMixin = require('../../mixins/component');
-
-AuthEmailLoginField = require('./fields/emailLogin');
-
-AuthEmailResetButton = require('./buttons/emailReset');
-
-AuthRememberedPasswordLink = require('./links/rememberedPassword');
-
-AuthEmailRecovery = React.createClass({
-  displayName: 'AuthEmailRecovery',
-  mixins: [ComponentMixin],
-  getInitialState: function() {
-    return {
-      loading: false
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "auth"
-    }, React.createElement("div", {
-      "className": "auth__grid-table"
-    }, React.createElement("div", {
-      "className": "auth__grid-cell"
-    }, React.createElement("div", {
-      "style": {
-        backgroundImage: 'url(../../images/images/Polly-73.jpg)'
-      },
-      "className": "auth__bg"
-    }), React.createElement("div", {
-      "className": "auth__section"
-    }, React.createElement("div", {
-      "className": "auth__header"
-    }, React.createElement("div", {
-      "className": "auth__header-title"
-    }, i18n.t('email_recovery_header_title'))), React.createElement("div", {
-      "className": "auth__body"
-    }, React.createElement("form", {
-      "onSubmit": this.handleSubmit
-    }, React.createElement(AuthEmailLoginField, {
-      "ref": "loginField"
-    }), React.createElement("div", {
-      "className": "auth__buttons"
-    }, React.createElement(AuthEmailResetButton, {
-      "loading": this.state.loading
-    })))), React.createElement("div", {
-      "className": "auth__footer"
-    }, React.createElement(AuthRememberedPasswordLink, null))))));
-  },
-  activateLoadingState: function() {
-    return this.safeUpdateState({
-      loading: true
-    });
-  },
-  deactivateLoadingState: function() {
-    return this.safeUpdateState({
-      loading: false
-    });
-  },
-  isValid: function() {
-    var login;
-    login = this.refs.loginField.getValue();
-    if (login.length === 0) {
-      NotifyController.notifyError(i18n.t('empty_login_error'));
-      return false;
-    } else {
-      return true;
-    }
-  },
-  recover: function() {
-    var login;
-    login = this.refs.loginField.getValue();
-    this.activateLoadingState();
-    return SessionsViewActions.recover(login).then(ScreenController.close).always(this.deactivateLoadingState);
-  },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    if (this.isValid() && !this.state.loading) {
-      return this.recover();
-    }
-  }
-});
-
-module.exports = AuthEmailRecovery;
-
-
-
-},{"../../actions/view/sessions":11,"../../controllers/notify":143,"../../controllers/screen":144,"../../mixins/component":147,"./buttons/emailReset":20,"./fields/emailLogin":27,"./links/rememberedPassword":33}],17:[function(require,module,exports){
-(function (global){
-var AuthEmailLoginField, AuthEmailPasswordField, AuthEmailSubmitButton, AuthForgotPasswordLink, AuthNotRegisteredYetLink, ComponentMixin, NotifyController, SessionsViewActions;
-
-NotifyController = require('../../controllers/notify');
-
-SessionsViewActions = require('../../actions/view/sessions');
-
-ComponentMixin = require('../../mixins/component');
-
-AuthEmailLoginField = require('./fields/emailLogin');
-
-AuthEmailPasswordField = require('./fields/emailPassword');
-
-AuthEmailSubmitButton = require('./buttons/emailSubmit');
-
-AuthNotRegisteredYetLink = require('./links/notRegisteredYet');
-
-AuthForgotPasswordLink = require('./links/forgotPassword');
-
-global.AuthEmailSignIn = React.createClass({
-  displayName: 'AuthEmailSignIn',
-  mixins: [ComponentMixin],
-  getInitialState: function() {
-    return {
-      loading: false
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "auth"
-    }, React.createElement("div", {
-      "className": "auth__grid-table"
-    }, React.createElement("div", {
-      "className": "auth__grid-cell"
-    }, React.createElement("div", {
-      "style": {
-        backgroundImage: 'url(../../images/images/Polly-73.jpg)'
-      },
-      "className": "auth__bg"
-    }), React.createElement("div", {
-      "className": "auth__section"
-    }, React.createElement("div", {
-      "className": "auth__header"
-    }, React.createElement("div", {
-      "className": "auth__header-title"
-    }, i18n.t('email_signin_header'))), React.createElement("div", {
-      "className": "auth__body"
-    }, React.createElement("form", {
-      "onSubmit": this.handleSubmit
-    }, React.createElement(AuthEmailLoginField, {
-      "ref": "loginField"
-    }), React.createElement(AuthEmailPasswordField, {
-      "ref": "passwordField"
-    }), React.createElement("div", {
-      "className": "auth__buttons"
-    }, React.createElement(AuthEmailSubmitButton, {
-      "loading": this.state.loading
-    })))), React.createElement("div", {
-      "className": "auth__footer"
-    }, React.createElement(AuthNotRegisteredYetLink, null), React.createElement("span", {
-      "className": "auth__footer-sep"
-    }, "\u00b7"), React.createElement(AuthForgotPasswordLink, null))))));
-  },
-  activateLoadingState: function() {
-    return this.safeUpdateState({
-      loading: true
-    });
-  },
-  deactivateLoadingState: function() {
-    return this.safeUpdateState({
-      loading: false
-    });
-  },
-  isValid: function() {
-    var login, password;
-    login = this.refs.loginField.getValue();
-    password = this.refs.passwordField.getValue();
-    switch (false) {
-      case login.length !== 0:
-        NotifyController.notifyError(i18n.t('empty_login_error'));
-        return false;
-      case password.length !== 0:
-        NotifyController.notifyError(i18n.t('empty_password_error'));
-        return false;
-      default:
-        return true;
-    }
-  },
-  signIn: function() {
-    var login, password;
-    login = this.refs.loginField.getValue();
-    password = this.refs.passwordField.getValue();
-    this.activateLoadingState();
-    return SessionsViewActions.signIn(login, password).then((function(_this) {
-      return function() {
-        return setTimeout((function() {
-          return window.location.reload(true);
-        }), 0);
-      };
-    })(this)).always(this.deactivateLoadingState);
-  },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    if (this.isValid() && !this.state.loading) {
-      return this.signIn();
-    }
-  }
-});
-
-module.exports = AuthEmailSignIn;
-
-
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../actions/view/sessions":11,"../../controllers/notify":143,"../../mixins/component":147,"./buttons/emailSubmit":23,"./fields/emailLogin":27,"./fields/emailPassword":29,"./links/forgotPassword":31,"./links/notRegisteredYet":32}],18:[function(require,module,exports){
-(function (global){
-var AuthAlreadyRegisteredLink, AuthEmailEmailField, AuthEmailNicknameField, AuthEmailPasswordField, AuthEmailSubmitButton, ComponentMixin, NotifyController, SessionsViewActions;
-
-NotifyController = require('../../controllers/notify');
-
-SessionsViewActions = require('../../actions/view/sessions');
-
-ComponentMixin = require('../../mixins/component');
-
-AuthEmailEmailField = require('./fields/emailEmail');
-
-AuthEmailPasswordField = require('./fields/emailPassword');
-
-AuthEmailNicknameField = require('./fields/emailNickname');
-
-AuthEmailSubmitButton = require('./buttons/emailSubmit');
-
-AuthAlreadyRegisteredLink = require('./links/alreadyRegistered');
-
-global.AuthEmailSignUp = React.createClass({
-  displayName: 'AuthEmailSignUp',
-  mixins: [ComponentMixin],
-  getInitialState: function() {
-    return {
-      loading: false
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "auth"
-    }, React.createElement("div", {
-      "className": "auth__grid-table"
-    }, React.createElement("div", {
-      "className": "auth__grid-cell"
-    }, React.createElement("div", {
-      "style": {
-        backgroundImage: 'url(../../images/images/Polly-73.jpg)'
-      },
-      "className": "auth__bg"
-    }), React.createElement("div", {
-      "className": "auth__section"
-    }, React.createElement("div", {
-      "className": "auth__header"
-    }, React.createElement("div", {
-      "className": "auth__header-title"
-    }, i18n.t('email_signup_header'))), React.createElement("div", {
-      "className": "auth__body"
-    }, React.createElement("form", {
-      "onSubmit": this.handleSubmit
-    }, React.createElement(AuthEmailEmailField, {
-      "ref": "emailField"
-    }), React.createElement(AuthEmailPasswordField, {
-      "ref": "passwordField"
-    }), React.createElement(AuthEmailNicknameField, {
-      "ref": "nicknameField"
-    }), React.createElement("div", {
-      "className": "auth__buttons"
-    }, React.createElement(AuthEmailSubmitButton, {
-      "loading": this.state.loading
-    })))), React.createElement("div", {
-      "className": "auth__footer"
-    }, React.createElement(AuthAlreadyRegisteredLink, null))))));
-  },
-  activateLoadingState: function() {
-    return this.safeUpdateState({
-      loading: true
-    });
-  },
-  deactivateLoadingState: function() {
-    return this.safeUpdateState({
-      loading: false
-    });
-  },
-  isValid: function() {
-    var email, password;
-    email = this.refs.emailField.getValue();
-    password = this.refs.passwordField.getValue();
-    switch (false) {
-      case email.length !== 0:
-        NotifyController.notifyError(i18n.t('empty_email_error'));
-        return false;
-      case password.length !== 0:
-        NotifyController.notifyError(i18n.t('empty_password_error'));
-        return false;
-      default:
-        return true;
-    }
-  },
-  signUp: function() {
-    var email, nickname, password;
-    email = this.refs.emailField.getValue();
-    password = this.refs.passwordField.getValue();
-    nickname = this.refs.nicknameField.getValue();
-    this.activateLoadingState();
-    return SessionsViewActions.signUp(email, password, nickname).then((function(_this) {
-      return function(user) {
-        return setTimeout((function() {
-          return window.location.href = user.tlog_url;
-        }), 0);
-      };
-    })(this)).always(this.deactivateLoadingState);
-  },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    if (this.isValid() && !this.state.loading) {
-      return this.signUp();
-    }
-  }
-});
-
-module.exports = AuthEmailSignUp;
-
-
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../actions/view/sessions":11,"../../controllers/notify":143,"../../mixins/component":147,"./buttons/emailSubmit":23,"./fields/emailEmail":26,"./fields/emailNickname":28,"./fields/emailPassword":29,"./links/alreadyRegistered":30}],19:[function(require,module,exports){
-var Auth, AuthManager, ConnectStoreMixin, CurrentUserStore;
-
-CurrentUserStore = require('../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-Auth = require('./auth');
-
-AuthManager = React.createClass({
-  displayName: 'AuthManager',
-  mixins: [ConnectStoreMixin(CurrentUserStore)],
-  render: function() {
-    if (!this.state.logged) {
-      return React.createElement(Auth, null);
-    } else {
-      return null;
-    }
-  },
-  getStateFromStore: function() {
-    return {
-      logged: CurrentUserStore.isLogged()
-    };
-  }
-});
-
-module.exports = AuthManager;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":166,"../../stores/currentUser":160,"./auth":15}],20:[function(require,module,exports){
-var AuthEmailResetButton, PropTypes, Spinner;
-
-Spinner = require('../../common/spinner/spinner');
-
-PropTypes = React.PropTypes;
-
-AuthEmailResetButton = React.createClass({
-  displayName: 'AuthEmailResetButton',
-  propTypes: {
-    loading: PropTypes.bool.isRequired
-  },
-  render: function() {
-    return React.createElement("button", {
-      "className": "outline-auth-button"
-    }, this.renderSpinner(), " ", i18n.t('reset_password_button'));
-  },
-  renderSpinner: function() {
-    if (this.props.loading) {
-      return React.createElement(Spinner, {
-        "size": 14.
-      });
-    }
-  }
-});
-
-module.exports = AuthEmailResetButton;
-
-
-
-},{"../../common/spinner/spinner":46}],21:[function(require,module,exports){
-var AuthEmailSignIn, AuthEmailSignInButton, ScreenController;
-
-ScreenController = require('../../../controllers/screen');
-
-AuthEmailSignIn = require('../authEmailSignIn');
-
-AuthEmailSignInButton = React.createClass({
-  displayName: 'AuthEmailSignInButton',
-  render: function() {
-    return React.createElement("button", {
-      "className": "site-auth-button",
-      "onClick": this.handleClick
-    }, i18n.t('email_signin_button'));
-  },
-  handleClick: function() {
-    return ScreenController.show(AuthEmailSignIn, {}, 'auth-page');
-  }
-});
-
-module.exports = AuthEmailSignInButton;
-
-
-
-},{"../../../controllers/screen":144,"../authEmailSignIn":17}],22:[function(require,module,exports){
-var AuthEmailSignUpButton, ScreenController;
-
-ScreenController = require('../../../controllers/screen');
-
-AuthEmailSignUpButton = React.createClass({
-  displayName: 'AuthEmailSignUpButton',
-  render: function() {
-    return React.createElement("button", {
-      "className": "reg-auth-button",
-      "onClick": this.handleClick
-    }, i18n.t('email_signup_button'));
-  },
-  handleClick: function() {
-    return ScreenController.show(AuthEmailSignUp, {}, 'auth-page');
-  }
-});
-
-module.exports = AuthEmailSignUpButton;
-
-
-
-},{"../../../controllers/screen":144}],23:[function(require,module,exports){
-var AuthEmailSubmitButton, PropTypes, Spinner;
-
-Spinner = require('../../common/spinner/spinner');
-
-PropTypes = React.PropTypes;
-
-AuthEmailSubmitButton = React.createClass({
-  displayName: 'AuthEmailSubmitButton',
-  propTypes: {
-    loading: PropTypes.bool.isRequired
-  },
-  render: function() {
-    return React.createElement("button", {
-      "className": "outline-auth-button"
-    }, this.renderSpinner(), " ", i18n.t('email_submit_button'));
-  },
-  renderSpinner: function() {
-    if (this.props.loading) {
-      return React.createElement(Spinner, {
-        "size": 14.
-      });
-    }
-  }
-});
-
-module.exports = AuthEmailSubmitButton;
-
-
-
-},{"../../common/spinner/spinner":46}],24:[function(require,module,exports){
-var AuthFacebookButton;
-
-AuthFacebookButton = React.createClass({
-  displayName: 'AuthFacebookButton',
-  render: function() {
-    return React.createElement("button", {
-      "className": "fb-auth-button",
-      "onClick": this.handleClick
-    }, i18n.t('facebook_signin_button'));
-  },
-  handleClick: function() {
-    return window.location = ApiRoutes.omniauth_url('facebook');
-  }
-});
-
-module.exports = AuthFacebookButton;
-
-
-
-},{}],25:[function(require,module,exports){
-var AuthVkontakteButton;
-
-AuthVkontakteButton = React.createClass({
-  displayName: 'AuthVkontakteButton',
-  render: function() {
-    return React.createElement("button", {
-      "className": "vk-auth-button",
-      "onClick": this.handleClick
-    }, i18n.t('vkontakte_signin_button'));
-  },
-  handleClick: function() {
-    return window.location = ApiRoutes.omniauth_url('vkontakte');
-  }
-});
-
-module.exports = AuthVkontakteButton;
-
-
-
-},{}],26:[function(require,module,exports){
-var AuthEmailEmailField;
-
-AuthEmailEmailField = React.createClass({
-  displayName: 'AuthEmailEmailField',
-  render: function() {
-    return React.createElement("div", {
-      "className": "auth__field"
-    }, React.createElement("label", {
-      "htmlFor": "auth-email",
-      "className": "auth__field-icon"
-    }, React.createElement("i", {
-      "className": "icon icon--profile"
-    })), React.createElement("input", {
-      "ref": "input",
-      "type": "email",
-      "placeholder": i18n.t('email_field_placeholder'),
-      "id": "auth-email",
-      "className": "auth__field-input"
-    }));
-  },
-  getValue: function() {
-    return this.refs.input.getDOMNode().value.trim();
-  }
-});
-
-module.exports = AuthEmailEmailField;
-
-
-
-},{}],27:[function(require,module,exports){
-var AuthEmailLoginField;
-
-AuthEmailLoginField = React.createClass({
-  displayName: 'AuthEmailLoginField',
-  render: function() {
-    return React.createElement("div", {
-      "className": "auth__field"
-    }, React.createElement("label", {
-      "htmlFor": "auth-email-nick",
-      "className": "auth__field-icon"
-    }, React.createElement("i", {
-      "className": "icon icon--profile"
-    })), React.createElement("input", {
-      "ref": "input",
-      "type": "text",
-      "placeholder": i18n.t('login_field_placeholder'),
-      "id": "auth-email-nick",
-      "className": "auth__field-input"
-    }));
-  },
-  getValue: function() {
-    return this.refs.input.getDOMNode().value.trim();
-  }
-});
-
-module.exports = AuthEmailLoginField;
-
-
-
-},{}],28:[function(require,module,exports){
-var AuthEmailNicknameField;
-
-AuthEmailNicknameField = React.createClass({
-  displayName: 'AuthEmailNicknameField',
-  render: function() {
-    return React.createElement("div", {
-      "className": "auth__field"
-    }, React.createElement("label", {
-      "htmlFor": "auth-nick",
-      "className": "auth__field-icon"
-    }, React.createElement("i", {
-      "className": "icon icon--diary"
-    })), React.createElement("input", {
-      "ref": "input",
-      "type": "text",
-      "placeholder": i18n.t('nickname_field_placeholder'),
-      "id": "auth-nick",
-      "className": "auth__field-input"
-    }));
-  },
-  getValue: function() {
-    return this.refs.input.getDOMNode().value.trim();
-  }
-});
-
-module.exports = AuthEmailNicknameField;
-
-
-
-},{}],29:[function(require,module,exports){
-var AuthEmailPasswordField;
-
-AuthEmailPasswordField = React.createClass({
-  displayName: 'AuthEmailPasswordField',
-  render: function() {
-    return React.createElement("div", {
-      "className": "auth__field"
-    }, React.createElement("label", {
-      "htmlFor": "auth-password",
-      "className": "auth__field-icon"
-    }, React.createElement("i", {
-      "className": "icon icon--lock"
-    })), React.createElement("input", {
-      "ref": "input",
-      "type": "password",
-      "placeholder": i18n.t('password_field'),
-      "id": "auth-password",
-      "className": "auth__field-input"
-    }));
-  },
-  getValue: function() {
-    return this.refs.input.getDOMNode().value.trim();
-  }
-});
-
-module.exports = AuthEmailPasswordField;
-
-
-
-},{}],30:[function(require,module,exports){
-var AuthNotRegisteredYetLink, ScreenController;
-
-ScreenController = require('../../../controllers/screen');
-
-AuthNotRegisteredYetLink = React.createClass({
-  displayName: 'AuthNotRegisteredYetLink',
-  render: function() {
-    return React.createElement("a", {
-      "className": "auth__footer-link",
-      "onClick": this.handleClick
-    }, i18n.t('already_registered_link'));
-  },
-  handleClick: function() {
-    return ScreenController.show(Auth, {}, 'auth-page');
-  }
-});
-
-module.exports = AuthNotRegisteredYetLink;
-
-
-
-},{"../../../controllers/screen":144}],31:[function(require,module,exports){
-var AuthEmailRecovery, AuthForgotPasswordLink, ScreenController;
-
-ScreenController = require('../../../controllers/screen');
-
-AuthEmailRecovery = require('../authEmailRecovery');
-
-AuthForgotPasswordLink = React.createClass({
-  displayName: 'AuthForgotPasswordLink',
-  render: function() {
-    return React.createElement("a", {
-      "className": "auth__footer-link",
-      "onClick": this.handleClick
-    }, i18n.t('forgot_password_link'));
-  },
-  handleClick: function() {
-    return ScreenController.show(AuthEmailRecovery, {}, 'auth-page');
-  }
-});
-
-module.exports = AuthForgotPasswordLink;
-
-
-
-},{"../../../controllers/screen":144,"../authEmailRecovery":16}],32:[function(require,module,exports){
-var AuthNotRegisteredYetLink, ScreenController;
-
-ScreenController = require('../../../controllers/screen');
-
-AuthNotRegisteredYetLink = React.createClass({
-  displayName: 'AuthNotRegisteredYetLink',
-  render: function() {
-    return React.createElement("a", {
-      "className": "auth__footer-link",
-      "onClick": this.handleClick
-    }, i18n.t('not_registered_yet_link'));
-  },
-  handleClick: function() {
-    return ScreenController.show(AuthEmailSignUp, {}, 'auth-page');
-  }
-});
-
-module.exports = AuthNotRegisteredYetLink;
-
-
-
-},{"../../../controllers/screen":144}],33:[function(require,module,exports){
-var AuthRememberedPasswordLink, ScreenController;
-
-ScreenController = require('../../../controllers/screen');
-
-AuthRememberedPasswordLink = React.createClass({
-  displayName: 'AuthRememberedPasswordLink',
-  render: function() {
-    return React.createElement("a", {
-      "className": "auth__footer-link",
-      "onClick": this.handleClick
-    }, i18n.t('remembered_password_link'));
-  },
-  handleClick: function() {
-    return ScreenController.show(Auth, {}, 'auth-page');
-  }
-});
-
-module.exports = AuthRememberedPasswordLink;
-
-
-
-},{"../../../controllers/screen":144}],34:[function(require,module,exports){
-var AuthButton, ScreenController;
-
-ScreenController = require('../../../controllers/screen');
-
-AuthButton = React.createClass({
-  displayName: 'AuthButton',
-  render: function() {
-    return React.createElement("button", {
-      "className": "auth-button",
-      "onClick": this.handleClick
-    }, i18n.t('signin_button'));
-  },
-  handleClick: function() {
-    return ScreenController.show(Auth, {}, 'auth-page');
-  }
-});
-
-module.exports = AuthButton;
-
-
-
-},{"../../../controllers/screen":144}],35:[function(require,module,exports){
-var AuthButton, AuthButtonManager, ConnectStoreMixin, CurrentUserStore, ScreenController;
-
-ScreenController = require('../../../controllers/screen');
-
-CurrentUserStore = require('../../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
-
-AuthButton = require('./auth');
-
-AuthButtonManager = React.createClass({
-  displayName: 'AuthButtonManager',
-  mixins: [ConnectStoreMixin(CurrentUserStore)],
-  render: function() {
-    if (!this.state.logged) {
-      return React.createElement(AuthButton, null);
-    } else {
-      return null;
-    }
-  },
-  getStateFromStore: function() {
-    return {
-      logged: CurrentUserStore.isLogged()
-    };
-  },
-  handleClick: function() {
-    return ScreenController.show(Auth, {}, 'auth-page');
-  }
-});
-
-module.exports = AuthButtonManager;
-
-
-
-},{"../../../../../shared/react/mixins/connectStore":166,"../../../controllers/screen":144,"../../../stores/currentUser":160,"./auth":34}],36:[function(require,module,exports){
-var ComponentMixin, ConnectStoreMixin, ERROR_STATE, FRIEND_STATUS, FollowButton, GUESSED_STATUS, IGNORED_STATUS, NONE_STATUS, PROCESS_STATE, PropTypes, REQUESTED_STATUS, RelationshipButtonMixin, RelationshipsStore, SHOW_STATE, cx;
-
-cx = require('react/lib/cx');
-
-RelationshipsStore = require('../../../stores/relationships');
-
-RelationshipButtonMixin = require('./mixins/relationship');
-
-ComponentMixin = require('../../../mixins/component');
-
-ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
-
-PropTypes = React.PropTypes;
-
-SHOW_STATE = 'show';
-
-ERROR_STATE = 'error';
-
-PROCESS_STATE = 'process';
-
-FRIEND_STATUS = 'friend';
-
-REQUESTED_STATUS = 'requested';
-
-IGNORED_STATUS = 'ignored';
-
-GUESSED_STATUS = 'guessed';
-
-NONE_STATUS = 'none';
-
-FollowButton = React.createClass({
-  displayName: 'FollowButton',
-  mixins: [ConnectStoreMixin(RelationshipsStore), RelationshipButtonMixin, ComponentMixin],
-  propTypes: {
-    user: PropTypes.object.isRequired,
-    status: PropTypes.string.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: SHOW_STATE
-    };
-  },
-  render: function() {
-    var buttonClasses;
-    buttonClasses = cx({
-      'follow-button': true,
-      '__active': this.isFollowStatus() && this.isShowState()
-    });
-    if (this.state.status != null) {
-      return React.createElement("button", {
-        "style": {
-          display: 'inline-block!important'
-        },
-        "className": buttonClasses,
-        "onClick": this.handleClick
-      }, this.getTitle());
-    } else {
-      return null;
-    }
-  },
-  isShowState: function() {
-    return this.state.currentState === SHOW_STATE;
-  },
-  isErrorState: function() {
-    return this.state.currentState === ERROR_STATE;
-  },
-  isFollowStatus: function() {
-    return this.state.status === FRIEND_STATUS;
-  },
-  isTlogPrivate: function() {
-    return this.props.user.is_privacy;
-  },
-  activateProcessState: function() {
-    return this.safeUpdateState({
-      currentState: PROCESS_STATE
-    });
-  },
-  activateErrorState: function() {
-    return this.safeUpdateState({
-      currentState: ERROR_STATE
-    });
-  },
-  activateShowState: function() {
-    return this.safeUpdateState({
-      currentState: SHOW_STATE
-    });
-  },
-  getTitle: function() {
-    switch (this.state.currentState) {
-      case ERROR_STATE:
-        return i18n.t('follow_button_error');
-      case PROCESS_STATE:
-        return i18n.t('follow_button_process');
-    }
-    switch (this.state.status) {
-      case FRIEND_STATUS:
-        return i18n.t('follow_button_subscribed');
-      case REQUESTED_STATUS:
-        return i18n.t('follow_button_requested');
-      case IGNORED_STATUS:
-        return i18n.t('follow_button_ignored');
-      case GUESSED_STATUS:
-      case NONE_STATUS:
-        if (this.isTlogPrivate()) {
-          return i18n.t('follow_button_send_request');
-        } else {
-          return i18n.t('follow_button_subscribe');
-        }
-        break;
-      default:
-        return console.warn('Unknown follow status of FollowButton component', this.state.status);
-    }
-  },
-  handleClick: function() {
-    var userId;
-    userId = this.props.user.id;
-    if (this.isShowState()) {
-      switch (this.state.status) {
-        case FRIEND_STATUS:
-          return this.unfollow(userId);
-        case REQUESTED_STATUS:
-          return this.cancel(userId);
-        case IGNORED_STATUS:
-          return this.cancel(userId);
-        case GUESSED_STATUS:
-          return this.follow(userId);
-        case NONE_STATUS:
-          return this.follow(userId);
-        default:
-          return console.warn('Unknown follow status of FollowButton component', this.state.status);
-      }
-    }
-  },
-  getStateFromStore: function() {
-    return {
-      status: RelationshipsStore.getStatus(this.props.user.id) || this.props.status
-    };
-  }
-});
-
-module.exports = FollowButton;
-
-
-
-},{"../../../../../shared/react/mixins/connectStore":166,"../../../mixins/component":147,"../../../stores/relationships":162,"./mixins/relationship":37,"react/lib/cx":279}],37:[function(require,module,exports){
-var RelationshipButtonMixin, RelationshipViewActions;
-
-RelationshipViewActions = require('../../../../actions/view/relationship');
-
-RelationshipButtonMixin = {
-  componentWillUnmount: function() {
-    return this.clearErrorTimeout();
-  },
-  clearErrorTimeout: function() {
-    if (this.errorTimeout != null) {
-      return clearTimeout(this.errorTimeout);
-    }
-  },
-  startErrorTimeout: function() {
-    if (!this.isErrorState()) {
-      this.activateErrorState();
-    }
-    return this.errorTimeout = setTimeout(this.activateShowState, 1000);
-  },
-  follow: function(userId) {
-    this.activateProcessState();
-    return RelationshipViewActions.follow(userId).then(this.activateShowState).fail(this.startErrorTimeout);
-  },
-  unfollow: function(userId) {
-    this.activateProcessState();
-    return RelationshipViewActions.unfollow(userId).then(this.activateShowState).fail(this.startErrorTimeout);
-  },
-  cancel: function(userId) {
-    this.activateProcessState();
-    return RelationshipViewActions.cancel(userId).then(this.activateShowState).fail(this.startErrorTimeout);
-  }
-};
-
-module.exports = RelationshipButtonMixin;
-
-
-
-},{"../../../../actions/view/relationship":10}],38:[function(require,module,exports){
-var Avatar, PropTypes, cx;
-
-cx = require('react/lib/cx');
-
-PropTypes = React.PropTypes;
-
-Avatar = React.createClass({
-  displayName: 'Avatar',
-  propTypes: {
-    name: PropTypes.string.isRequired,
-    userpic: PropTypes.object.isRequired,
-    size: PropTypes.number
-  },
-  getDefaultProps: function() {
-    return {
-      size: 220
-    };
-  },
-  render: function() {
-    var avatarClasses, avatarStyles, avatarSymbol, avatarUrl;
-    avatarUrl = this.props.userpic.original_url || this.props.userpic.large_url;
-    avatarSymbol = this.props.userpic.symbol;
-    avatarClasses = cx({
-      'avatar': true,
-      'anonymous_char': this.isAnonymous()
-    });
-    if (avatarUrl != null) {
-      avatarUrl = ThumborService.imageUrl({
-        url: avatarUrl,
-        path: this.props.userpic.thumbor_path,
-        size: this.props.size + 'x' + this.props.size
-      });
-      avatarStyles = {
-        backgroundImage: "url('" + avatarUrl + "')"
-      };
-      return React.createElement("span", {
-        "style": avatarStyles,
-        "className": avatarClasses
-      }, React.createElement("img", {
-        "src": avatarUrl,
-        "alt": this.props.name,
-        "className": "avatar__img"
-      }));
-    } else {
-      avatarStyles = {
-        backgroundColor: this.props.userpic.default_colors.background,
-        color: this.props.userpic.default_colors.name
-      };
-      return React.createElement("span", {
-        "style": avatarStyles,
-        "className": avatarClasses,
-        "title": this.props.name
-      }, React.createElement("span", {
-        "className": "avatar__text"
-      }, avatarSymbol));
-    }
-  },
-  isAnonymous: function() {
-    return this.props.userpic.kind === 'anonymous';
-  },
-  isUser: function() {
-    return this.props.userpic.kind === 'user';
-  }
-});
-
-module.exports = Avatar;
-
-
-
-},{"react/lib/cx":279}],39:[function(require,module,exports){
-var Avatar, PropTypes, UserAvatar;
-
-Avatar = require('./avatar');
-
-PropTypes = React.PropTypes;
-
-UserAvatar = React.createClass({
-  displayName: 'UserAvatar',
-  propTypes: {
-    user: PropTypes.object.isRequired,
-    size: PropTypes.number
-  },
-  render: function() {
-    return React.createElement(Avatar, {
-      "name": this.props.user.name,
-      "userpic": this.props.user.userpic,
-      "size": this.props.size
-    });
-  }
-});
-
-module.exports = UserAvatar;
-
-
-
-},{"./avatar":38}],40:[function(require,module,exports){
-var Collage, CollageMixin, CollageRow, PropTypes;
-
-CollageMixin = require('./mixins/collage');
-
-CollageRow = require('./row');
-
-PropTypes = React.PropTypes;
-
-Collage = React.createClass({
-  displayName: 'Collage',
-  mixins: [CollageMixin],
-  propTypes: {
-    images: PropTypes.array.isRequired,
-    width: PropTypes.number.isRequired,
-    margin: PropTypes.number.isRequired,
-    minRowHeight: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "collage"
-    }, this.renderItems());
-  },
-  renderItems: function() {
-    var images, rows;
-    images = this.props.images;
-    switch (false) {
-      case images.length !== 0:
-        return [];
-      case images.length !== 1:
-        rows = this.makeRows(images);
-        return React.createElement(CollageRow, {
-          "row": rows[0]
-        });
-      case !(images.length >= 2):
-        rows = this.makeRows(images);
-        return rows.map(function(row, i) {
-          return React.createElement(CollageRow, {
-            "row": row,
-            "key": i
-          });
-        });
-      default:
-        return [];
-    }
-  }
-});
-
-module.exports = Collage;
-
-
-
-},{"./mixins/collage":42,"./row":43}],41:[function(require,module,exports){
-var Collage, CollageManager, MARGIN, MIN_ROW_HEIGHT, PropTypes;
-
-Collage = require('./collage');
-
-PropTypes = React.PropTypes;
-
-MARGIN = 0;
-
-MIN_ROW_HEIGHT = 150;
-
-CollageManager = React.createClass({
-  displayName: 'CollageManager',
-  propTypes: {
-    images: PropTypes.array.isRequired,
-    width: PropTypes.number,
-    margin: PropTypes.number,
-    minRowHeight: PropTypes.number
-  },
-  getDefaultProps: function() {
-    return {
-      margin: MARGIN,
-      minRowHeight: MIN_ROW_HEIGHT
-    };
-  },
-  getInitialState: function() {
-    return {
-      width: this.props.width || null
-    };
-  },
-  componentDidMount: function() {
-    this.updateWidthState();
-    return window.addEventListener('resize', this.updateWidthState);
-  },
-  componentWillUnmount: function() {
-    return window.removeEventListener('resize', this.updateWidthState);
-  },
-  render: function() {
-    if (this.hasWidth()) {
-      return React.createElement(Collage, React.__spread({}, this.props, {
-        "width": this.state.width
-      }));
-    } else {
-      return React.createElement("span", null);
-    }
-  },
-  hasWidth: function() {
-    return this.state.width != null;
-  },
-  updateWidthState: function() {
-    var parentWidth;
-    parentWidth = this.getDOMNode().parentNode.offsetWidth;
-    return this.setState({
-      width: parentWidth + this.props.margin * 2
-    });
-  }
-});
-
-module.exports = CollageManager;
-
-
-
-},{"./collage":40}],42:[function(require,module,exports){
-var CollageMixin, assign;
-
-assign = require('react/lib/Object.assign');
-
-CollageMixin = {
-  makeRows: function(images) {
-    var newImages, rowIndex, rowWidth, rows;
-    rows = [];
-    rowIndex = 0;
-    rowWidth = 0;
-    newImages = JSON.parse(JSON.stringify(images));
-    this.calculateImagesRatio(newImages);
-    newImages.forEach((function(_this) {
-      return function(image, i) {
-        assign(image, {
-          width: _this.getItemNewWidth(image, _this.props.minRowHeight),
-          height: _this.props.minRowHeight,
-          margin: _this.props.margin
-        });
-        if (i === 0 || rowWidth + image.width < _this.props.width) {
-          if (rows[rowIndex] == null) {
-            rows[rowIndex] = [];
-          }
-          rows[rowIndex].push(image);
-          rowWidth += image.width + image.margin * 2;
-        } else {
-          _this.stretchRow(rows[rowIndex], rowWidth);
-          rows[rowIndex + 1] = [image];
-          rowWidth = image.width + image.margin * 2;
-          rowIndex++;
-        }
-        if (i === newImages.length - 1) {
-          return _this.stretchRow(rows[rowIndex], rowWidth);
-        }
-      };
-    })(this));
-    return rows;
-  },
-  stretchRow: function(row, rowWidth) {
-    var lastElement, requiredHeight, resultWidth, rowHeight;
-    rowHeight = row[0].height + row[0].margin * 2;
-    requiredHeight = Math.round(rowHeight / rowWidth * this.props.width);
-    resultWidth = 0;
-    lastElement = row[row.length - 1];
-    row.forEach((function(_this) {
-      return function(image, i) {
-        assign(image, {
-          width: _this.getItemNewWidth(image, requiredHeight - _this.props.margin * 2),
-          height: requiredHeight - _this.props.margin * 2
-        });
-        return resultWidth += image.width + image.margin * 2;
-      };
-    })(this));
-    return lastElement.width = lastElement.width + lastElement.margin * 2 + (this.props.width - resultWidth) - this.props.margin * 2;
-  },
-  getItemNewWidth: function(item, newHeight) {
-    return Math.round(newHeight * item.ratio);
-  },
-  calculateImagesRatio: function(images) {
-    return images.forEach(function(image) {
-      return image.ratio = image.width / image.height;
-    });
-  }
-};
-
-module.exports = CollageMixin;
-
-
-
-},{"react/lib/Object.assign":200}],43:[function(require,module,exports){
-var CollageRow, CollageRowItem, PropTypes;
-
-CollageRowItem = require('./row/item');
-
-PropTypes = React.PropTypes;
-
-CollageRow = React.createClass({
-  displayName: 'CollageRow',
-  propTypes: {
-    row: PropTypes.array.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "collage__row"
-    }, this.renderRowItems());
-  },
-  renderRowItems: function() {
-    return this.props.row.map(function(image) {
-      return React.createElement(CollageRowItem, {
-        "width": image.width,
-        "height": image.height,
-        "imagePath": image.payload.path,
-        "imageUrl": image.payload.url,
-        "key": image.payload.id
-      });
-    });
-  }
-});
-
-module.exports = CollageRow;
-
-
-
-},{"./row/item":44}],44:[function(require,module,exports){
-var CollageItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CollageItem = React.createClass({
-  displayName: 'CollageItem',
-  propTypes: {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    margin: PropTypes.number,
-    imageUrl: PropTypes.string.isRequired,
-    imagePath: PropTypes.string.isRequired
-  },
-  getInitialState: function() {
-    return {
-      width: this.props.width,
-      height: this.props.height
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "style": this.getContainerStyles(),
-      "className": "collage__item"
-    }, React.createElement("img", {
-      "style": this.getImageStyles(),
-      "src": this.getImageUrl()
-    }));
-  },
-  getContainerStyles: function() {
-    var height, margin, width, _ref;
-    _ref = this.props, width = _ref.width, height = _ref.height, margin = _ref.margin;
-    return {
-      width: width,
-      height: height,
-      margin: margin
-    };
-  },
-  getImageStyles: function() {
-    var height, width, _ref;
-    _ref = this.props, width = _ref.width, height = _ref.height;
-    return {
-      width: width,
-      height: height
-    };
-  },
-  getImageUrl: function() {
-    var height, width, _ref;
-    _ref = this.state, width = _ref.width, height = _ref.height;
-    return ThumborService.imageUrl({
-      url: this.props.imageUrl,
-      path: this.props.imagePath,
-      size: width + 'x' + height
-    });
-  }
-});
-
-module.exports = CollageItem;
-
-
-
-},{}],45:[function(require,module,exports){
-var ConnectStoreMixin, FollowStatus, PropTypes, RelationshipsStore;
-
-RelationshipsStore = require('../../../stores/relationships');
-
-ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
-
-PropTypes = React.PropTypes;
-
-FollowStatus = React.createClass({
-  displayName: 'FollowStatus',
-  mixins: [ConnectStoreMixin(RelationshipsStore)],
-  propTypes: {
-    userId: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired
-  },
-  render: function() {
-    if (this.state.status != null) {
-      return React.createElement("span", {
-        "className": 'follow-status __' + this.state.status
-      }, React.createElement("i", {
-        "className": "follow-status__icon"
-      }));
-    } else {
-      return null;
-    }
-  },
-  getStateFromStore: function() {
-    return {
-      status: RelationshipsStore.getStatus(this.props.userId) || this.props.status
-    };
-  }
-});
-
-module.exports = FollowStatus;
-
-
-
-},{"../../../../../shared/react/mixins/connectStore":166,"../../../stores/relationships":162}],46:[function(require,module,exports){
-var PropTypes, Spinner;
-
-PropTypes = React.PropTypes;
-
-Spinner = React.createClass({
-  propTypes: {
-    size: PropTypes.number
-  },
-  getDefaultProps: function() {
-    return {
-      size: 8
-    };
-  },
-  render: function() {
-    return React.createElement("span", {
-      "className": 'spinner spinner--' + this.getSize()
-    }, React.createElement("span", {
-      "className": "spinner__icon"
-    }));
-  },
-  getSize: function() {
-    return this.props.size + 'x' + this.props.size;
-  }
-});
-
-module.exports = Spinner;
-
-
-
-},{}],47:[function(require,module,exports){
-var Daylog, DaylogEmptyPageMessage, EntryTlog, PropTypes;
-
-DaylogEmptyPageMessage = require('./emptyPageMessage');
-
-EntryTlog = require('../entry/tlog');
-
-PropTypes = React.PropTypes;
-
-Daylog = React.createClass({
-  displayName: 'Daylog',
-  propTypes: {
-    entries: PropTypes.array.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "posts"
-    }, this.renderEntryList());
-  },
-  renderEntryList: function() {
-    if (this.props.entries.length) {
-      return this.props.entries.map(function(entry) {
-        return React.createElement(EntryTlog, {
-          "entry": entry,
-          "key": entry.id
-        });
-      });
-    } else {
-      return React.createElement(DaylogEmptyPageMessage, null);
-    }
-  }
-});
-
-module.exports = Daylog;
-
-
-
-},{"../entry/tlog":92,"./emptyPageMessage":48}],48:[function(require,module,exports){
-var DaylogEmptyPageMessage;
-
-DaylogEmptyPageMessage = React.createClass({
-  displayName: 'DaylogEmptyPageMessage',
-  render: function() {
-    return React.createElement("div", {
-      "className": "post"
-    }, React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("div", {
-      "className": "post__header"
-    }, React.createElement("h1", {
-      "className": "post__title"
-    }, i18n.t('daylog_empty_page')))));
-  }
-});
-
-module.exports = DaylogEmptyPageMessage;
-
-
-
-},{}],49:[function(require,module,exports){
-var CommentsLoadMoreButton, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentsLoadMoreButton = React.createClass({
-  displayName: 'CommentsLoadMoreButton',
-  propTypes: {
-    title: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("span", {
-      "className": "comments__more-link",
-      "onClick": this.props.onClick
-    }, this.props.title);
-  }
-});
-
-module.exports = CommentsLoadMoreButton;
-
-
-
-},{}],50:[function(require,module,exports){
-var CommentForm, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentForm = React.createClass({
-  displayName: 'CommentForm',
-  propTypes: {
-    text: PropTypes.string,
-    buttonTitle: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired,
-    disabled: PropTypes.bool,
-    onSubmit: React.PropTypes.func.isRequired,
-    onCancel: React.PropTypes.func
-  },
-  getDefaultProps: function() {
-    return {
-      disabled: false
-    };
-  },
-  render: function() {
-    return React.createElement("form", {
-      "className": "comment-form"
-    }, this.renderCancelButton(), React.createElement("button", {
-      "className": "comment-form__submit",
-      "onClick": this.handleSubmit
-    }, this.props.buttonTitle), React.createElement("div", {
-      "className": "comment-form__field"
-    }, React.createElement("textarea", {
-      "ref": "textField",
-      "defaultValue": this.props.text,
-      "placeholder": this.props.placeholder,
-      "disabled": this.props.disabled,
-      "className": "comment-form__field-textarea",
-      "onKeyDown": this.handleTextareaKeydown
-    })));
-  },
-  renderCancelButton: function() {
-    if (this.props.onCancel != null) {
-      return React.createElement("button", {
-        "className": "comment-form__cancel",
-        "onClick": this.handleCancel
-      }, i18n.t('edit_comment_cancel_button'));
-    }
-  },
-  clearForm: function() {
-    return this.refs.textField.getDOMNode().value = '';
-  },
-  handleSubmit: function(e) {
-    var value;
-    e.preventDefault();
-    value = this.refs.textField.getDOMNode().value.trim();
-    if (!this.props.disabled) {
-      return this.props.onSubmit(value);
-    }
-  },
-  handleCancel: function(e) {
-    e.preventDefault();
-    return this.props.onCancel();
-  }
-});
-
-module.exports = CommentForm;
-
-
-
-},{}],51:[function(require,module,exports){
-var CommentCreateForm, CommentForm, ComponentMixin, PropTypes;
-
-CommentForm = require('../commentForm');
-
-ComponentMixin = require('../../../../mixins/component');
-
-PropTypes = React.PropTypes;
-
-CommentCreateForm = React.createClass({
-  displayName: 'CommentCreateForm',
-  propTypes: {
-    entryId: PropTypes.number.isRequired,
-    loading: PropTypes.bool.isRequired,
-    onCommentCreate: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement(CommentForm, {
-      "ref": "commentForm",
-      "buttonTitle": i18n.t('create_comment_button'),
-      "placeholder": i18n.t('create_comment_placeholder'),
-      "disabled": this.props.loading,
-      "onSubmit": this.createComment
-    });
-  },
-  isValid: function(text) {
-    return !!text.match(/./);
-  },
-  clearForm: function() {
-    return this.refs.commentForm.clearForm();
-  },
-  createComment: function(text) {
-    if (!this.isValid(text)) {
-      return;
-    }
-    this.props.onCommentCreate(text);
-    return this.clearForm();
-  }
-});
-
-module.exports = CommentCreateForm;
-
-
-
-},{"../../../../mixins/component":147,"../commentForm":50}],52:[function(require,module,exports){
-var CommentEditForm, CommentForm, ComponentMixin, PropTypes;
-
-CommentForm = require('../commentForm');
-
-ComponentMixin = require('../../../../mixins/component');
-
-PropTypes = React.PropTypes;
-
-CommentEditForm = React.createClass({
-  displayName: 'CommentEditForm',
-  propTypes: {
-    entryId: PropTypes.number.isRequired,
-    comment: PropTypes.object.isRequired,
-    onEditFinish: PropTypes.func.isRequired,
-    onEditCancel: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement(CommentForm, {
-      "ref": "commentForm",
-      "text": this.props.comment.comment_html,
-      "buttonTitle": i18n.t('edit_comment_button'),
-      "placeholder": i18n.t('edit_comment_placeholder'),
-      "onSubmit": this.editComment,
-      "onCancel": this.props.onEditCancel
-    });
-  },
-  isValid: function(text) {
-    return !!text.match(/./) && this.props.comment.comment_html !== text;
-  },
-  clearForm: function() {
-    return this.refs.commentForm.clearForm();
-  },
-  editComment: function(text) {
-    if (!this.isValid(text)) {
-      return this.props.onEditCancel();
-    }
-    this.props.onEditFinish(text);
-    return this.clearForm();
-  }
-});
-
-module.exports = CommentEditForm;
-
-
-
-},{"../../../../mixins/component":147,"../commentForm":50}],53:[function(require,module,exports){
-var CommentList, CommentManager, PropTypes;
-
-CommentManager = require('./commentList/commentManager');
-
-PropTypes = React.PropTypes;
-
-CommentList = React.createClass({
-  displayName: 'CommentList',
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    comments: PropTypes.array.isRequired,
-    onCommentEdit: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  render: function() {
-    var commentList;
-    commentList = this.props.comments.map((function(_this) {
-      return function(comment) {
-        return React.createElement(CommentManager, {
-          "entry": _this.props.entry,
-          "comment": comment,
-          "onCommentEdit": _this.props.onCommentEdit,
-          "onCommentDelete": _this.props.onCommentDelete,
-          "onCommentReport": _this.props.onCommentReport,
-          "key": comment.id
-        });
-      };
-    })(this));
-    return React.createElement("div", {
-      "className": "comments__list"
-    }, commentList);
-  }
-});
-
-module.exports = CommentList;
-
-
-
-},{"./commentList/commentManager":65}],54:[function(require,module,exports){
-var Comment, CommentActions, CommentDate, CommentText, CommentUser, PropTypes;
-
-CommentUser = require('./comment/user');
-
-CommentText = require('./comment/text');
-
-CommentDate = require('./comment/date');
-
-CommentActions = require('./comment/actions');
-
-PropTypes = React.PropTypes;
-
-Comment = React.createClass({
-  displayName: 'Comment',
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    comment: PropTypes.object.isRequired,
-    onEditStart: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "comment"
-    }, React.createElement("div", {
-      "className": "comment__content"
-    }, React.createElement(CommentUser, {
-      "user": this.props.comment.user
-    }), React.createElement(CommentText, {
-      "text": this.props.comment.comment_html
-    }), React.createElement(CommentDate, {
-      "date": this.props.comment.created_at,
-      "commentId": this.props.comment.id,
-      "entryUrl": this.props.entry.entry_url
-    }), React.createElement(CommentActions, React.__spread({}, this.props))));
-  }
-});
-
-module.exports = Comment;
-
-
-
-},{"./comment/actions":55,"./comment/date":62,"./comment/text":63,"./comment/user":64}],55:[function(require,module,exports){
-var CLOSE_STATE, ClickOutsideMixin, CommentActions, CommentActionsButton, CommentActionsDropdownMenu, OPEN_STATE, PropTypes, UserAvatar, cx;
-
-cx = require('react/lib/cx');
-
-ClickOutsideMixin = require('../../../../../mixins/clickOutside');
-
-CommentActionsButton = require('./actions/buttons/button');
-
-CommentActionsDropdownMenu = require('./actions/dropdownMenu');
-
-UserAvatar = require('../../../../common/avatar/user');
-
-PropTypes = React.PropTypes;
-
-OPEN_STATE = 'open';
-
-CLOSE_STATE = 'close';
-
-CommentActions = React.createClass({
-  displayName: 'CommentActions',
-  mixins: [ClickOutsideMixin],
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    comment: PropTypes.object.isRequired,
-    onEditStart: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: CLOSE_STATE
-    };
-  },
-  render: function() {
-    var actionsClasses;
-    actionsClasses = cx({
-      'comment__actions': true,
-      '__open': this.isOpenState()
-    });
-    return React.createElement("div", {
-      "className": actionsClasses
-    }, React.createElement(CommentActionsButton, {
-      "onClick": this.toggleOpenState
-    }), React.createElement(CommentActionsDropdownMenu, React.__spread({}, this.props, {
-      "visible": this.isOpenState()
-    })));
-  },
-  isOpenState: function() {
-    return this.state.currentState === OPEN_STATE;
-  },
-  activateCloseState: function() {
-    return this.setState({
-      currentState: CLOSE_STATE
-    });
-  },
-  activateOpenState: function() {
-    return this.setState({
-      currentState: OPEN_STATE
-    });
-  },
-  toggleOpenState: function() {
-    if (this.isOpenState()) {
-      return this.activateCloseState();
-    } else {
-      return this.activateOpenState();
-    }
-  }
-});
-
-module.exports = CommentActions;
-
-
-
-},{"../../../../../mixins/clickOutside":146,"../../../../common/avatar/user":39,"./actions/buttons/button":56,"./actions/dropdownMenu":57,"react/lib/cx":279}],56:[function(require,module,exports){
-var CommentActionsButton, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentActionsButton = React.createClass({
-  displayName: 'CommentActionsButton',
-  propTypes: {
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("button", {
-      "className": "comment__actions-button",
-      "onClick": this.props.onClick
-    }, React.createElement("i", {
-      "className": "icon icon--dots"
-    }));
-  }
-});
-
-module.exports = CommentActionsButton;
-
-
-
-},{}],57:[function(require,module,exports){
-var CommentActionsDropdownMenu, CommentActionsDropdownMenuDeleteItem, CommentActionsDropdownMenuEditItem, CommentActionsDropdownMenuLinkItem, CommentActionsDropdownMenuReportItem, DropdownMenuMixin, PropTypes;
-
-DropdownMenuMixin = require('../../../../../../mixins/dropdownMenu');
-
-CommentActionsDropdownMenuLinkItem = require('./dropdownMenu/items/link');
-
-CommentActionsDropdownMenuEditItem = require('./dropdownMenu/items/edit');
-
-CommentActionsDropdownMenuDeleteItem = require('./dropdownMenu/items/delete');
-
-CommentActionsDropdownMenuReportItem = require('./dropdownMenu/items/report');
-
-PropTypes = React.PropTypes;
-
-CommentActionsDropdownMenu = React.createClass({
-  displayName: 'CommentActionsDropdownMenu',
-  mixins: [DropdownMenuMixin],
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    comment: PropTypes.object.isRequired,
-    onEditStart: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": this.getPopupClasses('comment__dropdown-popup')
-    }, this.renderPopupList());
-  },
-  renderPopupList: function() {
-    var deleteItem, editItem, linkItem, reportItem;
-    linkItem = React.createElement(CommentActionsDropdownMenuLinkItem, {
-      "commentId": this.props.comment.id,
-      "entryUrl": this.props.entry.entry_url,
-      "key": "link"
-    });
-    if (this.props.comment.can_report) {
-      reportItem = React.createElement(CommentActionsDropdownMenuReportItem, {
-        "commentId": this.props.comment.id,
-        "onCommentReport": this.props.onCommentReport,
-        "key": "report"
-      });
-    }
-    if (this.props.comment.can_edit) {
-      editItem = React.createElement(CommentActionsDropdownMenuEditItem, {
-        "onEditStart": this.props.onEditStart,
-        "key": "edit"
-      });
-    }
-    if (this.props.comment.can_delete) {
-      deleteItem = React.createElement(CommentActionsDropdownMenuDeleteItem, {
-        "commentId": this.props.comment.id,
-        "onCommentDelete": this.props.onCommentDelete,
-        "key": "delete"
-      });
-    }
-    return React.createElement("ul", {
-      "className": "comment__dropdown-popup-list"
-    }, [editItem, linkItem, reportItem, deleteItem]);
-  }
-});
-
-module.exports = CommentActionsDropdownMenu;
-
-
-
-},{"../../../../../../mixins/dropdownMenu":148,"./dropdownMenu/items/delete":58,"./dropdownMenu/items/edit":59,"./dropdownMenu/items/link":60,"./dropdownMenu/items/report":61}],58:[function(require,module,exports){
-var CommentActionsDropdownMenuDeleteItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentActionsDropdownMenuDeleteItem = React.createClass({
-  displayName: 'CommentActionsDropdownMenuDeleteItem',
-  propTypes: {
-    commentId: PropTypes.number.isRequired,
-    onCommentDelete: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "comment__dropdown-popup-item",
-      "onClick": this.handleClick
-    }, React.createElement("a", {
-      "className": "comment__dropdown-popup-link"
-    }, React.createElement("i", {
-      "className": "icon icon--basket"
-    }), React.createElement("span", null, i18n.t('delete_comment_item'))));
-  },
-  "delete": function() {
-    return this.props.onCommentDelete(this.props.commentId);
-  },
-  handleClick: function() {
-    if (confirm(i18n.t('delete_comment_confirm'))) {
-      return this["delete"]();
-    }
-  }
-});
-
-module.exports = CommentActionsDropdownMenuDeleteItem;
-
-
-
-},{}],59:[function(require,module,exports){
-var CommentActionsDropdownMenuEditItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentActionsDropdownMenuEditItem = React.createClass({
-  displayName: 'CommentActionsDropdownMenuEditItem',
-  propTypes: {
-    onEditStart: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "comment__dropdown-popup-item",
-      "onClick": this.props.onEditStart
-    }, React.createElement("a", {
-      "className": "comment__dropdown-popup-link"
-    }, React.createElement("i", {
-      "className": "icon icon--pencil"
-    }), React.createElement("span", null, i18n.t('edit_comment_item'))));
-  }
-});
-
-module.exports = CommentActionsDropdownMenuEditItem;
-
-
-
-},{}],60:[function(require,module,exports){
-var CommentActionsDropdownMenuLinkItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentActionsDropdownMenuLinkItem = React.createClass({
-  displayName: 'CommentActionsDropdownMenuLinkItem',
-  propTypes: {
-    entryUrl: PropTypes.string.isRequired,
-    commentId: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "comment__dropdown-popup-item"
-    }, React.createElement("a", {
-      "className": "comment__dropdown-popup-link",
-      "href": this.getCommentUrl()
-    }, React.createElement("i", {
-      "className": "icon icon--hyperlink"
-    }), React.createElement("span", null, i18n.t('link_comment_item'))));
-  },
-  getCommentUrl: function() {
-    return this.props.entryUrl + '#comment-' + this.props.commentId;
-  }
-});
-
-module.exports = CommentActionsDropdownMenuLinkItem;
-
-
-
-},{}],61:[function(require,module,exports){
-var CommentActionsDropdownMenuReportItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentActionsDropdownMenuReportItem = React.createClass({
-  displayName: 'CommentActionsDropdownMenuReportItem',
-  propTypes: {
-    commentId: PropTypes.number.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "comment__dropdown-popup-item",
-      "onClick": this.handleClick
-    }, React.createElement("a", {
-      "className": "comment__dropdown-popup-link"
-    }, React.createElement("i", {
-      "className": "icon icon--exclamation-mark"
-    }), React.createElement("span", null, i18n.t('report_comment_item'))));
-  },
-  report: function() {
-    return this.props.onCommentReport(this.props.commentId);
-  },
-  handleClick: function() {
-    if (confirm(i18n.t('report_comment_confirm'))) {
-      return this.report();
-    }
-  }
-});
-
-module.exports = CommentActionsDropdownMenuReportItem;
-
-
-
-},{}],62:[function(require,module,exports){
-var CommentDate, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentDate = React.createClass({
-  displayName: 'CommentDate',
-  propTypes: {
-    date: PropTypes.string.isRequired,
-    entryUrl: PropTypes.string.isRequired,
-    commentId: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "href": this.getCommentUrl(),
-      "className": "comment__date"
-    }, this.getFormattedDate());
-  },
-  getCommentUrl: function() {
-    return this.props.entryUrl + '#comment-' + this.props.commentId;
-  },
-  getFormattedDate: function() {
-    var createdAt, now;
-    now = moment();
-    createdAt = moment(this.props.date);
-    switch (false) {
-      case !(now.diff(createdAt, 'seconds') < 5):
-        return createdAt.subtract(5, 's').fromNow();
-      case !(now.diff(createdAt, 'minutes') < 180):
-        return createdAt.fromNow();
-      case !(now.diff(createdAt, 'days') < 1):
-        return createdAt.calendar();
-      default:
-        if (now.year() !== createdAt.year()) {
-          return createdAt.format('D MMMM YYYY');
-        } else {
-          return createdAt.format('D MMMM');
-        }
-    }
-  }
-});
-
-module.exports = CommentDate;
-
-
-
-},{}],63:[function(require,module,exports){
-var CommentText, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentText = React.createClass({
-  displayName: 'CommentText',
-  propTypes: {
-    text: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("span", {
-      "className": "comment__text",
-      "dangerouslySetInnerHTML": {
-        __html: this.props.text
-      }
-    });
-  }
-});
-
-module.exports = CommentText;
-
-
-
-},{}],64:[function(require,module,exports){
-var CommentUser, PropTypes, UserAvatar;
-
-UserAvatar = require('../../../../common/avatar/user');
-
-PropTypes = React.PropTypes;
-
-CommentUser = React.createClass({
-  displayName: 'CommentUser',
-  propTypes: {
-    user: PropTypes.object.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "href": this.props.user.tlog_url,
-      "className": "comment__user",
-      "target": "_blank",
-      "title": this.props.user.slug
-    }, React.createElement("span", {
-      "className": "comment__avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.user,
-      "size": 42.
-    })), React.createElement("span", {
-      "className": "comment__username"
-    }, this.props.user.slug));
-  }
-});
-
-module.exports = CommentUser;
-
-
-
-},{"../../../../common/avatar/user":39}],65:[function(require,module,exports){
-var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
-
-Comment = require('./comment');
-
-CommentEditForm = require('../commentForm/edit');
-
-ComponentMixin = require('../../../../mixins/component');
-
-PropTypes = React.PropTypes;
-
-SHOW_STATE = 'show';
-
-EDIT_STATE = 'edit';
-
-CommentManager = React.createClass({
-  displayName: 'CommentManager',
-  mixins: [ComponentMixin],
-  propTypes: {
-    comment: PropTypes.object.isRequired,
-    entry: PropTypes.object.isRequired,
-    onCommentEdit: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: SHOW_STATE
-    };
-  },
-  render: function() {
-    switch (this.state.currentState) {
-      case SHOW_STATE:
-        return React.createElement(Comment, React.__spread({}, this.props, {
-          "onEditStart": this.activateEditState
-        }));
-      case EDIT_STATE:
-        return React.createElement(CommentEditForm, {
-          "comment": this.props.comment,
-          "entryId": this.props.entry.id,
-          "onEditFinish": this.handleEditFinish,
-          "onEditCancel": this.activateShowState
-        });
-      default:
-        return typeof console.warn === "function" ? console.warn('Unknown currentState of CommentManager component', this.state.currentState) : void 0;
-    }
-  },
-  activateEditState: function() {
-    return this.safeUpdateState({
-      currentState: EDIT_STATE
-    });
-  },
-  activateShowState: function() {
-    return this.safeUpdateState({
-      currentState: SHOW_STATE
-    });
-  },
-  handleEditFinish: function(text) {
-    var commentId;
-    commentId = this.props.comment.id;
-    this.props.onCommentEdit(commentId, text);
-    return this.activateShowState();
-  }
-});
-
-module.exports = CommentManager;
-
-
-
-},{"../../../../mixins/component":147,"../commentForm/edit":52,"./comment":54}],66:[function(require,module,exports){
-var CommentCreateForm, CommentList, CommentsLoadMore, EntryComments, PropTypes;
-
-CommentList = require('./commentList');
-
-CommentCreateForm = require('./commentForm/create');
-
-CommentsLoadMore = require('./commentsLoadMore');
-
-PropTypes = React.PropTypes;
-
-EntryComments = React.createClass({
-  displayName: 'EntryComments',
-  propTypes: {
-    user: PropTypes.object,
-    entry: PropTypes.object.isRequired,
-    comments: PropTypes.array.isRequired,
-    commentsCount: PropTypes.number.isRequired,
-    loading: PropTypes.bool.isRequired,
-    loadPerTime: PropTypes.number,
-    onCommentsLoadMore: PropTypes.func.isRequired,
-    onCommentCreate: PropTypes.func.isRequired,
-    onCommentEdit: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__comments"
-    }, React.createElement("div", {
-      "className": "comments"
-    }, this.renderLoadMore(), this.renderCommentList(), this.renderCommentForm()));
-  },
-  renderLoadMore: function() {
-    if (this.props.commentsCount > this.props.comments.length) {
-      return React.createElement(CommentsLoadMore, {
-        "totalCount": this.props.commentsCount,
-        "loadedCount": this.props.comments.length,
-        "loading": this.props.loading,
-        "loadPerTime": this.props.loadPerTime,
-        "onCommentsLoadMore": this.props.onCommentsLoadMore
-      });
-    }
-  },
-  renderCommentList: function() {
-    if (this.props.comments.length) {
-      return React.createElement(CommentList, {
-        "comments": this.props.comments,
-        "entry": this.props.entry,
-        "onCommentEdit": this.props.onCommentEdit,
-        "onCommentDelete": this.props.onCommentDelete,
-        "onCommentReport": this.props.onCommentReport
-      });
-    }
-  },
-  renderCommentForm: function() {
-    if (this.props.user != null) {
-      return React.createElement(CommentCreateForm, {
-        "entryId": this.props.entry.id,
-        "loading": this.props.loading,
-        "onCommentCreate": this.props.onCommentCreate
-      });
-    }
-  }
-});
-
-module.exports = EntryComments;
-
-
-
-},{"./commentForm/create":51,"./commentList":53,"./commentsLoadMore":67}],67:[function(require,module,exports){
-var CommentsLoadMore, CommentsLoadMoreButton, PropTypes, Spinner;
-
-Spinner = require('../../common/spinner/spinner');
-
-CommentsLoadMoreButton = require('./buttons/loadMore');
-
-PropTypes = React.PropTypes;
-
-CommentsLoadMore = React.createClass({
-  displayName: 'CommentsLoadMore',
-  propTypes: {
-    totalCount: PropTypes.number.isRequired,
-    loadedCount: PropTypes.number,
-    loadPerTime: PropTypes.number,
-    loading: PropTypes.bool.isRequired,
-    onCommentsLoadMore: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "comments__more"
-    }, this.renderContent());
-  },
-  renderContent: function() {
-    if (this.props.loading) {
-      return React.createElement("div", {
-        "className": "comments__loader"
-      }, React.createElement(Spinner, {
-        "size": 14.
-      }));
-    } else {
-      return React.createElement(CommentsLoadMoreButton, {
-        "title": this.getTitle(),
-        "onClick": this.props.onCommentsLoadMore
-      });
-    }
-  },
-  getTitle: function() {
-    var possibleCount, remainingCount;
-    remainingCount = this.props.totalCount - this.props.loadedCount;
-    possibleCount = this.props.loadedCount + this.props.loadPerTime;
-    if (possibleCount < this.props.totalCount) {
-      return i18n.t('load_more_comments', {
-        count: this.props.loadPerTime
-      });
-    } else {
-      return i18n.t('load_more_comments_remaining', {
-        count: remainingCount
-      });
-    }
-  }
-});
-
-module.exports = CommentsLoadMore;
-
-
-
-},{"../../common/spinner/spinner":46,"./buttons/loadMore":49}],68:[function(require,module,exports){
-var EntryContent, IMAGE_TYPE, ImageEntryContent, PropTypes, QUOTE_TYPE, QuoteEntryContent, TEXT_TYPE, TextEntryContent, UnknownEntryContent, VIDEO_TYPE, VideoEntryContent;
-
-TextEntryContent = require('./text/text');
-
-ImageEntryContent = require('./image/image');
-
-VideoEntryContent = require('./video/video');
-
-QuoteEntryContent = require('./quote/quote');
-
-UnknownEntryContent = require('./unknown/unknown');
-
-PropTypes = React.PropTypes;
-
-TEXT_TYPE = 'text';
-
-IMAGE_TYPE = 'image';
-
-VIDEO_TYPE = 'video';
-
-QUOTE_TYPE = 'quote';
-
-EntryContent = React.createClass({
-  displayName: 'EntryContent',
-  propTypes: {
-    entry: PropTypes.object.isRequired
-  },
-  render: function() {
-    switch (this.props.entry.type) {
-      case TEXT_TYPE:
-        return React.createElement(TextEntryContent, {
-          "title": this.props.entry.title,
-          "text": this.props.entry.text
-        });
-      case IMAGE_TYPE:
-        return React.createElement(ImageEntryContent, {
-          "title": this.props.entry.title,
-          "imageUrl": this.props.entry.image_url,
-          "imageAttachments": this.props.entry.image_attachments
-        });
-      case VIDEO_TYPE:
-        return React.createElement(VideoEntryContent, {
-          "iframely": this.props.entry.iframely
-        });
-      case QUOTE_TYPE:
-        return React.createElement(QuoteEntryContent, {
-          "text": this.props.entry.text,
-          "source": this.props.entry.source
-        });
-      default:
-        return React.createElement(UnknownEntryContent, {
-          "title": this.props.entry.title
-        });
-    }
-  }
-});
-
-module.exports = EntryContent;
-
-
-
-},{"./image/image":70,"./quote/quote":71,"./text/text":73,"./unknown/unknown":75,"./video/video":76}],69:[function(require,module,exports){
-var CollageManager, ImageEntryAttachments, PropTypes;
-
-CollageManager = require('../../../common/collage/collageManager');
-
-PropTypes = React.PropTypes;
-
-ImageEntryAttachments = React.createClass({
-  displayName: 'ImageEntryAttachments',
-  propTypes: {
-    imageAttachments: PropTypes.array.isRequired
-  },
-  render: function() {
-    return React.createElement(CollageManager, {
-      "images": this.getImages()
-    });
-  },
-  getImages: function() {
-    return this.props.imageAttachments.map(function(imageAttachment) {
-      var image, newImage;
-      image = imageAttachment.image;
-      newImage = {
-        width: image.geometry.width,
-        height: image.geometry.height,
-        payload: {
-          id: imageAttachment.id,
-          url: image.url,
-          path: image.path,
-          title: image.title
-        }
-      };
-      return newImage;
-    });
-  }
-});
-
-module.exports = ImageEntryAttachments;
-
-
-
-},{"../../../common/collage/collageManager":41}],70:[function(require,module,exports){
-var ImageEntryAttachments, ImageEntryContent, PropTypes;
-
-ImageEntryAttachments = require('./attachments');
-
-PropTypes = React.PropTypes;
-
-ImageEntryContent = React.createClass({
-  displayName: 'ImageEntryContent',
-  propTypes: {
-    title: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string,
-    imageAttachments: PropTypes.array.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__content"
-    }, this.renderEntryImage(), React.createElement("p", null, this.props.title));
-  },
-  renderEntryImage: function() {
-    var content;
-    content = (function() {
-      switch (false) {
-        case !this.props.imageAttachments:
-          return React.createElement(ImageEntryAttachments, {
-            "imageAttachments": this.props.imageAttachments
-          });
-        case !this.props.imageUrl:
-          return React.createElement("img", {
-            "src": this.props.imageUrl
-          });
-        default:
-          return i18n.t('empty_image_entry');
-      }
-    }).call(this);
-    return React.createElement("div", {
-      "className": "media-image"
-    }, content);
-  }
-});
-
-module.exports = ImageEntryContent;
-
-
-
-},{"./attachments":69}],71:[function(require,module,exports){
-var PropTypes, QuoteEntryContent;
-
-PropTypes = React.PropTypes;
-
-QuoteEntryContent = React.createClass({
-  displayName: 'QuoteEntryContent',
-  propTypes: {
-    text: PropTypes.string.isRequired,
-    source: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("blockquote", {
-      "className": "blockquote"
-    }, React.createElement("span", {
-      "className": "laquo"
-    }, "\u00ab"), React.createElement("span", null, this.props.text), React.createElement("span", {
-      "className": "raquo"
-    }, "\u00bb"), this.renderCaption()));
-  },
-  renderCaption: function() {
-    if (this.props.source) {
-      return React.createElement("div", {
-        "className": "blockquote__caption"
-      }, this.props.source);
-    }
-  }
-});
-
-module.exports = QuoteEntryContent;
-
-
-
-},{}],72:[function(require,module,exports){
-var PropTypes, TextEntryHeader;
-
-PropTypes = React.PropTypes;
-
-TextEntryHeader = React.createClass({
-  displayName: 'TextEntryHeader',
-  propTypes: {
-    title: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__header"
-    }, React.createElement("h1", {
-      "className": "post__title"
-    }, this.props.title));
-  }
-});
-
-module.exports = TextEntryHeader;
-
-
-
-},{}],73:[function(require,module,exports){
-var PropTypes, TextEntryContent, TextEntryHeader;
-
-TextEntryHeader = require('./header');
-
-PropTypes = React.PropTypes;
-
-TextEntryContent = React.createClass({
-  displayName: 'TextEntryContent',
-  propTypes: {
-    title: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(TextEntryHeader, {
-      "title": this.props.title
-    }), React.createElement("div", {
-      "className": "post__content",
-      "dangerouslySetInnerHTML": {
-        __html: this.props.text
-      }
-    }));
-  }
-});
-
-module.exports = TextEntryContent;
-
-
-
-},{"./header":72}],74:[function(require,module,exports){
-var PropTypes, UnknownEntryHeader;
-
-PropTypes = React.PropTypes;
-
-UnknownEntryHeader = React.createClass({
-  displayName: 'UnknownEntryHeader',
-  propTypes: {
-    title: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__header"
-    }, React.createElement("h1", {
-      "className": "post__title"
-    }, this.props.title));
-  }
-});
-
-module.exports = UnknownEntryHeader;
-
-
-
-},{}],75:[function(require,module,exports){
-var PropTypes, UnknownEntryContent, UnknownEntryHeader;
-
-UnknownEntryHeader = require('./header');
-
-PropTypes = React.PropTypes;
-
-UnknownEntryContent = React.createClass({
-  displayName: 'UnknownEntryContent',
-  propTypes: {
-    title: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(UnknownEntryHeader, {
-      "title": this.props.title
-    }), React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("p", null, i18n.t('unknown_entry_type'))));
-  }
-});
-
-module.exports = UnknownEntryContent;
-
-
-
-},{"./header":74}],76:[function(require,module,exports){
-var PropTypes, VideoEntryContent;
-
-PropTypes = React.PropTypes;
-
-VideoEntryContent = React.createClass({
-  displayName: 'VideoEntryContent',
-  propTypes: {
-    iframely: PropTypes.object
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("div", {
-      "className": "media-video"
-    }, this.renderEmbedHtml()));
-  },
-  renderEmbedHtml: function() {
-    var _ref;
-    if ((_ref = this.props.iframely) != null ? _ref.html : void 0) {
-      return React.createElement("div", {
-        "className": "media-video__embed",
-        "dangerouslySetInnerHTML": {
-          __html: this.props.iframely.html
-        }
-      });
-    } else {
-      return React.createElement("div", {
-        "className": "media-video__embed"
-      }, i18n.t('empty_video_entry'));
-    }
-  }
-});
-
-module.exports = VideoEntryContent;
-
-
-
-},{}],77:[function(require,module,exports){
-var ComponentMixin, ConnectStoreMixin, CurrentUserStore, EntryComments, EntryContent, EntryFeed, EntryFeedMeta, EntryMixin, PropTypes;
-
-EntryFeedMeta = require('./feed/meta');
-
-EntryComments = require('./comments/comments');
-
-EntryContent = require('./content/content');
-
-CurrentUserStore = require('../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-ComponentMixin = require('../../mixins/component');
-
-EntryMixin = require('./mixins/entry');
-
-PropTypes = React.PropTypes;
-
-EntryFeed = React.createClass({
-  displayName: 'EntryFeed',
-  mixins: [ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin],
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    loadPerTime: PropTypes.number
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": this.getEntryClasses()
-    }, React.createElement(EntryContent, {
-      "entry": this.props.entry
-    }), React.createElement(EntryFeedMeta, {
-      "entry": this.props.entry,
-      "commentsCount": this.state.commentsCount
-    }), React.createElement(EntryComments, {
-      "user": this.state.user,
-      "entry": this.props.entry,
-      "comments": this.state.comments,
-      "commentsCount": this.state.commentsCount,
-      "loading": this.isLoadingState(),
-      "loadPerTime": this.props.loadPerTime,
-      "onCommentsLoadMore": this.loadMoreComments,
-      "onCommentCreate": this.createComment,
-      "onCommentEdit": this.editComment,
-      "onCommentDelete": this.deleteComment,
-      "onCommentReport": this.reportComment
-    }));
-  },
-  getStateFromStore: function() {
-    return {
-      user: CurrentUserStore.getUser()
-    };
-  }
-});
-
-module.exports = EntryFeed;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":166,"../../mixins/component":147,"../../stores/currentUser":160,"./comments/comments":66,"./content/content":68,"./feed/meta":78,"./mixins/entry":91}],78:[function(require,module,exports){
-var EntryFeedMeta, EntryMetaActions, EntryMetaAuthor, EntryMetaComments, EntryMetaVoting, PropTypes;
-
-EntryMetaVoting = require('../meta/voting');
-
-EntryMetaActions = require('../meta/actions');
-
-EntryMetaComments = require('../meta/comments');
-
-EntryMetaAuthor = require('../meta/author');
-
-PropTypes = React.PropTypes;
-
-EntryFeedMeta = React.createClass({
-  displayName: 'EntryFeedMeta',
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    commentsCount: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__meta"
-    }, React.createElement(EntryMetaActions, {
-      "entry": this.props.entry
-    }), this.renderVoting(), React.createElement(EntryMetaComments, {
-      "commentsCount": this.props.commentsCount
-    }), React.createElement(EntryMetaAuthor, {
-      "author": this.props.entry.author
-    }));
-  },
-  renderVoting: function() {
-    if (this.props.entry.is_voteable) {
-      return React.createElement(EntryMetaVoting, {
-        "rating": this.props.entry.rating,
-        "entryId": this.props.entry.id
-      });
-    }
-  }
-});
-
-module.exports = EntryFeedMeta;
-
-
-
-},{"../meta/actions":79,"../meta/author":88,"../meta/comments":89,"../meta/voting":90}],79:[function(require,module,exports){
-var CLOSE_STATE, ClickOutsideMixin, EntryMetaActions, EntryMetaActions_Button, EntryMetaActions_DropdownMenu, OPEN_STATE, PropTypes, cx;
-
-cx = require('react/lib/cx');
-
-ClickOutsideMixin = require('../../../mixins/clickOutside');
-
-EntryMetaActions_Button = require('./actions/buttons/button');
-
-EntryMetaActions_DropdownMenu = require('./actions/dropdownMenu');
-
-PropTypes = React.PropTypes;
-
-OPEN_STATE = 'open';
-
-CLOSE_STATE = 'close';
-
-EntryMetaActions = React.createClass({
-  displayName: 'EntryMetaActions',
-  mixins: [ClickOutsideMixin],
-  propTypes: {
-    entry: PropTypes.object.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: CLOSE_STATE
-    };
-  },
-  render: function() {
-    var actionsClasses;
-    actionsClasses = cx({
-      'meta-actions': true,
-      '__open': this.isOpenState()
-    });
-    return React.createElement("div", {
-      "className": actionsClasses
-    }, React.createElement(EntryMetaActions_Button, {
-      "onClick": this.toggleOpenState
-    }), React.createElement(EntryMetaActions_DropdownMenu, {
-      "entry": this.props.entry,
-      "visible": this.isOpenState()
-    }));
-  },
-  isOpenState: function() {
-    return this.state.currentState === OPEN_STATE;
-  },
-  activateCloseState: function() {
-    return this.setState({
-      currentState: CLOSE_STATE
-    });
-  },
-  activateOpenState: function() {
-    return this.setState({
-      currentState: OPEN_STATE
-    });
-  },
-  toggleOpenState: function() {
-    if (this.isOpenState()) {
-      return this.activateCloseState();
-    } else {
-      return this.activateOpenState();
-    }
-  }
-});
-
-module.exports = EntryMetaActions;
-
-
-
-},{"../../../mixins/clickOutside":146,"./actions/buttons/button":80,"./actions/dropdownMenu":81,"react/lib/cx":279}],80:[function(require,module,exports){
-var EntryMetaActions_Button, PropTypes;
-
-PropTypes = React.PropTypes;
-
-EntryMetaActions_Button = React.createClass({
-  displayName: 'EntryMetaActions_Button',
-  propTypes: {
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("button", {
-      "className": "meta-actions__button",
-      "onClick": this.props.onClick
-    }, React.createElement("i", {
-      "className": "icon icon--dots"
-    }));
-  }
-});
-
-module.exports = EntryMetaActions_Button;
-
-
-
-},{}],81:[function(require,module,exports){
-var DropdownMenuMixin, EntryMetaActions_DropdownMenu, EntryMetaActions_DropdownMenu_DeleteItem, EntryMetaActions_DropdownMenu_EditItem, EntryMetaActions_DropdownMenu_FavoriteItem, EntryMetaActions_DropdownMenu_LinkItem, EntryMetaActions_DropdownMenu_ReportItem, EntryMetaActions_DropdownMenu_WatchItem, PropTypes;
-
-DropdownMenuMixin = require('../../../../mixins/dropdownMenu');
-
-EntryMetaActions_DropdownMenu_LinkItem = require('./dropdownMenu/items/link');
-
-EntryMetaActions_DropdownMenu_EditItem = require('./dropdownMenu/items/edit');
-
-EntryMetaActions_DropdownMenu_FavoriteItem = require('./dropdownMenu/items/favorite');
-
-EntryMetaActions_DropdownMenu_WatchItem = require('./dropdownMenu/items/watch');
-
-EntryMetaActions_DropdownMenu_DeleteItem = require('./dropdownMenu/items/delete');
-
-EntryMetaActions_DropdownMenu_ReportItem = require('./dropdownMenu/items/report');
-
-PropTypes = React.PropTypes;
-
-EntryMetaActions_DropdownMenu = React.createClass({
-  displayName: 'EntryMetaActions_DropdownMenu',
-  mixins: [DropdownMenuMixin],
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    visible: PropTypes.bool.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": this.getPopupClasses('meta-actions__dropdown-popup')
-    }, this.renderPopupList());
-  },
-  renderPopupList: function() {
-    var deleteItem, editItem, favoriteItem, linkItem, reportItem, watchItem;
-    linkItem = React.createElement(EntryMetaActions_DropdownMenu_LinkItem, {
-      "entryUrl": this.props.entry.entry_url,
-      "key": "link"
-    });
-    if (this.props.entry.can_edit) {
-      editItem = React.createElement(EntryMetaActions_DropdownMenu_EditItem, {
-        "editUrl": Routes.entry_edit_url(this.props.entry.author.slug, this.props.entry.id),
-        "key": "edit"
-      });
-    }
-    if (this.props.entry.can_favorite) {
-      favoriteItem = React.createElement(EntryMetaActions_DropdownMenu_FavoriteItem, {
-        "entryId": this.props.entry.id,
-        "favorited": this.props.entry.is_favorited,
-        "key": "favorite"
-      });
-    }
-    if (this.props.entry.can_watch) {
-      watchItem = React.createElement(EntryMetaActions_DropdownMenu_WatchItem, {
-        "entryId": this.props.entry.id,
-        "watching": this.props.entry.is_watching,
-        "key": "watch"
-      });
-    }
-    if (this.props.entry.can_report) {
-      reportItem = React.createElement(EntryMetaActions_DropdownMenu_ReportItem, {
-        "entryId": this.props.entry.id,
-        "key": "report"
-      });
-    }
-    if (this.props.entry.can_delete) {
-      deleteItem = React.createElement(EntryMetaActions_DropdownMenu_DeleteItem, {
-        "entryId": this.props.entry.id,
-        "key": "delete"
-      });
-    }
-    return React.createElement("ul", {
-      "className": "meta-actions__dropdown-popup-list"
-    }, [editItem, linkItem, favoriteItem, watchItem, reportItem, deleteItem]);
-  }
-});
-
-module.exports = EntryMetaActions_DropdownMenu;
-
-
-
-},{"../../../../mixins/dropdownMenu":148,"./dropdownMenu/items/delete":82,"./dropdownMenu/items/edit":83,"./dropdownMenu/items/favorite":84,"./dropdownMenu/items/link":85,"./dropdownMenu/items/report":86,"./dropdownMenu/items/watch":87}],82:[function(require,module,exports){
-var EntryMetaActions_DropdownMenu_DeleteItem, EntryViewActions, PropTypes;
-
-EntryViewActions = require('../../../../../../actions/view/entry');
-
-PropTypes = React.PropTypes;
-
-EntryMetaActions_DropdownMenu_DeleteItem = React.createClass({
-  displayName: 'EntryMetaActions_DropdownMenu_DeleteItem',
-  propTypes: {
-    entryId: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "meta-actions__dropdown-popup-item"
-    }, React.createElement("a", {
-      "className": "meta-actions__dropdown-popup-link",
-      "onClick": this.handleClick
-    }, React.createElement("i", {
-      "className": "icon icon--basket"
-    }), React.createElement("span", null, i18n.t('delete_entry_item'))));
-  },
-  "delete": function() {
-    return EntryViewActions["delete"](this.props.entryId);
-  },
-  handleClick: function() {
-    if (confirm(i18n.t('delete_entry_confirm'))) {
-      return this["delete"]();
-    }
-  }
-});
-
-module.exports = EntryMetaActions_DropdownMenu_DeleteItem;
-
-
-
-},{"../../../../../../actions/view/entry":8}],83:[function(require,module,exports){
-var EntryMetaActions_DropdownMenu_EditItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-EntryMetaActions_DropdownMenu_EditItem = React.createClass({
-  displayName: 'EntryMetaActions_DropdownMenu_EditItem',
-  propTypes: {
-    editUrl: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "meta-actions__dropdown-popup-item"
-    }, React.createElement("a", {
-      "href": this.props.editUrl,
-      "className": "meta-actions__dropdown-popup-link"
-    }, React.createElement("i", {
-      "className": "icon icon--pencil"
-    }), React.createElement("span", null, i18n.t('edit_entry_item'))));
-  }
-});
-
-module.exports = EntryMetaActions_DropdownMenu_EditItem;
-
-
-
-},{}],84:[function(require,module,exports){
-var EntryMetaActions_DropdownMenu_FavoriteItem, EntryViewActions, PropTypes, cx;
-
-cx = require('react/lib/cx');
-
-EntryViewActions = require('../../../../../../actions/view/entry');
-
-PropTypes = React.PropTypes;
-
-EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass({
-  displayName: 'EntryMetaActions_DropdownMenu_FavoriteItem',
-  propTypes: {
-    favorited: PropTypes.bool.isRequired,
-    entryId: PropTypes.number.isRequired
-  },
-  getInitialState: function() {
-    return {
-      favorited: this.props.favorited
-    };
-  },
-  render: function() {
-    var iconClasses;
-    iconClasses = cx({
-      'icon': true,
-      'icon--star': true,
-      'icon--star-fill': this.isFavorited()
-    });
-    return React.createElement("li", {
-      "className": "meta-actions__dropdown-popup-item"
-    }, React.createElement("a", {
-      "className": "meta-actions__dropdown-popup-link",
-      "onClick": this.handleClick
-    }, React.createElement("i", {
-      "className": iconClasses
-    }), React.createElement("span", null, this.getTitle())));
-  },
-  isFavorited: function() {
-    return this.state.favorited;
-  },
-  getTitle: function() {
-    if (this.isFavorited()) {
-      return i18n.t('remove_from_favorites_entry_item');
-    } else {
-      return i18n.t('add_to_favorites_entry_item');
-    }
-  },
-  addToFavorites: function() {
-    return EntryViewActions.addToFavorites(this.props.entryId).then((function(_this) {
-      return function() {
-        return _this.setState({
-          favorited: true
-        });
-      };
-    })(this));
-  },
-  removeFromFavorites: function() {
-    return EntryViewActions.removeFromFavorites(this.props.entryId).then((function(_this) {
-      return function() {
-        return _this.setState({
-          favorited: false
-        });
-      };
-    })(this));
-  },
-  handleClick: function() {
-    if (this.isFavorited()) {
-      return this.removeFromFavorites();
-    } else {
-      return this.addToFavorites();
-    }
-  }
-});
-
-module.exports = EntryMetaActions_DropdownMenu_FavoriteItem;
-
-
-
-},{"../../../../../../actions/view/entry":8,"react/lib/cx":279}],85:[function(require,module,exports){
-var EntryMetaActions_DropdownMenu_LinkItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-EntryMetaActions_DropdownMenu_LinkItem = React.createClass({
-  displayName: 'EntryMetaActions_DropdownMenu_LinkItem',
-  propTypes: {
-    entryUrl: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "meta-actions__dropdown-popup-item"
-    }, React.createElement("a", {
-      "href": this.props.entryUrl,
-      "className": "meta-actions__dropdown-popup-link"
-    }, React.createElement("i", {
-      "className": "icon icon--hyperlink"
-    }), React.createElement("span", null, i18n.t('link_entry_item'))));
-  }
-});
-
-module.exports = EntryMetaActions_DropdownMenu_LinkItem;
-
-
-
-},{}],86:[function(require,module,exports){
-var EntryMetaActions_DropdownMenu_ReportItem, EntryViewActions, PropTypes;
-
-EntryViewActions = require('../../../../../../actions/view/entry');
-
-PropTypes = React.PropTypes;
-
-EntryMetaActions_DropdownMenu_ReportItem = React.createClass({
-  displayName: 'EntryMetaActions_DropdownMenu_ReportItem',
-  propTypes: {
-    entryId: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "meta-actions__dropdown-popup-item"
-    }, React.createElement("a", {
-      "className": "meta-actions__dropdown-popup-link",
-      "onClick": this.handleClick
-    }, React.createElement("i", {
-      "className": "icon icon--exclamation-mark"
-    }), React.createElement("span", null, i18n.t('report_entry_item'))));
-  },
-  report: function() {
-    return EntryViewActions.report(this.props.entryId);
-  },
-  handleClick: function() {
-    if (confirm(i18n.t('report_entry_confirm'))) {
-      return this.report();
-    }
-  }
-});
-
-module.exports = EntryMetaActions_DropdownMenu_ReportItem;
-
-
-
-},{"../../../../../../actions/view/entry":8}],87:[function(require,module,exports){
-var EntryMetaActions_DropdownMenu_WatchItem, EntryViewActions, PropTypes;
-
-EntryViewActions = require('../../../../../../actions/view/entry');
-
-PropTypes = React.PropTypes;
-
-EntryMetaActions_DropdownMenu_WatchItem = React.createClass({
-  displayName: 'EntryMetaActions_DropdownMenu_WatchItem',
-  propTypes: {
-    entryId: PropTypes.number.isRequired,
-    watching: PropTypes.bool.isRequired
-  },
-  getInitialState: function() {
-    return {
-      watching: this.props.watching
-    };
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "meta-actions__dropdown-popup-item"
-    }, React.createElement("a", {
-      "className": "meta-actions__dropdown-popup-link",
-      "onClick": this.handleClick
-    }, React.createElement("i", {
-      "className": "icon icon--comments-subscribe"
-    }), React.createElement("span", null, this.getTitle())));
-  },
-  isWatching: function() {
-    return this.state.watching;
-  },
-  getTitle: function() {
-    if (this.isWatching()) {
-      return i18n.t('stop_watch_entry_item');
-    } else {
-      return i18n.t('start_watch_entry_item');
-    }
-  },
-  startWatch: function() {
-    return EntryViewActions.startWatch(this.props.entryId).then((function(_this) {
-      return function() {
-        return _this.setState({
-          watching: true
-        });
-      };
-    })(this));
-  },
-  stopWatch: function() {
-    return EntryViewActions.stopWatch(this.props.entryId).then((function(_this) {
-      return function() {
-        return _this.setState({
-          watching: false
-        });
-      };
-    })(this));
-  },
-  handleClick: function() {
-    if (this.isWatching()) {
-      return this.stopWatch();
-    } else {
-      return this.startWatch();
-    }
-  }
-});
-
-module.exports = EntryMetaActions_DropdownMenu_WatchItem;
-
-
-
-},{"../../../../../../actions/view/entry":8}],88:[function(require,module,exports){
-var EntryMetaAuthor, PropTypes, UserAvatar;
-
-UserAvatar = require('../../common/avatar/user');
-
-PropTypes = React.PropTypes;
-
-EntryMetaAuthor = React.createClass({
-  displayName: 'EntryMetaAuthor',
-  propTypes: {
-    author: PropTypes.object.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "className": "meta-author",
-      "href": this.props.author.tlog_url
-    }, React.createElement("span", {
-      "className": "meta-author__avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.author,
-      "size": 28.
-    })), React.createElement("span", null, this.getUserSlug()));
-  },
-  getUserSlug: function() {
-    return " @" + this.props.author.slug;
-  }
-});
-
-module.exports = EntryMetaAuthor;
-
-
-
-},{"../../common/avatar/user":39}],89:[function(require,module,exports){
-var EntryMetaComments, PropTypes;
-
-PropTypes = React.PropTypes;
-
-EntryMetaComments = React.createClass({
-  displayName: 'EntryMetaComments',
-  propTypes: {
-    commentsCount: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "meta-comments"
-    }, this.props.commentsCount);
-  }
-});
-
-module.exports = EntryMetaComments;
-
-
-
-},{}],90:[function(require,module,exports){
-var ComponentMixin, EntryMetaVoting, EntryViewActions, PropTypes, cx;
-
-cx = require('react/lib/cx');
-
-EntryViewActions = require('../../../actions/view/entry');
-
-ComponentMixin = require('../../../mixins/component');
-
-PropTypes = React.PropTypes;
-
-EntryMetaVoting = React.createClass({
-  displayName: 'EntryMetaVoting',
-  mixins: [ComponentMixin],
-  propTypes: {
-    rating: PropTypes.object.isRequired,
-    entryId: PropTypes.number.isRequired
-  },
-  getInitialState: function() {
-    return {
-      canVote: this.props.rating.is_voteable,
-      voted: this.props.rating.is_voted,
-      votes: this.props.rating.votes
-    };
-  },
-  render: function() {
-    var votingClasses;
-    votingClasses = cx({
-      'meta-voting': true,
-      'voted': this.isVoted(),
-      'votable': this.isVoteable(),
-      'unvotable': !this.isVoteable()
-    });
-    return React.createElement("div", {
-      "className": votingClasses,
-      "onClick": this.handleClick
-    }, this.state.votes);
-  },
-  isVoted: function() {
-    return this.state.voted;
-  },
-  isVoteable: function() {
-    return this.state.canVote;
-  },
-  vote: function() {
-    return EntryViewActions.vote(this.props.entryId).then((function(_this) {
-      return function(rating) {
-        return _this.safeUpdateState({
-          canVote: rating.is_voteable,
-          voted: rating.is_voted,
-          votes: rating.votes
-        });
-      };
-    })(this));
-  },
-  handleClick: function() {
-    if (this.isVoted() || !this.isVoteable()) {
-      return;
-    }
-    return this.vote();
-  }
-});
-
-module.exports = EntryMetaVoting;
-
-
-
-},{"../../../actions/view/entry":8,"../../../mixins/component":147,"react/lib/cx":279}],91:[function(require,module,exports){
-var EntryMixin, EntryViewActions, IMAGE_TYPE, LOAD_MORE_COMMENTS_LIMIT, QUOTE_TYPE, TEXT_TYPE, VIDEO_TYPE, assign;
-
-assign = require('react/lib/Object.assign');
-
-EntryViewActions = require('../../../actions/view/entry');
-
-LOAD_MORE_COMMENTS_LIMIT = 21;
-
-TEXT_TYPE = 'text';
-
-IMAGE_TYPE = 'image';
-
-VIDEO_TYPE = 'video';
-
-QUOTE_TYPE = 'quote';
-
-EntryMixin = {
-  getDefaultProps: function() {
-    return {
-      loadPerTime: LOAD_MORE_COMMENTS_LIMIT
-    };
-  },
-  getInitialState: function() {
-    var _ref, _ref1;
-    return {
-      comments: ((_ref = this.props.entry.comments_info) != null ? _ref.comments : void 0) || [],
-      commentsCount: ((_ref1 = this.props.entry.comments_info) != null ? _ref1.total_count : void 0) || 0,
-      loading: false
-    };
-  },
-  isLoadingState: function() {
-    return this.state.loading === true;
-  },
-  activateLoadingState: function() {
-    return this.safeUpdateState({
-      loading: true
-    });
-  },
-  deactivateLoadingState: function() {
-    return this.safeUpdateState({
-      loading: false
-    });
-  },
-  loadMoreComments: function() {
-    var entryId, limit, toCommentId;
-    entryId = this.props.entry.id;
-    toCommentId = this.state.comments[0].id;
-    limit = this.props.loadPerTime;
-    this.activateLoadingState();
-    return EntryViewActions.loadComments(entryId, toCommentId, limit).then((function(_this) {
-      return function(commentsInfo) {
-        var comments, commentsCount;
-        comments = commentsInfo.comments;
-        commentsCount = commentsInfo.total_count;
-        return _this.safeUpdateState({
-          comments: comments.concat(_this.state.comments),
-          commentsCount: commentsCount
-        });
-      };
-    })(this)).always(this.deactivateLoadingState);
-  },
-  createComment: function(text) {
-    var entryId;
-    entryId = this.props.entry.id;
-    return EntryViewActions.createComment(entryId, text).then((function(_this) {
-      return function(comment) {
-        _this.state.comments.push(comment);
-        return _this.safeUpdateState({
-          comments: _this.state.comments,
-          commentsCount: _this.state.commentsCount + 1
-        });
-      };
-    })(this)).always(this.deactivateLoadingState);
-  },
-  editComment: function(commentId, text) {
-    var entryId;
-    entryId = this.props.entry.id;
-    return EntryViewActions.editComment(entryId, commentId, text).then((function(_this) {
-      return function(comment) {
-        var item, _i, _len, _ref;
-        _ref = _this.state.comments;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          item = _ref[_i];
-          if (!(item.id === comment.id)) {
-            continue;
-          }
-          assign(item, comment);
-          break;
-        }
-        return _this.forceUpdate();
-      };
-    })(this));
-  },
-  deleteComment: function(commentId) {
-    var entryId;
-    entryId = this.props.entry.id;
-    return EntryViewActions.deleteComment(entryId, commentId).then((function(_this) {
-      return function() {
-        var i, item, _i, _len, _ref;
-        _ref = _this.state.comments;
-        for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-          item = _ref[i];
-          if (!(item.id === commentId)) {
-            continue;
-          }
-          _this.state.comments.splice(i, 1);
-          break;
-        }
-        return _this.forceUpdate();
-      };
-    })(this));
-  },
-  reportComment: function(commentId) {
-    return EntryViewActions.reportComment(commentId);
-  },
-  getEntryClasses: function() {
-    var typeClass;
-    typeClass = (function() {
-      switch (this.props.entry.type) {
-        case TEXT_TYPE:
-          return 'text';
-        case IMAGE_TYPE:
-          return 'image';
-        case VIDEO_TYPE:
-          return 'video';
-        case QUOTE_TYPE:
-          return 'quote';
-        default:
-          return 'text';
-      }
-    }).call(this);
-    return 'post post--' + typeClass;
-  }
-};
-
-module.exports = EntryMixin;
-
-
-
-},{"../../../actions/view/entry":8,"react/lib/Object.assign":200}],92:[function(require,module,exports){
-var ComponentMixin, ConnectStoreMixin, CurrentUserStore, EntryComments, EntryContent, EntryMixin, EntryTlog, EntryTlogMeta, PropTypes;
-
-EntryTlogMeta = require('./tlog/meta');
-
-EntryComments = require('./comments/comments');
-
-EntryContent = require('./content/content');
-
-CurrentUserStore = require('../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-ComponentMixin = require('../../mixins/component');
-
-EntryMixin = require('./mixins/entry');
-
-PropTypes = React.PropTypes;
-
-EntryTlog = React.createClass({
-  displayName: 'EntryTlog',
-  mixins: [ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin],
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    loadPerTime: PropTypes.number
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": this.getEntryClasses()
-    }, React.createElement(EntryContent, {
-      "entry": this.props.entry
-    }), React.createElement(EntryTlogMeta, {
-      "entry": this.props.entry,
-      "commentsCount": this.state.commentsCount
-    }), React.createElement(EntryComments, {
-      "user": this.state.user,
-      "entry": this.props.entry,
-      "comments": this.state.comments,
-      "commentsCount": this.state.commentsCount,
-      "loading": this.isLoadingState(),
-      "loadPerTime": this.props.loadPerTime,
-      "onCommentsLoadMore": this.loadMoreComments,
-      "onCommentCreate": this.createComment,
-      "onCommentEdit": this.editComment,
-      "onCommentDelete": this.deleteComment,
-      "onCommentReport": this.reportComment
-    }));
-  },
-  getStateFromStore: function() {
-    return {
-      user: CurrentUserStore.getUser()
-    };
-  }
-});
-
-module.exports = EntryTlog;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":166,"../../mixins/component":147,"../../stores/currentUser":160,"./comments/comments":66,"./content/content":68,"./mixins/entry":91,"./tlog/meta":93}],93:[function(require,module,exports){
-var EntryMetaActions, EntryMetaComments, EntryMetaVoting, EntryTlogMeta, PropTypes;
-
-EntryMetaVoting = require('../meta/voting');
-
-EntryMetaActions = require('../meta/actions');
-
-EntryMetaComments = require('../meta/comments');
-
-PropTypes = React.PropTypes;
-
-EntryTlogMeta = React.createClass({
-  displayName: 'EntryTlogMeta',
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    commentsCount: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__meta"
-    }, React.createElement(EntryMetaActions, {
-      "entry": this.props.entry
-    }), this.renderVoting(), React.createElement(EntryMetaComments, {
-      "commentsCount": this.props.commentsCount
-    }));
-  },
-  renderVoting: function() {
-    if (this.props.entry.is_voteable) {
-      return React.createElement(EntryMetaVoting, {
-        "rating": this.props.entry.rating,
-        "entryId": this.props.entry.id
-      });
-    }
-  }
-});
-
-module.exports = EntryTlogMeta;
-
-
-
-},{"../meta/actions":79,"../meta/comments":89,"../meta/voting":90}],94:[function(require,module,exports){
-var FeedLoadMoreButton, PropTypes;
-
-PropTypes = React.PropTypes;
-
-FeedLoadMoreButton = React.createClass({
-  displayName: 'FeedLoadMoreButton',
-  propTypes: {
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("button", {
-      "className": "load-more-button",
-      "onClick": this.props.onClick
-    }, i18n.t('feed_load_more_button'));
-  }
-});
-
-module.exports = FeedLoadMoreButton;
-
-
-
-},{}],95:[function(require,module,exports){
-var FeedEmptyPageMessage, MESSAGE;
-
-MESSAGE = 'В ленте нет записей';
-
-FeedEmptyPageMessage = React.createClass({
-  displayName: 'FeedEmptyPageMessage',
-  render: function() {
-    return React.createElement("div", {
-      "className": "post"
-    }, React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("div", {
-      "className": "post__header"
-    }, React.createElement("h1", {
-      "className": "post__title"
-    }, MESSAGE))));
-  }
-});
-
-module.exports = FeedEmptyPageMessage;
-
-
-
-},{}],96:[function(require,module,exports){
-var EntryFeed, Feed, FeedEmptyPageMessage, FeedLoadMore, PropTypes;
-
-FeedEmptyPageMessage = require('./emptyPageMessage');
-
-FeedLoadMore = require('./loadMore');
-
-EntryFeed = require('../entry/feed');
-
-PropTypes = React.PropTypes;
-
-Feed = React.createClass({
-  displayName: 'Feed',
-  propTypes: {
-    entries: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired,
-    everythingLoaded: PropTypes.bool.isRequired,
-    onLoadMore: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "posts"
-    }, this.renderEntryList(), this.renderLoadMore());
-  },
-  renderEntryList: function() {
-    if (this.props.entries.length) {
-      return this.props.entries.map(function(entry) {
-        return React.createElement(EntryFeed, {
-          "entry": entry,
-          "key": entry.id
-        });
-      });
-    } else {
-      return React.createElement(FeedEmptyPageMessage, null);
-    }
-  },
-  renderLoadMore: function() {
-    if (this.props.entries.length && !this.props.everythingLoaded) {
-      return React.createElement(FeedLoadMore, {
-        "loading": this.props.loading,
-        "onClick": this.props.onLoadMore
-      });
-    }
-  }
-});
-
-module.exports = Feed;
-
-
-
-},{"../entry/feed":77,"./emptyPageMessage":95,"./loadMore":100}],97:[function(require,module,exports){
-var ComponentMixin, ConnectStoreMixin, Feed, FeedBest, FeedMixin, FeedStore, FeedViewActions, PropTypes;
-
-FeedStore = require('../../stores/feed');
-
-ComponentMixin = require('../../mixins/component');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-FeedMixin = require('./mixins/feed');
-
-FeedViewActions = require('../../actions/view/feed');
-
-Feed = require('./feed');
-
-PropTypes = React.PropTypes;
-
-FeedBest = React.createClass({
-  displayName: 'FeedBest',
-  mixins: [ConnectStoreMixin(FeedStore), FeedMixin, ComponentMixin],
-  propTypes: {
-    entries: PropTypes.array.isRequired,
-    limit: PropTypes.number
-  },
-  render: function() {
-    return React.createElement(Feed, {
-      "entries": this.state.entries,
-      "loading": this.isLoadingState(),
-      "everythingLoaded": this.state.everythingLoaded,
-      "onLoadMore": this.loadMoreEntries
-    });
-  },
-  loadMoreEntries: function() {
-    var limit, sinceEntryId;
-    sinceEntryId = this.state.entries[this.state.entries.length - 1].id;
-    limit = this.props.limit;
-    this.activateLoadingState();
-    return FeedViewActions.loadBestEntries(sinceEntryId, limit).then(this.activateShowState).fail(this.activateErrorState);
-  }
-});
-
-module.exports = FeedBest;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":166,"../../actions/view/feed":9,"../../mixins/component":147,"../../stores/feed":161,"./feed":96,"./mixins/feed":101}],98:[function(require,module,exports){
-var ComponentMixin, ConnectStoreMixin, Feed, FeedFriends, FeedMixin, FeedStore, FeedViewActions, PropTypes;
-
-FeedStore = require('../../stores/feed');
-
-ComponentMixin = require('../../mixins/component');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-FeedMixin = require('./mixins/feed');
-
-FeedViewActions = require('../../actions/view/feed');
-
-Feed = require('./feed');
-
-PropTypes = React.PropTypes;
-
-FeedFriends = React.createClass({
-  displayName: 'FeedFriends',
-  mixins: [ConnectStoreMixin(FeedStore), FeedMixin, ComponentMixin],
-  propTypes: {
-    entries: PropTypes.array.isRequired,
-    limit: PropTypes.number
-  },
-  render: function() {
-    return React.createElement(Feed, {
-      "entries": this.state.entries,
-      "loading": this.isLoadingState(),
-      "everythingLoaded": this.state.everythingLoaded,
-      "onLoadMore": this.loadMoreEntries
-    });
-  },
-  loadMoreEntries: function() {
-    var limit, sinceEntryId;
-    sinceEntryId = this.state.entries[this.state.entries.length - 1].id;
-    limit = this.props.limit;
-    this.activateLoadingState();
-    return FeedViewActions.loadFriendsEntries(sinceEntryId, limit).then(this.activateShowState).fail(this.activateErrorState);
-  }
-});
-
-module.exports = FeedFriends;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":166,"../../actions/view/feed":9,"../../mixins/component":147,"../../stores/feed":161,"./feed":96,"./mixins/feed":101}],99:[function(require,module,exports){
-var ComponentMixin, ConnectStoreMixin, Feed, FeedLive, FeedMixin, FeedStore, FeedViewActions, PropTypes;
-
-FeedStore = require('../../stores/feed');
-
-ComponentMixin = require('../../mixins/component');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-FeedMixin = require('./mixins/feed');
-
-FeedViewActions = require('../../actions/view/feed');
-
-Feed = require('./feed');
-
-PropTypes = React.PropTypes;
-
-FeedLive = React.createClass({
-  displayName: 'FeedLive',
-  mixins: [ConnectStoreMixin(FeedStore), FeedMixin, ComponentMixin],
-  propTypes: {
-    entries: PropTypes.array.isRequired,
-    limit: PropTypes.number
-  },
-  render: function() {
-    return React.createElement(Feed, {
-      "entries": this.state.entries,
-      "loading": this.isLoadingState(),
-      "everythingLoaded": this.state.everythingLoaded,
-      "onLoadMore": this.loadMoreEntries
-    });
-  },
-  loadMoreEntries: function() {
-    var limit, sinceEntryId;
-    sinceEntryId = this.state.entries[this.state.entries.length - 1].id;
-    limit = this.props.limit;
-    this.activateLoadingState();
-    return FeedViewActions.loadLiveEntries(sinceEntryId, limit).then(this.activateShowState).fail(this.activateErrorState);
-  }
-});
-
-module.exports = FeedLive;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":166,"../../actions/view/feed":9,"../../mixins/component":147,"../../stores/feed":161,"./feed":96,"./mixins/feed":101}],100:[function(require,module,exports){
-var FeedLoadMore, FeedLoadMoreButton, PropTypes, Spinner;
-
-Spinner = require('../common/spinner/spinner');
-
-FeedLoadMoreButton = require('./buttons/loadMore');
-
-PropTypes = React.PropTypes;
-
-FeedLoadMore = React.createClass({
-  displayName: 'FeedLoadMore',
-  propTypes: {
-    loading: PropTypes.bool.isRequired,
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "feed__more"
-    }, this.renderContent());
-  },
-  renderContent: function() {
-    if (this.props.loading) {
-      return React.createElement("div", {
-        "className": "loader"
-      }, React.createElement(Spinner, {
-        "size": 30.
-      }));
-    } else {
-      return React.createElement(FeedLoadMoreButton, {
-        "onClick": this.props.onClick
-      });
-    }
-  }
-});
-
-module.exports = FeedLoadMore;
-
-
-
-},{"../common/spinner/spinner":46,"./buttons/loadMore":94}],101:[function(require,module,exports){
-var ERROR_STATE, FeedMixin, FeedViewActions, LOADING_STATE, LOAD_MORE_ENTRIES_LIMIT, SHOW_STATE;
-
-FeedViewActions = require('../../../actions/view/feed');
-
-LOAD_MORE_ENTRIES_LIMIT = 10;
-
-SHOW_STATE = 'show';
-
-LOADING_STATE = 'load';
-
-ERROR_STATE = 'error';
-
-FeedMixin = {
-  getDefaultProps: function() {
-    return {
-      limit: LOAD_MORE_ENTRIES_LIMIT
-    };
-  },
-  getInitialState: function() {
-    return {
-      currentState: SHOW_STATE
-    };
-  },
-  componentWillMount: function() {
-    return FeedViewActions.initializeFeed(this.props.entries);
-  },
-  isLoadingState: function() {
-    return this.state.currentState === LOADING_STATE;
-  },
-  activateShowState: function() {
-    return this.safeUpdateState({
-      currentState: SHOW_STATE
-    });
-  },
-  activateLoadingState: function() {
-    return this.safeUpdateState({
-      currentState: LOADING_STATE
-    });
-  },
-  activateErrorState: function() {
-    return this.safeUpdateState({
-      currentState: ERROR_STATE
-    });
-  },
-  getStateFromStore: function() {
-    return {
-      entries: FeedStore.getEntries(),
-      everythingLoaded: FeedStore.isEverythingLoaded()
-    };
-  }
-};
-
-module.exports = FeedMixin;
-
-
-
-},{"../../../actions/view/feed":9}],102:[function(require,module,exports){
-var HeroFeed, PropTypes;
-
-PropTypes = React.PropTypes;
-
-HeroFeed = React.createClass({
-  displayName: 'HeroFeed',
-  propTypes: {
-    title: PropTypes.string.isRequired,
-    backgroundUrl: PropTypes.string.isRequired,
-    entriesCount: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "style": this.getHeroStyles(),
-      "className": "hero"
-    }, React.createElement("div", {
-      "className": "hero__overlay"
-    }), React.createElement("div", {
-      "className": "hero__content"
-    }, React.createElement("div", {
-      "className": "hero__head"
-    }, React.createElement("div", {
-      "className": "hero__title"
-    }, React.createElement("span", null, this.props.title)), React.createElement("div", {
-      "className": "hero__smalltext"
-    }, React.createElement("span", null, i18n.t('feed_entries_count', {
-      count: this.props.entriesCount
-    }))))));
-  },
-  getHeroStyles: function() {
-    return {
-      backgroundImage: "url('" + this.props.backgroundUrl + "')"
-    };
-  }
-});
-
-module.exports = HeroFeed;
-
-
-
-},{}],103:[function(require,module,exports){
-var HeroFeed, HeroFeedBest, PropTypes;
-
-HeroFeed = require('./feed');
-
-PropTypes = React.PropTypes;
-
-HeroFeedBest = React.createClass({
-  displayName: 'HeroFeedBest',
-  propTypes: {
-    backgroundUrl: PropTypes.string.isRequired,
-    entriesCount: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement(HeroFeed, React.__spread({}, this.props, {
-      "title": i18n.t('feed_best')
-    }));
-  }
-});
-
-module.exports = HeroFeedBest;
-
-
-
-},{"./feed":102}],104:[function(require,module,exports){
-var HeroFeed, HeroFeedFriends, PropTypes;
-
-HeroFeed = require('./feed');
-
-PropTypes = React.PropTypes;
-
-HeroFeedFriends = React.createClass({
-  displayName: 'HeroFeedFriends',
-  propTypes: {
-    backgroundUrl: PropTypes.string.isRequired,
-    entriesCount: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement(HeroFeed, React.__spread({}, this.props, {
-      "title": i18n.t('feed_friends')
-    }));
-  }
-});
-
-module.exports = HeroFeedFriends;
-
-
-
-},{"./feed":102}],105:[function(require,module,exports){
-var HeroFeed, HeroFeedLive, PropTypes;
-
-HeroFeed = require('./feed');
-
-PropTypes = React.PropTypes;
-
-HeroFeedLive = React.createClass({
-  displayName: 'HeroFeedLive',
-  propTypes: {
-    backgroundUrl: PropTypes.string.isRequired,
-    entriesCount: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement(HeroFeed, React.__spread({}, this.props, {
-      "title": i18n.t('feed_live')
-    }));
-  }
-});
-
-module.exports = HeroFeedLive;
-
-
-
-},{"./feed":102}],106:[function(require,module,exports){
-var BrowserHelpers, CLOSE_STATE, ConnectStoreMixin, CurrentUserStore, HeroTlog, HeroTlogActions, HeroTlogAvatar, HeroTlogCloseButton, HeroTlogHead, HeroTlogStats, OPEN_STATE, PropTypes, _initialHeroHeight, _openHeroHeight, _screenOrientation;
-
-CurrentUserStore = require('../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-BrowserHelpers = require('../../../../shared/helpers/browser');
-
-HeroTlogAvatar = require('./tlog/avatar');
-
-HeroTlogHead = require('./tlog/head');
-
-HeroTlogActions = require('./tlog/actions');
-
-HeroTlogStats = require('./tlog/stats');
-
-HeroTlogCloseButton = require('./tlog/buttons/close');
-
-PropTypes = React.PropTypes;
-
-CLOSE_STATE = 'close';
-
-OPEN_STATE = 'open';
-
-_screenOrientation = null;
-
-_initialHeroHeight = null;
-
-_openHeroHeight = null;
-
-HeroTlog = React.createClass({
-  displayName: 'HeroTlog',
-  mixins: [ConnectStoreMixin(CurrentUserStore)],
-  propTypes: {
-    tlog: PropTypes.object.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: CLOSE_STATE
-    };
-  },
-  componentDidMount: function() {
-    _initialHeroHeight = this.getDOMNode().offsetHeight;
-    return window.addEventListener('resize', this.onResize);
-  },
-  componentWillUnmount: function() {
-    return window.removeEventListener('resize', this.onResize);
-  },
-  render: function() {
-    return React.createElement("div", {
-      "style": this.getHeroStyles(),
-      "className": "hero"
-    }, React.createElement(HeroTlogCloseButton, {
-      "onClick": this.close
-    }), React.createElement("div", {
-      "className": "hero__overlay"
-    }), React.createElement("div", {
-      "className": "hero__gradient"
-    }), React.createElement("div", {
-      "className": "hero__content"
-    }, React.createElement(HeroTlogAvatar, {
-      "user": this.state.user,
-      "author": this.props.tlog.author,
-      "status": this.props.tlog.my_relationship,
-      "onClick": this.handleAvatarClick
-    }), React.createElement(HeroTlogHead, {
-      "author": this.props.tlog.author
-    }), React.createElement(HeroTlogActions, {
-      "user": this.state.user,
-      "author": this.props.tlog.author,
-      "status": this.props.tlog.my_relationship
-    })), React.createElement(HeroTlogStats, {
-      "author": this.props.tlog.author,
-      "stats": this.props.tlog.stats
-    }));
-  },
-  isOpenState: function() {
-    return this.state.currentState === OPEN_STATE;
-  },
-  activateOpenState: function() {
-    return this.setState({
-      currentState: OPEN_STATE
-    });
-  },
-  activateCloseState: function() {
-    return this.setState({
-      currentState: CLOSE_STATE
-    });
-  },
-  open: function() {
-    var html;
-    html = document.querySelector('html');
-    html.classList.add('hero-enabled');
-    _openHeroHeight = window.innerHeight;
-    document.body.style.height = _openHeroHeight + 'px';
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
-    return this.activateOpenState();
-  },
-  close: function() {
-    var html;
-    html = document.querySelector('html');
-    html.classList.remove('hero-enabled');
-    _screenOrientation = null;
-    document.body.style.height = '';
-    return this.activateCloseState();
-  },
-  getHeroStyles: function() {
-    var backgroundUrl, height, _ref;
-    backgroundUrl = (_ref = this.props.tlog.design) != null ? _ref.background_url : void 0;
-    height = this.isOpenState() ? _openHeroHeight : _initialHeroHeight;
-    return {
-      backgroundImage: "url('" + backgroundUrl + "')",
-      height: height
-    };
-  },
-  handleAvatarClick: function() {
-    if (!this.isOpenState()) {
-      return this.open();
-    }
-  },
-  onResize: function() {
-    var currentOrientation, html;
-    html = document.querySelector('html');
-    currentOrientation = BrowserHelpers.getCurrentOrientation();
-    if (this.isOpenState() && _screenOrientation !== currentOrientation) {
-      _screenOrientation = currentOrientation;
-      _openHeroHeight = window.innerHeight;
-      document.body.style.height = _openHeroHeight + 'px';
-      return this.forceUpdate();
-    }
-  },
-  getStateFromStore: function() {
-    return {
-      user: CurrentUserStore.getUser()
-    };
-  }
-});
-
-module.exports = HeroTlog;
-
-
-
-},{"../../../../shared/helpers/browser":164,"../../../../shared/react/mixins/connectStore":166,"../../stores/currentUser":160,"./tlog/actions":107,"./tlog/avatar":117,"./tlog/buttons/close":118,"./tlog/head":119,"./tlog/stats":120}],107:[function(require,module,exports){
-var HeroTlogActions, HeroTlogActions_CurrentUser, HeroTlogActions_User, PropTypes;
-
-HeroTlogActions_User = require('./actions/user');
-
-HeroTlogActions_CurrentUser = require('./actions/currentUser');
-
-PropTypes = React.PropTypes;
-
-HeroTlogActions = React.createClass({
-  displayName: 'HeroTlogActions',
-  propTypes: {
-    user: PropTypes.object,
-    author: PropTypes.object.isRequired,
-    status: PropTypes.string
-  },
-  render: function() {
-    if (!this.isLogged()) {
-      return null;
-    }
-    if (this.isCurrentUser()) {
-      return React.createElement(HeroTlogActions_CurrentUser, {
-        "user": this.props.user
-      });
-    } else {
-      return React.createElement(HeroTlogActions_User, {
-        "user": this.props.author,
-        "status": this.props.status
-      });
-    }
-  },
-  isLogged: function() {
-    return this.props.user != null;
-  },
-  isCurrentUser: function() {
-    var _ref;
-    return ((_ref = this.props.user) != null ? _ref.id : void 0) === this.props.author.id;
-  }
-});
-
-module.exports = HeroTlogActions;
-
-
-
-},{"./actions/currentUser":110,"./actions/user":116}],108:[function(require,module,exports){
-var HeroTlogActions_SettingsButton, PropTypes;
-
-PropTypes = React.PropTypes;
-
-HeroTlogActions_SettingsButton = React.createClass({
-  displayName: 'HeroTlogActions_SettingsButton',
-  propTypes: {
-    slug: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("button", {
-      "className": "profile-settings-button",
-      "onClick": this.handleClick
-    }, React.createElement("i", {
-      "className": "icon icon--cogwheel"
-    }));
-  },
-  handleClick: function() {
-    return window.location = Routes.userSettings(this.props.slug);
-  }
-});
-
-module.exports = HeroTlogActions_SettingsButton;
-
-
-
-},{}],109:[function(require,module,exports){
-var HeroTlogActions_WriteMessageButton;
-
-HeroTlogActions_WriteMessageButton = React.createClass({
-  displayName: 'HeroTlogActions_WriteMessageButton',
-  render: function() {
-    return React.createElement("button", {
-      "className": "write-message-button",
-      "onClick": this.handleClick
-    }, React.createElement("i", {
-      "className": "icon icon--letter"
-    }));
-  },
-  handleClick: function() {
-    return alert('Ещё не работает');
-  }
-});
-
-module.exports = HeroTlogActions_WriteMessageButton;
-
-
-
-},{}],110:[function(require,module,exports){
-var HeroTlogActions_CurrentUser, HeroTlogActions_SettingsButton, PropTypes;
-
-HeroTlogActions_SettingsButton = require('./buttons/settings');
-
-PropTypes = React.PropTypes;
-
-HeroTlogActions_CurrentUser = React.createClass({
-  displayName: 'HeroTlogActions_CurrentUser',
-  propTypes: {
-    user: PropTypes.object.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "hero__actions"
-    }, React.createElement("button", {
-      "className": "follow-button"
-    }, i18n.t('current_user_button')), React.createElement(HeroTlogActions_SettingsButton, {
-      "slug": this.props.user.slug
-    }));
-  }
-});
-
-module.exports = HeroTlogActions_CurrentUser;
-
-
-
-},{"./buttons/settings":108}],111:[function(require,module,exports){
-var CLOSE_STATE, ClickOutsideMixin, HeroTlogActions_DropdownMenu, HeroTlogActions_DropdownMenu_Button, HeroTlogActions_DropdownMenu_Popup, OPEN_STATE, PropTypes, cx;
-
-cx = require('react/lib/cx');
-
-ClickOutsideMixin = require('../../../../mixins/clickOutside');
-
-HeroTlogActions_DropdownMenu_Button = require('./dropdownMenu/buttons/button');
-
-HeroTlogActions_DropdownMenu_Popup = require('./dropdownMenu/popup');
-
-PropTypes = React.PropTypes;
-
-CLOSE_STATE = 'close';
-
-OPEN_STATE = 'open';
-
-HeroTlogActions_DropdownMenu = React.createClass({
-  displayName: 'HeroTlogActions_DropdownMenu',
-  mixins: [ClickOutsideMixin],
-  propTypes: {
-    userId: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: CLOSE_STATE
-    };
-  },
-  render: function() {
-    var menuClasses;
-    menuClasses = cx({
-      'hero__user-actions': true,
-      '__open': this.isOpenState()
-    });
-    return React.createElement("div", {
-      "className": menuClasses
-    }, React.createElement(HeroTlogActions_DropdownMenu_Button, {
-      "onClick": this.toggleOpenState
-    }), React.createElement(HeroTlogActions_DropdownMenu_Popup, {
-      "arrangement": "top",
-      "visible": this.isOpenState(),
-      "userId": this.props.userId,
-      "status": this.props.status,
-      "onClose": this.activateCloseState
-    }));
-  },
-  isOpenState: function() {
-    return this.state.currentState === OPEN_STATE;
-  },
-  activateCloseState: function() {
-    return this.setState({
-      currentState: CLOSE_STATE
-    });
-  },
-  activateOpenState: function() {
-    return this.setState({
-      currentState: OPEN_STATE
-    });
-  },
-  toggleOpenState: function() {
-    if (this.isOpenState()) {
-      return this.activateCloseState();
-    } else {
-      return this.activateOpenState();
-    }
-  }
-});
-
-module.exports = HeroTlogActions_DropdownMenu;
-
-
-
-},{"../../../../mixins/clickOutside":146,"./dropdownMenu/buttons/button":112,"./dropdownMenu/popup":115,"react/lib/cx":279}],112:[function(require,module,exports){
-var HeroTlogActions_DropdownMenu_Button, PropTypes;
-
-PropTypes = React.PropTypes;
-
-HeroTlogActions_DropdownMenu_Button = React.createClass({
-  displayName: 'HeroTlogActions_DropdownMenu_Button',
-  propTypes: {
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("button", {
-      "className": "action-menu-button",
-      "onClick": this.props.onClick
-    }, React.createElement("i", {
-      "className": "icon icon--dots"
-    }));
-  }
-});
-
-module.exports = HeroTlogActions_DropdownMenu_Button;
-
-
-
-},{}],113:[function(require,module,exports){
-var HeroTlogActions_DropdownMenuIgnoreItem, PropTypes, RelationshipViewActions;
-
-RelationshipViewActions = require('../../../../../../actions/view/relationship');
-
-PropTypes = React.PropTypes;
-
-HeroTlogActions_DropdownMenuIgnoreItem = React.createClass({
-  displayName: 'HeroTlogActions_DropdownMenuIgnoreItem',
-  propTypes: {
-    userId: PropTypes.number.isRequired,
-    onIgnore: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "hero__dropdown-popup-item",
-      "onClick": this.ignore
-    }, React.createElement("a", {
-      "className": "hero__dropdown-popup-link"
-    }, React.createElement("i", {
-      "className": "icon icon--not-allowed"
-    }), React.createElement("span", null, i18n.t('ignore_tlog_item'))));
-  },
-  ignore: function() {
-    return RelationshipViewActions.ignore(this.props.userId).then(this.props.onIgnore);
-  }
-});
-
-module.exports = HeroTlogActions_DropdownMenuIgnoreItem;
-
-
-
-},{"../../../../../../actions/view/relationship":10}],114:[function(require,module,exports){
-var HeroTlogActions_DropdownMenuReportItem, PropTypes, RelationshipViewActions;
-
-RelationshipViewActions = require('../../../../../../actions/view/relationship');
-
-PropTypes = React.PropTypes;
-
-HeroTlogActions_DropdownMenuReportItem = React.createClass({
-  displayName: 'HeroTlogActions_DropdownMenuReportItem',
-  propTypes: {
-    userId: PropTypes.number.isRequired,
-    onReport: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "hero__dropdown-popup-item",
-      "onClick": this.report
-    }, React.createElement("a", {
-      "className": "hero__dropdown-popup-link"
-    }, React.createElement("i", {
-      "className": "icon icon--exclamation-mark"
-    }), React.createElement("span", null, i18n.t('report_tlog_item'))));
-  },
-  report: function() {
-    return RelationshipViewActions.report(this.props.userId).always(this.props.onReport);
-  }
-});
-
-module.exports = HeroTlogActions_DropdownMenuReportItem;
-
-
-
-},{"../../../../../../actions/view/relationship":10}],115:[function(require,module,exports){
-var ConnectStoreMixin, DropdownMenuMixin, HeroTlogActions_DropdownMenuIgnoreItem, HeroTlogActions_DropdownMenuReportItem, HeroTlogActions_DropdownMenu_Popup, IGNORED_STATUS, PropTypes, RelationshipsStore;
-
-RelationshipsStore = require('../../../../../stores/relationships');
-
-ConnectStoreMixin = require('../../../../../../../shared/react/mixins/connectStore');
-
-DropdownMenuMixin = require('../../../../../mixins/dropdownMenu');
-
-HeroTlogActions_DropdownMenuIgnoreItem = require('./items/ignore');
-
-HeroTlogActions_DropdownMenuReportItem = require('./items/report');
-
-PropTypes = React.PropTypes;
-
-IGNORED_STATUS = 'ignored';
-
-HeroTlogActions_DropdownMenu_Popup = React.createClass({
-  displayName: 'HeroTlogActions_DropdownMenu_Popup',
-  mixins: [ConnectStoreMixin(RelationshipsStore), DropdownMenuMixin],
-  propTypes: {
-    arrangement: PropTypes.string,
-    visible: PropTypes.bool.isRequired,
-    userId: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired,
-    onClose: PropTypes.func.isRequired
-  },
-  getDefaultProps: function() {
-    return {
-      arrangement: 'bottom'
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": this.getPopupClasses('hero__dropdown-popup __' + this.props.arrangement)
-    }, this._renderPopupList());
-  },
-  _renderPopupList: function() {
-    var ignoreItem;
-    if (this.state.status !== IGNORED_STATUS) {
-      ignoreItem = React.createElement(HeroTlogActions_DropdownMenuIgnoreItem, {
-        "userId": this.props.userId,
-        "onIgnore": this.props.onClose
-      });
-    }
-    return React.createElement("ul", {
-      "className": "hero__dropdown-popup-list"
-    }, ignoreItem, React.createElement(HeroTlogActions_DropdownMenuReportItem, {
-      "userId": this.props.userId,
-      "onReport": this.props.onClose
-    }));
-  },
-  getStateFromStore: function() {
-    return {
-      status: RelationshipsStore.getStatus(this.props.userId) || this.props.status
-    };
-  }
-});
-
-module.exports = HeroTlogActions_DropdownMenu_Popup;
-
-
-
-},{"../../../../../../../shared/react/mixins/connectStore":166,"../../../../../mixins/dropdownMenu":148,"../../../../../stores/relationships":162,"./items/ignore":113,"./items/report":114}],116:[function(require,module,exports){
-var FollowButton, HeroTlogActions_DropdownMenu, HeroTlogActions_User, HeroTlogActions_WriteMessageButton, PropTypes;
-
-FollowButton = require('../../../buttons/relationship/follow');
-
-HeroTlogActions_WriteMessageButton = require('./buttons/writeMessage');
-
-HeroTlogActions_DropdownMenu = require('./dropdownMenu');
-
-PropTypes = React.PropTypes;
-
-HeroTlogActions_User = React.createClass({
-  displayName: 'HeroTlogActions_User',
-  propTypes: {
-    user: PropTypes.object.isRequired,
-    status: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "hero__actions"
-    }, React.createElement(FollowButton, {
-      "user": this.props.user,
-      "status": this.props.status
-    }), React.createElement(HeroTlogActions_WriteMessageButton, {
-      "user": this.props.user
-    }), React.createElement(HeroTlogActions_DropdownMenu, {
-      "userId": this.props.user.id,
-      "status": this.props.status
-    }));
-  }
-});
-
-module.exports = HeroTlogActions_User;
-
-
-
-},{"../../../buttons/relationship/follow":36,"./buttons/writeMessage":109,"./dropdownMenu":111}],117:[function(require,module,exports){
-var FollowStatus, HERO_AVATAR_SIZE, HeroTlogAvatar, PropTypes, UserAvatar;
-
-UserAvatar = require('../../common/avatar/user');
-
-FollowStatus = require('../../common/followStatus/followStatus');
-
-PropTypes = React.PropTypes;
-
-HERO_AVATAR_SIZE = 220;
-
-HeroTlogAvatar = React.createClass({
-  displayName: 'HeroTlogAvatar',
-  propTypes: {
-    user: PropTypes.object,
-    author: PropTypes.object.isRequired,
-    status: PropTypes.string,
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "hero__avatar",
-      "onClick": this.props.onClick
-    }, this.renderFollowStatus(), React.createElement(UserAvatar, {
-      "user": this.props.author,
-      "size": HERO_AVATAR_SIZE
-    }));
-  },
-  renderFollowStatus: function() {
-    if (!(this.isCurrentUser() || !this.isLogged())) {
-      return React.createElement(FollowStatus, {
-        "userId": this.props.author.id,
-        "status": this.props.status
-      });
-    }
-  },
-  isLogged: function() {
-    return this.props.user != null;
-  },
-  isCurrentUser: function() {
-    var _ref;
-    return ((_ref = this.props.user) != null ? _ref.id : void 0) === this.props.author.id;
-  }
-});
-
-module.exports = HeroTlogAvatar;
-
-
-
-},{"../../common/avatar/user":39,"../../common/followStatus/followStatus":45}],118:[function(require,module,exports){
-var HeroTlogCloseButton, PropTypes;
-
-PropTypes = React.PropTypes;
-
-HeroTlogCloseButton = React.createClass({
-  displayName: 'HeroTlogCloseButton',
-  propTypes: {
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "hero__close",
-      "onClick": this.props.onClick
-    }, React.createElement("i", {
-      "className": "icon icon--cross"
-    }));
-  }
-});
-
-module.exports = HeroTlogCloseButton;
-
-
-
-},{}],119:[function(require,module,exports){
-var HeroTlogHead, PropTypes;
-
-PropTypes = React.PropTypes;
-
-HeroTlogHead = React.createClass({
-  displayName: 'HeroTlogHead',
-  propTypes: {
-    author: PropTypes.object.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "hero__head"
-    }, React.createElement("div", {
-      "className": "hero__title"
-    }, React.createElement("span", null, React.createElement("a", {
-      "href": this.props.author.tlog_url
-    }, this.props.author.slug))), React.createElement("div", {
-      "className": "hero__text"
-    }, React.createElement("span", {
-      "dangerouslySetInnerHTML": {
-        __html: this.props.author.title
-      }
-    })));
-  }
-});
-
-module.exports = HeroTlogHead;
-
-
-
-},{}],120:[function(require,module,exports){
-var HeroTlogStats, HeroTlogStatsItem, PropTypes;
-
-HeroTlogStatsItem = require('./stats/item');
-
-PropTypes = React.PropTypes;
-
-HeroTlogStats = React.createClass({
-  displayName: 'HeroTlogStats',
-  propTypes: {
-    stats: PropTypes.object.isRequired,
-    author: PropTypes.object.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "hero__stats"
-    }, this.renderStatsList());
-  },
-  renderStatsList: function() {
-    var days, entries, followers, followings, url;
-    if (this.props.stats.entries_count != null) {
-      if (!this.isTlogPrivate()) {
-        url = this.props.author.tlog_url;
-      }
-      entries = React.createElement(HeroTlogStatsItem, {
-        "href": url,
-        "count": this.props.stats.entries_count,
-        "title": this.getTitle('entries'),
-        "key": "entries"
-      });
-    }
-    if (this.props.stats.followings_count != null) {
-      followings = React.createElement(HeroTlogStatsItem, {
-        "count": this.props.stats.followings_count,
-        "title": this.getTitle('followings'),
-        "key": "followings"
-      });
-    }
-    if (this.props.stats.followers_count != null) {
-      followers = React.createElement(HeroTlogStatsItem, {
-        "count": this.props.stats.followers_count,
-        "title": this.getTitle('followers'),
-        "key": "followers"
-      });
-    }
-    if (this.props.stats.days_count != null) {
-      days = React.createElement(HeroTlogStatsItem, {
-        "count": this.props.stats.days_count,
-        "title": this.getTitle('days'),
-        "key": "days"
-      });
-    }
-    return React.createElement("div", {
-      "className": "hero__stats-list"
-    }, [entries, followings, followers, days]);
-  },
-  isTlogPrivate: function() {
-    return this.props.author.is_privacy;
-  },
-  getTitle: function(type) {
-    switch (type) {
-      case 'entries':
-        return i18n.t('stats_entries_count', {
-          count: this.props.stats.entries_count
-        });
-      case 'followings':
-        return i18n.t('stats_followings_count', {
-          count: this.props.stats.followings_count
-        });
-      case 'followers':
-        return i18n.t('stats_followers_count', {
-          count: this.props.stats.followers_count
-        });
-      case 'days':
-        return i18n.t('stats_days_count', {
-          count: this.props.stats.days_count
-        });
-      default:
-        return console.warn('Unknown type of stats of HeroTlogStats component', type);
-    }
-  }
-});
-
-module.exports = HeroTlogStats;
-
-
-
-},{"./stats/item":121}],121:[function(require,module,exports){
-var HeroTlogStatsItem, NumberHelpers, PropTypes, cx;
-
-cx = require('react/lib/cx');
-
-NumberHelpers = require('../../../../../../shared/helpers/number');
-
-PropTypes = React.PropTypes;
-
-HeroTlogStatsItem = React.createClass({
-  displayName: 'HeroTlogStatsItem',
-  propTypes: {
-    count: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    href: PropTypes.string,
-    onClick: PropTypes.func
-  },
-  render: function() {
-    var itemClasses;
-    itemClasses = cx({
-      'hero__stats-item': true,
-      'hero__stats-item-handler': this.props.onClick
-    });
-    return React.createElement("div", {
-      "className": itemClasses,
-      "onClick": this.handleClick
-    }, this.renderItem());
-  },
-  renderItem: function() {
-    var count;
-    count = NumberHelpers.reduceNumber(this.props.count);
-    if (this.props.href) {
-      return React.createElement("a", {
-        "href": this.props.href,
-        "title": this.props.count + ' ' + this.props.title,
-        "className": "hero__stats-link"
-      }, React.createElement("strong", {
-        "className": "hero__stats-value"
-      }, count), React.createElement("span", null, this.props.title));
-    } else {
-      return React.createElement("span", null, React.createElement("strong", {
-        "className": "hero__stats-value"
-      }, count), React.createElement("span", null, this.props.title));
-    }
-  },
-  handleClick: function(e) {
-    if (this.props.onClick) {
-      e.preventDefault();
-      return this.props.onClick();
-    }
-  }
-});
-
-module.exports = HeroTlogStatsItem;
-
-
-
-},{"../../../../../../shared/helpers/number":165,"react/lib/cx":279}],122:[function(require,module,exports){
-var DaylogPagination, PaginationNext, PaginationPrev, PropTypes;
-
-PaginationPrev = require('./items/prev');
-
-PaginationNext = require('./items/next');
-
-PropTypes = React.PropTypes;
-
-DaylogPagination = React.createClass({
-  displayName: 'DaylogPagination',
-  propTypes: {
-    slug: PropTypes.string.isRequired,
-    prevDay: PropTypes.string,
-    nextDay: PropTypes.string
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "pagination"
-    }, this.renderPaginationItems());
-  },
-  renderPaginationItems: function() {
-    var nextDay, paginationItems, prevDay, slug, _ref;
-    _ref = this.props, prevDay = _ref.prevDay, nextDay = _ref.nextDay, slug = _ref.slug;
-    paginationItems = [];
-    if (prevDay != null) {
-      paginationItems.push(React.createElement(PaginationPrev, {
-        "href": Routes.daylogPagination(this.props.slug, prevDay),
-        "single": nextDay == null,
-        "key": "prev"
-      }));
-    }
-    if (nextDay != null) {
-      paginationItems.push(React.createElement(PaginationNext, {
-        "href": Routes.daylogPagination(this.props.slug, nextDay),
-        "single": prevDay == null,
-        "key": "next"
-      }));
-    }
-    return paginationItems;
-  }
-});
-
-module.exports = DaylogPagination;
-
-
-
-},{"./items/next":124,"./items/prev":125}],123:[function(require,module,exports){
-var EntryPagination, PropTypes;
-
-PropTypes = React.PropTypes;
-
-EntryPagination = React.createClass({
-  displayName: 'EntryPagination',
-  propTypes: {
-    tlogUrl: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "pagination"
-    }, React.createElement("a", {
-      "className": "pagination__item",
-      "href": this.props.tlogUrl
-    }, i18n.t('pagination_all_entries')));
-  }
-});
-
-module.exports = EntryPagination;
-
-
-
-},{}],124:[function(require,module,exports){
-var PaginationNext, PropTypes, cx;
-
-cx = require('react/lib/cx');
-
-PropTypes = React.PropTypes;
-
-PaginationNext = React.createClass({
-  displayName: 'PaginationNext',
-  propTypes: {
-    href: PropTypes.string.isRequired,
-    single: PropTypes.bool
-  },
-  getDefaultProps: function() {
-    return {
-      single: false
-    };
-  },
-  render: function() {
-    var nextClasses;
-    nextClasses = cx({
-      'pagination__item': true,
-      'pagination__item--next': !this.props.single
-    });
-    return React.createElement("a", {
-      "className": nextClasses,
-      "href": this.props.href
-    }, i18n.t('pagination_next'));
-  }
-});
-
-module.exports = PaginationNext;
-
-
-
-},{"react/lib/cx":279}],125:[function(require,module,exports){
-var PaginationPrev, PropTypes, cx;
-
-cx = require('react/lib/cx');
-
-PropTypes = React.PropTypes;
-
-PaginationPrev = React.createClass({
-  displayName: 'PaginationPrev',
-  propTypes: {
-    href: PropTypes.string.isRequired,
-    single: PropTypes.bool
-  },
-  getDefaultProps: function() {
-    return {
-      single: false
-    };
-  },
-  render: function() {
-    var prevClasses;
-    prevClasses = cx({
-      'pagination__item': true,
-      'pagination__item--prev': !this.props.single
-    });
-    return React.createElement("a", {
-      "className": prevClasses,
-      "href": this.props.href
-    }, i18n.t('pagination_prev'));
-  }
-});
-
-module.exports = PaginationPrev;
-
-
-
-},{"react/lib/cx":279}],126:[function(require,module,exports){
-var PaginationNext, PaginationPrev, PropTypes, TlogPagination;
-
-PaginationPrev = require('./items/prev');
-
-PaginationNext = require('./items/next');
-
-PropTypes = React.PropTypes;
-
-TlogPagination = React.createClass({
-  displayName: 'TlogPagination',
-  propTypes: {
-    slug: PropTypes.string.isRequired,
-    currentPage: PropTypes.number.isRequired,
-    totalPagesCount: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "pagination"
-    }, this.renderPaginationItems());
-  },
-  renderPaginationItems: function() {
-    var currentPage, paginationItems, slug, totalPagesCount, _ref;
-    _ref = this.props, currentPage = _ref.currentPage, totalPagesCount = _ref.totalPagesCount, slug = _ref.slug;
-    paginationItems = [];
-    switch (false) {
-      case !(currentPage === 1 && totalPagesCount > 1):
-        paginationItems.push(React.createElement(PaginationPrev, {
-          "href": Routes.tlogPagination(this.props.slug, currentPage + 1),
-          "single": true,
-          "key": "prev"
-        }));
-        break;
-      case !((totalPagesCount > currentPage && currentPage > 1)):
-        paginationItems.push(React.createElement(PaginationPrev, {
-          "href": Routes.tlogPagination(this.props.slug, currentPage + 1),
-          "key": "prev"
-        }));
-        paginationItems.push(React.createElement(PaginationNext, {
-          "href": Routes.tlogPagination(this.props.slug, currentPage - 1),
-          "key": "next"
-        }));
-        break;
-      case !(currentPage > totalPagesCount):
-        paginationItems.push(React.createElement(PaginationNext, {
-          "href": Routes.tlogPagination(this.props.slug, totalPagesCount),
-          "single": true,
-          "key": "next"
-        }));
-        break;
-      case !(currentPage === totalPagesCount && currentPage !== 1):
-        paginationItems.push(React.createElement(PaginationNext, {
-          "href": Routes.tlogPagination(this.props.slug, currentPage - 1),
-          "single": true,
-          "key": "next"
-        }));
-    }
-    return paginationItems;
-  }
-});
-
-module.exports = TlogPagination;
-
-
-
-},{"./items/next":124,"./items/prev":125}],127:[function(require,module,exports){
-var TlogEmptyPageMessage;
-
-TlogEmptyPageMessage = React.createClass({
-  displayName: 'TlogEmptyPageMessage',
-  render: function() {
-    return React.createElement("div", {
-      "className": "post"
-    }, React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("div", {
-      "className": "post__header"
-    }, React.createElement("h1", {
-      "className": "post__title"
-    }, i18n.t('tlog_empty_page')))));
-  }
-});
-
-module.exports = TlogEmptyPageMessage;
-
-
-
-},{}],128:[function(require,module,exports){
-var EntryTlog, PropTypes, Tlog, TlogEmptyPageMessage;
-
-TlogEmptyPageMessage = require('./emptyPageMessage');
-
-EntryTlog = require('../entry/tlog');
-
-PropTypes = React.PropTypes;
-
-Tlog = React.createClass({
-  displayName: 'Tlog',
-  propTypes: {
-    entries: PropTypes.array.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "posts"
-    }, this.renderEntryList());
-  },
-  renderEntryList: function() {
-    if (this.props.entries.length) {
-      return this.props.entries.map(function(entry) {
-        return React.createElement(EntryTlog, {
-          "entry": entry,
-          "key": entry.id
-        });
-      });
-    } else {
-      return React.createElement(TlogEmptyPageMessage, null);
-    }
-  }
-});
-
-module.exports = Tlog;
-
-
-
-},{"../entry/tlog":92,"./emptyPageMessage":127}],129:[function(require,module,exports){
-var PropTypes, ToolbarItem, cx;
-
-cx = require('react/lib/cx');
-
-PropTypes = React.PropTypes;
-
-ToolbarItem = React.createClass({
-  displayName: 'ToolbarItem',
-  propTypes: {
-    icon: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    href: PropTypes.string,
-    active: PropTypes.bool,
-    disabled: PropTypes.bool,
-    onSelect: PropTypes.func
-  },
-  getDefaultProps: function() {
-    return {
-      active: false,
-      disabled: false
-    };
-  },
-  render: function() {
-    var toolbarItemClasses;
-    toolbarItemClasses = cx({
-      'toolbar__popup-item': true,
-      '__active': this.props.active,
-      '__disabled': this.props.disabled
-    });
-    return React.createElement("li", {
-      "className": toolbarItemClasses
-    }, React.createElement("a", {
-      "href": this.props.href,
-      "className": "toolbar__popup-link",
-      "onClick": this.handleSelect
-    }, React.createElement("i", {
-      "className": 'icon ' + this.props.icon
-    }), this.props.title));
-  },
-  handleSelect: function(e) {
-    if (!this.props.href && !this.props.disabled) {
-      e.preventDefault();
-      return this.props.onSelect();
-    }
-  }
-});
-
-module.exports = ToolbarItem;
-
-
-
-},{"react/lib/cx":279}],130:[function(require,module,exports){
-var FeedToolbar, FeedToolbarList, PropTypes, ToolbarMixin, cx;
-
-cx = require('react/lib/cx');
-
-FeedToolbarList = require('./feed/list');
-
-ToolbarMixin = require('./mixins/toolbar');
-
-PropTypes = React.PropTypes;
-
-FeedToolbar = React.createClass({
-  displayName: 'FeedToolbar',
-  mixins: [ToolbarMixin],
-  propTypes: {
-    user: PropTypes.object
-  },
-  render: function() {
-    var toolbarClasses;
-    toolbarClasses = cx({
-      'toolbar__popup': true,
-      '__visible': this.isOpenState()
-    });
-    return React.createElement("nav", {
-      "className": "toolbar toolbar--feed"
-    }, React.createElement("div", {
-      "className": "toolbar__toggle",
-      "onClick": this.toggleOpenState
-    }, React.createElement("i", {
-      "className": "icon icon--ribbon"
-    })), React.createElement("div", {
-      "className": toolbarClasses
-    }, React.createElement(FeedToolbarList, {
-      "user": this.props.user
-    })));
-  },
-  toggleOpenState: function() {
-    var html;
-    html = document.querySelector('html');
-    if (html.classList.contains('user-toolbar-open')) {
-      html.classList.remove('user-toolbar-open');
-    }
-    html.classList.toggle('feed-toolbar-open');
-    if (this.isOpenState()) {
-      return this.activateCloseState();
-    } else {
-      return this.activateOpenState();
-    }
-  }
-});
-
-module.exports = FeedToolbar;
-
-
-
-},{"./feed/list":131,"./mixins/toolbar":133,"react/lib/cx":279}],131:[function(require,module,exports){
-var FeedToolbarList, PropTypes, ToolbarItem;
-
-ToolbarItem = require('../_item');
-
-PropTypes = React.PropTypes;
-
-FeedToolbarList = React.createClass({
-  displayName: 'FeedToolbarList',
-  propTypes: {
-    user: PropTypes.object
-  },
-  render: function() {
-    var friends;
-    if (this.props.user != null) {
-      friends = React.createElement(ToolbarItem, {
-        "title": i18n.t('feed_friends'),
-        "href": Routes.friends_feed_path(),
-        "icon": "icon--friends",
-        "key": "friends"
-      });
-    }
-    return React.createElement("ul", {
-      "className": "toolbar__popup-list"
-    }, friends, React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_live'),
-      "href": Routes.live_feed_path(),
-      "icon": "icon--wave",
-      "key": "live"
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_best'),
-      "href": Routes.best_feed_path(),
-      "icon": "icon--fire",
-      "key": "best"
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_anonymous'),
-      "href": Routes.anonymous_feed_path(),
-      "icon": "icon--anonymous",
-      "key": "anonymous"
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_people'),
-      "href": Routes.people_path(),
-      "icon": "icon--friends",
-      "key": "people"
-    }));
-  }
-});
-
-module.exports = FeedToolbarList;
-
-
-
-},{"../_item":129}],132:[function(require,module,exports){
-var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
-
-CurrentUserStore = require('../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-FeedToolbar = require('./feed');
-
-FeedToolbarManager = React.createClass({
-  displayName: 'FeedToolbarManager',
-  mixins: [ConnectStoreMixin(CurrentUserStore)],
-  render: function() {
-    return React.createElement(FeedToolbar, {
-      "user": this.state.user
-    });
-  },
-  getStateFromStore: function() {
-    return {
-      user: CurrentUserStore.getUser()
-    };
-  }
-});
-
-module.exports = FeedToolbarManager;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":166,"../../stores/currentUser":160,"./feed":130}],133:[function(require,module,exports){
-var CLOSE_STATE, OPEN_STATE, ToolbarMixin;
-
-CLOSE_STATE = 'close';
-
-OPEN_STATE = 'open';
-
-ToolbarMixin = {
-  getInitialState: function() {
-    return {
-      currentState: CLOSE_STATE
-    };
-  },
-  isOpenState: function() {
-    return this.state.currentState === OPEN_STATE;
-  },
-  activateCloseState: function() {
-    return this.setState({
-      currentState: CLOSE_STATE
-    });
-  },
-  activateOpenState: function() {
-    return this.setState({
-      currentState: OPEN_STATE
-    });
-  }
-};
-
-module.exports = ToolbarMixin;
-
-
-
-},{}],134:[function(require,module,exports){
-var PropTypes, ToolbarMixin, UserToolbar, UserToolbarList, cx;
-
-cx = require('react/lib/cx');
-
-UserToolbarList = require('./user/list');
-
-ToolbarMixin = require('./mixins/toolbar');
-
-PropTypes = React.PropTypes;
-
-UserToolbar = React.createClass({
-  displayName: 'UserToolbar',
-  mixins: [ToolbarMixin],
-  propTypes: {
-    user: PropTypes.object
-  },
-  render: function() {
-    var toolbarClasses;
-    toolbarClasses = cx({
-      'toolbar__popup': true,
-      '__visible': this.isOpenState()
-    });
-    return React.createElement("nav", {
-      "className": "toolbar toolbar--right toolbar--user"
-    }, React.createElement("div", {
-      "className": "toolbar__toggle",
-      "onClick": this.toggleOpenState
-    }, React.createElement("i", {
-      "className": "icon icon--menu"
-    })), React.createElement("div", {
-      "className": toolbarClasses
-    }, React.createElement(UserToolbarList, {
-      "user": this.props.user
-    })));
-  },
-  toggleOpenState: function() {
-    var html;
-    html = document.querySelector('html');
-    if (html.classList.contains('feed-toolbar-open')) {
-      html.classList.remove('feed-toolbar-open');
-    }
-    html.classList.toggle('user-toolbar-open');
-    if (this.isOpenState()) {
-      return this.activateCloseState();
-    } else {
-      return this.activateOpenState();
-    }
-  }
-});
-
-module.exports = UserToolbar;
-
-
-
-},{"./mixins/toolbar":133,"./user/list":135,"react/lib/cx":279}],135:[function(require,module,exports){
-var PropTypes, ToolbarItem, UserToolbarList, UserToolbarListMixin;
-
-ToolbarItem = require('../_item');
-
-UserToolbarListMixin = require('./mixins/list');
-
-PropTypes = React.PropTypes;
-
-UserToolbarList = React.createClass({
-  displayName: 'UserToolbarList',
-  mixins: [UserToolbarListMixin],
-  propTypes: {
-    user: PropTypes.object
-  },
-  render: function() {
-    return React.createElement("ul", {
-      "className": "toolbar__popup-list"
-    }, React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_new_entry_item'),
-      "href": Routes.new_entry_url(this.props.user.slug),
-      "icon": "icon--plus"
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_my_diary_item'),
-      "href": Routes.my_tlog_url(this.props.user.slug),
-      "icon": "icon--diary"
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_profile_item'),
-      "icon": "icon--profile",
-      "href": Routes.userProfile(this.props.user.slug)
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_favorites_item'),
-      "href": Routes.favorites_url(this.props.user.slug),
-      "icon": "icon--star"
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_new_anonymous_item'),
-      "href": Routes.new_anonymous_entry_url(this.props.user.slug),
-      "icon": "icon--anonymous"
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_privates_item'),
-      "href": Routes.private_entries_url(this.props.user.slug),
-      "icon": "icon--lock"
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_messages_item'),
-      "icon": "icon--messages",
-      "onSelect": this.showMessages
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_friends_item'),
-      "icon": "icon--friends",
-      "onSelect": this.showFriends
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_design_item'),
-      "icon": "icon--drawing",
-      "href": Routes.userDesignSettings(this.props.user.slug)
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_settings_item'),
-      "icon": "icon--cogwheel",
-      "href": Routes.userSettings(this.props.user.slug)
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_logout_item'),
-      "href": Routes.logout_path(this.props.user.slug),
-      "icon": "icon--logout"
-    }));
-  }
-});
-
-module.exports = UserToolbarList;
-
-
-
-},{"../_item":129,"./mixins/list":136}],136:[function(require,module,exports){
-var UserToolbarListMixin;
-
-UserToolbarListMixin = {
-  showFriends: function(panelName, userId) {
-    return alert('Ещё не работает');
-  },
-  showMessages: function() {
-    return alert('Ещё не работает');
-  }
-};
-
-module.exports = UserToolbarListMixin;
-
-
-
-},{}],137:[function(require,module,exports){
-var ConnectStoreMixin, CurrentUserStore, UserToolbar, UserToolbarManager;
-
-CurrentUserStore = require('../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-UserToolbar = require('./user');
-
-UserToolbarManager = React.createClass({
-  displayName: 'UserToolbarManager',
-  mixins: [ConnectStoreMixin(CurrentUserStore)],
-  render: function() {
-    if (this.state.logged) {
-      return React.createElement(UserToolbar, {
-        "user": this.state.user
-      });
-    } else {
-      return null;
-    }
-  },
-  getStateFromStore: function() {
-    return {
-      user: CurrentUserStore.getUser(),
-      logged: CurrentUserStore.isLogged()
-    };
-  }
-});
-
-module.exports = UserToolbarManager;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":166,"../../stores/currentUser":160,"./user":134}],138:[function(require,module,exports){
-var ApiConstants, keyMirror;
-
-keyMirror = require('react/lib/keyMirror');
-
-ApiConstants = keyMirror({
-  FOLLOW_USER: null,
-  UNFOLLOW_USER: null,
-  CANCEL_USER: null,
-  IGNORE_USER: null,
-  REPORT_USER: null,
-  ADD_TO_FAVORITES: null,
-  REMOVE_FROM_FAVORITES: null,
-  START_WATCH: null,
-  STOP_WATCH: null,
-  REPORT: null,
-  DELETE: null,
-  VOTE: null,
-  LOAD_COMMENTS: null,
-  DELETE_COMMENT: null,
-  REPORT_COMMENT: null,
-  CREATE_COMMENT: null,
-  EDIT_COMMENT: null,
-  LOAD_FEED_ENTRIES: null,
-  SIGN_IN: null,
-  SIGN_UP: null,
-  RECOVER: null
-});
-
-module.exports = ApiConstants;
-
-
-
-},{"react/lib/keyMirror":307}],139:[function(require,module,exports){
-var ApiConstants, EntryConstants, FeedConstants, RelationshipConstants;
-
-ApiConstants = require('./api');
-
-EntryConstants = require('./entry');
-
-FeedConstants = require('./feed');
-
-RelationshipConstants = require('./relationship');
-
-module.exports = {
-  api: ApiConstants,
-  entry: EntryConstants,
-  feed: FeedConstants,
-  relationship: RelationshipConstants
-};
-
-
-
-},{"./api":138,"./entry":140,"./feed":141,"./relationship":142}],140:[function(require,module,exports){
-var EntryConstants, keyMirror;
-
-keyMirror = require('react/lib/keyMirror');
-
-EntryConstants = keyMirror({
-  INITIALIZE_COMMENTS: null,
-  LOAD_COMMENTS: null,
-  DELETE_COMMENT: null,
-  CREATE_COMMENT: null,
-  EDIT_COMMENT: null
-});
-
-module.exports = EntryConstants;
-
-
-
-},{"react/lib/keyMirror":307}],141:[function(require,module,exports){
-var FeedConstants, keyMirror;
-
-keyMirror = require('react/lib/keyMirror');
-
-FeedConstants = keyMirror({
-  INITIALIZE_FEED: null,
-  LOAD_ENTRIES: null
-});
-
-module.exports = FeedConstants;
-
-
-
-},{"react/lib/keyMirror":307}],142:[function(require,module,exports){
-var RelationshipConstants, keyMirror;
-
-keyMirror = require('react/lib/keyMirror');
-
-RelationshipConstants = keyMirror({
-  UPDATE_RELATIONSHIP: null
-});
-
-module.exports = RelationshipConstants;
-
-
-
-},{"react/lib/keyMirror":307}],143:[function(require,module,exports){
-var Notify, NotifyController, closeNotification, getContainer, isPageLoadingCanceled, _pendingNotification;
-
-Notify = require('../components/alerts/notify');
-
-_pendingNotification = null;
-
-getContainer = function() {
-  var container;
-  container = document.querySelector('[notify-container]');
-  if (container == null) {
-    container = document.createElement('div');
-    container.setAttribute('notify-container', '');
-    document.body.appendChild(container);
-  }
-  return container;
-};
-
-closeNotification = function() {
-  var container;
-  container = getContainer();
-  React.unmountComponentAtNode(container);
-  return _pendingNotification = null;
-};
-
-isPageLoadingCanceled = function(xhr) {
-  return xhr.status === 0;
-};
-
-NotifyController = {
-  notify: function(type, text, timeout) {
-    var container, notification;
-    if (timeout == null) {
-      timeout = 3000;
-    }
-    container = getContainer();
-    closeNotification();
-    notification = React.render(React.createElement(Notify, {
-      "type": type,
-      "text": text,
-      "timeout": timeout,
-      "onClose": closeNotification
-    }), container);
-    return _pendingNotification = notification;
-  },
-  notifySuccess: function(text, timeout) {
-    if (timeout == null) {
-      timeout = 3000;
-    }
-    return this.notify('success', text, timeout);
-  },
-  notifyError: function(text, timeout) {
-    if (timeout == null) {
-      timeout = 3000;
-    }
-    return this.notify('error', text, timeout);
-  },
-  errorResponse: function(xhr, timeout) {
-    var json, message;
-    if (timeout == null) {
-      timeout = 3000;
-    }
-    if (xhr._aborted === true) {
-      return;
-    }
-    if (xhr.responseText) {
-      json = JSON.parse(xhr.responseText);
-      message = (function() {
-        switch (false) {
-          case !json.message:
-            return json.message;
-          case !json.long_message:
-            return json.long_message;
-          case !json.error:
-            return json.error;
-        }
-      })();
-    } else {
-      message = "Ошибка сети: " + xhr.statusText;
-    }
-    if (!isPageLoadingCanceled(xhr)) {
-      return this.notify('error', message, timeout);
-    }
-  }
-};
-
-module.exports = NotifyController;
-
-
-
-},{"../components/alerts/notify":14}],144:[function(require,module,exports){
-var ScreenController, getContainer, restorePageName, switchPageName, _oldPageName;
-
-_oldPageName = null;
-
-getContainer = function() {
-  var container;
-  container = document.querySelector('[screen-container]');
-  if (container == null) {
-    container = document.createElement('div');
-    container.setAttribute('screen-container', '');
-    container.style.height = '100%';
-    document.body.appendChild(container);
-  }
-  return container;
-};
-
-switchPageName = function(pageName) {
-  var oldClassName;
-  oldClassName = document.documentElement.className;
-  if (_oldPageName === null) {
-    _oldPageName = oldClassName.match(/.*-page/);
-  }
-  return document.documentElement.className = oldClassName.replace(/.*-page/, pageName);
-};
-
-restorePageName = function() {
-  var oldClassName;
-  oldClassName = document.documentElement.className;
-  document.documentElement.className = oldClassName.replace(/.*-page/, _oldPageName);
-  return _oldPageName = null;
-};
-
-ScreenController = {
-  show: function(reactClass, props, pageName) {
-    var appContainer, container;
-    container = getContainer();
-    appContainer = document.getElementById('App');
-    appContainer.style.display = 'none';
-    switchPageName(pageName);
-    return React.render(React.createElement(reactClass, React.__spread({}, props)), container);
-  },
-  close: function() {
-    var appContainer, container;
-    container = getContainer();
-    appContainer = document.getElementById('App');
-    appContainer.style.display = '';
-    restorePageName();
-    return setTimeout((function() {
-      return React.unmountComponentAtNode(container);
-    }), 0);
-  }
-};
-
-module.exports = ScreenController;
-
-
-
-},{}],145:[function(require,module,exports){
-var AppDispatcher, Dispatcher, assign;
-
-assign = require('react/lib/Object.assign');
-
-Dispatcher = require('flux').Dispatcher;
-
-AppDispatcher = assign(new Dispatcher(), {
-  handleViewAction: function(action) {
-    return this.dispatch({
-      source: 'VIEW_ACTION',
-      action: action
-    });
-  },
-  handleServerAction: function(action) {
-    return this.dispatch({
-      source: 'SERVER_ACTION',
-      action: action
-    });
-  }
-});
-
-module.exports = AppDispatcher;
-
-
-
-},{"flux":171,"react/lib/Object.assign":200}],146:[function(require,module,exports){
-var ClickOutsideMixin, closest;
-
-closest = function(el, target) {
-  while (target.parentNode) {
-    if (target === el) {
-      return true;
-    }
-    target = target.parentNode;
-  }
-  return false;
-};
-
-ClickOutsideMixin = {
-  componentDidMount: function() {
-    return document.addEventListener('click', this.onDocumentClick);
-  },
-  componentWillUnmount: function() {
-    return document.removeEventListener('click', this.onDocumentClick);
-  },
-  onDocumentClick: function(e) {
-    var isClickInside;
-    if (!this.isOpenState()) {
-      return;
-    }
-    isClickInside = closest(this.getDOMNode(), e.target);
-    if (!isClickInside) {
-      return this.activateCloseState();
-    }
-  }
-};
-
-module.exports = ClickOutsideMixin;
-
-
-
-},{}],147:[function(require,module,exports){
-var ComponentMixin;
-
-ComponentMixin = {
-  safeUpdate: function(func) {
-    if (!this._isUnmounted()) {
-      return func();
-    }
-  },
-  safeUpdateState: function(newStates) {
-    if (!this._isUnmounted()) {
-      return this.setState(newStates);
-    }
-  },
-  _isUnmounted: function() {
-    return this._compositeLifeCycleState === 'UNMOUNTING' || this._compositeLifeCycleState === 'UNMOUNTED' || this._lifeCycleState === 'UNMOUNTING' || this._lifeCycleState === 'UNMOUNTED';
-  }
-};
-
-module.exports = ComponentMixin;
-
-
-
-},{}],148:[function(require,module,exports){
-var DropdownMenuMixin, REVERSE_MARGIN, getSize, getViewportWH;
-
-REVERSE_MARGIN = 5;
-
-getSize = function(elem) {
-  return [elem.offsetWidth, elem.offsetHeight];
-};
-
-getViewportWH = function() {
-  var d, e, g, w, x, y;
-  w = window;
-  d = document;
-  e = d.documentElement;
-  g = d.getElementsByTagName('body')[0];
-  x = w.innerWidth || e.clientWidth || g.clientWidth;
-  y = w.innerHeight || e.clientHeight || g.clientHeight;
-  return [x, y];
-};
-
-DropdownMenuMixin = {
-  getPopupClasses: function(baseClasses) {
-    var isNotEnoughBottomSpace, isNotEnoughRightSpace, menu, menuOffsets, popupClasses, viewportWH;
-    if (baseClasses == null) {
-      baseClasses = '';
-    }
-    popupClasses = baseClasses;
-    if (this.isMounted() && this.props.visible) {
-      menu = this.getDOMNode();
-      menuOffsets = menu.getBoundingClientRect();
-      viewportWH = getViewportWH();
-      isNotEnoughBottomSpace = (function(_this) {
-        return function() {
-          var menuOffsetTop, menuSize, viewportHeight;
-          menuSize = getSize(menu);
-          menuOffsetTop = menuOffsets.top;
-          viewportHeight = viewportWH[1];
-          if (viewportHeight - REVERSE_MARGIN < menuOffsetTop + menuSize[1]) {
-            return true;
-          } else {
-            return false;
-          }
-        };
-      })(this);
-      isNotEnoughRightSpace = (function(_this) {
-        return function() {
-          var menuOffsetRight, viewportWidth;
-          menuOffsetRight = menuOffsets.right;
-          viewportWidth = viewportWH[0];
-          if (viewportWidth - REVERSE_MARGIN < menuOffsetRight) {
-            return true;
-          } else {
-            return false;
-          }
-        };
-      })(this);
-      if (isNotEnoughBottomSpace()) {
-        popupClasses += ' __top';
-      }
-      if (isNotEnoughRightSpace()) {
-        popupClasses += ' __right';
-      }
-    }
-    return popupClasses;
-  }
-};
-
-module.exports = DropdownMenuMixin;
-
-
-
-},{}],149:[function(require,module,exports){
-var AuthButtonManager, AuthManager, CurrentUserStore, EntryPage, EntryPagination, EntryTlog, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, UserToolbarManager;
-
-CurrentUserStore = require('../stores/currentUser');
-
-PageMixin = require('./mixins/page');
-
-FeedToolbarManager = require('../components/toolbars/feedManager');
-
-UserToolbarManager = require('../components/toolbars/userManager');
-
-HeroTlog = require('../components/hero/tlog');
-
-EntryTlog = require('../components/entry/tlog');
-
-EntryPagination = require('../components/pagination/entry');
-
-AuthManager = require('../components/auth/authManager');
-
-AuthButtonManager = require('../components/buttons/auth/authManager');
-
-PropTypes = React.PropTypes;
-
-EntryPage = React.createClass({
-  displayName: 'EntryPage',
-  mixins: [PageMixin],
-  propTypes: {
-    currentUser: PropTypes.object,
-    tlog: PropTypes.object.isRequired,
-    entry: PropTypes.object.isRequired
-  },
-  componentWillMount: function() {
-    return CurrentUserStore.initialize(this.props.currentUser);
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
-      "className": "layout"
-    }, React.createElement("div", {
-      "className": "layout__header"
-    }, React.createElement(HeroTlog, {
-      "tlog": this.props.tlog
-    })), React.createElement("div", {
-      "className": "layout__body"
-    }, React.createElement(EntryTlog, {
-      "entry": this.props.entry
-    }), React.createElement(EntryPagination, {
-      "tlogUrl": this.props.tlog.tlog_url
-    }))), React.createElement(AuthManager, null));
-  }
-});
-
-module.exports = EntryPage;
-
-
-
-},{"../components/auth/authManager":19,"../components/buttons/auth/authManager":35,"../components/entry/tlog":92,"../components/hero/tlog":106,"../components/pagination/entry":123,"../components/toolbars/feedManager":132,"../components/toolbars/userManager":137,"../stores/currentUser":160,"./mixins/page":156}],150:[function(require,module,exports){
-var AuthButtonManager, AuthManager, CurrentUserStore, FeedBest, FeedBestPage, FeedBestPageMixin, FeedToolbarManager, HeroFeedBest, PageMixin, PropTypes, UserToolbarManager;
-
-CurrentUserStore = require('../stores/currentUser');
-
-PageMixin = require('./mixins/page');
-
-FeedToolbarManager = require('../components/toolbars/feedManager');
-
-UserToolbarManager = require('../components/toolbars/userManager');
-
-HeroFeedBest = require('../components/hero/feedBest');
-
-FeedBest = require('../components/feed/feedBest');
-
-AuthManager = require('../components/auth/authManager');
-
-AuthButtonManager = require('../components/buttons/auth/authManager');
-
-FeedBestPageMixin = require('./mixins/feedBest');
-
-PropTypes = React.PropTypes;
-
-FeedBestPage = React.createClass({
-  displayName: 'FeedBestPage',
-  mixins: [FeedBestPageMixin, PageMixin],
-  propTypes: {
-    currentUser: PropTypes.object,
-    entries: PropTypes.array.isRequired,
-    feed: PropTypes.object.isRequired
-  },
-  componentWillMount: function() {
-    return CurrentUserStore.initialize(this.props.currentUser);
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
-      "className": "layout"
-    }, React.createElement("div", {
-      "className": "layout__header"
-    }, React.createElement(HeroFeedBest, {
-      "backgroundUrl": this.props.feed.backgroundUrl,
-      "entriesCount": this.props.feed.entriesCount
-    })), React.createElement("div", {
-      "className": "layout__body"
-    }, React.createElement(FeedBest, {
-      "entries": this.props.entries
-    }))), React.createElement(AuthManager, null));
-  }
-});
-
-module.exports = FeedBestPage;
-
-
-
-},{"../components/auth/authManager":19,"../components/buttons/auth/authManager":35,"../components/feed/feedBest":97,"../components/hero/feedBest":103,"../components/toolbars/feedManager":132,"../components/toolbars/userManager":137,"../stores/currentUser":160,"./mixins/feedBest":153,"./mixins/page":156}],151:[function(require,module,exports){
-var AuthButtonManager, AuthManager, CurrentUserStore, FeedFriends, FeedFriendsPage, FeedFriendsPageMixin, FeedToolbarManager, HeroFeedFriends, PageMixin, PropTypes, UserToolbarManager;
-
-CurrentUserStore = require('../stores/currentUser');
-
-PageMixin = require('./mixins/page');
-
-FeedToolbarManager = require('../components/toolbars/feedManager');
-
-UserToolbarManager = require('../components/toolbars/userManager');
-
-HeroFeedFriends = require('../components/hero/feedFriends');
-
-FeedFriends = require('../components/feed/feedFriends');
-
-AuthManager = require('../components/auth/authManager');
-
-AuthButtonManager = require('../components/buttons/auth/authManager');
-
-FeedFriendsPageMixin = require('./mixins/feedFriends');
-
-PropTypes = React.PropTypes;
-
-FeedFriendsPage = React.createClass({
-  displayName: 'FeedFriendsPage',
-  mixins: [FeedFriendsPageMixin, PageMixin],
-  propTypes: {
-    currentUser: PropTypes.object,
-    entries: PropTypes.array.isRequired,
-    feed: PropTypes.object.isRequired
-  },
-  componentWillMount: function() {
-    return CurrentUserStore.initialize(this.props.currentUser);
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
-      "className": "layout"
-    }, React.createElement("div", {
-      "className": "layout__header"
-    }, React.createElement(HeroFeedFriends, {
-      "backgroundUrl": this.props.feed.backgroundUrl,
-      "entriesCount": this.props.feed.entriesCount
-    })), React.createElement("div", {
-      "className": "layout__body"
-    }, React.createElement(FeedFriends, {
-      "entries": this.props.entries
-    }))), React.createElement(AuthManager, null));
-  }
-});
-
-module.exports = FeedFriendsPage;
-
-
-
-},{"../components/auth/authManager":19,"../components/buttons/auth/authManager":35,"../components/feed/feedFriends":98,"../components/hero/feedFriends":104,"../components/toolbars/feedManager":132,"../components/toolbars/userManager":137,"../stores/currentUser":160,"./mixins/feedFriends":154,"./mixins/page":156}],152:[function(require,module,exports){
-var AuthButtonManager, AuthManager, CurrentUserStore, FeedLive, FeedLivePage, FeedLivePageMixin, FeedToolbarManager, HeroFeedLive, PageMixin, PropTypes, UserToolbarManager;
-
-CurrentUserStore = require('../stores/currentUser');
-
-PageMixin = require('./mixins/page');
-
-FeedToolbarManager = require('../components/toolbars/feedManager');
-
-UserToolbarManager = require('../components/toolbars/userManager');
-
-HeroFeedLive = require('../components/hero/feedLive');
-
-FeedLive = require('../components/feed/feedLive');
-
-AuthManager = require('../components/auth/authManager');
-
-AuthButtonManager = require('../components/buttons/auth/authManager');
-
-FeedLivePageMixin = require('./mixins/feedLive');
-
-PropTypes = React.PropTypes;
-
-FeedLivePage = React.createClass({
-  displayName: 'FeedLivePage',
-  mixins: [FeedLivePageMixin, PageMixin],
-  propTypes: {
-    currentUser: PropTypes.object,
-    entries: PropTypes.array.isRequired,
-    feed: PropTypes.object.isRequired
-  },
-  componentWillMount: function() {
-    return CurrentUserStore.initialize(this.props.currentUser);
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
-      "className": "layout"
-    }, React.createElement("div", {
-      "className": "layout__header"
-    }, React.createElement(HeroFeedLive, {
-      "backgroundUrl": this.props.feed.backgroundUrl,
-      "entriesCount": this.props.feed.entriesCount
-    })), React.createElement("div", {
-      "className": "layout__body"
-    }, React.createElement(FeedLive, {
-      "entries": this.props.entries
-    }))), React.createElement(AuthManager, null));
-  }
-});
-
-module.exports = FeedLivePage;
-
-
-
-},{"../components/auth/authManager":19,"../components/buttons/auth/authManager":35,"../components/feed/feedLive":99,"../components/hero/feedLive":105,"../components/toolbars/feedManager":132,"../components/toolbars/userManager":137,"../stores/currentUser":160,"./mixins/feedLive":155,"./mixins/page":156}],153:[function(require,module,exports){
-var FeedBestPageMixin;
-
-FeedBestPageMixin = {
-  getDefaultProps: function() {
-    return {
-      entries: [
-        {
-          author: {
-            created_at: "2014-11-08T14:07:32.000+03:00",
-            features: {
-              notification: false,
-              search: false
-            },
-            id: 244412,
-            is_daylog: false,
-            is_female: false,
-            is_privacy: false,
-            name: "hyperwax",
-            private_entries_count: 0,
-            public_entries_count: 20,
-            slug: "hyperwax",
-            title: "",
-            tlog_url: "http://taaasty.com/~hyperwax",
-            total_entries_count: 22,
-            updated_at: "2015-01-16T19:30:05.000+03:00",
-            userpic: {
-              default_colors: {
-                background: "#eb4656",
-                name: "#ffffff"
-              },
-              kind: "user",
-              large_url: "http://taaasty.com/assets/userpic/25/ff/244412_large.jpg",
-              original_url: "http://taaasty.com/assets/userpic/25/ff/244412_original.jpg",
-              symbol: "h",
-              thumb64_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb64.jpg",
-              thumb128_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb128.jpg",
-              thumbor_path: "userpic/25/ff/244412_original.jpg"
-            }
-          },
-          can_delete: false,
-          can_edit: false,
-          can_favorite: true,
-          can_report: true,
-          can_vote: true,
-          can_watch: true,
-          comments_count: 0,
-          comments_info: {
-            comments: [],
-            from_comment_id: null,
-            order: "desc",
-            to_comment_id: null,
-            total_count: 0
-          },
-          created_at: "2015-01-16T19:30:05.000+03:00",
-          entry_url: "http://taaasty.com/~hyperwax/19616804",
-          id: 19620857,
-          image_attachments: [
-            {
-              content_type: "image/jpeg",
-              created_at: "2015-01-16T19:30:05.000+03:00",
-              frames_count: 1,
-              id: 16794460,
-              image: {
-                geometry: {
-                  height: 1200,
-                  width: 800
-                },
-                path: "att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg",
-                source: "image_attachment",
-                title: null,
-                url: "http://taaasty.com/assets/att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg"
-              }
-            }
-          ],
-          image_url: null,
-          is_favorited: false,
-          is_voteable: true,
-          is_watching: false,
-          privacy: "live",
-          rating: {
-            entry_id: 19616804,
-            is_voteable: true,
-            is_voted: false,
-            rating: 0,
-            votes: 0
-          },
-          title: "",
-          type: "image",
-          updated_at: "2015-01-16T19:30:05.000+03:00",
-          via: null
-        }
-      ],
-      feed: {
-        backgroundUrl: 'http://taaasty.com/images/hero-cover.jpg',
-        entriesCount: 41
-      }
-    };
-  }
-};
-
-module.exports = FeedBestPageMixin;
-
-
-
-},{}],154:[function(require,module,exports){
-var FeedFriendsPageMixin;
-
-FeedFriendsPageMixin = {
-  getDefaultProps: function() {
-    return {
-      currentUser: {
-        api_key: {
-          access_token: 'my_super_key',
-          expires_at: '2015-01-04T18:07:07.000+03:00',
-          user_id: 232992
-        },
-        authentications: [
-          {
-            id: 5,
-            image: 'https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg',
-            name: 'Сергей Лаптев',
-            provider: 'vkontakte',
-            sex: null,
-            uid: '17202995',
-            url: 'http://vk.com/my_super_key'
-          }
-        ],
-        available_notifications: true,
-        confirmation_email: null,
-        created_at: '2014-06-18T14:27:22.000+04:00',
-        design: {
-          backgroundBrightness: 75,
-          background_url: 'http://taaasty.ru/assets/backgrounds/cf/78/1881243_4k_Resolution_Game_Wallpaper__12_fullsize.jpeg',
-          coverAlign: 'justify',
-          feedColor: 'black',
-          feedOpacity: 0.62,
-          fontType: 'sans',
-          headerColor: 'white'
-        },
-        email: 'iamsergeylaptev@gmail.com',
-        features: {
-          notification: false,
-          search: true
-        },
-        id: 232992,
-        is_confirmed: true,
-        is_daylog: false,
-        is_female: false,
-        is_privacy: true,
-        name: 'sergeylaptev',
-        private_entries_count: 0,
-        public_entries_count: 3,
-        slug: 'sergeylaptev',
-        title: 'To be continued...',
-        tlog_url: 'http://taaasty.ru/~sergeylaptev',
-        total_entries_count: 3,
-        updated_at: '2014-12-17T11:54:20.000+03:00',
-        userpic: {
-          default_colors: {
-            background: '#b5c31e',
-            name: '#ffffff'
-          },
-          kind: 'user',
-          large_url: 'http://taaasty.ru/assets/userpic/22/36/232992_large.jpeg',
-          original_url: 'http://taaasty.ru/assets/userpic/22/36/232992_original.jpeg',
-          symbol: 's',
-          thumb64_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb64.jpeg',
-          thumb128_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb128.jpeg',
-          thumbor_path: 'userpic/22/36/232992_original.jpeg'
-        }
-      },
-      entries: [
-        {
-          author: {
-            created_at: "2014-11-08T14:07:32.000+03:00",
-            features: {
-              notification: false,
-              search: false
-            },
-            id: 244412,
-            is_daylog: false,
-            is_female: false,
-            is_privacy: false,
-            name: "hyperwax",
-            private_entries_count: 0,
-            public_entries_count: 20,
-            slug: "hyperwax",
-            title: "",
-            tlog_url: "http://taaasty.com/~hyperwax",
-            total_entries_count: 22,
-            updated_at: "2015-01-16T19:30:05.000+03:00",
-            userpic: {
-              default_colors: {
-                background: "#eb4656",
-                name: "#ffffff"
-              },
-              kind: "user",
-              large_url: "http://taaasty.com/assets/userpic/25/ff/244412_large.jpg",
-              original_url: "http://taaasty.com/assets/userpic/25/ff/244412_original.jpg",
-              symbol: "h",
-              thumb64_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb64.jpg",
-              thumb128_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb128.jpg",
-              thumbor_path: "userpic/25/ff/244412_original.jpg"
-            }
-          },
-          can_delete: false,
-          can_edit: false,
-          can_favorite: true,
-          can_report: true,
-          can_vote: true,
-          can_watch: true,
-          comments_count: 0,
-          comments_info: {
-            comments: [],
-            from_comment_id: null,
-            order: "desc",
-            to_comment_id: null,
-            total_count: 0
-          },
-          created_at: "2015-01-16T19:30:05.000+03:00",
-          entry_url: "http://taaasty.com/~hyperwax/19616804",
-          id: 19617454,
-          image_attachments: [
-            {
-              content_type: "image/jpeg",
-              created_at: "2015-01-16T19:30:05.000+03:00",
-              frames_count: 1,
-              id: 16794460,
-              image: {
-                geometry: {
-                  height: 1200,
-                  width: 800
-                },
-                path: "att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg",
-                source: "image_attachment",
-                title: null,
-                url: "http://taaasty.com/assets/att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg"
-              }
-            }
-          ],
-          image_url: null,
-          is_favorited: false,
-          is_voteable: true,
-          is_watching: false,
-          privacy: "live",
-          rating: {
-            entry_id: 19616804,
-            is_voteable: true,
-            is_voted: false,
-            rating: 0,
-            votes: 0
-          },
-          title: "",
-          type: "image",
-          updated_at: "2015-01-16T19:30:05.000+03:00",
-          via: null
-        }
-      ],
-      feed: {
-        backgroundUrl: 'http://taaasty.com/images/hero-cover.jpg',
-        entriesCount: 42
-      }
-    };
-  }
-};
-
-module.exports = FeedFriendsPageMixin;
-
-
-
-},{}],155:[function(require,module,exports){
-var FeedLivePageMixin;
-
-FeedLivePageMixin = {
-  getDefaultProps: function() {
-    return {
-      currentUser: {
-        api_key: {
-          access_token: 'my_super_key',
-          expires_at: '2015-01-04T18:07:07.000+03:00',
-          user_id: 232992
-        },
-        authentications: [
-          {
-            id: 5,
-            image: 'https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg',
-            name: 'Сергей Лаптев',
-            provider: 'vkontakte',
-            sex: null,
-            uid: '17202995',
-            url: 'http://vk.com/my_super_key'
-          }
-        ],
-        available_notifications: true,
-        confirmation_email: null,
-        created_at: '2014-06-18T14:27:22.000+04:00',
-        design: {
-          backgroundBrightness: 75,
-          background_url: 'http://taaasty.ru/assets/backgrounds/cf/78/1881243_4k_Resolution_Game_Wallpaper__12_fullsize.jpeg',
-          coverAlign: 'justify',
-          feedColor: 'black',
-          feedOpacity: 0.62,
-          fontType: 'sans',
-          headerColor: 'white'
-        },
-        email: 'iamsergeylaptev@gmail.com',
-        features: {
-          notification: false,
-          search: true
-        },
-        id: 232992,
-        is_confirmed: true,
-        is_daylog: false,
-        is_female: false,
-        is_privacy: true,
-        name: 'sergeylaptev',
-        private_entries_count: 0,
-        public_entries_count: 3,
-        slug: 'sergeylaptev',
-        title: 'To be continued...',
-        tlog_url: 'http://taaasty.ru/~sergeylaptev',
-        total_entries_count: 3,
-        updated_at: '2014-12-17T11:54:20.000+03:00',
-        userpic: {
-          default_colors: {
-            background: '#b5c31e',
-            name: '#ffffff'
-          },
-          kind: 'user',
-          large_url: 'http://taaasty.ru/assets/userpic/22/36/232992_large.jpeg',
-          original_url: 'http://taaasty.ru/assets/userpic/22/36/232992_original.jpeg',
-          symbol: 's',
-          thumb64_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb64.jpeg',
-          thumb128_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb128.jpeg',
-          thumbor_path: 'userpic/22/36/232992_original.jpeg'
-        }
-      },
-      entries: [
-        {
-          author: {
-            created_at: "2014-11-08T14:07:32.000+03:00",
-            features: {
-              notification: false,
-              search: false
-            },
-            id: 244412,
-            is_daylog: false,
-            is_female: false,
-            is_privacy: false,
-            name: "hyperwax",
-            private_entries_count: 0,
-            public_entries_count: 20,
-            slug: "hyperwax",
-            title: "",
-            tlog_url: "http://taaasty.com/~hyperwax",
-            total_entries_count: 22,
-            updated_at: "2015-01-16T19:30:05.000+03:00",
-            userpic: {
-              default_colors: {
-                background: "#eb4656",
-                name: "#ffffff"
-              },
-              kind: "user",
-              large_url: "http://taaasty.com/assets/userpic/25/ff/244412_large.jpg",
-              original_url: "http://taaasty.com/assets/userpic/25/ff/244412_original.jpg",
-              symbol: "h",
-              thumb64_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb64.jpg",
-              thumb128_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb128.jpg",
-              thumbor_path: "userpic/25/ff/244412_original.jpg"
-            }
-          },
-          can_delete: false,
-          can_edit: false,
-          can_favorite: true,
-          can_report: true,
-          can_vote: true,
-          can_watch: true,
-          comments_count: 0,
-          comments_info: {
-            comments: [],
-            from_comment_id: null,
-            order: "desc",
-            to_comment_id: null,
-            total_count: 0
-          },
-          created_at: "2015-01-16T19:30:05.000+03:00",
-          entry_url: "http://taaasty.com/~hyperwax/19616804",
-          id: 19619777,
-          image_attachments: [
-            {
-              content_type: "image/jpeg",
-              created_at: "2015-01-16T19:30:05.000+03:00",
-              frames_count: 1,
-              id: 16794460,
-              image: {
-                geometry: {
-                  height: 1200,
-                  width: 800
-                },
-                path: "att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg",
-                source: "image_attachment",
-                title: null,
-                url: "http://taaasty.com/assets/att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg"
-              }
-            }
-          ],
-          image_url: null,
-          is_favorited: false,
-          is_voteable: true,
-          is_watching: false,
-          privacy: "live",
-          rating: {
-            entry_id: 19616804,
-            is_voteable: true,
-            is_voted: false,
-            rating: 0,
-            votes: 0
-          },
-          title: "",
-          type: "image",
-          updated_at: "2015-01-16T19:30:05.000+03:00",
-          via: null
-        }
-      ],
-      feed: {
-        backgroundUrl: 'http://taaasty.com/images/hero-cover.jpg',
-        entriesCount: 41
-      }
-    };
-  }
-};
-
-module.exports = FeedLivePageMixin;
-
-
-
-},{}],156:[function(require,module,exports){
-var PageMixin, PropTypes;
-
-PropTypes = React.PropTypes;
-
-PageMixin = {
-  propTypes: {
-    locale: PropTypes.string
-  },
-  getDefaultProps: function() {
-    return {
-      locale: TastySettings.locale
-    };
-  },
-  componentWillMount: function() {
-    return i18n.setLng(this.props.locale);
-  }
-};
-
-module.exports = PageMixin;
-
-
-
-},{}],157:[function(require,module,exports){
-var AuthButtonManager, AuthManager, CurrentUserStore, Daylog, DaylogPagination, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, TlogDaylogPage, UserToolbarManager;
-
-CurrentUserStore = require('../stores/currentUser');
-
-PageMixin = require('./mixins/page');
-
-FeedToolbarManager = require('../components/toolbars/feedManager');
-
-UserToolbarManager = require('../components/toolbars/userManager');
-
-HeroTlog = require('../components/hero/tlog');
-
-Daylog = require('../components/daylog/daylog');
-
-DaylogPagination = require('../components/pagination/daylog');
-
-AuthManager = require('../components/auth/authManager');
-
-AuthButtonManager = require('../components/buttons/auth/authManager');
-
-PropTypes = React.PropTypes;
-
-TlogDaylogPage = React.createClass({
-  displayName: 'TlogDaylogPage',
-  mixins: [PageMixin],
-  propTypes: {
-    currentUser: PropTypes.object,
-    tlog: PropTypes.object.isRequired,
-    entries: PropTypes.array.isRequired,
-    pagination: PropTypes.object.isRequired
-  },
-  componentWillMount: function() {
-    return CurrentUserStore.initialize(this.props.currentUser);
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
-      "className": "layout"
-    }, React.createElement("div", {
-      "className": "layout__header"
-    }, React.createElement(HeroTlog, {
-      "tlog": this.props.tlog
-    })), React.createElement("div", {
-      "className": "layout__body"
-    }, React.createElement(Daylog, {
-      "entries": this.props.entries
-    }), React.createElement(DaylogPagination, {
-      "slug": this.props.tlog.author.slug,
-      "prevDay": this.props.pagination.prevDay,
-      "nextDay": this.props.pagination.nextDay
-    }))), React.createElement(AuthManager, null));
-  }
-});
-
-module.exports = TlogDaylogPage;
-
-
-
-},{"../components/auth/authManager":19,"../components/buttons/auth/authManager":35,"../components/daylog/daylog":47,"../components/hero/tlog":106,"../components/pagination/daylog":122,"../components/toolbars/feedManager":132,"../components/toolbars/userManager":137,"../stores/currentUser":160,"./mixins/page":156}],158:[function(require,module,exports){
-var AuthButtonManager, AuthManager, CurrentUserStore, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, Tlog, TlogPagination, TlogRegularPage, UserToolbarManager;
-
-CurrentUserStore = require('../stores/currentUser');
-
-PageMixin = require('./mixins/page');
-
-FeedToolbarManager = require('../components/toolbars/feedManager');
-
-UserToolbarManager = require('../components/toolbars/userManager');
-
-HeroTlog = require('../components/hero/tlog');
-
-Tlog = require('../components/tlog/tlog');
-
-TlogPagination = require('../components/pagination/tlog');
-
-AuthManager = require('../components/auth/authManager');
-
-AuthButtonManager = require('../components/buttons/auth/authManager');
-
-PropTypes = React.PropTypes;
-
-TlogRegularPage = React.createClass({
-  displayName: 'TlogRegularPage',
-  mixins: [PageMixin],
-  propTypes: {
-    currentUser: PropTypes.object,
-    tlog: PropTypes.object.isRequired,
-    entries: PropTypes.array.isRequired,
-    pagination: PropTypes.object.isRequired
-  },
-  componentWillMount: function() {
-    return CurrentUserStore.initialize(this.props.currentUser);
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
-      "className": "layout"
-    }, React.createElement("div", {
-      "className": "layout__header"
-    }, React.createElement(HeroTlog, {
-      "tlog": this.props.tlog
-    })), React.createElement("div", {
-      "className": "layout__body"
-    }, React.createElement(Tlog, {
-      "entries": this.props.entries
-    }), React.createElement(TlogPagination, {
-      "slug": this.props.tlog.author.slug,
-      "currentPage": this.props.pagination.currentPage,
-      "totalPagesCount": this.props.pagination.totalPagesCount
-    }))), React.createElement(AuthManager, null));
-  }
-});
-
-module.exports = TlogRegularPage;
-
-
-
-},{"../components/auth/authManager":19,"../components/buttons/auth/authManager":35,"../components/hero/tlog":106,"../components/pagination/tlog":126,"../components/tlog/tlog":128,"../components/toolbars/feedManager":132,"../components/toolbars/userManager":137,"../stores/currentUser":160,"./mixins/page":156}],159:[function(require,module,exports){
-var BaseStore, CHANGE_EVENT,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-CHANGE_EVENT = 'change';
-
-BaseStore = (function(_super) {
-  __extends(BaseStore, _super);
-
-  function BaseStore() {
-    return BaseStore.__super__.constructor.apply(this, arguments);
-  }
-
-  BaseStore.prototype.emitChange = function() {
-    return this.emit(CHANGE_EVENT);
-  };
-
-  BaseStore.prototype.addChangeListener = function(cb) {
-    return this.on(CHANGE_EVENT, cb);
-  };
-
-  BaseStore.prototype.removeChangeListener = function(cb) {
-    return this.off(CHANGE_EVENT, cb);
-  };
-
-  return BaseStore;
-
-})(EventEmitter);
-
-module.exports = BaseStore;
-
-
-
-},{}],160:[function(require,module,exports){
-var BaseStore, CurrentUserStore, assign, extendByMockData, _currentUser;
-
-assign = require('react/lib/Object.assign');
-
-BaseStore = require('./_base');
-
-_currentUser = null;
-
-extendByMockData = function(user) {
-  if ((typeof localStorage !== "undefined" && localStorage !== null ? localStorage.getItem('userLogged') : void 0) === 'true') {
-    if (localStorage.getItem('userToken')) {
-      user.api_key.access_token = localStorage.getItem('userToken');
-    }
-    if (localStorage.getItem('userId')) {
-      user.id = parseInt(localStorage.getItem('userId'));
-    }
-  }
-  return user;
-};
-
-CurrentUserStore = assign(new BaseStore(), {
-  initialize: function(user) {
-    if (user != null) {
-      user = extendByMockData(user);
-      _currentUser = user;
-      return typeof console.debug === "function" ? console.debug('Залогинен пользователь:', user.slug) : void 0;
-    } else {
-      _currentUser = null;
-      return typeof console.debug === "function" ? console.debug('Без пользователя') : void 0;
-    }
-  },
-  isLogged: function() {
-    return _currentUser != null;
-  },
-  getUser: function() {
-    return _currentUser;
-  },
-  getAccessToken: function() {
-    return _currentUser != null ? _currentUser.api_key.access_token : void 0;
-  }
-});
-
-module.exports = CurrentUserStore;
-
-
-
-},{"./_base":159,"react/lib/Object.assign":200}],161:[function(require,module,exports){
-var AppDispatcher, BaseStore, Constants, assign, initializeFeed, pushEntries, _entries, _everythingLoaded;
-
-assign = require('react/lib/Object.assign');
-
-BaseStore = require('./_base');
-
-Constants = require('../constants/constants');
-
-AppDispatcher = require('../dispatcher/dispatcher');
-
-_entries = [];
-
-_everythingLoaded = false;
-
-initializeFeed = function(entries) {
-  _entries = entries;
-  return _everythingLoaded = false;
-};
-
-pushEntries = function(entries) {
-  return _entries = _entries.concat(entries);
-};
-
-window.FeedStore = assign(new BaseStore(), {
-  getEntries: function() {
-    return _entries;
-  },
-  isEverythingLoaded: function() {
-    return _everythingLoaded;
-  }
-});
-
-module.exports = FeedStore;
-
-FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
-  var action;
-  action = payload.action;
-  switch (action.type) {
-    case Constants.feed.INITIALIZE_FEED:
-      initializeFeed(action.entries);
-      return FeedStore.emitChange();
-    case Constants.feed.LOAD_ENTRIES:
-      if (action.entries.length) {
-        pushEntries(action.entries);
-      } else {
-        _everythingLoaded = true;
-      }
-      return FeedStore.emitChange();
-  }
-});
-
-
-
-},{"../constants/constants":139,"../dispatcher/dispatcher":145,"./_base":159,"react/lib/Object.assign":200}],162:[function(require,module,exports){
-var AppDispatcher, BaseStore, Constants, RelationshipsStore, assign, updateStatus, _relationships;
-
-assign = require('react/lib/Object.assign');
-
-BaseStore = require('./_base');
-
-Constants = require('../constants/constants');
-
-AppDispatcher = require('../dispatcher/dispatcher');
-
-_relationships = {};
-
-updateStatus = function(_arg) {
-  var status, userId;
-  userId = _arg.userId, status = _arg.status;
-  return _relationships[userId] = status;
-};
-
-RelationshipsStore = assign(new BaseStore(), {
-  getStatus: function(userId) {
-    return _relationships[userId];
-  }
-});
-
-module.exports = RelationshipsStore;
-
-RelationshipsStore.dispatchToken = AppDispatcher.register(function(payload) {
-  var action, relationship, userId;
-  action = payload.action;
-  switch (action.type) {
-    case Constants.relationship.UPDATE_RELATIONSHIP:
-      userId = action.userId, relationship = action.relationship;
-      updateStatus({
-        userId: userId,
-        status: relationship.state
-      });
-      return RelationshipsStore.emitChange();
-  }
-});
-
-
-
-},{"../constants/constants":139,"../dispatcher/dispatcher":145,"./_base":159,"react/lib/Object.assign":200}],163:[function(require,module,exports){
-window.React = require('react');
-
-window.reqwest = require('reqwest');
-
-window.EventEmitter = require('eventEmitter');
-
-window.moment = require('../../../bower_components/momentjs/moment');
-
-
-
-},{"../../../bower_components/momentjs/moment":3,"eventEmitter":"eventEmitter","react":"react","reqwest":"reqwest"}],164:[function(require,module,exports){
-var BrowserHelpers;
-
-BrowserHelpers = {
-  whichTransitionEvent: function() {
-    var el, t, transitions;
-    el = document.createElement('fakeelement');
-    transitions = {
-      'transition': 'transitionend',
-      'OTransition': 'oTransitionEnd',
-      'MozTransition': 'transitionend',
-      'WebkitTransition': 'webkitTransitionEnd'
-    };
-    for (t in transitions) {
-      if (el.style[t] != null) {
-        return transitions[t];
-      }
-    }
-  },
-  isSupportsOrientationChangeEvent: function() {
-    return typeof window.orientation === 'number';
-  },
-  getCurrentOrientation: function() {
-    var orientation;
-    if (this.isSupportsOrientationChangeEvent()) {
-      switch (window.orientation) {
-        case 0:
-        case 180:
-          return 'Portrait';
-        case -90:
-        case 90:
-          return 'Landscape';
-      }
-    } else {
-      orientation = screen.orientation || screen.mozOrientation || screen.msOrientation;
-      switch (false) {
-        case !/portrait/.test(orientation):
-          return 'Portrait';
-        case !/landscape/.test(orientation):
-          return 'Landscape';
-      }
-    }
-  }
-};
-
-module.exports = BrowserHelpers;
-
-
-
-},{}],165:[function(require,module,exports){
-var NumberHelpers;
-
-NumberHelpers = {
-  formatNumber: function(rawNumber, round, delimiter) {
-    var number;
-    if (delimiter == null) {
-      delimiter = ' ';
-    }
-    number = parseInt(rawNumber);
-    if (round != null) {
-      number = Math.ceil(number / round) * round;
-    }
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
-  },
-  reduceNumber: function(rawNumber, delimiter) {
-    var number;
-    if (delimiter == null) {
-      delimiter = ' ';
-    }
-    number = parseInt(rawNumber);
-    if (number > 1000) {
-      number = Math.floor(number / 1000) + 'k+';
-    }
-    return number;
-  }
-};
-
-module.exports = NumberHelpers;
-
-
-
-},{}],166:[function(require,module,exports){
-var ConnectStoreMixin;
-
-ConnectStoreMixin = function(listenableStore) {
-  return {
-    getInitialState: function() {
-      return this.getStateFromStore();
-    },
-    componentWillMount: function() {
-      return listenableStore.addChangeListener(this.onStoreChange);
-    },
-    componentWillUnmount: function() {
-      return listenableStore.removeChangeListener(this.onStoreChange);
-    },
-    onStoreChange: function() {
-      return this.setState(this.getStateFromStore());
-    }
-  };
-};
-
-module.exports = ConnectStoreMixin;
-
-
-
-},{}],167:[function(require,module,exports){
-var ThumborService;
-
-ThumborService = {
-  thumborUrl: 'http://thumbor0.tasty0.ru',
-  imageUrl: function(_arg) {
-    var path, size, url;
-    url = _arg.url, path = _arg.path, size = _arg.size;
-    switch (TastySettings.env) {
-      case 'static-development':
-      case 'development':
-        return url;
-      default:
-        return this.thumborUrl + ("/unsafe/" + size + "/filters:no_upscale()/") + path;
-    }
-  }
-};
-
-module.exports = ThumborService;
-
-
-
-},{}],168:[function(require,module,exports){
-var ApiRoutes;
-
-ApiRoutes = {
-  omniauth_url: function(provider) {
-    return TastySettings.host + '/auth/' + provider;
-  },
-  iframely_url: function() {
-    return TastySettings.api_host + '/v1/embeding/iframely.json';
-  },
-  pusher_auth_url: function() {
-    return TastySettings.api_host + '/v1/messenger/auth';
-  },
-  calendar_url: function(tlogId) {
-    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/calendar';
-  },
-  votes_url: function(entryId) {
-    return TastySettings.api_host + '/v1/entries/' + entryId + '/votes';
-  },
-  embed_url: function() {
-    return TastySettings.api_host + '/v1/embed';
-  },
-  design_settings_url: function(slug) {
-    return TastySettings.api_host + '/v1/design_settings/' + slug;
-  },
-  design_settings_cover_url: function(slug) {
-    return TastySettings.api_host + '/v1/design_settings/' + slug + '/cover';
-  },
-  signin_url: function() {
-    return TastySettings.api_host + '/v1/sessions';
-  },
-  signup_url: function() {
-    return TastySettings.api_host + '/v1/users';
-  },
-  update_profile_url: function() {
-    return TastySettings.api_host + '/v1/users';
-  },
-  recovery_url: function() {
-    return TastySettings.api_host + '/v1/users/password/recovery';
-  },
-  request_confirm_url: function() {
-    return TastySettings.api_host + '/v1/users/confirmation';
-  },
-  userpic_url: function() {
-    return TastySettings.api_host + '/v1/users/userpic';
-  },
-  users_predict: function() {
-    return TastySettings.api_host + '/v1/users/predict';
-  },
-  create_entry_url: function(type) {
-    return TastySettings.api_host + '/v1/entries/' + type;
-  },
-  update_entry_url: function(entryId, entryType) {
-    return TastySettings.api_host + '/v1/entries/' + entryType + '/' + entryId;
-  },
-  update_images_url: function(entryId) {
-    return TastySettings.api_host + '/v1/entries/image/' + entryId + '/images';
-  },
-  entry_url: function(entryId) {
-    return TastySettings.api_host + '/v1/entries/' + entryId;
-  },
-  favorites_url: function() {
-    return TastySettings.api_host + '/v1/favorites';
-  },
-  watching_url: function() {
-    return TastySettings.api_host + '/v1/watching';
-  },
-  report_url: function(entryId) {
-    return TastySettings.api_host + '/v1/entries/' + entryId + '/report';
-  },
-  relationships_summary_url: function() {
-    return TastySettings.api_host + '/v1/relationships/summary';
-  },
-  relationships_to_url: function(state) {
-    return TastySettings.api_host + '/v1/relationships/to/' + state;
-  },
-  relationships_by_url: function(state) {
-    return TastySettings.api_host + '/v1/relationships/by/' + state;
-  },
-  relationships_by_id_url: function(tlogId) {
-    return TastySettings.api_host + '/v1/relationships/by/' + tlogId;
-  },
-  unfollow_from_yourself_url: function(tlogId) {
-    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId;
-  },
-  relationships_by_tlog_approve_url: function(tlogId) {
-    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/approve';
-  },
-  relationships_by_tlog_disapprove_url: function(tlogId) {
-    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/disapprove';
-  },
-  tlog_followers: function(tlogId) {
-    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followers';
-  },
-  tlog_followings: function(tlogId) {
-    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followings';
-  },
-  tlog_tags: function(tlogId) {
-    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/tags';
-  },
-  tlog_report: function(tlogId) {
-    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/report';
-  },
-  get_my_relationship_url: function(tlogId) {
-    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId;
-  },
-  comments_url: function(entryId) {
-    return TastySettings.api_host + '/v1/comments';
-  },
-  comments_edit_delete_url: function(commentId) {
-    return TastySettings.api_host + '/v1/comments/' + commentId;
-  },
-  comments_report_url: function(commentId) {
-    return TastySettings.api_host + '/v1/comments/' + commentId + '/report';
-  },
-  change_my_relationship_url: function(tlogId, state) {
-    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId + '/' + state;
-  },
-  messenger_ready_url: function() {
-    return TastySettings.api_host + '/v1/messenger/ready';
-  },
-  messenger_new_conversation_url: function(slug) {
-    return TastySettings.api_host + '/v1/messenger/conversations/by_slug/' + slug;
-  },
-  messenger_new_message_url: function(conversationId) {
-    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
-  },
-  messenger_load_messages_url: function(conversationId) {
-    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
-  },
-  messenger_read_messages_url: function(conversationId) {
-    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages/read';
-  },
-  notifications_read_url: function(notificationId) {
-    return TastySettings.api_host + '/v1/messenger/notifications/' + notificationId + '/read';
-  },
-  suggestions_vkontakte: function() {
-    return TastySettings.api_host + '/v1/relationships/suggestions/vkontakte';
-  },
-  suggestions_facebook: function() {
-    return TastySettings.api_host + '/v1/relationships/suggestions/facebook';
-  },
-  feedLive: function() {
-    return TastySettings.api_host + '/v1/feeds/live';
-  },
-  feedBest: function() {
-    return TastySettings.api_host + '/v1/feeds/best';
-  },
-  feedFriends: function() {
-    return TastySettings.api_host + '/v1/my_feeds/friends';
-  }
-};
-
-module.exports = ApiRoutes;
-
-
-
-},{}],169:[function(require,module,exports){
-var Routes;
-
-Routes = {
-  logout_path: function() {
-    return '/logout';
-  },
-  tlog_favorite_entries_path: function(slug) {
-    return '/~' + slug + '/favorites';
-  },
-  tag_path: function(tag) {
-    return '/tags/' + tag;
-  },
-  friends_feed_path: function() {
-    return '/friends';
-  },
-  live_feed_path: function() {
-    return '/live';
-  },
-  best_feed_path: function() {
-    return '/best';
-  },
-  anonymous_feed_path: function() {
-    return '/anonymous';
-  },
-  people_path: function() {
-    return '/people';
-  },
-  new_entry_url: function(userSlug) {
-    return '/~' + userSlug + '/new';
-  },
-  new_anonymous_entry_url: function(userSlug) {
-    return '/~' + userSlug + '/anonymous/new';
-  },
-  my_tlog_url: function(userSlug) {
-    return '/~' + userSlug;
-  },
-  favorites_url: function(userSlug) {
-    return '/~' + userSlug + '/favorites';
-  },
-  private_entries_url: function(userSlug) {
-    return '/~' + userSlug + '/privates';
-  },
-  entry_edit_url: function(userSlug, entryId) {
-    return '/~' + userSlug + '/edit' + '/' + entryId;
-  },
-  userProfile: function(userSlug) {
-    return '/~' + userSlug + '/profile';
-  },
-  userSettings: function(userSlug) {
-    return '/~' + userSlug + '/settings';
-  },
-  userDesignSettings: function(userSlug) {
-    return '/~' + userSlug + '/design_settings';
-  },
-  tlogPagination: function(userSlug, page) {
-    return '/~' + userSlug + '/page/' + page;
-  },
-  daylogPagination: function(userSlug, page) {
-    return '/~' + userSlug + '/' + page;
-  }
-};
-
-module.exports = Routes;
-
-
-
-},{}],170:[function(require,module,exports){
-// shim for using process in browser
-
-var process = module.exports = {};
-
-process.nextTick = (function () {
-    var canSetImmediate = typeof window !== 'undefined'
-    && window.setImmediate;
-    var canMutationObserver = typeof window !== 'undefined'
-    && window.MutationObserver;
-    var canPost = typeof window !== 'undefined'
-    && window.postMessage && window.addEventListener
-    ;
-
-    if (canSetImmediate) {
-        return function (f) { return window.setImmediate(f) };
-    }
-
-    var queue = [];
-
-    if (canMutationObserver) {
-        var hiddenDiv = document.createElement("div");
-        var observer = new MutationObserver(function () {
-            var queueList = queue.slice();
-            queue.length = 0;
-            queueList.forEach(function (fn) {
-                fn();
-            });
-        });
-
-        observer.observe(hiddenDiv, { attributes: true });
-
-        return function nextTick(fn) {
-            if (!queue.length) {
-                hiddenDiv.setAttribute('yes', 'no');
-            }
-            queue.push(fn);
-        };
-    }
-
-    if (canPost) {
-        window.addEventListener('message', function (ev) {
-            var source = ev.source;
-            if ((source === window || source === null) && ev.data === 'process-tick') {
-                ev.stopPropagation();
-                if (queue.length > 0) {
-                    var fn = queue.shift();
-                    fn();
-                }
-            }
-        }, true);
-
-        return function nextTick(fn) {
-            queue.push(fn);
-            window.postMessage('process-tick', '*');
-        };
-    }
-
-    return function nextTick(fn) {
-        setTimeout(fn, 0);
-    };
-})();
-
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-// TODO(shtylman)
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-
-},{}],171:[function(require,module,exports){
-/**
- * Copyright (c) 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-module.exports.Dispatcher = require('./lib/Dispatcher')
-
-},{"./lib/Dispatcher":172}],172:[function(require,module,exports){
-/*
- * Copyright (c) 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule Dispatcher
- * @typechecks
- */
-
-"use strict";
-
-var invariant = require('./invariant');
-
-var _lastID = 1;
-var _prefix = 'ID_';
-
-/**
- * Dispatcher is used to broadcast payloads to registered callbacks. This is
- * different from generic pub-sub systems in two ways:
- *
- *   1) Callbacks are not subscribed to particular events. Every payload is
- *      dispatched to every registered callback.
- *   2) Callbacks can be deferred in whole or part until other callbacks have
- *      been executed.
- *
- * For example, consider this hypothetical flight destination form, which
- * selects a default city when a country is selected:
- *
- *   var flightDispatcher = new Dispatcher();
- *
- *   // Keeps track of which country is selected
- *   var CountryStore = {country: null};
- *
- *   // Keeps track of which city is selected
- *   var CityStore = {city: null};
- *
- *   // Keeps track of the base flight price of the selected city
- *   var FlightPriceStore = {price: null}
- *
- * When a user changes the selected city, we dispatch the payload:
- *
- *   flightDispatcher.dispatch({
- *     actionType: 'city-update',
- *     selectedCity: 'paris'
- *   });
- *
- * This payload is digested by `CityStore`:
- *
- *   flightDispatcher.register(function(payload) {
- *     if (payload.actionType === 'city-update') {
- *       CityStore.city = payload.selectedCity;
- *     }
- *   });
- *
- * When the user selects a country, we dispatch the payload:
- *
- *   flightDispatcher.dispatch({
- *     actionType: 'country-update',
- *     selectedCountry: 'australia'
- *   });
- *
- * This payload is digested by both stores:
- *
- *    CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
- *     if (payload.actionType === 'country-update') {
- *       CountryStore.country = payload.selectedCountry;
- *     }
- *   });
- *
- * When the callback to update `CountryStore` is registered, we save a reference
- * to the returned token. Using this token with `waitFor()`, we can guarantee
- * that `CountryStore` is updated before the callback that updates `CityStore`
- * needs to query its data.
- *
- *   CityStore.dispatchToken = flightDispatcher.register(function(payload) {
- *     if (payload.actionType === 'country-update') {
- *       // `CountryStore.country` may not be updated.
- *       flightDispatcher.waitFor([CountryStore.dispatchToken]);
- *       // `CountryStore.country` is now guaranteed to be updated.
- *
- *       // Select the default city for the new country
- *       CityStore.city = getDefaultCityForCountry(CountryStore.country);
- *     }
- *   });
- *
- * The usage of `waitFor()` can be chained, for example:
- *
- *   FlightPriceStore.dispatchToken =
- *     flightDispatcher.register(function(payload) {
- *       switch (payload.actionType) {
- *         case 'country-update':
- *           flightDispatcher.waitFor([CityStore.dispatchToken]);
- *           FlightPriceStore.price =
- *             getFlightPriceStore(CountryStore.country, CityStore.city);
- *           break;
- *
- *         case 'city-update':
- *           FlightPriceStore.price =
- *             FlightPriceStore(CountryStore.country, CityStore.city);
- *           break;
- *     }
- *   });
- *
- * The `country-update` payload will be guaranteed to invoke the stores'
- * registered callbacks in order: `CountryStore`, `CityStore`, then
- * `FlightPriceStore`.
- */
-
-  function Dispatcher() {
-    this.$Dispatcher_callbacks = {};
-    this.$Dispatcher_isPending = {};
-    this.$Dispatcher_isHandled = {};
-    this.$Dispatcher_isDispatching = false;
-    this.$Dispatcher_pendingPayload = null;
-  }
-
-  /**
-   * Registers a callback to be invoked with every dispatched payload. Returns
-   * a token that can be used with `waitFor()`.
-   *
-   * @param {function} callback
-   * @return {string}
-   */
-  Dispatcher.prototype.register=function(callback) {
-    var id = _prefix + _lastID++;
-    this.$Dispatcher_callbacks[id] = callback;
-    return id;
-  };
-
-  /**
-   * Removes a callback based on its token.
-   *
-   * @param {string} id
-   */
-  Dispatcher.prototype.unregister=function(id) {
-    invariant(
-      this.$Dispatcher_callbacks[id],
-      'Dispatcher.unregister(...): `%s` does not map to a registered callback.',
-      id
-    );
-    delete this.$Dispatcher_callbacks[id];
-  };
-
-  /**
-   * Waits for the callbacks specified to be invoked before continuing execution
-   * of the current callback. This method should only be used by a callback in
-   * response to a dispatched payload.
-   *
-   * @param {array<string>} ids
-   */
-  Dispatcher.prototype.waitFor=function(ids) {
-    invariant(
-      this.$Dispatcher_isDispatching,
-      'Dispatcher.waitFor(...): Must be invoked while dispatching.'
-    );
-    for (var ii = 0; ii < ids.length; ii++) {
-      var id = ids[ii];
-      if (this.$Dispatcher_isPending[id]) {
-        invariant(
-          this.$Dispatcher_isHandled[id],
-          'Dispatcher.waitFor(...): Circular dependency detected while ' +
-          'waiting for `%s`.',
-          id
-        );
-        continue;
-      }
-      invariant(
-        this.$Dispatcher_callbacks[id],
-        'Dispatcher.waitFor(...): `%s` does not map to a registered callback.',
-        id
-      );
-      this.$Dispatcher_invokeCallback(id);
-    }
-  };
-
-  /**
-   * Dispatches a payload to all registered callbacks.
-   *
-   * @param {object} payload
-   */
-  Dispatcher.prototype.dispatch=function(payload) {
-    invariant(
-      !this.$Dispatcher_isDispatching,
-      'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.'
-    );
-    this.$Dispatcher_startDispatching(payload);
-    try {
-      for (var id in this.$Dispatcher_callbacks) {
-        if (this.$Dispatcher_isPending[id]) {
-          continue;
-        }
-        this.$Dispatcher_invokeCallback(id);
-      }
-    } finally {
-      this.$Dispatcher_stopDispatching();
-    }
-  };
-
-  /**
-   * Is this Dispatcher currently dispatching.
-   *
-   * @return {boolean}
-   */
-  Dispatcher.prototype.isDispatching=function() {
-    return this.$Dispatcher_isDispatching;
-  };
-
-  /**
-   * Call the callback stored with the given id. Also do some internal
-   * bookkeeping.
-   *
-   * @param {string} id
-   * @internal
-   */
-  Dispatcher.prototype.$Dispatcher_invokeCallback=function(id) {
-    this.$Dispatcher_isPending[id] = true;
-    this.$Dispatcher_callbacks[id](this.$Dispatcher_pendingPayload);
-    this.$Dispatcher_isHandled[id] = true;
-  };
-
-  /**
-   * Set up bookkeeping needed when dispatching.
-   *
-   * @param {object} payload
-   * @internal
-   */
-  Dispatcher.prototype.$Dispatcher_startDispatching=function(payload) {
-    for (var id in this.$Dispatcher_callbacks) {
-      this.$Dispatcher_isPending[id] = false;
-      this.$Dispatcher_isHandled[id] = false;
-    }
-    this.$Dispatcher_pendingPayload = payload;
-    this.$Dispatcher_isDispatching = true;
-  };
-
-  /**
-   * Clear bookkeeping used for dispatching.
-   *
-   * @internal
-   */
-  Dispatcher.prototype.$Dispatcher_stopDispatching=function() {
-    this.$Dispatcher_pendingPayload = null;
-    this.$Dispatcher_isDispatching = false;
-  };
-
-
-module.exports = Dispatcher;
-
-},{"./invariant":173}],173:[function(require,module,exports){
-/**
- * Copyright (c) 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule invariant
- */
-
-"use strict";
-
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
-
-var invariant = function(condition, format, a, b, c, d, e, f) {
-  if (false) {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
-  }
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error(
-        'Minified exception occurred; use the non-minified dev environment ' +
-        'for the full error message and additional helpful warnings.'
-      );
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(
-        'Invariant Violation: ' +
-        format.replace(/%s/g, function() { return args[argIndex++]; })
-      );
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
-};
-
-module.exports = invariant;
-
-},{}],174:[function(require,module,exports){
+},{"./mobile/bundle":5}],2:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
@@ -20650,6 +9217,11439 @@ return jQuery;
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],3:[function(require,module,exports){
+(function (global){
+// moment.js locale configuration
+// locale : russian (ru)
+// author : Viktorminator : https://github.com/Viktorminator
+// Author : Menelion Elensúle : https://github.com/Oire
+
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['moment'], factory); // AMD
+    } else if (typeof exports === 'object') {
+        module.exports = factory(require('../moment')); // Node
+    } else {
+        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
+    }
+}(function (moment) {
+    function plural(word, num) {
+        var forms = word.split('_');
+        return num % 10 === 1 && num % 100 !== 11 ? forms[0] : (num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? forms[1] : forms[2]);
+    }
+
+    function relativeTimeWithPlural(number, withoutSuffix, key) {
+        var format = {
+            'mm': withoutSuffix ? 'минута_минуты_минут' : 'минуту_минуты_минут',
+            'hh': 'час_часа_часов',
+            'dd': 'день_дня_дней',
+            'MM': 'месяц_месяца_месяцев',
+            'yy': 'год_года_лет'
+        };
+        if (key === 'm') {
+            return withoutSuffix ? 'минута' : 'минуту';
+        }
+        else {
+            return number + ' ' + plural(format[key], +number);
+        }
+    }
+
+    function monthsCaseReplace(m, format) {
+        var months = {
+            'nominative': 'январь_февраль_март_апрель_май_июнь_июль_август_сентябрь_октябрь_ноябрь_декабрь'.split('_'),
+            'accusative': 'января_февраля_марта_апреля_мая_июня_июля_августа_сентября_октября_ноября_декабря'.split('_')
+        },
+
+        nounCase = (/D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/).test(format) ?
+            'accusative' :
+            'nominative';
+
+        return months[nounCase][m.month()];
+    }
+
+    function monthsShortCaseReplace(m, format) {
+        var monthsShort = {
+            'nominative': 'янв_фев_март_апр_май_июнь_июль_авг_сен_окт_ноя_дек'.split('_'),
+            'accusative': 'янв_фев_мар_апр_мая_июня_июля_авг_сен_окт_ноя_дек'.split('_')
+        },
+
+        nounCase = (/D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/).test(format) ?
+            'accusative' :
+            'nominative';
+
+        return monthsShort[nounCase][m.month()];
+    }
+
+    function weekdaysCaseReplace(m, format) {
+        var weekdays = {
+            'nominative': 'воскресенье_понедельник_вторник_среда_четверг_пятница_суббота'.split('_'),
+            'accusative': 'воскресенье_понедельник_вторник_среду_четверг_пятницу_субботу'.split('_')
+        },
+
+        nounCase = (/\[ ?[Вв] ?(?:прошлую|следующую|эту)? ?\] ?dddd/).test(format) ?
+            'accusative' :
+            'nominative';
+
+        return weekdays[nounCase][m.day()];
+    }
+
+    return moment.defineLocale('ru', {
+        months : monthsCaseReplace,
+        monthsShort : monthsShortCaseReplace,
+        weekdays : weekdaysCaseReplace,
+        weekdaysShort : 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
+        weekdaysMin : 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
+        monthsParse : [/^янв/i, /^фев/i, /^мар/i, /^апр/i, /^ма[й|я]/i, /^июн/i, /^июл/i, /^авг/i, /^сен/i, /^окт/i, /^ноя/i, /^дек/i],
+        longDateFormat : {
+            LT : 'HH:mm',
+            LTS : 'LT:ss',
+            L : 'DD.MM.YYYY',
+            LL : 'D MMMM YYYY г.',
+            LLL : 'D MMMM YYYY г., LT',
+            LLLL : 'dddd, D MMMM YYYY г., LT'
+        },
+        calendar : {
+            sameDay: '[Сегодня в] LT',
+            nextDay: '[Завтра в] LT',
+            lastDay: '[Вчера в] LT',
+            nextWeek: function () {
+                return this.day() === 2 ? '[Во] dddd [в] LT' : '[В] dddd [в] LT';
+            },
+            lastWeek: function (now) {
+                if (now.week() !== this.week()) {
+                    switch (this.day()) {
+                    case 0:
+                        return '[В прошлое] dddd [в] LT';
+                    case 1:
+                    case 2:
+                    case 4:
+                        return '[В прошлый] dddd [в] LT';
+                    case 3:
+                    case 5:
+                    case 6:
+                        return '[В прошлую] dddd [в] LT';
+                    }
+                } else {
+                    if (this.day() === 2) {
+                        return '[Во] dddd [в] LT';
+                    } else {
+                        return '[В] dddd [в] LT';
+                    }
+                }
+            },
+            sameElse: 'L'
+        },
+        relativeTime : {
+            future : 'через %s',
+            past : '%s назад',
+            s : 'несколько секунд',
+            m : relativeTimeWithPlural,
+            mm : relativeTimeWithPlural,
+            h : 'час',
+            hh : relativeTimeWithPlural,
+            d : 'день',
+            dd : relativeTimeWithPlural,
+            M : 'месяц',
+            MM : relativeTimeWithPlural,
+            y : 'год',
+            yy : relativeTimeWithPlural
+        },
+
+        meridiemParse: /ночи|утра|дня|вечера/i,
+        isPM : function (input) {
+            return /^(дня|вечера)$/.test(input);
+        },
+
+        meridiem : function (hour, minute, isLower) {
+            if (hour < 4) {
+                return 'ночи';
+            } else if (hour < 12) {
+                return 'утра';
+            } else if (hour < 17) {
+                return 'дня';
+            } else {
+                return 'вечера';
+            }
+        },
+
+        ordinalParse: /\d{1,2}-(й|го|я)/,
+        ordinal: function (number, period) {
+            switch (period) {
+            case 'M':
+            case 'd':
+            case 'DDD':
+                return number + '-й';
+            case 'D':
+                return number + '-го';
+            case 'w':
+            case 'W':
+                return number + '-я';
+            default:
+                return number;
+            }
+        },
+
+        week : {
+            dow : 1, // Monday is the first day of the week.
+            doy : 7  // The week that contains Jan 1st is the first week of the year.
+        }
+    });
+}));
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../moment":4}],4:[function(require,module,exports){
+(function (global){
+//! moment.js
+//! version : 2.8.4
+//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
+//! license : MIT
+//! momentjs.com
+
+(function (undefined) {
+    /************************************
+        Constants
+    ************************************/
+
+    var moment,
+        VERSION = '2.8.4',
+        // the global-scope this is NOT the global object in Node.js
+        globalScope = typeof global !== 'undefined' ? global : this,
+        oldGlobalMoment,
+        round = Math.round,
+        hasOwnProperty = Object.prototype.hasOwnProperty,
+        i,
+
+        YEAR = 0,
+        MONTH = 1,
+        DATE = 2,
+        HOUR = 3,
+        MINUTE = 4,
+        SECOND = 5,
+        MILLISECOND = 6,
+
+        // internal storage for locale config files
+        locales = {},
+
+        // extra moment internal properties (plugins register props here)
+        momentProperties = [],
+
+        // check for nodeJS
+        hasModule = (typeof module !== 'undefined' && module && module.exports),
+
+        // ASP.NET json date format regex
+        aspNetJsonRegex = /^\/?Date\((\-?\d+)/i,
+        aspNetTimeSpanJsonRegex = /(\-)?(?:(\d*)\.)?(\d+)\:(\d+)(?:\:(\d+)\.?(\d{3})?)?/,
+
+        // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
+        // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
+        isoDurationRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/,
+
+        // format tokens
+        formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|x|X|zz?|ZZ?|.)/g,
+        localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g,
+
+        // parsing token regexes
+        parseTokenOneOrTwoDigits = /\d\d?/, // 0 - 99
+        parseTokenOneToThreeDigits = /\d{1,3}/, // 0 - 999
+        parseTokenOneToFourDigits = /\d{1,4}/, // 0 - 9999
+        parseTokenOneToSixDigits = /[+\-]?\d{1,6}/, // -999,999 - 999,999
+        parseTokenDigits = /\d+/, // nonzero number of digits
+        parseTokenWord = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i, // any word (or two) characters or numbers including two/three word month in arabic.
+        parseTokenTimezone = /Z|[\+\-]\d\d:?\d\d/gi, // +00:00 -00:00 +0000 -0000 or Z
+        parseTokenT = /T/i, // T (ISO separator)
+        parseTokenOffsetMs = /[\+\-]?\d+/, // 1234567890123
+        parseTokenTimestampMs = /[\+\-]?\d+(\.\d{1,3})?/, // 123456789 123456789.123
+
+        //strict parsing regexes
+        parseTokenOneDigit = /\d/, // 0 - 9
+        parseTokenTwoDigits = /\d\d/, // 00 - 99
+        parseTokenThreeDigits = /\d{3}/, // 000 - 999
+        parseTokenFourDigits = /\d{4}/, // 0000 - 9999
+        parseTokenSixDigits = /[+-]?\d{6}/, // -999,999 - 999,999
+        parseTokenSignedNumber = /[+-]?\d+/, // -inf - inf
+
+        // iso 8601 regex
+        // 0000-00-00 0000-W00 or 0000-W00-0 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000 or +00)
+        isoRegex = /^\s*(?:[+-]\d{6}|\d{4})-(?:(\d\d-\d\d)|(W\d\d$)|(W\d\d-\d)|(\d\d\d))((T| )(\d\d(:\d\d(:\d\d(\.\d+)?)?)?)?([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/,
+
+        isoFormat = 'YYYY-MM-DDTHH:mm:ssZ',
+
+        isoDates = [
+            ['YYYYYY-MM-DD', /[+-]\d{6}-\d{2}-\d{2}/],
+            ['YYYY-MM-DD', /\d{4}-\d{2}-\d{2}/],
+            ['GGGG-[W]WW-E', /\d{4}-W\d{2}-\d/],
+            ['GGGG-[W]WW', /\d{4}-W\d{2}/],
+            ['YYYY-DDD', /\d{4}-\d{3}/]
+        ],
+
+        // iso time formats and regexes
+        isoTimes = [
+            ['HH:mm:ss.SSSS', /(T| )\d\d:\d\d:\d\d\.\d+/],
+            ['HH:mm:ss', /(T| )\d\d:\d\d:\d\d/],
+            ['HH:mm', /(T| )\d\d:\d\d/],
+            ['HH', /(T| )\d\d/]
+        ],
+
+        // timezone chunker '+10:00' > ['10', '00'] or '-1530' > ['-15', '30']
+        parseTimezoneChunker = /([\+\-]|\d\d)/gi,
+
+        // getter and setter names
+        proxyGettersAndSetters = 'Date|Hours|Minutes|Seconds|Milliseconds'.split('|'),
+        unitMillisecondFactors = {
+            'Milliseconds' : 1,
+            'Seconds' : 1e3,
+            'Minutes' : 6e4,
+            'Hours' : 36e5,
+            'Days' : 864e5,
+            'Months' : 2592e6,
+            'Years' : 31536e6
+        },
+
+        unitAliases = {
+            ms : 'millisecond',
+            s : 'second',
+            m : 'minute',
+            h : 'hour',
+            d : 'day',
+            D : 'date',
+            w : 'week',
+            W : 'isoWeek',
+            M : 'month',
+            Q : 'quarter',
+            y : 'year',
+            DDD : 'dayOfYear',
+            e : 'weekday',
+            E : 'isoWeekday',
+            gg: 'weekYear',
+            GG: 'isoWeekYear'
+        },
+
+        camelFunctions = {
+            dayofyear : 'dayOfYear',
+            isoweekday : 'isoWeekday',
+            isoweek : 'isoWeek',
+            weekyear : 'weekYear',
+            isoweekyear : 'isoWeekYear'
+        },
+
+        // format function strings
+        formatFunctions = {},
+
+        // default relative time thresholds
+        relativeTimeThresholds = {
+            s: 45,  // seconds to minute
+            m: 45,  // minutes to hour
+            h: 22,  // hours to day
+            d: 26,  // days to month
+            M: 11   // months to year
+        },
+
+        // tokens to ordinalize and pad
+        ordinalizeTokens = 'DDD w W M D d'.split(' '),
+        paddedTokens = 'M D H h m s w W'.split(' '),
+
+        formatTokenFunctions = {
+            M    : function () {
+                return this.month() + 1;
+            },
+            MMM  : function (format) {
+                return this.localeData().monthsShort(this, format);
+            },
+            MMMM : function (format) {
+                return this.localeData().months(this, format);
+            },
+            D    : function () {
+                return this.date();
+            },
+            DDD  : function () {
+                return this.dayOfYear();
+            },
+            d    : function () {
+                return this.day();
+            },
+            dd   : function (format) {
+                return this.localeData().weekdaysMin(this, format);
+            },
+            ddd  : function (format) {
+                return this.localeData().weekdaysShort(this, format);
+            },
+            dddd : function (format) {
+                return this.localeData().weekdays(this, format);
+            },
+            w    : function () {
+                return this.week();
+            },
+            W    : function () {
+                return this.isoWeek();
+            },
+            YY   : function () {
+                return leftZeroFill(this.year() % 100, 2);
+            },
+            YYYY : function () {
+                return leftZeroFill(this.year(), 4);
+            },
+            YYYYY : function () {
+                return leftZeroFill(this.year(), 5);
+            },
+            YYYYYY : function () {
+                var y = this.year(), sign = y >= 0 ? '+' : '-';
+                return sign + leftZeroFill(Math.abs(y), 6);
+            },
+            gg   : function () {
+                return leftZeroFill(this.weekYear() % 100, 2);
+            },
+            gggg : function () {
+                return leftZeroFill(this.weekYear(), 4);
+            },
+            ggggg : function () {
+                return leftZeroFill(this.weekYear(), 5);
+            },
+            GG   : function () {
+                return leftZeroFill(this.isoWeekYear() % 100, 2);
+            },
+            GGGG : function () {
+                return leftZeroFill(this.isoWeekYear(), 4);
+            },
+            GGGGG : function () {
+                return leftZeroFill(this.isoWeekYear(), 5);
+            },
+            e : function () {
+                return this.weekday();
+            },
+            E : function () {
+                return this.isoWeekday();
+            },
+            a    : function () {
+                return this.localeData().meridiem(this.hours(), this.minutes(), true);
+            },
+            A    : function () {
+                return this.localeData().meridiem(this.hours(), this.minutes(), false);
+            },
+            H    : function () {
+                return this.hours();
+            },
+            h    : function () {
+                return this.hours() % 12 || 12;
+            },
+            m    : function () {
+                return this.minutes();
+            },
+            s    : function () {
+                return this.seconds();
+            },
+            S    : function () {
+                return toInt(this.milliseconds() / 100);
+            },
+            SS   : function () {
+                return leftZeroFill(toInt(this.milliseconds() / 10), 2);
+            },
+            SSS  : function () {
+                return leftZeroFill(this.milliseconds(), 3);
+            },
+            SSSS : function () {
+                return leftZeroFill(this.milliseconds(), 3);
+            },
+            Z    : function () {
+                var a = -this.zone(),
+                    b = '+';
+                if (a < 0) {
+                    a = -a;
+                    b = '-';
+                }
+                return b + leftZeroFill(toInt(a / 60), 2) + ':' + leftZeroFill(toInt(a) % 60, 2);
+            },
+            ZZ   : function () {
+                var a = -this.zone(),
+                    b = '+';
+                if (a < 0) {
+                    a = -a;
+                    b = '-';
+                }
+                return b + leftZeroFill(toInt(a / 60), 2) + leftZeroFill(toInt(a) % 60, 2);
+            },
+            z : function () {
+                return this.zoneAbbr();
+            },
+            zz : function () {
+                return this.zoneName();
+            },
+            x    : function () {
+                return this.valueOf();
+            },
+            X    : function () {
+                return this.unix();
+            },
+            Q : function () {
+                return this.quarter();
+            }
+        },
+
+        deprecations = {},
+
+        lists = ['months', 'monthsShort', 'weekdays', 'weekdaysShort', 'weekdaysMin'];
+
+    // Pick the first defined of two or three arguments. dfl comes from
+    // default.
+    function dfl(a, b, c) {
+        switch (arguments.length) {
+            case 2: return a != null ? a : b;
+            case 3: return a != null ? a : b != null ? b : c;
+            default: throw new Error('Implement me');
+        }
+    }
+
+    function hasOwnProp(a, b) {
+        return hasOwnProperty.call(a, b);
+    }
+
+    function defaultParsingFlags() {
+        // We need to deep clone this object, and es5 standard is not very
+        // helpful.
+        return {
+            empty : false,
+            unusedTokens : [],
+            unusedInput : [],
+            overflow : -2,
+            charsLeftOver : 0,
+            nullInput : false,
+            invalidMonth : null,
+            invalidFormat : false,
+            userInvalidated : false,
+            iso: false
+        };
+    }
+
+    function printMsg(msg) {
+        if (moment.suppressDeprecationWarnings === false &&
+                typeof console !== 'undefined' && console.warn) {
+            console.warn('Deprecation warning: ' + msg);
+        }
+    }
+
+    function deprecate(msg, fn) {
+        var firstTime = true;
+        return extend(function () {
+            if (firstTime) {
+                printMsg(msg);
+                firstTime = false;
+            }
+            return fn.apply(this, arguments);
+        }, fn);
+    }
+
+    function deprecateSimple(name, msg) {
+        if (!deprecations[name]) {
+            printMsg(msg);
+            deprecations[name] = true;
+        }
+    }
+
+    function padToken(func, count) {
+        return function (a) {
+            return leftZeroFill(func.call(this, a), count);
+        };
+    }
+    function ordinalizeToken(func, period) {
+        return function (a) {
+            return this.localeData().ordinal(func.call(this, a), period);
+        };
+    }
+
+    while (ordinalizeTokens.length) {
+        i = ordinalizeTokens.pop();
+        formatTokenFunctions[i + 'o'] = ordinalizeToken(formatTokenFunctions[i], i);
+    }
+    while (paddedTokens.length) {
+        i = paddedTokens.pop();
+        formatTokenFunctions[i + i] = padToken(formatTokenFunctions[i], 2);
+    }
+    formatTokenFunctions.DDDD = padToken(formatTokenFunctions.DDD, 3);
+
+
+    /************************************
+        Constructors
+    ************************************/
+
+    function Locale() {
+    }
+
+    // Moment prototype object
+    function Moment(config, skipOverflow) {
+        if (skipOverflow !== false) {
+            checkOverflow(config);
+        }
+        copyConfig(this, config);
+        this._d = new Date(+config._d);
+    }
+
+    // Duration Constructor
+    function Duration(duration) {
+        var normalizedInput = normalizeObjectUnits(duration),
+            years = normalizedInput.year || 0,
+            quarters = normalizedInput.quarter || 0,
+            months = normalizedInput.month || 0,
+            weeks = normalizedInput.week || 0,
+            days = normalizedInput.day || 0,
+            hours = normalizedInput.hour || 0,
+            minutes = normalizedInput.minute || 0,
+            seconds = normalizedInput.second || 0,
+            milliseconds = normalizedInput.millisecond || 0;
+
+        // representation for dateAddRemove
+        this._milliseconds = +milliseconds +
+            seconds * 1e3 + // 1000
+            minutes * 6e4 + // 1000 * 60
+            hours * 36e5; // 1000 * 60 * 60
+        // Because of dateAddRemove treats 24 hours as different from a
+        // day when working around DST, we need to store them separately
+        this._days = +days +
+            weeks * 7;
+        // It is impossible translate months into days without knowing
+        // which months you are are talking about, so we have to store
+        // it separately.
+        this._months = +months +
+            quarters * 3 +
+            years * 12;
+
+        this._data = {};
+
+        this._locale = moment.localeData();
+
+        this._bubble();
+    }
+
+    /************************************
+        Helpers
+    ************************************/
+
+
+    function extend(a, b) {
+        for (var i in b) {
+            if (hasOwnProp(b, i)) {
+                a[i] = b[i];
+            }
+        }
+
+        if (hasOwnProp(b, 'toString')) {
+            a.toString = b.toString;
+        }
+
+        if (hasOwnProp(b, 'valueOf')) {
+            a.valueOf = b.valueOf;
+        }
+
+        return a;
+    }
+
+    function copyConfig(to, from) {
+        var i, prop, val;
+
+        if (typeof from._isAMomentObject !== 'undefined') {
+            to._isAMomentObject = from._isAMomentObject;
+        }
+        if (typeof from._i !== 'undefined') {
+            to._i = from._i;
+        }
+        if (typeof from._f !== 'undefined') {
+            to._f = from._f;
+        }
+        if (typeof from._l !== 'undefined') {
+            to._l = from._l;
+        }
+        if (typeof from._strict !== 'undefined') {
+            to._strict = from._strict;
+        }
+        if (typeof from._tzm !== 'undefined') {
+            to._tzm = from._tzm;
+        }
+        if (typeof from._isUTC !== 'undefined') {
+            to._isUTC = from._isUTC;
+        }
+        if (typeof from._offset !== 'undefined') {
+            to._offset = from._offset;
+        }
+        if (typeof from._pf !== 'undefined') {
+            to._pf = from._pf;
+        }
+        if (typeof from._locale !== 'undefined') {
+            to._locale = from._locale;
+        }
+
+        if (momentProperties.length > 0) {
+            for (i in momentProperties) {
+                prop = momentProperties[i];
+                val = from[prop];
+                if (typeof val !== 'undefined') {
+                    to[prop] = val;
+                }
+            }
+        }
+
+        return to;
+    }
+
+    function absRound(number) {
+        if (number < 0) {
+            return Math.ceil(number);
+        } else {
+            return Math.floor(number);
+        }
+    }
+
+    // left zero fill a number
+    // see http://jsperf.com/left-zero-filling for performance comparison
+    function leftZeroFill(number, targetLength, forceSign) {
+        var output = '' + Math.abs(number),
+            sign = number >= 0;
+
+        while (output.length < targetLength) {
+            output = '0' + output;
+        }
+        return (sign ? (forceSign ? '+' : '') : '-') + output;
+    }
+
+    function positiveMomentsDifference(base, other) {
+        var res = {milliseconds: 0, months: 0};
+
+        res.months = other.month() - base.month() +
+            (other.year() - base.year()) * 12;
+        if (base.clone().add(res.months, 'M').isAfter(other)) {
+            --res.months;
+        }
+
+        res.milliseconds = +other - +(base.clone().add(res.months, 'M'));
+
+        return res;
+    }
+
+    function momentsDifference(base, other) {
+        var res;
+        other = makeAs(other, base);
+        if (base.isBefore(other)) {
+            res = positiveMomentsDifference(base, other);
+        } else {
+            res = positiveMomentsDifference(other, base);
+            res.milliseconds = -res.milliseconds;
+            res.months = -res.months;
+        }
+
+        return res;
+    }
+
+    // TODO: remove 'name' arg after deprecation is removed
+    function createAdder(direction, name) {
+        return function (val, period) {
+            var dur, tmp;
+            //invert the arguments, but complain about it
+            if (period !== null && !isNaN(+period)) {
+                deprecateSimple(name, 'moment().' + name  + '(period, number) is deprecated. Please use moment().' + name + '(number, period).');
+                tmp = val; val = period; period = tmp;
+            }
+
+            val = typeof val === 'string' ? +val : val;
+            dur = moment.duration(val, period);
+            addOrSubtractDurationFromMoment(this, dur, direction);
+            return this;
+        };
+    }
+
+    function addOrSubtractDurationFromMoment(mom, duration, isAdding, updateOffset) {
+        var milliseconds = duration._milliseconds,
+            days = duration._days,
+            months = duration._months;
+        updateOffset = updateOffset == null ? true : updateOffset;
+
+        if (milliseconds) {
+            mom._d.setTime(+mom._d + milliseconds * isAdding);
+        }
+        if (days) {
+            rawSetter(mom, 'Date', rawGetter(mom, 'Date') + days * isAdding);
+        }
+        if (months) {
+            rawMonthSetter(mom, rawGetter(mom, 'Month') + months * isAdding);
+        }
+        if (updateOffset) {
+            moment.updateOffset(mom, days || months);
+        }
+    }
+
+    // check if is an array
+    function isArray(input) {
+        return Object.prototype.toString.call(input) === '[object Array]';
+    }
+
+    function isDate(input) {
+        return Object.prototype.toString.call(input) === '[object Date]' ||
+            input instanceof Date;
+    }
+
+    // compare two arrays, return the number of differences
+    function compareArrays(array1, array2, dontConvert) {
+        var len = Math.min(array1.length, array2.length),
+            lengthDiff = Math.abs(array1.length - array2.length),
+            diffs = 0,
+            i;
+        for (i = 0; i < len; i++) {
+            if ((dontConvert && array1[i] !== array2[i]) ||
+                (!dontConvert && toInt(array1[i]) !== toInt(array2[i]))) {
+                diffs++;
+            }
+        }
+        return diffs + lengthDiff;
+    }
+
+    function normalizeUnits(units) {
+        if (units) {
+            var lowered = units.toLowerCase().replace(/(.)s$/, '$1');
+            units = unitAliases[units] || camelFunctions[lowered] || lowered;
+        }
+        return units;
+    }
+
+    function normalizeObjectUnits(inputObject) {
+        var normalizedInput = {},
+            normalizedProp,
+            prop;
+
+        for (prop in inputObject) {
+            if (hasOwnProp(inputObject, prop)) {
+                normalizedProp = normalizeUnits(prop);
+                if (normalizedProp) {
+                    normalizedInput[normalizedProp] = inputObject[prop];
+                }
+            }
+        }
+
+        return normalizedInput;
+    }
+
+    function makeList(field) {
+        var count, setter;
+
+        if (field.indexOf('week') === 0) {
+            count = 7;
+            setter = 'day';
+        }
+        else if (field.indexOf('month') === 0) {
+            count = 12;
+            setter = 'month';
+        }
+        else {
+            return;
+        }
+
+        moment[field] = function (format, index) {
+            var i, getter,
+                method = moment._locale[field],
+                results = [];
+
+            if (typeof format === 'number') {
+                index = format;
+                format = undefined;
+            }
+
+            getter = function (i) {
+                var m = moment().utc().set(setter, i);
+                return method.call(moment._locale, m, format || '');
+            };
+
+            if (index != null) {
+                return getter(index);
+            }
+            else {
+                for (i = 0; i < count; i++) {
+                    results.push(getter(i));
+                }
+                return results;
+            }
+        };
+    }
+
+    function toInt(argumentForCoercion) {
+        var coercedNumber = +argumentForCoercion,
+            value = 0;
+
+        if (coercedNumber !== 0 && isFinite(coercedNumber)) {
+            if (coercedNumber >= 0) {
+                value = Math.floor(coercedNumber);
+            } else {
+                value = Math.ceil(coercedNumber);
+            }
+        }
+
+        return value;
+    }
+
+    function daysInMonth(year, month) {
+        return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+    }
+
+    function weeksInYear(year, dow, doy) {
+        return weekOfYear(moment([year, 11, 31 + dow - doy]), dow, doy).week;
+    }
+
+    function daysInYear(year) {
+        return isLeapYear(year) ? 366 : 365;
+    }
+
+    function isLeapYear(year) {
+        return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+    }
+
+    function checkOverflow(m) {
+        var overflow;
+        if (m._a && m._pf.overflow === -2) {
+            overflow =
+                m._a[MONTH] < 0 || m._a[MONTH] > 11 ? MONTH :
+                m._a[DATE] < 1 || m._a[DATE] > daysInMonth(m._a[YEAR], m._a[MONTH]) ? DATE :
+                m._a[HOUR] < 0 || m._a[HOUR] > 24 ||
+                    (m._a[HOUR] === 24 && (m._a[MINUTE] !== 0 ||
+                                           m._a[SECOND] !== 0 ||
+                                           m._a[MILLISECOND] !== 0)) ? HOUR :
+                m._a[MINUTE] < 0 || m._a[MINUTE] > 59 ? MINUTE :
+                m._a[SECOND] < 0 || m._a[SECOND] > 59 ? SECOND :
+                m._a[MILLISECOND] < 0 || m._a[MILLISECOND] > 999 ? MILLISECOND :
+                -1;
+
+            if (m._pf._overflowDayOfYear && (overflow < YEAR || overflow > DATE)) {
+                overflow = DATE;
+            }
+
+            m._pf.overflow = overflow;
+        }
+    }
+
+    function isValid(m) {
+        if (m._isValid == null) {
+            m._isValid = !isNaN(m._d.getTime()) &&
+                m._pf.overflow < 0 &&
+                !m._pf.empty &&
+                !m._pf.invalidMonth &&
+                !m._pf.nullInput &&
+                !m._pf.invalidFormat &&
+                !m._pf.userInvalidated;
+
+            if (m._strict) {
+                m._isValid = m._isValid &&
+                    m._pf.charsLeftOver === 0 &&
+                    m._pf.unusedTokens.length === 0 &&
+                    m._pf.bigHour === undefined;
+            }
+        }
+        return m._isValid;
+    }
+
+    function normalizeLocale(key) {
+        return key ? key.toLowerCase().replace('_', '-') : key;
+    }
+
+    // pick the locale from the array
+    // try ['en-au', 'en-gb'] as 'en-au', 'en-gb', 'en', as in move through the list trying each
+    // substring from most specific to least, but move to the next array item if it's a more specific variant than the current root
+    function chooseLocale(names) {
+        var i = 0, j, next, locale, split;
+
+        while (i < names.length) {
+            split = normalizeLocale(names[i]).split('-');
+            j = split.length;
+            next = normalizeLocale(names[i + 1]);
+            next = next ? next.split('-') : null;
+            while (j > 0) {
+                locale = loadLocale(split.slice(0, j).join('-'));
+                if (locale) {
+                    return locale;
+                }
+                if (next && next.length >= j && compareArrays(split, next, true) >= j - 1) {
+                    //the next array item is better than a shallower substring of this one
+                    break;
+                }
+                j--;
+            }
+            i++;
+        }
+        return null;
+    }
+
+    function loadLocale(name) {
+        var oldLocale = null;
+        if (!locales[name] && hasModule) {
+            try {
+                oldLocale = moment.locale();
+                require('./locale/' + name);
+                // because defineLocale currently also sets the global locale, we want to undo that for lazy loaded locales
+                moment.locale(oldLocale);
+            } catch (e) { }
+        }
+        return locales[name];
+    }
+
+    // Return a moment from input, that is local/utc/zone equivalent to model.
+    function makeAs(input, model) {
+        var res, diff;
+        if (model._isUTC) {
+            res = model.clone();
+            diff = (moment.isMoment(input) || isDate(input) ?
+                    +input : +moment(input)) - (+res);
+            // Use low-level api, because this fn is low-level api.
+            res._d.setTime(+res._d + diff);
+            moment.updateOffset(res, false);
+            return res;
+        } else {
+            return moment(input).local();
+        }
+    }
+
+    /************************************
+        Locale
+    ************************************/
+
+
+    extend(Locale.prototype, {
+
+        set : function (config) {
+            var prop, i;
+            for (i in config) {
+                prop = config[i];
+                if (typeof prop === 'function') {
+                    this[i] = prop;
+                } else {
+                    this['_' + i] = prop;
+                }
+            }
+            // Lenient ordinal parsing accepts just a number in addition to
+            // number + (possibly) stuff coming from _ordinalParseLenient.
+            this._ordinalParseLenient = new RegExp(this._ordinalParse.source + '|' + /\d{1,2}/.source);
+        },
+
+        _months : 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
+        months : function (m) {
+            return this._months[m.month()];
+        },
+
+        _monthsShort : 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
+        monthsShort : function (m) {
+            return this._monthsShort[m.month()];
+        },
+
+        monthsParse : function (monthName, format, strict) {
+            var i, mom, regex;
+
+            if (!this._monthsParse) {
+                this._monthsParse = [];
+                this._longMonthsParse = [];
+                this._shortMonthsParse = [];
+            }
+
+            for (i = 0; i < 12; i++) {
+                // make the regex if we don't have it already
+                mom = moment.utc([2000, i]);
+                if (strict && !this._longMonthsParse[i]) {
+                    this._longMonthsParse[i] = new RegExp('^' + this.months(mom, '').replace('.', '') + '$', 'i');
+                    this._shortMonthsParse[i] = new RegExp('^' + this.monthsShort(mom, '').replace('.', '') + '$', 'i');
+                }
+                if (!strict && !this._monthsParse[i]) {
+                    regex = '^' + this.months(mom, '') + '|^' + this.monthsShort(mom, '');
+                    this._monthsParse[i] = new RegExp(regex.replace('.', ''), 'i');
+                }
+                // test the regex
+                if (strict && format === 'MMMM' && this._longMonthsParse[i].test(monthName)) {
+                    return i;
+                } else if (strict && format === 'MMM' && this._shortMonthsParse[i].test(monthName)) {
+                    return i;
+                } else if (!strict && this._monthsParse[i].test(monthName)) {
+                    return i;
+                }
+            }
+        },
+
+        _weekdays : 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
+        weekdays : function (m) {
+            return this._weekdays[m.day()];
+        },
+
+        _weekdaysShort : 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
+        weekdaysShort : function (m) {
+            return this._weekdaysShort[m.day()];
+        },
+
+        _weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
+        weekdaysMin : function (m) {
+            return this._weekdaysMin[m.day()];
+        },
+
+        weekdaysParse : function (weekdayName) {
+            var i, mom, regex;
+
+            if (!this._weekdaysParse) {
+                this._weekdaysParse = [];
+            }
+
+            for (i = 0; i < 7; i++) {
+                // make the regex if we don't have it already
+                if (!this._weekdaysParse[i]) {
+                    mom = moment([2000, 1]).day(i);
+                    regex = '^' + this.weekdays(mom, '') + '|^' + this.weekdaysShort(mom, '') + '|^' + this.weekdaysMin(mom, '');
+                    this._weekdaysParse[i] = new RegExp(regex.replace('.', ''), 'i');
+                }
+                // test the regex
+                if (this._weekdaysParse[i].test(weekdayName)) {
+                    return i;
+                }
+            }
+        },
+
+        _longDateFormat : {
+            LTS : 'h:mm:ss A',
+            LT : 'h:mm A',
+            L : 'MM/DD/YYYY',
+            LL : 'MMMM D, YYYY',
+            LLL : 'MMMM D, YYYY LT',
+            LLLL : 'dddd, MMMM D, YYYY LT'
+        },
+        longDateFormat : function (key) {
+            var output = this._longDateFormat[key];
+            if (!output && this._longDateFormat[key.toUpperCase()]) {
+                output = this._longDateFormat[key.toUpperCase()].replace(/MMMM|MM|DD|dddd/g, function (val) {
+                    return val.slice(1);
+                });
+                this._longDateFormat[key] = output;
+            }
+            return output;
+        },
+
+        isPM : function (input) {
+            // IE8 Quirks Mode & IE7 Standards Mode do not allow accessing strings like arrays
+            // Using charAt should be more compatible.
+            return ((input + '').toLowerCase().charAt(0) === 'p');
+        },
+
+        _meridiemParse : /[ap]\.?m?\.?/i,
+        meridiem : function (hours, minutes, isLower) {
+            if (hours > 11) {
+                return isLower ? 'pm' : 'PM';
+            } else {
+                return isLower ? 'am' : 'AM';
+            }
+        },
+
+        _calendar : {
+            sameDay : '[Today at] LT',
+            nextDay : '[Tomorrow at] LT',
+            nextWeek : 'dddd [at] LT',
+            lastDay : '[Yesterday at] LT',
+            lastWeek : '[Last] dddd [at] LT',
+            sameElse : 'L'
+        },
+        calendar : function (key, mom, now) {
+            var output = this._calendar[key];
+            return typeof output === 'function' ? output.apply(mom, [now]) : output;
+        },
+
+        _relativeTime : {
+            future : 'in %s',
+            past : '%s ago',
+            s : 'a few seconds',
+            m : 'a minute',
+            mm : '%d minutes',
+            h : 'an hour',
+            hh : '%d hours',
+            d : 'a day',
+            dd : '%d days',
+            M : 'a month',
+            MM : '%d months',
+            y : 'a year',
+            yy : '%d years'
+        },
+
+        relativeTime : function (number, withoutSuffix, string, isFuture) {
+            var output = this._relativeTime[string];
+            return (typeof output === 'function') ?
+                output(number, withoutSuffix, string, isFuture) :
+                output.replace(/%d/i, number);
+        },
+
+        pastFuture : function (diff, output) {
+            var format = this._relativeTime[diff > 0 ? 'future' : 'past'];
+            return typeof format === 'function' ? format(output) : format.replace(/%s/i, output);
+        },
+
+        ordinal : function (number) {
+            return this._ordinal.replace('%d', number);
+        },
+        _ordinal : '%d',
+        _ordinalParse : /\d{1,2}/,
+
+        preparse : function (string) {
+            return string;
+        },
+
+        postformat : function (string) {
+            return string;
+        },
+
+        week : function (mom) {
+            return weekOfYear(mom, this._week.dow, this._week.doy).week;
+        },
+
+        _week : {
+            dow : 0, // Sunday is the first day of the week.
+            doy : 6  // The week that contains Jan 1st is the first week of the year.
+        },
+
+        _invalidDate: 'Invalid date',
+        invalidDate: function () {
+            return this._invalidDate;
+        }
+    });
+
+    /************************************
+        Formatting
+    ************************************/
+
+
+    function removeFormattingTokens(input) {
+        if (input.match(/\[[\s\S]/)) {
+            return input.replace(/^\[|\]$/g, '');
+        }
+        return input.replace(/\\/g, '');
+    }
+
+    function makeFormatFunction(format) {
+        var array = format.match(formattingTokens), i, length;
+
+        for (i = 0, length = array.length; i < length; i++) {
+            if (formatTokenFunctions[array[i]]) {
+                array[i] = formatTokenFunctions[array[i]];
+            } else {
+                array[i] = removeFormattingTokens(array[i]);
+            }
+        }
+
+        return function (mom) {
+            var output = '';
+            for (i = 0; i < length; i++) {
+                output += array[i] instanceof Function ? array[i].call(mom, format) : array[i];
+            }
+            return output;
+        };
+    }
+
+    // format date using native date object
+    function formatMoment(m, format) {
+        if (!m.isValid()) {
+            return m.localeData().invalidDate();
+        }
+
+        format = expandFormat(format, m.localeData());
+
+        if (!formatFunctions[format]) {
+            formatFunctions[format] = makeFormatFunction(format);
+        }
+
+        return formatFunctions[format](m);
+    }
+
+    function expandFormat(format, locale) {
+        var i = 5;
+
+        function replaceLongDateFormatTokens(input) {
+            return locale.longDateFormat(input) || input;
+        }
+
+        localFormattingTokens.lastIndex = 0;
+        while (i >= 0 && localFormattingTokens.test(format)) {
+            format = format.replace(localFormattingTokens, replaceLongDateFormatTokens);
+            localFormattingTokens.lastIndex = 0;
+            i -= 1;
+        }
+
+        return format;
+    }
+
+
+    /************************************
+        Parsing
+    ************************************/
+
+
+    // get the regex to find the next token
+    function getParseRegexForToken(token, config) {
+        var a, strict = config._strict;
+        switch (token) {
+        case 'Q':
+            return parseTokenOneDigit;
+        case 'DDDD':
+            return parseTokenThreeDigits;
+        case 'YYYY':
+        case 'GGGG':
+        case 'gggg':
+            return strict ? parseTokenFourDigits : parseTokenOneToFourDigits;
+        case 'Y':
+        case 'G':
+        case 'g':
+            return parseTokenSignedNumber;
+        case 'YYYYYY':
+        case 'YYYYY':
+        case 'GGGGG':
+        case 'ggggg':
+            return strict ? parseTokenSixDigits : parseTokenOneToSixDigits;
+        case 'S':
+            if (strict) {
+                return parseTokenOneDigit;
+            }
+            /* falls through */
+        case 'SS':
+            if (strict) {
+                return parseTokenTwoDigits;
+            }
+            /* falls through */
+        case 'SSS':
+            if (strict) {
+                return parseTokenThreeDigits;
+            }
+            /* falls through */
+        case 'DDD':
+            return parseTokenOneToThreeDigits;
+        case 'MMM':
+        case 'MMMM':
+        case 'dd':
+        case 'ddd':
+        case 'dddd':
+            return parseTokenWord;
+        case 'a':
+        case 'A':
+            return config._locale._meridiemParse;
+        case 'x':
+            return parseTokenOffsetMs;
+        case 'X':
+            return parseTokenTimestampMs;
+        case 'Z':
+        case 'ZZ':
+            return parseTokenTimezone;
+        case 'T':
+            return parseTokenT;
+        case 'SSSS':
+            return parseTokenDigits;
+        case 'MM':
+        case 'DD':
+        case 'YY':
+        case 'GG':
+        case 'gg':
+        case 'HH':
+        case 'hh':
+        case 'mm':
+        case 'ss':
+        case 'ww':
+        case 'WW':
+            return strict ? parseTokenTwoDigits : parseTokenOneOrTwoDigits;
+        case 'M':
+        case 'D':
+        case 'd':
+        case 'H':
+        case 'h':
+        case 'm':
+        case 's':
+        case 'w':
+        case 'W':
+        case 'e':
+        case 'E':
+            return parseTokenOneOrTwoDigits;
+        case 'Do':
+            return strict ? config._locale._ordinalParse : config._locale._ordinalParseLenient;
+        default :
+            a = new RegExp(regexpEscape(unescapeFormat(token.replace('\\', '')), 'i'));
+            return a;
+        }
+    }
+
+    function timezoneMinutesFromString(string) {
+        string = string || '';
+        var possibleTzMatches = (string.match(parseTokenTimezone) || []),
+            tzChunk = possibleTzMatches[possibleTzMatches.length - 1] || [],
+            parts = (tzChunk + '').match(parseTimezoneChunker) || ['-', 0, 0],
+            minutes = +(parts[1] * 60) + toInt(parts[2]);
+
+        return parts[0] === '+' ? -minutes : minutes;
+    }
+
+    // function to convert string input to date
+    function addTimeToArrayFromToken(token, input, config) {
+        var a, datePartArray = config._a;
+
+        switch (token) {
+        // QUARTER
+        case 'Q':
+            if (input != null) {
+                datePartArray[MONTH] = (toInt(input) - 1) * 3;
+            }
+            break;
+        // MONTH
+        case 'M' : // fall through to MM
+        case 'MM' :
+            if (input != null) {
+                datePartArray[MONTH] = toInt(input) - 1;
+            }
+            break;
+        case 'MMM' : // fall through to MMMM
+        case 'MMMM' :
+            a = config._locale.monthsParse(input, token, config._strict);
+            // if we didn't find a month name, mark the date as invalid.
+            if (a != null) {
+                datePartArray[MONTH] = a;
+            } else {
+                config._pf.invalidMonth = input;
+            }
+            break;
+        // DAY OF MONTH
+        case 'D' : // fall through to DD
+        case 'DD' :
+            if (input != null) {
+                datePartArray[DATE] = toInt(input);
+            }
+            break;
+        case 'Do' :
+            if (input != null) {
+                datePartArray[DATE] = toInt(parseInt(
+                            input.match(/\d{1,2}/)[0], 10));
+            }
+            break;
+        // DAY OF YEAR
+        case 'DDD' : // fall through to DDDD
+        case 'DDDD' :
+            if (input != null) {
+                config._dayOfYear = toInt(input);
+            }
+
+            break;
+        // YEAR
+        case 'YY' :
+            datePartArray[YEAR] = moment.parseTwoDigitYear(input);
+            break;
+        case 'YYYY' :
+        case 'YYYYY' :
+        case 'YYYYYY' :
+            datePartArray[YEAR] = toInt(input);
+            break;
+        // AM / PM
+        case 'a' : // fall through to A
+        case 'A' :
+            config._isPm = config._locale.isPM(input);
+            break;
+        // HOUR
+        case 'h' : // fall through to hh
+        case 'hh' :
+            config._pf.bigHour = true;
+            /* falls through */
+        case 'H' : // fall through to HH
+        case 'HH' :
+            datePartArray[HOUR] = toInt(input);
+            break;
+        // MINUTE
+        case 'm' : // fall through to mm
+        case 'mm' :
+            datePartArray[MINUTE] = toInt(input);
+            break;
+        // SECOND
+        case 's' : // fall through to ss
+        case 'ss' :
+            datePartArray[SECOND] = toInt(input);
+            break;
+        // MILLISECOND
+        case 'S' :
+        case 'SS' :
+        case 'SSS' :
+        case 'SSSS' :
+            datePartArray[MILLISECOND] = toInt(('0.' + input) * 1000);
+            break;
+        // UNIX OFFSET (MILLISECONDS)
+        case 'x':
+            config._d = new Date(toInt(input));
+            break;
+        // UNIX TIMESTAMP WITH MS
+        case 'X':
+            config._d = new Date(parseFloat(input) * 1000);
+            break;
+        // TIMEZONE
+        case 'Z' : // fall through to ZZ
+        case 'ZZ' :
+            config._useUTC = true;
+            config._tzm = timezoneMinutesFromString(input);
+            break;
+        // WEEKDAY - human
+        case 'dd':
+        case 'ddd':
+        case 'dddd':
+            a = config._locale.weekdaysParse(input);
+            // if we didn't get a weekday name, mark the date as invalid
+            if (a != null) {
+                config._w = config._w || {};
+                config._w['d'] = a;
+            } else {
+                config._pf.invalidWeekday = input;
+            }
+            break;
+        // WEEK, WEEK DAY - numeric
+        case 'w':
+        case 'ww':
+        case 'W':
+        case 'WW':
+        case 'd':
+        case 'e':
+        case 'E':
+            token = token.substr(0, 1);
+            /* falls through */
+        case 'gggg':
+        case 'GGGG':
+        case 'GGGGG':
+            token = token.substr(0, 2);
+            if (input) {
+                config._w = config._w || {};
+                config._w[token] = toInt(input);
+            }
+            break;
+        case 'gg':
+        case 'GG':
+            config._w = config._w || {};
+            config._w[token] = moment.parseTwoDigitYear(input);
+        }
+    }
+
+    function dayOfYearFromWeekInfo(config) {
+        var w, weekYear, week, weekday, dow, doy, temp;
+
+        w = config._w;
+        if (w.GG != null || w.W != null || w.E != null) {
+            dow = 1;
+            doy = 4;
+
+            // TODO: We need to take the current isoWeekYear, but that depends on
+            // how we interpret now (local, utc, fixed offset). So create
+            // a now version of current config (take local/utc/offset flags, and
+            // create now).
+            weekYear = dfl(w.GG, config._a[YEAR], weekOfYear(moment(), 1, 4).year);
+            week = dfl(w.W, 1);
+            weekday = dfl(w.E, 1);
+        } else {
+            dow = config._locale._week.dow;
+            doy = config._locale._week.doy;
+
+            weekYear = dfl(w.gg, config._a[YEAR], weekOfYear(moment(), dow, doy).year);
+            week = dfl(w.w, 1);
+
+            if (w.d != null) {
+                // weekday -- low day numbers are considered next week
+                weekday = w.d;
+                if (weekday < dow) {
+                    ++week;
+                }
+            } else if (w.e != null) {
+                // local weekday -- counting starts from begining of week
+                weekday = w.e + dow;
+            } else {
+                // default to begining of week
+                weekday = dow;
+            }
+        }
+        temp = dayOfYearFromWeeks(weekYear, week, weekday, doy, dow);
+
+        config._a[YEAR] = temp.year;
+        config._dayOfYear = temp.dayOfYear;
+    }
+
+    // convert an array to a date.
+    // the array should mirror the parameters below
+    // note: all values past the year are optional and will default to the lowest possible value.
+    // [year, month, day , hour, minute, second, millisecond]
+    function dateFromConfig(config) {
+        var i, date, input = [], currentDate, yearToUse;
+
+        if (config._d) {
+            return;
+        }
+
+        currentDate = currentDateArray(config);
+
+        //compute day of the year from weeks and weekdays
+        if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
+            dayOfYearFromWeekInfo(config);
+        }
+
+        //if the day of the year is set, figure out what it is
+        if (config._dayOfYear) {
+            yearToUse = dfl(config._a[YEAR], currentDate[YEAR]);
+
+            if (config._dayOfYear > daysInYear(yearToUse)) {
+                config._pf._overflowDayOfYear = true;
+            }
+
+            date = makeUTCDate(yearToUse, 0, config._dayOfYear);
+            config._a[MONTH] = date.getUTCMonth();
+            config._a[DATE] = date.getUTCDate();
+        }
+
+        // Default to current date.
+        // * if no year, month, day of month are given, default to today
+        // * if day of month is given, default month and year
+        // * if month is given, default only year
+        // * if year is given, don't default anything
+        for (i = 0; i < 3 && config._a[i] == null; ++i) {
+            config._a[i] = input[i] = currentDate[i];
+        }
+
+        // Zero out whatever was not defaulted, including time
+        for (; i < 7; i++) {
+            config._a[i] = input[i] = (config._a[i] == null) ? (i === 2 ? 1 : 0) : config._a[i];
+        }
+
+        // Check for 24:00:00.000
+        if (config._a[HOUR] === 24 &&
+                config._a[MINUTE] === 0 &&
+                config._a[SECOND] === 0 &&
+                config._a[MILLISECOND] === 0) {
+            config._nextDay = true;
+            config._a[HOUR] = 0;
+        }
+
+        config._d = (config._useUTC ? makeUTCDate : makeDate).apply(null, input);
+        // Apply timezone offset from input. The actual zone can be changed
+        // with parseZone.
+        if (config._tzm != null) {
+            config._d.setUTCMinutes(config._d.getUTCMinutes() + config._tzm);
+        }
+
+        if (config._nextDay) {
+            config._a[HOUR] = 24;
+        }
+    }
+
+    function dateFromObject(config) {
+        var normalizedInput;
+
+        if (config._d) {
+            return;
+        }
+
+        normalizedInput = normalizeObjectUnits(config._i);
+        config._a = [
+            normalizedInput.year,
+            normalizedInput.month,
+            normalizedInput.day || normalizedInput.date,
+            normalizedInput.hour,
+            normalizedInput.minute,
+            normalizedInput.second,
+            normalizedInput.millisecond
+        ];
+
+        dateFromConfig(config);
+    }
+
+    function currentDateArray(config) {
+        var now = new Date();
+        if (config._useUTC) {
+            return [
+                now.getUTCFullYear(),
+                now.getUTCMonth(),
+                now.getUTCDate()
+            ];
+        } else {
+            return [now.getFullYear(), now.getMonth(), now.getDate()];
+        }
+    }
+
+    // date from string and format string
+    function makeDateFromStringAndFormat(config) {
+        if (config._f === moment.ISO_8601) {
+            parseISO(config);
+            return;
+        }
+
+        config._a = [];
+        config._pf.empty = true;
+
+        // This array is used to make a Date, either with `new Date` or `Date.UTC`
+        var string = '' + config._i,
+            i, parsedInput, tokens, token, skipped,
+            stringLength = string.length,
+            totalParsedInputLength = 0;
+
+        tokens = expandFormat(config._f, config._locale).match(formattingTokens) || [];
+
+        for (i = 0; i < tokens.length; i++) {
+            token = tokens[i];
+            parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0];
+            if (parsedInput) {
+                skipped = string.substr(0, string.indexOf(parsedInput));
+                if (skipped.length > 0) {
+                    config._pf.unusedInput.push(skipped);
+                }
+                string = string.slice(string.indexOf(parsedInput) + parsedInput.length);
+                totalParsedInputLength += parsedInput.length;
+            }
+            // don't parse if it's not a known token
+            if (formatTokenFunctions[token]) {
+                if (parsedInput) {
+                    config._pf.empty = false;
+                }
+                else {
+                    config._pf.unusedTokens.push(token);
+                }
+                addTimeToArrayFromToken(token, parsedInput, config);
+            }
+            else if (config._strict && !parsedInput) {
+                config._pf.unusedTokens.push(token);
+            }
+        }
+
+        // add remaining unparsed input length to the string
+        config._pf.charsLeftOver = stringLength - totalParsedInputLength;
+        if (string.length > 0) {
+            config._pf.unusedInput.push(string);
+        }
+
+        // clear _12h flag if hour is <= 12
+        if (config._pf.bigHour === true && config._a[HOUR] <= 12) {
+            config._pf.bigHour = undefined;
+        }
+        // handle am pm
+        if (config._isPm && config._a[HOUR] < 12) {
+            config._a[HOUR] += 12;
+        }
+        // if is 12 am, change hours to 0
+        if (config._isPm === false && config._a[HOUR] === 12) {
+            config._a[HOUR] = 0;
+        }
+        dateFromConfig(config);
+        checkOverflow(config);
+    }
+
+    function unescapeFormat(s) {
+        return s.replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function (matched, p1, p2, p3, p4) {
+            return p1 || p2 || p3 || p4;
+        });
+    }
+
+    // Code from http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
+    function regexpEscape(s) {
+        return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    }
+
+    // date from string and array of format strings
+    function makeDateFromStringAndArray(config) {
+        var tempConfig,
+            bestMoment,
+
+            scoreToBeat,
+            i,
+            currentScore;
+
+        if (config._f.length === 0) {
+            config._pf.invalidFormat = true;
+            config._d = new Date(NaN);
+            return;
+        }
+
+        for (i = 0; i < config._f.length; i++) {
+            currentScore = 0;
+            tempConfig = copyConfig({}, config);
+            if (config._useUTC != null) {
+                tempConfig._useUTC = config._useUTC;
+            }
+            tempConfig._pf = defaultParsingFlags();
+            tempConfig._f = config._f[i];
+            makeDateFromStringAndFormat(tempConfig);
+
+            if (!isValid(tempConfig)) {
+                continue;
+            }
+
+            // if there is any input that was not parsed add a penalty for that format
+            currentScore += tempConfig._pf.charsLeftOver;
+
+            //or tokens
+            currentScore += tempConfig._pf.unusedTokens.length * 10;
+
+            tempConfig._pf.score = currentScore;
+
+            if (scoreToBeat == null || currentScore < scoreToBeat) {
+                scoreToBeat = currentScore;
+                bestMoment = tempConfig;
+            }
+        }
+
+        extend(config, bestMoment || tempConfig);
+    }
+
+    // date from iso format
+    function parseISO(config) {
+        var i, l,
+            string = config._i,
+            match = isoRegex.exec(string);
+
+        if (match) {
+            config._pf.iso = true;
+            for (i = 0, l = isoDates.length; i < l; i++) {
+                if (isoDates[i][1].exec(string)) {
+                    // match[5] should be 'T' or undefined
+                    config._f = isoDates[i][0] + (match[6] || ' ');
+                    break;
+                }
+            }
+            for (i = 0, l = isoTimes.length; i < l; i++) {
+                if (isoTimes[i][1].exec(string)) {
+                    config._f += isoTimes[i][0];
+                    break;
+                }
+            }
+            if (string.match(parseTokenTimezone)) {
+                config._f += 'Z';
+            }
+            makeDateFromStringAndFormat(config);
+        } else {
+            config._isValid = false;
+        }
+    }
+
+    // date from iso format or fallback
+    function makeDateFromString(config) {
+        parseISO(config);
+        if (config._isValid === false) {
+            delete config._isValid;
+            moment.createFromInputFallback(config);
+        }
+    }
+
+    function map(arr, fn) {
+        var res = [], i;
+        for (i = 0; i < arr.length; ++i) {
+            res.push(fn(arr[i], i));
+        }
+        return res;
+    }
+
+    function makeDateFromInput(config) {
+        var input = config._i, matched;
+        if (input === undefined) {
+            config._d = new Date();
+        } else if (isDate(input)) {
+            config._d = new Date(+input);
+        } else if ((matched = aspNetJsonRegex.exec(input)) !== null) {
+            config._d = new Date(+matched[1]);
+        } else if (typeof input === 'string') {
+            makeDateFromString(config);
+        } else if (isArray(input)) {
+            config._a = map(input.slice(0), function (obj) {
+                return parseInt(obj, 10);
+            });
+            dateFromConfig(config);
+        } else if (typeof(input) === 'object') {
+            dateFromObject(config);
+        } else if (typeof(input) === 'number') {
+            // from milliseconds
+            config._d = new Date(input);
+        } else {
+            moment.createFromInputFallback(config);
+        }
+    }
+
+    function makeDate(y, m, d, h, M, s, ms) {
+        //can't just apply() to create a date:
+        //http://stackoverflow.com/questions/181348/instantiating-a-javascript-object-by-calling-prototype-constructor-apply
+        var date = new Date(y, m, d, h, M, s, ms);
+
+        //the date constructor doesn't accept years < 1970
+        if (y < 1970) {
+            date.setFullYear(y);
+        }
+        return date;
+    }
+
+    function makeUTCDate(y) {
+        var date = new Date(Date.UTC.apply(null, arguments));
+        if (y < 1970) {
+            date.setUTCFullYear(y);
+        }
+        return date;
+    }
+
+    function parseWeekday(input, locale) {
+        if (typeof input === 'string') {
+            if (!isNaN(input)) {
+                input = parseInt(input, 10);
+            }
+            else {
+                input = locale.weekdaysParse(input);
+                if (typeof input !== 'number') {
+                    return null;
+                }
+            }
+        }
+        return input;
+    }
+
+    /************************************
+        Relative Time
+    ************************************/
+
+
+    // helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
+    function substituteTimeAgo(string, number, withoutSuffix, isFuture, locale) {
+        return locale.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
+    }
+
+    function relativeTime(posNegDuration, withoutSuffix, locale) {
+        var duration = moment.duration(posNegDuration).abs(),
+            seconds = round(duration.as('s')),
+            minutes = round(duration.as('m')),
+            hours = round(duration.as('h')),
+            days = round(duration.as('d')),
+            months = round(duration.as('M')),
+            years = round(duration.as('y')),
+
+            args = seconds < relativeTimeThresholds.s && ['s', seconds] ||
+                minutes === 1 && ['m'] ||
+                minutes < relativeTimeThresholds.m && ['mm', minutes] ||
+                hours === 1 && ['h'] ||
+                hours < relativeTimeThresholds.h && ['hh', hours] ||
+                days === 1 && ['d'] ||
+                days < relativeTimeThresholds.d && ['dd', days] ||
+                months === 1 && ['M'] ||
+                months < relativeTimeThresholds.M && ['MM', months] ||
+                years === 1 && ['y'] || ['yy', years];
+
+        args[2] = withoutSuffix;
+        args[3] = +posNegDuration > 0;
+        args[4] = locale;
+        return substituteTimeAgo.apply({}, args);
+    }
+
+
+    /************************************
+        Week of Year
+    ************************************/
+
+
+    // firstDayOfWeek       0 = sun, 6 = sat
+    //                      the day of the week that starts the week
+    //                      (usually sunday or monday)
+    // firstDayOfWeekOfYear 0 = sun, 6 = sat
+    //                      the first week is the week that contains the first
+    //                      of this day of the week
+    //                      (eg. ISO weeks use thursday (4))
+    function weekOfYear(mom, firstDayOfWeek, firstDayOfWeekOfYear) {
+        var end = firstDayOfWeekOfYear - firstDayOfWeek,
+            daysToDayOfWeek = firstDayOfWeekOfYear - mom.day(),
+            adjustedMoment;
+
+
+        if (daysToDayOfWeek > end) {
+            daysToDayOfWeek -= 7;
+        }
+
+        if (daysToDayOfWeek < end - 7) {
+            daysToDayOfWeek += 7;
+        }
+
+        adjustedMoment = moment(mom).add(daysToDayOfWeek, 'd');
+        return {
+            week: Math.ceil(adjustedMoment.dayOfYear() / 7),
+            year: adjustedMoment.year()
+        };
+    }
+
+    //http://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
+    function dayOfYearFromWeeks(year, week, weekday, firstDayOfWeekOfYear, firstDayOfWeek) {
+        var d = makeUTCDate(year, 0, 1).getUTCDay(), daysToAdd, dayOfYear;
+
+        d = d === 0 ? 7 : d;
+        weekday = weekday != null ? weekday : firstDayOfWeek;
+        daysToAdd = firstDayOfWeek - d + (d > firstDayOfWeekOfYear ? 7 : 0) - (d < firstDayOfWeek ? 7 : 0);
+        dayOfYear = 7 * (week - 1) + (weekday - firstDayOfWeek) + daysToAdd + 1;
+
+        return {
+            year: dayOfYear > 0 ? year : year - 1,
+            dayOfYear: dayOfYear > 0 ?  dayOfYear : daysInYear(year - 1) + dayOfYear
+        };
+    }
+
+    /************************************
+        Top Level Functions
+    ************************************/
+
+    function makeMoment(config) {
+        var input = config._i,
+            format = config._f,
+            res;
+
+        config._locale = config._locale || moment.localeData(config._l);
+
+        if (input === null || (format === undefined && input === '')) {
+            return moment.invalid({nullInput: true});
+        }
+
+        if (typeof input === 'string') {
+            config._i = input = config._locale.preparse(input);
+        }
+
+        if (moment.isMoment(input)) {
+            return new Moment(input, true);
+        } else if (format) {
+            if (isArray(format)) {
+                makeDateFromStringAndArray(config);
+            } else {
+                makeDateFromStringAndFormat(config);
+            }
+        } else {
+            makeDateFromInput(config);
+        }
+
+        res = new Moment(config);
+        if (res._nextDay) {
+            // Adding is smart enough around DST
+            res.add(1, 'd');
+            res._nextDay = undefined;
+        }
+
+        return res;
+    }
+
+    moment = function (input, format, locale, strict) {
+        var c;
+
+        if (typeof(locale) === 'boolean') {
+            strict = locale;
+            locale = undefined;
+        }
+        // object construction must be done this way.
+        // https://github.com/moment/moment/issues/1423
+        c = {};
+        c._isAMomentObject = true;
+        c._i = input;
+        c._f = format;
+        c._l = locale;
+        c._strict = strict;
+        c._isUTC = false;
+        c._pf = defaultParsingFlags();
+
+        return makeMoment(c);
+    };
+
+    moment.suppressDeprecationWarnings = false;
+
+    moment.createFromInputFallback = deprecate(
+        'moment construction falls back to js Date. This is ' +
+        'discouraged and will be removed in upcoming major ' +
+        'release. Please refer to ' +
+        'https://github.com/moment/moment/issues/1407 for more info.',
+        function (config) {
+            config._d = new Date(config._i + (config._useUTC ? ' UTC' : ''));
+        }
+    );
+
+    // Pick a moment m from moments so that m[fn](other) is true for all
+    // other. This relies on the function fn to be transitive.
+    //
+    // moments should either be an array of moment objects or an array, whose
+    // first element is an array of moment objects.
+    function pickBy(fn, moments) {
+        var res, i;
+        if (moments.length === 1 && isArray(moments[0])) {
+            moments = moments[0];
+        }
+        if (!moments.length) {
+            return moment();
+        }
+        res = moments[0];
+        for (i = 1; i < moments.length; ++i) {
+            if (moments[i][fn](res)) {
+                res = moments[i];
+            }
+        }
+        return res;
+    }
+
+    moment.min = function () {
+        var args = [].slice.call(arguments, 0);
+
+        return pickBy('isBefore', args);
+    };
+
+    moment.max = function () {
+        var args = [].slice.call(arguments, 0);
+
+        return pickBy('isAfter', args);
+    };
+
+    // creating with utc
+    moment.utc = function (input, format, locale, strict) {
+        var c;
+
+        if (typeof(locale) === 'boolean') {
+            strict = locale;
+            locale = undefined;
+        }
+        // object construction must be done this way.
+        // https://github.com/moment/moment/issues/1423
+        c = {};
+        c._isAMomentObject = true;
+        c._useUTC = true;
+        c._isUTC = true;
+        c._l = locale;
+        c._i = input;
+        c._f = format;
+        c._strict = strict;
+        c._pf = defaultParsingFlags();
+
+        return makeMoment(c).utc();
+    };
+
+    // creating with unix timestamp (in seconds)
+    moment.unix = function (input) {
+        return moment(input * 1000);
+    };
+
+    // duration
+    moment.duration = function (input, key) {
+        var duration = input,
+            // matching against regexp is expensive, do it on demand
+            match = null,
+            sign,
+            ret,
+            parseIso,
+            diffRes;
+
+        if (moment.isDuration(input)) {
+            duration = {
+                ms: input._milliseconds,
+                d: input._days,
+                M: input._months
+            };
+        } else if (typeof input === 'number') {
+            duration = {};
+            if (key) {
+                duration[key] = input;
+            } else {
+                duration.milliseconds = input;
+            }
+        } else if (!!(match = aspNetTimeSpanJsonRegex.exec(input))) {
+            sign = (match[1] === '-') ? -1 : 1;
+            duration = {
+                y: 0,
+                d: toInt(match[DATE]) * sign,
+                h: toInt(match[HOUR]) * sign,
+                m: toInt(match[MINUTE]) * sign,
+                s: toInt(match[SECOND]) * sign,
+                ms: toInt(match[MILLISECOND]) * sign
+            };
+        } else if (!!(match = isoDurationRegex.exec(input))) {
+            sign = (match[1] === '-') ? -1 : 1;
+            parseIso = function (inp) {
+                // We'd normally use ~~inp for this, but unfortunately it also
+                // converts floats to ints.
+                // inp may be undefined, so careful calling replace on it.
+                var res = inp && parseFloat(inp.replace(',', '.'));
+                // apply sign while we're at it
+                return (isNaN(res) ? 0 : res) * sign;
+            };
+            duration = {
+                y: parseIso(match[2]),
+                M: parseIso(match[3]),
+                d: parseIso(match[4]),
+                h: parseIso(match[5]),
+                m: parseIso(match[6]),
+                s: parseIso(match[7]),
+                w: parseIso(match[8])
+            };
+        } else if (typeof duration === 'object' &&
+                ('from' in duration || 'to' in duration)) {
+            diffRes = momentsDifference(moment(duration.from), moment(duration.to));
+
+            duration = {};
+            duration.ms = diffRes.milliseconds;
+            duration.M = diffRes.months;
+        }
+
+        ret = new Duration(duration);
+
+        if (moment.isDuration(input) && hasOwnProp(input, '_locale')) {
+            ret._locale = input._locale;
+        }
+
+        return ret;
+    };
+
+    // version number
+    moment.version = VERSION;
+
+    // default format
+    moment.defaultFormat = isoFormat;
+
+    // constant that refers to the ISO standard
+    moment.ISO_8601 = function () {};
+
+    // Plugins that add properties should also add the key here (null value),
+    // so we can properly clone ourselves.
+    moment.momentProperties = momentProperties;
+
+    // This function will be called whenever a moment is mutated.
+    // It is intended to keep the offset in sync with the timezone.
+    moment.updateOffset = function () {};
+
+    // This function allows you to set a threshold for relative time strings
+    moment.relativeTimeThreshold = function (threshold, limit) {
+        if (relativeTimeThresholds[threshold] === undefined) {
+            return false;
+        }
+        if (limit === undefined) {
+            return relativeTimeThresholds[threshold];
+        }
+        relativeTimeThresholds[threshold] = limit;
+        return true;
+    };
+
+    moment.lang = deprecate(
+        'moment.lang is deprecated. Use moment.locale instead.',
+        function (key, value) {
+            return moment.locale(key, value);
+        }
+    );
+
+    // This function will load locale and then set the global locale.  If
+    // no arguments are passed in, it will simply return the current global
+    // locale key.
+    moment.locale = function (key, values) {
+        var data;
+        if (key) {
+            if (typeof(values) !== 'undefined') {
+                data = moment.defineLocale(key, values);
+            }
+            else {
+                data = moment.localeData(key);
+            }
+
+            if (data) {
+                moment.duration._locale = moment._locale = data;
+            }
+        }
+
+        return moment._locale._abbr;
+    };
+
+    moment.defineLocale = function (name, values) {
+        if (values !== null) {
+            values.abbr = name;
+            if (!locales[name]) {
+                locales[name] = new Locale();
+            }
+            locales[name].set(values);
+
+            // backwards compat for now: also set the locale
+            moment.locale(name);
+
+            return locales[name];
+        } else {
+            // useful for testing
+            delete locales[name];
+            return null;
+        }
+    };
+
+    moment.langData = deprecate(
+        'moment.langData is deprecated. Use moment.localeData instead.',
+        function (key) {
+            return moment.localeData(key);
+        }
+    );
+
+    // returns locale data
+    moment.localeData = function (key) {
+        var locale;
+
+        if (key && key._locale && key._locale._abbr) {
+            key = key._locale._abbr;
+        }
+
+        if (!key) {
+            return moment._locale;
+        }
+
+        if (!isArray(key)) {
+            //short-circuit everything else
+            locale = loadLocale(key);
+            if (locale) {
+                return locale;
+            }
+            key = [key];
+        }
+
+        return chooseLocale(key);
+    };
+
+    // compare moment object
+    moment.isMoment = function (obj) {
+        return obj instanceof Moment ||
+            (obj != null && hasOwnProp(obj, '_isAMomentObject'));
+    };
+
+    // for typechecking Duration objects
+    moment.isDuration = function (obj) {
+        return obj instanceof Duration;
+    };
+
+    for (i = lists.length - 1; i >= 0; --i) {
+        makeList(lists[i]);
+    }
+
+    moment.normalizeUnits = function (units) {
+        return normalizeUnits(units);
+    };
+
+    moment.invalid = function (flags) {
+        var m = moment.utc(NaN);
+        if (flags != null) {
+            extend(m._pf, flags);
+        }
+        else {
+            m._pf.userInvalidated = true;
+        }
+
+        return m;
+    };
+
+    moment.parseZone = function () {
+        return moment.apply(null, arguments).parseZone();
+    };
+
+    moment.parseTwoDigitYear = function (input) {
+        return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
+    };
+
+    /************************************
+        Moment Prototype
+    ************************************/
+
+
+    extend(moment.fn = Moment.prototype, {
+
+        clone : function () {
+            return moment(this);
+        },
+
+        valueOf : function () {
+            return +this._d + ((this._offset || 0) * 60000);
+        },
+
+        unix : function () {
+            return Math.floor(+this / 1000);
+        },
+
+        toString : function () {
+            return this.clone().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ');
+        },
+
+        toDate : function () {
+            return this._offset ? new Date(+this) : this._d;
+        },
+
+        toISOString : function () {
+            var m = moment(this).utc();
+            if (0 < m.year() && m.year() <= 9999) {
+                if ('function' === typeof Date.prototype.toISOString) {
+                    // native implementation is ~50x faster, use it when we can
+                    return this.toDate().toISOString();
+                } else {
+                    return formatMoment(m, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+                }
+            } else {
+                return formatMoment(m, 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+            }
+        },
+
+        toArray : function () {
+            var m = this;
+            return [
+                m.year(),
+                m.month(),
+                m.date(),
+                m.hours(),
+                m.minutes(),
+                m.seconds(),
+                m.milliseconds()
+            ];
+        },
+
+        isValid : function () {
+            return isValid(this);
+        },
+
+        isDSTShifted : function () {
+            if (this._a) {
+                return this.isValid() && compareArrays(this._a, (this._isUTC ? moment.utc(this._a) : moment(this._a)).toArray()) > 0;
+            }
+
+            return false;
+        },
+
+        parsingFlags : function () {
+            return extend({}, this._pf);
+        },
+
+        invalidAt: function () {
+            return this._pf.overflow;
+        },
+
+        utc : function (keepLocalTime) {
+            return this.zone(0, keepLocalTime);
+        },
+
+        local : function (keepLocalTime) {
+            if (this._isUTC) {
+                this.zone(0, keepLocalTime);
+                this._isUTC = false;
+
+                if (keepLocalTime) {
+                    this.add(this._dateTzOffset(), 'm');
+                }
+            }
+            return this;
+        },
+
+        format : function (inputString) {
+            var output = formatMoment(this, inputString || moment.defaultFormat);
+            return this.localeData().postformat(output);
+        },
+
+        add : createAdder(1, 'add'),
+
+        subtract : createAdder(-1, 'subtract'),
+
+        diff : function (input, units, asFloat) {
+            var that = makeAs(input, this),
+                zoneDiff = (this.zone() - that.zone()) * 6e4,
+                diff, output, daysAdjust;
+
+            units = normalizeUnits(units);
+
+            if (units === 'year' || units === 'month') {
+                // average number of days in the months in the given dates
+                diff = (this.daysInMonth() + that.daysInMonth()) * 432e5; // 24 * 60 * 60 * 1000 / 2
+                // difference in months
+                output = ((this.year() - that.year()) * 12) + (this.month() - that.month());
+                // adjust by taking difference in days, average number of days
+                // and dst in the given months.
+                daysAdjust = (this - moment(this).startOf('month')) -
+                    (that - moment(that).startOf('month'));
+                // same as above but with zones, to negate all dst
+                daysAdjust -= ((this.zone() - moment(this).startOf('month').zone()) -
+                        (that.zone() - moment(that).startOf('month').zone())) * 6e4;
+                output += daysAdjust / diff;
+                if (units === 'year') {
+                    output = output / 12;
+                }
+            } else {
+                diff = (this - that);
+                output = units === 'second' ? diff / 1e3 : // 1000
+                    units === 'minute' ? diff / 6e4 : // 1000 * 60
+                    units === 'hour' ? diff / 36e5 : // 1000 * 60 * 60
+                    units === 'day' ? (diff - zoneDiff) / 864e5 : // 1000 * 60 * 60 * 24, negate dst
+                    units === 'week' ? (diff - zoneDiff) / 6048e5 : // 1000 * 60 * 60 * 24 * 7, negate dst
+                    diff;
+            }
+            return asFloat ? output : absRound(output);
+        },
+
+        from : function (time, withoutSuffix) {
+            return moment.duration({to: this, from: time}).locale(this.locale()).humanize(!withoutSuffix);
+        },
+
+        fromNow : function (withoutSuffix) {
+            return this.from(moment(), withoutSuffix);
+        },
+
+        calendar : function (time) {
+            // We want to compare the start of today, vs this.
+            // Getting start-of-today depends on whether we're zone'd or not.
+            var now = time || moment(),
+                sod = makeAs(now, this).startOf('day'),
+                diff = this.diff(sod, 'days', true),
+                format = diff < -6 ? 'sameElse' :
+                    diff < -1 ? 'lastWeek' :
+                    diff < 0 ? 'lastDay' :
+                    diff < 1 ? 'sameDay' :
+                    diff < 2 ? 'nextDay' :
+                    diff < 7 ? 'nextWeek' : 'sameElse';
+            return this.format(this.localeData().calendar(format, this, moment(now)));
+        },
+
+        isLeapYear : function () {
+            return isLeapYear(this.year());
+        },
+
+        isDST : function () {
+            return (this.zone() < this.clone().month(0).zone() ||
+                this.zone() < this.clone().month(5).zone());
+        },
+
+        day : function (input) {
+            var day = this._isUTC ? this._d.getUTCDay() : this._d.getDay();
+            if (input != null) {
+                input = parseWeekday(input, this.localeData());
+                return this.add(input - day, 'd');
+            } else {
+                return day;
+            }
+        },
+
+        month : makeAccessor('Month', true),
+
+        startOf : function (units) {
+            units = normalizeUnits(units);
+            // the following switch intentionally omits break keywords
+            // to utilize falling through the cases.
+            switch (units) {
+            case 'year':
+                this.month(0);
+                /* falls through */
+            case 'quarter':
+            case 'month':
+                this.date(1);
+                /* falls through */
+            case 'week':
+            case 'isoWeek':
+            case 'day':
+                this.hours(0);
+                /* falls through */
+            case 'hour':
+                this.minutes(0);
+                /* falls through */
+            case 'minute':
+                this.seconds(0);
+                /* falls through */
+            case 'second':
+                this.milliseconds(0);
+                /* falls through */
+            }
+
+            // weeks are a special case
+            if (units === 'week') {
+                this.weekday(0);
+            } else if (units === 'isoWeek') {
+                this.isoWeekday(1);
+            }
+
+            // quarters are also special
+            if (units === 'quarter') {
+                this.month(Math.floor(this.month() / 3) * 3);
+            }
+
+            return this;
+        },
+
+        endOf: function (units) {
+            units = normalizeUnits(units);
+            if (units === undefined || units === 'millisecond') {
+                return this;
+            }
+            return this.startOf(units).add(1, (units === 'isoWeek' ? 'week' : units)).subtract(1, 'ms');
+        },
+
+        isAfter: function (input, units) {
+            var inputMs;
+            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
+            if (units === 'millisecond') {
+                input = moment.isMoment(input) ? input : moment(input);
+                return +this > +input;
+            } else {
+                inputMs = moment.isMoment(input) ? +input : +moment(input);
+                return inputMs < +this.clone().startOf(units);
+            }
+        },
+
+        isBefore: function (input, units) {
+            var inputMs;
+            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
+            if (units === 'millisecond') {
+                input = moment.isMoment(input) ? input : moment(input);
+                return +this < +input;
+            } else {
+                inputMs = moment.isMoment(input) ? +input : +moment(input);
+                return +this.clone().endOf(units) < inputMs;
+            }
+        },
+
+        isSame: function (input, units) {
+            var inputMs;
+            units = normalizeUnits(units || 'millisecond');
+            if (units === 'millisecond') {
+                input = moment.isMoment(input) ? input : moment(input);
+                return +this === +input;
+            } else {
+                inputMs = +moment(input);
+                return +(this.clone().startOf(units)) <= inputMs && inputMs <= +(this.clone().endOf(units));
+            }
+        },
+
+        min: deprecate(
+                 'moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548',
+                 function (other) {
+                     other = moment.apply(null, arguments);
+                     return other < this ? this : other;
+                 }
+         ),
+
+        max: deprecate(
+                'moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548',
+                function (other) {
+                    other = moment.apply(null, arguments);
+                    return other > this ? this : other;
+                }
+        ),
+
+        // keepLocalTime = true means only change the timezone, without
+        // affecting the local hour. So 5:31:26 +0300 --[zone(2, true)]-->
+        // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist int zone
+        // +0200, so we adjust the time as needed, to be valid.
+        //
+        // Keeping the time actually adds/subtracts (one hour)
+        // from the actual represented time. That is why we call updateOffset
+        // a second time. In case it wants us to change the offset again
+        // _changeInProgress == true case, then we have to adjust, because
+        // there is no such time in the given timezone.
+        zone : function (input, keepLocalTime) {
+            var offset = this._offset || 0,
+                localAdjust;
+            if (input != null) {
+                if (typeof input === 'string') {
+                    input = timezoneMinutesFromString(input);
+                }
+                if (Math.abs(input) < 16) {
+                    input = input * 60;
+                }
+                if (!this._isUTC && keepLocalTime) {
+                    localAdjust = this._dateTzOffset();
+                }
+                this._offset = input;
+                this._isUTC = true;
+                if (localAdjust != null) {
+                    this.subtract(localAdjust, 'm');
+                }
+                if (offset !== input) {
+                    if (!keepLocalTime || this._changeInProgress) {
+                        addOrSubtractDurationFromMoment(this,
+                                moment.duration(offset - input, 'm'), 1, false);
+                    } else if (!this._changeInProgress) {
+                        this._changeInProgress = true;
+                        moment.updateOffset(this, true);
+                        this._changeInProgress = null;
+                    }
+                }
+            } else {
+                return this._isUTC ? offset : this._dateTzOffset();
+            }
+            return this;
+        },
+
+        zoneAbbr : function () {
+            return this._isUTC ? 'UTC' : '';
+        },
+
+        zoneName : function () {
+            return this._isUTC ? 'Coordinated Universal Time' : '';
+        },
+
+        parseZone : function () {
+            if (this._tzm) {
+                this.zone(this._tzm);
+            } else if (typeof this._i === 'string') {
+                this.zone(this._i);
+            }
+            return this;
+        },
+
+        hasAlignedHourOffset : function (input) {
+            if (!input) {
+                input = 0;
+            }
+            else {
+                input = moment(input).zone();
+            }
+
+            return (this.zone() - input) % 60 === 0;
+        },
+
+        daysInMonth : function () {
+            return daysInMonth(this.year(), this.month());
+        },
+
+        dayOfYear : function (input) {
+            var dayOfYear = round((moment(this).startOf('day') - moment(this).startOf('year')) / 864e5) + 1;
+            return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
+        },
+
+        quarter : function (input) {
+            return input == null ? Math.ceil((this.month() + 1) / 3) : this.month((input - 1) * 3 + this.month() % 3);
+        },
+
+        weekYear : function (input) {
+            var year = weekOfYear(this, this.localeData()._week.dow, this.localeData()._week.doy).year;
+            return input == null ? year : this.add((input - year), 'y');
+        },
+
+        isoWeekYear : function (input) {
+            var year = weekOfYear(this, 1, 4).year;
+            return input == null ? year : this.add((input - year), 'y');
+        },
+
+        week : function (input) {
+            var week = this.localeData().week(this);
+            return input == null ? week : this.add((input - week) * 7, 'd');
+        },
+
+        isoWeek : function (input) {
+            var week = weekOfYear(this, 1, 4).week;
+            return input == null ? week : this.add((input - week) * 7, 'd');
+        },
+
+        weekday : function (input) {
+            var weekday = (this.day() + 7 - this.localeData()._week.dow) % 7;
+            return input == null ? weekday : this.add(input - weekday, 'd');
+        },
+
+        isoWeekday : function (input) {
+            // behaves the same as moment#day except
+            // as a getter, returns 7 instead of 0 (1-7 range instead of 0-6)
+            // as a setter, sunday should belong to the previous week.
+            return input == null ? this.day() || 7 : this.day(this.day() % 7 ? input : input - 7);
+        },
+
+        isoWeeksInYear : function () {
+            return weeksInYear(this.year(), 1, 4);
+        },
+
+        weeksInYear : function () {
+            var weekInfo = this.localeData()._week;
+            return weeksInYear(this.year(), weekInfo.dow, weekInfo.doy);
+        },
+
+        get : function (units) {
+            units = normalizeUnits(units);
+            return this[units]();
+        },
+
+        set : function (units, value) {
+            units = normalizeUnits(units);
+            if (typeof this[units] === 'function') {
+                this[units](value);
+            }
+            return this;
+        },
+
+        // If passed a locale key, it will set the locale for this
+        // instance.  Otherwise, it will return the locale configuration
+        // variables for this instance.
+        locale : function (key) {
+            var newLocaleData;
+
+            if (key === undefined) {
+                return this._locale._abbr;
+            } else {
+                newLocaleData = moment.localeData(key);
+                if (newLocaleData != null) {
+                    this._locale = newLocaleData;
+                }
+                return this;
+            }
+        },
+
+        lang : deprecate(
+            'moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.',
+            function (key) {
+                if (key === undefined) {
+                    return this.localeData();
+                } else {
+                    return this.locale(key);
+                }
+            }
+        ),
+
+        localeData : function () {
+            return this._locale;
+        },
+
+        _dateTzOffset : function () {
+            // On Firefox.24 Date#getTimezoneOffset returns a floating point.
+            // https://github.com/moment/moment/pull/1871
+            return Math.round(this._d.getTimezoneOffset() / 15) * 15;
+        }
+    });
+
+    function rawMonthSetter(mom, value) {
+        var dayOfMonth;
+
+        // TODO: Move this out of here!
+        if (typeof value === 'string') {
+            value = mom.localeData().monthsParse(value);
+            // TODO: Another silent failure?
+            if (typeof value !== 'number') {
+                return mom;
+            }
+        }
+
+        dayOfMonth = Math.min(mom.date(),
+                daysInMonth(mom.year(), value));
+        mom._d['set' + (mom._isUTC ? 'UTC' : '') + 'Month'](value, dayOfMonth);
+        return mom;
+    }
+
+    function rawGetter(mom, unit) {
+        return mom._d['get' + (mom._isUTC ? 'UTC' : '') + unit]();
+    }
+
+    function rawSetter(mom, unit, value) {
+        if (unit === 'Month') {
+            return rawMonthSetter(mom, value);
+        } else {
+            return mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value);
+        }
+    }
+
+    function makeAccessor(unit, keepTime) {
+        return function (value) {
+            if (value != null) {
+                rawSetter(this, unit, value);
+                moment.updateOffset(this, keepTime);
+                return this;
+            } else {
+                return rawGetter(this, unit);
+            }
+        };
+    }
+
+    moment.fn.millisecond = moment.fn.milliseconds = makeAccessor('Milliseconds', false);
+    moment.fn.second = moment.fn.seconds = makeAccessor('Seconds', false);
+    moment.fn.minute = moment.fn.minutes = makeAccessor('Minutes', false);
+    // Setting the hour should keep the time, because the user explicitly
+    // specified which hour he wants. So trying to maintain the same hour (in
+    // a new timezone) makes sense. Adding/subtracting hours does not follow
+    // this rule.
+    moment.fn.hour = moment.fn.hours = makeAccessor('Hours', true);
+    // moment.fn.month is defined separately
+    moment.fn.date = makeAccessor('Date', true);
+    moment.fn.dates = deprecate('dates accessor is deprecated. Use date instead.', makeAccessor('Date', true));
+    moment.fn.year = makeAccessor('FullYear', true);
+    moment.fn.years = deprecate('years accessor is deprecated. Use year instead.', makeAccessor('FullYear', true));
+
+    // add plural methods
+    moment.fn.days = moment.fn.day;
+    moment.fn.months = moment.fn.month;
+    moment.fn.weeks = moment.fn.week;
+    moment.fn.isoWeeks = moment.fn.isoWeek;
+    moment.fn.quarters = moment.fn.quarter;
+
+    // add aliased format methods
+    moment.fn.toJSON = moment.fn.toISOString;
+
+    /************************************
+        Duration Prototype
+    ************************************/
+
+
+    function daysToYears (days) {
+        // 400 years have 146097 days (taking into account leap year rules)
+        return days * 400 / 146097;
+    }
+
+    function yearsToDays (years) {
+        // years * 365 + absRound(years / 4) -
+        //     absRound(years / 100) + absRound(years / 400);
+        return years * 146097 / 400;
+    }
+
+    extend(moment.duration.fn = Duration.prototype, {
+
+        _bubble : function () {
+            var milliseconds = this._milliseconds,
+                days = this._days,
+                months = this._months,
+                data = this._data,
+                seconds, minutes, hours, years = 0;
+
+            // The following code bubbles up values, see the tests for
+            // examples of what that means.
+            data.milliseconds = milliseconds % 1000;
+
+            seconds = absRound(milliseconds / 1000);
+            data.seconds = seconds % 60;
+
+            minutes = absRound(seconds / 60);
+            data.minutes = minutes % 60;
+
+            hours = absRound(minutes / 60);
+            data.hours = hours % 24;
+
+            days += absRound(hours / 24);
+
+            // Accurately convert days to years, assume start from year 0.
+            years = absRound(daysToYears(days));
+            days -= absRound(yearsToDays(years));
+
+            // 30 days to a month
+            // TODO (iskren): Use anchor date (like 1st Jan) to compute this.
+            months += absRound(days / 30);
+            days %= 30;
+
+            // 12 months -> 1 year
+            years += absRound(months / 12);
+            months %= 12;
+
+            data.days = days;
+            data.months = months;
+            data.years = years;
+        },
+
+        abs : function () {
+            this._milliseconds = Math.abs(this._milliseconds);
+            this._days = Math.abs(this._days);
+            this._months = Math.abs(this._months);
+
+            this._data.milliseconds = Math.abs(this._data.milliseconds);
+            this._data.seconds = Math.abs(this._data.seconds);
+            this._data.minutes = Math.abs(this._data.minutes);
+            this._data.hours = Math.abs(this._data.hours);
+            this._data.months = Math.abs(this._data.months);
+            this._data.years = Math.abs(this._data.years);
+
+            return this;
+        },
+
+        weeks : function () {
+            return absRound(this.days() / 7);
+        },
+
+        valueOf : function () {
+            return this._milliseconds +
+              this._days * 864e5 +
+              (this._months % 12) * 2592e6 +
+              toInt(this._months / 12) * 31536e6;
+        },
+
+        humanize : function (withSuffix) {
+            var output = relativeTime(this, !withSuffix, this.localeData());
+
+            if (withSuffix) {
+                output = this.localeData().pastFuture(+this, output);
+            }
+
+            return this.localeData().postformat(output);
+        },
+
+        add : function (input, val) {
+            // supports only 2.0-style add(1, 's') or add(moment)
+            var dur = moment.duration(input, val);
+
+            this._milliseconds += dur._milliseconds;
+            this._days += dur._days;
+            this._months += dur._months;
+
+            this._bubble();
+
+            return this;
+        },
+
+        subtract : function (input, val) {
+            var dur = moment.duration(input, val);
+
+            this._milliseconds -= dur._milliseconds;
+            this._days -= dur._days;
+            this._months -= dur._months;
+
+            this._bubble();
+
+            return this;
+        },
+
+        get : function (units) {
+            units = normalizeUnits(units);
+            return this[units.toLowerCase() + 's']();
+        },
+
+        as : function (units) {
+            var days, months;
+            units = normalizeUnits(units);
+
+            if (units === 'month' || units === 'year') {
+                days = this._days + this._milliseconds / 864e5;
+                months = this._months + daysToYears(days) * 12;
+                return units === 'month' ? months : months / 12;
+            } else {
+                // handle milliseconds separately because of floating point math errors (issue #1867)
+                days = this._days + Math.round(yearsToDays(this._months / 12));
+                switch (units) {
+                    case 'week': return days / 7 + this._milliseconds / 6048e5;
+                    case 'day': return days + this._milliseconds / 864e5;
+                    case 'hour': return days * 24 + this._milliseconds / 36e5;
+                    case 'minute': return days * 24 * 60 + this._milliseconds / 6e4;
+                    case 'second': return days * 24 * 60 * 60 + this._milliseconds / 1000;
+                    // Math.floor prevents floating point math errors here
+                    case 'millisecond': return Math.floor(days * 24 * 60 * 60 * 1000) + this._milliseconds;
+                    default: throw new Error('Unknown unit ' + units);
+                }
+            }
+        },
+
+        lang : moment.fn.lang,
+        locale : moment.fn.locale,
+
+        toIsoString : deprecate(
+            'toIsoString() is deprecated. Please use toISOString() instead ' +
+            '(notice the capitals)',
+            function () {
+                return this.toISOString();
+            }
+        ),
+
+        toISOString : function () {
+            // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
+            var years = Math.abs(this.years()),
+                months = Math.abs(this.months()),
+                days = Math.abs(this.days()),
+                hours = Math.abs(this.hours()),
+                minutes = Math.abs(this.minutes()),
+                seconds = Math.abs(this.seconds() + this.milliseconds() / 1000);
+
+            if (!this.asSeconds()) {
+                // this is the same as C#'s (Noda) and python (isodate)...
+                // but not other JS (goog.date)
+                return 'P0D';
+            }
+
+            return (this.asSeconds() < 0 ? '-' : '') +
+                'P' +
+                (years ? years + 'Y' : '') +
+                (months ? months + 'M' : '') +
+                (days ? days + 'D' : '') +
+                ((hours || minutes || seconds) ? 'T' : '') +
+                (hours ? hours + 'H' : '') +
+                (minutes ? minutes + 'M' : '') +
+                (seconds ? seconds + 'S' : '');
+        },
+
+        localeData : function () {
+            return this._locale;
+        }
+    });
+
+    moment.duration.fn.toString = moment.duration.fn.toISOString;
+
+    function makeDurationGetter(name) {
+        moment.duration.fn[name] = function () {
+            return this._data[name];
+        };
+    }
+
+    for (i in unitMillisecondFactors) {
+        if (hasOwnProp(unitMillisecondFactors, i)) {
+            makeDurationGetter(i.toLowerCase());
+        }
+    }
+
+    moment.duration.fn.asMilliseconds = function () {
+        return this.as('ms');
+    };
+    moment.duration.fn.asSeconds = function () {
+        return this.as('s');
+    };
+    moment.duration.fn.asMinutes = function () {
+        return this.as('m');
+    };
+    moment.duration.fn.asHours = function () {
+        return this.as('h');
+    };
+    moment.duration.fn.asDays = function () {
+        return this.as('d');
+    };
+    moment.duration.fn.asWeeks = function () {
+        return this.as('weeks');
+    };
+    moment.duration.fn.asMonths = function () {
+        return this.as('M');
+    };
+    moment.duration.fn.asYears = function () {
+        return this.as('y');
+    };
+
+    /************************************
+        Default Locale
+    ************************************/
+
+
+    // Set default locale, other locale will inherit from English.
+    moment.locale('en', {
+        ordinalParse: /\d{1,2}(th|st|nd|rd)/,
+        ordinal : function (number) {
+            var b = number % 10,
+                output = (toInt(number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
+            return number + output;
+        }
+    });
+
+    /* EMBED_LOCALES */
+
+    /************************************
+        Exposing Moment
+    ************************************/
+
+    function makeGlobal(shouldDeprecate) {
+        /*global ender:false */
+        if (typeof ender !== 'undefined') {
+            return;
+        }
+        oldGlobalMoment = globalScope.moment;
+        if (shouldDeprecate) {
+            globalScope.moment = deprecate(
+                    'Accessing Moment through the global scope is ' +
+                    'deprecated, and will be removed in an upcoming ' +
+                    'release.',
+                    moment);
+        } else {
+            globalScope.moment = moment;
+        }
+    }
+
+    // CommonJS module is defined
+    if (hasModule) {
+        module.exports = moment;
+    } else if (typeof define === 'function' && define.amd) {
+        define('moment', function (require, exports, module) {
+            if (module.config && module.config() && module.config().noGlobal === true) {
+                // release the global variable
+                globalScope.moment = oldGlobalMoment;
+            }
+
+            return moment;
+        });
+        makeGlobal(true);
+    } else {
+        makeGlobal();
+    }
+}).call(this);
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],5:[function(require,module,exports){
+require('./resources/libs');
+
+require('./locales/locales');
+
+window.Routes = require('../shared/routes/routes');
+
+window.ApiRoutes = require('../shared/routes/api');
+
+require('./react/application');
+
+window.ThumborService = require('../shared/react/services/thumbor');
+
+require('./react/components/auth/auth');
+
+require('./react/components/auth/authEmailSignIn');
+
+require('./react/components/auth/authEmailSignUp');
+
+window.EntryPage = require('./react/pages/entry');
+
+window.TlogRegularPage = require('./react/pages/tlogRegular');
+
+window.TlogDaylogPage = require('./react/pages/tlogDaylog');
+
+window.FeedLivePage = require('./react/pages/feedLive');
+
+window.FeedBestPage = require('./react/pages/feedBest');
+
+window.FeedFriendsPage = require('./react/pages/feedFriends');
+
+require('./react/stores/currentUser');
+
+require('./react/stores/relationships');
+
+require('./react/stores/feed');
+
+ReactApp.start();
+
+
+
+},{"../shared/react/services/thumbor":168,"../shared/routes/api":169,"../shared/routes/routes":170,"./locales/locales":6,"./react/application":14,"./react/components/auth/auth":16,"./react/components/auth/authEmailSignIn":18,"./react/components/auth/authEmailSignUp":19,"./react/pages/entry":150,"./react/pages/feedBest":151,"./react/pages/feedFriends":152,"./react/pages/feedLive":153,"./react/pages/tlogDaylog":158,"./react/pages/tlogRegular":159,"./react/stores/currentUser":161,"./react/stores/feed":162,"./react/stores/relationships":163,"./resources/libs":164}],6:[function(require,module,exports){
+var momentLocales;
+
+momentLocales = {
+  'ru': require('../../../bower_components/momentjs/locale/ru')
+};
+
+window.moment.locale('ru', momentLocales.ru);
+
+
+
+},{"../../../bower_components/momentjs/locale/ru":3}],7:[function(require,module,exports){
+var AppDispatcher, Constants, FeedServerActions;
+
+Constants = require('../../constants/constants');
+
+AppDispatcher = require('../../dispatcher/dispatcher');
+
+FeedServerActions = {
+  initializeFeed: function(entries) {
+    return AppDispatcher.handleServerAction({
+      type: Constants.feed.INITIALIZE_FEED,
+      entries: entries
+    });
+  },
+  loadEntries: function(entries) {
+    return AppDispatcher.handleServerAction({
+      type: Constants.feed.LOAD_ENTRIES,
+      entries: entries
+    });
+  }
+};
+
+module.exports = FeedServerActions;
+
+
+
+},{"../../constants/constants":140,"../../dispatcher/dispatcher":146}],8:[function(require,module,exports){
+var AppDispatcher, Constants, RelationshipServerActions;
+
+Constants = require('../../constants/constants');
+
+AppDispatcher = require('../../dispatcher/dispatcher');
+
+RelationshipServerActions = {
+  updateRelationship: function(_arg) {
+    var relationship, userId;
+    userId = _arg.userId, relationship = _arg.relationship;
+    return AppDispatcher.handleServerAction({
+      type: Constants.relationship.UPDATE_RELATIONSHIP,
+      userId: userId,
+      relationship: relationship
+    });
+  }
+};
+
+module.exports = RelationshipServerActions;
+
+
+
+},{"../../constants/constants":140,"../../dispatcher/dispatcher":146}],9:[function(require,module,exports){
+var Api, EntryViewActions, NotifyController;
+
+Api = require('../../api/api');
+
+NotifyController = require('../../controllers/notify');
+
+EntryViewActions = {
+  addToFavorites: function(entryId) {
+    return Api.entry.addToFavorites(entryId).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  removeFromFavorites: function(entryId) {
+    return Api.entry.removeFromFavorites(entryId).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  startWatch: function(entryId) {
+    return Api.entry.startWatch(entryId).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  stopWatch: function(entryId) {
+    return Api.entry.stopWatch(entryId).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  report: function(entryId) {
+    return Api.entry.report(entryId).then(function() {
+      return NotifyController.notifySuccess(i18n.t('report_entry_success'));
+    }).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  "delete": function(entryId) {
+    return Api.entry["delete"](entryId).then(function() {
+      return NotifyController.notifySuccess(i18n.t('delete_entry_success'));
+    }).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  vote: function(entryId) {
+    return Api.entry.vote(entryId).then(function(rating) {
+      NotifyController.notifySuccess(i18n.t('vote_entry_success'));
+      return rating;
+    }).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  loadComments: function(entryId, toCommentId, limit) {
+    return Api.entry.loadComments(entryId, toCommentId, limit).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  createComment: function(entryId, text) {
+    return Api.entry.createComment(entryId, text).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  editComment: function(entryId, commentId, text) {
+    return Api.entry.editComment(commentId, text).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  deleteComment: function(entryId, commentId) {
+    return Api.entry.deleteComment(commentId).then(function() {
+      return NotifyController.notifySuccess(i18n.t('report_comment_success'));
+    }).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  reportComment: function(commentId) {
+    return Api.entry.reportComment(commentId).then(function() {
+      return NotifyController.notifySuccess(i18n.t('delete_comment_success'));
+    }).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  }
+};
+
+module.exports = EntryViewActions;
+
+
+
+},{"../../api/api":13,"../../controllers/notify":144}],10:[function(require,module,exports){
+var Api, FeedServerActions, FeedViewActions, NotifyController;
+
+Api = require('../../api/api');
+
+NotifyController = require('../../controllers/notify');
+
+FeedServerActions = require('../server/feed');
+
+FeedViewActions = {
+  initializeFeed: function(entries) {
+    return FeedServerActions.initializeFeed(entries);
+  },
+  loadLiveEntries: function(sinceEntryId, limit) {
+    return Api.feed.loadLiveEntries(sinceEntryId, limit).then((function(_this) {
+      return function(response) {
+        return FeedServerActions.loadEntries(response.entries);
+      };
+    })(this)).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  loadBestEntries: function(sinceEntryId, limit) {
+    return Api.feed.loadBestEntries(sinceEntryId, limit).then((function(_this) {
+      return function(response) {
+        return FeedServerActions.loadEntries(response.entries);
+      };
+    })(this)).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  loadFriendsEntries: function(sinceEntryId, limit) {
+    return Api.feed.loadFriendsEntries(sinceEntryId, limit).then((function(_this) {
+      return function(response) {
+        return FeedServerActions.loadEntries(response.entries);
+      };
+    })(this)).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  }
+};
+
+module.exports = FeedViewActions;
+
+
+
+},{"../../api/api":13,"../../controllers/notify":144,"../server/feed":7}],11:[function(require,module,exports){
+var Api, NotifyController, RelationshipServerActions, RelationshipViewActions;
+
+Api = require('../../api/api');
+
+NotifyController = require('../../controllers/notify');
+
+RelationshipServerActions = require('../server/relationship');
+
+RelationshipViewActions = {
+  follow: function(userId) {
+    return Api.relationship.follow(userId).then(function(relationship) {
+      return RelationshipServerActions.updateRelationship({
+        userId: userId,
+        relationship: relationship
+      });
+    }).fail((function(_this) {
+      return function(xhr) {
+        return NotifyController.errorResponse(xhr);
+      };
+    })(this));
+  },
+  unfollow: function(userId) {
+    return Api.relationship.unfollow(userId).then(function(relationship) {
+      return RelationshipServerActions.updateRelationship({
+        userId: userId,
+        relationship: relationship
+      });
+    }).fail((function(_this) {
+      return function(xhr) {
+        return NotifyController.errorResponse(xhr);
+      };
+    })(this));
+  },
+  cancel: function(userId) {
+    return Api.relationship.cancel(userId).then(function(relationship) {
+      return RelationshipServerActions.updateRelationship({
+        userId: userId,
+        relationship: relationship
+      });
+    }).fail((function(_this) {
+      return function(xhr) {
+        return NotifyController.errorResponse(xhr);
+      };
+    })(this));
+  },
+  ignore: function(userId) {
+    return Api.relationship.ignore(userId).then(function(relationship) {
+      return RelationshipServerActions.updateRelationship({
+        userId: userId,
+        relationship: relationship
+      });
+    }).fail((function(_this) {
+      return function(xhr) {
+        return NotifyController.errorResponse(xhr);
+      };
+    })(this));
+  },
+  report: function(userId) {
+    return Api.relationship.report(userId).then(function() {
+      return NotifyController.notifySuccess(i18n.t('report_user_success'));
+    }).fail((function(_this) {
+      return function(xhr) {
+        return NotifyController.errorResponse(xhr);
+      };
+    })(this));
+  }
+};
+
+module.exports = RelationshipViewActions;
+
+
+
+},{"../../api/api":13,"../../controllers/notify":144,"../server/relationship":8}],12:[function(require,module,exports){
+var Api, NotifyController, SessionsViewActions;
+
+Api = require('../../api/api');
+
+NotifyController = require('../../controllers/notify');
+
+SessionsViewActions = {
+  signIn: function(login, password) {
+    return Api.sessions.signIn(login, password).then(function(user) {
+      NotifyController.notifySuccess(i18n.t('signin_success', {
+        userSlug: user.slug
+      }));
+      return user;
+    }).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  signUp: function(email, password, nickname) {
+    return Api.sessions.signUp(email, password, nickname).then(function(user) {
+      NotifyController.notifySuccess(i18n.t('signup_success', {
+        userSlug: user.slug
+      }));
+      return user;
+    }).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  },
+  recover: function(login) {
+    return Api.sessions.recover(login).then(function() {
+      return NotifyController.notifySuccess(i18n.t('recovery_mail_sent'));
+    }).fail(function(xhr) {
+      return NotifyController.errorResponse(xhr);
+    });
+  }
+};
+
+module.exports = SessionsViewActions;
+
+
+
+},{"../../api/api":13,"../../controllers/notify":144}],13:[function(require,module,exports){
+var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, assign, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _pendingRequests;
+
+assign = require('react/lib/Object.assign');
+
+Constants = require('../constants/constants');
+
+CurrentUserStore = require('../stores/currentUser');
+
+TIMEOUT = 10000;
+
+_pendingRequests = {};
+
+abortPendingRequests = function(key) {
+  if (_pendingRequests[key]) {
+    _pendingRequests[key].abort();
+    return _pendingRequests[key] = null;
+  }
+};
+
+userToken = function() {
+  return CurrentUserStore.getAccessToken();
+};
+
+request = function(_method, url, data) {
+  var headers, method;
+  if (data == null) {
+    data = {};
+  }
+  headers = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-Tasty-Client-Name': 'web_mobile',
+    'X-Tasty-Client-Version': TastySettings.version
+  };
+  if (userToken()) {
+    headers['X-User-Token'] = userToken();
+  }
+  method = (function() {
+    switch (_method) {
+      case 'GET':
+        return 'GET';
+      case 'POST':
+      case 'PUT':
+      case 'DELETE':
+        return 'POST';
+      default:
+        return 'GET';
+    }
+  })();
+  assign(data, {
+    _method: _method
+  });
+  return reqwest({
+    url: url,
+    method: method,
+    data: data,
+    timeout: TIMEOUT,
+    headers: headers
+  });
+};
+
+getRequest = function(url, data) {
+  return request('GET', url, data);
+};
+
+postRequest = function(url, data) {
+  return request('POST', url, data);
+};
+
+putRequest = function(url, data) {
+  return request('PUT', url, data);
+};
+
+deleteRequest = function(url, data) {
+  return request('DELETE', url, data);
+};
+
+Api = {
+  locales: {
+    load: function(locale) {
+      var url;
+      url = TastySettings.localesPath + '/' + locale + '.json';
+      return getRequest(url);
+    }
+  },
+  relationship: {
+    follow: function(userId) {
+      var key, url;
+      url = ApiRoutes.change_my_relationship_url(userId, 'follow');
+      key = Constants.api.FOLLOW_USER;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url);
+    },
+    unfollow: function(userId) {
+      var key, url;
+      url = ApiRoutes.change_my_relationship_url(userId, 'unfollow');
+      key = Constants.api.UNFOLLOW_USER;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url);
+    },
+    cancel: function(userId) {
+      var key, url;
+      url = ApiRoutes.change_my_relationship_url(userId, 'cancel');
+      key = Constants.api.CANCEL_USER;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url);
+    },
+    ignore: function(userId) {
+      var key, url;
+      url = ApiRoutes.change_my_relationship_url(userId, 'ignore');
+      key = Constants.api.IGNORE_USER;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url);
+    },
+    report: function(userId) {
+      var key, url;
+      url = ApiRoutes.tlog_report(userId);
+      key = Constants.api.REPORT_USER;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url);
+    }
+  },
+  entry: {
+    addToFavorites: function(entryId) {
+      var data, key, url;
+      url = ApiRoutes.favorites_url();
+      key = Constants.api.ADD_TO_FAVORITES;
+      data = {
+        entry_id: entryId
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, data);
+    },
+    removeFromFavorites: function(entryId) {
+      var data, key, url;
+      url = ApiRoutes.favorites_url();
+      key = Constants.api.REMOVE_FROM_FAVORITES;
+      data = {
+        entry_id: entryId
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = deleteRequest(url, data);
+    },
+    startWatch: function(entryId) {
+      var data, key, url;
+      url = ApiRoutes.watching_url();
+      key = Constants.api.START_WATCH;
+      data = {
+        entry_id: entryId
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, data);
+    },
+    stopWatch: function(entryId) {
+      var data, key, url;
+      url = ApiRoutes.watching_url();
+      key = Constants.api.STOP_WATCH;
+      data = {
+        entry_id: entryId
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = deleteRequest(url, data);
+    },
+    report: function(entryId) {
+      var key, url;
+      url = ApiRoutes.report_url(entryId);
+      key = Constants.api.REPORT;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url);
+    },
+    "delete": function(entryId) {
+      var key, url;
+      url = ApiRoutes.entry_url(entryId);
+      key = Constants.api.DELETE;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = deleteRequest(url);
+    },
+    vote: function(entryId) {
+      var key, url;
+      url = ApiRoutes.votes_url(entryId);
+      key = Constants.api.VOTE;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url);
+    },
+    loadComments: function(entryId, toCommentId, limit) {
+      var data, key, url;
+      url = ApiRoutes.comments_url();
+      key = Constants.api.LOAD_COMMENTS;
+      data = {
+        entry_id: entryId,
+        to_comment_id: toCommentId,
+        limit: limit
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = getRequest(url, data);
+    },
+    deleteComment: function(commentId) {
+      var key, url;
+      url = ApiRoutes.comments_edit_delete_url(commentId);
+      key = Constants.api.DELETE_COMMENT;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = deleteRequest(url);
+    },
+    reportComment: function(commentId) {
+      var key, url;
+      url = ApiRoutes.comments_report_url(commentId);
+      key = Constants.api.REPORT_COMMENT;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url);
+    },
+    createComment: function(entryId, text) {
+      var data, key, url;
+      url = ApiRoutes.comments_url();
+      key = Constants.api.CREATE_COMMENT;
+      data = {
+        entry_id: entryId,
+        text: text
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, data);
+    },
+    editComment: function(commentId, text) {
+      var data, key, url;
+      url = ApiRoutes.comments_edit_delete_url(commentId);
+      key = Constants.api.EDIT_COMMENT;
+      data = {
+        text: text
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = putRequest(url, data);
+    }
+  },
+  feed: {
+    loadLiveEntries: function(sinceEntryId, limit) {
+      var data, key, url;
+      url = ApiRoutes.feedLive();
+      key = Constants.api.LOAD_FEED_ENTRIES;
+      data = {
+        since_entry_id: sinceEntryId,
+        limit: limit,
+        include_comments_info: 1
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = getRequest(url, data);
+    },
+    loadBestEntries: function(sinceEntryId, limit) {
+      var data, key, url;
+      url = ApiRoutes.feedBest();
+      key = Constants.api.LOAD_FEED_ENTRIES;
+      data = {
+        since_entry_id: sinceEntryId,
+        limit: limit,
+        include_comments_info: 1
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = getRequest(url, data);
+    },
+    loadFriendsEntries: function(sinceEntryId, limit) {
+      var data, key, url;
+      url = ApiRoutes.feedFriends();
+      key = Constants.api.LOAD_FEED_ENTRIES;
+      data = {
+        since_entry_id: sinceEntryId,
+        limit: limit,
+        include_comments_info: 1
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = getRequest(url, data);
+    }
+  },
+  sessions: {
+    signIn: function(login, password) {
+      var data, key, url;
+      url = ApiRoutes.signin_url();
+      key = Constants.api.SIGN_IN;
+      data = {
+        email: login,
+        password: password
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, data);
+    },
+    signUp: function(email, password, nickname) {
+      var data, key, url;
+      url = ApiRoutes.signup_url();
+      key = Constants.api.SIGN_UP;
+      data = {
+        email: email,
+        password: password,
+        slug: nickname
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, data);
+    },
+    recover: function(login) {
+      var data, key, url;
+      url = ApiRoutes.recovery_url();
+      key = Constants.api.RECOVER;
+      data = {
+        slug_or_email: login
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, data);
+    }
+  }
+};
+
+module.exports = Api;
+
+
+
+},{"../constants/constants":140,"../stores/currentUser":161,"react/lib/Object.assign":200}],14:[function(require,module,exports){
+var ReactUjs;
+
+window.i18n = require('i18next');
+
+ReactUjs = require('reactUjs');
+
+window.ReactApp = {
+  start: function(locale) {
+    if (locale == null) {
+      locale = TastySettings.locale;
+    }
+    console.log('ReactApp start');
+    return i18n.init({
+      resGetPath: TastySettings.localesPath + '/__lng__.json'
+    }, function() {
+      console.log('Locales loaded');
+      return ReactUjs.initialize();
+    });
+  }
+};
+
+
+
+},{"i18next":"i18next","reactUjs":"reactUjs"}],15:[function(require,module,exports){
+var Notify, PropTypes, TIMEOUT, TYPE;
+
+PropTypes = React.PropTypes;
+
+TYPE = 'success';
+
+TIMEOUT = 3000;
+
+Notify = React.createClass({
+  displayName: 'Notify',
+  propTypes: {
+    text: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    timeout: PropTypes.number,
+    onClose: PropTypes.func.isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      type: TYPE,
+      timeout: TIMEOUT
+    };
+  },
+  componentDidMount: function() {
+    return this.timeout = setTimeout(this.props.onClose, this.props.timeout);
+  },
+  componentWillUnmount: function() {
+    if (this.timeout != null) {
+      return clearTimeout(this.timeout);
+    }
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "alert alert--" + this.props.type
+    }, this.props.text);
+  }
+});
+
+module.exports = Notify;
+
+
+
+},{}],16:[function(require,module,exports){
+(function (global){
+var AuthEmailSignInButton, AuthEmailSignUpButton, AuthFacebookButton, AuthVkontakteButton;
+
+AuthVkontakteButton = require('./buttons/vkontakte');
+
+AuthFacebookButton = require('./buttons/facebook');
+
+AuthEmailSignInButton = require('./buttons/emailSignIn');
+
+AuthEmailSignUpButton = require('./buttons/emailSignUp');
+
+global.Auth = React.createClass({
+  displayName: 'Auth',
+  render: function() {
+    return React.createElement("div", {
+      "className": "auth"
+    }, React.createElement("div", {
+      "className": "auth__grid-table"
+    }, React.createElement("div", {
+      "className": "auth__grid-cell"
+    }, React.createElement("div", {
+      "style": {
+        backgroundImage: 'url(../../images/images/Polly-73.jpg)'
+      },
+      "className": "auth__bg"
+    }), React.createElement("div", {
+      "className": "auth__section"
+    }, React.createElement("div", {
+      "className": "auth__body"
+    }, React.createElement("div", {
+      "className": "auth__logo"
+    }, React.createElement("i", {
+      "className": "icon icon--ribbon"
+    })), React.createElement("h1", {
+      "className": "auth__lead",
+      "dangerouslySetInnerHTML": {
+        __html: i18n.t('auth')
+      }
+    }), React.createElement("div", {
+      "className": "auth__buttons"
+    }, React.createElement(AuthVkontakteButton, null), React.createElement(AuthFacebookButton, null), React.createElement(AuthEmailSignInButton, null), React.createElement(AuthEmailSignUpButton, null)))))));
+  }
+});
+
+module.exports = Auth;
+
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./buttons/emailSignIn":22,"./buttons/emailSignUp":23,"./buttons/facebook":25,"./buttons/vkontakte":26}],17:[function(require,module,exports){
+var AuthEmailLoginField, AuthEmailRecovery, AuthEmailResetButton, AuthRememberedPasswordLink, ComponentMixin, NotifyController, ScreenController, SessionsViewActions;
+
+ScreenController = require('../../controllers/screen');
+
+NotifyController = require('../../controllers/notify');
+
+SessionsViewActions = require('../../actions/view/sessions');
+
+ComponentMixin = require('../../mixins/component');
+
+AuthEmailLoginField = require('./fields/emailLogin');
+
+AuthEmailResetButton = require('./buttons/emailReset');
+
+AuthRememberedPasswordLink = require('./links/rememberedPassword');
+
+AuthEmailRecovery = React.createClass({
+  displayName: 'AuthEmailRecovery',
+  mixins: [ComponentMixin],
+  getInitialState: function() {
+    return {
+      loading: false
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "auth"
+    }, React.createElement("div", {
+      "className": "auth__grid-table"
+    }, React.createElement("div", {
+      "className": "auth__grid-cell"
+    }, React.createElement("div", {
+      "style": {
+        backgroundImage: 'url(../../images/images/Polly-73.jpg)'
+      },
+      "className": "auth__bg"
+    }), React.createElement("div", {
+      "className": "auth__section"
+    }, React.createElement("div", {
+      "className": "auth__header"
+    }, React.createElement("div", {
+      "className": "auth__header-title"
+    }, i18n.t('email_recovery_header_title'))), React.createElement("div", {
+      "className": "auth__body"
+    }, React.createElement("form", {
+      "onSubmit": this.handleSubmit
+    }, React.createElement(AuthEmailLoginField, {
+      "ref": "loginField"
+    }), React.createElement("div", {
+      "className": "auth__buttons"
+    }, React.createElement(AuthEmailResetButton, {
+      "loading": this.state.loading
+    })))), React.createElement("div", {
+      "className": "auth__footer"
+    }, React.createElement(AuthRememberedPasswordLink, null))))));
+  },
+  activateLoadingState: function() {
+    return this.safeUpdateState({
+      loading: true
+    });
+  },
+  deactivateLoadingState: function() {
+    return this.safeUpdateState({
+      loading: false
+    });
+  },
+  isValid: function() {
+    var login;
+    login = this.refs.loginField.getValue();
+    if (login.length === 0) {
+      NotifyController.notifyError(i18n.t('empty_login_error'));
+      return false;
+    } else {
+      return true;
+    }
+  },
+  recover: function() {
+    var login;
+    login = this.refs.loginField.getValue();
+    this.activateLoadingState();
+    return SessionsViewActions.recover(login).then(ScreenController.close).always(this.deactivateLoadingState);
+  },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    if (this.isValid() && !this.state.loading) {
+      return this.recover();
+    }
+  }
+});
+
+module.exports = AuthEmailRecovery;
+
+
+
+},{"../../actions/view/sessions":12,"../../controllers/notify":144,"../../controllers/screen":145,"../../mixins/component":148,"./buttons/emailReset":21,"./fields/emailLogin":28,"./links/rememberedPassword":34}],18:[function(require,module,exports){
+(function (global){
+var AuthEmailLoginField, AuthEmailPasswordField, AuthEmailSubmitButton, AuthForgotPasswordLink, AuthNotRegisteredYetLink, ComponentMixin, NotifyController, SessionsViewActions;
+
+NotifyController = require('../../controllers/notify');
+
+SessionsViewActions = require('../../actions/view/sessions');
+
+ComponentMixin = require('../../mixins/component');
+
+AuthEmailLoginField = require('./fields/emailLogin');
+
+AuthEmailPasswordField = require('./fields/emailPassword');
+
+AuthEmailSubmitButton = require('./buttons/emailSubmit');
+
+AuthNotRegisteredYetLink = require('./links/notRegisteredYet');
+
+AuthForgotPasswordLink = require('./links/forgotPassword');
+
+global.AuthEmailSignIn = React.createClass({
+  displayName: 'AuthEmailSignIn',
+  mixins: [ComponentMixin],
+  getInitialState: function() {
+    return {
+      loading: false
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "auth"
+    }, React.createElement("div", {
+      "className": "auth__grid-table"
+    }, React.createElement("div", {
+      "className": "auth__grid-cell"
+    }, React.createElement("div", {
+      "style": {
+        backgroundImage: 'url(../../images/images/Polly-73.jpg)'
+      },
+      "className": "auth__bg"
+    }), React.createElement("div", {
+      "className": "auth__section"
+    }, React.createElement("div", {
+      "className": "auth__header"
+    }, React.createElement("div", {
+      "className": "auth__header-title"
+    }, i18n.t('email_signin_header'))), React.createElement("div", {
+      "className": "auth__body"
+    }, React.createElement("form", {
+      "onSubmit": this.handleSubmit
+    }, React.createElement(AuthEmailLoginField, {
+      "ref": "loginField"
+    }), React.createElement(AuthEmailPasswordField, {
+      "ref": "passwordField"
+    }), React.createElement("div", {
+      "className": "auth__buttons"
+    }, React.createElement(AuthEmailSubmitButton, {
+      "loading": this.state.loading
+    })))), React.createElement("div", {
+      "className": "auth__footer"
+    }, React.createElement(AuthNotRegisteredYetLink, null), React.createElement("span", {
+      "className": "auth__footer-sep"
+    }, "\u00b7"), React.createElement(AuthForgotPasswordLink, null))))));
+  },
+  activateLoadingState: function() {
+    return this.safeUpdateState({
+      loading: true
+    });
+  },
+  deactivateLoadingState: function() {
+    return this.safeUpdateState({
+      loading: false
+    });
+  },
+  isValid: function() {
+    var login, password;
+    login = this.refs.loginField.getValue();
+    password = this.refs.passwordField.getValue();
+    switch (false) {
+      case login.length !== 0:
+        NotifyController.notifyError(i18n.t('empty_login_error'));
+        return false;
+      case password.length !== 0:
+        NotifyController.notifyError(i18n.t('empty_password_error'));
+        return false;
+      default:
+        return true;
+    }
+  },
+  signIn: function() {
+    var login, password;
+    login = this.refs.loginField.getValue();
+    password = this.refs.passwordField.getValue();
+    this.activateLoadingState();
+    return SessionsViewActions.signIn(login, password).then((function(_this) {
+      return function() {
+        return setTimeout((function() {
+          return window.location.reload(true);
+        }), 0);
+      };
+    })(this)).always(this.deactivateLoadingState);
+  },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    if (this.isValid() && !this.state.loading) {
+      return this.signIn();
+    }
+  }
+});
+
+module.exports = AuthEmailSignIn;
+
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../../actions/view/sessions":12,"../../controllers/notify":144,"../../mixins/component":148,"./buttons/emailSubmit":24,"./fields/emailLogin":28,"./fields/emailPassword":30,"./links/forgotPassword":32,"./links/notRegisteredYet":33}],19:[function(require,module,exports){
+(function (global){
+var AuthAlreadyRegisteredLink, AuthEmailEmailField, AuthEmailNicknameField, AuthEmailPasswordField, AuthEmailSubmitButton, ComponentMixin, NotifyController, SessionsViewActions;
+
+NotifyController = require('../../controllers/notify');
+
+SessionsViewActions = require('../../actions/view/sessions');
+
+ComponentMixin = require('../../mixins/component');
+
+AuthEmailEmailField = require('./fields/emailEmail');
+
+AuthEmailPasswordField = require('./fields/emailPassword');
+
+AuthEmailNicknameField = require('./fields/emailNickname');
+
+AuthEmailSubmitButton = require('./buttons/emailSubmit');
+
+AuthAlreadyRegisteredLink = require('./links/alreadyRegistered');
+
+global.AuthEmailSignUp = React.createClass({
+  displayName: 'AuthEmailSignUp',
+  mixins: [ComponentMixin],
+  getInitialState: function() {
+    return {
+      loading: false
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "auth"
+    }, React.createElement("div", {
+      "className": "auth__grid-table"
+    }, React.createElement("div", {
+      "className": "auth__grid-cell"
+    }, React.createElement("div", {
+      "style": {
+        backgroundImage: 'url(../../images/images/Polly-73.jpg)'
+      },
+      "className": "auth__bg"
+    }), React.createElement("div", {
+      "className": "auth__section"
+    }, React.createElement("div", {
+      "className": "auth__header"
+    }, React.createElement("div", {
+      "className": "auth__header-title"
+    }, i18n.t('email_signup_header'))), React.createElement("div", {
+      "className": "auth__body"
+    }, React.createElement("form", {
+      "onSubmit": this.handleSubmit
+    }, React.createElement(AuthEmailEmailField, {
+      "ref": "emailField"
+    }), React.createElement(AuthEmailPasswordField, {
+      "ref": "passwordField"
+    }), React.createElement(AuthEmailNicknameField, {
+      "ref": "nicknameField"
+    }), React.createElement("div", {
+      "className": "auth__buttons"
+    }, React.createElement(AuthEmailSubmitButton, {
+      "loading": this.state.loading
+    })))), React.createElement("div", {
+      "className": "auth__footer"
+    }, React.createElement(AuthAlreadyRegisteredLink, null))))));
+  },
+  activateLoadingState: function() {
+    return this.safeUpdateState({
+      loading: true
+    });
+  },
+  deactivateLoadingState: function() {
+    return this.safeUpdateState({
+      loading: false
+    });
+  },
+  isValid: function() {
+    var email, password;
+    email = this.refs.emailField.getValue();
+    password = this.refs.passwordField.getValue();
+    switch (false) {
+      case email.length !== 0:
+        NotifyController.notifyError(i18n.t('empty_email_error'));
+        return false;
+      case password.length !== 0:
+        NotifyController.notifyError(i18n.t('empty_password_error'));
+        return false;
+      default:
+        return true;
+    }
+  },
+  signUp: function() {
+    var email, nickname, password;
+    email = this.refs.emailField.getValue();
+    password = this.refs.passwordField.getValue();
+    nickname = this.refs.nicknameField.getValue();
+    this.activateLoadingState();
+    return SessionsViewActions.signUp(email, password, nickname).then((function(_this) {
+      return function(user) {
+        return setTimeout((function() {
+          return window.location.href = user.tlog_url;
+        }), 0);
+      };
+    })(this)).always(this.deactivateLoadingState);
+  },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    if (this.isValid() && !this.state.loading) {
+      return this.signUp();
+    }
+  }
+});
+
+module.exports = AuthEmailSignUp;
+
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../../actions/view/sessions":12,"../../controllers/notify":144,"../../mixins/component":148,"./buttons/emailSubmit":24,"./fields/emailEmail":27,"./fields/emailNickname":29,"./fields/emailPassword":30,"./links/alreadyRegistered":31}],20:[function(require,module,exports){
+var Auth, AuthManager, ConnectStoreMixin, CurrentUserStore;
+
+CurrentUserStore = require('../../stores/currentUser');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+Auth = require('./auth');
+
+AuthManager = React.createClass({
+  displayName: 'AuthManager',
+  mixins: [ConnectStoreMixin(CurrentUserStore)],
+  render: function() {
+    if (!this.state.logged) {
+      return React.createElement(Auth, null);
+    } else {
+      return null;
+    }
+  },
+  getStateFromStore: function() {
+    return {
+      logged: CurrentUserStore.isLogged()
+    };
+  }
+});
+
+module.exports = AuthManager;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":167,"../../stores/currentUser":161,"./auth":16}],21:[function(require,module,exports){
+var AuthEmailResetButton, PropTypes, Spinner;
+
+Spinner = require('../../common/spinner/spinner');
+
+PropTypes = React.PropTypes;
+
+AuthEmailResetButton = React.createClass({
+  displayName: 'AuthEmailResetButton',
+  propTypes: {
+    loading: PropTypes.bool.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "outline-auth-button"
+    }, this.renderSpinner(), " ", i18n.t('reset_password_button'));
+  },
+  renderSpinner: function() {
+    if (this.props.loading) {
+      return React.createElement(Spinner, {
+        "size": 14.
+      });
+    }
+  }
+});
+
+module.exports = AuthEmailResetButton;
+
+
+
+},{"../../common/spinner/spinner":47}],22:[function(require,module,exports){
+var AuthEmailSignIn, AuthEmailSignInButton, ScreenController;
+
+ScreenController = require('../../../controllers/screen');
+
+AuthEmailSignIn = require('../authEmailSignIn');
+
+AuthEmailSignInButton = React.createClass({
+  displayName: 'AuthEmailSignInButton',
+  render: function() {
+    return React.createElement("button", {
+      "className": "site-auth-button",
+      "onClick": this.handleClick
+    }, i18n.t('email_signin_button'));
+  },
+  handleClick: function() {
+    return ScreenController.show(AuthEmailSignIn, {}, 'auth-page');
+  }
+});
+
+module.exports = AuthEmailSignInButton;
+
+
+
+},{"../../../controllers/screen":145,"../authEmailSignIn":18}],23:[function(require,module,exports){
+var AuthEmailSignUpButton, ScreenController;
+
+ScreenController = require('../../../controllers/screen');
+
+AuthEmailSignUpButton = React.createClass({
+  displayName: 'AuthEmailSignUpButton',
+  render: function() {
+    return React.createElement("button", {
+      "className": "reg-auth-button",
+      "onClick": this.handleClick
+    }, i18n.t('email_signup_button'));
+  },
+  handleClick: function() {
+    return ScreenController.show(AuthEmailSignUp, {}, 'auth-page');
+  }
+});
+
+module.exports = AuthEmailSignUpButton;
+
+
+
+},{"../../../controllers/screen":145}],24:[function(require,module,exports){
+var AuthEmailSubmitButton, PropTypes, Spinner;
+
+Spinner = require('../../common/spinner/spinner');
+
+PropTypes = React.PropTypes;
+
+AuthEmailSubmitButton = React.createClass({
+  displayName: 'AuthEmailSubmitButton',
+  propTypes: {
+    loading: PropTypes.bool.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "outline-auth-button"
+    }, this.renderSpinner(), " ", i18n.t('email_submit_button'));
+  },
+  renderSpinner: function() {
+    if (this.props.loading) {
+      return React.createElement(Spinner, {
+        "size": 14.
+      });
+    }
+  }
+});
+
+module.exports = AuthEmailSubmitButton;
+
+
+
+},{"../../common/spinner/spinner":47}],25:[function(require,module,exports){
+var AuthFacebookButton;
+
+AuthFacebookButton = React.createClass({
+  displayName: 'AuthFacebookButton',
+  render: function() {
+    return React.createElement("button", {
+      "className": "fb-auth-button",
+      "onClick": this.handleClick
+    }, i18n.t('facebook_signin_button'));
+  },
+  handleClick: function() {
+    return window.location = ApiRoutes.omniauth_url('facebook');
+  }
+});
+
+module.exports = AuthFacebookButton;
+
+
+
+},{}],26:[function(require,module,exports){
+var AuthVkontakteButton;
+
+AuthVkontakteButton = React.createClass({
+  displayName: 'AuthVkontakteButton',
+  render: function() {
+    return React.createElement("button", {
+      "className": "vk-auth-button",
+      "onClick": this.handleClick
+    }, i18n.t('vkontakte_signin_button'));
+  },
+  handleClick: function() {
+    return window.location = ApiRoutes.omniauth_url('vkontakte');
+  }
+});
+
+module.exports = AuthVkontakteButton;
+
+
+
+},{}],27:[function(require,module,exports){
+var AuthEmailEmailField;
+
+AuthEmailEmailField = React.createClass({
+  displayName: 'AuthEmailEmailField',
+  render: function() {
+    return React.createElement("div", {
+      "className": "auth__field"
+    }, React.createElement("label", {
+      "htmlFor": "auth-email",
+      "className": "auth__field-icon"
+    }, React.createElement("i", {
+      "className": "icon icon--profile"
+    })), React.createElement("input", {
+      "ref": "input",
+      "type": "email",
+      "placeholder": i18n.t('email_field_placeholder'),
+      "id": "auth-email",
+      "className": "auth__field-input"
+    }));
+  },
+  getValue: function() {
+    return this.refs.input.getDOMNode().value.trim();
+  }
+});
+
+module.exports = AuthEmailEmailField;
+
+
+
+},{}],28:[function(require,module,exports){
+var AuthEmailLoginField;
+
+AuthEmailLoginField = React.createClass({
+  displayName: 'AuthEmailLoginField',
+  render: function() {
+    return React.createElement("div", {
+      "className": "auth__field"
+    }, React.createElement("label", {
+      "htmlFor": "auth-email-nick",
+      "className": "auth__field-icon"
+    }, React.createElement("i", {
+      "className": "icon icon--profile"
+    })), React.createElement("input", {
+      "ref": "input",
+      "type": "text",
+      "placeholder": i18n.t('login_field_placeholder'),
+      "id": "auth-email-nick",
+      "className": "auth__field-input"
+    }));
+  },
+  getValue: function() {
+    return this.refs.input.getDOMNode().value.trim();
+  }
+});
+
+module.exports = AuthEmailLoginField;
+
+
+
+},{}],29:[function(require,module,exports){
+var AuthEmailNicknameField;
+
+AuthEmailNicknameField = React.createClass({
+  displayName: 'AuthEmailNicknameField',
+  render: function() {
+    return React.createElement("div", {
+      "className": "auth__field"
+    }, React.createElement("label", {
+      "htmlFor": "auth-nick",
+      "className": "auth__field-icon"
+    }, React.createElement("i", {
+      "className": "icon icon--diary"
+    })), React.createElement("input", {
+      "ref": "input",
+      "type": "text",
+      "placeholder": i18n.t('nickname_field_placeholder'),
+      "id": "auth-nick",
+      "className": "auth__field-input"
+    }));
+  },
+  getValue: function() {
+    return this.refs.input.getDOMNode().value.trim();
+  }
+});
+
+module.exports = AuthEmailNicknameField;
+
+
+
+},{}],30:[function(require,module,exports){
+var AuthEmailPasswordField;
+
+AuthEmailPasswordField = React.createClass({
+  displayName: 'AuthEmailPasswordField',
+  render: function() {
+    return React.createElement("div", {
+      "className": "auth__field"
+    }, React.createElement("label", {
+      "htmlFor": "auth-password",
+      "className": "auth__field-icon"
+    }, React.createElement("i", {
+      "className": "icon icon--lock"
+    })), React.createElement("input", {
+      "ref": "input",
+      "type": "password",
+      "placeholder": i18n.t('password_field'),
+      "id": "auth-password",
+      "className": "auth__field-input"
+    }));
+  },
+  getValue: function() {
+    return this.refs.input.getDOMNode().value.trim();
+  }
+});
+
+module.exports = AuthEmailPasswordField;
+
+
+
+},{}],31:[function(require,module,exports){
+var AuthNotRegisteredYetLink, ScreenController;
+
+ScreenController = require('../../../controllers/screen');
+
+AuthNotRegisteredYetLink = React.createClass({
+  displayName: 'AuthNotRegisteredYetLink',
+  render: function() {
+    return React.createElement("a", {
+      "className": "auth__footer-link",
+      "onClick": this.handleClick
+    }, i18n.t('already_registered_link'));
+  },
+  handleClick: function() {
+    return ScreenController.show(Auth, {}, 'auth-page');
+  }
+});
+
+module.exports = AuthNotRegisteredYetLink;
+
+
+
+},{"../../../controllers/screen":145}],32:[function(require,module,exports){
+var AuthEmailRecovery, AuthForgotPasswordLink, ScreenController;
+
+ScreenController = require('../../../controllers/screen');
+
+AuthEmailRecovery = require('../authEmailRecovery');
+
+AuthForgotPasswordLink = React.createClass({
+  displayName: 'AuthForgotPasswordLink',
+  render: function() {
+    return React.createElement("a", {
+      "className": "auth__footer-link",
+      "onClick": this.handleClick
+    }, i18n.t('forgot_password_link'));
+  },
+  handleClick: function() {
+    return ScreenController.show(AuthEmailRecovery, {}, 'auth-page');
+  }
+});
+
+module.exports = AuthForgotPasswordLink;
+
+
+
+},{"../../../controllers/screen":145,"../authEmailRecovery":17}],33:[function(require,module,exports){
+var AuthNotRegisteredYetLink, ScreenController;
+
+ScreenController = require('../../../controllers/screen');
+
+AuthNotRegisteredYetLink = React.createClass({
+  displayName: 'AuthNotRegisteredYetLink',
+  render: function() {
+    return React.createElement("a", {
+      "className": "auth__footer-link",
+      "onClick": this.handleClick
+    }, i18n.t('not_registered_yet_link'));
+  },
+  handleClick: function() {
+    return ScreenController.show(AuthEmailSignUp, {}, 'auth-page');
+  }
+});
+
+module.exports = AuthNotRegisteredYetLink;
+
+
+
+},{"../../../controllers/screen":145}],34:[function(require,module,exports){
+var AuthRememberedPasswordLink, ScreenController;
+
+ScreenController = require('../../../controllers/screen');
+
+AuthRememberedPasswordLink = React.createClass({
+  displayName: 'AuthRememberedPasswordLink',
+  render: function() {
+    return React.createElement("a", {
+      "className": "auth__footer-link",
+      "onClick": this.handleClick
+    }, i18n.t('remembered_password_link'));
+  },
+  handleClick: function() {
+    return ScreenController.show(Auth, {}, 'auth-page');
+  }
+});
+
+module.exports = AuthRememberedPasswordLink;
+
+
+
+},{"../../../controllers/screen":145}],35:[function(require,module,exports){
+var AuthButton, ScreenController;
+
+ScreenController = require('../../../controllers/screen');
+
+AuthButton = React.createClass({
+  displayName: 'AuthButton',
+  render: function() {
+    return React.createElement("button", {
+      "className": "auth-button",
+      "onClick": this.handleClick
+    }, i18n.t('signin_button'));
+  },
+  handleClick: function() {
+    return ScreenController.show(Auth, {}, 'auth-page');
+  }
+});
+
+module.exports = AuthButton;
+
+
+
+},{"../../../controllers/screen":145}],36:[function(require,module,exports){
+var AuthButton, AuthButtonManager, ConnectStoreMixin, CurrentUserStore, ScreenController;
+
+ScreenController = require('../../../controllers/screen');
+
+CurrentUserStore = require('../../../stores/currentUser');
+
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
+
+AuthButton = require('./auth');
+
+AuthButtonManager = React.createClass({
+  displayName: 'AuthButtonManager',
+  mixins: [ConnectStoreMixin(CurrentUserStore)],
+  render: function() {
+    if (!this.state.logged) {
+      return React.createElement(AuthButton, null);
+    } else {
+      return null;
+    }
+  },
+  getStateFromStore: function() {
+    return {
+      logged: CurrentUserStore.isLogged()
+    };
+  },
+  handleClick: function() {
+    return ScreenController.show(Auth, {}, 'auth-page');
+  }
+});
+
+module.exports = AuthButtonManager;
+
+
+
+},{"../../../../../shared/react/mixins/connectStore":167,"../../../controllers/screen":145,"../../../stores/currentUser":161,"./auth":35}],37:[function(require,module,exports){
+var ComponentMixin, ConnectStoreMixin, ERROR_STATE, FRIEND_STATUS, FollowButton, GUESSED_STATUS, IGNORED_STATUS, NONE_STATUS, PROCESS_STATE, PropTypes, REQUESTED_STATUS, RelationshipButtonMixin, RelationshipsStore, SHOW_STATE, cx;
+
+cx = require('react/lib/cx');
+
+RelationshipsStore = require('../../../stores/relationships');
+
+RelationshipButtonMixin = require('./mixins/relationship');
+
+ComponentMixin = require('../../../mixins/component');
+
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
+
+PropTypes = React.PropTypes;
+
+SHOW_STATE = 'show';
+
+ERROR_STATE = 'error';
+
+PROCESS_STATE = 'process';
+
+FRIEND_STATUS = 'friend';
+
+REQUESTED_STATUS = 'requested';
+
+IGNORED_STATUS = 'ignored';
+
+GUESSED_STATUS = 'guessed';
+
+NONE_STATUS = 'none';
+
+FollowButton = React.createClass({
+  displayName: 'FollowButton',
+  mixins: [ConnectStoreMixin(RelationshipsStore), RelationshipButtonMixin, ComponentMixin],
+  propTypes: {
+    user: PropTypes.object.isRequired,
+    status: PropTypes.string.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: SHOW_STATE
+    };
+  },
+  render: function() {
+    var buttonClasses;
+    buttonClasses = cx({
+      'follow-button': true,
+      '__active': this.isFollowStatus() && this.isShowState()
+    });
+    if (this.state.status != null) {
+      return React.createElement("button", {
+        "style": {
+          display: 'inline-block!important'
+        },
+        "className": buttonClasses,
+        "onClick": this.handleClick
+      }, this.getTitle());
+    } else {
+      return null;
+    }
+  },
+  isShowState: function() {
+    return this.state.currentState === SHOW_STATE;
+  },
+  isErrorState: function() {
+    return this.state.currentState === ERROR_STATE;
+  },
+  isFollowStatus: function() {
+    return this.state.status === FRIEND_STATUS;
+  },
+  isTlogPrivate: function() {
+    return this.props.user.is_privacy;
+  },
+  activateProcessState: function() {
+    return this.safeUpdateState({
+      currentState: PROCESS_STATE
+    });
+  },
+  activateErrorState: function() {
+    return this.safeUpdateState({
+      currentState: ERROR_STATE
+    });
+  },
+  activateShowState: function() {
+    return this.safeUpdateState({
+      currentState: SHOW_STATE
+    });
+  },
+  getTitle: function() {
+    switch (this.state.currentState) {
+      case ERROR_STATE:
+        return i18n.t('follow_button_error');
+      case PROCESS_STATE:
+        return i18n.t('follow_button_process');
+    }
+    switch (this.state.status) {
+      case FRIEND_STATUS:
+        return i18n.t('follow_button_subscribed');
+      case REQUESTED_STATUS:
+        return i18n.t('follow_button_requested');
+      case IGNORED_STATUS:
+        return i18n.t('follow_button_ignored');
+      case GUESSED_STATUS:
+      case NONE_STATUS:
+        if (this.isTlogPrivate()) {
+          return i18n.t('follow_button_send_request');
+        } else {
+          return i18n.t('follow_button_subscribe');
+        }
+        break;
+      default:
+        return console.warn('Unknown follow status of FollowButton component', this.state.status);
+    }
+  },
+  handleClick: function() {
+    var userId;
+    userId = this.props.user.id;
+    if (this.isShowState()) {
+      switch (this.state.status) {
+        case FRIEND_STATUS:
+          return this.unfollow(userId);
+        case REQUESTED_STATUS:
+          return this.cancel(userId);
+        case IGNORED_STATUS:
+          return this.cancel(userId);
+        case GUESSED_STATUS:
+          return this.follow(userId);
+        case NONE_STATUS:
+          return this.follow(userId);
+        default:
+          return console.warn('Unknown follow status of FollowButton component', this.state.status);
+      }
+    }
+  },
+  getStateFromStore: function() {
+    return {
+      status: RelationshipsStore.getStatus(this.props.user.id) || this.props.status
+    };
+  }
+});
+
+module.exports = FollowButton;
+
+
+
+},{"../../../../../shared/react/mixins/connectStore":167,"../../../mixins/component":148,"../../../stores/relationships":163,"./mixins/relationship":38,"react/lib/cx":279}],38:[function(require,module,exports){
+var RelationshipButtonMixin, RelationshipViewActions;
+
+RelationshipViewActions = require('../../../../actions/view/relationship');
+
+RelationshipButtonMixin = {
+  componentWillUnmount: function() {
+    return this.clearErrorTimeout();
+  },
+  clearErrorTimeout: function() {
+    if (this.errorTimeout != null) {
+      return clearTimeout(this.errorTimeout);
+    }
+  },
+  startErrorTimeout: function() {
+    if (!this.isErrorState()) {
+      this.activateErrorState();
+    }
+    return this.errorTimeout = setTimeout(this.activateShowState, 1000);
+  },
+  follow: function(userId) {
+    this.activateProcessState();
+    return RelationshipViewActions.follow(userId).then(this.activateShowState).fail(this.startErrorTimeout);
+  },
+  unfollow: function(userId) {
+    this.activateProcessState();
+    return RelationshipViewActions.unfollow(userId).then(this.activateShowState).fail(this.startErrorTimeout);
+  },
+  cancel: function(userId) {
+    this.activateProcessState();
+    return RelationshipViewActions.cancel(userId).then(this.activateShowState).fail(this.startErrorTimeout);
+  }
+};
+
+module.exports = RelationshipButtonMixin;
+
+
+
+},{"../../../../actions/view/relationship":11}],39:[function(require,module,exports){
+var Avatar, PropTypes, cx;
+
+cx = require('react/lib/cx');
+
+PropTypes = React.PropTypes;
+
+Avatar = React.createClass({
+  displayName: 'Avatar',
+  propTypes: {
+    name: PropTypes.string.isRequired,
+    userpic: PropTypes.object.isRequired,
+    size: PropTypes.number
+  },
+  getDefaultProps: function() {
+    return {
+      size: 220
+    };
+  },
+  render: function() {
+    var avatarClasses, avatarStyles, avatarSymbol, avatarUrl;
+    avatarUrl = this.props.userpic.original_url || this.props.userpic.large_url;
+    avatarSymbol = this.props.userpic.symbol;
+    avatarClasses = cx({
+      'avatar': true,
+      'anonymous_char': this.isAnonymous()
+    });
+    if (avatarUrl != null) {
+      avatarUrl = ThumborService.imageUrl({
+        url: avatarUrl,
+        path: this.props.userpic.thumbor_path,
+        size: this.props.size + 'x' + this.props.size
+      });
+      avatarStyles = {
+        backgroundImage: "url('" + avatarUrl + "')"
+      };
+      return React.createElement("span", {
+        "style": avatarStyles,
+        "className": avatarClasses
+      }, React.createElement("img", {
+        "src": avatarUrl,
+        "alt": this.props.name,
+        "className": "avatar__img"
+      }));
+    } else {
+      avatarStyles = {
+        backgroundColor: this.props.userpic.default_colors.background,
+        color: this.props.userpic.default_colors.name
+      };
+      return React.createElement("span", {
+        "style": avatarStyles,
+        "className": avatarClasses,
+        "title": this.props.name
+      }, React.createElement("span", {
+        "className": "avatar__text"
+      }, avatarSymbol));
+    }
+  },
+  isAnonymous: function() {
+    return this.props.userpic.kind === 'anonymous';
+  },
+  isUser: function() {
+    return this.props.userpic.kind === 'user';
+  }
+});
+
+module.exports = Avatar;
+
+
+
+},{"react/lib/cx":279}],40:[function(require,module,exports){
+var Avatar, PropTypes, UserAvatar;
+
+Avatar = require('./avatar');
+
+PropTypes = React.PropTypes;
+
+UserAvatar = React.createClass({
+  displayName: 'UserAvatar',
+  propTypes: {
+    user: PropTypes.object.isRequired,
+    size: PropTypes.number
+  },
+  render: function() {
+    return React.createElement(Avatar, {
+      "name": this.props.user.name,
+      "userpic": this.props.user.userpic,
+      "size": this.props.size
+    });
+  }
+});
+
+module.exports = UserAvatar;
+
+
+
+},{"./avatar":39}],41:[function(require,module,exports){
+var Collage, CollageMixin, CollageRow, PropTypes;
+
+CollageMixin = require('./mixins/collage');
+
+CollageRow = require('./row');
+
+PropTypes = React.PropTypes;
+
+Collage = React.createClass({
+  displayName: 'Collage',
+  mixins: [CollageMixin],
+  propTypes: {
+    images: PropTypes.array.isRequired,
+    width: PropTypes.number.isRequired,
+    margin: PropTypes.number.isRequired,
+    minRowHeight: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "collage"
+    }, this.renderItems());
+  },
+  renderItems: function() {
+    var images, rows;
+    images = this.props.images;
+    switch (false) {
+      case images.length !== 0:
+        return [];
+      case images.length !== 1:
+        rows = this.makeRows(images);
+        return React.createElement(CollageRow, {
+          "row": rows[0]
+        });
+      case !(images.length >= 2):
+        rows = this.makeRows(images);
+        return rows.map(function(row, i) {
+          return React.createElement(CollageRow, {
+            "row": row,
+            "key": i
+          });
+        });
+      default:
+        return [];
+    }
+  }
+});
+
+module.exports = Collage;
+
+
+
+},{"./mixins/collage":43,"./row":44}],42:[function(require,module,exports){
+var Collage, CollageManager, MARGIN, MIN_ROW_HEIGHT, PropTypes;
+
+Collage = require('./collage');
+
+PropTypes = React.PropTypes;
+
+MARGIN = 0;
+
+MIN_ROW_HEIGHT = 150;
+
+CollageManager = React.createClass({
+  displayName: 'CollageManager',
+  propTypes: {
+    images: PropTypes.array.isRequired,
+    width: PropTypes.number,
+    margin: PropTypes.number,
+    minRowHeight: PropTypes.number
+  },
+  getDefaultProps: function() {
+    return {
+      margin: MARGIN,
+      minRowHeight: MIN_ROW_HEIGHT
+    };
+  },
+  getInitialState: function() {
+    return {
+      width: this.props.width || null
+    };
+  },
+  componentDidMount: function() {
+    this.updateWidthState();
+    return window.addEventListener('resize', this.updateWidthState);
+  },
+  componentWillUnmount: function() {
+    return window.removeEventListener('resize', this.updateWidthState);
+  },
+  render: function() {
+    if (this.hasWidth()) {
+      return React.createElement(Collage, React.__spread({}, this.props, {
+        "width": this.state.width
+      }));
+    } else {
+      return React.createElement("span", null);
+    }
+  },
+  hasWidth: function() {
+    return this.state.width != null;
+  },
+  updateWidthState: function() {
+    var parentWidth;
+    parentWidth = this.getDOMNode().parentNode.offsetWidth;
+    return this.setState({
+      width: parentWidth + this.props.margin * 2
+    });
+  }
+});
+
+module.exports = CollageManager;
+
+
+
+},{"./collage":41}],43:[function(require,module,exports){
+var CollageMixin, assign;
+
+assign = require('react/lib/Object.assign');
+
+CollageMixin = {
+  makeRows: function(images) {
+    var newImages, rowIndex, rowWidth, rows;
+    rows = [];
+    rowIndex = 0;
+    rowWidth = 0;
+    newImages = JSON.parse(JSON.stringify(images));
+    this.calculateImagesRatio(newImages);
+    newImages.forEach((function(_this) {
+      return function(image, i) {
+        assign(image, {
+          width: _this.getItemNewWidth(image, _this.props.minRowHeight),
+          height: _this.props.minRowHeight,
+          margin: _this.props.margin
+        });
+        if (i === 0 || rowWidth + image.width < _this.props.width) {
+          if (rows[rowIndex] == null) {
+            rows[rowIndex] = [];
+          }
+          rows[rowIndex].push(image);
+          rowWidth += image.width + image.margin * 2;
+        } else {
+          _this.stretchRow(rows[rowIndex], rowWidth);
+          rows[rowIndex + 1] = [image];
+          rowWidth = image.width + image.margin * 2;
+          rowIndex++;
+        }
+        if (i === newImages.length - 1) {
+          return _this.stretchRow(rows[rowIndex], rowWidth);
+        }
+      };
+    })(this));
+    return rows;
+  },
+  stretchRow: function(row, rowWidth) {
+    var lastElement, requiredHeight, resultWidth, rowHeight;
+    rowHeight = row[0].height + row[0].margin * 2;
+    requiredHeight = Math.round(rowHeight / rowWidth * this.props.width);
+    resultWidth = 0;
+    lastElement = row[row.length - 1];
+    row.forEach((function(_this) {
+      return function(image, i) {
+        assign(image, {
+          width: _this.getItemNewWidth(image, requiredHeight - _this.props.margin * 2),
+          height: requiredHeight - _this.props.margin * 2
+        });
+        return resultWidth += image.width + image.margin * 2;
+      };
+    })(this));
+    return lastElement.width = lastElement.width + lastElement.margin * 2 + (this.props.width - resultWidth) - this.props.margin * 2;
+  },
+  getItemNewWidth: function(item, newHeight) {
+    return Math.round(newHeight * item.ratio);
+  },
+  calculateImagesRatio: function(images) {
+    return images.forEach(function(image) {
+      return image.ratio = image.width / image.height;
+    });
+  }
+};
+
+module.exports = CollageMixin;
+
+
+
+},{"react/lib/Object.assign":200}],44:[function(require,module,exports){
+var CollageRow, CollageRowItem, PropTypes;
+
+CollageRowItem = require('./row/item');
+
+PropTypes = React.PropTypes;
+
+CollageRow = React.createClass({
+  displayName: 'CollageRow',
+  propTypes: {
+    row: PropTypes.array.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "collage__row"
+    }, this.renderRowItems());
+  },
+  renderRowItems: function() {
+    return this.props.row.map(function(image) {
+      return React.createElement(CollageRowItem, {
+        "width": image.width,
+        "height": image.height,
+        "imagePath": image.payload.path,
+        "imageUrl": image.payload.url,
+        "key": image.payload.id
+      });
+    });
+  }
+});
+
+module.exports = CollageRow;
+
+
+
+},{"./row/item":45}],45:[function(require,module,exports){
+var CollageItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CollageItem = React.createClass({
+  displayName: 'CollageItem',
+  propTypes: {
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    margin: PropTypes.number,
+    imageUrl: PropTypes.string.isRequired,
+    imagePath: PropTypes.string.isRequired
+  },
+  getInitialState: function() {
+    return {
+      width: this.props.width,
+      height: this.props.height
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "style": this.getContainerStyles(),
+      "className": "collage__item"
+    }, React.createElement("img", {
+      "style": this.getImageStyles(),
+      "src": this.getImageUrl()
+    }));
+  },
+  getContainerStyles: function() {
+    var height, margin, width, _ref;
+    _ref = this.props, width = _ref.width, height = _ref.height, margin = _ref.margin;
+    return {
+      width: width,
+      height: height,
+      margin: margin
+    };
+  },
+  getImageStyles: function() {
+    var height, width, _ref;
+    _ref = this.props, width = _ref.width, height = _ref.height;
+    return {
+      width: width,
+      height: height
+    };
+  },
+  getImageUrl: function() {
+    var height, width, _ref;
+    _ref = this.state, width = _ref.width, height = _ref.height;
+    return ThumborService.imageUrl({
+      url: this.props.imageUrl,
+      path: this.props.imagePath,
+      size: width + 'x' + height
+    });
+  }
+});
+
+module.exports = CollageItem;
+
+
+
+},{}],46:[function(require,module,exports){
+var ConnectStoreMixin, FollowStatus, PropTypes, RelationshipsStore;
+
+RelationshipsStore = require('../../../stores/relationships');
+
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
+
+PropTypes = React.PropTypes;
+
+FollowStatus = React.createClass({
+  displayName: 'FollowStatus',
+  mixins: [ConnectStoreMixin(RelationshipsStore)],
+  propTypes: {
+    userId: PropTypes.number.isRequired,
+    status: PropTypes.string.isRequired
+  },
+  render: function() {
+    if (this.state.status != null) {
+      return React.createElement("span", {
+        "className": 'follow-status __' + this.state.status
+      }, React.createElement("i", {
+        "className": "follow-status__icon"
+      }));
+    } else {
+      return null;
+    }
+  },
+  getStateFromStore: function() {
+    return {
+      status: RelationshipsStore.getStatus(this.props.userId) || this.props.status
+    };
+  }
+});
+
+module.exports = FollowStatus;
+
+
+
+},{"../../../../../shared/react/mixins/connectStore":167,"../../../stores/relationships":163}],47:[function(require,module,exports){
+var PropTypes, Spinner;
+
+PropTypes = React.PropTypes;
+
+Spinner = React.createClass({
+  propTypes: {
+    size: PropTypes.number
+  },
+  getDefaultProps: function() {
+    return {
+      size: 8
+    };
+  },
+  render: function() {
+    return React.createElement("span", {
+      "className": 'spinner spinner--' + this.getSize()
+    }, React.createElement("span", {
+      "className": "spinner__icon"
+    }));
+  },
+  getSize: function() {
+    return this.props.size + 'x' + this.props.size;
+  }
+});
+
+module.exports = Spinner;
+
+
+
+},{}],48:[function(require,module,exports){
+var Daylog, DaylogEmptyPageMessage, EntryTlog, PropTypes;
+
+DaylogEmptyPageMessage = require('./emptyPageMessage');
+
+EntryTlog = require('../entry/tlog');
+
+PropTypes = React.PropTypes;
+
+Daylog = React.createClass({
+  displayName: 'Daylog',
+  propTypes: {
+    entries: PropTypes.array.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "posts"
+    }, this.renderEntryList());
+  },
+  renderEntryList: function() {
+    if (this.props.entries.length) {
+      return this.props.entries.map(function(entry) {
+        return React.createElement(EntryTlog, {
+          "entry": entry,
+          "key": entry.id
+        });
+      });
+    } else {
+      return React.createElement(DaylogEmptyPageMessage, null);
+    }
+  }
+});
+
+module.exports = Daylog;
+
+
+
+},{"../entry/tlog":93,"./emptyPageMessage":49}],49:[function(require,module,exports){
+var DaylogEmptyPageMessage;
+
+DaylogEmptyPageMessage = React.createClass({
+  displayName: 'DaylogEmptyPageMessage',
+  render: function() {
+    return React.createElement("div", {
+      "className": "post"
+    }, React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement("div", {
+      "className": "post__header"
+    }, React.createElement("h1", {
+      "className": "post__title"
+    }, i18n.t('daylog_empty_page')))));
+  }
+});
+
+module.exports = DaylogEmptyPageMessage;
+
+
+
+},{}],50:[function(require,module,exports){
+var CommentsLoadMoreButton, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentsLoadMoreButton = React.createClass({
+  displayName: 'CommentsLoadMoreButton',
+  propTypes: {
+    title: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("span", {
+      "className": "comments__more-link",
+      "onClick": this.props.onClick
+    }, this.props.title);
+  }
+});
+
+module.exports = CommentsLoadMoreButton;
+
+
+
+},{}],51:[function(require,module,exports){
+var CommentForm, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentForm = React.createClass({
+  displayName: 'CommentForm',
+  propTypes: {
+    text: PropTypes.string,
+    buttonTitle: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    disabled: PropTypes.bool,
+    onSubmit: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func
+  },
+  getDefaultProps: function() {
+    return {
+      disabled: false
+    };
+  },
+  render: function() {
+    return React.createElement("form", {
+      "className": "comment-form"
+    }, this.renderCancelButton(), React.createElement("button", {
+      "className": "comment-form__submit",
+      "onClick": this.handleSubmit
+    }, this.props.buttonTitle), React.createElement("div", {
+      "className": "comment-form__field"
+    }, React.createElement("textarea", {
+      "ref": "textField",
+      "defaultValue": this.props.text,
+      "placeholder": this.props.placeholder,
+      "disabled": this.props.disabled,
+      "className": "comment-form__field-textarea",
+      "onKeyDown": this.handleTextareaKeydown
+    })));
+  },
+  renderCancelButton: function() {
+    if (this.props.onCancel != null) {
+      return React.createElement("button", {
+        "className": "comment-form__cancel",
+        "onClick": this.handleCancel
+      }, i18n.t('edit_comment_cancel_button'));
+    }
+  },
+  clearForm: function() {
+    return this.refs.textField.getDOMNode().value = '';
+  },
+  handleSubmit: function(e) {
+    var value;
+    e.preventDefault();
+    value = this.refs.textField.getDOMNode().value.trim();
+    if (!this.props.disabled) {
+      return this.props.onSubmit(value);
+    }
+  },
+  handleCancel: function(e) {
+    e.preventDefault();
+    return this.props.onCancel();
+  }
+});
+
+module.exports = CommentForm;
+
+
+
+},{}],52:[function(require,module,exports){
+var CommentCreateForm, CommentForm, ComponentMixin, PropTypes;
+
+CommentForm = require('../commentForm');
+
+ComponentMixin = require('../../../../mixins/component');
+
+PropTypes = React.PropTypes;
+
+CommentCreateForm = React.createClass({
+  displayName: 'CommentCreateForm',
+  propTypes: {
+    entryId: PropTypes.number.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onCommentCreate: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement(CommentForm, {
+      "ref": "commentForm",
+      "buttonTitle": i18n.t('create_comment_button'),
+      "placeholder": i18n.t('create_comment_placeholder'),
+      "disabled": this.props.loading,
+      "onSubmit": this.createComment
+    });
+  },
+  isValid: function(text) {
+    return !!text.match(/./);
+  },
+  clearForm: function() {
+    return this.refs.commentForm.clearForm();
+  },
+  createComment: function(text) {
+    if (!this.isValid(text)) {
+      return;
+    }
+    this.props.onCommentCreate(text);
+    return this.clearForm();
+  }
+});
+
+module.exports = CommentCreateForm;
+
+
+
+},{"../../../../mixins/component":148,"../commentForm":51}],53:[function(require,module,exports){
+var CommentEditForm, CommentForm, ComponentMixin, PropTypes;
+
+CommentForm = require('../commentForm');
+
+ComponentMixin = require('../../../../mixins/component');
+
+PropTypes = React.PropTypes;
+
+CommentEditForm = React.createClass({
+  displayName: 'CommentEditForm',
+  propTypes: {
+    entryId: PropTypes.number.isRequired,
+    comment: PropTypes.object.isRequired,
+    onEditFinish: PropTypes.func.isRequired,
+    onEditCancel: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement(CommentForm, {
+      "ref": "commentForm",
+      "text": this.props.comment.comment_html,
+      "buttonTitle": i18n.t('edit_comment_button'),
+      "placeholder": i18n.t('edit_comment_placeholder'),
+      "onSubmit": this.editComment,
+      "onCancel": this.props.onEditCancel
+    });
+  },
+  isValid: function(text) {
+    return !!text.match(/./) && this.props.comment.comment_html !== text;
+  },
+  clearForm: function() {
+    return this.refs.commentForm.clearForm();
+  },
+  editComment: function(text) {
+    if (!this.isValid(text)) {
+      return this.props.onEditCancel();
+    }
+    this.props.onEditFinish(text);
+    return this.clearForm();
+  }
+});
+
+module.exports = CommentEditForm;
+
+
+
+},{"../../../../mixins/component":148,"../commentForm":51}],54:[function(require,module,exports){
+var CommentList, CommentManager, PropTypes;
+
+CommentManager = require('./commentList/commentManager');
+
+PropTypes = React.PropTypes;
+
+CommentList = React.createClass({
+  displayName: 'CommentList',
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    comments: PropTypes.array.isRequired,
+    onCommentEdit: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  render: function() {
+    var commentList;
+    commentList = this.props.comments.map((function(_this) {
+      return function(comment) {
+        return React.createElement(CommentManager, {
+          "entry": _this.props.entry,
+          "comment": comment,
+          "onCommentEdit": _this.props.onCommentEdit,
+          "onCommentDelete": _this.props.onCommentDelete,
+          "onCommentReport": _this.props.onCommentReport,
+          "key": comment.id
+        });
+      };
+    })(this));
+    return React.createElement("div", {
+      "className": "comments__list"
+    }, commentList);
+  }
+});
+
+module.exports = CommentList;
+
+
+
+},{"./commentList/commentManager":66}],55:[function(require,module,exports){
+var Comment, CommentActions, CommentDate, CommentText, CommentUser, PropTypes;
+
+CommentUser = require('./comment/user');
+
+CommentText = require('./comment/text');
+
+CommentDate = require('./comment/date');
+
+CommentActions = require('./comment/actions');
+
+PropTypes = React.PropTypes;
+
+Comment = React.createClass({
+  displayName: 'Comment',
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    comment: PropTypes.object.isRequired,
+    onEditStart: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "comment"
+    }, React.createElement("div", {
+      "className": "comment__content"
+    }, React.createElement(CommentUser, {
+      "user": this.props.comment.user
+    }), React.createElement(CommentText, {
+      "text": this.props.comment.comment_html
+    }), React.createElement(CommentDate, {
+      "date": this.props.comment.created_at,
+      "commentId": this.props.comment.id,
+      "entryUrl": this.props.entry.entry_url
+    }), React.createElement(CommentActions, React.__spread({}, this.props))));
+  }
+});
+
+module.exports = Comment;
+
+
+
+},{"./comment/actions":56,"./comment/date":63,"./comment/text":64,"./comment/user":65}],56:[function(require,module,exports){
+var CLOSE_STATE, ClickOutsideMixin, CommentActions, CommentActionsButton, CommentActionsDropdownMenu, OPEN_STATE, PropTypes, UserAvatar, cx;
+
+cx = require('react/lib/cx');
+
+ClickOutsideMixin = require('../../../../../mixins/clickOutside');
+
+CommentActionsButton = require('./actions/buttons/button');
+
+CommentActionsDropdownMenu = require('./actions/dropdownMenu');
+
+UserAvatar = require('../../../../common/avatar/user');
+
+PropTypes = React.PropTypes;
+
+OPEN_STATE = 'open';
+
+CLOSE_STATE = 'close';
+
+CommentActions = React.createClass({
+  displayName: 'CommentActions',
+  mixins: [ClickOutsideMixin],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    comment: PropTypes.object.isRequired,
+    onEditStart: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: CLOSE_STATE
+    };
+  },
+  render: function() {
+    var actionsClasses;
+    actionsClasses = cx({
+      'comment__actions': true,
+      '__open': this.isOpenState()
+    });
+    return React.createElement("div", {
+      "className": actionsClasses
+    }, React.createElement(CommentActionsButton, {
+      "onClick": this.toggleOpenState
+    }), React.createElement(CommentActionsDropdownMenu, React.__spread({}, this.props, {
+      "visible": this.isOpenState()
+    })));
+  },
+  isOpenState: function() {
+    return this.state.currentState === OPEN_STATE;
+  },
+  activateCloseState: function() {
+    return this.setState({
+      currentState: CLOSE_STATE
+    });
+  },
+  activateOpenState: function() {
+    return this.setState({
+      currentState: OPEN_STATE
+    });
+  },
+  toggleOpenState: function() {
+    if (this.isOpenState()) {
+      return this.activateCloseState();
+    } else {
+      return this.activateOpenState();
+    }
+  }
+});
+
+module.exports = CommentActions;
+
+
+
+},{"../../../../../mixins/clickOutside":147,"../../../../common/avatar/user":40,"./actions/buttons/button":57,"./actions/dropdownMenu":58,"react/lib/cx":279}],57:[function(require,module,exports){
+var CommentActionsButton, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentActionsButton = React.createClass({
+  displayName: 'CommentActionsButton',
+  propTypes: {
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "comment__actions-button",
+      "onClick": this.props.onClick
+    }, React.createElement("i", {
+      "className": "icon icon--dots"
+    }));
+  }
+});
+
+module.exports = CommentActionsButton;
+
+
+
+},{}],58:[function(require,module,exports){
+var CommentActionsDropdownMenu, CommentActionsDropdownMenuDeleteItem, CommentActionsDropdownMenuEditItem, CommentActionsDropdownMenuLinkItem, CommentActionsDropdownMenuReportItem, DropdownMenuMixin, PropTypes;
+
+DropdownMenuMixin = require('../../../../../../mixins/dropdownMenu');
+
+CommentActionsDropdownMenuLinkItem = require('./dropdownMenu/items/link');
+
+CommentActionsDropdownMenuEditItem = require('./dropdownMenu/items/edit');
+
+CommentActionsDropdownMenuDeleteItem = require('./dropdownMenu/items/delete');
+
+CommentActionsDropdownMenuReportItem = require('./dropdownMenu/items/report');
+
+PropTypes = React.PropTypes;
+
+CommentActionsDropdownMenu = React.createClass({
+  displayName: 'CommentActionsDropdownMenu',
+  mixins: [DropdownMenuMixin],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    comment: PropTypes.object.isRequired,
+    onEditStart: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": this.getPopupClasses('comment__dropdown-popup')
+    }, this.renderPopupList());
+  },
+  renderPopupList: function() {
+    var deleteItem, editItem, linkItem, reportItem;
+    linkItem = React.createElement(CommentActionsDropdownMenuLinkItem, {
+      "commentId": this.props.comment.id,
+      "entryUrl": this.props.entry.entry_url,
+      "key": "link"
+    });
+    if (this.props.comment.can_report) {
+      reportItem = React.createElement(CommentActionsDropdownMenuReportItem, {
+        "commentId": this.props.comment.id,
+        "onCommentReport": this.props.onCommentReport,
+        "key": "report"
+      });
+    }
+    if (this.props.comment.can_edit) {
+      editItem = React.createElement(CommentActionsDropdownMenuEditItem, {
+        "onEditStart": this.props.onEditStart,
+        "key": "edit"
+      });
+    }
+    if (this.props.comment.can_delete) {
+      deleteItem = React.createElement(CommentActionsDropdownMenuDeleteItem, {
+        "commentId": this.props.comment.id,
+        "onCommentDelete": this.props.onCommentDelete,
+        "key": "delete"
+      });
+    }
+    return React.createElement("ul", {
+      "className": "comment__dropdown-popup-list"
+    }, [editItem, linkItem, reportItem, deleteItem]);
+  }
+});
+
+module.exports = CommentActionsDropdownMenu;
+
+
+
+},{"../../../../../../mixins/dropdownMenu":149,"./dropdownMenu/items/delete":59,"./dropdownMenu/items/edit":60,"./dropdownMenu/items/link":61,"./dropdownMenu/items/report":62}],59:[function(require,module,exports){
+var CommentActionsDropdownMenuDeleteItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentActionsDropdownMenuDeleteItem = React.createClass({
+  displayName: 'CommentActionsDropdownMenuDeleteItem',
+  propTypes: {
+    commentId: PropTypes.number.isRequired,
+    onCommentDelete: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "comment__dropdown-popup-item",
+      "onClick": this.handleClick
+    }, React.createElement("a", {
+      "className": "comment__dropdown-popup-link"
+    }, React.createElement("i", {
+      "className": "icon icon--basket"
+    }), React.createElement("span", null, i18n.t('delete_comment_item'))));
+  },
+  "delete": function() {
+    return this.props.onCommentDelete(this.props.commentId);
+  },
+  handleClick: function() {
+    if (confirm(i18n.t('delete_comment_confirm'))) {
+      return this["delete"]();
+    }
+  }
+});
+
+module.exports = CommentActionsDropdownMenuDeleteItem;
+
+
+
+},{}],60:[function(require,module,exports){
+var CommentActionsDropdownMenuEditItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentActionsDropdownMenuEditItem = React.createClass({
+  displayName: 'CommentActionsDropdownMenuEditItem',
+  propTypes: {
+    onEditStart: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "comment__dropdown-popup-item",
+      "onClick": this.props.onEditStart
+    }, React.createElement("a", {
+      "className": "comment__dropdown-popup-link"
+    }, React.createElement("i", {
+      "className": "icon icon--pencil"
+    }), React.createElement("span", null, i18n.t('edit_comment_item'))));
+  }
+});
+
+module.exports = CommentActionsDropdownMenuEditItem;
+
+
+
+},{}],61:[function(require,module,exports){
+var CommentActionsDropdownMenuLinkItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentActionsDropdownMenuLinkItem = React.createClass({
+  displayName: 'CommentActionsDropdownMenuLinkItem',
+  propTypes: {
+    entryUrl: PropTypes.string.isRequired,
+    commentId: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "comment__dropdown-popup-item"
+    }, React.createElement("a", {
+      "className": "comment__dropdown-popup-link",
+      "href": this.getCommentUrl()
+    }, React.createElement("i", {
+      "className": "icon icon--hyperlink"
+    }), React.createElement("span", null, i18n.t('link_comment_item'))));
+  },
+  getCommentUrl: function() {
+    return this.props.entryUrl + '#comment-' + this.props.commentId;
+  }
+});
+
+module.exports = CommentActionsDropdownMenuLinkItem;
+
+
+
+},{}],62:[function(require,module,exports){
+var CommentActionsDropdownMenuReportItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentActionsDropdownMenuReportItem = React.createClass({
+  displayName: 'CommentActionsDropdownMenuReportItem',
+  propTypes: {
+    commentId: PropTypes.number.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "comment__dropdown-popup-item",
+      "onClick": this.handleClick
+    }, React.createElement("a", {
+      "className": "comment__dropdown-popup-link"
+    }, React.createElement("i", {
+      "className": "icon icon--exclamation-mark"
+    }), React.createElement("span", null, i18n.t('report_comment_item'))));
+  },
+  report: function() {
+    return this.props.onCommentReport(this.props.commentId);
+  },
+  handleClick: function() {
+    if (confirm(i18n.t('report_comment_confirm'))) {
+      return this.report();
+    }
+  }
+});
+
+module.exports = CommentActionsDropdownMenuReportItem;
+
+
+
+},{}],63:[function(require,module,exports){
+var CommentDate, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentDate = React.createClass({
+  displayName: 'CommentDate',
+  propTypes: {
+    date: PropTypes.string.isRequired,
+    entryUrl: PropTypes.string.isRequired,
+    commentId: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "href": this.getCommentUrl(),
+      "className": "comment__date"
+    }, this.getFormattedDate());
+  },
+  getCommentUrl: function() {
+    return this.props.entryUrl + '#comment-' + this.props.commentId;
+  },
+  getFormattedDate: function() {
+    var createdAt, now;
+    now = moment();
+    createdAt = moment(this.props.date);
+    switch (false) {
+      case !(now.diff(createdAt, 'seconds') < 5):
+        return createdAt.subtract(5, 's').fromNow();
+      case !(now.diff(createdAt, 'minutes') < 180):
+        return createdAt.fromNow();
+      case !(now.diff(createdAt, 'days') < 1):
+        return createdAt.calendar();
+      default:
+        if (now.year() !== createdAt.year()) {
+          return createdAt.format('D MMMM YYYY');
+        } else {
+          return createdAt.format('D MMMM');
+        }
+    }
+  }
+});
+
+module.exports = CommentDate;
+
+
+
+},{}],64:[function(require,module,exports){
+var CommentText, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentText = React.createClass({
+  displayName: 'CommentText',
+  propTypes: {
+    text: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("span", {
+      "className": "comment__text",
+      "dangerouslySetInnerHTML": {
+        __html: this.props.text
+      }
+    });
+  }
+});
+
+module.exports = CommentText;
+
+
+
+},{}],65:[function(require,module,exports){
+var CommentUser, PropTypes, UserAvatar;
+
+UserAvatar = require('../../../../common/avatar/user');
+
+PropTypes = React.PropTypes;
+
+CommentUser = React.createClass({
+  displayName: 'CommentUser',
+  propTypes: {
+    user: PropTypes.object.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "href": this.props.user.tlog_url,
+      "className": "comment__user",
+      "target": "_blank",
+      "title": this.props.user.slug
+    }, React.createElement("span", {
+      "className": "comment__avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.user,
+      "size": 42.
+    })), React.createElement("span", {
+      "className": "comment__username"
+    }, this.props.user.slug));
+  }
+});
+
+module.exports = CommentUser;
+
+
+
+},{"../../../../common/avatar/user":40}],66:[function(require,module,exports){
+var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
+
+Comment = require('./comment');
+
+CommentEditForm = require('../commentForm/edit');
+
+ComponentMixin = require('../../../../mixins/component');
+
+PropTypes = React.PropTypes;
+
+SHOW_STATE = 'show';
+
+EDIT_STATE = 'edit';
+
+CommentManager = React.createClass({
+  displayName: 'CommentManager',
+  mixins: [ComponentMixin],
+  propTypes: {
+    comment: PropTypes.object.isRequired,
+    entry: PropTypes.object.isRequired,
+    onCommentEdit: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: SHOW_STATE
+    };
+  },
+  render: function() {
+    switch (this.state.currentState) {
+      case SHOW_STATE:
+        return React.createElement(Comment, React.__spread({}, this.props, {
+          "onEditStart": this.activateEditState
+        }));
+      case EDIT_STATE:
+        return React.createElement(CommentEditForm, {
+          "comment": this.props.comment,
+          "entryId": this.props.entry.id,
+          "onEditFinish": this.handleEditFinish,
+          "onEditCancel": this.activateShowState
+        });
+      default:
+        return typeof console.warn === "function" ? console.warn('Unknown currentState of CommentManager component', this.state.currentState) : void 0;
+    }
+  },
+  activateEditState: function() {
+    return this.safeUpdateState({
+      currentState: EDIT_STATE
+    });
+  },
+  activateShowState: function() {
+    return this.safeUpdateState({
+      currentState: SHOW_STATE
+    });
+  },
+  handleEditFinish: function(text) {
+    var commentId;
+    commentId = this.props.comment.id;
+    this.props.onCommentEdit(commentId, text);
+    return this.activateShowState();
+  }
+});
+
+module.exports = CommentManager;
+
+
+
+},{"../../../../mixins/component":148,"../commentForm/edit":53,"./comment":55}],67:[function(require,module,exports){
+var CommentCreateForm, CommentList, CommentsLoadMore, EntryComments, PropTypes;
+
+CommentList = require('./commentList');
+
+CommentCreateForm = require('./commentForm/create');
+
+CommentsLoadMore = require('./commentsLoadMore');
+
+PropTypes = React.PropTypes;
+
+EntryComments = React.createClass({
+  displayName: 'EntryComments',
+  propTypes: {
+    user: PropTypes.object,
+    entry: PropTypes.object.isRequired,
+    comments: PropTypes.array.isRequired,
+    commentsCount: PropTypes.number.isRequired,
+    loading: PropTypes.bool.isRequired,
+    loadPerTime: PropTypes.number,
+    onCommentsLoadMore: PropTypes.func.isRequired,
+    onCommentCreate: PropTypes.func.isRequired,
+    onCommentEdit: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__comments"
+    }, React.createElement("div", {
+      "className": "comments"
+    }, this.renderLoadMore(), this.renderCommentList(), this.renderCommentForm()));
+  },
+  renderLoadMore: function() {
+    if (this.props.commentsCount > this.props.comments.length) {
+      return React.createElement(CommentsLoadMore, {
+        "totalCount": this.props.commentsCount,
+        "loadedCount": this.props.comments.length,
+        "loading": this.props.loading,
+        "loadPerTime": this.props.loadPerTime,
+        "onCommentsLoadMore": this.props.onCommentsLoadMore
+      });
+    }
+  },
+  renderCommentList: function() {
+    if (this.props.comments.length) {
+      return React.createElement(CommentList, {
+        "comments": this.props.comments,
+        "entry": this.props.entry,
+        "onCommentEdit": this.props.onCommentEdit,
+        "onCommentDelete": this.props.onCommentDelete,
+        "onCommentReport": this.props.onCommentReport
+      });
+    }
+  },
+  renderCommentForm: function() {
+    if (this.props.user != null) {
+      return React.createElement(CommentCreateForm, {
+        "entryId": this.props.entry.id,
+        "loading": this.props.loading,
+        "onCommentCreate": this.props.onCommentCreate
+      });
+    }
+  }
+});
+
+module.exports = EntryComments;
+
+
+
+},{"./commentForm/create":52,"./commentList":54,"./commentsLoadMore":68}],68:[function(require,module,exports){
+var CommentsLoadMore, CommentsLoadMoreButton, PropTypes, Spinner;
+
+Spinner = require('../../common/spinner/spinner');
+
+CommentsLoadMoreButton = require('./buttons/loadMore');
+
+PropTypes = React.PropTypes;
+
+CommentsLoadMore = React.createClass({
+  displayName: 'CommentsLoadMore',
+  propTypes: {
+    totalCount: PropTypes.number.isRequired,
+    loadedCount: PropTypes.number,
+    loadPerTime: PropTypes.number,
+    loading: PropTypes.bool.isRequired,
+    onCommentsLoadMore: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "comments__more"
+    }, this.renderContent());
+  },
+  renderContent: function() {
+    if (this.props.loading) {
+      return React.createElement("div", {
+        "className": "comments__loader"
+      }, React.createElement(Spinner, {
+        "size": 14.
+      }));
+    } else {
+      return React.createElement(CommentsLoadMoreButton, {
+        "title": this.getTitle(),
+        "onClick": this.props.onCommentsLoadMore
+      });
+    }
+  },
+  getTitle: function() {
+    var possibleCount, remainingCount;
+    remainingCount = this.props.totalCount - this.props.loadedCount;
+    possibleCount = this.props.loadedCount + this.props.loadPerTime;
+    if (possibleCount < this.props.totalCount) {
+      return i18n.t('load_more_comments', {
+        count: this.props.loadPerTime
+      });
+    } else {
+      return i18n.t('load_more_comments_remaining', {
+        count: remainingCount
+      });
+    }
+  }
+});
+
+module.exports = CommentsLoadMore;
+
+
+
+},{"../../common/spinner/spinner":47,"./buttons/loadMore":50}],69:[function(require,module,exports){
+var EntryContent, IMAGE_TYPE, ImageEntryContent, PropTypes, QUOTE_TYPE, QuoteEntryContent, TEXT_TYPE, TextEntryContent, UnknownEntryContent, VIDEO_TYPE, VideoEntryContent;
+
+TextEntryContent = require('./text/text');
+
+ImageEntryContent = require('./image/image');
+
+VideoEntryContent = require('./video/video');
+
+QuoteEntryContent = require('./quote/quote');
+
+UnknownEntryContent = require('./unknown/unknown');
+
+PropTypes = React.PropTypes;
+
+TEXT_TYPE = 'text';
+
+IMAGE_TYPE = 'image';
+
+VIDEO_TYPE = 'video';
+
+QUOTE_TYPE = 'quote';
+
+EntryContent = React.createClass({
+  displayName: 'EntryContent',
+  propTypes: {
+    entry: PropTypes.object.isRequired
+  },
+  render: function() {
+    switch (this.props.entry.type) {
+      case TEXT_TYPE:
+        return React.createElement(TextEntryContent, {
+          "title": this.props.entry.title,
+          "text": this.props.entry.text
+        });
+      case IMAGE_TYPE:
+        return React.createElement(ImageEntryContent, {
+          "title": this.props.entry.title,
+          "imageUrl": this.props.entry.image_url,
+          "imageAttachments": this.props.entry.image_attachments
+        });
+      case VIDEO_TYPE:
+        return React.createElement(VideoEntryContent, {
+          "iframely": this.props.entry.iframely
+        });
+      case QUOTE_TYPE:
+        return React.createElement(QuoteEntryContent, {
+          "text": this.props.entry.text,
+          "source": this.props.entry.source
+        });
+      default:
+        return React.createElement(UnknownEntryContent, {
+          "title": this.props.entry.title
+        });
+    }
+  }
+});
+
+module.exports = EntryContent;
+
+
+
+},{"./image/image":71,"./quote/quote":72,"./text/text":74,"./unknown/unknown":76,"./video/video":77}],70:[function(require,module,exports){
+var CollageManager, ImageEntryAttachments, PropTypes;
+
+CollageManager = require('../../../common/collage/collageManager');
+
+PropTypes = React.PropTypes;
+
+ImageEntryAttachments = React.createClass({
+  displayName: 'ImageEntryAttachments',
+  propTypes: {
+    imageAttachments: PropTypes.array.isRequired
+  },
+  render: function() {
+    return React.createElement(CollageManager, {
+      "images": this.getImages()
+    });
+  },
+  getImages: function() {
+    return this.props.imageAttachments.map(function(imageAttachment) {
+      var image, newImage;
+      image = imageAttachment.image;
+      newImage = {
+        width: image.geometry.width,
+        height: image.geometry.height,
+        payload: {
+          id: imageAttachment.id,
+          url: image.url,
+          path: image.path,
+          title: image.title
+        }
+      };
+      return newImage;
+    });
+  }
+});
+
+module.exports = ImageEntryAttachments;
+
+
+
+},{"../../../common/collage/collageManager":42}],71:[function(require,module,exports){
+var ImageEntryAttachments, ImageEntryContent, PropTypes;
+
+ImageEntryAttachments = require('./attachments');
+
+PropTypes = React.PropTypes;
+
+ImageEntryContent = React.createClass({
+  displayName: 'ImageEntryContent',
+  propTypes: {
+    title: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string,
+    imageAttachments: PropTypes.array.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__content"
+    }, this.renderEntryImage(), React.createElement("p", null, this.props.title));
+  },
+  renderEntryImage: function() {
+    var content;
+    content = (function() {
+      switch (false) {
+        case !this.props.imageAttachments:
+          return React.createElement(ImageEntryAttachments, {
+            "imageAttachments": this.props.imageAttachments
+          });
+        case !this.props.imageUrl:
+          return React.createElement("img", {
+            "src": this.props.imageUrl
+          });
+        default:
+          return i18n.t('empty_image_entry');
+      }
+    }).call(this);
+    return React.createElement("div", {
+      "className": "media-image"
+    }, content);
+  }
+});
+
+module.exports = ImageEntryContent;
+
+
+
+},{"./attachments":70}],72:[function(require,module,exports){
+var PropTypes, QuoteEntryContent;
+
+PropTypes = React.PropTypes;
+
+QuoteEntryContent = React.createClass({
+  displayName: 'QuoteEntryContent',
+  propTypes: {
+    text: PropTypes.string.isRequired,
+    source: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement("blockquote", {
+      "className": "blockquote"
+    }, React.createElement("span", {
+      "className": "laquo"
+    }, "\u00ab"), React.createElement("span", null, this.props.text), React.createElement("span", {
+      "className": "raquo"
+    }, "\u00bb"), this.renderCaption()));
+  },
+  renderCaption: function() {
+    if (this.props.source) {
+      return React.createElement("div", {
+        "className": "blockquote__caption"
+      }, this.props.source);
+    }
+  }
+});
+
+module.exports = QuoteEntryContent;
+
+
+
+},{}],73:[function(require,module,exports){
+var PropTypes, TextEntryHeader;
+
+PropTypes = React.PropTypes;
+
+TextEntryHeader = React.createClass({
+  displayName: 'TextEntryHeader',
+  propTypes: {
+    title: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__header"
+    }, React.createElement("h1", {
+      "className": "post__title"
+    }, this.props.title));
+  }
+});
+
+module.exports = TextEntryHeader;
+
+
+
+},{}],74:[function(require,module,exports){
+var PropTypes, TextEntryContent, TextEntryHeader;
+
+TextEntryHeader = require('./header');
+
+PropTypes = React.PropTypes;
+
+TextEntryContent = React.createClass({
+  displayName: 'TextEntryContent',
+  propTypes: {
+    title: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("div", null, React.createElement(TextEntryHeader, {
+      "title": this.props.title
+    }), React.createElement("div", {
+      "className": "post__content",
+      "dangerouslySetInnerHTML": {
+        __html: this.props.text
+      }
+    }));
+  }
+});
+
+module.exports = TextEntryContent;
+
+
+
+},{"./header":73}],75:[function(require,module,exports){
+var PropTypes, UnknownEntryHeader;
+
+PropTypes = React.PropTypes;
+
+UnknownEntryHeader = React.createClass({
+  displayName: 'UnknownEntryHeader',
+  propTypes: {
+    title: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__header"
+    }, React.createElement("h1", {
+      "className": "post__title"
+    }, this.props.title));
+  }
+});
+
+module.exports = UnknownEntryHeader;
+
+
+
+},{}],76:[function(require,module,exports){
+var PropTypes, UnknownEntryContent, UnknownEntryHeader;
+
+UnknownEntryHeader = require('./header');
+
+PropTypes = React.PropTypes;
+
+UnknownEntryContent = React.createClass({
+  displayName: 'UnknownEntryContent',
+  propTypes: {
+    title: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("div", null, React.createElement(UnknownEntryHeader, {
+      "title": this.props.title
+    }), React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement("p", null, i18n.t('unknown_entry_type'))));
+  }
+});
+
+module.exports = UnknownEntryContent;
+
+
+
+},{"./header":75}],77:[function(require,module,exports){
+var PropTypes, VideoEntryContent;
+
+PropTypes = React.PropTypes;
+
+VideoEntryContent = React.createClass({
+  displayName: 'VideoEntryContent',
+  propTypes: {
+    iframely: PropTypes.object
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement("div", {
+      "className": "media-video"
+    }, this.renderEmbedHtml()));
+  },
+  renderEmbedHtml: function() {
+    var _ref;
+    if ((_ref = this.props.iframely) != null ? _ref.html : void 0) {
+      return React.createElement("div", {
+        "className": "media-video__embed",
+        "dangerouslySetInnerHTML": {
+          __html: this.props.iframely.html
+        }
+      });
+    } else {
+      return React.createElement("div", {
+        "className": "media-video__embed"
+      }, i18n.t('empty_video_entry'));
+    }
+  }
+});
+
+module.exports = VideoEntryContent;
+
+
+
+},{}],78:[function(require,module,exports){
+var ComponentMixin, ConnectStoreMixin, CurrentUserStore, EntryComments, EntryContent, EntryFeed, EntryFeedMeta, EntryMixin, PropTypes;
+
+EntryFeedMeta = require('./feed/meta');
+
+EntryComments = require('./comments/comments');
+
+EntryContent = require('./content/content');
+
+CurrentUserStore = require('../../stores/currentUser');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+ComponentMixin = require('../../mixins/component');
+
+EntryMixin = require('./mixins/entry');
+
+PropTypes = React.PropTypes;
+
+EntryFeed = React.createClass({
+  displayName: 'EntryFeed',
+  mixins: [ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    loadPerTime: PropTypes.number
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": this.getEntryClasses()
+    }, React.createElement(EntryContent, {
+      "entry": this.props.entry
+    }), React.createElement(EntryFeedMeta, {
+      "entry": this.props.entry,
+      "commentsCount": this.state.commentsCount
+    }), React.createElement(EntryComments, {
+      "user": this.state.user,
+      "entry": this.props.entry,
+      "comments": this.state.comments,
+      "commentsCount": this.state.commentsCount,
+      "loading": this.isLoadingState(),
+      "loadPerTime": this.props.loadPerTime,
+      "onCommentsLoadMore": this.loadMoreComments,
+      "onCommentCreate": this.createComment,
+      "onCommentEdit": this.editComment,
+      "onCommentDelete": this.deleteComment,
+      "onCommentReport": this.reportComment
+    }));
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser()
+    };
+  }
+});
+
+module.exports = EntryFeed;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":167,"../../mixins/component":148,"../../stores/currentUser":161,"./comments/comments":67,"./content/content":69,"./feed/meta":79,"./mixins/entry":92}],79:[function(require,module,exports){
+var EntryFeedMeta, EntryMetaActions, EntryMetaAuthor, EntryMetaComments, EntryMetaVoting, PropTypes;
+
+EntryMetaVoting = require('../meta/voting');
+
+EntryMetaActions = require('../meta/actions');
+
+EntryMetaComments = require('../meta/comments');
+
+EntryMetaAuthor = require('../meta/author');
+
+PropTypes = React.PropTypes;
+
+EntryFeedMeta = React.createClass({
+  displayName: 'EntryFeedMeta',
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    commentsCount: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__meta"
+    }, React.createElement(EntryMetaActions, {
+      "entry": this.props.entry
+    }), this.renderVoting(), React.createElement(EntryMetaComments, {
+      "commentsCount": this.props.commentsCount
+    }), React.createElement(EntryMetaAuthor, {
+      "author": this.props.entry.author
+    }));
+  },
+  renderVoting: function() {
+    if (this.props.entry.is_voteable) {
+      return React.createElement(EntryMetaVoting, {
+        "rating": this.props.entry.rating,
+        "entryId": this.props.entry.id
+      });
+    }
+  }
+});
+
+module.exports = EntryFeedMeta;
+
+
+
+},{"../meta/actions":80,"../meta/author":89,"../meta/comments":90,"../meta/voting":91}],80:[function(require,module,exports){
+var CLOSE_STATE, ClickOutsideMixin, EntryMetaActions, EntryMetaActions_Button, EntryMetaActions_DropdownMenu, OPEN_STATE, PropTypes, cx;
+
+cx = require('react/lib/cx');
+
+ClickOutsideMixin = require('../../../mixins/clickOutside');
+
+EntryMetaActions_Button = require('./actions/buttons/button');
+
+EntryMetaActions_DropdownMenu = require('./actions/dropdownMenu');
+
+PropTypes = React.PropTypes;
+
+OPEN_STATE = 'open';
+
+CLOSE_STATE = 'close';
+
+EntryMetaActions = React.createClass({
+  displayName: 'EntryMetaActions',
+  mixins: [ClickOutsideMixin],
+  propTypes: {
+    entry: PropTypes.object.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: CLOSE_STATE
+    };
+  },
+  render: function() {
+    var actionsClasses;
+    actionsClasses = cx({
+      'meta-actions': true,
+      '__open': this.isOpenState()
+    });
+    return React.createElement("div", {
+      "className": actionsClasses
+    }, React.createElement(EntryMetaActions_Button, {
+      "onClick": this.toggleOpenState
+    }), React.createElement(EntryMetaActions_DropdownMenu, {
+      "entry": this.props.entry,
+      "visible": this.isOpenState()
+    }));
+  },
+  isOpenState: function() {
+    return this.state.currentState === OPEN_STATE;
+  },
+  activateCloseState: function() {
+    return this.setState({
+      currentState: CLOSE_STATE
+    });
+  },
+  activateOpenState: function() {
+    return this.setState({
+      currentState: OPEN_STATE
+    });
+  },
+  toggleOpenState: function() {
+    if (this.isOpenState()) {
+      return this.activateCloseState();
+    } else {
+      return this.activateOpenState();
+    }
+  }
+});
+
+module.exports = EntryMetaActions;
+
+
+
+},{"../../../mixins/clickOutside":147,"./actions/buttons/button":81,"./actions/dropdownMenu":82,"react/lib/cx":279}],81:[function(require,module,exports){
+var EntryMetaActions_Button, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EntryMetaActions_Button = React.createClass({
+  displayName: 'EntryMetaActions_Button',
+  propTypes: {
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "meta-actions__button",
+      "onClick": this.props.onClick
+    }, React.createElement("i", {
+      "className": "icon icon--dots"
+    }));
+  }
+});
+
+module.exports = EntryMetaActions_Button;
+
+
+
+},{}],82:[function(require,module,exports){
+var DropdownMenuMixin, EntryMetaActions_DropdownMenu, EntryMetaActions_DropdownMenu_DeleteItem, EntryMetaActions_DropdownMenu_EditItem, EntryMetaActions_DropdownMenu_FavoriteItem, EntryMetaActions_DropdownMenu_LinkItem, EntryMetaActions_DropdownMenu_ReportItem, EntryMetaActions_DropdownMenu_WatchItem, PropTypes;
+
+DropdownMenuMixin = require('../../../../mixins/dropdownMenu');
+
+EntryMetaActions_DropdownMenu_LinkItem = require('./dropdownMenu/items/link');
+
+EntryMetaActions_DropdownMenu_EditItem = require('./dropdownMenu/items/edit');
+
+EntryMetaActions_DropdownMenu_FavoriteItem = require('./dropdownMenu/items/favorite');
+
+EntryMetaActions_DropdownMenu_WatchItem = require('./dropdownMenu/items/watch');
+
+EntryMetaActions_DropdownMenu_DeleteItem = require('./dropdownMenu/items/delete');
+
+EntryMetaActions_DropdownMenu_ReportItem = require('./dropdownMenu/items/report');
+
+PropTypes = React.PropTypes;
+
+EntryMetaActions_DropdownMenu = React.createClass({
+  displayName: 'EntryMetaActions_DropdownMenu',
+  mixins: [DropdownMenuMixin],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    visible: PropTypes.bool.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": this.getPopupClasses('meta-actions__dropdown-popup')
+    }, this.renderPopupList());
+  },
+  renderPopupList: function() {
+    var deleteItem, editItem, favoriteItem, linkItem, reportItem, watchItem;
+    linkItem = React.createElement(EntryMetaActions_DropdownMenu_LinkItem, {
+      "entryUrl": this.props.entry.entry_url,
+      "key": "link"
+    });
+    if (this.props.entry.can_edit) {
+      editItem = React.createElement(EntryMetaActions_DropdownMenu_EditItem, {
+        "editUrl": Routes.entry_edit_url(this.props.entry.author.slug, this.props.entry.id),
+        "key": "edit"
+      });
+    }
+    if (this.props.entry.can_favorite) {
+      favoriteItem = React.createElement(EntryMetaActions_DropdownMenu_FavoriteItem, {
+        "entryId": this.props.entry.id,
+        "favorited": this.props.entry.is_favorited,
+        "key": "favorite"
+      });
+    }
+    if (this.props.entry.can_watch) {
+      watchItem = React.createElement(EntryMetaActions_DropdownMenu_WatchItem, {
+        "entryId": this.props.entry.id,
+        "watching": this.props.entry.is_watching,
+        "key": "watch"
+      });
+    }
+    if (this.props.entry.can_report) {
+      reportItem = React.createElement(EntryMetaActions_DropdownMenu_ReportItem, {
+        "entryId": this.props.entry.id,
+        "key": "report"
+      });
+    }
+    if (this.props.entry.can_delete) {
+      deleteItem = React.createElement(EntryMetaActions_DropdownMenu_DeleteItem, {
+        "entryId": this.props.entry.id,
+        "key": "delete"
+      });
+    }
+    return React.createElement("ul", {
+      "className": "meta-actions__dropdown-popup-list"
+    }, [editItem, linkItem, favoriteItem, watchItem, reportItem, deleteItem]);
+  }
+});
+
+module.exports = EntryMetaActions_DropdownMenu;
+
+
+
+},{"../../../../mixins/dropdownMenu":149,"./dropdownMenu/items/delete":83,"./dropdownMenu/items/edit":84,"./dropdownMenu/items/favorite":85,"./dropdownMenu/items/link":86,"./dropdownMenu/items/report":87,"./dropdownMenu/items/watch":88}],83:[function(require,module,exports){
+var EntryMetaActions_DropdownMenu_DeleteItem, EntryViewActions, PropTypes;
+
+EntryViewActions = require('../../../../../../actions/view/entry');
+
+PropTypes = React.PropTypes;
+
+EntryMetaActions_DropdownMenu_DeleteItem = React.createClass({
+  displayName: 'EntryMetaActions_DropdownMenu_DeleteItem',
+  propTypes: {
+    entryId: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "meta-actions__dropdown-popup-item"
+    }, React.createElement("a", {
+      "className": "meta-actions__dropdown-popup-link",
+      "onClick": this.handleClick
+    }, React.createElement("i", {
+      "className": "icon icon--basket"
+    }), React.createElement("span", null, i18n.t('delete_entry_item'))));
+  },
+  "delete": function() {
+    return EntryViewActions["delete"](this.props.entryId);
+  },
+  handleClick: function() {
+    if (confirm(i18n.t('delete_entry_confirm'))) {
+      return this["delete"]();
+    }
+  }
+});
+
+module.exports = EntryMetaActions_DropdownMenu_DeleteItem;
+
+
+
+},{"../../../../../../actions/view/entry":9}],84:[function(require,module,exports){
+var EntryMetaActions_DropdownMenu_EditItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EntryMetaActions_DropdownMenu_EditItem = React.createClass({
+  displayName: 'EntryMetaActions_DropdownMenu_EditItem',
+  propTypes: {
+    editUrl: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "meta-actions__dropdown-popup-item"
+    }, React.createElement("a", {
+      "href": this.props.editUrl,
+      "className": "meta-actions__dropdown-popup-link"
+    }, React.createElement("i", {
+      "className": "icon icon--pencil"
+    }), React.createElement("span", null, i18n.t('edit_entry_item'))));
+  }
+});
+
+module.exports = EntryMetaActions_DropdownMenu_EditItem;
+
+
+
+},{}],85:[function(require,module,exports){
+var EntryMetaActions_DropdownMenu_FavoriteItem, EntryViewActions, PropTypes, cx;
+
+cx = require('react/lib/cx');
+
+EntryViewActions = require('../../../../../../actions/view/entry');
+
+PropTypes = React.PropTypes;
+
+EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass({
+  displayName: 'EntryMetaActions_DropdownMenu_FavoriteItem',
+  propTypes: {
+    favorited: PropTypes.bool.isRequired,
+    entryId: PropTypes.number.isRequired
+  },
+  getInitialState: function() {
+    return {
+      favorited: this.props.favorited
+    };
+  },
+  render: function() {
+    var iconClasses;
+    iconClasses = cx({
+      'icon': true,
+      'icon--star': true,
+      'icon--star-fill': this.isFavorited()
+    });
+    return React.createElement("li", {
+      "className": "meta-actions__dropdown-popup-item"
+    }, React.createElement("a", {
+      "className": "meta-actions__dropdown-popup-link",
+      "onClick": this.handleClick
+    }, React.createElement("i", {
+      "className": iconClasses
+    }), React.createElement("span", null, this.getTitle())));
+  },
+  isFavorited: function() {
+    return this.state.favorited;
+  },
+  getTitle: function() {
+    if (this.isFavorited()) {
+      return i18n.t('remove_from_favorites_entry_item');
+    } else {
+      return i18n.t('add_to_favorites_entry_item');
+    }
+  },
+  addToFavorites: function() {
+    return EntryViewActions.addToFavorites(this.props.entryId).then((function(_this) {
+      return function() {
+        return _this.setState({
+          favorited: true
+        });
+      };
+    })(this));
+  },
+  removeFromFavorites: function() {
+    return EntryViewActions.removeFromFavorites(this.props.entryId).then((function(_this) {
+      return function() {
+        return _this.setState({
+          favorited: false
+        });
+      };
+    })(this));
+  },
+  handleClick: function() {
+    if (this.isFavorited()) {
+      return this.removeFromFavorites();
+    } else {
+      return this.addToFavorites();
+    }
+  }
+});
+
+module.exports = EntryMetaActions_DropdownMenu_FavoriteItem;
+
+
+
+},{"../../../../../../actions/view/entry":9,"react/lib/cx":279}],86:[function(require,module,exports){
+var EntryMetaActions_DropdownMenu_LinkItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EntryMetaActions_DropdownMenu_LinkItem = React.createClass({
+  displayName: 'EntryMetaActions_DropdownMenu_LinkItem',
+  propTypes: {
+    entryUrl: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "meta-actions__dropdown-popup-item"
+    }, React.createElement("a", {
+      "href": this.props.entryUrl,
+      "className": "meta-actions__dropdown-popup-link"
+    }, React.createElement("i", {
+      "className": "icon icon--hyperlink"
+    }), React.createElement("span", null, i18n.t('link_entry_item'))));
+  }
+});
+
+module.exports = EntryMetaActions_DropdownMenu_LinkItem;
+
+
+
+},{}],87:[function(require,module,exports){
+var EntryMetaActions_DropdownMenu_ReportItem, EntryViewActions, PropTypes;
+
+EntryViewActions = require('../../../../../../actions/view/entry');
+
+PropTypes = React.PropTypes;
+
+EntryMetaActions_DropdownMenu_ReportItem = React.createClass({
+  displayName: 'EntryMetaActions_DropdownMenu_ReportItem',
+  propTypes: {
+    entryId: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "meta-actions__dropdown-popup-item"
+    }, React.createElement("a", {
+      "className": "meta-actions__dropdown-popup-link",
+      "onClick": this.handleClick
+    }, React.createElement("i", {
+      "className": "icon icon--exclamation-mark"
+    }), React.createElement("span", null, i18n.t('report_entry_item'))));
+  },
+  report: function() {
+    return EntryViewActions.report(this.props.entryId);
+  },
+  handleClick: function() {
+    if (confirm(i18n.t('report_entry_confirm'))) {
+      return this.report();
+    }
+  }
+});
+
+module.exports = EntryMetaActions_DropdownMenu_ReportItem;
+
+
+
+},{"../../../../../../actions/view/entry":9}],88:[function(require,module,exports){
+var EntryMetaActions_DropdownMenu_WatchItem, EntryViewActions, PropTypes;
+
+EntryViewActions = require('../../../../../../actions/view/entry');
+
+PropTypes = React.PropTypes;
+
+EntryMetaActions_DropdownMenu_WatchItem = React.createClass({
+  displayName: 'EntryMetaActions_DropdownMenu_WatchItem',
+  propTypes: {
+    entryId: PropTypes.number.isRequired,
+    watching: PropTypes.bool.isRequired
+  },
+  getInitialState: function() {
+    return {
+      watching: this.props.watching
+    };
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "meta-actions__dropdown-popup-item"
+    }, React.createElement("a", {
+      "className": "meta-actions__dropdown-popup-link",
+      "onClick": this.handleClick
+    }, React.createElement("i", {
+      "className": "icon icon--comments-subscribe"
+    }), React.createElement("span", null, this.getTitle())));
+  },
+  isWatching: function() {
+    return this.state.watching;
+  },
+  getTitle: function() {
+    if (this.isWatching()) {
+      return i18n.t('stop_watch_entry_item');
+    } else {
+      return i18n.t('start_watch_entry_item');
+    }
+  },
+  startWatch: function() {
+    return EntryViewActions.startWatch(this.props.entryId).then((function(_this) {
+      return function() {
+        return _this.setState({
+          watching: true
+        });
+      };
+    })(this));
+  },
+  stopWatch: function() {
+    return EntryViewActions.stopWatch(this.props.entryId).then((function(_this) {
+      return function() {
+        return _this.setState({
+          watching: false
+        });
+      };
+    })(this));
+  },
+  handleClick: function() {
+    if (this.isWatching()) {
+      return this.stopWatch();
+    } else {
+      return this.startWatch();
+    }
+  }
+});
+
+module.exports = EntryMetaActions_DropdownMenu_WatchItem;
+
+
+
+},{"../../../../../../actions/view/entry":9}],89:[function(require,module,exports){
+var EntryMetaAuthor, PropTypes, UserAvatar;
+
+UserAvatar = require('../../common/avatar/user');
+
+PropTypes = React.PropTypes;
+
+EntryMetaAuthor = React.createClass({
+  displayName: 'EntryMetaAuthor',
+  propTypes: {
+    author: PropTypes.object.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "className": "meta-author",
+      "href": this.props.author.tlog_url
+    }, React.createElement("span", {
+      "className": "meta-author__avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.author,
+      "size": 28.
+    })), React.createElement("span", null, this.getUserSlug()));
+  },
+  getUserSlug: function() {
+    return " @" + this.props.author.slug;
+  }
+});
+
+module.exports = EntryMetaAuthor;
+
+
+
+},{"../../common/avatar/user":40}],90:[function(require,module,exports){
+var EntryMetaComments, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EntryMetaComments = React.createClass({
+  displayName: 'EntryMetaComments',
+  propTypes: {
+    commentsCount: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "meta-comments"
+    }, this.props.commentsCount);
+  }
+});
+
+module.exports = EntryMetaComments;
+
+
+
+},{}],91:[function(require,module,exports){
+var ComponentMixin, EntryMetaVoting, EntryViewActions, PropTypes, cx;
+
+cx = require('react/lib/cx');
+
+EntryViewActions = require('../../../actions/view/entry');
+
+ComponentMixin = require('../../../mixins/component');
+
+PropTypes = React.PropTypes;
+
+EntryMetaVoting = React.createClass({
+  displayName: 'EntryMetaVoting',
+  mixins: [ComponentMixin],
+  propTypes: {
+    rating: PropTypes.object.isRequired,
+    entryId: PropTypes.number.isRequired
+  },
+  getInitialState: function() {
+    return {
+      canVote: this.props.rating.is_voteable,
+      voted: this.props.rating.is_voted,
+      votes: this.props.rating.votes
+    };
+  },
+  render: function() {
+    var votingClasses;
+    votingClasses = cx({
+      'meta-voting': true,
+      'voted': this.isVoted(),
+      'votable': this.isVoteable(),
+      'unvotable': !this.isVoteable()
+    });
+    return React.createElement("div", {
+      "className": votingClasses,
+      "onClick": this.handleClick
+    }, this.state.votes);
+  },
+  isVoted: function() {
+    return this.state.voted;
+  },
+  isVoteable: function() {
+    return this.state.canVote;
+  },
+  vote: function() {
+    return EntryViewActions.vote(this.props.entryId).then((function(_this) {
+      return function(rating) {
+        return _this.safeUpdateState({
+          canVote: rating.is_voteable,
+          voted: rating.is_voted,
+          votes: rating.votes
+        });
+      };
+    })(this));
+  },
+  handleClick: function() {
+    if (this.isVoted() || !this.isVoteable()) {
+      return;
+    }
+    return this.vote();
+  }
+});
+
+module.exports = EntryMetaVoting;
+
+
+
+},{"../../../actions/view/entry":9,"../../../mixins/component":148,"react/lib/cx":279}],92:[function(require,module,exports){
+var EntryMixin, EntryViewActions, IMAGE_TYPE, LOAD_MORE_COMMENTS_LIMIT, QUOTE_TYPE, TEXT_TYPE, VIDEO_TYPE, assign;
+
+assign = require('react/lib/Object.assign');
+
+EntryViewActions = require('../../../actions/view/entry');
+
+LOAD_MORE_COMMENTS_LIMIT = 21;
+
+TEXT_TYPE = 'text';
+
+IMAGE_TYPE = 'image';
+
+VIDEO_TYPE = 'video';
+
+QUOTE_TYPE = 'quote';
+
+EntryMixin = {
+  getDefaultProps: function() {
+    return {
+      loadPerTime: LOAD_MORE_COMMENTS_LIMIT
+    };
+  },
+  getInitialState: function() {
+    var _ref, _ref1;
+    return {
+      comments: ((_ref = this.props.entry.comments_info) != null ? _ref.comments : void 0) || [],
+      commentsCount: ((_ref1 = this.props.entry.comments_info) != null ? _ref1.total_count : void 0) || 0,
+      loading: false
+    };
+  },
+  isLoadingState: function() {
+    return this.state.loading === true;
+  },
+  activateLoadingState: function() {
+    return this.safeUpdateState({
+      loading: true
+    });
+  },
+  deactivateLoadingState: function() {
+    return this.safeUpdateState({
+      loading: false
+    });
+  },
+  loadMoreComments: function() {
+    var entryId, limit, toCommentId;
+    entryId = this.props.entry.id;
+    toCommentId = this.state.comments[0].id;
+    limit = this.props.loadPerTime;
+    this.activateLoadingState();
+    return EntryViewActions.loadComments(entryId, toCommentId, limit).then((function(_this) {
+      return function(commentsInfo) {
+        var comments, commentsCount;
+        comments = commentsInfo.comments;
+        commentsCount = commentsInfo.total_count;
+        return _this.safeUpdateState({
+          comments: comments.concat(_this.state.comments),
+          commentsCount: commentsCount
+        });
+      };
+    })(this)).always(this.deactivateLoadingState);
+  },
+  createComment: function(text) {
+    var entryId;
+    entryId = this.props.entry.id;
+    return EntryViewActions.createComment(entryId, text).then((function(_this) {
+      return function(comment) {
+        _this.state.comments.push(comment);
+        return _this.safeUpdateState({
+          comments: _this.state.comments,
+          commentsCount: _this.state.commentsCount + 1
+        });
+      };
+    })(this)).always(this.deactivateLoadingState);
+  },
+  editComment: function(commentId, text) {
+    var entryId;
+    entryId = this.props.entry.id;
+    return EntryViewActions.editComment(entryId, commentId, text).then((function(_this) {
+      return function(comment) {
+        var item, _i, _len, _ref;
+        _ref = _this.state.comments;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          item = _ref[_i];
+          if (!(item.id === comment.id)) {
+            continue;
+          }
+          assign(item, comment);
+          break;
+        }
+        return _this.forceUpdate();
+      };
+    })(this));
+  },
+  deleteComment: function(commentId) {
+    var entryId;
+    entryId = this.props.entry.id;
+    return EntryViewActions.deleteComment(entryId, commentId).then((function(_this) {
+      return function() {
+        var i, item, _i, _len, _ref;
+        _ref = _this.state.comments;
+        for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+          item = _ref[i];
+          if (!(item.id === commentId)) {
+            continue;
+          }
+          _this.state.comments.splice(i, 1);
+          break;
+        }
+        return _this.forceUpdate();
+      };
+    })(this));
+  },
+  reportComment: function(commentId) {
+    return EntryViewActions.reportComment(commentId);
+  },
+  getEntryClasses: function() {
+    var typeClass;
+    typeClass = (function() {
+      switch (this.props.entry.type) {
+        case TEXT_TYPE:
+          return 'text';
+        case IMAGE_TYPE:
+          return 'image';
+        case VIDEO_TYPE:
+          return 'video';
+        case QUOTE_TYPE:
+          return 'quote';
+        default:
+          return 'text';
+      }
+    }).call(this);
+    return 'post post--' + typeClass;
+  }
+};
+
+module.exports = EntryMixin;
+
+
+
+},{"../../../actions/view/entry":9,"react/lib/Object.assign":200}],93:[function(require,module,exports){
+var ComponentMixin, ConnectStoreMixin, CurrentUserStore, EntryComments, EntryContent, EntryMixin, EntryTlog, EntryTlogMeta, PropTypes;
+
+EntryTlogMeta = require('./tlog/meta');
+
+EntryComments = require('./comments/comments');
+
+EntryContent = require('./content/content');
+
+CurrentUserStore = require('../../stores/currentUser');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+ComponentMixin = require('../../mixins/component');
+
+EntryMixin = require('./mixins/entry');
+
+PropTypes = React.PropTypes;
+
+EntryTlog = React.createClass({
+  displayName: 'EntryTlog',
+  mixins: [ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    loadPerTime: PropTypes.number
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": this.getEntryClasses()
+    }, React.createElement(EntryContent, {
+      "entry": this.props.entry
+    }), React.createElement(EntryTlogMeta, {
+      "entry": this.props.entry,
+      "commentsCount": this.state.commentsCount
+    }), React.createElement(EntryComments, {
+      "user": this.state.user,
+      "entry": this.props.entry,
+      "comments": this.state.comments,
+      "commentsCount": this.state.commentsCount,
+      "loading": this.isLoadingState(),
+      "loadPerTime": this.props.loadPerTime,
+      "onCommentsLoadMore": this.loadMoreComments,
+      "onCommentCreate": this.createComment,
+      "onCommentEdit": this.editComment,
+      "onCommentDelete": this.deleteComment,
+      "onCommentReport": this.reportComment
+    }));
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser()
+    };
+  }
+});
+
+module.exports = EntryTlog;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":167,"../../mixins/component":148,"../../stores/currentUser":161,"./comments/comments":67,"./content/content":69,"./mixins/entry":92,"./tlog/meta":94}],94:[function(require,module,exports){
+var EntryMetaActions, EntryMetaComments, EntryMetaVoting, EntryTlogMeta, PropTypes;
+
+EntryMetaVoting = require('../meta/voting');
+
+EntryMetaActions = require('../meta/actions');
+
+EntryMetaComments = require('../meta/comments');
+
+PropTypes = React.PropTypes;
+
+EntryTlogMeta = React.createClass({
+  displayName: 'EntryTlogMeta',
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    commentsCount: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__meta"
+    }, React.createElement(EntryMetaActions, {
+      "entry": this.props.entry
+    }), this.renderVoting(), React.createElement(EntryMetaComments, {
+      "commentsCount": this.props.commentsCount
+    }));
+  },
+  renderVoting: function() {
+    if (this.props.entry.is_voteable) {
+      return React.createElement(EntryMetaVoting, {
+        "rating": this.props.entry.rating,
+        "entryId": this.props.entry.id
+      });
+    }
+  }
+});
+
+module.exports = EntryTlogMeta;
+
+
+
+},{"../meta/actions":80,"../meta/comments":90,"../meta/voting":91}],95:[function(require,module,exports){
+var FeedLoadMoreButton, PropTypes;
+
+PropTypes = React.PropTypes;
+
+FeedLoadMoreButton = React.createClass({
+  displayName: 'FeedLoadMoreButton',
+  propTypes: {
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "load-more-button",
+      "onClick": this.props.onClick
+    }, i18n.t('feed_load_more_button'));
+  }
+});
+
+module.exports = FeedLoadMoreButton;
+
+
+
+},{}],96:[function(require,module,exports){
+var FeedEmptyPageMessage, MESSAGE;
+
+MESSAGE = 'В ленте нет записей';
+
+FeedEmptyPageMessage = React.createClass({
+  displayName: 'FeedEmptyPageMessage',
+  render: function() {
+    return React.createElement("div", {
+      "className": "post"
+    }, React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement("div", {
+      "className": "post__header"
+    }, React.createElement("h1", {
+      "className": "post__title"
+    }, MESSAGE))));
+  }
+});
+
+module.exports = FeedEmptyPageMessage;
+
+
+
+},{}],97:[function(require,module,exports){
+var EntryFeed, Feed, FeedEmptyPageMessage, FeedLoadMore, PropTypes;
+
+FeedEmptyPageMessage = require('./emptyPageMessage');
+
+FeedLoadMore = require('./loadMore');
+
+EntryFeed = require('../entry/feed');
+
+PropTypes = React.PropTypes;
+
+Feed = React.createClass({
+  displayName: 'Feed',
+  propTypes: {
+    entries: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired,
+    everythingLoaded: PropTypes.bool.isRequired,
+    onLoadMore: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "posts"
+    }, this.renderEntryList(), this.renderLoadMore());
+  },
+  renderEntryList: function() {
+    if (this.props.entries.length) {
+      return this.props.entries.map(function(entry) {
+        return React.createElement(EntryFeed, {
+          "entry": entry,
+          "key": entry.id
+        });
+      });
+    } else {
+      return React.createElement(FeedEmptyPageMessage, null);
+    }
+  },
+  renderLoadMore: function() {
+    if (this.props.entries.length && !this.props.everythingLoaded) {
+      return React.createElement(FeedLoadMore, {
+        "loading": this.props.loading,
+        "onClick": this.props.onLoadMore
+      });
+    }
+  }
+});
+
+module.exports = Feed;
+
+
+
+},{"../entry/feed":78,"./emptyPageMessage":96,"./loadMore":101}],98:[function(require,module,exports){
+var ComponentMixin, ConnectStoreMixin, Feed, FeedBest, FeedMixin, FeedStore, FeedViewActions, PropTypes;
+
+FeedStore = require('../../stores/feed');
+
+ComponentMixin = require('../../mixins/component');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+FeedMixin = require('./mixins/feed');
+
+FeedViewActions = require('../../actions/view/feed');
+
+Feed = require('./feed');
+
+PropTypes = React.PropTypes;
+
+FeedBest = React.createClass({
+  displayName: 'FeedBest',
+  mixins: [ConnectStoreMixin(FeedStore), FeedMixin, ComponentMixin],
+  propTypes: {
+    entries: PropTypes.array.isRequired,
+    limit: PropTypes.number
+  },
+  render: function() {
+    return React.createElement(Feed, {
+      "entries": this.state.entries,
+      "loading": this.isLoadingState(),
+      "everythingLoaded": this.state.everythingLoaded,
+      "onLoadMore": this.loadMoreEntries
+    });
+  },
+  loadMoreEntries: function() {
+    var limit, sinceEntryId;
+    sinceEntryId = this.state.entries[this.state.entries.length - 1].id;
+    limit = this.props.limit;
+    this.activateLoadingState();
+    return FeedViewActions.loadBestEntries(sinceEntryId, limit).then(this.activateShowState).fail(this.activateErrorState);
+  }
+});
+
+module.exports = FeedBest;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":167,"../../actions/view/feed":10,"../../mixins/component":148,"../../stores/feed":162,"./feed":97,"./mixins/feed":102}],99:[function(require,module,exports){
+var ComponentMixin, ConnectStoreMixin, Feed, FeedFriends, FeedMixin, FeedStore, FeedViewActions, PropTypes;
+
+FeedStore = require('../../stores/feed');
+
+ComponentMixin = require('../../mixins/component');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+FeedMixin = require('./mixins/feed');
+
+FeedViewActions = require('../../actions/view/feed');
+
+Feed = require('./feed');
+
+PropTypes = React.PropTypes;
+
+FeedFriends = React.createClass({
+  displayName: 'FeedFriends',
+  mixins: [ConnectStoreMixin(FeedStore), FeedMixin, ComponentMixin],
+  propTypes: {
+    entries: PropTypes.array.isRequired,
+    limit: PropTypes.number
+  },
+  render: function() {
+    return React.createElement(Feed, {
+      "entries": this.state.entries,
+      "loading": this.isLoadingState(),
+      "everythingLoaded": this.state.everythingLoaded,
+      "onLoadMore": this.loadMoreEntries
+    });
+  },
+  loadMoreEntries: function() {
+    var limit, sinceEntryId;
+    sinceEntryId = this.state.entries[this.state.entries.length - 1].id;
+    limit = this.props.limit;
+    this.activateLoadingState();
+    return FeedViewActions.loadFriendsEntries(sinceEntryId, limit).then(this.activateShowState).fail(this.activateErrorState);
+  }
+});
+
+module.exports = FeedFriends;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":167,"../../actions/view/feed":10,"../../mixins/component":148,"../../stores/feed":162,"./feed":97,"./mixins/feed":102}],100:[function(require,module,exports){
+var ComponentMixin, ConnectStoreMixin, Feed, FeedLive, FeedMixin, FeedStore, FeedViewActions, PropTypes;
+
+FeedStore = require('../../stores/feed');
+
+ComponentMixin = require('../../mixins/component');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+FeedMixin = require('./mixins/feed');
+
+FeedViewActions = require('../../actions/view/feed');
+
+Feed = require('./feed');
+
+PropTypes = React.PropTypes;
+
+FeedLive = React.createClass({
+  displayName: 'FeedLive',
+  mixins: [ConnectStoreMixin(FeedStore), FeedMixin, ComponentMixin],
+  propTypes: {
+    entries: PropTypes.array.isRequired,
+    limit: PropTypes.number
+  },
+  render: function() {
+    return React.createElement(Feed, {
+      "entries": this.state.entries,
+      "loading": this.isLoadingState(),
+      "everythingLoaded": this.state.everythingLoaded,
+      "onLoadMore": this.loadMoreEntries
+    });
+  },
+  loadMoreEntries: function() {
+    var limit, sinceEntryId;
+    sinceEntryId = this.state.entries[this.state.entries.length - 1].id;
+    limit = this.props.limit;
+    this.activateLoadingState();
+    return FeedViewActions.loadLiveEntries(sinceEntryId, limit).then(this.activateShowState).fail(this.activateErrorState);
+  }
+});
+
+module.exports = FeedLive;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":167,"../../actions/view/feed":10,"../../mixins/component":148,"../../stores/feed":162,"./feed":97,"./mixins/feed":102}],101:[function(require,module,exports){
+var FeedLoadMore, FeedLoadMoreButton, PropTypes, Spinner;
+
+Spinner = require('../common/spinner/spinner');
+
+FeedLoadMoreButton = require('./buttons/loadMore');
+
+PropTypes = React.PropTypes;
+
+FeedLoadMore = React.createClass({
+  displayName: 'FeedLoadMore',
+  propTypes: {
+    loading: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "feed__more"
+    }, this.renderContent());
+  },
+  renderContent: function() {
+    if (this.props.loading) {
+      return React.createElement("div", {
+        "className": "loader"
+      }, React.createElement(Spinner, {
+        "size": 30.
+      }));
+    } else {
+      return React.createElement(FeedLoadMoreButton, {
+        "onClick": this.props.onClick
+      });
+    }
+  }
+});
+
+module.exports = FeedLoadMore;
+
+
+
+},{"../common/spinner/spinner":47,"./buttons/loadMore":95}],102:[function(require,module,exports){
+var ERROR_STATE, FeedMixin, FeedViewActions, LOADING_STATE, LOAD_MORE_ENTRIES_LIMIT, SHOW_STATE;
+
+FeedViewActions = require('../../../actions/view/feed');
+
+LOAD_MORE_ENTRIES_LIMIT = 10;
+
+SHOW_STATE = 'show';
+
+LOADING_STATE = 'load';
+
+ERROR_STATE = 'error';
+
+FeedMixin = {
+  getDefaultProps: function() {
+    return {
+      limit: LOAD_MORE_ENTRIES_LIMIT
+    };
+  },
+  getInitialState: function() {
+    return {
+      currentState: SHOW_STATE
+    };
+  },
+  componentWillMount: function() {
+    return FeedViewActions.initializeFeed(this.props.entries);
+  },
+  isLoadingState: function() {
+    return this.state.currentState === LOADING_STATE;
+  },
+  activateShowState: function() {
+    return this.safeUpdateState({
+      currentState: SHOW_STATE
+    });
+  },
+  activateLoadingState: function() {
+    return this.safeUpdateState({
+      currentState: LOADING_STATE
+    });
+  },
+  activateErrorState: function() {
+    return this.safeUpdateState({
+      currentState: ERROR_STATE
+    });
+  },
+  getStateFromStore: function() {
+    return {
+      entries: FeedStore.getEntries(),
+      everythingLoaded: FeedStore.isEverythingLoaded()
+    };
+  }
+};
+
+module.exports = FeedMixin;
+
+
+
+},{"../../../actions/view/feed":10}],103:[function(require,module,exports){
+var HeroFeed, PropTypes;
+
+PropTypes = React.PropTypes;
+
+HeroFeed = React.createClass({
+  displayName: 'HeroFeed',
+  propTypes: {
+    title: PropTypes.string.isRequired,
+    backgroundUrl: PropTypes.string.isRequired,
+    entriesCount: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "style": this.getHeroStyles(),
+      "className": "hero"
+    }, React.createElement("div", {
+      "className": "hero__overlay"
+    }), React.createElement("div", {
+      "className": "hero__content"
+    }, React.createElement("div", {
+      "className": "hero__head"
+    }, React.createElement("div", {
+      "className": "hero__title"
+    }, React.createElement("span", null, this.props.title)), React.createElement("div", {
+      "className": "hero__smalltext"
+    }, React.createElement("span", null, i18n.t('feed_entries_count', {
+      count: this.props.entriesCount
+    }))))));
+  },
+  getHeroStyles: function() {
+    return {
+      backgroundImage: "url('" + this.props.backgroundUrl + "')"
+    };
+  }
+});
+
+module.exports = HeroFeed;
+
+
+
+},{}],104:[function(require,module,exports){
+var HeroFeed, HeroFeedBest, PropTypes;
+
+HeroFeed = require('./feed');
+
+PropTypes = React.PropTypes;
+
+HeroFeedBest = React.createClass({
+  displayName: 'HeroFeedBest',
+  propTypes: {
+    backgroundUrl: PropTypes.string.isRequired,
+    entriesCount: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement(HeroFeed, React.__spread({}, this.props, {
+      "title": i18n.t('feed_best')
+    }));
+  }
+});
+
+module.exports = HeroFeedBest;
+
+
+
+},{"./feed":103}],105:[function(require,module,exports){
+var HeroFeed, HeroFeedFriends, PropTypes;
+
+HeroFeed = require('./feed');
+
+PropTypes = React.PropTypes;
+
+HeroFeedFriends = React.createClass({
+  displayName: 'HeroFeedFriends',
+  propTypes: {
+    backgroundUrl: PropTypes.string.isRequired,
+    entriesCount: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement(HeroFeed, React.__spread({}, this.props, {
+      "title": i18n.t('feed_friends')
+    }));
+  }
+});
+
+module.exports = HeroFeedFriends;
+
+
+
+},{"./feed":103}],106:[function(require,module,exports){
+var HeroFeed, HeroFeedLive, PropTypes;
+
+HeroFeed = require('./feed');
+
+PropTypes = React.PropTypes;
+
+HeroFeedLive = React.createClass({
+  displayName: 'HeroFeedLive',
+  propTypes: {
+    backgroundUrl: PropTypes.string.isRequired,
+    entriesCount: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement(HeroFeed, React.__spread({}, this.props, {
+      "title": i18n.t('feed_live')
+    }));
+  }
+});
+
+module.exports = HeroFeedLive;
+
+
+
+},{"./feed":103}],107:[function(require,module,exports){
+var BrowserHelpers, CLOSE_STATE, ConnectStoreMixin, CurrentUserStore, HeroTlog, HeroTlogActions, HeroTlogAvatar, HeroTlogCloseButton, HeroTlogHead, HeroTlogStats, OPEN_STATE, PropTypes, _initialHeroHeight, _openHeroHeight, _screenOrientation;
+
+CurrentUserStore = require('../../stores/currentUser');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+BrowserHelpers = require('../../../../shared/helpers/browser');
+
+HeroTlogAvatar = require('./tlog/avatar');
+
+HeroTlogHead = require('./tlog/head');
+
+HeroTlogActions = require('./tlog/actions');
+
+HeroTlogStats = require('./tlog/stats');
+
+HeroTlogCloseButton = require('./tlog/buttons/close');
+
+PropTypes = React.PropTypes;
+
+CLOSE_STATE = 'close';
+
+OPEN_STATE = 'open';
+
+_screenOrientation = null;
+
+_initialHeroHeight = null;
+
+_openHeroHeight = null;
+
+HeroTlog = React.createClass({
+  displayName: 'HeroTlog',
+  mixins: [ConnectStoreMixin(CurrentUserStore)],
+  propTypes: {
+    tlog: PropTypes.object.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: CLOSE_STATE
+    };
+  },
+  componentDidMount: function() {
+    _initialHeroHeight = this.getDOMNode().offsetHeight;
+    return window.addEventListener('resize', this.onResize);
+  },
+  componentWillUnmount: function() {
+    return window.removeEventListener('resize', this.onResize);
+  },
+  render: function() {
+    return React.createElement("div", {
+      "style": this.getHeroStyles(),
+      "className": "hero"
+    }, React.createElement(HeroTlogCloseButton, {
+      "onClick": this.close
+    }), React.createElement("div", {
+      "className": "hero__overlay"
+    }), React.createElement("div", {
+      "className": "hero__gradient"
+    }), React.createElement("div", {
+      "className": "hero__content"
+    }, React.createElement(HeroTlogAvatar, {
+      "user": this.state.user,
+      "author": this.props.tlog.author,
+      "status": this.props.tlog.my_relationship,
+      "onClick": this.handleAvatarClick
+    }), React.createElement(HeroTlogHead, {
+      "author": this.props.tlog.author
+    }), React.createElement(HeroTlogActions, {
+      "user": this.state.user,
+      "author": this.props.tlog.author,
+      "status": this.props.tlog.my_relationship
+    })), React.createElement(HeroTlogStats, {
+      "author": this.props.tlog.author,
+      "stats": this.props.tlog.stats
+    }));
+  },
+  isOpenState: function() {
+    return this.state.currentState === OPEN_STATE;
+  },
+  activateOpenState: function() {
+    return this.setState({
+      currentState: OPEN_STATE
+    });
+  },
+  activateCloseState: function() {
+    return this.setState({
+      currentState: CLOSE_STATE
+    });
+  },
+  open: function() {
+    var html;
+    html = document.querySelector('html');
+    html.classList.add('hero-enabled');
+    _openHeroHeight = window.innerHeight;
+    document.body.style.height = _openHeroHeight + 'px';
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    return this.activateOpenState();
+  },
+  close: function() {
+    var html;
+    html = document.querySelector('html');
+    html.classList.remove('hero-enabled');
+    _screenOrientation = null;
+    document.body.style.height = '';
+    return this.activateCloseState();
+  },
+  getHeroStyles: function() {
+    var backgroundUrl, height, _ref;
+    backgroundUrl = (_ref = this.props.tlog.design) != null ? _ref.background_url : void 0;
+    height = this.isOpenState() ? _openHeroHeight : _initialHeroHeight;
+    return {
+      backgroundImage: "url('" + backgroundUrl + "')",
+      height: height
+    };
+  },
+  handleAvatarClick: function() {
+    if (!this.isOpenState()) {
+      return this.open();
+    }
+  },
+  onResize: function() {
+    var currentOrientation, html;
+    html = document.querySelector('html');
+    currentOrientation = BrowserHelpers.getCurrentOrientation();
+    if (this.isOpenState() && _screenOrientation !== currentOrientation) {
+      _screenOrientation = currentOrientation;
+      _openHeroHeight = window.innerHeight;
+      document.body.style.height = _openHeroHeight + 'px';
+      return this.forceUpdate();
+    }
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser()
+    };
+  }
+});
+
+module.exports = HeroTlog;
+
+
+
+},{"../../../../shared/helpers/browser":165,"../../../../shared/react/mixins/connectStore":167,"../../stores/currentUser":161,"./tlog/actions":108,"./tlog/avatar":118,"./tlog/buttons/close":119,"./tlog/head":120,"./tlog/stats":121}],108:[function(require,module,exports){
+var HeroTlogActions, HeroTlogActions_CurrentUser, HeroTlogActions_User, PropTypes;
+
+HeroTlogActions_User = require('./actions/user');
+
+HeroTlogActions_CurrentUser = require('./actions/currentUser');
+
+PropTypes = React.PropTypes;
+
+HeroTlogActions = React.createClass({
+  displayName: 'HeroTlogActions',
+  propTypes: {
+    user: PropTypes.object,
+    author: PropTypes.object.isRequired,
+    status: PropTypes.string
+  },
+  render: function() {
+    if (!this.isLogged()) {
+      return null;
+    }
+    if (this.isCurrentUser()) {
+      return React.createElement(HeroTlogActions_CurrentUser, {
+        "user": this.props.user
+      });
+    } else {
+      return React.createElement(HeroTlogActions_User, {
+        "user": this.props.author,
+        "status": this.props.status
+      });
+    }
+  },
+  isLogged: function() {
+    return this.props.user != null;
+  },
+  isCurrentUser: function() {
+    var _ref;
+    return ((_ref = this.props.user) != null ? _ref.id : void 0) === this.props.author.id;
+  }
+});
+
+module.exports = HeroTlogActions;
+
+
+
+},{"./actions/currentUser":111,"./actions/user":117}],109:[function(require,module,exports){
+var HeroTlogActions_SettingsButton, PropTypes;
+
+PropTypes = React.PropTypes;
+
+HeroTlogActions_SettingsButton = React.createClass({
+  displayName: 'HeroTlogActions_SettingsButton',
+  propTypes: {
+    slug: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "profile-settings-button",
+      "onClick": this.handleClick
+    }, React.createElement("i", {
+      "className": "icon icon--cogwheel"
+    }));
+  },
+  handleClick: function() {
+    return window.location = Routes.userSettings(this.props.slug);
+  }
+});
+
+module.exports = HeroTlogActions_SettingsButton;
+
+
+
+},{}],110:[function(require,module,exports){
+var HeroTlogActions_WriteMessageButton;
+
+HeroTlogActions_WriteMessageButton = React.createClass({
+  displayName: 'HeroTlogActions_WriteMessageButton',
+  render: function() {
+    return React.createElement("button", {
+      "className": "write-message-button",
+      "onClick": this.handleClick
+    }, React.createElement("i", {
+      "className": "icon icon--letter"
+    }));
+  },
+  handleClick: function() {
+    return alert('Ещё не работает');
+  }
+});
+
+module.exports = HeroTlogActions_WriteMessageButton;
+
+
+
+},{}],111:[function(require,module,exports){
+var HeroTlogActions_CurrentUser, HeroTlogActions_SettingsButton, PropTypes;
+
+HeroTlogActions_SettingsButton = require('./buttons/settings');
+
+PropTypes = React.PropTypes;
+
+HeroTlogActions_CurrentUser = React.createClass({
+  displayName: 'HeroTlogActions_CurrentUser',
+  propTypes: {
+    user: PropTypes.object.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "hero__actions"
+    }, React.createElement("button", {
+      "className": "follow-button"
+    }, i18n.t('current_user_button')), React.createElement(HeroTlogActions_SettingsButton, {
+      "slug": this.props.user.slug
+    }));
+  }
+});
+
+module.exports = HeroTlogActions_CurrentUser;
+
+
+
+},{"./buttons/settings":109}],112:[function(require,module,exports){
+var CLOSE_STATE, ClickOutsideMixin, HeroTlogActions_DropdownMenu, HeroTlogActions_DropdownMenu_Button, HeroTlogActions_DropdownMenu_Popup, OPEN_STATE, PropTypes, cx;
+
+cx = require('react/lib/cx');
+
+ClickOutsideMixin = require('../../../../mixins/clickOutside');
+
+HeroTlogActions_DropdownMenu_Button = require('./dropdownMenu/buttons/button');
+
+HeroTlogActions_DropdownMenu_Popup = require('./dropdownMenu/popup');
+
+PropTypes = React.PropTypes;
+
+CLOSE_STATE = 'close';
+
+OPEN_STATE = 'open';
+
+HeroTlogActions_DropdownMenu = React.createClass({
+  displayName: 'HeroTlogActions_DropdownMenu',
+  mixins: [ClickOutsideMixin],
+  propTypes: {
+    userId: PropTypes.number.isRequired,
+    status: PropTypes.string.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: CLOSE_STATE
+    };
+  },
+  render: function() {
+    var menuClasses;
+    menuClasses = cx({
+      'hero__user-actions': true,
+      '__open': this.isOpenState()
+    });
+    return React.createElement("div", {
+      "className": menuClasses
+    }, React.createElement(HeroTlogActions_DropdownMenu_Button, {
+      "onClick": this.toggleOpenState
+    }), React.createElement(HeroTlogActions_DropdownMenu_Popup, {
+      "arrangement": "top",
+      "visible": this.isOpenState(),
+      "userId": this.props.userId,
+      "status": this.props.status,
+      "onClose": this.activateCloseState
+    }));
+  },
+  isOpenState: function() {
+    return this.state.currentState === OPEN_STATE;
+  },
+  activateCloseState: function() {
+    return this.setState({
+      currentState: CLOSE_STATE
+    });
+  },
+  activateOpenState: function() {
+    return this.setState({
+      currentState: OPEN_STATE
+    });
+  },
+  toggleOpenState: function() {
+    if (this.isOpenState()) {
+      return this.activateCloseState();
+    } else {
+      return this.activateOpenState();
+    }
+  }
+});
+
+module.exports = HeroTlogActions_DropdownMenu;
+
+
+
+},{"../../../../mixins/clickOutside":147,"./dropdownMenu/buttons/button":113,"./dropdownMenu/popup":116,"react/lib/cx":279}],113:[function(require,module,exports){
+var HeroTlogActions_DropdownMenu_Button, PropTypes;
+
+PropTypes = React.PropTypes;
+
+HeroTlogActions_DropdownMenu_Button = React.createClass({
+  displayName: 'HeroTlogActions_DropdownMenu_Button',
+  propTypes: {
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "action-menu-button",
+      "onClick": this.props.onClick
+    }, React.createElement("i", {
+      "className": "icon icon--dots"
+    }));
+  }
+});
+
+module.exports = HeroTlogActions_DropdownMenu_Button;
+
+
+
+},{}],114:[function(require,module,exports){
+var HeroTlogActions_DropdownMenuIgnoreItem, PropTypes, RelationshipViewActions;
+
+RelationshipViewActions = require('../../../../../../actions/view/relationship');
+
+PropTypes = React.PropTypes;
+
+HeroTlogActions_DropdownMenuIgnoreItem = React.createClass({
+  displayName: 'HeroTlogActions_DropdownMenuIgnoreItem',
+  propTypes: {
+    userId: PropTypes.number.isRequired,
+    onIgnore: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "hero__dropdown-popup-item",
+      "onClick": this.ignore
+    }, React.createElement("a", {
+      "className": "hero__dropdown-popup-link"
+    }, React.createElement("i", {
+      "className": "icon icon--not-allowed"
+    }), React.createElement("span", null, i18n.t('ignore_tlog_item'))));
+  },
+  ignore: function() {
+    return RelationshipViewActions.ignore(this.props.userId).then(this.props.onIgnore);
+  }
+});
+
+module.exports = HeroTlogActions_DropdownMenuIgnoreItem;
+
+
+
+},{"../../../../../../actions/view/relationship":11}],115:[function(require,module,exports){
+var HeroTlogActions_DropdownMenuReportItem, PropTypes, RelationshipViewActions;
+
+RelationshipViewActions = require('../../../../../../actions/view/relationship');
+
+PropTypes = React.PropTypes;
+
+HeroTlogActions_DropdownMenuReportItem = React.createClass({
+  displayName: 'HeroTlogActions_DropdownMenuReportItem',
+  propTypes: {
+    userId: PropTypes.number.isRequired,
+    onReport: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "hero__dropdown-popup-item",
+      "onClick": this.report
+    }, React.createElement("a", {
+      "className": "hero__dropdown-popup-link"
+    }, React.createElement("i", {
+      "className": "icon icon--exclamation-mark"
+    }), React.createElement("span", null, i18n.t('report_tlog_item'))));
+  },
+  report: function() {
+    return RelationshipViewActions.report(this.props.userId).always(this.props.onReport);
+  }
+});
+
+module.exports = HeroTlogActions_DropdownMenuReportItem;
+
+
+
+},{"../../../../../../actions/view/relationship":11}],116:[function(require,module,exports){
+var ConnectStoreMixin, DropdownMenuMixin, HeroTlogActions_DropdownMenuIgnoreItem, HeroTlogActions_DropdownMenuReportItem, HeroTlogActions_DropdownMenu_Popup, IGNORED_STATUS, PropTypes, RelationshipsStore;
+
+RelationshipsStore = require('../../../../../stores/relationships');
+
+ConnectStoreMixin = require('../../../../../../../shared/react/mixins/connectStore');
+
+DropdownMenuMixin = require('../../../../../mixins/dropdownMenu');
+
+HeroTlogActions_DropdownMenuIgnoreItem = require('./items/ignore');
+
+HeroTlogActions_DropdownMenuReportItem = require('./items/report');
+
+PropTypes = React.PropTypes;
+
+IGNORED_STATUS = 'ignored';
+
+HeroTlogActions_DropdownMenu_Popup = React.createClass({
+  displayName: 'HeroTlogActions_DropdownMenu_Popup',
+  mixins: [ConnectStoreMixin(RelationshipsStore), DropdownMenuMixin],
+  propTypes: {
+    arrangement: PropTypes.string,
+    visible: PropTypes.bool.isRequired,
+    userId: PropTypes.number.isRequired,
+    status: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      arrangement: 'bottom'
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": this.getPopupClasses('hero__dropdown-popup __' + this.props.arrangement)
+    }, this._renderPopupList());
+  },
+  _renderPopupList: function() {
+    var ignoreItem;
+    if (this.state.status !== IGNORED_STATUS) {
+      ignoreItem = React.createElement(HeroTlogActions_DropdownMenuIgnoreItem, {
+        "userId": this.props.userId,
+        "onIgnore": this.props.onClose
+      });
+    }
+    return React.createElement("ul", {
+      "className": "hero__dropdown-popup-list"
+    }, ignoreItem, React.createElement(HeroTlogActions_DropdownMenuReportItem, {
+      "userId": this.props.userId,
+      "onReport": this.props.onClose
+    }));
+  },
+  getStateFromStore: function() {
+    return {
+      status: RelationshipsStore.getStatus(this.props.userId) || this.props.status
+    };
+  }
+});
+
+module.exports = HeroTlogActions_DropdownMenu_Popup;
+
+
+
+},{"../../../../../../../shared/react/mixins/connectStore":167,"../../../../../mixins/dropdownMenu":149,"../../../../../stores/relationships":163,"./items/ignore":114,"./items/report":115}],117:[function(require,module,exports){
+var FollowButton, HeroTlogActions_DropdownMenu, HeroTlogActions_User, HeroTlogActions_WriteMessageButton, PropTypes;
+
+FollowButton = require('../../../buttons/relationship/follow');
+
+HeroTlogActions_WriteMessageButton = require('./buttons/writeMessage');
+
+HeroTlogActions_DropdownMenu = require('./dropdownMenu');
+
+PropTypes = React.PropTypes;
+
+HeroTlogActions_User = React.createClass({
+  displayName: 'HeroTlogActions_User',
+  propTypes: {
+    user: PropTypes.object.isRequired,
+    status: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "hero__actions"
+    }, React.createElement(FollowButton, {
+      "user": this.props.user,
+      "status": this.props.status
+    }), React.createElement(HeroTlogActions_WriteMessageButton, {
+      "user": this.props.user
+    }), React.createElement(HeroTlogActions_DropdownMenu, {
+      "userId": this.props.user.id,
+      "status": this.props.status
+    }));
+  }
+});
+
+module.exports = HeroTlogActions_User;
+
+
+
+},{"../../../buttons/relationship/follow":37,"./buttons/writeMessage":110,"./dropdownMenu":112}],118:[function(require,module,exports){
+var FollowStatus, HERO_AVATAR_SIZE, HeroTlogAvatar, PropTypes, UserAvatar;
+
+UserAvatar = require('../../common/avatar/user');
+
+FollowStatus = require('../../common/followStatus/followStatus');
+
+PropTypes = React.PropTypes;
+
+HERO_AVATAR_SIZE = 220;
+
+HeroTlogAvatar = React.createClass({
+  displayName: 'HeroTlogAvatar',
+  propTypes: {
+    user: PropTypes.object,
+    author: PropTypes.object.isRequired,
+    status: PropTypes.string,
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "hero__avatar",
+      "onClick": this.props.onClick
+    }, this.renderFollowStatus(), React.createElement(UserAvatar, {
+      "user": this.props.author,
+      "size": HERO_AVATAR_SIZE
+    }));
+  },
+  renderFollowStatus: function() {
+    if (!(this.isCurrentUser() || !this.isLogged())) {
+      return React.createElement(FollowStatus, {
+        "userId": this.props.author.id,
+        "status": this.props.status
+      });
+    }
+  },
+  isLogged: function() {
+    return this.props.user != null;
+  },
+  isCurrentUser: function() {
+    var _ref;
+    return ((_ref = this.props.user) != null ? _ref.id : void 0) === this.props.author.id;
+  }
+});
+
+module.exports = HeroTlogAvatar;
+
+
+
+},{"../../common/avatar/user":40,"../../common/followStatus/followStatus":46}],119:[function(require,module,exports){
+var HeroTlogCloseButton, PropTypes;
+
+PropTypes = React.PropTypes;
+
+HeroTlogCloseButton = React.createClass({
+  displayName: 'HeroTlogCloseButton',
+  propTypes: {
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "hero__close",
+      "onClick": this.props.onClick
+    }, React.createElement("i", {
+      "className": "icon icon--cross"
+    }));
+  }
+});
+
+module.exports = HeroTlogCloseButton;
+
+
+
+},{}],120:[function(require,module,exports){
+var HeroTlogHead, PropTypes;
+
+PropTypes = React.PropTypes;
+
+HeroTlogHead = React.createClass({
+  displayName: 'HeroTlogHead',
+  propTypes: {
+    author: PropTypes.object.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "hero__head"
+    }, React.createElement("div", {
+      "className": "hero__title"
+    }, React.createElement("span", null, React.createElement("a", {
+      "href": this.props.author.tlog_url
+    }, this.props.author.slug))), React.createElement("div", {
+      "className": "hero__text"
+    }, React.createElement("span", {
+      "dangerouslySetInnerHTML": {
+        __html: this.props.author.title
+      }
+    })));
+  }
+});
+
+module.exports = HeroTlogHead;
+
+
+
+},{}],121:[function(require,module,exports){
+var HeroTlogStats, HeroTlogStatsItem, PropTypes;
+
+HeroTlogStatsItem = require('./stats/item');
+
+PropTypes = React.PropTypes;
+
+HeroTlogStats = React.createClass({
+  displayName: 'HeroTlogStats',
+  propTypes: {
+    stats: PropTypes.object.isRequired,
+    author: PropTypes.object.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "hero__stats"
+    }, this.renderStatsList());
+  },
+  renderStatsList: function() {
+    var days, entries, followers, followings, url;
+    if (this.props.stats.entries_count != null) {
+      if (!this.isTlogPrivate()) {
+        url = this.props.author.tlog_url;
+      }
+      entries = React.createElement(HeroTlogStatsItem, {
+        "href": url,
+        "count": this.props.stats.entries_count,
+        "title": this.getTitle('entries'),
+        "key": "entries"
+      });
+    }
+    if (this.props.stats.followings_count != null) {
+      followings = React.createElement(HeroTlogStatsItem, {
+        "count": this.props.stats.followings_count,
+        "title": this.getTitle('followings'),
+        "key": "followings"
+      });
+    }
+    if (this.props.stats.followers_count != null) {
+      followers = React.createElement(HeroTlogStatsItem, {
+        "count": this.props.stats.followers_count,
+        "title": this.getTitle('followers'),
+        "key": "followers"
+      });
+    }
+    if (this.props.stats.days_count != null) {
+      days = React.createElement(HeroTlogStatsItem, {
+        "count": this.props.stats.days_count,
+        "title": this.getTitle('days'),
+        "key": "days"
+      });
+    }
+    return React.createElement("div", {
+      "className": "hero__stats-list"
+    }, [entries, followings, followers, days]);
+  },
+  isTlogPrivate: function() {
+    return this.props.author.is_privacy;
+  },
+  getTitle: function(type) {
+    switch (type) {
+      case 'entries':
+        return i18n.t('stats_entries_count', {
+          count: this.props.stats.entries_count
+        });
+      case 'followings':
+        return i18n.t('stats_followings_count', {
+          count: this.props.stats.followings_count
+        });
+      case 'followers':
+        return i18n.t('stats_followers_count', {
+          count: this.props.stats.followers_count
+        });
+      case 'days':
+        return i18n.t('stats_days_count', {
+          count: this.props.stats.days_count
+        });
+      default:
+        return console.warn('Unknown type of stats of HeroTlogStats component', type);
+    }
+  }
+});
+
+module.exports = HeroTlogStats;
+
+
+
+},{"./stats/item":122}],122:[function(require,module,exports){
+var HeroTlogStatsItem, NumberHelpers, PropTypes, cx;
+
+cx = require('react/lib/cx');
+
+NumberHelpers = require('../../../../../../shared/helpers/number');
+
+PropTypes = React.PropTypes;
+
+HeroTlogStatsItem = React.createClass({
+  displayName: 'HeroTlogStatsItem',
+  propTypes: {
+    count: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    href: PropTypes.string,
+    onClick: PropTypes.func
+  },
+  render: function() {
+    var itemClasses;
+    itemClasses = cx({
+      'hero__stats-item': true,
+      'hero__stats-item-handler': this.props.onClick
+    });
+    return React.createElement("div", {
+      "className": itemClasses,
+      "onClick": this.handleClick
+    }, this.renderItem());
+  },
+  renderItem: function() {
+    var count;
+    count = NumberHelpers.reduceNumber(this.props.count);
+    if (this.props.href) {
+      return React.createElement("a", {
+        "href": this.props.href,
+        "title": this.props.count + ' ' + this.props.title,
+        "className": "hero__stats-link"
+      }, React.createElement("strong", {
+        "className": "hero__stats-value"
+      }, count), React.createElement("span", null, this.props.title));
+    } else {
+      return React.createElement("span", null, React.createElement("strong", {
+        "className": "hero__stats-value"
+      }, count), React.createElement("span", null, this.props.title));
+    }
+  },
+  handleClick: function(e) {
+    if (this.props.onClick) {
+      e.preventDefault();
+      return this.props.onClick();
+    }
+  }
+});
+
+module.exports = HeroTlogStatsItem;
+
+
+
+},{"../../../../../../shared/helpers/number":166,"react/lib/cx":279}],123:[function(require,module,exports){
+var DaylogPagination, PaginationNext, PaginationPrev, PropTypes;
+
+PaginationPrev = require('./items/prev');
+
+PaginationNext = require('./items/next');
+
+PropTypes = React.PropTypes;
+
+DaylogPagination = React.createClass({
+  displayName: 'DaylogPagination',
+  propTypes: {
+    slug: PropTypes.string.isRequired,
+    prevDay: PropTypes.string,
+    nextDay: PropTypes.string
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "pagination"
+    }, this.renderPaginationItems());
+  },
+  renderPaginationItems: function() {
+    var nextDay, paginationItems, prevDay, slug, _ref;
+    _ref = this.props, prevDay = _ref.prevDay, nextDay = _ref.nextDay, slug = _ref.slug;
+    paginationItems = [];
+    if (prevDay != null) {
+      paginationItems.push(React.createElement(PaginationPrev, {
+        "href": Routes.daylogPagination(this.props.slug, prevDay),
+        "single": nextDay == null,
+        "key": "prev"
+      }));
+    }
+    if (nextDay != null) {
+      paginationItems.push(React.createElement(PaginationNext, {
+        "href": Routes.daylogPagination(this.props.slug, nextDay),
+        "single": prevDay == null,
+        "key": "next"
+      }));
+    }
+    return paginationItems;
+  }
+});
+
+module.exports = DaylogPagination;
+
+
+
+},{"./items/next":125,"./items/prev":126}],124:[function(require,module,exports){
+var EntryPagination, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EntryPagination = React.createClass({
+  displayName: 'EntryPagination',
+  propTypes: {
+    tlogUrl: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "pagination"
+    }, React.createElement("a", {
+      "className": "pagination__item",
+      "href": this.props.tlogUrl
+    }, i18n.t('pagination_all_entries')));
+  }
+});
+
+module.exports = EntryPagination;
+
+
+
+},{}],125:[function(require,module,exports){
+var PaginationNext, PropTypes, cx;
+
+cx = require('react/lib/cx');
+
+PropTypes = React.PropTypes;
+
+PaginationNext = React.createClass({
+  displayName: 'PaginationNext',
+  propTypes: {
+    href: PropTypes.string.isRequired,
+    single: PropTypes.bool
+  },
+  getDefaultProps: function() {
+    return {
+      single: false
+    };
+  },
+  render: function() {
+    var nextClasses;
+    nextClasses = cx({
+      'pagination__item': true,
+      'pagination__item--next': !this.props.single
+    });
+    return React.createElement("a", {
+      "className": nextClasses,
+      "href": this.props.href
+    }, i18n.t('pagination_next'));
+  }
+});
+
+module.exports = PaginationNext;
+
+
+
+},{"react/lib/cx":279}],126:[function(require,module,exports){
+var PaginationPrev, PropTypes, cx;
+
+cx = require('react/lib/cx');
+
+PropTypes = React.PropTypes;
+
+PaginationPrev = React.createClass({
+  displayName: 'PaginationPrev',
+  propTypes: {
+    href: PropTypes.string.isRequired,
+    single: PropTypes.bool
+  },
+  getDefaultProps: function() {
+    return {
+      single: false
+    };
+  },
+  render: function() {
+    var prevClasses;
+    prevClasses = cx({
+      'pagination__item': true,
+      'pagination__item--prev': !this.props.single
+    });
+    return React.createElement("a", {
+      "className": prevClasses,
+      "href": this.props.href
+    }, i18n.t('pagination_prev'));
+  }
+});
+
+module.exports = PaginationPrev;
+
+
+
+},{"react/lib/cx":279}],127:[function(require,module,exports){
+var PaginationNext, PaginationPrev, PropTypes, TlogPagination;
+
+PaginationPrev = require('./items/prev');
+
+PaginationNext = require('./items/next');
+
+PropTypes = React.PropTypes;
+
+TlogPagination = React.createClass({
+  displayName: 'TlogPagination',
+  propTypes: {
+    slug: PropTypes.string.isRequired,
+    currentPage: PropTypes.number.isRequired,
+    totalPagesCount: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "pagination"
+    }, this.renderPaginationItems());
+  },
+  renderPaginationItems: function() {
+    var currentPage, paginationItems, slug, totalPagesCount, _ref;
+    _ref = this.props, currentPage = _ref.currentPage, totalPagesCount = _ref.totalPagesCount, slug = _ref.slug;
+    paginationItems = [];
+    switch (false) {
+      case !(currentPage === 1 && totalPagesCount > 1):
+        paginationItems.push(React.createElement(PaginationPrev, {
+          "href": Routes.tlogPagination(this.props.slug, currentPage + 1),
+          "single": true,
+          "key": "prev"
+        }));
+        break;
+      case !((totalPagesCount > currentPage && currentPage > 1)):
+        paginationItems.push(React.createElement(PaginationPrev, {
+          "href": Routes.tlogPagination(this.props.slug, currentPage + 1),
+          "key": "prev"
+        }));
+        paginationItems.push(React.createElement(PaginationNext, {
+          "href": Routes.tlogPagination(this.props.slug, currentPage - 1),
+          "key": "next"
+        }));
+        break;
+      case !(currentPage > totalPagesCount):
+        paginationItems.push(React.createElement(PaginationNext, {
+          "href": Routes.tlogPagination(this.props.slug, totalPagesCount),
+          "single": true,
+          "key": "next"
+        }));
+        break;
+      case !(currentPage === totalPagesCount && currentPage !== 1):
+        paginationItems.push(React.createElement(PaginationNext, {
+          "href": Routes.tlogPagination(this.props.slug, currentPage - 1),
+          "single": true,
+          "key": "next"
+        }));
+    }
+    return paginationItems;
+  }
+});
+
+module.exports = TlogPagination;
+
+
+
+},{"./items/next":125,"./items/prev":126}],128:[function(require,module,exports){
+var TlogEmptyPageMessage;
+
+TlogEmptyPageMessage = React.createClass({
+  displayName: 'TlogEmptyPageMessage',
+  render: function() {
+    return React.createElement("div", {
+      "className": "post"
+    }, React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement("div", {
+      "className": "post__header"
+    }, React.createElement("h1", {
+      "className": "post__title"
+    }, i18n.t('tlog_empty_page')))));
+  }
+});
+
+module.exports = TlogEmptyPageMessage;
+
+
+
+},{}],129:[function(require,module,exports){
+var EntryTlog, PropTypes, Tlog, TlogEmptyPageMessage;
+
+TlogEmptyPageMessage = require('./emptyPageMessage');
+
+EntryTlog = require('../entry/tlog');
+
+PropTypes = React.PropTypes;
+
+Tlog = React.createClass({
+  displayName: 'Tlog',
+  propTypes: {
+    entries: PropTypes.array.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "posts"
+    }, this.renderEntryList());
+  },
+  renderEntryList: function() {
+    if (this.props.entries.length) {
+      return this.props.entries.map(function(entry) {
+        return React.createElement(EntryTlog, {
+          "entry": entry,
+          "key": entry.id
+        });
+      });
+    } else {
+      return React.createElement(TlogEmptyPageMessage, null);
+    }
+  }
+});
+
+module.exports = Tlog;
+
+
+
+},{"../entry/tlog":93,"./emptyPageMessage":128}],130:[function(require,module,exports){
+var PropTypes, ToolbarItem, cx;
+
+cx = require('react/lib/cx');
+
+PropTypes = React.PropTypes;
+
+ToolbarItem = React.createClass({
+  displayName: 'ToolbarItem',
+  propTypes: {
+    icon: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    href: PropTypes.string,
+    active: PropTypes.bool,
+    disabled: PropTypes.bool,
+    onSelect: PropTypes.func
+  },
+  getDefaultProps: function() {
+    return {
+      active: false,
+      disabled: false
+    };
+  },
+  render: function() {
+    var toolbarItemClasses;
+    toolbarItemClasses = cx({
+      'toolbar__popup-item': true,
+      '__active': this.props.active,
+      '__disabled': this.props.disabled
+    });
+    return React.createElement("li", {
+      "className": toolbarItemClasses
+    }, React.createElement("a", {
+      "href": this.props.href,
+      "className": "toolbar__popup-link",
+      "onClick": this.handleSelect
+    }, React.createElement("i", {
+      "className": 'icon ' + this.props.icon
+    }), this.props.title));
+  },
+  handleSelect: function(e) {
+    if (!this.props.href && !this.props.disabled) {
+      e.preventDefault();
+      return this.props.onSelect();
+    }
+  }
+});
+
+module.exports = ToolbarItem;
+
+
+
+},{"react/lib/cx":279}],131:[function(require,module,exports){
+var FeedToolbar, FeedToolbarList, PropTypes, ToolbarMixin, cx;
+
+cx = require('react/lib/cx');
+
+FeedToolbarList = require('./feed/list');
+
+ToolbarMixin = require('./mixins/toolbar');
+
+PropTypes = React.PropTypes;
+
+FeedToolbar = React.createClass({
+  displayName: 'FeedToolbar',
+  mixins: [ToolbarMixin],
+  propTypes: {
+    user: PropTypes.object
+  },
+  render: function() {
+    var toolbarClasses;
+    toolbarClasses = cx({
+      'toolbar__popup': true,
+      '__visible': this.isOpenState()
+    });
+    return React.createElement("nav", {
+      "className": "toolbar toolbar--feed"
+    }, React.createElement("div", {
+      "className": "toolbar__toggle",
+      "onClick": this.toggleOpenState
+    }, React.createElement("i", {
+      "className": "icon icon--ribbon"
+    })), React.createElement("div", {
+      "className": toolbarClasses
+    }, React.createElement(FeedToolbarList, {
+      "user": this.props.user
+    })));
+  },
+  toggleOpenState: function() {
+    var html;
+    html = document.querySelector('html');
+    if (html.classList.contains('user-toolbar-open')) {
+      html.classList.remove('user-toolbar-open');
+    }
+    html.classList.toggle('feed-toolbar-open');
+    if (this.isOpenState()) {
+      return this.activateCloseState();
+    } else {
+      return this.activateOpenState();
+    }
+  }
+});
+
+module.exports = FeedToolbar;
+
+
+
+},{"./feed/list":132,"./mixins/toolbar":134,"react/lib/cx":279}],132:[function(require,module,exports){
+var FeedToolbarList, PropTypes, ToolbarItem;
+
+ToolbarItem = require('../_item');
+
+PropTypes = React.PropTypes;
+
+FeedToolbarList = React.createClass({
+  displayName: 'FeedToolbarList',
+  propTypes: {
+    user: PropTypes.object
+  },
+  render: function() {
+    var friends;
+    if (this.props.user != null) {
+      friends = React.createElement(ToolbarItem, {
+        "title": i18n.t('feed_friends'),
+        "href": Routes.friends_feed_path(),
+        "icon": "icon--friends",
+        "key": "friends"
+      });
+    }
+    return React.createElement("ul", {
+      "className": "toolbar__popup-list"
+    }, friends, React.createElement(ToolbarItem, {
+      "title": i18n.t('feed_live'),
+      "href": Routes.live_feed_path(),
+      "icon": "icon--wave",
+      "key": "live"
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('feed_best'),
+      "href": Routes.best_feed_path(),
+      "icon": "icon--fire",
+      "key": "best"
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('feed_anonymous'),
+      "href": Routes.anonymous_feed_path(),
+      "icon": "icon--anonymous",
+      "key": "anonymous"
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('feed_people'),
+      "href": Routes.people_path(),
+      "icon": "icon--friends",
+      "key": "people"
+    }));
+  }
+});
+
+module.exports = FeedToolbarList;
+
+
+
+},{"../_item":130}],133:[function(require,module,exports){
+var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
+
+CurrentUserStore = require('../../stores/currentUser');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+FeedToolbar = require('./feed');
+
+FeedToolbarManager = React.createClass({
+  displayName: 'FeedToolbarManager',
+  mixins: [ConnectStoreMixin(CurrentUserStore)],
+  render: function() {
+    return React.createElement(FeedToolbar, {
+      "user": this.state.user
+    });
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser()
+    };
+  }
+});
+
+module.exports = FeedToolbarManager;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":167,"../../stores/currentUser":161,"./feed":131}],134:[function(require,module,exports){
+var CLOSE_STATE, OPEN_STATE, ToolbarMixin;
+
+CLOSE_STATE = 'close';
+
+OPEN_STATE = 'open';
+
+ToolbarMixin = {
+  getInitialState: function() {
+    return {
+      currentState: CLOSE_STATE
+    };
+  },
+  isOpenState: function() {
+    return this.state.currentState === OPEN_STATE;
+  },
+  activateCloseState: function() {
+    return this.setState({
+      currentState: CLOSE_STATE
+    });
+  },
+  activateOpenState: function() {
+    return this.setState({
+      currentState: OPEN_STATE
+    });
+  }
+};
+
+module.exports = ToolbarMixin;
+
+
+
+},{}],135:[function(require,module,exports){
+var PropTypes, ToolbarMixin, UserToolbar, UserToolbarList, cx;
+
+cx = require('react/lib/cx');
+
+UserToolbarList = require('./user/list');
+
+ToolbarMixin = require('./mixins/toolbar');
+
+PropTypes = React.PropTypes;
+
+UserToolbar = React.createClass({
+  displayName: 'UserToolbar',
+  mixins: [ToolbarMixin],
+  propTypes: {
+    user: PropTypes.object
+  },
+  render: function() {
+    var toolbarClasses;
+    toolbarClasses = cx({
+      'toolbar__popup': true,
+      '__visible': this.isOpenState()
+    });
+    return React.createElement("nav", {
+      "className": "toolbar toolbar--right toolbar--user"
+    }, React.createElement("div", {
+      "className": "toolbar__toggle",
+      "onClick": this.toggleOpenState
+    }, React.createElement("i", {
+      "className": "icon icon--menu"
+    })), React.createElement("div", {
+      "className": toolbarClasses
+    }, React.createElement(UserToolbarList, {
+      "user": this.props.user
+    })));
+  },
+  toggleOpenState: function() {
+    var html;
+    html = document.querySelector('html');
+    if (html.classList.contains('feed-toolbar-open')) {
+      html.classList.remove('feed-toolbar-open');
+    }
+    html.classList.toggle('user-toolbar-open');
+    if (this.isOpenState()) {
+      return this.activateCloseState();
+    } else {
+      return this.activateOpenState();
+    }
+  }
+});
+
+module.exports = UserToolbar;
+
+
+
+},{"./mixins/toolbar":134,"./user/list":136,"react/lib/cx":279}],136:[function(require,module,exports){
+var PropTypes, ToolbarItem, UserToolbarList, UserToolbarListMixin;
+
+ToolbarItem = require('../_item');
+
+UserToolbarListMixin = require('./mixins/list');
+
+PropTypes = React.PropTypes;
+
+UserToolbarList = React.createClass({
+  displayName: 'UserToolbarList',
+  mixins: [UserToolbarListMixin],
+  propTypes: {
+    user: PropTypes.object
+  },
+  render: function() {
+    return React.createElement("ul", {
+      "className": "toolbar__popup-list"
+    }, React.createElement(ToolbarItem, {
+      "title": i18n.t('toolbar_new_entry_item'),
+      "href": Routes.new_entry_url(this.props.user.slug),
+      "icon": "icon--plus"
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('toolbar_my_diary_item'),
+      "href": Routes.my_tlog_url(this.props.user.slug),
+      "icon": "icon--diary"
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('toolbar_profile_item'),
+      "icon": "icon--profile",
+      "href": Routes.userProfile(this.props.user.slug)
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('toolbar_favorites_item'),
+      "href": Routes.favorites_url(this.props.user.slug),
+      "icon": "icon--star"
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('toolbar_new_anonymous_item'),
+      "href": Routes.new_anonymous_entry_url(this.props.user.slug),
+      "icon": "icon--anonymous"
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('toolbar_privates_item'),
+      "href": Routes.private_entries_url(this.props.user.slug),
+      "icon": "icon--lock"
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('toolbar_messages_item'),
+      "icon": "icon--messages",
+      "onSelect": this.showMessages
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('toolbar_friends_item'),
+      "icon": "icon--friends",
+      "onSelect": this.showFriends
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('toolbar_design_item'),
+      "icon": "icon--drawing",
+      "href": Routes.userDesignSettings(this.props.user.slug)
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('toolbar_settings_item'),
+      "icon": "icon--cogwheel",
+      "href": Routes.userSettings(this.props.user.slug)
+    }), React.createElement(ToolbarItem, {
+      "title": i18n.t('toolbar_logout_item'),
+      "href": Routes.logout_path(this.props.user.slug),
+      "icon": "icon--logout"
+    }));
+  }
+});
+
+module.exports = UserToolbarList;
+
+
+
+},{"../_item":130,"./mixins/list":137}],137:[function(require,module,exports){
+var UserToolbarListMixin;
+
+UserToolbarListMixin = {
+  showFriends: function(panelName, userId) {
+    return alert('Ещё не работает');
+  },
+  showMessages: function() {
+    return alert('Ещё не работает');
+  }
+};
+
+module.exports = UserToolbarListMixin;
+
+
+
+},{}],138:[function(require,module,exports){
+var ConnectStoreMixin, CurrentUserStore, UserToolbar, UserToolbarManager;
+
+CurrentUserStore = require('../../stores/currentUser');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+UserToolbar = require('./user');
+
+UserToolbarManager = React.createClass({
+  displayName: 'UserToolbarManager',
+  mixins: [ConnectStoreMixin(CurrentUserStore)],
+  render: function() {
+    if (this.state.logged) {
+      return React.createElement(UserToolbar, {
+        "user": this.state.user
+      });
+    } else {
+      return null;
+    }
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser(),
+      logged: CurrentUserStore.isLogged()
+    };
+  }
+});
+
+module.exports = UserToolbarManager;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":167,"../../stores/currentUser":161,"./user":135}],139:[function(require,module,exports){
+var ApiConstants, keyMirror;
+
+keyMirror = require('react/lib/keyMirror');
+
+ApiConstants = keyMirror({
+  FOLLOW_USER: null,
+  UNFOLLOW_USER: null,
+  CANCEL_USER: null,
+  IGNORE_USER: null,
+  REPORT_USER: null,
+  ADD_TO_FAVORITES: null,
+  REMOVE_FROM_FAVORITES: null,
+  START_WATCH: null,
+  STOP_WATCH: null,
+  REPORT: null,
+  DELETE: null,
+  VOTE: null,
+  LOAD_COMMENTS: null,
+  DELETE_COMMENT: null,
+  REPORT_COMMENT: null,
+  CREATE_COMMENT: null,
+  EDIT_COMMENT: null,
+  LOAD_FEED_ENTRIES: null,
+  SIGN_IN: null,
+  SIGN_UP: null,
+  RECOVER: null
+});
+
+module.exports = ApiConstants;
+
+
+
+},{"react/lib/keyMirror":307}],140:[function(require,module,exports){
+var ApiConstants, EntryConstants, FeedConstants, RelationshipConstants;
+
+ApiConstants = require('./api');
+
+EntryConstants = require('./entry');
+
+FeedConstants = require('./feed');
+
+RelationshipConstants = require('./relationship');
+
+module.exports = {
+  api: ApiConstants,
+  entry: EntryConstants,
+  feed: FeedConstants,
+  relationship: RelationshipConstants
+};
+
+
+
+},{"./api":139,"./entry":141,"./feed":142,"./relationship":143}],141:[function(require,module,exports){
+var EntryConstants, keyMirror;
+
+keyMirror = require('react/lib/keyMirror');
+
+EntryConstants = keyMirror({
+  INITIALIZE_COMMENTS: null,
+  LOAD_COMMENTS: null,
+  DELETE_COMMENT: null,
+  CREATE_COMMENT: null,
+  EDIT_COMMENT: null
+});
+
+module.exports = EntryConstants;
+
+
+
+},{"react/lib/keyMirror":307}],142:[function(require,module,exports){
+var FeedConstants, keyMirror;
+
+keyMirror = require('react/lib/keyMirror');
+
+FeedConstants = keyMirror({
+  INITIALIZE_FEED: null,
+  LOAD_ENTRIES: null
+});
+
+module.exports = FeedConstants;
+
+
+
+},{"react/lib/keyMirror":307}],143:[function(require,module,exports){
+var RelationshipConstants, keyMirror;
+
+keyMirror = require('react/lib/keyMirror');
+
+RelationshipConstants = keyMirror({
+  UPDATE_RELATIONSHIP: null
+});
+
+module.exports = RelationshipConstants;
+
+
+
+},{"react/lib/keyMirror":307}],144:[function(require,module,exports){
+var Notify, NotifyController, closeNotification, getContainer, isPageLoadingCanceled, _pendingNotification;
+
+Notify = require('../components/alerts/notify');
+
+_pendingNotification = null;
+
+getContainer = function() {
+  var container;
+  container = document.querySelector('[notify-container]');
+  if (container == null) {
+    container = document.createElement('div');
+    container.setAttribute('notify-container', '');
+    document.body.appendChild(container);
+  }
+  return container;
+};
+
+closeNotification = function() {
+  var container;
+  container = getContainer();
+  React.unmountComponentAtNode(container);
+  return _pendingNotification = null;
+};
+
+isPageLoadingCanceled = function(xhr) {
+  return xhr.status === 0;
+};
+
+NotifyController = {
+  notify: function(type, text, timeout) {
+    var container, notification;
+    if (timeout == null) {
+      timeout = 3000;
+    }
+    container = getContainer();
+    closeNotification();
+    notification = React.render(React.createElement(Notify, {
+      "type": type,
+      "text": text,
+      "timeout": timeout,
+      "onClose": closeNotification
+    }), container);
+    return _pendingNotification = notification;
+  },
+  notifySuccess: function(text, timeout) {
+    if (timeout == null) {
+      timeout = 3000;
+    }
+    return this.notify('success', text, timeout);
+  },
+  notifyError: function(text, timeout) {
+    if (timeout == null) {
+      timeout = 3000;
+    }
+    return this.notify('error', text, timeout);
+  },
+  errorResponse: function(xhr, timeout) {
+    var json, message;
+    if (timeout == null) {
+      timeout = 3000;
+    }
+    if (xhr._aborted === true) {
+      return;
+    }
+    if (xhr.responseText) {
+      json = JSON.parse(xhr.responseText);
+      message = (function() {
+        switch (false) {
+          case !json.message:
+            return json.message;
+          case !json.long_message:
+            return json.long_message;
+          case !json.error:
+            return json.error;
+        }
+      })();
+    } else {
+      message = "Ошибка сети: " + xhr.statusText;
+    }
+    if (!isPageLoadingCanceled(xhr)) {
+      return this.notify('error', message, timeout);
+    }
+  }
+};
+
+module.exports = NotifyController;
+
+
+
+},{"../components/alerts/notify":15}],145:[function(require,module,exports){
+var ScreenController, getContainer, restorePageName, switchPageName, _oldPageName;
+
+_oldPageName = null;
+
+getContainer = function() {
+  var container;
+  container = document.querySelector('[screen-container]');
+  if (container == null) {
+    container = document.createElement('div');
+    container.setAttribute('screen-container', '');
+    container.style.height = '100%';
+    document.body.appendChild(container);
+  }
+  return container;
+};
+
+switchPageName = function(pageName) {
+  var oldClassName;
+  oldClassName = document.documentElement.className;
+  if (_oldPageName === null) {
+    _oldPageName = oldClassName.match(/.*-page/);
+  }
+  return document.documentElement.className = oldClassName.replace(/.*-page/, pageName);
+};
+
+restorePageName = function() {
+  var oldClassName;
+  oldClassName = document.documentElement.className;
+  document.documentElement.className = oldClassName.replace(/.*-page/, _oldPageName);
+  return _oldPageName = null;
+};
+
+ScreenController = {
+  show: function(reactClass, props, pageName) {
+    var appContainer, container;
+    container = getContainer();
+    appContainer = document.getElementById('App');
+    appContainer.style.display = 'none';
+    switchPageName(pageName);
+    return React.render(React.createElement(reactClass, React.__spread({}, props)), container);
+  },
+  close: function() {
+    var appContainer, container;
+    container = getContainer();
+    appContainer = document.getElementById('App');
+    appContainer.style.display = '';
+    restorePageName();
+    return setTimeout((function() {
+      return React.unmountComponentAtNode(container);
+    }), 0);
+  }
+};
+
+module.exports = ScreenController;
+
+
+
+},{}],146:[function(require,module,exports){
+var AppDispatcher, Dispatcher, assign;
+
+assign = require('react/lib/Object.assign');
+
+Dispatcher = require('flux').Dispatcher;
+
+AppDispatcher = assign(new Dispatcher(), {
+  handleViewAction: function(action) {
+    return this.dispatch({
+      source: 'VIEW_ACTION',
+      action: action
+    });
+  },
+  handleServerAction: function(action) {
+    return this.dispatch({
+      source: 'SERVER_ACTION',
+      action: action
+    });
+  }
+});
+
+module.exports = AppDispatcher;
+
+
+
+},{"flux":172,"react/lib/Object.assign":200}],147:[function(require,module,exports){
+var ClickOutsideMixin, closest;
+
+closest = function(el, target) {
+  while (target.parentNode) {
+    if (target === el) {
+      return true;
+    }
+    target = target.parentNode;
+  }
+  return false;
+};
+
+ClickOutsideMixin = {
+  componentDidMount: function() {
+    return document.addEventListener('click', this.onDocumentClick);
+  },
+  componentWillUnmount: function() {
+    return document.removeEventListener('click', this.onDocumentClick);
+  },
+  onDocumentClick: function(e) {
+    var isClickInside;
+    if (!this.isOpenState()) {
+      return;
+    }
+    isClickInside = closest(this.getDOMNode(), e.target);
+    if (!isClickInside) {
+      return this.activateCloseState();
+    }
+  }
+};
+
+module.exports = ClickOutsideMixin;
+
+
+
+},{}],148:[function(require,module,exports){
+var ComponentMixin;
+
+ComponentMixin = {
+  safeUpdate: function(func) {
+    if (!this._isUnmounted()) {
+      return func();
+    }
+  },
+  safeUpdateState: function(newStates) {
+    if (!this._isUnmounted()) {
+      return this.setState(newStates);
+    }
+  },
+  _isUnmounted: function() {
+    return this._compositeLifeCycleState === 'UNMOUNTING' || this._compositeLifeCycleState === 'UNMOUNTED' || this._lifeCycleState === 'UNMOUNTING' || this._lifeCycleState === 'UNMOUNTED';
+  }
+};
+
+module.exports = ComponentMixin;
+
+
+
+},{}],149:[function(require,module,exports){
+var DropdownMenuMixin, REVERSE_MARGIN, getSize, getViewportWH;
+
+REVERSE_MARGIN = 5;
+
+getSize = function(elem) {
+  return [elem.offsetWidth, elem.offsetHeight];
+};
+
+getViewportWH = function() {
+  var d, e, g, w, x, y;
+  w = window;
+  d = document;
+  e = d.documentElement;
+  g = d.getElementsByTagName('body')[0];
+  x = w.innerWidth || e.clientWidth || g.clientWidth;
+  y = w.innerHeight || e.clientHeight || g.clientHeight;
+  return [x, y];
+};
+
+DropdownMenuMixin = {
+  getPopupClasses: function(baseClasses) {
+    var isNotEnoughBottomSpace, isNotEnoughRightSpace, menu, menuOffsets, popupClasses, viewportWH;
+    if (baseClasses == null) {
+      baseClasses = '';
+    }
+    popupClasses = baseClasses;
+    if (this.isMounted() && this.props.visible) {
+      menu = this.getDOMNode();
+      menuOffsets = menu.getBoundingClientRect();
+      viewportWH = getViewportWH();
+      isNotEnoughBottomSpace = (function(_this) {
+        return function() {
+          var menuOffsetTop, menuSize, viewportHeight;
+          menuSize = getSize(menu);
+          menuOffsetTop = menuOffsets.top;
+          viewportHeight = viewportWH[1];
+          if (viewportHeight - REVERSE_MARGIN < menuOffsetTop + menuSize[1]) {
+            return true;
+          } else {
+            return false;
+          }
+        };
+      })(this);
+      isNotEnoughRightSpace = (function(_this) {
+        return function() {
+          var menuOffsetRight, viewportWidth;
+          menuOffsetRight = menuOffsets.right;
+          viewportWidth = viewportWH[0];
+          if (viewportWidth - REVERSE_MARGIN < menuOffsetRight) {
+            return true;
+          } else {
+            return false;
+          }
+        };
+      })(this);
+      if (isNotEnoughBottomSpace()) {
+        popupClasses += ' __top';
+      }
+      if (isNotEnoughRightSpace()) {
+        popupClasses += ' __right';
+      }
+    }
+    return popupClasses;
+  }
+};
+
+module.exports = DropdownMenuMixin;
+
+
+
+},{}],150:[function(require,module,exports){
+var AuthButtonManager, AuthManager, CurrentUserStore, EntryPage, EntryPagination, EntryTlog, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, UserToolbarManager;
+
+CurrentUserStore = require('../stores/currentUser');
+
+PageMixin = require('./mixins/page');
+
+FeedToolbarManager = require('../components/toolbars/feedManager');
+
+UserToolbarManager = require('../components/toolbars/userManager');
+
+HeroTlog = require('../components/hero/tlog');
+
+EntryTlog = require('../components/entry/tlog');
+
+EntryPagination = require('../components/pagination/entry');
+
+AuthManager = require('../components/auth/authManager');
+
+AuthButtonManager = require('../components/buttons/auth/authManager');
+
+PropTypes = React.PropTypes;
+
+EntryPage = React.createClass({
+  displayName: 'EntryPage',
+  mixins: [PageMixin],
+  propTypes: {
+    currentUser: PropTypes.object,
+    tlog: PropTypes.object.isRequired,
+    entry: PropTypes.object.isRequired
+  },
+  componentWillMount: function() {
+    return CurrentUserStore.initialize(this.props.currentUser);
+  },
+  render: function() {
+    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
+      "className": "layout"
+    }, React.createElement("div", {
+      "className": "layout__header"
+    }, React.createElement(HeroTlog, {
+      "tlog": this.props.tlog
+    })), React.createElement("div", {
+      "className": "layout__body"
+    }, React.createElement(EntryTlog, {
+      "entry": this.props.entry
+    }), React.createElement(EntryPagination, {
+      "tlogUrl": this.props.tlog.tlog_url
+    }))), React.createElement(AuthManager, null));
+  }
+});
+
+module.exports = EntryPage;
+
+
+
+},{"../components/auth/authManager":20,"../components/buttons/auth/authManager":36,"../components/entry/tlog":93,"../components/hero/tlog":107,"../components/pagination/entry":124,"../components/toolbars/feedManager":133,"../components/toolbars/userManager":138,"../stores/currentUser":161,"./mixins/page":157}],151:[function(require,module,exports){
+var AuthButtonManager, AuthManager, CurrentUserStore, FeedBest, FeedBestPage, FeedBestPageMixin, FeedToolbarManager, HeroFeedBest, PageMixin, PropTypes, UserToolbarManager;
+
+CurrentUserStore = require('../stores/currentUser');
+
+PageMixin = require('./mixins/page');
+
+FeedToolbarManager = require('../components/toolbars/feedManager');
+
+UserToolbarManager = require('../components/toolbars/userManager');
+
+HeroFeedBest = require('../components/hero/feedBest');
+
+FeedBest = require('../components/feed/feedBest');
+
+AuthManager = require('../components/auth/authManager');
+
+AuthButtonManager = require('../components/buttons/auth/authManager');
+
+FeedBestPageMixin = require('./mixins/feedBest');
+
+PropTypes = React.PropTypes;
+
+FeedBestPage = React.createClass({
+  displayName: 'FeedBestPage',
+  mixins: [FeedBestPageMixin, PageMixin],
+  propTypes: {
+    currentUser: PropTypes.object,
+    entries: PropTypes.array.isRequired,
+    feed: PropTypes.object.isRequired
+  },
+  componentWillMount: function() {
+    return CurrentUserStore.initialize(this.props.currentUser);
+  },
+  render: function() {
+    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
+      "className": "layout"
+    }, React.createElement("div", {
+      "className": "layout__header"
+    }, React.createElement(HeroFeedBest, {
+      "backgroundUrl": this.props.feed.backgroundUrl,
+      "entriesCount": this.props.feed.entriesCount
+    })), React.createElement("div", {
+      "className": "layout__body"
+    }, React.createElement(FeedBest, {
+      "entries": this.props.entries
+    }))), React.createElement(AuthManager, null));
+  }
+});
+
+module.exports = FeedBestPage;
+
+
+
+},{"../components/auth/authManager":20,"../components/buttons/auth/authManager":36,"../components/feed/feedBest":98,"../components/hero/feedBest":104,"../components/toolbars/feedManager":133,"../components/toolbars/userManager":138,"../stores/currentUser":161,"./mixins/feedBest":154,"./mixins/page":157}],152:[function(require,module,exports){
+var AuthButtonManager, AuthManager, CurrentUserStore, FeedFriends, FeedFriendsPage, FeedFriendsPageMixin, FeedToolbarManager, HeroFeedFriends, PageMixin, PropTypes, UserToolbarManager;
+
+CurrentUserStore = require('../stores/currentUser');
+
+PageMixin = require('./mixins/page');
+
+FeedToolbarManager = require('../components/toolbars/feedManager');
+
+UserToolbarManager = require('../components/toolbars/userManager');
+
+HeroFeedFriends = require('../components/hero/feedFriends');
+
+FeedFriends = require('../components/feed/feedFriends');
+
+AuthManager = require('../components/auth/authManager');
+
+AuthButtonManager = require('../components/buttons/auth/authManager');
+
+FeedFriendsPageMixin = require('./mixins/feedFriends');
+
+PropTypes = React.PropTypes;
+
+FeedFriendsPage = React.createClass({
+  displayName: 'FeedFriendsPage',
+  mixins: [FeedFriendsPageMixin, PageMixin],
+  propTypes: {
+    currentUser: PropTypes.object,
+    entries: PropTypes.array.isRequired,
+    feed: PropTypes.object.isRequired
+  },
+  componentWillMount: function() {
+    return CurrentUserStore.initialize(this.props.currentUser);
+  },
+  render: function() {
+    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
+      "className": "layout"
+    }, React.createElement("div", {
+      "className": "layout__header"
+    }, React.createElement(HeroFeedFriends, {
+      "backgroundUrl": this.props.feed.backgroundUrl,
+      "entriesCount": this.props.feed.entriesCount
+    })), React.createElement("div", {
+      "className": "layout__body"
+    }, React.createElement(FeedFriends, {
+      "entries": this.props.entries
+    }))), React.createElement(AuthManager, null));
+  }
+});
+
+module.exports = FeedFriendsPage;
+
+
+
+},{"../components/auth/authManager":20,"../components/buttons/auth/authManager":36,"../components/feed/feedFriends":99,"../components/hero/feedFriends":105,"../components/toolbars/feedManager":133,"../components/toolbars/userManager":138,"../stores/currentUser":161,"./mixins/feedFriends":155,"./mixins/page":157}],153:[function(require,module,exports){
+var AuthButtonManager, AuthManager, CurrentUserStore, FeedLive, FeedLivePage, FeedLivePageMixin, FeedToolbarManager, HeroFeedLive, PageMixin, PropTypes, UserToolbarManager;
+
+CurrentUserStore = require('../stores/currentUser');
+
+PageMixin = require('./mixins/page');
+
+FeedToolbarManager = require('../components/toolbars/feedManager');
+
+UserToolbarManager = require('../components/toolbars/userManager');
+
+HeroFeedLive = require('../components/hero/feedLive');
+
+FeedLive = require('../components/feed/feedLive');
+
+AuthManager = require('../components/auth/authManager');
+
+AuthButtonManager = require('../components/buttons/auth/authManager');
+
+FeedLivePageMixin = require('./mixins/feedLive');
+
+PropTypes = React.PropTypes;
+
+FeedLivePage = React.createClass({
+  displayName: 'FeedLivePage',
+  mixins: [FeedLivePageMixin, PageMixin],
+  propTypes: {
+    currentUser: PropTypes.object,
+    entries: PropTypes.array.isRequired,
+    feed: PropTypes.object.isRequired
+  },
+  componentWillMount: function() {
+    return CurrentUserStore.initialize(this.props.currentUser);
+  },
+  render: function() {
+    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
+      "className": "layout"
+    }, React.createElement("div", {
+      "className": "layout__header"
+    }, React.createElement(HeroFeedLive, {
+      "backgroundUrl": this.props.feed.backgroundUrl,
+      "entriesCount": this.props.feed.entriesCount
+    })), React.createElement("div", {
+      "className": "layout__body"
+    }, React.createElement(FeedLive, {
+      "entries": this.props.entries
+    }))), React.createElement(AuthManager, null));
+  }
+});
+
+module.exports = FeedLivePage;
+
+
+
+},{"../components/auth/authManager":20,"../components/buttons/auth/authManager":36,"../components/feed/feedLive":100,"../components/hero/feedLive":106,"../components/toolbars/feedManager":133,"../components/toolbars/userManager":138,"../stores/currentUser":161,"./mixins/feedLive":156,"./mixins/page":157}],154:[function(require,module,exports){
+var FeedBestPageMixin;
+
+FeedBestPageMixin = {
+  getDefaultProps: function() {
+    return {
+      entries: [
+        {
+          author: {
+            created_at: "2014-11-08T14:07:32.000+03:00",
+            features: {
+              notification: false,
+              search: false
+            },
+            id: 244412,
+            is_daylog: false,
+            is_female: false,
+            is_privacy: false,
+            name: "hyperwax",
+            private_entries_count: 0,
+            public_entries_count: 20,
+            slug: "hyperwax",
+            title: "",
+            tlog_url: "http://taaasty.com/~hyperwax",
+            total_entries_count: 22,
+            updated_at: "2015-01-16T19:30:05.000+03:00",
+            userpic: {
+              default_colors: {
+                background: "#eb4656",
+                name: "#ffffff"
+              },
+              kind: "user",
+              large_url: "http://taaasty.com/assets/userpic/25/ff/244412_large.jpg",
+              original_url: "http://taaasty.com/assets/userpic/25/ff/244412_original.jpg",
+              symbol: "h",
+              thumb64_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb64.jpg",
+              thumb128_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb128.jpg",
+              thumbor_path: "userpic/25/ff/244412_original.jpg"
+            }
+          },
+          can_delete: false,
+          can_edit: false,
+          can_favorite: true,
+          can_report: true,
+          can_vote: true,
+          can_watch: true,
+          comments_count: 0,
+          comments_info: {
+            comments: [],
+            from_comment_id: null,
+            order: "desc",
+            to_comment_id: null,
+            total_count: 0
+          },
+          created_at: "2015-01-16T19:30:05.000+03:00",
+          entry_url: "http://taaasty.com/~hyperwax/19616804",
+          id: 19620857,
+          image_attachments: [
+            {
+              content_type: "image/jpeg",
+              created_at: "2015-01-16T19:30:05.000+03:00",
+              frames_count: 1,
+              id: 16794460,
+              image: {
+                geometry: {
+                  height: 1200,
+                  width: 800
+                },
+                path: "att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg",
+                source: "image_attachment",
+                title: null,
+                url: "http://taaasty.com/assets/att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg"
+              }
+            }
+          ],
+          image_url: null,
+          is_favorited: false,
+          is_voteable: true,
+          is_watching: false,
+          privacy: "live",
+          rating: {
+            entry_id: 19616804,
+            is_voteable: true,
+            is_voted: false,
+            rating: 0,
+            votes: 0
+          },
+          title: "",
+          type: "image",
+          updated_at: "2015-01-16T19:30:05.000+03:00",
+          via: null
+        }
+      ],
+      feed: {
+        backgroundUrl: 'http://taaasty.com/images/hero-cover.jpg',
+        entriesCount: 41
+      }
+    };
+  }
+};
+
+module.exports = FeedBestPageMixin;
+
+
+
+},{}],155:[function(require,module,exports){
+var FeedFriendsPageMixin;
+
+FeedFriendsPageMixin = {
+  getDefaultProps: function() {
+    return {
+      currentUser: {
+        api_key: {
+          access_token: 'my_super_key',
+          expires_at: '2015-01-04T18:07:07.000+03:00',
+          user_id: 232992
+        },
+        authentications: [
+          {
+            id: 5,
+            image: 'https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg',
+            name: 'Сергей Лаптев',
+            provider: 'vkontakte',
+            sex: null,
+            uid: '17202995',
+            url: 'http://vk.com/my_super_key'
+          }
+        ],
+        available_notifications: true,
+        confirmation_email: null,
+        created_at: '2014-06-18T14:27:22.000+04:00',
+        design: {
+          backgroundBrightness: 75,
+          background_url: 'http://taaasty.ru/assets/backgrounds/cf/78/1881243_4k_Resolution_Game_Wallpaper__12_fullsize.jpeg',
+          coverAlign: 'justify',
+          feedColor: 'black',
+          feedOpacity: 0.62,
+          fontType: 'sans',
+          headerColor: 'white'
+        },
+        email: 'iamsergeylaptev@gmail.com',
+        features: {
+          notification: false,
+          search: true
+        },
+        id: 232992,
+        is_confirmed: true,
+        is_daylog: false,
+        is_female: false,
+        is_privacy: true,
+        name: 'sergeylaptev',
+        private_entries_count: 0,
+        public_entries_count: 3,
+        slug: 'sergeylaptev',
+        title: 'To be continued...',
+        tlog_url: 'http://taaasty.ru/~sergeylaptev',
+        total_entries_count: 3,
+        updated_at: '2014-12-17T11:54:20.000+03:00',
+        userpic: {
+          default_colors: {
+            background: '#b5c31e',
+            name: '#ffffff'
+          },
+          kind: 'user',
+          large_url: 'http://taaasty.ru/assets/userpic/22/36/232992_large.jpeg',
+          original_url: 'http://taaasty.ru/assets/userpic/22/36/232992_original.jpeg',
+          symbol: 's',
+          thumb64_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb64.jpeg',
+          thumb128_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb128.jpeg',
+          thumbor_path: 'userpic/22/36/232992_original.jpeg'
+        }
+      },
+      entries: [
+        {
+          author: {
+            created_at: "2014-11-08T14:07:32.000+03:00",
+            features: {
+              notification: false,
+              search: false
+            },
+            id: 244412,
+            is_daylog: false,
+            is_female: false,
+            is_privacy: false,
+            name: "hyperwax",
+            private_entries_count: 0,
+            public_entries_count: 20,
+            slug: "hyperwax",
+            title: "",
+            tlog_url: "http://taaasty.com/~hyperwax",
+            total_entries_count: 22,
+            updated_at: "2015-01-16T19:30:05.000+03:00",
+            userpic: {
+              default_colors: {
+                background: "#eb4656",
+                name: "#ffffff"
+              },
+              kind: "user",
+              large_url: "http://taaasty.com/assets/userpic/25/ff/244412_large.jpg",
+              original_url: "http://taaasty.com/assets/userpic/25/ff/244412_original.jpg",
+              symbol: "h",
+              thumb64_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb64.jpg",
+              thumb128_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb128.jpg",
+              thumbor_path: "userpic/25/ff/244412_original.jpg"
+            }
+          },
+          can_delete: false,
+          can_edit: false,
+          can_favorite: true,
+          can_report: true,
+          can_vote: true,
+          can_watch: true,
+          comments_count: 0,
+          comments_info: {
+            comments: [],
+            from_comment_id: null,
+            order: "desc",
+            to_comment_id: null,
+            total_count: 0
+          },
+          created_at: "2015-01-16T19:30:05.000+03:00",
+          entry_url: "http://taaasty.com/~hyperwax/19616804",
+          id: 19617454,
+          image_attachments: [
+            {
+              content_type: "image/jpeg",
+              created_at: "2015-01-16T19:30:05.000+03:00",
+              frames_count: 1,
+              id: 16794460,
+              image: {
+                geometry: {
+                  height: 1200,
+                  width: 800
+                },
+                path: "att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg",
+                source: "image_attachment",
+                title: null,
+                url: "http://taaasty.com/assets/att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg"
+              }
+            }
+          ],
+          image_url: null,
+          is_favorited: false,
+          is_voteable: true,
+          is_watching: false,
+          privacy: "live",
+          rating: {
+            entry_id: 19616804,
+            is_voteable: true,
+            is_voted: false,
+            rating: 0,
+            votes: 0
+          },
+          title: "",
+          type: "image",
+          updated_at: "2015-01-16T19:30:05.000+03:00",
+          via: null
+        }
+      ],
+      feed: {
+        backgroundUrl: 'http://taaasty.com/images/hero-cover.jpg',
+        entriesCount: 42
+      }
+    };
+  }
+};
+
+module.exports = FeedFriendsPageMixin;
+
+
+
+},{}],156:[function(require,module,exports){
+var FeedLivePageMixin;
+
+FeedLivePageMixin = {
+  getDefaultProps: function() {
+    return {
+      currentUser: {
+        api_key: {
+          access_token: 'my_super_key',
+          expires_at: '2015-01-04T18:07:07.000+03:00',
+          user_id: 232992
+        },
+        authentications: [
+          {
+            id: 5,
+            image: 'https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg',
+            name: 'Сергей Лаптев',
+            provider: 'vkontakte',
+            sex: null,
+            uid: '17202995',
+            url: 'http://vk.com/my_super_key'
+          }
+        ],
+        available_notifications: true,
+        confirmation_email: null,
+        created_at: '2014-06-18T14:27:22.000+04:00',
+        design: {
+          backgroundBrightness: 75,
+          background_url: 'http://taaasty.ru/assets/backgrounds/cf/78/1881243_4k_Resolution_Game_Wallpaper__12_fullsize.jpeg',
+          coverAlign: 'justify',
+          feedColor: 'black',
+          feedOpacity: 0.62,
+          fontType: 'sans',
+          headerColor: 'white'
+        },
+        email: 'iamsergeylaptev@gmail.com',
+        features: {
+          notification: false,
+          search: true
+        },
+        id: 232992,
+        is_confirmed: true,
+        is_daylog: false,
+        is_female: false,
+        is_privacy: true,
+        name: 'sergeylaptev',
+        private_entries_count: 0,
+        public_entries_count: 3,
+        slug: 'sergeylaptev',
+        title: 'To be continued...',
+        tlog_url: 'http://taaasty.ru/~sergeylaptev',
+        total_entries_count: 3,
+        updated_at: '2014-12-17T11:54:20.000+03:00',
+        userpic: {
+          default_colors: {
+            background: '#b5c31e',
+            name: '#ffffff'
+          },
+          kind: 'user',
+          large_url: 'http://taaasty.ru/assets/userpic/22/36/232992_large.jpeg',
+          original_url: 'http://taaasty.ru/assets/userpic/22/36/232992_original.jpeg',
+          symbol: 's',
+          thumb64_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb64.jpeg',
+          thumb128_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb128.jpeg',
+          thumbor_path: 'userpic/22/36/232992_original.jpeg'
+        }
+      },
+      entries: [
+        {
+          author: {
+            created_at: "2014-11-08T14:07:32.000+03:00",
+            features: {
+              notification: false,
+              search: false
+            },
+            id: 244412,
+            is_daylog: false,
+            is_female: false,
+            is_privacy: false,
+            name: "hyperwax",
+            private_entries_count: 0,
+            public_entries_count: 20,
+            slug: "hyperwax",
+            title: "",
+            tlog_url: "http://taaasty.com/~hyperwax",
+            total_entries_count: 22,
+            updated_at: "2015-01-16T19:30:05.000+03:00",
+            userpic: {
+              default_colors: {
+                background: "#eb4656",
+                name: "#ffffff"
+              },
+              kind: "user",
+              large_url: "http://taaasty.com/assets/userpic/25/ff/244412_large.jpg",
+              original_url: "http://taaasty.com/assets/userpic/25/ff/244412_original.jpg",
+              symbol: "h",
+              thumb64_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb64.jpg",
+              thumb128_url: "http://taaasty.com/assets/userpic/25/ff/244412_thumb128.jpg",
+              thumbor_path: "userpic/25/ff/244412_original.jpg"
+            }
+          },
+          can_delete: false,
+          can_edit: false,
+          can_favorite: true,
+          can_report: true,
+          can_vote: true,
+          can_watch: true,
+          comments_count: 0,
+          comments_info: {
+            comments: [],
+            from_comment_id: null,
+            order: "desc",
+            to_comment_id: null,
+            total_count: 0
+          },
+          created_at: "2015-01-16T19:30:05.000+03:00",
+          entry_url: "http://taaasty.com/~hyperwax/19616804",
+          id: 19619777,
+          image_attachments: [
+            {
+              content_type: "image/jpeg",
+              created_at: "2015-01-16T19:30:05.000+03:00",
+              frames_count: 1,
+              id: 16794460,
+              image: {
+                geometry: {
+                  height: 1200,
+                  width: 800
+                },
+                path: "att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg",
+                source: "image_attachment",
+                title: null,
+                url: "http://taaasty.com/assets/att/8c/79/16794460_244412_19616804_bf44b698-5d7b-4480-b555-4fca3439ce2f.jpg"
+              }
+            }
+          ],
+          image_url: null,
+          is_favorited: false,
+          is_voteable: true,
+          is_watching: false,
+          privacy: "live",
+          rating: {
+            entry_id: 19616804,
+            is_voteable: true,
+            is_voted: false,
+            rating: 0,
+            votes: 0
+          },
+          title: "",
+          type: "image",
+          updated_at: "2015-01-16T19:30:05.000+03:00",
+          via: null
+        }
+      ],
+      feed: {
+        backgroundUrl: 'http://taaasty.com/images/hero-cover.jpg',
+        entriesCount: 41
+      }
+    };
+  }
+};
+
+module.exports = FeedLivePageMixin;
+
+
+
+},{}],157:[function(require,module,exports){
+var PageMixin, PropTypes;
+
+PropTypes = React.PropTypes;
+
+PageMixin = {
+  propTypes: {
+    locale: PropTypes.string
+  },
+  getDefaultProps: function() {
+    return {
+      locale: TastySettings.locale
+    };
+  },
+  componentWillMount: function() {
+    return i18n.setLng(this.props.locale);
+  }
+};
+
+module.exports = PageMixin;
+
+
+
+},{}],158:[function(require,module,exports){
+var AuthButtonManager, AuthManager, CurrentUserStore, Daylog, DaylogPagination, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, TlogDaylogPage, UserToolbarManager;
+
+CurrentUserStore = require('../stores/currentUser');
+
+PageMixin = require('./mixins/page');
+
+FeedToolbarManager = require('../components/toolbars/feedManager');
+
+UserToolbarManager = require('../components/toolbars/userManager');
+
+HeroTlog = require('../components/hero/tlog');
+
+Daylog = require('../components/daylog/daylog');
+
+DaylogPagination = require('../components/pagination/daylog');
+
+AuthManager = require('../components/auth/authManager');
+
+AuthButtonManager = require('../components/buttons/auth/authManager');
+
+PropTypes = React.PropTypes;
+
+TlogDaylogPage = React.createClass({
+  displayName: 'TlogDaylogPage',
+  mixins: [PageMixin],
+  propTypes: {
+    currentUser: PropTypes.object,
+    tlog: PropTypes.object.isRequired,
+    entries: PropTypes.array.isRequired,
+    pagination: PropTypes.object.isRequired
+  },
+  componentWillMount: function() {
+    return CurrentUserStore.initialize(this.props.currentUser);
+  },
+  render: function() {
+    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
+      "className": "layout"
+    }, React.createElement("div", {
+      "className": "layout__header"
+    }, React.createElement(HeroTlog, {
+      "tlog": this.props.tlog
+    })), React.createElement("div", {
+      "className": "layout__body"
+    }, React.createElement(Daylog, {
+      "entries": this.props.entries
+    }), React.createElement(DaylogPagination, {
+      "slug": this.props.tlog.author.slug,
+      "prevDay": this.props.pagination.prevDay,
+      "nextDay": this.props.pagination.nextDay
+    }))), React.createElement(AuthManager, null));
+  }
+});
+
+module.exports = TlogDaylogPage;
+
+
+
+},{"../components/auth/authManager":20,"../components/buttons/auth/authManager":36,"../components/daylog/daylog":48,"../components/hero/tlog":107,"../components/pagination/daylog":123,"../components/toolbars/feedManager":133,"../components/toolbars/userManager":138,"../stores/currentUser":161,"./mixins/page":157}],159:[function(require,module,exports){
+var AuthButtonManager, AuthManager, CurrentUserStore, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, Tlog, TlogPagination, TlogRegularPage, UserToolbarManager;
+
+CurrentUserStore = require('../stores/currentUser');
+
+PageMixin = require('./mixins/page');
+
+FeedToolbarManager = require('../components/toolbars/feedManager');
+
+UserToolbarManager = require('../components/toolbars/userManager');
+
+HeroTlog = require('../components/hero/tlog');
+
+Tlog = require('../components/tlog/tlog');
+
+TlogPagination = require('../components/pagination/tlog');
+
+AuthManager = require('../components/auth/authManager');
+
+AuthButtonManager = require('../components/buttons/auth/authManager');
+
+PropTypes = React.PropTypes;
+
+TlogRegularPage = React.createClass({
+  displayName: 'TlogRegularPage',
+  mixins: [PageMixin],
+  propTypes: {
+    currentUser: PropTypes.object,
+    tlog: PropTypes.object.isRequired,
+    entries: PropTypes.array.isRequired,
+    pagination: PropTypes.object.isRequired
+  },
+  componentWillMount: function() {
+    return CurrentUserStore.initialize(this.props.currentUser);
+  },
+  render: function() {
+    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
+      "className": "layout"
+    }, React.createElement("div", {
+      "className": "layout__header"
+    }, React.createElement(HeroTlog, {
+      "tlog": this.props.tlog
+    })), React.createElement("div", {
+      "className": "layout__body"
+    }, React.createElement(Tlog, {
+      "entries": this.props.entries
+    }), React.createElement(TlogPagination, {
+      "slug": this.props.tlog.author.slug,
+      "currentPage": this.props.pagination.currentPage,
+      "totalPagesCount": this.props.pagination.totalPagesCount
+    }))), React.createElement(AuthManager, null));
+  }
+});
+
+module.exports = TlogRegularPage;
+
+
+
+},{"../components/auth/authManager":20,"../components/buttons/auth/authManager":36,"../components/hero/tlog":107,"../components/pagination/tlog":127,"../components/tlog/tlog":129,"../components/toolbars/feedManager":133,"../components/toolbars/userManager":138,"../stores/currentUser":161,"./mixins/page":157}],160:[function(require,module,exports){
+var BaseStore, CHANGE_EVENT,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+CHANGE_EVENT = 'change';
+
+BaseStore = (function(_super) {
+  __extends(BaseStore, _super);
+
+  function BaseStore() {
+    return BaseStore.__super__.constructor.apply(this, arguments);
+  }
+
+  BaseStore.prototype.emitChange = function() {
+    return this.emit(CHANGE_EVENT);
+  };
+
+  BaseStore.prototype.addChangeListener = function(cb) {
+    return this.on(CHANGE_EVENT, cb);
+  };
+
+  BaseStore.prototype.removeChangeListener = function(cb) {
+    return this.off(CHANGE_EVENT, cb);
+  };
+
+  return BaseStore;
+
+})(EventEmitter);
+
+module.exports = BaseStore;
+
+
+
+},{}],161:[function(require,module,exports){
+var BaseStore, CurrentUserStore, assign, extendByMockData, _currentUser;
+
+assign = require('react/lib/Object.assign');
+
+BaseStore = require('./_base');
+
+_currentUser = null;
+
+extendByMockData = function(user) {
+  if ((typeof localStorage !== "undefined" && localStorage !== null ? localStorage.getItem('userLogged') : void 0) === 'true') {
+    if (localStorage.getItem('userToken')) {
+      user.api_key.access_token = localStorage.getItem('userToken');
+    }
+    if (localStorage.getItem('userId')) {
+      user.id = parseInt(localStorage.getItem('userId'));
+    }
+  }
+  return user;
+};
+
+CurrentUserStore = assign(new BaseStore(), {
+  initialize: function(user) {
+    if (user != null) {
+      user = extendByMockData(user);
+      _currentUser = user;
+      return typeof console.debug === "function" ? console.debug('Залогинен пользователь:', user.slug) : void 0;
+    } else {
+      _currentUser = null;
+      return typeof console.debug === "function" ? console.debug('Без пользователя') : void 0;
+    }
+  },
+  isLogged: function() {
+    return _currentUser != null;
+  },
+  getUser: function() {
+    return _currentUser;
+  },
+  getAccessToken: function() {
+    return _currentUser != null ? _currentUser.api_key.access_token : void 0;
+  }
+});
+
+module.exports = CurrentUserStore;
+
+
+
+},{"./_base":160,"react/lib/Object.assign":200}],162:[function(require,module,exports){
+var AppDispatcher, BaseStore, Constants, assign, initializeFeed, pushEntries, _entries, _everythingLoaded;
+
+assign = require('react/lib/Object.assign');
+
+BaseStore = require('./_base');
+
+Constants = require('../constants/constants');
+
+AppDispatcher = require('../dispatcher/dispatcher');
+
+_entries = [];
+
+_everythingLoaded = false;
+
+initializeFeed = function(entries) {
+  _entries = entries;
+  return _everythingLoaded = false;
+};
+
+pushEntries = function(entries) {
+  return _entries = _entries.concat(entries);
+};
+
+window.FeedStore = assign(new BaseStore(), {
+  getEntries: function() {
+    return _entries;
+  },
+  isEverythingLoaded: function() {
+    return _everythingLoaded;
+  }
+});
+
+module.exports = FeedStore;
+
+FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
+  var action;
+  action = payload.action;
+  switch (action.type) {
+    case Constants.feed.INITIALIZE_FEED:
+      initializeFeed(action.entries);
+      return FeedStore.emitChange();
+    case Constants.feed.LOAD_ENTRIES:
+      if (action.entries.length) {
+        pushEntries(action.entries);
+      } else {
+        _everythingLoaded = true;
+      }
+      return FeedStore.emitChange();
+  }
+});
+
+
+
+},{"../constants/constants":140,"../dispatcher/dispatcher":146,"./_base":160,"react/lib/Object.assign":200}],163:[function(require,module,exports){
+var AppDispatcher, BaseStore, Constants, RelationshipsStore, assign, updateStatus, _relationships;
+
+assign = require('react/lib/Object.assign');
+
+BaseStore = require('./_base');
+
+Constants = require('../constants/constants');
+
+AppDispatcher = require('../dispatcher/dispatcher');
+
+_relationships = {};
+
+updateStatus = function(_arg) {
+  var status, userId;
+  userId = _arg.userId, status = _arg.status;
+  return _relationships[userId] = status;
+};
+
+RelationshipsStore = assign(new BaseStore(), {
+  getStatus: function(userId) {
+    return _relationships[userId];
+  }
+});
+
+module.exports = RelationshipsStore;
+
+RelationshipsStore.dispatchToken = AppDispatcher.register(function(payload) {
+  var action, relationship, userId;
+  action = payload.action;
+  switch (action.type) {
+    case Constants.relationship.UPDATE_RELATIONSHIP:
+      userId = action.userId, relationship = action.relationship;
+      updateStatus({
+        userId: userId,
+        status: relationship.state
+      });
+      return RelationshipsStore.emitChange();
+  }
+});
+
+
+
+},{"../constants/constants":140,"../dispatcher/dispatcher":146,"./_base":160,"react/lib/Object.assign":200}],164:[function(require,module,exports){
+window.React = require('react');
+
+window.reqwest = require('reqwest');
+
+window.EventEmitter = require('eventEmitter');
+
+window.moment = require('../../../bower_components/momentjs/moment');
+
+
+
+},{"../../../bower_components/momentjs/moment":4,"eventEmitter":"eventEmitter","react":"react","reqwest":"reqwest"}],165:[function(require,module,exports){
+var BrowserHelpers;
+
+BrowserHelpers = {
+  whichTransitionEvent: function() {
+    var el, t, transitions;
+    el = document.createElement('fakeelement');
+    transitions = {
+      'transition': 'transitionend',
+      'OTransition': 'oTransitionEnd',
+      'MozTransition': 'transitionend',
+      'WebkitTransition': 'webkitTransitionEnd'
+    };
+    for (t in transitions) {
+      if (el.style[t] != null) {
+        return transitions[t];
+      }
+    }
+  },
+  isSupportsOrientationChangeEvent: function() {
+    return typeof window.orientation === 'number';
+  },
+  getCurrentOrientation: function() {
+    var orientation;
+    if (this.isSupportsOrientationChangeEvent()) {
+      switch (window.orientation) {
+        case 0:
+        case 180:
+          return 'Portrait';
+        case -90:
+        case 90:
+          return 'Landscape';
+      }
+    } else {
+      orientation = screen.orientation || screen.mozOrientation || screen.msOrientation;
+      switch (false) {
+        case !/portrait/.test(orientation):
+          return 'Portrait';
+        case !/landscape/.test(orientation):
+          return 'Landscape';
+      }
+    }
+  }
+};
+
+module.exports = BrowserHelpers;
+
+
+
+},{}],166:[function(require,module,exports){
+var NumberHelpers;
+
+NumberHelpers = {
+  formatNumber: function(rawNumber, round, delimiter) {
+    var number;
+    if (delimiter == null) {
+      delimiter = ' ';
+    }
+    number = parseInt(rawNumber);
+    if (round != null) {
+      number = Math.ceil(number / round) * round;
+    }
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
+  },
+  reduceNumber: function(rawNumber, delimiter) {
+    var number;
+    if (delimiter == null) {
+      delimiter = ' ';
+    }
+    number = parseInt(rawNumber);
+    if (number > 1000) {
+      number = Math.floor(number / 1000) + 'k+';
+    }
+    return number;
+  }
+};
+
+module.exports = NumberHelpers;
+
+
+
+},{}],167:[function(require,module,exports){
+var ConnectStoreMixin;
+
+ConnectStoreMixin = function(listenableStore) {
+  return {
+    getInitialState: function() {
+      return this.getStateFromStore();
+    },
+    componentWillMount: function() {
+      return listenableStore.addChangeListener(this.onStoreChange);
+    },
+    componentWillUnmount: function() {
+      return listenableStore.removeChangeListener(this.onStoreChange);
+    },
+    onStoreChange: function() {
+      return this.setState(this.getStateFromStore());
+    }
+  };
+};
+
+module.exports = ConnectStoreMixin;
+
+
+
+},{}],168:[function(require,module,exports){
+var ThumborService;
+
+ThumborService = {
+  thumborUrl: 'http://thumbor0.tasty0.ru',
+  imageUrl: function(_arg) {
+    var path, size, url;
+    url = _arg.url, path = _arg.path, size = _arg.size;
+    switch (TastySettings.env) {
+      case 'static-development':
+      case 'development':
+        return url;
+      default:
+        return this.thumborUrl + ("/unsafe/" + size + "/filters:no_upscale()/") + path;
+    }
+  }
+};
+
+module.exports = ThumborService;
+
+
+
+},{}],169:[function(require,module,exports){
+var ApiRoutes;
+
+ApiRoutes = {
+  omniauth_url: function(provider) {
+    return TastySettings.host + '/auth/' + provider;
+  },
+  iframely_url: function() {
+    return TastySettings.api_host + '/v1/embeding/iframely.json';
+  },
+  pusher_auth_url: function() {
+    return TastySettings.api_host + '/v1/messenger/auth';
+  },
+  calendar_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/calendar';
+  },
+  votes_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/' + entryId + '/votes';
+  },
+  embed_url: function() {
+    return TastySettings.api_host + '/v1/embed';
+  },
+  design_settings_url: function(slug) {
+    return TastySettings.api_host + '/v1/design_settings/' + slug;
+  },
+  design_settings_cover_url: function(slug) {
+    return TastySettings.api_host + '/v1/design_settings/' + slug + '/cover';
+  },
+  signin_url: function() {
+    return TastySettings.api_host + '/v1/sessions';
+  },
+  signup_url: function() {
+    return TastySettings.api_host + '/v1/users';
+  },
+  update_profile_url: function() {
+    return TastySettings.api_host + '/v1/users';
+  },
+  recovery_url: function() {
+    return TastySettings.api_host + '/v1/users/password/recovery';
+  },
+  request_confirm_url: function() {
+    return TastySettings.api_host + '/v1/users/confirmation';
+  },
+  userpic_url: function() {
+    return TastySettings.api_host + '/v1/users/userpic';
+  },
+  users_predict: function() {
+    return TastySettings.api_host + '/v1/users/predict';
+  },
+  create_entry_url: function(type) {
+    return TastySettings.api_host + '/v1/entries/' + type;
+  },
+  update_entry_url: function(entryId, entryType) {
+    return TastySettings.api_host + '/v1/entries/' + entryType + '/' + entryId;
+  },
+  update_images_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/image/' + entryId + '/images';
+  },
+  entry_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/' + entryId;
+  },
+  favorites_url: function() {
+    return TastySettings.api_host + '/v1/favorites';
+  },
+  watching_url: function() {
+    return TastySettings.api_host + '/v1/watching';
+  },
+  report_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/' + entryId + '/report';
+  },
+  relationships_summary_url: function() {
+    return TastySettings.api_host + '/v1/relationships/summary';
+  },
+  relationships_to_url: function(state) {
+    return TastySettings.api_host + '/v1/relationships/to/' + state;
+  },
+  relationships_by_url: function(state) {
+    return TastySettings.api_host + '/v1/relationships/by/' + state;
+  },
+  relationships_by_id_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/' + tlogId;
+  },
+  unfollow_from_yourself_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId;
+  },
+  relationships_by_tlog_approve_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/approve';
+  },
+  relationships_by_tlog_disapprove_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/disapprove';
+  },
+  tlog_followers: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followers';
+  },
+  tlog_followings: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followings';
+  },
+  tlog_tags: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/tags';
+  },
+  tlog_report: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/report';
+  },
+  get_my_relationship_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId;
+  },
+  comments_url: function(entryId) {
+    return TastySettings.api_host + '/v1/comments';
+  },
+  comments_edit_delete_url: function(commentId) {
+    return TastySettings.api_host + '/v1/comments/' + commentId;
+  },
+  comments_report_url: function(commentId) {
+    return TastySettings.api_host + '/v1/comments/' + commentId + '/report';
+  },
+  change_my_relationship_url: function(tlogId, state) {
+    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId + '/' + state;
+  },
+  messenger_ready_url: function() {
+    return TastySettings.api_host + '/v1/messenger/ready';
+  },
+  messenger_new_conversation_url: function(slug) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_slug/' + slug;
+  },
+  messenger_new_message_url: function(conversationId) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
+  },
+  messenger_load_messages_url: function(conversationId) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
+  },
+  messenger_read_messages_url: function(conversationId) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages/read';
+  },
+  notifications_read_url: function(notificationId) {
+    return TastySettings.api_host + '/v1/messenger/notifications/' + notificationId + '/read';
+  },
+  suggestions_vkontakte: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/vkontakte';
+  },
+  suggestions_facebook: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/facebook';
+  },
+  feedLive: function() {
+    return TastySettings.api_host + '/v1/feeds/live';
+  },
+  feedBest: function() {
+    return TastySettings.api_host + '/v1/feeds/best';
+  },
+  feedFriends: function() {
+    return TastySettings.api_host + '/v1/my_feeds/friends';
+  }
+};
+
+module.exports = ApiRoutes;
+
+
+
+},{}],170:[function(require,module,exports){
+var Routes;
+
+Routes = {
+  logout_path: function() {
+    return '/logout';
+  },
+  tlog_favorite_entries_path: function(slug) {
+    return '/~' + slug + '/favorites';
+  },
+  tag_path: function(tag) {
+    return '/tags/' + tag;
+  },
+  friends_feed_path: function() {
+    return '/friends';
+  },
+  live_feed_path: function() {
+    return '/live';
+  },
+  best_feed_path: function() {
+    return '/best';
+  },
+  anonymous_feed_path: function() {
+    return '/anonymous';
+  },
+  people_path: function() {
+    return '/people';
+  },
+  new_entry_url: function(userSlug) {
+    return '/~' + userSlug + '/new';
+  },
+  new_anonymous_entry_url: function(userSlug) {
+    return '/~' + userSlug + '/anonymous/new';
+  },
+  my_tlog_url: function(userSlug) {
+    return '/~' + userSlug;
+  },
+  favorites_url: function(userSlug) {
+    return '/~' + userSlug + '/favorites';
+  },
+  private_entries_url: function(userSlug) {
+    return '/~' + userSlug + '/privates';
+  },
+  entry_edit_url: function(userSlug, entryId) {
+    return '/~' + userSlug + '/edit' + '/' + entryId;
+  },
+  userProfile: function(userSlug) {
+    return '/~' + userSlug + '/profile';
+  },
+  userSettings: function(userSlug) {
+    return '/~' + userSlug + '/settings';
+  },
+  userDesignSettings: function(userSlug) {
+    return '/~' + userSlug + '/design_settings';
+  },
+  tlogPagination: function(userSlug, page) {
+    return '/~' + userSlug + '/page/' + page;
+  },
+  daylogPagination: function(userSlug, page) {
+    return '/~' + userSlug + '/' + page;
+  }
+};
+
+module.exports = Routes;
+
+
+
+},{}],171:[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+
+process.nextTick = (function () {
+    var canSetImmediate = typeof window !== 'undefined'
+    && window.setImmediate;
+    var canMutationObserver = typeof window !== 'undefined'
+    && window.MutationObserver;
+    var canPost = typeof window !== 'undefined'
+    && window.postMessage && window.addEventListener
+    ;
+
+    if (canSetImmediate) {
+        return function (f) { return window.setImmediate(f) };
+    }
+
+    var queue = [];
+
+    if (canMutationObserver) {
+        var hiddenDiv = document.createElement("div");
+        var observer = new MutationObserver(function () {
+            var queueList = queue.slice();
+            queue.length = 0;
+            queueList.forEach(function (fn) {
+                fn();
+            });
+        });
+
+        observer.observe(hiddenDiv, { attributes: true });
+
+        return function nextTick(fn) {
+            if (!queue.length) {
+                hiddenDiv.setAttribute('yes', 'no');
+            }
+            queue.push(fn);
+        };
+    }
+
+    if (canPost) {
+        window.addEventListener('message', function (ev) {
+            var source = ev.source;
+            if ((source === window || source === null) && ev.data === 'process-tick') {
+                ev.stopPropagation();
+                if (queue.length > 0) {
+                    var fn = queue.shift();
+                    fn();
+                }
+            }
+        }, true);
+
+        return function nextTick(fn) {
+            queue.push(fn);
+            window.postMessage('process-tick', '*');
+        };
+    }
+
+    return function nextTick(fn) {
+        setTimeout(fn, 0);
+    };
+})();
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+
+},{}],172:[function(require,module,exports){
+/**
+ * Copyright (c) 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+module.exports.Dispatcher = require('./lib/Dispatcher')
+
+},{"./lib/Dispatcher":173}],173:[function(require,module,exports){
+/*
+ * Copyright (c) 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule Dispatcher
+ * @typechecks
+ */
+
+"use strict";
+
+var invariant = require('./invariant');
+
+var _lastID = 1;
+var _prefix = 'ID_';
+
+/**
+ * Dispatcher is used to broadcast payloads to registered callbacks. This is
+ * different from generic pub-sub systems in two ways:
+ *
+ *   1) Callbacks are not subscribed to particular events. Every payload is
+ *      dispatched to every registered callback.
+ *   2) Callbacks can be deferred in whole or part until other callbacks have
+ *      been executed.
+ *
+ * For example, consider this hypothetical flight destination form, which
+ * selects a default city when a country is selected:
+ *
+ *   var flightDispatcher = new Dispatcher();
+ *
+ *   // Keeps track of which country is selected
+ *   var CountryStore = {country: null};
+ *
+ *   // Keeps track of which city is selected
+ *   var CityStore = {city: null};
+ *
+ *   // Keeps track of the base flight price of the selected city
+ *   var FlightPriceStore = {price: null}
+ *
+ * When a user changes the selected city, we dispatch the payload:
+ *
+ *   flightDispatcher.dispatch({
+ *     actionType: 'city-update',
+ *     selectedCity: 'paris'
+ *   });
+ *
+ * This payload is digested by `CityStore`:
+ *
+ *   flightDispatcher.register(function(payload) {
+ *     if (payload.actionType === 'city-update') {
+ *       CityStore.city = payload.selectedCity;
+ *     }
+ *   });
+ *
+ * When the user selects a country, we dispatch the payload:
+ *
+ *   flightDispatcher.dispatch({
+ *     actionType: 'country-update',
+ *     selectedCountry: 'australia'
+ *   });
+ *
+ * This payload is digested by both stores:
+ *
+ *    CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
+ *     if (payload.actionType === 'country-update') {
+ *       CountryStore.country = payload.selectedCountry;
+ *     }
+ *   });
+ *
+ * When the callback to update `CountryStore` is registered, we save a reference
+ * to the returned token. Using this token with `waitFor()`, we can guarantee
+ * that `CountryStore` is updated before the callback that updates `CityStore`
+ * needs to query its data.
+ *
+ *   CityStore.dispatchToken = flightDispatcher.register(function(payload) {
+ *     if (payload.actionType === 'country-update') {
+ *       // `CountryStore.country` may not be updated.
+ *       flightDispatcher.waitFor([CountryStore.dispatchToken]);
+ *       // `CountryStore.country` is now guaranteed to be updated.
+ *
+ *       // Select the default city for the new country
+ *       CityStore.city = getDefaultCityForCountry(CountryStore.country);
+ *     }
+ *   });
+ *
+ * The usage of `waitFor()` can be chained, for example:
+ *
+ *   FlightPriceStore.dispatchToken =
+ *     flightDispatcher.register(function(payload) {
+ *       switch (payload.actionType) {
+ *         case 'country-update':
+ *           flightDispatcher.waitFor([CityStore.dispatchToken]);
+ *           FlightPriceStore.price =
+ *             getFlightPriceStore(CountryStore.country, CityStore.city);
+ *           break;
+ *
+ *         case 'city-update':
+ *           FlightPriceStore.price =
+ *             FlightPriceStore(CountryStore.country, CityStore.city);
+ *           break;
+ *     }
+ *   });
+ *
+ * The `country-update` payload will be guaranteed to invoke the stores'
+ * registered callbacks in order: `CountryStore`, `CityStore`, then
+ * `FlightPriceStore`.
+ */
+
+  function Dispatcher() {
+    this.$Dispatcher_callbacks = {};
+    this.$Dispatcher_isPending = {};
+    this.$Dispatcher_isHandled = {};
+    this.$Dispatcher_isDispatching = false;
+    this.$Dispatcher_pendingPayload = null;
+  }
+
+  /**
+   * Registers a callback to be invoked with every dispatched payload. Returns
+   * a token that can be used with `waitFor()`.
+   *
+   * @param {function} callback
+   * @return {string}
+   */
+  Dispatcher.prototype.register=function(callback) {
+    var id = _prefix + _lastID++;
+    this.$Dispatcher_callbacks[id] = callback;
+    return id;
+  };
+
+  /**
+   * Removes a callback based on its token.
+   *
+   * @param {string} id
+   */
+  Dispatcher.prototype.unregister=function(id) {
+    invariant(
+      this.$Dispatcher_callbacks[id],
+      'Dispatcher.unregister(...): `%s` does not map to a registered callback.',
+      id
+    );
+    delete this.$Dispatcher_callbacks[id];
+  };
+
+  /**
+   * Waits for the callbacks specified to be invoked before continuing execution
+   * of the current callback. This method should only be used by a callback in
+   * response to a dispatched payload.
+   *
+   * @param {array<string>} ids
+   */
+  Dispatcher.prototype.waitFor=function(ids) {
+    invariant(
+      this.$Dispatcher_isDispatching,
+      'Dispatcher.waitFor(...): Must be invoked while dispatching.'
+    );
+    for (var ii = 0; ii < ids.length; ii++) {
+      var id = ids[ii];
+      if (this.$Dispatcher_isPending[id]) {
+        invariant(
+          this.$Dispatcher_isHandled[id],
+          'Dispatcher.waitFor(...): Circular dependency detected while ' +
+          'waiting for `%s`.',
+          id
+        );
+        continue;
+      }
+      invariant(
+        this.$Dispatcher_callbacks[id],
+        'Dispatcher.waitFor(...): `%s` does not map to a registered callback.',
+        id
+      );
+      this.$Dispatcher_invokeCallback(id);
+    }
+  };
+
+  /**
+   * Dispatches a payload to all registered callbacks.
+   *
+   * @param {object} payload
+   */
+  Dispatcher.prototype.dispatch=function(payload) {
+    invariant(
+      !this.$Dispatcher_isDispatching,
+      'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.'
+    );
+    this.$Dispatcher_startDispatching(payload);
+    try {
+      for (var id in this.$Dispatcher_callbacks) {
+        if (this.$Dispatcher_isPending[id]) {
+          continue;
+        }
+        this.$Dispatcher_invokeCallback(id);
+      }
+    } finally {
+      this.$Dispatcher_stopDispatching();
+    }
+  };
+
+  /**
+   * Is this Dispatcher currently dispatching.
+   *
+   * @return {boolean}
+   */
+  Dispatcher.prototype.isDispatching=function() {
+    return this.$Dispatcher_isDispatching;
+  };
+
+  /**
+   * Call the callback stored with the given id. Also do some internal
+   * bookkeeping.
+   *
+   * @param {string} id
+   * @internal
+   */
+  Dispatcher.prototype.$Dispatcher_invokeCallback=function(id) {
+    this.$Dispatcher_isPending[id] = true;
+    this.$Dispatcher_callbacks[id](this.$Dispatcher_pendingPayload);
+    this.$Dispatcher_isHandled[id] = true;
+  };
+
+  /**
+   * Set up bookkeeping needed when dispatching.
+   *
+   * @param {object} payload
+   * @internal
+   */
+  Dispatcher.prototype.$Dispatcher_startDispatching=function(payload) {
+    for (var id in this.$Dispatcher_callbacks) {
+      this.$Dispatcher_isPending[id] = false;
+      this.$Dispatcher_isHandled[id] = false;
+    }
+    this.$Dispatcher_pendingPayload = payload;
+    this.$Dispatcher_isDispatching = true;
+  };
+
+  /**
+   * Clear bookkeeping used for dispatching.
+   *
+   * @internal
+   */
+  Dispatcher.prototype.$Dispatcher_stopDispatching=function() {
+    this.$Dispatcher_pendingPayload = null;
+    this.$Dispatcher_isDispatching = false;
+  };
+
+
+module.exports = Dispatcher;
+
+},{"./invariant":174}],174:[function(require,module,exports){
+/**
+ * Copyright (c) 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule invariant
+ */
+
+"use strict";
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (false) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  }
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(
+        'Invariant Violation: ' +
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+};
+
+module.exports = invariant;
+
 },{}],175:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -21153,7 +21153,7 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./CSSProperty":177,"./ExecutionEnvironment":195,"./camelizeStyleName":274,"./dangerousStyleValue":280,"./hyphenateStyleName":299,"./memoizeStringOnly":310,"./warning":320,"_process":170}],179:[function(require,module,exports){
+},{"./CSSProperty":177,"./ExecutionEnvironment":195,"./camelizeStyleName":274,"./dangerousStyleValue":280,"./hyphenateStyleName":299,"./memoizeStringOnly":310,"./warning":320,"_process":171}],179:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -21253,7 +21253,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 module.exports = CallbackQueue;
 
 }).call(this,require('_process'))
-},{"./Object.assign":200,"./PooledClass":201,"./invariant":301,"_process":170}],180:[function(require,module,exports){
+},{"./Object.assign":200,"./PooledClass":201,"./invariant":301,"_process":171}],180:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -22094,7 +22094,7 @@ var DOMChildrenOperations = {
 module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
-},{"./Danger":186,"./ReactMultiChildUpdateTypes":239,"./getTextContentAccessor":296,"./invariant":301,"_process":170}],184:[function(require,module,exports){
+},{"./Danger":186,"./ReactMultiChildUpdateTypes":239,"./getTextContentAccessor":296,"./invariant":301,"_process":171}],184:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -22393,7 +22393,7 @@ var DOMProperty = {
 module.exports = DOMProperty;
 
 }).call(this,require('_process'))
-},{"./invariant":301,"_process":170}],185:[function(require,module,exports){
+},{"./invariant":301,"_process":171}],185:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -22590,7 +22590,7 @@ var DOMPropertyOperations = {
 module.exports = DOMPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":184,"./escapeTextForBrowser":284,"./memoizeStringOnly":310,"./warning":320,"_process":170}],186:[function(require,module,exports){
+},{"./DOMProperty":184,"./escapeTextForBrowser":284,"./memoizeStringOnly":310,"./warning":320,"_process":171}],186:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -22776,7 +22776,7 @@ var Danger = {
 module.exports = Danger;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":195,"./createNodesFromMarkup":278,"./emptyFunction":282,"./getMarkupWrap":293,"./invariant":301,"_process":170}],187:[function(require,module,exports){
+},{"./ExecutionEnvironment":195,"./createNodesFromMarkup":278,"./emptyFunction":282,"./getMarkupWrap":293,"./invariant":301,"_process":171}],187:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -23118,7 +23118,7 @@ var EventListener = {
 module.exports = EventListener;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":282,"_process":170}],191:[function(require,module,exports){
+},{"./emptyFunction":282,"_process":171}],191:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -23394,7 +23394,7 @@ var EventPluginHub = {
 module.exports = EventPluginHub;
 
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":192,"./EventPluginUtils":193,"./accumulateInto":271,"./forEachAccumulated":287,"./invariant":301,"_process":170}],192:[function(require,module,exports){
+},{"./EventPluginRegistry":192,"./EventPluginUtils":193,"./accumulateInto":271,"./forEachAccumulated":287,"./invariant":301,"_process":171}],192:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -23674,7 +23674,7 @@ var EventPluginRegistry = {
 module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
-},{"./invariant":301,"_process":170}],193:[function(require,module,exports){
+},{"./invariant":301,"_process":171}],193:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -23895,7 +23895,7 @@ var EventPluginUtils = {
 module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
-},{"./EventConstants":189,"./invariant":301,"_process":170}],194:[function(require,module,exports){
+},{"./EventConstants":189,"./invariant":301,"_process":171}],194:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -24037,7 +24037,7 @@ var EventPropagators = {
 module.exports = EventPropagators;
 
 }).call(this,require('_process'))
-},{"./EventConstants":189,"./EventPluginHub":191,"./accumulateInto":271,"./forEachAccumulated":287,"_process":170}],195:[function(require,module,exports){
+},{"./EventConstants":189,"./EventPluginHub":191,"./accumulateInto":271,"./forEachAccumulated":287,"_process":171}],195:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -24430,7 +24430,7 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
-},{"./ReactPropTypes":246,"./invariant":301,"_process":170}],198:[function(require,module,exports){
+},{"./ReactPropTypes":246,"./invariant":301,"_process":171}],198:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -24480,7 +24480,7 @@ var LocalEventTrapMixin = {
 module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserEventEmitter":204,"./accumulateInto":271,"./forEachAccumulated":287,"./invariant":301,"_process":170}],199:[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":204,"./accumulateInto":271,"./forEachAccumulated":287,"./invariant":301,"_process":171}],199:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -24701,7 +24701,7 @@ var PooledClass = {
 module.exports = PooledClass;
 
 }).call(this,require('_process'))
-},{"./invariant":301,"_process":170}],202:[function(require,module,exports){
+},{"./invariant":301,"_process":171}],202:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -24889,7 +24889,7 @@ React.version = '0.12.2';
 module.exports = React;
 
 }).call(this,require('_process'))
-},{"./DOMPropertyOperations":185,"./EventPluginUtils":193,"./ExecutionEnvironment":195,"./Object.assign":200,"./ReactChildren":205,"./ReactComponent":206,"./ReactCompositeComponent":208,"./ReactContext":209,"./ReactCurrentOwner":210,"./ReactDOM":211,"./ReactDOMComponent":213,"./ReactDefaultInjection":223,"./ReactElement":226,"./ReactElementValidator":227,"./ReactInstanceHandles":234,"./ReactLegacyElement":235,"./ReactMount":237,"./ReactMultiChild":238,"./ReactPerf":242,"./ReactPropTypes":246,"./ReactServerRendering":250,"./ReactTextComponent":252,"./deprecated":281,"./onlyChild":312,"_process":170}],203:[function(require,module,exports){
+},{"./DOMPropertyOperations":185,"./EventPluginUtils":193,"./ExecutionEnvironment":195,"./Object.assign":200,"./ReactChildren":205,"./ReactComponent":206,"./ReactCompositeComponent":208,"./ReactContext":209,"./ReactCurrentOwner":210,"./ReactDOM":211,"./ReactDOMComponent":213,"./ReactDefaultInjection":223,"./ReactElement":226,"./ReactElementValidator":227,"./ReactInstanceHandles":234,"./ReactLegacyElement":235,"./ReactMount":237,"./ReactMultiChild":238,"./ReactPerf":242,"./ReactPropTypes":246,"./ReactServerRendering":250,"./ReactTextComponent":252,"./deprecated":281,"./onlyChild":312,"_process":171}],203:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -24932,7 +24932,7 @@ var ReactBrowserComponentMixin = {
 module.exports = ReactBrowserComponentMixin;
 
 }).call(this,require('_process'))
-},{"./ReactEmptyComponent":228,"./ReactMount":237,"./invariant":301,"_process":170}],204:[function(require,module,exports){
+},{"./ReactEmptyComponent":228,"./ReactMount":237,"./invariant":301,"_process":171}],204:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25437,7 +25437,7 @@ var ReactChildren = {
 module.exports = ReactChildren;
 
 }).call(this,require('_process'))
-},{"./PooledClass":201,"./traverseAllChildren":319,"./warning":320,"_process":170}],206:[function(require,module,exports){
+},{"./PooledClass":201,"./traverseAllChildren":319,"./warning":320,"_process":171}],206:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -25880,7 +25880,7 @@ var ReactComponent = {
 module.exports = ReactComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":200,"./ReactElement":226,"./ReactOwner":241,"./ReactUpdates":253,"./invariant":301,"./keyMirror":307,"_process":170}],207:[function(require,module,exports){
+},{"./Object.assign":200,"./ReactElement":226,"./ReactOwner":241,"./ReactUpdates":253,"./invariant":301,"./keyMirror":307,"_process":171}],207:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -26002,7 +26002,7 @@ var ReactComponentBrowserEnvironment = {
 module.exports = ReactComponentBrowserEnvironment;
 
 }).call(this,require('_process'))
-},{"./ReactDOMIDOperations":215,"./ReactMarkupChecksum":236,"./ReactMount":237,"./ReactPerf":242,"./ReactReconcileTransaction":248,"./getReactRootElementInContainer":295,"./invariant":301,"./setInnerHTML":315,"_process":170}],208:[function(require,module,exports){
+},{"./ReactDOMIDOperations":215,"./ReactMarkupChecksum":236,"./ReactMount":237,"./ReactPerf":242,"./ReactReconcileTransaction":248,"./getReactRootElementInContainer":295,"./invariant":301,"./setInnerHTML":315,"_process":171}],208:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -27442,7 +27442,7 @@ var ReactCompositeComponent = {
 module.exports = ReactCompositeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":200,"./ReactComponent":206,"./ReactContext":209,"./ReactCurrentOwner":210,"./ReactElement":226,"./ReactElementValidator":227,"./ReactEmptyComponent":228,"./ReactErrorUtils":229,"./ReactLegacyElement":235,"./ReactOwner":241,"./ReactPerf":242,"./ReactPropTransferer":243,"./ReactPropTypeLocationNames":244,"./ReactPropTypeLocations":245,"./ReactUpdates":253,"./instantiateReactComponent":300,"./invariant":301,"./keyMirror":307,"./keyOf":308,"./mapObject":309,"./monitorCodeUse":311,"./shouldUpdateReactComponent":317,"./warning":320,"_process":170}],209:[function(require,module,exports){
+},{"./Object.assign":200,"./ReactComponent":206,"./ReactContext":209,"./ReactCurrentOwner":210,"./ReactElement":226,"./ReactElementValidator":227,"./ReactEmptyComponent":228,"./ReactErrorUtils":229,"./ReactLegacyElement":235,"./ReactOwner":241,"./ReactPerf":242,"./ReactPropTransferer":243,"./ReactPropTypeLocationNames":244,"./ReactPropTypeLocations":245,"./ReactUpdates":253,"./instantiateReactComponent":300,"./invariant":301,"./keyMirror":307,"./keyOf":308,"./mapObject":309,"./monitorCodeUse":311,"./shouldUpdateReactComponent":317,"./warning":320,"_process":171}],209:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27721,7 +27721,7 @@ var ReactDOM = mapObject({
 module.exports = ReactDOM;
 
 }).call(this,require('_process'))
-},{"./ReactElement":226,"./ReactElementValidator":227,"./ReactLegacyElement":235,"./mapObject":309,"_process":170}],212:[function(require,module,exports){
+},{"./ReactElement":226,"./ReactElementValidator":227,"./ReactLegacyElement":235,"./mapObject":309,"_process":171}],212:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28273,7 +28273,7 @@ assign(
 module.exports = ReactDOMComponent;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":178,"./DOMProperty":184,"./DOMPropertyOperations":185,"./Object.assign":200,"./ReactBrowserComponentMixin":203,"./ReactBrowserEventEmitter":204,"./ReactComponent":206,"./ReactMount":237,"./ReactMultiChild":238,"./ReactPerf":242,"./escapeTextForBrowser":284,"./invariant":301,"./isEventSupported":302,"./keyOf":308,"./monitorCodeUse":311,"_process":170}],214:[function(require,module,exports){
+},{"./CSSPropertyOperations":178,"./DOMProperty":184,"./DOMPropertyOperations":185,"./Object.assign":200,"./ReactBrowserComponentMixin":203,"./ReactBrowserEventEmitter":204,"./ReactComponent":206,"./ReactMount":237,"./ReactMultiChild":238,"./ReactPerf":242,"./escapeTextForBrowser":284,"./invariant":301,"./isEventSupported":302,"./keyOf":308,"./monitorCodeUse":311,"_process":171}],214:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28509,7 +28509,7 @@ var ReactDOMIDOperations = {
 module.exports = ReactDOMIDOperations;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":178,"./DOMChildrenOperations":183,"./DOMPropertyOperations":185,"./ReactMount":237,"./ReactPerf":242,"./invariant":301,"./setInnerHTML":315,"_process":170}],216:[function(require,module,exports){
+},{"./CSSPropertyOperations":178,"./DOMChildrenOperations":183,"./DOMPropertyOperations":185,"./ReactMount":237,"./ReactPerf":242,"./invariant":301,"./setInnerHTML":315,"_process":171}],216:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28735,7 +28735,7 @@ var ReactDOMInput = ReactCompositeComponent.createClass({
 module.exports = ReactDOMInput;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":175,"./DOMPropertyOperations":185,"./LinkedValueUtils":197,"./Object.assign":200,"./ReactBrowserComponentMixin":203,"./ReactCompositeComponent":208,"./ReactDOM":211,"./ReactElement":226,"./ReactMount":237,"./ReactUpdates":253,"./invariant":301,"_process":170}],218:[function(require,module,exports){
+},{"./AutoFocusMixin":175,"./DOMPropertyOperations":185,"./LinkedValueUtils":197,"./Object.assign":200,"./ReactBrowserComponentMixin":203,"./ReactCompositeComponent":208,"./ReactDOM":211,"./ReactElement":226,"./ReactMount":237,"./ReactUpdates":253,"./invariant":301,"_process":171}],218:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -28788,7 +28788,7 @@ var ReactDOMOption = ReactCompositeComponent.createClass({
 module.exports = ReactDOMOption;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserComponentMixin":203,"./ReactCompositeComponent":208,"./ReactDOM":211,"./ReactElement":226,"./warning":320,"_process":170}],219:[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":203,"./ReactCompositeComponent":208,"./ReactDOM":211,"./ReactElement":226,"./warning":320,"_process":171}],219:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29322,7 +29322,7 @@ var ReactDOMTextarea = ReactCompositeComponent.createClass({
 module.exports = ReactDOMTextarea;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":175,"./DOMPropertyOperations":185,"./LinkedValueUtils":197,"./Object.assign":200,"./ReactBrowserComponentMixin":203,"./ReactCompositeComponent":208,"./ReactDOM":211,"./ReactElement":226,"./ReactUpdates":253,"./invariant":301,"./warning":320,"_process":170}],222:[function(require,module,exports){
+},{"./AutoFocusMixin":175,"./DOMPropertyOperations":185,"./LinkedValueUtils":197,"./Object.assign":200,"./ReactBrowserComponentMixin":203,"./ReactCompositeComponent":208,"./ReactDOM":211,"./ReactElement":226,"./ReactUpdates":253,"./invariant":301,"./warning":320,"_process":171}],222:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29524,7 +29524,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./BeforeInputEventPlugin":176,"./ChangeEventPlugin":180,"./ClientReactRootIndex":181,"./CompositionEventPlugin":182,"./DefaultEventPluginOrder":187,"./EnterLeaveEventPlugin":188,"./ExecutionEnvironment":195,"./HTMLDOMPropertyConfig":196,"./MobileSafariClickEventPlugin":199,"./ReactBrowserComponentMixin":203,"./ReactComponentBrowserEnvironment":207,"./ReactDOMButton":212,"./ReactDOMComponent":213,"./ReactDOMForm":214,"./ReactDOMImg":216,"./ReactDOMInput":217,"./ReactDOMOption":218,"./ReactDOMSelect":219,"./ReactDOMTextarea":221,"./ReactDefaultBatchingStrategy":222,"./ReactDefaultPerf":224,"./ReactEventListener":231,"./ReactInjection":232,"./ReactInstanceHandles":234,"./ReactMount":237,"./SVGDOMPropertyConfig":254,"./SelectEventPlugin":255,"./ServerReactRootIndex":256,"./SimpleEventPlugin":257,"./createFullPageComponent":277,"_process":170}],224:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":176,"./ChangeEventPlugin":180,"./ClientReactRootIndex":181,"./CompositionEventPlugin":182,"./DefaultEventPluginOrder":187,"./EnterLeaveEventPlugin":188,"./ExecutionEnvironment":195,"./HTMLDOMPropertyConfig":196,"./MobileSafariClickEventPlugin":199,"./ReactBrowserComponentMixin":203,"./ReactComponentBrowserEnvironment":207,"./ReactDOMButton":212,"./ReactDOMComponent":213,"./ReactDOMForm":214,"./ReactDOMImg":216,"./ReactDOMInput":217,"./ReactDOMOption":218,"./ReactDOMSelect":219,"./ReactDOMTextarea":221,"./ReactDefaultBatchingStrategy":222,"./ReactDefaultPerf":224,"./ReactEventListener":231,"./ReactInjection":232,"./ReactInstanceHandles":234,"./ReactMount":237,"./SVGDOMPropertyConfig":254,"./SelectEventPlugin":255,"./ServerReactRootIndex":256,"./SimpleEventPlugin":257,"./createFullPageComponent":277,"_process":171}],224:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30236,7 +30236,7 @@ ReactElement.isValidElement = function(object) {
 module.exports = ReactElement;
 
 }).call(this,require('_process'))
-},{"./ReactContext":209,"./ReactCurrentOwner":210,"./warning":320,"_process":170}],227:[function(require,module,exports){
+},{"./ReactContext":209,"./ReactCurrentOwner":210,"./warning":320,"_process":171}],227:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -30518,7 +30518,7 @@ var ReactElementValidator = {
 module.exports = ReactElementValidator;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":210,"./ReactElement":226,"./ReactPropTypeLocations":245,"./monitorCodeUse":311,"./warning":320,"_process":170}],228:[function(require,module,exports){
+},{"./ReactCurrentOwner":210,"./ReactElement":226,"./ReactPropTypeLocations":245,"./monitorCodeUse":311,"./warning":320,"_process":171}],228:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -30595,7 +30595,7 @@ var ReactEmptyComponent = {
 module.exports = ReactEmptyComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":226,"./invariant":301,"_process":170}],229:[function(require,module,exports){
+},{"./ReactElement":226,"./invariant":301,"_process":171}],229:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31372,7 +31372,7 @@ var ReactInstanceHandles = {
 module.exports = ReactInstanceHandles;
 
 }).call(this,require('_process'))
-},{"./ReactRootIndex":249,"./invariant":301,"_process":170}],235:[function(require,module,exports){
+},{"./ReactRootIndex":249,"./invariant":301,"_process":171}],235:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -31619,7 +31619,7 @@ ReactLegacyElementFactory._isLegacyCallWarningEnabled = true;
 module.exports = ReactLegacyElementFactory;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":210,"./invariant":301,"./monitorCodeUse":311,"./warning":320,"_process":170}],236:[function(require,module,exports){
+},{"./ReactCurrentOwner":210,"./invariant":301,"./monitorCodeUse":311,"./warning":320,"_process":171}],236:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32365,7 +32365,7 @@ ReactMount.renderComponent = deprecated(
 module.exports = ReactMount;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":184,"./ReactBrowserEventEmitter":204,"./ReactCurrentOwner":210,"./ReactElement":226,"./ReactInstanceHandles":234,"./ReactLegacyElement":235,"./ReactPerf":242,"./containsNode":275,"./deprecated":281,"./getReactRootElementInContainer":295,"./instantiateReactComponent":300,"./invariant":301,"./shouldUpdateReactComponent":317,"./warning":320,"_process":170}],238:[function(require,module,exports){
+},{"./DOMProperty":184,"./ReactBrowserEventEmitter":204,"./ReactCurrentOwner":210,"./ReactElement":226,"./ReactInstanceHandles":234,"./ReactLegacyElement":235,"./ReactPerf":242,"./containsNode":275,"./deprecated":281,"./getReactRootElementInContainer":295,"./instantiateReactComponent":300,"./invariant":301,"./shouldUpdateReactComponent":317,"./warning":320,"_process":171}],238:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32899,7 +32899,7 @@ var ReactNativeComponent = {
 module.exports = ReactNativeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":200,"./invariant":301,"_process":170}],241:[function(require,module,exports){
+},{"./Object.assign":200,"./invariant":301,"_process":171}],241:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -33055,7 +33055,7 @@ var ReactOwner = {
 module.exports = ReactOwner;
 
 }).call(this,require('_process'))
-},{"./emptyObject":283,"./invariant":301,"_process":170}],242:[function(require,module,exports){
+},{"./emptyObject":283,"./invariant":301,"_process":171}],242:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -33139,7 +33139,7 @@ function _noMeasure(objName, fnName, func) {
 module.exports = ReactPerf;
 
 }).call(this,require('_process'))
-},{"_process":170}],243:[function(require,module,exports){
+},{"_process":171}],243:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -33306,7 +33306,7 @@ var ReactPropTransferer = {
 module.exports = ReactPropTransferer;
 
 }).call(this,require('_process'))
-},{"./Object.assign":200,"./emptyFunction":282,"./invariant":301,"./joinClasses":306,"./warning":320,"_process":170}],244:[function(require,module,exports){
+},{"./Object.assign":200,"./emptyFunction":282,"./invariant":301,"./joinClasses":306,"./warning":320,"_process":171}],244:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -33334,7 +33334,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = ReactPropTypeLocationNames;
 
 }).call(this,require('_process'))
-},{"_process":170}],245:[function(require,module,exports){
+},{"_process":171}],245:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -34055,7 +34055,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./ReactElement":226,"./ReactInstanceHandles":234,"./ReactMarkupChecksum":236,"./ReactServerRenderingTransaction":251,"./instantiateReactComponent":300,"./invariant":301,"_process":170}],251:[function(require,module,exports){
+},{"./ReactElement":226,"./ReactInstanceHandles":234,"./ReactMarkupChecksum":236,"./ReactServerRenderingTransaction":251,"./instantiateReactComponent":300,"./invariant":301,"_process":171}],251:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -34564,7 +34564,7 @@ var ReactUpdates = {
 module.exports = ReactUpdates;
 
 }).call(this,require('_process'))
-},{"./CallbackQueue":179,"./Object.assign":200,"./PooledClass":201,"./ReactCurrentOwner":210,"./ReactPerf":242,"./Transaction":269,"./invariant":301,"./warning":320,"_process":170}],254:[function(require,module,exports){
+},{"./CallbackQueue":179,"./Object.assign":200,"./PooledClass":201,"./ReactCurrentOwner":210,"./ReactPerf":242,"./Transaction":269,"./invariant":301,"./warning":320,"_process":171}],254:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -35310,7 +35310,7 @@ var SimpleEventPlugin = {
 module.exports = SimpleEventPlugin;
 
 }).call(this,require('_process'))
-},{"./EventConstants":189,"./EventPluginUtils":193,"./EventPropagators":194,"./SyntheticClipboardEvent":258,"./SyntheticDragEvent":260,"./SyntheticEvent":261,"./SyntheticFocusEvent":262,"./SyntheticKeyboardEvent":264,"./SyntheticMouseEvent":265,"./SyntheticTouchEvent":266,"./SyntheticUIEvent":267,"./SyntheticWheelEvent":268,"./getEventCharCode":289,"./invariant":301,"./keyOf":308,"./warning":320,"_process":170}],258:[function(require,module,exports){
+},{"./EventConstants":189,"./EventPluginUtils":193,"./EventPropagators":194,"./SyntheticClipboardEvent":258,"./SyntheticDragEvent":260,"./SyntheticEvent":261,"./SyntheticFocusEvent":262,"./SyntheticKeyboardEvent":264,"./SyntheticMouseEvent":265,"./SyntheticTouchEvent":266,"./SyntheticUIEvent":267,"./SyntheticWheelEvent":268,"./getEventCharCode":289,"./invariant":301,"./keyOf":308,"./warning":320,"_process":171}],258:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -36267,7 +36267,7 @@ var Transaction = {
 module.exports = Transaction;
 
 }).call(this,require('_process'))
-},{"./invariant":301,"_process":170}],270:[function(require,module,exports){
+},{"./invariant":301,"_process":171}],270:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -36365,7 +36365,7 @@ function accumulateInto(current, next) {
 module.exports = accumulateInto;
 
 }).call(this,require('_process'))
-},{"./invariant":301,"_process":170}],272:[function(require,module,exports){
+},{"./invariant":301,"_process":171}],272:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -36664,7 +36664,7 @@ function createFullPageComponent(tag) {
 module.exports = createFullPageComponent;
 
 }).call(this,require('_process'))
-},{"./ReactCompositeComponent":208,"./ReactElement":226,"./invariant":301,"_process":170}],278:[function(require,module,exports){
+},{"./ReactCompositeComponent":208,"./ReactElement":226,"./invariant":301,"_process":171}],278:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -36754,7 +36754,7 @@ function createNodesFromMarkup(markup, handleScript) {
 module.exports = createNodesFromMarkup;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":195,"./createArrayFrom":276,"./getMarkupWrap":293,"./invariant":301,"_process":170}],279:[function(require,module,exports){
+},{"./ExecutionEnvironment":195,"./createArrayFrom":276,"./getMarkupWrap":293,"./invariant":301,"_process":171}],279:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -36902,7 +36902,7 @@ function deprecated(namespace, oldName, newName, ctx, fn) {
 module.exports = deprecated;
 
 }).call(this,require('_process'))
-},{"./Object.assign":200,"./warning":320,"_process":170}],282:[function(require,module,exports){
+},{"./Object.assign":200,"./warning":320,"_process":171}],282:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -36960,7 +36960,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = emptyObject;
 
 }).call(this,require('_process'))
-},{"_process":170}],284:[function(require,module,exports){
+},{"_process":171}],284:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -37070,7 +37070,7 @@ function flattenChildren(children) {
 module.exports = flattenChildren;
 
 }).call(this,require('_process'))
-},{"./ReactTextComponent":252,"./traverseAllChildren":319,"./warning":320,"_process":170}],286:[function(require,module,exports){
+},{"./ReactTextComponent":252,"./traverseAllChildren":319,"./warning":320,"_process":171}],286:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -37511,7 +37511,7 @@ function getMarkupWrap(nodeName) {
 module.exports = getMarkupWrap;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":195,"./invariant":301,"_process":170}],294:[function(require,module,exports){
+},{"./ExecutionEnvironment":195,"./invariant":301,"_process":171}],294:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -37886,7 +37886,7 @@ function instantiateReactComponent(element, parentCompositeType) {
 module.exports = instantiateReactComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":226,"./ReactEmptyComponent":228,"./ReactLegacyElement":235,"./ReactNativeComponent":240,"./warning":320,"_process":170}],301:[function(require,module,exports){
+},{"./ReactElement":226,"./ReactEmptyComponent":228,"./ReactLegacyElement":235,"./ReactNativeComponent":240,"./warning":320,"_process":171}],301:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -37943,7 +37943,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":170}],302:[function(require,module,exports){
+},{"_process":171}],302:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -38201,7 +38201,7 @@ var keyMirror = function(obj) {
 module.exports = keyMirror;
 
 }).call(this,require('_process'))
-},{"./invariant":301,"_process":170}],308:[function(require,module,exports){
+},{"./invariant":301,"_process":171}],308:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -38358,7 +38358,7 @@ function monitorCodeUse(eventName, data) {
 module.exports = monitorCodeUse;
 
 }).call(this,require('_process'))
-},{"./invariant":301,"_process":170}],312:[function(require,module,exports){
+},{"./invariant":301,"_process":171}],312:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -38398,7 +38398,7 @@ function onlyChild(children) {
 module.exports = onlyChild;
 
 }).call(this,require('_process'))
-},{"./ReactElement":226,"./invariant":301,"_process":170}],313:[function(require,module,exports){
+},{"./ReactElement":226,"./invariant":301,"_process":171}],313:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -38686,7 +38686,7 @@ function toArray(obj) {
 module.exports = toArray;
 
 }).call(this,require('_process'))
-},{"./invariant":301,"_process":170}],319:[function(require,module,exports){
+},{"./invariant":301,"_process":171}],319:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -38869,7 +38869,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 module.exports = traverseAllChildren;
 
 }).call(this,require('_process'))
-},{"./ReactElement":226,"./ReactInstanceHandles":234,"./invariant":301,"_process":170}],320:[function(require,module,exports){
+},{"./ReactElement":226,"./ReactInstanceHandles":234,"./invariant":301,"_process":171}],320:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -38914,7 +38914,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":282,"_process":170}],"eventEmitter":[function(require,module,exports){
+},{"./emptyFunction":282,"_process":171}],"eventEmitter":[function(require,module,exports){
 /*!
  * EventEmitter v4.2.11 - git.io/ee
  * Unlicense - http://unlicense.org/
@@ -40172,6 +40172,8 @@ module.exports = warning;
         read: function(name) { return null; },
         remove: function(name) {}
     };
+    
+    
     
     // move dependent functions to a container so that
     // they can be overriden easier in no jquery environment (node.js)
@@ -41509,7 +41511,7 @@ module.exports = warning;
     i18n.options = o;
 
 })();
-},{"jquery":174}],"reactUjs":[function(require,module,exports){
+},{"jquery":2}],"reactUjs":[function(require,module,exports){
 var CLASS_NAME_ATTR, PROPS_ATTR, findReactDOMNodes, initialize, mountReactComponents, unmountReactComponents;
 
 CLASS_NAME_ATTR = 'data-react-class';
