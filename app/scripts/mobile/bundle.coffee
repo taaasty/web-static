@@ -1,5 +1,5 @@
 require './resources/libs'
-require './locales/locales'
+require './resources/locales'
 window.Routes    = require '../shared/routes/routes'
 window.ApiRoutes = require '../shared/routes/api'
 require './react/application'

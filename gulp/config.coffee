@@ -11,6 +11,10 @@ module.exports =
     server:
       baseDir: [build, src]
     files: [build + '/**']
+  locales:
+    src: src + '/scripts/shared/locales/**/*.json'
+    destDesktop: build + '/locales'
+    destMobile: build + '/mobile/locales'
   desktop:
     local:
       scripts:
@@ -75,9 +79,6 @@ module.exports =
       html:
         src: src + '/html/mobile/**/*.html'
         dest: build + '/mobile'
-      locales:
-        src: src + '/scripts/mobile/locales/**/*.json'
-        dest: build + '/mobile/locales'
     production:
       scripts:
         bundle:
