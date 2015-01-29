@@ -1,8 +1,6 @@
 cx = require 'react/lib/cx'
 { PropTypes } = React
 
-TITLE = -> t 'pagination_next'
-
 PaginationNext = React.createClass
   displayName: 'PaginationNext'
 
@@ -19,9 +17,8 @@ PaginationNext = React.createClass
       'pagination__item--next': !@props.single
 
     return <a className={ nextClasses }
-              href={ @props.href }
-              title={ TITLE() }>
-             { TITLE() }
+              href={ @props.href }>
+             { i18n.t('pagination_next') }
            </a>
 
 module.exports = PaginationNext

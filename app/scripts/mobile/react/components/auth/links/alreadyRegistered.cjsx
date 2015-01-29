@@ -1,15 +1,12 @@
 ScreenController = require '../../../controllers/screen'
 
-TEXT = -> t 'already_registered_link'
-
 AuthNotRegisteredYetLink = React.createClass
   displayName: 'AuthNotRegisteredYetLink'
 
   render: ->
-    <a title={ TEXT() }
-       className="auth__footer-link"
+    <a className="auth__footer-link"
        onClick={ @handleClick }>
-      { TEXT() }
+      { i18n.t('already_registered_link') }
     </a>
 
   handleClick: ->

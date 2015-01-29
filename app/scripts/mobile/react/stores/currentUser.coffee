@@ -25,6 +25,7 @@ CurrentUserStore = assign new BaseStore(),
 
       console.debug? 'Залогинен пользователь:', user.slug
     else
+      _currentUser = null
       console.debug? 'Без пользователя'
 
   isLogged: ->

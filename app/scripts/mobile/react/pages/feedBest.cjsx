@@ -1,4 +1,5 @@
 CurrentUserStore   = require '../stores/currentUser'
+PageMixin          = require './mixins/page'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
 HeroFeedBest       = require '../components/hero/feedBest'
@@ -10,7 +11,7 @@ FeedBestPageMixin  = require './mixins/feedBest'
 
 FeedBestPage = React.createClass
   displayName: 'FeedBestPage'
-  mixins: [FeedBestPageMixin]
+  mixins: [FeedBestPageMixin, PageMixin]
 
   propTypes:
     currentUser: PropTypes.object

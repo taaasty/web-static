@@ -1,12 +1,6 @@
 Api              = require '../../api/api'
 NotifyController = require '../../controllers/notify'
 
-REPORT_SUCCESS_MESSAGE         = -> t 'report_entry_success'
-DELETE_SUCCESS_MESSAGE         = -> t 'delete_entry_success'
-VOTE_SUCCESS_MESSAGE           = -> t 'vote_entry_success'
-COMMENT_REPORT_SUCCESS_MESSAGE = -> t 'report_comment_success'
-COMMENT_DELETE_SUCCESS_MESSAGE = -> t 'delete_comment_success'
-
 EntryViewActions =
 
   addToFavorites: (entryId) ->
@@ -32,21 +26,21 @@ EntryViewActions =
   report: (entryId) ->
     Api.entry.report entryId
       .then ->
-        NotifyController.notifySuccess REPORT_SUCCESS_MESSAGE()
+        NotifyController.notifySuccess i18n.t 'report_entry_success'
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
   delete: (entryId) ->
     Api.entry.delete entryId
       .then ->
-        NotifyController.notifySuccess DELETE_SUCCESS_MESSAGE()
+        NotifyController.notifySuccess i18n.t 'delete_entry_success'
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
   vote: (entryId) ->
     Api.entry.vote entryId
       .then (rating) ->
-        NotifyController.notifySuccess VOTE_SUCCESS_MESSAGE()
+        NotifyController.notifySuccess i18n.t 'vote_entry_success'
         rating
       .fail (xhr) ->
         NotifyController.errorResponse xhr
@@ -69,14 +63,14 @@ EntryViewActions =
   deleteComment: (entryId, commentId) ->
     Api.entry.deleteComment commentId
       .then ->
-        NotifyController.notifySuccess COMMENT_DELETE_SUCCESS_MESSAGE()
+        NotifyController.notifySuccess i18n.t 'report_comment_success'
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
   reportComment: (commentId) ->
     Api.entry.reportComment commentId
       .then ->
-        NotifyController.notifySuccess COMMENT_REPORT_SUCCESS_MESSAGE()
+        NotifyController.notifySuccess i18n.t 'delete_comment_success'
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 

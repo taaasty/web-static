@@ -1,14 +1,12 @@
 ScreenController = require '../../../controllers/screen'
 
-TEXT = -> t 'signin_button'
-
 AuthButton = React.createClass
   displayName: 'AuthButton'
 
   render: ->
     <button className="auth-button"
             onClick={ @handleClick }>
-      { TEXT() }
+      { i18n.t('signin_button') }
     </button>
 
   handleClick: ->

@@ -1,7 +1,5 @@
 { PropTypes } = React
 
-LINK_TEXT = -> t 'edit_comment_item'
-
 CommentActionsDropdownMenuEditItem = React.createClass
   displayName: 'CommentActionsDropdownMenuEditItem'
 
@@ -11,10 +9,9 @@ CommentActionsDropdownMenuEditItem = React.createClass
   render: ->
     <li className="comment__dropdown-popup-item"
         onClick={ @props.onEditStart }>
-      <a className="comment__dropdown-popup-link"
-         title={ LINK_TEXT() }>
+      <a className="comment__dropdown-popup-link">
         <i className="icon icon--pencil" />
-        <span>{ LINK_TEXT() }</span>
+        <span>{ i18n.t('edit_comment_item') }</span>
       </a>
     </li>
 

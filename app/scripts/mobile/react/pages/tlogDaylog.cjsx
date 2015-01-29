@@ -1,4 +1,5 @@
 CurrentUserStore   = require '../stores/currentUser'
+PageMixin          = require './mixins/page'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
 HeroTlog           = require '../components/hero/tlog'
@@ -11,7 +12,7 @@ AuthButtonManager  = require '../components/buttons/auth/authManager'
 
 TlogDaylogPage = React.createClass
   displayName: 'TlogDaylogPage'
-  # mixins: [TlogDaylogPageMixin]
+  mixins: [PageMixin]
 
   propTypes:
     currentUser: PropTypes.object

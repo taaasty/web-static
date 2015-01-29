@@ -3,10 +3,8 @@ AuthFacebookButton    = require './buttons/facebook'
 AuthEmailSignInButton = require './buttons/emailSignIn'
 AuthEmailSignUpButton = require './buttons/emailSignUp'
 
-TITLE = -> t 'auth'
-
 #FIXME: Remove from global when implement react-router
-window.Auth = React.createClass
+global.Auth = React.createClass
   displayName: 'Auth'
 
   render: ->
@@ -21,7 +19,7 @@ window.Auth = React.createClass
                 <i className="icon icon--ribbon" />
               </div>
               <h1 className="auth__lead"
-                  dangerouslySetInnerHTML={{ __html: TITLE() }} />
+                  dangerouslySetInnerHTML={{ __html: i18n.t('auth') }} />
               <div className="auth__buttons">
                 <AuthVkontakteButton />
                 <AuthFacebookButton />
