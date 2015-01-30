@@ -1,14 +1,10 @@
-#TODO: i18n
-SUBSCRIBE_ALL_BUTTON_TEXT     = 'Подписаться на всех'
-SUBSCRIBE_ALL_SUCCESS_MESSAGE = 'Вы подписались на всех ваших друзей из Вконтакте'
-
 VkontakteSubscribeAllButton = React.createClass
   mixins: [window.RequesterMixin]
 
   render: ->
     <button className="manage-persons-button"
             onClick={ @subscribeAll }>
-      { SUBSCRIBE_ALL_BUTTON_TEXT }
+      { i18n.t('vkontakte_subscribe_all_button') }
     </button>
 
   subscribeAll: ->
@@ -20,7 +16,7 @@ VkontakteSubscribeAllButton = React.createClass
           type: 'suggestionsSubscribed'
           source: 'vkontakte'
 
-        TastyNotifyController.notifySuccess SUBSCRIBE_ALL_SUCCESS_MESSAGE
+        TastyNotifyController.notifySuccess i18n.t 'vkontakte_subscribe_all_success'
       error: (data) =>
         TastyNotifyController.errorResponse data
 

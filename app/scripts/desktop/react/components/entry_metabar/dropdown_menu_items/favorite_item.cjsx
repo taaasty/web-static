@@ -28,9 +28,9 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
 
   getTitle: ->
     if @state.isFavorited
-      if @state.isHover then 'Удалить из избранного' else 'В избранном'
+      if @state.isHover then i18n.t 'remove_from_favorites_entry_item' else i18n.t 'entry_in_favorites'
     else
-      'Добавить в избранное'
+      i18n.t 'add_to_favorites_entry_item'
 
   onClick: (e) ->
     e.stopPropagation()

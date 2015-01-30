@@ -7192,10 +7192,6 @@ window.EmbedComponentWithCover = React.createClass({
 
 
 },{}],49:[function(require,module,exports){
-var TEXT_BUTTON;
-
-TEXT_BUTTON = 'Ok';
-
 window.EntryCommentBox_CommentFormSubmit = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
@@ -7207,7 +7203,7 @@ window.EntryCommentBox_CommentFormSubmit = React.createClass({
         "ref": "commentFormSubmit",
         "className": "comment-form__submit",
         "onClick": this.props.onClick
-      }, TEXT_BUTTON);
+      }, i18n.t('comment_form_submit'));
     } else {
       return React.createElement("span", null);
     }
@@ -7280,7 +7276,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({
         }, React.createElement("a", {
           "onClick": this.onClick,
           "className": "comments__more-link"
-        }, "\u041f\u0440\u043e\u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c"));
+        }, i18n.t('comment_more_link')));
         break;
       default:
         console.warn('Неизвестное состояние формы ввода комментария', this.state.currentState);
@@ -7500,7 +7496,7 @@ window.EntryCommentBox_CommentForm = React.createClass({
       "className": "comment-form__field"
     }, React.createElement("textarea", {
       "ref": "commentFormField",
-      "placeholder": "Комментарий. SHIFT + ENTER новая строка",
+      "placeholder": i18n.t('comment_form_placeholder'),
       "defaultValue": this.props.text,
       "disabled": this.props.isLoading,
       "className": "comment-form__field-textarea",
@@ -7679,7 +7675,7 @@ window.EntryCommentBox_CommentList = React.createClass({
   componentDidMount: function() {
     if (this.props.sharedCommentId != null) {
       if (!this._isSharedCommentExists()) {
-        return alert('К сожалению, данного комментария больше нет');
+        return alert(i18n.t('shared_comment_doesnt_exist'));
       }
     }
   },
@@ -8006,18 +8002,18 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
   render: function() {
     return React.createElement("a", {
       "onClick": this.onClick,
-      "title": "Удалить комментарий",
+      "title": i18n.t('delete_comment_item'),
       "className": "comment__dropdown-item"
     }, React.createElement("i", {
       "className": "icon icon--basket"
-    }), "\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439");
+    }), i18n.t('delete_comment_item'));
   },
   onClick: function(e) {
     e.stopPropagation();
     e.preventDefault();
     return TastyConfirmController.show({
-      message: 'Вы действительно хотите удалить комментарий?<br />Его нельзя будет восстановить.',
-      acceptButtonText: 'Удалить комментарий',
+      message: i18n.t('delete_comment_confirm'),
+      acceptButtonText: i18n.t('delete_comment_button'),
       onAccept: this.deleteComment
     });
   },
@@ -8030,7 +8026,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
       },
       success: (function(_this) {
         return function() {
-          TastyNotifyController.notify('success', 'Комментарий успешно удалён');
+          TastyNotifyController.notifySuccess(i18n.t('delete_comment_success'));
           if (_this.props.onDelete != null) {
             return _this.props.onDelete();
           }
@@ -8054,11 +8050,11 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
   render: function() {
     return React.createElement("a", {
       "onClick": this.onClick,
-      "title": "Редактировать комментарий",
+      "title": i18n.t('edit_comment_item'),
       "className": "comment__dropdown-item"
     }, React.createElement("i", {
       "className": "icon icon--pencil"
-    }), "\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439");
+    }), i18n.t('edit_comment_item'));
   },
   onClick: function() {
     return window.commentsMediator.doEdit(this.props.entryId, this.props.commentId);
@@ -8075,11 +8071,11 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
   render: function() {
     return React.createElement("a", {
       "href": this._getCommentUrl(),
-      "title": "Ссылка на комментарий",
+      "title": i18n.t('link_comment_item'),
       "className": "comment__dropdown-item"
     }, React.createElement("i", {
       "className": "icon icon--hyperlink"
-    }), "\u0421\u0441\u044b\u043b\u043a\u0430 \u043d\u0430 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439");
+    }), i18n.t('link_comment_item'));
   },
   _getCommentUrl: function() {
     return this.props.entryUrl + '#comment-' + this.props.commentId;
@@ -8097,18 +8093,18 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
   render: function() {
     return React.createElement("a", {
       "onClick": this.onClick,
-      "title": "Пожаловаться на комментарий",
+      "title": i18n.t('report_comment_item'),
       "className": "comment__dropdown-item"
     }, React.createElement("i", {
       "className": "icon icon--exclamation-mark"
-    }), "\u041f\u043e\u0436\u0430\u043b\u043e\u0432\u0430\u0442\u044c\u0441\u044f \u043d\u0430 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439");
+    }), i18n.t('report_comment_item'));
   },
   onClick: function(e) {
     e.stopPropagation();
     e.preventDefault();
     return TastyConfirmController.show({
-      message: 'Вы действительно хотите пожаловаться на комментарий?',
-      acceptButtonText: 'Пожаловаться',
+      message: i18n.t('report_comment_confirm'),
+      acceptButtonText: i18n.t('report_comment_button'),
       onAccept: this.createReport
     });
   },
@@ -8118,7 +8114,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
       method: 'POST',
       success: (function(_this) {
         return function() {
-          return TastyNotifyController.notify('success', 'Жалоба на пост успешно отправлена');
+          return TastyNotifyController.notifySuccess(i18n.t('report_comment_success'));
         };
       })(this),
       error: function(data) {
@@ -8199,7 +8195,7 @@ window.EntryCommentBox = React.createClass({
       }
     } else {
       if (this.state.isLoadError || this.state.isLoadMoreError || this.state.isPostError) {
-        commentList = React.createElement("div", null, "\u041e\u0448\u0438\u0431\u043a\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0438.");
+        commentList = React.createElement("div", null, i18n.t('load_comments_error'));
       } else if (this.state.isLoadLoading || this.state.isLoadMoreLoading) {
         commentList = React.createElement(Spinner, {
           "size": 15.
@@ -8227,7 +8223,6 @@ window.EntryCommentBox = React.createClass({
 
 },{}],65:[function(require,module,exports){
 window.EntryCommentBox_LoadMore = React.createClass({
-  mixins: [ReactGrammarMixin],
   propTypes: {
     totalCount: React.PropTypes.number.isRequired,
     loadedCount: React.PropTypes.number.isRequired,
@@ -8244,14 +8239,17 @@ window.EntryCommentBox_LoadMore = React.createClass({
     }, this._getTitle()));
   },
   _getTitle: function() {
-    var possibleCount, remainingCount, remainingDeclension;
+    var possibleCount, remainingCount;
     remainingCount = this.props.totalCount - this.props.loadedCount;
-    remainingDeclension = this.declension(remainingCount, ['комментарий', 'комментария', 'комментариев']);
     possibleCount = this.props.loadedCount + this.props.limit;
     if (possibleCount < this.props.totalCount) {
-      return "Загрузить еще " + this.props.limit + " комментариев";
+      return i18n.t('load_more_comments', {
+        count: this.props.limit
+      });
     } else {
-      return "Загрузить оставшиеся " + remainingCount + " " + remainingDeclension;
+      return i18n.t('load_more_comments_remaining', {
+        count: remainingCount
+      });
     }
   }
 });
@@ -8473,9 +8471,9 @@ window.EntryMetabarComment = React.createClass({
     if (this.props.isLogged) {
       commentText = React.createElement("a", {
         "className": "meta-item__common meta__link",
-        "title": "Прокомментировать",
+        "title": i18n.t('entry_meta_comment_link'),
         "onClick": this.onClick
-      }, "\u041f\u0440\u043e\u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c");
+      }, i18n.t('entry_meta_comment_link'));
     } else {
       commentText = React.createElement("a", {
         "className": "meta-item__common meta__link",
@@ -8493,8 +8491,10 @@ window.EntryMetabarComment = React.createClass({
     return window.commentsMediator.doCommentClicked(this.props.entryId);
   },
   _getNumberOfComments: function() {
-    if (this.props.totalCommentsCount > 0) {
-      return this.props.totalCommentsCount + ' ' + this.declension(this.props.totalCommentsCount, ['комментарий', 'комментария', 'комментариев']);
+    if (this.props.totalCommentsCount) {
+      return i18n.t('comments_count', {
+        count: this.props.totalCommentsCount
+      });
     }
   }
 });
@@ -8591,14 +8591,14 @@ window.EntryMetabarDropdownMenu = React.createClass({
     };
     if (this.props.canEdit) {
       actionList.push(React.createElement(EntryMetabarDropdownMenuItem, {
-        "title": "Редактировать",
+        "title": i18n.t('edit_entry_item'),
         "icon": "icon--pencil",
         "href": this.props.editUrl,
         "key": "edit"
       }));
     }
     actionList.push(React.createElement(EntryMetabarDropdownMenuItem, {
-      "title": "Ссылка на запись",
+      "title": i18n.t('link_entry_item'),
       "icon": "icon--hyperlink",
       "href": this.props.entryUrl,
       "key": "link"
@@ -8749,14 +8749,14 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
     return React.createElement("a", {
       "onClick": this.onClick,
       "className": "meta-item__dropdown-item"
-    }, icon, "\u0423\u0434\u0430\u043b\u0438\u0442\u044c");
+    }, icon, i18n.t('delete_entry_item'));
   },
   onClick: function(e) {
     e.stopPropagation();
     e.preventDefault();
     return TastyConfirmController.show({
-      message: "Вы действительно хотите удалить запись?<br />Её нельзя будет восстановить.",
-      acceptButtonText: "Удалить запись",
+      message: i18n.t('delete_entry_confirm_html'),
+      acceptButtonText: i18n.t('delete_entry_button'),
       onAccept: this.deleteEntry
     });
   },
@@ -8832,12 +8832,12 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({
   getTitle: function() {
     if (this.state.isFavorited) {
       if (this.state.isHover) {
-        return 'Удалить из избранного';
+        return i18n.t('remove_from_favorites_entry_item');
       } else {
-        return 'В избранном';
+        return i18n.t('entry_in_favorites');
       }
     } else {
-      return 'Добавить в избранное';
+      return i18n.t('add_to_favorites_entry_item');
     }
   },
   onClick: function(e) {
@@ -8939,14 +8939,14 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
       "className": "meta-item__dropdown-item"
     }, React.createElement("i", {
       "className": "icon icon--exclamation-mark"
-    }), "\u041f\u043e\u0436\u0430\u043b\u043e\u0432\u0430\u0442\u044c\u0441\u044f");
+    }), i18n.t('report_entry_item'));
   },
   onClick: function(e) {
     e.stopPropagation();
     e.preventDefault();
     return TastyConfirmController.show({
-      message: 'Вы действительно хотите пожаловаться на пост?',
-      acceptButtonText: 'Пожаловаться',
+      message: i18n.t('report_entry_confirm'),
+      acceptButtonText: i18n.t('report_entry_button'),
       onAccept: this.createReport
     });
   },
@@ -8956,7 +8956,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
       method: 'POST',
       success: (function(_this) {
         return function() {
-          return TastyNotifyController.notify('success', 'Жалоба на пост успешно отправлена');
+          return TastyNotifyController.notifySuccess(i18n.t('report_entry_success'));
         };
       })(this),
       error: function(data) {
@@ -8994,12 +8994,12 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
   getTitle: function() {
     if (this.state.isWatching) {
       if (this.state.isHover) {
-        return 'Отписаться';
+        return i18n.t('stop_watch_entry_item');
       } else {
-        return 'Подписан';
+        return i18n.t('watching_entry_item');
       }
     } else {
-      return 'Подписаться на комментарии';
+      return i18n.t('start_watch_entry_item');
     }
   },
   onClick: function(e) {
@@ -9649,10 +9649,6 @@ window.HeroProfile_DropdownMenu = React.createClass({
 
 
 },{"react/lib/cx":428}],86:[function(require,module,exports){
-var TITLE;
-
-TITLE = 'Заблокировать';
-
 window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -9665,7 +9661,7 @@ window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
       "onClick": this.ignore
     }, React.createElement("i", {
       "className": "icon icon--not-allowed"
-    }), TITLE);
+    }), i18n.t('ignore_tlog_item'));
   },
   ignore: function() {
     return this.createRequest({
@@ -9689,10 +9685,6 @@ window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
 
 
 },{}],87:[function(require,module,exports){
-var TITLE;
-
-TITLE = 'Пожаловаться';
-
 window.HeroProfile_DropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -9705,14 +9697,14 @@ window.HeroProfile_DropdownMenuReportItem = React.createClass({
       "onClick": this.report
     }, React.createElement("i", {
       "className": "icon icon--exclamation-mark"
-    }), TITLE);
+    }), i18n.t('report_tlog_item'));
   },
   report: function() {
     return this.createRequest({
       url: ApiRoutes.tlog_report(this.props.userId),
       method: 'POST',
       success: function() {
-        TastyNotifyController.notify('success', 'Жалоба на пользователя принята, и будет рассмотрена в ближайшее время');
+        TastyNotifyController.notifySuccess(i18n.t('report_user_success'));
         return this.props.onRequestEnd();
       },
       error: function(data) {
@@ -9761,15 +9753,15 @@ window.HeroProfileStats_FollowersPopup = React.createClass({
       if (this.state.isError) {
         message = React.createElement("div", {
           "className": "popup__text"
-        }, "\u041e\u0448\u0438\u0431\u043a\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0438.");
+        }, i18n.t('hero_stats_popup_error'));
       } else if (this.state.isLoading) {
         message = React.createElement("div", {
           "className": "popup__text"
-        }, "\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u044e..");
+        }, i18n.t('hero_stats_popup_loading'));
       } else {
         message = React.createElement("div", {
           "className": "popup__text"
-        }, "\u0421\u043f\u0438\u0441\u043e\u043a \u043f\u0443\u0441\u0442.");
+        }, i18n.t('hero_stats_popup_empty'));
       }
       followerList = React.createElement("div", {
         "className": "grid-full"
@@ -9866,15 +9858,15 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({
       if (this.state.isError) {
         message = React.createElement("div", {
           "className": "popup__text"
-        }, "\u041e\u0448\u0438\u0431\u043a\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0438.");
+        }, i18n.t('hero_stats_popup_error'));
       } else if (this.state.isLoading) {
         message = React.createElement("div", {
           "className": "popup__text"
-        }, "\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u044e..");
+        }, i18n.t('hero_stats_popup_loading'));
       } else {
         message = React.createElement("div", {
           "className": "popup__text"
-        }, "\u0421\u043f\u0438\u0441\u043e\u043a \u043f\u0443\u0441\u0442.");
+        }, i18n.t('hero_stats_popup_empty'));
       }
       followingList = React.createElement("div", {
         "className": "grid-full"
@@ -10130,15 +10122,15 @@ window.HeroProfileStats_TagsPopup = React.createClass({
       if (this.state.isError) {
         message = React.createElement("div", {
           "className": "popup__text"
-        }, "\u041e\u0448\u0438\u0431\u043a\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0438.");
+        }, i18n.t('hero_stats_popup_error'));
       } else if (this.state.isLoading) {
         message = React.createElement("div", {
           "className": "popup__text"
-        }, "\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u044e..");
+        }, i18n.t('hero_stats_popup_loading'));
       } else {
         message = React.createElement("div", {
           "className": "popup__text"
-        }, "\u0421\u043f\u0438\u0441\u043e\u043a \u043f\u0443\u0441\u0442.");
+        }, i18n.t('hero_stats_popup_empty'));
       }
       tagList = React.createElement("div", {
         "className": "grid-full"
@@ -10495,7 +10487,9 @@ window.HeroProfileStats = React.createClass({
     if (this.props.stats.followers_count != null) {
       heroStats.push(React.createElement(HeroProfileStatsItem, {
         "count": this.props.stats.followers_count,
-        "title": this.getTitle('followers'),
+        "title": i18n.t('stats_followers_count', {
+          count: this.props.stats.followers_count
+        }),
         "onClick": onClick.bind(this, 'followers'),
         "key": "followers"
       }));
@@ -10503,7 +10497,9 @@ window.HeroProfileStats = React.createClass({
     if (this.props.stats.followings_count != null) {
       heroStats.push(React.createElement(HeroProfileStatsItem, {
         "count": this.props.stats.followings_count,
-        "title": this.getTitle('followings'),
+        "title": i18n.t('stats_followings_count', {
+          count: this.props.stats.followings_count
+        }),
         "onClick": onClick.bind(this, 'followings'),
         "key": "followings"
       }));
@@ -10515,7 +10511,7 @@ window.HeroProfileStats = React.createClass({
       heroStats.push(React.createElement(HeroProfileStatsItem, {
         "href": url,
         "count": this.props.stats.favorites_count,
-        "title": this.getTitle('favorites'),
+        "title": i18n.t('stats_favorites_count'),
         "key": "favorites"
       }));
     }
@@ -10526,28 +10522,36 @@ window.HeroProfileStats = React.createClass({
       heroStats.push(React.createElement(HeroProfileStatsItem, {
         "href": url,
         "count": this.props.stats.entries_count,
-        "title": this.getTitle('entries'),
+        "title": i18n.t('stats_entries_count', {
+          count: this.props.stats.entries_count
+        }),
         "key": "entries"
       }));
     }
     if (this.props.stats.comments_count != null) {
       heroStats.push(React.createElement(HeroProfileStatsItem, {
         "count": this.props.stats.comments_count,
-        "title": this.getTitle('comments'),
+        "title": i18n.t('stats_comments_count', {
+          counts: this.props.stats.comments_count
+        }),
         "key": "comments"
       }));
     }
     if (this.props.stats.days_count != null) {
       heroStats.push(React.createElement(HeroProfileStatsItem, {
         "count": this.props.stats.days_count,
-        "title": this.getTitle('days'),
+        "title": i18n.t('stats_days_count', {
+          count: this.props.stats.days_count
+        }),
         "key": "days"
       }));
     }
     if (this.props.stats.tags_count != null) {
       heroStats.push(React.createElement(HeroProfileStatsItem, {
         "count": this.props.stats.tags_count,
-        "title": this.getTitle('tags'),
+        "title": i18n.t('stats_tags_count', {
+          count: this.props.stats.tags_count
+        }),
         "onClick": onClick.bind(this, 'tags'),
         "key": "tags"
       }));
@@ -10558,29 +10562,9 @@ window.HeroProfileStats = React.createClass({
       "className": "hero__stats-list"
     }, heroStats));
   },
-  getTitle: function(type) {
-    switch (type) {
-      case 'followers':
-        return this.declension(this.props.stats.followers_count, ['подписчик', 'подписчика', 'подписчиков']);
-      case 'followings':
-        return this.declension(this.props.stats.followings_count, ['подписка', 'подписки', 'подписок']);
-      case 'favorites':
-        return 'в избранном';
-      case 'entries':
-        return this.declension(this.props.stats.entries_count, ['пост', 'поста', 'постов']);
-      case 'comments':
-        return this.declension(this.props.stats.comments_count, ['комментарий', 'комментария', 'комментариев']);
-      case 'days':
-        return this.declension(this.props.stats.days_count, ['день', 'дня', 'дней']) + ' на тейсти';
-      case 'tags':
-        return this.declension(this.props.stats.tags_count, ['тег', 'тега', 'тегов']);
-      default:
-        return console.log("Неизвестный тип статистики профиля " + type);
-    }
-  },
   handleFollowersClick: function($el) {
     return React.render(React.createElement(HeroProfileStats_Popup, {
-      "title": "Подписчики",
+      "title": i18n.t('followers'),
       "toggle": $el
     }, React.createElement(HeroProfileStats_FollowersPopup, {
       "tlogId": this.props.user.id
@@ -10588,7 +10572,7 @@ window.HeroProfileStats = React.createClass({
   },
   handleFollowingsClick: function($el) {
     return React.render(React.createElement(HeroProfileStats_Popup, {
-      "title": "Подписки",
+      "title": i18n.t('followings'),
       "toggle": $el
     }, React.createElement(HeroProfileStats_FollowingsPopup, {
       "tlogId": this.props.user.id
@@ -10596,7 +10580,7 @@ window.HeroProfileStats = React.createClass({
   },
   handleTagsClick: function($el) {
     return React.render(React.createElement(HeroProfileStats_Popup, {
-      "title": "Теги",
+      "title": i18n.t('tags'),
       "toggle": $el
     }, React.createElement(HeroProfileStats_TagsPopup, {
       "tlogId": this.props.user.id
@@ -11190,14 +11174,11 @@ window.PersonsPopup_IgnoredRelationship = React.createClass({
 
 },{}],110:[function(require,module,exports){
 window.PersonsPopup_PersonItem = React.createClass({
-  mixins: [ReactGrammarMixin],
   propTypes: {
     user: React.PropTypes.object.isRequired,
     children: React.PropTypes.component.isRequired
   },
   render: function() {
-    var entriesCount;
-    entriesCount = this.getNumberOfEntries(this.props.user.public_entries_count);
     return React.createElement("li", {
       "className": "person"
     }, React.createElement("div", {
@@ -11217,12 +11198,16 @@ window.PersonsPopup_PersonItem = React.createClass({
       "className": "person__name"
     }, this.props.user.name)), React.createElement("div", {
       "className": "person__count"
-    }, entriesCount)), React.createElement("div", {
+    }, this.renderEntriesCount())), React.createElement("div", {
       "className": "person__actions"
     }, this.props.children)));
   },
-  getNumberOfEntries: function(number) {
-    return number + ' ' + this.declension(number, ['запись', 'записи', 'записей']);
+  renderEntriesCount: function() {
+    var count;
+    count = this.props.user.public_entries_count;
+    return React.createElement("span", null, count, " ", i18n.t('entries_count', {
+      count: this.props.user.public_entries_count
+    }));
   }
 });
 
@@ -11252,22 +11237,6 @@ window.PersonsPopup_RequestedRelationship = React.createClass({
 
 
 },{}],112:[function(require,module,exports){
-var FACEBOOK, FOLLOWERS, FOLLOWINGS, GUESSED, IGNORED, REQUESTED, VKONTAKTE;
-
-FOLLOWINGS = 'Вы подписаны';
-
-FOLLOWERS = 'Подписчики';
-
-REQUESTED = 'Заявки';
-
-GUESSED = 'Рекомендации';
-
-IGNORED = 'Заблокированы';
-
-VKONTAKTE = 'Вконтакте';
-
-FACEBOOK = 'Facebook';
-
 window.PersonsPopup_Menu = React.createClass({
   displayName: 'PersonsPopup_Menu',
   mixins: [RequesterMixin],
@@ -11296,7 +11265,7 @@ window.PersonsPopup_Menu = React.createClass({
       requestedMenuItem = React.createElement(PersonsPopup_MenuItem, {
         "isActive": this.props.currentTab === 'requested',
         "totalCount": this.state.requestedTotalCount,
-        "title": REQUESTED,
+        "title": i18n.t('persons_popup_menu_requested'),
         "onClick": this.props.onSelect.bind(null, 'requested')
       });
     }
@@ -11307,25 +11276,25 @@ window.PersonsPopup_Menu = React.createClass({
     }, React.createElement(PersonsPopup_MenuItem, {
       "isActive": this.props.currentTab === 'followings',
       "totalCount": this.state.followingsTotalCount,
-      "title": FOLLOWINGS,
+      "title": i18n.t('persons_popup_menu_followings'),
       "onClick": this.props.onSelect.bind(null, 'followings')
     }), React.createElement(PersonsPopup_MenuItem, {
       "isActive": this.props.currentTab === 'followers',
       "totalCount": this.state.followersTotalCount,
-      "title": FOLLOWERS,
+      "title": i18n.t('persons_popup_menu_followers'),
       "onClick": this.props.onSelect.bind(null, 'followers')
     }), requestedMenuItem, React.createElement(PersonsPopup_MenuItem, {
       "isActive": this.props.currentTab === 'ignored',
       "totalCount": this.state.ignoredTotalCount,
-      "title": IGNORED,
+      "title": i18n.t('persons_popup_menu_ignored'),
       "onClick": this.props.onSelect.bind(null, 'ignored')
     }), React.createElement(PersonsPopup_MenuItem, {
       "isActive": this.props.currentTab === 'vkontakte',
-      "title": VKONTAKTE,
+      "title": i18n.t('persons_popup_menu_vkontakte'),
       "onClick": this.props.onSelect.bind(null, 'vkontakte')
     }), React.createElement(PersonsPopup_MenuItem, {
       "isActive": this.props.currentTab === 'facebook',
-      "title": FACEBOOK,
+      "title": i18n.t('persons_popup_menu_facebook'),
       "onClick": this.props.onSelect.bind(null, 'facebook')
     })));
   },
@@ -11398,15 +11367,9 @@ window.PersonsPopup_MenuItem = React.createClass({
 
 
 },{"react/lib/cx":428}],114:[function(require,module,exports){
-var EMPTY_LIST, ERROR_STATE, LOADED_STATE, LOADING, LOADING_ERROR, LOADING_STATE, cx;
+var ERROR_STATE, LOADED_STATE, LOADING_STATE, cx;
 
 cx = require('react/lib/cx');
-
-LOADING_ERROR = 'Ошибка загрузки.';
-
-LOADING = 'Загружаю..';
-
-EMPTY_LIST = 'Список пуст.';
 
 ERROR_STATE = 'error';
 
@@ -11447,13 +11410,13 @@ window.PersonsPopup_PanelMixin = {
     } else {
       switch (this.state.currentState) {
         case ERROR_STATE:
-          messageText = LOADING_ERROR;
+          messageText = i18n.t('persons_popup_error');
           break;
         case LOADING_STATE:
-          messageText = LOADING;
+          messageText = i18n.t('persons_popup_loading');
           break;
         case LOADED_STATE:
-          messageText = EMPTY_LIST;
+          messageText = i18n.t('persons_popup_empty');
           break;
         default:
           console.warn('Unknown currentState', this.state.currentState);
@@ -11744,11 +11707,7 @@ window.PersonsPopup_FacebookPanel = React.createClass({
 
 
 },{"./facebook/signIn":121,"./facebook/suggestions":122,"./mixins/socialNetwork":127}],121:[function(require,module,exports){
-var BUTTON_TEXT, SIGN_IN_MESSAGE, VkontakteSignIn;
-
-SIGN_IN_MESSAGE = 'Вы еще не привязали свой аккаунт Facebook';
-
-BUTTON_TEXT = 'Найти друзей Facebook';
+var VkontakteSignIn;
 
 VkontakteSignIn = React.createClass({
   render: function() {
@@ -11758,10 +11717,10 @@ VkontakteSignIn = React.createClass({
       "className": "grid-full__middle"
     }, React.createElement("div", {
       "className": "popup__text popup__text--soc"
-    }, React.createElement("span", null, SIGN_IN_MESSAGE, " "), React.createElement("button", {
+    }, React.createElement("span", null, i18n.t('facebook_suggestions_not_signedin'), " "), React.createElement("button", {
       "className": "fb-auth-button",
       "onClick": this.handleClick
-    }, BUTTON_TEXT))));
+    }, i18n.t('facebook_suggestions_signin_button')))));
   },
   handleClick: function() {
     return window.location = ApiRoutes.omniauth_url('facebook');
@@ -11799,19 +11758,15 @@ module.exports = FacebookSuggestions;
 
 
 },{"../mixins/suggestions":129,"./suggestions/empty":124,"./suggestions/list":125}],123:[function(require,module,exports){
-var SUBSCRIBE_ALL_BUTTON_TEXT, SUBSCRIBE_ALL_SUCCESS_MESSAGE, VkontakteSubscribeAllButton;
+var FacebookSubscribeAllButton;
 
-SUBSCRIBE_ALL_BUTTON_TEXT = 'Подписаться на всех';
-
-SUBSCRIBE_ALL_SUCCESS_MESSAGE = 'Вы подписались на всех ваших друзей из Facebook';
-
-VkontakteSubscribeAllButton = React.createClass({
+FacebookSubscribeAllButton = React.createClass({
   mixins: [window.RequesterMixin],
   render: function() {
     return React.createElement("button", {
       "className": "manage-persons-button",
       "onClick": this.subscribeAll
-    }, SUBSCRIBE_ALL_BUTTON_TEXT);
+    }, i18n.t('facebook_subscribe_all_button'));
   },
   subscribeAll: function() {
     return this.createRequest({
@@ -11822,7 +11777,7 @@ VkontakteSubscribeAllButton = React.createClass({
           type: 'suggestionsSubscribed',
           source: 'facebook'
         });
-        return TastyNotifyController.notifySuccess(SUBSCRIBE_ALL_SUCCESS_MESSAGE);
+        return TastyNotifyController.notifySuccess(i18n.t('facebook_subscribe_all_success'));
       },
       error: (function(_this) {
         return function(data) {
@@ -11833,16 +11788,14 @@ VkontakteSubscribeAllButton = React.createClass({
   }
 });
 
-module.exports = VkontakteSubscribeAllButton;
+module.exports = FacebookSubscribeAllButton;
 
 
 
 },{}],124:[function(require,module,exports){
-var FacebookSuggestionsEmpty, MESSAGE, PropTypes;
+var FacebookSuggestionsEmpty, PropTypes;
 
 PropTypes = React.PropTypes;
-
-MESSAGE = 'К сожалению, на Тейсти нет ваших друзей из Facebook на которых вы не подписаны';
 
 FacebookSuggestionsEmpty = React.createClass({
   displayName: 'FacebookSuggestionsEmpty',
@@ -11853,7 +11806,7 @@ FacebookSuggestionsEmpty = React.createClass({
       "className": "grid-full__middle"
     }, React.createElement("div", {
       "className": "popup__text"
-    }, MESSAGE)));
+    }, i18n.t('facebook_suggestions_empty'))));
   }
 });
 
@@ -11908,15 +11861,9 @@ module.exports = FacebookSuggestionsItem;
 
 
 },{}],127:[function(require,module,exports){
-var ConnectStoreMixin, EMPTY_LIST, ERROR_STATE, LOADED_STATE, LOADING, LOADING_ERROR, LOADING_STATE, SocialNetworkPanelMixin;
+var ConnectStoreMixin, ERROR_STATE, LOADED_STATE, LOADING_STATE, SocialNetworkPanelMixin;
 
 ConnectStoreMixin = require('../../../../../../../shared/react/mixins/connectStore');
-
-LOADING_ERROR = 'Ошибка загрузки.';
-
-LOADING = 'Загружаю..';
-
-EMPTY_LIST = 'Список пуст.';
 
 ERROR_STATE = 'error';
 
@@ -11941,9 +11888,9 @@ SocialNetworkPanelMixin = {
     content = (function() {
       switch (this.state.currentState) {
         case ERROR_STATE:
-          return this.renderMessage(LOADING_ERROR);
+          return this.renderMessage(i18n.t('persons_popup_error'));
         case LOADING_STATE:
-          return this.renderMessage(LOADING);
+          return this.renderMessage(i18n.t('persons_popup_loading'));
         case LOADED_STATE:
           return this.renderContent();
         default:
@@ -12035,7 +11982,9 @@ SuggestionListMixin = {
     }
   },
   getSuggestionsCountMessage: function() {
-    return 'Мы нашли ' + this.props.suggestionsCount + ' ' + this.declension(this.props.suggestionsCount, ['друга', 'друга', 'друзей']);
+    return i18n.t('suggestions_found', {
+      count: this.props.suggestionsCount
+    });
   }
 };
 
@@ -12137,11 +12086,7 @@ window.PersonsPopup_VkontaktePanel = React.createClass({
 
 
 },{"./mixins/socialNetwork":127,"./vkontakte/signIn":131,"./vkontakte/suggestions":132}],131:[function(require,module,exports){
-var BUTTON_TEXT, SIGN_IN_MESSAGE, VkontakteSignIn;
-
-SIGN_IN_MESSAGE = 'Вы еще не привязали свой аккаунт Вконтакте';
-
-BUTTON_TEXT = 'Найти друзей Вконтакте';
+var VkontakteSignIn;
 
 VkontakteSignIn = React.createClass({
   render: function() {
@@ -12151,10 +12096,10 @@ VkontakteSignIn = React.createClass({
       "className": "grid-full__middle"
     }, React.createElement("div", {
       "className": "popup__text popup__text--soc"
-    }, React.createElement("span", null, SIGN_IN_MESSAGE, " "), React.createElement("button", {
+    }, React.createElement("span", null, i18n.t('vkontakte_suggestions_not_signedin'), " "), React.createElement("button", {
       "className": "vk-auth-button",
       "onClick": this.handleClick
-    }, BUTTON_TEXT))));
+    }, i18n.t('vkontakte_suggestions_signin_button')))));
   },
   handleClick: function() {
     return window.location = ApiRoutes.omniauth_url('vkontakte');
@@ -12192,11 +12137,7 @@ module.exports = VkontakteSuggestions;
 
 
 },{"../mixins/suggestions":129,"./suggestions/empty":134,"./suggestions/list":135}],133:[function(require,module,exports){
-var SUBSCRIBE_ALL_BUTTON_TEXT, SUBSCRIBE_ALL_SUCCESS_MESSAGE, VkontakteSubscribeAllButton;
-
-SUBSCRIBE_ALL_BUTTON_TEXT = 'Подписаться на всех';
-
-SUBSCRIBE_ALL_SUCCESS_MESSAGE = 'Вы подписались на всех ваших друзей из Вконтакте';
+var VkontakteSubscribeAllButton;
 
 VkontakteSubscribeAllButton = React.createClass({
   mixins: [window.RequesterMixin],
@@ -12204,7 +12145,7 @@ VkontakteSubscribeAllButton = React.createClass({
     return React.createElement("button", {
       "className": "manage-persons-button",
       "onClick": this.subscribeAll
-    }, SUBSCRIBE_ALL_BUTTON_TEXT);
+    }, i18n.t('vkontakte_subscribe_all_button'));
   },
   subscribeAll: function() {
     return this.createRequest({
@@ -12215,7 +12156,7 @@ VkontakteSubscribeAllButton = React.createClass({
           type: 'suggestionsSubscribed',
           source: 'vkontakte'
         });
-        return TastyNotifyController.notifySuccess(SUBSCRIBE_ALL_SUCCESS_MESSAGE);
+        return TastyNotifyController.notifySuccess(i18n.t('vkontakte_subscribe_all_success'));
       },
       error: (function(_this) {
         return function(data) {
@@ -12231,11 +12172,9 @@ module.exports = VkontakteSubscribeAllButton;
 
 
 },{}],134:[function(require,module,exports){
-var MESSAGE, PropTypes, VkontakteSuggestionsEmpty;
+var PropTypes, VkontakteSuggestionsEmpty;
 
 PropTypes = React.PropTypes;
-
-MESSAGE = 'К сожалению, на Тейсти нет ваших друзей из Вконтакте на которых вы не подписаны';
 
 VkontakteSuggestionsEmpty = React.createClass({
   displayName: 'VkontakteSuggestionsEmpty',
@@ -12246,7 +12185,7 @@ VkontakteSuggestionsEmpty = React.createClass({
       "className": "grid-full__middle"
     }, React.createElement("div", {
       "className": "popup__text"
-    }, MESSAGE)));
+    }, i18n.t('vkontakte_suggestions_empty'))));
   }
 });
 
@@ -12301,9 +12240,7 @@ module.exports = VkontakteSuggestionsItem;
 
 
 },{}],137:[function(require,module,exports){
-var DEFAULT_PANEL, PERSON_POPUP_TITLE;
-
-PERSON_POPUP_TITLE = 'Управление подписками';
+var DEFAULT_PANEL;
 
 DEFAULT_PANEL = 'followings';
 
@@ -12334,7 +12271,7 @@ window.PersonsPopup = React.createClass({
   render: function() {
     return React.createElement(Popup, {
       "hasActivities": this.hasActivities(),
-      "title": PERSON_POPUP_TITLE,
+      "title": i18n.t('persons_popup_header'),
       "isDraggable": true,
       "colorScheme": "dark",
       "className": "popup--persons"

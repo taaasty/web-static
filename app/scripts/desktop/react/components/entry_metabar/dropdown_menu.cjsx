@@ -1,7 +1,7 @@
 cx = require 'react/lib/cx'
 
 MOUSE_LEAVE_TIMEOUT = 300
-DROPDOWN_CLOSED = 'closed'
+DROPDOWN_CLOSED          = 'closed'
 DROPDOWN_OPENED_BY_HOVER = 'openedByHover'
 DROPDOWN_OPENED_BY_CLICK = 'openedByClick'
 MARGIN_BETWEEN_TOGGLER_AND_MENU = 20
@@ -42,11 +42,11 @@ window.EntryMetabarDropdownMenu = React.createClass
     menuStyles = marginTop: @_getTopPosition()
 
     if @props.canEdit
-      actionList.push <EntryMetabarDropdownMenuItem title="Редактировать"
+      actionList.push <EntryMetabarDropdownMenuItem title={ i18n.t('edit_entry_item') }
                                                     icon="icon--pencil"
                                                     href={ this.props.editUrl }
                                                     key="edit" />
-    actionList.push <EntryMetabarDropdownMenuItem title="Ссылка на запись"
+    actionList.push <EntryMetabarDropdownMenuItem title={ i18n.t('link_entry_item') }
                                                   icon="icon--hyperlink"
                                                   href={ this.props.entryUrl }
                                                   key="link" />

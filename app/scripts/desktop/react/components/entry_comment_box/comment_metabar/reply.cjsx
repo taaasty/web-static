@@ -10,4 +10,5 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass
       Ответить
     </span>
 
-  onClick: -> window.commentsMediator.doReplyClicked @props.entryId, @props.name
+  onClick: ->
+    window.commentsMediator.doReplyClicked @props.entryId, @props.name

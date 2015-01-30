@@ -10,9 +10,9 @@ window.EntryMetabarComment = React.createClass
   render: ->
     if @props.isLogged
       commentText = <a className="meta-item__common meta__link"
-                       title="Прокомментировать"
+                       title={ i18n.t('entry_meta_comment_link') }
                        onClick={ this.onClick }>
-                      Прокомментировать
+                      { i18n.t('entry_meta_comment_link') }
                     </a>
     else
       commentText = <a className="meta-item__common meta__link"
@@ -29,6 +29,5 @@ window.EntryMetabarComment = React.createClass
     window.commentsMediator.doCommentClicked @props.entryId
 
   _getNumberOfComments: ->
-    if @props.totalCommentsCount > 0
-      @props.totalCommentsCount + ' ' +
-      @declension(@props.totalCommentsCount, ['комментарий', 'комментария', 'комментариев'])
+    if @props.totalCommentsCount
+      i18n.t 'comments_count', count: @props.totalCommentsCount

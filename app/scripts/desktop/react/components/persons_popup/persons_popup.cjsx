@@ -1,6 +1,3 @@
-# TODO: i18n
-PERSON_POPUP_TITLE = 'Управление подписками'
-
 DEFAULT_PANEL = 'followings'
 
 window.PersonsPopup = React.createClass
@@ -27,7 +24,7 @@ window.PersonsPopup = React.createClass
   render: ->
     <Popup
         hasActivities={ @hasActivities() }
-        title={ PERSON_POPUP_TITLE }
+        title={ i18n.t('persons_popup_header') }
         isDraggable={ true }
         colorScheme="dark"
         className="popup--persons">

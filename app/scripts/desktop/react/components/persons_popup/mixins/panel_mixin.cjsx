@@ -1,11 +1,6 @@
 cx = require 'react/lib/cx'
 
 #TODO: Refactor. Every panel type should have separate component instead of generic one 
-#TODO: i18n
-LOADING_ERROR = 'Ошибка загрузки.'
-LOADING       = 'Загружаю..'
-EMPTY_LIST    = 'Список пуст.'
-
 ERROR_STATE   = 'error'
 LOADED_STATE  = 'loaded'
 LOADING_STATE = 'loading'
@@ -34,9 +29,9 @@ window.PersonsPopup_PanelMixin =
       panelContent = <ul className="persons">{ relationships }</ul>
     else
       switch @state.currentState
-        when ERROR_STATE   then messageText = LOADING_ERROR
-        when LOADING_STATE then messageText = LOADING
-        when LOADED_STATE  then messageText = EMPTY_LIST
+        when ERROR_STATE   then messageText = i18n.t 'persons_popup_error'
+        when LOADING_STATE then messageText = i18n.t 'persons_popup_loading'
+        when LOADED_STATE  then messageText = i18n.t 'persons_popup_empty'
         else console.warn 'Unknown currentState', @state.currentState
 
       panelContent = <div className="grid-full">

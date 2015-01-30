@@ -20,7 +20,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass
     <a onClick={ this.onClick }
         className="meta-item__dropdown-item">
       { icon }
-      Удалить
+      { i18n.t('delete_entry_item') }
     </a>
 
   onClick: (e) ->
@@ -28,8 +28,8 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass
     e.preventDefault()
 
     TastyConfirmController.show
-      message:          "Вы действительно хотите удалить запись?<br />Её нельзя будет восстановить."
-      acceptButtonText: "Удалить запись"
+      message:          i18n.t 'delete_entry_confirm_html'
+      acceptButtonText: i18n.t 'delete_entry_button'
       onAccept:         @deleteEntry
 
   deleteEntry: ->

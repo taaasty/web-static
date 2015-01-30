@@ -1,7 +1,7 @@
 cx = require 'react/lib/cx'
 
 MOUSE_LEAVE_TIMEOUT = 300
-DROPDOWN_CLOSED = 'closed'
+DROPDOWN_CLOSED          = 'closed'
 DROPDOWN_OPENED_BY_HOVER = 'openedByHover'
 DROPDOWN_OPENED_BY_CLICK = 'openedByClick'
 

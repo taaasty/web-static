@@ -6,10 +6,10 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass
 
   render: ->
     <a onClick={ this.onClick }
-       title="Пожаловаться на комментарий"
+       title={ i18n.t('report_comment_item') }
        className="comment__dropdown-item">
       <i className="icon icon--exclamation-mark" />
-      Пожаловаться на комментарий
+      { i18n.t('report_comment_item') }
     </a>
 
   onClick: (e) ->
@@ -17,13 +17,13 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass
     e.preventDefault()
 
     TastyConfirmController.show
-      message:          'Вы действительно хотите пожаловаться на комментарий?'
-      acceptButtonText: 'Пожаловаться'
+      message:          i18n.t 'report_comment_confirm'
+      acceptButtonText: i18n.t 'report_comment_button'
       onAccept:         @createReport
 
   createReport: ->
     @createRequest
       url: ApiRoutes.comments_report_url @props.commentId
       method: 'POST'
-      success: => TastyNotifyController.notify 'success', 'Жалоба на пост успешно отправлена'
+      success: => TastyNotifyController.notifySuccess i18n.t 'report_comment_success'
       error: (data) -> TastyNotifyController.errorResponse data
