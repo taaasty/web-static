@@ -12997,6 +12997,7 @@ window.ReactApp = {
     }
     console.log('ReactApp start');
     return i18n.init({
+      lng: locale,
       resGetPath: TastySettings.localesPath + '/__lng__.json'
     }, function() {
       console.log('Locales loaded');
@@ -13142,7 +13143,7 @@ AuthEmailRecovery = React.createClass({
       "className": "auth__header"
     }, React.createElement("div", {
       "className": "auth__header-title"
-    }, i18n.t('email_recovery_header_title'))), React.createElement("div", {
+    }, i18n.t('email_recovery_header'))), React.createElement("div", {
       "className": "auth__body"
     }, React.createElement("form", {
       "onSubmit": this.handleSubmit

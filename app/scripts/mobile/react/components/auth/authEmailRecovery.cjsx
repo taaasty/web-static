@@ -22,7 +22,7 @@ AuthEmailRecovery = React.createClass
           <div className="auth__section">
             <div className="auth__header">
               <div className="auth__header-title">
-                { i18n.t('email_recovery_header_title') }
+                { i18n.t('email_recovery_header') }
               </div>
             </div>
             <div className="auth__body">

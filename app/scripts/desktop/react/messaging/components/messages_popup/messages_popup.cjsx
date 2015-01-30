@@ -1,12 +1,8 @@
-MESSAGES_POPUP_TITLE  = 'Мои переписки'
-MESSAGES_THREAD_TITLE = 'Переписка с #{name}'
 CONVERSATIONS_STATE           = 'conversations'
 CREATE_NEW_CONVERSATION_STATE = 'createNewConversation'
 THREAD_STATE                  = 'thread'
 ENTER_TIMEOUT = 300
 LEAVE_TIMEOUT = 300
-
-#TODO: Restore TimeoutTransitionGroup after upgrate to 0.12.2
 
 window.MessagesPopup = React.createClass
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin]
@@ -65,9 +61,9 @@ window.MessagesPopup = React.createClass
     if @isThreadState()
       conversation  = ConversationsStore.getConversation @state.currentConversationId
       recipientSlug = conversation.recipient.slug
-      popupTitle    = MESSAGES_THREAD_TITLE.replace /#{.+}/, recipientSlug
+      popupTitle    = i18n.t 'messages_thread_title', slug: recipientSlug
     else
-      popupTitle = MESSAGES_POPUP_TITLE
+      popupTitle = i18n.t 'messages_popup_title'
 
     popupTitle
 

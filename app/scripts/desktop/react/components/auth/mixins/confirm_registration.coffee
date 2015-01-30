@@ -17,7 +17,7 @@ ConfirmRegistrationMixin =
         password: password
         slug:     proposedSlug
       success: (data) =>
-        TastyNotifyController.notify 'success', "Добро пожаловать, #{data.name}! Подождите, я перезагружусь.."
+        TastyNotifyController.notifySuccess i18n.t 'signup_success', userSlug: data.name
         ReactApp.shellbox.close()
         _.defer -> window.location.href = data.tlog_url
       error: (data) =>

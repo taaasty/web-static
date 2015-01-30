@@ -7,6 +7,6 @@ window.LoadMoreButton = React.createClass
     <div className="popup__more">
       <button onClick={ this.props.onClick }
               className="more-button">
-        Показать ещё
+        { i18n.t('load_more_button') }
       </button>
     </div>

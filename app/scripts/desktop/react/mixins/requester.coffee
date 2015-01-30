@@ -1,5 +1,5 @@
 Nanobar = require 'nanobar'
-nanobar = new Nanobar(bg: '#24df88')
+nanobar = new Nanobar bg: '#24df88'
 
 # /*===================================================
 # =            Rewriting jQuery's ajax xhr            =

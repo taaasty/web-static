@@ -4,10 +4,6 @@ INVALID_PASSWORD_MESSAGE = 'user_authenticator/invalid_password'
 INVALID_EMAIL_MESSAGE    = 'user_authenticator/user_by_email_not_found'
 INVALID_SLUG_MESSAGE     = 'user_authenticator/user_by_slug_not_found'
 
-#TODO: i18n
-LOGIN_EMPTY_ERROR    = 'Вы забыли ввести логин'
-PASSWORD_EMPTY_ERROR = 'Вы забыли ввести пароль'
-
 EmailMixin =
 
   isValid: ->
@@ -16,10 +12,10 @@ EmailMixin =
 
     switch
       when login.length == 0
-        TastyNotifyController.notifyError LOGIN_EMPTY_ERROR
+        TastyNotifyController.notifyError i18n.t 'empty_login_error'
         return false
       when password.length == 0
-        TastyNotifyController.notifyError PASSWORD_EMPTY_ERROR
+        TastyNotifyController.notifyError i18n.t 'empty_password_error'
         return false
       else return true
 
@@ -36,7 +32,7 @@ EmailMixin =
         email:    login
         password: password
       success: (data) =>
-        TastyNotifyController.notifySuccess "Добро пожаловать, #{ data.name }! Подождите, я перезагружусь.."
+        TastyNotifyController.notifySuccess i18n.t 'signin_success', userSlug: data.name
         ReactApp.shellbox.close()
         _.defer -> location.reload true
       error: (data) =>

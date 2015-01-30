@@ -26,7 +26,7 @@ class window.MessagingService
     @channel = @pusher.subscribe @CHANNEL_MAIN(@user.id)
     @channel.bind 'pusher:subscription_succeeded', @_connected
     @channel.bind 'pusher:subscription_error', (error) ->
-      TastyNotifyController.notify 'error', 'Соединение не установлено'
+      TastyNotifyController.notify 'error', i18n.t 'pusher_subscription_error'
       MessagingDispatcher.changeConnectionState ConnectionStateStore.ERROR_STATE
 
     @channel.bind @EVENT_STATUS,              MessagingDispatcher.updateMessagingStatus

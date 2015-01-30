@@ -13020,7 +13020,7 @@ AuthEmailRecovery = React.createClass({
       "className": "auth__header"
     }, React.createElement("div", {
       "className": "auth__header-title"
-    }, i18n.t('email_recovery_header_title'))), React.createElement("div", {
+    }, i18n.t('email_recovery_header'))), React.createElement("div", {
       "className": "auth__body"
     }, React.createElement("form", {
       "onSubmit": this.handleSubmit
@@ -18105,7 +18105,79 @@ module.exports={
   "stats_days_count_plural_2": "дня на тейсти",
   "stats_days_count_plural_5": "дней на тейсти",
   "signup_success": "Добро пожаловать, __userSlug__! Подождите, я перезагружусь..",
-  "signin_success": "Добро пожаловать, __userSlug__! Подождите, я перезагружусь.."
+  "signin_success": "Добро пожаловать, __userSlug__! Подождите, я перезагружусь..",
+
+  "network_error": "Ошибка сети: __text__",
+  "pusher_subscription_error": "Соединение не установлено",
+  "conversations_empty_list": "Здесь будут отображаться ваши переписки",
+  "new_thread_hint": "Начните вводить имя друга, которому хотите написать сообщение",
+  "new_thread_placeholder": "Введите имя",
+  "new_thread_button": "Cоздать переписку",
+  "new_thread_unknown_user": "К сожалению, мы не можем найти данного пользователя",
+  "new_thread_process": "Создаю беседу…",
+  "new_message_placeholder": "Ваше сообщение…",
+  "messages_empty_list": "Здесь будут отображаться сообщения",
+  "messages_popup_title": "Мои переписки",
+  "messages_thread_title": "Переписка с __slug__",
+  "notifications_empty_list": "Нет непросмотренных уведомлений",
+  "auth_select_signin_method": "Выберите способ входа/регистрации",
+  "vkontakte": "Вконтакте",
+  "facebook": "Facebook",
+  "auth_signin_login": "Емейл или Ник",
+  "entries_count": "запись",
+  "entries_count_plural_2": "записи",
+  "entries_count_plural_5": "записей",
+  "users_count": "пользователь",
+  "users_count_plural_2": "пользователя",
+  "users_count_plural_5": "пользователей",
+  "seconds_count": "секунда чтобы начать",
+  "seconds_count_plural_2": "секунды чтобы начать",
+  "seconds_count_plural_5": "секунд чтобы начать",
+  "facebook_signin_process_button": "Авторизуюсь..",
+  "facebook_signup_process_button": "Зарегистрироваться",
+  "vkontakte_signin_process_button": "Авторизуюсь..",
+  "vkontakte_signup_process_button": "Зарегистрироваться",
+  "return_to_selecting_signin_method": "Вернуться к выбору способа входа",
+  "forgot_password_or_email": "Я забыл пароль или почту",
+  "email_submit_process_button": "Вхожу..",
+  "confirm_signup": "Сейчас будет создан новый аккаунт @__userSlug__",
+  "confirm_signup_approve": "Да, зарегистрировать новый аккаунт",
+  "or": "или",
+  "email_signin_signup_header": "Вход/Регистрация через емейл",
+  "reset_password_process_button": "Отправляю запрос..",
+  "load_more_button": "Показать ещё",
+  "calendar_empty": "Нет записей",
+  "marker_comments_count": "__count__ комментарий",
+  "marker_comments_count_plural_2": "__count__ комментария",
+  "marker_comments_count_plural_5": "__count__ комментариев",
+  "marker_no_comments": "ни одного комментария",
+  "design_settings_align": "Настройка фона",
+  "design_settings_align_justify": "по ширине",
+  "design_settings_align_center": "по центру",
+  "design_settings_background": "Фон блога",
+  "design_settings_background_move_or": "Перетащите или",
+  "design_settings_background_load": "загрузите",
+  "settings_saved": "Настройки сохранены",
+  "design_settings_feed_color": "Цвет ленты и текста",
+  "design_settings_feed_color_white": "Белый",
+  "design_settings_feed_color_black": "Чёрный",
+  "design_settings_font_type": "Шрифт ленты",
+  "design_settings_header_color": "Заголовок блога",
+  "design_settings_header_color_white": "Белый",
+  "design_settings_header_color_black": "Чёрный",
+  "design_settings_header_color_white_on_black": "Белый на чёрном",
+  "design_settings_header_color_black_on_white": "Чёрный на белом",
+  "design_settings_opacity": "Прозрачность ленты",
+  "design_settings_header": "Управление дизайном",
+  "design_settings_drop_hint": "Отпустите картинку и она начнет загружаться",
+  "settings_still_saving": "Некоторые настройки ещё не успели сохраниться.",
+  "settings_still_saving_confirm": "Некоторые настройки ещё не успели сохраниться. Вы уверены, что хотите выйти?",
+  "i_ll_be_waiting": "Я подожду",
+  "votes": {
+    "vote": "Проголосовать",
+    "voted": "Вы уже проголосовали",
+    "cantVote": "Вы не можете проголосовать"
+  }
 }
 },{}],127:[function(require,module,exports){
 var ConnectStoreMixin;

@@ -28,4 +28,4 @@ window.Shellbox_VkAuthButton = React.createClass
     @props.onClick() if @props.onClick?
 
   _getTitle: ->
-    if @props.isActive then 'Авторизуюсь..' else 'Зарегистрироваться'
+    if @props.isActive then i18n.t 'vkontakte_signin_process_button' else i18n.t 'vkontakte_signup_process_button'

@@ -1,11 +1,11 @@
-require './libs'
-require './locales/locales'
-window.Routes    = require '../shared/routes/routes'
-window.ApiRoutes = require '../shared/routes/api'
+require './resources/libs'
+require './resources/locales'
 require './resources/is_mobile'
 require './resources/fileReceiver'
 require './resources/tasty'
 require './resources/tasty_utils'
+window.Routes    = require '../shared/routes/routes'
+window.ApiRoutes = require '../shared/routes/api'
 
 require './react/entities/normalized_entry'
 

@@ -21,11 +21,15 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
              <DesignSettingsPopup_ControlsProgressbar progress={ this.state.progress } />
              <div className="settings-design__control-inner">
                <span className="settings-design__valign"></span>
-               <span className="settings-design__text absolute--left animate--down">Фон блога</span>
+               <span className="settings-design__text absolute--left animate--down">
+                 { i18n.t('design_settings_background') }
+               </span>
                <span className="settings-design__text absolute--left animate--up">
-                 Перетащите или
+                 { i18n.t('design_settings_background_move_or') }
                  <span className="form-upload form-upload--cover">
-                   <span className="form-upload__text">загрузите</span>
+                   <span className="form-upload__text">
+                     { i18n.t('design_settings_background_load') }
+                   </span>
                    <input ref="uploadCoverInput"
                           type="file"
                           name="layout-cover"
@@ -57,7 +61,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass
       done: (e, data) =>
         @props.onBackgroundChanged data.jqXHR.responseJSON
 
-        TastyNotifyController.notifySuccess 'Настройки сохранены', 2000
+        TastyNotifyController.notifySuccess i18n.t('settings_saved'), 2000
       fail: (e, data) ->
         TastyNotifyController.errorResponse data.response().jqXHR
       always: =>

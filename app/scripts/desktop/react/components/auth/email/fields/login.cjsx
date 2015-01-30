@@ -1,8 +1,5 @@
 cx = require 'react/lib/cx'
 
-#TODO: i18n
-PLACEHOLDER = 'Электронная почта или имя'
-
 EmailLoginField = React.createClass
 
   propTypes:
@@ -22,7 +19,7 @@ EmailLoginField = React.createClass
                <AdaptiveInput
                    ref="input"
                    value={ @props.value }
-                   placeholder={ PLACEHOLDER }
+                   placeholder={ i18n.t('login_field_placeholder') }
                    autoFocus={ true }
                    required={ true }
                    disabled={ @props.isDisabled }

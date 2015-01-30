@@ -15,7 +15,9 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass
     <div className="settings-design__control settings-design__control--feed-color" data-key="feedColor">
       <div className="settings-design__control-inner">
         <span className="settings-design__valign"></span>
-        <span className="settings-design__text absolute--left animate--down">Цвет ленты и текста</span>
+        <span className="settings-design__text absolute--left animate--down">
+          { i18n.t('design_settings_feed_color') }
+        </span>
         <span className="settings-design__state settings-design__state--radiobutton absolute--right animate--right">
           <span className="settings-design__state-i"></span>
         </span>
@@ -23,13 +25,13 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass
           <DesignSettingsPopup_ControlsRadioButton value="white"
                                                    settingId="feedColor"
                                                    isActive={ this.state.active == "white" }
-                                                   text="Белый"
+                                                   text={ i18n.t('design_settings_feed_color_white') }
                                                    onChange={ this.onChange } />
 
           <DesignSettingsPopup_ControlsRadioButton value="black"
                                                    settingId="feedColor"
                                                    isActive={ this.state.active == "black" }
-                                                   text="Чёрный"
+                                                   text={ i18n.t('design_settings_feed_color_black') }
                                                    onChange={ this.onChange } />
         </span>
       </div>

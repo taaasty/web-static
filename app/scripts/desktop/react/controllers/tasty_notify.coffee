@@ -37,7 +37,7 @@ window.TastyNotifyController =
       message = json.long_message if json.long_message?
       message ||= json.error if json.error? && json.error.length > 0
     else
-      message = "Ошибка сети: #{response.statusText}"
+      message = i18n.t 'network_error', text: response.statusText
 
     unless @_isPageLoadingCanceled response
       @notify 'error', message, timeout

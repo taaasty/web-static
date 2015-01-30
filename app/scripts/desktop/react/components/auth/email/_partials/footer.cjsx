@@ -1,21 +1,17 @@
-#TODO: i18n
-AUTH_TITLE     = 'Вернуться к выбору способа входа'
-RECOVERY_TITLE = 'Я забыл пароль или почту'
-
 EmailFooter = React.createClass
 
   render: ->
     return <div className="form-popup__footer">
-             <a title={ AUTH_TITLE }
+             <a title={ i18n.t('return_to_selecting_signin_method') }
                 className="form-popup__footer-item"
                 onClick={ this.handleAuthClick }>
-               { AUTH_TITLE }
+               { i18n.t('return_to_selecting_signin_method') }
              </a>
              <span className="form-popup__footer-sep">·</span>
-             <a title={ RECOVERY_TITLE }
+             <a title={ i18n.t('forgot_password_or_email') }
                 className="form-popup__footer-item"
                 onClick={ this.handleRecoveryClick }>
-               { RECOVERY_TITLE }
+               { i18n.t('forgot_password_or_email') }
              </a>
            </div>
 
