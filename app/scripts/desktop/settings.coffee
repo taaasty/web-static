@@ -4,7 +4,7 @@ TastySettings =
   host:            'http://taaasty.com/'
   api_host:        'http://taaasty.com/api/'
   sound_asset_url: 'sounds/'
-  localesPath:     '../locales/i18n' # For backend path should be absolute like http://taaasty.com/locales
+  localesPath:     '../locales' # For backend path should be absolute like http://taaasty.com/locales
 
 console.log 'TastyVersion', TastySettings.version
 

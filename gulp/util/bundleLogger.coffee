@@ -8,7 +8,8 @@ gutil        = require 'gulp-util'
 prettyHrtime = require 'pretty-hrtime'
 startTime    = null
 
-module.exports = {
+module.exports =
+
   start: (filepath) ->
     startTime = process.hrtime()
     gutil.log 'Bundling', gutil.colors.green(filepath) + '...'
@@ -17,4 +18,3 @@ module.exports = {
     taskTime   = process.hrtime startTime
     prettyTime = prettyHrtime taskTime
     gutil.log 'Bundled', gutil.colors.green(filepath), 'in', gutil.colors.magenta(prettyTime)
-}

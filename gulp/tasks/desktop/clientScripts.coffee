@@ -6,7 +6,7 @@ bundleLogger   = require '../../util/bundleLogger'
 handleErrors   = require '../../util/handleErrors'
 config         = require('../../config').desktop.local.scripts.client
 
-gulp.task 'clientDesktopScripts', ->
+gulp.task '[D] ClientScripts', ->
   bundler = browserify({
     cache: {}, packageCache: {}
     entries: config.entries
