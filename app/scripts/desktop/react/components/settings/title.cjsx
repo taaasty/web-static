@@ -12,7 +12,7 @@ SettingsTitle = React.createClass
     <div className="settings__hero__text">
       <EditableField
           defaultValue={ @state.title }
-          placeholder="Введите небольшое описание вашего тлога"
+          placeholder={ i18n.t('settings_description_placeholder') }
           onEditEnd={ @handleEditEnd } />
     </div>
 

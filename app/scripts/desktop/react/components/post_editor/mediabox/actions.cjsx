@@ -11,7 +11,7 @@ window.MediaBox_Actions = React.createClass
     actions = []
 
     if @props.onDelete?
-      actions.push <div title="Удалить"
+      actions.push <div title={ i18n.t('editor_mediabox_delete') }
                         className="media-box__action media-box__action--delete"
                         onClick={ this.props.onDelete }
                         key="delete">
@@ -19,7 +19,7 @@ window.MediaBox_Actions = React.createClass
                    </div>
 
     if @props.onRotate?
-      actions.push <div title="Повернуть"
+      actions.push <div title={ i18n.t('editor_mediabox_rotate') }
                         className="media-box__action media-box__action--rotate"
                         onClick={ this.props.onRotate }
                         key="rotate">

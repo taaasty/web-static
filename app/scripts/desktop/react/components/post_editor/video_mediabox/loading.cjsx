@@ -9,7 +9,7 @@ window.VideoMediaBox_Loading = React.createClass
         <div className="media-box__text">
           <span>{ this.props.embedUrl }</span>
           <br />
-          <span>Загружаю..</span>
+          <span>{ i18n.t('editor_video_mediabox_loading') }</span>
         </div>
       </div>
     </MediaBox_Layout>

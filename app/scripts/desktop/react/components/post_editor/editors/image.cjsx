@@ -55,7 +55,7 @@ window.PostEditor_ImageEditor = React.createClass
 
                  <TastyEditor ref="titleEditor"
                               mode="rich"
-                              placeholder="Придумайте подпись"
+                              placeholder={ i18n.t('editor_description_placeholder') }
                               content={ this._getTitle() }
                               isLoading={ this.hasActivities() }
                               onChange={ this.startAutosave } />
@@ -133,6 +133,6 @@ window.PostEditor_ImageEditor = React.createClass
       @activateLoadedMode()
       @setState { imageUrl, images }
     image.onerror = =>
-      TastyNotifyController.notifyError "Изображения #{ imageUrl } не существует."
+      TastyNotifyController.notifyError i18n.t 'editor_image_doesnt_exist', {imageUrl}
 
     image.src = imageUrl

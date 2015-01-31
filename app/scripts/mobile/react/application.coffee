@@ -3,7 +3,7 @@ ReactUjs    = require 'reactUjs'
 
 window.ReactApp =
 
-  start: (locale = TastySettings.locale) ->
+  start: (locale) ->
     console.log 'ReactApp start'
 
     i18n.init

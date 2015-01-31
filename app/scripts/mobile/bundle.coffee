@@ -28,5 +28,3 @@ window.FeedFriendsPage = require './react/pages/feedFriends'
 require './react/stores/currentUser'
 require './react/stores/relationships'
 require './react/stores/feed'
-
-ReactApp.start()

@@ -56,30 +56,26 @@ window.FollowButton = React.createClass
     @setState(relationship: newRelationship)
 
   _getTitle: ->
-    return 'ошибка'       if @state.isError
-    return 'в процессе..' if @state.isProcess
+    return i18n.t 'follow_button_error'   if @state.isError
+    return i18n.t 'follow_button_process' if @state.isProcess
 
     if @state.isHover
       switch @state.relationship.state
-        when STATE_FRIEND    then 'Отписаться'
-        when STATE_REQUESTED then 'Отменить запрос'
-        when STATE_IGNORED   then 'Разблокировать'
+        when STATE_FRIEND    then i18n.t 'follow_button_unsubscribe'
+        when STATE_REQUESTED then i18n.t 'follow_button_cancel'
+        when STATE_IGNORED   then i18n.t 'follow_button_unblock'
         when STATE_GUESSED
-          if @state.relationship.user.is_privacy then 'Отправить запрос' else 'Подписаться'
+          if @state.relationship.user.is_privacy then i18n.t 'follow_button_send_request' else i18n.t 'follow_button_subscribe'
         when STATE_NONE
-          if @state.relationship.user.is_privacy then 'Отправить запрос' else 'Подписаться'
-        else
-          console.log 'Неизвестный статус', @state.relationship.state
-          'Неизвестный статус'
+          if @state.relationship.user.is_privacy then i18n.t 'follow_button_send_request' else i18n.t 'follow_button_subscribe'
+        else console.log 'Неизвестный статус', @state.relationship.state
     else
       switch @state.relationship.state
-        when STATE_FRIEND    then 'Подписан'
-        when STATE_REQUESTED then 'Ждём одобрения'
-        when STATE_IGNORED   then 'Заблокирован'
+        when STATE_FRIEND    then i18n.t 'follow_button_subscribed'
+        when STATE_REQUESTED then i18n.t 'follow_button_requested'
+        when STATE_IGNORED   then i18n.t 'follow_button_ignored'
         when STATE_GUESSED
-          if @state.relationship.user.is_privacy then 'Отправить запрос' else 'Подписаться'
+          if @state.relationship.user.is_privacy then i18n.t 'follow_button_send_request' else i18n.t 'follow_button_subscribe'
         when STATE_NONE
-          if @state.relationship.user.is_privacy then 'Отправить запрос' else 'Подписаться'
-        else
-          console.log 'Неизвестный статус', @state.relationship.state
-          'Неизвестный статус'
+          if @state.relationship.user.is_privacy then i18n.t 'follow_button_send_request' else i18n.t 'follow_button_subscribe'
+        else console.log 'Неизвестный статус', @state.relationship.state

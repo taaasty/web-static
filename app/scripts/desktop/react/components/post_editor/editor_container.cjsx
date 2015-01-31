@@ -29,7 +29,7 @@ window.PostEditor_EditorContainer = React.createClass
     else
       _.defer =>
         # TODO Выводить модалку
-        TastyNotifyController.notifySuccess 'Опубликовано! Переходим на страницу поста..'
+        TastyNotifyController.notifySuccess i18n.t 'editor_create_success'
         console.log 'goto', entry.entry_url
         window.location.href = entry.entry_url
 

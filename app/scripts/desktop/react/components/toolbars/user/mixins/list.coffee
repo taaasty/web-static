@@ -60,8 +60,8 @@ UserToolbarListMixin =
 
     if url.indexOf( @props.myTlogUrl ) == -1
       TastyConfirmController.show
-        message:           'Для изменения дизайна вашего дневника, необходимо перейти в тлог'
-        acceptButtonText:  'Перейти в тлог'
+        message:           i18n.t 'design_settings_page_confirm'
+        acceptButtonText:  i18n.t 'design_settings_page_confirm_approve'
         acceptButtonColor: 'green'
         onAccept:          @redirectToProfile
     else
@@ -70,7 +70,7 @@ UserToolbarListMixin =
       ), container
 
   showSettings: ->
-    ReactApp.popup.show Settings, title: 'Настройки'
+    ReactApp.popup.show Settings, title: i18n.t('settings_header')
 
   showMessages: ->
     PopupActions.openMessagesPopup()

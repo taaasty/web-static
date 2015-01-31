@@ -8,13 +8,17 @@ SettingsPasswordShow = React.createClass
       <div className="settings__right">
         <button className="button button--outline"
                 onClick={ this.handleButtonClick }>
-          <span className="button__text">Изменить</span>
+          <span className="button__text">
+            { i18n.t('settings_password_edit_button') }
+          </span>
         </button>
       </div>
       <div className="settings__left">
-        <h3 className="settings__title">Пароль</h3>
+        <h3 className="settings__title">
+          { i18n.t('settings_password') }
+        </h3>
         <p className="settings__desc">
-          Используйте сложный пароль для авторизации и обеспечения сохранности данных.
+          { i18n.t('settings_password_description') }
         </p>
       </div>
     </div>

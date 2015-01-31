@@ -42,7 +42,7 @@ SettingsEmailEstablishEdit = React.createClass
            </div>
 
   getButtonTitle: ->
-    if @state.hasInput then 'установить' else 'отмена'
+    if @state.hasInput then i18n.t 'settings_email_establish_approve' else i18n.t 'settings_email_establish_disapprove'
 
   handleButtonClick: (e) ->
     e.preventDefault()

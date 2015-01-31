@@ -7,13 +7,13 @@ window.MediaBox_VideoWelcome = React.createClass
     <MediaBox_Layout type="video">
       <div className="media-box__info">
         <div className="media-box__text">
-          <a title="Вставьте"
+          <a title={ i18n.t('editor_welcome_video_insert') }
              onClick={ this.props.onClick }>
-            Вставьте
+            { i18n.t('editor_welcome_video_insert') }
           </a>
-          <span> ссылку на видео.</span>
+          <span> { i18n.t('editor_welcome_video_link') }</span>
           <br />
-          <span> Мы поддерживаем YouTube, Instagram, Coub и другие.</span>
+          <span> { i18n.t('editor_welcome_video_supported_services') }</span>
         </div>
       </div>
     </MediaBox_Layout>

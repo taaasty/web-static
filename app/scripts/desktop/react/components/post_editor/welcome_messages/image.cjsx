@@ -9,9 +9,9 @@ window.MediaBox_ImageWelcome = React.createClass
   render: ->
     <div className="media-box__info">
       <div className="media-box__text">
-        <span>Перетащите или </span>
+        <span>{ i18n.t('editor_welcome_move_or') } </span>
         <span className="form-upload form-upload--image">
-           <span className="form-upload__text">выберите</span>
+           <span className="form-upload__text">{ i18n.t('editor_welcome_choose') }</span>
            <input ref="input"
                   type="file"
                   id="image"
@@ -19,11 +19,11 @@ window.MediaBox_ImageWelcome = React.createClass
                   accept="image/*"
                   multiple={ true } />
          </span>
-        <span> картинку или</span><br />
-        <a title="вставьте"
+        <span> { i18n.t('editor_welcome_picture_or') }</span><br />
+        <a title={ i18n.t('editor_welcome_insert') }
            onClick={ this.props.onClick }>
-          вставьте
+          { i18n.t('editor_welcome_insert') }
         </a>
-        <span> ссылку на нее</span>
+        <span> { i18n.t('editor_welcome_link_to_it') }</span>
       </div>
     </div>

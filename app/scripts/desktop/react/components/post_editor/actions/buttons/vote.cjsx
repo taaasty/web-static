@@ -27,7 +27,7 @@ window.PostActions_VoteButton = React.createClass
            </button>
 
   _getTooltipTitle: ->
-    if @props.enabled then 'Убрать голосование' else 'Добавить голосование'
+    if @props.enabled then i18n.t 'editor_disable_voting' else i18n.t 'editor_enable_voting'
 
   onClick: ->
     @props.onChange !@props.enabled

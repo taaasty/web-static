@@ -22,8 +22,12 @@ SettingsRadioItem = React.createClass
                  onChange={ this.handleChange } />
           <label htmlFor={ this.props.id }
                  className="switcher__label">
-            <span className="switcher__btn switcher__btn--on">Да</span>
-            <span className="switcher__btn switcher__btn--off">Нет</span>
+            <span className="switcher__btn switcher__btn--on">
+              { i18n.t('settings_radio_button_on') }
+            </span>
+            <span className="switcher__btn switcher__btn--off">
+              { i18n.t('settings_radio_button_off') }
+            </span>
           </label>
         </div>
       </div>

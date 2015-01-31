@@ -1,7 +1,5 @@
 { PropTypes } = React
 
-EMPTY_SLUG_MESSAGE = 'Название тлога не может быть пустым'
-
 SettingsSlug = React.createClass
   displayName: 'SettingsSlug'
 
@@ -16,7 +14,7 @@ SettingsSlug = React.createClass
     <div className="settings__hero__name">
       <EditableField
           defaultValue={ @state.slug }
-          placeholder="Введите ваш псевдоним"
+          placeholder={ i18n.t('settings_slug_placeholder') }
           onEditEnd={ @handleEditEnd } />
     </div>
 
@@ -25,7 +23,7 @@ SettingsSlug = React.createClass
       @setState(slug: slug)
       @props.onChange slug
     else
-      TastyNotifyController.notifyError EMPTY_SLUG_MESSAGE, 2000
+      TastyNotifyController.notifyError i18n.t('settings_empty_slug_error'), 2000
       @forceUpdate()
 
 module.exports = SettingsSlug

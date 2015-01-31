@@ -12,7 +12,7 @@ FeedToolbarList = React.createClass
   render: ->
     if @props.friendsUrl
       friends = <ToolbarItem
-                    title="Подписки"
+                    title={ i18n.t('feed_friends') }
                     href={ this.props.friendsUrl }
                     icon="icon--friends"
                     key="friends" />
@@ -20,22 +20,22 @@ FeedToolbarList = React.createClass
     return <ul className="toolbar__popup-list">
              { friends }
              <ToolbarItem
-                 title="Прямой эфир"
+                 title={ i18n.t('feed_live') }
                  href={ this.props.liveUrl }
                  icon="icon--wave"
                  key="live" />
              <ToolbarItem
-                 title="Лучшее"
+                 title={ i18n.t('feed_best') }
                  href={ this.props.bestUrl }
                  icon="icon--fire"
                  key="best" />
              <ToolbarItem
-                 title="Анонимки"
+                 title={ i18n.t('feed_anonymous') }
                  href={ this.props.anonymousUrl }
                  icon="icon--anonymous"
                  key="anonymous" />
              <ToolbarItem
-                 title="Люди"
+                 title={ i18n.t('feed_people') }
                  href={ Routes.people_path() }
                  icon="icon--friends"
                  key="people" />

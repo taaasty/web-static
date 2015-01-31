@@ -28,7 +28,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass
     e.preventDefault()
 
     TastyConfirmController.show
-      message:          i18n.t 'delete_entry_confirm_html'
+      message:          i18n.t 'delete_entry_confirm'
       acceptButtonText: i18n.t 'delete_entry_button'
       onAccept:         @deleteEntry
 

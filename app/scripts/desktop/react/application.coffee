@@ -8,7 +8,7 @@ window.ReactApp =
     console.log 'ReactApp start'
 
     i18n.init
-      lng: locale || TastySettings.locale
+      lng: locale
       resGetPath: TastySettings.localesPath + '/__lng__.json'
     , ->
       console.log 'Locales loaded'

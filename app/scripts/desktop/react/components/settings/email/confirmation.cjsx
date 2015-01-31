@@ -18,11 +18,11 @@ SettingsEmailConfirmation = React.createClass
     message = switch @state.currentState
       when SHOW_STATE
         <span>
-          Емейл не подтвержден. <a title="Отправить" onClick={ this.handleClick }>Отправить</a> подтверждение снова (или проверьте в папке «Спам»)
+          { i18n.t('settings_email_not_confirmed') } <a title={ i18n.t('settings_email_resend_mail') } onClick={ this.handleClick }>{ i18n.t('settings_email_resend_mail') }</a> { i18n.t('settings_email_check_spam') }
         </span>
-      when SENDING_STATE then 'Отправляем письмо..'
-      when SENT_STATE    then 'Отправлено письмо на электронный ящик (проверьте в папке «Спам»).'
-      when ERROR_STATE   then 'Ошибка: ' + @state.errorMessage
+      when SENDING_STATE then i18n.t 'settings_email_confirmation_process'
+      when SENT_STATE    then i18n.t 'settings_email_confirmation_sent'
+      when ERROR_STATE   then i18n.t 'settings_email_confirmation_error', errorMessage: @state.errorMessage
       else console.warn 'Unknown currentState of SettingsEmailConfirmation component', @state.currentState
 
     return <p className="settings__error">{ message }</p>

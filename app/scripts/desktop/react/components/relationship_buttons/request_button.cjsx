@@ -1,8 +1,3 @@
-#TODO: i18n
-ERROR   = 'ошибка'
-LOADING = 'в процессе..'
-APPROVE = 'одобрить'
-
 ERROR_STATE   = 'error'
 LOADING_STATE = 'loading'
 WAITING_STATE = 'waiting'
@@ -39,9 +34,9 @@ window.RelationshipRequestButton = React.createClass
 
   _getTitle: ->
     switch @state.currentState
-      when ERROR_STATE   then ERROR
-      when LOADING_STATE then LOADING
-      else APPROVE
+      when ERROR_STATE   then i18n.t 'follow_button_error'
+      when LOADING_STATE then i18n.t 'follow_button_process'
+      else i18n.t 'follow_button_approve'
 
   handleApproveClick: ->
     @approve

@@ -3,25 +3,25 @@ cx = require 'react/lib/cx'
 CHOICER_TYPES = ['text', 'image', 'instagram', 'music', 'video','quote']
 CHOICER_ITEMS =
   text:
-    title: 'Текст'
+    title: -> i18n.t 'editor_text_type'
     icon:  'icon--text-circle'
   image:
-    title: 'Картинка'
+    title: -> i18n.t 'editor_image_type'
     icon:  'icon--image-circle'
   instagram:
-    title: 'Instagram'
+    title: -> i18n.t 'editor_instagram_type'
     icon:  'icon--instagram-circle'
   music:
-    title: 'Музыка'
+    title: -> i18n.t 'editor_music_type'
     icon:  'icon--music-circle'
   video:
-    title: 'Видео'
+    title: -> i18n.t 'editor_video_type'
     icon:  'icon--video-circle'
   quote:
-    title: 'Цитата'
+    title: -> i18n.t 'editor_quote_type'
     icon:  'icon--quote-circle'
   anonymous:
-    title: 'Анонимка'
+    title: -> i18n.t 'editor_anonymous_type'
     icon:  'icon--text-circle'
 
 window.PostEditor_Choicer = React.createClass
@@ -52,7 +52,7 @@ window.PostEditor_Choicer = React.createClass
     choicerItemData = CHOICER_ITEMS[type]
 
     <PostEditor_ChoicerItem
-        title={ choicerItemData.title }
+        title={ choicerItemData.title() }
         icon={ choicerItemData.icon }
         isActive={ @props.currentType == type }
         isLoading={ @props.isLoading }

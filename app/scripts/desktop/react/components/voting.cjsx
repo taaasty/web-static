@@ -62,10 +62,10 @@ window.Voting = React.createClass
 
   getTitle: ->
     if @state.canVote && !@state.isVoted
-      title = i18n.t 'votes.vote'
+      title = i18n.t 'vote'
     else if @state.isVoted
-      title = i18n.t 'votes.voted'
+      title = i18n.t 'voted'
     else
-      title = i18n.t 'votes.cantVote'
+      title = i18n.t 'cant_vote'
 
      '(Рейтинг ' + @state.rating + ') ' + title
