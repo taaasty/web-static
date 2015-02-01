@@ -46,10 +46,10 @@ HeroTlogStats = React.createClass
 
   getTitle: (type) ->
     switch type
-      when 'entries'    then i18n.t 'stats_entries_count',    count: @props.stats.entries_count
-      when 'followings' then i18n.t 'stats_followings_count', count: @props.stats.followings_count
-      when 'followers'  then i18n.t 'stats_followers_count',  count: @props.stats.followers_count
-      when 'days'       then i18n.t 'stats_days_count',       count: @props.stats.days_count
+      when 'entries'    then i18n.t 'hero.stats_entries_count',    count: @props.stats.entries_count
+      when 'followings' then i18n.t 'hero.stats_followings_count', count: @props.stats.followings_count
+      when 'followers'  then i18n.t 'hero.stats_followers_count',  count: @props.stats.followers_count
+      when 'days'       then i18n.t 'hero.stats_days_count',       count: @props.stats.days_count
       else console.warn 'Unknown type of stats of HeroTlogStats component', type
 
 module.exports = HeroTlogStats

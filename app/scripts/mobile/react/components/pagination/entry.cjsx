@@ -10,7 +10,7 @@ EntryPagination = React.createClass
     <div className="pagination">
       <a className="pagination__item"
          href={ @props.tlogUrl }>
-        { i18n.t('pagination_all_entries') }
+        { i18n.t('pagination.all_entries') }
       </a>
     </div>
 

@@ -10,7 +10,7 @@ HeroTlogActions_CurrentUser = React.createClass
   render: ->
     <div className="hero__actions">
       <button className="follow-button">
-        { i18n.t('current_user_button') }
+        { i18n.t('buttons.hero_current_user') }
       </button>
       <HeroTlogActions_SettingsButton slug={ @props.user.slug } />
     </div>

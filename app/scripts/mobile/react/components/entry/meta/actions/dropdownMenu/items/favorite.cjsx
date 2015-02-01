@@ -29,7 +29,7 @@ EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass
   isFavorited: -> @state.favorited
 
   getTitle: ->
-    if @isFavorited() then i18n.t 'remove_from_favorites_entry_item' else i18n.t 'add_to_favorites_entry_item'
+    if @isFavorited() then i18n.t 'entry.remove_from_favorites_item' else i18n.t 'entry.add_to_favorites_item'
 
   addToFavorites: ->
     EntryViewActions.addToFavorites @props.entryId

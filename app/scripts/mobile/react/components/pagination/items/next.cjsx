@@ -18,7 +18,7 @@ PaginationNext = React.createClass
 
     return <a className={ nextClasses }
               href={ @props.href }>
-             { i18n.t('pagination_next') }
+             { i18n.t('pagination.next') }
            </a>
 
 module.exports = PaginationNext

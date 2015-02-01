@@ -10,7 +10,7 @@ FeedToolbarList = React.createClass
   render: ->
     if @props.user?
       friends = <ToolbarItem
-                    title={ i18n.t('feed_friends') }
+                    title={ i18n.t('feed.friends') }
                     href={ Routes.friends_feed_path() }
                     icon="icon--friends"
                     key="friends" />
@@ -18,22 +18,22 @@ FeedToolbarList = React.createClass
     return <ul className="toolbar__popup-list">
              { friends }
              <ToolbarItem
-                 title={ i18n.t('feed_live') }
+                 title={ i18n.t('feed.live') }
                  href={ Routes.live_feed_path() }
                  icon="icon--wave"
                  key="live" />
              <ToolbarItem
-                 title={ i18n.t('feed_best') }
+                 title={ i18n.t('feed.best') }
                  href={ Routes.best_feed_path() }
                  icon="icon--fire"
                  key="best" />
              <ToolbarItem
-                 title={ i18n.t('feed_anonymous') }
+                 title={ i18n.t('feed.anonymous') }
                  href={ Routes.anonymous_feed_path() }
                  icon="icon--anonymous"
                  key="anonymous" />
              <ToolbarItem
-                 title={ i18n.t('feed_people') }
+                 title={ i18n.t('feed.people') }
                  href={ Routes.people_path() }
                  icon="icon--friends"
                  key="people" />

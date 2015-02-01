@@ -4,7 +4,7 @@ AuthFacebookButton = React.createClass
   render: ->
     <button className="fb-auth-button"
             onClick={ @handleClick }>
-      { i18n.t('facebook_signin_button') }
+      { i18n.t('buttons.auth_facebook_signin') }
     </button>
 
   handleClick: ->

@@ -7,7 +7,7 @@ AuthForgotPasswordLink = React.createClass
   render: ->
     <a className="auth__footer-link"
        onClick={ @handleClick }>
-      { i18n.t('forgot_password_link') }
+      { i18n.t('auth.forgot_password_link') }
     </a>
 
   handleClick: ->

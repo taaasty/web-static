@@ -11,7 +11,7 @@ CommentActionsDropdownMenuEditItem = React.createClass
         onClick={ @props.onEditStart }>
       <a className="comment__dropdown-popup-link">
         <i className="icon icon--pencil" />
-        <span>{ i18n.t('edit_comment_item') }</span>
+        <span>{ i18n.t('comment.edit_item') }</span>
       </a>
     </li>
 

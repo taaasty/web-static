@@ -24,7 +24,7 @@ global.AuthEmailSignUp = React.createClass
           <div className="auth__section">
             <div className="auth__header">
               <div className="auth__header-title">
-                { i18n.t('email_signup_header') }
+                { i18n.t('auth.email_signup_header') }
               </div>
             </div>
             <div className="auth__body">
@@ -54,10 +54,10 @@ global.AuthEmailSignUp = React.createClass
 
     switch
       when email.length == 0
-        NotifyController.notifyError i18n.t 'empty_email_error'
+        NotifyController.notifyError i18n.t 'messages.auth_empty_email_error'
         false
       when password.length == 0
-        NotifyController.notifyError i18n.t 'empty_password_error'
+        NotifyController.notifyError i18n.t 'messages.auth_empty_password_error'
         false
       else true
 

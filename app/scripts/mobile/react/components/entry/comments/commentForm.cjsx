@@ -36,7 +36,7 @@ CommentForm = React.createClass
     if @props.onCancel?
       <button className="comment-form__cancel"
               onClick={ @handleCancel }>
-        { i18n.t('edit_comment_cancel_button') }
+        { i18n.t('buttons.comment_edit_cancel') }
       </button>
 
   clearForm: ->

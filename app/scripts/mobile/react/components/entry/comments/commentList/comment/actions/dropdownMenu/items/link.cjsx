@@ -12,7 +12,7 @@ CommentActionsDropdownMenuLinkItem = React.createClass
       <a className="comment__dropdown-popup-link"
          href={ @getCommentUrl() }>
         <i className="icon icon--hyperlink" />
-        <span>{ i18n.t('link_comment_item') }</span>
+        <span>{ i18n.t('comment.link_item') }</span>
       </a>
     </li>
 

@@ -19,7 +19,7 @@ VideoEntryContent = React.createClass
            dangerouslySetInnerHTML={{ __html: @props.iframely.html }} />
     else
       <div className="media-video__embed">
-        { i18n.t('empty_video_entry') }
+        { i18n.t('entry.empty_video') }
       </div>
 
 module.exports = VideoEntryContent

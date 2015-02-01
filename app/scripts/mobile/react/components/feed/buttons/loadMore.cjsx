@@ -9,7 +9,7 @@ FeedLoadMoreButton = React.createClass
   render: ->
     <button className="load-more-button"
             onClick={ @props.onClick }>
-      { i18n.t('feed_load_more_button') }
+      { i18n.t('buttons.feed_load_more') }
     </button>
 
 module.exports = FeedLoadMoreButton

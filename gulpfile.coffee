@@ -3,7 +3,7 @@ requireDir  = require 'require-dir'
 runSequence = require 'run-sequence'
 
 # Require all tasks in gulp/tasks, including subfolders
-requireDir './gulp/tasks', { recurse: true }
+requireDir './gulp/tasks', recurse: true
 
 gulp.task 'dist', ['[S] Clean'], ->
   gulp.start '[D][P] Scripts', '[D][P] Styles', '[D][P] Locales',

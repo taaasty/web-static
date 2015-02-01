@@ -12358,117 +12358,138 @@ module.exports={
 }
 },{}],6:[function(require,module,exports){
 module.exports={
-  "report_entry_success": "Жалоба на пост успешно отправлена",
-  "delete_entry_success": "Пост успешно удалён",
-  "vote_entry_success": "Голос за пост отдан",
-  "report_comment_success": "Жалоба на комментарий успешно отправлена",
-  "delete_comment_success": "Комментарий успешно удалён",
-  "recovery_mail_sent": "Вам на почту отправлена ссылка для восстановления пароля",
-  "auth": "Это&nbsp;<strong>дневник</strong>, в&nbsp;который хочется писать каждый день",
-  "email_signin_header": "Вход",
-  "email_signup_header": "Регистрация",
-  "email_recovery_header": "Забыли пароль",
-  "empty_login_error": "Вы забыли ввести логин",
-  "empty_email_error": "Вы забыли ввести электронную почту",
-  "empty_password_error": "Вы забыли ввести пароль",
-  "reset_password_button": "Сбросить пароль",
-  "email_signin_button": "Войти с помощью эл. почты",
-  "email_signup_button": "или зарегистрироваться",
-  "email_submit_button": "Войти",
-  "facebook_signin_button": "Войти с помощью Facebook",
-  "vkontakte_signin_button": "Войти с помощью Вконтакте",
-  "email_field_placeholder": "Электронная почта",
-  "login_field_placeholder": "Электронная почта или ник",
-  "nickname_field_placeholder": "Ник",
-  "password_field": "Пароль",
-  "already_registered_link": "Я уже зарегистрирован",
-  "forgot_password_link": "Я забыл пароль",
-  "not_registered_yet_link": "Я еще не зарегистрирован",
-  "remembered_password_link": "Я всё вспомнил, верните меня",
-  "signin_button": "Войти",
-  "follow_button_error": "Ошибка",
-  "follow_button_process": "В процессе..",
-  "follow_button_subscribe": "Подписаться",
-  "follow_button_unsubscribe": "Отписаться",
-  "follow_button_cancel": "Отменить запрос",
-  "follow_button_unblock": "Разблокировать",
-  "follow_button_send_request": "Отправить запрос",
-  "follow_button_subscribed": "Подписан",
-  "follow_button_requested": "Ждём одобрения",
-  "follow_button_ignored": "Заблокирован",
-  "daylog_empty_page": "Нет публикаций за эту дату",
-  "edit_comment_cancel_button": "Отмена",
-  "create_comment_button": "Отпр",
-  "create_comment_placeholder": "Добавить комментарий",
-  "edit_comment_button": "Изм",
-  "edit_comment_placeholder": "Отредактировать комментарий",
-  "delete_comment_item": "Удалить комментарий",
-  "delete_comment_confirm": "Вы действительно хотите удалить комментарий?",
-  "edit_comment_item": "Редактировать комментарий",
-  "link_comment_item": "Ссылка на комментарий",
-  "report_comment_item": "Пожаловаться на комментарий",
-  "report_comment_confirm": "Вы действительно хотите пожаловаться на комментарий?",
-  "empty_image_entry": "У данного поста нет изображения",
-  "unknown_entry_type": "Неизвестный тип поста",
-  "empty_video_entry": "Упс. Для данного поста не найдены медиа-данные",
-  "delete_entry_item": "Удалить",
-  "delete_entry_confirm": "Вы действительно хотите удалить запись?\nЕё нельзя будет восстановить",
-  "edit_entry_item": "Редактировать",
-  "add_to_favorites_entry_item": "Добавить в избранное",
-  "remove_from_favorites_entry_item": "Удалить из избранного",
-  "link_entry_item": "Ссылка на запись",
-  "report_entry_item": "Пожаловаться",
-  "report_entry_confirm": "Вы действительно хотите пожаловаться на пост?",
-  "start_watch_entry_item": "Подписаться на комментарии",
-  "stop_watch_entry_item": "Отписаться от комментариев",
-  "report_user_success": "Жалоба на пользователя принята, и будет рассмотрена в ближайшее время",
-  "feed_load_more_button": "Загрузить еще",
-  "feed_best": "Лучшее",
-  "feed_friends": "Подписки",
-  "feed_live": "Прямой эфир",
-  "feed_people": "Люди",
-  "feed_anonymous": "Анонимки",
-  "current_user_button": "Это вы",
-  "ignore_tlog_item": "Заблокировать",
-  "report_tlog_item": "Пожаловаться",
-  "pagination_next": "Позже",
-  "pagination_prev": "Ранее",
-  "pagination_all_entries": "Смотреть все записи",
-  "tlog_empty_page": "На этой странице нет записей",
-  "toolbar_new_entry_item": "Новая запись",
-  "toolbar_my_diary_item": "Мой дневник",
-  "toolbar_profile_item": "Профиль",
-  "toolbar_favorites_item": "Избранное",
-  "toolbar_new_anonymous_item": "Новая анонимка",
-  "toolbar_privates_item": "Скрытые записи",
-  "toolbar_messages_item": "Сообщения",
-  "toolbar_friends_item": "Друзья",
-  "toolbar_design_item": "Настройки дизайна",
-  "toolbar_settings_item": "Настройки",
-  "toolbar_logout_item": "Выйти",
-  "load_more_comments": "Загрузить ещё __count__ комментарий",
-  "load_more_comments_plural_2": "Загрузить ещё __count__ комментария",
-  "load_more_comments_plural_5": "Загрузить ещё __count__ комментариев",
-  "load_more_comments_remaining": "Загрузить оставшийся комментарий",
-  "load_more_comments_remaining_plural_2": "Загрузить оставшиеся __count__ комментария",
-  "load_more_comments_remaining_plural_5": "Загрузить оставшиеся __count__ комментариев",
-  "feed_entries_count": "__count__ запись за 24 часа",
-  "feed_entries_count_plural_2": "__count__ записи за 24 часа",
-  "feed_entries_count_plural_5": "__count__ записей за 24 часа",
-  "stats_entries_count": "пост",
-  "stats_entries_count_plural_2": "поста",
-  "stats_entries_count_plural_5": "постов",
-  "stats_followings_count": "подписка",
-  "stats_followings_count_plural_2": "подписки",
-  "stats_followings_count_plural_5": "подписок",
-  "stats_followers_count": "подписчик",
-  "stats_followers_count_plural_2": "подписчика",
-  "stats_followers_count_plural_5": "подписчиков",
-  "stats_days_count": "день на тейсти",
-  "stats_days_count_plural_2": "дня на тейсти",
-  "stats_days_count_plural_5": "дней на тейсти",
-  "signup_success": "Добро пожаловать, __userSlug__! Подождите, я перезагружусь..",
-  "signin_success": "Добро пожаловать, __userSlug__! Подождите, я перезагружусь.."
+  "feed": {
+    "best": "Лучшее",
+    "friends": "Подписки",
+    "live": "Прямой эфир",
+    "people": "Люди",
+    "anonymous": "Анонимки"
+  },
+  "user_toolbar": {
+    "new_entry_item": "Новая запись",
+    "my_diary_item": "Мой дневник",
+    "profile_item": "Профиль",
+    "favorites_item": "Избранное",
+    "new_anonymous_item": "Новая анонимка",
+    "privates_item": "Скрытые записи",
+    "messages_item": "Сообщения",
+    "friends_item": "Друзья",
+    "design_item": "Настройки дизайна",
+    "settings_item": "Настройки",
+    "logout_item": "Выйти"
+  },
+  "hero": {
+    "ignore_tlog_item": "Заблокировать",
+    "report_tlog_item": "Пожаловаться",
+    "feed_entries_count": "__count__ запись за 24 часа",
+    "feed_entries_count_plural_2": "__count__ записи за 24 часа",
+    "feed_entries_count_plural_5": "__count__ записей за 24 часа",
+    "stats_entries_count": "пост",
+    "stats_entries_count_plural_2": "поста",
+    "stats_entries_count_plural_5": "постов",
+    "stats_followings_count": "подписка",
+    "stats_followings_count_plural_2": "подписки",
+    "stats_followings_count_plural_5": "подписок",
+    "stats_followers_count": "подписчик",
+    "stats_followers_count_plural_2": "подписчика",
+    "stats_followers_count_plural_5": "подписчиков",
+    "stats_days_count": "день на тейсти",
+    "stats_days_count_plural_2": "дня на тейсти",
+    "stats_days_count_plural_5": "дней на тейсти"
+  },
+  "entry": {
+    "empty_image": "У данного поста нет изображения",
+    "empty_video": "Упс. Для данного поста не найдены медиа-данные",
+    "unknown_type": "Неизвестный тип поста",
+    "delete_item": "Удалить",
+    "delete_confirm": "Вы действительно хотите удалить запись?\nЕё нельзя будет восстановить",
+    "edit_item": "Редактировать",
+    "add_to_favorites_item": "Добавить в избранное",
+    "remove_from_favorites_item": "Удалить из избранного",
+    "link_item": "Ссылка на запись",
+    "report_item": "Пожаловаться",
+    "report_confirm": "Вы действительно хотите пожаловаться на пост?",
+    "start_watch_item": "Подписаться на комментарии",
+    "stop_watch_item": "Отписаться от комментариев"
+  },
+  "comment": {
+    "delete_item": "Удалить комментарий",
+    "delete_confirm": "Вы действительно хотите удалить комментарий?",
+    "edit_item": "Редактировать комментарий",
+    "link_item": "Ссылка на комментарий",
+    "report_item": "Пожаловаться на комментарий",
+    "report_confirm": "Вы действительно хотите пожаловаться на комментарий?"
+  },
+  "tlog": {
+    "daylog_empty_page": "Нет публикаций за эту дату",
+    "tlog_empty_page": "На этой странице нет записей"
+  },
+  "auth": {
+    "header": "Это&nbsp;<strong>дневник</strong>, в&nbsp;который хочется писать каждый день",
+    "email_signin_header": "Вход",
+    "email_signup_header": "Регистрация",
+    "email_recovery_header": "Забыли пароль",
+    "already_registered_link": "Я уже зарегистрирован",
+    "forgot_password_link": "Я забыл пароль",
+    "not_registered_yet_link": "Я еще не зарегистрирован",
+    "remembered_password_link": "Я всё вспомнил, верните меня"
+  },
+  "pagination": {
+    "next": "Позже",
+    "prev": "Ранее",
+    "all_entries": "Смотреть все записи"
+  },
+  "buttons": {
+    "comment_edit_cancel": "Отмена",
+    "comment_create": "Отпр",
+    "comment_edit": "Изм",
+    "feed_load_more": "Загрузить еще",
+    "hero_current_user": "Это вы",
+    "auth_reset_password": "Сбросить пароль",
+    "auth_email_signin": "Войти с помощью эл. почты",
+    "auth_email_signup": "или зарегистрироваться",
+    "auth_email_submit": "Войти",
+    "auth_facebook_signin": "Войти с помощью Facebook",
+    "auth_vkontakte_signin": "Войти с помощью Вконтакте",
+    "auth_signin": "Войти",
+    "comments_load_more": "Загрузить ещё __count__ комментарий",
+    "comments_load_more_plural_2": "Загрузить ещё __count__ комментария",
+    "comments_load_more_plural_5": "Загрузить ещё __count__ комментариев",
+    "comments_load_more_remaining": "Загрузить оставшийся комментарий",
+    "comments_load_more_remaining_plural_2": "Загрузить оставшиеся __count__ комментария",
+    "comments_load_more_remaining_plural_5": "Загрузить оставшиеся __count__ комментариев",
+    "follow": {
+      "error": "Ошибка",
+      "process": "В процессе..",
+      "subscribe": "Подписаться",
+      "send_request": "Отправить запрос",
+      "subscribed": "Подписан",
+      "requested": "Ждём одобрения",
+      "ignored": "Заблокирован"  
+    }
+  },
+  "messages": {
+    "entry_report_success": "Жалоба на пост успешно отправлена",
+    "entry_delete_success": "Пост успешно удалён",
+    "entry_vote_success": "Голос за пост отдан",
+    "comment_report_success": "Жалоба на комментарий успешно отправлена",
+    "comment_delete_success": "Комментарий успешно удалён",
+    "tlog_report_success": "Жалоба на пользователя принята, и будет рассмотрена в ближайшее время",
+    "auth_signup_success": "Добро пожаловать, __userSlug__! Подождите, я перезагружусь..",
+    "auth_signin_success": "Добро пожаловать, __userSlug__! Подождите, я перезагружусь..",
+    "auth_empty_login_error": "Вы забыли ввести логин",
+    "auth_empty_email_error": "Вы забыли ввести электронную почту",
+    "auth_empty_password_error": "Вы забыли ввести пароль",
+    "auth_recovery_mail_sent_success": "Вам на почту отправлена ссылка для восстановления пароля"
+  },
+  "placeholders": {
+    "comment_create": "Добавить комментарий",
+    "comment_edit": "Отредактировать комментарий",
+    "auth_email": "Электронная почта",
+    "auth_login": "Электронная почта или ник",
+    "auth_nickname": "Ник",
+    "auth_password": "Пароль"
+  }
 }
 },{}],7:[function(require,module,exports){
 var AppDispatcher, Constants, RelationshipServerActions;
@@ -12523,21 +12544,21 @@ EntryViewActions = {
   },
   report: function(entryId) {
     return Api.entry.report(entryId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('report_entry_success'));
+      return NotifyController.notifySuccess(i18n.t('messages.entry_report_success'));
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
     });
   },
   "delete": function(entryId) {
     return Api.entry["delete"](entryId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('delete_entry_success'));
+      return NotifyController.notifySuccess(i18n.t('messages.entry_delete_success'));
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
     });
   },
   vote: function(entryId) {
     return Api.entry.vote(entryId).then(function(rating) {
-      NotifyController.notifySuccess(i18n.t('vote_entry_success'));
+      NotifyController.notifySuccess(i18n.t('messages.entry_vote_success'));
       return rating;
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
@@ -12560,14 +12581,14 @@ EntryViewActions = {
   },
   deleteComment: function(entryId, commentId) {
     return Api.entry.deleteComment(commentId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('report_comment_success'));
+      return NotifyController.notifySuccess(i18n.t('messages.comment_report_success'));
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
     });
   },
   reportComment: function(commentId) {
     return Api.entry.reportComment(commentId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('delete_comment_success'));
+      return NotifyController.notifySuccess(i18n.t('messages.comment_delete_success'));
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
     });
@@ -12638,7 +12659,7 @@ RelationshipViewActions = {
   },
   report: function(userId) {
     return Api.relationship.report(userId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('report_user_success'));
+      return NotifyController.notifySuccess(i18n.t('messages.tlog_report_success'));
     }).fail((function(_this) {
       return function(xhr) {
         return NotifyController.errorResponse(xhr);
@@ -12661,7 +12682,7 @@ NotifyController = require('../../controllers/notify');
 SessionsViewActions = {
   signIn: function(login, password) {
     return Api.sessions.signIn(login, password).then(function(user) {
-      NotifyController.notifySuccess(i18n.t('signin_success', {
+      NotifyController.notifySuccess(i18n.t('messages.auth_signin_success', {
         userSlug: user.slug
       }));
       return user;
@@ -12671,7 +12692,7 @@ SessionsViewActions = {
   },
   signUp: function(email, password, nickname) {
     return Api.sessions.signUp(email, password, nickname).then(function(user) {
-      NotifyController.notifySuccess(i18n.t('signup_success', {
+      NotifyController.notifySuccess(i18n.t('messages.auth_signup_success', {
         userSlug: user.slug
       }));
       return user;
@@ -12681,7 +12702,7 @@ SessionsViewActions = {
   },
   recover: function(login) {
     return Api.sessions.recover(login).then(function() {
-      return NotifyController.notifySuccess(i18n.t('recovery_mail_sent'));
+      return NotifyController.notifySuccess(i18n.t('messages.auth_recovery_mail_sent_success'));
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
     });
@@ -13082,7 +13103,7 @@ global.Auth = React.createClass({
     })), React.createElement("h1", {
       "className": "auth__lead",
       "dangerouslySetInnerHTML": {
-        __html: i18n.t('auth')
+        __html: i18n.t('auth.header')
       }
     }), React.createElement("div", {
       "className": "auth__buttons"
@@ -13138,7 +13159,7 @@ AuthEmailRecovery = React.createClass({
       "className": "auth__header"
     }, React.createElement("div", {
       "className": "auth__header-title"
-    }, i18n.t('email_recovery_header'))), React.createElement("div", {
+    }, i18n.t('auth.email_recovery_header'))), React.createElement("div", {
       "className": "auth__body"
     }, React.createElement("form", {
       "onSubmit": this.handleSubmit
@@ -13166,7 +13187,7 @@ AuthEmailRecovery = React.createClass({
     var login;
     login = this.refs.loginField.getValue();
     if (login.length === 0) {
-      NotifyController.notifyError(i18n.t('empty_login_error'));
+      NotifyController.notifyError(i18n.t('messages.auth_empty_login_error'));
       return false;
     } else {
       return true;
@@ -13236,7 +13257,7 @@ global.AuthEmailSignIn = React.createClass({
       "className": "auth__header"
     }, React.createElement("div", {
       "className": "auth__header-title"
-    }, i18n.t('email_signin_header'))), React.createElement("div", {
+    }, i18n.t('auth.email_signin_header'))), React.createElement("div", {
       "className": "auth__body"
     }, React.createElement("form", {
       "onSubmit": this.handleSubmit
@@ -13270,10 +13291,10 @@ global.AuthEmailSignIn = React.createClass({
     password = this.refs.passwordField.getValue();
     switch (false) {
       case login.length !== 0:
-        NotifyController.notifyError(i18n.t('empty_login_error'));
+        NotifyController.notifyError(i18n.t('messages.auth_empty_login_error'));
         return false;
       case password.length !== 0:
-        NotifyController.notifyError(i18n.t('empty_password_error'));
+        NotifyController.notifyError(i18n.t('messages.auth_empty_password_error'));
         return false;
       default:
         return true;
@@ -13350,7 +13371,7 @@ AuthEmailResetButton = React.createClass({
   render: function() {
     return React.createElement("button", {
       "className": "outline-auth-button"
-    }, this.renderSpinner(), " ", i18n.t('reset_password_button'));
+    }, this.renderSpinner(), " ", i18n.t('buttons.auth_reset_password'));
   },
   renderSpinner: function() {
     if (this.props.loading) {
@@ -13378,7 +13399,7 @@ AuthEmailSignInButton = React.createClass({
     return React.createElement("button", {
       "className": "site-auth-button",
       "onClick": this.handleClick
-    }, i18n.t('email_signin_button'));
+    }, i18n.t('buttons.auth_email_signin'));
   },
   handleClick: function() {
     return ScreenController.show(AuthEmailSignIn, {}, 'auth-page');
@@ -13400,7 +13421,7 @@ AuthEmailSignUpButton = React.createClass({
     return React.createElement("button", {
       "className": "reg-auth-button",
       "onClick": this.handleClick
-    }, i18n.t('email_signup_button'));
+    }, i18n.t('buttons.auth_email_signup'));
   },
   handleClick: function() {
     return ScreenController.show(AuthEmailSignUp, {}, 'auth-page');
@@ -13426,7 +13447,7 @@ AuthEmailSubmitButton = React.createClass({
   render: function() {
     return React.createElement("button", {
       "className": "outline-auth-button"
-    }, this.renderSpinner(), " ", i18n.t('email_submit_button'));
+    }, this.renderSpinner(), " ", i18n.t('buttons.auth_email_submit'));
   },
   renderSpinner: function() {
     if (this.props.loading) {
@@ -13450,7 +13471,7 @@ AuthFacebookButton = React.createClass({
     return React.createElement("button", {
       "className": "fb-auth-button",
       "onClick": this.handleClick
-    }, i18n.t('facebook_signin_button'));
+    }, i18n.t('buttons.auth_facebook_signin'));
   },
   handleClick: function() {
     return window.location = ApiRoutes.omniauth_url('facebook');
@@ -13470,7 +13491,7 @@ AuthVkontakteButton = React.createClass({
     return React.createElement("button", {
       "className": "vk-auth-button",
       "onClick": this.handleClick
-    }, i18n.t('vkontakte_signin_button'));
+    }, i18n.t('buttons.auth_vkontakte_signin'));
   },
   handleClick: function() {
     return window.location = ApiRoutes.omniauth_url('vkontakte');
@@ -13497,7 +13518,7 @@ AuthEmailLoginField = React.createClass({
     })), React.createElement("input", {
       "ref": "input",
       "type": "text",
-      "placeholder": i18n.t('login_field_placeholder'),
+      "placeholder": i18n.t('placeholders.auth_login'),
       "id": "auth-email-nick",
       "className": "auth__field-input"
     }));
@@ -13527,7 +13548,7 @@ AuthEmailPasswordField = React.createClass({
     })), React.createElement("input", {
       "ref": "input",
       "type": "password",
-      "placeholder": i18n.t('password_field'),
+      "placeholder": i18n.t('placeholders.auth_password'),
       "id": "auth-password",
       "className": "auth__field-input"
     }));
@@ -13554,7 +13575,7 @@ AuthForgotPasswordLink = React.createClass({
     return React.createElement("a", {
       "className": "auth__footer-link",
       "onClick": this.handleClick
-    }, i18n.t('forgot_password_link'));
+    }, i18n.t('auth.forgot_password_link'));
   },
   handleClick: function() {
     return ScreenController.show(AuthEmailRecovery, {}, 'auth-page');
@@ -13576,7 +13597,7 @@ AuthNotRegisteredYetLink = React.createClass({
     return React.createElement("a", {
       "className": "auth__footer-link",
       "onClick": this.handleClick
-    }, i18n.t('not_registered_yet_link'));
+    }, i18n.t('auth.not_registered_yet_link'));
   },
   handleClick: function() {
     return ScreenController.show(AuthEmailSignUp, {}, 'auth-page');
@@ -13598,7 +13619,7 @@ AuthRememberedPasswordLink = React.createClass({
     return React.createElement("a", {
       "className": "auth__footer-link",
       "onClick": this.handleClick
-    }, i18n.t('remembered_password_link'));
+    }, i18n.t('auth.remembered_password_link'));
   },
   handleClick: function() {
     return ScreenController.show(Auth, {}, 'auth-page');
@@ -13620,7 +13641,7 @@ AuthButton = React.createClass({
     return React.createElement("button", {
       "className": "auth-button",
       "onClick": this.handleClick
-    }, i18n.t('signin_button'));
+    }, i18n.t('buttons.auth_signin'));
   },
   handleClick: function() {
     return ScreenController.show(Auth, {}, 'auth-page');
@@ -13757,23 +13778,23 @@ FollowButton = React.createClass({
   getTitle: function() {
     switch (this.state.currentState) {
       case ERROR_STATE:
-        return i18n.t('follow_button_error');
+        return i18n.t('buttons.follow.error');
       case PROCESS_STATE:
-        return i18n.t('follow_button_process');
+        return i18n.t('buttons.follow.process');
     }
     switch (this.state.status) {
       case FRIEND_STATUS:
-        return i18n.t('follow_button_subscribed');
+        return i18n.t('buttons.follow.subscribed');
       case REQUESTED_STATUS:
-        return i18n.t('follow_button_requested');
+        return i18n.t('buttons.follow.requested');
       case IGNORED_STATUS:
-        return i18n.t('follow_button_ignored');
+        return i18n.t('buttons.follow.ignored');
       case GUESSED_STATUS:
       case NONE_STATUS:
         if (this.isTlogPrivate()) {
-          return i18n.t('follow_button_send_request');
+          return i18n.t('buttons.follow.send_request');
         } else {
-          return i18n.t('follow_button_subscribe');
+          return i18n.t('buttons.follow.subscribe');
         }
         break;
       default:
@@ -14357,7 +14378,7 @@ CommentForm = React.createClass({
       return React.createElement("button", {
         "className": "comment-form__cancel",
         "onClick": this.handleCancel
-      }, i18n.t('edit_comment_cancel_button'));
+      }, i18n.t('buttons.comment_edit_cancel'));
     }
   },
   clearForm: function() {
@@ -14400,8 +14421,8 @@ CommentCreateForm = React.createClass({
   render: function() {
     return React.createElement(CommentForm, {
       "ref": "commentForm",
-      "buttonTitle": i18n.t('create_comment_button'),
-      "placeholder": i18n.t('create_comment_placeholder'),
+      "buttonTitle": i18n.t('buttons.comment_create'),
+      "placeholder": i18n.t('placeholders.comment_create'),
       "disabled": this.props.loading,
       "onSubmit": this.createComment
     });
@@ -14446,8 +14467,8 @@ CommentEditForm = React.createClass({
     return React.createElement(CommentForm, {
       "ref": "commentForm",
       "text": this.props.comment.comment_html,
-      "buttonTitle": i18n.t('edit_comment_button'),
-      "placeholder": i18n.t('edit_comment_placeholder'),
+      "buttonTitle": i18n.t('buttons.comment_edit'),
+      "placeholder": i18n.t('placeholders.comment_edit'),
       "onSubmit": this.editComment,
       "onCancel": this.props.onEditCancel
     });
@@ -14738,13 +14759,13 @@ CommentActionsDropdownMenuDeleteItem = React.createClass({
       "className": "comment__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--basket"
-    }), React.createElement("span", null, i18n.t('delete_comment_item'))));
+    }), React.createElement("span", null, i18n.t('comment.delete_item'))));
   },
   "delete": function() {
     return this.props.onCommentDelete(this.props.commentId);
   },
   handleClick: function() {
-    if (confirm(i18n.t('delete_comment_confirm'))) {
+    if (confirm(i18n.t('comment.delete_confirm'))) {
       return this["delete"]();
     }
   }
@@ -14772,7 +14793,7 @@ CommentActionsDropdownMenuEditItem = React.createClass({
       "className": "comment__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--pencil"
-    }), React.createElement("span", null, i18n.t('edit_comment_item'))));
+    }), React.createElement("span", null, i18n.t('comment.edit_item'))));
   }
 });
 
@@ -14799,7 +14820,7 @@ CommentActionsDropdownMenuLinkItem = React.createClass({
       "href": this.getCommentUrl()
     }, React.createElement("i", {
       "className": "icon icon--hyperlink"
-    }), React.createElement("span", null, i18n.t('link_comment_item'))));
+    }), React.createElement("span", null, i18n.t('comment.link_item'))));
   },
   getCommentUrl: function() {
     return this.props.entryUrl + '#comment-' + this.props.commentId;
@@ -14829,13 +14850,13 @@ CommentActionsDropdownMenuReportItem = React.createClass({
       "className": "comment__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--exclamation-mark"
-    }), React.createElement("span", null, i18n.t('report_comment_item'))));
+    }), React.createElement("span", null, i18n.t('comment.report_item'))));
   },
   report: function() {
     return this.props.onCommentReport(this.props.commentId);
   },
   handleClick: function() {
-    if (confirm(i18n.t('report_comment_confirm'))) {
+    if (confirm(i18n.t('comment.report_confirm'))) {
       return this.report();
     }
   }
@@ -15129,11 +15150,11 @@ CommentsLoadMore = React.createClass({
     remainingCount = this.props.totalCount - this.props.loadedCount;
     possibleCount = this.props.loadedCount + this.props.loadPerTime;
     if (possibleCount < this.props.totalCount) {
-      return i18n.t('load_more_comments', {
+      return i18n.t('buttons.comments_load_more', {
         count: this.props.loadPerTime
       });
     } else {
-      return i18n.t('load_more_comments_remaining', {
+      return i18n.t('buttons.comments_load_more_remaining', {
         count: remainingCount
       });
     }
@@ -15278,7 +15299,7 @@ ImageEntryContent = React.createClass({
             "src": this.props.imageUrl
           });
         default:
-          return i18n.t('empty_image_entry');
+          return i18n.t('entry.empty_image');
       }
     }).call(this);
     return React.createElement("div", {
@@ -15418,7 +15439,7 @@ UnknownEntryContent = React.createClass({
       "title": this.props.title
     }), React.createElement("div", {
       "className": "post__content"
-    }, React.createElement("p", null, i18n.t('unknown_entry_type'))));
+    }, React.createElement("p", null, i18n.t('entry.unknown_type'))));
   }
 });
 
@@ -15455,7 +15476,7 @@ VideoEntryContent = React.createClass({
     } else {
       return React.createElement("div", {
         "className": "media-video__embed"
-      }, i18n.t('empty_video_entry'));
+      }, i18n.t('entry.empty_video'));
     }
   }
 });
@@ -15656,13 +15677,13 @@ EntryMetaActions_DropdownMenu_DeleteItem = React.createClass({
       "onClick": this.handleClick
     }, React.createElement("i", {
       "className": "icon icon--basket"
-    }), React.createElement("span", null, i18n.t('delete_entry_item'))));
+    }), React.createElement("span", null, i18n.t('entry.delete_item'))));
   },
   "delete": function() {
     return EntryViewActions["delete"](this.props.entryId);
   },
   handleClick: function() {
-    if (confirm(i18n.t('delete_entry_confirm'))) {
+    if (confirm(i18n.t('entry.delete_confirm'))) {
       return this["delete"]();
     }
   }
@@ -15690,7 +15711,7 @@ EntryMetaActions_DropdownMenu_EditItem = React.createClass({
       "className": "meta-actions__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--pencil"
-    }), React.createElement("span", null, i18n.t('edit_entry_item'))));
+    }), React.createElement("span", null, i18n.t('entry.edit_item'))));
   }
 });
 
@@ -15739,9 +15760,9 @@ EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass({
   },
   getTitle: function() {
     if (this.isFavorited()) {
-      return i18n.t('remove_from_favorites_entry_item');
+      return i18n.t('entry.remove_from_favorites_item');
     } else {
-      return i18n.t('add_to_favorites_entry_item');
+      return i18n.t('entry.add_to_favorites_item');
     }
   },
   addToFavorites: function() {
@@ -15793,7 +15814,7 @@ EntryMetaActions_DropdownMenu_LinkItem = React.createClass({
       "className": "meta-actions__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--hyperlink"
-    }), React.createElement("span", null, i18n.t('link_entry_item'))));
+    }), React.createElement("span", null, i18n.t('entry.link_item'))));
   }
 });
 
@@ -15821,13 +15842,13 @@ EntryMetaActions_DropdownMenu_ReportItem = React.createClass({
       "onClick": this.handleClick
     }, React.createElement("i", {
       "className": "icon icon--exclamation-mark"
-    }), React.createElement("span", null, i18n.t('report_entry_item'))));
+    }), React.createElement("span", null, i18n.t('entry.report_item'))));
   },
   report: function() {
     return EntryViewActions.report(this.props.entryId);
   },
   handleClick: function() {
-    if (confirm(i18n.t('report_entry_confirm'))) {
+    if (confirm(i18n.t('entry.report_confirm'))) {
       return this.report();
     }
   }
@@ -15870,9 +15891,9 @@ EntryMetaActions_DropdownMenu_WatchItem = React.createClass({
   },
   getTitle: function() {
     if (this.isWatching()) {
-      return i18n.t('stop_watch_entry_item');
+      return i18n.t('entry.stop_watch_item');
     } else {
-      return i18n.t('start_watch_entry_item');
+      return i18n.t('entry.start_watch_item');
     }
   },
   startWatch: function() {
@@ -16486,7 +16507,7 @@ HeroTlogActions_CurrentUser = React.createClass({
       "className": "hero__actions"
     }, React.createElement("button", {
       "className": "follow-button"
-    }, i18n.t('current_user_button')), React.createElement(HeroTlogActions_SettingsButton, {
+    }, i18n.t('buttons.hero_current_user')), React.createElement(HeroTlogActions_SettingsButton, {
       "slug": this.props.user.slug
     }));
   }
@@ -16614,7 +16635,7 @@ HeroTlogActions_DropdownMenuIgnoreItem = React.createClass({
       "className": "hero__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--not-allowed"
-    }), React.createElement("span", null, i18n.t('ignore_tlog_item'))));
+    }), React.createElement("span", null, i18n.t('hero.ignore_tlog_item'))));
   },
   ignore: function() {
     return RelationshipViewActions.ignore(this.props.userId).then(this.props.onIgnore);
@@ -16646,7 +16667,7 @@ HeroTlogActions_DropdownMenuReportItem = React.createClass({
       "className": "hero__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--exclamation-mark"
-    }), React.createElement("span", null, i18n.t('report_tlog_item'))));
+    }), React.createElement("span", null, i18n.t('hero.report_tlog_item'))));
   },
   report: function() {
     return RelationshipViewActions.report(this.props.userId).always(this.props.onReport);
@@ -16922,19 +16943,19 @@ HeroTlogStats = React.createClass({
   getTitle: function(type) {
     switch (type) {
       case 'entries':
-        return i18n.t('stats_entries_count', {
+        return i18n.t('hero.stats_entries_count', {
           count: this.props.stats.entries_count
         });
       case 'followings':
-        return i18n.t('stats_followings_count', {
+        return i18n.t('hero.stats_followings_count', {
           count: this.props.stats.followings_count
         });
       case 'followers':
-        return i18n.t('stats_followers_count', {
+        return i18n.t('hero.stats_followers_count', {
           count: this.props.stats.followers_count
         });
       case 'days':
-        return i18n.t('stats_days_count', {
+        return i18n.t('hero.stats_days_count', {
           count: this.props.stats.days_count
         });
       default:
@@ -17020,7 +17041,7 @@ EntryPagination = React.createClass({
     }, React.createElement("a", {
       "className": "pagination__item",
       "href": this.props.tlogUrl
-    }, i18n.t('pagination_all_entries')));
+    }, i18n.t('pagination.all_entries')));
   }
 });
 
@@ -17151,7 +17172,7 @@ FeedToolbarList = React.createClass({
     var friends;
     if (this.props.user != null) {
       friends = React.createElement(ToolbarItem, {
-        "title": i18n.t('feed_friends'),
+        "title": i18n.t('feed.friends'),
         "href": Routes.friends_feed_path(),
         "icon": "icon--friends",
         "key": "friends"
@@ -17160,22 +17181,22 @@ FeedToolbarList = React.createClass({
     return React.createElement("ul", {
       "className": "toolbar__popup-list"
     }, friends, React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_live'),
+      "title": i18n.t('feed.live'),
       "href": Routes.live_feed_path(),
       "icon": "icon--wave",
       "key": "live"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_best'),
+      "title": i18n.t('feed.best'),
       "href": Routes.best_feed_path(),
       "icon": "icon--fire",
       "key": "best"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_anonymous'),
+      "title": i18n.t('feed.anonymous'),
       "href": Routes.anonymous_feed_path(),
       "icon": "icon--anonymous",
       "key": "anonymous"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_people'),
+      "title": i18n.t('feed.people'),
       "href": Routes.people_path(),
       "icon": "icon--friends",
       "key": "people"
@@ -17321,47 +17342,47 @@ UserToolbarList = React.createClass({
     return React.createElement("ul", {
       "className": "toolbar__popup-list"
     }, React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_new_entry_item'),
+      "title": i18n.t('user_toolbar.new_entry_item'),
       "href": Routes.new_entry_url(this.props.user.slug),
       "icon": "icon--plus"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_my_diary_item'),
+      "title": i18n.t('user_toolbar.my_diary_item'),
       "href": Routes.my_tlog_url(this.props.user.slug),
       "icon": "icon--diary"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_profile_item'),
+      "title": i18n.t('user_toolbar.profile_item'),
       "icon": "icon--profile",
       "href": Routes.userProfile(this.props.user.slug)
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_favorites_item'),
+      "title": i18n.t('user_toolbar.favorites_item'),
       "href": Routes.favorites_url(this.props.user.slug),
       "icon": "icon--star"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_new_anonymous_item'),
+      "title": i18n.t('user_toolbar.new_anonymous_item'),
       "href": Routes.new_anonymous_entry_url(this.props.user.slug),
       "icon": "icon--anonymous"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_privates_item'),
+      "title": i18n.t('user_toolbar.privates_item'),
       "href": Routes.private_entries_url(this.props.user.slug),
       "icon": "icon--lock"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_messages_item'),
+      "title": i18n.t('user_toolbar.messages_item'),
       "icon": "icon--messages",
       "onSelect": this.showMessages
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_friends_item'),
+      "title": i18n.t('user_toolbar.friends_item'),
       "icon": "icon--friends",
       "onSelect": this.showFriends
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_design_item'),
+      "title": i18n.t('user_toolbar.design_item'),
       "icon": "icon--drawing",
       "href": Routes.userDesignSettings(this.props.user.slug)
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_settings_item'),
+      "title": i18n.t('user_toolbar.settings_item'),
       "icon": "icon--cogwheel",
       "href": Routes.userSettings(this.props.user.slug)
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_logout_item'),
+      "title": i18n.t('user_toolbar.logout_item'),
       "href": Routes.logout_path(this.props.user.slug),
       "icon": "icon--logout"
     }));

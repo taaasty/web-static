@@ -12455,21 +12455,21 @@ EntryViewActions = {
   },
   report: function(entryId) {
     return Api.entry.report(entryId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('report_entry_success'));
+      return NotifyController.notifySuccess(i18n.t('messages.entry_report_success'));
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
     });
   },
   "delete": function(entryId) {
     return Api.entry["delete"](entryId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('delete_entry_success'));
+      return NotifyController.notifySuccess(i18n.t('messages.entry_delete_success'));
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
     });
   },
   vote: function(entryId) {
     return Api.entry.vote(entryId).then(function(rating) {
-      NotifyController.notifySuccess(i18n.t('vote_entry_success'));
+      NotifyController.notifySuccess(i18n.t('messages.entry_vote_success'));
       return rating;
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
@@ -12492,14 +12492,14 @@ EntryViewActions = {
   },
   deleteComment: function(entryId, commentId) {
     return Api.entry.deleteComment(commentId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('report_comment_success'));
+      return NotifyController.notifySuccess(i18n.t('messages.comment_report_success'));
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
     });
   },
   reportComment: function(commentId) {
     return Api.entry.reportComment(commentId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('delete_comment_success'));
+      return NotifyController.notifySuccess(i18n.t('messages.comment_delete_success'));
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
     });
@@ -12616,7 +12616,7 @@ RelationshipViewActions = {
   },
   report: function(userId) {
     return Api.relationship.report(userId).then(function() {
-      return NotifyController.notifySuccess(i18n.t('report_user_success'));
+      return NotifyController.notifySuccess(i18n.t('messages.tlog_report_success'));
     }).fail((function(_this) {
       return function(xhr) {
         return NotifyController.errorResponse(xhr);
@@ -12639,7 +12639,7 @@ NotifyController = require('../../controllers/notify');
 SessionsViewActions = {
   signIn: function(login, password) {
     return Api.sessions.signIn(login, password).then(function(user) {
-      NotifyController.notifySuccess(i18n.t('signin_success', {
+      NotifyController.notifySuccess(i18n.t('messages.auth_signin_success', {
         userSlug: user.slug
       }));
       return user;
@@ -12649,7 +12649,7 @@ SessionsViewActions = {
   },
   signUp: function(email, password, nickname) {
     return Api.sessions.signUp(email, password, nickname).then(function(user) {
-      NotifyController.notifySuccess(i18n.t('signup_success', {
+      NotifyController.notifySuccess(i18n.t('messages.auth_signup_success', {
         userSlug: user.slug
       }));
       return user;
@@ -12659,7 +12659,7 @@ SessionsViewActions = {
   },
   recover: function(login) {
     return Api.sessions.recover(login).then(function() {
-      return NotifyController.notifySuccess(i18n.t('recovery_mail_sent'));
+      return NotifyController.notifySuccess(i18n.t('messages.auth_recovery_mail_sent_success'));
     }).fail(function(xhr) {
       return NotifyController.errorResponse(xhr);
     });
@@ -13082,7 +13082,7 @@ global.Auth = React.createClass({
     })), React.createElement("h1", {
       "className": "auth__lead",
       "dangerouslySetInnerHTML": {
-        __html: i18n.t('auth')
+        __html: i18n.t('auth.header')
       }
     }), React.createElement("div", {
       "className": "auth__buttons"
@@ -13138,7 +13138,7 @@ AuthEmailRecovery = React.createClass({
       "className": "auth__header"
     }, React.createElement("div", {
       "className": "auth__header-title"
-    }, i18n.t('email_recovery_header'))), React.createElement("div", {
+    }, i18n.t('auth.email_recovery_header'))), React.createElement("div", {
       "className": "auth__body"
     }, React.createElement("form", {
       "onSubmit": this.handleSubmit
@@ -13166,7 +13166,7 @@ AuthEmailRecovery = React.createClass({
     var login;
     login = this.refs.loginField.getValue();
     if (login.length === 0) {
-      NotifyController.notifyError(i18n.t('empty_login_error'));
+      NotifyController.notifyError(i18n.t('messages.auth_empty_login_error'));
       return false;
     } else {
       return true;
@@ -13236,7 +13236,7 @@ global.AuthEmailSignIn = React.createClass({
       "className": "auth__header"
     }, React.createElement("div", {
       "className": "auth__header-title"
-    }, i18n.t('email_signin_header'))), React.createElement("div", {
+    }, i18n.t('auth.email_signin_header'))), React.createElement("div", {
       "className": "auth__body"
     }, React.createElement("form", {
       "onSubmit": this.handleSubmit
@@ -13270,10 +13270,10 @@ global.AuthEmailSignIn = React.createClass({
     password = this.refs.passwordField.getValue();
     switch (false) {
       case login.length !== 0:
-        NotifyController.notifyError(i18n.t('empty_login_error'));
+        NotifyController.notifyError(i18n.t('messages.auth_empty_login_error'));
         return false;
       case password.length !== 0:
-        NotifyController.notifyError(i18n.t('empty_password_error'));
+        NotifyController.notifyError(i18n.t('messages.auth_empty_password_error'));
         return false;
       default:
         return true;
@@ -13351,7 +13351,7 @@ global.AuthEmailSignUp = React.createClass({
       "className": "auth__header"
     }, React.createElement("div", {
       "className": "auth__header-title"
-    }, i18n.t('email_signup_header'))), React.createElement("div", {
+    }, i18n.t('auth.email_signup_header'))), React.createElement("div", {
       "className": "auth__body"
     }, React.createElement("form", {
       "onSubmit": this.handleSubmit
@@ -13385,10 +13385,10 @@ global.AuthEmailSignUp = React.createClass({
     password = this.refs.passwordField.getValue();
     switch (false) {
       case email.length !== 0:
-        NotifyController.notifyError(i18n.t('empty_email_error'));
+        NotifyController.notifyError(i18n.t('messages.auth_empty_email_error'));
         return false;
       case password.length !== 0:
-        NotifyController.notifyError(i18n.t('empty_password_error'));
+        NotifyController.notifyError(i18n.t('messages.auth_empty_password_error'));
         return false;
       default:
         return true;
@@ -13466,7 +13466,7 @@ AuthEmailResetButton = React.createClass({
   render: function() {
     return React.createElement("button", {
       "className": "outline-auth-button"
-    }, this.renderSpinner(), " ", i18n.t('reset_password_button'));
+    }, this.renderSpinner(), " ", i18n.t('buttons.auth_reset_password'));
   },
   renderSpinner: function() {
     if (this.props.loading) {
@@ -13494,7 +13494,7 @@ AuthEmailSignInButton = React.createClass({
     return React.createElement("button", {
       "className": "site-auth-button",
       "onClick": this.handleClick
-    }, i18n.t('email_signin_button'));
+    }, i18n.t('buttons.auth_email_signin'));
   },
   handleClick: function() {
     return ScreenController.show(AuthEmailSignIn, {}, 'auth-page');
@@ -13516,7 +13516,7 @@ AuthEmailSignUpButton = React.createClass({
     return React.createElement("button", {
       "className": "reg-auth-button",
       "onClick": this.handleClick
-    }, i18n.t('email_signup_button'));
+    }, i18n.t('buttons.auth_email_signup'));
   },
   handleClick: function() {
     return ScreenController.show(AuthEmailSignUp, {}, 'auth-page');
@@ -13542,7 +13542,7 @@ AuthEmailSubmitButton = React.createClass({
   render: function() {
     return React.createElement("button", {
       "className": "outline-auth-button"
-    }, this.renderSpinner(), " ", i18n.t('email_submit_button'));
+    }, this.renderSpinner(), " ", i18n.t('buttons.auth_email_submit'));
   },
   renderSpinner: function() {
     if (this.props.loading) {
@@ -13566,7 +13566,7 @@ AuthFacebookButton = React.createClass({
     return React.createElement("button", {
       "className": "fb-auth-button",
       "onClick": this.handleClick
-    }, i18n.t('facebook_signin_button'));
+    }, i18n.t('buttons.auth_facebook_signin'));
   },
   handleClick: function() {
     return window.location = ApiRoutes.omniauth_url('facebook');
@@ -13586,7 +13586,7 @@ AuthVkontakteButton = React.createClass({
     return React.createElement("button", {
       "className": "vk-auth-button",
       "onClick": this.handleClick
-    }, i18n.t('vkontakte_signin_button'));
+    }, i18n.t('buttons.auth_vkontakte_signin'));
   },
   handleClick: function() {
     return window.location = ApiRoutes.omniauth_url('vkontakte');
@@ -13613,7 +13613,7 @@ AuthEmailEmailField = React.createClass({
     })), React.createElement("input", {
       "ref": "input",
       "type": "email",
-      "placeholder": i18n.t('email_field_placeholder'),
+      "placeholder": i18n.t('placeholders.auth_email'),
       "id": "auth-email",
       "className": "auth__field-input"
     }));
@@ -13643,7 +13643,7 @@ AuthEmailLoginField = React.createClass({
     })), React.createElement("input", {
       "ref": "input",
       "type": "text",
-      "placeholder": i18n.t('login_field_placeholder'),
+      "placeholder": i18n.t('placeholders.auth_login'),
       "id": "auth-email-nick",
       "className": "auth__field-input"
     }));
@@ -13673,7 +13673,7 @@ AuthEmailNicknameField = React.createClass({
     })), React.createElement("input", {
       "ref": "input",
       "type": "text",
-      "placeholder": i18n.t('nickname_field_placeholder'),
+      "placeholder": i18n.t('placeholders.auth_nickname'),
       "id": "auth-nick",
       "className": "auth__field-input"
     }));
@@ -13703,7 +13703,7 @@ AuthEmailPasswordField = React.createClass({
     })), React.createElement("input", {
       "ref": "input",
       "type": "password",
-      "placeholder": i18n.t('password_field'),
+      "placeholder": i18n.t('placeholders.auth_password'),
       "id": "auth-password",
       "className": "auth__field-input"
     }));
@@ -13728,7 +13728,7 @@ AuthNotRegisteredYetLink = React.createClass({
     return React.createElement("a", {
       "className": "auth__footer-link",
       "onClick": this.handleClick
-    }, i18n.t('already_registered_link'));
+    }, i18n.t('auth.already_registered_link'));
   },
   handleClick: function() {
     return ScreenController.show(Auth, {}, 'auth-page');
@@ -13752,7 +13752,7 @@ AuthForgotPasswordLink = React.createClass({
     return React.createElement("a", {
       "className": "auth__footer-link",
       "onClick": this.handleClick
-    }, i18n.t('forgot_password_link'));
+    }, i18n.t('auth.forgot_password_link'));
   },
   handleClick: function() {
     return ScreenController.show(AuthEmailRecovery, {}, 'auth-page');
@@ -13774,7 +13774,7 @@ AuthNotRegisteredYetLink = React.createClass({
     return React.createElement("a", {
       "className": "auth__footer-link",
       "onClick": this.handleClick
-    }, i18n.t('not_registered_yet_link'));
+    }, i18n.t('auth.not_registered_yet_link'));
   },
   handleClick: function() {
     return ScreenController.show(AuthEmailSignUp, {}, 'auth-page');
@@ -13796,7 +13796,7 @@ AuthRememberedPasswordLink = React.createClass({
     return React.createElement("a", {
       "className": "auth__footer-link",
       "onClick": this.handleClick
-    }, i18n.t('remembered_password_link'));
+    }, i18n.t('auth.remembered_password_link'));
   },
   handleClick: function() {
     return ScreenController.show(Auth, {}, 'auth-page');
@@ -13818,7 +13818,7 @@ AuthButton = React.createClass({
     return React.createElement("button", {
       "className": "auth-button",
       "onClick": this.handleClick
-    }, i18n.t('signin_button'));
+    }, i18n.t('buttons.auth_signin'));
   },
   handleClick: function() {
     return ScreenController.show(Auth, {}, 'auth-page');
@@ -13955,23 +13955,23 @@ FollowButton = React.createClass({
   getTitle: function() {
     switch (this.state.currentState) {
       case ERROR_STATE:
-        return i18n.t('follow_button_error');
+        return i18n.t('buttons.follow.error');
       case PROCESS_STATE:
-        return i18n.t('follow_button_process');
+        return i18n.t('buttons.follow.process');
     }
     switch (this.state.status) {
       case FRIEND_STATUS:
-        return i18n.t('follow_button_subscribed');
+        return i18n.t('buttons.follow.subscribed');
       case REQUESTED_STATUS:
-        return i18n.t('follow_button_requested');
+        return i18n.t('buttons.follow.requested');
       case IGNORED_STATUS:
-        return i18n.t('follow_button_ignored');
+        return i18n.t('buttons.follow.ignored');
       case GUESSED_STATUS:
       case NONE_STATUS:
         if (this.isTlogPrivate()) {
-          return i18n.t('follow_button_send_request');
+          return i18n.t('buttons.follow.send_request');
         } else {
-          return i18n.t('follow_button_subscribe');
+          return i18n.t('buttons.follow.subscribe');
         }
         break;
       default:
@@ -14541,7 +14541,7 @@ DaylogEmptyPageMessage = React.createClass({
       "className": "post__header"
     }, React.createElement("h1", {
       "className": "post__title"
-    }, i18n.t('daylog_empty_page')))));
+    }, i18n.t('tlog.daylog_empty_page')))));
   }
 });
 
@@ -14614,7 +14614,7 @@ CommentForm = React.createClass({
       return React.createElement("button", {
         "className": "comment-form__cancel",
         "onClick": this.handleCancel
-      }, i18n.t('edit_comment_cancel_button'));
+      }, i18n.t('buttons.comment_edit_cancel'));
     }
   },
   clearForm: function() {
@@ -14657,8 +14657,8 @@ CommentCreateForm = React.createClass({
   render: function() {
     return React.createElement(CommentForm, {
       "ref": "commentForm",
-      "buttonTitle": i18n.t('create_comment_button'),
-      "placeholder": i18n.t('create_comment_placeholder'),
+      "buttonTitle": i18n.t('buttons.comment_create'),
+      "placeholder": i18n.t('placeholders.comment_create'),
       "disabled": this.props.loading,
       "onSubmit": this.createComment
     });
@@ -14703,8 +14703,8 @@ CommentEditForm = React.createClass({
     return React.createElement(CommentForm, {
       "ref": "commentForm",
       "text": this.props.comment.comment_html,
-      "buttonTitle": i18n.t('edit_comment_button'),
-      "placeholder": i18n.t('edit_comment_placeholder'),
+      "buttonTitle": i18n.t('buttons.comment_edit'),
+      "placeholder": i18n.t('placeholders.comment_edit'),
       "onSubmit": this.editComment,
       "onCancel": this.props.onEditCancel
     });
@@ -14995,13 +14995,13 @@ CommentActionsDropdownMenuDeleteItem = React.createClass({
       "className": "comment__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--basket"
-    }), React.createElement("span", null, i18n.t('delete_comment_item'))));
+    }), React.createElement("span", null, i18n.t('comment.delete_item'))));
   },
   "delete": function() {
     return this.props.onCommentDelete(this.props.commentId);
   },
   handleClick: function() {
-    if (confirm(i18n.t('delete_comment_confirm'))) {
+    if (confirm(i18n.t('comment.delete_confirm'))) {
       return this["delete"]();
     }
   }
@@ -15029,7 +15029,7 @@ CommentActionsDropdownMenuEditItem = React.createClass({
       "className": "comment__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--pencil"
-    }), React.createElement("span", null, i18n.t('edit_comment_item'))));
+    }), React.createElement("span", null, i18n.t('comment.edit_item'))));
   }
 });
 
@@ -15056,7 +15056,7 @@ CommentActionsDropdownMenuLinkItem = React.createClass({
       "href": this.getCommentUrl()
     }, React.createElement("i", {
       "className": "icon icon--hyperlink"
-    }), React.createElement("span", null, i18n.t('link_comment_item'))));
+    }), React.createElement("span", null, i18n.t('comment.link_item'))));
   },
   getCommentUrl: function() {
     return this.props.entryUrl + '#comment-' + this.props.commentId;
@@ -15086,13 +15086,13 @@ CommentActionsDropdownMenuReportItem = React.createClass({
       "className": "comment__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--exclamation-mark"
-    }), React.createElement("span", null, i18n.t('report_comment_item'))));
+    }), React.createElement("span", null, i18n.t('comment.report_item'))));
   },
   report: function() {
     return this.props.onCommentReport(this.props.commentId);
   },
   handleClick: function() {
-    if (confirm(i18n.t('report_comment_confirm'))) {
+    if (confirm(i18n.t('comment.report_confirm'))) {
       return this.report();
     }
   }
@@ -15386,11 +15386,11 @@ CommentsLoadMore = React.createClass({
     remainingCount = this.props.totalCount - this.props.loadedCount;
     possibleCount = this.props.loadedCount + this.props.loadPerTime;
     if (possibleCount < this.props.totalCount) {
-      return i18n.t('load_more_comments', {
+      return i18n.t('buttons.comments_load_more', {
         count: this.props.loadPerTime
       });
     } else {
-      return i18n.t('load_more_comments_remaining', {
+      return i18n.t('buttons.comments_load_more_remaining', {
         count: remainingCount
       });
     }
@@ -15535,7 +15535,7 @@ ImageEntryContent = React.createClass({
             "src": this.props.imageUrl
           });
         default:
-          return i18n.t('empty_image_entry');
+          return i18n.t('entry.empty_image');
       }
     }).call(this);
     return React.createElement("div", {
@@ -15675,7 +15675,7 @@ UnknownEntryContent = React.createClass({
       "title": this.props.title
     }), React.createElement("div", {
       "className": "post__content"
-    }, React.createElement("p", null, i18n.t('unknown_entry_type'))));
+    }, React.createElement("p", null, i18n.t('entry.unknown_type'))));
   }
 });
 
@@ -15712,7 +15712,7 @@ VideoEntryContent = React.createClass({
     } else {
       return React.createElement("div", {
         "className": "media-video__embed"
-      }, i18n.t('empty_video_entry'));
+      }, i18n.t('entry.empty_video'));
     }
   }
 });
@@ -16016,13 +16016,13 @@ EntryMetaActions_DropdownMenu_DeleteItem = React.createClass({
       "onClick": this.handleClick
     }, React.createElement("i", {
       "className": "icon icon--basket"
-    }), React.createElement("span", null, i18n.t('delete_entry_item'))));
+    }), React.createElement("span", null, i18n.t('entry.delete_item'))));
   },
   "delete": function() {
     return EntryViewActions["delete"](this.props.entryId);
   },
   handleClick: function() {
-    if (confirm(i18n.t('delete_entry_confirm'))) {
+    if (confirm(i18n.t('entry.delete_confirm'))) {
       return this["delete"]();
     }
   }
@@ -16050,7 +16050,7 @@ EntryMetaActions_DropdownMenu_EditItem = React.createClass({
       "className": "meta-actions__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--pencil"
-    }), React.createElement("span", null, i18n.t('edit_entry_item'))));
+    }), React.createElement("span", null, i18n.t('entry.edit_item'))));
   }
 });
 
@@ -16099,9 +16099,9 @@ EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass({
   },
   getTitle: function() {
     if (this.isFavorited()) {
-      return i18n.t('remove_from_favorites_entry_item');
+      return i18n.t('entry.remove_from_favorites_item');
     } else {
-      return i18n.t('add_to_favorites_entry_item');
+      return i18n.t('entry.add_to_favorites_item');
     }
   },
   addToFavorites: function() {
@@ -16153,7 +16153,7 @@ EntryMetaActions_DropdownMenu_LinkItem = React.createClass({
       "className": "meta-actions__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--hyperlink"
-    }), React.createElement("span", null, i18n.t('link_entry_item'))));
+    }), React.createElement("span", null, i18n.t('entry.link_item'))));
   }
 });
 
@@ -16181,13 +16181,13 @@ EntryMetaActions_DropdownMenu_ReportItem = React.createClass({
       "onClick": this.handleClick
     }, React.createElement("i", {
       "className": "icon icon--exclamation-mark"
-    }), React.createElement("span", null, i18n.t('report_entry_item'))));
+    }), React.createElement("span", null, i18n.t('entry.report_item'))));
   },
   report: function() {
     return EntryViewActions.report(this.props.entryId);
   },
   handleClick: function() {
-    if (confirm(i18n.t('report_entry_confirm'))) {
+    if (confirm(i18n.t('entry.report_confirm'))) {
       return this.report();
     }
   }
@@ -16230,9 +16230,9 @@ EntryMetaActions_DropdownMenu_WatchItem = React.createClass({
   },
   getTitle: function() {
     if (this.isWatching()) {
-      return i18n.t('stop_watch_entry_item');
+      return i18n.t('entry.stop_watch_item');
     } else {
-      return i18n.t('start_watch_entry_item');
+      return i18n.t('entry.start_watch_item');
     }
   },
   startWatch: function() {
@@ -16639,7 +16639,7 @@ FeedLoadMoreButton = React.createClass({
     return React.createElement("button", {
       "className": "load-more-button",
       "onClick": this.props.onClick
-    }, i18n.t('feed_load_more_button'));
+    }, i18n.t('buttons.feed_load_more'));
   }
 });
 
@@ -16978,7 +16978,7 @@ HeroFeed = React.createClass({
       "className": "hero__title"
     }, React.createElement("span", null, this.props.title)), React.createElement("div", {
       "className": "hero__smalltext"
-    }, React.createElement("span", null, i18n.t('feed_entries_count', {
+    }, React.createElement("span", null, i18n.t('hero.feed_entries_count', {
       count: this.props.entriesCount
     }))))));
   },
@@ -17008,7 +17008,7 @@ HeroFeedBest = React.createClass({
   },
   render: function() {
     return React.createElement(HeroFeed, React.__spread({}, this.props, {
-      "title": i18n.t('feed_best')
+      "title": i18n.t('feed.best')
     }));
   }
 });
@@ -17032,7 +17032,7 @@ HeroFeedFriends = React.createClass({
   },
   render: function() {
     return React.createElement(HeroFeed, React.__spread({}, this.props, {
-      "title": i18n.t('feed_friends')
+      "title": i18n.t('feed.friends')
     }));
   }
 });
@@ -17056,7 +17056,7 @@ HeroFeedLive = React.createClass({
   },
   render: function() {
     return React.createElement(HeroFeed, React.__spread({}, this.props, {
-      "title": i18n.t('feed_live')
+      "title": i18n.t('feed.live')
     }));
   }
 });
@@ -17318,7 +17318,7 @@ HeroTlogActions_CurrentUser = React.createClass({
       "className": "hero__actions"
     }, React.createElement("button", {
       "className": "follow-button"
-    }, i18n.t('current_user_button')), React.createElement(HeroTlogActions_SettingsButton, {
+    }, i18n.t('buttons.hero_current_user')), React.createElement(HeroTlogActions_SettingsButton, {
       "slug": this.props.user.slug
     }));
   }
@@ -17446,7 +17446,7 @@ HeroTlogActions_DropdownMenuIgnoreItem = React.createClass({
       "className": "hero__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--not-allowed"
-    }), React.createElement("span", null, i18n.t('ignore_tlog_item'))));
+    }), React.createElement("span", null, i18n.t('hero.ignore_tlog_item'))));
   },
   ignore: function() {
     return RelationshipViewActions.ignore(this.props.userId).then(this.props.onIgnore);
@@ -17478,7 +17478,7 @@ HeroTlogActions_DropdownMenuReportItem = React.createClass({
       "className": "hero__dropdown-popup-link"
     }, React.createElement("i", {
       "className": "icon icon--exclamation-mark"
-    }), React.createElement("span", null, i18n.t('report_tlog_item'))));
+    }), React.createElement("span", null, i18n.t('hero.report_tlog_item'))));
   },
   report: function() {
     return RelationshipViewActions.report(this.props.userId).always(this.props.onReport);
@@ -17754,19 +17754,19 @@ HeroTlogStats = React.createClass({
   getTitle: function(type) {
     switch (type) {
       case 'entries':
-        return i18n.t('stats_entries_count', {
+        return i18n.t('hero.stats_entries_count', {
           count: this.props.stats.entries_count
         });
       case 'followings':
-        return i18n.t('stats_followings_count', {
+        return i18n.t('hero.stats_followings_count', {
           count: this.props.stats.followings_count
         });
       case 'followers':
-        return i18n.t('stats_followers_count', {
+        return i18n.t('hero.stats_followers_count', {
           count: this.props.stats.followers_count
         });
       case 'days':
-        return i18n.t('stats_days_count', {
+        return i18n.t('hero.stats_days_count', {
           count: this.props.stats.days_count
         });
       default:
@@ -17899,7 +17899,7 @@ EntryPagination = React.createClass({
     }, React.createElement("a", {
       "className": "pagination__item",
       "href": this.props.tlogUrl
-    }, i18n.t('pagination_all_entries')));
+    }, i18n.t('pagination.all_entries')));
   }
 });
 
@@ -17934,7 +17934,7 @@ PaginationNext = React.createClass({
     return React.createElement("a", {
       "className": nextClasses,
       "href": this.props.href
-    }, i18n.t('pagination_next'));
+    }, i18n.t('pagination.next'));
   }
 });
 
@@ -17969,7 +17969,7 @@ PaginationPrev = React.createClass({
     return React.createElement("a", {
       "className": prevClasses,
       "href": this.props.href
-    }, i18n.t('pagination_prev'));
+    }, i18n.t('pagination.prev'));
   }
 });
 
@@ -18056,7 +18056,7 @@ TlogEmptyPageMessage = React.createClass({
       "className": "post__header"
     }, React.createElement("h1", {
       "className": "post__title"
-    }, i18n.t('tlog_empty_page')))));
+    }, i18n.t('tlog.tlog_empty_page')))));
   }
 });
 
@@ -18224,7 +18224,7 @@ FeedToolbarList = React.createClass({
     var friends;
     if (this.props.user != null) {
       friends = React.createElement(ToolbarItem, {
-        "title": i18n.t('feed_friends'),
+        "title": i18n.t('feed.friends'),
         "href": Routes.friends_feed_path(),
         "icon": "icon--friends",
         "key": "friends"
@@ -18233,22 +18233,22 @@ FeedToolbarList = React.createClass({
     return React.createElement("ul", {
       "className": "toolbar__popup-list"
     }, friends, React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_live'),
+      "title": i18n.t('feed.live'),
       "href": Routes.live_feed_path(),
       "icon": "icon--wave",
       "key": "live"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_best'),
+      "title": i18n.t('feed.best'),
       "href": Routes.best_feed_path(),
       "icon": "icon--fire",
       "key": "best"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_anonymous'),
+      "title": i18n.t('feed.anonymous'),
       "href": Routes.anonymous_feed_path(),
       "icon": "icon--anonymous",
       "key": "anonymous"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('feed_people'),
+      "title": i18n.t('feed.people'),
       "href": Routes.people_path(),
       "icon": "icon--friends",
       "key": "people"
@@ -18394,47 +18394,47 @@ UserToolbarList = React.createClass({
     return React.createElement("ul", {
       "className": "toolbar__popup-list"
     }, React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_new_entry_item'),
+      "title": i18n.t('user_toolbar.new_entry_item'),
       "href": Routes.new_entry_url(this.props.user.slug),
       "icon": "icon--plus"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_my_diary_item'),
+      "title": i18n.t('user_toolbar.my_diary_item'),
       "href": Routes.my_tlog_url(this.props.user.slug),
       "icon": "icon--diary"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_profile_item'),
+      "title": i18n.t('user_toolbar.profile_item'),
       "icon": "icon--profile",
       "href": Routes.userProfile(this.props.user.slug)
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_favorites_item'),
+      "title": i18n.t('user_toolbar.favorites_item'),
       "href": Routes.favorites_url(this.props.user.slug),
       "icon": "icon--star"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_new_anonymous_item'),
+      "title": i18n.t('user_toolbar.new_anonymous_item'),
       "href": Routes.new_anonymous_entry_url(this.props.user.slug),
       "icon": "icon--anonymous"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_privates_item'),
+      "title": i18n.t('user_toolbar.privates_item'),
       "href": Routes.private_entries_url(this.props.user.slug),
       "icon": "icon--lock"
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_messages_item'),
+      "title": i18n.t('user_toolbar.messages_item'),
       "icon": "icon--messages",
       "onSelect": this.showMessages
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_friends_item'),
+      "title": i18n.t('user_toolbar.friends_item'),
       "icon": "icon--friends",
       "onSelect": this.showFriends
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_design_item'),
+      "title": i18n.t('user_toolbar.design_item'),
       "icon": "icon--drawing",
       "href": Routes.userDesignSettings(this.props.user.slug)
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_settings_item'),
+      "title": i18n.t('user_toolbar.settings_item'),
       "icon": "icon--cogwheel",
       "href": Routes.userSettings(this.props.user.slug)
     }), React.createElement(ToolbarItem, {
-      "title": i18n.t('toolbar_logout_item'),
+      "title": i18n.t('user_toolbar.logout_item'),
       "href": Routes.logout_path(this.props.user.slug),
       "icon": "icon--logout"
     }));

@@ -9,7 +9,7 @@ AuthEmailNicknameField = React.createClass
       </label>
       <input ref="input"
              type="text"
-             placeholder={ i18n.t('nickname_field_placeholder') }
+             placeholder={ i18n.t('placeholders.auth_nickname') }
              id="auth-nick"
              className="auth__field-input" />
     </div>

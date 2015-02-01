@@ -26,21 +26,21 @@ EntryViewActions =
   report: (entryId) ->
     Api.entry.report entryId
       .then ->
-        NotifyController.notifySuccess i18n.t 'report_entry_success'
+        NotifyController.notifySuccess i18n.t 'messages.entry_report_success'
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
   delete: (entryId) ->
     Api.entry.delete entryId
       .then ->
-        NotifyController.notifySuccess i18n.t 'delete_entry_success'
+        NotifyController.notifySuccess i18n.t 'messages.entry_delete_success'
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
   vote: (entryId) ->
     Api.entry.vote entryId
       .then (rating) ->
-        NotifyController.notifySuccess i18n.t 'vote_entry_success'
+        NotifyController.notifySuccess i18n.t 'messages.entry_vote_success'
         rating
       .fail (xhr) ->
         NotifyController.errorResponse xhr
@@ -63,14 +63,14 @@ EntryViewActions =
   deleteComment: (entryId, commentId) ->
     Api.entry.deleteComment commentId
       .then ->
-        NotifyController.notifySuccess i18n.t 'report_comment_success'
+        NotifyController.notifySuccess i18n.t 'messages.comment_report_success'
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
   reportComment: (commentId) ->
     Api.entry.reportComment commentId
       .then ->
-        NotifyController.notifySuccess i18n.t 'delete_comment_success'
+        NotifyController.notifySuccess i18n.t 'messages.comment_delete_success'
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 

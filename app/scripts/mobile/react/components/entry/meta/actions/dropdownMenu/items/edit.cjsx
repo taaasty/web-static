@@ -11,7 +11,7 @@ EntryMetaActions_DropdownMenu_EditItem = React.createClass
       <a href={ @props.editUrl }
          className="meta-actions__dropdown-popup-link">
         <i className="icon icon--pencil" />
-        <span>{ i18n.t('edit_entry_item') }</span>
+        <span>{ i18n.t('entry.edit_item') }</span>
       </a>
     </li>
 

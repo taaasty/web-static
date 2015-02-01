@@ -23,7 +23,7 @@ EntryMetaActions_DropdownMenu_WatchItem = React.createClass
   isWatching: -> @state.watching
 
   getTitle: ->
-    if @isWatching() then i18n.t 'stop_watch_entry_item' else i18n.t 'start_watch_entry_item'
+    if @isWatching() then i18n.t 'entry.stop_watch_item' else i18n.t 'entry.start_watch_item'
 
   startWatch: ->
     EntryViewActions.startWatch @props.entryId

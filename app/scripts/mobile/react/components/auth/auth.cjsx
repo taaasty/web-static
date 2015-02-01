@@ -19,7 +19,7 @@ global.Auth = React.createClass
                 <i className="icon icon--ribbon" />
               </div>
               <h1 className="auth__lead"
-                  dangerouslySetInnerHTML={{ __html: i18n.t('auth') }} />
+                  dangerouslySetInnerHTML={{ __html: i18n.t('auth.header') }} />
               <div className="auth__buttons">
                 <AuthVkontakteButton />
                 <AuthFacebookButton />

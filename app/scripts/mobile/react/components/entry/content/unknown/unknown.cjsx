@@ -11,7 +11,7 @@ UnknownEntryContent = React.createClass
     <div>
       <UnknownEntryHeader title={ @props.title } />
       <div className="post__content">
-        <p>{ i18n.t('unknown_entry_type') }</p>
+        <p>{ i18n.t('entry.unknown_type') }</p>
       </div>
     </div>
 

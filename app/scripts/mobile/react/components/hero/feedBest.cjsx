@@ -9,6 +9,6 @@ HeroFeedBest = React.createClass
     entriesCount:  PropTypes.number.isRequired
 
   render: ->
-    <HeroFeed {...@props} title={ i18n.t('feed_best') } />
+    <HeroFeed {...@props} title={ i18n.t('feed.best') } />
 
 module.exports = HeroFeedBest

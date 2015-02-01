@@ -4,7 +4,7 @@ AuthVkontakteButton = React.createClass
   render: ->
     <button className="vk-auth-button"
             onClick={ @handleClick }>
-      { i18n.t('vkontakte_signin_button') }
+      { i18n.t('buttons.auth_vkontakte_signin') }
     </button>
 
   handleClick: ->
