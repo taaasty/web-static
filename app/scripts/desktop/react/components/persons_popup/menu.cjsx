@@ -1,12 +1,3 @@
-#TODO: i18n
-FOLLOWINGS = 'Вы подписаны'
-FOLLOWERS  = 'Подписчики'
-REQUESTED  = 'Заявки'
-GUESSED    = 'Рекомендации'
-IGNORED    = 'Заблокированы'
-VKONTAKTE  = 'Вконтакте'
-FACEBOOK   = 'Facebook'
-
 window.PersonsPopup_Menu = React.createClass
   displayName: 'PersonsPopup_Menu'
   mixins: [RequesterMixin]
@@ -33,7 +24,7 @@ window.PersonsPopup_Menu = React.createClass
       requestedMenuItem = <PersonsPopup_MenuItem
                               isActive={ @props.currentTab == 'requested' }
                               totalCount={ @state.requestedTotalCount }
-                              title={ REQUESTED }
+                              title={ i18n.t('persons_popup_menu_requested') }
                               onClick={ @props.onSelect.bind(null, 'requested') } />
 
     return <nav className="tabs-nav tabs-nav--white">
@@ -41,13 +32,13 @@ window.PersonsPopup_Menu = React.createClass
                <PersonsPopup_MenuItem 
                    isActive={ @props.currentTab == 'followings' }
                    totalCount={ @state.followingsTotalCount }
-                   title={ FOLLOWINGS }
+                   title={ i18n.t('persons_popup_menu_followings') }
                    onClick={ @props.onSelect.bind(null, 'followings') } />
 
                <PersonsPopup_MenuItem
                    isActive={ @props.currentTab == 'followers' }
                    totalCount={ @state.followersTotalCount }
-                   title={ FOLLOWERS }
+                   title={ i18n.t('persons_popup_menu_followers') }
                    onClick={ @props.onSelect.bind(null, 'followers') } />
 
                { requestedMenuItem }
@@ -55,26 +46,20 @@ window.PersonsPopup_Menu = React.createClass
                <PersonsPopup_MenuItem
                    isActive={ @props.currentTab == 'ignored' }
                    totalCount={ @state.ignoredTotalCount }
-                   title={ IGNORED }
+                   title={ i18n.t('persons_popup_menu_ignored') }
                    onClick={ @props.onSelect.bind(null, 'ignored') } />
 
                <PersonsPopup_MenuItem
                    isActive={ @props.currentTab == 'vkontakte' }
-                   title={ VKONTAKTE }
+                   title={ i18n.t('persons_popup_menu_vkontakte') }
                    onClick={ @props.onSelect.bind(null, 'vkontakte') } />
 
                <PersonsPopup_MenuItem
                    isActive={ @props.currentTab == 'facebook' }
-                   title={ FACEBOOK }
+                   title={ i18n.t('persons_popup_menu_facebook') }
                    onClick={ @props.onSelect.bind(null, 'facebook') } />
              </ul>
            </nav>
-
-    # Temporarily exclude guesses tab
-    # <PersonsPopup_MenuItem isActive={ this.props.currentTab == "guesses" }
-    #                    totalCount={ this.state.guessesTotalCount }
-    #                    title={ GUESSES }
-    #                    onClick={ onSelect.bind(this, 'guesses') } />
 
   isProfilePrivate: -> @props.user.is_privacy is true
   isSummaryLoaded:  -> RelationshipsStore.isSummaryLoaded()

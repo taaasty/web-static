@@ -52,15 +52,15 @@ FollowButton = React.createClass
 
   getTitle: ->
     switch @state.currentState
-      when ERROR_STATE   then return i18n.t 'follow_button_error'
-      when PROCESS_STATE then return i18n.t 'follow_button_process'
+      when ERROR_STATE   then return i18n.t 'buttons.follow.error'
+      when PROCESS_STATE then return i18n.t 'buttons.follow.process'
 
     switch @state.status
-      when FRIEND_STATUS    then i18n.t 'follow_button_subscribed'
-      when REQUESTED_STATUS then i18n.t 'follow_button_requested'
-      when IGNORED_STATUS   then i18n.t 'follow_button_ignored'
+      when FRIEND_STATUS    then i18n.t 'buttons.follow.subscribed'
+      when REQUESTED_STATUS then i18n.t 'buttons.follow.requested'
+      when IGNORED_STATUS   then i18n.t 'buttons.follow.ignored'
       when GUESSED_STATUS, NONE_STATUS
-        if @isTlogPrivate() then i18n.t 'follow_button_send_request' else i18n.t 'follow_button_subscribe'
+        if @isTlogPrivate() then i18n.t 'buttons.follow.send_request' else i18n.t 'buttons.follow.subscribe'
       else console.warn 'Unknown follow status of FollowButton component', @state.status
 
   handleClick: ->

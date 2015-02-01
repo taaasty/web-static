@@ -6,7 +6,7 @@ SessionsViewActions =
   signIn: (login, password) ->
     Api.sessions.signIn login, password
       .then (user) ->
-        NotifyController.notifySuccess i18n.t 'signin_success', userSlug: user.slug
+        NotifyController.notifySuccess i18n.t 'messages.auth_signin_success', userSlug: user.slug
         user
       .fail (xhr) ->
         NotifyController.errorResponse xhr
@@ -14,7 +14,7 @@ SessionsViewActions =
   signUp: (email, password, nickname) ->
     Api.sessions.signUp email, password, nickname
       .then (user) ->
-        NotifyController.notifySuccess i18n.t 'signup_success', userSlug: user.slug
+        NotifyController.notifySuccess i18n.t 'messages.auth_signup_success', userSlug: user.slug
         user
       .fail (xhr) ->
         NotifyController.errorResponse xhr
@@ -22,7 +22,7 @@ SessionsViewActions =
   recover: (login) ->
     Api.sessions.recover login
       .then ->
-        NotifyController.notifySuccess i18n.t 'recovery_mail_sent'
+        NotifyController.notifySuccess i18n.t 'messages.auth_recovery_mail_sent_success'
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 

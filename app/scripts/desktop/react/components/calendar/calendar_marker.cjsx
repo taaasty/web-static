@@ -37,6 +37,6 @@ window.CalendarMarker = React.createClass
 
   getNumberOfRecords: (number) ->
     if number > 0
-      number + ' ' + @declension(number, ['запись', 'записи', 'записей'])
+      i18n.t 'marker_comments_count', count: number
     else
-      'ни одной записи'
+      i18n.t 'marker_no_comments'

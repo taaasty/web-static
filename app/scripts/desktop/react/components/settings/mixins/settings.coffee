@@ -1,5 +1,3 @@
-#TODO: i18n для всех сообщений
-
 CurrentUserViewActions = require '../../../actions/view/current_user'
 
 SettingsMixin =
@@ -10,8 +8,8 @@ SettingsMixin =
       beforeSend: => @incrementActivities()
       success: (data) ->
         TastyLockingAlertController.show
-          title: 'Внимание!'
-          message: "Сейчас будет произведён переход по новому адресу вашего тлога (#{data.tlog_url})"
+          title:   i18n.t 'settings_alert_header'
+          message: i18n.t 'settings_redirect', tlogUrl: data.tlog_url
           action: -> window.location = data.tlog_url
       complete: => @decrementActivities()
 
@@ -19,28 +17,28 @@ SettingsMixin =
     CurrentUserViewActions.updateTitle
       title: title
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess 'Описание тлога успешно изменено', 2000
+      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_description_success'), 2000
       complete:   => @decrementActivities()
 
   updatePrivacy: (privacy) ->
     CurrentUserViewActions.updatePrivacy
       privacy: privacy
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess 'Приватность тлога успешно изменена', 2000
+      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_privacy_success'), 2000
       complete:   => @decrementActivities()
 
   updateDaylog: (daylog) ->
     CurrentUserViewActions.updateDaylog
       daylog: daylog
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess 'Настройки тлогодня успешно изменены', 2000
+      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_daylog_success'), 2000
       complete:   => @decrementActivities()
 
   updateFemale: (female) ->
     CurrentUserViewActions.updateFemale
       female: female
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess 'Настройки пола успешно изменены', 2000
+      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_gender_success'), 2000
       complete:   => @decrementActivities()
 
   updatePassword: ({password, success}) ->
@@ -48,7 +46,7 @@ SettingsMixin =
       password: password
       beforeSend: => @incrementActivities()
       success: =>
-        TastyNotifyController.notifySuccess 'Пароль успешно изменён', 2000
+        TastyNotifyController.notifySuccess i18n.t('settings_change_password_success'), 2000
         success?()
       complete: => @decrementActivities()
 
@@ -56,7 +54,7 @@ SettingsMixin =
     CurrentUserViewActions.updateAvailableNotifications
       availableNotifications: availableNotifications
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess 'Настройки уведомлений успешно изменены', 2000
+      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_notifications_success'), 2000
       complete:   => @decrementActivities()
 
   updateEmail: ({email, success}) ->
@@ -65,13 +63,13 @@ SettingsMixin =
       beforeSend: => @incrementActivities()
       success: =>
         success?()
-        TastyNotifyController.notifySuccess 'На указанный адрес отправлено письмо для активации', 2000
+        TastyNotifyController.notifySuccess i18n.t('settings_change_email_mail_sent'), 2000
       complete:   => @decrementActivities()
 
   cancelEmailConfirmation: ->
     CurrentUserViewActions.cancelEmailConfirmation
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess 'Запрос на изменение емейла успешно отменён', 2000
+      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_email_canceled'), 2000
       complete:   => @decrementActivities()
 
   resendEmailConfirmation: ({beforeSend, error, success}) ->
@@ -81,7 +79,7 @@ SettingsMixin =
         beforeSend?()
       error: error
       success: ->
-        TastyNotifyController.notifySuccess 'Запрос на изменение емейла отправлен повторно', 2000
+        TastyNotifyController.notifySuccess i18n.t('settings_change_email_mail_resent'), 2000
         success?()
       complete: => @decrementActivities()
 

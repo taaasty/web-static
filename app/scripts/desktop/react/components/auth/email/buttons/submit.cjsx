@@ -1,7 +1,3 @@
-#TODO: i18n
-ENTER_TITLE    = 'Войти'
-ENTERING_TITLE = 'Вхожу..'
-
 EmailSubmitButton = React.createClass
 
   propTypes:
@@ -21,7 +17,7 @@ EmailSubmitButton = React.createClass
     </div>
 
   getTitle: ->
-    if @props.isProcess then ENTERING_TITLE else ENTER_TITLE
+    if @props.isProcess then i18n.t 'email_submit_process_button' else i18n.t 'email_submit_button'
 
   handleClick: (e) ->
     e.preventDefault()

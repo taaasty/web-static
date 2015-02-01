@@ -28,8 +28,8 @@ window.PostActions_PrivacyButton = React.createClass
            </button>
 
   _getTooltipTitle: ->
-    title = if @props.private then 'Закрытая запись' else 'Открытая запись'
-    title = 'Открытая запись с голосованием' if @props.isVoteEnabled
+    title = if @props.private then i18n.t 'editor_private_entry' else i18n.t 'editor_public_entry'
+    title = i18n.t 'editor_public_with_voting_entry' if @props.isVoteEnabled
 
     title
 

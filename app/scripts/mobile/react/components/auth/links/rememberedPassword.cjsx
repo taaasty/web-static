@@ -6,7 +6,7 @@ AuthRememberedPasswordLink = React.createClass
   render: ->
     <a className="auth__footer-link"
        onClick={ @handleClick }>
-      { i18n.t('remembered_password_link') }
+      { i18n.t('auth.remembered_password_link') }
     </a>
 
   handleClick: ->

@@ -12,7 +12,7 @@ CommentActionsDropdownMenuReportItem = React.createClass
         onClick={ @handleClick }>
       <a className="comment__dropdown-popup-link">
         <i className="icon icon--exclamation-mark" />
-        <span>{ i18n.t('report_comment_item') }</span>
+        <span>{ i18n.t('comment.report_item') }</span>
       </a>
     </li>
 
@@ -20,6 +20,6 @@ CommentActionsDropdownMenuReportItem = React.createClass
     @props.onCommentReport @props.commentId
 
   handleClick: ->
-    @report() if confirm i18n.t 'report_comment_confirm'
+    @report() if confirm i18n.t 'comment.report_confirm'
 
 module.exports = CommentActionsDropdownMenuReportItem

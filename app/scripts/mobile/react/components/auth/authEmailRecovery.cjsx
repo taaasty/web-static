@@ -22,7 +22,7 @@ AuthEmailRecovery = React.createClass
           <div className="auth__section">
             <div className="auth__header">
               <div className="auth__header-title">
-                { i18n.t('email_recovery_header_title') }
+                { i18n.t('auth.email_recovery_header') }
               </div>
             </div>
             <div className="auth__body">
@@ -48,7 +48,7 @@ AuthEmailRecovery = React.createClass
     login = @refs.loginField.getValue()
 
     if login.length == 0
-      NotifyController.notifyError i18n.t 'empty_login_error'
+      NotifyController.notifyError i18n.t 'messages.auth_empty_login_error'
       false
     else true
 

@@ -1,8 +1,5 @@
 cx = require 'react/lib/cx'
 
-#TODO: i18n
-PLACEHOLDER = 'Пароль'
-
 EmailPasswordField = React.createClass
 
   propTypes:
@@ -23,7 +20,7 @@ EmailPasswordField = React.createClass
                    ref="input"
                    type="password"
                    value={ @props.value }
-                   placeholder={ PLACEHOLDER }
+                   placeholder={ i18n.t('password_field') }
                    required={ true }
                    disabled={ @props.isDisabled }
                    className="form-field__input"

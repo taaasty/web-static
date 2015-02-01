@@ -1,5 +1,3 @@
-TEXT_BUTTON = 'Ok'
-
 window.EntryCommentBox_CommentFormSubmit = React.createClass
 
   propTypes:
@@ -11,7 +9,7 @@ window.EntryCommentBox_CommentFormSubmit = React.createClass
       return <button ref="commentFormSubmit"
                      className="comment-form__submit"
                      onClick={ this.props.onClick }>
-               { TEXT_BUTTON }
+               { i18n.t('comment_form_submit') }
              </button>
     else
       return <span />

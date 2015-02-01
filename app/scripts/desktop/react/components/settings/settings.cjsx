@@ -32,22 +32,22 @@ window.Settings = React.createClass
 
         <div className="settings__body">
           <SettingsRadioItem
-              title="Закрытый дневник?"
-              description="Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам, конечно."
+              title={ i18n.t('settings_privacy') }
+              description={ i18n.t('settings_privacy_description') }
               checked={ @state.user.is_privacy }
               id="isPrivacy"
               onChange={ @updatePrivacy } />
 
           <SettingsRadioItem
-              title="Тлогодень"
-              description="Это режим отображения, когда на странице показываются записи только за один день."
+              title={ i18n.t('settings_daylog') }
+              description={ i18n.t('settings_daylog_description') }
               checked={ @state.user.is_daylog }
               id="isDaylog"
               onChange={ @updateDaylog } />
 
           <SettingsRadioItem
-              title="Вы - девушка"
-              description="На Тейсти сложилось так, что 7 из 10 пользователей – это девушки. Поэтому по умолчанию для всех именно такая настройка."
+              title={ i18n.t('settings_gender') }
+              description={ i18n.t('settings_gender_description') }
               checked={ @state.user.is_female }
               id="isFemale"
               onChange={ @updateFemale } />
@@ -60,8 +60,8 @@ window.Settings = React.createClass
               onResend={ @resendEmailConfirmation } />
 
           <SettingsRadioItem
-              title="Уведомления"
-              description="Отправлять мне емейл-уведомления обо всех новых комментариях, подписчиках и личных сообщениях?"
+              title={ i18n.t('settings_notifications') }
+              description={ i18n.t('settings_notifications_description') }
               checked={ @state.user.available_notifications }
               id="availableNotifications"
               onChange={ @updateAvailableNotifications } />

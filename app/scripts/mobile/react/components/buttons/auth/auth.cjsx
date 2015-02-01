@@ -6,7 +6,7 @@ AuthButton = React.createClass
   render: ->
     <button className="auth-button"
             onClick={ @handleClick }>
-      { i18n.t('signin_button') }
+      { i18n.t('buttons.auth_signin') }
     </button>
 
   handleClick: ->

@@ -38,7 +38,9 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
       when HIDDEN_STATE then form = <div />
       when LINK_STATE   then form = <div className="comments__more">
                                       <a onClick={ this.onClick }
-                                         className="comments__more-link">Прокомментировать</a>
+                                         className="comments__more-link">
+                                        { i18n.t('comment_more_link') }
+                                      </a>
                                     </div>
       else console.warn 'Неизвестное состояние формы ввода комментария', @state.currentState
 

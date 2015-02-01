@@ -13,7 +13,7 @@ HeroTlogActions_DropdownMenuIgnoreItem = React.createClass
         onClick={ @ignore }>
       <a className="hero__dropdown-popup-link">
         <i className="icon icon--not-allowed" />
-        <span>{ i18n.t('ignore_tlog_item') }</span>
+        <span>{ i18n.t('hero.ignore_tlog_item') }</span>
       </a>
     </li>
 

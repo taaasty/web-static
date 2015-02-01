@@ -1,8 +1,6 @@
 cx                       = require 'react/lib/cx'
 CurrentUserServerActions = require '../../actions/server/current_user'
 
-DESIGN_SETTINGS_POPUP_TITLE = 'Управление дизайном'
-
 window.DesignSettingsPopup = React.createClass
   mixins: ['ReactActivitiesMixin', RequesterMixin, ReactShakeMixin, ReactUnmountMixin]
 
@@ -25,7 +23,7 @@ window.DesignSettingsPopup = React.createClass
       'state--drag-hover': @state.isDragged
 
     return <Popup hasActivities={ this.hasActivities() }
-                  title={ DESIGN_SETTINGS_POPUP_TITLE }
+                  title={ i18n.t('design_settings_header') }
                   isDraggable={ true }
                   colorScheme="dark"
                   position={{ top: 30, left: 30 }}
@@ -40,15 +38,16 @@ window.DesignSettingsPopup = React.createClass
                     onDragLeave={ this.onDragLeave }
                     onDrop={ this.onDrop }>
                  <div className="settings-design__drop-text">
-                   Отпустите картинку и она начнет загружаться
+                   { i18n.t('design_settings_drop_hint') }
                  </div>
                </div>
 
-               <DesignSettingsPopup_Controls design={ this.state.user.design }
-                                             userId={ this.state.user.id }
-                                             activitiesHandler={ this.activitiesHandler }
-                                             saveCallback={ this.save }
-                                             onBackgroundChanged={ this._updateUserDesign } />
+               <DesignSettingsPopup_Controls
+                   design={ this.state.user.design }
+                   userId={ this.state.user.id }
+                   activitiesHandler={ this.activitiesHandler }
+                   saveCallback={ this.save }
+                   onBackgroundChanged={ this._updateUserDesign } />
              </div>
            </Popup>
 
@@ -67,7 +66,7 @@ window.DesignSettingsPopup = React.createClass
       success: (newDesign) =>
         @_updateUserDesign newDesign
 
-        TastyNotifyController.notifySuccess 'Настройки сохранены', 2000
+        TastyNotifyController.notifySuccess i18n.t('settings_saved'), 2000
       error: (data) =>
         @shake()
         TastyNotifyController.errorResponse data
@@ -77,8 +76,8 @@ window.DesignSettingsPopup = React.createClass
   close: ->
     if @hasActivities()
       TastyAlertController.show
-        message:    'Некоторые настройки ещё не успели сохраниться.'
-        buttonText: 'Я подожду'
+        message:    i18n.t 'settings_still_saving'
+        buttonText: i18n.t 'i_ll_be_waiting'
     else
       @unmount()
 
@@ -100,7 +99,7 @@ window.DesignSettingsPopup = React.createClass
 
   onPageClose: (e) ->
     if @hasActivities()
-      'Некоторые настройки ещё не успели сохраниться. Вы уверены, что хотите выйти?'
+      i18n.t 'settings_still_saving_confirm'
 
   getStateFromStore: ->
     user: CurrentUserStore.getUser()

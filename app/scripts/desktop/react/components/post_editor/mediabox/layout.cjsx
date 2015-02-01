@@ -24,7 +24,7 @@ window.MediaBox_Layout = React.createClass
     # null - по -умолчанию
     # - display, actions: hidden
     # - form, info: show
-    #
+
     state:    React.PropTypes.string
     type:     React.PropTypes.string.isRequired
 

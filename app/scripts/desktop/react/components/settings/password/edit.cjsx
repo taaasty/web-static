@@ -30,12 +30,14 @@ SettingsPasswordEdit = React.createClass
                </button>
              </div>
              <div className="settings__left">
-               <h3 className="settings__title">Пароль</h3>
+               <h3 className="settings__title">
+                 { i18n.t('settings_password') }
+               </h3>
                <div className="form-field form-field--default">
                  <input ref="password"
                         autoFocus={ true }
                         type="password"
-                        placeholder="Новый пароль"
+                        placeholder={ i18n.t('settings_password_new') }
                         className="form-field__input"
                         onKeyDown={ this.handleInputKeyDown }
                         onBlur={ this.handleInputBlur }
@@ -46,7 +48,7 @@ SettingsPasswordEdit = React.createClass
                <div className="form-field form-field--default">
                  <input ref="password_confirm"
                         type="password"
-                        placeholder="Новый пароль еще раз"
+                        placeholder={ i18n.t('settings_password_new_repeat') }
                         className="form-field__input"
                         onKeyDown={ this.handleInputKeyDown }
                         onBlur={ this.handleInputBlur }
@@ -63,10 +65,10 @@ SettingsPasswordEdit = React.createClass
 
     switch
       when password.length == 0, passwordConfirm.length == 0
-        TastyNotifyController.notifyError 'Введите пароль чтобы сохранить или нажмите ESC чтобы отказаться'
+        TastyNotifyController.notifyError i18n.t 'settings_password_empty_error'
         return false
       when password isnt passwordConfirm
-        TastyNotifyController.notifyError 'Пароли не совпадают'
+        TastyNotifyController.notifyError i18n.t 'settings_password_arent_equals'
         return false
       else return true
 
@@ -77,7 +79,7 @@ SettingsPasswordEdit = React.createClass
     passwordLength > 0 && passwordConfirmLength > 0
 
   getButtonTitle: ->
-    if @state.hasInput then 'сохранить' else 'отмена'
+    if @state.hasInput then i18n.t 'settings_password_save' else i18n.t 'settings_password_cancel'
 
   setCancelTimeout: ->
     @cancelTimeout = setTimeout @props.onEditCancel, CANCEL_TIMEOUT

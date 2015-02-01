@@ -6,10 +6,10 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass
 
   render: ->
     <a onClick={ this.onClick }
-       title="Редактировать комментарий"
+       title={ i18n.t('edit_comment_item') }
        className="comment__dropdown-item">
       <i className="icon icon--pencil" />
-      Редактировать комментарий
+      { i18n.t('edit_comment_item') }
     </a>
 
   onClick: ->

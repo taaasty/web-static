@@ -33,7 +33,7 @@ window.MessagesPopup_Chooser = React.createClass
                       style={{ 'width': '100%' }} />
               </div>
               <div className="messages__hint">
-                Начните вводить имя друга, которому хотите написать сообщение
+                { i18n.t('new_thread_hint') }
               </div>
             </div>
 

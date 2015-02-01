@@ -14,23 +14,21 @@ window.AuthorizationShellbox = React.createClass
                    <div className="inviter__logo">
                      <i className="icon icon--ribbon"></i>
                    </div>
-                   <div className="inviter__title">Тейсти – это дневник в который хочется писать каждый день</div>
+                   <div className="inviter__title"
+                        dangerouslySetInnerHTML={{ __html: i18n.t('auth') }} />
                    <div className="inviter__actions">
                      { this.props.children }
                    </div>
                    <div className="inviter__spacer" />
                    <div className="inviter__stats">
                      <div className="inviter__stats-item">
-                       <strong>{ entriesCount }</strong>
-                       записей
+                       { @renderEntriesCount() }
                      </div>
                      <div className="inviter__stats-item">
-                       <strong>{ usersCount }</strong>
-                       пользователей
+                       { @renderUsersCount() }
                      </div>
                      <div className="inviter__stats-item">
-                       <strong><span className="tilde">&#126;</span>30</strong>
-                       секунд чтобы начать
+                       { @renderSecondsCount() }
                      </div>
                    </div>
                  </div>
@@ -38,8 +36,30 @@ window.AuthorizationShellbox = React.createClass
              </div>
            </div>
 
-  _getEntriesCount: ->
-    TastyUtils.formatNumber( window.gon.app_stats.entries_count, 100 ) + '+'
+  renderEntriesCount: ->
+    number         = parseInt TastyUtils.formatNumber window.gon.app_stats.entries_count, 100, ''
+    formatedNumber = TastyUtils.formatNumber window.gon.app_stats.entries_count, 100
 
-  _getUsersCount: ->
-    TastyUtils.formatNumber( window.gon.app_stats.users_count, 100 ) + '+'
+    <span>
+      <strong>{ formatedNumber }+</strong>
+      <span>{ i18n.t('entries_count', {count: number}) }</span>
+    </span>
+
+  renderUsersCount: ->
+    number         = parseInt TastyUtils.formatNumber window.gon.app_stats.users_count, 100, ''
+    formatedNumber = TastyUtils.formatNumber window.gon.app_stats.users_count, 100
+
+    <span>
+      <strong>{ formatedNumber }+</strong>
+      <span>{ i18n.t('users_count', {count: number}) }</span>
+    </span>
+
+  renderSecondsCount: ->
+    number = 30
+
+    <span>
+      <strong>
+        <span className="tilde">&#126;</span>{ number }
+      </strong>
+      <span>{ i18n.t('seconds_count', {count: number}) }</span>
+    </span>

@@ -30,10 +30,10 @@ window.RelationshipIgnoreButton = React.createClass
   onMouseLeave: -> @setState isHover: false
 
   _getTitle: ->
-    return 'ошибка'       if @state.isError
-    return 'в процессе..' if @state.isProcess
+    return i18n.t 'follow_button_error'   if @state.isError
+    return i18n.t 'follow_button_process' if @state.isProcess
 
     if @state.relationship.state is STATE_IGNORED
-      if @state.isHover then 'Разблокировать' else 'Заблокирован'
+      if @state.isHover then i18n.t 'follow_button_unblock' else i18n.t 'follow_button_ignored'
     else
-      'Заблокировать'
+      i18n.t 'follow_button_block'

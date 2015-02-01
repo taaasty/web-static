@@ -9,7 +9,7 @@ AuthEmailResetButton = React.createClass
 
   render: ->
     <button className="outline-auth-button">
-      { @renderSpinner() } { i18n.t('reset_password_button') }
+      { @renderSpinner() } { i18n.t('buttons.auth_reset_password') }
     </button>
 
   renderSpinner: ->

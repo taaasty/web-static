@@ -5,6 +5,6 @@ window.CloseToolbar = React.createClass
     <div onClick={ this.props.onClick }
          className="toolbar toolbar--close">
       <div className="toolbar__toggle">
-        <i className="icon icon--cross"></i>
+        <i className="icon icon--cross" />
       </div>
     </div>

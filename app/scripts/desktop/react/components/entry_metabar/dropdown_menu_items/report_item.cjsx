@@ -8,7 +8,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass
     <a onClick={ this.onClick }
         className="meta-item__dropdown-item">
       <i className="icon icon--exclamation-mark"></i>
-      Пожаловаться
+      { i18n.t('report_entry_item') }
     </a>
 
   onClick: (e) ->
@@ -16,13 +16,13 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass
     e.preventDefault()
 
     TastyConfirmController.show
-      message:          'Вы действительно хотите пожаловаться на пост?'
-      acceptButtonText: 'Пожаловаться'
+      message:          i18n.t 'report_entry_confirm'
+      acceptButtonText: i18n.t 'report_entry_button'
       onAccept:         @createReport
 
   createReport: ->
     @createRequest
       url: ApiRoutes.report_url @props.entryId
       method: 'POST'
-      success: => TastyNotifyController.notify 'success', 'Жалоба на пост успешно отправлена'
+      success: => TastyNotifyController.notifySuccess i18n.t 'report_entry_success'
       error:   (data) -> TastyNotifyController.errorResponse data

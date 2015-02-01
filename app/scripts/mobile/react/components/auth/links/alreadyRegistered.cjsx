@@ -6,7 +6,7 @@ AuthNotRegisteredYetLink = React.createClass
   render: ->
     <a className="auth__footer-link"
        onClick={ @handleClick }>
-      { i18n.t('already_registered_link') }
+      { i18n.t('auth.already_registered_link') }
     </a>
 
   handleClick: ->

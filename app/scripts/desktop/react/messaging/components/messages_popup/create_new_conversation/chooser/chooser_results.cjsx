@@ -35,7 +35,7 @@ window.MessagesPopup_ChooserResults = React.createClass
 
       when EMPTY_STATE
         content = <div className="messages__chooser-empty">
-                    К сожалению, мы не можем найти данного пользователя
+                    { i18n.t('new_thread_unknown_user') }
                   </div>
 
     return <div className="messages__chooser-results">

@@ -5,10 +5,10 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass
 
   render: ->
     <a href={ this._getCommentUrl() }
-       title="Ссылка на комментарий"
+       title={ i18n.t('link_comment_item') }
        className="comment__dropdown-item">
       <i className="icon icon--hyperlink" />
-      Ссылка на комментарий
+      { i18n.t('link_comment_item') }
     </a>
 
   _getCommentUrl: -> @props.entryUrl + '#comment-' + @props.commentId

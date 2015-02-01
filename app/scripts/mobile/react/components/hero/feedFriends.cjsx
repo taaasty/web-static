@@ -9,6 +9,6 @@ HeroFeedFriends = React.createClass
     entriesCount:  PropTypes.number.isRequired
 
   render: ->
-    <HeroFeed {...@props} title={ i18n.t('feed_friends') } />
+    <HeroFeed {...@props} title={ i18n.t('feed.friends') } />
 
 module.exports = HeroFeedFriends

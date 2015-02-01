@@ -7,11 +7,11 @@ window.MediaBox_InstagramWelcome = React.createClass
     <MediaBox_Layout type="video">
       <div className="media-box__info">
         <div className="media-box__text">
-          <a title="Вставьте"
+          <a title={ i18n.t('editor_welcome_instagram_insert') }
              onClick={ this.props.onClick }>
-            Вставьте
+            { i18n.t('editor_welcome_instagram_insert') }
           </a>
-          <span> ссылку на пост в инстаграме.</span>
+          <span> { i18n.t('editor_welcome_instagram_link') }</span>
         </div>
       </div>
     </MediaBox_Layout>

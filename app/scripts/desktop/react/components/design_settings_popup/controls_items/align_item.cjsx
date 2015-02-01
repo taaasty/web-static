@@ -1,5 +1,3 @@
-SETTING_TITLE = 'Настройка фона'
-
 window.DesignSettingsPopup_ControlsAlignItem = React.createClass
 
   # Известные варианты выравнивания
@@ -18,7 +16,9 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass
     <div className="settings-design__control settings-design__control--cover-align">
       <div className="settings-design__control-inner">
         <span className="settings-design__valign"></span>
-        <span className="settings-design__text absolute--left animate--down">{ SETTING_TITLE }</span>
+        <span className="settings-design__text absolute--left animate--down">
+          { i18n.t('design_settings_align') }
+        </span>
         <span className="settings-design__state absolute--right animate--right">
           <span className="settings-design__state-i"></span>
         </span>
@@ -26,13 +26,13 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass
           <DesignSettingsPopup_ControlsRadioButton value="justify"
                                                    settingId="coverAlign"
                                                    isActive={ this.state.active == "justify" }
-                                                   text="по ширине"
+                                                   text={ i18n.t('design_settings_align_justify') }
                                                    onChange={ this.onChange } />
 
           <DesignSettingsPopup_ControlsRadioButton value="center"
                                                    settingId="coverAlign"
                                                    isActive={ this.state.active == "center" }
-                                                   text="по центру"
+                                                   text={ i18n.t('design_settings_align_center') }
                                                    onChange={ this.onChange } />
         </span>
       </div>

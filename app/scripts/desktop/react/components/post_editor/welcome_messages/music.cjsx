@@ -7,13 +7,13 @@ window.MediaBox_MusicWelcome = React.createClass
     <MediaBox_Layout type="video">
       <div className="media-box__info">
         <div className="media-box__text">
-          <a title="Вставьте"
+          <a title={ i18n.t('editor_welcome_music_insert') }
              onClick={ this.props.onClick }>
-            Вставьте
+            { i18n.t('editor_welcome_music_insert') }
           </a>
-          <span> ссылку на музыку.</span>
+          <span> { i18n.t('editor_welcome_music_link') }</span>
           <br />
-          <span> Мы поддерживаем Soundcloud, Grooveshark и другие сервисы с легальным контентом.</span>
+          <span> { i18n.t('editor_welcome_music_supported_services') }</span>
         </div>
       </div>
     </MediaBox_Layout>

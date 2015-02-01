@@ -13,8 +13,8 @@ CommentCreateForm = React.createClass
   render: ->
     <CommentForm
         ref="commentForm"
-        buttonTitle={ i18n.t('create_comment_button') }
-        placeholder={ i18n.t('create_comment_placeholder') }
+        buttonTitle={ i18n.t('buttons.comment_create') }
+        placeholder={ i18n.t('placeholders.comment_create') }
         disabled={ @props.loading }
         onSubmit={ @createComment } />
 

@@ -6,7 +6,7 @@ AuthEmailSignUpButton = React.createClass
   render: ->
     <button className="reg-auth-button"
             onClick={ @handleClick }>
-      { i18n.t('email_signup_button') }
+      { i18n.t('buttons.auth_email_signup') }
     </button>
 
   handleClick: ->

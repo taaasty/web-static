@@ -1,16 +1,19 @@
 browserify   = require 'browserify'
 gulp         = require 'gulp'
 source       = require 'vinyl-source-stream'
-bundleLogger = require '../../util/bundleLogger'
-handleErrors = require '../../util/handleErrors'
-config       = require('../../config').desktop.production.scripts.bundle
+buffer       = require 'vinyl-buffer'
+uglify       = require 'gulp-uglify'
+rename       = require 'gulp-rename'
+bundleLogger = require '../../../util/bundleLogger'
+handleErrors = require '../../../util/handleErrors'
+config       = require('../../../config').desktop.production.scripts
 
-gulp.task 'desktopScripts', ->
+gulp.task '[D][P] Scripts', ->
   bundler = browserify({
     cache: {}, packageCache: {}
-    basedir: config.baseDir
-    entries: config.entries
-    extensions: config.extensions
+    basedir: config.bundle.baseDir
+    entries: config.bundle.entries
+    extensions: config.bundle.extensions
   }).require './bower_components/jquery/dist/jquery',                       expose: 'jquery'
     .require './bower_components/jquery-ui/ui/core',                        expose: 'jquery.ui.core'
     .require './bower_components/jquery-ui/ui/slider',                      expose: 'jquery.ui.slider'
@@ -47,14 +50,21 @@ gulp.task 'desktopScripts', ->
     .require './bower_components/nanobar/index',                            expose: 'nanobar'
 
   bundle = ->
-    bundleLogger.start config.outputName
+    bundleLogger.start config.bundle.outputName
 
     return bundler
       .bundle()
       .on 'error', handleErrors
-      .pipe source(config.outputName)
-      .pipe gulp.dest(config.dest)
+      .pipe source config.bundle.outputName
+      .pipe gulp.dest config.bundle.dest
       .on 'end', ->
-        bundleLogger.end config.outputName
+        bundleLogger.end config.bundle.outputName
+        bundleLogger.start config.min.outputName
+      .pipe buffer()
+      .pipe uglify()
+      .pipe rename config.min.outputName
+      .pipe gulp.dest config.min.dest
+      .on 'end', ->
+        bundleLogger.end config.min.outputName
 
   return bundle()

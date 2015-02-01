@@ -9,7 +9,7 @@ AuthEmailSubmitButton = React.createClass
 
   render: ->
     <button className="outline-auth-button">
-      { @renderSpinner() } { i18n.t('email_submit_button') }
+      { @renderSpinner() } { i18n.t('buttons.auth_email_submit') }
     </button>
 
   renderSpinner: ->

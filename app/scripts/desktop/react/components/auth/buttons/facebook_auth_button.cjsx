@@ -28,4 +28,4 @@ window.Shellbox_FacebookAuthButton = React.createClass
     @props.onClick() if @props.onClick?
 
   _getTitle: ->
-    if @props.isActive then 'Авторизуюсь..' else 'Зарегистрироваться'
+    if @props.isActive then i18n.t 'facebook_signin_process_button' else i18n.t 'facebook_signup_process_button'

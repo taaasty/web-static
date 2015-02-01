@@ -47,7 +47,7 @@ window.PostEditor_ImagesForm =
     imageFiles = data.files.filter (file) => file.type.match ACCEPT_FILE_TYPES
 
     if imageFiles.length == 0
-      return TastyNotifyController.notifyError 'Среди указанных вами файлов нет ни одного изображения'
+      return TastyNotifyController.notifyError i18n.t 'editor_files_without_images'
 
     @fileUploader = data
 

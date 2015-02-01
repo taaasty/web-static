@@ -42,6 +42,6 @@ SuggestionListMixin =
       </div>
 
   getSuggestionsCountMessage: ->
-    'Мы нашли ' + @props.suggestionsCount + ' ' + @declension(@props.suggestionsCount, ['друга', 'друга', 'друзей'])
+    i18n.t 'suggestions_found', count: @props.suggestionsCount
 
 module.exports = SuggestionListMixin

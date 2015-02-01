@@ -27,7 +27,9 @@ window.DesignSettingsPopup_ControlsOpacityItem = React.createClass
     <div className="settings-design__control settings-design__control--opacity">
       <div className="settings-design__control-inner">
         <span className="settings-design__valign"></span>
-        <span className="settings-design__text absolute--left animate--down">Прозрачность ленты</span>
+        <span className="settings-design__text absolute--left animate--down">
+          { i18n.t('design_settings_opacity') }
+        </span>
         <span ref="opacitySlider"
               className="form-range form-range--opacity form-range--yellow absolute--left animate--up">
           <input className="form-range__input" id="opacity-feed" name="feedOpacity" type="text" />

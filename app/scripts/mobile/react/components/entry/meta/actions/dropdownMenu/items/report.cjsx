@@ -12,7 +12,7 @@ EntryMetaActions_DropdownMenu_ReportItem = React.createClass
       <a className="meta-actions__dropdown-popup-link"
          onClick={ @handleClick }>
         <i className="icon icon--exclamation-mark" />
-        <span>{ i18n.t('report_entry_item') }</span>
+        <span>{ i18n.t('entry.report_item') }</span>
       </a>
     </li>
 
@@ -20,6 +20,6 @@ EntryMetaActions_DropdownMenu_ReportItem = React.createClass
     EntryViewActions.report @props.entryId
 
   handleClick: ->
-    @report() if confirm i18n.t 'report_entry_confirm'
+    @report() if confirm i18n.t 'entry.report_confirm'
 
 module.exports = EntryMetaActions_DropdownMenu_ReportItem

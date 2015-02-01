@@ -37,7 +37,7 @@ window.EntryCommentBox = React.createClass
                                                    onClick={ this.loadMoreComments } />
     else
       if @state.isLoadError || @state.isLoadMoreError || @state.isPostError
-        commentList = <div>Ошибка загрузки.</div>
+        commentList = <div>{ i18n.t('load_comments_error') }</div>
       else if @state.isLoadLoading || @state.isLoadMoreLoading
         commentList = <Spinner size={ 15 } />
 

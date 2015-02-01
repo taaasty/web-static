@@ -1,10 +1,7 @@
 window.MessagesPopup_LoadingMessage = React.createClass
 
   propTypes:
-    content: React.PropTypes.string
-
-  getDefaultProps: ->
-    content: 'Загрузка'
+    content: React.PropTypes.string.isRequired
 
   render: ->
     <div className="grid-full">

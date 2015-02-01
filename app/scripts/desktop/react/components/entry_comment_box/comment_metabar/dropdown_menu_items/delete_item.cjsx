@@ -7,10 +7,10 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass
 
   render: ->
     <a onClick={ this.onClick }
-       title="Удалить комментарий"
+       title={ i18n.t('delete_comment_item') }
        className="comment__dropdown-item">
       <i className="icon icon--basket" />
-      Удалить комментарий
+      { i18n.t('delete_comment_item') }
     </a>
 
   onClick: (e) ->
@@ -18,8 +18,8 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass
     e.preventDefault()
 
     TastyConfirmController.show
-      message:          'Вы действительно хотите удалить комментарий?<br />Его нельзя будет восстановить.'
-      acceptButtonText: 'Удалить комментарий'
+      message:          i18n.t 'delete_comment_confirm'
+      acceptButtonText: i18n.t 'delete_comment_button'
       onAccept:         @deleteComment
 
   deleteComment: ->
@@ -29,6 +29,6 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass
       data:
         _method: 'DELETE'
       success: =>
-        TastyNotifyController.notify 'success', 'Комментарий успешно удалён'
+        TastyNotifyController.notifySuccess i18n.t 'delete_comment_success'
         @props.onDelete() if @props.onDelete?
       error: (data) -> TastyNotifyController.errorResponse data

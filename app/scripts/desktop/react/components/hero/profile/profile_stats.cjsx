@@ -22,40 +22,45 @@ window.HeroProfileStats = React.createClass
     heroStats = []
 
     if @props.stats.followers_count?
-      heroStats.push <HeroProfileStatsItem count={ this.props.stats.followers_count }
-                                           title={ this.getTitle('followers') }
-                                           onClick={ onClick.bind(this, 'followers') }
-                                           key="followers" />
+      heroStats.push <HeroProfileStatsItem
+                         count={ this.props.stats.followers_count }
+                         title={ i18n.t('stats_followers_count', {count: @props.stats.followers_count}) }
+                         onClick={ onClick.bind(this, 'followers') }
+                         key="followers" />
     if @props.stats.followings_count?
-      heroStats.push <HeroProfileStatsItem count={ this.props.stats.followings_count }
-                                           title={ this.getTitle('followings') }
-                                           onClick={ onClick.bind(this, 'followings') }
-                                           key="followings" />
+      heroStats.push <HeroProfileStatsItem
+                         count={ this.props.stats.followings_count }
+                         title={ i18n.t('stats_followings_count', {count: @props.stats.followings_count}) }
+                         onClick={ onClick.bind(this, 'followings') }
+                         key="followings" />
     if @props.stats.favorites_count?
       url = Routes.tlog_favorite_entries_path @props.user.slug unless @_isPrivate()
 
-      heroStats.push <HeroProfileStatsItem href={ url }
-                                           count={ this.props.stats.favorites_count }
-                                           title={ this.getTitle('favorites') }
-                                           key="favorites" />
+      heroStats.push <HeroProfileStatsItem
+                         href={ url }
+                         count={ this.props.stats.favorites_count }
+                         title={ i18n.t('stats_favorites_count') }
+                         key="favorites" />
     if @props.stats.entries_count?
       url = @props.user.tlog_url unless @_isPrivate()
 
-      heroStats.push <HeroProfileStatsItem href={ url }
-                                           count={ this.props.stats.entries_count }
-                                           title={ this.getTitle('entries') }
-                                           key="entries" />
+      heroStats.push <HeroProfileStatsItem
+                         href={ url }
+                         count={ this.props.stats.entries_count }
+                         title={ i18n.t('stats_entries_count', {count: @props.stats.entries_count}) }
+                         key="entries" />
     if @props.stats.comments_count?
-      heroStats.push <HeroProfileStatsItem count={ this.props.stats.comments_count }
-                                           title={ this.getTitle('comments') }
-                                           key="comments" />
+      heroStats.push <HeroProfileStatsItem
+                         count={ this.props.stats.comments_count }
+                         title={ i18n.t('stats_comments_count', {counts: @props.stats.comments_count}) }
+                         key="comments" />
     if @props.stats.days_count?
       heroStats.push <HeroProfileStatsItem count={ this.props.stats.days_count }
-                                           title={ this.getTitle('days') }
+                                           title={ i18n.t('stats_days_count', {count: @props.stats.days_count}) }
                                            key="days" />
     if @props.stats.tags_count?
       heroStats.push <HeroProfileStatsItem count={ this.props.stats.tags_count }
-                                           title={ this.getTitle('tags') }
+                                           title={ i18n.t('stats_tags_count', {count: @props.stats.tags_count}) }
                                            onClick={ onClick.bind(this, 'tags') }
                                            key="tags" />
 
@@ -63,21 +68,10 @@ window.HeroProfileStats = React.createClass
              <div className="hero__stats-list">{ heroStats }</div>
            </div>
 
-  getTitle: (type) ->
-    switch type
-      when 'followers'  then @declension( @props.stats.followers_count, ['подписчик', 'подписчика', 'подписчиков'] )
-      when 'followings' then @declension( @props.stats.followings_count, ['подписка', 'подписки', 'подписок'] )
-      when 'favorites'  then 'в избранном'
-      when 'entries'    then @declension( @props.stats.entries_count, ['пост', 'поста', 'постов'] )
-      when 'comments'   then @declension( @props.stats.comments_count, ['комментарий', 'комментария', 'комментариев'] )
-      when 'days'       then @declension( @props.stats.days_count, ['день', 'дня', 'дней'] ) + ' на тейсти'
-      when 'tags'       then @declension( @props.stats.tags_count, ['тег', 'тега', 'тегов'] )
-      else console.log "Неизвестный тип статистики профиля #{type}"
-
   handleFollowersClick: ($el) ->
     React.render (
       <HeroProfileStats_Popup
-          title="Подписчики"
+          title={ i18n.t('followers') }
           toggle={ $el }>
         <HeroProfileStats_FollowersPopup tlogId={ this.props.user.id } />
       </HeroProfileStats_Popup>
@@ -86,7 +80,7 @@ window.HeroProfileStats = React.createClass
   handleFollowingsClick: ($el) ->
     React.render (
       <HeroProfileStats_Popup
-          title="Подписки"
+          title={ i18n.t('followings') }
           toggle={ $el }>
         <HeroProfileStats_FollowingsPopup tlogId={ this.props.user.id } />
       </HeroProfileStats_Popup>
@@ -95,7 +89,7 @@ window.HeroProfileStats = React.createClass
   handleTagsClick: ($el) ->
     React.render (
       <HeroProfileStats_Popup
-          title="Теги"
+          title={ i18n.t('tags') }
           toggle={ $el }>
         <HeroProfileStats_TagsPopup tlogId={ this.props.user.id } />
       </HeroProfileStats_Popup>

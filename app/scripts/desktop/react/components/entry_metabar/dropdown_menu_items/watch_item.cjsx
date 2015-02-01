@@ -20,18 +20,15 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass
 
   getTitle: ->
     if @state.isWatching
-      if @state.isHover then 'Отписаться' else 'Подписан'
+      if @state.isHover then i18n.t 'stop_watch_entry_item' else i18n.t 'watching_entry_item'
     else
-      'Подписаться на комментарии'
+      i18n.t 'start_watch_entry_item'
 
   onClick: (e) ->
     e.stopPropagation()
     e.preventDefault()
 
-    if @state.isWatching
-      @removeFromWatching()
-    else
-      @addToWatching()
+    if @state.isWatching then @removeFromWatching() else @addToWatching()
 
   addToWatching: ->
     @createRequest

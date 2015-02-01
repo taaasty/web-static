@@ -1,6 +1,3 @@
-#TODO: i18n
-TITLE = 'Заблокировать'
-
 window.HeroProfile_DropdownMenuIgnoreItem = React.createClass
   mixins: [RequesterMixin]
 
@@ -12,7 +9,7 @@ window.HeroProfile_DropdownMenuIgnoreItem = React.createClass
     <a className="action-dropdown-item"
        onClick={ this.ignore }>
       <i className="icon icon--not-allowed" />
-      { TITLE }
+      { i18n.t('ignore_tlog_item') }
     </a>
 
   ignore: ->

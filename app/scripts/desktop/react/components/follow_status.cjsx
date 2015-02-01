@@ -8,16 +8,6 @@ STATE_REQUESTED = 'requested'
 STATE_ERROR     = 'error'
 STATE_PROCESS   = 'process'
 
-#TODO: i18n
-TOOLTIP_TEXT_NONE      = 'Подписаться на тлог'
-TOOLTIP_TEXT_FRIEND    = 'Вы подписаны на данный тлог'
-TOOLTIP_TEXT_IGNORED   = 'Вам отказано в подписке на данный тлог'
-TOOLTIP_TEXT_GUESSED   = 'Рекомендуем подписаться'
-TOOLTIP_TEXT_REQUESTED = 'В ожидании'
-
-TOOLTIP_TEXT_PROCESS   = 'Отправка запроса'
-TOOLTIP_TEXT_ERROR     = 'Ошибка'
-
 window.FollowStatus = React.createClass
   propTypes:
     status:  React.PropTypes.string.isRequired
@@ -37,11 +27,11 @@ window.FollowStatus = React.createClass
 
   render: ->
     tooltipText = switch @props.status
-      when STATE_NONE      then TOOLTIP_TEXT_NONE
-      when STATE_FRIEND    then TOOLTIP_TEXT_FRIEND
-      when STATE_IGNORED   then TOOLTIP_TEXT_IGNORED
-      when STATE_GUESSED   then TOOLTIP_TEXT_GUESSED
-      when STATE_REQUESTED then TOOLTIP_TEXT_REQUESTED
+      when STATE_NONE      then i18n.t 'follow_status_none'
+      when STATE_FRIEND    then i18n.t 'follow_status_friend'
+      when STATE_IGNORED   then i18n.t 'follow_status_ignored'
+      when STATE_GUESSED   then i18n.t 'follow_status_guessed'
+      when STATE_REQUESTED then i18n.t 'follow_status_requested'
       else console.warn 'Неизвестный статус', @props.status
 
     content = <i className='icon'></i>

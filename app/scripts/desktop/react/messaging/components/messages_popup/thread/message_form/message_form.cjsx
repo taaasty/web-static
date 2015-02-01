@@ -23,7 +23,7 @@ window.MessagesPopup_ThreadMessageForm = React.createClass
              </span>
              <textarea ref="messageForm"
                        onKeyDown={ this.handleKeyDown }
-                       placeholder="Ваше сообщение…"
+                       placeholder={ i18n.t("new_message_placeholder") }
                        className="message-form__textarea" />
            </div>
 

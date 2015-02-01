@@ -15,8 +15,8 @@ CommentEditForm = React.createClass
     <CommentForm
         ref="commentForm"
         text={ @props.comment.comment_html }
-        buttonTitle={ i18n.t('edit_comment_button') }
-        placeholder={ i18n.t('edit_comment_placeholder') }
+        buttonTitle={ i18n.t('buttons.comment_edit') }
+        placeholder={ i18n.t('placeholders.comment_edit') }
         onSubmit={ @editComment }
         onCancel={ @props.onEditCancel } />
 

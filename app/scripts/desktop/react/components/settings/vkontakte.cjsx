@@ -10,13 +10,19 @@ SettingsVkontakte = React.createClass
     <div className="settings__item">
       <div className="settings__right">
         <button className="button button--vkontakte" onClick={this.click}>
-          <span className="icon icon--vkontakte"></span>
-          <span className="button__text">Привязать аккаунт</span>
+          <span className="icon icon--vkontakte" />
+          <span className="button__text">
+            { i18n.t('settings_vkontakte_signin') }
+          </span>
         </button>
       </div>
       <div className="settings__left">
-        <h3 className="settings__title">Вконтакте</h3>
-        <p className="settings__desc">Привяжите свой аккаунт Вконтакте, если вы захотите можно будет включить автопубликацию ваших  записей из дневника</p>
+        <h3 className="settings__title">
+          { i18n.t('settings_vkontakte') }
+        </h3>
+        <p className="settings__desc">
+          { i18n.t('settings_vkontakte_description') }
+        </p>
       </div>
     </div>
 

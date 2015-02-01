@@ -32,7 +32,9 @@ SettingsEmailEdit = React.createClass
                </button>
              </div>
              <div className="settings__left">
-               <h3 className="settings__title">Емейл</h3>
+               <h3 className="settings__title">
+                 { i18n.t('settings_email') }
+               </h3>
                <div className="form-field form-field--default">
                  <input ref="email"
                         defaultValue={ this.props.email }
@@ -47,7 +49,7 @@ SettingsEmailEdit = React.createClass
            </div>
 
   getButtonTitle: ->
-    if @state.hasInput then 'сохранить' else 'отмена'
+    if @state.hasInput then i18n.t 'settings_email_edit_save' else i18n.t 'settings_email_edit_cancel'
 
   handleButtonMouseDown: (e) ->
     emailField = @refs.email.getDOMNode()

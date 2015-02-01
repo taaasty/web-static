@@ -24,7 +24,7 @@ module.exports =
           dest: build + '/scripts'
           outputName: 'client.js'
           extensions: ['.cjsx', '.coffee']
-      less:
+      styles:
         src: src + '/stylesheets/desktop.local.less'
         dest: build + '/stylesheets'
         outputName: 'main.css'
@@ -34,6 +34,9 @@ module.exports =
       assets:
         src: src + '/assets/**/*.*'
         dest: build + '/assets'
+      locales:
+        src: src + '/scripts/desktop/locales/**/*.json'
+        dest: build + '/locales'
     production:
       scripts:
         bundle:
@@ -42,8 +45,7 @@ module.exports =
           extensions: ['.cjsx', '.coffee']
           dest: dist + '/scripts/'
           outputName: 'bundle.js'
-        minify:
-          src: dist + '/scripts/bundle.js'
+        min:
           dest: dist + '/scripts'
           outputName: 'bundle.min.js'
       styles:
@@ -51,10 +53,12 @@ module.exports =
           src: src + '/stylesheets/desktop.production.less'
           dest: dist + '/stylesheets'
           outputName: 'bundle.css'
-        minify:
-          src: dist + '/stylesheets/bundle.css'
+        min:
           dest: dist + '/stylesheets'
           outputName: 'bundle.min.css'
+      locales:
+        src: src + '/scripts/desktop/locales/**/*.json'
+        dest: dist + '/locales/desktop'
   mobile:
     local:
       scripts:
@@ -68,7 +72,7 @@ module.exports =
           dest: build + '/mobile/scripts'
           outputName: 'client.js'
           extensions: ['.cjsx', '.coffee']
-      less:
+      styles:
         src: src + '/stylesheets/mobile.local.less'
         dest: build + '/mobile/stylesheets'
         outputName: 'main.css'
@@ -86,7 +90,7 @@ module.exports =
           extensions: ['.cjsx', '.coffee']
           dest: dist + '/scripts/'
           outputName: 'mobile_bundle.js'
-        minify:
+        min:
           src: dist + '/scripts/mobile_bundle.js'
           dest: dist + '/scripts'
           outputName: 'mobile_bundle.min.js'
@@ -101,7 +105,9 @@ module.exports =
           src: src + '/stylesheets/mobile.production.less'
           dest: dist + '/stylesheets'
           outputName: 'mobile_bundle.css'
-        minify:
-          src: dist + '/stylesheets/mobile_bundle.css'
+        min:
           dest: dist + '/stylesheets'
           outputName: 'mobile_bundle.min.css'
+      locales:
+        src: src + '/scripts/desktop/locales/**/*.json'
+        dest: dist + '/locales/mobile'

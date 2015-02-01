@@ -21,11 +21,11 @@ window.HeroProfileStats_TagsPopup = React.createClass
       tagList = <section className="users">{ tags }</section>
     else
       if @state.isError
-        message = <div className="popup__text">Ошибка загрузки.</div>
+        message = <div className="popup__text">{ i18n.t('hero_stats_popup_error') }</div>
       else if @state.isLoading
-        message = <div className="popup__text">Загружаю..</div>
+        message = <div className="popup__text">{ i18n.t('hero_stats_popup_loading') }</div>
       else
-        message = <div className="popup__text">Список пуст.</div>
+        message = <div className="popup__text">{ i18n.t('hero_stats_popup_empty') }</div>
       tagList = <div className="grid-full"><div className="grid-full__middle">{ message }</div></div>
 
     return <div className="scroller scroller--tags" ref="scroller">

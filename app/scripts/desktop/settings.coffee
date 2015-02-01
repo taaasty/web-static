@@ -1,9 +1,10 @@
 TastySettings =
   version:         'static-development'
   env:             'static-development'
-  host:            'http://taaasty.ru/'
-  api_host:        'http://taaasty.ru/api/'
+  host:            'http://taaasty.com/'
+  api_host:        'http://taaasty.com/api/'
   sound_asset_url: 'sounds/'
+  localesPath:     '../locales' # For backend path should be absolute like http://taaasty.com/locales
 
 console.log 'TastyVersion', TastySettings.version
 

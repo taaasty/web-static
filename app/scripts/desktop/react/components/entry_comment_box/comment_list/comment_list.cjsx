@@ -10,7 +10,7 @@ window.EntryCommentBox_CommentList = React.createClass
 
   componentDidMount: ->
     if @props.sharedCommentId?
-      alert 'К сожалению, данного комментария больше нет' unless @_isSharedCommentExists()
+      alert i18n.t('shared_comment_doesnt_exist') unless @_isSharedCommentExists()
 
   render: ->
     that = @

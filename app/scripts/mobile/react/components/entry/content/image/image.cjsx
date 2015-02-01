@@ -19,7 +19,7 @@ ImageEntryContent = React.createClass
     content = switch
       when @props.imageAttachments then <ImageEntryAttachments imageAttachments={ @props.imageAttachments } />
       when @props.imageUrl         then <img src={ @props.imageUrl } />
-      else i18n.t 'empty_image_entry'
+      else i18n.t 'entry.empty_image'
 
     return <div className="media-image">
              { content }

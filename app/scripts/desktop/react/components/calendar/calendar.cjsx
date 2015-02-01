@@ -1,12 +1,12 @@
 cx = require 'react/lib/cx'
 
 MOUSE_LEAVE_TIMEOUT = 300
-CALENDAR_CLOSED = 'closed'
+CALENDAR_CLOSED          = 'closed'
 CALENDAR_OPENED_BY_HOVER = 'openedByHover'
 CALENDAR_OPENED_BY_CLICK = 'openedByClick'
-TARGET_POST_CLASS =        '.post'
+TARGET_POST_CLASS        = '.post'
 TARGET_POST_PARENT_CLASS = '.posts'
-
+  
 window.Calendar = React.createClass
   mixins: [RequesterMixin, ComponentManipulationsMixin]
 
@@ -49,7 +49,7 @@ window.Calendar = React.createClass
                                      periods={ this.state.calendar.periods } />
       else
         if @state.calendar?.periods?.length == 0
-          message = <div>Нет записей</div>
+          message = <div>{ i18n.t('calendar_empty') }</div>
         else
           message = <span className="spinner spinner--24x24"><span className="spinner__icon"></span></span>
 
@@ -127,7 +127,7 @@ window.Calendar = React.createClass
 
   onMouseLeave: ->
     if @state.currentState == CALENDAR_OPENED_BY_HOVER
-      @timeout = setTimeout ( =>
+      @timeout = setTimeout (=>
         @safeUpdateState currentState: CALENDAR_CLOSED
       ), MOUSE_LEAVE_TIMEOUT
 

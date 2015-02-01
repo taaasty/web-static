@@ -4,9 +4,6 @@ EmailPasswordField = require './fields/password'
 EmailSubmitButton  = require './buttons/submit'
 EmailMixin         = require './mixins/email'
 
-#TODO: i18n
-TITLE = 'Вход/Регистрация через емейл'
-
 window.Email = React.createClass
   mixins: [EmailMixin, ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin]
 
@@ -31,7 +28,9 @@ window.Email = React.createClass
 
     return <div className="form-popup form-popup--login">
              <div className="form-popup__header">
-               <h3 className="form-popup__title">{ TITLE }</h3>
+               <h3 className="form-popup__title">
+                 { i18n.t('email_signin_signup_header') }
+               </h3>
              </div>
              <div className="form-popup__body">
                <form>

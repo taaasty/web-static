@@ -3,19 +3,25 @@ requireDir  = require 'require-dir'
 runSequence = require 'run-sequence'
 
 # Require all tasks in gulp/tasks, including subfolders
-requireDir './gulp/tasks', { recurse: true }
+requireDir './gulp/tasks', recurse: true
 
-gulp.task 'dist', ['clean'], ->
-  gulp.start 'minifyDesktopScripts', 'minifyDesktopStyles', 'minifyMobileScripts', 'minifyMobileStyles', 'mobileComponentsScripts'
+gulp.task 'dist', ['[S] Clean'], ->
+  gulp.start '[D][P] Scripts', '[D][P] Styles', '[D][P] Locales',
+             '[M][P] Scripts', '[M][P] Styles', '[M][P] Locales', '[M] ComponentsScripts'
 
-gulp.task 'build', ['clean'], (cb) ->
+gulp.task 'build', ['[S] Clean'], (cb) ->
   runSequence ['buildDesktop', 'buildMobile'], cb
 
-gulp.task 'buildDesktop', ['clean'], (cb) ->
-  runSequence ['vendorDesktopScripts', 'clientDesktopScripts', 'desktopLess', 'desktopHtml', 'assets'], cb
+gulp.task 'buildDesktop', ['[S] Clean'], (cb) ->
+  runSequence [
+    '[D] VendorScripts', '[D] ClientScripts', '[D][L] Styles', '[D] Html', '[D] Assets'
+    '[D][L] Locales'
+  ], cb
 
-gulp.task 'buildMobile', ['clean'], (cb) ->
-  runSequence ['vendorMobileScripts', 'clientMobileScripts', 'mobileLess', 'mobileHtml', 'mobileLocales'], cb
+gulp.task 'buildMobile', ['[S] Clean'], (cb) ->
+  runSequence [
+    '[M] VendorScripts', '[M] ClientScripts', '[M][L] Styles', '[M] Html', '[M][L] Locales'
+  ], cb
 
-gulp.task 'server', ['setWatch', 'build'], ->
-  gulp.start 'watch'
+gulp.task 'server', ['[S] SetWatch', 'build'], ->
+  gulp.start '[S] Watch'

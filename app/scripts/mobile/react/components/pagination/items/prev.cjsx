@@ -18,7 +18,7 @@ PaginationPrev = React.createClass
 
     return <a className={ prevClasses }
               href={ @props.href }>
-             { i18n.t('pagination_prev') }
+             { i18n.t('pagination.prev') }
            </a>
 
 module.exports = PaginationPrev

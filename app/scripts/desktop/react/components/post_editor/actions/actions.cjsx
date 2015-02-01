@@ -5,10 +5,9 @@ ENTRY_PRIVACY_PUBLIC    = TLOG_TYPE_PUBLIC    = 'public'
 ENTRY_PRIVACY_ANONYMOUS = TLOG_TYPE_ANONYMOUS = 'anonymous'
 ENTRY_PRIVACY_PUBLIC_WITH_VOTING = 'public_with_voting'
 
-PREVIEW_BODY_CLASSES = {
+PREVIEW_BODY_CLASSES =
   true:  'tlog-mode-full'
   false: 'tlog-mode-minimal'
-}
 
 window.PostActions = React.createClass
 
@@ -61,7 +60,9 @@ window.PostActions = React.createClass
              <div className="post-action post-action--button">
                <button className={ previewButtonClasses }
                        onClick={ this.props.onPreview }>
-                 <span className="button__text">Предпросмотр</span>
+                 <span className="button__text">
+                   { i18n.t('editor_preview_button') }
+                 </span>
                </button>
              </div>
              <div className="post-action post-action--button">
@@ -87,7 +88,7 @@ window.PostActions = React.createClass
   isTlogPrivate:   -> @props.tlogType is TLOG_TYPE_PRIVATE
 
   _getSaveButtonText: ->
-    if @isPostPrivate() then 'Сохранить в тлоге' else 'Опубликовать'
+    if @isPostPrivate() then i18n.t 'editor_save_button' else i18n.t 'editor_publish_button'
 
   onVoteChanged: (value) ->
     newEntryPrivacy = if value then ENTRY_PRIVACY_PUBLIC_WITH_VOTING else ENTRY_PRIVACY_PUBLIC

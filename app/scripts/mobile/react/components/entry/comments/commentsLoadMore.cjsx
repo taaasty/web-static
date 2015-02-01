@@ -32,8 +32,8 @@ CommentsLoadMore = React.createClass
     possibleCount  = @props.loadedCount + @props.loadPerTime
 
     if possibleCount < @props.totalCount
-      i18n.t 'load_more_comments', count: @props.loadPerTime
+      i18n.t 'buttons.comments_load_more', count: @props.loadPerTime
     else
-      i18n.t 'load_more_comments_remaining', count: remainingCount
+      i18n.t 'buttons.comments_load_more_remaining', count: remainingCount
 
 module.exports = CommentsLoadMore

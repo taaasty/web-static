@@ -1,5 +1,4 @@
 window.EntryCommentBox_LoadMore = React.createClass
-  mixins: [ReactGrammarMixin]
 
   propTypes:
     totalCount:  React.PropTypes.number.isRequired
@@ -18,10 +17,9 @@ window.EntryCommentBox_LoadMore = React.createClass
 
   _getTitle: ->
     remainingCount = @props.totalCount - @props.loadedCount
-    remainingDeclension = @declension remainingCount, ['комментарий', 'комментария', 'комментариев']
     possibleCount  = @props.loadedCount + @props.limit
 
     if possibleCount < @props.totalCount
-      "Загрузить еще #{ @props.limit } комментариев"
+      i18n.t 'load_more_comments', count: @props.limit
     else
-      "Загрузить оставшиеся #{ remainingCount } #{ remainingDeclension }"
+      i18n.t 'load_more_comments_remaining', count: remainingCount

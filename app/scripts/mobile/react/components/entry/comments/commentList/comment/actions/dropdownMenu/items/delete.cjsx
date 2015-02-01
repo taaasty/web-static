@@ -12,7 +12,7 @@ CommentActionsDropdownMenuDeleteItem = React.createClass
         onClick={ @handleClick }>
       <a className="comment__dropdown-popup-link">
         <i className="icon icon--basket" />
-        <span>{ i18n.t('delete_comment_item') }</span>
+        <span>{ i18n.t('comment.delete_item') }</span>
       </a>
     </li>
 
@@ -20,6 +20,6 @@ CommentActionsDropdownMenuDeleteItem = React.createClass
     @props.onCommentDelete @props.commentId
 
   handleClick: ->
-    @delete() if confirm i18n.t 'delete_comment_confirm'
-    
+    @delete() if confirm i18n.t 'comment.delete_confirm'
+
 module.exports = CommentActionsDropdownMenuDeleteItem

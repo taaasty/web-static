@@ -1,5 +1,5 @@
 require './resources/libs'
-require './locales/locales'
+require './resources/locales'
 window.Routes    = require '../shared/routes/routes'
 window.ApiRoutes = require '../shared/routes/api'
 require './react/application'
@@ -28,5 +28,3 @@ window.FeedFriendsPage = require './react/pages/feedFriends'
 require './react/stores/currentUser'
 require './react/stores/relationships'
 require './react/stores/feed'
-
-ReactApp.start()

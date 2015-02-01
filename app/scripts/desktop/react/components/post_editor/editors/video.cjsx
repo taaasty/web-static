@@ -21,7 +21,7 @@ window.PostEditor_VideoEditor = React.createClass
                  <MediaBox_VideoWelcome />
                </VideoMediaBox>
                <TastyEditor ref="titleEditor"
-                            placeholder="Придумайте подпись"
+                            placeholder={ i18n.t('editor_description_placeholder') }
                             mode="partial"
                             content={ this.state.title }
                             isLoading={ this.hasActivities() }

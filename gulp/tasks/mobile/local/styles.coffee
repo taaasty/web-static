@@ -2,15 +2,15 @@ gulp         = require 'gulp'
 less         = require 'gulp-less'
 autoprefixer = require 'gulp-autoprefixer'
 rename       = require 'gulp-rename'
-handleErrors = require '../../util/handleErrors'
-config       = require('../../config').mobile.production.styles.bundle
+handleErrors = require '../../../util/handleErrors'
+config       = require('../../../config').mobile.local.styles
 
-gulp.task 'mobileStyles', ->
+gulp.task '[M][L] Styles', ->
   gulp.src config.src
     .pipe less(
       paths: ['./app/bower_components/']
     )
     .on 'error', handleErrors
-    .pipe autoprefixer('last 2 versions')
+    .pipe autoprefixer 'last 2 versions'
     .pipe rename config.outputName
     .pipe gulp.dest config.dest

@@ -1,10 +1,5 @@
 ConnectStoreMixin = require '../../../../../../../shared/react/mixins/connectStore'
 
-#TODO: i18n
-LOADING_ERROR = 'Ошибка загрузки.'
-LOADING       = 'Загружаю..'
-EMPTY_LIST    = 'Список пуст.'
-
 ERROR_STATE   = 'error'
 LOADED_STATE  = 'loaded'
 LOADING_STATE = 'loading'
@@ -20,8 +15,8 @@ SocialNetworkPanelMixin =
 
   render: ->
     content = switch @state.currentState
-      when ERROR_STATE   then @renderMessage LOADING_ERROR
-      when LOADING_STATE then @renderMessage LOADING
+      when ERROR_STATE   then @renderMessage i18n.t('persons_popup_error')
+      when LOADING_STATE then @renderMessage i18n.t('persons_popup_loading')
       when LOADED_STATE  then @renderContent()
       else console.warn? "Unknown state of #{ @_currentElement.type.displayName } component", @state.currentState
 

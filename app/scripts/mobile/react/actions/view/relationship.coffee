@@ -35,7 +35,7 @@ RelationshipViewActions =
   report: (userId) ->
     Api.relationship.report userId
       .then ->
-        NotifyController.notifySuccess i18n.t 'report_user_success'
+        NotifyController.notifySuccess i18n.t 'messages.tlog_report_success'
       .fail (xhr) =>
         NotifyController.errorResponse xhr
 

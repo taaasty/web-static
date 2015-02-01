@@ -5,7 +5,7 @@ bundleLogger = require '../../util/bundleLogger'
 handleErrors = require '../../util/handleErrors'
 config       = require('../../config').mobile.production.scripts.components
 
-gulp.task 'mobileComponentsScripts', ->
+gulp.task '[M] ComponentsScripts', ->
   bundler = browserify({
     cache: {}, packageCache: {}
     basedir: config.baseDir

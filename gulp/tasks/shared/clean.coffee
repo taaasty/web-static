@@ -1,10 +1,6 @@
-# /*==================================
-# =            Clean Task            =
-# ==================================*/
-
 gulp   = require 'gulp'
 del    = require 'del'
 config = require('../../config').clean
 
-gulp.task 'clean', (cb) ->
+gulp.task '[S] Clean', (cb) ->
   del config.dest, cb
