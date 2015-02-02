@@ -109,5 +109,5 @@ module.exports =
           dest: dist + '/stylesheets'
           outputName: 'mobile_bundle.min.css'
       locales:
-        src: src + '/scripts/desktop/locales/**/*.json'
+        src: src + '/scripts/mobile/locales/**/*.json'
         dest: dist + '/locales/mobile'
