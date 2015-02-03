@@ -466,19 +466,48 @@
   left: 0;
   background: none;
 
+  .toolbar__toggle {
+    transform: translateX(0);
+    transition: transform .4s ease;
+  }
+
+  .toolbar__toggle {
+    height: @toolbar-size;
+    width: @toolbar-size;
+    position: fixed;
+    top: @toolbar-indent;
+    left: @toolbar-indent;
+    background: @toolbar-bg-base;
+    background-color: @toolbar-bg;
+    line-height: @toolbar-size;
+    color: @white;
+    text-align: center;
+    white-space: nowrap;
+    opacity: 1;
+    user-select: none;
+    border-radius: @toolbar-size;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
   .toolbar__popup {
     width: auto;
     height: 100%;
     margin-top: 0;
+    padding-bottom: 100px;
     position: fixed;
     top: 0;
     left: 0;
     opacity: 1;
     visibility: visible;
-    overflow-y: auto;
     border-radius: 0;
+    box-sizing: border-box;
     transform: translate(0, 0);
-    -webkit-overflow-scrolling: touch;
+    transform: translateX(-100%);
+    transition: transform .4s ease;
+
+    & > .scroller {
+      height: 100%;
+    }
   }
 
   .toolbar__popup-link {
@@ -492,5 +521,22 @@
 
   .toolbar__popup-text {
     display: none;
+  }
+
+  .toolbar__popup-list--bottom {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  &.state--active {
+    .toolbar__toggle {
+      transform: translateX(-100px);
+    }
+
+    .toolbar__popup {
+      transform: translateX(0);
+    }
   }
 }
