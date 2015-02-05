@@ -72,7 +72,7 @@ $ ->
     barOnCls: 'scroller--tracked'
     pause:    0
 
-  # Слайдер внутри контролла настроек дизайна
+  # Слайдер
   # http://stackoverflow.com/questions/7212102/detect-with-javascript-or-jquery-if-css-transform-2d-is-available
   getSupportedTransform = ->
     prefixes = 'transform WebkitTransform MozTransform OTransform msTransform'.split(' ')
@@ -85,17 +85,17 @@ $ ->
 
   supportCSSTransform = getSupportedTransform()
 
-  $('.design-settings__slider').each ->
+  $('.slider').each ->
     $slider = $(this)
-    $main = $slider.find('.design-settings__slider-main')
-    $list = $slider.find('.design-settings__slider-list')
+    $main = $slider.find('.slider__main')
+    $list = $slider.find('.slider__list')
 
     pos = 0
 
     return true if $list.width() < $main.width()
 
-    btnPrev = $('<div />', {'class': 'design-settings__slider-btn design-settings__slider-btn--left'})
-    btnNext = $('<div />', {'class': 'design-settings__slider-btn design-settings__slider-btn--right'})
+    btnPrev = $('<div />', {'class': 'slider__btn slider__btn--left'})
+    btnNext = $('<div />', {'class': 'slider__btn slider__btn--right'})
     $slider
       .append(btnPrev, btnNext)
       .addClass '__inited __leftlimit'
@@ -144,3 +144,32 @@ $ ->
 
       $slider.removeClass '__rightlimit'
       setPosition(pos * -1)
+
+  # Попап оплаты
+  paymentPopup            = document.querySelector('.popup--payment');
+  closeButtonPaymentPopup = paymentPopup.querySelector('.popup__close');
+
+  payButton               = document.querySelector('.payment__section--list .payment__button');
+  returnButton            = document.querySelector('.payment__section--success .payment__button');
+
+  listSection = document.querySelector('.payment__section--list');
+  processSection = document.querySelector('.payment__section--process');
+  successSection = document.querySelector('.payment__section--success');
+
+  payButton.onclick = ->
+    listSection.style.display = 'none'
+    processSection.style.display = 'block'
+    setTimeout(->
+      processSection.style.display = 'none'
+      successSection.style.display = 'block'
+    , 2000)
+
+  returnButton.onclick = ->
+    closePaymentPopup()
+
+  closeButtonPaymentPopup.onclick = ->
+    closePaymentPopup()
+
+  closePaymentPopup = ->
+    paymentPopup.parentNode.parentNode.parentNode.style.display = 'none'
+    document.documentElement.classList.remove 'popup-enabled'

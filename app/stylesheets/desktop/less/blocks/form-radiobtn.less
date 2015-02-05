@@ -17,6 +17,10 @@
   opacity: 0;
   z-index: -1;
 
+  & + .form-radiobtn__label {
+    cursor: pointer;
+  }
+
   &:checked {
     & + .form-radiobtn__label {
       color: @yellow;
@@ -26,7 +30,6 @@
 
 .form-radiobtn__label {
   display: inline-block;
-  cursor: pointer;
   transition: all .4s ease;
 }
 

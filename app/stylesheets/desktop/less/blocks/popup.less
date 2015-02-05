@@ -273,8 +273,8 @@
   min-height: 300px;
   max-height: 670px;
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: 3%;
+  left: @indent-base;
   display: block;
 
   .popup__header {
@@ -283,9 +283,9 @@
   }
 
   .popup__body {
+    height: 100%;
     margin-top: -43px;
     padding-top: 43px;
-    height: 100%;
     background: none;
     box-sizing: border-box;
   }
@@ -294,6 +294,14 @@
   .design-settings__options {
     height: 100%;
   }
+}
+
+.popup--payment {
+  &:extend(.popup--dark all);
+  width: @payment-popup-width;
+  margin: 40px auto;
+  position: relative;
+  display: block;
 }
 
 .popup--persons {
