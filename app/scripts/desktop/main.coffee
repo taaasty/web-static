@@ -31,13 +31,14 @@ $ ->
       barOnCls: 'scroller--tracked'
       pause:    0
 
-  document.onclick = (e) ->
-    if !$(e.target).hasClass('toolbar__toggle') &&
-       $(e.target).closest('.toolbar__toggle').length == 0
-      mainToolbar.classList.remove('state--active')
+  # document.onclick = (e) ->
+  #   if !$(e.target).hasClass('toolbar__toggle') &&
+  #      $(e.target).closest('.toolbar__toggle').length == 0
+  #     mainToolbar.classList.remove('state--active')
 
   mainToolbarToggle.onclick = ->
-    mainToolbar.classList.add('state--active')
+    # mainToolbar.classList.toggle('state--active')
+      document.body.classList.toggle('main-toolbar-open');
 
   # Тултип для шаринга
   $("[tooltip]").tooltip()

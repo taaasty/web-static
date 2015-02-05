@@ -461,22 +461,27 @@
 
 // ======= EXPERIMENT ======== //
 .toolbar--main {
+  height: 100%;
   padding: 0;
   top: 0;
   left: 0;
   background: none;
+  transform: translateX(-100%);
+  transition: transform .4s ease;
 
   .toolbar__toggle {
-    transform: translateX(0);
-    transition: transform .4s ease;
+    /*transform: translateX(0);
+    transition: transform .4s ease;*/
   }
 
   .toolbar__toggle {
     height: @toolbar-size;
     width: @toolbar-size;
-    position: fixed;
+    /*position: fixed;*/
+    position: absolute;
     top: @toolbar-indent;
     left: @toolbar-indent;
+    margin-left: 100%;
     background: @toolbar-bg-base;
     background-color: @toolbar-bg;
     line-height: @toolbar-size;
@@ -494,19 +499,30 @@
     height: 100%;
     margin-top: 0;
     padding-bottom: 100px;
-    position: fixed;
+    /*position: fixed;*/
+    position: relative;
     top: 0;
     left: 0;
-    opacity: 1;
+    background-color: rgba(red(@toolbar-bg-base), green(@toolbar-bg-base), blue(@toolbar-bg-base), .9);
     visibility: visible;
+    opacity: 1;
     border-radius: 0;
     box-sizing: border-box;
     transform: translate(0, 0);
-    transform: translateX(-100%);
-    transition: transform .4s ease;
+    /*transform: translateX(-100%);
+    transition: transform .4s ease;*/
 
     & > .scroller {
       height: 100%;
+    }
+  }
+
+  .toolbar__popup-item {
+    .avatar {
+      width: 36px;
+      height: 36px;
+      margin: 10px auto;
+      display: block;
     }
   }
 
@@ -516,6 +532,7 @@
 
     .icon {
       margin-right: 0;
+      font-size: 30px;
     }
   }
 
@@ -531,12 +548,43 @@
   }
 
   &.state--active {
-    .toolbar__toggle {
+    transform: translateX(0);
+    /*.toolbar__toggle {
       transform: translateX(-100px);
     }
 
     .toolbar__popup {
       transform: translateX(0);
-    }
+    }*/
   }
+}
+
+
+.toolbar--addpost {
+  top: auto;
+  left: auto;
+  right: @indent-base;
+  bottom: @indent-base;
+
+  .toolbar__toggle {
+    background: #2ac67e;
+  }
+}
+
+.main-toolbar-open {
+  .toolbar--main {
+    transform: translateX(0);
+  }
+
+  .calendar {
+    visibility: hidden;
+    opacity: 0;
+    transition: width .3s ease-in-out, visibility 0s ease-in-out .3s, opacity .3s ease-in-out !important;
+  }
+}
+
+.calendar {
+  visibility: visible;
+  opacity: 1;
+  transition: width .3s ease-in-out, visibility 0s ease-in-out, opacity .3s ease-in-out !important;
 }

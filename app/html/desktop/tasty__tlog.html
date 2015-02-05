@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="stylesheets/main.css" />
         <!-- end Styles -->
     </head>
-    <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white not-logged" ng-app='AApp'>
+    <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white not-logged main-toolbar-open" ng-app='AApp'>
 
         <!-- Browserbar -->
         <!-- <div class="browserbar">
@@ -177,22 +177,27 @@
 
         <!-- Social Share -->
         <div class="social-share">
-            <button class="social-share-facebook-button" data-original-title="Расшарить&nbsp;в&nbsp;Фейсбуке" data-placement="right" tooltip>F</button>
-            <button class="social-share-vkontakte-button state--active" data-original-title="Расшарить&nbsp;Вконтакте" data-placement="right" tooltip>В</button>
+            <button class="social-share-facebook-button" data-original-title="Расшарить&nbsp;в&nbsp;Фейсбуке" data-placement="left" tooltip>F</button>
+            <button class="social-share-vkontakte-button state--active" data-original-title="Расшарить&nbsp;Вконтакте" data-placement="left" tooltip>В</button>
         </div>
         <!-- end Social Share -->
 
          <!-- Toolbar - Experiment -->
         <div class="toolbar toolbar--main">
-            <div class="toolbar__toggle" data-element="dropdown-toggle">
+            <div class="toolbar__toggle">
                 <i class="icon icon--menu"></i>
             </div>
             <div class="toolbar__popup">
                 <div class="scroller scroller--dark">
                     <div class="scroller__pane">
                         <ul class="toolbar__popup-list">
-                            <li class="toolbar__popup-item">
+                            <!--<li class="toolbar__popup-item">
                                 <a class="toolbar__popup-link" href="#" data-original-title="Новая&nbsp;запись" data-placement="right" data-container="body" tooltip><i class="icon icon--plus"></i><span class="toolbar__popup-text">Новая запись</span></a>
+                            </li>-->
+                            <li class="toolbar__popup-item">
+                                <span class="avatar" style="background-image:url('http://taaasty.ru/assets/userpic/ad/48/212831_original.JPG');">
+                                    <img class="avatar__img" src="http://taaasty.ru/assets/userpic/ad/48/212831_original.JPG" alt="dapi" />
+                                </span>
                             </li>
                             <li class="toolbar__popup-item">
                                 <a class="toolbar__popup-link" href="#" data-original-title="Мой&nbsp;дневник" data-placement="right" data-container="body" tooltip><i class="icon icon--diary"></i><span class="toolbar__popup-text">Мой дневник</span></a>
@@ -219,10 +224,16 @@
                                 <a class="toolbar__popup-link" href="#" data-original-title="Избранное" data-placement="right" data-container="body" tooltip><i class="icon icon--star"></i><span class="toolbar__popup-text">Избранное</span></a>
                             </li>
                             <li class="toolbar__popup-item">
+                                <a class="toolbar__popup-link" href="#" data-original-title="Новая&nbsp;анонимка" data-placement="right" data-container="body" tooltip><i class="icon icon--anonymous"></i><span class="toolbar__popup-text">Новая анонимка</span></a>
+                            </li>
+                            <li class="toolbar__popup-item">
                                 <a class="toolbar__popup-link" href="#" data-original-title="Скрытые&nbsp;записи" data-placement="right" data-container="body" tooltip><i class="icon icon--lock"></i><span class="toolbar__popup-text">Скрытые записи</span></a>
                             </li>
                             <li class="toolbar__popup-item">
                                 <a class="toolbar__popup-link" href="#" data-original-title="Сообщения" data-placement="right" data-container="body" tooltip><i class="icon icon--messages"></i><span class="toolbar__popup-text">Сообщения</span></a>
+                            </li>
+                            <li class="toolbar__popup-item">
+                                <a class="toolbar__popup-link" href="#" data-original-title="Уведомления" data-placement="right" data-container="body" tooltip><i class="icon icon--bell"></i><span class="toolbar__popup-text">Уведомления</span></a>
                             </li>
                             <li class="toolbar__popup-item">
                                 <a class="toolbar__popup-link" href="#" data-original-title="Друзья" data-placement="right" data-container="body" tooltip><i class="icon icon--friends"></i><span class="toolbar__popup-text">Друзья</span></a>
@@ -244,6 +255,12 @@
                         <a class="toolbar__popup-link" href="#" data-original-title="Выйти" data-placement="right" data-container="body" tooltip><i class="icon icon--logout"></i><span class="toolbar__popup-text">Выйти</span></a>
                     </li>
                 </ul>
+            </div>
+        </div>
+
+        <div class="toolbar toolbar--addpost" data-original-title="Новая&nbsp;запись" data-placement="left" data-container="body" tooltip>
+            <div class="toolbar__toggle" >
+                <i class="icon icon--plus"></i>
             </div>
         </div>
         <!-- end Toolbar - Experiment -->
