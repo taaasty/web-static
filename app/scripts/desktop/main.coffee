@@ -40,5 +40,11 @@ $ ->
     # mainToolbar.classList.toggle('state--active')
       document.body.classList.toggle('main-toolbar-open');
 
+  $('.toolbar__popup-item').on 'mouseenter', ->
+    $(this).find('.toolbar__subnav').stop().slideDown(300)
+
+  $('.toolbar__popup-item').on 'mouseleave', ->
+    $(this).find('.toolbar__subnav').stop().slideUp(300)
+
   # Тултип для шаринга
   $("[tooltip]").tooltip()

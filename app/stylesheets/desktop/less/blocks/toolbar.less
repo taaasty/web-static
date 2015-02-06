@@ -518,22 +518,32 @@
   }
 
   .toolbar__popup-item {
+    position: relative;
+    text-align: center;
+
     .avatar {
       width: 36px;
       height: 36px;
-      margin: 10px auto;
+      margin: 0 auto;
       display: block;
+    }
+
+    .icon {
+      margin-right: 0;
+      font-size: 30px;
+    }
+
+    .messages-badge,
+    .notifications-badge,
+    .favorites-badge {
+      margin: -4px 0 0 -14px;
+      position: absolute;
     }
   }
 
   .toolbar__popup-link {
     padding-right: 16px;
     padding-left: 16px;
-
-    .icon {
-      margin-right: 0;
-      font-size: 30px;
-    }
   }
 
   .toolbar__popup-text {
@@ -559,6 +569,21 @@
   }
 }
 
+.toolbar__subnav {
+  display: none;
+}
+
+.toolbar__subnav-item {
+  &:extend(.toolbar__popup-item all);
+}
+
+.toolbar__subnav-link {
+  &:extend(.toolbar__popup-link all);
+}
+
+.toolbar__subnav-text {
+  &:extend(.toolbar__popup-text all);
+}
 
 .toolbar--addpost {
   top: auto;
