@@ -1,4 +1,4 @@
-window.ColorPicker_Popup = React.createClass
+ColorPicker_Popup = React.createClass
   propTypes:
     color:    React.PropTypes.string
     isDrag:   React.PropTypes.func
@@ -21,3 +21,5 @@ window.ColorPicker_Popup = React.createClass
   handleDrag: (color, c) ->
     @setState currentColor: color
     @props.onDrag color, c
+
+module.exports = ColorPicker_Popup

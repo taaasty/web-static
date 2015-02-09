@@ -4,9 +4,10 @@ POPUP_WIDTH = 176
 STATE_VIEW   = 'view'
 STATE_CHOICE = 'choice'
 
-window.ColorPicker = React.createClass
+ColorPicker = React.createClass
   propTypes:
-    color: React.PropTypes.string
+    color: React.PropTypes.string,
+    disabled: React.PropTypes.bool
 
   getInitialState: ->
     currentState: STATE_VIEW
@@ -36,17 +37,18 @@ window.ColorPicker = React.createClass
   onDrag: (color, c) ->
     @setState currentColor: color
 
-  handleClickActivator: ->
-    unless @state.currentState is STATE_CHOICE
-      @openPopup()
-    else
-      @closePopup()
+  handleClickActivator: (e) ->
+    if !@props.disabled
+      unless @state.currentState is STATE_CHOICE
+        @openPopup()
+      else
+        @closePopup()
 
   getCoordsPopup: ->
     $activator = $(@refs.activator.getDOMNode())
 
-    widthActivator = $activator.width()
-    heightActivator = $activator.height()
+    widthActivator = $activator.outerWidth()
+    heightActivator = $activator.outerHeight()
 
     return {
       top : $activator.offset().top + heightActivator
@@ -72,11 +74,9 @@ window.ColorPicker = React.createClass
     @popupContainer = container
     @activateChoiceState()
 
-    $(@refs.activator.getDOMNode()).closest('.design-settings__control').addClass('__hover')
-
   closePopup: ->
     _.defer =>
       React.unmountComponentAtNode @popupContainer
       @activateViewState()
 
-      $(@refs.activator.getDOMNode()).closest('.design-settings__control').removeClass('__hover')
+module.exports = ColorPicker
