@@ -461,6 +461,7 @@
 
 // ======= EXPERIMENT ======== //
 .toolbar--main {
+  width: 70px;
   height: 100%;
   padding: 0;
   top: 0;
@@ -533,6 +534,16 @@
       font-size: 30px;
     }
 
+    .icon--plus {
+      width: 38px;
+      height: 38px;
+      background: #2ac67e;
+      font-size: 24px;
+      line-height: 38px;
+      color: #fff !important;
+      border-radius: 50%;
+    }
+
     .messages-badge,
     .notifications-badge,
     .favorites-badge {
@@ -593,6 +604,15 @@
 
   .toolbar__toggle {
     background: #2ac67e;
+  }
+}
+
+.toolbar--avatar {
+  left: auto;
+  right: @indent-base;
+
+  .toolbar__toggle {
+    background: none;
   }
 }
 

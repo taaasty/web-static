@@ -31,19 +31,13 @@ $ ->
       barOnCls: 'scroller--tracked'
       pause:    0
 
-  # document.onclick = (e) ->
-  #   if !$(e.target).hasClass('toolbar__toggle') &&
-  #      $(e.target).closest('.toolbar__toggle').length == 0
-  #     mainToolbar.classList.remove('state--active')
-
   mainToolbarToggle.onclick = ->
-    # mainToolbar.classList.toggle('state--active')
-      document.body.classList.toggle('main-toolbar-open');
+    document.body.classList.toggle('main-toolbar-open');
 
-  $('.toolbar__popup-item').on 'mouseenter', ->
+  $('.toolbar--main .toolbar__popup-item').on 'mouseenter', ->
     $(this).find('.toolbar__subnav').stop().slideDown(300)
 
-  $('.toolbar__popup-item').on 'mouseleave', ->
+  $('.toolbar--main .toolbar__popup').on 'mouseleave', ->
     $(this).find('.toolbar__subnav').stop().slideUp(300)
 
   # Тултип для шаринга
