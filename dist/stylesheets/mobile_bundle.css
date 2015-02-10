@@ -1013,6 +1013,9 @@ button {
 .manage-subscriptions-button,
 .auth-button,
 .load-more-button,
+.settings__change-button,
+.settings__declare-button,
+.settings__cancel-button,
 .follow-button,
 .account__logout,
 .settings__submit,
@@ -1055,6 +1058,9 @@ a.reg-auth-button,
 a.manage-subscriptions-button,
 a.auth-button,
 a.load-more-button,
+a.settings__change-button,
+a.settings__declare-button,
+a.settings__cancel-button,
 a.follow-button,
 a.account__logout,
 a.settings__submit,
@@ -1073,6 +1079,9 @@ a.outline-auth-button {
 .manage-subscriptions-button:after,
 .auth-button:after,
 .load-more-button:after,
+.settings__change-button:after,
+.settings__declare-button:after,
+.settings__cancel-button:after,
 .follow-button:after,
 .account__logout:after,
 .settings__submit:after,
@@ -1098,6 +1107,9 @@ a.outline-auth-button {
 .manage-subscriptions-button .icon,
 .auth-button .icon,
 .load-more-button .icon,
+.settings__change-button .icon,
+.settings__declare-button .icon,
+.settings__cancel-button .icon,
 .follow-button .icon,
 .account__logout .icon,
 .settings__submit .icon,
@@ -1120,6 +1132,9 @@ a.outline-auth-button {
 .manage-subscriptions-button .icon--cross,
 .auth-button .icon--cross,
 .load-more-button .icon--cross,
+.settings__change-button .icon--cross,
+.settings__declare-button .icon--cross,
+.settings__cancel-button .icon--cross,
 .follow-button .icon--cross,
 .account__logout .icon--cross,
 .settings__submit .icon--cross,
@@ -1138,6 +1153,9 @@ a.outline-auth-button {
 .manage-subscriptions-button .spinner,
 .auth-button .spinner,
 .load-more-button .spinner,
+.settings__change-button .spinner,
+.settings__declare-button .spinner,
+.settings__cancel-button .spinner,
 .follow-button .spinner,
 .account__logout .spinner,
 .settings__submit .spinner,
@@ -1161,6 +1179,9 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:first-of-type),
 .button-group > .auth-button:not(:first-of-type),
 .button-group > .load-more-button:not(:first-of-type),
+.button-group > .settings__change-button:not(:first-of-type),
+.button-group > .settings__declare-button:not(:first-of-type),
+.button-group > .settings__cancel-button:not(:first-of-type),
 .button-group > .follow-button:not(:first-of-type),
 .button-group > .account__logout:not(:first-of-type),
 .button-group > .settings__submit:not(:first-of-type),
@@ -1181,6 +1202,9 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:last-of-type),
 .button-group > .auth-button:not(:last-of-type),
 .button-group > .load-more-button:not(:last-of-type),
+.button-group > .settings__change-button:not(:last-of-type),
+.button-group > .settings__declare-button:not(:last-of-type),
+.button-group > .settings__cancel-button:not(:last-of-type),
 .button-group > .follow-button:not(:last-of-type),
 .button-group > .account__logout:not(:last-of-type),
 .button-group > .settings__submit:not(:last-of-type),
@@ -1200,6 +1224,9 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:first-of-type):not(:last-of-type),
 .button-group > .auth-button:not(:first-of-type):not(:last-of-type),
 .button-group > .load-more-button:not(:first-of-type):not(:last-of-type),
+.button-group > .settings__change-button:not(:first-of-type):not(:last-of-type),
+.button-group > .settings__declare-button:not(:first-of-type):not(:last-of-type),
+.button-group > .settings__cancel-button:not(:first-of-type):not(:last-of-type),
 .button-group > .follow-button:not(:first-of-type):not(:last-of-type),
 .button-group > .account__logout:not(:first-of-type):not(:last-of-type),
 .button-group > .settings__submit:not(:first-of-type):not(:last-of-type),
@@ -1218,6 +1245,9 @@ a.outline-auth-button {
 .button-group.__expanded > .manage-subscriptions-button,
 .button-group.__expanded > .auth-button,
 .button-group.__expanded > .load-more-button,
+.button-group.__expanded > .settings__change-button,
+.button-group.__expanded > .settings__declare-button,
+.button-group.__expanded > .settings__cancel-button,
 .button-group.__expanded > .follow-button,
 .button-group.__expanded > .account__logout,
 .button-group.__expanded > .settings__submit,
@@ -1249,6 +1279,9 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:first-child) .auth-button,
 .button-group-dropdown:not(:first-child) .load-more-button,
+.button-group-dropdown:not(:first-child) .settings__change-button,
+.button-group-dropdown:not(:first-child) .settings__declare-button,
+.button-group-dropdown:not(:first-child) .settings__cancel-button,
 .button-group-dropdown:not(:first-child) .follow-button,
 .button-group-dropdown:not(:first-child) .account__logout,
 .button-group-dropdown:not(:first-child) .settings__submit,
@@ -1268,6 +1301,9 @@ a.outline-auth-button {
 .button-group-dropdown:not(:last-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:last-child) .auth-button,
 .button-group-dropdown:not(:last-child) .load-more-button,
+.button-group-dropdown:not(:last-child) .settings__change-button,
+.button-group-dropdown:not(:last-child) .settings__declare-button,
+.button-group-dropdown:not(:last-child) .settings__cancel-button,
 .button-group-dropdown:not(:last-child) .follow-button,
 .button-group-dropdown:not(:last-child) .account__logout,
 .button-group-dropdown:not(:last-child) .settings__submit,
@@ -1287,6 +1323,9 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child):not(:last-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .auth-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .load-more-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .settings__change-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .settings__declare-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .settings__cancel-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .follow-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .account__logout,
 .button-group-dropdown:not(:first-child):not(:last-child) .settings__submit,
@@ -1331,6 +1370,8 @@ a.outline-auth-button {
 }
 .button--green,
 .auth-button,
+.settings__change-button,
+.settings__declare-button,
 .settings__submit,
 .messages__button {
   color: #ffffff !important;
@@ -1338,6 +1379,8 @@ a.outline-auth-button {
 }
 .button--green:active,
 .auth-button:active,
+.settings__change-button:active,
+.settings__declare-button:active,
 .settings__submit:active,
 .messages__button:active {
   background-color: #2b8a5c;
@@ -1363,11 +1406,13 @@ a.outline-auth-button {
 .button--blue:active {
   background-color: #43668e;
 }
-.button--grey {
+.button--grey,
+.settings__cancel-button {
   color: #ffffff !important;
   background-color: #b2b2b2;
 }
-.button--grey:active {
+.button--grey:active,
+.settings__cancel-button:active {
   background-color: #a3a3a3;
 }
 .button--yellow {
@@ -1384,6 +1429,9 @@ a.outline-auth-button {
 .button--block,
 .manage-subscriptions-button,
 .load-more-button,
+.settings__change-button,
+.settings__declare-button,
+.settings__cancel-button,
 .auth__buttons button,
 .settings__submit,
 .messages__section--dialogs .messages__button {
@@ -3405,6 +3453,9 @@ a.pagination__item:active {
 .settings__error a:active {
   color: inherit;
   text-decoration: none;
+}
+.settings__email-actions {
+  margin-top: 15px;
 }
 .subscriptions {
   -webkit-user-select: none;

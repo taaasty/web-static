@@ -26,7 +26,7 @@ request = (_method, url, data = {}) ->
     when 'POST', 'PUT', 'DELETE' then 'POST'
     else 'GET'
 
-  assign data, { _method }
+  assign data, {_method}
 
   reqwest
     url: url
@@ -46,6 +46,21 @@ Api =
     load: (locale) ->
       url = TastySettings.localesPath + '/' + locale + '.json'
       getRequest url
+
+  currentUser:
+    update: (data) ->
+      url = ApiRoutes.update_profile_url()
+      key = Constants.api.UPDATE_CURRENT_USER
+
+      abortPendingRequests key
+      _pendingRequests = putRequest url, data
+
+    cancelEmailConfirmation: ->
+      url = ApiRoutes.request_confirm_url()
+      key = Constants.api.CANCEL_EMAIL_CONFIRMATION
+
+      abortPendingRequests key
+      _pendingRequests = deleteRequest url
 
   relationship:
     follow: (userId) ->
