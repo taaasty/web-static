@@ -34,10 +34,10 @@ $ ->
   mainToolbarToggle.onclick = ->
     document.body.classList.toggle('main-toolbar-open');
 
-  $('.toolbar--main .toolbar__popup-item').on 'mouseenter', ->
+  $('.toolbar--main .toolbar__nav-item').on 'mouseenter', ->
     $(this).find('.toolbar__subnav').stop().slideDown(300)
 
-  $('.toolbar--main .toolbar__popup').on 'mouseleave', ->
+  $('.toolbar--main .toolbar__nav').on 'mouseleave', ->
     $(this).find('.toolbar__subnav').stop().slideUp(300)
 
   # Тултип для шаринга
