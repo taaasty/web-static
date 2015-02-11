@@ -15,7 +15,7 @@ SettingsAccounts = React.createClass
           <div className="account__actions">
             <a href={ Routes.logout_path() }
                className="account__logout">
-              Выйти
+              { i18n.t('buttons.settings_accounts_logout') }
             </a>
           </div>
           <div className="account__info">
@@ -29,7 +29,7 @@ SettingsAccounts = React.createClass
                 { @props.user.slug }
               </div>
               <div className="account__status">
-                Активный дневник
+                { i18n.t('settings.account_active_status') }
               </div>
             </div>
           </div>

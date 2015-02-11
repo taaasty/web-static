@@ -9,6 +9,6 @@ SettingsMixin =
       CurrentUserViewActions.update @state.tempSettings
         .then @resetTempSettings
     else
-      NotifyController.notifyError 'У вас нет несохранённых изменений'
+      NotifyController.notifyError i18n.t('messages.settings_no_unsaved_changes_error')
 
 module.exports = SettingsMixin

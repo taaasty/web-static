@@ -11,7 +11,7 @@ SettingsPasswordField = React.createClass
     <div className="form-field form-field--default">
       <input type="password"
              value={ @props.value }
-             placeholder="Новый пароль"
+             placeholder={ i18n.t('placeholders.settings_password') }
              className="form-field__input"
              onChange={ @handleChange } />
     </div>

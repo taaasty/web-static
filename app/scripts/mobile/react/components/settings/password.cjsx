@@ -17,10 +17,10 @@ SettingsPassword = React.createClass
     <div className="settings__item">
       <div className="settings__left">
         <h3 className="settings__title">
-          Пароль
+          { i18n.t('settings.password_header') }
         </h3>
         <p className="settings__desc">
-          Используйте сложный пароль для авторизации и обеспечения сохранности данных.
+          { i18n.t('settings.password_description') }
         </p>
         <SettingsPasswordField
             value={ @state.password }

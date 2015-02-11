@@ -7,12 +7,12 @@ CurrentUserViewActions =
   updateEmail: (newEmail) ->
     @update(email: newEmail)
       .then ->
-        NotifyController.notifySuccess 'Письмо отправлено на почту'
+        NotifyController.notifySuccess i18n.t 'messages.settings_update_email_success'
 
   updateAvatar: (formData) ->
     Api.currentUser.updateAvatar formData
       .then (userpic) ->
-        NotifyController.notifySuccess 'Аватар успешно изменён'
+        NotifyController.notifySuccess i18n.t 'messages.settings_update_avatar_success'
         CurrentUserServerActions.updateAvatar userpic
       .fail (xhr) ->
         NotifyController.errorResponse xhr
@@ -20,7 +20,7 @@ CurrentUserViewActions =
   update: (data) ->
     Api.currentUser.update data
       .then (user) ->
-        NotifyController.notifySuccess 'Настройки успешно сохранены'
+        NotifyController.notifySuccess i18n.t 'messages.settings_update_success'
         CurrentUserServerActions.update user
       .fail (xhr) ->
         NotifyController.errorResponse xhr
@@ -28,7 +28,7 @@ CurrentUserViewActions =
   cancelEmailConfirmation: ->
     Api.currentUser.cancelEmailConfirmation()
       .then ->
-        NotifyController.notifySuccess 'Вы успешно отказались от изменения емейла'
+        NotifyController.notifySuccess i18n.t 'messages.settings_cancel_email_confirmation_success'
         CurrentUserServerActions.cancelEmailConfirmation()
 
 module.exports = CurrentUserViewActions

@@ -13,7 +13,7 @@ SettingsHeroSlug = React.createClass
     <div className="settings__hero__name">
       <textarea
           defaultValue={ @props.slug }
-          placeholder="Ваш псевдоним"
+          placeholder={ i18n.t('placeholders.settings_slug') }
           maxLength={ 140 }
           className="settings__hero__textarea"
           onBlur={ @handleBlur } />
@@ -25,6 +25,6 @@ SettingsHeroSlug = React.createClass
     if value.length
       @props.onChange value
     else
-      NotifyController.notifyError 'Псевдоним не может быть пустым'
+      NotifyController.notifyError i18n.t('messages.settings_empty_slug_error')
 
 module.exports = SettingsHeroSlug

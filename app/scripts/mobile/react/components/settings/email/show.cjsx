@@ -1,4 +1,6 @@
-NotifyController = require '../../../controllers/notify'
+NotifyController          = require '../../../controllers/notify'
+SettingsEmailField        = require './fields/email'
+SettingsEmailChangeButton = require './buttons/change'
 { PropTypes } = React
 
 SettingsEmailShow = React.createClass
@@ -12,39 +14,31 @@ SettingsEmailShow = React.createClass
     <div className="settings__item">
       <div className="settings__left">
         <h3 className="settings__title">
-          Емейл
+          { i18n.t('settings.email_show_header') }
         </h3>
-        <div className="form-field form-field--default form-field--light">
-          <input ref="emailField"
-                 type="email"
-                 placeholder="Ваш емейл"
-                 defaultValue={ @props.email }
-                 className="form-field__input" />
-        </div>
+        <SettingsEmailField
+            ref="emailField"
+            value={ @props.email } />
         <div className="settings__email-actions">
-          <button className="settings__change-button"
-                  onClick={ @handleClick }>
-            Изменить
-          </button>
+          <SettingsEmailChangeButton onClick={ @handleClick } />
         </div>
       </div>
     </div>
 
   isValid: ->
-    email = @refs.emailField.getDOMNode().value
+    email = @refs.emailField.getValue()
 
     switch
       when email.length == 0
-        NotifyController.notifyError 'Емейл не может быть пустым'
+        NotifyController.notifyError i18n.t('messages.settings_empty_email_error')
         false
       when email == @props.email
-        NotifyController.notifyError 'Новый емейл должен отличаться от текущего'
+        NotifyController.notifyError i18n.t('messages.settings_not_unique_email_error')
         false
       else true
 
-  handleClick: (e) ->
-    e.preventDefault()
-    email = @refs.emailField.getDOMNode().value
+  handleClick: ->
+    email = @refs.emailField.getValue()
 
     @props.onChange(email) if @isValid()
 

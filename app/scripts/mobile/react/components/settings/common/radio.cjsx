@@ -23,14 +23,22 @@ Settings_Radio = React.createClass
                  onChange={ @handleChange } />
           <label htmlFor={ @id }
                  className="switcher__label">
-            <span className="switcher__btn switcher__btn--on">Да</span>
-            <span className="switcher__btn switcher__btn--off">Нет</span>
+            <span className="switcher__btn switcher__btn--on">
+              { i18n.t('buttons.settings_switcher_on') }
+            </span>
+            <span className="switcher__btn switcher__btn--off">
+              { i18n.t('buttons.settings_switcher_off') }
+            </span>
           </label>
         </div>
       </div>
       <div className="settings__left">
-        <h3 className="settings__title">{ @props.title }</h3>
-        <p className="settings__desc">{ @props.description }</p>
+        <h3 className="settings__title">
+          { @props.title }
+        </h3>
+        <p className="settings__desc">
+          { @props.description }
+        </p>
       </div>
     </div>
 

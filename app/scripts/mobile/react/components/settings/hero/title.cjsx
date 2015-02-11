@@ -10,7 +10,7 @@ SettingsHeroTitle = React.createClass
   render: ->
     <div className="settings__hero__text">
       <textarea
-          placeholder="Небольшое описание тлога"
+          placeholder={ i18n.t('placeholders.settings_title') }
           maxLength={ 140 }
           className="settings__hero__textarea"
           onBlur={ @handleBlur } />

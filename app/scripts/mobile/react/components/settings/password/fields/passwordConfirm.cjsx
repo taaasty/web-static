@@ -11,7 +11,7 @@ SettingsPasswordConfirmField = React.createClass
     <div className="form-field form-field--default">
       <input type="password"
              value={ @props.value }
-             placeholder="Новый пароль еще раз"
+             placeholder={ i18n.t('placeholders.settings_password_confirm') }
              className="form-field__input"
              onChange={ @handleChange } />
     </div>

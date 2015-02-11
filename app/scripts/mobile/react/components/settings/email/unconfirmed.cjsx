@@ -1,35 +1,30 @@
+SettingsEmailField        = require './fields/email'
+SettingsEmailCancelButton = require './buttons/cancel'
 { PropTypes } = React
 
 SettingsEmailUnconfirmed = React.createClass
   displayName: 'SettingsEmailUnconfirmed'
 
   propTypes:
-    confirmationEmail: PropTypes.string.isRequired
+    confirmationEmail: PropTypes.oneOfType [PropTypes.string, PropTypes.object]
     onCancel:          PropTypes.func.isRequired
 
   render: ->
     <div className="settings__item">
       <div className="settings__left">
         <h3 className="settings__title">
-          Емейл
+          { i18n.t('settings.email_unconfirmed_header') }
         </h3>
-        <div className="form-field form-field--default form-field--light">
-          <input type="email"
-                 value={ @props.confirmationEmail }
-                 disabled={ true }
-                 className="form-field__input" />
-        </div>
+        <SettingsEmailField
+            value={ @props.confirmationEmail }
+            disabled={ true } />
         <div className="settings__email-actions">
-          <button className="settings__cancel-button"
-                  onClick={ @handleClick }>
-            Отменить
-          </button>
+          <SettingsEmailCancelButton onClick={ @handleClick } />
         </div>
       </div>
     </div>
 
-  handleClick: (e) ->
-    e.preventDefault()
+  handleClick: ->
     @props.onCancel()
 
 module.exports = SettingsEmailUnconfirmed
