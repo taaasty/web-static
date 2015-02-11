@@ -54,3 +54,6 @@ CurrentUserStore.dispatchToken = AppDispatcher.register (payload) ->
     when Constants.currentUser.CANCEL_EMAIL_CONFIRMATION
       CurrentUserStore.update(confirmation_email: null)
       CurrentUserStore.emitChange()
+    when Constants.currentUser.UPDATE_AVATAR
+      CurrentUserStore.update(userpic: action.userpic)
+      CurrentUserStore.emitChange()

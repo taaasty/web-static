@@ -7,7 +7,9 @@ SettingsHero = React.createClass
   displayName: 'SettingsHero'
 
   propTypes:
-    user: PropTypes.object.isRequired
+    user:          PropTypes.object.isRequired
+    onSlugChange:  PropTypes.func.isRequired
+    onTitleChange: PropTypes.func.isRequired
 
   render: ->
     <div className="settings__hero"
@@ -15,8 +17,12 @@ SettingsHero = React.createClass
       <div className="settings__hero__overlay" />
       <div className="settings__hero__box">
         <SettingsHeroAvatar user={ @props.user } />
-        <SettingsHeroSlug slug={ @props.user.slug } />
-        <SettingsHeroTitle title={ @props.user.title }  />
+        <SettingsHeroSlug
+            slug={ @props.user.slug }
+            onChange={ @props.onSlugChange } />
+        <SettingsHeroTitle
+            title={ @props.user.title }
+            onChange={ @props.onTitleChange } />
       </div>
     </div>
 

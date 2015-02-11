@@ -8,6 +8,11 @@ CurrentUserServerActions =
       type: Constants.currentUser.UPDATE
       user: user
 
+  updateAvatar: (userpic) ->
+    AppDispatcher.handleServerAction
+      type:    Constants.currentUser.UPDATE_AVATAR
+      userpic: userpic
+
   cancelEmailConfirmation: ->
     AppDispatcher.handleServerAction
       type: Constants.currentUser.CANCEL_EMAIL_CONFIRMATION

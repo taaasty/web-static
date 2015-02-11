@@ -9,11 +9,19 @@ CurrentUserViewActions =
       .then ->
         NotifyController.notifySuccess 'Письмо отправлено на почту'
 
+  updateAvatar: (formData) ->
+    Api.currentUser.updateAvatar formData
+      .then (userpic) ->
+        NotifyController.notifySuccess 'Аватар успешно изменён'
+        CurrentUserServerActions.updateAvatar userpic
+      .fail (xhr) ->
+        NotifyController.errorResponse xhr
+
   update: (data) ->
     Api.currentUser.update data
       .then (user) ->
-        CurrentUserServerActions.update user
         NotifyController.notifySuccess 'Настройки успешно сохранены'
+        CurrentUserServerActions.update user
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 

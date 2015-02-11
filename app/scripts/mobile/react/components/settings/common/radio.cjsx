@@ -8,6 +8,7 @@ Settings_Radio = React.createClass
     title:       PropTypes.string.isRequired
     description: PropTypes.string.isRequired
     checked:     PropTypes.bool.isRequired
+    onChange:    PropTypes.func.isRequired
 
   componentWillMount: ->
     @id = UuidService.generate()
@@ -18,7 +19,8 @@ Settings_Radio = React.createClass
         <div className="switcher">
           <input type="checkbox"
                  id={ @id }
-                 className="switcher__input" />
+                 className="switcher__input"
+                 onChange={ @handleChange } />
           <label htmlFor={ @id }
                  className="switcher__label">
             <span className="switcher__btn switcher__btn--on">Да</span>
@@ -31,5 +33,9 @@ Settings_Radio = React.createClass
         <p className="settings__desc">{ @props.description }</p>
       </div>
     </div>
+
+  handleChange: (e) ->
+    checked = e.target.checked
+    @props.onChange checked
 
 module.exports = Settings_Radio
