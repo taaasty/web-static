@@ -43,7 +43,6 @@
     display: inline-block;
     font-size: @toolbar-size / 2 - 2;
     vertical-align: middle;
-    transition: color .4s ease;
   }
 
   .icon--menu {
@@ -175,6 +174,10 @@
   left: 0;
   cursor: pointer;
   border-radius: 50%;
+
+  .icon {
+    transition: color .4s ease;
+  }
 
   .tasty-ribbon {
     width: 100%;
@@ -410,6 +413,114 @@
   }
 }
 
+// Navbar
+.toolbar__navbar {
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  background: @toolbar-bg-base;
+  background-color: rgba(red(@toolbar-bg-base), green(@toolbar-bg-base), blue(@toolbar-bg-base), .9);
+  font-size: 16px;
+  line-height: 22px;
+  text-align: left;
+  overflow: hidden;
+  user-select: none;
+  box-sizing: border-box;
+
+  & > .scroller {
+    height: 100%;
+  }
+}
+
+// Nav
+.toolbar__nav-item {
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .icon {
+    font-size: 30px;
+  }
+
+  .icon--plus {
+    width: 38px;
+    height: 38px;
+    background: #2ac67e;
+    font-size: 24px;
+    line-height: 38px;
+    color: #fff !important;
+    border-radius: 50%;
+  }
+
+  .messages-badge,
+  .notifications-badge,
+  .favorites-badge {
+    margin: -4px 0 0 -14px;
+    position: absolute;
+  }
+
+  // States
+  &.state--active {
+    .toolbar__nav-link {
+      .toolbar-popup-link-hover;
+    }
+  }
+}
+
+.toolbar__nav-link {
+  padding: 10px 16px 9px;
+  display: block;
+  color: #bbb;
+  opacity: .92;
+
+  a& {
+    &:hover {
+      .toolbar-popup-link-hover;
+    }
+
+    &:active {
+      background-color: lighten(@yellow, 10%);
+      opacity: 1;
+    }
+  }
+}
+
+.toolbar__nav-text {
+  display: none;
+}
+
+.toolbar__nav-list--bottom {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+// Subnav
+.toolbar__subnav {
+  display: none;
+}
+
+.toolbar__subnav-item {
+  &:extend(.toolbar__nav-item all);
+}
+
+.toolbar__subnav-link {
+  &:extend(.toolbar__nav-link all);
+}
+
+.toolbar__subnav-text {
+  &:extend(.toolbar__nav-text all);
+}
+
 // Types
 .toolbar--right {
   padding-left: 0;
@@ -433,6 +544,50 @@
   opacity: 0;
 }
 
+.toolbar--main {
+  width: 70px;
+  height: 100%;
+  padding: 0;
+  top: 0;
+  left: 0;
+  background: none;
+  transform: translateX(-100%);
+  transition: transform .4s ease;
+
+  .toolbar__toggle {
+    height: @toolbar-size;
+    width: @toolbar-size;
+    position: absolute;
+    top: @toolbar-indent;
+    left: @toolbar-indent;
+    margin-left: 100%;
+    background: @toolbar-bg-base;
+    background-color: @toolbar-bg;
+    line-height: @toolbar-size;
+    color: @white;
+    text-align: center;
+    white-space: nowrap;
+    opacity: 1;
+    user-select: none;
+    border-radius: @toolbar-size;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  .toolbar__navbar {
+    padding-bottom: 100px;
+  }
+}
+
+.toolbar--avatar {
+  left: auto;
+  right: @indent-base;
+
+  .toolbar__toggle {
+    background: none;
+  }
+}
+
+
 // Keyframes
 @-webkit-keyframes toolbar-indicators-animate {
   0%   { opacity: 0; }
@@ -453,4 +608,17 @@
   0%   { opacity: 0; }
   20%  { opacity: 0; }
   100% { opacity: 1; }
+}
+
+
+.main-toolbar-open {
+  .toolbar--main {
+    transform: translateX(0);
+  }
+
+  .calendar {
+    visibility: hidden;
+    opacity: 0;
+    transition: width .3s ease-in-out, visibility 0s ease-in-out .3s, opacity .3s ease-in-out !important;
+  }
 }

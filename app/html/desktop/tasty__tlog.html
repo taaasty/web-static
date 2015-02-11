@@ -20,12 +20,12 @@
         <link rel="stylesheet" href="stylesheets/main.css" />
         <!-- end Styles -->
     </head>
-    <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white not-logged browserbar-enabled" ng-app='AApp'>
+    <body class="layout--tlog tlog-fonttype-serif tlog-coveralign-justify tlog-feedcolor-white not-logged main-toolbar-open" ng-app='AApp'>
 
         <!-- Browserbar -->
-        <div class="browserbar">
+        <!-- <div class="browserbar">
             <div class="browserbar__inner">Мы не поддерживаем ваш браузер, обновите его до <a href="#" title="последней версии">последней версии</a></div>
-        </div>
+        </div> -->
         <!-- end Browserbar -->
 
         <!-- Toolbar - Back -->
@@ -42,11 +42,11 @@
         <!-- end Toolbar - Back -->
 
         <!-- Toolbar - Logo -->
-        <div data-react-class="FeedToolbar" data-react-props='{"friendsUrl": "http://taaasty.ru/friends", "liveUrl": "http://taaasty.ru/live", "bestUrl": "http://taaasty.ru/best", "anonymousUrl": "http://taaasty.ru/anonymous"}'></div>
+        <!-- <div data-react-class="FeedToolbar" data-react-props='{"friendsUrl": "http://taaasty.ru/friends", "liveUrl": "http://taaasty.ru/live", "bestUrl": "http://taaasty.ru/best", "anonymousUrl": "http://taaasty.ru/anonymous"}'></div> -->
         <!-- end Toolbar - Logo -->
 
         <!-- Toolbar - Indicators -->
-        <div data-react-class="IndicatorsToolbar" data-react-props='
+        <!--<div data-react-class="IndicatorsToolbar" data-react-props='
         {
             "user": {
                 "id": 232992,
@@ -100,10 +100,10 @@
                     }
                 }
             }
-        }'></div>
+        }'></div>-->
         <!-- end Toolbar - Indicators -->
         <!-- Toolbar - Userbar -->
-        <div data-react-class="UserToolbar" data-react-props='
+        <!--<div data-react-class="UserToolbar" data-react-props='
         {
             "user": {
                 "id": 232992,
@@ -164,7 +164,7 @@
             "favoritesUrl":"http://taaasty.ru/@sergeylaptev/favorites",
             "privateEntriesUrl":"http://taaasty.ru/@sergeylaptev/privates",
             "logoutUrl":"http://taaasty.ru/logout"
-        }'></div>
+        }'></div>-->
         <!-- end Toolbar - Userbar -->
 
         <!-- Auth Button -->
@@ -177,10 +177,80 @@
 
         <!-- Social Share -->
         <div class="social-share">
-            <button class="social-share-facebook-button" data-original-title="Расшарить&nbsp;в&nbsp;Фейсбуке" data-placement="right" tooltip>F</button>
-            <button class="social-share-vkontakte-button state--active" data-original-title="Расшарить&nbsp;Вконтакте" data-placement="right" tooltip>В</button>
+            <button class="social-share-facebook-button" data-original-title="Расшарить&nbsp;в&nbsp;Фейсбуке" data-placement="left" tooltip>F</button>
+            <button class="social-share-vkontakte-button state--active" data-original-title="Расшарить&nbsp;Вконтакте" data-placement="left" tooltip>В</button>
         </div>
         <!-- end Social Share -->
+
+         <!-- Toolbar - Experiment -->
+        <div class="toolbar toolbar--main">
+            <div class="toolbar__toggle">
+                <i class="icon icon--menu"></i>
+            </div>
+            <div class="toolbar__navbar">
+                <div class="scroller scroller--dark">
+                    <div class="scroller__pane">
+                        <ul class="toolbar__nav">
+                            <li class="toolbar__nav-item">
+                                <a class="toolbar__nav-link" href="#" data-original-title="Новая&nbsp;запись" data-placement="right" data-container="body" tooltip><i class="icon icon--plus"></i><span class="toolbar__nav-text">Новая запись</span></a>
+                            </li>
+                            <li class="toolbar__nav-item">
+                                <a class="toolbar__nav-link" href="#" data-original-title="Подписки" data-placement="right" data-container="body" tooltip><i class="icon icon--friends"></i><span class="toolbar__nav-text">Подписки</span></a>
+                                <ul class="toolbar__subnav">
+                                    <li class="toolbar__subnav-item">
+                                        <a class="toolbar__subnav-link" href="#" data-original-title="Прямой эфир" data-placement="right" data-container="body" tooltip><i class="icon icon--wave"></i><span class="toolbar__subnav-text">Прямой эфир</span></a>
+                                    </li>
+                                    <li class="toolbar__subnav-item">
+                                        <a class="toolbar__subnav-link" href="#" data-original-title="Лучшее" data-placement="right" data-container="body" tooltip><i class="icon icon--rating"></i><span class="toolbar__subnav-text">Лучшее</span></a>
+                                    </li>
+                                    <li class="toolbar__subnav-item">
+                                        <a class="toolbar__subnav-link" href="#" data-original-title="Анонимки" data-placement="right" data-container="body" tooltip><i class="icon icon--anonymous"></i><span class="toolbar__subnav-text">Анонимки</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="toolbar__nav-item">
+                                <a class="toolbar__nav-link" href="#" data-original-title="Сообщения" data-placement="right" data-container="body" tooltip><i class="icon icon--messages"></i><span class="toolbar__nav-text">Сообщения</span><span class="messages-badge">4</span></a>
+                            </li>
+                            <li class="toolbar__nav-item">
+                                <a class="toolbar__nav-link" href="#" data-original-title="Уведомления" data-placement="right" data-container="body" tooltip><i class="icon icon--bell"></i><span class="toolbar__nav-text">Уведомления</span><span class="notifications-badge">12</span></a>
+                            </li>
+                            <li class="toolbar__nav-item">
+                                <a class="toolbar__nav-link" href="#" data-original-title="Избранное" data-placement="right" data-container="body" tooltip><i class="icon icon--star"></i><span class="toolbar__nav-text">Избранное</span><span class="favorites-badge">1</span></a>
+                            </li>
+                            <li class="toolbar__nav-item">
+                                <a class="toolbar__nav-link" href="#" data-original-title="Скрытые&nbsp;записи" data-placement="right" data-container="body" tooltip><i class="icon icon--lock"></i><span class="toolbar__nav-text">Скрытые записи</span></a>
+                            </li>
+                            <li class="toolbar__nav-item">
+                                <a class="toolbar__nav-link" href="#" data-original-title="Управление&nbsp;подписками" data-placement="right" data-container="body" tooltip><i class="icon icon--friends"></i><span class="toolbar__nav-text">Управление подписками</span></a>
+                            </li>
+                            <li class="toolbar__nav-item">
+                                <a class="toolbar__nav-link" href="#" data-original-title="Дизайн&nbsp;дневника" data-placement="right" data-container="body" tooltip><i class="icon icon--drawing"></i><span class="toolbar__nav-text">Дизайн дневника</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="scroller__track">
+                        <div class="scroller__bar"></div>
+                    </div>
+                </div>
+                <ul class="toolbar__nav toolbar__nav--bottom">
+                    <li class="toolbar__nav-item">
+                        <a class="toolbar__nav-link" href="#" data-original-title="Общие&nbsp;настройки" data-placement="right" data-container="body" tooltip><i class="icon icon--cogwheel"></i><span class="toolbar__nav-text">Общие настройки</span></a>
+                    </li>
+                    <li class="toolbar__nav-item">
+                        <a class="toolbar__nav-link" href="#" data-original-title="Выход" data-placement="right" data-container="body" tooltip><i class="icon icon--logout"></i><span class="toolbar__nav-text">Выход</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <a class="toolbar toolbar--avatar" href="#" data-original-title="Мой дневник" data-placement="left" data-container="body" tooltip>
+            <div class="toolbar__toggle">
+                <span class="avatar" style="background-image:url('http://taaasty.ru/assets/userpic/ad/48/212831_original.JPG');">
+                    <img class="avatar__img" src="url('http://taaasty.ru/assets/userpic/ad/48/212831_original.JPG')" alt="" />
+                </span>
+            </div>
+        </a>
+        <!-- end Toolbar - Experiment -->
 
         <!-- Page -->
         <div class="page js-preview-design">

@@ -18,3 +18,27 @@ $ ->
   else
     console.debug? 'Без пользователя'
     window.Tasty.start()
+
+  # Эксперимент с навигацией
+  mainToolbar = document.querySelector('.toolbar--main')
+  mainToolbarToggle = mainToolbar.querySelector('.toolbar__toggle')
+  mainToolbarScroller = mainToolbar.querySelector('.scroller')
+
+  $(mainToolbarScroller).baron
+      scroller: '.scroller__pane'
+      bar:      '.scroller__bar'
+      track:    '.scroller__track'
+      barOnCls: 'scroller--tracked'
+      pause:    0
+
+  mainToolbarToggle.onclick = ->
+    document.body.classList.toggle('main-toolbar-open');
+
+  $('.toolbar--main .toolbar__nav-item').on 'mouseenter', ->
+    $(this).find('.toolbar__subnav').stop().slideDown(300)
+
+  $('.toolbar--main .toolbar__nav').on 'mouseleave', ->
+    $(this).find('.toolbar__subnav').stop().slideUp(300)
+
+  # Тултип для шаринга
+  $("[tooltip]").tooltip()

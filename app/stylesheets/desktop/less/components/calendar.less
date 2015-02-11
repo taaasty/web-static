@@ -15,9 +15,11 @@
   white-space: nowrap;
   overflow: hidden;
   z-index: @zindex-calendar;
+  visibility: visible;
+  opacity: 1;
   user-select: none;
   border-radius: (@calendar-height / 2);
-  transition: width .3s ease-in-out;
+  transition: width .3s ease-in-out, visibility 0s ease-in-out, opacity .3s ease-in-out;
 
   .calendar__period-marker--current {
     width: 7px;
