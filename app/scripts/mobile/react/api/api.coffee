@@ -26,12 +26,20 @@ request = (_method, url, data = {}) ->
     when 'POST', 'PUT', 'DELETE' then 'POST'
     else 'GET'
 
-  assign data, { _method }
+  if data instanceof FormData
+    dataType    = 'multipart/form-data'
+    processData = false
+  else
+    dataType    = 'json'
+    processData = true
+    assign data, {_method}
 
   reqwest
     url: url
     method: method
     data: data
+    dataType: dataType
+    processData: processData
     timeout: TIMEOUT
     headers: headers
 
@@ -46,6 +54,28 @@ Api =
     load: (locale) ->
       url = TastySettings.localesPath + '/' + locale + '.json'
       getRequest url
+
+  currentUser:
+    update: (data) ->
+      url = ApiRoutes.update_profile_url()
+      key = Constants.api.UPDATE_CURRENT_USER
+
+      abortPendingRequests key
+      _pendingRequests = putRequest url, data
+
+    updateAvatar: (formData) ->
+      url = ApiRoutes.userpic_url()
+      key = Constants.api.UPDATE_CURRENT_USER_AVATAR
+
+      abortPendingRequests key
+      _pendingRequests = postRequest url, formData
+
+    cancelEmailConfirmation: ->
+      url = ApiRoutes.request_confirm_url()
+      key = Constants.api.CANCEL_EMAIL_CONFIRMATION
+
+      abortPendingRequests key
+      _pendingRequests = deleteRequest url
 
   relationship:
     follow: (userId) ->

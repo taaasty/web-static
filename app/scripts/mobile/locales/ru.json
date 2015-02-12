@@ -75,6 +75,22 @@
     "not_registered_yet_link": "Я еще не зарегистрирован",
     "remembered_password_link": "Я всё вспомнил, верните меня"
   },
+  "settings": {
+    "account_active_status": "Активный дневник",
+    "email_declare_header": "Емейл",
+    "email_show_header": "Емейл",
+    "email_unconfirmed_header": "Емейл",
+    "password_header": "Пароль",
+    "password_description": "Используйте сложный пароль для авторизации и обеспечения сохранности данных.",
+    "privacy_header": "Закрытый дневник?",
+    "privacy_description": "Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам конечно.",
+    "daylog_header": "Тлогодень",
+    "daylog_description": "Это режим отображения, когда на странице показываются записи только за один день.",
+    "female_header": "Вы - девушка",
+    "female_description": "На Тейсти сложилось так, что 7 из 10 пользователей – это девушки. Поэтому по-умолчанию для всех именно такая настройка.",
+    "available_notifications_header": "Уведомления",
+    "available_notifications_description": "Отправлять мне емейл уведомления обо всех новых комментариях, подписчиках и личных сообщениях?"
+  },
   "pagination": {
     "next": "Позже",
     "prev": "Ранее",
@@ -93,6 +109,13 @@
     "auth_facebook_signin": "Войти с помощью Facebook",
     "auth_vkontakte_signin": "Войти с помощью Вконтакте",
     "auth_signin": "Войти",
+    "settings_accounts_logout": "Выйти",
+    "settings_save": "Сохранить",
+    "settings_switcher_on": "Да",
+    "settings_switcher_off": "Нет",
+    "settings_email_cancel": "Отменить",
+    "settings_email_change": "Изменить",
+    "settings_email_declare": "Установить",
     "comments_load_more": "Загрузить ещё __count__ комментарий",
     "comments_load_more_plural_2": "Загрузить ещё __count__ комментария",
     "comments_load_more_plural_5": "Загрузить ещё __count__ комментариев",
@@ -121,7 +144,15 @@
     "auth_empty_login_error": "Вы забыли ввести логин",
     "auth_empty_email_error": "Вы забыли ввести электронную почту",
     "auth_empty_password_error": "Вы забыли ввести пароль",
-    "auth_recovery_mail_sent_success": "Вам на почту отправлена ссылка для восстановления пароля"
+    "auth_recovery_mail_sent_success": "Вам на почту отправлена ссылка для восстановления пароля",
+    "settings_update_email_success": "На указанный адрес отправлено письмо для активации",
+    "settings_update_avatar_success": "Аватар успешно изменён",
+    "settings_update_success": "Настройки успешно сохранены",
+    "settings_cancel_email_confirmation_success": "Запрос на изменение емейла успешно отменён",
+    "settings_empty_email_error": "Емейл не может быть пустым",
+    "settings_not_unique_email_error": "Новый емейл должен отличаться от текущего",
+    "settings_empty_slug_error": "Псевдоним не может быть пустым",
+    "settings_no_unsaved_changes_error": "У вас нет несохранённых изменений"
   },
   "placeholders": {
     "comment_create": "Добавить комментарий",
@@ -129,6 +160,11 @@
     "auth_email": "Электронная почта",
     "auth_login": "Электронная почта или ник",
     "auth_nickname": "Ник",
-    "auth_password": "Пароль"
+    "auth_password": "Пароль",
+    "settings_email": "Ваш емейл",
+    "settings_slug": "Ваш псевдоним",
+    "settings_title": "Небольшое описание тлога",
+    "settings_password": "Новый пароль",
+    "settings_password_confirm": "Новый пароль еще раз"
   }
 }
