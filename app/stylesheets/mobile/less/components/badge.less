@@ -1,0 +1,35 @@
+.badge {
+  padding: 2px 5px 1px;
+  display: inline-block;
+  font-size: @badge-font-size;
+  line-height: @badge-line-height;
+  border-radius: 1em;
+  text-align: center;
+}
+
+.badge--green {
+  .badge-style(@badge-green-bg, @badge-green-color);
+}
+
+.badge--yellow {
+  .badge-style(@badge-yellow-bg, @badge-yellow-color);
+}
+
+.badge--blue {
+  .badge-style(@badge-blue-bg, @badge-blue-color);
+}
+
+.notifications-badge {
+  &:extend(.badge all, .badge--green all);
+  min-width: 1em;
+}
+
+.messages-badge {
+  &:extend(.badge all, .badge--yellow all);
+  min-width: 1em;
+}
+
+.favorites-badge {
+  &:extend(.badge all, .badge--blue all);
+  min-width: 1em;
+}

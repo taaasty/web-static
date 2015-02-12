@@ -41,7 +41,13 @@
 
     <!-- User Toolbar -->
     <nav class="toolbar toolbar--user">
-      <div class="toolbar__toggle"><i class="icon icon--menu"></i></div>
+      <div class="toolbar__toggle">
+        <span class="toolbar__indicators">
+          <i class="toolbar__indicator toolbar__indicator--messages"></i>
+          <i class="toolbar__indicator toolbar__indicator--notifications"></i>
+        </span>
+        <i class="icon icon--menu"></i>
+      </div>
       <div class="toolbar__popup toolbar__popup--complex __visible">
         <ul class="toolbar__popup-list">
           <li class="toolbar__popup-item">
@@ -54,7 +60,7 @@
             <a class="toolbar__popup-link" href="#"><i class="icon icon--profile"></i>Профиль</a>
           </li>
           <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное</a>
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное <span class="favorites-badge">24</span></a>
           </li>
           <li class="toolbar__popup-item">
             <a class="toolbar__popup-link" href="#"><i class="icon icon--anonymous"></i>Новая анонимка</a>
@@ -63,7 +69,10 @@
             <a class="toolbar__popup-link" href="#"><i class="icon icon--lock"></i>Скрытые записи</a>
           </li>
           <li class="toolbar__popup-item">
-            <a class="toolbar__popup-link" href="#"><i class="icon icon--messages"></i>Сообщения</a>
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--messages"></i>Сообщения <span class="messages-badge">12</span></a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--bell"></i>Уведомления <span class="notifications-badge">3</span></a>
           </li>
           <li class="toolbar__popup-item">
             <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Друзья</a>
