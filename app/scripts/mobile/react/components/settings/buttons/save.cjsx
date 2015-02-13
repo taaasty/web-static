@@ -9,7 +9,7 @@ SettingsSaveButton = React.createClass
   render: ->
     <div className="settings__item">
       <button
-          className="settings__submit"
+          className="settings__submit-button"
           onClick={ @handleClick }>
         { i18n.t('buttons.settings_save') }
       </button>

@@ -19,7 +19,7 @@ SettingsEmailShow = React.createClass
         <SettingsEmailField
             ref="emailField"
             value={ @props.email } />
-        <div className="settings__email-actions">
+        <div className="settings__actions">
           <SettingsEmailChangeButton onClick={ @handleClick } />
         </div>
       </div>

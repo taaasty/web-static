@@ -16,7 +16,7 @@ SettingsEmailDeclare = React.createClass
           { i18n.t('settings.email_declare_header') }
         </h3>
         <SettingsEmailField ref="emailField" />
-        <div className="settings__email-actions">
+        <div className="settings__actions">
           <SettingsEmailDeclareButton onClick={ @handleClick } />
         </div>
       </div>

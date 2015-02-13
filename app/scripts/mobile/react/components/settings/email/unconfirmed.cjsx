@@ -18,7 +18,7 @@ SettingsEmailUnconfirmed = React.createClass
         <SettingsEmailField
             value={ @props.confirmationEmail }
             disabled={ true } />
-        <div className="settings__email-actions">
+        <div className="settings__actions">
           <SettingsEmailCancelButton onClick={ @handleClick } />
         </div>
       </div>

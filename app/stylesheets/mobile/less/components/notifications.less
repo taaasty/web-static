@@ -3,6 +3,43 @@
   line-height: @notifications-line-height;
 }
 
+// Header
+.notifications__header {
+  padding: 12px;
+  background-color: @notifications-header-bg;
+  text-align: center;
+  user-select: none;
+}
+
+.notifications__title {
+  width: 66%;
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 18px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: @notifications-header-color;
+  vertical-align: middle;
+}
+
+// Actions
+.notifications__actions {
+  padding: (@indent-base + 4) @indent-base;
+  border-bottom: 1px solid @notification-divider-bg;
+}
+
+.notifications__mark-button {
+  &:extend(.button all, .button--small all, .button--green-lighter all, .button--block all);
+}
+
+// Text
+.notifications__text {
+  padding: @indent-base;
+  text-align: center;
+}
+
+// List
 .notifications__list {
   .list-style-none();
   width: 100%;

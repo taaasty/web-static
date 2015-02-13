@@ -84,119 +84,76 @@
 
     <!-- Layout -->
     <div class="layout">
-      <!-- Layout Header -->
-      <div class="layout__header">
-        <!-- Hero -->
-        <div class="hero" style="background-image: url(../images/bg.jpg);">
-            <div class="hero__close"><i class="icon icon--cross"></i></div>
-            <div class="hero__overlay"></div>
-            <div class="hero__gradient"></div>
-            <div class="hero__content">
-              <div class="hero__avatar">
-                <span class="follow-status">
-                  <i class="follow-status__icon"></i>
-                </span>
-                <span class="avatar" style="background-color: #eb4656; color: #fff;">
-                  <span class="avatar__text">8</span>
-                </span>
-              </div>
-              <div class="hero__head">
-                <div class="hero__title"><span>88mm</span></div>
-                <div class="hero__text"><span>sun-makes-my-day sun-makes-my-day sun-makes-my-day sun-makes-my-day sun-makes-my-day sun-makes-my-day</span></div>
-              </div>
-              <div class="hero__actions">
-                <button class="follow-button">Подписаться</button><button class="profile-settings-button"><i class="icon icon--cogwheel"></i></button><button class="write-message-button"><i class="icon icon--letter"></i></button><div class="hero__user-actions">
-                  <button class="action-menu-button"><i class="icon icon--dots"></i></button>
-                  <div class="hero__dropdown-popup __top">
-                    <ul class="hero__dropdown-popup-list">
-                      <li class="hero__dropdown-popup-item"><a class="hero__dropdown-popup-link" href="#"><i class="icon icon--not-allowed"></i>Заблокировать</a></li>
-                      <li class="hero__dropdown-popup-item"><a class="hero__dropdown-popup-link" href="#"><i class="icon icon--exclamation-mark"></i>Пожаловаться</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="hero__stats">
-              <div class="hero__stats-list">
-                <div class="hero__stats-item">
-                  <a class="hero__stats-link" href="#" title="356 записей">
-                    <strong class="hero__stats-value">356</strong> <span class="hero__stats-label">записей</span>
-                  </a>
-                </div>
-                <div class="hero__stats-item hero__stats-item-handler">
-                  <strong class="hero__stats-value">45</strong> <span class="hero__stats-label">подписан</span>
-                </div>
-                <div class="hero__stats-item hero__stats-item-handler">
-                  <strong class="hero__stats-value">356</strong> <span class="hero__stats-label">подписчиков</span>
-                </div>
-                <div class="hero__stats-item">
-                  <strong class="hero__stats-value">12</strong> <span class="hero__stats-label">дней тут</span>
-                </div>
-              </div>
-          </div>
-        </div>
-        <!-- end Hero -->
-      </div>
-      <!-- end Layout Header -->
       <!-- Layout Body -->
       <div class="layout__body">
         <!-- Notifications -->
         <div class="notifications">
-          <ul class="notifications__list">
-            <li class="notification __unread">
-              <a class="notification__link" href="#">
-                <div class="notification__inner">
-                  <div class="notification__read-state"></div>
-                  <div class="notification__user-avatar">
-                    <span class="avatar" style="background-color: #eb4656; color: #ffffff;">
-                      <span class="avatar__text">P</span>
-                    </span>
-                  </div>
-                  <div class="notification__desc">
-                    <span class="notification__spacer"></span><span class="notification__content">
-                      <span class="notification__user">pianohat</span> <span class="notification__action-text">ответила на ваш комментарий:</span> <span class="notification__text">Ох как я согласна.</span>
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li class="notification __unread">
-              <a class="notification__link" href="#">
-                <div class="notification__inner">
-                  <div class="notification__read-state"></div>
-                  <div class="notification__user-avatar">
-                    <span class="avatar" style="background-color: #f37420; color: #ffffff;">
-                      <span class="avatar__text">H</span>
-                    </span>
-                  </div>
-                  <div class="notification__image">
-                    <img src="../images/images/image_22.jpg" alt="" />
-                  </div>
-                  <div class="notification__desc">
-                    <span class="notification__spacer"></span><span class="notification__content">
-                      <span class="notification__user">headstone</span> <span class="notification__action-text">прокомментировала вашу запись &raquo;Как вы думаете, что мн...&raquo;:</span> <span class="notification__text">Most instances of neuroplasticity-based changes in the brain are much more...</span>
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li class="notification">
-              <a class="notification__link" href="#">
-                <div class="notification__inner">
-                  <div class="notification__user-avatar">
-                    <span class="avatar" style="background-color: #44d068; color: #ffffff;">
-                      <span class="avatar__text">D</span>
-                    </span>
-                  </div>
-                  <div class="notification__desc">
-                    <span class="notification__spacer"></span><span class="notification__content">
-                      <span class="notification__gap"></span><span class="notification__user">Dr-Watson</span> <span class="notification__action-text">упомянул вас в комментарии:</span> <span class="notification__text">@madworld присоединяйся)</span>
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
+          <div class="notifications__header">
+            <h3 class="notifications__title">Уведомления</h3>
+          </div>
+          <div class="notifications__body">
+            <div class="notifications__actions">
+              <button class="notifications__mark-button">Отметить как прочитанное</button>
+            </div>
+            <div class="notifications__content">
+              <!--<p class="notifications__text">Список уведомлений пуст</p>-->
+              <ul class="notifications__list">
+                <li class="notification __unread">
+                  <a class="notification__link" href="#">
+                    <div class="notification__inner">
+                      <div class="notification__read-state"></div>
+                      <div class="notification__user-avatar">
+                        <span class="avatar" style="background-color: #eb4656; color: #ffffff;">
+                          <span class="avatar__text">P</span>
+                        </span>
+                      </div>
+                      <div class="notification__desc">
+                        <span class="notification__spacer"></span><span class="notification__content">
+                          <span class="notification__user">pianohat</span> <span class="notification__action-text">ответила на ваш комментарий:</span> <span class="notification__text">Ох как я согласна.</span>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li class="notification __unread">
+                  <a class="notification__link" href="#">
+                    <div class="notification__inner">
+                      <div class="notification__read-state"></div>
+                      <div class="notification__user-avatar">
+                        <span class="avatar" style="background-color: #f37420; color: #ffffff;">
+                          <span class="avatar__text">H</span>
+                        </span>
+                      </div>
+                      <div class="notification__image">
+                        <img src="../images/images/image_22.jpg" alt="" />
+                      </div>
+                      <div class="notification__desc">
+                        <span class="notification__spacer"></span><span class="notification__content">
+                          <span class="notification__user">headstone</span> <span class="notification__action-text">прокомментировала вашу запись &raquo;Как вы думаете, что мн...&raquo;:</span> <span class="notification__text">Most instances of neuroplasticity-based changes in the brain are much more...</span>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li class="notification">
+                  <a class="notification__link" href="#">
+                    <div class="notification__inner">
+                      <div class="notification__user-avatar">
+                        <span class="avatar" style="background-color: #44d068; color: #ffffff;">
+                          <span class="avatar__text">D</span>
+                        </span>
+                      </div>
+                      <div class="notification__desc">
+                        <span class="notification__spacer"></span><span class="notification__content">
+                          <span class="notification__gap"></span><span class="notification__user">Dr-Watson</span> <span class="notification__action-text">упомянул вас в комментарии:</span> <span class="notification__text">@madworld присоединяйся)</span>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
         <!-- end Notifications -->
       </div>
