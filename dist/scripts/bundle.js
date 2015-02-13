@@ -22937,7 +22937,6 @@ ThumborService = {
     var path, size, url;
     url = _arg.url, path = _arg.path, size = _arg.size;
     switch (TastySettings.env) {
-      case 'static-development':
       case 'development':
         return url;
       default:
