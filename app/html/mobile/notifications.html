@@ -88,6 +88,7 @@
       <div class="layout__body">
         <!-- Notifications -->
         <div class="notifications">
+          <button class="notifications__refresh"><i class="icon icon--refresh"></i></button>
           <div class="notifications__header">
             <h3 class="notifications__title">Уведомления</h3>
           </div>
@@ -153,6 +154,16 @@
                 </li>
               </ul>
             </div>
+            <!-- Load More Button -->
+            <button class="load-more-button">Загрузить еще <!-- Можно так показывать поцесс загрузки: <span class="spinner spinner--14x14"><span class="spinner__icon"></span></span>--></button>
+            <!-- end Load More Button -->
+            <!-- Loader -->
+            <div class="loader __hidden">
+              <span class="spinner spinner--30x30">
+                <span class="spinner__icon"></span>
+              </span>
+            </div>
+            <!-- end Loader -->
           </div>
         </div>
         <!-- end Notifications -->
