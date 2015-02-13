@@ -3,6 +3,32 @@
   line-height: @notifications-line-height;
 }
 
+.notifications__refresh {
+  &:extend(.button all);
+  width: @notifications-refresh-size;
+  height: @notifications-refresh-size;
+  padding: 0;
+  position: fixed;
+  right: @indent-base;
+  bottom: @indent-base;
+  line-height: @notifications-refresh-size;
+  letter-spacing: 0;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  z-index: @zindex-notifications-refresh;
+  border-radius: 50%;
+  .button-common-style(@green-lighter);
+
+  .icon {
+    font-size: 28px;
+  }
+
+  &:active {
+    animation: notifications-refresh-active .3s ease;
+  }
+}
+
 // Header
 .notifications__header {
   padding: 12px;
@@ -138,4 +164,10 @@
   padding: 40px 20px;
   color: @white;
   text-align: center;
+}
+
+
+@keyframes notifications-refresh-active {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
 }
