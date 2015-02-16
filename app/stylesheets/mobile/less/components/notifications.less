@@ -18,7 +18,7 @@
   cursor: pointer;
   z-index: @zindex-notifications-refresh;
   border-radius: 50%;
-  .button-common-style(@green-lighter);
+  .button-common-style(#36b377);
 
   .icon {
     font-size: 28px;
@@ -56,7 +56,9 @@
 }
 
 .notifications__mark-button {
-  &:extend(.button all, .button--small all, .button--green-lighter all, .button--block all);
+  &:extend(.button all, .button--small all, .button--block all);
+  .button-common-style(#36b377);
+  color: #fff;
 }
 
 // Text

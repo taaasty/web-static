@@ -9,11 +9,12 @@
 // Messages Section
 .messages__section {
   position: relative;
+  box-sizing: border-box;
 }
 
 // Header
 .messages__header {
-  padding: 12px;
+  height: 42px;
   background-color: @messages-header-bg;
   text-align: center;
   user-select: none;
@@ -22,6 +23,13 @@
 // Body
 .messages__body {
   position: relative;
+}
+
+.messages__scroll {
+  height: 100%;
+  position: relative;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 // Footer
@@ -33,6 +41,7 @@
 .messages__title {
   width: 66%;
   margin: 0 auto;
+  padding: @indent-base 0;
   font-weight: bold;
   font-size: 11px;
   line-height: 18px;
@@ -40,6 +49,7 @@
   letter-spacing: .14em;
   color: @messages-header-color;
   vertical-align: middle;
+  .text-overflow;
 }
 
 // Message Dialogs
@@ -173,11 +183,6 @@
   width: 90%;
 }
 
-// Message Box
-.messages__box {
-  padding: @indent-base;
-}
-
 // Message Field
 .messages__field {
   margin-bottom: 12px;
@@ -185,17 +190,34 @@
 }
 
 // Message Chooser
+.messages__chooserbox {
+  height: 100%;
+  padding: @indent-base;
+  box-sizing: border-box;
+}
+
 .messages__chooser {
-  margin-bottom: 12px;
+  padding-top: 46px;
   position: relative;
   background-color: @messages-chooser-bg;
   color: @white;
   border-radius: @border-radius-base;
+  box-sizing: border-box;
+
+  &.__open {
+    height: 100%;
+
+    & + .messages__hint {
+      display: none;
+    }
+  }
 }
 
 .messages__chooser-input {
   width: 100%;
+  margin-top: -46px;
   padding: @indent-base;
+  display: block;
   border: none;
   background: none;
   font: inherit;
@@ -203,27 +225,47 @@
   box-sizing: border-box;
 }
 
+.messages__chooser-dropdown {
+  height: 100%;
+  border-top: 1px solid @messages-chooser-divider-bg;
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .messages__chooser-loading,
 .messages__chooser-empty,
 .messages__chooser-result {
   padding: @indent-base;
-  border-top: 1px solid @messages-chooser-divider-bg;
 }
 
-.messages__chooser-loading {
-  text-align: center;
-}
-
+.messages__chooser-loading,
 .messages__chooser-empty {
   text-align: center;
 }
 
+.messages__chooser-results {
+  .list-style-none;
+}
+
 .messages__chooser-result {
+  & + & {
+    border-top: 1px solid @messages-chooser-divider-bg;
+  }
+
   &:active,
   &.__active {
     .messages__person {
       color: @white;
     }
+  }
+}
+
+.messages__chooser-more-button {
+  &:extend(.button all, .button--large all, .button--rectangle all, .button--block all);
+
+  .messages__chooser-results + & {
+    border-top: 1px solid @messages-chooser-divider-bg;
   }
 }
 
@@ -247,6 +289,7 @@
 
 // Messages Hint
 .messages__hint {
+  margin-top: 12px;
   font-size: @font-size-xs;
   line-height: 18px;
   color: @grey;
@@ -390,6 +433,7 @@
 
 // Message Form
 .message-form {
+  height: 47px;
   position: relative;
   background-color: @white;
 }
