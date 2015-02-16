@@ -77,6 +77,15 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = deleteRequest url
 
+  users:
+    predict: (query) ->
+      url  = ApiRoutes.users_predict()
+      key  = Constants.api.USERS_PREDICT
+      data = {query}
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
   notifications:
     load: (sinceId, limit) ->
       url  = ApiRoutes.notificationsUrl()
@@ -98,6 +107,14 @@ Api =
     readAll: ->
       url = ApiRoutes.notificationsReadAllUrl()
       key = Constants.api.READ_NOTIFICATIONS
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
+
+  messenger:
+    createConversation: (id) ->
+      url = ApiRoutes.messengerConversationsByUserId id
+      key = Constants.api.CREATE_CONVERSATION
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest url

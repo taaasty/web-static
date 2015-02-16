@@ -1,47 +1,52 @@
+ConversationStore           = require '../../stores/conversation'
+ConnectStoreMixin           = require '../../../../shared/react/mixins/connectStore'
+ComponentMixin              = require '../../mixins/component'
+MessengerMixin              = require './mixins/messenger'
+MessengerConversation       = require './conversation'
+MessengerConversations      = require './conversations'
+MessengerCreateConversation = require './createConversation'
 { PropTypes } = React
+
+CONVERSATION_STATE        = 'conversation'
+CONVERSATION_LIST_STATE   = 'conversationList'
+CREATE_CONVERSATION_STATE = 'createConversation'
 
 Messenger = React.createClass
   displayName: 'Messenger'
+  mixins: [ConnectStoreMixin(ConversationStore), MessengerMixin, ComponentMixin]
 
   propTypes:
-    conversations: PropTypes.array.isRequired
+    state:          PropTypes.string
+    conversationId: PropTypes.number
+
+  getDefaultProps: ->
+    state:          CREATE_CONVERSATION_STATE
+    conversationId: null
+
+  getInitialState: ->
+    currentState:   @props.state
+    conversationId: @props.conversationId
 
   render: ->
-    <div className="messages">
-      <div className="messages__section messages__section--dialogs">
-        <div className="messages__header">
-          <h3 className="messages__title">Диалоги</h3>
-        </div>
-        <div className="messages__body">
-          <div className="messages__dialogs">
-            <div className="messages__dialog">
-              <div className="messages__user-avatar">
-                <span className="avatar">
-                  <span className="avatar__text">L</span>
-                </span>
-              </div>
-              <div className="messages__dialog-text">
-                <span className="messages__user-name">Liver</span> Привет
-              </div>
-              <span className="messages__date">28 ноября 14:27</span>
-            </div>
-            <div className="messages__dialog __read">
-              <div className="messages__user-avatar">
-                <span className="avatar">
-                  <span className="avatar__text">B</span>
-                </span>
-              </div>
-              <div className="messages__dialog-text">
-                <span className="messages__user-name">boom</span> Все в силе?
-              </div>
-              <span className="messages__date">3 октября 16:53</span>
-            </div>
-          </div>
-        </div>
-        <div className="messages__footer">
-          <button className="messages__button">Cоздать переписку</button>
-        </div>
-      </div>
-    </div>
+    content = switch @state.currentState
+      when CONVERSATION_STATE
+        <MessengerConversation id={ @state.conversationId } />
+      when CONVERSATION_LIST_STATE
+        <MessengerConversations
+            conversations={ @state.conversations }
+            onCreateButtonClick={ @activateCreateState } />
+      when CREATE_CONVERSATION_STATE
+        <MessengerCreateConversation onCreate={ @createConversation } />
+      else console.warn 'Unknown currentState of Messenger component', @state.currentState
+
+    return <div className="messages">
+             { content }
+           </div>
+
+  activateCreateState:       -> @setState(currentState: CREATE_CONVERSATION_STATE)
+  activateConversationState: -> @setState(currentState: CONVERSATION_STATE)
+
+  getStateFromStore: ->
+    conversations: ConversationStore.getAll()
 
 module.exports = Messenger
