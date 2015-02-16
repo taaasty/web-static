@@ -24,6 +24,7 @@ global.FeedBestPage      = require './react/pages/feedBest'
 global.FeedFriendsPage   = require './react/pages/feedFriends'
 global.SettingsPage      = require './react/pages/settings'
 global.NotificationsPage = require './react/pages/notifications'
+global.MessengerPage     = require './react/pages/messenger'
 
 # /*==========  Stores  ==========*/
 
