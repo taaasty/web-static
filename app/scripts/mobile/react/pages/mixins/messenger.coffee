@@ -2,58 +2,66 @@ MessengerPageMixin =
 
   getDefaultProps: ->
     currentUser:
-      api_key:
-        access_token: 'my_super_key'
-        expires_at: '2015-01-04T18:07:07.000+03:00'
-        user_id: 232992
-      authentications: [{
-        id: 5
-        image: 'https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg'
-        name: 'Сергей Лаптев'
-        provider: 'vkontakte'
-        sex: null
-        uid: '17202995'
-        url: 'http://vk.com/my_super_key'
-      }]
-      available_notifications: true
-      confirmation_email: null
-      created_at: '2014-06-18T14:27:22.000+04:00'
-      design:
-        backgroundBrightness: 75
-        background_url: 'http://taaasty.ru/assets/backgrounds/cf/78/1881243_4k_Resolution_Game_Wallpaper__12_fullsize.jpeg'
-        coverAlign: 'justify'
-        feedColor: 'black'
-        feedOpacity: 0.62
-        fontType: 'sans'
-        headerColor: 'white'
-      email: 'iamsergeylaptev@gmail.com'
-      features:
-        notification: false
-        search: true
-      id: 232992
-      is_confirmed: true
-      is_daylog: false
-      is_female: false
-      is_privacy: true
-      name: 'sergeylaptev'
-      private_entries_count: 0
-      public_entries_count: 3
-      slug: 'sergeylaptev'
-      title: 'To be continued...'
-      tlog_url: 'http://taaasty.ru/~sergeylaptev'
-      total_entries_count: 3
-      updated_at: '2014-12-17T11:54:20.000+03:00'
-      userpic:
-        default_colors:
-          background: '#b5c31e'
-          name: '#ffffff'
-        kind: 'user'
-        large_url: 'http://taaasty.ru/assets/userpic/22/36/232992_large.jpeg'
-        original_url: 'http://taaasty.ru/assets/userpic/22/36/232992_original.jpeg'
-        symbol: 's'
-        thumb64_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb64.jpeg'
-        thumb128_url: 'http://taaasty.ru/assets/userpic/22/36/232992_thumb128.jpeg'
-        thumbor_path: 'userpic/22/36/232992_original.jpeg'
+      "id": 232992,
+      "locale": "ru",
+      "name": "sergeylaptev",
+      "slug": "sergeylaptev",
+      "title": "",
+      "is_female": false,
+      "is_daylog": false,
+      "tlog_url": "http://taaasty.com/~sergeylaptev",
+      "created_at": "2014-06-18T14:27:22.000+04:00",
+      "updated_at": "2015-02-17T21:08:10.000+03:00",
+      "total_entries_count": 28,
+      "private_entries_count": 21,
+      "public_entries_count": 7,
+      "saw_guide": true,
+      "saw_guide_design": false,
+      "is_privacy": false,
+      "confirmation_email": null,
+      "email": "iamsergeylaptev@gmail.com",
+      "is_confirmed": false,
+      "available_notifications": false,
+      "authentications": [
+        "id": 5,
+        "provider": "vkontakte",
+        "uid": "17202992",
+        "name": "Сергей Лаптев",
+        "sex": null,
+        "image": "https://pp.vk.me/c618020/v618020992/50e6/UtWWgge-iQc.jpg",
+        "url": "http://vk.com/iamsergeylaptev"
+      ],
+      "api_key": {
+        "access_token": "adsh213472orafasdf897sckasBCKJ123",
+        "user_id": 232992,
+        "expires_at": "2015-01-04T18:07:07.000+03:00"
+      },
+      "design": {
+        "feedColor": "black",
+        "headerColor": "white",
+        "fontType": "sans",
+        "coverAlign": "center",
+        "feedOpacity": 0.88,
+        "background_url": "http://taaasty.com/assets/backgrounds/fb/e2/1881243_20140806230841_91475.jpg",
+        "backgroundBrightness": 75
+      },
+      "userpic": {
+        "original_url": "http://taaasty.com/assets/userpic/6d/ec/232992_original.jpeg",
+        "large_url": "http://taaasty.com/assets/userpic/6d/ec/232992_large.jpeg",
+        "thumb128_url": "http://taaasty.com/assets/userpic/6d/ec/232992_thumb128.jpeg",
+        "thumb64_url": "http://taaasty.com/assets/userpic/6d/ec/232992_thumb64.jpeg",
+        "thumbor_path": "userpic/6d/ec/232992_original.jpeg",
+        "symbol": "s",
+        "kind": "user",
+        "default_colors": {
+          "background": "#b5c31e",
+          "name": "#ffffff"
+        }
+      },
+      "features": {
+        "search": true,
+        "notification": false
+      }
     conversations: [{"id":255993,"user_id":232992,"created_at":"2014-09-25T13:14:07.000+04:00","updated_at":"2015-01-16T14:59:51.000+03:00","recipient_id":232419,"recipient":{"id":232419,"name":"test","slug":"test","title":"Барсик недоволен!","is_female":true,"is_daylog":false,"tlog_url":"http://taaasty.com/~test","created_at":"2014-06-09T05:16:47.000+04:00","updated_at":"2015-02-07T21:32:39.000+03:00","total_entries_count":31,"private_entries_count":16,"public_entries_count":15,"saw_guide":true,"saw_guide_design":true,"is_privacy":false,"design":{"feedColor":"black","headerColor":"whiteonblack","fontType":"sans","coverAlign":"center","feedOpacity":0.89,"background_url":"http://taaasty.ru/assets/backgrounds/20/7a/1883611_aviary_20141026_222429.jpg","backgroundBrightness":75},"userpic":{"original_url":"http://taaasty.com/assets/userpic/d3/1d/232419_original.jpg","large_url":"http://taaasty.com/assets/userpic/d3/1d/232419_large.jpg","thumb128_url":"http://taaasty.com/assets/userpic/d3/1d/232419_thumb128.jpg","thumb64_url":"http://taaasty.com/assets/userpic/d3/1d/232419_thumb64.jpg","thumbor_path":"userpic/d3/1d/232419_original.jpg","symbol":"t","kind":"user","default_colors":{"background":"#44d068","name":"#ffffff"}},"features":{"search":false,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3636419,"user_id":232992,"recipient_id":232419,"created_at":"2015-01-16T14:59:51.000+03:00","content_html":"!!!"},"messages_count":46},{"id":256038,"user_id":232992,"created_at":"2014-10-01T19:39:42.000+04:00","updated_at":"2015-01-16T14:58:29.000+03:00","recipient_id":236482,"recipient":{"id":236482,"name":"imperm3rjke","slug":"imperm3rjke","title":"","is_female":true,"is_daylog":false,"tlog_url":"http://taaasty.com/~imperm3rjke","created_at":"2014-08-22T11:42:17.000+04:00","updated_at":"2015-01-04T22:25:25.000+03:00","total_entries_count":3,"private_entries_count":3,"public_entries_count":0,"saw_guide":false,"saw_guide_design":false,"is_privacy":false,"design":{"feedColor":"white","headerColor":"black","fontType":"serif","coverAlign":"center","feedOpacity":1,"background_url":"http://taaasty.ru/assets/backgrounds/a8/63/1890055_Beautiful-Wallpapers-HD.jpg","backgroundBrightness":75},"userpic":{"original_url":"http://taaasty.com/assets/userpic/61/22/236482_original.jpg","large_url":"http://taaasty.com/assets/userpic/61/22/236482_large.jpg","thumb128_url":"http://taaasty.com/assets/userpic/61/22/236482_thumb128.jpg","thumb64_url":"http://taaasty.com/assets/userpic/61/22/236482_thumb64.jpg","thumbor_path":"userpic/61/22/236482_original.jpg","symbol":"i","kind":"user","default_colors":{"background":"#f37420","name":"#ffffff"}},"features":{"search":false,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3636418,"user_id":236482,"recipient_id":232992,"created_at":"2015-01-16T14:58:29.000+03:00","content_html":"test"},"messages_count":7},{"id":255648,"user_id":232992,"created_at":"2014-09-19T20:15:17.000+04:00","updated_at":"2015-01-14T19:38:00.000+03:00","recipient_id":232992,"recipient":{"id":232992,"name":"sergeylaptev","slug":"sergeylaptev","title":"","is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.com/~sergeylaptev","created_at":"2014-06-18T14:27:22.000+04:00","updated_at":"2015-02-12T12:19:52.000+03:00","total_entries_count":28,"private_entries_count":21,"public_entries_count":7,"saw_guide":true,"saw_guide_design":false,"is_privacy":false,"design":{"feedColor":"black","headerColor":"white","fontType":"sans","coverAlign":"center","feedOpacity":0.88,"background_url":"http://taaasty.com/assets/backgrounds/fb/e2/1881243_20140806230841_91475.jpg","backgroundBrightness":75},"userpic":{"original_url":"http://taaasty.com/assets/userpic/6d/ec/232992_original.jpeg","large_url":"http://taaasty.com/assets/userpic/6d/ec/232992_large.jpeg","thumb128_url":"http://taaasty.com/assets/userpic/6d/ec/232992_thumb128.jpeg","thumb64_url":"http://taaasty.com/assets/userpic/6d/ec/232992_thumb64.jpeg","thumbor_path":"userpic/6d/ec/232992_original.jpeg","symbol":"s","kind":"user","default_colors":{"background":"#b5c31e","name":"#ffffff"}},"features":{"search":true,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3626556,"user_id":232992,"recipient_id":232992,"created_at":"2015-01-14T19:38:00.000+03:00","content_html":"ok2"},"messages_count":10},{"id":274661,"user_id":232992,"created_at":"2015-01-07T23:40:45.000+03:00","updated_at":"2015-01-09T17:20:48.000+03:00","recipient_id":251483,"recipient":{"id":251483,"name":"Svetasamakina","slug":"svetasamakina","title":"","is_female":true,"is_daylog":false,"tlog_url":"http://taaasty.com/~Svetasamakina","created_at":"2014-12-25T11:01:36.000+03:00","updated_at":"2015-01-09T17:59:48.000+03:00","total_entries_count":4,"private_entries_count":4,"public_entries_count":0,"saw_guide":false,"saw_guide_design":false,"is_privacy":false,"design":{"feedColor":"black","headerColor":"white","fontType":"sans","coverAlign":"justify","feedOpacity":0.44,"background_url":"http://taaasty.ru/assets/backgrounds/2f/15/1896123_z_2fb91834.jpg","backgroundBrightness":75},"userpic":{"original_url":"http://taaasty.com/assets/userpic/d3/9b/251483_original.jpg","large_url":"http://taaasty.com/assets/userpic/d3/9b/251483_large.jpg","thumb128_url":"http://taaasty.com/assets/userpic/d3/9b/251483_thumb128.jpg","thumb64_url":"http://taaasty.com/assets/userpic/d3/9b/251483_thumb64.jpg","thumbor_path":"userpic/d3/9b/251483_original.jpg","symbol":"S","kind":"user","default_colors":{"background":"#b5c31e","name":"#ffffff"}},"features":{"search":false,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3596947,"user_id":232992,"recipient_id":251483,"created_at":"2015-01-09T17:20:48.000+03:00","content_html":"=*"},"messages_count":6},{"id":273671,"user_id":232992,"created_at":"2014-12-28T12:54:48.000+03:00","updated_at":"2015-01-06T19:21:38.000+03:00","recipient_id":252021,"recipient":{"id":252021,"name":"asdqd","slug":"asdqd","title":"","is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.com/~asdqd","created_at":"2014-12-28T12:28:51.000+03:00","updated_at":"2015-01-19T15:46:34.000+03:00","total_entries_count":5,"private_entries_count":0,"public_entries_count":5,"saw_guide":false,"saw_guide_design":false,"is_privacy":false,"design":{"feedColor":"black","headerColor":"white","fontType":"sans","coverAlign":"justify","feedOpacity":0.9,"background_url":"http://taaasty.ru/assets/backgrounds/36/78/1895021_heic0715a.jpg","backgroundBrightness":75},"userpic":{"original_url":"http://taaasty.com/assets/userpic/54/a2/252021_original.jpg","large_url":"http://taaasty.com/assets/userpic/54/a2/252021_large.jpg","thumb128_url":"http://taaasty.com/assets/userpic/54/a2/252021_thumb128.jpg","thumb64_url":"http://taaasty.com/assets/userpic/54/a2/252021_thumb64.jpg","thumbor_path":"userpic/54/a2/252021_original.jpg","symbol":"a","kind":"user","default_colors":{"background":"#f37420","name":"#ffffff"}},"features":{"search":false,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3571847,"user_id":232992,"recipient_id":252021,"created_at":"2015-01-06T19:21:37.000+03:00","content_html":"Ну"},"messages_count":5},{"id":273444,"user_id":232992,"created_at":"2014-12-24T23:05:17.000+03:00","updated_at":"2014-12-24T23:05:20.000+03:00","recipient_id":5256,"recipient":{"id":5256,"name":"d","slug":"d","title":"Bianco vita*","is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.com/~d","created_at":"2008-05-06T21:53:20.000+04:00","updated_at":"2014-06-28T23:53:33.000+04:00","total_entries_count":193,"private_entries_count":18,"public_entries_count":174,"saw_guide":false,"saw_guide_design":false,"is_privacy":false,"design":{"feedColor":"white","headerColor":"white","fontType":"serif","coverAlign":"center","feedOpacity":1,"background_url":"http://taaasty.com/assets/backgrounds/39/d4/4757_5256_70s_tile.gif","backgroundBrightness":75},"userpic":{"symbol":"d","kind":"user","default_colors":{"background":"#44d068","name":"#ffffff"}},"features":{"search":false,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":1,"last_message":{"id":3524153,"user_id":232992,"recipient_id":5256,"created_at":"2014-12-24T23:05:20.000+03:00","content_html":"test"},"messages_count":1},{"id":255926,"user_id":232992,"created_at":"2014-09-22T20:39:37.000+04:00","updated_at":"2014-12-24T23:05:06.000+03:00","recipient_id":212831,"recipient":{"id":212831,"name":"dapi","slug":"dapi","title":"Асса!","is_female":true,"is_daylog":false,"tlog_url":"http://taaasty.com/~dapi","created_at":"2013-10-30T18:35:12.000+04:00","updated_at":"2015-01-19T17:37:36.000+03:00","total_entries_count":31,"private_entries_count":2,"public_entries_count":28,"saw_guide":true,"saw_guide_design":true,"is_privacy":false,"design":{"feedColor":"black","headerColor":"white","fontType":"sans","coverAlign":"justify","feedOpacity":0.28,"background_url":"http://taaasty.ru/assets/backgrounds/48/0c/1858767_21335-clouds-and-blue-sky-1600x1200-digital-art-wallpaper.jpg","backgroundBrightness":75},"userpic":{"original_url":"http://taaasty.com/assets/userpic/ad/48/212831_original.JPG","large_url":"http://taaasty.com/assets/userpic/ad/48/212831_large.JPG","thumb128_url":"http://taaasty.com/assets/userpic/ad/48/212831_thumb128.JPG","thumb64_url":"http://taaasty.com/assets/userpic/ad/48/212831_thumb64.JPG","thumbor_path":"userpic/ad/48/212831_original.JPG","symbol":"d","kind":"user","default_colors":{"background":"#44d068","name":"#ffffff"}},"features":{"search":true,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3524150,"user_id":212831,"recipient_id":232992,"created_at":"2014-12-24T23:05:06.000+03:00","content_html":"А у меня 0.11.2 еще=("},"messages_count":157},{"id":272495,"user_id":232992,"created_at":"2014-12-08T08:09:24.000+03:00","updated_at":"2014-12-08T08:10:08.000+03:00","recipient_id":249286,"recipient":{"id":249286,"name":"sergeyappleyard","slug":"sergeyappleyard","title":"","is_female":true,"is_daylog":false,"tlog_url":"http://taaasty.com/~sergeyappleyard","created_at":"2014-12-08T07:56:48.000+03:00","updated_at":"2014-12-08T10:04:10.000+03:00","total_entries_count":1,"private_entries_count":0,"public_entries_count":1,"saw_guide":false,"saw_guide_design":false,"is_privacy":false,"design":{"feedColor":"white","headerColor":"whiteonblack","fontType":"sans","coverAlign":"center","feedOpacity":0.99,"background_url":"http://taaasty.ru/assets/backgrounds/41/1e/1894524_gender-text_2x.png","backgroundBrightness":75},"userpic":{"symbol":"s","kind":"user","default_colors":{"background":"#b5c31e","name":"#ffffff"}},"features":{"search":false,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3464232,"user_id":249286,"recipient_id":232992,"created_at":"2014-12-08T08:10:08.000+03:00","content_html":"Лирика, несмотря на то, что все эти характерологические черты отсылают не к единому образу нарратора, текстологически начинает глубокий парафраз. Исправлению подверглись лишь явные орфографические..."},"messages_count":2},{"id":272493,"user_id":232992,"created_at":"2014-12-08T08:06:14.000+03:00","updated_at":"2014-12-08T08:06:23.000+03:00","recipient_id":249066,"recipient":{"id":249066,"name":"kqwejlkqwjellkqwjelkwqe","slug":"kqwejlkqwjellkqwjelkwqe","title":"","is_female":true,"is_daylog":false,"tlog_url":"http://taaasty.com/~kqwejlkqwjellkqwjelkwqe","created_at":"2014-12-06T12:56:49.000+03:00","updated_at":"2014-12-06T12:56:49.000+03:00","total_entries_count":0,"private_entries_count":0,"public_entries_count":0,"saw_guide":false,"saw_guide_design":false,"is_privacy":false,"design":{"feedColor":"white","headerColor":"white","fontType":"serif","coverAlign":"center","feedOpacity":1,"background_url":"/images/backgrounds/10.jpg","backgroundBrightness":75},"userpic":{"symbol":"k","kind":"user","default_colors":{"background":"#b5c31e","name":"#ffffff"}},"features":{"search":false,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3464228,"user_id":249066,"recipient_id":232992,"created_at":"2014-12-08T08:06:23.000+03:00","content_html":"asd"},"messages_count":9},{"id":270070,"user_id":232992,"created_at":"2014-10-30T17:11:40.000+03:00","updated_at":"2014-10-30T17:12:43.000+03:00","recipient_id":235087,"recipient":{"id":235087,"name":"developers","slug":"developers","title":"Разработчики taaasty.ru","is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.com/~developers","created_at":"2014-07-27T02:22:34.000+04:00","updated_at":"2014-10-30T18:02:12.000+03:00","total_entries_count":8,"private_entries_count":0,"public_entries_count":8,"saw_guide":false,"saw_guide_design":false,"is_privacy":false,"design":{"feedColor":"white","headerColor":"black","fontType":"sans","coverAlign":"justify","feedOpacity":0.0,"background_url":"http://taaasty.ru/assets/backgrounds/a2/be/1871718_clouds.jpg","backgroundBrightness":75},"userpic":{"original_url":"http://taaasty.com/assets/userpic/86/c0/235087_original.png","large_url":"http://taaasty.com/assets/userpic/86/c0/235087_large.png","thumb128_url":"http://taaasty.com/assets/userpic/86/c0/235087_thumb128.png","thumb64_url":"http://taaasty.com/assets/userpic/86/c0/235087_thumb64.png","thumbor_path":"userpic/86/c0/235087_original.png","symbol":"d","kind":"user","default_colors":{"background":"#44d068","name":"#ffffff"}},"features":{"search":false,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3332014,"user_id":235087,"recipient_id":232992,"created_at":"2014-10-30T17:12:43.000+03:00","content_html":"Ку=)"},"messages_count":2},{"id":269512,"user_id":232992,"created_at":"2014-10-14T17:51:10.000+04:00","updated_at":"2014-10-23T12:01:02.000+04:00","recipient_id":4409,"recipient":{"id":4409,"name":"anonymous","slug":"anonymous","title":"Посты и комментарии анонимны. Не нарушайте правила приличия и уважайте друг друга","is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.com/~anonymous","created_at":"2008-02-12T22:15:44.000+03:00","updated_at":"2014-07-24T16:15:10.000+04:00","total_entries_count":0,"private_entries_count":0,"public_entries_count":0,"saw_guide":false,"saw_guide_design":false,"is_privacy":false,"design":{"feedColor":"white","headerColor":"white","fontType":"serif","coverAlign":"center","feedOpacity":0.94,"background_url":"http://taaasty.ru/assets/backgrounds/d8/0e/1861518_1861518_stardust__2X.png","backgroundBrightness":75},"userpic":{"original_url":"http://taaasty.com/assets/userpic/72/29/4409_original.png","large_url":"http://taaasty.com/assets/userpic/72/29/4409_large.png","thumb128_url":"http://taaasty.com/assets/userpic/72/29/4409_thumb128.png","thumb64_url":"http://taaasty.com/assets/userpic/72/29/4409_thumb64.png","thumbor_path":"userpic/72/29/4409_original.png","symbol":"a","kind":"user","default_colors":{"background":"#f37420","name":"#ffffff"}},"features":{"search":false,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":3,"last_message":{"id":3319625,"user_id":232992,"recipient_id":4409,"created_at":"2014-10-23T12:01:02.000+04:00","content_html":"=)"},"messages_count":4},{"id":255677,"user_id":232992,"created_at":"2014-09-19T21:04:43.000+04:00","updated_at":"2014-10-16T16:55:57.000+04:00","recipient_id":2,"recipient":{"id":2,"name":"genue","slug":"genue","title":"http://instagram.com/genue","is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.com/~genue","created_at":"2007-03-25T23:09:06.000+04:00","updated_at":"2015-02-13T18:06:11.000+03:00","total_entries_count":323,"private_entries_count":15,"public_entries_count":304,"saw_guide":true,"saw_guide_design":true,"is_privacy":false,"design":{"feedColor":"white","headerColor":"white","fontType":"sans","coverAlign":"center","feedOpacity":0.99,"background_url":"http://taaasty.com/assets/backgrounds/6c/7b/1695336_14604363965_deeaa63edf_z.jpg","backgroundBrightness":75},"userpic":{"original_url":"http://taaasty.com/assets/userpic/9c/98/2_original.jpg","large_url":"http://taaasty.com/assets/userpic/9c/98/2_large.jpg","thumb128_url":"http://taaasty.com/assets/userpic/9c/98/2_thumb128.jpg","thumb64_url":"http://taaasty.com/assets/userpic/9c/98/2_thumb64.jpg","thumbor_path":"userpic/9c/98/2_original.jpg","symbol":"g","kind":"user","default_colors":{"background":"#7648de","name":"#ffffff"}},"features":{"search":true,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3305500,"user_id":2,"recipient_id":232992,"created_at":"2014-10-16T16:55:57.000+04:00","content_html":"сейчас поищу картинка"},"messages_count":85},{"id":269495,"user_id":232992,"created_at":"2014-10-13T13:46:27.000+04:00","updated_at":"2014-10-13T13:58:15.000+04:00","recipient_id":215374,"recipient":{"id":215374,"name":"s-a-a","slug":"s-a-a","title":"","is_female":true,"is_daylog":true,"tlog_url":"http://taaasty.com/~s-a-a","created_at":"2013-11-30T10:42:47.000+04:00","updated_at":"2014-10-13T13:46:27.000+04:00","total_entries_count":0,"private_entries_count":0,"public_entries_count":0,"saw_guide":false,"saw_guide_design":false,"is_privacy":false,"design":{"feedColor":"white","headerColor":"white","fontType":"serif","coverAlign":"center","feedOpacity":1,"background_url":"/images/backgrounds/3.jpg","backgroundBrightness":75},"userpic":{"symbol":"s","kind":"user","default_colors":{"background":"#b5c31e","name":"#ffffff"}},"features":{"search":false,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3302784,"user_id":215374,"recipient_id":232992,"created_at":"2014-10-13T13:58:11.000+04:00","content_html":"5"},"messages_count":16},{"id":256061,"user_id":232992,"created_at":"2014-10-03T14:43:56.000+04:00","updated_at":"2014-10-03T19:37:02.000+04:00","recipient_id":39161,"recipient":{"id":39161,"name":"orlv","slug":"orlv","title":"хихик","is_female":false,"is_daylog":true,"tlog_url":"http://taaasty.com/~orlv","created_at":"2011-03-13T23:35:13.000+03:00","updated_at":"2015-02-03T11:35:51.000+03:00","total_entries_count":206,"private_entries_count":41,"public_entries_count":156,"saw_guide":true,"saw_guide_design":true,"is_privacy":false,"design":{"feedColor":"black","headerColor":"white","fontType":"serif","coverAlign":"justify","feedOpacity":0.0,"background_url":"http://taaasty.ru/assets/backgrounds/ae/85/1627543_ohw7YmwQJ5M.jpg","backgroundBrightness":75},"userpic":{"original_url":"http://taaasty.com/assets/userpic/0b/55/39161_original.jpg","large_url":"http://taaasty.com/assets/userpic/0b/55/39161_large.jpg","thumb128_url":"http://taaasty.com/assets/userpic/0b/55/39161_thumb128.jpg","thumb64_url":"http://taaasty.com/assets/userpic/0b/55/39161_thumb64.jpg","thumbor_path":"userpic/0b/55/39161_original.jpg","symbol":"o","kind":"user","default_colors":{"background":"#7648de","name":"#ffffff"}},"features":{"search":true,"notification":false}},"unread_messages_count":0,"unreceived_messages_count":0,"last_message":{"id":3297071,"user_id":39161,"recipient_id":232992,"created_at":"2014-10-03T19:37:02.000+04:00","content_html":"ого, а тут классно"},"messages_count":3
     }]
 

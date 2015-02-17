@@ -13,40 +13,29 @@ CREATE_CONVERSATION_STATE = 'createConversation'
 
 Messenger = React.createClass
   displayName: 'Messenger'
-  mixins: [ConnectStoreMixin(ConversationStore), MessengerMixin, ComponentMixin]
-
-  propTypes:
-    state:          PropTypes.string
-    conversationId: PropTypes.number
-
-  getDefaultProps: ->
-    state:          CREATE_CONVERSATION_STATE
-    conversationId: null
+  mixins: [MessengerMixin, ComponentMixin]
 
   getInitialState: ->
-    currentState:   @props.state
-    conversationId: @props.conversationId
+    currentState: CONVERSATION_LIST_STATE
 
   render: ->
     content = switch @state.currentState
       when CONVERSATION_STATE
-        <MessengerConversation id={ @state.conversationId } />
+        <MessengerConversation />
       when CONVERSATION_LIST_STATE
         <MessengerConversations
-            conversations={ @state.conversations }
+            onConversationClick={ @openConversation }
             onCreateButtonClick={ @activateCreateState } />
       when CREATE_CONVERSATION_STATE
         <MessengerCreateConversation onCreate={ @createConversation } />
       else console.warn 'Unknown currentState of Messenger component', @state.currentState
 
-    return <div className="messages">
+    return <div className="messages messages--fixed">
              { content }
            </div>
 
-  activateCreateState:       -> @setState(currentState: CREATE_CONVERSATION_STATE)
-  activateConversationState: -> @setState(currentState: CONVERSATION_STATE)
-
-  getStateFromStore: ->
-    conversations: ConversationStore.getAll()
+  activateCreateState:           -> @safeUpdateState(currentState: CREATE_CONVERSATION_STATE)
+  activateConversationState:     -> @safeUpdateState(currentState: CONVERSATION_STATE)
+  activateConversationListState: -> @safeUpdateState(currentState: CONVERSATION_LIST_STATE)
 
 module.exports = Messenger

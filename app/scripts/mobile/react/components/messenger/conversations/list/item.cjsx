@@ -1,14 +1,16 @@
 UserAvatar = require '../../../common/avatar/user'
 { PropTypes } = React
 
-MessengerConversationListItem = React.createClass
-  displayName: 'MessengerConversationListItem'
+ConversationListItem = React.createClass
+  displayName: 'ConversationListItem'
 
   propTypes:
-    item: PropTypes.object.isRequired
+    item:    PropTypes.object.isRequired
+    onClick: PropTypes.func.isRequired
 
   render: ->
-    <div className="messages__dialog">
+    <div className="messages__dialog"
+         onClick={ @handleClick }>
       <div className="messages__user-avatar">
         <UserAvatar
             user={ @props.item.recipient }
@@ -41,4 +43,7 @@ MessengerConversationListItem = React.createClass
   lastConversationCreatedAt: ->
     moment( @props.item.created_at ).format 'D MMMM HH:mm'
 
-module.exports = MessengerConversationListItem
+  handleClick: ->
+    @props.onClick @props.item.id
+
+module.exports = ConversationListItem

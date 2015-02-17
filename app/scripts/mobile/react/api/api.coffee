@@ -112,12 +112,19 @@ Api =
       _pendingRequests[key] = postRequest url
 
   messenger:
-    createConversation: (id) ->
-      url = ApiRoutes.messengerConversationsByUserId id
+    createConversation: (userID) ->
+      url = ApiRoutes.messengerConversationsByUserId userID
       key = Constants.api.CREATE_CONVERSATION
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
+
+    loadMessages: (convID) ->
+      url = ApiRoutes.messenger_load_messages_url convID
+      key = Constants.api.LOAD_MESSAGES
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url
 
   relationship:
     follow: (userId) ->

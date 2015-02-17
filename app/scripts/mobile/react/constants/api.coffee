@@ -28,5 +28,6 @@ ApiConstants = keyMirror
   USERS_PREDICT:              null
   LOAD_NOTIFICATIONS:         null
   READ_NOTIFICATIONS:         null
+  LOAD_MESSAGES:              null
 
 module.exports = ApiConstants

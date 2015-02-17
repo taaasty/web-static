@@ -23,7 +23,7 @@ MessengerPage = React.createClass
     ConversationStore.initialize @props.conversations
 
   render: ->
-    <div style={{ height: '100%' }}>
+    <div>
       <FeedToolbarManager />
       <UserToolbarManager />
       <div className="layout">

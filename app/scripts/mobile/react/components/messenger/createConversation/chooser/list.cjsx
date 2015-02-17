@@ -8,6 +8,7 @@ MessengerChooserList = React.createClass
 
   propTypes:
     items:        PropTypes.array.isRequired
+    loading:      PropTypes.bool.isRequired #TODO: Spinner on load more predictions
     onItemSelect: PropTypes.func.isRequired
 
   render: ->
@@ -20,9 +21,11 @@ MessengerChooserList = React.createClass
           onSelect={ @props.onItemSelect }
           key={ item.id } />
 
-    return <ul className="messages__chooser-results">
-             { listItems }
-           </ul>
+    return <div className="messages__chooser-dropdown">
+             <ul className="messages__chooser-results">
+               { listItems }
+             </ul>
+           </div>
 
   isEmpty: ->
     @props.items.length == 0
