@@ -190,46 +190,59 @@
 }
 
 // Message Chooser
-.messages__chooserbox {
-  height: 100%;
-  padding: @indent-base;
-  box-sizing: border-box;
-}
-
 .messages__chooser {
-  padding-top: 46px;
-  position: relative;
-  background-color: @messages-chooser-bg;
-  color: @white;
-  border-radius: @border-radius-base;
+  padding: @indent-base;
   box-sizing: border-box;
 
   &.__open {
     height: 100%;
 
-    & + .messages__hint {
+    .messages__chooser-input {
+      border-radius: @border-radius-base @border-radius-base 0 0;
+    }
+
+    .messages__chooser-dropdown {
+      display: block;
+    }
+
+    .messages__chooser-hint {
       display: none;
     }
   }
 }
 
+.messages__chooser-box {
+  height: 100%;
+  padding-top: 46px;
+  position: relative;
+  color: @white;
+  border-radius: @border-radius-base;
+  box-sizing: border-box;
+}
+
 .messages__chooser-input {
   width: 100%;
+  height: 46px;
   margin-top: -46px;
   padding: @indent-base;
   display: block;
   border: none;
   background: none;
+  background-color: @messages-chooser-bg;
   font: inherit;
   color: inherit;
   box-sizing: border-box;
+  border-radius: @border-radius-base;
 }
 
 .messages__chooser-dropdown {
-  height: 100%;
+  max-height: 100%;
+  display: none;
   border-top: 1px solid @messages-chooser-divider-bg;
-  box-sizing: border-box;
+  background-color: @messages-chooser-bg;
   overflow-y: auto;
+  box-sizing: border-box;
+  border-radius: 0 0 @border-radius-base @border-radius-base;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -246,6 +259,10 @@
 
 .messages__chooser-results {
   .list-style-none;
+
+  & + .messages__chooser-loading {
+    border-top: 1px solid @messages-chooser-divider-bg;
+  }
 }
 
 .messages__chooser-result {
@@ -269,6 +286,13 @@
   }
 }
 
+.messages__chooser-hint {
+  margin-top: 12px;
+  font-size: @font-size-xs;
+  line-height: 18px;
+  color: @grey;
+}
+
 // Messages Person
 .messages__person {
   .clearfix();
@@ -285,14 +309,6 @@
 .messages__person-name {
   .text-overflow();
   margin-top: 7px;
-}
-
-// Messages Hint
-.messages__hint {
-  margin-top: 12px;
-  font-size: @font-size-xs;
-  line-height: 18px;
-  color: @grey;
 }
 
 // Messages Loading
