@@ -2,11 +2,14 @@
 .feed-toolbar-open {
   overflow: hidden;
 
-  body {
+  body,
+  .error {
     overflow: hidden;
   }
 
-  .layout {
+  .layout,
+  .error,
+  .messages {
     left: @toolbar-popup-width;
     //transform: translateX(@toolbar-popup-width);
   }
@@ -34,11 +37,14 @@
 .user-toolbar-open {
   overflow: hidden;
 
-  body {
+  body,
+  .error {
     overflow: hidden;
   }
 
-  .layout {
+  .layout,
+  .error,
+  .messages {
     left: -@toolbar-popup-width;
     //transform: translateX(-@toolbar-popup-width);
   }

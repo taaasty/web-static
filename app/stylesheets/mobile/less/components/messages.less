@@ -6,6 +6,35 @@
   user-select: none;
 }
 
+.messages--fixed {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  .messages__section,
+  .messages__body {
+    height: 100%;
+  }
+
+  .messages__section {
+    padding-top: 42px;
+  }
+
+  .messages__section--thread {
+    padding-bottom: 47px;
+  }
+
+  .messages__section--dialogs {
+    padding-bottom: 64px;
+  }
+
+  .messages__header {
+    margin-top: -42px;
+  }
+}
+
 // Messages Section
 .messages__section {
   position: relative;

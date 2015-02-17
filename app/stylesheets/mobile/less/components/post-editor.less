@@ -1,9 +1,29 @@
 .post-editor {
   padding: 2.5em 0;
 
+  .post {
+    font-family: @font-family-serif;
+  }
+
   .blockquote__caption {
     &:before {
       color: @grey;
+    }
+  }
+
+  .post--image {
+    &:first-child {
+      .media-image {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .post--video {
+    &:first-child {
+      .media-video {
+        margin-top: 0;
+      }
     }
   }
 }
