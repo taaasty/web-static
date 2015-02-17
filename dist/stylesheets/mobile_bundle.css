@@ -398,59 +398,6 @@ body {
   background: #ffffff;
   position: relative;
 }
-.auth-page {
-  height: 100%;
-  background-color: #323039;
-}
-.auth-page body {
-  height: 100%;
-  color: #ffffff;
-}
-.feed-page .hero {
-  height: 200px;
-}
-.feed-page .hero__overlay {
-  opacity: .6;
-}
-.feed-page .hero__title {
-  font-size: 30px;
-}
-.feed-page .post {
-  font-family: 'PT Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
-}
-.post-editor-page .layout {
-  -webkit-transform: none;
-      -ms-transform: none;
-          transform: none;
-}
-.post-editor-page .layout__body {
-  padding: 0;
-}
-.post-editor-page .post--image:first-child .media-image,
-.post-editor-page .post--image:first-child .media-object {
-  margin-top: 0;
-}
-.post-editor-page .post--video:first-child .media-video {
-  margin-top: 0;
-}
-.messages-page .hero__avatar {
-  width: 80px;
-  height: 80px;
-}
-.messages-page .follow-status {
-  right: 0;
-  bottom: 0;
-}
-.error-page {
-  height: 100%;
-}
-.error-page body {
-  height: 100%;
-}
-.error-page .layout,
-.error-page .layout__body {
-  height: 100%;
-}
 /* Вспомогательные классы, как placeholder selectors в sass (используем только для расширения)
  *
  * ----------------------------------------------------------------------
@@ -577,10 +524,13 @@ body {
 .feed-toolbar-open {
   overflow: hidden;
 }
-.feed-toolbar-open body {
+.feed-toolbar-open body,
+.feed-toolbar-open .error {
   overflow: hidden;
 }
-.feed-toolbar-open .layout {
+.feed-toolbar-open .layout,
+.feed-toolbar-open .error,
+.feed-toolbar-open .messages {
   left: 240px;
 }
 .feed-toolbar-open .toolbar--feed .toolbar__toggle,
@@ -598,10 +548,13 @@ body {
 .user-toolbar-open {
   overflow: hidden;
 }
-.user-toolbar-open body {
+.user-toolbar-open body,
+.user-toolbar-open .error {
   overflow: hidden;
 }
-.user-toolbar-open .layout {
+.user-toolbar-open .layout,
+.user-toolbar-open .error,
+.user-toolbar-open .messages {
   left: -240px;
 }
 .user-toolbar-open .toolbar--user .toolbar__toggle,
@@ -1013,13 +966,16 @@ button {
 .manage-subscriptions-button,
 .auth-button,
 .load-more-button,
+.follow-button,
+.account__logout,
+.settings__submit-button,
 .settings__change-button,
 .settings__declare-button,
 .settings__cancel-button,
-.follow-button,
-.account__logout,
-.settings__submit,
+.notifications__refresh,
+.notifications__mark-button,
 .messages__button,
+.messages__chooser-more-button,
 .write-message-button,
 .outline-auth-button {
   width: auto;
@@ -1058,13 +1014,16 @@ a.reg-auth-button,
 a.manage-subscriptions-button,
 a.auth-button,
 a.load-more-button,
+a.follow-button,
+a.account__logout,
+a.settings__submit-button,
 a.settings__change-button,
 a.settings__declare-button,
 a.settings__cancel-button,
-a.follow-button,
-a.account__logout,
-a.settings__submit,
+a.notifications__refresh,
+a.notifications__mark-button,
 a.messages__button,
+a.messages__chooser-more-button,
 a.write-message-button,
 a.outline-auth-button {
   text-decoration: none !important;
@@ -1079,13 +1038,16 @@ a.outline-auth-button {
 .manage-subscriptions-button:after,
 .auth-button:after,
 .load-more-button:after,
+.follow-button:after,
+.account__logout:after,
+.settings__submit-button:after,
 .settings__change-button:after,
 .settings__declare-button:after,
 .settings__cancel-button:after,
-.follow-button:after,
-.account__logout:after,
-.settings__submit:after,
+.notifications__refresh:after,
+.notifications__mark-button:after,
 .messages__button:after,
+.messages__chooser-more-button:after,
 .write-message-button:after,
 .outline-auth-button:after {
   content: "";
@@ -1107,13 +1069,16 @@ a.outline-auth-button {
 .manage-subscriptions-button .icon,
 .auth-button .icon,
 .load-more-button .icon,
+.follow-button .icon,
+.account__logout .icon,
+.settings__submit-button .icon,
 .settings__change-button .icon,
 .settings__declare-button .icon,
 .settings__cancel-button .icon,
-.follow-button .icon,
-.account__logout .icon,
-.settings__submit .icon,
+.notifications__refresh .icon,
+.notifications__mark-button .icon,
 .messages__button .icon,
+.messages__chooser-more-button .icon,
 .write-message-button .icon,
 .outline-auth-button .icon {
   position: relative;
@@ -1132,13 +1097,16 @@ a.outline-auth-button {
 .manage-subscriptions-button .icon--cross,
 .auth-button .icon--cross,
 .load-more-button .icon--cross,
+.follow-button .icon--cross,
+.account__logout .icon--cross,
+.settings__submit-button .icon--cross,
 .settings__change-button .icon--cross,
 .settings__declare-button .icon--cross,
 .settings__cancel-button .icon--cross,
-.follow-button .icon--cross,
-.account__logout .icon--cross,
-.settings__submit .icon--cross,
+.notifications__refresh .icon--cross,
+.notifications__mark-button .icon--cross,
 .messages__button .icon--cross,
+.messages__chooser-more-button .icon--cross,
 .write-message-button .icon--cross,
 .outline-auth-button .icon--cross {
   font-size: 18px;
@@ -1153,13 +1121,16 @@ a.outline-auth-button {
 .manage-subscriptions-button .spinner,
 .auth-button .spinner,
 .load-more-button .spinner,
+.follow-button .spinner,
+.account__logout .spinner,
+.settings__submit-button .spinner,
 .settings__change-button .spinner,
 .settings__declare-button .spinner,
 .settings__cancel-button .spinner,
-.follow-button .spinner,
-.account__logout .spinner,
-.settings__submit .spinner,
+.notifications__refresh .spinner,
+.notifications__mark-button .spinner,
 .messages__button .spinner,
+.messages__chooser-more-button .spinner,
 .write-message-button .spinner,
 .outline-auth-button .spinner {
   top: -2px;
@@ -1179,13 +1150,16 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:first-of-type),
 .button-group > .auth-button:not(:first-of-type),
 .button-group > .load-more-button:not(:first-of-type),
+.button-group > .follow-button:not(:first-of-type),
+.button-group > .account__logout:not(:first-of-type),
+.button-group > .settings__submit-button:not(:first-of-type),
 .button-group > .settings__change-button:not(:first-of-type),
 .button-group > .settings__declare-button:not(:first-of-type),
 .button-group > .settings__cancel-button:not(:first-of-type),
-.button-group > .follow-button:not(:first-of-type),
-.button-group > .account__logout:not(:first-of-type),
-.button-group > .settings__submit:not(:first-of-type),
+.button-group > .notifications__refresh:not(:first-of-type),
+.button-group > .notifications__mark-button:not(:first-of-type),
 .button-group > .messages__button:not(:first-of-type),
+.button-group > .messages__chooser-more-button:not(:first-of-type),
 .button-group > .write-message-button:not(:first-of-type),
 .button-group > .outline-auth-button:not(:first-of-type) {
   margin-left: -1px;
@@ -1202,13 +1176,16 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:last-of-type),
 .button-group > .auth-button:not(:last-of-type),
 .button-group > .load-more-button:not(:last-of-type),
+.button-group > .follow-button:not(:last-of-type),
+.button-group > .account__logout:not(:last-of-type),
+.button-group > .settings__submit-button:not(:last-of-type),
 .button-group > .settings__change-button:not(:last-of-type),
 .button-group > .settings__declare-button:not(:last-of-type),
 .button-group > .settings__cancel-button:not(:last-of-type),
-.button-group > .follow-button:not(:last-of-type),
-.button-group > .account__logout:not(:last-of-type),
-.button-group > .settings__submit:not(:last-of-type),
+.button-group > .notifications__refresh:not(:last-of-type),
+.button-group > .notifications__mark-button:not(:last-of-type),
 .button-group > .messages__button:not(:last-of-type),
+.button-group > .messages__chooser-more-button:not(:last-of-type),
 .button-group > .write-message-button:not(:last-of-type),
 .button-group > .outline-auth-button:not(:last-of-type) {
   border-top-right-radius: 0;
@@ -1224,13 +1201,16 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:first-of-type):not(:last-of-type),
 .button-group > .auth-button:not(:first-of-type):not(:last-of-type),
 .button-group > .load-more-button:not(:first-of-type):not(:last-of-type),
+.button-group > .follow-button:not(:first-of-type):not(:last-of-type),
+.button-group > .account__logout:not(:first-of-type):not(:last-of-type),
+.button-group > .settings__submit-button:not(:first-of-type):not(:last-of-type),
 .button-group > .settings__change-button:not(:first-of-type):not(:last-of-type),
 .button-group > .settings__declare-button:not(:first-of-type):not(:last-of-type),
 .button-group > .settings__cancel-button:not(:first-of-type):not(:last-of-type),
-.button-group > .follow-button:not(:first-of-type):not(:last-of-type),
-.button-group > .account__logout:not(:first-of-type):not(:last-of-type),
-.button-group > .settings__submit:not(:first-of-type):not(:last-of-type),
+.button-group > .notifications__refresh:not(:first-of-type):not(:last-of-type),
+.button-group > .notifications__mark-button:not(:first-of-type):not(:last-of-type),
 .button-group > .messages__button:not(:first-of-type):not(:last-of-type),
+.button-group > .messages__chooser-more-button:not(:first-of-type):not(:last-of-type),
 .button-group > .write-message-button:not(:first-of-type):not(:last-of-type),
 .button-group > .outline-auth-button:not(:first-of-type):not(:last-of-type) {
   border-radius: 0;
@@ -1245,13 +1225,16 @@ a.outline-auth-button {
 .button-group.__expanded > .manage-subscriptions-button,
 .button-group.__expanded > .auth-button,
 .button-group.__expanded > .load-more-button,
+.button-group.__expanded > .follow-button,
+.button-group.__expanded > .account__logout,
+.button-group.__expanded > .settings__submit-button,
 .button-group.__expanded > .settings__change-button,
 .button-group.__expanded > .settings__declare-button,
 .button-group.__expanded > .settings__cancel-button,
-.button-group.__expanded > .follow-button,
-.button-group.__expanded > .account__logout,
-.button-group.__expanded > .settings__submit,
+.button-group.__expanded > .notifications__refresh,
+.button-group.__expanded > .notifications__mark-button,
 .button-group.__expanded > .messages__button,
+.button-group.__expanded > .messages__chooser-more-button,
 .button-group.__expanded > .write-message-button,
 .button-group.__expanded > .outline-auth-button {
   border-bottom-right-radius: 0;
@@ -1279,13 +1262,16 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:first-child) .auth-button,
 .button-group-dropdown:not(:first-child) .load-more-button,
+.button-group-dropdown:not(:first-child) .follow-button,
+.button-group-dropdown:not(:first-child) .account__logout,
+.button-group-dropdown:not(:first-child) .settings__submit-button,
 .button-group-dropdown:not(:first-child) .settings__change-button,
 .button-group-dropdown:not(:first-child) .settings__declare-button,
 .button-group-dropdown:not(:first-child) .settings__cancel-button,
-.button-group-dropdown:not(:first-child) .follow-button,
-.button-group-dropdown:not(:first-child) .account__logout,
-.button-group-dropdown:not(:first-child) .settings__submit,
+.button-group-dropdown:not(:first-child) .notifications__refresh,
+.button-group-dropdown:not(:first-child) .notifications__mark-button,
 .button-group-dropdown:not(:first-child) .messages__button,
+.button-group-dropdown:not(:first-child) .messages__chooser-more-button,
 .button-group-dropdown:not(:first-child) .write-message-button,
 .button-group-dropdown:not(:first-child) .outline-auth-button {
   border-top-left-radius: 0;
@@ -1301,13 +1287,16 @@ a.outline-auth-button {
 .button-group-dropdown:not(:last-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:last-child) .auth-button,
 .button-group-dropdown:not(:last-child) .load-more-button,
+.button-group-dropdown:not(:last-child) .follow-button,
+.button-group-dropdown:not(:last-child) .account__logout,
+.button-group-dropdown:not(:last-child) .settings__submit-button,
 .button-group-dropdown:not(:last-child) .settings__change-button,
 .button-group-dropdown:not(:last-child) .settings__declare-button,
 .button-group-dropdown:not(:last-child) .settings__cancel-button,
-.button-group-dropdown:not(:last-child) .follow-button,
-.button-group-dropdown:not(:last-child) .account__logout,
-.button-group-dropdown:not(:last-child) .settings__submit,
+.button-group-dropdown:not(:last-child) .notifications__refresh,
+.button-group-dropdown:not(:last-child) .notifications__mark-button,
 .button-group-dropdown:not(:last-child) .messages__button,
+.button-group-dropdown:not(:last-child) .messages__chooser-more-button,
 .button-group-dropdown:not(:last-child) .write-message-button,
 .button-group-dropdown:not(:last-child) .outline-auth-button {
   border-top-right-radius: 0;
@@ -1323,13 +1312,16 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child):not(:last-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .auth-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .load-more-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .follow-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .account__logout,
+.button-group-dropdown:not(:first-child):not(:last-child) .settings__submit-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .settings__change-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .settings__declare-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .settings__cancel-button,
-.button-group-dropdown:not(:first-child):not(:last-child) .follow-button,
-.button-group-dropdown:not(:first-child):not(:last-child) .account__logout,
-.button-group-dropdown:not(:first-child):not(:last-child) .settings__submit,
+.button-group-dropdown:not(:first-child):not(:last-child) .notifications__refresh,
+.button-group-dropdown:not(:first-child):not(:last-child) .notifications__mark-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .messages__button,
+.button-group-dropdown:not(:first-child):not(:last-child) .messages__chooser-more-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .write-message-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .outline-auth-button {
   border-radius: 0;
@@ -1347,14 +1339,16 @@ a.outline-auth-button {
   font-size: 12px;
   line-height: 33px;
 }
-.button--small {
+.button--small,
+.notifications__mark-button {
   height: 40px;
   padding-right: 18px;
   padding-left: 18px;
   font-size: 11px;
   line-height: 41px;
 }
-.button--large {
+.button--large,
+.messages__chooser-more-button {
   height: 48px;
   padding-right: 28px;
   padding-left: 28px;
@@ -1370,18 +1364,18 @@ a.outline-auth-button {
 }
 .button--green,
 .auth-button,
+.settings__submit-button,
 .settings__change-button,
 .settings__declare-button,
-.settings__submit,
 .messages__button {
   color: #ffffff !important;
   background-color: #32a16c;
 }
 .button--green:active,
 .auth-button:active,
+.settings__submit-button:active,
 .settings__change-button:active,
 .settings__declare-button:active,
-.settings__submit:active,
 .messages__button:active {
   background-color: #2b8a5c;
 }
@@ -1423,17 +1417,20 @@ a.outline-auth-button {
   background-color: #d9ae00;
 }
 .button--rectangle,
-.load-more-button {
+.load-more-button,
+.messages__chooser-more-button {
   border-radius: 0;
 }
 .button--block,
 .manage-subscriptions-button,
 .load-more-button,
+.auth__buttons button,
+.settings__submit-button,
 .settings__change-button,
 .settings__declare-button,
 .settings__cancel-button,
-.auth__buttons button,
-.settings__submit,
+.notifications__mark-button,
+.messages__chooser-more-button,
 .messages__section--dialogs .messages__button {
   width: 100%;
   padding-right: 0;
@@ -1644,6 +1641,41 @@ a.outline-auth-button {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
   }
+}
+.badge,
+.notifications-badge,
+.messages-badge,
+.favorites-badge {
+  padding: 2px 5px 1px;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 17px;
+  border-radius: 1em;
+  text-align: center;
+}
+.badge--green,
+.notifications-badge {
+  background-color: #61cc67;
+  color: #ffffff;
+}
+.badge--yellow,
+.messages-badge {
+  background-color: #fff627;
+  color: #000000;
+}
+.badge--blue,
+.favorites-badge {
+  background-color: #4d75a3;
+  color: #ffffff;
+}
+.notifications-badge {
+  min-width: 1em;
+}
+.messages-badge {
+  min-width: 1em;
+}
+.favorites-badge {
+  min-width: 1em;
 }
 .form-choose-file {
   display: inline-block;
@@ -1931,6 +1963,7 @@ a.outline-auth-button {
   color: #ffffff;
 }
 .auth {
+  width: 100%;
   height: 100%;
   position: relative;
   text-align: center;
@@ -1938,6 +1971,16 @@ a.outline-auth-button {
 }
 .auth a {
   color: inherit;
+}
+.auth--fixed {
+  top: 0;
+  left: 0;
+  position: fixed;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.auth--fixed .auth__bg {
+  position: fixed;
 }
 .auth__grid-table {
   width: 100%;
@@ -1955,6 +1998,7 @@ a.outline-auth-button {
   position: absolute;
   top: 0;
   left: 0;
+  background-color: #323039;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
@@ -2094,6 +2138,31 @@ a.outline-auth-button {
   border-radius: 50%;
   z-index: 200;
 }
+.toolbar__indicators {
+  font-size: 0;
+  line-height: 0;
+  font-family: a;
+  position: absolute;
+  left: -3px;
+  top: 50%;
+  text-align: center;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.toolbar__indicator {
+  width: 6px;
+  height: 6px;
+  margin: 3px 0;
+  display: block;
+  border-radius: 50%;
+}
+.toolbar__indicator--messages {
+  background-color: #fff627;
+}
+.toolbar__indicator--notifications {
+  background-color: #61cc67;
+}
 .toolbar__popup {
   width: 240px;
   height: 100%;
@@ -2111,6 +2180,11 @@ a.outline-auth-button {
       -ms-user-select: none;
           user-select: none;
   -webkit-overflow-scrolling: touch;
+}
+.toolbar__popup .notifications-badge,
+.toolbar__popup .messages-badge,
+.toolbar__popup .favorites-badge {
+  margin-left: 5px;
 }
 .toolbar__popup.__visible {
   display: block;
@@ -2198,28 +2272,6 @@ a.toolbar__popup-link:active {
 .toolbar__popup-list--additional .toolbar__popup-link {
   background-color: transparent !important;
   color: #bbb !important;
-}
-@-webkit-keyframes toolbar-indicators-animate {
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes toolbar-indicators-animate {
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 .hero {
   min-height: 192px;
@@ -2352,6 +2404,15 @@ a.toolbar__popup-link:active {
 .hero__stats-link {
   display: block;
   color: #ffffff;
+}
+.hero--static {
+  height: 200px;
+}
+.hero--static .hero__overlay {
+  opacity: .6;
+}
+.hero--static .hero__title {
+  font-size: 30px;
 }
 .blockquote__caption {
   margin: .2em 0 0 1.2em;
@@ -2855,7 +2916,7 @@ a.toolbar__popup-link:active {
   margin-bottom: 15px;
   padding: 12px;
   position: relative;
-  font-family: 'PT Serif', Georgia, serif;
+  font-family: 'PT Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .post__title {
@@ -2913,8 +2974,18 @@ a.toolbar__popup-link:active {
 .post-editor {
   padding: 2.5em 0;
 }
+.post-editor .post {
+  font-family: 'PT Serif', Georgia, serif;
+}
 .post-editor .blockquote__caption:before {
   color: #b2b2b2;
+}
+.post-editor .post--image:first-child .media-image,
+.post-editor .post--image:first-child .media-object {
+  margin-top: 0;
+}
+.post-editor .post--video:first-child .media-video {
+  margin-top: 0;
 }
 .post-editor-back {
   position: fixed;
@@ -3461,7 +3532,7 @@ a.pagination__item:active {
   color: inherit;
   text-decoration: none;
 }
-.settings__email-actions {
+.settings__actions {
   margin-top: 15px;
 }
 .subscriptions {
@@ -3593,6 +3664,67 @@ a.pagination__item:active {
   font-size: 16px;
   line-height: 1.375em;
 }
+.notifications__refresh {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  line-height: 42px;
+  letter-spacing: 0;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  z-index: 200;
+  border-radius: 50%;
+  background-color: #36b377;
+}
+.notifications__refresh:active {
+  background-color: #2f9b67;
+}
+.notifications__refresh .icon {
+  font-size: 28px;
+}
+.notifications__refresh:active {
+  -webkit-animation: notifications-refresh-active 0.3s ease;
+          animation: notifications-refresh-active 0.3s ease;
+}
+.notifications__header {
+  padding: 12px;
+  background-color: #f5f5f5;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.notifications__title {
+  width: 66%;
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 18px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: #616161;
+  vertical-align: middle;
+}
+.notifications__actions {
+  padding: 16px 12px;
+  border-bottom: 1px solid #f1f1f1;
+}
+.notifications__mark-button {
+  background-color: #36b377;
+  color: #fff;
+}
+.notifications__mark-button:active {
+  background-color: #2f9b67;
+}
+.notifications__text {
+  padding: 12px;
+  text-align: center;
+}
 .notifications__list {
   margin: 0;
   padding: 0;
@@ -3675,6 +3807,26 @@ a.pagination__item:active {
   color: #ffffff;
   text-align: center;
 }
+@-webkit-keyframes notifications-refresh-active {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
+@keyframes notifications-refresh-active {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
 .messages {
   overflow: hidden;
   position: relative;
@@ -3685,11 +3837,35 @@ a.pagination__item:active {
       -ms-user-select: none;
           user-select: none;
 }
+.messages--fixed {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.messages--fixed .messages__section,
+.messages--fixed .messages__body {
+  height: 100%;
+}
+.messages--fixed .messages__section {
+  padding-top: 42px;
+}
+.messages--fixed .messages__section--thread {
+  padding-bottom: 47px;
+}
+.messages--fixed .messages__section--dialogs {
+  padding-bottom: 64px;
+}
+.messages--fixed .messages__header {
+  margin-top: -42px;
+}
 .messages__section {
   position: relative;
+  box-sizing: border-box;
 }
 .messages__header {
-  padding: 12px;
+  height: 42px;
   background-color: #f5f5f5;
   text-align: center;
   -webkit-user-select: none;
@@ -3700,12 +3876,19 @@ a.pagination__item:active {
 .messages__body {
   position: relative;
 }
+.messages__scroll {
+  height: 100%;
+  position: relative;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .messages__footer {
   text-align: center;
 }
 .messages__title {
   width: 66%;
   margin: 0 auto;
+  padding: 12px 0;
   font-weight: bold;
   font-size: 11px;
   line-height: 18px;
@@ -3713,6 +3896,9 @@ a.pagination__item:active {
   letter-spacing: .14em;
   color: #616161;
   vertical-align: middle;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .messages__dialog {
   padding: 12px 50px 12px 66px;
@@ -3828,44 +4014,90 @@ a.pagination__item:active {
   vertical-align: middle;
   width: 90%;
 }
-.messages__box {
-  padding: 12px;
-}
 .messages__field {
   margin-bottom: 12px;
   position: relative;
 }
 .messages__chooser {
-  margin-bottom: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.messages__chooser.__open {
+  height: 100%;
+}
+.messages__chooser.__open .messages__chooser-input {
+  border-radius: 4px 4px 0 0;
+}
+.messages__chooser.__open .messages__chooser-dropdown {
+  display: block;
+}
+.messages__chooser.__open .messages__chooser-hint {
+  display: none;
+}
+.messages__chooser-box {
+  height: 100%;
+  padding-top: 46px;
   position: relative;
-  background-color: rgba(51, 51, 51, 0.93);
   color: #ffffff;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 .messages__chooser-input {
   width: 100%;
+  height: 46px;
+  margin-top: -46px;
   padding: 12px;
+  display: block;
   border: none;
   background: none;
+  background-color: rgba(51, 51, 51, 0.93);
   font: inherit;
   color: inherit;
   box-sizing: border-box;
+  border-radius: 4px;
+}
+.messages__chooser-dropdown {
+  max-height: 100%;
+  display: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(51, 51, 51, 0.93);
+  overflow-y: auto;
+  box-sizing: border-box;
+  border-radius: 0 0 4px 4px;
+  -webkit-overflow-scrolling: touch;
 }
 .messages__chooser-loading,
 .messages__chooser-empty,
 .messages__chooser-result {
   padding: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
-.messages__chooser-loading {
-  text-align: center;
-}
+.messages__chooser-loading,
 .messages__chooser-empty {
   text-align: center;
+}
+.messages__chooser-results {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.messages__chooser-results + .messages__chooser-loading {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.messages__chooser-result + .messages__chooser-result {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 .messages__chooser-result:active .messages__person,
 .messages__chooser-result.__active .messages__person {
   color: #ffffff;
+}
+.messages__chooser-results + .messages__chooser-more-button {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.messages__chooser-hint {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 18px;
+  color: #b2b2b2;
 }
 .messages__person {
   color: #b2b2b2;
@@ -3897,11 +4129,6 @@ a.pagination__item:active {
   text-overflow: ellipsis;
   overflow: hidden;
   margin-top: 7px;
-}
-.messages__hint {
-  font-size: 14px;
-  line-height: 18px;
-  color: #b2b2b2;
 }
 .messages-loading {
   font-size: 14px;
@@ -4001,6 +4228,7 @@ a.pagination__item:active {
   margin-left: 3px;
 }
 .message-form {
+  height: 47px;
   position: relative;
   background-color: #ffffff;
 }
@@ -4196,7 +4424,13 @@ a.pagination__item:active {
   top: .23em;
 }
 .error {
+  width: 100%;
   height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .error__grid-table {
   position: relative;

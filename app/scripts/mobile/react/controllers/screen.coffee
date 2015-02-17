@@ -24,6 +24,7 @@ restorePageName = ->
 ScreenController =
 
   show: (reactClass, props, pageName) ->
+    props.fixed  = true
     container    = getContainer()
     appContainer = document.getElementById 'App'
     appContainer.style.display = 'none'

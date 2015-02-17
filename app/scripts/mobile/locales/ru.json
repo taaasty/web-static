@@ -17,7 +17,8 @@
     "friends_item": "Друзья",
     "design_item": "Настройки дизайна",
     "settings_item": "Настройки",
-    "logout_item": "Выйти"
+    "logout_item": "Выйти",
+    "switch_to_desktop_item": "Показать десктоп версию"
   },
   "hero": {
     "ignore_tlog_item": "Заблокировать",

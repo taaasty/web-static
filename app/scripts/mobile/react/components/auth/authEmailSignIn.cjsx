@@ -1,3 +1,4 @@
+cx                       = require 'react/lib/cx'
 NotifyController         = require '../../controllers/notify'
 SessionsViewActions      = require '../../actions/view/sessions'
 ComponentMixin           = require '../../mixins/component'
@@ -6,45 +7,57 @@ AuthEmailPasswordField   = require './fields/emailPassword'
 AuthEmailSubmitButton    = require './buttons/emailSubmit'
 AuthNotRegisteredYetLink = require './links/notRegisteredYet'
 AuthForgotPasswordLink   = require './links/forgotPassword'
+{ PropTypes } = React
 
 #FIXME: Remove from global when implement react-router
 global.AuthEmailSignIn = React.createClass
   displayName: 'AuthEmailSignIn'
   mixins: [ComponentMixin]
 
+  propTypes:
+    fixed: PropTypes.bool
+
+  getDefaultProps: ->
+    fixed: false
+
   getInitialState: ->
     loading: false
 
   render: ->
-    <div className="auth">
-      <div className="auth__grid-table">
-        <div className="auth__grid-cell">
-          <div style={{ backgroundImage: 'url(../../images/images/Polly-73.jpg)' }}
-               className="auth__bg" />
-          <div className="auth__section">
-            <div className="auth__header">
-              <div className="auth__header-title">
-                { i18n.t('auth.email_signin_header') }
-              </div>
-            </div>
-            <div className="auth__body">
-              <form onSubmit={ @handleSubmit }>
-                <AuthEmailLoginField ref="loginField" />
-                <AuthEmailPasswordField ref="passwordField" />
-                <div className="auth__buttons">
-                  <AuthEmailSubmitButton loading={ @state.loading } />
-                </div>
-              </form>
-            </div>
-            <div className="auth__footer">
-              <AuthNotRegisteredYetLink />
-              <span className="auth__footer-sep">&middot;</span>
-              <AuthForgotPasswordLink />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    authClasses = cx
+      'auth': true
+      'auth--fixed': @props.fixed
+    authBgStyles = backgroundImage: 'url("' + TastySettings.authBackgroundUrl + '")'
+
+    return <div className={ authClasses }>
+             <div className="auth__grid-table">
+               <div className="auth__grid-cell">
+                 <div className="auth__bg"
+                      style={ authBgStyles } />
+                 <div className="auth__section">
+                   <div className="auth__header">
+                     <div className="auth__header-title">
+                       { i18n.t('auth.email_signin_header') }
+                     </div>
+                   </div>
+                   <div className="auth__body">
+                     <form onSubmit={ @handleSubmit }>
+                       <AuthEmailLoginField ref="loginField" />
+                       <AuthEmailPasswordField ref="passwordField" />
+                       <div className="auth__buttons">
+                         <AuthEmailSubmitButton loading={ @state.loading } />
+                       </div>
+                     </form>
+                   </div>
+                   <div className="auth__footer">
+                     <AuthNotRegisteredYetLink />
+                     <span className="auth__footer-sep">&middot;</span>
+                     <AuthForgotPasswordLink />
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
 
   activateLoadingState:   -> @safeUpdateState(loading: true)
   deactivateLoadingState: -> @safeUpdateState(loading: false)

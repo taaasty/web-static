@@ -10,7 +10,7 @@ HeroFeed = React.createClass
 
   render: ->
     <div style={ @getHeroStyles() }
-         className="hero">
+         className="hero hero--static">
       <div className="hero__overlay" />
       <div className="hero__content">
         <div className="hero__head">

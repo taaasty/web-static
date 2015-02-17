@@ -1182,11 +1182,17 @@ body {
 }
 .hero-enabled .toolbar--back,
 .hero-enabled .toolbar--nav,
+.hero-enabled .toolbar--avatar,
 .hero-enabled .post-actions,
 .hero-enabled .back-button,
 .hero-enabled .toolbar__indicators {
   top: -85px !important;
   opacity: 0 !important;
+}
+.hero-enabled .toolbar--main {
+  -webkit-transform: translateX(-200%) !important;
+      -ms-transform: translateX(-200%) !important;
+          transform: translateX(-200%) !important;
 }
 .hero-enabled .toolbar--close {
   left: 20px;
@@ -2119,7 +2125,6 @@ body {
   display: inline-block;
   font-size: 26px;
   vertical-align: middle;
-  transition: color .4s ease;
 }
 .toolbar .icon--menu {
   font-size: 32px;
@@ -2197,6 +2202,9 @@ body {
   left: 0;
   cursor: pointer;
   border-radius: 50%;
+}
+.toolbar__toggle .icon {
+  transition: color .4s ease;
 }
 .toolbar__toggle .tasty-ribbon {
   width: 100%;
@@ -2399,6 +2407,104 @@ a.toolbar__popup-link:active {
   background-color: #ffd52c;
   opacity: 1;
 }
+.toolbar__navbar {
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  background: #252525;
+  background-color: rgba(37, 37, 37, 0.9);
+  font-size: 16px;
+  line-height: 22px;
+  text-align: left;
+  overflow: hidden;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  box-sizing: border-box;
+}
+.toolbar__navbar > .scroller {
+  height: 100%;
+}
+.toolbar__nav-item,
+.toolbar__subnav-item {
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+}
+.toolbar__nav-item .avatar,
+.toolbar__subnav-item .avatar {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto;
+  display: block;
+}
+.toolbar__nav-item .icon,
+.toolbar__subnav-item .icon {
+  font-size: 30px;
+}
+.toolbar__nav-item .icon--plus,
+.toolbar__subnav-item .icon--plus {
+  width: 38px;
+  height: 38px;
+  background: #2ac67e;
+  font-size: 24px;
+  line-height: 38px;
+  color: #fff !important;
+  border-radius: 50%;
+}
+.toolbar__nav-item .messages-badge,
+.toolbar__nav-item .notifications-badge,
+.toolbar__nav-item .favorites-badge,
+.toolbar__subnav-item .messages-badge,
+.toolbar__subnav-item .notifications-badge,
+.toolbar__subnav-item .favorites-badge {
+  margin: -4px 0 0 -14px;
+  position: absolute;
+}
+.toolbar__nav-item.state--active .toolbar__nav-link,
+.toolbar__subnav-item.state--active .toolbar__nav-link,
+.toolbar__nav-item.state--active .toolbar__subnav-link {
+  background-color: #f8c700;
+  color: #232323;
+  -moz-opacity: 0.95;
+  opacity: 0.95;
+  filter: alpha(opacity=95);
+}
+.toolbar__nav-link,
+.toolbar__subnav-link {
+  padding: 10px 16px 9px;
+  display: block;
+  color: #bbb;
+  opacity: .92;
+}
+a.toolbar__nav-link:hover,
+a.toolbar__subnav-link:hover {
+  background-color: #f8c700;
+  color: #232323;
+  -moz-opacity: 0.95;
+  opacity: 0.95;
+  filter: alpha(opacity=95);
+}
+a.toolbar__nav-link:active,
+a.toolbar__subnav-link:active {
+  background-color: #ffd52c;
+  opacity: 1;
+}
+.toolbar__nav-text,
+.toolbar__subnav-text {
+  display: none;
+}
+.toolbar__nav-list--bottom {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.toolbar__subnav {
+  display: none;
+}
 .toolbar--right {
   padding-left: 0;
   padding-right: 56px;
@@ -2416,6 +2522,50 @@ a.toolbar__popup-link:active {
 .toolbar--close {
   left: -85px;
   opacity: 0;
+}
+.toolbar--main {
+  width: 70px;
+  height: 100%;
+  padding: 0;
+  top: 0;
+  left: 0;
+  background: none;
+  -webkit-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+          transform: translateX(-100%);
+  transition: -webkit-transform .4s ease;
+  transition: transform .4s ease;
+}
+.toolbar--main .toolbar__toggle {
+  height: 56px;
+  width: 56px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  margin-left: 100%;
+  background: #252525;
+  background-color: rgba(37, 37, 37, 0.72);
+  line-height: 56px;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 1;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  border-radius: 56px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.toolbar--main .toolbar__navbar {
+  padding-bottom: 100px;
+}
+.toolbar--avatar {
+  left: auto;
+  right: 20px;
+}
+.toolbar--avatar .toolbar__toggle {
+  background: none;
 }
 @-webkit-keyframes toolbar-indicators-animate {
   0% {
@@ -2438,6 +2588,16 @@ a.toolbar__popup-link:active {
   100% {
     opacity: 1;
   }
+}
+.main-toolbar-open .toolbar--main {
+  -webkit-transform: translateX(0);
+      -ms-transform: translateX(0);
+          transform: translateX(0);
+}
+.main-toolbar-open .calendar {
+  visibility: hidden;
+  opacity: 0;
+  transition: width 0.3s ease-in-out, visibility 0s ease-in-out 0.3s, opacity 0.3s ease-in-out !important;
 }
 .dropdown-container {
   position: relative;
@@ -2710,6 +2870,12 @@ a.toolbar__popup-link:active {
 }
 .hero__actions button {
   margin: 0 5px;
+}
+.hero__actions--visible {
+  max-height: 400px;
+  padding-top: 20px;
+  visibility: visible;
+  opacity: 1;
 }
 .hero__stats {
   width: 100%;
@@ -6460,13 +6626,15 @@ a.write-message-button {
   border-radius: 4px;
   transition: opacity .3s ease;
 }
-.scroller__bar:hover {
+.scroller__bar:hover,
+.scroller__bar:active {
   opacity: .5;
 }
 .scroller--dark .scroller__bar {
   background: #bbb;
 }
-.scroller--dark .scroller__bar:hover {
+.scroller--dark .scroller__bar:hover,
+.scroller--dark .scroller__bar:active {
   opacity: .7;
 }
 .scroller--users .scroller__pane {
@@ -8915,7 +9083,8 @@ a.types-posts__item:hover .types-posts__text {
 .notifications-badge,
 .messages-badge,
 .error-badge,
-.new-badge {
+.new-badge,
+.favorites-badge {
   padding: 2px 5px 1px;
   display: inline-block;
   font-size: 12px;
@@ -8947,6 +9116,11 @@ a.types-posts__item:hover .types-posts__text {
   background-color: #36b377;
   color: #ffffff;
   border-radius: 50%;
+}
+.favorites-badge {
+  background-color: #4d75a3;
+  color: #ffffff;
+  min-width: 1em;
 }
 .content-info {
   padding: 100px 40px;
@@ -9202,7 +9376,7 @@ a.types-posts__item:hover .types-posts__text {
   margin-top: -68px;
   position: fixed;
   top: 50%;
-  left: 20px;
+  right: 20px;
   z-index: 150;
 }
 .social-share button {
@@ -9406,12 +9580,14 @@ a.types-posts__item:hover .types-posts__text {
   white-space: nowrap;
   overflow: hidden;
   z-index: 200;
+  visibility: visible;
+  opacity: 1;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
   border-radius: 26.5px;
-  transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out, visibility 0s ease-in-out, opacity 0.3s ease-in-out;
 }
 .calendar .calendar__period-marker--current {
   width: 7px;
