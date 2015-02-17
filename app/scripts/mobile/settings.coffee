@@ -1,10 +1,11 @@
 TastySettings =
-  version:     'static-development'
-  env:         'static-development'
-  host:        'http://taaasty.com'
-  api_host:    'http://taaasty.com/api'
-  localesPath: '../locales' # For backend path should be absolute like http://taaasty.com/locales
-  locale:      'ru'
+  version:           'static-development'
+  env:               'static-development'
+  host:              'http://taaasty.com'
+  api_host:          'http://taaasty.com/api'
+  localesPath:       '../locales' # For backend path should be absolute like http://taaasty.com/locales
+  locale:            'ru'
+  authBackgroundUrl: '../../images/images/Polly-73.jpg' # For backend should be absolute path like http://taaasty.com/images/auth-bg.jpg
 
 console.log 'TastyVersion', TastySettings.version
 

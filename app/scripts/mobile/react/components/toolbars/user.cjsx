@@ -1,6 +1,7 @@
-cx              = require 'react/lib/cx'
-UserToolbarList = require './user/list'
-ToolbarMixin    = require './mixins/toolbar'
+cx                        = require 'react/lib/cx'
+UserToolbarList           = require './user/list'
+UserToolbarListAdditional = require './user/listAdditional'
+ToolbarMixin              = require './mixins/toolbar'
 { PropTypes } = React
 
 UserToolbar = React.createClass
@@ -13,15 +14,17 @@ UserToolbar = React.createClass
   render: ->
     toolbarClasses = cx
       'toolbar__popup': true
+      'toolbar__popup--complex': true
       '__visible': @isOpenState()
 
-    return <nav className="toolbar toolbar--right toolbar--user">
+    return <nav className="toolbar toolbar--user">
              <div className="toolbar__toggle"
                   onClick={ @toggleOpenState }>
                <i className="icon icon--menu" />
              </div>
              <div className={ toolbarClasses }>
                <UserToolbarList user={ @props.user } />
+               <UserToolbarListAdditional />
              </div>
            </nav>
 

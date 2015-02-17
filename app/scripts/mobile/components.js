@@ -7,11 +7,13 @@ i18n         = require('i18next');
 moment.locale('ru', require('../../bower_components/momentjs/locale/ru'));
 
 Phrases = {
-  dev: { translation: require('./locales/dev') },
   ru: { translation: require('./locales/ru') }
 };
 
-i18n.init({resStore: Phrases});
+i18n.init({
+  resStore: Phrases,
+  fallbackLng: 'ru'
+});
 
 Routes         = require('../shared/routes/routes');
 ApiRoutes      = require('../shared/routes/api');
