@@ -61,21 +61,46 @@ Api =
       key = Constants.api.UPDATE_CURRENT_USER
 
       abortPendingRequests key
-      _pendingRequests = putRequest url, data
+      _pendingRequests[key] = putRequest url, data
 
     updateAvatar: (formData) ->
       url = ApiRoutes.userpic_url()
       key = Constants.api.UPDATE_CURRENT_USER_AVATAR
 
       abortPendingRequests key
-      _pendingRequests = postRequest url, formData
+      _pendingRequests[key] = postRequest url, formData
 
     cancelEmailConfirmation: ->
       url = ApiRoutes.request_confirm_url()
       key = Constants.api.CANCEL_EMAIL_CONFIRMATION
 
       abortPendingRequests key
-      _pendingRequests = deleteRequest url
+      _pendingRequests[key] = deleteRequest url
+
+  notifications:
+    load: (sinceId, limit) ->
+      url  = ApiRoutes.notificationsUrl()
+      key  = Constants.api.LOAD_NOTIFICATIONS
+      data =
+        limit: limit
+        to_notification_id: sinceId
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
+    read: (id)->
+      url = ApiRoutes.notifications_read_url id
+      key = Constants.api.READ_NOTIFICATIONS
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest url
+
+    readAll: ->
+      url = ApiRoutes.notificationsReadAllUrl()
+      key = Constants.api.READ_NOTIFICATIONS
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
 
   relationship:
     follow: (userId) ->

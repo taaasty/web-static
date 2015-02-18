@@ -25,5 +25,7 @@ ApiConstants = keyMirror
   UPDATE_CURRENT_USER:        null
   CANCEL_EMAIL_CONFIRMATION:  null
   UPDATE_CURRENT_USER_AVATAR: null
+  LOAD_NOTIFICATIONS:         null
+  READ_NOTIFICATIONS:         null
 
 module.exports = ApiConstants

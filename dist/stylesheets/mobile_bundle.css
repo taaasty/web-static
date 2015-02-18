@@ -3725,6 +3725,16 @@ a.pagination__item:active {
   padding: 12px;
   text-align: center;
 }
+.notifications__text--empty {
+  width: 100%;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  box-sizing: border-box;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
 .notifications__list {
   margin: 0;
   padding: 0;
