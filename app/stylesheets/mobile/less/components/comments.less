@@ -12,12 +12,12 @@
 }
 
 .comments__more-link {
-  &:extend(.link-design-default all, .link-design all);
   display: block;
   cursor: pointer;
+  opacity: .4;
 
   &:active {
-    &:extend(.link-design-default-active all);
+    opacity: .7;
   }
 }
 
@@ -69,15 +69,25 @@
 
 .comment__username {
   font-weight: bold;
+  opacity: .4;
+
+  *:active > & {
+    opacity: .7;
+  }
 }
 
 .comment__date {
   font-size: @font-size-xs;
   white-space: nowrap;
+  opacity: .4;
 
   &:before {
     content: "\2014"; // Тире
     margin-right: .25em;
+  }
+
+  &:active {
+    opacity: .7;
   }
 }
 
@@ -91,18 +101,24 @@
   top: 5px;
   right: 0;
   white-space: nowrap;
+
+  &.__open {
+    .comment__actions-button {
+      opacity: .7;
+    }
+  }
 }
 
 .comment__actions-button {
-  &:extend(.link-design-default all, .link-design all);
-  cursor: pointer;
   width: auto;
   height: auto;
   margin: 0;
-  padding: 4px 6px;
-  border: 1px solid transparent;
+  padding: 5px 7px;
+  border: none;
   background: none;
   font: inherit;
+  cursor: pointer;
+  opacity: .4;
 
   .icon {
     font-size: 20px;
@@ -110,8 +126,8 @@
     vertical-align: middle;
   }
 
-  .__open & {
-    &:extend(.link-design-default-active all, .link-design:active all);
+  &:active {
+    opacity: .7;
   }
 }
 

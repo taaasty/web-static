@@ -7,13 +7,28 @@
 }
 
 .meta-item-button {
-  &:extend(.link-design-default all, .link-design all);
-  padding: 4px 6px;
-  border: 1px solid #e6e6e6;
+  padding: 5px 7px;
+  position: relative;
+  border: none;
+  background: none;
   border-radius: @border-radius-small;
+  opacity: .4;
+
+  &:after {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid;
+    border-radius: @border-radius-small;
+    opacity: .4;
+  }
 
   &:active {
-    &:extend(.link-design-default-active all);
+    opacity: .7;
   }
 }
 

@@ -7,8 +7,13 @@
 
   &.voted {
     color: @yellow !important;
+    opacity: 1;
 
     .ico-fire-fill-reg;
+
+    &:after {
+      opacity: .7;
+    }
   }
 
   &.unvotable {
@@ -16,10 +21,16 @@
   }
 
   &.votable {
+    opacity: 1;
+
     &:active {
       color: @yellow !important;
 
       .ico-fire-fill-reg;
+    }
+
+    &:after {
+      opacity: .7;
     }
   }
 }

@@ -3,18 +3,19 @@
   position: relative;
 
   &.__open {
-    &:extend(.link-design-default-active all, .link-design:active all);
+    .meta-actions__button {
+      opacity: .7;
+    }
   }
 }
 
 .meta-actions__button {
   &:extend(.meta-item-button all);
-  cursor: pointer;
   .inline-block;
   width: auto;
   height: auto;
-  background: none;
   font: inherit;
+  cursor: pointer;
 
   .icon {
     &:extend(.meta-item-icon all);
