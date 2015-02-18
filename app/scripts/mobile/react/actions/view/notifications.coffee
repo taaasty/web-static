@@ -22,7 +22,7 @@ NotificationsViewActions =
   readAll: ->
     Api.notifications.readAll()
       .then (notifications) =>
-        NotifyController.notifySuccess 'Все уведомления успешно отмечены как прочитанные'
+        NotifyController.notifySuccess i18n.t('messages.notifications_mark_all_as_read_success')
         NotificationsServerActions.readAll notifications
       .fail (xhr) ->
         NotifyController.errorResponse xhr

@@ -6,7 +6,6 @@ NotificationsMarkButton = require './buttons/mark'
 NotificationsHeader     = require './header'
 NotificationList        = require './list'
 NotificationsLoadMore   = require './loadMore'
-{ PropTypes } = React
 
 Notifications = React.createClass
   displayName: 'Notifications'

@@ -9,7 +9,7 @@ NotificationsLoadMoreButton = React.createClass
   render: ->
     <button className="load-more-button"
             onClick={ @handleClick }>
-      Загрузить еще
+      { i18n.t('buttons.notifications_load_more') }
     </button>
 
   handleClick: (e) ->

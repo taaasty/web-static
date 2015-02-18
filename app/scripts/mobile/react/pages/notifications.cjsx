@@ -13,7 +13,6 @@ NotificationsPage = React.createClass
 
   propTypes:
     currentUser:   PropTypes.object.isRequired
-    tlog:          PropTypes.object.isRequired
     notifications: PropTypes.array.isRequired
 
   componentWillMount: ->
@@ -29,7 +28,7 @@ NotificationsPage = React.createClass
       <UserToolbarManager />
       <div className="layout">
         <div className="layout__body">
-          <Notifications notifications={ @props.notifications } />
+          <Notifications />
         </div>
       </div>
     </div>

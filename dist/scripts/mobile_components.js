@@ -12433,6 +12433,10 @@ module.exports={
     "not_registered_yet_link": "Я еще не зарегистрирован",
     "remembered_password_link": "Я всё вспомнил, верните меня"
   },
+  "notifications": {
+    "header": "Уведомления",
+    "empty_list": "Список уведомлений пуст"
+  },
   "settings": {
     "account_active_status": "Активный дневник",
     "email_declare_header": "Емейл",
@@ -12474,6 +12478,8 @@ module.exports={
     "settings_email_cancel": "Отменить",
     "settings_email_change": "Изменить",
     "settings_email_declare": "Установить",
+    "notifications_mark_all_as_read": "Отметить как прочитанные",
+    "notifications_load_more": "Загрузить еще",
     "comments_load_more": "Загрузить ещё __count__ комментарий",
     "comments_load_more_plural_2": "Загрузить ещё __count__ комментария",
     "comments_load_more_plural_5": "Загрузить ещё __count__ комментариев",
@@ -12510,7 +12516,8 @@ module.exports={
     "settings_empty_email_error": "Емейл не может быть пустым",
     "settings_not_unique_email_error": "Новый емейл должен отличаться от текущего",
     "settings_empty_slug_error": "Псевдоним не может быть пустым",
-    "settings_no_unsaved_changes_error": "У вас нет несохранённых изменений"
+    "settings_no_unsaved_changes_error": "У вас нет несохранённых изменений",
+    "notifications_mark_all_as_read_success": "Все уведомления успешно отмечены как прочитанные"
   },
   "placeholders": {
     "comment_create": "Добавить комментарий",
@@ -16170,7 +16177,7 @@ assign = require('react/lib/Object.assign');
 
 EntryViewActions = require('../../../actions/view/entry');
 
-LOAD_MORE_COMMENTS_LIMIT = 21;
+LOAD_MORE_COMMENTS_LIMIT = 30;
 
 TEXT_TYPE = 'text';
 

@@ -1,7 +1,7 @@
 assign           = require 'react/lib/Object.assign'
 EntryViewActions = require '../../../actions/view/entry'
 
-LOAD_MORE_COMMENTS_LIMIT = 21
+LOAD_MORE_COMMENTS_LIMIT = 30
 TEXT_TYPE  = 'text'
 IMAGE_TYPE = 'image'
 VIDEO_TYPE = 'video'

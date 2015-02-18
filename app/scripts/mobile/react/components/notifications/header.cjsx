@@ -4,7 +4,7 @@ NotificationsHeader = React.createClass
   render: ->
     <div className="notifications__header">
       <h3 className="notifications__title">
-        Уведомления
+        { i18n.t('notifications.header') }
       </h3>
     </div>
 

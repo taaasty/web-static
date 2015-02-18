@@ -9,7 +9,7 @@ NotificationsMarkButton = React.createClass
   render: ->
     <button className="notifications__mark-button"
             onClick={ @handleClick }>
-      Отметить как прочитанные
+      { i18n.t('buttons.notifications_mark_all_as_read') }
     </button>
 
   handleClick: ->

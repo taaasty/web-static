@@ -12702,7 +12702,7 @@ NotificationsViewActions = {
   readAll: function() {
     return Api.notifications.readAll().then((function(_this) {
       return function(notifications) {
-        NotifyController.notifySuccess('Все уведомления успешно отмечены как прочитанные');
+        NotifyController.notifySuccess(i18n.t('messages.notifications_mark_all_as_read_success'));
         return NotificationsServerActions.readAll(notifications);
       };
     })(this)).fail(function(xhr) {
@@ -16751,7 +16751,7 @@ assign = require('react/lib/Object.assign');
 
 EntryViewActions = require('../../../actions/view/entry');
 
-LOAD_MORE_COMMENTS_LIMIT = 21;
+LOAD_MORE_COMMENTS_LIMIT = 30;
 
 TEXT_TYPE = 'text';
 
@@ -18208,7 +18208,7 @@ NotificationsLoadMoreButton = React.createClass({
     return React.createElement("button", {
       "className": "load-more-button",
       "onClick": this.handleClick
-    }, "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0435\u0449\u0435");
+    }, i18n.t('buttons.notifications_load_more'));
   },
   handleClick: function(e) {
     e.preventDefault();
@@ -18234,7 +18234,7 @@ NotificationsMarkButton = React.createClass({
     return React.createElement("button", {
       "className": "notifications__mark-button",
       "onClick": this.handleClick
-    }, "\u041e\u0442\u043c\u0435\u0442\u0438\u0442\u044c \u043a\u0430\u043a \u043f\u0440\u043e\u0447\u0438\u0442\u0430\u043d\u043d\u044b\u0435");
+    }, i18n.t('buttons.notifications_mark_all_as_read'));
   },
   handleClick: function() {
     return this.props.onClick();
@@ -18255,7 +18255,7 @@ NotificationsHeader = React.createClass({
       "className": "notifications__header"
     }, React.createElement("h3", {
       "className": "notifications__title"
-    }, "\u0423\u0432\u0435\u0434\u043e\u043c\u043b\u0435\u043d\u0438\u044f"));
+    }, i18n.t('notifications.header')));
   }
 });
 
@@ -18318,7 +18318,7 @@ NotificationsListEmpty = React.createClass({
   render: function() {
     return React.createElement("p", {
       "className": "notifications__text notifications__text--empty"
-    }, "\u0421\u043f\u0438\u0441\u043e\u043a \u0443\u0432\u0435\u0434\u043e\u043c\u043b\u0435\u043d\u0438\u0439 \u043f\u0443\u0441\u0442");
+    }, i18n.t('notifications.empty_list'));
   }
 });
 
@@ -18502,7 +18502,7 @@ module.exports = NotificationsMixin;
 
 
 },{"../../../actions/view/notifications":13,"lodash":218}],135:[function(require,module,exports){
-var ComponentMixin, ConnectStoreMixin, NotificationList, NotificationStore, Notifications, NotificationsHeader, NotificationsLoadMore, NotificationsMarkButton, NotificationsMixin, PropTypes;
+var ComponentMixin, ConnectStoreMixin, NotificationList, NotificationStore, Notifications, NotificationsHeader, NotificationsLoadMore, NotificationsMarkButton, NotificationsMixin;
 
 NotificationStore = require('../../stores/notification');
 
@@ -18519,8 +18519,6 @@ NotificationsHeader = require('./header');
 NotificationList = require('./list');
 
 NotificationsLoadMore = require('./loadMore');
-
-PropTypes = React.PropTypes;
 
 Notifications = React.createClass({
   displayName: 'Notifications',
@@ -21706,7 +21704,6 @@ NotificationsPage = React.createClass({
   mixins: [PageMixin, NotificationsPageMixin],
   propTypes: {
     currentUser: PropTypes.object.isRequired,
-    tlog: PropTypes.object.isRequired,
     notifications: PropTypes.array.isRequired
   },
   componentWillMount: function() {
@@ -21718,9 +21715,7 @@ NotificationsPage = React.createClass({
       "className": "layout"
     }, React.createElement("div", {
       "className": "layout__body"
-    }, React.createElement(Notifications, {
-      "notifications": this.props.notifications
-    }))));
+    }, React.createElement(Notifications, null))));
   }
 });
 
