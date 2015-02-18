@@ -972,10 +972,7 @@ button {
 .settings__change-button,
 .settings__declare-button,
 .settings__cancel-button,
-<<<<<<< HEAD
 .notifications__refresh,
-=======
->>>>>>> Mobile notifications static [#87981078]
 .notifications__mark-button,
 .messages__button,
 .messages__chooser-more-button,
@@ -1023,10 +1020,7 @@ a.settings__submit-button,
 a.settings__change-button,
 a.settings__declare-button,
 a.settings__cancel-button,
-<<<<<<< HEAD
 a.notifications__refresh,
-=======
->>>>>>> Mobile notifications static [#87981078]
 a.notifications__mark-button,
 a.messages__button,
 a.messages__chooser-more-button,
@@ -1050,10 +1044,7 @@ a.outline-auth-button {
 .settings__change-button:after,
 .settings__declare-button:after,
 .settings__cancel-button:after,
-<<<<<<< HEAD
 .notifications__refresh:after,
-=======
->>>>>>> Mobile notifications static [#87981078]
 .notifications__mark-button:after,
 .messages__button:after,
 .messages__chooser-more-button:after,
@@ -1084,10 +1075,7 @@ a.outline-auth-button {
 .settings__change-button .icon,
 .settings__declare-button .icon,
 .settings__cancel-button .icon,
-<<<<<<< HEAD
 .notifications__refresh .icon,
-=======
->>>>>>> Mobile notifications static [#87981078]
 .notifications__mark-button .icon,
 .messages__button .icon,
 .messages__chooser-more-button .icon,
@@ -1115,10 +1103,7 @@ a.outline-auth-button {
 .settings__change-button .icon--cross,
 .settings__declare-button .icon--cross,
 .settings__cancel-button .icon--cross,
-<<<<<<< HEAD
 .notifications__refresh .icon--cross,
-=======
->>>>>>> Mobile notifications static [#87981078]
 .notifications__mark-button .icon--cross,
 .messages__button .icon--cross,
 .messages__chooser-more-button .icon--cross,
@@ -1142,10 +1127,7 @@ a.outline-auth-button {
 .settings__change-button .spinner,
 .settings__declare-button .spinner,
 .settings__cancel-button .spinner,
-<<<<<<< HEAD
 .notifications__refresh .spinner,
-=======
->>>>>>> Mobile notifications static [#87981078]
 .notifications__mark-button .spinner,
 .messages__button .spinner,
 .messages__chooser-more-button .spinner,
@@ -1174,10 +1156,7 @@ a.outline-auth-button {
 .button-group > .settings__change-button:not(:first-of-type),
 .button-group > .settings__declare-button:not(:first-of-type),
 .button-group > .settings__cancel-button:not(:first-of-type),
-<<<<<<< HEAD
 .button-group > .notifications__refresh:not(:first-of-type),
-=======
->>>>>>> Mobile notifications static [#87981078]
 .button-group > .notifications__mark-button:not(:first-of-type),
 .button-group > .messages__button:not(:first-of-type),
 .button-group > .messages__chooser-more-button:not(:first-of-type),
@@ -1203,10 +1182,7 @@ a.outline-auth-button {
 .button-group > .settings__change-button:not(:last-of-type),
 .button-group > .settings__declare-button:not(:last-of-type),
 .button-group > .settings__cancel-button:not(:last-of-type),
-<<<<<<< HEAD
 .button-group > .notifications__refresh:not(:last-of-type),
-=======
->>>>>>> Mobile notifications static [#87981078]
 .button-group > .notifications__mark-button:not(:last-of-type),
 .button-group > .messages__button:not(:last-of-type),
 .button-group > .messages__chooser-more-button:not(:last-of-type),
@@ -1231,10 +1207,7 @@ a.outline-auth-button {
 .button-group > .settings__change-button:not(:first-of-type):not(:last-of-type),
 .button-group > .settings__declare-button:not(:first-of-type):not(:last-of-type),
 .button-group > .settings__cancel-button:not(:first-of-type):not(:last-of-type),
-<<<<<<< HEAD
 .button-group > .notifications__refresh:not(:first-of-type):not(:last-of-type),
-=======
->>>>>>> Mobile notifications static [#87981078]
 .button-group > .notifications__mark-button:not(:first-of-type):not(:last-of-type),
 .button-group > .messages__button:not(:first-of-type):not(:last-of-type),
 .button-group > .messages__chooser-more-button:not(:first-of-type):not(:last-of-type),
@@ -1258,10 +1231,7 @@ a.outline-auth-button {
 .button-group.__expanded > .settings__change-button,
 .button-group.__expanded > .settings__declare-button,
 .button-group.__expanded > .settings__cancel-button,
-<<<<<<< HEAD
 .button-group.__expanded > .notifications__refresh,
-=======
->>>>>>> Mobile notifications static [#87981078]
 .button-group.__expanded > .notifications__mark-button,
 .button-group.__expanded > .messages__button,
 .button-group.__expanded > .messages__chooser-more-button,
@@ -1298,10 +1268,7 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child) .settings__change-button,
 .button-group-dropdown:not(:first-child) .settings__declare-button,
 .button-group-dropdown:not(:first-child) .settings__cancel-button,
-<<<<<<< HEAD
 .button-group-dropdown:not(:first-child) .notifications__refresh,
-=======
->>>>>>> Mobile notifications static [#87981078]
 .button-group-dropdown:not(:first-child) .notifications__mark-button,
 .button-group-dropdown:not(:first-child) .messages__button,
 .button-group-dropdown:not(:first-child) .messages__chooser-more-button,
@@ -1326,10 +1293,7 @@ a.outline-auth-button {
 .button-group-dropdown:not(:last-child) .settings__change-button,
 .button-group-dropdown:not(:last-child) .settings__declare-button,
 .button-group-dropdown:not(:last-child) .settings__cancel-button,
-<<<<<<< HEAD
 .button-group-dropdown:not(:last-child) .notifications__refresh,
-=======
->>>>>>> Mobile notifications static [#87981078]
 .button-group-dropdown:not(:last-child) .notifications__mark-button,
 .button-group-dropdown:not(:last-child) .messages__button,
 .button-group-dropdown:not(:last-child) .messages__chooser-more-button,
@@ -1354,10 +1318,7 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child):not(:last-child) .settings__change-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .settings__declare-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .settings__cancel-button,
-<<<<<<< HEAD
 .button-group-dropdown:not(:first-child):not(:last-child) .notifications__refresh,
-=======
->>>>>>> Mobile notifications static [#87981078]
 .button-group-dropdown:not(:first-child):not(:last-child) .notifications__mark-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .messages__button,
 .button-group-dropdown:not(:first-child):not(:last-child) .messages__chooser-more-button,
@@ -1418,13 +1379,11 @@ a.outline-auth-button {
 .messages__button:active {
   background-color: #2b8a5c;
 }
-.button--green-lighter,
-.notifications__mark-button {
+.button--green-lighter {
   color: #ffffff !important;
   background-color: #77b97e;
 }
-.button--green-lighter:active,
-.notifications__mark-button:active {
+.button--green-lighter:active {
   background-color: #63af6b;
 }
 .button--green-dark {
@@ -1471,10 +1430,7 @@ a.outline-auth-button {
 .settings__declare-button,
 .settings__cancel-button,
 .notifications__mark-button,
-<<<<<<< HEAD
 .messages__chooser-more-button,
-=======
->>>>>>> Mobile notifications static [#87981078]
 .messages__section--dialogs .messages__button {
   width: 100%;
   padding-right: 0;
@@ -3708,7 +3664,6 @@ a.pagination__item:active {
   font-size: 16px;
   line-height: 1.375em;
 }
-<<<<<<< HEAD
 .notifications__refresh {
   width: 42px;
   height: 42px;
@@ -3735,8 +3690,6 @@ a.pagination__item:active {
   -webkit-animation: notifications-refresh-active 0.3s ease;
           animation: notifications-refresh-active 0.3s ease;
 }
-=======
->>>>>>> Mobile notifications static [#87981078]
 .notifications__header {
   padding: 12px;
   background-color: #f5f5f5;
@@ -3761,7 +3714,6 @@ a.pagination__item:active {
   padding: 16px 12px;
   border-bottom: 1px solid #f1f1f1;
 }
-<<<<<<< HEAD
 .notifications__mark-button {
   background-color: #36b377;
   color: #fff;
@@ -3769,14 +3721,10 @@ a.pagination__item:active {
 .notifications__mark-button:active {
   background-color: #2f9b67;
 }
-=======
->>>>>>> Mobile notifications static [#87981078]
 .notifications__text {
   padding: 12px;
   text-align: center;
 }
-<<<<<<< HEAD
-=======
 .notifications__text--empty {
   width: 100%;
   position: fixed;
@@ -3787,7 +3735,6 @@ a.pagination__item:active {
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
 }
->>>>>>> Mobile notifications static [#87981078]
 .notifications__list {
   margin: 0;
   padding: 0;

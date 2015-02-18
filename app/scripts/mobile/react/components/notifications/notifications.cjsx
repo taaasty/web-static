@@ -1,18 +1,16 @@
-_                       = require 'lodash'
 NotificationStore       = require '../../stores/notification'
 ConnectStoreMixin       = require '../../../../shared/react/mixins/connectStore'
+ComponentMixin          = require '../../mixins/component'
 NotificationsMixin      = require './mixins/notifications'
 NotificationsMarkButton = require './buttons/mark'
 NotificationsHeader     = require './header'
-NotificationsList       = require './list'
+NotificationList        = require './list'
+NotificationsLoadMore   = require './loadMore'
 { PropTypes } = React
 
 Notifications = React.createClass
   displayName: 'Notifications'
-  mixins: [ConnectStoreMixin(NotificationStore), NotificationsMixin]
-
-  propTypes:
-    notifications: PropTypes.array.isRequired
+  mixins: [ConnectStoreMixin(NotificationStore), NotificationsMixin, ComponentMixin]
 
   render: ->
     <div className="notifications">
@@ -20,8 +18,11 @@ Notifications = React.createClass
       <div className="notifications__body">
         { @renderActions() }
         <div className="notifications__content">
-          <NotificationsList notifications={ @props.notifications } />
+          <NotificationList
+              items={ @state.notifications }
+              onItemRead={ @markAsRead } />
         </div>
+        { @renderLoadMore() }
       </div>
     </div>
 
@@ -31,13 +32,14 @@ Notifications = React.createClass
         <NotificationsMarkButton onClick={ @markAllAsRead } />    
       </div>
 
-  hasUnreadNotifications: ->
-    unreadItems = _.filter @props.notifications, (item) ->
-      item.read_at is null
-
-    !!unreadItems.length
+  renderLoadMore: ->
+    if @state.notifications.length && !@state.everythingLoaded
+      <NotificationsLoadMore
+          loading={ @isLoadingState() }
+          onClick={ @loadMore } />
 
   getStateFromStore: ->
-    notifications: NotificationStore.getAll()
+    notifications:    NotificationStore.getAll()
+    everythingLoaded: NotificationStore.isEverythingLoaded()
 
 module.exports = Notifications

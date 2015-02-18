@@ -4650,6 +4650,7 @@ window.ReactApp = {
     console.log('ReactApp start');
     i18n.init({
       lng: locale,
+      fallbackLng: 'ru',
       resGetPath: TastySettings.localesPath + '/__lng__.json'
     }, function() {
       console.log('Locales loaded');
@@ -23082,8 +23083,14 @@ ApiRoutes = {
   messenger_read_messages_url: function(conversationId) {
     return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages/read';
   },
-  notifications_read_url: function(notificationId) {
-    return TastySettings.api_host + '/v1/messenger/notifications/' + notificationId + '/read';
+  notificationsUrl: function() {
+    return TastySettings.api_host + '/v1/messenger/notifications';
+  },
+  notificationsReadAllUrl: function() {
+    return TastySettings.api_host + '/v1/messenger/notifications/read';
+  },
+  notifications_read_url: function(id) {
+    return TastySettings.api_host + '/v1/messenger/notifications/' + id + '/read';
   },
   suggestions_vkontakte: function() {
     return TastySettings.api_host + '/v1/relationships/suggestions/vkontakte';

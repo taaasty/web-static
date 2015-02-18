@@ -3,26 +3,28 @@ UserAvatar = require '../../common/avatar/user'
 Image      = require '../../common/image/image'
 { PropTypes } = React
 
-NotificationsListItem = React.createClass
-  displayName: 'NotificationsListItem'
+NotificationListItem = React.createClass
+  displayName: 'NotificationListItem'
 
   propTypes:
-    notification: PropTypes.object.isRequired
+    item:   PropTypes.object.isRequired
+    onRead: PropTypes.func.isRequired
 
   render: ->
     itemClasses = cx
       'notification': true
       '__unread': @isUnread()
 
-    return <li className={ itemClasses }>
-             <a href={ @props.notification.entity_url }
+    return <li className={ itemClasses }
+               onClick={ @handleClick }>
+             <a href={ @props.item.entity_url }
                 target="_blank"
                 className="notification__link">
                <div className="notification__inner">
                  <div className="notification__read-state" />
                  <div className="notification__user-avatar">
                    <UserAvatar
-                       user={ @props.notification.sender }
+                       user={ @props.item.sender }
                        size={ 42 } />
                  </div>
                  { @renderNotificationImage() }
@@ -30,11 +32,11 @@ NotificationsListItem = React.createClass
                    <span className="notification__spacer" />
                    <span className="notification__content">
                      <span className="notification__user">
-                       { @props.notification.sender.slug }
+                       { @props.item.sender.slug }
                      </span>
-                     <span className="notification__action-text"> { @props.notification.action_text }: </span>
+                     <span className="notification__action-text"> { @props.item.action_text }: </span>
                      <span className="notification__text">
-                       { @props.notification.text }
+                       { @props.item.text }
                      </span>
                    </span>
                  </div>
@@ -43,12 +45,15 @@ NotificationsListItem = React.createClass
            </li>
 
   renderNotificationImage: ->
-    if @props.notification.image?
-      <Image image={ @props.notification.image }
+    if @props.item.image?
+      <Image image={ @props.item.image }
              maxWidth={ 70 }
              className="notification__image" />
 
   isUnread: ->
-    @props.notification.read_at is null
+    @props.item.read_at is null
 
-module.exports = NotificationsListItem
+  handleClick: ->
+    @props.onRead @props.item.id if @isUnread()
+
+module.exports = NotificationListItem

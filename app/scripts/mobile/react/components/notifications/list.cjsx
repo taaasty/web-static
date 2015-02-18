@@ -1,26 +1,30 @@
-_                      = require 'lodash'
-NotificationsListItem  = require './list/item'
-NotificationsListEmpty = require './list/empty'
+_                     = require 'lodash'
+NotificationListItem  = require './list/item'
+NotificationListEmpty = require './list/empty'
 { PropTypes } = React
 
-NotificationsList = React.createClass
-  displayName: 'NotificationsList'
+NotificationList = React.createClass
+  displayName: 'NotificationList'
 
   propTypes:
-    notifications: PropTypes.array.isRequired
+    items:      PropTypes.array.isRequired
+    onItemRead: PropTypes.func.isRequired
 
   render: ->
-    if @isEmpty() then <NotificationsListEmpty /> else @renderListItems()
+    if @isEmpty() then <NotificationListEmpty /> else @renderListItems()
 
   renderListItems: ->
-    listItems = _.map @props.notifications, (item) ->
-      <NotificationsListItem notification={ item } key={ item.id } />
+    listItems = _.map @props.items, (item) =>
+      <NotificationListItem
+          item={ item }
+          onRead={ @props.onItemRead }
+          key={ item.id } />
 
     return <ul className="notifications__list">
              { listItems }
            </ul>
 
   isEmpty: ->
-    @props.notifications.length == 0
+    @props.items.length == 0
 
-module.exports = NotificationsList
+module.exports = NotificationList

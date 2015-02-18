@@ -1,4 +1,5 @@
 NotificationsHeader = React.createClass
+  displayName: 'NotificationsHeader'
 
   render: ->
     <div className="notifications__header">
