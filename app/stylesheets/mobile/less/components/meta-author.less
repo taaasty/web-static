@@ -3,14 +3,25 @@
   .text-overflow;
   max-width: 100%;
   margin-right: 12px;
+
+  &:active {
+    .meta-author__name {
+      opacity: .7;
+    }
+  }
 }
 
 .meta-author__avatar {
   .inline-block();
   width: 28px;
   height: 28px;
+  margin-right: 8px;
 
   .avatar__text {
     font-size: 18px;
   }
+}
+
+.meta-author__name {
+  opacity: .4;
 }
