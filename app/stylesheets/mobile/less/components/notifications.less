@@ -3,6 +3,26 @@
   line-height: @notifications-line-height;
 }
 
+.notifications--fixed {
+  width: 100%;
+  height: 100%;
+  padding-top: 42px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+
+  .notifications__header {
+    margin-top: -42px;
+  }
+
+  .notifications__body {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 .notifications__refresh {
   &:extend(.button all);
   width: @notifications-refresh-size;
@@ -31,7 +51,7 @@
 
 // Header
 .notifications__header {
-  padding: 12px;
+  height: 42px;
   background-color: @notifications-header-bg;
   text-align: center;
   user-select: none;
@@ -40,6 +60,7 @@
 .notifications__title {
   width: 66%;
   margin: 0 auto;
+  padding: @indent-base 0;
   font-weight: bold;
   font-size: 11px;
   line-height: 18px;
@@ -47,6 +68,7 @@
   letter-spacing: .14em;
   color: @notifications-header-color;
   vertical-align: middle;
+  .text-overflow;
 }
 
 // Actions
