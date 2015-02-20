@@ -176,6 +176,12 @@
   left: 0;
   background: #111;
   opacity: .5;
+
+  & + .messages__scroll {
+    .spinner {
+      color: #fff;
+    }
+  }
 }
 
 // Message List
@@ -190,26 +196,24 @@
   vertical-align: bottom;
 }
 
-// Message Empty
-.messages__empty {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+// Text
+.messages__text {
+  padding: @indent-base;
   color: @grey;
   text-align: center;
 
-  &:after {
-    .inline-block;
-    content: "";
-    height: 100%;
+  .spinner {
+    color: #000;
   }
 }
 
-.messages__empty-text {
-  .inline-block;
-  width: 90%;
+.messages__text--center {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  box-sizing: border-box;
+  transform: translateY(-50%);
 }
 
 // Message Field
