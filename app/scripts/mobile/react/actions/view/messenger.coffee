@@ -1,7 +1,9 @@
 Api                    = require '../../api/api'
 Constants              = require '../../constants/constants'
+NotifyController       = require '../../controllers/notify'
 AppDispatcher          = require '../../dispatcher/dispatcher'
 MessengerServerActions = require '../server/messenger'
+UuidService            = require '../../../../shared/react/services/uuid'
 
 MessengerViewActions =
 
@@ -16,9 +18,44 @@ MessengerViewActions =
       type: Constants.messenger.OPEN_CONVERSATION
       convID: convID
 
-  loadMessages: (convId) ->
-    Api.messenger.loadMessages convId
+  loadMessages: (convID) ->
+    Api.messenger.loadMessages convID
       .then (response) ->
         MessengerServerActions.loadMessages response.messages
+
+  loadMoreMessages: (convID, toMsgID) ->
+    Api.messenger.loadMessages convID, toMsgID
+      .then (response) ->
+        MessengerServerActions.loadMessages response.messages
+        response
+
+  readMessages: (convID, ids) ->
+    Api.messenger.readMessages convID, ids
+      .then (response) ->
+        MessengerServerActions.readMessages ids
+
+  createMessage: (convID, messageText) ->
+    uuid = UuidService.generate()
+
+    AppDispatcher.handleViewAction
+      type: Constants.messenger.CREATE_LOCAL_MESSAGE
+      convID: convID
+      messageText: messageText
+      uuid: uuid
+
+    Api.messenger.createMessage convID, messageText, uuid
+      .then (message) ->
+        MessengerServerActions.createMessage message
+      .fail ->
+        NotifyController.notifyError 'При отправке сообщения произошла ошибка'
+        MessengerServerActions.createMessageFail uuid
+
+  recreateMessage: (convID, messageText, uuid) ->
+    Api.messenger.createMessage convID, messageText, uuid
+      .then (message) ->
+        MessengerServerActions.createMessage message
+      .fail ->
+        NotifyController.notifyError 'При отправке сообщения произошла ошибка'
+        MessengerServerActions.createMessageFail uuid
 
 module.exports = MessengerViewActions

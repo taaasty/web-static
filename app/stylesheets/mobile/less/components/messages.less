@@ -87,6 +87,7 @@
   position: relative;
   border-bottom: 1px solid @messages-dialog-divider-bg;
   background-color: @white;
+  cursor: pointer;
 
   .messages__date {
     display: block;
@@ -283,6 +284,7 @@
 .messages__chooser-empty,
 .messages__chooser-result {
   padding: @indent-base;
+  cursor: pointer;
 }
 
 .messages__chooser-loading,
@@ -423,6 +425,10 @@
   .message__meta {
     text-align: right;
   }
+}
+
+.message--error {
+  cursor: pointer;
 }
 
 .message__bubble {

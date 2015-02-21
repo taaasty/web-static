@@ -2,8 +2,10 @@ ConversationListEmpty = React.createClass
   displayName: 'ConversationListEmpty'
 
   render: ->
-    <p className="messages-conversations__text messages-conversations__text--empty">
-      Список диалогов пуст
-    </p>
+    <div className="messages__scroll">
+      <p className="messages__text messages__text--center">
+        Список диалогов пуст
+      </p>
+    </div>
 
 module.exports = ConversationListEmpty

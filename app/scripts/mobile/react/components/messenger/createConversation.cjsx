@@ -1,5 +1,5 @@
-MessengerHeader  = require './common/header'
-MessengerChooser = require './createConversation/chooser'
+CreateConversationHeader = require './createConversation/header'
+MessengerChooser         = require './createConversation/chooser'
 { PropTypes } = React
 
 MessengerCreateConversation = React.createClass
@@ -10,7 +10,7 @@ MessengerCreateConversation = React.createClass
 
   render: ->
     <div className="messages__section messages__section--recipients">
-      <MessengerHeader title="Выбор получателя" />
+      <CreateConversationHeader />
       <div className="messages__body">
         <MessengerChooser onItemSelect={ @props.onCreate } />
       </div>

@@ -13,7 +13,7 @@ initializeFeed = (entries) ->
 pushEntries = (entries) ->
   _entries = _entries.concat entries
 
-window.FeedStore = assign new BaseStore(),
+FeedStore = assign new BaseStore(),
 
   getEntries: -> _entries
 

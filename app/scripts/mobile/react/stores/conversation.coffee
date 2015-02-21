@@ -7,9 +7,13 @@ AppDispatcher = require '../dispatcher/dispatcher'
 _currentID = null
 _conversations = {}
 
-global.ConversationStore = assign new BaseStore(),
+ConversationStore = assign new BaseStore(),
 
-  initialize: (conversations) ->
+  initSingular: (conversation) ->
+    _currentID = conversation.id
+    _conversations[conversation.id] = conversation
+
+  initPlural: (conversations) ->
     _.forEach conversations, (item) ->
       _conversations[item.id] = item
 

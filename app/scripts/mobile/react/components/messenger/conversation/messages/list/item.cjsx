@@ -1,50 +1,57 @@
-cx           = require 'react/lib/cx'
-MessageStore = require '../../../../../stores/message'
-UserAvatar   = require '../../../../common/avatar/user'
+cx         = require 'react/lib/cx'
+UserAvatar = require '../../../../common/avatar/user'
 { PropTypes } = React
+
+ERROR_STATE   = 'error'
+SENT_STATE    = 'sent'
+READ_STATE    = 'read'
+SENDING_STATE = 'sending'
 
 MessageListItem = React.createClass
   displayName: 'MessageListItem'
 
   propTypes:
-    item: PropTypes.object.isRequired
-
-  getInitialState: ->
-    itemInfo: MessageStore.getInfo @props.item.id, @props.item.conversation_id
+    item:            PropTypes.object.isRequired
+    itemInfo:        PropTypes.object.isRequired
+    deliveryStatus:  PropTypes.string.isRequired
+    onResendMessage: PropTypes.func.isRequired
 
   render: ->
     itemClasses = cx
       'message': true
       'message--to': @isIncoming()
       'message--from': @isOutgoing()
+      'message--error': @isErrorStatus()
 
-    return <div className={ itemClasses }>
+    return <div className={ itemClasses }
+                onClick={ @handleClick }>
              <div className="message__user-avatar">
                <UserAvatar
-                   user={ @state.itemInfo.user }
+                   user={ @props.itemInfo.user }
                    size={ 42 } />
              </div>
              <div className="message__bubble">
                { @renderSlug() }
-               <span className="messages__text"
+               <span className="message__text"
                      dangerouslySetInnerHTML={{ __html: @props.item.content_html }} />
              </div>
              <div className="message__meta">
                { @renderMessageDate() }
+               { @renderDeliveryStatus() }
              </div>
            </div>
 
   renderSlug: ->
     if @isIncoming()
       <span className="message__user-name">
-        <a href={ @state.itemInfo.user.tlog_url }
+        <a href={ @props.itemInfo.user.tlog_url }
            target="_blank">
-          { @state.itemInfo.user.slug }
+          { @props.itemInfo.user.slug }
         </a>
       </span>
     else
       <span className="message__user-name">
-        { @state.itemInfo.user.slug }
+        { @props.itemInfo.user.slug }
       </span>
 
   renderMessageDate: ->
@@ -55,7 +62,24 @@ MessageListItem = React.createClass
                { date }
              </span>
 
-  isOutgoing: -> @state.itemInfo.type is 'outgoing'
-  isIncoming: -> @state.itemInfo.type is 'incoming'
+  renderDeliveryStatus: ->
+    if @isOutgoing()
+      statusClass = switch @props.deliveryStatus
+        when SENT_STATE  then 'icon--tick'
+        when READ_STATE  then 'icon--double-tick'
+        when ERROR_STATE then 'icon--refresh'
+        else ''
+
+      return <span className="message__delivery-status">
+               <i className={ "icon " + statusClass } />
+             </span>
+
+  isErrorStatus: -> @props.deliveryStatus is ERROR_STATE
+
+  isOutgoing: -> @props.itemInfo.type is 'outgoing'
+  isIncoming: -> @props.itemInfo.type is 'incoming'
+
+  handleClick: ->
+    @props.onResendMessage() if @isErrorStatus()
 
 module.exports = MessageListItem

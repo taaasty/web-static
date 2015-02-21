@@ -13,4 +13,19 @@ MessengerServerActions =
       type: Constants.messenger.LOAD_MESSAGES
       messages: messages
 
+  readMessages: (ids) ->
+    AppDispatcher.handleServerAction
+      type: Constants.messenger.READ_MESSAGES
+      ids: ids
+
+  createMessage: (message) ->
+    AppDispatcher.handleServerAction
+      type: Constants.messenger.CREATE_REMOTE_MESSAGE
+      message: message
+
+  createMessageFail: (uuid) ->
+    AppDispatcher.handleServerAction
+      type: Constants.messenger.CREATE_REMOTE_MESSAGE_FAIL
+      uuid: uuid 
+
 module.exports = MessengerServerActions

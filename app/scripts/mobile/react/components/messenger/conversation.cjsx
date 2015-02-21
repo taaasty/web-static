@@ -1,7 +1,8 @@
-ConversationStore    = require '../../stores/conversation'
-ConnectStoreMixin    = require '../../../../shared/react/mixins/connectStore'
-ConversationHeader   = require './conversation/header'
-ConversationMessages = require './conversation/messages'
+ConversationStore       = require '../../stores/conversation'
+ConnectStoreMixin       = require '../../../../shared/react/mixins/connectStore'
+ConversationHeader      = require './conversation/header'
+ConversationMessages    = require './conversation/messages'
+ConversationMessageForm = require './conversation/messageForm'
 { PropTypes } = React
 
 MessengerConversation = React.createClass
@@ -20,20 +21,10 @@ MessengerConversation = React.createClass
                <div className="messages__thread-overlay" />
                <ConversationMessages />
              </div>
+             <div className="messages__footer">
+               <ConversationMessageForm convID={ @state.conversation.id } />
+             </div>
            </div>
-
-             # <div className="messages__footer">
-             #   <form className="message-form">
-             #     <button className="message-form__submit">
-             #       Отпр
-             #     </button>
-             #     <div className="message-form__field">
-             #       <textarea
-             #           placeholder="Ваше сообщение…"
-             #           className="message-form__field-textarea" />
-             #     </div>
-             #   </form>
-             # </div>
 
   getStateFromStore: ->
     conversation: ConversationStore.getCurrent()

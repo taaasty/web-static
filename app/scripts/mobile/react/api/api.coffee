@@ -119,12 +119,32 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
 
-    loadMessages: (convID) ->
-      url = ApiRoutes.messenger_load_messages_url convID
-      key = Constants.api.LOAD_MESSAGES
+    loadMessages: (convID, toMsgID) ->
+      url  = ApiRoutes.messenger_load_messages_url convID
+      key  = Constants.api.LOAD_MESSAGES
+      data = limit: 40
+      data.to_message_id = toMsgID if toMsgID?
 
       abortPendingRequests key
-      _pendingRequests[key] = getRequest url
+      _pendingRequests[key] = getRequest url, data
+
+    readMessages: (convID, ids) ->
+      url  = ApiRoutes.messenger_read_messages_url convID
+      key  = Constants.api.READ_MESSAGES
+      data = ids: ids.join(',')
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest url, data
+
+    createMessage: (convID, messageText, uuid) ->
+      url  = ApiRoutes.messenger_new_message_url convID
+      key  = Constants.api.CREATE_MESSAGE
+      data =
+        content: messageText
+        uuid: uuid
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
 
   relationship:
     follow: (userId) ->

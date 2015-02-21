@@ -1,8 +1,8 @@
-ConversationStore                 = require '../../stores/conversation'
-ConnectStoreMixin                 = require '../../../../shared/react/mixins/connectStore'
-MessengerHeader                   = require './common/header'
-ConversationList                  = require './conversations/list'
-MessengerCreateConversationButton = require './buttons/createConversation'
+ConversationStore        = require '../../stores/conversation'
+ConnectStoreMixin        = require '../../../../shared/react/mixins/connectStore'
+ConversationsHeader      = require './conversations/header'
+ConversationList         = require './conversations/list'
+CreateConversationButton = require './buttons/createConversation'
 { PropTypes } = React
 
 MessengerConversations = React.createClass
@@ -15,14 +15,14 @@ MessengerConversations = React.createClass
 
   render: ->
     <div className="messages__section messages__section--dialogs">
-      <MessengerHeader title="Диалоги" />
+      <ConversationsHeader />
       <div className="messages__body">
         <ConversationList
             items={ @state.conversations }
             onItemClick={ @props.onConversationClick } />
       </div>
       <div className="messages__footer">
-        <MessengerCreateConversationButton onClick={ @props.onCreateButtonClick } />
+        <CreateConversationButton onClick={ @props.onCreateButtonClick } />
       </div>
     </div>
 

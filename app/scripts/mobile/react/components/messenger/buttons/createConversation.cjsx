@@ -1,7 +1,7 @@
 { PropTypes } = React
 
-MessengerCreateConversationButton = React.createClass
-  displayName: 'MessengerCreateConversationButton'
+CreateConversationButton = React.createClass
+  displayName: 'CreateConversationButton'
 
   propTypes:
     onClick: PropTypes.func.isRequired
@@ -16,4 +16,4 @@ MessengerCreateConversationButton = React.createClass
     e.preventDefault()
     @props.onClick()
 
-module.exports = MessengerCreateConversationButton
+module.exports = CreateConversationButton

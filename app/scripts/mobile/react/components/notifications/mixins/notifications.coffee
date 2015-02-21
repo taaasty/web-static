@@ -36,7 +36,6 @@ NotificationsMixin =
     @activateLoadingState()
 
     NotificationsViewActions.loadMore sinceId, limit
-      .then @activateShowState
-      .then @activateErrorState
+      .always @activateShowState
 
 module.exports = NotificationsMixin

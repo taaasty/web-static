@@ -20,7 +20,7 @@ MessengerPage = React.createClass
     # root App component
     # Some signin gists https://gist.github.com/ButuzGOL/707d1605f63eef55e4af
     CurrentUserStore.initialize @props.currentUser
-    ConversationStore.initialize @props.conversations
+    ConversationStore.initPlural @props.conversations
 
   render: ->
     <div>

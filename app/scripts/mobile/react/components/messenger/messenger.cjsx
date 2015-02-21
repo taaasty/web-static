@@ -15,8 +15,14 @@ Messenger = React.createClass
   displayName: 'Messenger'
   mixins: [MessengerMixin, ComponentMixin]
 
+  propTypes:
+    state: PropTypes.string
+
+  getDefaultProps: ->
+    state: CONVERSATION_LIST_STATE
+
   getInitialState: ->
-    currentState: CONVERSATION_LIST_STATE
+    currentState: @props.state
 
   render: ->
     content = switch @state.currentState
