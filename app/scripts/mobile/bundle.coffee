@@ -29,6 +29,10 @@ global.MessengerThreadPage = require './react/pages/messengerThread'
 
 # /*==========  Stores  ==========*/
 
+require './react/stores/conversation'
 require './react/stores/currentUser'
-require './react/stores/relationships'
 require './react/stores/feed'
+require './react/stores/message'
+require './react/stores/messagingStatus'
+require './react/stores/notification'
+require './react/stores/relationships'

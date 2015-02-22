@@ -4,23 +4,28 @@ BaseStore     = require './_base'
 Constants     = require '../constants/constants'
 AppDispatcher = require '../dispatcher/dispatcher'
 
-_notifications    = []
+_notifications    = {}
 _everythingLoaded = false
-
-update = (data) ->
-  _.forEach _notifications, (item) ->
-    _.extend item, data if item.id == data.id
-
-push = (notifications) ->
-  _notifications = _notifications.concat notifications
 
 NotificationStore = assign new BaseStore(),
 
   initialize: (notifications) ->
-    _notifications = notifications
+    _.forEach notifications, (item) ->
+      _notifications[item.id] = item
 
   getAll: ->
     _notifications
+
+  getAllChrono: ->
+    notifications = []
+
+    _.forEach _notifications, (item) ->
+      notifications.push item
+
+    notifications = _.sortBy notifications, (item) ->
+      -item.id
+
+    notifications
 
   isEverythingLoaded: ->
     _everythingLoaded
@@ -32,15 +37,24 @@ NotificationStore.dispatchToken = AppDispatcher.register (payload) ->
 
   switch action.type
     when Constants.notifications.LOAD
-      notifications = action.notifications.reverse()
-
-      if notifications.length then push(notifications) else _everythingLoaded = true
+      if action.notifications.length
+        _.forEach action.notifications, (item) -> _notifications[item.id] = item
+      else
+        _everythingLoaded = true
       NotificationStore.emitChange()
 
     when Constants.notifications.READ
-      update action.notification
+      _.extend _notifications[action.notification.id], action.notification
       NotificationStore.emitChange()
 
     when Constants.notifications.READ_ALL
-      _.forEach action.notifications, update
+      _.forEach action.notifications, (item) -> _.extend _notifications[item.id], item
+      NotificationStore.emitChange()
+
+    when Constants.messaging.PUSH_NOTIFICATION
+      _notifications[action.notification.id] = action.notification
+      NotificationStore.emitChange()
+
+    when Constants.messaging.UPDATE_NOTIFICATIONS
+      _.forEach action.notifications, (item) -> _.extend _notifications[item.id], item
       NotificationStore.emitChange()

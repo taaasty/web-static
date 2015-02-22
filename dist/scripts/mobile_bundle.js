@@ -3,7 +3,7 @@ require('./mobile/bundle');
 
 
 
-},{"./mobile/bundle":5}],2:[function(require,module,exports){
+},{"./mobile/bundle":6}],2:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
@@ -12339,6 +12339,4031 @@ return jQuery;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],5:[function(require,module,exports){
 (function (global){
+;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
+/*!
+ * Pusher JavaScript Library v2.2.4
+ * http://pusher.com/
+ *
+ * Copyright 2014, Pusher
+ * Released under the MIT licence.
+ */
+
+;(function() {
+  function Pusher(app_key, options) {
+    checkAppKey(app_key);
+    options = options || {};
+
+    var self = this;
+
+    this.key = app_key;
+    this.config = Pusher.Util.extend(
+      Pusher.getGlobalConfig(),
+      options.cluster ? Pusher.getClusterConfig(options.cluster) : {},
+      options
+    );
+
+    this.channels = new Pusher.Channels();
+    this.global_emitter = new Pusher.EventsDispatcher();
+    this.sessionID = Math.floor(Math.random() * 1000000000);
+
+    this.timeline = new Pusher.Timeline(this.key, this.sessionID, {
+      cluster: this.config.cluster,
+      features: Pusher.Util.getClientFeatures(),
+      params: this.config.timelineParams || {},
+      limit: 50,
+      level: Pusher.Timeline.INFO,
+      version: Pusher.VERSION
+    });
+    if (!this.config.disableStats) {
+      this.timelineSender = new Pusher.TimelineSender(this.timeline, {
+        host: this.config.statsHost,
+        path: "/timeline/v2/jsonp"
+      });
+    }
+
+    var getStrategy = function(options) {
+      var config = Pusher.Util.extend({}, self.config, options);
+      return Pusher.StrategyBuilder.build(
+        Pusher.getDefaultStrategy(config), config
+      );
+    };
+
+    this.connection = new Pusher.ConnectionManager(
+      this.key,
+      Pusher.Util.extend(
+        { getStrategy: getStrategy,
+          timeline: this.timeline,
+          activityTimeout: this.config.activity_timeout,
+          pongTimeout: this.config.pong_timeout,
+          unavailableTimeout: this.config.unavailable_timeout
+        },
+        this.config,
+        { encrypted: this.isEncrypted() }
+      )
+    );
+
+    this.connection.bind('connected', function() {
+      self.subscribeAll();
+      if (self.timelineSender) {
+        self.timelineSender.send(self.connection.isEncrypted());
+      }
+    });
+    this.connection.bind('message', function(params) {
+      var internal = (params.event.indexOf('pusher_internal:') === 0);
+      if (params.channel) {
+        var channel = self.channel(params.channel);
+        if (channel) {
+          channel.handleEvent(params.event, params.data);
+        }
+      }
+      // Emit globaly [deprecated]
+      if (!internal) {
+        self.global_emitter.emit(params.event, params.data);
+      }
+    });
+    this.connection.bind('disconnected', function() {
+      self.channels.disconnect();
+    });
+    this.connection.bind('error', function(err) {
+      Pusher.warn('Error', err);
+    });
+
+    Pusher.instances.push(this);
+    this.timeline.info({ instances: Pusher.instances.length });
+
+    if (Pusher.isReady) {
+      self.connect();
+    }
+  }
+  var prototype = Pusher.prototype;
+
+  Pusher.instances = [];
+  Pusher.isReady = false;
+
+  // To receive log output provide a Pusher.log function, for example
+  // Pusher.log = function(m){console.log(m)}
+  Pusher.debug = function() {
+    if (!Pusher.log) {
+      return;
+    }
+    Pusher.log(Pusher.Util.stringify.apply(this, arguments));
+  };
+
+  Pusher.warn = function() {
+    var message = Pusher.Util.stringify.apply(this, arguments);
+    if (window.console) {
+      if (window.console.warn) {
+        window.console.warn(message);
+      } else if (window.console.log) {
+        window.console.log(message);
+      }
+    }
+    if (Pusher.log) {
+      Pusher.log(message);
+    }
+  };
+
+  Pusher.ready = function() {
+    Pusher.isReady = true;
+    for (var i = 0, l = Pusher.instances.length; i < l; i++) {
+      Pusher.instances[i].connect();
+    }
+  };
+
+  prototype.channel = function(name) {
+    return this.channels.find(name);
+  };
+
+  prototype.allChannels = function() {
+    return this.channels.all();
+  };
+
+  prototype.connect = function() {
+    this.connection.connect();
+
+    if (this.timelineSender) {
+      if (!this.timelineSenderTimer) {
+        var encrypted = this.connection.isEncrypted();
+        var timelineSender = this.timelineSender;
+        this.timelineSenderTimer = new Pusher.PeriodicTimer(60000, function() {
+          timelineSender.send(encrypted);
+        });
+      }
+    }
+  };
+
+  prototype.disconnect = function() {
+    this.connection.disconnect();
+
+    if (this.timelineSenderTimer) {
+      this.timelineSenderTimer.ensureAborted();
+      this.timelineSenderTimer = null;
+    }
+  };
+
+  prototype.bind = function(event_name, callback) {
+    this.global_emitter.bind(event_name, callback);
+    return this;
+  };
+
+  prototype.bind_all = function(callback) {
+    this.global_emitter.bind_all(callback);
+    return this;
+  };
+
+  prototype.subscribeAll = function() {
+    var channelName;
+    for (channelName in this.channels.channels) {
+      if (this.channels.channels.hasOwnProperty(channelName)) {
+        this.subscribe(channelName);
+      }
+    }
+  };
+
+  prototype.subscribe = function(channel_name) {
+    var channel = this.channels.add(channel_name, this);
+    if (this.connection.state === 'connected') {
+      channel.subscribe();
+    }
+    return channel;
+  };
+
+  prototype.unsubscribe = function(channel_name) {
+    var channel = this.channels.remove(channel_name);
+    if (this.connection.state === 'connected') {
+      channel.unsubscribe();
+    }
+  };
+
+  prototype.send_event = function(event_name, data, channel) {
+    return this.connection.send_event(event_name, data, channel);
+  };
+
+  prototype.isEncrypted = function() {
+    if (Pusher.Util.getDocument().location.protocol === "https:") {
+      return true;
+    } else {
+      return Boolean(this.config.encrypted);
+    }
+  };
+
+  function checkAppKey(key) {
+    if (key === null || key === undefined) {
+      Pusher.warn(
+        'Warning', 'You must pass your app key when you instantiate Pusher.'
+      );
+    }
+  }
+
+  Pusher.HTTP = {};
+
+  this.Pusher = Pusher;
+}).call(this);
+
+;(function() {
+  // We need to bind clear functions this way to avoid exceptions on IE8
+  function clearTimeout(timer) {
+    window.clearTimeout(timer);
+  }
+  function clearInterval(timer) {
+    window.clearInterval(timer);
+  }
+
+  function GenericTimer(set, clear, delay, callback) {
+    var self = this;
+
+    this.clear = clear;
+    this.timer = set(function() {
+      if (self.timer !== null) {
+        self.timer = callback(self.timer);
+      }
+    }, delay);
+  }
+  var prototype = GenericTimer.prototype;
+
+  /** Returns whether the timer is still running.
+   *
+   * @return {Boolean}
+   */
+  prototype.isRunning = function() {
+    return this.timer !== null;
+  };
+
+  /** Aborts a timer when it's running. */
+  prototype.ensureAborted = function() {
+    if (this.timer) {
+      // Clear function is already bound
+      this.clear(this.timer);
+      this.timer = null;
+    }
+  };
+
+  /** Cross-browser compatible one-off timer abstraction.
+   *
+   * @param {Number} delay
+   * @param {Function} callback
+   */
+  Pusher.Timer = function(delay, callback) {
+    return new GenericTimer(setTimeout, clearTimeout, delay, function(timer) {
+      callback();
+      return null;
+    });
+  };
+  /** Cross-browser compatible periodic timer abstraction.
+   *
+   * @param {Number} delay
+   * @param {Function} callback
+   */
+  Pusher.PeriodicTimer = function(delay, callback) {
+    return new GenericTimer(setInterval, clearInterval, delay, function(timer) {
+      callback();
+      return timer;
+    });
+  };
+}).call(this);
+
+;(function() {
+  Pusher.Util = {
+    now: function() {
+      if (Date.now) {
+        return Date.now();
+      } else {
+        return new Date().valueOf();
+      }
+    },
+
+    defer: function(callback) {
+      return new Pusher.Timer(0, callback);
+    },
+
+    /** Merges multiple objects into the target argument.
+     *
+     * For properties that are plain Objects, performs a deep-merge. For the
+     * rest it just copies the value of the property.
+     *
+     * To extend prototypes use it as following:
+     *   Pusher.Util.extend(Target.prototype, Base.prototype)
+     *
+     * You can also use it to merge objects without altering them:
+     *   Pusher.Util.extend({}, object1, object2)
+     *
+     * @param  {Object} target
+     * @return {Object} the target argument
+     */
+    extend: function(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var extensions = arguments[i];
+        for (var property in extensions) {
+          if (extensions[property] && extensions[property].constructor &&
+              extensions[property].constructor === Object) {
+            target[property] = Pusher.Util.extend(
+              target[property] || {}, extensions[property]
+            );
+          } else {
+            target[property] = extensions[property];
+          }
+        }
+      }
+      return target;
+    },
+
+    stringify: function() {
+      var m = ["Pusher"];
+      for (var i = 0; i < arguments.length; i++) {
+        if (typeof arguments[i] === "string") {
+          m.push(arguments[i]);
+        } else {
+          if (window.JSON === undefined) {
+            m.push(arguments[i].toString());
+          } else {
+            m.push(JSON.stringify(arguments[i]));
+          }
+        }
+      }
+      return m.join(" : ");
+    },
+
+    arrayIndexOf: function(array, item) { // MSIE doesn't have array.indexOf
+      var nativeIndexOf = Array.prototype.indexOf;
+      if (array === null) {
+        return -1;
+      }
+      if (nativeIndexOf && array.indexOf === nativeIndexOf) {
+        return array.indexOf(item);
+      }
+      for (var i = 0, l = array.length; i < l; i++) {
+        if (array[i] === item) {
+          return i;
+        }
+      }
+      return -1;
+    },
+
+    /** Applies a function f to all properties of an object.
+     *
+     * Function f gets 3 arguments passed:
+     * - element from the object
+     * - key of the element
+     * - reference to the object
+     *
+     * @param {Object} object
+     * @param {Function} f
+     */
+    objectApply: function(object, f) {
+      for (var key in object) {
+        if (Object.prototype.hasOwnProperty.call(object, key)) {
+          f(object[key], key, object);
+        }
+      }
+    },
+
+    /** Return a list of object's own property keys
+     *
+     * @param {Object} object
+     * @returns {Array}
+     */
+    keys: function(object) {
+      var keys = [];
+      Pusher.Util.objectApply(object, function(_, key) {
+        keys.push(key);
+      });
+      return keys;
+    },
+
+    /** Return a list of object's own property values
+     *
+     * @param {Object} object
+     * @returns {Array}
+     */
+    values: function(object) {
+      var values = [];
+      Pusher.Util.objectApply(object, function(value) {
+        values.push(value);
+      });
+      return values;
+    },
+
+    /** Applies a function f to all elements of an array.
+     *
+     * Function f gets 3 arguments passed:
+     * - element from the array
+     * - index of the element
+     * - reference to the array
+     *
+     * @param {Array} array
+     * @param {Function} f
+     */
+    apply: function(array, f, context) {
+      for (var i = 0; i < array.length; i++) {
+        f.call(context || window, array[i], i, array);
+      }
+    },
+
+    /** Maps all elements of the array and returns the result.
+     *
+     * Function f gets 4 arguments passed:
+     * - element from the array
+     * - index of the element
+     * - reference to the source array
+     * - reference to the destination array
+     *
+     * @param {Array} array
+     * @param {Function} f
+     */
+    map: function(array, f) {
+      var result = [];
+      for (var i = 0; i < array.length; i++) {
+        result.push(f(array[i], i, array, result));
+      }
+      return result;
+    },
+
+    /** Maps all elements of the object and returns the result.
+     *
+     * Function f gets 4 arguments passed:
+     * - element from the object
+     * - key of the element
+     * - reference to the source object
+     * - reference to the destination object
+     *
+     * @param {Object} object
+     * @param {Function} f
+     */
+    mapObject: function(object, f) {
+      var result = {};
+      Pusher.Util.objectApply(object, function(value, key) {
+        result[key] = f(value);
+      });
+      return result;
+    },
+
+    /** Filters elements of the array using a test function.
+     *
+     * Function test gets 4 arguments passed:
+     * - element from the array
+     * - index of the element
+     * - reference to the source array
+     * - reference to the destination array
+     *
+     * @param {Array} array
+     * @param {Function} f
+     */
+    filter: function(array, test) {
+      test = test || function(value) { return !!value; };
+
+      var result = [];
+      for (var i = 0; i < array.length; i++) {
+        if (test(array[i], i, array, result)) {
+          result.push(array[i]);
+        }
+      }
+      return result;
+    },
+
+    /** Filters properties of the object using a test function.
+     *
+     * Function test gets 4 arguments passed:
+     * - element from the object
+     * - key of the element
+     * - reference to the source object
+     * - reference to the destination object
+     *
+     * @param {Object} object
+     * @param {Function} f
+     */
+    filterObject: function(object, test) {
+      var result = {};
+      Pusher.Util.objectApply(object, function(value, key) {
+        if ((test && test(value, key, object, result)) || Boolean(value)) {
+          result[key] = value;
+        }
+      });
+      return result;
+    },
+
+    /** Flattens an object into a two-dimensional array.
+     *
+     * @param  {Object} object
+     * @return {Array} resulting array of [key, value] pairs
+     */
+    flatten: function(object) {
+      var result = [];
+      Pusher.Util.objectApply(object, function(value, key) {
+        result.push([key, value]);
+      });
+      return result;
+    },
+
+    /** Checks whether any element of the array passes the test.
+     *
+     * Function test gets 3 arguments passed:
+     * - element from the array
+     * - index of the element
+     * - reference to the source array
+     *
+     * @param {Array} array
+     * @param {Function} f
+     */
+    any: function(array, test) {
+      for (var i = 0; i < array.length; i++) {
+        if (test(array[i], i, array)) {
+          return true;
+        }
+      }
+      return false;
+    },
+
+    /** Checks whether all elements of the array pass the test.
+     *
+     * Function test gets 3 arguments passed:
+     * - element from the array
+     * - index of the element
+     * - reference to the source array
+     *
+     * @param {Array} array
+     * @param {Function} f
+     */
+    all: function(array, test) {
+      for (var i = 0; i < array.length; i++) {
+        if (!test(array[i], i, array)) {
+          return false;
+        }
+      }
+      return true;
+    },
+
+    /** Builds a function that will proxy a method call to its first argument.
+     *
+     * Allows partial application of arguments, so additional arguments are
+     * prepended to the argument list.
+     *
+     * @param  {String} name method name
+     * @return {Function} proxy function
+     */
+    method: function(name) {
+      var boundArguments = Array.prototype.slice.call(arguments, 1);
+      return function(object) {
+        return object[name].apply(object, boundArguments.concat(arguments));
+      };
+    },
+
+    getWindow: function() {
+      return window;
+    },
+
+    getDocument: function() {
+      return document;
+    },
+
+    getNavigator: function() {
+      return navigator;
+    },
+
+    getLocalStorage: function() {
+      try {
+        return window.localStorage;
+      } catch (e) {
+        return undefined;
+      }
+    },
+
+    getClientFeatures: function() {
+      return Pusher.Util.keys(
+        Pusher.Util.filterObject(
+          { "ws": Pusher.WSTransport, "flash": Pusher.FlashTransport },
+          function (t) { return t.isSupported({}); }
+        )
+      );
+    },
+
+    addWindowListener: function(event, listener) {
+      var _window = Pusher.Util.getWindow();
+      if (_window.addEventListener !== undefined) {
+        _window.addEventListener(event, listener, false);
+      } else {
+        _window.attachEvent("on" + event, listener);
+      }
+    },
+
+    removeWindowListener: function(event, listener) {
+      var _window = Pusher.Util.getWindow();
+      if (_window.addEventListener !== undefined) {
+        _window.removeEventListener(event, listener, false);
+      } else {
+        _window.detachEvent("on" + event, listener);
+      }
+    },
+
+    isXHRSupported: function() {
+      var XHR = window.XMLHttpRequest;
+      return Boolean(XHR) && (new XHR()).withCredentials !== undefined;
+    },
+
+    isXDRSupported: function(encrypted) {
+      var protocol = encrypted ? "https:" : "http:";
+      var documentProtocol = Pusher.Util.getDocument().location.protocol;
+      return Boolean(window.XDomainRequest) && documentProtocol === protocol;
+    }
+  };
+}).call(this);
+
+;(function() {
+  Pusher.VERSION = '2.2.4';
+  Pusher.PROTOCOL = 7;
+
+  // DEPRECATED: WS connection parameters
+  Pusher.host = 'ws.pusherapp.com';
+  Pusher.ws_port = 80;
+  Pusher.wss_port = 443;
+  // DEPRECATED: SockJS fallback parameters
+  Pusher.sockjs_host = 'sockjs.pusher.com';
+  Pusher.sockjs_http_port = 80;
+  Pusher.sockjs_https_port = 443;
+  Pusher.sockjs_path = "/pusher";
+  // DEPRECATED: Stats
+  Pusher.stats_host = 'stats.pusher.com';
+  // DEPRECATED: Other settings
+  Pusher.channel_auth_endpoint = '/pusher/auth';
+  Pusher.channel_auth_transport = 'ajax';
+  Pusher.activity_timeout = 120000;
+  Pusher.pong_timeout = 30000;
+  Pusher.unavailable_timeout = 10000;
+  // CDN configuration
+  Pusher.cdn_http = 'http://js.pusher.com/';
+  Pusher.cdn_https = 'https://js.pusher.com/';
+  Pusher.dependency_suffix = '';
+
+  Pusher.getDefaultStrategy = function(config) {
+    var wsStrategy;
+    if (config.encrypted) {
+      wsStrategy = [
+        ":best_connected_ever",
+        ":ws_loop",
+        [":delayed", 2000, [":http_fallback_loop"]]
+      ];
+    } else {
+      wsStrategy = [
+        ":best_connected_ever",
+        ":ws_loop",
+        [":delayed", 2000, [":wss_loop"]],
+        [":delayed", 5000, [":http_fallback_loop"]]
+      ];
+    }
+
+    return [
+      [":def", "ws_options", {
+        hostUnencrypted: config.wsHost + ":" + config.wsPort,
+        hostEncrypted: config.wsHost + ":" + config.wssPort
+      }],
+      [":def", "wss_options", [":extend", ":ws_options", {
+        encrypted: true
+      }]],
+      [":def", "sockjs_options", {
+        hostUnencrypted: config.httpHost + ":" + config.httpPort,
+        hostEncrypted: config.httpHost + ":" + config.httpsPort,
+        httpPath: config.httpPath
+      }],
+      [":def", "timeouts", {
+        loop: true,
+        timeout: 15000,
+        timeoutLimit: 60000
+      }],
+
+      [":def", "ws_manager", [":transport_manager", {
+        lives: 2,
+        minPingDelay: 10000,
+        maxPingDelay: config.activity_timeout
+      }]],
+      [":def", "streaming_manager", [":transport_manager", {
+        lives: 2,
+        minPingDelay: 10000,
+        maxPingDelay: config.activity_timeout
+      }]],
+
+      [":def_transport", "ws", "ws", 3, ":ws_options", ":ws_manager"],
+      [":def_transport", "wss", "ws", 3, ":wss_options", ":ws_manager"],
+      [":def_transport", "flash", "flash", 2, ":ws_options", ":ws_manager"],
+      [":def_transport", "sockjs", "sockjs", 1, ":sockjs_options"],
+      [":def_transport", "xhr_streaming", "xhr_streaming", 1, ":sockjs_options", ":streaming_manager"],
+      [":def_transport", "xdr_streaming", "xdr_streaming", 1, ":sockjs_options", ":streaming_manager"],
+      [":def_transport", "xhr_polling", "xhr_polling", 1, ":sockjs_options"],
+      [":def_transport", "xdr_polling", "xdr_polling", 1, ":sockjs_options"],
+
+      [":def", "ws_loop", [":sequential", ":timeouts", ":ws"]],
+      [":def", "wss_loop", [":sequential", ":timeouts", ":wss"]],
+      [":def", "flash_loop", [":sequential", ":timeouts", ":flash"]],
+      [":def", "sockjs_loop", [":sequential", ":timeouts", ":sockjs"]],
+
+      [":def", "streaming_loop", [":sequential", ":timeouts",
+        [":if", [":is_supported", ":xhr_streaming"],
+          ":xhr_streaming",
+          ":xdr_streaming"
+        ]
+      ]],
+      [":def", "polling_loop", [":sequential", ":timeouts",
+        [":if", [":is_supported", ":xhr_polling"],
+          ":xhr_polling",
+          ":xdr_polling"
+        ]
+      ]],
+
+      [":def", "http_loop", [":if", [":is_supported", ":streaming_loop"], [
+        ":best_connected_ever",
+          ":streaming_loop",
+          [":delayed", 4000, [":polling_loop"]]
+      ], [
+        ":polling_loop"
+      ]]],
+
+      [":def", "http_fallback_loop",
+        [":if", [":is_supported", ":http_loop"], [
+          ":http_loop"
+        ], [
+          ":sockjs_loop"
+        ]]
+      ],
+
+      [":def", "strategy",
+        [":cached", 1800000,
+          [":first_connected",
+            [":if", [":is_supported", ":ws"],
+              wsStrategy,
+            [":if", [":is_supported", ":flash"], [
+              ":best_connected_ever",
+              ":flash_loop",
+              [":delayed", 2000, [":http_fallback_loop"]]
+            ], [
+              ":http_fallback_loop"
+            ]]]
+          ]
+        ]
+      ]
+    ];
+  };
+}).call(this);
+
+;(function() {
+  Pusher.getGlobalConfig = function() {
+    return {
+      wsHost: Pusher.host,
+      wsPort: Pusher.ws_port,
+      wssPort: Pusher.wss_port,
+      httpHost: Pusher.sockjs_host,
+      httpPort: Pusher.sockjs_http_port,
+      httpsPort: Pusher.sockjs_https_port,
+      httpPath: Pusher.sockjs_path,
+      statsHost: Pusher.stats_host,
+      authEndpoint: Pusher.channel_auth_endpoint,
+      authTransport: Pusher.channel_auth_transport,
+      // TODO make this consistent with other options in next major version
+      activity_timeout: Pusher.activity_timeout,
+      pong_timeout: Pusher.pong_timeout,
+      unavailable_timeout: Pusher.unavailable_timeout
+    };
+  };
+
+  Pusher.getClusterConfig = function(clusterName) {
+    return {
+      wsHost: "ws-" + clusterName + ".pusher.com",
+      httpHost: "sockjs-" + clusterName + ".pusher.com"
+    };
+  };
+}).call(this);
+
+;(function() {
+  function buildExceptionClass(name) {
+    var constructor = function(message) {
+      Error.call(this, message);
+      this.name = name;
+    };
+    Pusher.Util.extend(constructor.prototype, Error.prototype);
+
+    return constructor;
+  }
+
+  /** Error classes used throughout pusher-js library. */
+  Pusher.Errors = {
+    BadEventName: buildExceptionClass("BadEventName"),
+    RequestTimedOut: buildExceptionClass("RequestTimedOut"),
+    TransportPriorityTooLow: buildExceptionClass("TransportPriorityTooLow"),
+    TransportClosed: buildExceptionClass("TransportClosed"),
+    UnsupportedTransport: buildExceptionClass("UnsupportedTransport"),
+    UnsupportedStrategy: buildExceptionClass("UnsupportedStrategy")
+  };
+}).call(this);
+
+;(function() {
+  /** Manages callback bindings and event emitting.
+   *
+   * @param Function failThrough called when no listeners are bound to an event
+   */
+  function EventsDispatcher(failThrough) {
+    this.callbacks = new CallbackRegistry();
+    this.global_callbacks = [];
+    this.failThrough = failThrough;
+  }
+  var prototype = EventsDispatcher.prototype;
+
+  prototype.bind = function(eventName, callback, context) {
+    this.callbacks.add(eventName, callback, context);
+    return this;
+  };
+
+  prototype.bind_all = function(callback) {
+    this.global_callbacks.push(callback);
+    return this;
+  };
+
+  prototype.unbind = function(eventName, callback, context) {
+    this.callbacks.remove(eventName, callback, context);
+    return this;
+  };
+
+  prototype.unbind_all = function(eventName, callback) {
+    this.callbacks.remove(eventName, callback);
+    return this;
+  };
+
+  prototype.emit = function(eventName, data) {
+    var i;
+
+    for (i = 0; i < this.global_callbacks.length; i++) {
+      this.global_callbacks[i](eventName, data);
+    }
+
+    var callbacks = this.callbacks.get(eventName);
+    if (callbacks && callbacks.length > 0) {
+      for (i = 0; i < callbacks.length; i++) {
+        callbacks[i].fn.call(callbacks[i].context || window, data);
+      }
+    } else if (this.failThrough) {
+      this.failThrough(eventName, data);
+    }
+
+    return this;
+  };
+
+  /** Callback registry helper. */
+
+  function CallbackRegistry() {
+    this._callbacks = {};
+  }
+
+  CallbackRegistry.prototype.get = function(name) {
+    return this._callbacks[prefix(name)];
+  };
+
+  CallbackRegistry.prototype.add = function(name, callback, context) {
+    var prefixedEventName = prefix(name);
+    this._callbacks[prefixedEventName] = this._callbacks[prefixedEventName] || [];
+    this._callbacks[prefixedEventName].push({
+      fn: callback,
+      context: context
+    });
+  };
+
+  CallbackRegistry.prototype.remove = function(name, callback, context) {
+    if (!name && !callback && !context) {
+      this._callbacks = {};
+      return;
+    }
+
+    var names = name ? [prefix(name)] : Pusher.Util.keys(this._callbacks);
+
+    if (callback || context) {
+      Pusher.Util.apply(names, function(name) {
+        this._callbacks[name] = Pusher.Util.filter(
+          this._callbacks[name] || [],
+          function(binding) {
+            return (callback && callback !== binding.fn) ||
+                   (context && context !== binding.context);
+          }
+        );
+        if (this._callbacks[name].length === 0) {
+          delete this._callbacks[name];
+        }
+      }, this);
+    } else {
+      Pusher.Util.apply(names, function(name) {
+        delete this._callbacks[name];
+      }, this);
+    }
+  };
+
+  function prefix(name) {
+    return "_" + name;
+  }
+
+  Pusher.EventsDispatcher = EventsDispatcher;
+}).call(this);
+
+(function() {
+  /** Builds receivers for JSONP and Script requests.
+   *
+   * Each receiver is an object with following fields:
+   * - number - unique (for the factory instance), numerical id of the receiver
+   * - id - a string ID that can be used in DOM attributes
+   * - name - name of the function triggering the receiver
+   * - callback - callback function
+   *
+   * Receivers are triggered only once, on the first callback call.
+   *
+   * Receivers can be called by their name or by accessing factory object
+   * by the number key.
+   *
+   * @param {String} prefix the prefix used in ids
+   * @param {String} name the name of the object
+   */
+  function ScriptReceiverFactory(prefix, name) {
+    this.lastId = 0;
+    this.prefix = prefix;
+    this.name = name;
+  }
+  var prototype = ScriptReceiverFactory.prototype;
+
+  /** Creates a script receiver.
+   *
+   * @param {Function} callback
+   * @return {ScriptReceiver}
+   */
+  prototype.create = function(callback) {
+    this.lastId++;
+
+    var number = this.lastId;
+    var id = this.prefix + number;
+    var name = this.name + "[" + number + "]";
+
+    var called = false;
+    var callbackWrapper = function() {
+      if (!called) {
+        callback.apply(null, arguments);
+        called = true;
+      }
+    };
+
+    this[number] = callbackWrapper;
+    return { number: number, id: id, name: name, callback: callbackWrapper };
+  };
+
+  /** Removes the script receiver from the list.
+   *
+   * @param {ScriptReceiver} receiver
+   */
+  prototype.remove = function(receiver) {
+    delete this[receiver.number];
+  };
+
+  Pusher.ScriptReceiverFactory = ScriptReceiverFactory;
+  Pusher.ScriptReceivers = new ScriptReceiverFactory(
+    "_pusher_script_", "Pusher.ScriptReceivers"
+  );
+}).call(this);
+
+(function() {
+  /** Sends a generic HTTP GET request using a script tag.
+   *
+   * By constructing URL in a specific way, it can be used for loading
+   * JavaScript resources or JSONP requests. It can notify about errors, but
+   * only in certain environments. Please take care of monitoring the state of
+   * the request yourself.
+   *
+   * @param {String} src
+   */
+  function ScriptRequest(src) {
+    this.src = src;
+  }
+  var prototype = ScriptRequest.prototype;
+
+  /** Sends the actual script request.
+   *
+   * @param {ScriptReceiver} receiver
+   */
+  prototype.send = function(receiver) {
+    var self = this;
+    var errorString = "Error loading " + self.src;
+
+    self.script = document.createElement("script");
+    self.script.id = receiver.id;
+    self.script.src = self.src;
+    self.script.type = "text/javascript";
+    self.script.charset = "UTF-8";
+
+    if (self.script.addEventListener) {
+      self.script.onerror = function() {
+        receiver.callback(errorString);
+      };
+      self.script.onload = function() {
+        receiver.callback(null);
+      };
+    } else {
+      self.script.onreadystatechange = function() {
+        if (self.script.readyState === 'loaded' ||
+            self.script.readyState === 'complete') {
+          receiver.callback(null);
+        }
+      };
+    }
+
+    // Opera<11.6 hack for missing onerror callback
+    if (self.script.async === undefined && document.attachEvent &&
+        /opera/i.test(navigator.userAgent)) {
+      self.errorScript = document.createElement("script");
+      self.errorScript.id = receiver.id + "_error";
+      self.errorScript.text = receiver.name + "('" + errorString + "');";
+      self.script.async = self.errorScript.async = false;
+    } else {
+      self.script.async = true;
+    }
+
+    var head = document.getElementsByTagName('head')[0];
+    head.insertBefore(self.script, head.firstChild);
+    if (self.errorScript) {
+      head.insertBefore(self.errorScript, self.script.nextSibling);
+    }
+  };
+
+  /** Cleans up the DOM remains of the script request. */
+  prototype.cleanup = function() {
+    if (this.script) {
+      this.script.onload = this.script.onerror = null;
+      this.script.onreadystatechange = null;
+    }
+    if (this.script && this.script.parentNode) {
+      this.script.parentNode.removeChild(this.script);
+    }
+    if (this.errorScript && this.errorScript.parentNode) {
+      this.errorScript.parentNode.removeChild(this.errorScript);
+    }
+    this.script = null;
+    this.errorScript = null;
+  };
+
+  Pusher.ScriptRequest = ScriptRequest;
+}).call(this);
+
+;(function() {
+  /** Handles loading dependency files.
+   *
+   * Dependency loaders don't remember whether a resource has been loaded or
+   * not. It is caller's responsibility to make sure the resource is not loaded
+   * twice. This is because it's impossible to detect resource loading status
+   * without knowing its content.
+   *
+   * Options:
+   * - cdn_http - url to HTTP CND
+   * - cdn_https - url to HTTPS CDN
+   * - version - version of pusher-js
+   * - suffix - suffix appended to all names of dependency files
+   *
+   * @param {Object} options
+   */
+  function DependencyLoader(options) {
+    this.options = options;
+    this.receivers = options.receivers || Pusher.ScriptReceivers;
+    this.loading = {};
+  }
+  var prototype = DependencyLoader.prototype;
+
+  /** Loads the dependency from CDN.
+   *
+   * @param  {String} name
+   * @param  {Function} callback
+   */
+  prototype.load = function(name, options, callback) {
+    var self = this;
+
+    if (self.loading[name] && self.loading[name].length > 0) {
+      self.loading[name].push(callback);
+    } else {
+      self.loading[name] = [callback];
+
+      var request = new Pusher.ScriptRequest(self.getPath(name, options));
+      var receiver = self.receivers.create(function(error) {
+        self.receivers.remove(receiver);
+
+        if (self.loading[name]) {
+          var callbacks = self.loading[name];
+          delete self.loading[name];
+
+          var successCallback = function(wasSuccessful) {
+            if (!wasSuccessful) {
+              request.cleanup();
+            }
+          };
+          for (var i = 0; i < callbacks.length; i++) {
+            callbacks[i](error, successCallback);
+          }
+        }
+      });
+      request.send(receiver);
+    }
+  };
+
+  /** Returns a root URL for pusher-js CDN.
+   *
+   * @returns {String}
+   */
+  prototype.getRoot = function(options) {
+    var cdn;
+    var protocol = Pusher.Util.getDocument().location.protocol;
+    if ((options && options.encrypted) || protocol === "https:") {
+      cdn = this.options.cdn_https;
+    } else {
+      cdn = this.options.cdn_http;
+    }
+    // make sure there are no double slashes
+    return cdn.replace(/\/*$/, "") + "/" + this.options.version;
+  };
+
+  /** Returns a full path to a dependency file.
+   *
+   * @param {String} name
+   * @returns {String}
+   */
+  prototype.getPath = function(name, options) {
+    return this.getRoot(options) + '/' + name + this.options.suffix + '.js';
+  };
+
+  Pusher.DependencyLoader = DependencyLoader;
+}).call(this);
+
+;(function() {
+  Pusher.DependenciesReceivers = new Pusher.ScriptReceiverFactory(
+    "_pusher_dependencies", "Pusher.DependenciesReceivers"
+  );
+  Pusher.Dependencies = new Pusher.DependencyLoader({
+    cdn_http: Pusher.cdn_http,
+    cdn_https: Pusher.cdn_https,
+    version: Pusher.VERSION,
+    suffix: Pusher.dependency_suffix,
+    receivers: Pusher.DependenciesReceivers
+  });
+
+  function initialize() {
+    Pusher.ready();
+  }
+
+  // Allows calling a function when the document body is available
+   function onDocumentBody(callback) {
+    if (document.body) {
+      callback();
+    } else {
+      setTimeout(function() {
+        onDocumentBody(callback);
+      }, 0);
+    }
+  }
+
+  function initializeOnDocumentBody() {
+    onDocumentBody(initialize);
+  }
+
+  if (!window.JSON) {
+    Pusher.Dependencies.load("json2", {}, initializeOnDocumentBody);
+  } else {
+    initializeOnDocumentBody();
+  }
+})();
+
+(function() {
+
+  var Base64 = {
+    encode: function (s) {
+      return btoa(utob(s));
+    }
+  };
+
+  var fromCharCode = String.fromCharCode;
+
+  var b64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  var b64tab = {};
+
+  for (var i = 0, l = b64chars.length; i < l; i++) {
+    b64tab[b64chars.charAt(i)] = i;
+  }
+
+  var cb_utob = function(c) {
+    var cc = c.charCodeAt(0);
+    return cc < 0x80 ? c
+        : cc < 0x800 ? fromCharCode(0xc0 | (cc >>> 6)) +
+                       fromCharCode(0x80 | (cc & 0x3f))
+        : fromCharCode(0xe0 | ((cc >>> 12) & 0x0f)) +
+          fromCharCode(0x80 | ((cc >>>  6) & 0x3f)) +
+          fromCharCode(0x80 | ( cc         & 0x3f));
+  };
+
+  var utob = function(u) {
+    return u.replace(/[^\x00-\x7F]/g, cb_utob);
+  };
+
+  var cb_encode = function(ccc) {
+    var padlen = [0, 2, 1][ccc.length % 3];
+    var ord = ccc.charCodeAt(0) << 16
+      | ((ccc.length > 1 ? ccc.charCodeAt(1) : 0) << 8)
+      | ((ccc.length > 2 ? ccc.charCodeAt(2) : 0));
+    var chars = [
+      b64chars.charAt( ord >>> 18),
+      b64chars.charAt((ord >>> 12) & 63),
+      padlen >= 2 ? '=' : b64chars.charAt((ord >>> 6) & 63),
+      padlen >= 1 ? '=' : b64chars.charAt(ord & 63)
+    ];
+    return chars.join('');
+  };
+
+  var btoa = window.btoa || function(b) {
+    return b.replace(/[\s\S]{1,3}/g, cb_encode);
+  };
+
+  Pusher.Base64 = Base64;
+
+}).call(this);
+
+(function() {
+  /** Sends data via JSONP.
+   *
+   * Data is a key-value map. Its values are JSON-encoded and then passed
+   * through base64. Finally, keys and encoded values are appended to the query
+   * string.
+   *
+   * The class itself does not guarantee raising errors on failures, as it's not
+   * possible to support such feature on all browsers. Instead, JSONP endpoint
+   * should call back in a way that's easy to distinguish from browser calls,
+   * for example by passing a second argument to the receiver.
+   *
+   * @param {String} url
+   * @param {Object} data key-value map of data to be submitted
+   */
+  function JSONPRequest(url, data) {
+    this.url = url;
+    this.data = data;
+  }
+  var prototype = JSONPRequest.prototype;
+
+  /** Sends the actual JSONP request.
+   *
+   * @param {ScriptReceiver} receiver
+   */
+  prototype.send = function(receiver) {
+    if (this.request) {
+      return;
+    }
+
+    var params = Pusher.Util.filterObject(this.data, function(value) {
+      return value !== undefined;
+    });
+    var query = Pusher.Util.map(
+      Pusher.Util.flatten(encodeParamsObject(params)),
+      Pusher.Util.method("join", "=")
+    ).join("&");
+    var url = this.url + "/" + receiver.number + "?" + query;
+
+    this.request = new Pusher.ScriptRequest(url);
+    this.request.send(receiver);
+  };
+
+  /** Cleans up the DOM remains of the JSONP request. */
+  prototype.cleanup = function() {
+    if (this.request) {
+      this.request.cleanup();
+    }
+  };
+
+  function encodeParamsObject(data) {
+    return Pusher.Util.mapObject(data, function(value) {
+      if (typeof value === "object") {
+        value = JSON.stringify(value);
+      }
+      return encodeURIComponent(Pusher.Base64.encode(value.toString()));
+    });
+  }
+
+  Pusher.JSONPRequest = JSONPRequest;
+}).call(this);
+
+(function() {
+  function Timeline(key, session, options) {
+    this.key = key;
+    this.session = session;
+    this.events = [];
+    this.options = options || {};
+    this.sent = 0;
+    this.uniqueID = 0;
+  }
+  var prototype = Timeline.prototype;
+
+  // Log levels
+  Timeline.ERROR = 3;
+  Timeline.INFO = 6;
+  Timeline.DEBUG = 7;
+
+  prototype.log = function(level, event) {
+    if (level <= this.options.level) {
+      this.events.push(
+        Pusher.Util.extend({}, event, { timestamp: Pusher.Util.now() })
+      );
+      if (this.options.limit && this.events.length > this.options.limit) {
+        this.events.shift();
+      }
+    }
+  };
+
+  prototype.error = function(event) {
+    this.log(Timeline.ERROR, event);
+  };
+
+  prototype.info = function(event) {
+    this.log(Timeline.INFO, event);
+  };
+
+  prototype.debug = function(event) {
+    this.log(Timeline.DEBUG, event);
+  };
+
+  prototype.isEmpty = function() {
+    return this.events.length === 0;
+  };
+
+  prototype.send = function(sendJSONP, callback) {
+    var self = this;
+
+    var data = Pusher.Util.extend({
+      session: self.session,
+      bundle: self.sent + 1,
+      key: self.key,
+      lib: "js",
+      version: self.options.version,
+      cluster: self.options.cluster,
+      features: self.options.features,
+      timeline: self.events
+    }, self.options.params);
+
+    self.events = [];
+    sendJSONP(data, function(error, result) {
+      if (!error) {
+        self.sent++;
+      }
+      if (callback) {
+        callback(error, result);
+      }
+    });
+
+    return true;
+  };
+
+  prototype.generateUniqueID = function() {
+    this.uniqueID++;
+    return this.uniqueID;
+  };
+
+  Pusher.Timeline = Timeline;
+}).call(this);
+
+(function() {
+  function TimelineSender(timeline, options) {
+    this.timeline = timeline;
+    this.options = options || {};
+  }
+  var prototype = TimelineSender.prototype;
+
+  prototype.send = function(encrypted, callback) {
+    var self = this;
+
+    if (self.timeline.isEmpty()) {
+      return;
+    }
+
+    var sendJSONP = function(data, callback) {
+      var scheme = "http" + (encrypted ? "s" : "") + "://";
+      var url = scheme + (self.host || self.options.host) + self.options.path;
+      var request = new Pusher.JSONPRequest(url, data);
+
+      var receiver = Pusher.ScriptReceivers.create(function(error, result) {
+        Pusher.ScriptReceivers.remove(receiver);
+        request.cleanup();
+
+        if (result && result.host) {
+          self.host = result.host;
+        }
+        if (callback) {
+          callback(error, result);
+        }
+      });
+      request.send(receiver);
+    };
+    self.timeline.send(sendJSONP, callback);
+  };
+
+  Pusher.TimelineSender = TimelineSender;
+}).call(this);
+
+;(function() {
+  /** Launches all substrategies and emits prioritized connected transports.
+   *
+   * @param {Array} strategies
+   */
+  function BestConnectedEverStrategy(strategies) {
+    this.strategies = strategies;
+  }
+  var prototype = BestConnectedEverStrategy.prototype;
+
+  prototype.isSupported = function() {
+    return Pusher.Util.any(this.strategies, Pusher.Util.method("isSupported"));
+  };
+
+  prototype.connect = function(minPriority, callback) {
+    return connect(this.strategies, minPriority, function(i, runners) {
+      return function(error, handshake) {
+        runners[i].error = error;
+        if (error) {
+          if (allRunnersFailed(runners)) {
+            callback(true);
+          }
+          return;
+        }
+        Pusher.Util.apply(runners, function(runner) {
+          runner.forceMinPriority(handshake.transport.priority);
+        });
+        callback(null, handshake);
+      };
+    });
+  };
+
+  /** Connects to all strategies in parallel.
+   *
+   * Callback builder should be a function that takes two arguments: index
+   * and a list of runners. It should return another function that will be
+   * passed to the substrategy with given index. Runners can be aborted using
+   * abortRunner(s) functions from this class.
+   *
+   * @param  {Array} strategies
+   * @param  {Function} callbackBuilder
+   * @return {Object} strategy runner
+   */
+  function connect(strategies, minPriority, callbackBuilder) {
+    var runners = Pusher.Util.map(strategies, function(strategy, i, _, rs) {
+      return strategy.connect(minPriority, callbackBuilder(i, rs));
+    });
+    return {
+      abort: function() {
+        Pusher.Util.apply(runners, abortRunner);
+      },
+      forceMinPriority: function(p) {
+        Pusher.Util.apply(runners, function(runner) {
+          runner.forceMinPriority(p);
+        });
+      }
+    };
+  }
+
+  function allRunnersFailed(runners) {
+    return Pusher.Util.all(runners, function(runner) {
+      return Boolean(runner.error);
+    });
+  }
+
+  function abortRunner(runner) {
+    if (!runner.error && !runner.aborted) {
+      runner.abort();
+      runner.aborted = true;
+    }
+  }
+
+  Pusher.BestConnectedEverStrategy = BestConnectedEverStrategy;
+}).call(this);
+
+;(function() {
+  /** Caches last successful transport and uses it for following attempts.
+   *
+   * @param {Strategy} strategy
+   * @param {Object} transports
+   * @param {Object} options
+   */
+  function CachedStrategy(strategy, transports, options) {
+    this.strategy = strategy;
+    this.transports = transports;
+    this.ttl = options.ttl || 1800*1000;
+    this.encrypted = options.encrypted;
+    this.timeline = options.timeline;
+  }
+  var prototype = CachedStrategy.prototype;
+
+  prototype.isSupported = function() {
+    return this.strategy.isSupported();
+  };
+
+  prototype.connect = function(minPriority, callback) {
+    var encrypted = this.encrypted;
+    var info = fetchTransportCache(encrypted);
+
+    var strategies = [this.strategy];
+    if (info && info.timestamp + this.ttl >= Pusher.Util.now()) {
+      var transport = this.transports[info.transport];
+      if (transport) {
+        this.timeline.info({
+          cached: true,
+          transport: info.transport,
+          latency: info.latency
+        });
+        strategies.push(new Pusher.SequentialStrategy([transport], {
+          timeout: info.latency * 2 + 1000,
+          failFast: true
+        }));
+      }
+    }
+
+    var startTimestamp = Pusher.Util.now();
+    var runner = strategies.pop().connect(
+      minPriority,
+      function cb(error, handshake) {
+        if (error) {
+          flushTransportCache(encrypted);
+          if (strategies.length > 0) {
+            startTimestamp = Pusher.Util.now();
+            runner = strategies.pop().connect(minPriority, cb);
+          } else {
+            callback(error);
+          }
+        } else {
+          storeTransportCache(
+            encrypted,
+            handshake.transport.name,
+            Pusher.Util.now() - startTimestamp
+          );
+          callback(null, handshake);
+        }
+      }
+    );
+
+    return {
+      abort: function() {
+        runner.abort();
+      },
+      forceMinPriority: function(p) {
+        minPriority = p;
+        if (runner) {
+          runner.forceMinPriority(p);
+        }
+      }
+    };
+  };
+
+  function getTransportCacheKey(encrypted) {
+    return "pusherTransport" + (encrypted ? "Encrypted" : "Unencrypted");
+  }
+
+  function fetchTransportCache(encrypted) {
+    var storage = Pusher.Util.getLocalStorage();
+    if (storage) {
+      try {
+        var serializedCache = storage[getTransportCacheKey(encrypted)];
+        if (serializedCache) {
+          return JSON.parse(serializedCache);
+        }
+      } catch (e) {
+        flushTransportCache(encrypted);
+      }
+    }
+    return null;
+  }
+
+  function storeTransportCache(encrypted, transport, latency) {
+    var storage = Pusher.Util.getLocalStorage();
+    if (storage) {
+      try {
+        storage[getTransportCacheKey(encrypted)] = JSON.stringify({
+          timestamp: Pusher.Util.now(),
+          transport: transport,
+          latency: latency
+        });
+      } catch (e) {
+        // catch over quota exceptions raised by localStorage
+      }
+    }
+  }
+
+  function flushTransportCache(encrypted) {
+    var storage = Pusher.Util.getLocalStorage();
+    if (storage) {
+      try {
+        delete storage[getTransportCacheKey(encrypted)];
+      } catch (e) {
+        // catch exceptions raised by localStorage
+      }
+    }
+  }
+
+  Pusher.CachedStrategy = CachedStrategy;
+}).call(this);
+
+;(function() {
+  /** Runs substrategy after specified delay.
+   *
+   * Options:
+   * - delay - time in miliseconds to delay the substrategy attempt
+   *
+   * @param {Strategy} strategy
+   * @param {Object} options
+   */
+  function DelayedStrategy(strategy, options) {
+    this.strategy = strategy;
+    this.options = { delay: options.delay };
+  }
+  var prototype = DelayedStrategy.prototype;
+
+  prototype.isSupported = function() {
+    return this.strategy.isSupported();
+  };
+
+  prototype.connect = function(minPriority, callback) {
+    var strategy = this.strategy;
+    var runner;
+    var timer = new Pusher.Timer(this.options.delay, function() {
+      runner = strategy.connect(minPriority, callback);
+    });
+
+    return {
+      abort: function() {
+        timer.ensureAborted();
+        if (runner) {
+          runner.abort();
+        }
+      },
+      forceMinPriority: function(p) {
+        minPriority = p;
+        if (runner) {
+          runner.forceMinPriority(p);
+        }
+      }
+    };
+  };
+
+  Pusher.DelayedStrategy = DelayedStrategy;
+}).call(this);
+
+;(function() {
+  /** Launches the substrategy and terminates on the first open connection.
+   *
+   * @param {Strategy} strategy
+   */
+  function FirstConnectedStrategy(strategy) {
+    this.strategy = strategy;
+  }
+  var prototype = FirstConnectedStrategy.prototype;
+
+  prototype.isSupported = function() {
+    return this.strategy.isSupported();
+  };
+
+  prototype.connect = function(minPriority, callback) {
+    var runner = this.strategy.connect(
+      minPriority,
+      function(error, handshake) {
+        if (handshake) {
+          runner.abort();
+        }
+        callback(error, handshake);
+      }
+    );
+    return runner;
+  };
+
+  Pusher.FirstConnectedStrategy = FirstConnectedStrategy;
+}).call(this);
+
+;(function() {
+  /** Proxies method calls to one of substrategies basing on the test function.
+   *
+   * @param {Function} test
+   * @param {Strategy} trueBranch strategy used when test returns true
+   * @param {Strategy} falseBranch strategy used when test returns false
+   */
+  function IfStrategy(test, trueBranch, falseBranch) {
+    this.test = test;
+    this.trueBranch = trueBranch;
+    this.falseBranch = falseBranch;
+  }
+  var prototype = IfStrategy.prototype;
+
+  prototype.isSupported = function() {
+    var branch = this.test() ? this.trueBranch : this.falseBranch;
+    return branch.isSupported();
+  };
+
+  prototype.connect = function(minPriority, callback) {
+    var branch = this.test() ? this.trueBranch : this.falseBranch;
+    return branch.connect(minPriority, callback);
+  };
+
+  Pusher.IfStrategy = IfStrategy;
+}).call(this);
+
+;(function() {
+  /** Loops through strategies with optional timeouts.
+   *
+   * Options:
+   * - loop - whether it should loop through the substrategy list
+   * - timeout - initial timeout for a single substrategy
+   * - timeoutLimit - maximum timeout
+   *
+   * @param {Strategy[]} strategies
+   * @param {Object} options
+   */
+  function SequentialStrategy(strategies, options) {
+    this.strategies = strategies;
+    this.loop = Boolean(options.loop);
+    this.failFast = Boolean(options.failFast);
+    this.timeout = options.timeout;
+    this.timeoutLimit = options.timeoutLimit;
+  }
+  var prototype = SequentialStrategy.prototype;
+
+  prototype.isSupported = function() {
+    return Pusher.Util.any(this.strategies, Pusher.Util.method("isSupported"));
+  };
+
+  prototype.connect = function(minPriority, callback) {
+    var self = this;
+
+    var strategies = this.strategies;
+    var current = 0;
+    var timeout = this.timeout;
+    var runner = null;
+
+    var tryNextStrategy = function(error, handshake) {
+      if (handshake) {
+        callback(null, handshake);
+      } else {
+        current = current + 1;
+        if (self.loop) {
+          current = current % strategies.length;
+        }
+
+        if (current < strategies.length) {
+          if (timeout) {
+            timeout = timeout * 2;
+            if (self.timeoutLimit) {
+              timeout = Math.min(timeout, self.timeoutLimit);
+            }
+          }
+          runner = self.tryStrategy(
+            strategies[current],
+            minPriority,
+            { timeout: timeout, failFast: self.failFast },
+            tryNextStrategy
+          );
+        } else {
+          callback(true);
+        }
+      }
+    };
+
+    runner = this.tryStrategy(
+      strategies[current],
+      minPriority,
+      { timeout: timeout, failFast: this.failFast },
+      tryNextStrategy
+    );
+
+    return {
+      abort: function() {
+        runner.abort();
+      },
+      forceMinPriority: function(p) {
+        minPriority = p;
+        if (runner) {
+          runner.forceMinPriority(p);
+        }
+      }
+    };
+  };
+
+  /** @private */
+  prototype.tryStrategy = function(strategy, minPriority, options, callback) {
+    var timer = null;
+    var runner = null;
+
+    if (options.timeout > 0) {
+      timer = new Pusher.Timer(options.timeout, function() {
+        runner.abort();
+        callback(true);
+      });
+    }
+
+    runner = strategy.connect(minPriority, function(error, handshake) {
+      if (error && timer && timer.isRunning() && !options.failFast) {
+        // advance to the next strategy after the timeout
+        return;
+      }
+      if (timer) {
+        timer.ensureAborted();
+      }
+      callback(error, handshake);
+    });
+
+    return {
+      abort: function() {
+        if (timer) {
+          timer.ensureAborted();
+        }
+        runner.abort();
+      },
+      forceMinPriority: function(p) {
+        runner.forceMinPriority(p);
+      }
+    };
+  };
+
+  Pusher.SequentialStrategy = SequentialStrategy;
+}).call(this);
+
+;(function() {
+  /** Provides a strategy interface for transports.
+   *
+   * @param {String} name
+   * @param {Number} priority
+   * @param {Class} transport
+   * @param {Object} options
+   */
+  function TransportStrategy(name, priority, transport, options) {
+    this.name = name;
+    this.priority = priority;
+    this.transport = transport;
+    this.options = options || {};
+  }
+  var prototype = TransportStrategy.prototype;
+
+  /** Returns whether the transport is supported in the browser.
+   *
+   * @returns {Boolean}
+   */
+  prototype.isSupported = function() {
+    return this.transport.isSupported({
+      encrypted: this.options.encrypted
+    });
+  };
+
+  /** Launches a connection attempt and returns a strategy runner.
+   *
+   * @param  {Function} callback
+   * @return {Object} strategy runner
+   */
+  prototype.connect = function(minPriority, callback) {
+    if (!this.isSupported()) {
+      return failAttempt(new Pusher.Errors.UnsupportedStrategy(), callback);
+    } else if (this.priority < minPriority) {
+      return failAttempt(new Pusher.Errors.TransportPriorityTooLow(), callback);
+    }
+
+    var self = this;
+    var connected = false;
+
+    var transport = this.transport.createConnection(
+      this.name, this.priority, this.options.key, this.options
+    );
+    var handshake = null;
+
+    var onInitialized = function() {
+      transport.unbind("initialized", onInitialized);
+      transport.connect();
+    };
+    var onOpen = function() {
+      handshake = new Pusher.Handshake(transport, function(result) {
+        connected = true;
+        unbindListeners();
+        callback(null, result);
+      });
+    };
+    var onError = function(error) {
+      unbindListeners();
+      callback(error);
+    };
+    var onClosed = function() {
+      unbindListeners();
+      callback(new Pusher.Errors.TransportClosed(transport));
+    };
+
+    var unbindListeners = function() {
+      transport.unbind("initialized", onInitialized);
+      transport.unbind("open", onOpen);
+      transport.unbind("error", onError);
+      transport.unbind("closed", onClosed);
+    };
+
+    transport.bind("initialized", onInitialized);
+    transport.bind("open", onOpen);
+    transport.bind("error", onError);
+    transport.bind("closed", onClosed);
+
+    // connect will be called automatically after initialization
+    transport.initialize();
+
+    return {
+      abort: function() {
+        if (connected) {
+          return;
+        }
+        unbindListeners();
+        if (handshake) {
+          handshake.close();
+        } else {
+          transport.close();
+        }
+      },
+      forceMinPriority: function(p) {
+        if (connected) {
+          return;
+        }
+        if (self.priority < p) {
+          if (handshake) {
+            handshake.close();
+          } else {
+            transport.close();
+          }
+        }
+      }
+    };
+  };
+
+  function failAttempt(error, callback) {
+    Pusher.Util.defer(function() {
+      callback(error);
+    });
+    return {
+      abort: function() {},
+      forceMinPriority: function() {}
+    };
+  }
+
+  Pusher.TransportStrategy = TransportStrategy;
+}).call(this);
+
+(function() {
+  function getGenericURL(baseScheme, params, path) {
+    var scheme = baseScheme + (params.encrypted ? "s" : "");
+    var host = params.encrypted ? params.hostEncrypted : params.hostUnencrypted;
+    return scheme + "://" + host + path;
+  }
+
+  function getGenericPath(key, queryString) {
+    var path = "/app/" + key;
+    var query =
+      "?protocol=" + Pusher.PROTOCOL +
+      "&client=js" +
+      "&version=" + Pusher.VERSION +
+      (queryString ? ("&" + queryString) : "");
+    return path + query;
+  }
+
+  /** URL schemes for different transport types. */
+  Pusher.URLSchemes = {
+    /** Standard WebSocket URL scheme. */
+    ws: {
+      getInitial: function(key, params) {
+        return getGenericURL("ws", params, getGenericPath(key, "flash=false"));
+      }
+    },
+    /** URL scheme for Flash. Same as WebSocket, but with a flash parameter. */
+    flash: {
+      getInitial: function(key, params) {
+        return getGenericURL("ws", params, getGenericPath(key, "flash=true"));
+      }
+    },
+    /** SockJS URL scheme. Supplies the path separately from the initial URL. */
+    sockjs: {
+      getInitial: function(key, params) {
+        return getGenericURL("http", params, params.httpPath || "/pusher", "");
+      },
+      getPath: function(key, params) {
+        return getGenericPath(key);
+      }
+    },
+    /** URL scheme for HTTP transports. Basically, WS scheme with a prefix. */
+    http: {
+      getInitial: function(key, params) {
+        var path = (params.httpPath || "/pusher") + getGenericPath(key);
+        return getGenericURL("http", params, path);
+      }
+    }
+  };
+}).call(this);
+
+(function() {
+  /** Provides universal API for transport connections.
+   *
+   * Transport connection is a low-level object that wraps a connection method
+   * and exposes a simple evented interface for the connection state and
+   * messaging. It does not implement Pusher-specific WebSocket protocol.
+   *
+   * Additionally, it fetches resources needed for transport to work and exposes
+   * an interface for querying transport features.
+   *
+   * States:
+   * - new - initial state after constructing the object
+   * - initializing - during initialization phase, usually fetching resources
+   * - intialized - ready to establish a connection
+   * - connection - when connection is being established
+   * - open - when connection ready to be used
+   * - closed - after connection was closed be either side
+   *
+   * Emits:
+   * - error - after the connection raised an error
+   *
+   * Options:
+   * - encrypted - whether connection should use ssl
+   * - hostEncrypted - host to connect to when connection is encrypted
+   * - hostUnencrypted - host to connect to when connection is not encrypted
+   *
+   * @param {String} key application key
+   * @param {Object} options
+   */
+  function TransportConnection(hooks, name, priority, key, options) {
+    Pusher.EventsDispatcher.call(this);
+
+    this.hooks = hooks;
+    this.name = name;
+    this.priority = priority;
+    this.key = key;
+    this.options = options;
+
+    this.state = "new";
+    this.timeline = options.timeline;
+    this.activityTimeout = options.activityTimeout;
+    this.id = this.timeline.generateUniqueID();
+  }
+  var prototype = TransportConnection.prototype;
+  Pusher.Util.extend(prototype, Pusher.EventsDispatcher.prototype);
+
+  /** Checks whether the transport handles activity checks by itself.
+   *
+   * @return {Boolean}
+   */
+  prototype.handlesActivityChecks = function() {
+    return Boolean(this.hooks.handlesActivityChecks);
+  };
+
+  /** Checks whether the transport supports the ping/pong API.
+   *
+   * @return {Boolean}
+   */
+  prototype.supportsPing = function() {
+    return Boolean(this.hooks.supportsPing);
+  };
+
+  /** Initializes the transport.
+   *
+   * Fetches resources if needed and then transitions to initialized.
+   */
+  prototype.initialize = function() {
+    var self = this;
+
+    self.timeline.info(self.buildTimelineMessage({
+      transport: self.name + (self.options.encrypted ? "s" : "")
+    }));
+
+    if (self.hooks.beforeInitialize) {
+      self.hooks.beforeInitialize.call(self);
+    }
+
+    if (self.hooks.isInitialized()) {
+      self.changeState("initialized");
+    } else if (self.hooks.file) {
+      self.changeState("initializing");
+      Pusher.Dependencies.load(
+        self.hooks.file,
+        { encrypted: self.options.encrypted },
+        function(error, callback) {
+          if (self.hooks.isInitialized()) {
+            self.changeState("initialized");
+            callback(true);
+          } else {
+            if (error) {
+              self.onError(error);
+            }
+            self.onClose();
+            callback(false);
+          }
+        }
+      );
+    } else {
+      self.onClose();
+    }
+  };
+
+  /** Tries to establish a connection.
+   *
+   * @returns {Boolean} false if transport is in invalid state
+   */
+  prototype.connect = function() {
+    var self = this;
+
+    if (self.socket || self.state !== "initialized") {
+      return false;
+    }
+
+    var url = self.hooks.urls.getInitial(self.key, self.options);
+    try {
+      self.socket = self.hooks.getSocket(url, self.options);
+    } catch (e) {
+      Pusher.Util.defer(function() {
+        self.onError(e);
+        self.changeState("closed");
+      });
+      return false;
+    }
+
+    self.bindListeners();
+
+    Pusher.debug("Connecting", { transport: self.name, url: url });
+    self.changeState("connecting");
+    return true;
+  };
+
+  /** Closes the connection.
+   *
+   * @return {Boolean} true if there was a connection to close
+   */
+  prototype.close = function() {
+    if (this.socket) {
+      this.socket.close();
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  /** Sends data over the open connection.
+   *
+   * @param {String} data
+   * @return {Boolean} true only when in the "open" state
+   */
+  prototype.send = function(data) {
+    var self = this;
+
+    if (self.state === "open") {
+      // Workaround for MobileSafari bug (see https://gist.github.com/2052006)
+      Pusher.Util.defer(function() {
+        if (self.socket) {
+          self.socket.send(data);
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  /** Sends a ping if the connection is open and transport supports it. */
+  prototype.ping = function() {
+    if (this.state === "open" && this.supportsPing()) {
+      this.socket.ping();
+    }
+  };
+
+  /** @private */
+  prototype.onOpen = function() {
+    if (this.hooks.beforeOpen) {
+      this.hooks.beforeOpen(
+        this.socket, this.hooks.urls.getPath(this.key, this.options)
+      );
+    }
+    this.changeState("open");
+    this.socket.onopen = undefined;
+  };
+
+  /** @private */
+  prototype.onError = function(error) {
+    this.emit("error", { type: 'WebSocketError', error: error });
+    this.timeline.error(this.buildTimelineMessage({ error: error.toString() }));
+  };
+
+  /** @private */
+  prototype.onClose = function(closeEvent) {
+    if (closeEvent) {
+      this.changeState("closed", {
+        code: closeEvent.code,
+        reason: closeEvent.reason,
+        wasClean: closeEvent.wasClean
+      });
+    } else {
+      this.changeState("closed");
+    }
+    this.unbindListeners();
+    this.socket = undefined;
+  };
+
+  /** @private */
+  prototype.onMessage = function(message) {
+    this.emit("message", message);
+  };
+
+  /** @private */
+  prototype.onActivity = function() {
+    this.emit("activity");
+  };
+
+  /** @private */
+  prototype.bindListeners = function() {
+    var self = this;
+
+    self.socket.onopen = function() {
+      self.onOpen();
+    };
+    self.socket.onerror = function(error) {
+      self.onError(error);
+    };
+    self.socket.onclose = function(closeEvent) {
+      self.onClose(closeEvent);
+    };
+    self.socket.onmessage = function(message) {
+      self.onMessage(message);
+    };
+
+    if (self.supportsPing()) {
+      self.socket.onactivity = function() { self.onActivity(); };
+    }
+  };
+
+  /** @private */
+  prototype.unbindListeners = function() {
+    if (this.socket) {
+      this.socket.onopen = undefined;
+      this.socket.onerror = undefined;
+      this.socket.onclose = undefined;
+      this.socket.onmessage = undefined;
+      if (this.supportsPing()) {
+        this.socket.onactivity = undefined;
+      }
+    }
+  };
+
+  /** @private */
+  prototype.changeState = function(state, params) {
+    this.state = state;
+    this.timeline.info(this.buildTimelineMessage({
+      state: state,
+      params: params
+    }));
+    this.emit(state, params);
+  };
+
+  /** @private */
+  prototype.buildTimelineMessage = function(message) {
+    return Pusher.Util.extend({ cid: this.id }, message);
+  };
+
+  Pusher.TransportConnection = TransportConnection;
+}).call(this);
+
+(function() {
+  /** Provides interface for transport connection instantiation.
+   *
+   * Takes transport-specific hooks as the only argument, which allow checking
+   * for transport support and creating its connections.
+   *
+   * Supported hooks:
+   * - file - the name of the file to be fetched during initialization
+   * - urls - URL scheme to be used by transport
+   * - handlesActivityCheck - true when the transport handles activity checks
+   * - supportsPing - true when the transport has a ping/activity API
+   * - isSupported - tells whether the transport is supported in the environment
+   * - getSocket - creates a WebSocket-compatible transport socket
+   *
+   * See transports.js for specific implementations.
+   *
+   * @param {Object} hooks object containing all needed transport hooks
+   */
+  function Transport(hooks) {
+    this.hooks = hooks;
+  }
+  var prototype = Transport.prototype;
+
+  /** Returns whether the transport is supported in the environment.
+   *
+   * @param {Object} environment the environment details (encryption, settings)
+   * @returns {Boolean} true when the transport is supported
+   */
+  prototype.isSupported = function(environment) {
+    return this.hooks.isSupported(environment);
+  };
+
+  /** Creates a transport connection.
+   *
+   * @param {String} name
+   * @param {Number} priority
+   * @param {String} key the application key
+   * @param {Object} options
+   * @returns {TransportConnection}
+   */
+  prototype.createConnection = function(name, priority, key, options) {
+    return new Pusher.TransportConnection(
+      this.hooks, name, priority, key, options
+    );
+  };
+
+  Pusher.Transport = Transport;
+}).call(this);
+
+(function() {
+  /** WebSocket transport.
+   *
+   * Uses native WebSocket implementation, including MozWebSocket supported by
+   * earlier Firefox versions.
+   */
+  Pusher.WSTransport = new Pusher.Transport({
+    urls: Pusher.URLSchemes.ws,
+    handlesActivityChecks: false,
+    supportsPing: false,
+
+    isInitialized: function() {
+      return Boolean(window.WebSocket || window.MozWebSocket);
+    },
+    isSupported: function() {
+      return Boolean(window.WebSocket || window.MozWebSocket);
+    },
+    getSocket: function(url) {
+      var Constructor = window.WebSocket || window.MozWebSocket;
+      return new Constructor(url);
+    }
+  });
+
+  /** Flash transport using the WebSocket protocol. */
+  Pusher.FlashTransport = new Pusher.Transport({
+    file: "flashfallback",
+    urls: Pusher.URLSchemes.flash,
+    handlesActivityChecks: false,
+    supportsPing: false,
+
+    isSupported: function() {
+      try {
+        return Boolean(new ActiveXObject('ShockwaveFlash.ShockwaveFlash'));
+      } catch (e1) {
+        try {
+          var nav = Pusher.Util.getNavigator();
+          return Boolean(
+            nav &&
+            nav.mimeTypes &&
+            nav.mimeTypes["application/x-shockwave-flash"] !== undefined
+          );
+        } catch (e2) {
+          return false;
+        }
+      }
+    },
+    beforeInitialize: function() {
+      if (window.WEB_SOCKET_SUPPRESS_CROSS_DOMAIN_SWF_ERROR === undefined) {
+        window.WEB_SOCKET_SUPPRESS_CROSS_DOMAIN_SWF_ERROR = true;
+      }
+      window.WEB_SOCKET_SWF_LOCATION =
+        Pusher.Dependencies.getRoot({ encrypted: this.options.encrypted }) +
+        "/WebSocketMain.swf";
+    },
+    isInitialized: function() {
+      return window.FlashWebSocket !== undefined;
+    },
+    getSocket: function(url) {
+      return new FlashWebSocket(url);
+    }
+  });
+
+  /** SockJS transport. */
+  Pusher.SockJSTransport = new Pusher.Transport({
+    file: "sockjs",
+    urls: Pusher.URLSchemes.sockjs,
+    handlesActivityChecks: true,
+    supportsPing: false,
+
+    isSupported: function() {
+      return true;
+    },
+    isInitialized: function() {
+      return window.SockJS !== undefined;
+    },
+    getSocket: function(url, options) {
+      return new SockJS(url, null, {
+        js_path: Pusher.Dependencies.getPath("sockjs", {
+          encrypted: options.encrypted
+        }),
+        ignore_null_origin: options.ignoreNullOrigin
+      });
+    },
+    beforeOpen: function(socket, path) {
+      socket.send(JSON.stringify({
+        path: path
+      }));
+    }
+  });
+
+  var httpConfiguration = {
+    urls: Pusher.URLSchemes.http,
+    handlesActivityChecks: false,
+    supportsPing: true,
+    isInitialized: function() {
+      return Boolean(Pusher.HTTP.Socket);
+    }
+  };
+
+  var streamingConfiguration = Pusher.Util.extend(
+    { getSocket: function(url) {
+        return Pusher.HTTP.getStreamingSocket(url);
+      }
+    },
+    httpConfiguration
+  );
+  var pollingConfiguration = Pusher.Util.extend(
+    { getSocket: function(url) {
+        return Pusher.HTTP.getPollingSocket(url);
+      }
+    },
+    httpConfiguration
+  );
+
+  var xhrConfiguration = {
+    file: "xhr",
+    isSupported: Pusher.Util.isXHRSupported
+  };
+  var xdrConfiguration = {
+    file: "xdr",
+    isSupported: function(environment) {
+      return Pusher.Util.isXDRSupported(environment.encrypted);
+    }
+  };
+
+  /** HTTP streaming transport using CORS-enabled XMLHttpRequest. */
+  Pusher.XHRStreamingTransport = new Pusher.Transport(
+    Pusher.Util.extend({}, streamingConfiguration, xhrConfiguration)
+  );
+  /** HTTP streaming transport using XDomainRequest (IE 8,9). */
+  Pusher.XDRStreamingTransport = new Pusher.Transport(
+    Pusher.Util.extend({}, streamingConfiguration, xdrConfiguration)
+  );
+  /** HTTP long-polling transport using CORS-enabled XMLHttpRequest. */
+  Pusher.XHRPollingTransport = new Pusher.Transport(
+    Pusher.Util.extend({}, pollingConfiguration, xhrConfiguration)
+  );
+  /** HTTP long-polling transport using XDomainRequest (IE 8,9). */
+  Pusher.XDRPollingTransport = new Pusher.Transport(
+    Pusher.Util.extend({}, pollingConfiguration, xdrConfiguration)
+  );
+}).call(this);
+
+;(function() {
+  /** Creates transport connections monitored by a transport manager.
+   *
+   * When a transport is closed, it might mean the environment does not support
+   * it. It's possible that messages get stuck in an intermediate buffer or
+   * proxies terminate inactive connections. To combat these problems,
+   * assistants monitor the connection lifetime, report unclean exits and
+   * adjust ping timeouts to keep the connection active. The decision to disable
+   * a transport is the manager's responsibility.
+   *
+   * @param {TransportManager} manager
+   * @param {TransportConnection} transport
+   * @param {Object} options
+   */
+  function AssistantToTheTransportManager(manager, transport, options) {
+    this.manager = manager;
+    this.transport = transport;
+    this.minPingDelay = options.minPingDelay;
+    this.maxPingDelay = options.maxPingDelay;
+    this.pingDelay = undefined;
+  }
+  var prototype = AssistantToTheTransportManager.prototype;
+
+  /** Creates a transport connection.
+   *
+   * This function has the same API as Transport#createConnection.
+   *
+   * @param {String} name
+   * @param {Number} priority
+   * @param {String} key the application key
+   * @param {Object} options
+   * @returns {TransportConnection}
+   */
+  prototype.createConnection = function(name, priority, key, options) {
+    var self = this;
+
+    options = Pusher.Util.extend({}, options, {
+      activityTimeout: self.pingDelay
+    });
+    var connection = self.transport.createConnection(
+      name, priority, key, options
+    );
+
+    var openTimestamp = null;
+
+    var onOpen = function() {
+      connection.unbind("open", onOpen);
+      connection.bind("closed", onClosed);
+      openTimestamp = Pusher.Util.now();
+    };
+    var onClosed = function(closeEvent) {
+      connection.unbind("closed", onClosed);
+
+      if (closeEvent.code === 1002 || closeEvent.code === 1003) {
+        // we don't want to use transports not obeying the protocol
+        self.manager.reportDeath();
+      } else if (!closeEvent.wasClean && openTimestamp) {
+        // report deaths only for short-living transport
+        var lifespan = Pusher.Util.now() - openTimestamp;
+        if (lifespan < 2 * self.maxPingDelay) {
+          self.manager.reportDeath();
+          self.pingDelay = Math.max(lifespan / 2, self.minPingDelay);
+        }
+      }
+    };
+
+    connection.bind("open", onOpen);
+    return connection;
+  };
+
+  /** Returns whether the transport is supported in the environment.
+   *
+   * This function has the same API as Transport#isSupported. Might return false
+   * when the manager decides to kill the transport.
+   *
+   * @param {Object} environment the environment details (encryption, settings)
+   * @returns {Boolean} true when the transport is supported
+   */
+  prototype.isSupported = function(environment) {
+    return this.manager.isAlive() && this.transport.isSupported(environment);
+  };
+
+  Pusher.AssistantToTheTransportManager = AssistantToTheTransportManager;
+}).call(this);
+
+;(function() {
+  /** Keeps track of the number of lives left for a transport.
+   *
+   * In the beginning of a session, transports may be assigned a number of
+   * lives. When an AssistantToTheTransportManager instance reports a transport
+   * connection closed uncleanly, the transport loses a life. When the number
+   * of lives drops to zero, the transport gets disabled by its manager.
+   *
+   * @param {Object} options
+   */
+  function TransportManager(options) {
+    this.options = options || {};
+    this.livesLeft = this.options.lives || Infinity;
+  }
+  var prototype = TransportManager.prototype;
+
+  /** Creates a assistant for the transport.
+   *
+   * @param {Transport} transport
+   * @returns {AssistantToTheTransportManager}
+   */
+  prototype.getAssistant = function(transport) {
+    return new Pusher.AssistantToTheTransportManager(this, transport, {
+      minPingDelay: this.options.minPingDelay,
+      maxPingDelay: this.options.maxPingDelay
+    });
+  };
+
+  /** Returns whether the transport has any lives left.
+   *
+   * @returns {Boolean}
+   */
+  prototype.isAlive = function() {
+    return this.livesLeft > 0;
+  };
+
+  /** Takes one life from the transport. */
+  prototype.reportDeath = function() {
+    this.livesLeft -= 1;
+  };
+
+  Pusher.TransportManager = TransportManager;
+}).call(this);
+
+;(function() {
+  var StrategyBuilder = {
+    /** Transforms a JSON scheme to a strategy tree.
+     *
+     * @param {Array} scheme JSON strategy scheme
+     * @param {Object} options a hash of symbols to be included in the scheme
+     * @returns {Strategy} strategy tree that's represented by the scheme
+     */
+    build: function(scheme, options) {
+      var context = Pusher.Util.extend({}, globalContext, options);
+      return evaluate(scheme, context)[1].strategy;
+    }
+  };
+
+  var transports = {
+    ws: Pusher.WSTransport,
+    flash: Pusher.FlashTransport,
+    sockjs: Pusher.SockJSTransport,
+    xhr_streaming: Pusher.XHRStreamingTransport,
+    xdr_streaming: Pusher.XDRStreamingTransport,
+    xhr_polling: Pusher.XHRPollingTransport,
+    xdr_polling: Pusher.XDRPollingTransport
+  };
+
+  var UnsupportedStrategy = {
+    isSupported: function() {
+      return false;
+    },
+    connect: function(_, callback) {
+      var deferred = Pusher.Util.defer(function() {
+        callback(new Pusher.Errors.UnsupportedStrategy());
+      });
+      return {
+        abort: function() {
+          deferred.ensureAborted();
+        },
+        forceMinPriority: function() {}
+      };
+    }
+  };
+
+  // DSL bindings
+
+  function returnWithOriginalContext(f) {
+    return function(context) {
+      return [f.apply(this, arguments), context];
+    };
+  }
+
+  var globalContext = {
+    extend: function(context, first, second) {
+      return [Pusher.Util.extend({}, first, second), context];
+    },
+
+    def: function(context, name, value) {
+      if (context[name] !== undefined) {
+        throw "Redefining symbol " + name;
+      }
+      context[name] = value;
+      return [undefined, context];
+    },
+
+    def_transport: function(context, name, type, priority, options, manager) {
+      var transportClass = transports[type];
+      if (!transportClass) {
+        throw new Pusher.Errors.UnsupportedTransport(type);
+      }
+
+      var enabled =
+        (!context.enabledTransports ||
+          Pusher.Util.arrayIndexOf(context.enabledTransports, name) !== -1) &&
+        (!context.disabledTransports ||
+          Pusher.Util.arrayIndexOf(context.disabledTransports, name) === -1) &&
+        (name !== "flash" || context.disableFlash !== true);
+
+      var transport;
+      if (enabled) {
+        transport = new Pusher.TransportStrategy(
+          name,
+          priority,
+          manager ? manager.getAssistant(transportClass) : transportClass,
+          Pusher.Util.extend({
+            key: context.key,
+            encrypted: context.encrypted,
+            timeline: context.timeline,
+            ignoreNullOrigin: context.ignoreNullOrigin
+          }, options)
+        );
+      } else {
+        transport = UnsupportedStrategy;
+      }
+
+      var newContext = context.def(context, name, transport)[1];
+      newContext.transports = context.transports || {};
+      newContext.transports[name] = transport;
+      return [undefined, newContext];
+    },
+
+    transport_manager: returnWithOriginalContext(function(_, options) {
+      return new Pusher.TransportManager(options);
+    }),
+
+    sequential: returnWithOriginalContext(function(_, options) {
+      var strategies = Array.prototype.slice.call(arguments, 2);
+      return new Pusher.SequentialStrategy(strategies, options);
+    }),
+
+    cached: returnWithOriginalContext(function(context, ttl, strategy){
+      return new Pusher.CachedStrategy(strategy, context.transports, {
+        ttl: ttl,
+        timeline: context.timeline,
+        encrypted: context.encrypted
+      });
+    }),
+
+    first_connected: returnWithOriginalContext(function(_, strategy) {
+      return new Pusher.FirstConnectedStrategy(strategy);
+    }),
+
+    best_connected_ever: returnWithOriginalContext(function() {
+      var strategies = Array.prototype.slice.call(arguments, 1);
+      return new Pusher.BestConnectedEverStrategy(strategies);
+    }),
+
+    delayed: returnWithOriginalContext(function(_, delay, strategy) {
+      return new Pusher.DelayedStrategy(strategy, { delay: delay });
+    }),
+
+    "if": returnWithOriginalContext(function(_, test, trueBranch, falseBranch) {
+      return new Pusher.IfStrategy(test, trueBranch, falseBranch);
+    }),
+
+    is_supported: returnWithOriginalContext(function(_, strategy) {
+      return function() {
+        return strategy.isSupported();
+      };
+    })
+  };
+
+  // DSL interpreter
+
+  function isSymbol(expression) {
+    return (typeof expression === "string") && expression.charAt(0) === ":";
+  }
+
+  function getSymbolValue(expression, context) {
+    return context[expression.slice(1)];
+  }
+
+  function evaluateListOfExpressions(expressions, context) {
+    if (expressions.length === 0) {
+      return [[], context];
+    }
+    var head = evaluate(expressions[0], context);
+    var tail = evaluateListOfExpressions(expressions.slice(1), head[1]);
+    return [[head[0]].concat(tail[0]), tail[1]];
+  }
+
+  function evaluateString(expression, context) {
+    if (!isSymbol(expression)) {
+      return [expression, context];
+    }
+    var value = getSymbolValue(expression, context);
+    if (value === undefined) {
+      throw "Undefined symbol " + expression;
+    }
+    return [value, context];
+  }
+
+  function evaluateArray(expression, context) {
+    if (isSymbol(expression[0])) {
+      var f = getSymbolValue(expression[0], context);
+      if (expression.length > 1) {
+        if (typeof f !== "function") {
+          throw "Calling non-function " + expression[0];
+        }
+        var args = [Pusher.Util.extend({}, context)].concat(
+          Pusher.Util.map(expression.slice(1), function(arg) {
+            return evaluate(arg, Pusher.Util.extend({}, context))[0];
+          })
+        );
+        return f.apply(this, args);
+      } else {
+        return [f, context];
+      }
+    } else {
+      return evaluateListOfExpressions(expression, context);
+    }
+  }
+
+  function evaluate(expression, context) {
+    var expressionType = typeof expression;
+    if (typeof expression === "string") {
+      return evaluateString(expression, context);
+    } else if (typeof expression === "object") {
+      if (expression instanceof Array && expression.length > 0) {
+        return evaluateArray(expression, context);
+      }
+    }
+    return [expression, context];
+  }
+
+  Pusher.StrategyBuilder = StrategyBuilder;
+}).call(this);
+
+;(function() {
+  /**
+   * Provides functions for handling Pusher protocol-specific messages.
+   */
+  var Protocol = {};
+
+  /**
+   * Decodes a message in a Pusher format.
+   *
+   * Throws errors when messages are not parse'able.
+   *
+   * @param  {Object} message
+   * @return {Object}
+   */
+  Protocol.decodeMessage = function(message) {
+    try {
+      var params = JSON.parse(message.data);
+      if (typeof params.data === 'string') {
+        try {
+          params.data = JSON.parse(params.data);
+        } catch (e) {
+          if (!(e instanceof SyntaxError)) {
+            // TODO looks like unreachable code
+            // https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/JSON/parse
+            throw e;
+          }
+        }
+      }
+      return params;
+    } catch (e) {
+      throw { type: 'MessageParseError', error: e, data: message.data};
+    }
+  };
+
+  /**
+   * Encodes a message to be sent.
+   *
+   * @param  {Object} message
+   * @return {String}
+   */
+  Protocol.encodeMessage = function(message) {
+    return JSON.stringify(message);
+  };
+
+  /** Processes a handshake message and returns appropriate actions.
+   *
+   * Returns an object with an 'action' and other action-specific properties.
+   *
+   * There are three outcomes when calling this function. First is a successful
+   * connection attempt, when pusher:connection_established is received, which
+   * results in a 'connected' action with an 'id' property. When passed a
+   * pusher:error event, it returns a result with action appropriate to the
+   * close code and an error. Otherwise, it raises an exception.
+   *
+   * @param {String} message
+   * @result Object
+   */
+  Protocol.processHandshake = function(message) {
+    message = this.decodeMessage(message);
+
+    if (message.event === "pusher:connection_established") {
+      if (!message.data.activity_timeout) {
+        throw "No activity timeout specified in handshake";
+      }
+      return {
+        action: "connected",
+        id: message.data.socket_id,
+        activityTimeout: message.data.activity_timeout * 1000
+      };
+    } else if (message.event === "pusher:error") {
+      // From protocol 6 close codes are sent only once, so this only
+      // happens when connection does not support close codes
+      return {
+        action: this.getCloseAction(message.data),
+        error: this.getCloseError(message.data)
+      };
+    } else {
+      throw "Invalid handshake";
+    }
+  };
+
+  /**
+   * Dispatches the close event and returns an appropriate action name.
+   *
+   * See:
+   * 1. https://developer.mozilla.org/en-US/docs/WebSockets/WebSockets_reference/CloseEvent
+   * 2. http://pusher.com/docs/pusher_protocol
+   *
+   * @param  {CloseEvent} closeEvent
+   * @return {String} close action name
+   */
+  Protocol.getCloseAction = function(closeEvent) {
+    if (closeEvent.code < 4000) {
+      // ignore 1000 CLOSE_NORMAL, 1001 CLOSE_GOING_AWAY,
+      //        1005 CLOSE_NO_STATUS, 1006 CLOSE_ABNORMAL
+      // ignore 1007...3999
+      // handle 1002 CLOSE_PROTOCOL_ERROR, 1003 CLOSE_UNSUPPORTED,
+      //        1004 CLOSE_TOO_LARGE
+      if (closeEvent.code >= 1002 && closeEvent.code <= 1004) {
+        return "backoff";
+      } else {
+        return null;
+      }
+    } else if (closeEvent.code === 4000) {
+      return "ssl_only";
+    } else if (closeEvent.code < 4100) {
+      return "refused";
+    } else if (closeEvent.code < 4200) {
+      return "backoff";
+    } else if (closeEvent.code < 4300) {
+      return "retry";
+    } else {
+      // unknown error
+      return "refused";
+    }
+  };
+
+  /**
+   * Returns an error or null basing on the close event.
+   *
+   * Null is returned when connection was closed cleanly. Otherwise, an object
+   * with error details is returned.
+   *
+   * @param  {CloseEvent} closeEvent
+   * @return {Object} error object
+   */
+  Protocol.getCloseError = function(closeEvent) {
+    if (closeEvent.code !== 1000 && closeEvent.code !== 1001) {
+      return {
+        type: 'PusherError',
+        data: {
+          code: closeEvent.code,
+          message: closeEvent.reason || closeEvent.message
+        }
+      };
+    } else {
+      return null;
+    }
+  };
+
+  Pusher.Protocol = Protocol;
+}).call(this);
+
+;(function() {
+  /**
+   * Provides Pusher protocol interface for transports.
+   *
+   * Emits following events:
+   * - message - on received messages
+   * - ping - on ping requests
+   * - pong - on pong responses
+   * - error - when the transport emits an error
+   * - closed - after closing the transport
+   *
+   * It also emits more events when connection closes with a code.
+   * See Protocol.getCloseAction to get more details.
+   *
+   * @param {Number} id
+   * @param {AbstractTransport} transport
+   */
+  function Connection(id, transport) {
+    Pusher.EventsDispatcher.call(this);
+
+    this.id = id;
+    this.transport = transport;
+    this.activityTimeout = transport.activityTimeout;
+    this.bindListeners();
+  }
+  var prototype = Connection.prototype;
+  Pusher.Util.extend(prototype, Pusher.EventsDispatcher.prototype);
+
+  /** Returns whether used transport handles activity checks by itself
+   *
+   * @returns {Boolean} true if activity checks are handled by the transport
+   */
+  prototype.handlesActivityChecks = function() {
+    return this.transport.handlesActivityChecks();
+  };
+
+  /** Sends raw data.
+   *
+   * @param {String} data
+   */
+  prototype.send = function(data) {
+    return this.transport.send(data);
+  };
+
+  /** Sends an event.
+   *
+   * @param {String} name
+   * @param {String} data
+   * @param {String} [channel]
+   * @returns {Boolean} whether message was sent or not
+   */
+  prototype.send_event = function(name, data, channel) {
+    var message = { event: name, data: data };
+    if (channel) {
+      message.channel = channel;
+    }
+    Pusher.debug('Event sent', message);
+    return this.send(Pusher.Protocol.encodeMessage(message));
+  };
+
+  /** Sends a ping message to the server.
+   *
+   * Basing on the underlying transport, it might send either transport's
+   * protocol-specific ping or pusher:ping event.
+   */
+  prototype.ping = function() {
+    if (this.transport.supportsPing()) {
+      this.transport.ping();
+    } else {
+      this.send_event('pusher:ping', {});
+    }
+  };
+
+  /** Closes the connection. */
+  prototype.close = function() {
+    this.transport.close();
+  };
+
+  /** @private */
+  prototype.bindListeners = function() {
+    var self = this;
+
+    var listeners = {
+      message: function(m) {
+        var message;
+        try {
+          message = Pusher.Protocol.decodeMessage(m);
+        } catch(e) {
+          self.emit('error', {
+            type: 'MessageParseError',
+            error: e,
+            data: m.data
+          });
+        }
+
+        if (message !== undefined) {
+          Pusher.debug('Event recd', message);
+
+          switch (message.event) {
+            case 'pusher:error':
+              self.emit('error', { type: 'PusherError', data: message.data });
+              break;
+            case 'pusher:ping':
+              self.emit("ping");
+              break;
+            case 'pusher:pong':
+              self.emit("pong");
+              break;
+          }
+          self.emit('message', message);
+        }
+      },
+      activity: function() {
+        self.emit("activity");
+      },
+      error: function(error) {
+        self.emit("error", { type: "WebSocketError", error: error });
+      },
+      closed: function(closeEvent) {
+        unbindListeners();
+
+        if (closeEvent && closeEvent.code) {
+          self.handleCloseEvent(closeEvent);
+        }
+
+        self.transport = null;
+        self.emit("closed");
+      }
+    };
+
+    var unbindListeners = function() {
+      Pusher.Util.objectApply(listeners, function(listener, event) {
+        self.transport.unbind(event, listener);
+      });
+    };
+
+    Pusher.Util.objectApply(listeners, function(listener, event) {
+      self.transport.bind(event, listener);
+    });
+  };
+
+  /** @private */
+  prototype.handleCloseEvent = function(closeEvent) {
+    var action = Pusher.Protocol.getCloseAction(closeEvent);
+    var error = Pusher.Protocol.getCloseError(closeEvent);
+    if (error) {
+      this.emit('error', error);
+    }
+    if (action) {
+      this.emit(action);
+    }
+  };
+
+  Pusher.Connection = Connection;
+}).call(this);
+
+;(function() {
+  /**
+   * Handles Pusher protocol handshakes for transports.
+   *
+   * Calls back with a result object after handshake is completed. Results
+   * always have two fields:
+   * - action - string describing action to be taken after the handshake
+   * - transport - the transport object passed to the constructor
+   *
+   * Different actions can set different additional properties on the result.
+   * In the case of 'connected' action, there will be a 'connection' property
+   * containing a Connection object for the transport. Other actions should
+   * carry an 'error' property.
+   *
+   * @param {AbstractTransport} transport
+   * @param {Function} callback
+   */
+  function Handshake(transport, callback) {
+    this.transport = transport;
+    this.callback = callback;
+    this.bindListeners();
+  }
+  var prototype = Handshake.prototype;
+
+  prototype.close = function() {
+    this.unbindListeners();
+    this.transport.close();
+  };
+
+  /** @private */
+  prototype.bindListeners = function() {
+    var self = this;
+
+    self.onMessage = function(m) {
+      self.unbindListeners();
+
+      try {
+        var result = Pusher.Protocol.processHandshake(m);
+        if (result.action === "connected") {
+          self.finish("connected", {
+            connection: new Pusher.Connection(result.id, self.transport),
+            activityTimeout: result.activityTimeout
+          });
+        } else {
+          self.finish(result.action, { error: result.error });
+          self.transport.close();
+        }
+      } catch (e) {
+        self.finish("error", { error: e });
+        self.transport.close();
+      }
+    };
+
+    self.onClosed = function(closeEvent) {
+      self.unbindListeners();
+
+      var action = Pusher.Protocol.getCloseAction(closeEvent) || "backoff";
+      var error = Pusher.Protocol.getCloseError(closeEvent);
+      self.finish(action, { error: error });
+    };
+
+    self.transport.bind("message", self.onMessage);
+    self.transport.bind("closed", self.onClosed);
+  };
+
+  /** @private */
+  prototype.unbindListeners = function() {
+    this.transport.unbind("message", this.onMessage);
+    this.transport.unbind("closed", this.onClosed);
+  };
+
+  /** @private */
+  prototype.finish = function(action, params) {
+    this.callback(
+      Pusher.Util.extend({ transport: this.transport, action: action }, params)
+    );
+  };
+
+  Pusher.Handshake = Handshake;
+}).call(this);
+
+;(function() {
+  /** Manages connection to Pusher.
+   *
+   * Uses a strategy (currently only default), timers and network availability
+   * info to establish a connection and export its state. In case of failures,
+   * manages reconnection attempts.
+   *
+   * Exports state changes as following events:
+   * - "state_change", { previous: p, current: state }
+   * - state
+   *
+   * States:
+   * - initialized - initial state, never transitioned to
+   * - connecting - connection is being established
+   * - connected - connection has been fully established
+   * - disconnected - on requested disconnection
+   * - unavailable - after connection timeout or when there's no network
+   * - failed - when the connection strategy is not supported
+   *
+   * Options:
+   * - unavailableTimeout - time to transition to unavailable state
+   * - activityTimeout - time after which ping message should be sent
+   * - pongTimeout - time for Pusher to respond with pong before reconnecting
+   *
+   * @param {String} key application key
+   * @param {Object} options
+   */
+  function ConnectionManager(key, options) {
+    Pusher.EventsDispatcher.call(this);
+
+    this.key = key;
+    this.options = options || {};
+    this.state = "initialized";
+    this.connection = null;
+    this.encrypted = !!options.encrypted;
+    this.timeline = this.options.timeline;
+
+    this.connectionCallbacks = this.buildConnectionCallbacks();
+    this.errorCallbacks = this.buildErrorCallbacks();
+    this.handshakeCallbacks = this.buildHandshakeCallbacks(this.errorCallbacks);
+
+    var self = this;
+
+    Pusher.Network.bind("online", function() {
+      self.timeline.info({ netinfo: "online" });
+      if (self.state === "connecting" || self.state === "unavailable") {
+        self.retryIn(0);
+      }
+    });
+    Pusher.Network.bind("offline", function() {
+      self.timeline.info({ netinfo: "offline" });
+      if (self.connection) {
+        self.sendActivityCheck();
+      }
+    });
+
+    this.updateStrategy();
+  }
+  var prototype = ConnectionManager.prototype;
+
+  Pusher.Util.extend(prototype, Pusher.EventsDispatcher.prototype);
+
+  /** Establishes a connection to Pusher.
+   *
+   * Does nothing when connection is already established. See top-level doc
+   * to find events emitted on connection attempts.
+   */
+  prototype.connect = function() {
+    if (this.connection || this.runner) {
+      return;
+    }
+    if (!this.strategy.isSupported()) {
+      this.updateState("failed");
+      return;
+    }
+    this.updateState("connecting");
+    this.startConnecting();
+    this.setUnavailableTimer();
+  };
+
+  /** Sends raw data.
+   *
+   * @param {String} data
+   */
+  prototype.send = function(data) {
+    if (this.connection) {
+      return this.connection.send(data);
+    } else {
+      return false;
+    }
+  };
+
+  /** Sends an event.
+   *
+   * @param {String} name
+   * @param {String} data
+   * @param {String} [channel]
+   * @returns {Boolean} whether message was sent or not
+   */
+  prototype.send_event = function(name, data, channel) {
+    if (this.connection) {
+      return this.connection.send_event(name, data, channel);
+    } else {
+      return false;
+    }
+  };
+
+  /** Closes the connection. */
+  prototype.disconnect = function() {
+    this.disconnectInternally();
+    this.updateState("disconnected");
+  };
+
+  prototype.isEncrypted = function() {
+    return this.encrypted;
+  };
+
+  /** @private */
+  prototype.startConnecting = function() {
+    var self = this;
+    var callback = function(error, handshake) {
+      if (error) {
+        self.runner = self.strategy.connect(0, callback);
+      } else {
+        if (handshake.action === "error") {
+          self.emit("error", { type: "HandshakeError", error: handshake.error });
+          self.timeline.error({ handshakeError: handshake.error });
+        } else {
+          self.abortConnecting(); // we don't support switching connections yet
+          self.handshakeCallbacks[handshake.action](handshake);
+        }
+      }
+    };
+    self.runner = self.strategy.connect(0, callback);
+  };
+
+  /** @private */
+  prototype.abortConnecting = function() {
+    if (this.runner) {
+      this.runner.abort();
+      this.runner = null;
+    }
+  };
+
+  /** @private */
+  prototype.disconnectInternally = function() {
+    this.abortConnecting();
+    this.clearRetryTimer();
+    this.clearUnavailableTimer();
+    if (this.connection) {
+      var connection = this.abandonConnection();
+      connection.close();
+    }
+  };
+
+  /** @private */
+  prototype.updateStrategy = function() {
+    this.strategy = this.options.getStrategy({
+      key: this.key,
+      timeline: this.timeline,
+      encrypted: this.encrypted
+    });
+  };
+
+  /** @private */
+  prototype.retryIn = function(delay) {
+    var self = this;
+    self.timeline.info({ action: "retry", delay: delay });
+    if (delay > 0) {
+      self.emit("connecting_in", Math.round(delay / 1000));
+    }
+    self.retryTimer = new Pusher.Timer(delay || 0, function() {
+      self.disconnectInternally();
+      self.connect();
+    });
+  };
+
+  /** @private */
+  prototype.clearRetryTimer = function() {
+    if (this.retryTimer) {
+      this.retryTimer.ensureAborted();
+      this.retryTimer = null;
+    }
+  };
+
+  /** @private */
+  prototype.setUnavailableTimer = function() {
+    var self = this;
+    self.unavailableTimer = new Pusher.Timer(
+      self.options.unavailableTimeout,
+      function() {
+        self.updateState("unavailable");
+      }
+    );
+  };
+
+  /** @private */
+  prototype.clearUnavailableTimer = function() {
+    if (this.unavailableTimer) {
+      this.unavailableTimer.ensureAborted();
+    }
+  };
+
+  /** @private */
+  prototype.sendActivityCheck = function() {
+    var self = this;
+    self.stopActivityCheck();
+    self.connection.ping();
+    // wait for pong response
+    self.activityTimer = new Pusher.Timer(
+      self.options.pongTimeout,
+      function() {
+        self.timeline.error({ pong_timed_out: self.options.pongTimeout });
+        self.retryIn(0);
+      }
+    );
+  };
+
+  /** @private */
+  prototype.resetActivityCheck = function() {
+    var self = this;
+    self.stopActivityCheck();
+    // send ping after inactivity
+    if (!self.connection.handlesActivityChecks()) {
+      self.activityTimer = new Pusher.Timer(self.activityTimeout, function() {
+        self.sendActivityCheck();
+      });
+    }
+  };
+
+  /** @private */
+  prototype.stopActivityCheck = function() {
+    if (this.activityTimer) {
+      this.activityTimer.ensureAborted();
+    }
+  };
+
+  /** @private */
+  prototype.buildConnectionCallbacks = function() {
+    var self = this;
+    return {
+      message: function(message) {
+        // includes pong messages from server
+        self.resetActivityCheck();
+        self.emit('message', message);
+      },
+      ping: function() {
+        self.send_event('pusher:pong', {});
+      },
+      activity: function() {
+        self.resetActivityCheck();
+      },
+      error: function(error) {
+        // just emit error to user - socket will already be closed by browser
+        self.emit("error", { type: "WebSocketError", error: error });
+      },
+      closed: function() {
+        self.abandonConnection();
+        if (self.shouldRetry()) {
+          self.retryIn(1000);
+        }
+      }
+    };
+  };
+
+  /** @private */
+  prototype.buildHandshakeCallbacks = function(errorCallbacks) {
+    var self = this;
+    return Pusher.Util.extend({}, errorCallbacks, {
+      connected: function(handshake) {
+        self.activityTimeout = Math.min(
+          self.options.activityTimeout,
+          handshake.activityTimeout,
+          handshake.connection.activityTimeout || Infinity
+        );
+        self.clearUnavailableTimer();
+        self.setConnection(handshake.connection);
+        self.socket_id = self.connection.id;
+        self.updateState("connected", { socket_id: self.socket_id });
+      }
+    });
+  };
+
+  /** @private */
+  prototype.buildErrorCallbacks = function() {
+    var self = this;
+
+    function withErrorEmitted(callback) {
+      return function(result) {
+        if (result.error) {
+          self.emit("error", { type: "WebSocketError", error: result.error });
+        }
+        callback(result);
+      };
+    }
+
+    return {
+      ssl_only: withErrorEmitted(function() {
+        self.encrypted = true;
+        self.updateStrategy();
+        self.retryIn(0);
+      }),
+      refused: withErrorEmitted(function() {
+        self.disconnect();
+      }),
+      backoff: withErrorEmitted(function() {
+        self.retryIn(1000);
+      }),
+      retry: withErrorEmitted(function() {
+        self.retryIn(0);
+      })
+    };
+  };
+
+  /** @private */
+  prototype.setConnection = function(connection) {
+    this.connection = connection;
+    for (var event in this.connectionCallbacks) {
+      this.connection.bind(event, this.connectionCallbacks[event]);
+    }
+    this.resetActivityCheck();
+  };
+
+  /** @private */
+  prototype.abandonConnection = function() {
+    if (!this.connection) {
+      return;
+    }
+    this.stopActivityCheck();
+    for (var event in this.connectionCallbacks) {
+      this.connection.unbind(event, this.connectionCallbacks[event]);
+    }
+    var connection = this.connection;
+    this.connection = null;
+    return connection;
+  };
+
+  /** @private */
+  prototype.updateState = function(newState, data) {
+    var previousState = this.state;
+    this.state = newState;
+    if (previousState !== newState) {
+      Pusher.debug('State changed', previousState + ' -> ' + newState);
+      this.timeline.info({ state: newState, params: data });
+      this.emit('state_change', { previous: previousState, current: newState });
+      this.emit(newState, data);
+    }
+  };
+
+  /** @private */
+  prototype.shouldRetry = function() {
+    return this.state === "connecting" || this.state === "connected";
+  };
+
+  Pusher.ConnectionManager = ConnectionManager;
+}).call(this);
+
+;(function() {
+  /** Really basic interface providing network availability info.
+   *
+   * Emits:
+   * - online - when browser goes online
+   * - offline - when browser goes offline
+   */
+  function NetInfo() {
+    Pusher.EventsDispatcher.call(this);
+
+    var self = this;
+    // This is okay, as IE doesn't support this stuff anyway.
+    if (window.addEventListener !== undefined) {
+      window.addEventListener("online", function() {
+        self.emit('online');
+      }, false);
+      window.addEventListener("offline", function() {
+        self.emit('offline');
+      }, false);
+    }
+  }
+  Pusher.Util.extend(NetInfo.prototype, Pusher.EventsDispatcher.prototype);
+
+  var prototype = NetInfo.prototype;
+
+  /** Returns whether browser is online or not
+   *
+   * Offline means definitely offline (no connection to router).
+   * Inverse does NOT mean definitely online (only currently supported in Safari
+   * and even there only means the device has a connection to the router).
+   *
+   * @return {Boolean}
+   */
+  prototype.isOnline = function() {
+    if (window.navigator.onLine === undefined) {
+      return true;
+    } else {
+      return window.navigator.onLine;
+    }
+  };
+
+  Pusher.NetInfo = NetInfo;
+  Pusher.Network = new NetInfo();
+}).call(this);
+
+;(function() {
+  /** Represents a collection of members of a presence channel. */
+  function Members() {
+    this.reset();
+  }
+  var prototype = Members.prototype;
+
+  /** Returns member's info for given id.
+   *
+   * Resulting object containts two fields - id and info.
+   *
+   * @param {Number} id
+   * @return {Object} member's info or null
+   */
+  prototype.get = function(id) {
+    if (Object.prototype.hasOwnProperty.call(this.members, id)) {
+      return {
+        id: id,
+        info: this.members[id]
+      };
+    } else {
+      return null;
+    }
+  };
+
+  /** Calls back for each member in unspecified order.
+   *
+   * @param  {Function} callback
+   */
+  prototype.each = function(callback) {
+    var self = this;
+    Pusher.Util.objectApply(self.members, function(member, id) {
+      callback(self.get(id));
+    });
+  };
+
+  /** Updates the id for connected member. For internal use only. */
+  prototype.setMyID = function(id) {
+    this.myID = id;
+  };
+
+  /** Handles subscription data. For internal use only. */
+  prototype.onSubscription = function(subscriptionData) {
+    this.members = subscriptionData.presence.hash;
+    this.count = subscriptionData.presence.count;
+    this.me = this.get(this.myID);
+  };
+
+  /** Adds a new member to the collection. For internal use only. */
+  prototype.addMember = function(memberData) {
+    if (this.get(memberData.user_id) === null) {
+      this.count++;
+    }
+    this.members[memberData.user_id] = memberData.user_info;
+    return this.get(memberData.user_id);
+  };
+
+  /** Adds a member from the collection. For internal use only. */
+  prototype.removeMember = function(memberData) {
+    var member = this.get(memberData.user_id);
+    if (member) {
+      delete this.members[memberData.user_id];
+      this.count--;
+    }
+    return member;
+  };
+
+  /** Resets the collection to the initial state. For internal use only. */
+  prototype.reset = function() {
+    this.members = {};
+    this.count = 0;
+    this.myID = null;
+    this.me = null;
+  };
+
+  Pusher.Members = Members;
+}).call(this);
+
+;(function() {
+  /** Provides base public channel interface with an event emitter.
+   *
+   * Emits:
+   * - pusher:subscription_succeeded - after subscribing successfully
+   * - other non-internal events
+   *
+   * @param {String} name
+   * @param {Pusher} pusher
+   */
+  function Channel(name, pusher) {
+    Pusher.EventsDispatcher.call(this, function(event, data) {
+      Pusher.debug('No callbacks on ' + name + ' for ' + event);
+    });
+
+    this.name = name;
+    this.pusher = pusher;
+    this.subscribed = false;
+  }
+  var prototype = Channel.prototype;
+  Pusher.Util.extend(prototype, Pusher.EventsDispatcher.prototype);
+
+  /** Skips authorization, since public channels don't require it.
+   *
+   * @param {Function} callback
+   */
+  prototype.authorize = function(socketId, callback) {
+    return callback(false, {});
+  };
+
+  /** Triggers an event */
+  prototype.trigger = function(event, data) {
+    if (event.indexOf("client-") !== 0) {
+      throw new Pusher.Errors.BadEventName(
+        "Event '" + event + "' does not start with 'client-'"
+      );
+    }
+    return this.pusher.send_event(event, data, this.name);
+  };
+
+  /** Signals disconnection to the channel. For internal use only. */
+  prototype.disconnect = function() {
+    this.subscribed = false;
+  };
+
+  /** Handles an event. For internal use only.
+   *
+   * @param {String} event
+   * @param {*} data
+   */
+  prototype.handleEvent = function(event, data) {
+    if (event.indexOf("pusher_internal:") === 0) {
+      if (event === "pusher_internal:subscription_succeeded") {
+        this.subscribed = true;
+        this.emit("pusher:subscription_succeeded", data);
+      }
+    } else {
+      this.emit(event, data);
+    }
+  };
+
+  /** Sends a subscription request. For internal use only. */
+  prototype.subscribe = function() {
+    var self = this;
+
+    self.authorize(self.pusher.connection.socket_id, function(error, data) {
+      if (error) {
+        self.handleEvent('pusher:subscription_error', data);
+      } else {
+        self.pusher.send_event('pusher:subscribe', {
+          auth: data.auth,
+          channel_data: data.channel_data,
+          channel: self.name
+        });
+      }
+    });
+  };
+
+  /** Sends an unsubscription request. For internal use only. */
+  prototype.unsubscribe = function() {
+    this.pusher.send_event('pusher:unsubscribe', {
+      channel: this.name
+    });
+  };
+
+  Pusher.Channel = Channel;
+}).call(this);
+
+;(function() {
+  /** Extends public channels to provide private channel interface.
+   *
+   * @param {String} name
+   * @param {Pusher} pusher
+   */
+  function PrivateChannel(name, pusher) {
+    Pusher.Channel.call(this, name, pusher);
+  }
+  var prototype = PrivateChannel.prototype;
+  Pusher.Util.extend(prototype, Pusher.Channel.prototype);
+
+  /** Authorizes the connection to use the channel.
+   *
+   * @param  {String} socketId
+   * @param  {Function} callback
+   */
+  prototype.authorize = function(socketId, callback) {
+    var authorizer = new Pusher.Channel.Authorizer(this, this.pusher.config);
+    return authorizer.authorize(socketId, callback);
+  };
+
+  Pusher.PrivateChannel = PrivateChannel;
+}).call(this);
+
+;(function() {
+  /** Adds presence channel functionality to private channels.
+   *
+   * @param {String} name
+   * @param {Pusher} pusher
+   */
+  function PresenceChannel(name, pusher) {
+    Pusher.PrivateChannel.call(this, name, pusher);
+    this.members = new Pusher.Members();
+  }
+  var prototype = PresenceChannel.prototype;
+  Pusher.Util.extend(prototype, Pusher.PrivateChannel.prototype);
+
+  /** Authenticates the connection as a member of the channel.
+   *
+   * @param  {String} socketId
+   * @param  {Function} callback
+   */
+  prototype.authorize = function(socketId, callback) {
+    var _super = Pusher.PrivateChannel.prototype.authorize;
+    var self = this;
+    _super.call(self, socketId, function(error, authData) {
+      if (!error) {
+        if (authData.channel_data === undefined) {
+          Pusher.warn(
+            "Invalid auth response for channel '" +
+            self.name +
+            "', expected 'channel_data' field"
+          );
+          callback("Invalid auth response");
+          return;
+        }
+        var channelData = JSON.parse(authData.channel_data);
+        self.members.setMyID(channelData.user_id);
+      }
+      callback(error, authData);
+    });
+  };
+
+  /** Handles presence and subscription events. For internal use only.
+   *
+   * @param {String} event
+   * @param {*} data
+   */
+  prototype.handleEvent = function(event, data) {
+    switch (event) {
+      case "pusher_internal:subscription_succeeded":
+        this.members.onSubscription(data);
+        this.subscribed = true;
+        this.emit("pusher:subscription_succeeded", this.members);
+        break;
+      case "pusher_internal:member_added":
+        var addedMember = this.members.addMember(data);
+        this.emit('pusher:member_added', addedMember);
+        break;
+      case "pusher_internal:member_removed":
+        var removedMember = this.members.removeMember(data);
+        if (removedMember) {
+          this.emit('pusher:member_removed', removedMember);
+        }
+        break;
+      default:
+        Pusher.PrivateChannel.prototype.handleEvent.call(this, event, data);
+    }
+  };
+
+  /** Resets the channel state, including members map. For internal use only. */
+  prototype.disconnect = function() {
+    this.members.reset();
+    Pusher.PrivateChannel.prototype.disconnect.call(this);
+  };
+
+  Pusher.PresenceChannel = PresenceChannel;
+}).call(this);
+
+;(function() {
+  /** Handles a channel map. */
+  function Channels() {
+    this.channels = {};
+  }
+  var prototype = Channels.prototype;
+
+  /** Creates or retrieves an existing channel by its name.
+   *
+   * @param {String} name
+   * @param {Pusher} pusher
+   * @return {Channel}
+   */
+  prototype.add = function(name, pusher) {
+    if (!this.channels[name]) {
+      this.channels[name] = createChannel(name, pusher);
+    }
+    return this.channels[name];
+  };
+
+  /** Returns a list of all channels
+   *
+   * @return {Array}
+   */
+  prototype.all = function(name) {
+    return Pusher.Util.values(this.channels);
+  };
+
+  /** Finds a channel by its name.
+   *
+   * @param {String} name
+   * @return {Channel} channel or null if it doesn't exist
+   */
+  prototype.find = function(name) {
+    return this.channels[name];
+  };
+
+  /** Removes a channel from the map.
+   *
+   * @param {String} name
+   */
+  prototype.remove = function(name) {
+    var channel = this.channels[name];
+    delete this.channels[name];
+    return channel;
+  };
+
+  /** Proxies disconnection signal to all channels. */
+  prototype.disconnect = function() {
+    Pusher.Util.objectApply(this.channels, function(channel) {
+      channel.disconnect();
+    });
+  };
+
+  function createChannel(name, pusher) {
+    if (name.indexOf('private-') === 0) {
+      return new Pusher.PrivateChannel(name, pusher);
+    } else if (name.indexOf('presence-') === 0) {
+      return new Pusher.PresenceChannel(name, pusher);
+    } else {
+      return new Pusher.Channel(name, pusher);
+    }
+  }
+
+  Pusher.Channels = Channels;
+}).call(this);
+
+;(function() {
+  Pusher.Channel.Authorizer = function(channel, options) {
+    this.channel = channel;
+    this.type = options.authTransport;
+
+    this.options = options;
+    this.authOptions = (options || {}).auth || {};
+  };
+
+  Pusher.Channel.Authorizer.prototype = {
+    composeQuery: function(socketId) {
+      var query = 'socket_id=' + encodeURIComponent(socketId) +
+        '&channel_name=' + encodeURIComponent(this.channel.name);
+
+      for(var i in this.authOptions.params) {
+        query += "&" + encodeURIComponent(i) + "=" + encodeURIComponent(this.authOptions.params[i]);
+      }
+
+      return query;
+    },
+
+    authorize: function(socketId, callback) {
+      return Pusher.authorizers[this.type].call(this, socketId, callback);
+    }
+  };
+
+  var nextAuthCallbackID = 1;
+
+  Pusher.auth_callbacks = {};
+  Pusher.authorizers = {
+    ajax: function(socketId, callback){
+      var self = this, xhr;
+
+      if (Pusher.XHR) {
+        xhr = new Pusher.XHR();
+      } else {
+        xhr = (window.XMLHttpRequest ? new window.XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"));
+      }
+
+      xhr.open("POST", self.options.authEndpoint, true);
+
+      // add request headers
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      for(var headerName in this.authOptions.headers) {
+        xhr.setRequestHeader(headerName, this.authOptions.headers[headerName]);
+      }
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            var data, parsed = false;
+
+            try {
+              data = JSON.parse(xhr.responseText);
+              parsed = true;
+            } catch (e) {
+              callback(true, 'JSON returned from webapp was invalid, yet status code was 200. Data was: ' + xhr.responseText);
+            }
+
+            if (parsed) { // prevents double execution.
+              callback(false, data);
+            }
+          } else {
+            Pusher.warn("Couldn't get auth info from your webapp", xhr.status);
+            callback(true, xhr.status);
+          }
+        }
+      };
+
+      xhr.send(this.composeQuery(socketId));
+      return xhr;
+    },
+
+    jsonp: function(socketId, callback){
+      if(this.authOptions.headers !== undefined) {
+        Pusher.warn("Warn", "To send headers with the auth request, you must use AJAX, rather than JSONP.");
+      }
+
+      var callbackName = nextAuthCallbackID.toString();
+      nextAuthCallbackID++;
+
+      var document = Pusher.Util.getDocument();
+      var script = document.createElement("script");
+      // Hacked wrapper.
+      Pusher.auth_callbacks[callbackName] = function(data) {
+        callback(false, data);
+      };
+
+      var callback_name = "Pusher.auth_callbacks['" + callbackName + "']";
+      script.src = this.options.authEndpoint +
+        '?callback=' +
+        encodeURIComponent(callback_name) +
+        '&' +
+        this.composeQuery(socketId);
+
+      var head = document.getElementsByTagName("head")[0] || document.documentElement;
+      head.insertBefore( script, head.firstChild );
+    }
+  };
+}).call(this);
+
+
+; browserify_shim__define__module__export__(typeof Pusher != "undefined" ? Pusher : window.Pusher);
+
+}).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],6:[function(require,module,exports){
+(function (global){
 require('./resources/libs');
 
 require('./resources/locales');
@@ -12377,16 +16402,24 @@ global.MessengerPage = require('./react/pages/messenger');
 
 global.MessengerThreadPage = require('./react/pages/messengerThread');
 
+require('./react/stores/conversation');
+
 require('./react/stores/currentUser');
 
-require('./react/stores/relationships');
-
 require('./react/stores/feed');
+
+require('./react/stores/message');
+
+require('./react/stores/messagingStatus');
+
+require('./react/stores/notification');
+
+require('./react/stores/relationships');
 
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../shared/react/services/thumbor":245,"../shared/routes/api":247,"../shared/routes/routes":248,"./react/application":20,"./react/components/auth/auth":22,"./react/components/auth/authEmailSignIn":24,"./react/components/auth/authEmailSignUp":25,"./react/pages/entry":216,"./react/pages/feedBest":217,"./react/pages/feedFriends":218,"./react/pages/feedLive":219,"./react/pages/messenger":220,"./react/pages/messengerThread":221,"./react/pages/notifications":229,"./react/pages/settings":230,"./react/pages/tlogDaylog":231,"./react/pages/tlogRegular":232,"./react/stores/currentUser":235,"./react/stores/feed":236,"./react/stores/relationships":239,"./resources/libs":240,"./resources/locales":241}],6:[function(require,module,exports){
+},{"../shared/react/services/thumbor":249,"../shared/routes/api":251,"../shared/routes/routes":252,"./react/application":21,"./react/components/auth/auth":23,"./react/components/auth/authEmailSignIn":25,"./react/components/auth/authEmailSignUp":26,"./react/pages/entry":218,"./react/pages/feedBest":219,"./react/pages/feedFriends":220,"./react/pages/feedLive":221,"./react/pages/messenger":222,"./react/pages/messengerThread":223,"./react/pages/notifications":231,"./react/pages/settings":232,"./react/pages/tlogDaylog":233,"./react/pages/tlogRegular":234,"./react/stores/conversation":237,"./react/stores/currentUser":238,"./react/stores/feed":239,"./react/stores/message":240,"./react/stores/messagingStatus":241,"./react/stores/notification":242,"./react/stores/relationships":243,"./resources/libs":244,"./resources/locales":245}],7:[function(require,module,exports){
 var AppDispatcher, Constants, CurrentUserServerActions;
 
 Constants = require('../../constants/constants');
@@ -12417,7 +16450,7 @@ module.exports = CurrentUserServerActions;
 
 
 
-},{"../../constants/constants":203,"../../dispatcher/dispatcher":212}],7:[function(require,module,exports){
+},{"../../constants/constants":204,"../../dispatcher/dispatcher":214}],8:[function(require,module,exports){
 var AppDispatcher, Constants, FeedServerActions;
 
 Constants = require('../../constants/constants');
@@ -12443,7 +16476,7 @@ module.exports = FeedServerActions;
 
 
 
-},{"../../constants/constants":203,"../../dispatcher/dispatcher":212}],8:[function(require,module,exports){
+},{"../../constants/constants":204,"../../dispatcher/dispatcher":214}],9:[function(require,module,exports){
 var AppDispatcher, Constants, MessengerServerActions;
 
 Constants = require('../../constants/constants');
@@ -12487,7 +16520,7 @@ module.exports = MessengerServerActions;
 
 
 
-},{"../../constants/constants":203,"../../dispatcher/dispatcher":212}],9:[function(require,module,exports){
+},{"../../constants/constants":204,"../../dispatcher/dispatcher":214}],10:[function(require,module,exports){
 var AppDispatcher, Constants, NotificationsServerActions;
 
 Constants = require('../../constants/constants');
@@ -12520,7 +16553,7 @@ module.exports = NotificationsServerActions;
 
 
 
-},{"../../constants/constants":203,"../../dispatcher/dispatcher":212}],10:[function(require,module,exports){
+},{"../../constants/constants":204,"../../dispatcher/dispatcher":214}],11:[function(require,module,exports){
 var AppDispatcher, Constants, RelationshipServerActions;
 
 Constants = require('../../constants/constants');
@@ -12543,7 +16576,7 @@ module.exports = RelationshipServerActions;
 
 
 
-},{"../../constants/constants":203,"../../dispatcher/dispatcher":212}],11:[function(require,module,exports){
+},{"../../constants/constants":204,"../../dispatcher/dispatcher":214}],12:[function(require,module,exports){
 var Api, CurrentUserServerActions, CurrentUserViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -12588,7 +16621,7 @@ module.exports = CurrentUserViewActions;
 
 
 
-},{"../../api/api":19,"../../controllers/notify":210,"../server/currentUser":6}],12:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":212,"../server/currentUser":7}],13:[function(require,module,exports){
 var Api, EntryViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -12673,7 +16706,7 @@ module.exports = EntryViewActions;
 
 
 
-},{"../../api/api":19,"../../controllers/notify":210}],13:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":212}],14:[function(require,module,exports){
 var Api, FeedServerActions, FeedViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -12719,7 +16752,7 @@ module.exports = FeedViewActions;
 
 
 
-},{"../../api/api":19,"../../controllers/notify":210,"../server/feed":7}],14:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":212,"../server/feed":8}],15:[function(require,module,exports){
 var Api, AppDispatcher, Constants, MessengerServerActions, MessengerViewActions, NotifyController, UuidService;
 
 Api = require('../../api/api');
@@ -12783,7 +16816,7 @@ MessengerViewActions = {
     return Api.messenger.createMessage(convID, messageText, uuid).then(function(message) {
       return MessengerServerActions.createMessage(message);
     }).fail(function() {
-      NotifyController.notifyError('При отправке сообщения произошла ошибка');
+      NotifyController.notifyError('При повторной отправке сообщения произошла ошибка');
       return MessengerServerActions.createMessageFail(uuid);
     });
   }
@@ -12793,7 +16826,7 @@ module.exports = MessengerViewActions;
 
 
 
-},{"../../../../shared/react/services/uuid":246,"../../api/api":19,"../../constants/constants":203,"../../controllers/notify":210,"../../dispatcher/dispatcher":212,"../server/messenger":8}],15:[function(require,module,exports){
+},{"../../../../shared/react/services/uuid":250,"../../api/api":20,"../../constants/constants":204,"../../controllers/notify":212,"../../dispatcher/dispatcher":214,"../server/messenger":9}],16:[function(require,module,exports){
 var Api, NotificationsServerActions, NotificationsViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -12837,7 +16870,7 @@ module.exports = NotificationsViewActions;
 
 
 
-},{"../../api/api":19,"../../controllers/notify":210,"../server/notifications":9}],16:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":212,"../server/notifications":10}],17:[function(require,module,exports){
 var Api, NotifyController, RelationshipServerActions, RelationshipViewActions;
 
 Api = require('../../api/api');
@@ -12910,7 +16943,7 @@ module.exports = RelationshipViewActions;
 
 
 
-},{"../../api/api":19,"../../controllers/notify":210,"../server/relationship":10}],17:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":212,"../server/relationship":11}],18:[function(require,module,exports){
 var Api, NotifyController, SessionsViewActions;
 
 Api = require('../../api/api');
@@ -12951,7 +16984,7 @@ module.exports = SessionsViewActions;
 
 
 
-},{"../../api/api":19,"../../controllers/notify":210}],18:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":212}],19:[function(require,module,exports){
 var Api, UsersViewActions;
 
 Api = require('../../api/api');
@@ -12966,7 +16999,7 @@ module.exports = UsersViewActions;
 
 
 
-},{"../../api/api":19}],19:[function(require,module,exports){
+},{"../../api/api":20}],20:[function(require,module,exports){
 var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, assign, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _pendingRequests;
 
 assign = require('react/lib/Object.assign');
@@ -13122,6 +17155,18 @@ Api = {
       return _pendingRequests[key] = postRequest(url);
     }
   },
+  messaging: {
+    ready: function(socketID) {
+      var data, key, url;
+      url = ApiRoutes.messenger_ready_url();
+      key = Constants.api.READY_TO_MESSAGING;
+      data = {
+        socket_id: socketID
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, data);
+    }
+  },
   messenger: {
     createConversation: function(userID) {
       var key, url;
@@ -13161,7 +17206,6 @@ Api = {
         content: messageText,
         uuid: uuid
       };
-      abortPendingRequests(key);
       return _pendingRequests[key] = postRequest(url, data);
     }
   },
@@ -13391,17 +17435,23 @@ module.exports = Api;
 
 
 
-},{"../constants/constants":203,"../stores/currentUser":235,"react/lib/Object.assign":279}],20:[function(require,module,exports){
-var ReactUjs;
+},{"../constants/constants":204,"../stores/currentUser":238,"react/lib/Object.assign":283}],21:[function(require,module,exports){
+(function (global){
+var MessagingService, ReactUjs;
 
-window.i18n = require('i18next');
+global.i18n = require('i18next');
 
 ReactUjs = require('reactUjs');
 
+MessagingService = require('./services/messaging');
+
 window.ReactApp = {
-  start: function(locale) {
+  messagingService: null,
+  start: function(_arg) {
+    var locale, userID, userToken;
+    locale = _arg.locale, userID = _arg.userID, userToken = _arg.userToken;
     console.log('ReactApp start');
-    return i18n.init({
+    i18n.init({
       lng: locale,
       fallbackLng: 'ru',
       resGetPath: TastySettings.localesPath + '/__lng__.json'
@@ -13409,12 +17459,16 @@ window.ReactApp = {
       console.log('Locales loaded');
       return ReactUjs.initialize();
     });
+    if (userID && userToken) {
+      return this.messagingService = new MessagingService(userID, userToken);
+    }
   }
 };
 
 
 
-},{"i18next":"i18next","reactUjs":"reactUjs"}],21:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./services/messaging":235,"i18next":"i18next","reactUjs":"reactUjs"}],22:[function(require,module,exports){
 var Notify, PropTypes, TIMEOUT, TYPE;
 
 PropTypes = React.PropTypes;
@@ -13456,7 +17510,7 @@ module.exports = Notify;
 
 
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 (function (global){
 var AuthEmailSignInButton, AuthEmailSignUpButton, AuthFacebookButton, AuthVkontakteButton, PropTypes, cx;
 
@@ -13524,7 +17578,7 @@ module.exports = Auth;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./buttons/emailSignIn":28,"./buttons/emailSignUp":29,"./buttons/facebook":31,"./buttons/vkontakte":32,"react/lib/cx":358}],23:[function(require,module,exports){
+},{"./buttons/emailSignIn":29,"./buttons/emailSignUp":30,"./buttons/facebook":32,"./buttons/vkontakte":33,"react/lib/cx":362}],24:[function(require,module,exports){
 var AuthEmailLoginField, AuthEmailRecovery, AuthEmailResetButton, AuthRememberedPasswordLink, ComponentMixin, NotifyController, PropTypes, ScreenController, SessionsViewActions, cx;
 
 cx = require('react/lib/cx');
@@ -13637,7 +17691,7 @@ module.exports = AuthEmailRecovery;
 
 
 
-},{"../../actions/view/sessions":17,"../../controllers/notify":210,"../../controllers/screen":211,"../../mixins/component":214,"./buttons/emailReset":27,"./fields/emailLogin":34,"./links/rememberedPassword":40,"react/lib/cx":358}],24:[function(require,module,exports){
+},{"../../actions/view/sessions":18,"../../controllers/notify":212,"../../controllers/screen":213,"../../mixins/component":216,"./buttons/emailReset":28,"./fields/emailLogin":35,"./links/rememberedPassword":41,"react/lib/cx":362}],25:[function(require,module,exports){
 (function (global){
 var AuthEmailLoginField, AuthEmailPasswordField, AuthEmailSubmitButton, AuthForgotPasswordLink, AuthNotRegisteredYetLink, ComponentMixin, NotifyController, PropTypes, SessionsViewActions, cx;
 
@@ -13770,7 +17824,7 @@ module.exports = AuthEmailSignIn;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../actions/view/sessions":17,"../../controllers/notify":210,"../../mixins/component":214,"./buttons/emailSubmit":30,"./fields/emailLogin":34,"./fields/emailPassword":36,"./links/forgotPassword":38,"./links/notRegisteredYet":39,"react/lib/cx":358}],25:[function(require,module,exports){
+},{"../../actions/view/sessions":18,"../../controllers/notify":212,"../../mixins/component":216,"./buttons/emailSubmit":31,"./fields/emailLogin":35,"./fields/emailPassword":37,"./links/forgotPassword":39,"./links/notRegisteredYet":40,"react/lib/cx":362}],26:[function(require,module,exports){
 (function (global){
 var AuthAlreadyRegisteredLink, AuthEmailEmailField, AuthEmailNicknameField, AuthEmailPasswordField, AuthEmailSubmitButton, ComponentMixin, NotifyController, PropTypes, SessionsViewActions, cx;
 
@@ -13904,7 +17958,7 @@ module.exports = AuthEmailSignUp;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../actions/view/sessions":17,"../../controllers/notify":210,"../../mixins/component":214,"./buttons/emailSubmit":30,"./fields/emailEmail":33,"./fields/emailNickname":35,"./fields/emailPassword":36,"./links/alreadyRegistered":37,"react/lib/cx":358}],26:[function(require,module,exports){
+},{"../../actions/view/sessions":18,"../../controllers/notify":212,"../../mixins/component":216,"./buttons/emailSubmit":31,"./fields/emailEmail":34,"./fields/emailNickname":36,"./fields/emailPassword":37,"./links/alreadyRegistered":38,"react/lib/cx":362}],27:[function(require,module,exports){
 var Auth, AuthManager, ConnectStoreMixin, CurrentUserStore;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -13934,7 +17988,7 @@ module.exports = AuthManager;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../stores/currentUser":235,"./auth":22}],27:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../stores/currentUser":238,"./auth":23}],28:[function(require,module,exports){
 var AuthEmailResetButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -13964,7 +18018,7 @@ module.exports = AuthEmailResetButton;
 
 
 
-},{"../../common/spinner/spinner":54}],28:[function(require,module,exports){
+},{"../../common/spinner/spinner":55}],29:[function(require,module,exports){
 var AuthEmailSignIn, AuthEmailSignInButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -13988,7 +18042,7 @@ module.exports = AuthEmailSignInButton;
 
 
 
-},{"../../../controllers/screen":211,"../authEmailSignIn":24}],29:[function(require,module,exports){
+},{"../../../controllers/screen":213,"../authEmailSignIn":25}],30:[function(require,module,exports){
 var AuthEmailSignUpButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -14010,7 +18064,7 @@ module.exports = AuthEmailSignUpButton;
 
 
 
-},{"../../../controllers/screen":211}],30:[function(require,module,exports){
+},{"../../../controllers/screen":213}],31:[function(require,module,exports){
 var AuthEmailSubmitButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -14040,7 +18094,7 @@ module.exports = AuthEmailSubmitButton;
 
 
 
-},{"../../common/spinner/spinner":54}],31:[function(require,module,exports){
+},{"../../common/spinner/spinner":55}],32:[function(require,module,exports){
 var AuthFacebookButton;
 
 AuthFacebookButton = React.createClass({
@@ -14060,7 +18114,7 @@ module.exports = AuthFacebookButton;
 
 
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 var AuthVkontakteButton;
 
 AuthVkontakteButton = React.createClass({
@@ -14080,7 +18134,7 @@ module.exports = AuthVkontakteButton;
 
 
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 var AuthEmailEmailField;
 
 AuthEmailEmailField = React.createClass({
@@ -14110,7 +18164,7 @@ module.exports = AuthEmailEmailField;
 
 
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 var AuthEmailLoginField;
 
 AuthEmailLoginField = React.createClass({
@@ -14140,7 +18194,7 @@ module.exports = AuthEmailLoginField;
 
 
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 var AuthEmailNicknameField;
 
 AuthEmailNicknameField = React.createClass({
@@ -14170,7 +18224,7 @@ module.exports = AuthEmailNicknameField;
 
 
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 var AuthEmailPasswordField;
 
 AuthEmailPasswordField = React.createClass({
@@ -14200,7 +18254,7 @@ module.exports = AuthEmailPasswordField;
 
 
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 var AuthNotRegisteredYetLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -14222,7 +18276,7 @@ module.exports = AuthNotRegisteredYetLink;
 
 
 
-},{"../../../controllers/screen":211}],38:[function(require,module,exports){
+},{"../../../controllers/screen":213}],39:[function(require,module,exports){
 var AuthEmailRecovery, AuthForgotPasswordLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -14246,7 +18300,7 @@ module.exports = AuthForgotPasswordLink;
 
 
 
-},{"../../../controllers/screen":211,"../authEmailRecovery":23}],39:[function(require,module,exports){
+},{"../../../controllers/screen":213,"../authEmailRecovery":24}],40:[function(require,module,exports){
 var AuthNotRegisteredYetLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -14268,7 +18322,7 @@ module.exports = AuthNotRegisteredYetLink;
 
 
 
-},{"../../../controllers/screen":211}],40:[function(require,module,exports){
+},{"../../../controllers/screen":213}],41:[function(require,module,exports){
 var AuthRememberedPasswordLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -14290,7 +18344,7 @@ module.exports = AuthRememberedPasswordLink;
 
 
 
-},{"../../../controllers/screen":211}],41:[function(require,module,exports){
+},{"../../../controllers/screen":213}],42:[function(require,module,exports){
 var AuthButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -14312,7 +18366,7 @@ module.exports = AuthButton;
 
 
 
-},{"../../../controllers/screen":211}],42:[function(require,module,exports){
+},{"../../../controllers/screen":213}],43:[function(require,module,exports){
 var AuthButton, AuthButtonManager, ConnectStoreMixin, CurrentUserStore, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -14347,7 +18401,7 @@ module.exports = AuthButtonManager;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":244,"../../../controllers/screen":211,"../../../stores/currentUser":235,"./auth":41}],43:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":248,"../../../controllers/screen":213,"../../../stores/currentUser":238,"./auth":42}],44:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, ERROR_STATE, FRIEND_STATUS, FollowButton, GUESSED_STATUS, IGNORED_STATUS, NONE_STATUS, PROCESS_STATE, PropTypes, REQUESTED_STATUS, RelationshipButtonMixin, RelationshipsStore, SHOW_STATE, cx;
 
 cx = require('react/lib/cx');
@@ -14492,7 +18546,7 @@ module.exports = FollowButton;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":244,"../../../mixins/component":214,"../../../stores/relationships":239,"./mixins/relationship":44,"react/lib/cx":358}],44:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":248,"../../../mixins/component":216,"../../../stores/relationships":243,"./mixins/relationship":45,"react/lib/cx":362}],45:[function(require,module,exports){
 var RelationshipButtonMixin, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../actions/view/relationship');
@@ -14530,7 +18584,7 @@ module.exports = RelationshipButtonMixin;
 
 
 
-},{"../../../../actions/view/relationship":16}],45:[function(require,module,exports){
+},{"../../../../actions/view/relationship":17}],46:[function(require,module,exports){
 var Avatar, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -14600,7 +18654,7 @@ module.exports = Avatar;
 
 
 
-},{"react/lib/cx":358}],46:[function(require,module,exports){
+},{"react/lib/cx":362}],47:[function(require,module,exports){
 var Avatar, PropTypes, UserAvatar;
 
 Avatar = require('./avatar');
@@ -14626,7 +18680,7 @@ module.exports = UserAvatar;
 
 
 
-},{"./avatar":45}],47:[function(require,module,exports){
+},{"./avatar":46}],48:[function(require,module,exports){
 var Collage, CollageMixin, CollageRow, PropTypes;
 
 CollageMixin = require('./mixins/collage');
@@ -14678,7 +18732,7 @@ module.exports = Collage;
 
 
 
-},{"./mixins/collage":49,"./row":50}],48:[function(require,module,exports){
+},{"./mixins/collage":50,"./row":51}],49:[function(require,module,exports){
 var Collage, CollageManager, MARGIN, MIN_ROW_HEIGHT, PropTypes;
 
 Collage = require('./collage');
@@ -14740,7 +18794,7 @@ module.exports = CollageManager;
 
 
 
-},{"./collage":47}],49:[function(require,module,exports){
+},{"./collage":48}],50:[function(require,module,exports){
 var CollageMixin, assign;
 
 assign = require('react/lib/Object.assign');
@@ -14810,7 +18864,7 @@ module.exports = CollageMixin;
 
 
 
-},{"react/lib/Object.assign":279}],50:[function(require,module,exports){
+},{"react/lib/Object.assign":283}],51:[function(require,module,exports){
 var CollageRow, CollageRowItem, PropTypes;
 
 CollageRowItem = require('./row/item');
@@ -14844,7 +18898,7 @@ module.exports = CollageRow;
 
 
 
-},{"./row/item":51}],51:[function(require,module,exports){
+},{"./row/item":52}],52:[function(require,module,exports){
 var CollageItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -14905,7 +18959,7 @@ module.exports = CollageItem;
 
 
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 var ConnectStoreMixin, FollowStatus, PropTypes, RelationshipsStore;
 
 RelationshipsStore = require('../../../stores/relationships');
@@ -14943,7 +18997,7 @@ module.exports = FollowStatus;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":244,"../../../stores/relationships":239}],53:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":248,"../../../stores/relationships":243}],54:[function(require,module,exports){
 var Image, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -15010,7 +19064,7 @@ module.exports = Image;
 
 
 
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 var PropTypes, Spinner;
 
 PropTypes = React.PropTypes;
@@ -15040,7 +19094,7 @@ module.exports = Spinner;
 
 
 
-},{}],55:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 var Daylog, DaylogEmptyPageMessage, EntryTlog, PropTypes;
 
 DaylogEmptyPageMessage = require('./emptyPageMessage');
@@ -15077,7 +19131,7 @@ module.exports = Daylog;
 
 
 
-},{"../entry/tlog":100,"./emptyPageMessage":56}],56:[function(require,module,exports){
+},{"../entry/tlog":101,"./emptyPageMessage":57}],57:[function(require,module,exports){
 var DaylogEmptyPageMessage;
 
 DaylogEmptyPageMessage = React.createClass({
@@ -15099,7 +19153,7 @@ module.exports = DaylogEmptyPageMessage;
 
 
 
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 var CommentsLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -15122,7 +19176,7 @@ module.exports = CommentsLoadMoreButton;
 
 
 
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 var CommentForm, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -15188,7 +19242,7 @@ module.exports = CommentForm;
 
 
 
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 var CommentCreateForm, CommentForm, ComponentMixin, PropTypes;
 
 CommentForm = require('../commentForm');
@@ -15232,7 +19286,7 @@ module.exports = CommentCreateForm;
 
 
 
-},{"../../../../mixins/component":214,"../commentForm":58}],60:[function(require,module,exports){
+},{"../../../../mixins/component":216,"../commentForm":59}],61:[function(require,module,exports){
 var CommentEditForm, CommentForm, ComponentMixin, PropTypes;
 
 CommentForm = require('../commentForm');
@@ -15278,7 +19332,7 @@ module.exports = CommentEditForm;
 
 
 
-},{"../../../../mixins/component":214,"../commentForm":58}],61:[function(require,module,exports){
+},{"../../../../mixins/component":216,"../commentForm":59}],62:[function(require,module,exports){
 var CommentList, CommentManager, PropTypes;
 
 CommentManager = require('./commentList/commentManager');
@@ -15318,7 +19372,7 @@ module.exports = CommentList;
 
 
 
-},{"./commentList/commentManager":73}],62:[function(require,module,exports){
+},{"./commentList/commentManager":74}],63:[function(require,module,exports){
 var Comment, CommentActions, CommentDate, CommentText, CommentUser, PropTypes;
 
 CommentUser = require('./comment/user');
@@ -15361,7 +19415,7 @@ module.exports = Comment;
 
 
 
-},{"./comment/actions":63,"./comment/date":70,"./comment/text":71,"./comment/user":72}],63:[function(require,module,exports){
+},{"./comment/actions":64,"./comment/date":71,"./comment/text":72,"./comment/user":73}],64:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, CommentActions, CommentActionsButton, CommentActionsDropdownMenu, OPEN_STATE, PropTypes, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -15435,7 +19489,7 @@ module.exports = CommentActions;
 
 
 
-},{"../../../../../mixins/clickOutside":213,"../../../../common/avatar/user":46,"./actions/buttons/button":64,"./actions/dropdownMenu":65,"react/lib/cx":358}],64:[function(require,module,exports){
+},{"../../../../../mixins/clickOutside":215,"../../../../common/avatar/user":47,"./actions/buttons/button":65,"./actions/dropdownMenu":66,"react/lib/cx":362}],65:[function(require,module,exports){
 var CommentActionsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -15459,7 +19513,7 @@ module.exports = CommentActionsButton;
 
 
 
-},{}],65:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 var CommentActionsDropdownMenu, CommentActionsDropdownMenuDeleteItem, CommentActionsDropdownMenuEditItem, CommentActionsDropdownMenuLinkItem, CommentActionsDropdownMenuReportItem, DropdownMenuMixin, PropTypes;
 
 DropdownMenuMixin = require('../../../../../../mixins/dropdownMenu');
@@ -15526,7 +19580,7 @@ module.exports = CommentActionsDropdownMenu;
 
 
 
-},{"../../../../../../mixins/dropdownMenu":215,"./dropdownMenu/items/delete":66,"./dropdownMenu/items/edit":67,"./dropdownMenu/items/link":68,"./dropdownMenu/items/report":69}],66:[function(require,module,exports){
+},{"../../../../../../mixins/dropdownMenu":217,"./dropdownMenu/items/delete":67,"./dropdownMenu/items/edit":68,"./dropdownMenu/items/link":69,"./dropdownMenu/items/report":70}],67:[function(require,module,exports){
 var CommentActionsDropdownMenuDeleteItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -15561,7 +19615,7 @@ module.exports = CommentActionsDropdownMenuDeleteItem;
 
 
 
-},{}],67:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 var CommentActionsDropdownMenuEditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -15587,7 +19641,7 @@ module.exports = CommentActionsDropdownMenuEditItem;
 
 
 
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 var CommentActionsDropdownMenuLinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -15617,7 +19671,7 @@ module.exports = CommentActionsDropdownMenuLinkItem;
 
 
 
-},{}],69:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 var CommentActionsDropdownMenuReportItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -15652,7 +19706,7 @@ module.exports = CommentActionsDropdownMenuReportItem;
 
 
 
-},{}],70:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 var CommentDate, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -15698,7 +19752,7 @@ module.exports = CommentDate;
 
 
 
-},{}],71:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 var CommentText, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -15722,7 +19776,7 @@ module.exports = CommentText;
 
 
 
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 var CommentUser, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -15755,7 +19809,7 @@ module.exports = CommentUser;
 
 
 
-},{"../../../../common/avatar/user":46}],73:[function(require,module,exports){
+},{"../../../../common/avatar/user":47}],74:[function(require,module,exports){
 var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
 
 Comment = require('./comment');
@@ -15824,7 +19878,7 @@ module.exports = CommentManager;
 
 
 
-},{"../../../../mixins/component":214,"../commentForm/edit":60,"./comment":62}],74:[function(require,module,exports){
+},{"../../../../mixins/component":216,"../commentForm/edit":61,"./comment":63}],75:[function(require,module,exports){
 var CommentCreateForm, CommentList, CommentsLoadMore, EntryComments, PropTypes;
 
 CommentList = require('./commentList');
@@ -15894,7 +19948,7 @@ module.exports = EntryComments;
 
 
 
-},{"./commentForm/create":59,"./commentList":61,"./commentsLoadMore":75}],75:[function(require,module,exports){
+},{"./commentForm/create":60,"./commentList":62,"./commentsLoadMore":76}],76:[function(require,module,exports){
 var CommentsLoadMore, CommentsLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -15951,7 +20005,7 @@ module.exports = CommentsLoadMore;
 
 
 
-},{"../../common/spinner/spinner":54,"./buttons/loadMore":57}],76:[function(require,module,exports){
+},{"../../common/spinner/spinner":55,"./buttons/loadMore":58}],77:[function(require,module,exports){
 var EntryContent, IMAGE_TYPE, ImageEntryContent, PropTypes, QUOTE_TYPE, QuoteEntryContent, TEXT_TYPE, TextEntryContent, UnknownEntryContent, VIDEO_TYPE, VideoEntryContent;
 
 TextEntryContent = require('./text/text');
@@ -16013,7 +20067,7 @@ module.exports = EntryContent;
 
 
 
-},{"./image/image":78,"./quote/quote":79,"./text/text":81,"./unknown/unknown":83,"./video/video":84}],77:[function(require,module,exports){
+},{"./image/image":79,"./quote/quote":80,"./text/text":82,"./unknown/unknown":84,"./video/video":85}],78:[function(require,module,exports){
 var CollageManager, ImageEntryAttachments, PropTypes;
 
 CollageManager = require('../../../common/collage/collageManager');
@@ -16053,7 +20107,7 @@ module.exports = ImageEntryAttachments;
 
 
 
-},{"../../../common/collage/collageManager":48}],78:[function(require,module,exports){
+},{"../../../common/collage/collageManager":49}],79:[function(require,module,exports){
 var ImageEntryAttachments, ImageEntryContent, PropTypes;
 
 ImageEntryAttachments = require('./attachments');
@@ -16098,7 +20152,7 @@ module.exports = ImageEntryContent;
 
 
 
-},{"./attachments":77}],79:[function(require,module,exports){
+},{"./attachments":78}],80:[function(require,module,exports){
 var PropTypes, QuoteEntryContent;
 
 PropTypes = React.PropTypes;
@@ -16133,7 +20187,7 @@ module.exports = QuoteEntryContent;
 
 
 
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 var PropTypes, TextEntryHeader;
 
 PropTypes = React.PropTypes;
@@ -16156,7 +20210,7 @@ module.exports = TextEntryHeader;
 
 
 
-},{}],81:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 var PropTypes, TextEntryContent, TextEntryHeader;
 
 TextEntryHeader = require('./header');
@@ -16185,7 +20239,7 @@ module.exports = TextEntryContent;
 
 
 
-},{"./header":80}],82:[function(require,module,exports){
+},{"./header":81}],83:[function(require,module,exports){
 var PropTypes, UnknownEntryHeader;
 
 PropTypes = React.PropTypes;
@@ -16208,7 +20262,7 @@ module.exports = UnknownEntryHeader;
 
 
 
-},{}],83:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 var PropTypes, UnknownEntryContent, UnknownEntryHeader;
 
 UnknownEntryHeader = require('./header');
@@ -16233,7 +20287,7 @@ module.exports = UnknownEntryContent;
 
 
 
-},{"./header":82}],84:[function(require,module,exports){
+},{"./header":83}],85:[function(require,module,exports){
 var PropTypes, VideoEntryContent;
 
 PropTypes = React.PropTypes;
@@ -16271,7 +20325,7 @@ module.exports = VideoEntryContent;
 
 
 
-},{}],85:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, CurrentUserStore, EntryComments, EntryContent, EntryFeed, EntryFeedMeta, EntryMixin, PropTypes;
 
 EntryFeedMeta = require('./feed/meta');
@@ -16330,7 +20384,7 @@ module.exports = EntryFeed;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../mixins/component":214,"../../stores/currentUser":235,"./comments/comments":74,"./content/content":76,"./feed/meta":86,"./mixins/entry":99}],86:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../mixins/component":216,"../../stores/currentUser":238,"./comments/comments":75,"./content/content":77,"./feed/meta":87,"./mixins/entry":100}],87:[function(require,module,exports){
 var EntryFeedMeta, EntryMetaActions, EntryMetaAuthor, EntryMetaComments, EntryMetaVoting, PropTypes;
 
 EntryMetaVoting = require('../meta/voting');
@@ -16374,7 +20428,7 @@ module.exports = EntryFeedMeta;
 
 
 
-},{"../meta/actions":87,"../meta/author":96,"../meta/comments":97,"../meta/voting":98}],87:[function(require,module,exports){
+},{"../meta/actions":88,"../meta/author":97,"../meta/comments":98,"../meta/voting":99}],88:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, EntryMetaActions, EntryMetaActions_Button, EntryMetaActions_DropdownMenu, OPEN_STATE, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -16443,7 +20497,7 @@ module.exports = EntryMetaActions;
 
 
 
-},{"../../../mixins/clickOutside":213,"./actions/buttons/button":88,"./actions/dropdownMenu":89,"react/lib/cx":358}],88:[function(require,module,exports){
+},{"../../../mixins/clickOutside":215,"./actions/buttons/button":89,"./actions/dropdownMenu":90,"react/lib/cx":362}],89:[function(require,module,exports){
 var EntryMetaActions_Button, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -16467,7 +20521,7 @@ module.exports = EntryMetaActions_Button;
 
 
 
-},{}],89:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 var DropdownMenuMixin, EntryMetaActions_DropdownMenu, EntryMetaActions_DropdownMenu_DeleteItem, EntryMetaActions_DropdownMenu_EditItem, EntryMetaActions_DropdownMenu_FavoriteItem, EntryMetaActions_DropdownMenu_LinkItem, EntryMetaActions_DropdownMenu_ReportItem, EntryMetaActions_DropdownMenu_WatchItem, PropTypes;
 
 DropdownMenuMixin = require('../../../../mixins/dropdownMenu');
@@ -16546,7 +20600,7 @@ module.exports = EntryMetaActions_DropdownMenu;
 
 
 
-},{"../../../../mixins/dropdownMenu":215,"./dropdownMenu/items/delete":90,"./dropdownMenu/items/edit":91,"./dropdownMenu/items/favorite":92,"./dropdownMenu/items/link":93,"./dropdownMenu/items/report":94,"./dropdownMenu/items/watch":95}],90:[function(require,module,exports){
+},{"../../../../mixins/dropdownMenu":217,"./dropdownMenu/items/delete":91,"./dropdownMenu/items/edit":92,"./dropdownMenu/items/favorite":93,"./dropdownMenu/items/link":94,"./dropdownMenu/items/report":95,"./dropdownMenu/items/watch":96}],91:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_DeleteItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -16582,7 +20636,7 @@ module.exports = EntryMetaActions_DropdownMenu_DeleteItem;
 
 
 
-},{"../../../../../../actions/view/entry":12}],91:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":13}],92:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_EditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -16608,7 +20662,7 @@ module.exports = EntryMetaActions_DropdownMenu_EditItem;
 
 
 
-},{}],92:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_FavoriteItem, EntryViewActions, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -16685,7 +20739,7 @@ module.exports = EntryMetaActions_DropdownMenu_FavoriteItem;
 
 
 
-},{"../../../../../../actions/view/entry":12,"react/lib/cx":358}],93:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":13,"react/lib/cx":362}],94:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_LinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -16711,7 +20765,7 @@ module.exports = EntryMetaActions_DropdownMenu_LinkItem;
 
 
 
-},{}],94:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_ReportItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -16747,7 +20801,7 @@ module.exports = EntryMetaActions_DropdownMenu_ReportItem;
 
 
 
-},{"../../../../../../actions/view/entry":12}],95:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":13}],96:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_WatchItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -16816,7 +20870,7 @@ module.exports = EntryMetaActions_DropdownMenu_WatchItem;
 
 
 
-},{"../../../../../../actions/view/entry":12}],96:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":13}],97:[function(require,module,exports){
 var EntryMetaAuthor, PropTypes, UserAvatar;
 
 UserAvatar = require('../../common/avatar/user');
@@ -16850,7 +20904,7 @@ module.exports = EntryMetaAuthor;
 
 
 
-},{"../../common/avatar/user":46}],97:[function(require,module,exports){
+},{"../../common/avatar/user":47}],98:[function(require,module,exports){
 var EntryMetaComments, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -16871,7 +20925,7 @@ module.exports = EntryMetaComments;
 
 
 
-},{}],98:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 var ComponentMixin, EntryMetaVoting, EntryViewActions, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -16938,7 +20992,7 @@ module.exports = EntryMetaVoting;
 
 
 
-},{"../../../actions/view/entry":12,"../../../mixins/component":214,"react/lib/cx":358}],99:[function(require,module,exports){
+},{"../../../actions/view/entry":13,"../../../mixins/component":216,"react/lib/cx":362}],100:[function(require,module,exports){
 var EntryMixin, EntryViewActions, IMAGE_TYPE, LOAD_MORE_COMMENTS_LIMIT, QUOTE_TYPE, TEXT_TYPE, VIDEO_TYPE, assign;
 
 assign = require('react/lib/Object.assign');
@@ -17078,7 +21132,7 @@ module.exports = EntryMixin;
 
 
 
-},{"../../../actions/view/entry":12,"react/lib/Object.assign":279}],100:[function(require,module,exports){
+},{"../../../actions/view/entry":13,"react/lib/Object.assign":283}],101:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, CurrentUserStore, EntryComments, EntryContent, EntryMixin, EntryTlog, EntryTlogMeta, PropTypes;
 
 EntryTlogMeta = require('./tlog/meta');
@@ -17137,7 +21191,7 @@ module.exports = EntryTlog;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../mixins/component":214,"../../stores/currentUser":235,"./comments/comments":74,"./content/content":76,"./mixins/entry":99,"./tlog/meta":101}],101:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../mixins/component":216,"../../stores/currentUser":238,"./comments/comments":75,"./content/content":77,"./mixins/entry":100,"./tlog/meta":102}],102:[function(require,module,exports){
 var EntryMetaActions, EntryMetaComments, EntryMetaVoting, EntryTlogMeta, PropTypes;
 
 EntryMetaVoting = require('../meta/voting');
@@ -17177,7 +21231,7 @@ module.exports = EntryTlogMeta;
 
 
 
-},{"../meta/actions":87,"../meta/comments":97,"../meta/voting":98}],102:[function(require,module,exports){
+},{"../meta/actions":88,"../meta/comments":98,"../meta/voting":99}],103:[function(require,module,exports){
 var FeedLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -17199,7 +21253,7 @@ module.exports = FeedLoadMoreButton;
 
 
 
-},{}],103:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 var FeedEmptyPageMessage, MESSAGE;
 
 MESSAGE = 'В ленте нет записей';
@@ -17223,7 +21277,7 @@ module.exports = FeedEmptyPageMessage;
 
 
 
-},{}],104:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 var EntryFeed, Feed, FeedEmptyPageMessage, FeedLoadMore, PropTypes;
 
 FeedEmptyPageMessage = require('./emptyPageMessage');
@@ -17273,7 +21327,7 @@ module.exports = Feed;
 
 
 
-},{"../entry/feed":85,"./emptyPageMessage":103,"./loadMore":108}],105:[function(require,module,exports){
+},{"../entry/feed":86,"./emptyPageMessage":104,"./loadMore":109}],106:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedBest, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -17318,7 +21372,7 @@ module.exports = FeedBest;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../actions/view/feed":13,"../../mixins/component":214,"../../stores/feed":236,"./feed":104,"./mixins/feed":109}],106:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../actions/view/feed":14,"../../mixins/component":216,"../../stores/feed":239,"./feed":105,"./mixins/feed":110}],107:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedFriends, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -17363,7 +21417,7 @@ module.exports = FeedFriends;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../actions/view/feed":13,"../../mixins/component":214,"../../stores/feed":236,"./feed":104,"./mixins/feed":109}],107:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../actions/view/feed":14,"../../mixins/component":216,"../../stores/feed":239,"./feed":105,"./mixins/feed":110}],108:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedLive, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -17408,7 +21462,7 @@ module.exports = FeedLive;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../actions/view/feed":13,"../../mixins/component":214,"../../stores/feed":236,"./feed":104,"./mixins/feed":109}],108:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../actions/view/feed":14,"../../mixins/component":216,"../../stores/feed":239,"./feed":105,"./mixins/feed":110}],109:[function(require,module,exports){
 var FeedLoadMore, FeedLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../common/spinner/spinner');
@@ -17447,7 +21501,7 @@ module.exports = FeedLoadMore;
 
 
 
-},{"../common/spinner/spinner":54,"./buttons/loadMore":102}],109:[function(require,module,exports){
+},{"../common/spinner/spinner":55,"./buttons/loadMore":103}],110:[function(require,module,exports){
 var ERROR_STATE, FeedMixin, FeedViewActions, LOADING_STATE, LOAD_MORE_ENTRIES_LIMIT, SHOW_STATE;
 
 FeedViewActions = require('../../../actions/view/feed');
@@ -17504,7 +21558,7 @@ module.exports = FeedMixin;
 
 
 
-},{"../../../actions/view/feed":13}],110:[function(require,module,exports){
+},{"../../../actions/view/feed":14}],111:[function(require,module,exports){
 var HeroFeed, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -17545,7 +21599,7 @@ module.exports = HeroFeed;
 
 
 
-},{}],111:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 var HeroFeed, HeroFeedBest, PropTypes;
 
 HeroFeed = require('./feed');
@@ -17569,7 +21623,7 @@ module.exports = HeroFeedBest;
 
 
 
-},{"./feed":110}],112:[function(require,module,exports){
+},{"./feed":111}],113:[function(require,module,exports){
 var HeroFeed, HeroFeedFriends, PropTypes;
 
 HeroFeed = require('./feed');
@@ -17593,7 +21647,7 @@ module.exports = HeroFeedFriends;
 
 
 
-},{"./feed":110}],113:[function(require,module,exports){
+},{"./feed":111}],114:[function(require,module,exports){
 var HeroFeed, HeroFeedLive, PropTypes;
 
 HeroFeed = require('./feed');
@@ -17617,7 +21671,7 @@ module.exports = HeroFeedLive;
 
 
 
-},{"./feed":110}],114:[function(require,module,exports){
+},{"./feed":111}],115:[function(require,module,exports){
 var BrowserHelpers, CLOSE_STATE, ConnectStoreMixin, CurrentUserStore, HeroTlog, HeroTlogActions, HeroTlogAvatar, HeroTlogCloseButton, HeroTlogHead, HeroTlogStats, OPEN_STATE, PropTypes, _initialHeroHeight, _openHeroHeight, _screenOrientation;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -17760,7 +21814,7 @@ module.exports = HeroTlog;
 
 
 
-},{"../../../../shared/helpers/browser":242,"../../../../shared/react/mixins/connectStore":244,"../../stores/currentUser":235,"./tlog/actions":115,"./tlog/avatar":125,"./tlog/buttons/close":126,"./tlog/head":127,"./tlog/stats":128}],115:[function(require,module,exports){
+},{"../../../../shared/helpers/browser":246,"../../../../shared/react/mixins/connectStore":248,"../../stores/currentUser":238,"./tlog/actions":116,"./tlog/avatar":126,"./tlog/buttons/close":127,"./tlog/head":128,"./tlog/stats":129}],116:[function(require,module,exports){
 var HeroTlogActions, HeroTlogActions_CurrentUser, HeroTlogActions_User, PropTypes;
 
 HeroTlogActions_User = require('./actions/user');
@@ -17804,7 +21858,7 @@ module.exports = HeroTlogActions;
 
 
 
-},{"./actions/currentUser":118,"./actions/user":124}],116:[function(require,module,exports){
+},{"./actions/currentUser":119,"./actions/user":125}],117:[function(require,module,exports){
 var HeroTlogActions_SettingsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -17831,7 +21885,7 @@ module.exports = HeroTlogActions_SettingsButton;
 
 
 
-},{}],117:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 var HeroTlogActions_WriteMessageButton;
 
 HeroTlogActions_WriteMessageButton = React.createClass({
@@ -17853,7 +21907,7 @@ module.exports = HeroTlogActions_WriteMessageButton;
 
 
 
-},{}],118:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 var HeroTlogActions_CurrentUser, HeroTlogActions_SettingsButton, PropTypes;
 
 HeroTlogActions_SettingsButton = require('./buttons/settings');
@@ -17880,7 +21934,7 @@ module.exports = HeroTlogActions_CurrentUser;
 
 
 
-},{"./buttons/settings":116}],119:[function(require,module,exports){
+},{"./buttons/settings":117}],120:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, HeroTlogActions_DropdownMenu, HeroTlogActions_DropdownMenu_Button, HeroTlogActions_DropdownMenu_Popup, OPEN_STATE, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -17953,7 +22007,7 @@ module.exports = HeroTlogActions_DropdownMenu;
 
 
 
-},{"../../../../mixins/clickOutside":213,"./dropdownMenu/buttons/button":120,"./dropdownMenu/popup":123,"react/lib/cx":358}],120:[function(require,module,exports){
+},{"../../../../mixins/clickOutside":215,"./dropdownMenu/buttons/button":121,"./dropdownMenu/popup":124,"react/lib/cx":362}],121:[function(require,module,exports){
 var HeroTlogActions_DropdownMenu_Button, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -17977,7 +22031,7 @@ module.exports = HeroTlogActions_DropdownMenu_Button;
 
 
 
-},{}],121:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 var HeroTlogActions_DropdownMenuIgnoreItem, PropTypes, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
@@ -18009,7 +22063,7 @@ module.exports = HeroTlogActions_DropdownMenuIgnoreItem;
 
 
 
-},{"../../../../../../actions/view/relationship":16}],122:[function(require,module,exports){
+},{"../../../../../../actions/view/relationship":17}],123:[function(require,module,exports){
 var HeroTlogActions_DropdownMenuReportItem, PropTypes, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
@@ -18041,7 +22095,7 @@ module.exports = HeroTlogActions_DropdownMenuReportItem;
 
 
 
-},{"../../../../../../actions/view/relationship":16}],123:[function(require,module,exports){
+},{"../../../../../../actions/view/relationship":17}],124:[function(require,module,exports){
 var ConnectStoreMixin, DropdownMenuMixin, HeroTlogActions_DropdownMenuIgnoreItem, HeroTlogActions_DropdownMenuReportItem, HeroTlogActions_DropdownMenu_Popup, IGNORED_STATUS, PropTypes, RelationshipsStore;
 
 RelationshipsStore = require('../../../../../stores/relationships');
@@ -18104,7 +22158,7 @@ module.exports = HeroTlogActions_DropdownMenu_Popup;
 
 
 
-},{"../../../../../../../shared/react/mixins/connectStore":244,"../../../../../mixins/dropdownMenu":215,"../../../../../stores/relationships":239,"./items/ignore":121,"./items/report":122}],124:[function(require,module,exports){
+},{"../../../../../../../shared/react/mixins/connectStore":248,"../../../../../mixins/dropdownMenu":217,"../../../../../stores/relationships":243,"./items/ignore":122,"./items/report":123}],125:[function(require,module,exports){
 var FollowButton, HeroTlogActions_DropdownMenu, HeroTlogActions_User, HeroTlogActions_WriteMessageButton, PropTypes;
 
 FollowButton = require('../../../buttons/relationship/follow');
@@ -18140,7 +22194,7 @@ module.exports = HeroTlogActions_User;
 
 
 
-},{"../../../buttons/relationship/follow":43,"./buttons/writeMessage":117,"./dropdownMenu":119}],125:[function(require,module,exports){
+},{"../../../buttons/relationship/follow":44,"./buttons/writeMessage":118,"./dropdownMenu":120}],126:[function(require,module,exports){
 var FollowStatus, HERO_AVATAR_SIZE, HeroTlogAvatar, PropTypes, UserAvatar;
 
 UserAvatar = require('../../common/avatar/user');
@@ -18189,7 +22243,7 @@ module.exports = HeroTlogAvatar;
 
 
 
-},{"../../common/avatar/user":46,"../../common/followStatus/followStatus":52}],126:[function(require,module,exports){
+},{"../../common/avatar/user":47,"../../common/followStatus/followStatus":53}],127:[function(require,module,exports){
 var HeroTlogCloseButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -18213,7 +22267,7 @@ module.exports = HeroTlogCloseButton;
 
 
 
-},{}],127:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 var HeroTlogHead, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -18244,7 +22298,7 @@ module.exports = HeroTlogHead;
 
 
 
-},{}],128:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 var HeroTlogStats, HeroTlogStatsItem, PropTypes;
 
 HeroTlogStatsItem = require('./stats/item');
@@ -18331,7 +22385,7 @@ module.exports = HeroTlogStats;
 
 
 
-},{"./stats/item":129}],129:[function(require,module,exports){
+},{"./stats/item":130}],130:[function(require,module,exports){
 var HeroTlogStatsItem, NumberHelpers, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -18388,7 +22442,7 @@ module.exports = HeroTlogStatsItem;
 
 
 
-},{"../../../../../../shared/helpers/number":243,"react/lib/cx":358}],130:[function(require,module,exports){
+},{"../../../../../../shared/helpers/number":247,"react/lib/cx":362}],131:[function(require,module,exports){
 var CreateConversationButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -18414,7 +22468,7 @@ module.exports = CreateConversationButton;
 
 
 
-},{}],131:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 var MessengerHeader, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -18437,7 +22491,7 @@ module.exports = MessengerHeader;
 
 
 
-},{}],132:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 var ConnectStoreMixin, ConversationHeader, ConversationMessageForm, ConversationMessages, ConversationStore, MessengerConversation, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -18487,7 +22541,7 @@ module.exports = MessengerConversation;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../stores/conversation":234,"./conversation/header":133,"./conversation/messageForm":134,"./conversation/messages":136}],133:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../stores/conversation":237,"./conversation/header":134,"./conversation/messageForm":135,"./conversation/messages":137}],134:[function(require,module,exports){
 var ConversationHeader, MessengerHeader, PropTypes;
 
 MessengerHeader = require('../common/header');
@@ -18513,7 +22567,7 @@ module.exports = ConversationHeader;
 
 
 
-},{"../common/header":131}],134:[function(require,module,exports){
+},{"../common/header":132}],135:[function(require,module,exports){
 var ConversationMessageForm, ConversationMessageFormField, MessengerViewActions, NotifyController, PropTypes;
 
 NotifyController = require('../../../controllers/notify');
@@ -18571,7 +22625,7 @@ module.exports = ConversationMessageForm;
 
 
 
-},{"../../../actions/view/messenger":14,"../../../controllers/notify":210,"./messageForm/field":135}],135:[function(require,module,exports){
+},{"../../../actions/view/messenger":15,"../../../controllers/notify":212,"./messageForm/field":136}],136:[function(require,module,exports){
 var ConversationMessageFormField, PropTypes, _;
 
 _ = require('lodash');
@@ -18620,7 +22674,7 @@ module.exports = ConversationMessageFormField;
 
 
 
-},{"lodash":253}],136:[function(require,module,exports){
+},{"lodash":257}],137:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, ConversationMessages, ConversationStore, ERROR_STATE, LOADED_STATE, LOADING_MORE_STATE, LOADING_STATE, MessageList, MessageStore, MessengerViewActions, Spinner;
 
 MessageStore = require('../../../stores/message');
@@ -18745,7 +22799,7 @@ module.exports = ConversationMessages;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":244,"../../../actions/view/messenger":14,"../../../mixins/component":214,"../../../stores/conversation":234,"../../../stores/message":237,"../../common/spinner/spinner":54,"./messages/list":137}],137:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":248,"../../../actions/view/messenger":15,"../../../mixins/component":216,"../../../stores/conversation":237,"../../../stores/message":240,"../../common/spinner/spinner":55,"./messages/list":138}],138:[function(require,module,exports){
 var MessageList, MessageListEmpty, MessageListItemManager, PropTypes, _;
 
 _ = require('lodash');
@@ -18841,7 +22895,7 @@ module.exports = MessageList;
 
 
 
-},{"./list/empty":138,"./list/itemManager":140,"lodash":253}],138:[function(require,module,exports){
+},{"./list/empty":139,"./list/itemManager":141,"lodash":257}],139:[function(require,module,exports){
 var MessageListEmpty;
 
 MessageListEmpty = React.createClass({
@@ -18859,7 +22913,7 @@ module.exports = MessageListEmpty;
 
 
 
-},{}],139:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 var ERROR_STATE, MessageListItem, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -18976,7 +23030,7 @@ module.exports = MessageListItem;
 
 
 
-},{"../../../../common/avatar/user":46,"react/lib/cx":358}],140:[function(require,module,exports){
+},{"../../../../common/avatar/user":47,"react/lib/cx":362}],141:[function(require,module,exports){
 var ERROR_STATE, MessageListItem, MessageListItemManager, MessageStore, MessengerViewActions, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE;
 
 MessageStore = require('../../../../../stores/message');
@@ -19045,7 +23099,7 @@ module.exports = MessageListItemManager;
 
 
 
-},{"../../../../../actions/view/messenger":14,"../../../../../stores/message":237,"./item":139}],141:[function(require,module,exports){
+},{"../../../../../actions/view/messenger":15,"../../../../../stores/message":240,"./item":140}],142:[function(require,module,exports){
 var ConnectStoreMixin, ConversationList, ConversationStore, ConversationsHeader, CreateConversationButton, MessengerConversations, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -19092,7 +23146,7 @@ module.exports = MessengerConversations;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../stores/conversation":234,"./buttons/createConversation":130,"./conversations/header":142,"./conversations/list":143}],142:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../stores/conversation":237,"./buttons/createConversation":131,"./conversations/header":143,"./conversations/list":144}],143:[function(require,module,exports){
 var ConversationsHeader, MessengerHeader;
 
 MessengerHeader = require('../common/header');
@@ -19110,7 +23164,7 @@ module.exports = ConversationsHeader;
 
 
 
-},{"../common/header":131}],143:[function(require,module,exports){
+},{"../common/header":132}],144:[function(require,module,exports){
 var ConversationList, ConversationListEmpty, ConversationListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -19160,7 +23214,7 @@ module.exports = ConversationList;
 
 
 
-},{"./list/empty":144,"./list/item":145,"lodash":253}],144:[function(require,module,exports){
+},{"./list/empty":145,"./list/item":146,"lodash":257}],145:[function(require,module,exports){
 var ConversationListEmpty;
 
 ConversationListEmpty = React.createClass({
@@ -19178,8 +23232,10 @@ module.exports = ConversationListEmpty;
 
 
 
-},{}],145:[function(require,module,exports){
-var ConversationListItem, PropTypes, UserAvatar;
+},{}],146:[function(require,module,exports){
+var ConversationListItem, PropTypes, UserAvatar, cx;
+
+cx = require('react/lib/cx');
 
 UserAvatar = require('../../../common/avatar/user');
 
@@ -19192,8 +23248,13 @@ ConversationListItem = React.createClass({
     onClick: PropTypes.func.isRequired
   },
   render: function() {
+    var itemClasses;
+    itemClasses = cx({
+      'messages__dialog': true,
+      '__read': !this.hasUnreadMessages()
+    });
     return React.createElement("div", {
-      "className": "messages__dialog",
+      "className": itemClasses,
       "onClick": this.handleClick
     }, React.createElement("div", {
       "className": "messages__user-avatar"
@@ -19204,7 +23265,7 @@ ConversationListItem = React.createClass({
       "className": "messages__dialog-text"
     }, React.createElement("span", {
       "className": "messages__user-name"
-    }, this.props.item.recipient.slug), this.renderLastMessageText()), this.renderDate());
+    }, this.props.item.recipient.slug), this.renderLastMessageText()), this.renderCounter(), this.renderDate());
   },
   renderLastMessageText: function() {
     var text, _ref;
@@ -19222,6 +23283,26 @@ ConversationListItem = React.createClass({
       "className": "messages__date"
     }, date);
   },
+  renderCounter: function() {
+    switch (false) {
+      case !this.hasUnreadMessages():
+        return React.createElement("div", {
+          "className": "unread-messages__counter"
+        }, this.props.item.unread_messages_count);
+      case !this.hasUnreceivedMessages():
+        return React.createElement("div", {
+          "className": "unreceived-messages__counter"
+        });
+      default:
+        return null;
+    }
+  },
+  hasUnreadMessages: function() {
+    return this.props.item.unread_messages_count > 0;
+  },
+  hasUnreceivedMessages: function() {
+    return this.props.item.unreceived_messages_count > 0;
+  },
   lastMessageCreatedAt: function() {
     return moment(this.props.item.last_message.created_at).format('D MMMM HH:mm');
   },
@@ -19237,7 +23318,7 @@ module.exports = ConversationListItem;
 
 
 
-},{"../../../common/avatar/user":46}],146:[function(require,module,exports){
+},{"../../../common/avatar/user":47,"react/lib/cx":362}],147:[function(require,module,exports){
 var CreateConversationHeader, MessengerChooser, MessengerCreateConversation, PropTypes;
 
 CreateConversationHeader = require('./createConversation/header');
@@ -19266,7 +23347,7 @@ module.exports = MessengerCreateConversation;
 
 
 
-},{"./createConversation/chooser":147,"./createConversation/header":152}],147:[function(require,module,exports){
+},{"./createConversation/chooser":148,"./createConversation/header":153}],148:[function(require,module,exports){
 var ComponentMixin, LOADED_STATE, LOADING_STATE, MessengerChooser, MessengerChooserField, MessengerChooserList, PropTypes, Spinner, UsersViewActions, cx;
 
 cx = require('react/lib/cx');
@@ -19374,7 +23455,7 @@ module.exports = MessengerChooser;
 
 
 
-},{"../../../actions/view/users":18,"../../../mixins/component":214,"../../common/spinner/spinner":54,"./chooser/field":148,"./chooser/list":149,"react/lib/cx":358}],148:[function(require,module,exports){
+},{"../../../actions/view/users":19,"../../../mixins/component":216,"../../common/spinner/spinner":55,"./chooser/field":149,"./chooser/list":150,"react/lib/cx":362}],149:[function(require,module,exports){
 var MessengerChooserField, PropTypes, _;
 
 _ = require('lodash');
@@ -19411,7 +23492,7 @@ module.exports = MessengerChooserField;
 
 
 
-},{"lodash":253}],149:[function(require,module,exports){
+},{"lodash":257}],150:[function(require,module,exports){
 var MessengerChooserList, MessengerChooserListEmpty, MessengerChooserListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -19462,7 +23543,7 @@ module.exports = MessengerChooserList;
 
 
 
-},{"./list/empty":150,"./list/item":151,"lodash":253}],150:[function(require,module,exports){
+},{"./list/empty":151,"./list/item":152,"lodash":257}],151:[function(require,module,exports){
 var MessengerChooserListEmpty;
 
 MessengerChooserListEmpty = React.createClass({
@@ -19480,7 +23561,7 @@ module.exports = MessengerChooserListEmpty;
 
 
 
-},{}],151:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 var MessengerChooserListItem, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -19516,7 +23597,7 @@ module.exports = MessengerChooserListItem;
 
 
 
-},{"../../../../common/avatar/user":46}],152:[function(require,module,exports){
+},{"../../../../common/avatar/user":47}],153:[function(require,module,exports){
 var CreateConversationHeader, MessengerHeader;
 
 MessengerHeader = require('../common/header');
@@ -19534,7 +23615,7 @@ module.exports = CreateConversationHeader;
 
 
 
-},{"../common/header":131}],153:[function(require,module,exports){
+},{"../common/header":132}],154:[function(require,module,exports){
 var CONVERSATION_LIST_STATE, CONVERSATION_STATE, CREATE_CONVERSATION_STATE, ComponentMixin, ConnectStoreMixin, ConversationStore, Messenger, MessengerConversation, MessengerConversations, MessengerCreateConversation, MessengerMixin, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -19619,7 +23700,7 @@ module.exports = Messenger;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../mixins/component":214,"../../stores/conversation":234,"./conversation":132,"./conversations":141,"./createConversation":146,"./mixins/messenger":154}],154:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../mixins/component":216,"../../stores/conversation":237,"./conversation":133,"./conversations":142,"./createConversation":147,"./mixins/messenger":155}],155:[function(require,module,exports){
 var MessengerMixin, MessengerViewActions;
 
 MessengerViewActions = require('../../../actions/view/messenger');
@@ -19638,7 +23719,7 @@ module.exports = MessengerMixin;
 
 
 
-},{"../../../actions/view/messenger":14}],155:[function(require,module,exports){
+},{"../../../actions/view/messenger":15}],156:[function(require,module,exports){
 var NotificationsLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19664,7 +23745,7 @@ module.exports = NotificationsLoadMoreButton;
 
 
 
-},{}],156:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 var NotificationsMarkButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19689,7 +23770,7 @@ module.exports = NotificationsMarkButton;
 
 
 
-},{}],157:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 var NotificationsHeader;
 
 NotificationsHeader = React.createClass({
@@ -19707,7 +23788,7 @@ module.exports = NotificationsHeader;
 
 
 
-},{}],158:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 var NotificationList, NotificationListEmpty, NotificationListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -19755,7 +23836,7 @@ module.exports = NotificationList;
 
 
 
-},{"./list/empty":159,"./list/item":160,"lodash":253}],159:[function(require,module,exports){
+},{"./list/empty":160,"./list/item":161,"lodash":257}],160:[function(require,module,exports){
 var NotificationsListEmpty;
 
 NotificationsListEmpty = React.createClass({
@@ -19770,7 +23851,7 @@ module.exports = NotificationsListEmpty;
 
 
 
-},{}],160:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 var Image, NotificationListItem, PropTypes, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -19846,7 +23927,7 @@ module.exports = NotificationListItem;
 
 
 
-},{"../../common/avatar/user":46,"../../common/image/image":53,"react/lib/cx":358}],161:[function(require,module,exports){
+},{"../../common/avatar/user":47,"../../common/image/image":54,"react/lib/cx":362}],162:[function(require,module,exports){
 var NotificationsLoadMore, NotificationsLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../common/spinner/spinner');
@@ -19880,7 +23961,7 @@ module.exports = NotificationsLoadMore;
 
 
 
-},{"../common/spinner/spinner":54,"./buttons/loadMore":155}],162:[function(require,module,exports){
+},{"../common/spinner/spinner":55,"./buttons/loadMore":156}],163:[function(require,module,exports){
 var ERROR_STATE, LOADING_STATE, LOAD_MORE_LIMIT, NotificationsMixin, NotificationsViewActions, SHOW_STATE, _;
 
 _ = require('lodash');
@@ -19945,7 +24026,7 @@ module.exports = NotificationsMixin;
 
 
 
-},{"../../../actions/view/notifications":15,"lodash":253}],163:[function(require,module,exports){
+},{"../../../actions/view/notifications":16,"lodash":257}],164:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, NotificationList, NotificationStore, Notifications, NotificationsHeader, NotificationsLoadMore, NotificationsMarkButton, NotificationsMixin;
 
 NotificationStore = require('../../stores/notification');
@@ -19998,7 +24079,7 @@ Notifications = React.createClass({
   },
   getStateFromStore: function() {
     return {
-      notifications: NotificationStore.getAll(),
+      notifications: NotificationStore.getAllChrono(),
       everythingLoaded: NotificationStore.isEverythingLoaded()
     };
   }
@@ -20008,7 +24089,7 @@ module.exports = Notifications;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../mixins/component":214,"../../stores/notification":238,"./buttons/mark":156,"./header":157,"./list":158,"./loadMore":161,"./mixins/notifications":162}],164:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../mixins/component":216,"../../stores/notification":242,"./buttons/mark":157,"./header":158,"./list":159,"./loadMore":162,"./mixins/notifications":163}],165:[function(require,module,exports){
 var DaylogPagination, PaginationNext, PaginationPrev, PropTypes;
 
 PaginationPrev = require('./items/prev');
@@ -20055,7 +24136,7 @@ module.exports = DaylogPagination;
 
 
 
-},{"./items/next":166,"./items/prev":167}],165:[function(require,module,exports){
+},{"./items/next":167,"./items/prev":168}],166:[function(require,module,exports){
 var EntryPagination, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -20079,7 +24160,7 @@ module.exports = EntryPagination;
 
 
 
-},{}],166:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 var PaginationNext, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -20114,7 +24195,7 @@ module.exports = PaginationNext;
 
 
 
-},{"react/lib/cx":358}],167:[function(require,module,exports){
+},{"react/lib/cx":362}],168:[function(require,module,exports){
 var PaginationPrev, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -20149,7 +24230,7 @@ module.exports = PaginationPrev;
 
 
 
-},{"react/lib/cx":358}],168:[function(require,module,exports){
+},{"react/lib/cx":362}],169:[function(require,module,exports){
 var PaginationNext, PaginationPrev, PropTypes, TlogPagination;
 
 PaginationPrev = require('./items/prev');
@@ -20214,7 +24295,7 @@ module.exports = TlogPagination;
 
 
 
-},{"./items/next":166,"./items/prev":167}],169:[function(require,module,exports){
+},{"./items/next":167,"./items/prev":168}],170:[function(require,module,exports){
 var PropTypes, SettingsAccounts, UserAvatar;
 
 UserAvatar = require('../common/avatar/user');
@@ -20259,7 +24340,7 @@ module.exports = SettingsAccounts;
 
 
 
-},{"../common/avatar/user":46}],170:[function(require,module,exports){
+},{"../common/avatar/user":47}],171:[function(require,module,exports){
 var PropTypes, SettingsSaveButton;
 
 PropTypes = React.PropTypes;
@@ -20287,7 +24368,7 @@ module.exports = SettingsSaveButton;
 
 
 
-},{}],171:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 var PropTypes, Settings_Radio, UuidService;
 
 UuidService = require('../../../../../shared/react/services/uuid');
@@ -20343,7 +24424,7 @@ module.exports = Settings_Radio;
 
 
 
-},{"../../../../../shared/react/services/uuid":246}],172:[function(require,module,exports){
+},{"../../../../../shared/react/services/uuid":250}],173:[function(require,module,exports){
 var DECLARE_STATE, PropTypes, SHOW_STATE, SettingsEmail, SettingsEmailDeclare, SettingsEmailMixin, SettingsEmailShow, SettingsEmailUnconfirmed, UNCONFIRMED_STATE;
 
 SettingsEmailMixin = require('./mixins/email');
@@ -20420,7 +24501,7 @@ module.exports = SettingsEmail;
 
 
 
-},{"./email/declare":176,"./email/show":178,"./email/unconfirmed":179,"./mixins/email":184}],173:[function(require,module,exports){
+},{"./email/declare":177,"./email/show":179,"./email/unconfirmed":180,"./mixins/email":185}],174:[function(require,module,exports){
 var PropTypes, SettingsEmailCancelButton;
 
 PropTypes = React.PropTypes;
@@ -20446,7 +24527,7 @@ module.exports = SettingsEmailCancelButton;
 
 
 
-},{}],174:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 var PropTypes, SettingsEmailChangeButton;
 
 PropTypes = React.PropTypes;
@@ -20472,7 +24553,7 @@ module.exports = SettingsEmailChangeButton;
 
 
 
-},{}],175:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 var PropTypes, SettingsEmailDeclareButton;
 
 PropTypes = React.PropTypes;
@@ -20498,7 +24579,7 @@ module.exports = SettingsEmailDeclareButton;
 
 
 
-},{}],176:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsEmailDeclare, SettingsEmailDeclareButton, SettingsEmailField;
 
 NotifyController = require('../../../controllers/notify');
@@ -20552,7 +24633,7 @@ module.exports = SettingsEmailDeclare;
 
 
 
-},{"../../../controllers/notify":210,"./buttons/declare":175,"./fields/email":177}],177:[function(require,module,exports){
+},{"../../../controllers/notify":212,"./buttons/declare":176,"./fields/email":178}],178:[function(require,module,exports){
 var PropTypes, SettingsEmailField, _;
 
 _ = require('lodash');
@@ -20592,7 +24673,7 @@ module.exports = SettingsEmailField;
 
 
 
-},{"lodash":253}],178:[function(require,module,exports){
+},{"lodash":257}],179:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsEmailChangeButton, SettingsEmailField, SettingsEmailShow;
 
 NotifyController = require('../../../controllers/notify');
@@ -20652,7 +24733,7 @@ module.exports = SettingsEmailShow;
 
 
 
-},{"../../../controllers/notify":210,"./buttons/change":174,"./fields/email":177}],179:[function(require,module,exports){
+},{"../../../controllers/notify":212,"./buttons/change":175,"./fields/email":178}],180:[function(require,module,exports){
 var PropTypes, SettingsEmailCancelButton, SettingsEmailField, SettingsEmailUnconfirmed;
 
 SettingsEmailField = require('./fields/email');
@@ -20692,7 +24773,7 @@ module.exports = SettingsEmailUnconfirmed;
 
 
 
-},{"./buttons/cancel":173,"./fields/email":177}],180:[function(require,module,exports){
+},{"./buttons/cancel":174,"./fields/email":178}],181:[function(require,module,exports){
 var PropTypes, SettingsHero, SettingsHeroAvatar, SettingsHeroSlug, SettingsHeroTitle;
 
 SettingsHeroAvatar = require('./hero/avatar');
@@ -20741,7 +24822,7 @@ module.exports = SettingsHero;
 
 
 
-},{"./hero/avatar":181,"./hero/slug":182,"./hero/title":183}],181:[function(require,module,exports){
+},{"./hero/avatar":182,"./hero/slug":183,"./hero/title":184}],182:[function(require,module,exports){
 var CurrentUserViewAcitons, LOADING_STATE, PropTypes, SHOW_STATE, SettingsHeroAvatar, Spinner, UserAvatar;
 
 CurrentUserViewAcitons = require('../../../actions/view/currentUser');
@@ -20862,7 +24943,7 @@ module.exports = SettingsHeroAvatar;
 
 
 
-},{"../../../actions/view/currentUser":11,"../../common/avatar/user":46,"../../common/spinner/spinner":54}],182:[function(require,module,exports){
+},{"../../../actions/view/currentUser":12,"../../common/avatar/user":47,"../../common/spinner/spinner":55}],183:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsHeroSlug, _;
 
 _ = require('lodash');
@@ -20903,7 +24984,7 @@ module.exports = SettingsHeroSlug;
 
 
 
-},{"../../../controllers/notify":210,"lodash":253}],183:[function(require,module,exports){
+},{"../../../controllers/notify":212,"lodash":257}],184:[function(require,module,exports){
 var PropTypes, SettingsHeroTitle, _;
 
 _ = require('lodash');
@@ -20936,7 +25017,7 @@ module.exports = SettingsHeroTitle;
 
 
 
-},{"lodash":253}],184:[function(require,module,exports){
+},{"lodash":257}],185:[function(require,module,exports){
 var CurrentUserViewActions, SettingsEmailMixin;
 
 CurrentUserViewActions = require('../../../actions/view/currentUser');
@@ -20954,7 +25035,7 @@ module.exports = SettingsEmailMixin;
 
 
 
-},{"../../../actions/view/currentUser":11}],185:[function(require,module,exports){
+},{"../../../actions/view/currentUser":12}],186:[function(require,module,exports){
 var CurrentUserViewActions, NotifyController, SettingsMixin, _;
 
 _ = require('lodash');
@@ -20977,7 +25058,7 @@ module.exports = SettingsMixin;
 
 
 
-},{"../../../actions/view/currentUser":11,"../../../controllers/notify":210,"lodash":253}],186:[function(require,module,exports){
+},{"../../../actions/view/currentUser":12,"../../../controllers/notify":212,"lodash":257}],187:[function(require,module,exports){
 var PropTypes, SettingsPassword, SettingsPasswordConfirmField, SettingsPasswordField;
 
 SettingsPasswordField = require('./password/fields/password');
@@ -21046,7 +25127,7 @@ module.exports = SettingsPassword;
 
 
 
-},{"./password/fields/password":187,"./password/fields/passwordConfirm":188}],187:[function(require,module,exports){
+},{"./password/fields/password":188,"./password/fields/passwordConfirm":189}],188:[function(require,module,exports){
 var PropTypes, SettingsPasswordField;
 
 PropTypes = React.PropTypes;
@@ -21077,7 +25158,7 @@ module.exports = SettingsPasswordField;
 
 
 
-},{}],188:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 var PropTypes, SettingsPasswordConfirmField;
 
 PropTypes = React.PropTypes;
@@ -21108,7 +25189,7 @@ module.exports = SettingsPasswordConfirmField;
 
 
 
-},{}],189:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, Settings, SettingsAccounts, SettingsEmail, SettingsHero, SettingsMixin, SettingsPassword, SettingsSaveButton, Settings_Radio, _;
 
 _ = require('lodash');
@@ -21215,7 +25296,7 @@ module.exports = Settings;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../stores/currentUser":235,"./accounts":169,"./buttons/save":170,"./common/radio":171,"./email":172,"./hero":180,"./mixins/settings":185,"./password":186,"lodash":253}],190:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../stores/currentUser":238,"./accounts":170,"./buttons/save":171,"./common/radio":172,"./email":173,"./hero":181,"./mixins/settings":186,"./password":187,"lodash":257}],191:[function(require,module,exports){
 var TlogEmptyPageMessage;
 
 TlogEmptyPageMessage = React.createClass({
@@ -21237,7 +25318,7 @@ module.exports = TlogEmptyPageMessage;
 
 
 
-},{}],191:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 var EntryTlog, PropTypes, Tlog, TlogEmptyPageMessage;
 
 TlogEmptyPageMessage = require('./emptyPageMessage');
@@ -21274,7 +25355,7 @@ module.exports = Tlog;
 
 
 
-},{"../entry/tlog":100,"./emptyPageMessage":190}],192:[function(require,module,exports){
+},{"../entry/tlog":101,"./emptyPageMessage":191}],193:[function(require,module,exports){
 var PropTypes, ToolbarItem, cx;
 
 cx = require('react/lib/cx');
@@ -21326,7 +25407,7 @@ module.exports = ToolbarItem;
 
 
 
-},{"react/lib/cx":358}],193:[function(require,module,exports){
+},{"react/lib/cx":362}],194:[function(require,module,exports){
 var FeedToolbar, FeedToolbarList, PropTypes, ToolbarMixin, cx;
 
 cx = require('react/lib/cx');
@@ -21381,7 +25462,7 @@ module.exports = FeedToolbar;
 
 
 
-},{"./feed/list":194,"./mixins/toolbar":196,"react/lib/cx":358}],194:[function(require,module,exports){
+},{"./feed/list":195,"./mixins/toolbar":197,"react/lib/cx":362}],195:[function(require,module,exports){
 var FeedToolbarList, PropTypes, ToolbarItem;
 
 ToolbarItem = require('../_item');
@@ -21433,7 +25514,7 @@ module.exports = FeedToolbarList;
 
 
 
-},{"../_item":192}],195:[function(require,module,exports){
+},{"../_item":193}],196:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -21461,7 +25542,7 @@ module.exports = FeedToolbarManager;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../stores/currentUser":235,"./feed":193}],196:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../stores/currentUser":238,"./feed":194}],197:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, ToolbarMixin;
 
 CLOSE_STATE = 'close';
@@ -21493,7 +25574,7 @@ module.exports = ToolbarMixin;
 
 
 
-},{}],197:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 var PropTypes, ToolbarMixin, UserToolbar, UserToolbarList, UserToolbarListAdditional, cx;
 
 cx = require('react/lib/cx');
@@ -21551,7 +25632,7 @@ module.exports = UserToolbar;
 
 
 
-},{"./mixins/toolbar":196,"./user/list":198,"./user/listAdditional":199,"react/lib/cx":358}],198:[function(require,module,exports){
+},{"./mixins/toolbar":197,"./user/list":199,"./user/listAdditional":200,"react/lib/cx":362}],199:[function(require,module,exports){
 var PropTypes, ToolbarItem, UserToolbarList, UserToolbarListMixin;
 
 ToolbarItem = require('../_item');
@@ -21621,7 +25702,7 @@ module.exports = UserToolbarList;
 
 
 
-},{"../_item":192,"./mixins/list":200}],199:[function(require,module,exports){
+},{"../_item":193,"./mixins/list":201}],200:[function(require,module,exports){
 var UserToolbarListAdditional;
 
 UserToolbarListAdditional = React.createClass({
@@ -21641,7 +25722,7 @@ module.exports = UserToolbarListAdditional;
 
 
 
-},{}],200:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 var UserToolbarListMixin;
 
 UserToolbarListMixin = {
@@ -21657,7 +25738,7 @@ module.exports = UserToolbarListMixin;
 
 
 
-},{}],201:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, UserToolbar, UserToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -21690,7 +25771,7 @@ module.exports = UserToolbarManager;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":244,"../../stores/currentUser":235,"./user":197}],202:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":248,"../../stores/currentUser":238,"./user":198}],203:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -21725,15 +25806,16 @@ ApiConstants = keyMirror({
   READ_NOTIFICATIONS: null,
   LOAD_MESSAGES: null,
   CREATE_MESSAGE: null,
-  READ_MESSAGES: null
+  READ_MESSAGES: null,
+  READY_TO_MESSAGING: null
 });
 
 module.exports = ApiConstants;
 
 
 
-},{"react/lib/keyMirror":386}],203:[function(require,module,exports){
-var ApiConstants, CurrentUserConstants, EntryConstants, FeedConstants, MessengerConstants, NotificationsConstants, RelationshipConstants;
+},{"react/lib/keyMirror":390}],204:[function(require,module,exports){
+var ApiConstants, CurrentUserConstants, EntryConstants, FeedConstants, MessagingConstants, MessengerConstants, NotificationsConstants, RelationshipConstants;
 
 ApiConstants = require('./api');
 
@@ -21749,6 +25831,8 @@ NotificationsConstants = require('./notifications');
 
 MessengerConstants = require('./messenger');
 
+MessagingConstants = require('./messaging');
+
 module.exports = {
   api: ApiConstants,
   entry: EntryConstants,
@@ -21756,12 +25840,13 @@ module.exports = {
   relationship: RelationshipConstants,
   currentUser: CurrentUserConstants,
   notifications: NotificationsConstants,
-  messenger: MessengerConstants
+  messenger: MessengerConstants,
+  messaging: MessagingConstants
 };
 
 
 
-},{"./api":202,"./currentUser":204,"./entry":205,"./feed":206,"./messenger":207,"./notifications":208,"./relationship":209}],204:[function(require,module,exports){
+},{"./api":203,"./currentUser":205,"./entry":206,"./feed":207,"./messaging":208,"./messenger":209,"./notifications":210,"./relationship":211}],205:[function(require,module,exports){
 var CurrentUserConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -21776,7 +25861,7 @@ module.exports = CurrentUserConstants;
 
 
 
-},{"react/lib/keyMirror":386}],205:[function(require,module,exports){
+},{"react/lib/keyMirror":390}],206:[function(require,module,exports){
 var EntryConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -21793,7 +25878,7 @@ module.exports = EntryConstants;
 
 
 
-},{"react/lib/keyMirror":386}],206:[function(require,module,exports){
+},{"react/lib/keyMirror":390}],207:[function(require,module,exports){
 var FeedConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -21807,7 +25892,26 @@ module.exports = FeedConstants;
 
 
 
-},{"react/lib/keyMirror":386}],207:[function(require,module,exports){
+},{"react/lib/keyMirror":390}],208:[function(require,module,exports){
+var MessagingConstants;
+
+MessagingConstants = {
+  CONNECT_SUCCESS: 'pusher:subscription_succeeded',
+  CONNECT_FAIL: 'pusher:subscription_error',
+  UPDATE_STATUS: 'status',
+  UPDATE_CONVERSATION: 'update_conversation',
+  PUSH_MESSAGE: 'push_message',
+  UPDATE_MESSAGES: 'update_messages',
+  PUSH_NOTIFICATION: 'push_notification',
+  UPDATE_NOTIFICATIONS: 'update_notifications',
+  RECONNECT: 'reconnected'
+};
+
+module.exports = MessagingConstants;
+
+
+
+},{}],209:[function(require,module,exports){
 var MessengerConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -21826,7 +25930,7 @@ module.exports = MessengerConstants;
 
 
 
-},{"react/lib/keyMirror":386}],208:[function(require,module,exports){
+},{"react/lib/keyMirror":390}],210:[function(require,module,exports){
 var NotificationsConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -21840,7 +25944,7 @@ module.exports = NotificationsConstants;
 
 
 
-},{"react/lib/keyMirror":386}],209:[function(require,module,exports){
+},{"react/lib/keyMirror":390}],211:[function(require,module,exports){
 var RelationshipConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -21853,7 +25957,7 @@ module.exports = RelationshipConstants;
 
 
 
-},{"react/lib/keyMirror":386}],210:[function(require,module,exports){
+},{"react/lib/keyMirror":390}],212:[function(require,module,exports){
 var Notify, NotifyController, closeNotification, getContainer, isPageLoadingCanceled, _pendingNotification;
 
 Notify = require('../components/alerts/notify');
@@ -21943,7 +26047,7 @@ module.exports = NotifyController;
 
 
 
-},{"../components/alerts/notify":21}],211:[function(require,module,exports){
+},{"../components/alerts/notify":22}],213:[function(require,module,exports){
 var ScreenController, getContainer, restorePageName, switchPageName, _oldPageName;
 
 _oldPageName = null;
@@ -22002,7 +26106,7 @@ module.exports = ScreenController;
 
 
 
-},{}],212:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 var AppDispatcher, Dispatcher, assign;
 
 assign = require('react/lib/Object.assign');
@@ -22028,7 +26132,7 @@ module.exports = AppDispatcher;
 
 
 
-},{"flux":250,"react/lib/Object.assign":279}],213:[function(require,module,exports){
+},{"flux":254,"react/lib/Object.assign":283}],215:[function(require,module,exports){
 var ClickOutsideMixin, closest;
 
 closest = function(el, target) {
@@ -22064,7 +26168,7 @@ module.exports = ClickOutsideMixin;
 
 
 
-},{}],214:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 var ComponentMixin;
 
 ComponentMixin = {
@@ -22087,7 +26191,7 @@ module.exports = ComponentMixin;
 
 
 
-},{}],215:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 var DropdownMenuMixin, REVERSE_MARGIN, getSize, getViewportWH;
 
 REVERSE_MARGIN = 5;
@@ -22158,7 +26262,7 @@ module.exports = DropdownMenuMixin;
 
 
 
-},{}],216:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, EntryPage, EntryPagination, EntryTlog, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -22213,7 +26317,7 @@ module.exports = EntryPage;
 
 
 
-},{"../components/auth/authManager":26,"../components/buttons/auth/authManager":42,"../components/entry/tlog":100,"../components/hero/tlog":114,"../components/pagination/entry":165,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":201,"../stores/currentUser":235,"./mixins/page":228}],217:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/entry/tlog":101,"../components/hero/tlog":115,"../components/pagination/entry":166,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":202,"../stores/currentUser":238,"./mixins/page":230}],219:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedBest, FeedBestPage, FeedBestPageMixin, FeedToolbarManager, HeroFeedBest, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -22267,7 +26371,7 @@ module.exports = FeedBestPage;
 
 
 
-},{"../components/auth/authManager":26,"../components/buttons/auth/authManager":42,"../components/feed/feedBest":105,"../components/hero/feedBest":111,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":201,"../stores/currentUser":235,"./mixins/feedBest":222,"./mixins/page":228}],218:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedBest":106,"../components/hero/feedBest":112,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":202,"../stores/currentUser":238,"./mixins/feedBest":224,"./mixins/page":230}],220:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedFriends, FeedFriendsPage, FeedFriendsPageMixin, FeedToolbarManager, HeroFeedFriends, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -22321,7 +26425,7 @@ module.exports = FeedFriendsPage;
 
 
 
-},{"../components/auth/authManager":26,"../components/buttons/auth/authManager":42,"../components/feed/feedFriends":106,"../components/hero/feedFriends":112,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":201,"../stores/currentUser":235,"./mixins/feedFriends":223,"./mixins/page":228}],219:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedFriends":107,"../components/hero/feedFriends":113,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":202,"../stores/currentUser":238,"./mixins/feedFriends":225,"./mixins/page":230}],221:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedLive, FeedLivePage, FeedLivePageMixin, FeedToolbarManager, HeroFeedLive, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -22375,7 +26479,7 @@ module.exports = FeedLivePage;
 
 
 
-},{"../components/auth/authManager":26,"../components/buttons/auth/authManager":42,"../components/feed/feedLive":107,"../components/hero/feedLive":113,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":201,"../stores/currentUser":235,"./mixins/feedLive":224,"./mixins/page":228}],220:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedLive":108,"../components/hero/feedLive":114,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":202,"../stores/currentUser":238,"./mixins/feedLive":226,"./mixins/page":230}],222:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, Messenger, MessengerPage, MessengerPageMixin, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -22418,7 +26522,7 @@ module.exports = MessengerPage;
 
 
 
-},{"../components/messenger/messenger":153,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":201,"../stores/conversation":234,"../stores/currentUser":235,"./mixins/messenger":225,"./mixins/page":228}],221:[function(require,module,exports){
+},{"../components/messenger/messenger":154,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":202,"../stores/conversation":237,"../stores/currentUser":238,"./mixins/messenger":227,"./mixins/page":230}],223:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, MessageStore, Messenger, MessengerThreadPage, MessengerThreadPageMixin, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -22467,7 +26571,7 @@ module.exports = MessengerThreadPage;
 
 
 
-},{"../components/messenger/messenger":153,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":201,"../stores/conversation":234,"../stores/currentUser":235,"../stores/message":237,"./mixins/messengerThread":226,"./mixins/page":228}],222:[function(require,module,exports){
+},{"../components/messenger/messenger":154,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":202,"../stores/conversation":237,"../stores/currentUser":238,"../stores/message":240,"./mixins/messengerThread":228,"./mixins/page":230}],224:[function(require,module,exports){
 var FeedBestPageMixin;
 
 FeedBestPageMixin = {
@@ -22572,7 +26676,7 @@ module.exports = FeedBestPageMixin;
 
 
 
-},{}],223:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 var FeedFriendsPageMixin;
 
 FeedFriendsPageMixin = {
@@ -22738,7 +26842,7 @@ module.exports = FeedFriendsPageMixin;
 
 
 
-},{}],224:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 var FeedLivePageMixin;
 
 FeedLivePageMixin = {
@@ -22904,7 +27008,7 @@ module.exports = FeedLivePageMixin;
 
 
 
-},{}],225:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 var MessengerPageMixin;
 
 MessengerPageMixin = {
@@ -23791,7 +27895,7 @@ module.exports = MessengerPageMixin;
 
 
 
-},{}],226:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 var MessengerPageMixin;
 
 MessengerPageMixin = {
@@ -24022,7 +28126,7 @@ module.exports = MessengerPageMixin;
 
 
 
-},{}],227:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 var NotificationsPageMixin;
 
 NotificationsPageMixin = {
@@ -24340,7 +28444,7 @@ module.exports = NotificationsPageMixin;
 
 
 
-},{}],228:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 var PageMixin, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -24360,7 +28464,7 @@ module.exports = PageMixin;
 
 
 
-},{}],229:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 var CurrentUserStore, FeedToolbarManager, NotificationStore, Notifications, NotificationsPage, NotificationsPageMixin, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -24403,7 +28507,7 @@ module.exports = NotificationsPage;
 
 
 
-},{"../components/notifications/notifications":163,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":201,"../stores/currentUser":235,"../stores/notification":238,"./mixins/notifications":227,"./mixins/page":228}],230:[function(require,module,exports){
+},{"../components/notifications/notifications":164,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":202,"../stores/currentUser":238,"../stores/notification":242,"./mixins/notifications":229,"./mixins/page":230}],232:[function(require,module,exports){
 var CurrentUserStore, FeedToolbarManager, PageMixin, PropTypes, Settings, SettingsPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -24440,7 +28544,7 @@ module.exports = SettingsPage;
 
 
 
-},{"../components/settings/settings":189,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":201,"../stores/currentUser":235,"./mixins/page":228}],231:[function(require,module,exports){
+},{"../components/settings/settings":190,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":202,"../stores/currentUser":238,"./mixins/page":230}],233:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, Daylog, DaylogPagination, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, TlogDaylogPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -24498,7 +28602,7 @@ module.exports = TlogDaylogPage;
 
 
 
-},{"../components/auth/authManager":26,"../components/buttons/auth/authManager":42,"../components/daylog/daylog":55,"../components/hero/tlog":114,"../components/pagination/daylog":164,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":201,"../stores/currentUser":235,"./mixins/page":228}],232:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/daylog/daylog":56,"../components/hero/tlog":115,"../components/pagination/daylog":165,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":202,"../stores/currentUser":238,"./mixins/page":230}],234:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, Tlog, TlogPagination, TlogRegularPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -24556,7 +28660,124 @@ module.exports = TlogRegularPage;
 
 
 
-},{"../components/auth/authManager":26,"../components/buttons/auth/authManager":42,"../components/hero/tlog":114,"../components/pagination/tlog":168,"../components/tlog/tlog":191,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":201,"../stores/currentUser":235,"./mixins/page":228}],233:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/hero/tlog":115,"../components/pagination/tlog":169,"../components/tlog/tlog":192,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":202,"../stores/currentUser":238,"./mixins/page":230}],235:[function(require,module,exports){
+var Api, AppDispatcher, Constants, MessagingService, NotifyController,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+Constants = require('../constants/constants');
+
+NotifyController = require('../controllers/notify');
+
+AppDispatcher = require('../dispatcher/dispatcher');
+
+Api = require('../api/api');
+
+MessagingService = (function(_super) {
+  __extends(MessagingService, _super);
+
+  MessagingService.prototype.userID = null;
+
+  MessagingService.prototype.userToken = null;
+
+  MessagingService.prototype.pusher = null;
+
+  MessagingService.prototype.channel = null;
+
+  function MessagingService(userID, userToken) {
+    this.onConnectionSuccess = __bind(this.onConnectionSuccess, this);
+    var pusherOptions;
+    this.userID = userID;
+    this.userToken = userToken;
+    pusherOptions = {
+      authEndpoint: ApiRoutes.pusher_auth_url(),
+      pong_timeout: 6000,
+      unavailable_timeout: 2000,
+      auth: {
+        headers: {
+          'X-User-Token': this.userToken
+        }
+      }
+    };
+    this.pusher = new Pusher(gon.pusher.key, pusherOptions);
+    this.makeSubscriptions();
+  }
+
+  MessagingService.prototype.makeSubscriptions = function() {
+    this.channel = this.pusher.subscribe("private-" + this.userID + "-messaging");
+    this.channel.bind(Constants.messaging.CONNECT_SUCCESS, this.onConnectionSuccess);
+    this.channel.bind(Constants.messaging.CONNECT_FAIL, this.onConnectionFail);
+    this.channel.bind(Constants.messaging.UPDATE_STATUS, this.onUpdateStatus);
+    this.channel.bind(Constants.messaging.UPDATE_CONVERSATION, this.onUpdateConversation);
+    this.channel.bind(Constants.messaging.PUSH_MESSAGE, this.onPushMessage);
+    this.channel.bind(Constants.messaging.UPDATE_MESSAGES, this.onUpdateMessages);
+    this.channel.bind(Constants.messaging.PUSH_NOTIFICATION, this.onPushNotification);
+    return this.channel.bind(Constants.messaging.UPDATE_NOTIFICATIONS, this.onUpdateNotifications);
+  };
+
+  MessagingService.prototype.onConnectionSuccess = function() {
+    return Api.messaging.ready(this.pusher.connection.socket_id).then(function() {
+      return console.log('Welcome to the Matrix, Neo');
+    });
+  };
+
+  MessagingService.prototype.onConnectionFail = function() {
+    return NotifyController.notifyError('Соединение не установлено');
+  };
+
+  MessagingService.prototype.onUpdateStatus = function(status) {
+    console.log('onUpdateStatus', status);
+    return AppDispatcher.handleServerAction({
+      type: Constants.messaging.UPDATE_STATUS,
+      status: status
+    });
+  };
+
+  MessagingService.prototype.onUpdateConversation = function(conversation) {
+    return AppDispatcher.handleServerAction({
+      type: Constants.messaging.UPDATE_CONVERSATION,
+      conversation: conversation
+    });
+  };
+
+  MessagingService.prototype.onPushMessage = function(message) {
+    return AppDispatcher.handleServerAction({
+      type: Constants.messaging.PUSH_MESSAGE,
+      message: message
+    });
+  };
+
+  MessagingService.prototype.onUpdateMessages = function(data) {
+    return AppDispatcher.handleServerAction({
+      type: Constants.messaging.UPDATE_MESSAGES,
+      messages: data.messages
+    });
+  };
+
+  MessagingService.prototype.onPushNotification = function(notification) {
+    return AppDispatcher.handleServerAction({
+      type: Constants.messaging.PUSH_NOTIFICATION,
+      notification: notification
+    });
+  };
+
+  MessagingService.prototype.onUpdateNotifications = function(data) {
+    return AppDispatcher.handleServerAction({
+      type: Constants.messaging.UPDATE_NOTIFICATIONS,
+      notifications: data.notifications
+    });
+  };
+
+  return MessagingService;
+
+})(EventEmitter);
+
+module.exports = MessagingService;
+
+
+
+},{"../api/api":20,"../constants/constants":204,"../controllers/notify":212,"../dispatcher/dispatcher":214}],236:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -24590,7 +28811,7 @@ module.exports = BaseStore;
 
 
 
-},{}],234:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, ConversationStore, assign, _, _conversations, _currentID;
 
 _ = require('lodash');
@@ -24662,12 +28883,15 @@ ConversationStore.dispatchToken = AppDispatcher.register(function(payload) {
     case Constants.messenger.OPEN_CONVERSATION:
       _currentID = action.convID;
       return ConversationStore.emitChange();
+    case Constants.messaging.UPDATE_CONVERSATION:
+      _conversations[action.conversation.id] = action.conversation;
+      return ConversationStore.emitChange();
   }
 });
 
 
 
-},{"../constants/constants":203,"../dispatcher/dispatcher":212,"./_base":233,"lodash":253,"react/lib/Object.assign":279}],235:[function(require,module,exports){
+},{"../constants/constants":204,"../dispatcher/dispatcher":214,"./_base":236,"lodash":257,"react/lib/Object.assign":283}],238:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, CurrentUserStore, assign, extendByMockData, _currentUser;
 
 assign = require('react/lib/Object.assign');
@@ -24741,7 +28965,7 @@ CurrentUserStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":203,"../dispatcher/dispatcher":212,"./_base":233,"react/lib/Object.assign":279}],236:[function(require,module,exports){
+},{"../constants/constants":204,"../dispatcher/dispatcher":214,"./_base":236,"react/lib/Object.assign":283}],239:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, FeedStore, assign, initializeFeed, pushEntries, _entries, _everythingLoaded;
 
 assign = require('react/lib/Object.assign');
@@ -24795,7 +29019,7 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":203,"../dispatcher/dispatcher":212,"./_base":233,"react/lib/Object.assign":279}],237:[function(require,module,exports){
+},{"../constants/constants":204,"../dispatcher/dispatcher":214,"./_base":236,"react/lib/Object.assign":283}],240:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, ConversationStore, CurrentUserStore, MessageStore, addLocalMessage, addRemoteMessage, assign, _, _localMessages, _messages;
 
 _ = require('lodash');
@@ -24937,13 +29161,21 @@ MessageStore.dispatchToken = AppDispatcher.register(function(payload) {
         }
       });
       return MessageStore.emitChange();
+    case Constants.messaging.PUSH_MESSAGE:
+      addRemoteMessage(action.message);
+      return MessageStore.emitChange();
+    case Constants.messaging.UPDATE_MESSAGES:
+      _.forEach(action.messages, function(item) {
+        return _.extend(_messages[item.id], item);
+      });
+      return MessageStore.emitChange();
   }
 });
 
 
 
-},{"../constants/constants":203,"../dispatcher/dispatcher":212,"./_base":233,"./conversation":234,"./currentUser":235,"lodash":253,"react/lib/Object.assign":279}],238:[function(require,module,exports){
-var AppDispatcher, BaseStore, Constants, NotificationStore, assign, push, update, _, _everythingLoaded, _notifications;
+},{"../constants/constants":204,"../dispatcher/dispatcher":214,"./_base":236,"./conversation":237,"./currentUser":238,"lodash":257,"react/lib/Object.assign":283}],241:[function(require,module,exports){
+var AppDispatcher, BaseStore, Constants, MessagingStatusStore, assign, _, _messagingStatus;
 
 _ = require('lodash');
 
@@ -24955,28 +29187,74 @@ Constants = require('../constants/constants');
 
 AppDispatcher = require('../dispatcher/dispatcher');
 
-_notifications = [];
+_messagingStatus = {
+  activeConversationsCount: null,
+  unreadConversationsCount: null,
+  unreadNotificationsCount: null
+};
+
+MessagingStatusStore = assign(new BaseStore(), {
+  getUnreadConversationsCount: function() {
+    return _messagingStatus.unreadConversationsCount;
+  },
+  getActiveConversationsCount: function() {
+    return _messagingStatus.activeConversationsCount;
+  },
+  getUnreadNotificationsCount: function() {
+    return _messagingStatus.unreadNotificationsCount;
+  }
+});
+
+module.exports = MessagingStatusStore;
+
+MessagingStatusStore.dispatchToken = AppDispatcher.register(function(payload) {
+  var action;
+  action = payload.action;
+  switch (action.type) {
+    case Constants.messaging.UPDATE_STATUS:
+      _messagingStatus = action.status;
+      return MessagingStatusStore.emitChange();
+  }
+});
+
+
+
+},{"../constants/constants":204,"../dispatcher/dispatcher":214,"./_base":236,"lodash":257,"react/lib/Object.assign":283}],242:[function(require,module,exports){
+var AppDispatcher, BaseStore, Constants, NotificationStore, assign, _, _everythingLoaded, _notifications;
+
+_ = require('lodash');
+
+assign = require('react/lib/Object.assign');
+
+BaseStore = require('./_base');
+
+Constants = require('../constants/constants');
+
+AppDispatcher = require('../dispatcher/dispatcher');
+
+_notifications = {};
 
 _everythingLoaded = false;
 
-update = function(data) {
-  return _.forEach(_notifications, function(item) {
-    if (item.id === data.id) {
-      return _.extend(item, data);
-    }
-  });
-};
-
-push = function(notifications) {
-  return _notifications = _notifications.concat(notifications);
-};
-
 NotificationStore = assign(new BaseStore(), {
   initialize: function(notifications) {
-    return _notifications = notifications;
+    return _.forEach(notifications, function(item) {
+      return _notifications[item.id] = item;
+    });
   },
   getAll: function() {
     return _notifications;
+  },
+  getAllChrono: function() {
+    var notifications;
+    notifications = [];
+    _.forEach(_notifications, function(item) {
+      return notifications.push(item);
+    });
+    notifications = _.sortBy(notifications, function(item) {
+      return -item.id;
+    });
+    return notifications;
   },
   isEverythingLoaded: function() {
     return _everythingLoaded;
@@ -24986,29 +29264,40 @@ NotificationStore = assign(new BaseStore(), {
 module.exports = NotificationStore;
 
 NotificationStore.dispatchToken = AppDispatcher.register(function(payload) {
-  var action, notifications;
+  var action;
   action = payload.action;
   switch (action.type) {
     case Constants.notifications.LOAD:
-      notifications = action.notifications.reverse();
-      if (notifications.length) {
-        push(notifications);
+      if (action.notifications.length) {
+        _.forEach(action.notifications, function(item) {
+          return _notifications[item.id] = item;
+        });
       } else {
         _everythingLoaded = true;
       }
       return NotificationStore.emitChange();
     case Constants.notifications.READ:
-      update(action.notification);
+      _.extend(_notifications[action.notification.id], action.notification);
       return NotificationStore.emitChange();
     case Constants.notifications.READ_ALL:
-      _.forEach(action.notifications, update);
+      _.forEach(action.notifications, function(item) {
+        return _.extend(_notifications[item.id], item);
+      });
+      return NotificationStore.emitChange();
+    case Constants.messaging.PUSH_NOTIFICATION:
+      _notifications[action.notification.id] = action.notification;
+      return NotificationStore.emitChange();
+    case Constants.messaging.UPDATE_NOTIFICATIONS:
+      _.forEach(action.notifications, function(item) {
+        return _.extend(_notifications[item.id], item);
+      });
       return NotificationStore.emitChange();
   }
 });
 
 
 
-},{"../constants/constants":203,"../dispatcher/dispatcher":212,"./_base":233,"lodash":253,"react/lib/Object.assign":279}],239:[function(require,module,exports){
+},{"../constants/constants":204,"../dispatcher/dispatcher":214,"./_base":236,"lodash":257,"react/lib/Object.assign":283}],243:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, RelationshipsStore, assign, updateStatus, _relationships;
 
 assign = require('react/lib/Object.assign');
@@ -25051,18 +29340,22 @@ RelationshipsStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":203,"../dispatcher/dispatcher":212,"./_base":233,"react/lib/Object.assign":279}],240:[function(require,module,exports){
-window.React = require('react');
+},{"../constants/constants":204,"../dispatcher/dispatcher":214,"./_base":236,"react/lib/Object.assign":283}],244:[function(require,module,exports){
+(function (global){
+global.React = require('react');
 
-window.reqwest = require('reqwest');
+global.reqwest = require('reqwest');
 
-window.EventEmitter = require('eventEmitter');
+global.EventEmitter = require('eventEmitter');
 
-window.moment = require('../../../bower_components/momentjs/moment');
+global.Pusher = require('pusher');
+
+global.moment = require('../../../bower_components/momentjs/moment');
 
 
 
-},{"../../../bower_components/momentjs/moment":4,"eventEmitter":"eventEmitter","react":"react","reqwest":"reqwest"}],241:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../../../bower_components/momentjs/moment":4,"eventEmitter":"eventEmitter","pusher":5,"react":"react","reqwest":"reqwest"}],245:[function(require,module,exports){
 var momentLocales;
 
 momentLocales = {
@@ -25073,7 +29366,7 @@ window.moment.locale('ru', momentLocales.ru);
 
 
 
-},{"../../../bower_components/momentjs/locale/ru":3}],242:[function(require,module,exports){
+},{"../../../bower_components/momentjs/locale/ru":3}],246:[function(require,module,exports){
 var BrowserHelpers;
 
 BrowserHelpers = {
@@ -25122,7 +29415,7 @@ module.exports = BrowserHelpers;
 
 
 
-},{}],243:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 var NumberHelpers;
 
 NumberHelpers = {
@@ -25154,7 +29447,7 @@ module.exports = NumberHelpers;
 
 
 
-},{}],244:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 var ConnectStoreMixin;
 
 ConnectStoreMixin = function(listenableStore) {
@@ -25178,7 +29471,7 @@ module.exports = ConnectStoreMixin;
 
 
 
-},{}],245:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 var ThumborService;
 
 ThumborService = {
@@ -25199,7 +29492,7 @@ module.exports = ThumborService;
 
 
 
-},{}],246:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 var UuidService;
 
 UuidService = {
@@ -25216,7 +29509,7 @@ module.exports = UuidService;
 
 
 
-},{}],247:[function(require,module,exports){
+},{}],251:[function(require,module,exports){
 var ApiRoutes;
 
 ApiRoutes = {
@@ -25382,7 +29675,7 @@ module.exports = ApiRoutes;
 
 
 
-},{}],248:[function(require,module,exports){
+},{}],252:[function(require,module,exports){
 var Routes;
 
 Routes = {
@@ -25449,7 +29742,7 @@ module.exports = Routes;
 
 
 
-},{}],249:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -25537,7 +29830,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],250:[function(require,module,exports){
+},{}],254:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -25549,7 +29842,7 @@ process.chdir = function (dir) {
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":251}],251:[function(require,module,exports){
+},{"./lib/Dispatcher":255}],255:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -25801,7 +30094,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":252}],252:[function(require,module,exports){
+},{"./invariant":256}],256:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -25856,7 +30149,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],253:[function(require,module,exports){
+},{}],257:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -36684,7 +40977,7 @@ module.exports = invariant;
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],254:[function(require,module,exports){
+},{}],258:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -36711,7 +41004,7 @@ var AutoFocusMixin = {
 
 module.exports = AutoFocusMixin;
 
-},{"./focusNode":365}],255:[function(require,module,exports){
+},{"./focusNode":369}],259:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -36933,7 +41226,7 @@ var BeforeInputEventPlugin = {
 
 module.exports = BeforeInputEventPlugin;
 
-},{"./EventConstants":268,"./EventPropagators":273,"./ExecutionEnvironment":274,"./SyntheticInputEvent":342,"./keyOf":387}],256:[function(require,module,exports){
+},{"./EventConstants":272,"./EventPropagators":277,"./ExecutionEnvironment":278,"./SyntheticInputEvent":346,"./keyOf":391}],260:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -37052,7 +41345,7 @@ var CSSProperty = {
 
 module.exports = CSSProperty;
 
-},{}],257:[function(require,module,exports){
+},{}],261:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -37187,7 +41480,7 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./CSSProperty":256,"./ExecutionEnvironment":274,"./camelizeStyleName":353,"./dangerousStyleValue":359,"./hyphenateStyleName":378,"./memoizeStringOnly":389,"./warning":399,"_process":249}],258:[function(require,module,exports){
+},{"./CSSProperty":260,"./ExecutionEnvironment":278,"./camelizeStyleName":357,"./dangerousStyleValue":363,"./hyphenateStyleName":382,"./memoizeStringOnly":393,"./warning":403,"_process":253}],262:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -37287,7 +41580,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 module.exports = CallbackQueue;
 
 }).call(this,require('_process'))
-},{"./Object.assign":279,"./PooledClass":280,"./invariant":380,"_process":249}],259:[function(require,module,exports){
+},{"./Object.assign":283,"./PooledClass":284,"./invariant":384,"_process":253}],263:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -37669,7 +41962,7 @@ var ChangeEventPlugin = {
 
 module.exports = ChangeEventPlugin;
 
-},{"./EventConstants":268,"./EventPluginHub":270,"./EventPropagators":273,"./ExecutionEnvironment":274,"./ReactUpdates":332,"./SyntheticEvent":340,"./isEventSupported":381,"./isTextInputElement":383,"./keyOf":387}],260:[function(require,module,exports){
+},{"./EventConstants":272,"./EventPluginHub":274,"./EventPropagators":277,"./ExecutionEnvironment":278,"./ReactUpdates":336,"./SyntheticEvent":344,"./isEventSupported":385,"./isTextInputElement":387,"./keyOf":391}],264:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -37694,7 +41987,7 @@ var ClientReactRootIndex = {
 
 module.exports = ClientReactRootIndex;
 
-},{}],261:[function(require,module,exports){
+},{}],265:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -37953,7 +42246,7 @@ var CompositionEventPlugin = {
 
 module.exports = CompositionEventPlugin;
 
-},{"./EventConstants":268,"./EventPropagators":273,"./ExecutionEnvironment":274,"./ReactInputSelection":312,"./SyntheticCompositionEvent":338,"./getTextContentAccessor":375,"./keyOf":387}],262:[function(require,module,exports){
+},{"./EventConstants":272,"./EventPropagators":277,"./ExecutionEnvironment":278,"./ReactInputSelection":316,"./SyntheticCompositionEvent":342,"./getTextContentAccessor":379,"./keyOf":391}],266:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -38128,7 +42421,7 @@ var DOMChildrenOperations = {
 module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
-},{"./Danger":265,"./ReactMultiChildUpdateTypes":318,"./getTextContentAccessor":375,"./invariant":380,"_process":249}],263:[function(require,module,exports){
+},{"./Danger":269,"./ReactMultiChildUpdateTypes":322,"./getTextContentAccessor":379,"./invariant":384,"_process":253}],267:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -38427,7 +42720,7 @@ var DOMProperty = {
 module.exports = DOMProperty;
 
 }).call(this,require('_process'))
-},{"./invariant":380,"_process":249}],264:[function(require,module,exports){
+},{"./invariant":384,"_process":253}],268:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -38624,7 +42917,7 @@ var DOMPropertyOperations = {
 module.exports = DOMPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":263,"./escapeTextForBrowser":363,"./memoizeStringOnly":389,"./warning":399,"_process":249}],265:[function(require,module,exports){
+},{"./DOMProperty":267,"./escapeTextForBrowser":367,"./memoizeStringOnly":393,"./warning":403,"_process":253}],269:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -38810,7 +43103,7 @@ var Danger = {
 module.exports = Danger;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":274,"./createNodesFromMarkup":357,"./emptyFunction":361,"./getMarkupWrap":372,"./invariant":380,"_process":249}],266:[function(require,module,exports){
+},{"./ExecutionEnvironment":278,"./createNodesFromMarkup":361,"./emptyFunction":365,"./getMarkupWrap":376,"./invariant":384,"_process":253}],270:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -38850,7 +43143,7 @@ var DefaultEventPluginOrder = [
 
 module.exports = DefaultEventPluginOrder;
 
-},{"./keyOf":387}],267:[function(require,module,exports){
+},{"./keyOf":391}],271:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -38990,7 +43283,7 @@ var EnterLeaveEventPlugin = {
 
 module.exports = EnterLeaveEventPlugin;
 
-},{"./EventConstants":268,"./EventPropagators":273,"./ReactMount":316,"./SyntheticMouseEvent":344,"./keyOf":387}],268:[function(require,module,exports){
+},{"./EventConstants":272,"./EventPropagators":277,"./ReactMount":320,"./SyntheticMouseEvent":348,"./keyOf":391}],272:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -39062,7 +43355,7 @@ var EventConstants = {
 
 module.exports = EventConstants;
 
-},{"./keyMirror":386}],269:[function(require,module,exports){
+},{"./keyMirror":390}],273:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -39152,7 +43445,7 @@ var EventListener = {
 module.exports = EventListener;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":361,"_process":249}],270:[function(require,module,exports){
+},{"./emptyFunction":365,"_process":253}],274:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -39428,7 +43721,7 @@ var EventPluginHub = {
 module.exports = EventPluginHub;
 
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":271,"./EventPluginUtils":272,"./accumulateInto":350,"./forEachAccumulated":366,"./invariant":380,"_process":249}],271:[function(require,module,exports){
+},{"./EventPluginRegistry":275,"./EventPluginUtils":276,"./accumulateInto":354,"./forEachAccumulated":370,"./invariant":384,"_process":253}],275:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -39708,7 +44001,7 @@ var EventPluginRegistry = {
 module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
-},{"./invariant":380,"_process":249}],272:[function(require,module,exports){
+},{"./invariant":384,"_process":253}],276:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -39929,7 +44222,7 @@ var EventPluginUtils = {
 module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
-},{"./EventConstants":268,"./invariant":380,"_process":249}],273:[function(require,module,exports){
+},{"./EventConstants":272,"./invariant":384,"_process":253}],277:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -40071,7 +44364,7 @@ var EventPropagators = {
 module.exports = EventPropagators;
 
 }).call(this,require('_process'))
-},{"./EventConstants":268,"./EventPluginHub":270,"./accumulateInto":350,"./forEachAccumulated":366,"_process":249}],274:[function(require,module,exports){
+},{"./EventConstants":272,"./EventPluginHub":274,"./accumulateInto":354,"./forEachAccumulated":370,"_process":253}],278:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -40116,7 +44409,7 @@ var ExecutionEnvironment = {
 
 module.exports = ExecutionEnvironment;
 
-},{}],275:[function(require,module,exports){
+},{}],279:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -40308,7 +44601,7 @@ var HTMLDOMPropertyConfig = {
 
 module.exports = HTMLDOMPropertyConfig;
 
-},{"./DOMProperty":263,"./ExecutionEnvironment":274}],276:[function(require,module,exports){
+},{"./DOMProperty":267,"./ExecutionEnvironment":278}],280:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -40464,7 +44757,7 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
-},{"./ReactPropTypes":325,"./invariant":380,"_process":249}],277:[function(require,module,exports){
+},{"./ReactPropTypes":329,"./invariant":384,"_process":253}],281:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -40514,7 +44807,7 @@ var LocalEventTrapMixin = {
 module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserEventEmitter":283,"./accumulateInto":350,"./forEachAccumulated":366,"./invariant":380,"_process":249}],278:[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":287,"./accumulateInto":354,"./forEachAccumulated":370,"./invariant":384,"_process":253}],282:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -40572,7 +44865,7 @@ var MobileSafariClickEventPlugin = {
 
 module.exports = MobileSafariClickEventPlugin;
 
-},{"./EventConstants":268,"./emptyFunction":361}],279:[function(require,module,exports){
+},{"./EventConstants":272,"./emptyFunction":365}],283:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -40619,7 +44912,7 @@ function assign(target, sources) {
 
 module.exports = assign;
 
-},{}],280:[function(require,module,exports){
+},{}],284:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -40735,7 +45028,7 @@ var PooledClass = {
 module.exports = PooledClass;
 
 }).call(this,require('_process'))
-},{"./invariant":380,"_process":249}],281:[function(require,module,exports){
+},{"./invariant":384,"_process":253}],285:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -40923,7 +45216,7 @@ React.version = '0.12.2';
 module.exports = React;
 
 }).call(this,require('_process'))
-},{"./DOMPropertyOperations":264,"./EventPluginUtils":272,"./ExecutionEnvironment":274,"./Object.assign":279,"./ReactChildren":284,"./ReactComponent":285,"./ReactCompositeComponent":287,"./ReactContext":288,"./ReactCurrentOwner":289,"./ReactDOM":290,"./ReactDOMComponent":292,"./ReactDefaultInjection":302,"./ReactElement":305,"./ReactElementValidator":306,"./ReactInstanceHandles":313,"./ReactLegacyElement":314,"./ReactMount":316,"./ReactMultiChild":317,"./ReactPerf":321,"./ReactPropTypes":325,"./ReactServerRendering":329,"./ReactTextComponent":331,"./deprecated":360,"./onlyChild":391,"_process":249}],282:[function(require,module,exports){
+},{"./DOMPropertyOperations":268,"./EventPluginUtils":276,"./ExecutionEnvironment":278,"./Object.assign":283,"./ReactChildren":288,"./ReactComponent":289,"./ReactCompositeComponent":291,"./ReactContext":292,"./ReactCurrentOwner":293,"./ReactDOM":294,"./ReactDOMComponent":296,"./ReactDefaultInjection":306,"./ReactElement":309,"./ReactElementValidator":310,"./ReactInstanceHandles":317,"./ReactLegacyElement":318,"./ReactMount":320,"./ReactMultiChild":321,"./ReactPerf":325,"./ReactPropTypes":329,"./ReactServerRendering":333,"./ReactTextComponent":335,"./deprecated":364,"./onlyChild":395,"_process":253}],286:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -40966,7 +45259,7 @@ var ReactBrowserComponentMixin = {
 module.exports = ReactBrowserComponentMixin;
 
 }).call(this,require('_process'))
-},{"./ReactEmptyComponent":307,"./ReactMount":316,"./invariant":380,"_process":249}],283:[function(require,module,exports){
+},{"./ReactEmptyComponent":311,"./ReactMount":320,"./invariant":384,"_process":253}],287:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -41321,7 +45614,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
 
 module.exports = ReactBrowserEventEmitter;
 
-},{"./EventConstants":268,"./EventPluginHub":270,"./EventPluginRegistry":271,"./Object.assign":279,"./ReactEventEmitterMixin":309,"./ViewportMetrics":349,"./isEventSupported":381}],284:[function(require,module,exports){
+},{"./EventConstants":272,"./EventPluginHub":274,"./EventPluginRegistry":275,"./Object.assign":283,"./ReactEventEmitterMixin":313,"./ViewportMetrics":353,"./isEventSupported":385}],288:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -41471,7 +45764,7 @@ var ReactChildren = {
 module.exports = ReactChildren;
 
 }).call(this,require('_process'))
-},{"./PooledClass":280,"./traverseAllChildren":398,"./warning":399,"_process":249}],285:[function(require,module,exports){
+},{"./PooledClass":284,"./traverseAllChildren":402,"./warning":403,"_process":253}],289:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -41914,7 +46207,7 @@ var ReactComponent = {
 module.exports = ReactComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":279,"./ReactElement":305,"./ReactOwner":320,"./ReactUpdates":332,"./invariant":380,"./keyMirror":386,"_process":249}],286:[function(require,module,exports){
+},{"./Object.assign":283,"./ReactElement":309,"./ReactOwner":324,"./ReactUpdates":336,"./invariant":384,"./keyMirror":390,"_process":253}],290:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -42036,7 +46329,7 @@ var ReactComponentBrowserEnvironment = {
 module.exports = ReactComponentBrowserEnvironment;
 
 }).call(this,require('_process'))
-},{"./ReactDOMIDOperations":294,"./ReactMarkupChecksum":315,"./ReactMount":316,"./ReactPerf":321,"./ReactReconcileTransaction":327,"./getReactRootElementInContainer":374,"./invariant":380,"./setInnerHTML":394,"_process":249}],287:[function(require,module,exports){
+},{"./ReactDOMIDOperations":298,"./ReactMarkupChecksum":319,"./ReactMount":320,"./ReactPerf":325,"./ReactReconcileTransaction":331,"./getReactRootElementInContainer":378,"./invariant":384,"./setInnerHTML":398,"_process":253}],291:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -43476,7 +47769,7 @@ var ReactCompositeComponent = {
 module.exports = ReactCompositeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":279,"./ReactComponent":285,"./ReactContext":288,"./ReactCurrentOwner":289,"./ReactElement":305,"./ReactElementValidator":306,"./ReactEmptyComponent":307,"./ReactErrorUtils":308,"./ReactLegacyElement":314,"./ReactOwner":320,"./ReactPerf":321,"./ReactPropTransferer":322,"./ReactPropTypeLocationNames":323,"./ReactPropTypeLocations":324,"./ReactUpdates":332,"./instantiateReactComponent":379,"./invariant":380,"./keyMirror":386,"./keyOf":387,"./mapObject":388,"./monitorCodeUse":390,"./shouldUpdateReactComponent":396,"./warning":399,"_process":249}],288:[function(require,module,exports){
+},{"./Object.assign":283,"./ReactComponent":289,"./ReactContext":292,"./ReactCurrentOwner":293,"./ReactElement":309,"./ReactElementValidator":310,"./ReactEmptyComponent":311,"./ReactErrorUtils":312,"./ReactLegacyElement":318,"./ReactOwner":324,"./ReactPerf":325,"./ReactPropTransferer":326,"./ReactPropTypeLocationNames":327,"./ReactPropTypeLocations":328,"./ReactUpdates":336,"./instantiateReactComponent":383,"./invariant":384,"./keyMirror":390,"./keyOf":391,"./mapObject":392,"./monitorCodeUse":394,"./shouldUpdateReactComponent":400,"./warning":403,"_process":253}],292:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -43538,7 +47831,7 @@ var ReactContext = {
 
 module.exports = ReactContext;
 
-},{"./Object.assign":279}],289:[function(require,module,exports){
+},{"./Object.assign":283}],293:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -43572,7 +47865,7 @@ var ReactCurrentOwner = {
 
 module.exports = ReactCurrentOwner;
 
-},{}],290:[function(require,module,exports){
+},{}],294:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -43755,7 +48048,7 @@ var ReactDOM = mapObject({
 module.exports = ReactDOM;
 
 }).call(this,require('_process'))
-},{"./ReactElement":305,"./ReactElementValidator":306,"./ReactLegacyElement":314,"./mapObject":388,"_process":249}],291:[function(require,module,exports){
+},{"./ReactElement":309,"./ReactElementValidator":310,"./ReactLegacyElement":318,"./mapObject":392,"_process":253}],295:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -43820,7 +48113,7 @@ var ReactDOMButton = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMButton;
 
-},{"./AutoFocusMixin":254,"./ReactBrowserComponentMixin":282,"./ReactCompositeComponent":287,"./ReactDOM":290,"./ReactElement":305,"./keyMirror":386}],292:[function(require,module,exports){
+},{"./AutoFocusMixin":258,"./ReactBrowserComponentMixin":286,"./ReactCompositeComponent":291,"./ReactDOM":294,"./ReactElement":309,"./keyMirror":390}],296:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -44307,7 +48600,7 @@ assign(
 module.exports = ReactDOMComponent;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":257,"./DOMProperty":263,"./DOMPropertyOperations":264,"./Object.assign":279,"./ReactBrowserComponentMixin":282,"./ReactBrowserEventEmitter":283,"./ReactComponent":285,"./ReactMount":316,"./ReactMultiChild":317,"./ReactPerf":321,"./escapeTextForBrowser":363,"./invariant":380,"./isEventSupported":381,"./keyOf":387,"./monitorCodeUse":390,"_process":249}],293:[function(require,module,exports){
+},{"./CSSPropertyOperations":261,"./DOMProperty":267,"./DOMPropertyOperations":268,"./Object.assign":283,"./ReactBrowserComponentMixin":286,"./ReactBrowserEventEmitter":287,"./ReactComponent":289,"./ReactMount":320,"./ReactMultiChild":321,"./ReactPerf":325,"./escapeTextForBrowser":367,"./invariant":384,"./isEventSupported":385,"./keyOf":391,"./monitorCodeUse":394,"_process":253}],297:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44357,7 +48650,7 @@ var ReactDOMForm = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMForm;
 
-},{"./EventConstants":268,"./LocalEventTrapMixin":277,"./ReactBrowserComponentMixin":282,"./ReactCompositeComponent":287,"./ReactDOM":290,"./ReactElement":305}],294:[function(require,module,exports){
+},{"./EventConstants":272,"./LocalEventTrapMixin":281,"./ReactBrowserComponentMixin":286,"./ReactCompositeComponent":291,"./ReactDOM":294,"./ReactElement":309}],298:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -44543,7 +48836,7 @@ var ReactDOMIDOperations = {
 module.exports = ReactDOMIDOperations;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":257,"./DOMChildrenOperations":262,"./DOMPropertyOperations":264,"./ReactMount":316,"./ReactPerf":321,"./invariant":380,"./setInnerHTML":394,"_process":249}],295:[function(require,module,exports){
+},{"./CSSPropertyOperations":261,"./DOMChildrenOperations":266,"./DOMPropertyOperations":268,"./ReactMount":320,"./ReactPerf":325,"./invariant":384,"./setInnerHTML":398,"_process":253}],299:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44591,7 +48884,7 @@ var ReactDOMImg = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMImg;
 
-},{"./EventConstants":268,"./LocalEventTrapMixin":277,"./ReactBrowserComponentMixin":282,"./ReactCompositeComponent":287,"./ReactDOM":290,"./ReactElement":305}],296:[function(require,module,exports){
+},{"./EventConstants":272,"./LocalEventTrapMixin":281,"./ReactBrowserComponentMixin":286,"./ReactCompositeComponent":291,"./ReactDOM":294,"./ReactElement":309}],300:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -44769,7 +49062,7 @@ var ReactDOMInput = ReactCompositeComponent.createClass({
 module.exports = ReactDOMInput;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":254,"./DOMPropertyOperations":264,"./LinkedValueUtils":276,"./Object.assign":279,"./ReactBrowserComponentMixin":282,"./ReactCompositeComponent":287,"./ReactDOM":290,"./ReactElement":305,"./ReactMount":316,"./ReactUpdates":332,"./invariant":380,"_process":249}],297:[function(require,module,exports){
+},{"./AutoFocusMixin":258,"./DOMPropertyOperations":268,"./LinkedValueUtils":280,"./Object.assign":283,"./ReactBrowserComponentMixin":286,"./ReactCompositeComponent":291,"./ReactDOM":294,"./ReactElement":309,"./ReactMount":320,"./ReactUpdates":336,"./invariant":384,"_process":253}],301:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -44822,7 +49115,7 @@ var ReactDOMOption = ReactCompositeComponent.createClass({
 module.exports = ReactDOMOption;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserComponentMixin":282,"./ReactCompositeComponent":287,"./ReactDOM":290,"./ReactElement":305,"./warning":399,"_process":249}],298:[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":286,"./ReactCompositeComponent":291,"./ReactDOM":294,"./ReactElement":309,"./warning":403,"_process":253}],302:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45006,7 +49299,7 @@ var ReactDOMSelect = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMSelect;
 
-},{"./AutoFocusMixin":254,"./LinkedValueUtils":276,"./Object.assign":279,"./ReactBrowserComponentMixin":282,"./ReactCompositeComponent":287,"./ReactDOM":290,"./ReactElement":305,"./ReactUpdates":332}],299:[function(require,module,exports){
+},{"./AutoFocusMixin":258,"./LinkedValueUtils":280,"./Object.assign":283,"./ReactBrowserComponentMixin":286,"./ReactCompositeComponent":291,"./ReactDOM":294,"./ReactElement":309,"./ReactUpdates":336}],303:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45215,7 +49508,7 @@ var ReactDOMSelection = {
 
 module.exports = ReactDOMSelection;
 
-},{"./ExecutionEnvironment":274,"./getNodeForCharacterOffset":373,"./getTextContentAccessor":375}],300:[function(require,module,exports){
+},{"./ExecutionEnvironment":278,"./getNodeForCharacterOffset":377,"./getTextContentAccessor":379}],304:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -45356,7 +49649,7 @@ var ReactDOMTextarea = ReactCompositeComponent.createClass({
 module.exports = ReactDOMTextarea;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":254,"./DOMPropertyOperations":264,"./LinkedValueUtils":276,"./Object.assign":279,"./ReactBrowserComponentMixin":282,"./ReactCompositeComponent":287,"./ReactDOM":290,"./ReactElement":305,"./ReactUpdates":332,"./invariant":380,"./warning":399,"_process":249}],301:[function(require,module,exports){
+},{"./AutoFocusMixin":258,"./DOMPropertyOperations":268,"./LinkedValueUtils":280,"./Object.assign":283,"./ReactBrowserComponentMixin":286,"./ReactCompositeComponent":291,"./ReactDOM":294,"./ReactElement":309,"./ReactUpdates":336,"./invariant":384,"./warning":403,"_process":253}],305:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45429,7 +49722,7 @@ var ReactDefaultBatchingStrategy = {
 
 module.exports = ReactDefaultBatchingStrategy;
 
-},{"./Object.assign":279,"./ReactUpdates":332,"./Transaction":348,"./emptyFunction":361}],302:[function(require,module,exports){
+},{"./Object.assign":283,"./ReactUpdates":336,"./Transaction":352,"./emptyFunction":365}],306:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -45558,7 +49851,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./BeforeInputEventPlugin":255,"./ChangeEventPlugin":259,"./ClientReactRootIndex":260,"./CompositionEventPlugin":261,"./DefaultEventPluginOrder":266,"./EnterLeaveEventPlugin":267,"./ExecutionEnvironment":274,"./HTMLDOMPropertyConfig":275,"./MobileSafariClickEventPlugin":278,"./ReactBrowserComponentMixin":282,"./ReactComponentBrowserEnvironment":286,"./ReactDOMButton":291,"./ReactDOMComponent":292,"./ReactDOMForm":293,"./ReactDOMImg":295,"./ReactDOMInput":296,"./ReactDOMOption":297,"./ReactDOMSelect":298,"./ReactDOMTextarea":300,"./ReactDefaultBatchingStrategy":301,"./ReactDefaultPerf":303,"./ReactEventListener":310,"./ReactInjection":311,"./ReactInstanceHandles":313,"./ReactMount":316,"./SVGDOMPropertyConfig":333,"./SelectEventPlugin":334,"./ServerReactRootIndex":335,"./SimpleEventPlugin":336,"./createFullPageComponent":356,"_process":249}],303:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":259,"./ChangeEventPlugin":263,"./ClientReactRootIndex":264,"./CompositionEventPlugin":265,"./DefaultEventPluginOrder":270,"./EnterLeaveEventPlugin":271,"./ExecutionEnvironment":278,"./HTMLDOMPropertyConfig":279,"./MobileSafariClickEventPlugin":282,"./ReactBrowserComponentMixin":286,"./ReactComponentBrowserEnvironment":290,"./ReactDOMButton":295,"./ReactDOMComponent":296,"./ReactDOMForm":297,"./ReactDOMImg":299,"./ReactDOMInput":300,"./ReactDOMOption":301,"./ReactDOMSelect":302,"./ReactDOMTextarea":304,"./ReactDefaultBatchingStrategy":305,"./ReactDefaultPerf":307,"./ReactEventListener":314,"./ReactInjection":315,"./ReactInstanceHandles":317,"./ReactMount":320,"./SVGDOMPropertyConfig":337,"./SelectEventPlugin":338,"./ServerReactRootIndex":339,"./SimpleEventPlugin":340,"./createFullPageComponent":360,"_process":253}],307:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45818,7 +50111,7 @@ var ReactDefaultPerf = {
 
 module.exports = ReactDefaultPerf;
 
-},{"./DOMProperty":263,"./ReactDefaultPerfAnalysis":304,"./ReactMount":316,"./ReactPerf":321,"./performanceNow":393}],304:[function(require,module,exports){
+},{"./DOMProperty":267,"./ReactDefaultPerfAnalysis":308,"./ReactMount":320,"./ReactPerf":325,"./performanceNow":397}],308:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46024,7 +50317,7 @@ var ReactDefaultPerfAnalysis = {
 
 module.exports = ReactDefaultPerfAnalysis;
 
-},{"./Object.assign":279}],305:[function(require,module,exports){
+},{"./Object.assign":283}],309:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -46270,7 +50563,7 @@ ReactElement.isValidElement = function(object) {
 module.exports = ReactElement;
 
 }).call(this,require('_process'))
-},{"./ReactContext":288,"./ReactCurrentOwner":289,"./warning":399,"_process":249}],306:[function(require,module,exports){
+},{"./ReactContext":292,"./ReactCurrentOwner":293,"./warning":403,"_process":253}],310:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -46552,7 +50845,7 @@ var ReactElementValidator = {
 module.exports = ReactElementValidator;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":289,"./ReactElement":305,"./ReactPropTypeLocations":324,"./monitorCodeUse":390,"./warning":399,"_process":249}],307:[function(require,module,exports){
+},{"./ReactCurrentOwner":293,"./ReactElement":309,"./ReactPropTypeLocations":328,"./monitorCodeUse":394,"./warning":403,"_process":253}],311:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -46629,7 +50922,7 @@ var ReactEmptyComponent = {
 module.exports = ReactEmptyComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":305,"./invariant":380,"_process":249}],308:[function(require,module,exports){
+},{"./ReactElement":309,"./invariant":384,"_process":253}],312:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46661,7 +50954,7 @@ var ReactErrorUtils = {
 
 module.exports = ReactErrorUtils;
 
-},{}],309:[function(require,module,exports){
+},{}],313:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46711,7 +51004,7 @@ var ReactEventEmitterMixin = {
 
 module.exports = ReactEventEmitterMixin;
 
-},{"./EventPluginHub":270}],310:[function(require,module,exports){
+},{"./EventPluginHub":274}],314:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46895,7 +51188,7 @@ var ReactEventListener = {
 
 module.exports = ReactEventListener;
 
-},{"./EventListener":269,"./ExecutionEnvironment":274,"./Object.assign":279,"./PooledClass":280,"./ReactInstanceHandles":313,"./ReactMount":316,"./ReactUpdates":332,"./getEventTarget":371,"./getUnboundedScrollPosition":376}],311:[function(require,module,exports){
+},{"./EventListener":273,"./ExecutionEnvironment":278,"./Object.assign":283,"./PooledClass":284,"./ReactInstanceHandles":317,"./ReactMount":320,"./ReactUpdates":336,"./getEventTarget":375,"./getUnboundedScrollPosition":380}],315:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46935,7 +51228,7 @@ var ReactInjection = {
 
 module.exports = ReactInjection;
 
-},{"./DOMProperty":263,"./EventPluginHub":270,"./ReactBrowserEventEmitter":283,"./ReactComponent":285,"./ReactCompositeComponent":287,"./ReactEmptyComponent":307,"./ReactNativeComponent":319,"./ReactPerf":321,"./ReactRootIndex":328,"./ReactUpdates":332}],312:[function(require,module,exports){
+},{"./DOMProperty":267,"./EventPluginHub":274,"./ReactBrowserEventEmitter":287,"./ReactComponent":289,"./ReactCompositeComponent":291,"./ReactEmptyComponent":311,"./ReactNativeComponent":323,"./ReactPerf":325,"./ReactRootIndex":332,"./ReactUpdates":336}],316:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47071,7 +51364,7 @@ var ReactInputSelection = {
 
 module.exports = ReactInputSelection;
 
-},{"./ReactDOMSelection":299,"./containsNode":354,"./focusNode":365,"./getActiveElement":367}],313:[function(require,module,exports){
+},{"./ReactDOMSelection":303,"./containsNode":358,"./focusNode":369,"./getActiveElement":371}],317:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -47406,7 +51699,7 @@ var ReactInstanceHandles = {
 module.exports = ReactInstanceHandles;
 
 }).call(this,require('_process'))
-},{"./ReactRootIndex":328,"./invariant":380,"_process":249}],314:[function(require,module,exports){
+},{"./ReactRootIndex":332,"./invariant":384,"_process":253}],318:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -47653,7 +51946,7 @@ ReactLegacyElementFactory._isLegacyCallWarningEnabled = true;
 module.exports = ReactLegacyElementFactory;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":289,"./invariant":380,"./monitorCodeUse":390,"./warning":399,"_process":249}],315:[function(require,module,exports){
+},{"./ReactCurrentOwner":293,"./invariant":384,"./monitorCodeUse":394,"./warning":403,"_process":253}],319:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47701,7 +51994,7 @@ var ReactMarkupChecksum = {
 
 module.exports = ReactMarkupChecksum;
 
-},{"./adler32":351}],316:[function(require,module,exports){
+},{"./adler32":355}],320:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -48399,7 +52692,7 @@ ReactMount.renderComponent = deprecated(
 module.exports = ReactMount;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":263,"./ReactBrowserEventEmitter":283,"./ReactCurrentOwner":289,"./ReactElement":305,"./ReactInstanceHandles":313,"./ReactLegacyElement":314,"./ReactPerf":321,"./containsNode":354,"./deprecated":360,"./getReactRootElementInContainer":374,"./instantiateReactComponent":379,"./invariant":380,"./shouldUpdateReactComponent":396,"./warning":399,"_process":249}],317:[function(require,module,exports){
+},{"./DOMProperty":267,"./ReactBrowserEventEmitter":287,"./ReactCurrentOwner":293,"./ReactElement":309,"./ReactInstanceHandles":317,"./ReactLegacyElement":318,"./ReactPerf":325,"./containsNode":358,"./deprecated":364,"./getReactRootElementInContainer":378,"./instantiateReactComponent":383,"./invariant":384,"./shouldUpdateReactComponent":400,"./warning":403,"_process":253}],321:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -48827,7 +53120,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 
-},{"./ReactComponent":285,"./ReactMultiChildUpdateTypes":318,"./flattenChildren":364,"./instantiateReactComponent":379,"./shouldUpdateReactComponent":396}],318:[function(require,module,exports){
+},{"./ReactComponent":289,"./ReactMultiChildUpdateTypes":322,"./flattenChildren":368,"./instantiateReactComponent":383,"./shouldUpdateReactComponent":400}],322:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -48860,7 +53153,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 
 module.exports = ReactMultiChildUpdateTypes;
 
-},{"./keyMirror":386}],319:[function(require,module,exports){
+},{"./keyMirror":390}],323:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -48933,7 +53226,7 @@ var ReactNativeComponent = {
 module.exports = ReactNativeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":279,"./invariant":380,"_process":249}],320:[function(require,module,exports){
+},{"./Object.assign":283,"./invariant":384,"_process":253}],324:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -49089,7 +53382,7 @@ var ReactOwner = {
 module.exports = ReactOwner;
 
 }).call(this,require('_process'))
-},{"./emptyObject":362,"./invariant":380,"_process":249}],321:[function(require,module,exports){
+},{"./emptyObject":366,"./invariant":384,"_process":253}],325:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -49173,7 +53466,7 @@ function _noMeasure(objName, fnName, func) {
 module.exports = ReactPerf;
 
 }).call(this,require('_process'))
-},{"_process":249}],322:[function(require,module,exports){
+},{"_process":253}],326:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -49340,7 +53633,7 @@ var ReactPropTransferer = {
 module.exports = ReactPropTransferer;
 
 }).call(this,require('_process'))
-},{"./Object.assign":279,"./emptyFunction":361,"./invariant":380,"./joinClasses":385,"./warning":399,"_process":249}],323:[function(require,module,exports){
+},{"./Object.assign":283,"./emptyFunction":365,"./invariant":384,"./joinClasses":389,"./warning":403,"_process":253}],327:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -49368,7 +53661,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = ReactPropTypeLocationNames;
 
 }).call(this,require('_process'))
-},{"_process":249}],324:[function(require,module,exports){
+},{"_process":253}],328:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49392,7 +53685,7 @@ var ReactPropTypeLocations = keyMirror({
 
 module.exports = ReactPropTypeLocations;
 
-},{"./keyMirror":386}],325:[function(require,module,exports){
+},{"./keyMirror":390}],329:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49746,7 +54039,7 @@ function getPreciseType(propValue) {
 
 module.exports = ReactPropTypes;
 
-},{"./ReactElement":305,"./ReactPropTypeLocationNames":323,"./deprecated":360,"./emptyFunction":361}],326:[function(require,module,exports){
+},{"./ReactElement":309,"./ReactPropTypeLocationNames":327,"./deprecated":364,"./emptyFunction":365}],330:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49802,7 +54095,7 @@ PooledClass.addPoolingTo(ReactPutListenerQueue);
 
 module.exports = ReactPutListenerQueue;
 
-},{"./Object.assign":279,"./PooledClass":280,"./ReactBrowserEventEmitter":283}],327:[function(require,module,exports){
+},{"./Object.assign":283,"./PooledClass":284,"./ReactBrowserEventEmitter":287}],331:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49978,7 +54271,7 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
 
-},{"./CallbackQueue":258,"./Object.assign":279,"./PooledClass":280,"./ReactBrowserEventEmitter":283,"./ReactInputSelection":312,"./ReactPutListenerQueue":326,"./Transaction":348}],328:[function(require,module,exports){
+},{"./CallbackQueue":262,"./Object.assign":283,"./PooledClass":284,"./ReactBrowserEventEmitter":287,"./ReactInputSelection":316,"./ReactPutListenerQueue":330,"./Transaction":352}],332:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -50009,7 +54302,7 @@ var ReactRootIndex = {
 
 module.exports = ReactRootIndex;
 
-},{}],329:[function(require,module,exports){
+},{}],333:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -50089,7 +54382,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./ReactElement":305,"./ReactInstanceHandles":313,"./ReactMarkupChecksum":315,"./ReactServerRenderingTransaction":330,"./instantiateReactComponent":379,"./invariant":380,"_process":249}],330:[function(require,module,exports){
+},{"./ReactElement":309,"./ReactInstanceHandles":317,"./ReactMarkupChecksum":319,"./ReactServerRenderingTransaction":334,"./instantiateReactComponent":383,"./invariant":384,"_process":253}],334:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -50202,7 +54495,7 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 
-},{"./CallbackQueue":258,"./Object.assign":279,"./PooledClass":280,"./ReactPutListenerQueue":326,"./Transaction":348,"./emptyFunction":361}],331:[function(require,module,exports){
+},{"./CallbackQueue":262,"./Object.assign":283,"./PooledClass":284,"./ReactPutListenerQueue":330,"./Transaction":352,"./emptyFunction":365}],335:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -50308,7 +54601,7 @@ ReactTextComponentFactory.type = ReactTextComponent;
 
 module.exports = ReactTextComponentFactory;
 
-},{"./DOMPropertyOperations":264,"./Object.assign":279,"./ReactComponent":285,"./ReactElement":305,"./escapeTextForBrowser":363}],332:[function(require,module,exports){
+},{"./DOMPropertyOperations":268,"./Object.assign":283,"./ReactComponent":289,"./ReactElement":309,"./escapeTextForBrowser":367}],336:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -50598,7 +54891,7 @@ var ReactUpdates = {
 module.exports = ReactUpdates;
 
 }).call(this,require('_process'))
-},{"./CallbackQueue":258,"./Object.assign":279,"./PooledClass":280,"./ReactCurrentOwner":289,"./ReactPerf":321,"./Transaction":348,"./invariant":380,"./warning":399,"_process":249}],333:[function(require,module,exports){
+},{"./CallbackQueue":262,"./Object.assign":283,"./PooledClass":284,"./ReactCurrentOwner":293,"./ReactPerf":325,"./Transaction":352,"./invariant":384,"./warning":403,"_process":253}],337:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -50690,7 +54983,7 @@ var SVGDOMPropertyConfig = {
 
 module.exports = SVGDOMPropertyConfig;
 
-},{"./DOMProperty":263}],334:[function(require,module,exports){
+},{"./DOMProperty":267}],338:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -50885,7 +55178,7 @@ var SelectEventPlugin = {
 
 module.exports = SelectEventPlugin;
 
-},{"./EventConstants":268,"./EventPropagators":273,"./ReactInputSelection":312,"./SyntheticEvent":340,"./getActiveElement":367,"./isTextInputElement":383,"./keyOf":387,"./shallowEqual":395}],335:[function(require,module,exports){
+},{"./EventConstants":272,"./EventPropagators":277,"./ReactInputSelection":316,"./SyntheticEvent":344,"./getActiveElement":371,"./isTextInputElement":387,"./keyOf":391,"./shallowEqual":399}],339:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -50916,7 +55209,7 @@ var ServerReactRootIndex = {
 
 module.exports = ServerReactRootIndex;
 
-},{}],336:[function(require,module,exports){
+},{}],340:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -51344,7 +55637,7 @@ var SimpleEventPlugin = {
 module.exports = SimpleEventPlugin;
 
 }).call(this,require('_process'))
-},{"./EventConstants":268,"./EventPluginUtils":272,"./EventPropagators":273,"./SyntheticClipboardEvent":337,"./SyntheticDragEvent":339,"./SyntheticEvent":340,"./SyntheticFocusEvent":341,"./SyntheticKeyboardEvent":343,"./SyntheticMouseEvent":344,"./SyntheticTouchEvent":345,"./SyntheticUIEvent":346,"./SyntheticWheelEvent":347,"./getEventCharCode":368,"./invariant":380,"./keyOf":387,"./warning":399,"_process":249}],337:[function(require,module,exports){
+},{"./EventConstants":272,"./EventPluginUtils":276,"./EventPropagators":277,"./SyntheticClipboardEvent":341,"./SyntheticDragEvent":343,"./SyntheticEvent":344,"./SyntheticFocusEvent":345,"./SyntheticKeyboardEvent":347,"./SyntheticMouseEvent":348,"./SyntheticTouchEvent":349,"./SyntheticUIEvent":350,"./SyntheticWheelEvent":351,"./getEventCharCode":372,"./invariant":384,"./keyOf":391,"./warning":403,"_process":253}],341:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51390,7 +55683,7 @@ SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 module.exports = SyntheticClipboardEvent;
 
 
-},{"./SyntheticEvent":340}],338:[function(require,module,exports){
+},{"./SyntheticEvent":344}],342:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51436,7 +55729,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticCompositionEvent;
 
 
-},{"./SyntheticEvent":340}],339:[function(require,module,exports){
+},{"./SyntheticEvent":344}],343:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51475,7 +55768,7 @@ SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
 
-},{"./SyntheticMouseEvent":344}],340:[function(require,module,exports){
+},{"./SyntheticMouseEvent":348}],344:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51633,7 +55926,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.threeArgumentPooler);
 
 module.exports = SyntheticEvent;
 
-},{"./Object.assign":279,"./PooledClass":280,"./emptyFunction":361,"./getEventTarget":371}],341:[function(require,module,exports){
+},{"./Object.assign":283,"./PooledClass":284,"./emptyFunction":365,"./getEventTarget":375}],345:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51672,7 +55965,7 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
 
-},{"./SyntheticUIEvent":346}],342:[function(require,module,exports){
+},{"./SyntheticUIEvent":350}],346:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -51719,7 +56012,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticInputEvent;
 
 
-},{"./SyntheticEvent":340}],343:[function(require,module,exports){
+},{"./SyntheticEvent":344}],347:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51806,7 +56099,7 @@ SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
 
-},{"./SyntheticUIEvent":346,"./getEventCharCode":368,"./getEventKey":369,"./getEventModifierState":370}],344:[function(require,module,exports){
+},{"./SyntheticUIEvent":350,"./getEventCharCode":372,"./getEventKey":373,"./getEventModifierState":374}],348:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51889,7 +56182,7 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
 
-},{"./SyntheticUIEvent":346,"./ViewportMetrics":349,"./getEventModifierState":370}],345:[function(require,module,exports){
+},{"./SyntheticUIEvent":350,"./ViewportMetrics":353,"./getEventModifierState":374}],349:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51937,7 +56230,7 @@ SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
 
-},{"./SyntheticUIEvent":346,"./getEventModifierState":370}],346:[function(require,module,exports){
+},{"./SyntheticUIEvent":350,"./getEventModifierState":374}],350:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51999,7 +56292,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
 
-},{"./SyntheticEvent":340,"./getEventTarget":371}],347:[function(require,module,exports){
+},{"./SyntheticEvent":344,"./getEventTarget":375}],351:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52060,7 +56353,7 @@ SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
 
-},{"./SyntheticMouseEvent":344}],348:[function(require,module,exports){
+},{"./SyntheticMouseEvent":348}],352:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -52301,7 +56594,7 @@ var Transaction = {
 module.exports = Transaction;
 
 }).call(this,require('_process'))
-},{"./invariant":380,"_process":249}],349:[function(require,module,exports){
+},{"./invariant":384,"_process":253}],353:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52333,7 +56626,7 @@ var ViewportMetrics = {
 
 module.exports = ViewportMetrics;
 
-},{"./getUnboundedScrollPosition":376}],350:[function(require,module,exports){
+},{"./getUnboundedScrollPosition":380}],354:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -52399,7 +56692,7 @@ function accumulateInto(current, next) {
 module.exports = accumulateInto;
 
 }).call(this,require('_process'))
-},{"./invariant":380,"_process":249}],351:[function(require,module,exports){
+},{"./invariant":384,"_process":253}],355:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52433,7 +56726,7 @@ function adler32(data) {
 
 module.exports = adler32;
 
-},{}],352:[function(require,module,exports){
+},{}],356:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52465,7 +56758,7 @@ function camelize(string) {
 
 module.exports = camelize;
 
-},{}],353:[function(require,module,exports){
+},{}],357:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -52507,7 +56800,7 @@ function camelizeStyleName(string) {
 
 module.exports = camelizeStyleName;
 
-},{"./camelize":352}],354:[function(require,module,exports){
+},{"./camelize":356}],358:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52551,7 +56844,7 @@ function containsNode(outerNode, innerNode) {
 
 module.exports = containsNode;
 
-},{"./isTextNode":384}],355:[function(require,module,exports){
+},{"./isTextNode":388}],359:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52637,7 +56930,7 @@ function createArrayFrom(obj) {
 
 module.exports = createArrayFrom;
 
-},{"./toArray":397}],356:[function(require,module,exports){
+},{"./toArray":401}],360:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -52698,7 +56991,7 @@ function createFullPageComponent(tag) {
 module.exports = createFullPageComponent;
 
 }).call(this,require('_process'))
-},{"./ReactCompositeComponent":287,"./ReactElement":305,"./invariant":380,"_process":249}],357:[function(require,module,exports){
+},{"./ReactCompositeComponent":291,"./ReactElement":309,"./invariant":384,"_process":253}],361:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -52788,7 +57081,7 @@ function createNodesFromMarkup(markup, handleScript) {
 module.exports = createNodesFromMarkup;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":274,"./createArrayFrom":355,"./getMarkupWrap":372,"./invariant":380,"_process":249}],358:[function(require,module,exports){
+},{"./ExecutionEnvironment":278,"./createArrayFrom":359,"./getMarkupWrap":376,"./invariant":384,"_process":253}],362:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52827,7 +57120,7 @@ function cx(classNames) {
 
 module.exports = cx;
 
-},{}],359:[function(require,module,exports){
+},{}],363:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52885,7 +57178,7 @@ function dangerousStyleValue(name, value) {
 
 module.exports = dangerousStyleValue;
 
-},{"./CSSProperty":256}],360:[function(require,module,exports){
+},{"./CSSProperty":260}],364:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -52936,7 +57229,7 @@ function deprecated(namespace, oldName, newName, ctx, fn) {
 module.exports = deprecated;
 
 }).call(this,require('_process'))
-},{"./Object.assign":279,"./warning":399,"_process":249}],361:[function(require,module,exports){
+},{"./Object.assign":283,"./warning":403,"_process":253}],365:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52970,7 +57263,7 @@ emptyFunction.thatReturnsArgument = function(arg) { return arg; };
 
 module.exports = emptyFunction;
 
-},{}],362:[function(require,module,exports){
+},{}],366:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -52994,7 +57287,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = emptyObject;
 
 }).call(this,require('_process'))
-},{"_process":249}],363:[function(require,module,exports){
+},{"_process":253}],367:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53035,7 +57328,7 @@ function escapeTextForBrowser(text) {
 
 module.exports = escapeTextForBrowser;
 
-},{}],364:[function(require,module,exports){
+},{}],368:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -53104,7 +57397,7 @@ function flattenChildren(children) {
 module.exports = flattenChildren;
 
 }).call(this,require('_process'))
-},{"./ReactTextComponent":331,"./traverseAllChildren":398,"./warning":399,"_process":249}],365:[function(require,module,exports){
+},{"./ReactTextComponent":335,"./traverseAllChildren":402,"./warning":403,"_process":253}],369:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -53133,7 +57426,7 @@ function focusNode(node) {
 
 module.exports = focusNode;
 
-},{}],366:[function(require,module,exports){
+},{}],370:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53164,7 +57457,7 @@ var forEachAccumulated = function(arr, cb, scope) {
 
 module.exports = forEachAccumulated;
 
-},{}],367:[function(require,module,exports){
+},{}],371:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53193,7 +57486,7 @@ function getActiveElement() /*?DOMElement*/ {
 
 module.exports = getActiveElement;
 
-},{}],368:[function(require,module,exports){
+},{}],372:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53245,7 +57538,7 @@ function getEventCharCode(nativeEvent) {
 
 module.exports = getEventCharCode;
 
-},{}],369:[function(require,module,exports){
+},{}],373:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53350,7 +57643,7 @@ function getEventKey(nativeEvent) {
 
 module.exports = getEventKey;
 
-},{"./getEventCharCode":368}],370:[function(require,module,exports){
+},{"./getEventCharCode":372}],374:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -53397,7 +57690,7 @@ function getEventModifierState(nativeEvent) {
 
 module.exports = getEventModifierState;
 
-},{}],371:[function(require,module,exports){
+},{}],375:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53428,7 +57721,7 @@ function getEventTarget(nativeEvent) {
 
 module.exports = getEventTarget;
 
-},{}],372:[function(require,module,exports){
+},{}],376:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -53545,7 +57838,7 @@ function getMarkupWrap(nodeName) {
 module.exports = getMarkupWrap;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":274,"./invariant":380,"_process":249}],373:[function(require,module,exports){
+},{"./ExecutionEnvironment":278,"./invariant":384,"_process":253}],377:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53620,7 +57913,7 @@ function getNodeForCharacterOffset(root, offset) {
 
 module.exports = getNodeForCharacterOffset;
 
-},{}],374:[function(require,module,exports){
+},{}],378:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53655,7 +57948,7 @@ function getReactRootElementInContainer(container) {
 
 module.exports = getReactRootElementInContainer;
 
-},{}],375:[function(require,module,exports){
+},{}],379:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53692,7 +57985,7 @@ function getTextContentAccessor() {
 
 module.exports = getTextContentAccessor;
 
-},{"./ExecutionEnvironment":274}],376:[function(require,module,exports){
+},{"./ExecutionEnvironment":278}],380:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53732,7 +58025,7 @@ function getUnboundedScrollPosition(scrollable) {
 
 module.exports = getUnboundedScrollPosition;
 
-},{}],377:[function(require,module,exports){
+},{}],381:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53765,7 +58058,7 @@ function hyphenate(string) {
 
 module.exports = hyphenate;
 
-},{}],378:[function(require,module,exports){
+},{}],382:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53806,7 +58099,7 @@ function hyphenateStyleName(string) {
 
 module.exports = hyphenateStyleName;
 
-},{"./hyphenate":377}],379:[function(require,module,exports){
+},{"./hyphenate":381}],383:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -53920,7 +58213,7 @@ function instantiateReactComponent(element, parentCompositeType) {
 module.exports = instantiateReactComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":305,"./ReactEmptyComponent":307,"./ReactLegacyElement":314,"./ReactNativeComponent":319,"./warning":399,"_process":249}],380:[function(require,module,exports){
+},{"./ReactElement":309,"./ReactEmptyComponent":311,"./ReactLegacyElement":318,"./ReactNativeComponent":323,"./warning":403,"_process":253}],384:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -53977,7 +58270,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":249}],381:[function(require,module,exports){
+},{"_process":253}],385:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54042,7 +58335,7 @@ function isEventSupported(eventNameSuffix, capture) {
 
 module.exports = isEventSupported;
 
-},{"./ExecutionEnvironment":274}],382:[function(require,module,exports){
+},{"./ExecutionEnvironment":278}],386:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54070,7 +58363,7 @@ function isNode(object) {
 
 module.exports = isNode;
 
-},{}],383:[function(require,module,exports){
+},{}],387:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54114,7 +58407,7 @@ function isTextInputElement(elem) {
 
 module.exports = isTextInputElement;
 
-},{}],384:[function(require,module,exports){
+},{}],388:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54139,7 +58432,7 @@ function isTextNode(object) {
 
 module.exports = isTextNode;
 
-},{"./isNode":382}],385:[function(require,module,exports){
+},{"./isNode":386}],389:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54180,7 +58473,7 @@ function joinClasses(className/*, ... */) {
 
 module.exports = joinClasses;
 
-},{}],386:[function(require,module,exports){
+},{}],390:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -54235,7 +58528,7 @@ var keyMirror = function(obj) {
 module.exports = keyMirror;
 
 }).call(this,require('_process'))
-},{"./invariant":380,"_process":249}],387:[function(require,module,exports){
+},{"./invariant":384,"_process":253}],391:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54271,7 +58564,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 
-},{}],388:[function(require,module,exports){
+},{}],392:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54324,7 +58617,7 @@ function mapObject(object, callback, context) {
 
 module.exports = mapObject;
 
-},{}],389:[function(require,module,exports){
+},{}],393:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54358,7 +58651,7 @@ function memoizeStringOnly(callback) {
 
 module.exports = memoizeStringOnly;
 
-},{}],390:[function(require,module,exports){
+},{}],394:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -54392,7 +58685,7 @@ function monitorCodeUse(eventName, data) {
 module.exports = monitorCodeUse;
 
 }).call(this,require('_process'))
-},{"./invariant":380,"_process":249}],391:[function(require,module,exports){
+},{"./invariant":384,"_process":253}],395:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -54432,7 +58725,7 @@ function onlyChild(children) {
 module.exports = onlyChild;
 
 }).call(this,require('_process'))
-},{"./ReactElement":305,"./invariant":380,"_process":249}],392:[function(require,module,exports){
+},{"./ReactElement":309,"./invariant":384,"_process":253}],396:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54460,7 +58753,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = performance || {};
 
-},{"./ExecutionEnvironment":274}],393:[function(require,module,exports){
+},{"./ExecutionEnvironment":278}],397:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54488,7 +58781,7 @@ var performanceNow = performance.now.bind(performance);
 
 module.exports = performanceNow;
 
-},{"./performance":392}],394:[function(require,module,exports){
+},{"./performance":396}],398:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54566,7 +58859,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setInnerHTML;
 
-},{"./ExecutionEnvironment":274}],395:[function(require,module,exports){
+},{"./ExecutionEnvironment":278}],399:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54610,7 +58903,7 @@ function shallowEqual(objA, objB) {
 
 module.exports = shallowEqual;
 
-},{}],396:[function(require,module,exports){
+},{}],400:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54648,7 +58941,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 
 module.exports = shouldUpdateReactComponent;
 
-},{}],397:[function(require,module,exports){
+},{}],401:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -54720,7 +59013,7 @@ function toArray(obj) {
 module.exports = toArray;
 
 }).call(this,require('_process'))
-},{"./invariant":380,"_process":249}],398:[function(require,module,exports){
+},{"./invariant":384,"_process":253}],402:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -54903,7 +59196,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 module.exports = traverseAllChildren;
 
 }).call(this,require('_process'))
-},{"./ReactElement":305,"./ReactInstanceHandles":313,"./invariant":380,"_process":249}],399:[function(require,module,exports){
+},{"./ReactElement":309,"./ReactInstanceHandles":317,"./invariant":384,"_process":253}],403:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -54948,7 +59241,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":361,"_process":249}],"eventEmitter":[function(require,module,exports){
+},{"./emptyFunction":365,"_process":253}],"eventEmitter":[function(require,module,exports){
 /*!
  * EventEmitter v4.2.11 - git.io/ee
  * Unlicense - http://unlicense.org/
@@ -57609,7 +61902,7 @@ module.exports = {
 },{}],"react":[function(require,module,exports){
 module.exports = require('./lib/React');
 
-},{"./lib/React":281}],"reqwest":[function(require,module,exports){
+},{"./lib/React":285}],"reqwest":[function(require,module,exports){
 /*!
   * Reqwest! A general purpose XHR connection manager
   * license MIT (c) Dustin Diaz 2014

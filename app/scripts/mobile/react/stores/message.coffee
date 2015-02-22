@@ -109,3 +109,11 @@ MessageStore.dispatchToken = AppDispatcher.register (payload) ->
         message = _messages[id]
         message.read_at = new Date().toISOString() if message?
       MessageStore.emitChange()
+
+    when Constants.messaging.PUSH_MESSAGE
+      addRemoteMessage action.message
+      MessageStore.emitChange()
+
+    when Constants.messaging.UPDATE_MESSAGES
+      _.forEach action.messages, (item) -> _.extend _messages[item.id], item
+      MessageStore.emitChange()

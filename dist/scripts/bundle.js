@@ -55104,10 +55104,10 @@ var Plugins;
 
 },{}],"jquery.ui.core":[function(require,module,exports){
 /*!
- * jQuery UI Core 1.11.2
+ * jQuery UI Core 1.11.3
  * http://jqueryui.com
  *
- * Copyright 2014 jQuery Foundation and other contributors
+ * Copyright jQuery Foundation and other contributors
  * Released under the MIT license.
  * http://jquery.org/license
  *
@@ -55129,7 +55129,7 @@ var Plugins;
 $.ui = $.ui || {};
 
 $.extend( $.ui, {
-	version: "1.11.2",
+	version: "1.11.3",
 
 	keyCode: {
 		BACKSPACE: 8,
@@ -55202,7 +55202,7 @@ function focusable( element, isTabIndexNotNaN ) {
 		img = $( "img[usemap='#" + mapName + "']" )[ 0 ];
 		return !!img && visible( img );
 	}
-	return ( /input|select|textarea|button|object/.test( nodeName ) ?
+	return ( /^(input|select|textarea|button|object)$/.test( nodeName ) ?
 		!element.disabled :
 		"a" === nodeName ?
 			element.href || isTabIndexNotNaN :
@@ -55410,10 +55410,10 @@ $.ui.plugin = {
 
 },{}],"jquery.ui.draggable":[function(require,module,exports){
 /*!
- * jQuery UI Draggable 1.11.2
+ * jQuery UI Draggable 1.11.3
  * http://jqueryui.com
  *
- * Copyright 2014 jQuery Foundation and other contributors
+ * Copyright jQuery Foundation and other contributors
  * Released under the MIT license.
  * http://jquery.org/license
  *
@@ -55437,7 +55437,7 @@ $.ui.plugin = {
 }(function( $ ) {
 
 $.widget("ui.draggable", $.ui.mouse, {
-	version: "1.11.2",
+	version: "1.11.3",
 	widgetEventPrefix: "drag",
 	options: {
 		addClasses: true,
@@ -56540,10 +56540,10 @@ return $.ui.draggable;
 
 },{}],"jquery.ui.mouse":[function(require,module,exports){
 /*!
- * jQuery UI Mouse 1.11.2
+ * jQuery UI Mouse 1.11.3
  * http://jqueryui.com
  *
- * Copyright 2014 jQuery Foundation and other contributors
+ * Copyright jQuery Foundation and other contributors
  * Released under the MIT license.
  * http://jquery.org/license
  *
@@ -56570,7 +56570,7 @@ $( document ).mouseup( function() {
 });
 
 return $.widget("ui.mouse", {
-	version: "1.11.2",
+	version: "1.11.3",
 	options: {
 		cancel: "input,textarea,button,select,option",
 		distance: 1,
@@ -56741,10 +56741,10 @@ return $.widget("ui.mouse", {
 
 },{}],"jquery.ui.slider":[function(require,module,exports){
 /*!
- * jQuery UI Slider 1.11.2
+ * jQuery UI Slider 1.11.3
  * http://jqueryui.com
  *
- * Copyright 2014 jQuery Foundation and other contributors
+ * Copyright jQuery Foundation and other contributors
  * Released under the MIT license.
  * http://jquery.org/license
  *
@@ -56768,7 +56768,7 @@ return $.widget("ui.mouse", {
 }(function( $ ) {
 
 return $.widget( "ui.slider", $.ui.mouse, {
-	version: "1.11.2",
+	version: "1.11.3",
 	widgetEventPrefix: "slide",
 
 	options: {
@@ -57289,8 +57289,26 @@ return $.widget( "ui.slider", $.ui.mouse, {
 	},
 
 	_calculateNewMax: function() {
-		var remainder = ( this.options.max - this._valueMin() ) % this.options.step;
-		this.max = this.options.max - remainder;
+		var max = this.options.max,
+			min = this._valueMin(),
+			step = this.options.step,
+			aboveMin = Math.floor( ( max - min ) / step ) * step;
+		max = aboveMin + min;
+		this.max = parseFloat( max.toFixed( this._precision() ) );
+	},
+
+	_precision: function() {
+		var precision = this._precisionOf( this.options.step );
+		if ( this.options.min !== null ) {
+			precision = Math.max( precision, this._precisionOf( this.options.min ) );
+		}
+		return precision;
+	},
+
+	_precisionOf: function( num ) {
+		var str = num.toString(),
+			decimal = str.indexOf( "." );
+		return decimal === -1 ? 0 : str.length - decimal - 1;
 	},
 
 	_valueMin: function() {
@@ -57442,10 +57460,10 @@ return $.widget( "ui.slider", $.ui.mouse, {
 
 },{}],"jquery.ui.widget":[function(require,module,exports){
 /*!
- * jQuery UI Widget 1.11.2
+ * jQuery UI Widget 1.11.3
  * http://jqueryui.com
  *
- * Copyright 2014 jQuery Foundation and other contributors
+ * Copyright jQuery Foundation and other contributors
  * Released under the MIT license.
  * http://jquery.org/license
  *
@@ -57633,11 +57651,6 @@ $.widget.bridge = function( name, object ) {
 			args = widget_slice.call( arguments, 1 ),
 			returnValue = this;
 
-		// allow multiple hashes to be passed on init
-		options = !isMethodCall && args.length ?
-			$.widget.extend.apply( null, [ options ].concat(args) ) :
-			options;
-
 		if ( isMethodCall ) {
 			this.each(function() {
 				var methodValue,
@@ -57662,6 +57675,12 @@ $.widget.bridge = function( name, object ) {
 				}
 			});
 		} else {
+
+			// Allow multiple hashes to be passed on init
+			if ( args.length ) {
+				options = $.widget.extend.apply( null, [ options ].concat(args) );
+			}
+
 			this.each(function() {
 				var instance = $.data( this, fullName );
 				if ( instance ) {
@@ -70426,7 +70445,7 @@ module.exports = Nanobar;
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
- * Pusher JavaScript Library v2.2.3
+ * Pusher JavaScript Library v2.2.4
  * http://pusher.com/
  *
  * Copyright 2014, Pusher
@@ -71053,7 +71072,7 @@ module.exports = Nanobar;
 }).call(this);
 
 ;(function() {
-  Pusher.VERSION = '2.2.3';
+  Pusher.VERSION = '2.2.4';
   Pusher.PROTOCOL = 7;
 
   // DEPRECATED: WS connection parameters
@@ -71514,7 +71533,7 @@ module.exports = Nanobar;
    * @param  {String} name
    * @param  {Function} callback
    */
-  prototype.load = function(name, callback) {
+  prototype.load = function(name, options, callback) {
     var self = this;
 
     if (self.loading[name] && self.loading[name].length > 0) {
@@ -71522,7 +71541,7 @@ module.exports = Nanobar;
     } else {
       self.loading[name] = [callback];
 
-      var request = new Pusher.ScriptRequest(self.getPath(name));
+      var request = new Pusher.ScriptRequest(self.getPath(name, options));
       var receiver = self.receivers.create(function(error) {
         self.receivers.remove(receiver);
 
@@ -71604,7 +71623,7 @@ module.exports = Nanobar;
   }
 
   if (!window.JSON) {
-    Pusher.Dependencies.load("json2", initializeOnDocumentBody);
+    Pusher.Dependencies.load("json2", {}, initializeOnDocumentBody);
   } else {
     initializeOnDocumentBody();
   }
@@ -72506,25 +72525,29 @@ module.exports = Nanobar;
     }));
 
     if (self.hooks.beforeInitialize) {
-      self.hooks.beforeInitialize();
+      self.hooks.beforeInitialize.call(self);
     }
 
     if (self.hooks.isInitialized()) {
       self.changeState("initialized");
     } else if (self.hooks.file) {
       self.changeState("initializing");
-      Pusher.Dependencies.load(self.hooks.file, function(error, callback) {
-        if (self.hooks.isInitialized()) {
-          self.changeState("initialized");
-          callback(true);
-        } else {
-          if (error) {
-            self.onError(error);
+      Pusher.Dependencies.load(
+        self.hooks.file,
+        { encrypted: self.options.encrypted },
+        function(error, callback) {
+          if (self.hooks.isInitialized()) {
+            self.changeState("initialized");
+            callback(true);
+          } else {
+            if (error) {
+              self.onError(error);
+            }
+            self.onClose();
+            callback(false);
           }
-          self.onClose();
-          callback(false);
         }
-      });
+      );
     } else {
       self.onClose();
     }
@@ -72794,7 +72817,8 @@ module.exports = Nanobar;
       if (window.WEB_SOCKET_SUPPRESS_CROSS_DOMAIN_SWF_ERROR === undefined) {
         window.WEB_SOCKET_SUPPRESS_CROSS_DOMAIN_SWF_ERROR = true;
       }
-      window.WEB_SOCKET_SWF_LOCATION = Pusher.Dependencies.getRoot() +
+      window.WEB_SOCKET_SWF_LOCATION =
+        Pusher.Dependencies.getRoot({ encrypted: this.options.encrypted }) +
         "/WebSocketMain.swf";
     },
     isInitialized: function() {

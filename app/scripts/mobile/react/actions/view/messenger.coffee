@@ -55,7 +55,7 @@ MessengerViewActions =
       .then (message) ->
         MessengerServerActions.createMessage message
       .fail ->
-        NotifyController.notifyError 'При отправке сообщения произошла ошибка'
+        NotifyController.notifyError 'При повторной отправке сообщения произошла ошибка'
         MessengerServerActions.createMessageFail uuid
 
 module.exports = MessengerViewActions

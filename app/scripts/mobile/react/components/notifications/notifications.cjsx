@@ -38,7 +38,7 @@ Notifications = React.createClass
           onClick={ @loadMore } />
 
   getStateFromStore: ->
-    notifications:    NotificationStore.getAll()
+    notifications:    NotificationStore.getAllChrono()
     everythingLoaded: NotificationStore.isEverythingLoaded()
 
 module.exports = Notifications

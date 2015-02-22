@@ -58,3 +58,7 @@ ConversationStore.dispatchToken = AppDispatcher.register (payload) ->
     when Constants.messenger.OPEN_CONVERSATION
       _currentID = action.convID
       ConversationStore.emitChange()
+
+    when Constants.messaging.UPDATE_CONVERSATION
+      _conversations[action.conversation.id] = action.conversation
+      ConversationStore.emitChange()

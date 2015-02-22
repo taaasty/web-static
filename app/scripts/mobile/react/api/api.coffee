@@ -111,6 +111,15 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
 
+  messaging:
+    ready: (socketID) ->
+      url  = ApiRoutes.messenger_ready_url()
+      key  = Constants.api.READY_TO_MESSAGING
+      data = socket_id: socketID
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
+
   messenger:
     createConversation: (userID) ->
       url = ApiRoutes.messengerConversationsByUserId userID
@@ -143,7 +152,7 @@ Api =
         content: messageText
         uuid: uuid
 
-      abortPendingRequests key
+      # Мы позволяем отправлять сообщение, не дожидаясь завершения создания предыдущего
       _pendingRequests[key] = postRequest url, data
 
   relationship:
