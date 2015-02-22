@@ -7,7 +7,9 @@ UserToolbarList = React.createClass
   mixins: [UserToolbarListMixin]
 
   propTypes:
-    user: PropTypes.object
+    user:                     PropTypes.object
+    unreadConversationsCount: PropTypes.number.isRequired
+    unreadNotificationsCount: PropTypes.number.isRequired
 
   render: ->
     <ul className="toolbar__popup-list">
@@ -37,8 +39,16 @@ UserToolbarList = React.createClass
           icon="icon--lock" />
       <ToolbarItem
           title={ i18n.t('user_toolbar.messages_item') }
-          icon="icon--messages"
-          onSelect={ @showMessages } />
+          href={ Routes.messagesUrl(@props.user.slug) }
+          badgeCount={ @props.unreadConversationsCount }
+          badgeClassName="messages-badge"
+          icon="icon--messages" />
+      <ToolbarItem
+          title="Уведомления"
+          href={ Routes.notificationsUrl(@props.user.slug) }
+          badgeCount={ @props.unreadNotificationsCount }
+          badgeClassName="notifications-badge"
+          icon="icon--bell" />
       <ToolbarItem
           title={ i18n.t('user_toolbar.friends_item') }
           icon="icon--friends"

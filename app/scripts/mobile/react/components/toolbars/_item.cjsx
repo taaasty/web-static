@@ -5,12 +5,14 @@ ToolbarItem = React.createClass
   displayName: 'ToolbarItem'
 
   propTypes:
-    icon:     PropTypes.string.isRequired
-    title:    PropTypes.string.isRequired
-    href:     PropTypes.string
-    active:   PropTypes.bool
-    disabled: PropTypes.bool
-    onSelect: PropTypes.func
+    icon:           PropTypes.string.isRequired
+    title:          PropTypes.string.isRequired
+    href:           PropTypes.string
+    active:         PropTypes.bool
+    disabled:       PropTypes.bool
+    badgeCount:     PropTypes.number
+    badgeClassName: PropTypes.string
+    onSelect:       PropTypes.func
 
   getDefaultProps: ->
     active:   false
@@ -25,13 +27,19 @@ ToolbarItem = React.createClass
     return <li className={ toolbarItemClasses }>
              <a href={ @props.href }
                 className="toolbar__popup-link"
-                onClick={ @handleSelect }>
+                onClick={ @handleClick }>
                <i className={ 'icon ' + @props.icon } />
-               { @props.title }
+               { @props.title } { @renderBadge() }
              </a>
            </li>
 
-  handleSelect: (e) ->
+  renderBadge: ->
+    if @props.badgeCount
+      <span className={ @props.badgeClassName }>
+        { @props.badgeCount }
+      </span>
+
+  handleClick: (e) ->
     if !@props.href && !@props.disabled
       e.preventDefault()
       @props.onSelect()

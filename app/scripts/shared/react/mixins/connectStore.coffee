@@ -1,13 +1,23 @@
+_ = require 'lodash'
+
 ConnectStoreMixin = (listenableStore) ->
 
   getInitialState: ->
     @getStateFromStore()
 
   componentWillMount: ->
-    listenableStore.addChangeListener @onStoreChange
+    if _.isArray(listenableStore)
+      _.forEach listenableStore, (store) =>
+        store.addChangeListener @onStoreChange
+    else
+      listenableStore.addChangeListener @onStoreChange
 
   componentWillUnmount: ->
-    listenableStore.removeChangeListener @onStoreChange
+    if _.isArray(listenableStore)
+      _.forEach listenableStore, (store) =>
+        store.removeChangeListener @onStoreChange
+    else
+      listenableStore.removeChangeListener @onStoreChange
 
   onStoreChange: ->
     @setState @getStateFromStore()  

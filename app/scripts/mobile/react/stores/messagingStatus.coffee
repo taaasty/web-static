@@ -5,9 +5,9 @@ Constants     = require '../constants/constants'
 AppDispatcher = require '../dispatcher/dispatcher'
 
 _messagingStatus =
-  activeConversationsCount: null
-  unreadConversationsCount: null
-  unreadNotificationsCount: null
+  activeConversationsCount: 0
+  unreadConversationsCount: 0
+  unreadNotificationsCount: 0
 
 MessagingStatusStore = assign new BaseStore(),
 

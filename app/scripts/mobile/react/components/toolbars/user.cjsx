@@ -1,4 +1,5 @@
 cx                        = require 'react/lib/cx'
+UserToolbarToggle         = require './user/toggle'
 UserToolbarList           = require './user/list'
 UserToolbarListAdditional = require './user/listAdditional'
 ToolbarMixin              = require './mixins/toolbar'
@@ -9,7 +10,9 @@ UserToolbar = React.createClass
   mixins: [ToolbarMixin]
 
   propTypes:
-    user: PropTypes.object
+    user:                     PropTypes.object
+    unreadConversationsCount: PropTypes.number.isRequired
+    unreadNotificationsCount: PropTypes.number.isRequired
 
   render: ->
     toolbarClasses = cx
@@ -18,12 +21,15 @@ UserToolbar = React.createClass
       '__visible': @isOpenState()
 
     return <nav className="toolbar toolbar--user">
-             <div className="toolbar__toggle"
-                  onClick={ @toggleOpenState }>
-               <i className="icon icon--menu" />
-             </div>
+             <UserToolbarToggle
+                 hasConversations={ !!@props.unreadConversationsCount }
+                 hasNotifications={ !!@props.unreadNotificationsCount }
+                 onClick={ @toggleOpenState } />
              <div className={ toolbarClasses }>
-               <UserToolbarList user={ @props.user } />
+               <UserToolbarList
+                   user={ @props.user }
+                   unreadConversationsCount={ @props.unreadConversationsCount }
+                   unreadNotificationsCount={ @props.unreadNotificationsCount } />
                <UserToolbarListAdditional />
              </div>
            </nav>
