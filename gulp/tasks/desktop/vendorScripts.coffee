@@ -10,7 +10,7 @@ gulp.task '[D] VendorScripts', ->
     cache: {}, packageCache: {}
     basedir: config.baseDir
     extensions: config.extensions
-  }).require './jquery/dist/jquery',                             expose: 'jquery'
+  }).require '../../node_modules/jquery/dist/jquery',            expose: 'jquery'
     .require './jquery-ui/ui/core',                              expose: 'jquery.ui.core'
     .require './jquery-ui/ui/slider',                            expose: 'jquery.ui.slider'
     .require './jquery-ui/ui/draggable',                         expose: 'jquery.ui.draggable'

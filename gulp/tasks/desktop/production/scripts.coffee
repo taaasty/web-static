@@ -14,7 +14,7 @@ gulp.task '[D][P] Scripts', ->
     basedir: config.bundle.baseDir
     entries: config.bundle.entries
     extensions: config.bundle.extensions
-  }).require './bower_components/jquery/dist/jquery',                       expose: 'jquery'
+  }).require '../node_modules/jquery/dist/jquery',                          expose: 'jquery'
     .require './bower_components/jquery-ui/ui/core',                        expose: 'jquery.ui.core'
     .require './bower_components/jquery-ui/ui/slider',                      expose: 'jquery.ui.slider'
     .require './bower_components/jquery-ui/ui/draggable',                   expose: 'jquery.ui.draggable'
