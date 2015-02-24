@@ -39,10 +39,9 @@ class MessagingService extends EventEmitter
         console.log 'Welcome to the Matrix, Neo'
 
   onConnectionFail: ->
-    NotifyController.notifyError 'Соединение не установлено'
+    NotifyController.notifyError i18n.t('messages.messenger_connection_error')
 
   onUpdateStatus: (status) ->
-    console.log 'onUpdateStatus', status
     AppDispatcher.handleServerAction
       type: Constants.messaging.UPDATE_STATUS
       status: status

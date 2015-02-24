@@ -44,7 +44,7 @@ UserToolbarList = React.createClass
           badgeClassName="messages-badge"
           icon="icon--messages" />
       <ToolbarItem
-          title="Уведомления"
+          title={ i18n.t('user_toolbar.notifications_item') }
           href={ Routes.notificationsUrl(@props.user.slug) }
           badgeCount={ @props.unreadNotificationsCount }
           badgeClassName="notifications-badge"

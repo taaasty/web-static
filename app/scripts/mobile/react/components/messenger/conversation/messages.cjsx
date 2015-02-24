@@ -49,7 +49,7 @@ ConversationMessages = React.createClass
     else
       <div className="messages__scroll">
         <p className="messages__text messages__text--center">
-          Ошибка загрузки
+          { i18n.t('messenger.messages_loading_error') }
         </p>
       </div>
 

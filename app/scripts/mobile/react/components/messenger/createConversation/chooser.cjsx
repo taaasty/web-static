@@ -35,7 +35,7 @@ MessengerChooser = React.createClass
                  { @renderChooserList() }
                </div>
                <div className="messages__chooser-hint">
-                 Начните вводить имя друга, которому хотите написать сообщение
+                 { i18n.t('messenger.chooser_hint') }
                </div>
              </div>
            </div>

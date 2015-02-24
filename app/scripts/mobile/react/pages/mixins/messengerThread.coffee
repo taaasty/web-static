@@ -32,7 +32,7 @@ MessengerPageMixin =
         "url": "http://vk.com/iamsergeylaptev"
       ],
       "api_key": {
-        "access_token": "adsh213472orafasdf897sckasBCKJ123",
+        "access_token": "",
         "user_id": 232992,
         "expires_at": "2015-01-04T18:07:07.000+03:00"
       },

@@ -17,7 +17,7 @@ Routes =
   favorites_url:           (userSlug) -> '/~' + userSlug + '/favorites'
   private_entries_url:     (userSlug) -> '/~' + userSlug + '/privates'
   entry_edit_url: (userSlug, entryId) -> '/~' + userSlug + '/edit' + '/' + entryId
-  messagesUrl:             (userSlug) -> '/~' + userSlug + '/messages'
+  messagesUrl:             (userSlug) -> '/~' + userSlug + '/conversations'
   notificationsUrl:        (userSlug) -> '/~' + userSlug + '/notifications'
 
   userProfile:        (userSlug) -> '/~' + userSlug + '/profile'

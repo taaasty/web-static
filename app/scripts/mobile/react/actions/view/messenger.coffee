@@ -47,7 +47,7 @@ MessengerViewActions =
       .then (message) ->
         MessengerServerActions.createMessage message
       .fail ->
-        NotifyController.notifyError 'При отправке сообщения произошла ошибка'
+        NotifyController.notifyError i18n.t('messages.messenger_create_message_error')
         MessengerServerActions.createMessageFail uuid
 
   recreateMessage: (convID, messageText, uuid) ->
@@ -55,7 +55,7 @@ MessengerViewActions =
       .then (message) ->
         MessengerServerActions.createMessage message
       .fail ->
-        NotifyController.notifyError 'При повторной отправке сообщения произошла ошибка'
+        NotifyController.notifyError i18n.t('messages.messenger_recreate_message_error')
         MessengerServerActions.createMessageFail uuid
 
 module.exports = MessengerViewActions

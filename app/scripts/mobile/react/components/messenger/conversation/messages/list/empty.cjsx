@@ -4,7 +4,7 @@ MessageListEmpty = React.createClass
   render: ->
     <div className="messages__scroll">
       <p className="messages__text messages__text--center">
-        Здесь будут отображаться сообщения
+        { i18n.t('messenger.messages_empty_list') }
       </p>
     </div>
 

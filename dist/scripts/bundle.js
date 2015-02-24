@@ -23181,7 +23181,7 @@ Routes = {
     return '/~' + userSlug + '/edit' + '/' + entryId;
   },
   messagesUrl: function(userSlug) {
-    return '/~' + userSlug + '/messages';
+    return '/~' + userSlug + '/conversations';
   },
   notificationsUrl: function(userSlug) {
     return '/~' + userSlug + '/notifications';

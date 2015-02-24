@@ -3166,6 +3166,7 @@ module.exports={
     "new_anonymous_item": "Новая анонимка",
     "privates_item": "Скрытые записи",
     "messages_item": "Сообщения",
+    "notifications_item": "Уведомления",
     "friends_item": "Друзья",
     "design_item": "Настройки дизайна",
     "settings_item": "Настройки",
@@ -3232,6 +3233,16 @@ module.exports={
     "header": "Уведомления",
     "empty_list": "Список уведомлений пуст"
   },
+  "messenger": {
+    "conversation_header": "Переписка с __userSlug__",
+    "conversations_header": "Диалоги",
+    "create_conversation_header": "Выбор получателя",
+    "messages_loading_error": "Ошибка загрузки",
+    "messages_empty_list": "Здесь будут отображаться сообщения",
+    "conversations_empty_list": "Список диалогов пуст",
+    "chooser_hint": "Начните вводить имя друга, которому хотите написать сообщение",
+    "recipients_empty_list": "Список пуст"
+  },
   "settings": {
     "account_active_status": "Активный дневник",
     "email_declare_header": "Емейл",
@@ -3275,6 +3286,8 @@ module.exports={
     "settings_email_declare": "Установить",
     "notifications_mark_all_as_read": "Отметить как прочитанные",
     "notifications_load_more": "Загрузить еще",
+    "messenger_create_conversation": "Cоздать переписку",
+    "messenger_create_message": "Отпр",
     "comments_load_more": "Загрузить ещё __count__ комментарий",
     "comments_load_more_plural_2": "Загрузить ещё __count__ комментария",
     "comments_load_more_plural_5": "Загрузить ещё __count__ комментариев",
@@ -3312,7 +3325,11 @@ module.exports={
     "settings_not_unique_email_error": "Новый емейл должен отличаться от текущего",
     "settings_empty_slug_error": "Псевдоним не может быть пустым",
     "settings_no_unsaved_changes_error": "У вас нет несохранённых изменений",
-    "notifications_mark_all_as_read_success": "Все уведомления успешно отмечены как прочитанные"
+    "notifications_mark_all_as_read_success": "Все уведомления успешно отмечены как прочитанные",
+    "messenger_create_message_error": "При отправке сообщения произошла ошибка",
+    "messenger_recreate_message_error": "При повторной отправке сообщения произошла ошибка",
+    "messenger_empty_message_error": "Сообщение не может быть пустым",
+    "messenger_connection_error": "Соединение не установлено"
   },
   "placeholders": {
     "comment_create": "Добавить комментарий",
@@ -3325,7 +3342,8 @@ module.exports={
     "settings_slug": "Ваш псевдоним",
     "settings_title": "Небольшое описание тлога",
     "settings_password": "Новый пароль",
-    "settings_password_confirm": "Новый пароль еще раз"
+    "settings_password_confirm": "Новый пароль еще раз",
+    "messenger_create_message": "Ваше сообщение…"
   }
 }
 },{}],5:[function(require,module,exports){
@@ -3717,7 +3735,7 @@ MessengerViewActions = {
     return Api.messenger.createMessage(convID, messageText, uuid).then(function(message) {
       return MessengerServerActions.createMessage(message);
     }).fail(function() {
-      NotifyController.notifyError('При отправке сообщения произошла ошибка');
+      NotifyController.notifyError(i18n.t('messages.messenger_create_message_error'));
       return MessengerServerActions.createMessageFail(uuid);
     });
   },
@@ -3725,7 +3743,7 @@ MessengerViewActions = {
     return Api.messenger.createMessage(convID, messageText, uuid).then(function(message) {
       return MessengerServerActions.createMessage(message);
     }).fail(function() {
-      NotifyController.notifyError('При повторной отправке сообщения произошла ошибка');
+      NotifyController.notifyError(i18n.t('messages.messenger_recreate_message_error'));
       return MessengerServerActions.createMessageFail(uuid);
     });
   }
@@ -9116,7 +9134,7 @@ CreateConversationButton = React.createClass({
     return React.createElement("button", {
       "className": "messages__button",
       "onClick": this.handleClick
-    }, "C\u043e\u0437\u0434\u0430\u0442\u044c \u043f\u0435\u0440\u0435\u043f\u0438\u0441\u043a\u0443");
+    }, i18n.t('buttons.messenger_create_conversation'));
   },
   handleClick: function(e) {
     e.preventDefault();
@@ -9215,11 +9233,10 @@ ConversationHeader = React.createClass({
   },
   render: function() {
     return React.createElement(MessengerHeader, {
-      "title": this.getTitle()
+      "title": i18n.t('messenger.conversation_header', {
+        userSlug: this.props.slug
+      })
     });
-  },
-  getTitle: function() {
-    return 'Переписка с ' + this.props.slug;
   }
 });
 
@@ -9249,7 +9266,7 @@ ConversationMessageForm = React.createClass({
     }, React.createElement("button", {
       "className": "message-form__submit",
       "onClick": this.handleClick
-    }, "\u041e\u0442\u043f\u0440"), React.createElement(ConversationMessageFormField, {
+    }, i18n.t('buttons.messenger_create_message')), React.createElement(ConversationMessageFormField, {
       "ref": "formField",
       "onSubmit": this.createMessage
     }));
@@ -9258,7 +9275,7 @@ ConversationMessageForm = React.createClass({
     var messageText;
     messageText = this.refs.formField.getValue();
     if (messageText.length === 0) {
-      NotifyController.notifyError('Сообщение не может быть пустым');
+      NotifyController.notifyError(i18n.t('messages.messenger_empty_message_error'));
       return false;
     } else {
       return true;
@@ -9302,7 +9319,7 @@ ConversationMessageFormField = React.createClass({
       "className": "message-form__field"
     }, React.createElement("textarea", {
       "ref": "textarea",
-      "placeholder": "Ваше сообщение…",
+      "placeholder": i18n.t('placeholders.messenger_create_message'),
       "className": "message-form__field-textarea",
       "onKeyDown": this.handleKeyDown
     }));
@@ -9403,7 +9420,7 @@ ConversationMessages = React.createClass({
         "className": "messages__scroll"
       }, React.createElement("p", {
         "className": "messages__text messages__text--center"
-      }, "\u041e\u0448\u0438\u0431\u043a\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0438"));
+      }, i18n.t('messenger.messages_loading_error')));
     }
   },
   isLoadedState: function() {
@@ -9565,7 +9582,7 @@ MessageListEmpty = React.createClass({
       "className": "messages__scroll"
     }, React.createElement("p", {
       "className": "messages__text messages__text--center"
-    }, "\u0417\u0434\u0435\u0441\u044c \u0431\u0443\u0434\u0443\u0442 \u043e\u0442\u043e\u0431\u0440\u0430\u0436\u0430\u0442\u044c\u0441\u044f \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f"));
+    }, i18n.t('messenger.messages_empty_list')));
   }
 });
 
@@ -9815,7 +9832,7 @@ ConversationsHeader = React.createClass({
   displayName: 'ConversationsHeader',
   render: function() {
     return React.createElement(MessengerHeader, {
-      "title": "Диалоги"
+      "title": i18n.t('messenger.conversations_header')
     });
   }
 });
@@ -9884,7 +9901,7 @@ ConversationListEmpty = React.createClass({
       "className": "messages__scroll"
     }, React.createElement("p", {
       "className": "messages__text messages__text--center"
-    }, "\u0421\u043f\u0438\u0441\u043e\u043a \u0434\u0438\u0430\u043b\u043e\u0433\u043e\u0432 \u043f\u0443\u0441\u0442"));
+    }, i18n.t('messenger.conversations_empty_list')));
   }
 });
 
@@ -10058,7 +10075,7 @@ MessengerChooser = React.createClass({
       "onChange": this.handleFieldChange
     }), this.renderChooserList()), React.createElement("div", {
       "className": "messages__chooser-hint"
-    }, "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u0432\u0432\u043e\u0434\u0438\u0442\u044c \u0438\u043c\u044f \u0434\u0440\u0443\u0433\u0430, \u043a\u043e\u0442\u043e\u0440\u043e\u043c\u0443 \u0445\u043e\u0442\u0438\u0442\u0435 \u043d\u0430\u043f\u0438\u0441\u0430\u0442\u044c \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435")));
+    }, i18n.t('messenger.chooser_hint'))));
   },
   renderChooserList: function() {
     if (this.hasQuery()) {
@@ -10213,7 +10230,7 @@ MessengerChooserListEmpty = React.createClass({
       "className": "messages__chooser-dropdown"
     }, React.createElement("div", {
       "className": "messages__chooser-empty"
-    }, "\u0421\u043f\u0438\u0441\u043e\u043a \u043f\u0443\u0441\u0442"));
+    }, i18n.t('messenger.recipients_empty_list')));
   }
 });
 
@@ -10266,7 +10283,7 @@ CreateConversationHeader = React.createClass({
   displayName: 'CreateConversationHeader',
   render: function() {
     return React.createElement(MessengerHeader, {
-      "title": "Выбор получателя"
+      "title": i18n.t('messenger.create_conversation_header')
     });
   }
 });
@@ -12357,7 +12374,7 @@ UserToolbarList = React.createClass({
       "badgeClassName": "messages-badge",
       "icon": "icon--messages"
     }), React.createElement(ToolbarItem, {
-      "title": "Уведомления",
+      "title": i18n.t('user_toolbar.notifications_item'),
       "href": Routes.notificationsUrl(this.props.user.slug),
       "badgeCount": this.props.unreadNotificationsCount,
       "badgeClassName": "notifications-badge",
@@ -13785,7 +13802,7 @@ MessengerPageMixin = {
           }
         ],
         "api_key": {
-          "access_token": "adsh213472orafasdf897sckasBCKJ123",
+          "access_token": "",
           "user_id": 232992,
           "expires_at": "2015-01-04T18:07:07.000+03:00"
         },
@@ -14672,7 +14689,7 @@ MessengerPageMixin = {
           }
         ],
         "api_key": {
-          "access_token": "adsh213472orafasdf897sckasBCKJ123",
+          "access_token": "",
           "user_id": 232992,
           "expires_at": "2015-01-04T18:07:07.000+03:00"
         },
@@ -16335,7 +16352,7 @@ Routes = {
     return '/~' + userSlug + '/edit' + '/' + entryId;
   },
   messagesUrl: function(userSlug) {
-    return '/~' + userSlug + '/messages';
+    return '/~' + userSlug + '/conversations';
   },
   notificationsUrl: function(userSlug) {
     return '/~' + userSlug + '/notifications';

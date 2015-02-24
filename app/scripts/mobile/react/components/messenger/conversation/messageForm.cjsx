@@ -13,7 +13,7 @@ ConversationMessageForm = React.createClass
     <form className="message-form">
       <button className="message-form__submit"
               onClick={ @handleClick }>
-        Отпр
+        { i18n.t('buttons.messenger_create_message') }
       </button>
       <ConversationMessageFormField
           ref="formField"
@@ -24,7 +24,7 @@ ConversationMessageForm = React.createClass
     messageText = @refs.formField.getValue()
 
     if messageText.length == 0
-      NotifyController.notifyError 'Сообщение не может быть пустым'
+      NotifyController.notifyError i18n.t('messages.messenger_empty_message_error')
       false
     else true
 

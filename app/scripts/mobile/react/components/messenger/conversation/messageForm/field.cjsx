@@ -11,7 +11,7 @@ ConversationMessageFormField = React.createClass
     <div className="message-form__field">
       <textarea
           ref="textarea"
-          placeholder="Ваше сообщение…"
+          placeholder={ i18n.t('placeholders.messenger_create_message') }
           className="message-form__field-textarea"
           onKeyDown={ @handleKeyDown } />
     </div>

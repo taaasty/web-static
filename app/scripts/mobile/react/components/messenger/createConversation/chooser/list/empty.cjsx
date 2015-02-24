@@ -4,7 +4,7 @@ MessengerChooserListEmpty = React.createClass
   render: ->
     <div className="messages__chooser-dropdown">
       <div className="messages__chooser-empty">
-        Список пуст
+        { i18n.t('messenger.recipients_empty_list') }
       </div>
     </div>
 

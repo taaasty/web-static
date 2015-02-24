@@ -8,10 +8,6 @@ ConversationHeader = React.createClass
     slug: PropTypes.string.isRequired
 
   render: ->
-    <MessengerHeader title={ @getTitle() } />
-
-  getTitle: ->
-    #TODO: i18n key like "Переписка с __userSlug__", {userSlug: 'Tasty'}
-    'Переписка с ' + @props.slug
+    <MessengerHeader title={ i18n.t('messenger.conversation_header', {userSlug: @props.slug}) } />
 
 module.exports = ConversationHeader

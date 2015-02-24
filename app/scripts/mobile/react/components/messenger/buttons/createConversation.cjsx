@@ -9,7 +9,7 @@ CreateConversationButton = React.createClass
   render: ->
     <button className="messages__button"
             onClick={ @handleClick }>
-      Cоздать переписку
+      { i18n.t('buttons.messenger_create_conversation') }
     </button>
 
   handleClick: (e) ->

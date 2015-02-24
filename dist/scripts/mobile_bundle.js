@@ -7594,7 +7594,7 @@ MessengerViewActions = {
     return Api.messenger.createMessage(convID, messageText, uuid).then(function(message) {
       return MessengerServerActions.createMessage(message);
     }).fail(function() {
-      NotifyController.notifyError('При отправке сообщения произошла ошибка');
+      NotifyController.notifyError(i18n.t('messages.messenger_create_message_error'));
       return MessengerServerActions.createMessageFail(uuid);
     });
   },
@@ -7602,7 +7602,7 @@ MessengerViewActions = {
     return Api.messenger.createMessage(convID, messageText, uuid).then(function(message) {
       return MessengerServerActions.createMessage(message);
     }).fail(function() {
-      NotifyController.notifyError('При повторной отправке сообщения произошла ошибка');
+      NotifyController.notifyError(i18n.t('messages.messenger_recreate_message_error'));
       return MessengerServerActions.createMessageFail(uuid);
     });
   }
@@ -13242,7 +13242,7 @@ CreateConversationButton = React.createClass({
     return React.createElement("button", {
       "className": "messages__button",
       "onClick": this.handleClick
-    }, "C\u043e\u0437\u0434\u0430\u0442\u044c \u043f\u0435\u0440\u0435\u043f\u0438\u0441\u043a\u0443");
+    }, i18n.t('buttons.messenger_create_conversation'));
   },
   handleClick: function(e) {
     e.preventDefault();
@@ -13341,11 +13341,10 @@ ConversationHeader = React.createClass({
   },
   render: function() {
     return React.createElement(MessengerHeader, {
-      "title": this.getTitle()
+      "title": i18n.t('messenger.conversation_header', {
+        userSlug: this.props.slug
+      })
     });
-  },
-  getTitle: function() {
-    return 'Переписка с ' + this.props.slug;
   }
 });
 
@@ -13375,7 +13374,7 @@ ConversationMessageForm = React.createClass({
     }, React.createElement("button", {
       "className": "message-form__submit",
       "onClick": this.handleClick
-    }, "\u041e\u0442\u043f\u0440"), React.createElement(ConversationMessageFormField, {
+    }, i18n.t('buttons.messenger_create_message')), React.createElement(ConversationMessageFormField, {
       "ref": "formField",
       "onSubmit": this.createMessage
     }));
@@ -13384,7 +13383,7 @@ ConversationMessageForm = React.createClass({
     var messageText;
     messageText = this.refs.formField.getValue();
     if (messageText.length === 0) {
-      NotifyController.notifyError('Сообщение не может быть пустым');
+      NotifyController.notifyError(i18n.t('messages.messenger_empty_message_error'));
       return false;
     } else {
       return true;
@@ -13428,7 +13427,7 @@ ConversationMessageFormField = React.createClass({
       "className": "message-form__field"
     }, React.createElement("textarea", {
       "ref": "textarea",
-      "placeholder": "Ваше сообщение…",
+      "placeholder": i18n.t('placeholders.messenger_create_message'),
       "className": "message-form__field-textarea",
       "onKeyDown": this.handleKeyDown
     }));
@@ -13529,7 +13528,7 @@ ConversationMessages = React.createClass({
         "className": "messages__scroll"
       }, React.createElement("p", {
         "className": "messages__text messages__text--center"
-      }, "\u041e\u0448\u0438\u0431\u043a\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0438"));
+      }, i18n.t('messenger.messages_loading_error')));
     }
   },
   isLoadedState: function() {
@@ -13691,7 +13690,7 @@ MessageListEmpty = React.createClass({
       "className": "messages__scroll"
     }, React.createElement("p", {
       "className": "messages__text messages__text--center"
-    }, "\u0417\u0434\u0435\u0441\u044c \u0431\u0443\u0434\u0443\u0442 \u043e\u0442\u043e\u0431\u0440\u0430\u0436\u0430\u0442\u044c\u0441\u044f \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f"));
+    }, i18n.t('messenger.messages_empty_list')));
   }
 });
 
@@ -13941,7 +13940,7 @@ ConversationsHeader = React.createClass({
   displayName: 'ConversationsHeader',
   render: function() {
     return React.createElement(MessengerHeader, {
-      "title": "Диалоги"
+      "title": i18n.t('messenger.conversations_header')
     });
   }
 });
@@ -14010,7 +14009,7 @@ ConversationListEmpty = React.createClass({
       "className": "messages__scroll"
     }, React.createElement("p", {
       "className": "messages__text messages__text--center"
-    }, "\u0421\u043f\u0438\u0441\u043e\u043a \u0434\u0438\u0430\u043b\u043e\u0433\u043e\u0432 \u043f\u0443\u0441\u0442"));
+    }, i18n.t('messenger.conversations_empty_list')));
   }
 });
 
@@ -14184,7 +14183,7 @@ MessengerChooser = React.createClass({
       "onChange": this.handleFieldChange
     }), this.renderChooserList()), React.createElement("div", {
       "className": "messages__chooser-hint"
-    }, "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u0432\u0432\u043e\u0434\u0438\u0442\u044c \u0438\u043c\u044f \u0434\u0440\u0443\u0433\u0430, \u043a\u043e\u0442\u043e\u0440\u043e\u043c\u0443 \u0445\u043e\u0442\u0438\u0442\u0435 \u043d\u0430\u043f\u0438\u0441\u0430\u0442\u044c \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435")));
+    }, i18n.t('messenger.chooser_hint'))));
   },
   renderChooserList: function() {
     if (this.hasQuery()) {
@@ -14339,7 +14338,7 @@ MessengerChooserListEmpty = React.createClass({
       "className": "messages__chooser-dropdown"
     }, React.createElement("div", {
       "className": "messages__chooser-empty"
-    }, "\u0421\u043f\u0438\u0441\u043e\u043a \u043f\u0443\u0441\u0442"));
+    }, i18n.t('messenger.recipients_empty_list')));
   }
 });
 
@@ -14392,7 +14391,7 @@ CreateConversationHeader = React.createClass({
   displayName: 'CreateConversationHeader',
   render: function() {
     return React.createElement(MessengerHeader, {
-      "title": "Выбор получателя"
+      "title": i18n.t('messenger.create_conversation_header')
     });
   }
 });
@@ -16483,7 +16482,7 @@ UserToolbarList = React.createClass({
       "badgeClassName": "messages-badge",
       "icon": "icon--messages"
     }), React.createElement(ToolbarItem, {
-      "title": "Уведомления",
+      "title": i18n.t('user_toolbar.notifications_item'),
       "href": Routes.notificationsUrl(this.props.user.slug),
       "badgeCount": this.props.unreadNotificationsCount,
       "badgeClassName": "notifications-badge",
@@ -17911,7 +17910,7 @@ MessengerPageMixin = {
           }
         ],
         "api_key": {
-          "access_token": "adsh213472orafasdf897sckasBCKJ123",
+          "access_token": "",
           "user_id": 232992,
           "expires_at": "2015-01-04T18:07:07.000+03:00"
         },
@@ -18798,7 +18797,7 @@ MessengerPageMixin = {
           }
         ],
         "api_key": {
-          "access_token": "adsh213472orafasdf897sckasBCKJ123",
+          "access_token": "",
           "user_id": 232992,
           "expires_at": "2015-01-04T18:07:07.000+03:00"
         },
@@ -19587,11 +19586,10 @@ MessagingService = (function(_super) {
   };
 
   MessagingService.prototype.onConnectionFail = function() {
-    return NotifyController.notifyError('Соединение не установлено');
+    return NotifyController.notifyError(i18n.t('messages.messenger_connection_error'));
   };
 
   MessagingService.prototype.onUpdateStatus = function(status) {
-    console.log('onUpdateStatus', status);
     return AppDispatcher.handleServerAction({
       type: Constants.messaging.UPDATE_STATUS,
       status: status
@@ -20604,7 +20602,7 @@ Routes = {
     return '/~' + userSlug + '/edit' + '/' + entryId;
   },
   messagesUrl: function(userSlug) {
-    return '/~' + userSlug + '/messages';
+    return '/~' + userSlug + '/conversations';
   },
   notificationsUrl: function(userSlug) {
     return '/~' + userSlug + '/notifications';
