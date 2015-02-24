@@ -15,12 +15,12 @@ EntryMetaAuthor = React.createClass
             user={ @props.author }
             size={ 28 } />
       </span>
-      <span>
+      <span className="meta-author__name">
         { @getUserSlug() }
       </span>
     </a>
 
   getUserSlug: ->
-    " @#{ @props.author.slug }"
+    "@#{ @props.author.slug }"
 
 module.exports = EntryMetaAuthor

@@ -12,7 +12,7 @@ Notifications = React.createClass
   mixins: [ConnectStoreMixin(NotificationStore), NotificationsMixin, ComponentMixin]
 
   render: ->
-    <div className="notifications">
+    <div className="notifications notifications--fixed">
       <NotificationsHeader />
       <div className="notifications__body">
         { @renderActions() }
@@ -38,7 +38,7 @@ Notifications = React.createClass
           onClick={ @loadMore } />
 
   getStateFromStore: ->
-    notifications:    NotificationStore.getAll()
+    notifications:    NotificationStore.getAllChrono()
     everythingLoaded: NotificationStore.isEverythingLoaded()
 
 module.exports = Notifications

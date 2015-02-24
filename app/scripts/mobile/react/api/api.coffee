@@ -77,6 +77,15 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = deleteRequest url
 
+  users:
+    predict: (query) ->
+      url  = ApiRoutes.users_predict()
+      key  = Constants.api.USERS_PREDICT
+      data = {query}
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
   notifications:
     load: (sinceId, limit) ->
       url  = ApiRoutes.notificationsUrl()
@@ -101,6 +110,50 @@ Api =
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
+
+  messaging:
+    ready: (socketID) ->
+      url  = ApiRoutes.messenger_ready_url()
+      key  = Constants.api.READY_TO_MESSAGING
+      data = socket_id: socketID
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
+
+  messenger:
+    createConversation: (userID) ->
+      url = ApiRoutes.messengerConversationsByUserId userID
+      key = Constants.api.CREATE_CONVERSATION
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
+
+    loadMessages: (convID, toMsgID) ->
+      url  = ApiRoutes.messenger_load_messages_url convID
+      key  = Constants.api.LOAD_MESSAGES
+      data = limit: 40
+      data.to_message_id = toMsgID if toMsgID?
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
+    readMessages: (convID, ids) ->
+      url  = ApiRoutes.messenger_read_messages_url convID
+      key  = Constants.api.READ_MESSAGES
+      data = ids: ids.join(',')
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest url, data
+
+    createMessage: (convID, messageText, uuid) ->
+      url  = ApiRoutes.messenger_new_message_url convID
+      key  = Constants.api.CREATE_MESSAGE
+      data =
+        content: messageText
+        uuid: uuid
+
+      # Мы позволяем отправлять сообщение, не дожидаясь завершения создания предыдущего
+      _pendingRequests[key] = postRequest url, data
 
   relationship:
     follow: (userId) ->
