@@ -199,8 +199,11 @@
   }
 }
 
-// Настройки дизайна тлога
-// TODO: переделать на design-...
+
+//=====================//
+//        LEGACY       //
+//=====================//
+
 .tlog-feedcolor-white {
   .page-body {
     color: @black;
@@ -309,7 +312,7 @@
 }
 
 .tlog-headercolor-black {
-  .hero {
+  .hero__head {
     color: @black;
   }
 
@@ -322,7 +325,7 @@
 }
 
 .tlog-headercolor-white {
-  .hero {
+  .hero__head {
     color: @white;
   }
 
@@ -335,7 +338,7 @@
 }
 
 .tlog-headercolor-blackonwhite {
-  .hero {
+  .hero__head {
     color: @black;
   }
 
@@ -360,7 +363,7 @@
 }
 
 .tlog-headercolor-whiteonblack {
-  .hero {
+  .hero__head {
     color: @white;
   }
 
@@ -413,8 +416,8 @@
 
   .hero {
     margin-bottom: 40px;
-    color: @white !important;
     overflow: hidden;
+    color: #fff;
     transition: height .4s ease, color .4s ease;
   }
 
@@ -437,6 +440,10 @@
     .avatar__text {
       font-size: 100px;
     }
+  }
+
+  .hero__head {
+    color: inherit;
   }
 
   .hero__title {
@@ -581,6 +588,10 @@
     opacity: 1;
     transition: visibility 0s ease 0s, opacity .4s ease 0s;
   }
+}
+
+.popup-enabled {
+  overflow: hidden;
 }
 
 // Когда активен попап гайда

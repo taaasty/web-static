@@ -12,6 +12,7 @@ window.imagesLoaded      = require 'imagesloaded'
 window.MediumEditor      = require 'medium-editor'
 window.Undo              = require 'undo'
 window.introJs           = require 'introJs'
+window.VendorColorPicker = require 'react-color-picker'
 require 'aviator'
 
 require 'swfobject'

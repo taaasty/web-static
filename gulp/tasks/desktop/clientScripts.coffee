@@ -26,6 +26,7 @@ gulp.task '[D] ClientScripts', ->
     .external 'react'
     .external 'react-mixin-manager'
     .external 'reactUjs'
+    .external 'react-color-picker'
     .external 'underscore'
     .external 'baron'
     .external 'mousetrap'

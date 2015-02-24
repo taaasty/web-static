@@ -1,6 +1,9 @@
+//=====================//
+//        LEGACY       //
+//=====================//
+
 .form-radiogroup {
-  display: inline-block;
-  vertical-align: middle;
+  .inline-block-middle;
   user-select: none;
 }
 
@@ -214,5 +217,338 @@
         content: "F"; // TODO: Когда будем использовать, нужно поправить на правильную иконку
       }
     }
+  }
+}
+
+
+
+
+//=====================//
+//         NEW         //
+//=====================//
+
+.form-radiogroup {
+  .inline-block-middle;
+  user-select: none;
+}
+
+// Types
+// -- Dotted -- //
+.form-radiogroup--dotted {
+  .form-radiobtn {
+    margin-right: 14px;
+    float: left;
+
+    & + .form-radiobtn {
+      &:before {
+        content: "";
+        width: 0;
+        height: 1px;
+        position: absolute;
+        top: 50%;
+        left: -8px;
+        border-right: 2px solid;
+        color: #888;
+        cursor: default;
+        pointer-events: none;
+      }
+    }
+
+    .pay {
+      top: -.6em;
+      right: -.9em;
+    }
+  }
+}
+
+// -- Circle Buttons -- //
+.form-radiogroup--circlebtns {
+  .font-null();
+
+  .form-radiobtn {
+    margin-right: 8px;
+
+    .pay {
+      right: -.2em;
+    }
+  }
+
+  .form-radiobtn__label {
+    padding: 4px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+  }
+
+  .form-radiobtn__inner {
+    width: 4px;
+    height: 4px;
+    border: 8px solid;
+    border-radius: 50%;
+  }
+
+  .form-radiobtn__text {
+    display: none;
+  }
+
+  .form-radiobtn__input {
+    &:checked {
+      & + .form-radiobtn__label {
+        border-color: @yellow;
+      }
+    }
+  }
+
+  // -- Colors -- //
+  .form-radiobtn--white {
+    .form-radiobtn__inner {
+      border-color: #fff;
+      background-color: #fff;
+    }
+  }
+
+  .form-radiobtn--black {
+    .form-radiobtn__inner {
+      border-color: #000;
+      background-color: #000;
+    }
+  }
+
+  .form-radiobtn--shamrock {
+    .form-radiobtn__inner {
+      border-color: #2ac67e;
+      background-color: #2ac67e;
+    }
+  }
+
+  .form-radiobtn--cinnabar {
+    .form-radiobtn__inner {
+      border-color: #e74c3c;
+      background-color: #e74c3c;
+    }
+  }
+
+  .form-radiobtn--silversand {
+    .form-radiobtn__inner {
+      border-color: #c6c9cc;
+      background-color: #c6c9cc;
+    }
+  }
+
+  .form-radiobtn--bluegray {
+    .form-radiobtn__inner {
+      border-color: #6c7a89;
+      background-color: #6c7a89;
+    }
+  }
+
+  .form-radiobtn--madison {
+    .form-radiobtn__inner {
+      border-color: #38434e;
+      background-color: #38434e;
+    }
+  }
+
+  .form-radiobtn--custom {
+    .form-radiobtn__label {
+      padding: 2px;
+    }
+
+    .form-radiobtn__inner {
+      display: none;
+    }
+  }
+}
+
+// -- Covers -- //
+.form-radiogroup--covers {
+  .form-radiobtn {
+    margin-right: 10px;
+    position: relative;
+  }
+
+  .form-radiobtn__label {
+    width: @form-radiobtn-cover-size;
+    height: @form-radiobtn-cover-size;
+    padding: 4px;
+    border: 2px solid transparent;
+    background-color: transparent;
+    border-radius: 50%;
+  }
+
+  .form-radiobtn__inner {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-color: rgba(red(@white), green(@white), blue(@white), .05);
+    background-position: 50% 50%;
+    background-size: cover;
+    border-radius: 50%;
+  }
+
+  .form-radiobtn__text {
+    display: none;
+  }
+
+  .form-radiobtn__input {
+    &:checked {
+      & + .form-radiobtn__label {
+        border-color: @yellow;
+      }
+    }
+  }
+}
+
+// -- Font -- //
+.form-radiogroup--font {
+  font-size: 26px;
+  line-height: 1;
+  color: @white;
+
+  .form-radiobtn {
+    margin-right: 20px;
+  }
+
+  .form-radiobtn--proximanova {
+    font-family: @font-family-base;
+  }
+
+  .form-radiobtn--notoserif {
+    font-family: @font-family-notoserif;
+  }
+
+  .form-radiobtn--comfortaa {
+    font-family: @font-family-comfortaa;
+  }
+
+  .form-radiobtn--ptsans {
+    font-family: @font-family-sans-serif;
+  }
+
+  .form-radiobtn--ptserif {
+    font-family: @font-family-serif;
+  }
+
+  .form-radiobtn--roboto {
+    font-family: @font-family-roboto;
+  }
+
+  .form-radiobtn--lora {
+    font-family: @font-family-lora;
+  }
+
+  .form-radiobtn--philosopher {
+    font-family: @font-family-philosopher;
+  }
+
+  .form-radiobtn--airbornepilot {
+    font-family: @font-family-airbornepilot;
+  }
+
+  .form-radiobtn--amaranth {
+    font-family: @font-family-amaranth;
+  }
+
+  .form-radiobtn--beermoney {
+    font-family: @font-family-beermoney;
+  }
+
+  .form-radiobtn--dancingscript {
+    font-family: @font-family-dancingscript;
+  }
+
+  .form-radiobtn--greatvibes {
+    font-family: @font-family-greatvibes;
+
+    .form-radiobtn__inner {
+      top: .17em;
+    }
+  }
+
+  .form-radiobtn--veles {
+    font-family: @font-family-veles;
+
+    .form-radiobtn__inner {
+      top: .13em;
+    }
+  }
+
+  .form-radiobtn--zion {
+    font-family: @font-family-zion;
+
+    .form-radiobtn__inner {
+      top: .09em;
+    }
+  }
+
+  .form-radiobtn--nautilus {
+    font-family: @font-family-nautilus;
+
+    .form-radiobtn__inner {
+      top: .09em;
+    }
+  }
+
+  .form-radiobtn--ospdin {
+    font-family: @font-family-ospdin;
+  }
+
+  .form-radiobtn--pecita {
+    font-family: @font-family-pecita;
+
+    .form-radiobtn__inner {
+      top: .12em;
+    }
+  }
+
+  .form-radiobtn--poetsen {
+    font-family: @font-family-poetsen;
+  }
+
+  .form-radiobtn--yessireebob {
+    font-family: @font-family-yessireebob;
+  }
+
+  .form-radiobtn--ptmono {
+    font-family: @font-family-ptmono;
+  }
+
+  .form-radiobtn--berenisadfpro {
+    font-family: @font-family-berenisadfpro;
+
+    .form-radiobtn__inner {
+      top: .08em;
+    }
+  }
+
+  .form-radiobtn--djserif {
+    font-family: @font-family-djserif;
+  }
+
+  .form-radiobtn--heuristica {
+    font-family: @font-family-heuristica;
+
+    .form-radiobtn__inner {
+      top: .08em;
+    }
+  }
+
+  .form-radiobtn--permian {
+    font-family: @font-family-permian;
+  }
+
+  .form-radiobtn--robotoslab {
+    font-family: @font-family-robotoslab;
+  }
+
+  .form-radiobtn--lionel {
+    font-family: @font-family-lionel;
+  }
+
+  .form-radiobtn--clearsans {
+    font-family: @font-family-clearsans;
+  }
+
+  .form-radiobtn--museocyr {
+    font-family: @font-family-museocyr;
   }
 }

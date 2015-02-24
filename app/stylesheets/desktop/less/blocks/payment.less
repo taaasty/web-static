@@ -1,0 +1,81 @@
+.payment {
+  position: relative;
+  background-color: @payment-bg;
+  overflow: hidden;
+  user-select: none;
+
+  .form-radiogroup {
+    width: 100%;
+  }
+
+  .color-picker {
+    cursor: default;
+  }
+}
+
+.payment__item {
+  .clearfix;
+
+  & + & {
+    .payment__item-content {
+      border-top: 1px solid @payment-divider-border-color;
+    }
+  }
+
+  .slider__main {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}
+
+.payment__item-title {
+  width: 150px;
+  padding: @payment-indent;
+  float: left;
+  border-top: 1px solid transparent;
+}
+
+.payment__item-content {
+  margin: 0 @payment-indent 0 (150px + @payment-indent*2);
+  padding: @payment-indent 0;
+  color: #fff;
+}
+
+.payment__table {
+  &:extend(.grid-full all);
+}
+
+.payment__table-cell {
+  &:extend(.grid-full__middle all);
+}
+
+.payment__message {
+  height: 402px;
+  color: #fff;
+  text-align: center;
+
+  .payment__table-cell {
+    padding: 30px;
+  }
+}
+
+.payment__message-icon {
+  margin-bottom: 10px;
+  font-size: 30px;
+  line-height: 1.2em;
+}
+
+.payment__message-text {
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.payment__button {
+  &:extend(.button all, .button--rectangle, .button--block);
+  .button-common-style(@emerald);
+  height: @payment-button-height;
+  line-height: @payment-button-height;
+  color: #fff;
+  border-bottom-right-radius: @payment-border-radius;
+  border-bottom-left-radius: @payment-border-radius;
+}
