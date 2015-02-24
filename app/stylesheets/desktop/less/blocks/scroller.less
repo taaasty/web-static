@@ -104,9 +104,15 @@
     height: 20px;
     position: absolute;
     left: 0;
-    background-image: linear-gradient(180deg, #333 0%, transparent 100%);
+    background: -moz-linear-gradient(top, rgba(51,51,51,1) 0%, rgba(51,51,51,0) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(51,51,51,1)), color-stop(100%,rgba(51,51,51,0)));
+    background: -webkit-linear-gradient(top, rgba(51,51,51,1) 0%,rgba(51,51,51,0) 100%);
+    background: -o-linear-gradient(top, rgba(51,51,51,1) 0%,rgba(51,51,51,0) 100%);
+    background: -ms-linear-gradient(top, rgba(51,51,51,1) 0%,rgba(51,51,51,0) 100%);
+    background: linear-gradient(to bottom, rgba(51,51,51,1) 0%,rgba(51,51,51,0) 100%);
     pointer-events: none;
     z-index: @zindex-popup + 1;
+    backface-visibility: hidden;
   }
 
   &:before {
