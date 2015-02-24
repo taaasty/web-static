@@ -8180,7 +8180,9 @@ module.exports = FeedLoadMore;
 
 
 },{"../common/spinner/spinner":48,"./buttons/loadMore":96}],103:[function(require,module,exports){
-var ERROR_STATE, FeedMixin, FeedViewActions, LOADING_STATE, LOAD_MORE_ENTRIES_LIMIT, SHOW_STATE;
+var ERROR_STATE, FeedMixin, FeedStore, FeedViewActions, LOADING_STATE, LOAD_MORE_ENTRIES_LIMIT, SHOW_STATE;
+
+FeedStore = require('../../../stores/feed');
 
 FeedViewActions = require('../../../actions/view/feed');
 
@@ -8236,7 +8238,7 @@ module.exports = FeedMixin;
 
 
 
-},{"../../../actions/view/feed":12}],104:[function(require,module,exports){
+},{"../../../actions/view/feed":12,"../../../stores/feed":232}],104:[function(require,module,exports){
 var HeroFeed, PropTypes;
 
 PropTypes = React.PropTypes;

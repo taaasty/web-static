@@ -1,3 +1,4 @@
+FeedStore       = require '../../../stores/feed'
 FeedViewActions = require '../../../actions/view/feed'
 
 LOAD_MORE_ENTRIES_LIMIT = 10

@@ -28,6 +28,7 @@ gulp.task '[D][P] Scripts', ->
     .require './bower_components/jquery.shapeshift/core/jquery.shapeshift', expose: 'jquery.shapeshift'
     .require '../node_modules/react',                                       expose: 'react'
     .require './bower_components/react-mixin-manager/react-mixin-manager',  expose: 'react-mixin-manager'
+    .require './bower_components/react-color-picker/dist/react-color-picker', expose: 'react-color-picker'
     .require './scripts/shared/libs/react_ujs',                             expose: 'reactUjs'
     .require './bower_components/underscore/underscore',                    expose: 'underscore'
     .require './bower_components/baron/baron',                              expose: 'baron'
