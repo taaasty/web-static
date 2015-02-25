@@ -20,7 +20,7 @@ UserToolbar = React.createClass
   render: ->
     navbarClasses = cx
       'toolbar__navbar': true
-      'toolbar__popup--complex': @state.logged
+      'toolbar__navbar--complex': @state.logged
 
     <div className="toolbar toolbar--main">
       <UserToolbarToggle onClick={ @toggleVisibility } />
@@ -62,10 +62,10 @@ UserToolbar = React.createClass
 
   toggleNotifications: ->
     PopupActions.toggleNotifications()
-  
+
   showDesignSettings: ->
     PopupActions.showDesignSettings()
-  
+
   showFriends: ->
     PopupActions.showFriends()
 

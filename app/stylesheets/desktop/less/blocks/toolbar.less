@@ -267,6 +267,32 @@
   color: #61cc67;
 }
 
+// Mini Indicators
+.toolbar__mindicators {
+  .font-null;
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  text-align: center;
+  transform: translateY(-50%);
+}
+
+.toolbar__mindicator {
+  width: 6px;
+  height: 6px;
+  margin: 3px 0;
+  display: block;
+  border-radius: 50%;
+}
+
+.toolbar__mindicator--messages {
+  background-color: #fff627;
+}
+
+.toolbar__mindicator--notifications {
+  background-color: #61cc67;
+}
+
 // Aside dropdown
 .toolbar__dropdown {
   max-width: 0;
@@ -574,7 +600,7 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
-  .toolbar__navbar {
+  .toolbar__navbar--complex {
     padding-bottom: 100px;
   }
 }
