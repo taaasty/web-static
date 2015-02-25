@@ -1,28 +1,28 @@
-window._                 = require 'underscore'
-window.$ = window.jQuery = require 'jquery'
-window.MouseTrap         = require 'mousetrap'
-window.React             = require 'react'
-window.Dispatcher        = require('flux').Dispatcher
-window.EventEmitter      = require 'eventEmitter'
-window.bowser            = require 'bowser'
-window.moment            = require '../../../bower_components/momentjs/moment'
-window.Pusher            = require 'pusher'
-window.Modernizr         = require 'Modernizr'
-window.imagesLoaded      = require 'imagesloaded'
-window.MediumEditor      = require 'medium-editor'
-window.Undo              = require 'undo'
-window.introJs           = require 'introJs'
-window.VendorColorPicker = require 'react-color-picker'
+global._                 = require 'lodash'
+global.$ = global.jQuery = require 'jquery'
+global.MouseTrap         = require 'mousetrap'
+global.React             = require 'react'
+global.Dispatcher        = require('flux').Dispatcher
+global.EventEmitter      = require 'eventEmitter'
+global.bowser            = require 'bowser'
+global.moment            = require '../../../bower_components/momentjs/moment'
+global.Pusher            = require 'pusher'
+global.Modernizr         = require 'Modernizr'
+global.imagesLoaded      = require 'imagesloaded'
+global.MediumEditor      = require 'medium-editor'
+global.Undo              = require 'undo'
+global.introJs           = require 'introJs'
+global.VendorColorPicker = require 'react-color-picker'
 require 'aviator'
 
 require 'swfobject'
 require 'es5-shim'
-require('jquery.mousewheel')(window.jQuery)
+require('jquery.mousewheel')(global.jQuery)
 require 'jquery.scrollto'
 require 'screenviewer'
 
 require 'baron'
-require('react-mixin-manager')(window.React)
+require('react-mixin-manager')(global.React)
 require 'bootstrap.tooltip'
 
 # jQuery UI components

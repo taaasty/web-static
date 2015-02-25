@@ -13,17 +13,14 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
 
   updateActiveConversations: (activeConversations) ->
     console.log 'Receive activeConversations', activeConversations
-    MessagingDispatcher.handleServerAction {
+    MessagingDispatcher.handleServerAction
       type: 'updateActiveConversations'
       activeConversations: activeConversations
-    }
 
   updateConversation: (conversation) ->
-    MessagingDispatcher.handleServerAction {
+    MessagingDispatcher.handleServerAction
       type: 'updateConversation'
       conversation: conversation
-    }
-    console.log 'conversation updated', conversation
 
   changeConnectionState: (state) ->
     MessagingDispatcher.handleServerAction {

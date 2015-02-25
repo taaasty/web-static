@@ -43,7 +43,7 @@ require './react/mixins/touch'
 
 require './react/dispatchers/current_user'
 require './react/dispatchers/relationships'
-require './react/stores/current_user'
+global.CurrentUserStore = require './react/stores/current_user'
 require './react/stores/relationships'
 
 require './react/components/transition/timeout_transition_group'
@@ -58,7 +58,7 @@ require './react/messaging/dispatchers/messaging'
 
 # /*==========  Stores  ==========*/
 
-require './react/messaging/stores/messaging_status'
+global.MessagingStatusStore = require './react/messaging/stores/messaging_status'
 require './react/messaging/stores/connection_state'
 require './react/messaging/stores/messages_popup_state'
 require './react/messaging/stores/conversations'
@@ -138,7 +138,7 @@ require './react/components/auth/recovery'
 
 require './react/components/settings/settings'
 
-require './react/components/toolbars/user'
+global.UserToolbar = require './react/components/toolbars/user'
 require './react/components/toolbars/feed'
 require './react/components/toolbars/close/close'
 

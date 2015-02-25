@@ -248,6 +248,7 @@
 .popup--settings-design {
   width: @design-settings-popup-width;
   transition: top .3s ease, left .3s ease;
+  z-index: 4000;
 }
 
 .popup--subscribed-by,
@@ -348,8 +349,8 @@
 .popup--notifications {
   width: @notifications-popup-width;
   display: block;
-  top: 94px;
-  right: @indent-base;
+  top: 90px;
+  left: 80px;
 
   .popup__arrow {
     left: auto;

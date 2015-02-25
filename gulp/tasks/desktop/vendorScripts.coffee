@@ -26,7 +26,6 @@ gulp.task '[D] VendorScripts', ->
     .require './react-mixin-manager/react-mixin-manager',        expose: 'react-mixin-manager'
     .require '../scripts/shared/libs/react_ujs',                 expose: 'reactUjs'
     .require './react-color-picker/dist/react-color-picker',     expose: 'react-color-picker'
-    .require './underscore/underscore',                          expose: 'underscore'
     .require './baron/baron',                                    expose: 'baron'
     .require './mousetrap/mousetrap',                            expose: 'mousetrap'
     .require './bowser/bowser',                                  expose: 'bowser'
