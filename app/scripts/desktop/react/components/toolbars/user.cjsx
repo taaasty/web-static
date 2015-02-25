@@ -1,3 +1,4 @@
+cx                        = require 'react/lib/cx'
 CurrentUserStore          = require '../../stores/current_user'
 MessagingStatusStore      = require '../../messaging/stores/messaging_status'
 ConnectStoreMixin         = require '../../../../shared/react/mixins/connectStore'
@@ -17,9 +18,13 @@ UserToolbar = React.createClass
     open: false
 
   render: ->
+    navbarClasses = cx
+      'toolbar__navbar': true
+      'toolbar__popup--complex': @state.logged
+
     <div className="toolbar toolbar--main">
       <UserToolbarToggle onClick={ @toggleVisibility } />
-      <div className="toolbar__navbar">
+      <div className={ navbarClasses }>
         <Scroller>
           { @renderList() }
         </Scroller>

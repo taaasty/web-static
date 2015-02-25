@@ -11,12 +11,12 @@ UserToolbarAdditionalList = React.createClass
   render: ->
     <ul className="toolbar__nav toolbar__nav--bottom">
       <UserToolbarListItem
-          title="Общие настройки"
+          title={ i18n.t('toolbar_settings_item') }
           icon="icon--cogwheel"
           href={ Routes.userSettings(@props.user.slug) }
           onClick={ @props.onSettingsItemClick } />
       <UserToolbarListItem
-          title="Выход"
+          title={ i18n.t('toolbar_logout_item') }
           icon="icon--logout"
           href={ Routes.logout_path(@props.user.slug) } />
     </ul>
