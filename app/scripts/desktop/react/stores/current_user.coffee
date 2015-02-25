@@ -2,7 +2,7 @@ BaseStore = require './_base'
 
 currentUser = null
 
-window.CurrentUserStore = _.extend new BaseStore(), {
+CurrentUserStore = _.extend new BaseStore(),
 
   isLogged: -> currentUser?
 
@@ -34,7 +34,8 @@ window.CurrentUserStore = _.extend new BaseStore(), {
   _setupUser: (user) ->
     currentUser = user
     console.debug? 'Залогинен пользователь:', user.slug
-}
+
+module.exports = CurrentUserStore
 
 CurrentUserStore.dispatchToken = CurrentUserDispatcher.register (payload) ->
   action = payload.action

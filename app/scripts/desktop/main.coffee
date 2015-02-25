@@ -19,157 +19,136 @@ $ ->
     console.debug? 'Без пользователя'
     window.Tasty.start()
 
-  # Эксперимент с навигацией
-  mainToolbar = document.querySelector('.toolbar--main')
-  mainToolbarToggle = mainToolbar.querySelector('.toolbar__toggle')
-  mainToolbarScroller = mainToolbar.querySelector('.scroller')
+  # # Тултип для шаринга
+  # $("[tooltip]").tooltip()
 
-  $(mainToolbarScroller).baron
-      scroller: '.scroller__pane'
-      bar:      '.scroller__bar'
-      track:    '.scroller__track'
-      barOnCls: 'scroller--tracked'
-      pause:    0
+  # # В попапе настроек дизайна
+  # $("[design-settings-tooltip]").tooltip({
+  #   delay: {
+  #     show: 200
+  #   }
+  # })
 
-  mainToolbarToggle.onclick = ->
-    document.body.classList.toggle('main-toolbar-open');
+  # # Только демонстрация настроек дизайна
+  # $('.design-settings').on 'change', (e) ->
+  #   name = e.target.name.toLowerCase()
 
-  $('.toolbar--main .toolbar__nav-item').on 'mouseenter', ->
-    $(this).find('.toolbar__subnav').stop().slideDown(300)
+  #   classes = document.body.className.split(" ").filter((class_) ->
+  #     class_.lastIndexOf(name, 0) isnt 0
+  #   )
 
-  $('.toolbar--main .toolbar__nav').on 'mouseleave', ->
-    $(this).find('.toolbar__subnav').stop().slideUp(300)
+  #   newClass = (name + "-" + e.target.value)
 
-  # Тултип для шаринга
-  $("[tooltip]").tooltip()
+  #   if (e.target.type is 'checkbox' && !e.target.checked) || e.target.type is 'radio'
+  #     classes.push(newClass)
 
-  # В попапе настроек дизайна
-  $("[design-settings-tooltip]").tooltip({
-    delay: {
-      show: 200
-    }
-  })
+  #   document.body.className = $.trim(classes.join(" "))
 
-  # Только демонстрация настроек дизайна
-  $('.design-settings').on 'change', (e) ->
-    name = e.target.name.toLowerCase()
+  # $('.scroller--design').baron
+  #   scroller: '> .js-scroller-pane'
+  #   bar:      '> .js-scroller-track > .js-scroller-bar'
+  #   track:    '> .js-scroller-track'
+  #   barOnCls: 'scroller--tracked'
+  #   pause:    0
 
-    classes = document.body.className.split(" ").filter((class_) ->
-      class_.lastIndexOf(name, 0) isnt 0
-    )
+  # # Слайдер
+  # # http://stackoverflow.com/questions/7212102/detect-with-javascript-or-jquery-if-css-transform-2d-is-available
+  # getSupportedTransform = ->
+  #   prefixes = 'transform WebkitTransform MozTransform OTransform msTransform'.split(' ')
+  #   i = 0
 
-    newClass = (name + "-" + e.target.value)
+  #   while i < prefixes.length
+  #     return prefixes[i] if document.createElement('div').style[prefixes[i]] isnt `undefined`
+  #     i++
+  #   false
 
-    if (e.target.type is 'checkbox' && !e.target.checked) || e.target.type is 'radio'
-      classes.push(newClass)
+  # supportCSSTransform = getSupportedTransform()
 
-    document.body.className = $.trim(classes.join(" "))
+  # $('.slider').each ->
+  #   $slider = $(this)
+  #   $main = $slider.find('.slider__main')
+  #   $list = $slider.find('.slider__list')
 
-  $('.scroller--design').baron
-    scroller: '> .js-scroller-pane'
-    bar:      '> .js-scroller-track > .js-scroller-bar'
-    track:    '> .js-scroller-track'
-    barOnCls: 'scroller--tracked'
-    pause:    0
+  #   pos = 0
 
-  # Слайдер
-  # http://stackoverflow.com/questions/7212102/detect-with-javascript-or-jquery-if-css-transform-2d-is-available
-  getSupportedTransform = ->
-    prefixes = 'transform WebkitTransform MozTransform OTransform msTransform'.split(' ')
-    i = 0
+  #   return true if $list.width() < $main.width()
 
-    while i < prefixes.length
-      return prefixes[i] if document.createElement('div').style[prefixes[i]] isnt `undefined`
-      i++
-    false
+  #   btnPrev = $('<div />', {'class': 'slider__btn slider__btn--left'})
+  #   btnNext = $('<div />', {'class': 'slider__btn slider__btn--right'})
+  #   $slider
+  #     .append(btnPrev, btnNext)
+  #     .addClass '__inited __leftlimit'
 
-  supportCSSTransform = getSupportedTransform()
+  #   setPosition = (value) ->
+  #     unless supportCSSTransform
+  #       $list.css
+  #         left: value
+  #     else
+  #       $list.css
+  #         WebkitTransform: 'translateX(' + value + 'px)',
+  #         MozTransform:    'translateX(' + value + 'px)',
+  #         msTransform:     'translateX(' + value + 'px)',
+  #         OTransform:      'translateX(' + value + 'px)',
+  #         transform:       'translateX(' + value + 'px)'
 
-  $('.slider').each ->
-    $slider = $(this)
-    $main = $slider.find('.slider__main')
-    $list = $slider.find('.slider__list')
+  #   setPosition(0)
 
-    pos = 0
+  #   btnNext.on 'click', ->
+  #     shift = $main.width() - 40
 
-    return true if $list.width() < $main.width()
+  #     return true if pos + shift >= $list.width()
 
-    btnPrev = $('<div />', {'class': 'slider__btn slider__btn--left'})
-    btnNext = $('<div />', {'class': 'slider__btn slider__btn--right'})
-    $slider
-      .append(btnPrev, btnNext)
-      .addClass '__inited __leftlimit'
+  #     if pos + shift >= $list.width() - $main.width()
+  #       $slider.addClass '__rightlimit'
 
-    setPosition = (value) ->
-      unless supportCSSTransform
-        $list.css
-          left: value
-      else
-        $list.css
-          WebkitTransform: 'translateX(' + value + 'px)',
-          MozTransform:    'translateX(' + value + 'px)',
-          msTransform:     'translateX(' + value + 'px)',
-          OTransform:      'translateX(' + value + 'px)',
-          transform:       'translateX(' + value + 'px)'
+  #     if pos + shift >= $list.width() - $main.width()
+  #       pos = $list.width() - $main.width()
+  #     else
+  #       pos = pos + shift
 
-    setPosition(0)
+  #     $slider.removeClass '__leftlimit'
+  #     setPosition(pos * -1)
 
-    btnNext.on 'click', ->
-      shift = $main.width() - 40
+  #   btnPrev.on 'click', ->
+  #     shift = $main.width() - 40
 
-      return true if pos + shift >= $list.width()
+  #     if pos == 0
+  #       return true
 
-      if pos + shift >= $list.width() - $main.width()
-        $slider.addClass '__rightlimit'
+  #     if pos - shift <= 0
+  #       pos = 0
+  #       $slider.addClass '__leftlimit'
+  #     else
+  #       pos = pos - shift
 
-      if pos + shift >= $list.width() - $main.width()
-        pos = $list.width() - $main.width()
-      else
-        pos = pos + shift
+  #     $slider.removeClass '__rightlimit'
+  #     setPosition(pos * -1)
 
-      $slider.removeClass '__leftlimit'
-      setPosition(pos * -1)
+  # # Попап оплаты
+  # paymentPopup            = document.querySelector('.popup--payment');
+  # closeButtonPaymentPopup = paymentPopup.querySelector('.popup__close');
 
-    btnPrev.on 'click', ->
-      shift = $main.width() - 40
+  # payButton               = document.querySelector('.payment__section--list .payment__button');
+  # returnButton            = document.querySelector('.payment__section--success .payment__button');
 
-      if pos == 0
-        return true
+  # listSection = document.querySelector('.payment__section--list');
+  # processSection = document.querySelector('.payment__section--process');
+  # successSection = document.querySelector('.payment__section--success');
 
-      if pos - shift <= 0
-        pos = 0
-        $slider.addClass '__leftlimit'
-      else
-        pos = pos - shift
+  # payButton.onclick = ->
+  #   listSection.style.display = 'none'
+  #   processSection.style.display = 'block'
+  #   setTimeout(->
+  #     processSection.style.display = 'none'
+  #     successSection.style.display = 'block'
+  #   , 2000)
 
-      $slider.removeClass '__rightlimit'
-      setPosition(pos * -1)
+  # returnButton.onclick = ->
+  #   closePaymentPopup()
 
-  # Попап оплаты
-  paymentPopup            = document.querySelector('.popup--payment');
-  closeButtonPaymentPopup = paymentPopup.querySelector('.popup__close');
+  # closeButtonPaymentPopup.onclick = ->
+  #   closePaymentPopup()
 
-  payButton               = document.querySelector('.payment__section--list .payment__button');
-  returnButton            = document.querySelector('.payment__section--success .payment__button');
-
-  listSection = document.querySelector('.payment__section--list');
-  processSection = document.querySelector('.payment__section--process');
-  successSection = document.querySelector('.payment__section--success');
-
-  payButton.onclick = ->
-    listSection.style.display = 'none'
-    processSection.style.display = 'block'
-    setTimeout(->
-      processSection.style.display = 'none'
-      successSection.style.display = 'block'
-    , 2000)
-
-  returnButton.onclick = ->
-    closePaymentPopup()
-
-  closeButtonPaymentPopup.onclick = ->
-    closePaymentPopup()
-
-  closePaymentPopup = ->
-    paymentPopup.parentNode.parentNode.parentNode.style.display = 'none'
-    document.documentElement.classList.remove 'popup-enabled'
+  # closePaymentPopup = ->
+  #   paymentPopup.parentNode.parentNode.parentNode.style.display = 'none'
+  #   document.documentElement.classList.remove 'popup-enabled'

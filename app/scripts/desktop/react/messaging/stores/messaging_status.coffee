@@ -1,27 +1,25 @@
-CHANGE_EVENT = 'change'
+_         = require 'lodash'
+BaseStore = require './_base'
 
-_messagingStatus = {}
+_messagingStatus =
+  activeConversationsCount: 0
+  unreadConversationsCount: 0
+  unreadNotificationsCount: 0
 
-window.MessagingStatusStore = _.extend {}, EventEmitter.prototype, {
-
-  emitChange: -> @emit CHANGE_EVENT
-
-  addChangeListener:    (callback) -> @on CHANGE_EVENT, callback
-  removeChangeListener: (callback) -> @off CHANGE_EVENT, callback
+MessagingStatusStore = _.extend new BaseStore(),
 
   getUnreadConversationsCount: -> _messagingStatus.unreadConversationsCount
-  getActiveConversationsCount: -> _messagingStatus.unreadActiveConversationsCount
+  getActiveConversationsCount: -> _messagingStatus.activeConversationsCount
   getUnreadNotificationsCount: -> _messagingStatus.unreadNotificationsCount
 
   _update: (messagingStatus) -> _messagingStatus = messagingStatus
 
-}
+module.exports = MessagingStatusStore
 
 MessagingStatusStore.dispatchToken = MessagingDispatcher.register (payload) ->
   action = payload.action
 
   switch action.type
     when 'updateMessagingStatus'
-      MessagingStatusStore._update action.messagingStatus
+      _messagingStatus = action.messagingStatus
       MessagingStatusStore.emitChange()
-      break

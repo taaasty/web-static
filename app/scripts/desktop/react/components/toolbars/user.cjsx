@@ -1,53 +1,81 @@
-cx               = require 'react/lib/cx'
-UserToolbarList  = require './user/list'
-ToolbarMixin     = require './mixins/toolbar'
-UserToolbarMixin = require './user/mixins/user'
-PureRenderMixin  = require 'react/lib/ReactComponentWithPureRenderMixin'
-{ PropTypes } = React
+cx                        = require 'react/lib/cx'
+CurrentUserStore          = require '../../stores/current_user'
+MessagingStatusStore      = require '../../messaging/stores/messaging_status'
+ConnectStoreMixin         = require '../../../../shared/react/mixins/connectStore'
+UserToolbarActions        = require '../../actions/userToolbar'
+PopupActions              = require '../../actions/popup'
+Scroller                  = require '../common/scroller/scroller'
+UserToolbarToggle         = require './user/toggle'
+UserToolbarList           = require './user/list'
+UserToolbarGuestList      = require './user/guestList'
+UserToolbarAdditionalList = require './user/additionalList'
 
-window.UserToolbar = React.createClass
-  mixins: [
-    ToolbarMixin, UserToolbarMixin, ComponentManipulationsMixin, ScrollerMixin
-    PureRenderMixin
-  ]
+UserToolbar = React.createClass
+  displayName: 'UserToolbar'
+  mixins: [ConnectStoreMixin([CurrentUserStore, MessagingStatusStore])]
 
-  propTypes:
-    myTlogUrl:            PropTypes.string.isRequired
-    newEntryUrl:          PropTypes.string
-    newAnonymousEntryUrl: PropTypes.string
-    favoritesUrl:         PropTypes.string
-    privateEntriesUrl:    PropTypes.string
-    logoutUrl:            PropTypes.string
+  getInitialState: ->
+    open: false
 
   render: ->
-    toolbarClasses = cx
-      'toolbar':        true
-      'toolbar--right': true
-      'toolbar--user':  true
-      'state--open':    !@isClosedState()
+    navbarClasses = cx
+      'toolbar__navbar': true
+      'toolbar__popup--complex': @state.logged
 
-    return <nav className={ toolbarClasses }
-                onClick={ this.handleClick }
-                onMouseEnter={ this.handleMouseEnter }
-                onMouseLeave={ this.handleMouseLeave }>
-             <div className="toolbar__toggle">
-               <i className="icon icon--menu" />
-             </div>
-             <div className="toolbar__popup">
-               <div ref="scroller"
-                    className="scroller scroller--dark scroller--toolbar">
-                 <div className="scroller__pane js-scroller-pane">
-                   <UserToolbarList
-                       newEntryUrl={ this.props.newEntryUrl }
-                       newAnonymousEntryUrl={ this.props.newAnonymousEntryUrl }
-                       myTlogUrl={ this.props.myTlogUrl }
-                       favoritesUrl={ this.props.favoritesUrl }
-                       privateEntriesUrl={ this.props.privateEntriesUrl }
-                       logoutUrl={ this.props.logoutUrl } />
-                 </div>
-                 <div className="scroller__track js-scroller-track">
-                   <div className="scroller__bar js-scroller-bar" />
-                 </div>
-               </div>
-             </div>
-           </nav>
+    <div className="toolbar toolbar--main">
+      <UserToolbarToggle onClick={ @toggleVisibility } />
+      <div className={ navbarClasses }>
+        <Scroller>
+          { @renderList() }
+        </Scroller>
+        { @renderAdditionList() }
+      </div>
+    </div>
+
+  renderList: ->
+    if @state.logged
+      <UserToolbarList
+          user={ @state.user }
+          unreadConversationsCount={ @state.unreadConversationsCount }
+          unreadNotificationsCount={ @state.unreadNotificationsCount }
+          onMessagesItemClick={ @toggleMessages }
+          onNotificationsItemClick={ @toggleNotifications }
+          onFriendsItemClick={ @showFriends }
+          onDesignSettingsItemClick={ @showDesignSettings } />
+    else
+      <UserToolbarGuestList />
+
+  renderAdditionList: ->
+    if @state.logged
+      <UserToolbarAdditionalList
+          user={ @state.user }
+          onSettingsItemClick={ @showSettings } />
+
+  toggleVisibility: ->
+    visibility = !@state.open
+
+    UserToolbarActions.toggleVisibility visibility
+    @setState(open: visibility)
+
+  toggleMessages: ->
+    PopupActions.toggleMessages()
+
+  toggleNotifications: ->
+    PopupActions.toggleNotifications()
+  
+  showDesignSettings: ->
+    PopupActions.showDesignSettings()
+  
+  showFriends: ->
+    PopupActions.showFriends()
+
+  showSettings: ->
+    PopupActions.showSettings()
+
+  getStateFromStore: ->
+    user:                     CurrentUserStore.getUser()
+    logged:                   CurrentUserStore.isLogged()
+    unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount()
+    unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount()
+
+module.exports = UserToolbar

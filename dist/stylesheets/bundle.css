@@ -6376,6 +6376,12 @@ a.write-message-button {
   right: -0.8em;
   z-index: 1;
 }
+.form-radiobtn .free {
+  position: absolute;
+  top: -0.4em;
+  right: -0.8em;
+  z-index: 1;
+}
 .form-radiobtn__input {
   position: absolute;
   opacity: 0;
@@ -6589,6 +6595,10 @@ a.write-message-button {
   top: -0.6em;
   right: -0.9em;
 }
+.form-radiogroup--dotted .form-radiobtn .free {
+  top: -0.5em;
+  right: -1.2em;
+}
 .form-radiogroup--circlebtns {
   font-size: 0;
   line-height: 0;
@@ -6599,6 +6609,9 @@ a.write-message-button {
 }
 .form-radiogroup--circlebtns .form-radiobtn .pay {
   right: -0.2em;
+}
+.form-radiogroup--circlebtns .form-radiobtn .free {
+  right: -0.8em;
 }
 .form-radiogroup--circlebtns .form-radiobtn__label {
   padding: 4px;
@@ -6685,6 +6698,9 @@ a.write-message-button {
 }
 .form-radiogroup--font .form-radiobtn {
   margin-right: 20px;
+}
+.form-radiogroup--font .form-radiobtn .free {
+  right: -1.4em;
 }
 .form-radiogroup--font .form-radiobtn--proximanova {
   font-family: 'Proxima Nova', Arial, 'Helvetica Neue', Helvetica, sans-serif;
@@ -7286,6 +7302,7 @@ a.write-message-button {
 .popup--settings-design {
   width: 270px;
   transition: top .3s ease, left .3s ease;
+  z-index: 4000;
 }
 .popup--subscribed-by,
 .popup--subscribed-to {
@@ -7368,8 +7385,8 @@ a.write-message-button {
 .popup--notifications {
   width: 380px;
   display: block;
-  top: 94px;
-  right: 20px;
+  top: 90px;
+  left: 80px;
 }
 .popup--notifications .popup__arrow {
   left: auto;
@@ -7433,6 +7450,7 @@ a.write-message-button {
   color: #f8c700;
 }
 .settings-design .form-range--opacity {
+  width: 142px;
   margin-top: -2px;
 }
 .settings-design.state--drag-hover {
@@ -7820,6 +7838,10 @@ a.write-message-button {
   vertical-align: middle;
   margin-right: 14px;
 }
+.design-settings__text .free {
+  margin-left: 5px;
+  top: -2px;
+}
 .design-settings__cover {
   display: inline-block;
   vertical-align: middle;
@@ -8196,9 +8218,11 @@ a.write-message-button {
   height: 20px;
   position: absolute;
   left: 0;
-  background-image: linear-gradient(180deg, #333333 0%, transparent 100%);
+  background: linear-gradient(to bottom, #333333 0%, rgba(51, 51, 51, 0) 100%);
   pointer-events: none;
   z-index: 5001;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 .scroller--design:before {
   top: 0;
@@ -10481,6 +10505,18 @@ a.types-posts__item:hover .types-posts__text {
 .pay .icon:before {
   content: "\0420";
 }
+.free {
+  padding: 0 .333em;
+  position: relative;
+  display: inline-block;
+  background-color: #ffffff;
+  font-size: 9px;
+  line-height: 11px;
+  font-family: 'Proxima Nova', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  color: #111111;
+  border-radius: .223em;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
 .grid-full,
 .confirmation__main,
 .popup-container__main,
@@ -11269,11 +11305,11 @@ a.types-posts__item:hover .types-posts__text {
 }
 .slider__main:before {
   left: 0;
-  background-image: linear-gradient(-90deg, transparent 0%, #333333 100%);
+  background: linear-gradient(to right, #333333 0%, rgba(51, 51, 51, 0) 100%);
 }
 .slider__main:after {
   right: 0;
-  background-image: linear-gradient(90deg, transparent 0%, #333333 100%);
+  background: linear-gradient(to right, rgba(51, 51, 51, 0) 0%, #333333 100%);
 }
 .slider__list {
   height: 100%;
