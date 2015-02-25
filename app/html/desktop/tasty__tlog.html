@@ -119,9 +119,13 @@
         <!-- Toolbar - Experiment -->
 <!--         <div class="toolbar toolbar--main">
             <div class="toolbar__toggle">
+                <span class="toolbar__mindicators">
+                    <i class="toolbar__mindicator toolbar__mindicator--messages"></i>
+                    <i class="toolbar__mindicator toolbar__mindicator--notifications"></i>
+                </span>
                 <i class="icon icon--menu"></i>
             </div>
-            <div class="toolbar__navbar">
+            <div class="toolbar__navbar toolbar__navbar--complex">
                 <div class="scroller scroller--dark">
                     <div class="scroller__pane">
                         <ul class="toolbar__nav">
@@ -798,11 +802,61 @@
                         </div>
                     </div>
                     <div class="design-settings__options">
-                        <div class="design-settings__alert">
+                        <!--<div class="design-settings__alert">
                             <div class="design-settings__alert-in">
                                 <div class="design-settings__alert-clear">Сбросить</div>
                                 <div class="design-settings__alert-text">Настройки не сохранены, так как вы выбрали одну<br /> или несколько супервозможностей</div>
                                 <a class="design-settings__alert-button" href="#" title="Узнать как сохранить настройки">Узнать как сохранить настройки</a>
+                            </div>
+                        </div>-->
+                        <div class="design-settings__presets">
+                            <div class="slider">
+                                <div class="slider__main">
+                                    <div class="slider__list">
+                                        <div class="slider__table">
+                                            <div class="slider__table-cell">
+                                                <span class="form-radiogroup form-radiogroup--presets">
+                                                    <span class="form-radiobtn form-radiobtn--preset1" data-original-title="Preset 1" data-container="body" design-settings-tooltip>
+                                                        <input class="form-radiobtn__input" id="designTlog-preset-1" type="radio" name="designTlog-preset" value="1" />
+                                                        <label class="form-radiobtn__label" for="designTlog-preset-1">
+                                                            <span class="form-radiobtn__inner">
+                                                                <span class="form-radiobtn__text">Aa</span>
+                                                            </span>
+                                                        </label>
+                                                    </span><span class="form-radiobtn form-radiobtn--preset2" data-original-title="Preset 2" data-container="body" design-settings-tooltip>
+                                                        <input class="form-radiobtn__input" id="designTlog-preset-2" type="radio" name="designTlog-preset" value="2" checked="checked" />
+                                                        <label class="form-radiobtn__label" for="designTlog-preset-2">
+                                                            <span class="form-radiobtn__inner">
+                                                                <span class="form-radiobtn__text">Aa</span>
+                                                            </span>
+                                                        </label>
+                                                    </span><span class="form-radiobtn form-radiobtn--preset3" data-original-title="Preset 3" data-container="body" design-settings-tooltip>
+                                                        <input class="form-radiobtn__input" id="designTlog-preset-3" type="radio" name="designTlog-preset" value="3" />
+                                                        <label class="form-radiobtn__label" for="designTlog-preset-3">
+                                                            <span class="form-radiobtn__inner">
+                                                                <span class="form-radiobtn__text">Aa</span>
+                                                            </span>
+                                                        </label>
+                                                    </span><span class="form-radiobtn form-radiobtn--preset4" data-original-title="Preset 4" data-container="body" design-settings-tooltip>
+                                                        <input class="form-radiobtn__input" id="designTlog-preset-4" type="radio" name="designTlog-preset" value="4" />
+                                                        <label class="form-radiobtn__label" for="designTlog-preset-4">
+                                                            <span class="form-radiobtn__inner">
+                                                                <span class="form-radiobtn__text">Aa</span>
+                                                            </span>
+                                                        </label>
+                                                    </span><span class="form-radiobtn form-radiobtn--preset5" data-original-title="Preset 5" data-container="body" design-settings-tooltip>
+                                                        <input class="form-radiobtn__input" id="designTlog-preset-5" type="radio" name="designTlog-preset" value="amaranth" />
+                                                        <label class="form-radiobtn__label" for="designTlog-preset-5">
+                                                            <span class="form-radiobtn__inner">
+                                                                <span class="form-radiobtn__text">Aa</span>
+                                                            </span>
+                                                        </label>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="design-settings__groups">
