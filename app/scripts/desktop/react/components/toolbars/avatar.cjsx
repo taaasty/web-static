@@ -9,7 +9,7 @@ AvatarToolbar = React.createClass
     link = @refs.link.getDOMNode()
 
     $(link).tooltip
-      title: 'Мой дневник'
+      title: i18n.t('avatar_toolbar_tooltip')
       placement: 'left'
       container: '.toolbar--avatar'
 

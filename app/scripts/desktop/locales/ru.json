@@ -237,6 +237,7 @@
   "toolbar_design_item": "Дизайн дневника",
   "toolbar_settings_item": "Общие настройки",
   "toolbar_logout_item": "Выход",
+  "avatar_toolbar_tooltip": "Мой дневник",
   "follow_status_none": "Подписаться на тлог",
   "follow_status_friend": "Вы подписаны на данный тлог",
   "follow_status_ignored": "Вам отказано в подписке на данный тлог",

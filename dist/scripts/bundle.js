@@ -26913,7 +26913,7 @@ AvatarToolbar = React.createClass({
     var link;
     link = this.refs.link.getDOMNode();
     return $(link).tooltip({
-      title: 'Мой дневник',
+      title: i18n.t('avatar_toolbar_tooltip'),
       placement: 'left',
       container: '.toolbar--avatar'
     });
@@ -26998,7 +26998,7 @@ UserToolbar = React.createClass({
   mixins: [ConnectStoreMixin([CurrentUserStore, MessagingStatusStore])],
   getInitialState: function() {
     return {
-      open: false
+      open: true
     };
   },
   render: function() {
