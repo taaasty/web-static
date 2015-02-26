@@ -26998,7 +26998,7 @@ UserToolbar = React.createClass({
   mixins: [ConnectStoreMixin([CurrentUserStore, MessagingStatusStore])],
   getInitialState: function() {
     return {
-      open: true
+      open: false
     };
   },
   render: function() {

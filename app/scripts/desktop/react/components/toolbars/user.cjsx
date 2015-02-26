@@ -15,7 +15,7 @@ UserToolbar = React.createClass
   mixins: [ConnectStoreMixin([CurrentUserStore, MessagingStatusStore])]
 
   getInitialState: ->
-    open: true
+    open: false
 
   render: ->
     navbarClasses = cx
