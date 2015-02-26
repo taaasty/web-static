@@ -1517,9 +1517,9 @@ body {
   opacity: 0 !important;
 }
 .hero-enabled .toolbar--main {
-  -webkit-transform: translateX(-200%) !important;
-      -ms-transform: translateX(-200%) !important;
-          transform: translateX(-200%) !important;
+  -webkit-transform: translateX(-300%) !important;
+      -ms-transform: translateX(-300%) !important;
+          transform: translateX(-300%) !important;
 }
 .hero-enabled .toolbar--close {
   left: 20px;
@@ -1529,7 +1529,7 @@ body {
 .hero-enabled .hero {
   margin-bottom: 40px;
   overflow: hidden;
-  color: #fff;
+  color: #fff !important;
   transition: height .4s ease, color .4s ease;
 }
 .hero-enabled .hero__overlay {
@@ -1679,32 +1679,40 @@ body {
   background-color: #000000;
   overflow: hidden;
 }
-.tlog-mode-full .back-button {
+.tlog-mode-full .back-button,
+.designtlog-mode-full .back-button {
   top: 20px;
   left: 20px;
   opacity: 1;
   color: #bbb !important;
   border-radius: 50%;
 }
-.tlog-mode-full .back-button:hover {
+.tlog-mode-full .back-button:hover,
+.designtlog-mode-full .back-button:hover {
   color: #000000 !important;
   opacity: 1;
 }
 .tlog-mode-minimal .page-cover,
-.tlog-mode-minimal .hero {
+.designtlog-mode-minimal .page-cover,
+.tlog-mode-minimal .hero,
+.designtlog-mode-minimal .hero {
   visibility: hidden;
   opacity: 0;
   transition: opacity .3s ease, visibility 0s ease .3s;
 }
-.tlog-mode-minimal .page-body {
+.tlog-mode-minimal .page-body,
+.designtlog-mode-minimal .page-body {
   color: #000000 !important;
 }
-.tlog-mode-minimal .content-area__bg {
+.tlog-mode-minimal .content-area__bg,
+.designtlog-mode-minimal .content-area__bg {
   background-color: #ffffff !important;
   opacity: 1 !important;
 }
 .tlog-mode-minimal .social-share-facebook-button,
-.tlog-mode-minimal .social-share-vkontakte-button {
+.designtlog-mode-minimal .social-share-facebook-button,
+.tlog-mode-minimal .social-share-vkontakte-button,
+.designtlog-mode-minimal .social-share-vkontakte-button {
   box-shadow: inset 0 0 0 1px #b7b7b7;
 }
 .designtlog-headerfont-proximanova .design-settings__option--headerfont .design-settings__state,
@@ -3048,6 +3056,31 @@ body {
 .toolbar__indicator--notifications {
   color: #61cc67;
 }
+.toolbar__mindicators {
+  font-size: 0;
+  line-height: 0;
+  font-family: a;
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  text-align: center;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.toolbar__mindicator {
+  width: 6px;
+  height: 6px;
+  margin: 3px 0;
+  display: block;
+  border-radius: 50%;
+}
+.toolbar__mindicator--messages {
+  background-color: #fff627;
+}
+.toolbar__mindicator--notifications {
+  background-color: #61cc67;
+}
 .toolbar__dropdown {
   max-width: 0;
   display: inline-block;
@@ -3325,7 +3358,7 @@ a.toolbar__subnav-link:active {
   border-radius: 56px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-.toolbar--main .toolbar__navbar {
+.toolbar--main .toolbar__navbar--complex {
   padding-bottom: 100px;
 }
 .toolbar--avatar {
@@ -6810,6 +6843,40 @@ a.write-message-button {
 .form-radiogroup--font .form-radiobtn--museocyr {
   font-family: 'Museo Sans Cyr';
 }
+.form-radiogroup--presets {
+  font-size: 26px;
+  line-height: 1;
+  color: #ffffff;
+}
+.form-radiogroup--presets .form-radiobtn {
+  text-align: center;
+}
+.form-radiogroup--presets .form-radiobtn__input:checked + .form-radiobtn__label {
+  color: #fff;
+  box-shadow: inset 0 0 0 4px #f8c700;
+}
+.form-radiogroup--presets .form-radiobtn__label {
+  width: 105px;
+  height: 105px;
+  margin-right: 15px;
+  line-height: 105px;
+}
+.form-radiogroup--presets .form-radiobtn--preset1 .form-radiobtn__label {
+  background-color: #2ac67e;
+}
+.form-radiogroup--presets .form-radiobtn--preset2 .form-radiobtn__label {
+  background-color: #e74c3c;
+}
+.form-radiogroup--presets .form-radiobtn--preset3 .form-radiobtn__label {
+  background-color: #c6c9cc;
+  color: #000000 !important;
+}
+.form-radiogroup--presets .form-radiobtn--preset4 .form-radiobtn__label {
+  background-color: #6c7a89;
+}
+.form-radiogroup--presets .form-radiobtn--preset5 .form-radiobtn__label {
+  background-color: #000;
+}
 .form-range {
   position: relative;
   display: inline-block;
@@ -7713,6 +7780,27 @@ a.write-message-button {
 .design-settings__dragzone-text {
   padding: 15px;
 }
+.design-settings__presets {
+  height: 135px;
+  position: relative;
+  background-color: #2a2a2a;
+}
+.design-settings__presets .slider {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.design-settings__presets .slider__main:before {
+  background: linear-gradient(to right, #2a2a2a 0%, rgba(42, 42, 42, 0) 100%);
+}
+.design-settings__presets .slider__main:after {
+  background: linear-gradient(to right, rgba(42, 42, 42, 0) 0%, #2a2a2a 100%);
+}
+.design-settings__presets .slider__btn--left {
+  left: 4px;
+}
+.design-settings__presets .slider__btn--right {
+  right: 4px;
+}
 .design-settings__alert {
   height: 135px !important;
   position: relative;
@@ -7753,10 +7841,13 @@ a.write-message-button {
 }
 .design-settings__groups {
   height: 100%;
-  margin-top: -135px;
-  padding-top: 135px;
   padding-bottom: 50px;
   box-sizing: border-box;
+}
+.design-settings__alert + .design-settings__groups,
+.design-settings__presets + .design-settings__groups {
+  margin-top: -135px;
+  padding-top: 135px;
 }
 .design-settings__groups + .design-settings__save-button {
   margin-top: -50px;

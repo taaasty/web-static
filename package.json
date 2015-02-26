@@ -13,10 +13,12 @@
     ]
   },
   "browser": {
-    "pusher": "./app/bower_components/pusher/dist/pusher.js"
+    "pusher": "./app/bower_components/pusher/dist/pusher.js",
+    "jquery": "./app/bower_components/jquery/dist/jquery.js"
   },
   "browserify-shim": {
-    "pusher": "Pusher"
+    "pusher": "Pusher",
+    "jquery": "jQuery"
   },
   "dependencies": {
     "flux": "^2.0.1",
