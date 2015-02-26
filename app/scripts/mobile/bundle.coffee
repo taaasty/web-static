@@ -26,6 +26,7 @@ global.SettingsPage        = require './react/pages/settings'
 global.NotificationsPage   = require './react/pages/notifications'
 global.MessengerPage       = require './react/pages/messenger'
 global.MessengerThreadPage = require './react/pages/messengerThread'
+global.AuthPage            = require './react/pages/auth'
 
 # /*==========  Stores  ==========*/
 

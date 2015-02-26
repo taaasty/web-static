@@ -28,3 +28,4 @@ SettingsPage        = require('./react/pages/settings');
 NotificationsPage   = require('./react/pages/notifications');
 MessengerPage       = require('./react/pages/messenger');
 MessengerThreadPage = require('./react/pages/messengerThread');
+AuthPage            = require('./react/pages/auth');
