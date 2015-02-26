@@ -6,10 +6,6 @@ UserToolbarGuestList = React.createClass
   render: ->
     <ul className="toolbar__nav">
       <UserToolbarListItem
-          title={ i18n.t('feed_friends') }
-          icon="icon--friends"
-          href={ Routes.friends_feed_path() } />
-      <UserToolbarListItem
           title={ i18n.t('feed_live') }
           icon="icon--wave"
           href={ Routes.live_feed_path() } />
