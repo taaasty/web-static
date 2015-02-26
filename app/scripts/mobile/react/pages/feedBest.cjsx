@@ -6,12 +6,11 @@ HeroFeedBest       = require '../components/hero/feedBest'
 FeedBest           = require '../components/feed/feedBest'
 AuthManager        = require '../components/auth/authManager'
 AuthButtonManager  = require '../components/buttons/auth/authManager'
-FeedBestPageMixin  = require './mixins/feedBest'
 { PropTypes } = React
 
 FeedBestPage = React.createClass
   displayName: 'FeedBestPage'
-  mixins: [FeedBestPageMixin, PageMixin]
+  mixins: [PageMixin]
 
   propTypes:
     currentUser: PropTypes.object
