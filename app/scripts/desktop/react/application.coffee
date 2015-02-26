@@ -23,7 +23,7 @@ window.ReactApp =
       console.log 'Locales loaded'
       ReactUjs.initialize()
 
-      Aviator.pushStateEnabled = false
+      # Aviator.pushStateEnabled = false
 
       UserRouteTarget =
         profile:                 -> TastyEvents.emit TastyEvents.keys.command_hero_open()

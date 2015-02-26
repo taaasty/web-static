@@ -138,7 +138,8 @@ require './react/components/auth/recovery'
 
 require './react/components/settings/settings'
 
-global.UserToolbar = require './react/components/toolbars/user'
+global.UserToolbar   = require './react/components/toolbars/user'
+global.AvatarToolbar = require './react/components/toolbars/avatar'
 require './react/components/toolbars/close/close'
 
 require './react/components/shellboxes/confirm_registration'

@@ -23,7 +23,10 @@ UserToolbar = React.createClass
       'toolbar__navbar--complex': @state.logged
 
     <div className="toolbar toolbar--main">
-      <UserToolbarToggle onClick={ @toggleVisibility } />
+      <UserToolbarToggle
+          hasConversations={ !!@state.unreadConversationsCount }
+          hasNotifications={ !!@state.unreadNotificationsCount }
+          onClick={ @toggleVisibility } />
       <div className={ navbarClasses }>
         <Scroller>
           { @renderList() }
