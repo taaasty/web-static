@@ -19,14 +19,14 @@ UserToolbarToggle = React.createClass
     indicators = []
 
     if @props.hasConversations
-      indicators.push <i className="toolbar__mindicator toolbar__mindicator--messages"
+      indicators.push <i className="toolbar__m-indicator toolbar__m-indicator--messages"
                          key="conversations" />
 
     if @props.hasNotifications
-      indicators.push <i className="toolbar__mindicator toolbar__mindicator--notifications"
+      indicators.push <i className="toolbar__m-indicator toolbar__m-indicator--notifications"
                          key="notifications" />
 
-    return <span className="toolbar__mindicators">
+    return <span className="toolbar__m-indicators">
              { indicators }
            </span>
 

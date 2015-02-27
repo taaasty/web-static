@@ -925,7 +925,8 @@ body {
 }
 .feed-toolbar-open .layout,
 .feed-toolbar-open .error,
-.feed-toolbar-open .messages {
+.feed-toolbar-open .messages--fixed,
+.feed-toolbar-open .notifications--fixed {
   left: 240px;
 }
 .feed-toolbar-open .toolbar--feed .toolbar__toggle,
@@ -949,7 +950,8 @@ body {
 }
 .user-toolbar-open .layout,
 .user-toolbar-open .error,
-.user-toolbar-open .messages {
+.user-toolbar-open .messages--fixed,
+.user-toolbar-open .notifications--fixed {
   left: -240px;
 }
 .user-toolbar-open .toolbar--user .toolbar__toggle,
