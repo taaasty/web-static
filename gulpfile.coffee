@@ -7,7 +7,7 @@ requireDir './gulp/tasks', recurse: true
 
 gulp.task 'dist', ['[S] Clean'], ->
   gulp.start '[D][P] Scripts', '[D][P] Styles', '[D][P] Locales',
-             '[M][P] Scripts', '[M][P] Styles', '[M][P] Locales', '[M] ComponentsScripts'
+             '[M][P] Scripts', '[M][P] Styles', '[M][P] Locales'
 
 gulp.task 'build', ['[S] Clean'], (cb) ->
   runSequence ['buildDesktop', 'buildMobile'], cb
@@ -25,7 +25,7 @@ gulp.task 'buildDesktop', ['[S] Clean'], (cb) ->
 
 gulp.task 'buildMobile', ['[S] Clean'], (cb) ->
   runSequence [
-    '[M][L] Scripts', '[M][L] Styles', '[M] Html', '[M][L] Locales'
+    '[M][L] Scripts', '[M][L] Specs', '[M][L] Styles', '[M] Html', '[M][L] Locales'
   ], cb
 
 gulp.task 'server', ['[S] SetWatch', 'build'], ->

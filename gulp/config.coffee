@@ -63,7 +63,6 @@ module.exports =
     local:
       scripts:
         vendor:
-          baseDir: src + '/bower_components'
           dest: build + '/mobile/scripts'
           outputName: 'vendor.js'
           extensions: ['.coffee']
@@ -85,8 +84,7 @@ module.exports =
     production:
       scripts:
         bundle:
-          baseDir: src
-          entries: './scripts/mobile.production.coffee'
+          entries: src + '/scripts/mobile.production.coffee'
           extensions: ['.cjsx', '.coffee']
           dest: dist + '/scripts/'
           outputName: 'mobile_bundle.js'
@@ -95,8 +93,7 @@ module.exports =
           dest: dist + '/scripts'
           outputName: 'mobile_bundle.min.js'
         components:
-          baseDir: src
-          entries: './scripts/mobile/components.js'
+          entries: src + '/scripts/mobile/components.js'
           extensions: ['.cjsx', '.coffee']
           dest: dist + '/scripts/'
           outputName: 'mobile_components.js'

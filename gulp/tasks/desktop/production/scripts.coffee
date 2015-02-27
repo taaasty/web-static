@@ -1,12 +1,13 @@
-browserify   = require 'browserify'
-gulp         = require 'gulp'
-source       = require 'vinyl-source-stream'
-buffer       = require 'vinyl-buffer'
-uglify       = require 'gulp-uglify'
-rename       = require 'gulp-rename'
-bundleLogger = require '../../../util/bundleLogger'
-handleErrors = require '../../../util/handleErrors'
-config       = require('../../../config').desktop.production.scripts
+browserify     = require 'browserify'
+gulp           = require 'gulp'
+source         = require 'vinyl-source-stream'
+buffer         = require 'vinyl-buffer'
+uglify         = require 'gulp-uglify'
+rename         = require 'gulp-rename'
+coffeeReactify = require 'coffee-reactify'
+bundleLogger   = require '../../../util/bundleLogger'
+handleErrors   = require '../../../util/handleErrors'
+config         = require('../../../config').desktop.production.scripts
 
 gulp.task '[D][P] Scripts', ->
   bundler = browserify({
@@ -48,6 +49,8 @@ gulp.task '[D][P] Scripts', ->
     .require './scripts/desktop/resources/screen_viewer',                     expose: 'screenviewer'
     .require './bower_components/aviator/src/main',                           expose: 'aviator'
     .require './bower_components/nanobar/index',                              expose: 'nanobar'
+
+  bundler.transform coffeeReactify
 
   bundle = ->
     bundleLogger.start config.bundle.outputName
