@@ -3056,7 +3056,7 @@ body {
 .toolbar__indicator--notifications {
   color: #61cc67;
 }
-.toolbar__mindicators {
+.toolbar__m-indicators {
   font-size: 0;
   line-height: 0;
   font-family: a;
@@ -3068,17 +3068,17 @@ body {
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
 }
-.toolbar__mindicator {
+.toolbar__m-indicator {
   width: 6px;
   height: 6px;
   margin: 3px 0;
   display: block;
   border-radius: 50%;
 }
-.toolbar__mindicator--messages {
+.toolbar__m-indicator--messages {
   background-color: #fff627;
 }
-.toolbar__mindicator--notifications {
+.toolbar__m-indicator--notifications {
   background-color: #61cc67;
 }
 .toolbar__dropdown {
