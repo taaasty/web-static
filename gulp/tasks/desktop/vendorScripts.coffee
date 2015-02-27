@@ -1,6 +1,7 @@
 browserify     = require 'browserify'
 gulp           = require 'gulp'
 source         = require 'vinyl-source-stream'
+coffeeReactify = require 'coffee-reactify'
 bundleLogger   = require '../../util/bundleLogger'
 handleErrors   = require '../../util/handleErrors'
 config         = require('../../config').desktop.local.scripts.vendor
@@ -44,6 +45,8 @@ gulp.task '[D] VendorScripts', ->
     .require '../scripts/desktop/resources/screen_viewer',       expose: 'screenviewer'
     .require './aviator/src/main',                               expose: 'aviator'
     .require './nanobar/index',                                  expose: 'nanobar'
+
+  bundler.transform coffeeReactify
 
   bundle = ->
     bundleLogger.start config.outputName

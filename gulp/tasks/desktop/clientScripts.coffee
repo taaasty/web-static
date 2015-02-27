@@ -2,6 +2,7 @@ browserify     = require 'browserify'
 watchify       = require 'watchify'
 gulp           = require 'gulp'
 source         = require 'vinyl-source-stream'
+coffeeReactify = require 'coffee-reactify'
 bundleLogger   = require '../../util/bundleLogger'
 handleErrors   = require '../../util/handleErrors'
 config         = require('../../config').desktop.local.scripts.client
@@ -45,6 +46,8 @@ gulp.task '[D] ClientScripts', ->
     .external 'screenviewer'
     .external 'aviator'
     .external 'nanobar'
+
+  bundler.transform coffeeReactify
 
   bundle = ->
     bundleLogger.start config.outputName

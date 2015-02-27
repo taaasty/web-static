@@ -18,9 +18,14 @@ gulp.task 'buildDesktop', ['[S] Clean'], (cb) ->
     '[D][L] Locales'
   ], cb
 
+# gulp.task 'buildMobile', ['[S] Clean'], (cb) ->
+#   runSequence [
+#     '[M] VendorScripts', '[M] ClientScripts', '[M][L] Styles', '[M] Html', '[M][L] Locales'
+#   ], cb
+
 gulp.task 'buildMobile', ['[S] Clean'], (cb) ->
   runSequence [
-    '[M] VendorScripts', '[M] ClientScripts', '[M][L] Styles', '[M] Html', '[M][L] Locales'
+    '[M][L] Scripts', '[M][L] Styles', '[M] Html', '[M][L] Locales'
   ], cb
 
 gulp.task 'server', ['[S] SetWatch', 'build'], ->
