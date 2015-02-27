@@ -1,3 +1,4 @@
+_                         = require 'lodash'
 cx                        = require 'react/lib/cx'
 CurrentUserStore          = require '../../stores/current_user'
 MessagingStatusStore      = require '../../messaging/stores/messaging_status'
@@ -15,14 +16,19 @@ UserToolbar = React.createClass
   mixins: [ConnectStoreMixin([CurrentUserStore, MessagingStatusStore])]
 
   getInitialState: ->
-    open: false
+    _.extend @getStateFromLocalStorage(), hover: false
+
+  componentWillMount: ->
+    UserToolbarActions.initVisibility @state.open
 
   render: ->
     navbarClasses = cx
       'toolbar__navbar': true
       'toolbar__navbar--complex': @state.logged
 
-    <div className="toolbar toolbar--main">
+    <div className="toolbar toolbar--main"
+         onMouseEnter={ @handleMouseEnter }
+         onMouseLeave={ @handleMouseLeave }>
       <UserToolbarToggle
           hasConversations={ !!@state.unreadConversationsCount }
           hasNotifications={ !!@state.unreadNotificationsCount }
@@ -41,6 +47,7 @@ UserToolbar = React.createClass
           user={ @state.user }
           unreadConversationsCount={ @state.unreadConversationsCount }
           unreadNotificationsCount={ @state.unreadNotificationsCount }
+          stayOpen={ @state.hover }
           onMessagesItemClick={ @toggleMessages }
           onNotificationsItemClick={ @toggleNotifications }
           onFriendsItemClick={ @showFriends }
@@ -57,6 +64,7 @@ UserToolbar = React.createClass
   toggleVisibility: ->
     visibility = !@state.open
 
+    localStorage.setItem 'states:mainToolbarOpened', visibility
     UserToolbarActions.toggleVisibility visibility
     @setState(open: visibility)
 
@@ -74,6 +82,19 @@ UserToolbar = React.createClass
 
   showSettings: ->
     PopupActions.showSettings()
+
+  handleMouseEnter: ->
+    @setState(hover: true)
+
+  handleMouseLeave: ->
+    @setState(hover: false)
+
+  getStateFromLocalStorage: ->
+    storedState = localStorage.getItem 'states:mainToolbarOpened'
+
+    return {
+      open: if storedState? then JSON.parse(storedState) else true
+    }
 
   getStateFromStore: ->
     user:                     CurrentUserStore.getUser()

@@ -10,6 +10,7 @@ UserToolbarListItem = React.createClass
     href:           PropTypes.string
     badgeCount:     PropTypes.number
     badgeClassName: PropTypes.string
+    stayOpen:       PropTypes.bool
     onClick:        PropTypes.func
 
   getInitialState: ->
@@ -22,6 +23,9 @@ UserToolbarListItem = React.createClass
       title: @props.title
       placement: 'right'
       container: '.toolbar--main'
+
+  componentWillReceiveProps: (nextProps) ->
+    @close() unless nextProps.stayOpen and @isOpen()
 
   componentWillUnmount: ->
     link = @refs.link.getDOMNode()
@@ -54,13 +58,16 @@ UserToolbarListItem = React.createClass
         { @props.badgeCount }
       </span>
 
-  isOpen: -> @state.open is true
+  isOpen: -> !!@state.open
+
+  open:  -> @setState(open: true)
+  close: -> @setState(open: false)
 
   handleMouseEnter: ->
-    @setState(open: true)
+    @open()
 
   handleMouseLeave: ->
-    @setState(open: false)
+    @close() unless @props.stayOpen
 
   handeLinkClick: (e) ->
     if @props.onClick?

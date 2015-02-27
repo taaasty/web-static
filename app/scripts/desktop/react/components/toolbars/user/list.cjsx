@@ -9,6 +9,7 @@ UserToolbarList = React.createClass
     user:                      PropTypes.object.isRequired
     unreadConversationsCount:  PropTypes.number.isRequired
     unreadNotificationsCount:  PropTypes.number.isRequired
+    stayOpen:                  PropTypes.bool.isRequired
     onMessagesItemClick:       PropTypes.func.isRequired
     onNotificationsItemClick:  PropTypes.func.isRequired
     onFriendsItemClick:        PropTypes.func.isRequired
@@ -23,7 +24,8 @@ UserToolbarList = React.createClass
       <UserToolbarListItem
           title={ i18n.t('feed_friends') }
           icon="icon--friends"
-          href={ Routes.friends_feed_path() }>
+          href={ Routes.friends_feed_path() }
+          stayOpen={ @props.stayOpen }>
         <UserToolbarListSubList>
           <UserToolbarListSubListItem
               title={ i18n.t('feed_live') }

@@ -24,7 +24,7 @@ class LayoutStatesController
       action = payload.action
 
       switch action.type
-        when Constants.userToolbar.TOGGLE_VISIBILITY
+        when Constants.userToolbar.INIT_VISIBILITY, Constants.userToolbar.TOGGLE_VISIBILITY
           @toggleState 'userToolbar', action.value
 
 module.exports = LayoutStatesController
