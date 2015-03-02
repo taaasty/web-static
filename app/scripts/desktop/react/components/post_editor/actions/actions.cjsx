@@ -3,7 +3,7 @@ cx = require 'react/lib/cx'
 ENTRY_PRIVACY_PRIVATE   = TLOG_TYPE_PRIVATE   = 'private'
 ENTRY_PRIVACY_PUBLIC    = TLOG_TYPE_PUBLIC    = 'public'
 ENTRY_PRIVACY_ANONYMOUS = TLOG_TYPE_ANONYMOUS = 'anonymous'
-ENTRY_PRIVACY_PUBLIC_WITH_VOTING = 'public_with_voting'
+ENTRY_PRIVACY_LIVE = 'live'
 
 PREVIEW_BODY_CLASSES =
   true:  'tlog-mode-full'
@@ -80,7 +80,7 @@ window.PostActions = React.createClass
 
   isPostPublic:           -> @props.entryPrivacy is ENTRY_PRIVACY_PUBLIC
   isPostPrivate:          -> @props.entryPrivacy is ENTRY_PRIVACY_PRIVATE
-  isPostPublicWithVoting: -> @props.entryPrivacy is ENTRY_PRIVACY_PUBLIC_WITH_VOTING
+  isPostPublicWithVoting: -> @props.entryPrivacy is ENTRY_PRIVACY_LIVE
   isPostAnonymous:        -> @props.entryPrivacy is ENTRY_PRIVACY_ANONYMOUS
 
   isTlogAnonymous: -> @props.tlogType is TLOG_TYPE_ANONYMOUS
@@ -91,7 +91,7 @@ window.PostActions = React.createClass
     if @isPostPrivate() then i18n.t 'editor_save_button' else i18n.t 'editor_publish_button'
 
   onVoteChanged: (value) ->
-    newEntryPrivacy = if value then ENTRY_PRIVACY_PUBLIC_WITH_VOTING else ENTRY_PRIVACY_PUBLIC
+    newEntryPrivacy = if value then ENTRY_PRIVACY_LIVE else ENTRY_PRIVACY_PUBLIC
 
     @props.onChangePrivacy newEntryPrivacy
 
