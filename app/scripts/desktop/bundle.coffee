@@ -12,6 +12,7 @@ require './react/entities/normalized_entry'
 require './react/services/positions'
 require './react/services/entry_store'
 require './react/services/entry_normalizer'
+global.DesignSettingsService = require './react/services/designSettings'
 window.ThumborService = require '../shared/react/services/thumbor'
 require './react/services/uuid'
 
