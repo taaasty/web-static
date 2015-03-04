@@ -4,9 +4,6 @@
   .font-null;
 
   &.__inited {
-    padding-right: 15px;
-    padding-left: 15px;
-
     .slider__btn,
     .slider__main:before,
     .slider__main:after {
@@ -47,7 +44,7 @@
   &:before,
   &:after {
     content: "";
-    width: 20px;
+    width: 50px;
     height: 100%;
     position: absolute;
     display: none;
@@ -100,6 +97,7 @@
   top: 0;
   display: none;
   cursor: pointer;
+  z-index: 3;
 
   &:before {
     content: "";

@@ -1,0 +1,223 @@
+.presets {
+  position: relative;
+}
+
+.preset {
+  .inline-block-middle;
+  width: @preset-size;
+  height: @preset-size;
+  margin-right: 15px;
+  position: relative;
+  background-position: 50% 50%;
+  background-size: cover;
+  line-height: @preset-size;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 50%;
+
+  &:after {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    border-radius: 50%;
+    transition: all .3s ease;
+  }
+
+  &:first-child {
+    margin-left: 15px;
+  }
+
+  &.__active {
+    cursor: default;
+
+    &:after {
+      box-shadow: inset 0 0 0 4px @yellow;
+    }
+  }
+}
+
+.preset__header {
+  .inline-block-middle;
+  position: relative;
+  font-size: 26px;
+  line-height: 1;
+  color: #fff;
+}
+
+.save-preset-button {
+  padding: 0;
+  border: none;
+  background: none;
+  &:extend(.preset all);
+
+  &:after {
+    border: 1px solid rgba(255, 255, 255, .2);
+  }
+
+  &:hover {
+    &:after {
+      border: 1px solid rgba(255, 255, 255, .4);
+    }
+  }
+}
+
+.save-preset-button__text {
+  .inline-block-middle;
+  padding-top: 2px;
+  font-size: 12px;
+  line-height: 1.4;
+  font-family: @font-family-base;
+  letter-spacing: .06em;
+  white-space: normal;
+  color: #fff;
+}
+
+// Header
+// -- Font -- //
+.preset-headerfont-proximanova {
+  .preset__header {
+    font-family: @font-family-base;
+  }
+}
+
+.preset-headerfont-notoserif {
+  .preset__header {
+    font-family: @font-family-notoserif;
+  }
+}
+
+.preset-headerfont-comfortaa {
+  .preset__header {
+    font-family: @font-family-comfortaa;
+  }
+}
+
+.preset-headerfont-airbornepilot {
+  .preset__header {
+    font-family: @font-family-airbornepilot;
+  }
+}
+
+.preset-headerfont-amaranth {
+  .preset__header {
+    font-family: @font-family-amaranth;
+  }
+}
+
+.preset-headerfont-beermoney {
+  .preset__header {
+    font-family: @font-family-beermoney;
+  }
+}
+
+.preset-headerfont-dancingscript {
+  .preset__header {
+    font-family: @font-family-dancingscript;
+  }
+}
+
+.preset-headerfont-greatvibes {
+  .preset__header {
+    font-family: @font-family-greatvibes;
+  }
+}
+
+.preset-headerfont-veles {
+  .preset__header {
+    font-family: @font-family-veles;
+  }
+}
+
+.preset-headerfont-zion {
+  .preset__header {
+    font-family: @font-family-zion;
+  }
+}
+
+.preset-headerfont-nautilus {
+  .preset__header {
+    font-family: @font-family-nautilus;
+  }
+}
+
+.preset-headerfont-ospdin {
+  .preset__header {
+    font-family: @font-family-ospdin;
+  }
+}
+
+.preset-headerfont-pecita {
+  .preset__header {
+    font-family: @font-family-pecita;
+  }
+}
+
+.preset-headerfont-poetsen {
+  .preset__header {
+    font-family: @font-family-poetsen;
+  }
+}
+
+.preset-headerfont-yessireebob {
+  .preset__header {
+    font-family: @font-family-yessireebob;
+  }
+}
+
+// Background
+// -- Color -- //
+.preset-bgcolor-white {
+  background-color: #fff;
+
+  .preset__header {
+    color: #000;
+  }
+}
+
+.preset-bgcolor-black {
+  background-color: #000;
+}
+
+.preset-bgcolor-cinnabar {
+  background-color: #e74c3c;
+}
+
+.preset-bgcolor-silversand {
+  background-color: #c6c9cc;
+
+  .preset__header {
+    color: #000;
+  }
+}
+
+.preset-bgcolor-bluegray {
+  background-color: #6c7a89;
+}
+
+// -- Image -- //
+.preset-bgimage-custom {
+  background-color: transparent !important;
+
+  .preset__header {
+    color: #fff;
+    text-shadow: 0 0 0 #000;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    opacity: .5;
+  }
+}
