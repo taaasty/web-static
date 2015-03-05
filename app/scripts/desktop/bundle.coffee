@@ -46,6 +46,8 @@ global.CurrentUserStore = require './react/stores/current_user'
 require './react/stores/editor'
 require './react/stores/relationships'
 
+global.PersonalDesignSetRepo = require './react/repositories/personalDesignSet'
+
 require './react/components/transition/timeout_transition_group'
 
 # /*============================================
