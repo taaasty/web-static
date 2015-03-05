@@ -14,6 +14,7 @@ require './react/services/entry_store'
 require './react/services/entry_normalizer'
 global.DesignSettingsService = require './react/services/designSettings'
 global.DesignStatesService = require './react/services/designStates'
+global.DesignPresenterService = require './react/services/designPresenter'
 window.ThumborService = require '../shared/react/services/thumbor'
 require './react/services/uuid'
 
