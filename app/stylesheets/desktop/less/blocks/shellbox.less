@@ -33,14 +33,11 @@
 }
 
 .shellbox__main {
-  width: 100%;
-  height: 100%;
-  display: table;
+  &:extend(.grid-full all);
 }
 
 .shellbox__cell {
-  display: table-cell;
-  vertical-align: middle;
+  &:extend(.grid-full__middle all);
 }
 
 // Types
