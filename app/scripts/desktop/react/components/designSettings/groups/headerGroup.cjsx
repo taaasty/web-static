@@ -1,8 +1,8 @@
-DesignSettingsGroup       = require './Group'
-DesignSettingsOption      = require '../option/index'
+DesignSettingsGroup = require './group'
+DesignSettingsOption = require '../option/index'
 DesignSettingsOptionState = require '../option/state'
-DesignSettingsSlider      = require '../common/slider'
-DesignSettingsRadioList   = require '../common/radioList'
+DesignSettingsSlider = require '../common/slider'
+DesignSettingsRadioList = require '../common/radioList'
 { PropTypes } = React
 
 DesignSettingsHeaderGroup = React.createClass
@@ -19,12 +19,8 @@ DesignSettingsHeaderGroup = React.createClass
 
   render: ->
     <DesignSettingsGroup title="Заголовок">
-      <DesignSettingsOption
-          name="headerfont"
-          title="Шрифт">
-        <DesignSettingsOptionState
-            style="font"
-            text="Aa" />
+      <DesignSettingsOption title="Шрифт" name="headerfont">
+        <DesignSettingsOptionState style="font" text="Aa" />
         <DesignSettingsSlider>
           <DesignSettingsRadioList
               style="font"
@@ -35,24 +31,22 @@ DesignSettingsHeaderGroup = React.createClass
         </DesignSettingsSlider>
       </DesignSettingsOption>
 
-      <DesignSettingsOption
-          name="headersize"
-          title="Размер">
+      <DesignSettingsOption title="Размер" name="headersize">
         <DesignSettingsRadioList
             style="dotted"
             optionName="headerSize"
+            value={ @props.headerSize }
             items={ @props.headerSizeItems }
             className="ds-absolute-left ds-fadein-down"
             onChange={ @props.onOptionChange.bind(null, 'headerSize') } />
       </DesignSettingsOption>
 
-      <DesignSettingsOption
-          name="headercolor"
-          title="Цвет">
+      <DesignSettingsOption title="Цвет" name="headercolor">
         <DesignSettingsOptionState style="circlebtn" />
         <DesignSettingsRadioList
             style="circlebtns"
             optionName="headerColor"
+            value={ @props.headerColor }
             items={ @props.headerColorItems }
             className="ds-absolute-left ds-fadein-down"
             onChange={ @props.onOptionChange.bind(null, 'headerColor') } />

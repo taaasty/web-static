@@ -4,11 +4,11 @@ DesignSettingsOptionUpload = React.createClass
   displayName: 'DesignSettingsOptionUpload'
 
   propTypes:
-    stateName: PropTypes.string.isRequired
-    value: PropTypes.string
-    enabled: PropTypes.bool.isRequired
-    onUpload: PropTypes.func.isRequired
-    onVisibilityChange: PropTypes.func.isRequired
+    optionName: PropTypes.string.isRequired
+    backgroundImageUrl: PropTypes.string.isRequired
+    backgroundImageEnabled: PropTypes.bool.isRequired
+    onImageUrlChange: PropTypes.func.isRequired
+    onImageVisibilityChange: PropTypes.func.isRequired
 
   render: ->
     <span>
@@ -19,22 +19,20 @@ DesignSettingsOptionUpload = React.createClass
             загрузите
           </span>
           <input type="file"
-                 name={ @props.stateName }
                  className="form-upload__input"
                  onChange={ @handleChangeBackground } />
         </span>
       </span>
       <span className="design-settings__cover ds-absolute-right ds-fadeout-right"
-            style={{ backgroundImage: 'url("' + @props.value + '")' }} />
+            style={{ backgroundImage: 'url("' + @props.backgroundImageUrl + '")' }} />
       <span className="design-settings__text ds-absolute-right ds-fadein-left">
         <span className="form-checkbox">
           <input type="checkbox"
-                 name={ @props.stateName }
-                 value="none"
-                 id={ @props.stateName }
+                 defaultChecked={ @props.backgroundImageEnabled }
+                 id={ @props.optionName }
                  className="form-checkbox__input"
                  onChange={ @handleChangeVisibility } />
-          <label htmlFor={ @props.stateName }
+          <label htmlFor={ @props.optionName }
                  className="form-checkbox__label">
             <span className="form-checkbox__box">
               <i className="form-checkbox__icon" />
@@ -45,6 +43,6 @@ DesignSettingsOptionUpload = React.createClass
     </span>
 
   handleChangeVisibility: (e) ->
-    @props.onVisibilityChange !e.target.checked
+    @props.onImageVisibilityChange !e.target.checked
 
 module.exports = DesignSettingsOptionUpload

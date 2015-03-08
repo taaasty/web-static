@@ -1,8 +1,8 @@
-DesignSettingsGroup = require './Group'
-DesignSettingsOption = require '../Option/index'
-DesignSettingsOptionState = require '../Option/State'
-DesignSettingsOptionUpload = require '../Option/Upload'
-DesignSettingsRadioList = require '../common/RadioList'
+DesignSettingsGroup = require './group'
+DesignSettingsOption = require '../option/index'
+DesignSettingsOptionState = require '../option/state'
+DesignSettingsOptionUpload = require '../option/upload'
+DesignSettingsRadioList = require '../common/radioList'
 { PropTypes } = React
 
 DesignSettingsBackgroundGroup = React.createClass
@@ -19,37 +19,32 @@ DesignSettingsBackgroundGroup = React.createClass
 
   render: ->
     <DesignSettingsGroup title="Фон">
-      <DesignSettingsOption
-          name={ @props.group.color.optionName }
-          title="Цвет">
-        <DesignSettingsOptionState style={ @props.group.color.style } />
+      <DesignSettingsOption title="Цвет" name="bgcolor">
+        <DesignSettingsOptionState style="circlebtn" />
         <DesignSettingsRadioList
-            style={ @props.group.color.style }
-            stateName={ @props.group.color.stateName }
-            items={ @props.group.color.items }
+            style="circlebtns"
+            optionName="backgroundColor"
+            value={ @props.backgroundColor }
+            items={ @props.backgroundColorItems }
             className="ds-absolute-left ds-fadein-down"
             onChange={ @props.onOptionChange.bind(null, 'backgroundColor') } />
       </DesignSettingsOption>
 
-      <DesignSettingsOption
-          name={ @props.group.image.optionName }
-          title="Картинка"
-          free={ @props.group.image.free }>
+      <DesignSettingsOption title="Картинка" name="bgimage">
         <DesignSettingsOptionUpload
-            stateName={ @props.group.color.stateName }
-            value={ @props.group.image.value }
-            enabled={ @props.group.image.enabled }
-            onVisibilityChange={ @props.onBackgroundVisibilityChange } />
+            optionName="backgroundImage"
+            backgroundImageUrl={ @props.backgroundImageUrl }
+            backgroundImageEnabled={ @props.backgroundImageEnabled }
+            onImageUrlChange={ @props.onOptionChange.bind(null, 'backgroundImageUrl') }
+            onImageVisibilityChange={ @props.onOptionChange.bind(null, 'backgroundImageEnabled') } />
       </DesignSettingsOption>
 
-      <DesignSettingsOption
-          name={ @props.group.alignment.optionName }
-          title="Выравнивание"
-          free={ @props.group.alignment.free }>
+      <DesignSettingsOption title="Выравнивание" name="bgalignment">
         <DesignSettingsRadioList
-            style={ @props.group.alignment.style }
-            stateName={ @props.group.alignment.stateName }              
-            items={ @props.group.alignment.items }
+            style="dotted"
+            optionName="backgroundAlignment"
+            value={ @props.backgroundAlignment }
+            items={ @props.backgroundAlignmentItems }
             className="ds-absolute-left ds-fadein-down"
             onChange={ @props.onOptionChange.bind(null, 'backgroundAlignment') } />
       </DesignSettingsOption>

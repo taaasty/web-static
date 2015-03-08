@@ -1,31 +1,26 @@
-DesignRepo = require '../../repositories/design'
-PersonalDesignSetRepo = require '../../repositories/personalDesignSet'
 DesignSettingsDropZone = require './dropZone/index'
 DesignSettingsGroups = require './groups/index'
-# DesignSettingsSaveButton = require './buttons/Save'
-# DesignSettingsActions = require '../../actions/designSettings'
+DesignSettingsSaveButton = require './buttons/save'
+{ PropTypes } = React
 
 DesignSettings = React.createClass
   displayName: 'DesignSettings'
-  # mixins: [DesignSettingsMixin]
 
-  getInitialState: ->
-    design: PersonalDesignSetRepo.get('current').current
-    options: DesignRepo.getAll()
+  propTypes:
+    design: PropTypes.object.isRequired
+    options: PropTypes.object.isRequired
+    onOptionChange: PropTypes.func.isRequired
 
   render: ->
     <div className="design-settings">
       <DesignSettingsDropZone />
       <div className="design-settings__options">
         <DesignSettingsGroups
-            design={ @state.design }
-            options={ @state.options }
-            onOptionChange={ @handleOptionChange } />
+            design={ @props.design }
+            options={ @props.options }
+            onOptionChange={ @props.onOptionChange } />
         <DesignSettingsSaveButton />
       </div>
     </div>
-
-  handleOptionChange: (option, value) ->
-    # DesignSettingsActions.changeOptionValue optionName, value
 
 module.exports = DesignSettings

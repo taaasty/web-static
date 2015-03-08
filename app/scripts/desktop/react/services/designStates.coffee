@@ -283,7 +283,7 @@ DesignStatesService =
       classes.push newClass
 
     _.forEach switchableStates, (value, state) =>
-      unless value
+      if value
         newClass = @switchableStates[state]
         classes.push newClass
 
@@ -291,7 +291,13 @@ DesignStatesService =
       @pageCover.style.backgroundImage = 'url("' + design.backgroundImageUrl + '")'
 
     if _.isNumber design.feedTransparency
-      @feed.style.opacity = design.feedTransparency
+      # У пользователей свойство называется прозрачность, чем выше значение, тем
+      # прозрачнее должен быть фон ленты. Но в стилях есть только НЕпрозрачность.
+      # Конвертируем значение прозрачности в НЕпрозрачность.
+      # Например:
+      # .16 прозрачности == .84 НЕпрозрачности.
+      opacity = 1 - design.feedTransparency
+      @feed.style.opacity = opacity
 
     @page.className = _.trim classes.join ' '
 

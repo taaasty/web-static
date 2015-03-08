@@ -1,4 +1,4 @@
-_design =
+DesignStorage =
   headerFont: [
     'proximanova', 'notoserif', 'comfortaa', 'airbornepilot', 'amaranth', 'beermoney'
     'dancingscript', 'greatvibes', 'veles', 'zion', 'nautilus', 'ospdin', 'pecita'
@@ -15,12 +15,4 @@ _design =
   ]
   feedFontColor: ['#ffffff', '#000000', '#c6c9cc', '#6c7a89', '#38434e']
 
-DesignRepo =
-
-  get: (option) ->
-    _design[option]
-
-  getAll: ->
-    _design
-
-module.exports = DesignRepo
+module.exports = DesignStorage

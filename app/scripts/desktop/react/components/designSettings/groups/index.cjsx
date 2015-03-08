@@ -24,18 +24,18 @@ DesignSettingsGroups = React.createClass
             headerColorItems={ @props.options.headerColor }
             onOptionChange={ @props.onOptionChange } />
         <DesignSettingsBackgroundGroup
-            backgroundColor={ @props.backgroundColor }
-            backgroundImageUrl={ @props.backgroundImageUrl }
-            backgroundImageEnabled={ @props.backgroundImageEnabled }
+            backgroundColor={ @props.design.backgroundColor }
+            backgroundImageUrl={ @props.design.backgroundImageUrl }
+            backgroundImageEnabled={ @props.design.backgroundImageEnabled }
             backgroundAlignment={ @props.design.backgroundAlignment }
             backgroundColorItems={ @props.options.backgroundColor }
             backgroundAlignmentItems={ @props.options.backgroundAlignment }
             onOptionChange={ @props.onOptionChange } />
         <DesignSettingsFeedGroup
-            feedBackgroundColor={ @props.feedBackgroundColor }
-            feedFont={ @preops.feedFont }
-            feedFontColor={ @props.feedFontColor }
-            feedTransparency={ @props.feedTransparency }
+            feedBackgroundColor={ @props.design.feedBackgroundColor }
+            feedFont={ @props.design.feedFont }
+            feedFontColor={ @props.design.feedFontColor }
+            feedTransparency={ @props.design.feedTransparency }
             feedBackgroundColorItems={ @props.options.feedBackgroundColor }
             feedFontItems={ @props.options.feedFont }
             feedFontColorItems={ @props.options.feedFontColor }

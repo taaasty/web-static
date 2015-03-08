@@ -9,6 +9,7 @@ DesignSettingsRadioList = React.createClass
   propTypes:
     style: PropTypes.string.isRequired
     optionName: PropTypes.string.isRequired
+    value: PropTypes.string.isRequired
     items: PropTypes.array.isRequired
     className: PropTypes.string
     onChange: PropTypes.func.isRequired
@@ -18,10 +19,10 @@ DesignSettingsRadioList = React.createClass
     listItems = _.map @props.items, (item) =>
       <DesignSettingsRadio
           value={ item }
+          checked={ @props.value is item }
           optionName={ @props.optionName }
-          title={ DesignPresenterService.getTitle(@props.optionName, item) }
           onChange={ @props.onChange }
-          key={ item.value } />
+          key={ item } />
 
     return <span className={ listClasses }>
              { listItems}

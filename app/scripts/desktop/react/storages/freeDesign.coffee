@@ -1,4 +1,4 @@
-FreeDesign =
+FreeDesignStorage =
   headerFont: ['serif', 'sans']
   headerSize: ['middle']
   headerColor: ['#ffffff', '#000000']
@@ -11,4 +11,4 @@ FreeDesign =
   feedFontColor: ['#ffffff', '#000000']
   feedTransparency: ':ANY:'
 
-module.exports = FreeDesign
+module.exports = FreeDesignStorage

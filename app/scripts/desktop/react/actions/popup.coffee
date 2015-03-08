@@ -1,5 +1,6 @@
 CurrentUserStore = require '../stores/current_user'
 Searchbox = require '../components/searchbox/index'
+DesignSettingsManager = require '../components/designSettings/manager'
 
 PopupActions =
 
@@ -13,23 +14,17 @@ PopupActions =
 
   showDesignSettings: ->
     url = location.href
-    container = document.querySelector '[popup-design-settings-container]'
     user = CurrentUserStore.getUser()
 
-    unless container?
-      container = document.createElement 'div'
-      container.setAttribute 'popup-design-settings-container', ''
-      document.body.appendChild container
-
-    if url.indexOf(user.tlog_url) == -1
-      TastyConfirmController.show
-        message: i18n.t 'design_settings_page_confirm'
-        acceptButtonText: i18n.t 'design_settings_page_confirm_approve'
-        acceptButtonColor: 'green'
-        onAccept: ->
-          location.href = Routes.userDesignSettings user.slug
-    else
-      React.render <DesignSettingsPopup />, container
+    # if url.indexOf(user.tlog_url) == -1
+    #   TastyConfirmController.show
+    #     message: i18n.t 'design_settings_page_confirm'
+    #     acceptButtonText: i18n.t 'design_settings_page_confirm_approve'
+    #     acceptButtonColor: 'green'
+    #     onAccept: ->
+    #       location.href = Routes.userDesignSettings user.slug
+    # else
+    ReactApp.popupController.open DesignSettingsManager, {}, 'design-settings-container'
 
   showSearch: (props) ->
     ReactApp.popupController.openPopup Searchbox, props, 'searchbox-container'

@@ -3,17 +3,17 @@ DesignSet = require '../entities/designSet'
 _designs = {}
 # Mock
 _designs.current = new DesignSet
-  headerFont: "serif"
+  headerFont: "proximanova"
   headerSize: "middle"
   headerColor: "#ffffff"
   backgroundColor: "#ffffff"
-  backgroundImageUrl: "http://taaasty.ru/assets/backgrounds/8d/4b/1881243_4k_wallpaper_231.jpg"
+  backgroundImageUrl: "http://taaasty.com/assets/backgrounds/fb/e2/1881243_20140806230841_91475.jpg"
   backgroundImageEnabled: true
   backgroundAlignment: "justify"
   feedBackgroundColor: "#000000"
   feedFont: "ptsans"
   feedFontColor: "#000000"
-  feedTransparency: 0.5
+  feedTransparency: 0.7
 
 PersonalDesignSetRepo =
 

@@ -1,9 +1,9 @@
-DesignSettingsGroup = require './Group'
-DesignSettingsOption = require '../Option/index'
-DesignSettingsOptionState = require '../Option/State'
-DesignSettingsSlider = require '../common/Slider'
-DesignSettingsRadioList = require '../common/RadioList'
-DesignSettingsRange = require '../common/Range'
+DesignSettingsGroup = require './group'
+DesignSettingsOption = require '../option/index'
+DesignSettingsOptionState = require '../option/State'
+DesignSettingsSlider = require '../common/slider'
+DesignSettingsRadioList = require '../common/radioList'
+DesignSettingsRange = require '../common/range'
 { PropTypes } = React
 
 DesignSettingsFeedGroup = React.createClass
@@ -21,50 +21,44 @@ DesignSettingsFeedGroup = React.createClass
 
   render: ->
     <DesignSettingsGroup title="Лента">
-      <DesignSettingsOption
-          title="Цвет фона"
-          name={ @props.group.bgcolor.optionName }>
-        <DesignSettingsOptionState style={ @props.group.bgcolor.itemStyle } />
+      <DesignSettingsOption title="Цвет фона" name="feedbgcolor">
+        <DesignSettingsOptionState style="circlebtn" />
         <DesignSettingsRadioList
-            style={ @props.group.bgcolor.style }
-            stateName={ @props.group.bgcolor.stateName }              
-            items={ @props.group.bgcolor.items }
+            style="circlebtns"
+            optionName="feedBackgroundColor"
+            value={ @props.feedBackgroundColor }
+            items={ @props.feedBackgroundColorItems }
             className="ds-absolute-left ds-fadein-down"
             onChange={ @props.onOptionChange.bind(null, 'feedBackgroundColor') } />
       </DesignSettingsOption>
 
-      <DesignSettingsOption
-          title="Шрифт текста"
-          name={ @props.group.font.optionName }>
-        <DesignSettingsOptionState
-            style={ @props.group.font.style }
-            text="Aa" />
+      <DesignSettingsOption title="Шрифт текста" name="feedfont">
+        <DesignSettingsOptionState style="font" text="Aa" />
         <DesignSettingsSlider>
           <DesignSettingsRadioList
-              style={ @props.group.font.style }
-              stateName={ @props.group.font.stateName }              
-              items={ @props.group.font.items }
+              style="font"
+              optionName="feedFont"
+              value={ @props.feedFont }
+              items={ @props.feedFontItems }
               onChange={ @props.onOptionChange.bind(null, 'feedFont') } />
         </DesignSettingsSlider>
       </DesignSettingsOption>
 
-      <DesignSettingsOption
-          title="Цвет текста"
-          name={ @props.group.color.optionName }>
-        <DesignSettingsOptionState style={ @props.group.color.itemStyle } />
+      <DesignSettingsOption title="Цвет текста" name="feedcolor">
+        <DesignSettingsOptionState style="circlebtn" />
         <DesignSettingsRadioList
-            style={ @props.group.color.style }
-            stateName={ @props.group.color.stateName }              
-            items={ @props.group.color.items }
+            style="circlebtns"
+            optionName="feedFontColor"
+            value={ @props.feedFontColor }
+            items={ @props.feedFontColorItems }
             className="ds-absolute-left ds-fadein-down"
-            onChange={ @props.onOptionChange.bind(null, 'feedColor') } />
+            onChange={ @props.onOptionChange.bind(null, 'feedFontColor') } />
       </DesignSettingsOption>
 
-      <DesignSettingsOption
-          title="Прозрачность"
-          name={ @props.group.opacity.optionName }
-          free={ @props.group.opacity.free }>
-        <DesignSettingsRange value={ @props.group.opacity.value } />
+      <DesignSettingsOption title="Прозрачность" name="opacity">
+        <DesignSettingsRange
+            value={ @props.feedTransparency }
+            onChange={ @props.onOptionChange.bind(null, 'feedTransparency') } />
       </DesignSettingsOption>
     </DesignSettingsGroup>
 
