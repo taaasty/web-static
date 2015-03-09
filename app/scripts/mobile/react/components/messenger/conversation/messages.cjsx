@@ -1,10 +1,11 @@
-MessageStore         = require '../../../stores/message'
-ConversationStore    = require '../../../stores/conversation'
+canUseDOM = require('react/lib/ExecutionEnvironment').canUseDOM
+MessageStore = require '../../../stores/message'
+ConversationStore = require '../../../stores/conversation'
 MessengerViewActions = require '../../../actions/view/messenger'
-ConnectStoreMixin    = require '../../../../../shared/react/mixins/connectStore'
-ComponentMixin       = require '../../../mixins/component'
-Spinner              = require '../../common/spinner/spinner'
-MessageList          = require './messages/list'
+ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
+ComponentMixin = require '../../../mixins/component'
+Spinner = require '../../common/spinner/spinner'
+MessageList = require './messages/list'
 
 LOADED_STATE       = 'loaded'
 LOADING_STATE      = 'loading'
@@ -21,9 +22,11 @@ ConversationMessages = React.createClass
 
   componentWillMount: ->
     currentConvID = ConversationStore.getCurrentID()
-    MessengerViewActions.loadMessages currentConvID
-      .then @activateLoadedState
-      .fail @activateErrorState
+
+    if canUseDOM
+      MessengerViewActions.loadMessages currentConvID
+        .then @activateLoadedState
+        .fail @activateErrorState
 
   componentWillUpdate: ->
     currentConvID = ConversationStore.getCurrentID()

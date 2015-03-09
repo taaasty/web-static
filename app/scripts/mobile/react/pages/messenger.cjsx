@@ -12,15 +12,18 @@ MessengerPage = React.createClass
   mixins: [PageMixin, MessengerPageMixin]
 
   propTypes:
-    currentUser:   PropTypes.object.isRequired
-    conversations: PropTypes.array.isRequired
+    currentUser: PropTypes.object.isRequired
+    conversationsInfo: PropTypes.shape(
+      items: PropTypes.array.isRequired
+      totalCount: PropTypes.number.isRequired
+    ).isRequired
 
   componentWillMount: ->
     # Temporarily initialize CurrentUserStore here. Later on it will be set at
     # root App component
     # Some signin gists https://gist.github.com/ButuzGOL/707d1605f63eef55e4af
     CurrentUserStore.initialize @props.currentUser
-    ConversationStore.initPlural @props.conversations
+    ConversationStore.initPlural @props.conversationsInfo.items
 
   render: ->
     <div>
