@@ -5,13 +5,15 @@ ConversationMessageFormField = React.createClass
   displayName: 'ConversationMessageFormField'
 
   propTypes:
+    disabled: PropTypes.bool.isRequired
     onSubmit: PropTypes.func.isRequired
 
   render: ->
     <div className="message-form__field">
       <textarea
           ref="textarea"
-          placeholder={ i18n.t('placeholders.messenger_create_message') }
+          disabled={ @props.disabled }
+          placeholder={ @getPlaceholder() }
           className="message-form__field-textarea"
           onKeyDown={ @handleKeyDown } />
     </div>
@@ -24,6 +26,12 @@ ConversationMessageFormField = React.createClass
 
   getValue: ->
     _.trim @refs.textarea.getDOMNode().value
+
+  getPlaceholder: ->
+    if @props.disabled
+      i18n.t('placeholders.messenger_cant_talk')
+    else
+      i18n.t('placeholders.messenger_create_message')
 
   handleKeyDown: (e) ->
     isSystemKey = (e) ->

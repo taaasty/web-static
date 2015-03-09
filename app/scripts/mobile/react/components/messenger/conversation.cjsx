@@ -22,7 +22,9 @@ MessengerConversation = React.createClass
                <ConversationMessages />
              </div>
              <div className="messages__footer">
-               <ConversationMessageForm convID={ @state.conversation.id } />
+               <ConversationMessageForm
+                   convID={ @state.conversation.id }
+                   canTalk={ @state.conversation.can_talk } />
              </div>
            </div>
 

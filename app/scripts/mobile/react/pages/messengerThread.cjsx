@@ -13,9 +13,12 @@ MessengerThreadPage = React.createClass
   mixins: [PageMixin, MessengerThreadPageMixin]
 
   propTypes:
-    currentUser:  PropTypes.object.isRequired
+    currentUser: PropTypes.object.isRequired
     conversation: PropTypes.object.isRequired
-    messages:     PropTypes.array.isRequired
+    messagesInfo: PropTypes.shape(
+      items: PropTypes.array.isRequired
+      totalCount: PropTypes.number.isRequired
+    ).isRequired
 
   componentWillMount: ->
     # Temporarily initialize CurrentUserStore here. Later on it will be set at
@@ -23,7 +26,7 @@ MessengerThreadPage = React.createClass
     # Some signin gists https://gist.github.com/ButuzGOL/707d1605f63eef55e4af
     CurrentUserStore.initialize @props.currentUser
     ConversationStore.initSingular @props.conversation
-    MessageStore.initialize @props.messages
+    MessageStore.initialize @props.messagesInfo.items
 
   render: ->
     <div>
