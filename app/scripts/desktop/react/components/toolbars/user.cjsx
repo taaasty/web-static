@@ -10,10 +10,15 @@ UserToolbarToggle         = require './user/toggle'
 UserToolbarList           = require './user/list'
 UserToolbarGuestList      = require './user/guestList'
 UserToolbarAdditionalList = require './user/additionalList'
+{ PropTypes } = React
 
 UserToolbar = React.createClass
   displayName: 'UserToolbar'
   mixins: [ConnectStoreMixin([CurrentUserStore, MessagingStatusStore])]
+
+  propTypes:
+    searchUrl: PropTypes.string.isRequired
+    searchTitleI18nKey: PropTypes.string
 
   getInitialState: ->
     _.extend @getStateFromLocalStorage(), hover: false
@@ -59,7 +64,9 @@ UserToolbar = React.createClass
     if @state.logged
       <UserToolbarAdditionalList
           user={ @state.user }
-          onSettingsItemClick={ @showSettings } />
+          searchTitleI18nKey={ @props.searchTitleI18nKey }
+          onSettingsItemClick={ @showSettings }
+          onSearchItemClick={ @showSearch } />
 
   toggleVisibility: ->
     visibility = !@state.open
@@ -82,6 +89,9 @@ UserToolbar = React.createClass
 
   showSettings: ->
     PopupActions.showSettings()
+
+  showSearch: ->
+    PopupActions.showSearch searchUrl: @props.searchUrl
 
   handleMouseEnter: ->
     @setState(hover: true)
