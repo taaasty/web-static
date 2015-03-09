@@ -25,10 +25,12 @@ Searchbox = React.createClass
       </div>
       <form action={ @props.searchUrl }
             className="searchbox__form">
-        <h5 className="searchbox__title">Поиск по Вашему дневнику</h5>
+        <h5 className="searchbox__title">
+          { i18n.t('searchbox_title') }
+        </h5>
         <input type="text"
                name={ @props.searchParam }
-               placeholder="Введите Ваш запрос"
+               placeholder={ i18n.t('searchbox_placeholder') }
                autoFocus="true"
                onKeyDown={ @handleKeyDown }
                className="searchbox__input" />

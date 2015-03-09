@@ -11,7 +11,7 @@ UserToolbarAdditionalList = React.createClass
     onSearchItemClick: PropTypes.func.isRequired
 
   getDefaultProps: ->
-    searchTitleI18nKey: 'Поиск!!!'
+    searchTitleI18nKey: 'search_title'
 
   render: ->
     <ul className="toolbar__nav toolbar__nav--bottom">
