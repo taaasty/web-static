@@ -1,4 +1,5 @@
 CurrentUserStore = require '../stores/current_user'
+Searchbox = require '../components/searchbox/index'
 
 PopupActions =
 
@@ -24,6 +25,9 @@ PopupActions =
           location.href = Routes.userDesignSettings user.slug
     else
       React.render <DesignSettingsPopup />, container
+
+  showSearch: (props) ->
+    ReactApp.popupController.openPopup Searchbox, props, 'searchbox-container'
 
   showFriends: (panelName, userId) ->
     container = document.querySelector '[popup-persons-container]'
