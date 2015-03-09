@@ -1,5 +1,6 @@
 DesignPresenterService = require '../../../services/designPresenter'
 DesignSettingsService = require '../../../services/designSettings'
+DesignSettingsColorPicker = require './colorPicker'
 { PropTypes } = React
 
 DesignSettingsRadio = React.createClass
@@ -36,7 +37,7 @@ DesignSettingsRadio = React.createClass
     </span>
 
   renderColorPicker: ->
-    <ColorPicker /> if @state.name is 'custom'
+    <DesignSettingsColorPicker /> if @state.name is 'custom'
 
   renderFreeLabel: ->
     <span className="free">free</span> if @state.free

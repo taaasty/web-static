@@ -1,6 +1,7 @@
 CurrentUserStore = require '../stores/current_user'
 Searchbox = require '../components/searchbox/index'
 DesignSettingsManager = require '../components/designSettings/manager'
+DesignSettingsColorPickerPopup = require '../components/designSettings/common/colorPicker/popup'
 
 PopupActions =
 
@@ -28,6 +29,9 @@ PopupActions =
 
   showSearch: (props) ->
     ReactApp.popupController.openPopup Searchbox, props, 'searchbox-container'
+
+  showColorPicker: ->
+    ReactApp.popupController.openPopup DesignSettingsColorPickerPopup, {}, 'color-picker-container'
 
   showFriends: (panelName, userId) ->
     container = document.querySelector '[popup-persons-container]'
