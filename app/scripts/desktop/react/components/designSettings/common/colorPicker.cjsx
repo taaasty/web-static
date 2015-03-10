@@ -1,91 +1,54 @@
 PopupActions = require '../../../actions/popup'
 { PropTypes } = React
 
-# TODO: Нужно как-то избавиться от этого, может динамически вычеслять при инициализации компонента попапа
-# POPUP_WIDTH = 176
-
 DesignSettingsColorPicker = React.createClass
+  displayName: 'DesignSettingsColorPicker'
 
   propTypes:
-    color: PropTypes.string.isRequired
-    disabled: PropTypes.bool
+    color: PropTypes.string
+    onChange: PropTypes.func.isRequired
+
+  getDefaultProps: ->
+    color: '#fff'
 
   getInitialState: ->
     open: false
     color: @props.color
 
-#   componentDidMount: ->
-#     $(window).on 'scroll', @closePopup
-#     Mousetrap.bind 'esc', @closePopup
-
-#   componentWillUnmount: ->
-#     $(window).off 'scroll', @closePopup
-#     Mousetrap.unbind 'esc', @closePopup
+  componentWillUnmount: ->
+    PopupActions.closeColorPicker() if @state.open
 
   render: ->
     <span className="color-picker"
           style={{ backgroundColor: @state.color }}
-          onClick={ @handleActivatorClick } />
+          onClick={ @toggle } />
 
-  isOpen: ->
-    @state.open is true
+  activateCloseState: -> @setState(open: false)
+  activateOpenState:  -> @setState(open: true)
+
+  getValue: ->
+    @state.color
 
   open: ->
-    PopupActions.showColorPicker()
-    @setState(open: true)
+    activator = @getDOMNode()
+
+    PopupActions.showColorPicker
+      color: @state.color
+      activatorRect: activator.getBoundingClientRect()
+      onDrag: @handleDrag
+      onClose: @activateCloseState
+
+    @activateOpenState()
 
   close: ->
-    @setState(open: false)
+    PopupActions.closeColorPicker()
+    @activateCloseState()
 
   toggle: ->
-    if @isOpen() then @close() else @open()
+    if @state.open then @close() else @open()
 
-#   onDrag: (color, c) ->
-#     @setState currentColor: color
+  handleDrag: (color) ->
+    @props.onChange color
+    @setState {color}
 
-  handleActivatorClick: ->
-    @toggle() unless @props.disabled
-
-#   handleClickActivator: (e) ->
-#     if !@props.disabled
-#       unless @state.currentState is STATE_CHOICE
-#         @openPopup()
-#       else
-#         @closePopup()
-
-#   getCoordsPopup: ->
-#     $activator = $(@refs.activator.getDOMNode())
-
-#     widthActivator = $activator.outerWidth()
-#     heightActivator = $activator.outerHeight()
-
-#     return {
-#       top : $activator.offset().top + heightActivator
-#       left: $activator.offset().left - (POPUP_WIDTH - widthActivator) / 2
-#     }
-
-#   openPopup: ->
-#     container = document.querySelectorAll('[color-picker-popup-container]')[0]
-
-#     unless container
-#       container = document.createElement 'div'
-#       container.setAttribute 'color-picker-popup-container', ''
-#       document.body.appendChild(container);
-
-#     position = @getCoordsPopup()
-
-#     React.render (
-#       <ColorPicker_Popup color={ this.state.currentColor }
-#                          position={ position }
-#                          onDrag={ this.onDrag } />
-#     ), container
-
-#     @popupContainer = container
-#     @activateChoiceState()
-
-#   closePopup: ->
-#     _.defer =>
-#       React.unmountComponentAtNode @popupContainer
-#       @activateViewState()
-
-# module.exports = ColorPicker
+module.exports = DesignSettingsColorPicker

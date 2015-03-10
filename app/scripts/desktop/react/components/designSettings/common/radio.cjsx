@@ -8,6 +8,7 @@ DesignSettingsRadio = React.createClass
 
   propTypes:
     value: PropTypes.string.isRequired
+    custom: PropTypes.bool.isRequired
     checked: PropTypes.bool.isRequired
     optionName: PropTypes.string.isRequired
     onChange: PropTypes.func.isRequired
@@ -18,31 +19,38 @@ DesignSettingsRadio = React.createClass
     free: DesignSettingsService.isPaidValue @props.optionName, @props.value
 
   render: ->
-    <span className={ 'form-radiobtn form-radiobtn--' + @state.name }>
-      <input type="radio"
-             checked={ @props.checked }
-             id={ @props.optionName + '-' + @state.name }
-             className="form-radiobtn__input"
-             onChange={ @handleChange } />
-      <label htmlFor={ @props.optionName + '-' + @state.name }
-             className="form-radiobtn__label">
-        { @renderFreeLabel() }
-        <span className="form-radiobtn__inner">
-          <span className="form-radiobtn__text">
-            { @state.text }
-          </span>
-        </span>
-        { @renderColorPicker() }
-      </label>
-    </span>
+    name = if @props.custom then 'custom' else @state.name
+
+    return <span className={ 'form-radiobtn form-radiobtn--' + name }>
+             <input type="radio"
+                    checked={ @props.checked }
+                    id={ @props.optionName + '-' + name }
+                    className="form-radiobtn__input"
+                    onChange={ @handleChange } />
+             <label htmlFor={ @props.optionName + '-' + name }
+                    className="form-radiobtn__label">
+               { @renderFreeLabel() }
+               <span className="form-radiobtn__inner">
+                 <span className="form-radiobtn__text">
+                   { @state.text }
+                 </span>
+               </span>
+               { @renderColorPicker() }
+             </label>
+           </span>
 
   renderColorPicker: ->
-    <DesignSettingsColorPicker /> if @state.name is 'custom'
+    if @props.custom
+      <DesignSettingsColorPicker
+          ref="colorPicker"
+          color={ @props.value }
+          onChange={ @props.onChange } />
 
   renderFreeLabel: ->
     <span className="free">free</span> if @state.free
 
   handleChange: ->
-    @props.onChange @props.value
+    value = if @refs.colorPicker? then @refs.colorPicker.getValue() else @props.value
+    @props.onChange value
 
 module.exports = DesignSettingsRadio

@@ -192,9 +192,9 @@ require './react/components/design_settings_popup/controls_items/font_type_item'
 require './react/components/design_settings_popup/controls_items/opacity_item'
 require './react/components/design_settings_popup/controls_items/_radiobutton'
 require './react/components/design_settings_popup/controls_items/_progressbar'
-# для демонстрации
-global.ColorPicker       = require './react/components/design_settings_popup/color_picker'
-global.ColorPicker_Popup = require './react/components/design_settings_popup/color_picker_popup'
+
+global.DesignSettingsManager = require './react/components/designSettings/manager'
+global.DesignSettingsColorPickerPopup = require './react/components/designSettings/common/colorPicker/popup'
 
 require './react/components/persons_popup/mixins/panel_mixin'
 require './react/components/persons_popup/persons_popup'

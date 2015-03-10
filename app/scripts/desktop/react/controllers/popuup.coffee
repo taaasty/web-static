@@ -43,9 +43,14 @@ class PopupController
 
   openPopup: (PopupComponent, props, containerAttribute = @containerAttribute) ->
     container = @addContainer containerAttribute
+    onClose = @handleClose.bind @, containerAttribute
 
-    React.render <PopupComponent {...props}
-                     onClose={ @handleClose.bind(@, containerAttribute) } />, container
+    if props?.onClose
+      onClose = =>
+        props.onClose()
+        @handleClose containerAttribute
+
+    React.render <PopupComponent {...props} onClose={ onClose } />, container
 
   close: (containerAttribute = @containerAttribute) ->
     container = document.querySelector "[#{containerAttribute}]"

@@ -5,7 +5,7 @@ _designs = {}
 _designs.current = new DesignSet
   headerFont: "proximanova"
   headerSize: "middle"
-  headerColor: "#ffffff"
+  headerColor: "#2c61c1"
   backgroundColor: "#ffffff"
   backgroundImageUrl: "http://taaasty.com/assets/backgrounds/fb/e2/1881243_20140806230841_91475.jpg"
   backgroundImageEnabled: true

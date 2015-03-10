@@ -52,7 +52,7 @@ DesignPresenterService =
       }
       {
         value: 'veles'
-        name: 'greatvibes'
+        name: 'veles'
         title: 'Veles'
         text: 'Aa'
       }

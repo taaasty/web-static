@@ -16,10 +16,21 @@ DesignSettingsRadioList = React.createClass
 
   render: ->
     listClasses = ['form-radiogroup', 'form-radiogroup--' + @props.style, @props.className].join ' '
+
     listItems = _.map @props.items, (item) =>
+      value = item
+      custom = false
+      checked = @props.value is value
+
+      if item is ':ANY:'
+        value = @props.value
+        custom = true
+        checked = @props.items.indexOf(value) is -1
+
       <DesignSettingsRadio
-          value={ item }
-          checked={ @props.value is item }
+          value={ value }
+          custom={ custom }
+          checked={ checked }
           optionName={ @props.optionName }
           onChange={ @props.onChange }
           key={ item } />

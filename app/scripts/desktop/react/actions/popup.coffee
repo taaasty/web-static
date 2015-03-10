@@ -30,8 +30,11 @@ PopupActions =
   showSearch: (props) ->
     ReactApp.popupController.openPopup Searchbox, props, 'searchbox-container'
 
-  showColorPicker: ->
-    ReactApp.popupController.openPopup DesignSettingsColorPickerPopup, {}, 'color-picker-container'
+  showColorPicker: (props) ->
+    ReactApp.popupController.openPopup DesignSettingsColorPickerPopup, props, 'color-picker-container'
+
+  closeColorPicker: ->
+    ReactApp.popupController.close 'color-picker-container'
 
   showFriends: (panelName, userId) ->
     container = document.querySelector '[popup-persons-container]'
