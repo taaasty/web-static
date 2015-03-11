@@ -6,12 +6,9 @@ UserToolbarAdditionalList = React.createClass
 
   propTypes:
     user: PropTypes.object.isRequired
-    searchTitleI18nKey: PropTypes.string
+    searchTitleI18nKey: PropTypes.string.isRequired
     onSettingsItemClick: PropTypes.func.isRequired
     onSearchItemClick: PropTypes.func.isRequired
-
-  getDefaultProps: ->
-    searchTitleI18nKey: 'search_title'
 
   render: ->
     <ul className="toolbar__nav toolbar__nav--bottom">
