@@ -13,7 +13,7 @@ UserToolbarAdditionalList = React.createClass
   render: ->
     <ul className="toolbar__nav toolbar__nav--bottom">
       <UserToolbarListItem
-          title={ i18n.t(@props.searchTitleI18nKey) }
+          title={ i18n.t('searchbox_titles.' + @props.searchTitleI18nKey) }
           icon="icon--magnifier"
           onClick={ @props.onSearchItemClick } />
       <UserToolbarListItem

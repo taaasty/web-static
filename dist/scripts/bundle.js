@@ -25291,6 +25291,7 @@ Searchbox = React.createClass({
   displayName: 'Searchbox',
   propTypes: {
     searchUrl: PropTypes.string.isRequired,
+    searchTitleI18nKey: PropTypes.string.isRequired,
     searchParam: PropTypes.string,
     onClose: PropTypes.func.isRequired
   },
@@ -25318,7 +25319,7 @@ Searchbox = React.createClass({
       "className": "searchbox__form"
     }, React.createElement("h5", {
       "className": "searchbox__title"
-    }, i18n.t('searchbox_title')), React.createElement("input", {
+    }, i18n.t('searchbox_titles.' + this.props.searchTitleI18nKey)), React.createElement("input", {
       "type": "text",
       "name": this.props.searchParam,
       "placeholder": i18n.t('searchbox_placeholder'),
@@ -27076,7 +27077,7 @@ UserToolbarAdditionalList = require('./user/additionalList');
 
 PropTypes = React.PropTypes;
 
-SEARCH_TITLE_I18N_KEYS = ['search_live_title', 'search_best_title', 'search_friends_title', 'search_mytlog_title', 'search_tlog_title', 'search_favorites_title', 'search_privates_title', 'search_people_title'];
+SEARCH_TITLE_I18N_KEYS = ['live', 'best', 'friends', 'anonymous', 'mytlog', 'tlog', 'favorites', 'privates', 'people'];
 
 UserToolbar = React.createClass({
   displayName: 'UserToolbar',
@@ -27163,7 +27164,8 @@ UserToolbar = React.createClass({
   },
   showSearch: function() {
     return PopupActions.showSearch({
-      searchUrl: this.props.searchUrl
+      searchUrl: this.props.searchUrl,
+      searchTitleI18nKey: this.props.searchTitleI18nKey
     });
   },
   handleMouseEnter: function() {
@@ -27216,7 +27218,7 @@ UserToolbarAdditionalList = React.createClass({
     return React.createElement("ul", {
       "className": "toolbar__nav toolbar__nav--bottom"
     }, React.createElement(UserToolbarListItem, {
-      "title": i18n.t(this.props.searchTitleI18nKey),
+      "title": i18n.t('searchbox_titles.' + this.props.searchTitleI18nKey),
       "icon": "icon--magnifier",
       "onClick": this.props.onSearchItemClick
     }), React.createElement(UserToolbarListItem, {

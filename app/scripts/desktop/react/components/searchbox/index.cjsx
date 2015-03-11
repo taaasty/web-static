@@ -5,6 +5,7 @@ Searchbox = React.createClass
 
   propTypes:
     searchUrl: PropTypes.string.isRequired
+    searchTitleI18nKey: PropTypes.string.isRequired
     searchParam: PropTypes.string
     onClose: PropTypes.func.isRequired
 
@@ -26,7 +27,7 @@ Searchbox = React.createClass
       <form action={ @props.searchUrl }
             className="searchbox__form">
         <h5 className="searchbox__title">
-          { i18n.t('searchbox_title') }
+          { i18n.t('searchbox_titles.' + @props.searchTitleI18nKey) }
         </h5>
         <input type="text"
                name={ @props.searchParam }
