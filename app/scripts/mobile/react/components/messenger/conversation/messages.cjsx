@@ -1,4 +1,3 @@
-canUseDOM = require('react/lib/ExecutionEnvironment').canUseDOM
 MessageStore = require '../../../stores/message'
 ConversationStore = require '../../../stores/conversation'
 MessengerViewActions = require '../../../actions/view/messenger'
@@ -20,13 +19,12 @@ ConversationMessages = React.createClass
     currentState: LOADING_STATE
     allHistoryLoaded: false
 
-  componentWillMount: ->
+  componentDidMount: ->
     currentConvID = ConversationStore.getCurrentID()
 
-    if canUseDOM
-      MessengerViewActions.loadMessages currentConvID
-        .then @activateLoadedState
-        .fail @activateErrorState
+    MessengerViewActions.loadMessages currentConvID
+      .then @activateLoadedState
+      .fail @activateErrorState
 
   componentWillUpdate: ->
     currentConvID = ConversationStore.getCurrentID()

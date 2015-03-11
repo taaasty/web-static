@@ -11,8 +11,7 @@ FeedLive = React.createClass
   mixins: [ConnectStoreMixin(FeedStore), FeedMixin, ComponentMixin]
 
   propTypes:
-    entries: PropTypes.array.isRequired
-    limit:   PropTypes.number
+    limit: PropTypes.number
 
   render: ->
     <Feed entries={ @state.entries }

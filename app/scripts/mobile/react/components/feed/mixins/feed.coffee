@@ -1,5 +1,4 @@
-FeedStore       = require '../../../stores/feed'
-FeedViewActions = require '../../../actions/view/feed'
+FeedStore = require '../../../stores/feed'
 
 LOAD_MORE_ENTRIES_LIMIT = 10
 SHOW_STATE    = 'show'
@@ -13,9 +12,6 @@ FeedMixin =
 
   getInitialState: ->
     currentState: SHOW_STATE
-
-  componentWillMount: ->
-    FeedViewActions.initializeFeed @props.entries
 
   isLoadingState: -> @state.currentState is LOADING_STATE
 
