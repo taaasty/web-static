@@ -1,11 +1,12 @@
-CurrentUserStore   = require '../stores/currentUser'
-PageMixin          = require './mixins/page'
+CurrentUserStore = require '../stores/currentUser'
+FeedStore = require '../stores/feed'
+PageMixin = require './mixins/page'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
-HeroFeedBest       = require '../components/hero/feedBest'
-FeedBest           = require '../components/feed/feedBest'
-AuthManager        = require '../components/auth/authManager'
-AuthButtonManager  = require '../components/buttons/auth/authManager'
+HeroFeedBest = require '../components/hero/feedBest'
+FeedBest = require '../components/feed/feedBest'
+AuthManager = require '../components/auth/authManager'
+AuthButtonManager = require '../components/buttons/auth/authManager'
 { PropTypes } = React
 
 FeedBestPage = React.createClass
@@ -22,6 +23,7 @@ FeedBestPage = React.createClass
     # root App component
     # Some signin gists https://gist.github.com/ButuzGOL/707d1605f63eef55e4af
     CurrentUserStore.initialize @props.currentUser
+    FeedStore.initialize @props.entries
 
   render: ->
     <div>

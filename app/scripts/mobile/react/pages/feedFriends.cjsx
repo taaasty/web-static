@@ -1,17 +1,17 @@
-CurrentUserStore     = require '../stores/currentUser'
-PageMixin            = require './mixins/page'
-FeedToolbarManager   = require '../components/toolbars/feedManager'
-UserToolbarManager   = require '../components/toolbars/userManager'
-HeroFeedFriends      = require '../components/hero/feedFriends'
-FeedFriends          = require '../components/feed/feedFriends'
-AuthManager          = require '../components/auth/authManager'
-AuthButtonManager    = require '../components/buttons/auth/authManager'
-FeedFriendsPageMixin = require './mixins/feedFriends'
+CurrentUserStore = require '../stores/currentUser'
+FeedStore = require '../stores/feed'
+PageMixin = require './mixins/page'
+FeedToolbarManager = require '../components/toolbars/feedManager'
+UserToolbarManager = require '../components/toolbars/userManager'
+HeroFeedFriends = require '../components/hero/feedFriends'
+FeedFriends = require '../components/feed/feedFriends'
+AuthManager = require '../components/auth/authManager'
+AuthButtonManager = require '../components/buttons/auth/authManager'
 { PropTypes } = React
 
 FeedFriendsPage = React.createClass
   displayName: 'FeedFriendsPage'
-  mixins: [FeedFriendsPageMixin, PageMixin]
+  mixins: [PageMixin]
 
   propTypes:
     currentUser: PropTypes.object
@@ -23,6 +23,7 @@ FeedFriendsPage = React.createClass
     # root App component
     # Some signin gists https://gist.github.com/ButuzGOL/707d1605f63eef55e4af
     CurrentUserStore.initialize @props.currentUser
+    FeedStore.initialize @props.entries
 
   render: ->
     <div>

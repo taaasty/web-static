@@ -1,17 +1,17 @@
-CurrentUserStore   = require '../stores/currentUser'
-PageMixin          = require './mixins/page'
+CurrentUserStore = require '../stores/currentUser'
+FeedStore = require '../stores/feed'
+PageMixin = require './mixins/page'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
-HeroFeedLive       = require '../components/hero/feedLive'
-FeedLive           = require '../components/feed/feedLive'
-AuthManager        = require '../components/auth/authManager'
-AuthButtonManager  = require '../components/buttons/auth/authManager'
-FeedLivePageMixin  = require './mixins/feedLive'
+HeroFeedLive = require '../components/hero/feedLive'
+FeedLive = require '../components/feed/feedLive'
+AuthManager = require '../components/auth/authManager'
+AuthButtonManager = require '../components/buttons/auth/authManager'
 { PropTypes } = React
 
 FeedLivePage = React.createClass
   displayName: 'FeedLivePage'
-  mixins: [FeedLivePageMixin, PageMixin]
+  mixins: [PageMixin]
 
   propTypes:
     currentUser: PropTypes.object
@@ -23,6 +23,7 @@ FeedLivePage = React.createClass
     # root App component
     # Some signin gists https://gist.github.com/ButuzGOL/707d1605f63eef55e4af
     CurrentUserStore.initialize @props.currentUser
+    FeedStore.initialize @props.entries
 
   render: ->
     <div>
@@ -36,7 +37,7 @@ FeedLivePage = React.createClass
               entriesCount={ @props.feed.entriesCount } />
         </div>
         <div className="layout__body">
-          <FeedLive entries={ @props.entries } />
+          <FeedLive />
         </div>
       </div>
       <AuthManager />
