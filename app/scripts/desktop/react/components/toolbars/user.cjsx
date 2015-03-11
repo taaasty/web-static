@@ -12,11 +12,7 @@ UserToolbarGuestList      = require './user/guestList'
 UserToolbarAdditionalList = require './user/additionalList'
 { PropTypes } = React
 
-SEARCH_TITLE_I18N_KEYS = [
-  'search_live_title', 'search_best_title', 'search_friends_title'
-  'search_mytlog_title', 'search_tlog_title', 'search_favorites_title'
-  'search_privates_title', 'search_people_title'
-]
+SEARCH_TITLE_I18N_KEYS = ['live', 'best', 'friends', 'anonymous', 'mytlog', 'tlog', 'favorites', 'privates', 'people']
 
 UserToolbar = React.createClass
   displayName: 'UserToolbar'
@@ -97,7 +93,9 @@ UserToolbar = React.createClass
     PopupActions.showSettings()
 
   showSearch: ->
-    PopupActions.showSearch searchUrl: @props.searchUrl
+    PopupActions.showSearch
+      searchUrl: @props.searchUrl
+      searchTitleI18nKey: @props.searchTitleI18nKey
 
   handleMouseEnter: ->
     @setState(hover: true)
