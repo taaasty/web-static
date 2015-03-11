@@ -12,13 +12,19 @@ UserToolbarGuestList      = require './user/guestList'
 UserToolbarAdditionalList = require './user/additionalList'
 { PropTypes } = React
 
+SEARCH_TITLE_I18N_KEYS = [
+  'search_live_title', 'search_best_title', 'search_friends_title'
+  'search_mytlog_title', 'search_tlog_title', 'search_favorites_title'
+  'search_privates_title', 'search_people_title'
+]
+
 UserToolbar = React.createClass
   displayName: 'UserToolbar'
   mixins: [ConnectStoreMixin([CurrentUserStore, MessagingStatusStore])]
 
   propTypes:
     searchUrl: PropTypes.string.isRequired
-    searchTitleI18nKey: PropTypes.string
+    searchTitleI18nKey: PropTypes.oneOf(SEARCH_TITLE_I18N_KEYS).isRequired
 
   getInitialState: ->
     _.extend @getStateFromLocalStorage(), hover: false
