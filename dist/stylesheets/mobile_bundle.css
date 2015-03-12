@@ -3401,6 +3401,9 @@ a.toolbar__popup-link:active {
 .post__content .collage:after {
   clear: both;
 }
+.post__content a.fancybox {
+  border-bottom: none;
+}
 .post__meta {
   margin-top: -8px;
 }
