@@ -1,19 +1,26 @@
 _ = require 'lodash'
 DesignStorage = require '../../storages/design'
 DesignStatesService = require '../../services/designStates'
+DesignSettingsService = require '../../services/designSettings'
 DesignSettings = require './index'
 
 DesignSettingsManager = React.createClass
   displayName: 'DesignSettingsManager'
 
   getInitialState: ->
-    design: PersonalDesignSetRepo.get('current').current
-    options: DesignStorage
+    design = PersonalDesignSetRepo.get('current').current
+
+    return {
+      design: design
+      options: DesignStorage
+      hasPaidValues: DesignSettingsService.hasPaidValues design
+    }
 
   render: ->
     <DesignSettings
         design={ @state.design }
         options={ @state.options }
+        hasPaidValues={ @state.hasPaidValues }
         onOptionChange={ @handleOptionChange }
         onSave={ @handleSave } />
 
@@ -22,8 +29,9 @@ DesignSettingsManager = React.createClass
     newDesign[optionName] = value
 
     DesignStatesService.apply newDesign
-    @setState(design: newDesign)
-    console.log 'handleOptionChange', optionName, value
+    @setState
+      design: newDesign
+      hasPaidValues: DesignSettingsService.hasPaidValues newDesign
 
   handleSave: ->
     console.log 'handleSave'

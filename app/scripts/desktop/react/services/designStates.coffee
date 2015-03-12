@@ -1,13 +1,7 @@
 _ = require 'lodash'
 jss = require 'jss'
-jssNested = require 'jss-nested'
 
-jss.use jssNested
-sheet = jss.createStyleSheet({},
-  named: false
-  link: true
-).attach()
-window.sheet = sheet
+sheet = jss.createStyleSheet({}, named: false).attach()
 sheet.element.setAttribute 'design-settings-sheet', ''
 
 DesignStatesService =
@@ -272,12 +266,26 @@ DesignStatesService =
 
   rules:
     headerColor: (value) ->
-      '.design-settings__option--headercolor':
-        '& design-settings__state-i':
-          'border-color': value
-          'background-color': value
+      '.design-settings__option--headercolor .design-settings__state-i':
+        'border-color': value
+        'background-color': value
       '.hero':
         'color': value
+
+    backgroundColor: (value) ->
+      '.design-settings__option--bgcolor .design-settings__state-i':
+        'border-color': value
+        'background-color': value
+      '.page-cover':
+        'background-color': value
+
+    feedBackgroundColor: (value) ->
+      '.design-settings__option--feedbgcolor .design-settings__state-i':
+        'border-color': value
+        'background-color': value
+
+      '.content-area__bg':
+        'background-color': value
 
   apply: (design) ->
     states = {}
@@ -338,7 +346,11 @@ DesignStatesService =
     null
 
   setStyles: (option, value) ->
-    return throw new Error("Неизвестная опция #{option}") unless @rules[option]
+    rule = @rules[option]
+
+    return throw new Error("Неизвестная опция #{option}") unless rule
+
+    sheet.addRules rule(value)
 
 module.exports = DesignStatesService
 

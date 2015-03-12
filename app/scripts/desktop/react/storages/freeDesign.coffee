@@ -1,9 +1,9 @@
 FreeDesignStorage =
-  headerFont: ['serif', 'sans']
+  headerFont: ['proximanova']
   headerSize: ['middle']
   headerColor: ['#ffffff', '#000000']
   backgroundColor: ['#ffffff', '#000000']
-  backgroundImageUrl: ':ANY'
+  backgroundImageUrl: ':ANY:'
   backgroundImageEnabled: ':ANY:'
   backgroundAlignment: ['justify', 'center']
   feedBackgroundColor: ['#ffffff', '#000000']

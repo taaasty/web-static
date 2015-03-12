@@ -47,7 +47,7 @@ DesignSettingsRadio = React.createClass
           onChange={ @props.onChange } />
 
   renderFreeLabel: ->
-    <span className="free">free</span> if @state.free
+    <span className="free">free</span> if @state.free and not @props.custom
 
   handleChange: ->
     value = if @refs.colorPicker? then @refs.colorPicker.getValue() else @props.value

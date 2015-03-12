@@ -5,11 +5,8 @@ DesignSettingsColorPicker = React.createClass
   displayName: 'DesignSettingsColorPicker'
 
   propTypes:
-    color: PropTypes.string
+    color: PropTypes.string.isRequired
     onChange: PropTypes.func.isRequired
-
-  getDefaultProps: ->
-    color: '#fff'
 
   getInitialState: ->
     open: false
@@ -36,6 +33,7 @@ DesignSettingsColorPicker = React.createClass
       color: @state.color
       activatorRect: activator.getBoundingClientRect()
       onDrag: @handleDrag
+      onChange: @handleChange
       onClose: @activateCloseState
 
     @activateOpenState()
@@ -48,7 +46,9 @@ DesignSettingsColorPicker = React.createClass
     if @state.open then @close() else @open()
 
   handleDrag: (color) ->
-    @props.onChange color
     @setState {color}
+
+  handleChange: (color) ->
+    @props.onChange color
 
 module.exports = DesignSettingsColorPicker

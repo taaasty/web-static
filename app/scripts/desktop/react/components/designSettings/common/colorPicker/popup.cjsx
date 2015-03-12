@@ -1,6 +1,12 @@
 ReactColorPicker = require 'react-color-picker'
 { PropTypes } = React
 
+closest = (el, target) ->
+  while target.parentNode
+    return true if target is el
+    target = target.parentNode
+  false
+
 DesignSettingsColorPickerPopup = React.createClass
   displayName: 'DesignSettingsColorPickerPopup'
 
@@ -9,6 +15,7 @@ DesignSettingsColorPickerPopup = React.createClass
     activatorRect: PropTypes.object.isRequired
     onDrag: PropTypes.func.isRequired
     onClose: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired
 
   getInitialState: ->
     top: -9999
@@ -24,11 +31,13 @@ DesignSettingsColorPickerPopup = React.createClass
 
     Mousetrap.bind 'esc', @props.onClose
     $('.scroller__pane').on 'scroll', @props.onClose
+    $(document).on 'click', @handleDocumentClick
     $(document).on 'scroll', @props.onClose
 
   componentWillUnmount: ->
     Mousetrap.unbind 'esc'
     $('.scroller__pane').off 'scroll', @props.onClose
+    $(document).off 'click', @handleDocumentClick
     $(document).off 'scroll', @props.onClose
 
   render: ->
@@ -40,10 +49,18 @@ DesignSettingsColorPickerPopup = React.createClass
           saturationWidth={ 140 }
           saturationHeight={ 140 }
           hueWidth={ 6 }
-          onDrag={ @handleDrag } />
+          onDrag={ @handleDrag }
+          onChange={ @handleChange } />
     </div>
 
   handleDrag: (color) ->
     @props.onDrag color
+
+  handleChange: (color) ->
+    @props.onChange color
+
+  handleDocumentClick: (e) ->
+    isClickInside = closest @getDOMNode(), e.target
+    @props.onClose() unless isClickInside or e.target.type is 'radio'
 
 module.exports = DesignSettingsColorPickerPopup
