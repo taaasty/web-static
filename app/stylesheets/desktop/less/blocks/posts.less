@@ -47,6 +47,10 @@
     &:hover {
       border-bottom-color: transparent;
     }
+    
+    &.fancybox {
+      border-bottom: none;
+    }
   }
 
   p {
@@ -55,6 +59,12 @@
     img {
       width: 100%; // Для постов со старого тейсти
     }
+  }
+
+  // Фикс: большие картинки, вставленные ссылкой, вылазят за пределы области области тлога
+  // http://taaasty.com/~nof1000/17809097-logotipy-megaguide
+  img {
+    max-width: 100%;
   }
 
   figure,
