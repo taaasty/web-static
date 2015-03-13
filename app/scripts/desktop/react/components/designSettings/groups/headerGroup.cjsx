@@ -21,7 +21,7 @@ DesignSettingsHeaderGroup = React.createClass
     <DesignSettingsGroup title="Заголовок">
       <DesignSettingsOption title="Шрифт" name="headerfont">
         <DesignSettingsOptionState style="font" text="Aa" />
-        <DesignSettingsSlider>
+        <DesignSettingsSlider className="ds-fadein-down">
           <DesignSettingsRadioList
               style="font"
               optionName="headerFont"

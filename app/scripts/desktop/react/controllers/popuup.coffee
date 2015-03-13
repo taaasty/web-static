@@ -18,11 +18,13 @@ class PopupController
   removeContainer: (container) ->
     container.parentNode?.removeChild container
 
-  open: (Component, props, containerAttribute = @containerAttribute) ->
+  open: ({component, props, popupProps, containerAttribute}) ->
+    containerAttribute ?= @containerAttribute
     container = @addContainer containerAttribute
+    popupProps.onClose = @handleClose.bind(@, containerAttribute)
 
-    React.render <Popup onClose={ @handleClose.bind(@, containerAttribute) }>
-                   <Component {...props} />
+    React.render <Popup {...popupProps}>
+                   <component {...props} />
                  </Popup>, container
 
   openWithBackground: ({component, props, popupProps, containerAttribute}) ->

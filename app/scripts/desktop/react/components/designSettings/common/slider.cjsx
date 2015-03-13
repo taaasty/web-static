@@ -8,6 +8,7 @@ DesignSettingsSlider = React.createClass
   displayName: 'DesignSettingsSlider'
 
   propTypes:
+    className: PropTypes.string
     children: PropTypes.element.isRequired
 
   getInitialState: ->
@@ -21,10 +22,12 @@ DesignSettingsSlider = React.createClass
 
   render: ->
     sliderClasses = cx
-      'slider ds-fadein-down': true
+      'slider': true
       '__inited': @state.inited
       '__leftlimit': @state.leftLimit
       '__rightlimit': @state.rightLimit
+
+    sliderClasses = [sliderClasses, @props.className].join ' '
 
     return <div className={ sliderClasses }>
              <div ref="main"

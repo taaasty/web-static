@@ -6,11 +6,14 @@ DesignSettingsColorPicker = React.createClass
 
   propTypes:
     color: PropTypes.string.isRequired
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func
 
   getInitialState: ->
     open: false
     color: @props.color
+
+  getDefaultProps: ->
+    color: '#2ac67e'
 
   componentWillUnmount: ->
     PopupActions.closeColorPicker() if @state.open
@@ -49,6 +52,6 @@ DesignSettingsColorPicker = React.createClass
     @setState {color}
 
   handleChange: (color) ->
-    @props.onChange color
+    @props.onChange? color
 
 module.exports = DesignSettingsColorPicker

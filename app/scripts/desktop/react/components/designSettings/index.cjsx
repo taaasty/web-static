@@ -11,6 +11,7 @@ DesignSettings = React.createClass
     options: PropTypes.object.isRequired
     hasPaidValues: PropTypes.bool.isRequired
     onOptionChange: PropTypes.func.isRequired
+    onSave: PropTypes.func.isRequired
 
   render: ->
     <div className="design-settings">
@@ -20,7 +21,9 @@ DesignSettings = React.createClass
             design={ @props.design }
             options={ @props.options }
             onOptionChange={ @props.onOptionChange } />
-        <DesignSettingsSaveButton hasPaidValues={ @props.hasPaidValues } />
+        <DesignSettingsSaveButton
+            hasPaidValues={ @props.hasPaidValues }
+            onClick={ @props.onSave } />
       </div>
     </div>
 

@@ -1,6 +1,7 @@
 { PropTypes } = React
 
 PopupHeader = React.createClass
+  displayName: 'PopupHeader'
 
   propTypes:
     title:   PropTypes.string.isRequired

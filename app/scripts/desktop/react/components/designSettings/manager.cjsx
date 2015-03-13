@@ -2,6 +2,7 @@ _ = require 'lodash'
 DesignStorage = require '../../storages/design'
 DesignStatesService = require '../../services/designStates'
 DesignSettingsService = require '../../services/designSettings'
+PopupActions = require '../../actions/popup'
 DesignSettings = require './index'
 
 DesignSettingsManager = React.createClass
@@ -34,6 +35,9 @@ DesignSettingsManager = React.createClass
       hasPaidValues: DesignSettingsService.hasPaidValues newDesign
 
   handleSave: ->
-    console.log 'handleSave'
+    if @state.hasPaidValues
+      PopupActions.showDesignSettingsPayment()
+    else
+      console.log 'save settings', @state.design
 
 module.exports = DesignSettingsManager

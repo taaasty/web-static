@@ -194,6 +194,7 @@ require './react/components/design_settings_popup/controls_items/_radiobutton'
 require './react/components/design_settings_popup/controls_items/_progressbar'
 
 global.DesignSettingsManager = require './react/components/designSettings/manager'
+global.DesignSettingsPaymentManager = require './react/components/designSettingsPayment/manager'
 global.DesignSettingsColorPickerPopup = require './react/components/designSettings/common/colorPicker/popup'
 
 require './react/components/persons_popup/mixins/panel_mixin'

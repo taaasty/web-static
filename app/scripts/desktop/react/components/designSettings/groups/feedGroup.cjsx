@@ -34,7 +34,7 @@ DesignSettingsFeedGroup = React.createClass
 
       <DesignSettingsOption title="Шрифт текста" name="feedfont">
         <DesignSettingsOptionState style="font" text="Aa" />
-        <DesignSettingsSlider>
+        <DesignSettingsSlider className="ds-fadein-down">
           <DesignSettingsRadioList
               style="font"
               optionName="feedFont"

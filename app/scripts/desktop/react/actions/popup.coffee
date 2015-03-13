@@ -25,7 +25,21 @@ PopupActions =
     #     onAccept: ->
     #       location.href = Routes.userDesignSettings user.slug
     # else
-    ReactApp.popupController.open DesignSettingsManager, {}, 'design-settings-container'
+    ReactApp.popupController.open
+      component: DesignSettingsManager
+      popupProps:
+        title: 'Управление дизайном'
+        className: 'popup--design-settings'
+      containerAttribute: 'design-settings-container'
+
+  showDesignSettingsPayment: ->    
+    ReactApp.popupController.open
+      component: DesignSettingsPaymentManager
+      popupProps:
+        title: 'Что вы получаете?'
+        fullScreen: true
+        className: 'popup--payment'
+      containerAttribute: 'design-settings-payment-container'
 
   showSearch: (props) ->
     ReactApp.popupController.openPopup Searchbox, props, 'searchbox-container'
