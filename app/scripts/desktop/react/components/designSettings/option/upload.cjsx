@@ -43,6 +43,6 @@ DesignSettingsOptionUpload = React.createClass
     </span>
 
   handleChangeVisibility: (e) ->
-    @props.onImageVisibilityChange !e.target.checked
+    @props.onImageVisibilityChange e.target.checked
 
 module.exports = DesignSettingsOptionUpload
