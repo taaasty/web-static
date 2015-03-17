@@ -1,4 +1,4 @@
-FreeDesignStorage =
+FreeDesignOptionsModel =
   headerFont: ['proximanova']
   headerSize: ['middle']
   headerColor: ['#ffffff', '#000000']
@@ -11,4 +11,4 @@ FreeDesignStorage =
   feedFontColor: ['#ffffff', '#000000']
   feedTransparency: ':ANY:'
 
-module.exports = FreeDesignStorage
+module.exports = FreeDesignOptionsModel

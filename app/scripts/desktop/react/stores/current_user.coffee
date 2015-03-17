@@ -6,6 +6,9 @@ CurrentUserStore = _.extend new BaseStore(),
 
   isLogged: -> currentUser?
 
+  hasDesignBundle: ->
+    !!currentUser?.has_design_bundle
+
   hasVkontakteAuth: ->
     authentications = currentUser?.authentications
 

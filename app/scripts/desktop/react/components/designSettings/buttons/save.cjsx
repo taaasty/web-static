@@ -5,6 +5,7 @@ DesignSettingsSaveButton = React.createClass
 
   propTypes:
     hasPaidValues: PropTypes.bool.isRequired
+    hasDesignBundle: PropTypes.bool.isRequired
     onClick: PropTypes.func
 
   render: ->
@@ -14,7 +15,10 @@ DesignSettingsSaveButton = React.createClass
     </button>
 
   getTitle: ->
-    if @props.hasPaidValues then 'Оплатить и сохранить' else 'Сохранить'
+    if @props.hasDesignBundle || !@props.hasPaidValues
+      'Сохранить'
+    else
+      'Оплатить и сохранить'
 
   handleClick: ->
     @props.onClick()

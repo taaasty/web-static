@@ -1,7 +1,8 @@
 _ = require 'lodash'
-DesignStorage = require '../../storages/design'
-DesignStatesService = require '../../services/designStates'
-DesignSettingsService = require '../../services/designSettings'
+CurrentUserStore = require '../../stores/current_user'
+DesignOptionsModel = require '../../models/designOptions'
+DesignPreviewService = require '../../services/designPreview'
+DesignOptionsService = require '../../services/designOptions'
 PopupActions = require '../../actions/popup'
 DesignSettings = require './index'
 
@@ -13,15 +14,13 @@ DesignSettingsManager = React.createClass
 
     return {
       design: design
-      options: DesignStorage
-      hasPaidValues: DesignSettingsService.hasPaidValues design
+      options: DesignOptionsModel
+      hasDesignBundle: CurrentUserStore.hasDesignBundle()
+      hasPaidValues: DesignOptionsService.hasPaidValues design
     }
 
   render: ->
-    <DesignSettings
-        design={ @state.design }
-        options={ @state.options }
-        hasPaidValues={ @state.hasPaidValues }
+    <DesignSettings {...@state}
         onOptionChange={ @handleOptionChange }
         onSave={ @handleSave } />
 
@@ -29,10 +28,10 @@ DesignSettingsManager = React.createClass
     newDesign = _.clone @state.design
     newDesign[optionName] = value
 
-    DesignStatesService.apply newDesign
+    DesignPreviewService.apply newDesign
     @setState
       design: newDesign
-      hasPaidValues: DesignSettingsService.hasPaidValues newDesign
+      hasPaidValues: DesignOptionsService.hasPaidValues newDesign
 
   handleSave: ->
     if @state.hasPaidValues

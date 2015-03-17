@@ -4,7 +4,7 @@ jss = require 'jss'
 sheet = jss.createStyleSheet({}, named: false).attach()
 sheet.element.setAttribute 'design-settings-sheet', ''
 
-DesignStatesService =
+DesignPreviewService =
   page: document.body
   pageCover: document.querySelector '.page-cover'
   feed: document.querySelector '.content-area__bg'
@@ -359,4 +359,4 @@ DesignStatesService =
 
     sheet.addRules rule(value)
 
-module.exports = DesignStatesService
+module.exports = DesignPreviewService

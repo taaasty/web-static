@@ -1,5 +1,5 @@
+DesignOptionsService = require '../../../services/designOptions'
 DesignPresenterService = require '../../../services/designPresenter'
-DesignSettingsService = require '../../../services/designSettings'
 DesignSettingsColorPicker = require './colorPicker'
 { PropTypes } = React
 
@@ -16,7 +16,8 @@ DesignSettingsRadio = React.createClass
   getInitialState: ->
     name: DesignPresenterService.getName @props.optionName, @props.value
     text: DesignPresenterService.getText @props.optionName, @props.value
-    free: DesignSettingsService.isPaidValue @props.optionName, @props.value
+    free: !DesignOptionsService.isPaidValue @props.optionName, @props.value
+    bought: DesignOptionsService.isBoughtValue @props.optionName, @props.value
 
   render: ->
     name = if @props.custom then 'custom' else @state.name
@@ -47,7 +48,8 @@ DesignSettingsRadio = React.createClass
           onChange={ @props.onChange } />
 
   renderFreeLabel: ->
-    <span className="free">free</span> if @state.free and not @props.custom
+    if not @state.bought and @state.free and not @props.custom
+      <span className="free">free</span>
 
   handleChange: ->
     value = if @refs.colorPicker? then @refs.colorPicker.getValue() else @props.value

@@ -32,6 +32,7 @@
     "user_id": 232992,
     "expires_at": "2015-01-04T18:07:07.000+03:00"
   },
+  "has_design_bundle": false,
   "design": {
     "headerFont": "serif",
     "headerSize": "middle",
