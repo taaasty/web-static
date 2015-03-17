@@ -51,9 +51,9 @@ deleteRequest = (url, data) -> request 'DELETE', url, data
 
 Api =
   search:
-    loadNextPage: (url, q, page) ->
+    loadNextPage: ({q, url, page, style}) ->
       key  = Constants.api.SEARCH_LOAD_NEXT_PAGE
-      data = {q, page}
+      data = {q, page, style}
 
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
