@@ -180,6 +180,8 @@ require './react/components/feed/feed'
 require './react/components/feed/tlog'
 require './react/components/feed/bricks'
 
+global.SearchResults = require './react/components/searchResults/index'
+
 require './react/components/search/search'
 require './react/components/search/button'
 require './react/components/search/field'

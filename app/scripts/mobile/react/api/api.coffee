@@ -49,7 +49,6 @@ putRequest =    (url, data) -> request 'PUT', url, data
 deleteRequest = (url, data) -> request 'DELETE', url, data
 
 Api =
-
   locales:
     load: (locale) ->
       url = TastySettings.localesPath + '/' + locale + '.json'

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+        <title></title>
+
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+
+        <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
+
+        <!-- Fonts -->
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
+        <!-- end Fonts -->
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="stylesheets/main.css" />
+        <!-- end Styles -->
+
+    </head>
+    <body class="layout--feed">
+        <div data-react-class="UserToolbar"></div>
+
+        <!-- Page -->
+        <div class="page">
+            <div class="page__inner">
+                <div class="page__paper">
+                    <!-- Page Header -->
+                    <header class="page-header">
+                        <!-- Bubble Latest News -->
+                        <div class="bubble-latest-news">
+                            <a class="bubble-latest-news__link" href="#" title="Ищем редакторов">
+                                <div class="bubble-latest-news__bg">
+                                    <i class="bubble-latest-news__bg-top"></i>
+                                    <i class="bubble-latest-news__bg-left"></i>
+                                    <i class="bubble-latest-news__bg-right"></i>
+                                    <i class="bubble-latest-news__bg-bottom"></i>
+                                    <i class="bubble-latest-news__bg-arrow"></i>
+                                </div>
+                                <div class="bubble-latest-news__text">talk-to-tasty: Ищем редакторов, а также другие новости из мира разработки</div>
+                            </a>
+                        </div>
+                        <!-- end Bubble Latest News -->
+                        <!-- Site Apps -->
+                        <div class="site-apps">
+                            <img class="site-apps__device site-apps__device--iphone" src="images/site-apps/device-iphone.png" alt="" /><img class="site-apps__device site-apps__device--android" src="images/site-apps/device-android.png" alt="" /><div class="site-apps__desc">
+                                <h5 class="site-apps__title">Установите приложение для iOS или Android</h5>
+                                <div class="site-apps__badges">
+                                    <a class="site-apps__badge site-apps__badge--apple-store" href="https://itunes.apple.com/us/app/tejsti/id944944503?mt=8" title="Приложение для iOS"></a><a class="site-apps__badge site-apps__badge--google-play" href="https://play.google.com/store/apps/details?id=ru.taaasty&hl=ru" title="Приложение для Android"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end Site Apps -->
+                        <!-- Search -->
+                        <div class="search js-search">
+                            <form class="search__form" action="?">
+                                <input class="search__input js-search-input" type="text" placeholder="Поиск" />
+                            </form><div class="search__button js-search-button">
+                                <i class="icon icon--magnifier"></i>
+                            </div>
+                        </div>
+                        <!-- end Search -->
+                        <!-- Hero -->
+                        <div class="hero hero--cover" style="background-image: url(images/hero-cover.jpg);">
+                            <div class="hero__overlay"></div>
+                            <div class="hero__box">
+                                <div class="hero__slide state--current">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Друзья</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 друзей</span></div>
+                                </div>
+                                <div class="hero__slide">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Прямой эфир</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 758 людей пишут в прямой эфир</span></div>
+                                </div>
+                                <div class="hero__slide">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Лучшее</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 758 людей попали в лучшее</span></div>
+                                </div>
+                                <div class="hero__slide">
+                                    <div class="hero__head">
+                                        <div class="hero__title">
+                                            <span>Анонимки</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero__text"><span>25 людей пишут анонимки</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end Hero -->
+                    </header>
+                    <!-- end Page Header -->
+                    <!-- Page Body -->
+                    <div class="page-body">
+                        <div class="layout-outer">
+                            <nav class="nav-view-mode">
+                                <ul class="nav-view-mode__list">
+                                    <li class="nav-view-mode__item state--active">
+                                        <a class="nav-view-mode__link" href="http://taaasty.ru/best?style=feed" title="Показать кирпичиками">
+                                            <i class="icon icon--tiles"></i>
+                                        </a>
+                                    </li>
+                                    <li class="nav-view-mode__item">
+                                        <a class="nav-view-mode__link" href="http://taaasty.ru/best?style=tlog" title="Показать списком">
+                                            <i class="icon icon--menu"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <div data-react-class="SearchResults" data-react-props='{"style": "feed", "q": "test"}'></div>
+                        </div>
+                    </div>
+                    <!-- end Page Body -->
+                </div>
+            </div>
+        </div>
+        <!-- end Page -->
+
+        <script src="scripts/vendor.js"></script>
+        <script src="scripts/client.js"></script>
+    </body>
+</html>
