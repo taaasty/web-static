@@ -19374,7 +19374,7 @@ module.exports = CommentList;
 
 
 
-},{"./commentList/commentManager":74}],63:[function(require,module,exports){
+},{"./commentList/commentManager":64}],63:[function(require,module,exports){
 var Comment, CommentActions, CommentDate, CommentText, CommentUser, PropTypes;
 
 CommentUser = require('./comment/user');
@@ -19417,7 +19417,76 @@ module.exports = Comment;
 
 
 
-},{"./comment/actions":64,"./comment/date":71,"./comment/text":72,"./comment/user":73}],64:[function(require,module,exports){
+},{"./comment/actions":65,"./comment/date":72,"./comment/text":73,"./comment/user":74}],64:[function(require,module,exports){
+var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
+
+Comment = require('./comment');
+
+CommentEditForm = require('../commentForm/edit');
+
+ComponentMixin = require('../../../../mixins/component');
+
+PropTypes = React.PropTypes;
+
+SHOW_STATE = 'show';
+
+EDIT_STATE = 'edit';
+
+CommentManager = React.createClass({
+  displayName: 'CommentManager',
+  mixins: [ComponentMixin],
+  propTypes: {
+    comment: PropTypes.object.isRequired,
+    entry: PropTypes.object.isRequired,
+    onCommentEdit: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: SHOW_STATE
+    };
+  },
+  render: function() {
+    switch (this.state.currentState) {
+      case SHOW_STATE:
+        return React.createElement(Comment, React.__spread({}, this.props, {
+          "onEditStart": this.activateEditState
+        }));
+      case EDIT_STATE:
+        return React.createElement(CommentEditForm, {
+          "comment": this.props.comment,
+          "entryId": this.props.entry.id,
+          "onEditFinish": this.handleEditFinish,
+          "onEditCancel": this.activateShowState
+        });
+      default:
+        return typeof console.warn === "function" ? console.warn('Unknown currentState of CommentManager component', this.state.currentState) : void 0;
+    }
+  },
+  activateEditState: function() {
+    return this.safeUpdateState({
+      currentState: EDIT_STATE
+    });
+  },
+  activateShowState: function() {
+    return this.safeUpdateState({
+      currentState: SHOW_STATE
+    });
+  },
+  handleEditFinish: function(text) {
+    var commentId;
+    commentId = this.props.comment.id;
+    this.props.onCommentEdit(commentId, text);
+    return this.activateShowState();
+  }
+});
+
+module.exports = CommentManager;
+
+
+
+},{"../../../../mixins/component":217,"../commentForm/edit":61,"./comment":63}],65:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, CommentActions, CommentActionsButton, CommentActionsDropdownMenu, OPEN_STATE, PropTypes, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -19491,7 +19560,7 @@ module.exports = CommentActions;
 
 
 
-},{"../../../../../mixins/clickOutside":216,"../../../../common/avatar/user":47,"./actions/buttons/button":65,"./actions/dropdownMenu":66,"react/lib/cx":361}],65:[function(require,module,exports){
+},{"../../../../../mixins/clickOutside":216,"../../../../common/avatar/user":47,"./actions/buttons/button":66,"./actions/dropdownMenu":67,"react/lib/cx":361}],66:[function(require,module,exports){
 var CommentActionsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19515,7 +19584,7 @@ module.exports = CommentActionsButton;
 
 
 
-},{}],66:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 var CommentActionsDropdownMenu, CommentActionsDropdownMenuDeleteItem, CommentActionsDropdownMenuEditItem, CommentActionsDropdownMenuLinkItem, CommentActionsDropdownMenuReportItem, DropdownMenuMixin, PropTypes;
 
 DropdownMenuMixin = require('../../../../../../mixins/dropdownMenu');
@@ -19582,7 +19651,7 @@ module.exports = CommentActionsDropdownMenu;
 
 
 
-},{"../../../../../../mixins/dropdownMenu":218,"./dropdownMenu/items/delete":67,"./dropdownMenu/items/edit":68,"./dropdownMenu/items/link":69,"./dropdownMenu/items/report":70}],67:[function(require,module,exports){
+},{"../../../../../../mixins/dropdownMenu":218,"./dropdownMenu/items/delete":68,"./dropdownMenu/items/edit":69,"./dropdownMenu/items/link":70,"./dropdownMenu/items/report":71}],68:[function(require,module,exports){
 var CommentActionsDropdownMenuDeleteItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19617,7 +19686,7 @@ module.exports = CommentActionsDropdownMenuDeleteItem;
 
 
 
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 var CommentActionsDropdownMenuEditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19643,7 +19712,7 @@ module.exports = CommentActionsDropdownMenuEditItem;
 
 
 
-},{}],69:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 var CommentActionsDropdownMenuLinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19673,7 +19742,7 @@ module.exports = CommentActionsDropdownMenuLinkItem;
 
 
 
-},{}],70:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 var CommentActionsDropdownMenuReportItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19708,7 +19777,7 @@ module.exports = CommentActionsDropdownMenuReportItem;
 
 
 
-},{}],71:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 var CommentDate, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19754,7 +19823,7 @@ module.exports = CommentDate;
 
 
 
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 var CommentText, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19778,7 +19847,7 @@ module.exports = CommentText;
 
 
 
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 var CommentUser, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -19811,76 +19880,7 @@ module.exports = CommentUser;
 
 
 
-},{"../../../../common/avatar/user":47}],74:[function(require,module,exports){
-var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
-
-Comment = require('./comment');
-
-CommentEditForm = require('../commentForm/edit');
-
-ComponentMixin = require('../../../../mixins/component');
-
-PropTypes = React.PropTypes;
-
-SHOW_STATE = 'show';
-
-EDIT_STATE = 'edit';
-
-CommentManager = React.createClass({
-  displayName: 'CommentManager',
-  mixins: [ComponentMixin],
-  propTypes: {
-    comment: PropTypes.object.isRequired,
-    entry: PropTypes.object.isRequired,
-    onCommentEdit: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: SHOW_STATE
-    };
-  },
-  render: function() {
-    switch (this.state.currentState) {
-      case SHOW_STATE:
-        return React.createElement(Comment, React.__spread({}, this.props, {
-          "onEditStart": this.activateEditState
-        }));
-      case EDIT_STATE:
-        return React.createElement(CommentEditForm, {
-          "comment": this.props.comment,
-          "entryId": this.props.entry.id,
-          "onEditFinish": this.handleEditFinish,
-          "onEditCancel": this.activateShowState
-        });
-      default:
-        return typeof console.warn === "function" ? console.warn('Unknown currentState of CommentManager component', this.state.currentState) : void 0;
-    }
-  },
-  activateEditState: function() {
-    return this.safeUpdateState({
-      currentState: EDIT_STATE
-    });
-  },
-  activateShowState: function() {
-    return this.safeUpdateState({
-      currentState: SHOW_STATE
-    });
-  },
-  handleEditFinish: function(text) {
-    var commentId;
-    commentId = this.props.comment.id;
-    this.props.onCommentEdit(commentId, text);
-    return this.activateShowState();
-  }
-});
-
-module.exports = CommentManager;
-
-
-
-},{"../../../../mixins/component":217,"../commentForm/edit":61,"./comment":63}],75:[function(require,module,exports){
+},{"../../../../common/avatar/user":47}],75:[function(require,module,exports){
 var CommentCreateForm, CommentList, CommentsLoadMore, EntryComments, PropTypes;
 
 CommentList = require('./commentList');
@@ -25482,7 +25482,35 @@ module.exports = FeedToolbar;
 
 
 
-},{"./feed/list":195,"./mixins/toolbar":197,"react/lib/cx":361}],195:[function(require,module,exports){
+},{"./feed/list":196,"./mixins/toolbar":197,"react/lib/cx":361}],195:[function(require,module,exports){
+var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
+
+CurrentUserStore = require('../../stores/currentUser');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+FeedToolbar = require('./feed');
+
+FeedToolbarManager = React.createClass({
+  displayName: 'FeedToolbarManager',
+  mixins: [ConnectStoreMixin(CurrentUserStore)],
+  render: function() {
+    return React.createElement(FeedToolbar, {
+      "user": this.state.user
+    });
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser()
+    };
+  }
+});
+
+module.exports = FeedToolbarManager;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":247,"../../stores/currentUser":237,"./feed":194}],196:[function(require,module,exports){
 var FeedToolbarList, PropTypes, ToolbarItem;
 
 ToolbarItem = require('../_item');
@@ -25534,35 +25562,7 @@ module.exports = FeedToolbarList;
 
 
 
-},{"../_item":193}],196:[function(require,module,exports){
-var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
-
-CurrentUserStore = require('../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-FeedToolbar = require('./feed');
-
-FeedToolbarManager = React.createClass({
-  displayName: 'FeedToolbarManager',
-  mixins: [ConnectStoreMixin(CurrentUserStore)],
-  render: function() {
-    return React.createElement(FeedToolbar, {
-      "user": this.state.user
-    });
-  },
-  getStateFromStore: function() {
-    return {
-      user: CurrentUserStore.getUser()
-    };
-  }
-});
-
-module.exports = FeedToolbarManager;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":247,"../../stores/currentUser":237,"./feed":194}],197:[function(require,module,exports){
+},{"../_item":193}],197:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, ToolbarMixin;
 
 CLOSE_STATE = 'close';
@@ -25657,7 +25657,46 @@ module.exports = UserToolbar;
 
 
 
-},{"./mixins/toolbar":197,"./user/list":199,"./user/listAdditional":200,"./user/toggle":202,"react/lib/cx":361}],199:[function(require,module,exports){
+},{"./mixins/toolbar":197,"./user/list":200,"./user/listAdditional":201,"./user/toggle":203,"react/lib/cx":361}],199:[function(require,module,exports){
+var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, UserToolbar, UserToolbarManager;
+
+CurrentUserStore = require('../../stores/currentUser');
+
+MessagingStatusStore = require('../../stores/messagingStatus');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+UserToolbar = require('./user');
+
+UserToolbarManager = React.createClass({
+  displayName: 'UserToolbarManager',
+  mixins: [ConnectStoreMixin([CurrentUserStore, MessagingStatusStore])],
+  render: function() {
+    if (this.state.logged) {
+      return React.createElement(UserToolbar, {
+        "user": this.state.user,
+        "unreadConversationsCount": this.state.unreadConversationsCount,
+        "unreadNotificationsCount": this.state.unreadNotificationsCount
+      });
+    } else {
+      return null;
+    }
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser(),
+      logged: CurrentUserStore.isLogged(),
+      unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount(),
+      unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount()
+    };
+  }
+});
+
+module.exports = UserToolbarManager;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":247,"../../stores/currentUser":237,"../../stores/messagingStatus":240,"./user":198}],200:[function(require,module,exports){
 var PropTypes, ToolbarItem, UserToolbarList, UserToolbarListMixin;
 
 ToolbarItem = require('../_item');
@@ -25737,7 +25776,7 @@ module.exports = UserToolbarList;
 
 
 
-},{"../_item":193,"./mixins/list":201}],200:[function(require,module,exports){
+},{"../_item":193,"./mixins/list":202}],201:[function(require,module,exports){
 var UserToolbarListAdditional;
 
 UserToolbarListAdditional = React.createClass({
@@ -25757,7 +25796,7 @@ module.exports = UserToolbarListAdditional;
 
 
 
-},{}],201:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 var UserToolbarListMixin;
 
 UserToolbarListMixin = {
@@ -25773,7 +25812,7 @@ module.exports = UserToolbarListMixin;
 
 
 
-},{}],202:[function(require,module,exports){
+},{}],203:[function(require,module,exports){
 var PropTypes, UserToolbarToggle;
 
 PropTypes = React.PropTypes;
@@ -25821,46 +25860,7 @@ module.exports = UserToolbarToggle;
 
 
 
-},{}],203:[function(require,module,exports){
-var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, UserToolbar, UserToolbarManager;
-
-CurrentUserStore = require('../../stores/currentUser');
-
-MessagingStatusStore = require('../../stores/messagingStatus');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-UserToolbar = require('./user');
-
-UserToolbarManager = React.createClass({
-  displayName: 'UserToolbarManager',
-  mixins: [ConnectStoreMixin([CurrentUserStore, MessagingStatusStore])],
-  render: function() {
-    if (this.state.logged) {
-      return React.createElement(UserToolbar, {
-        "user": this.state.user,
-        "unreadConversationsCount": this.state.unreadConversationsCount,
-        "unreadNotificationsCount": this.state.unreadNotificationsCount
-      });
-    } else {
-      return null;
-    }
-  },
-  getStateFromStore: function() {
-    return {
-      user: CurrentUserStore.getUser(),
-      logged: CurrentUserStore.isLogged(),
-      unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount(),
-      unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount()
-    };
-  }
-});
-
-module.exports = UserToolbarManager;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":247,"../../stores/currentUser":237,"../../stores/messagingStatus":240,"./user":198}],204:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -26433,7 +26433,7 @@ module.exports = EntryPage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/entry/tlog":101,"../components/hero/tlog":115,"../components/pagination/entry":166,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":203,"../stores/currentUser":237,"./mixins/page":229}],221:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/entry/tlog":101,"../components/hero/tlog":115,"../components/pagination/entry":166,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":199,"../stores/currentUser":237,"./mixins/page":229}],221:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedBest, FeedBestPage, FeedStore, FeedToolbarManager, HeroFeedBest, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26488,7 +26488,7 @@ module.exports = FeedBestPage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedBest":106,"../components/hero/feedBest":112,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":203,"../stores/currentUser":237,"../stores/feed":238,"./mixins/page":229}],222:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedBest":106,"../components/hero/feedBest":112,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":199,"../stores/currentUser":237,"../stores/feed":238,"./mixins/page":229}],222:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedFriends, FeedFriendsPage, FeedStore, FeedToolbarManager, HeroFeedFriends, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26543,7 +26543,7 @@ module.exports = FeedFriendsPage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedFriends":107,"../components/hero/feedFriends":113,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":203,"../stores/currentUser":237,"../stores/feed":238,"./mixins/page":229}],223:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedFriends":107,"../components/hero/feedFriends":113,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":199,"../stores/currentUser":237,"../stores/feed":238,"./mixins/page":229}],223:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedLive, FeedLivePage, FeedStore, FeedToolbarManager, HeroFeedLive, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26596,7 +26596,7 @@ module.exports = FeedLivePage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedLive":108,"../components/hero/feedLive":114,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":203,"../stores/currentUser":237,"../stores/feed":238,"./mixins/page":229}],224:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedLive":108,"../components/hero/feedLive":114,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":199,"../stores/currentUser":237,"../stores/feed":238,"./mixins/page":229}],224:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, Messenger, MessengerPage, MessengerPageMixin, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26642,7 +26642,7 @@ module.exports = MessengerPage;
 
 
 
-},{"../components/messenger/messenger":154,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":203,"../stores/conversation":236,"../stores/currentUser":237,"./mixins/messenger":226,"./mixins/page":229}],225:[function(require,module,exports){
+},{"../components/messenger/messenger":154,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":199,"../stores/conversation":236,"../stores/currentUser":237,"./mixins/messenger":226,"./mixins/page":229}],225:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, MessageStore, Messenger, MessengerThreadPage, MessengerThreadPageMixin, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26694,7 +26694,7 @@ module.exports = MessengerThreadPage;
 
 
 
-},{"../components/messenger/messenger":154,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":203,"../stores/conversation":236,"../stores/currentUser":237,"../stores/message":239,"./mixins/messengerThread":227,"./mixins/page":229}],226:[function(require,module,exports){
+},{"../components/messenger/messenger":154,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":199,"../stores/conversation":236,"../stores/currentUser":237,"../stores/message":239,"./mixins/messengerThread":227,"./mixins/page":229}],226:[function(require,module,exports){
 var MessengerPageMixin;
 
 MessengerPageMixin = {
@@ -28199,7 +28199,7 @@ module.exports = NotificationsPage;
 
 
 
-},{"../components/notifications/notifications":164,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":203,"../stores/currentUser":237,"../stores/notification":241,"./mixins/notifications":228,"./mixins/page":229}],231:[function(require,module,exports){
+},{"../components/notifications/notifications":164,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":199,"../stores/currentUser":237,"../stores/notification":241,"./mixins/notifications":228,"./mixins/page":229}],231:[function(require,module,exports){
 var CurrentUserStore, FeedToolbarManager, PageMixin, PropTypes, Settings, SettingsPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -28236,7 +28236,7 @@ module.exports = SettingsPage;
 
 
 
-},{"../components/settings/settings":190,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":203,"../stores/currentUser":237,"./mixins/page":229}],232:[function(require,module,exports){
+},{"../components/settings/settings":190,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":199,"../stores/currentUser":237,"./mixins/page":229}],232:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, Daylog, DaylogPagination, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, TlogDaylogPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -28294,7 +28294,7 @@ module.exports = TlogDaylogPage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/daylog/daylog":56,"../components/hero/tlog":115,"../components/pagination/daylog":165,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":203,"../stores/currentUser":237,"./mixins/page":229}],233:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/daylog/daylog":56,"../components/hero/tlog":115,"../components/pagination/daylog":165,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":199,"../stores/currentUser":237,"./mixins/page":229}],233:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, Tlog, TlogPagination, TlogRegularPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -28352,7 +28352,7 @@ module.exports = TlogRegularPage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/hero/tlog":115,"../components/pagination/tlog":169,"../components/tlog/tlog":192,"../components/toolbars/feedManager":196,"../components/toolbars/userManager":203,"../stores/currentUser":237,"./mixins/page":229}],234:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/hero/tlog":115,"../components/pagination/tlog":169,"../components/tlog/tlog":192,"../components/toolbars/feedManager":195,"../components/toolbars/userManager":199,"../stores/currentUser":237,"./mixins/page":229}],234:[function(require,module,exports){
 var Api, AppDispatcher, Constants, MessagingService, NotifyController,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
@@ -29864,10 +29864,10 @@ module.exports = invariant;
 (function (global){
 /**
  * @license
- * lodash 3.3.1 (Custom Build) <https://lodash.com/>
+ * lodash 3.3.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern -d -o ./index.js`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.2 <http://underscorejs.org/LICENSE>
+ * Based on Underscore.js 1.7.0 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <https://lodash.com/license>
  */
@@ -29877,7 +29877,7 @@ module.exports = invariant;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '3.3.1';
+  var VERSION = '3.3.0';
 
   /** Used to compose bitmasks for wrapper metadata. */
   var BIND_FLAG = 1,
@@ -31668,7 +31668,7 @@ module.exports = invariant;
       var index = -1,
           indexOf = getIndexOf(),
           isCommon = indexOf == baseIndexOf,
-          cache = (isCommon && values.length >= 200) ? createCache(values) : null,
+          cache = isCommon && values.length >= 200 && createCache(values),
           valuesLength = values.length;
 
       if (cache) {
@@ -32488,7 +32488,7 @@ module.exports = invariant;
           length = array.length,
           isCommon = indexOf == baseIndexOf,
           isLarge = isCommon && length >= 200,
-          seen = isLarge ? createCache() : null,
+          seen = isLarge && createCache(),
           result = [];
 
       if (seen) {
@@ -33540,11 +33540,8 @@ module.exports = invariant;
       } else {
         prereq = type == 'string' && index in object;
       }
-      if (prereq) {
-        var other = object[index];
-        return value === value ? value === other : other !== other;
-      }
-      return false;
+      var other = object[index];
+      return prereq && (value === value ? value === other : other !== other);
     }
 
     /**
@@ -34270,7 +34267,7 @@ module.exports = invariant;
      * // => 2
      *
      * // using the `_.matches` callback shorthand
-     * _.findLastIndex(users, { 'user': 'barney', 'active': true });
+     * _.findLastIndex(users, { user': 'barney', 'active': true });
      * // => 0
      *
      * // using the `_.matchesProperty` callback shorthand
@@ -34381,7 +34378,7 @@ module.exports = invariant;
      * @example
      *
      * _.indexOf([1, 2, 1, 2], 2);
-     * // => 1
+     * // => 2
      *
      * // using `fromIndex`
      * _.indexOf([1, 2, 1, 2], 2, 2);
@@ -34454,7 +34451,7 @@ module.exports = invariant;
         var value = arguments[argsIndex];
         if (isArray(value) || isArguments(value)) {
           args.push(value);
-          caches.push((isCommon && value.length >= 120) ? createCache(argsIndex && value) : null);
+          caches.push(isCommon && value.length >= 120 && createCache(argsIndex && value));
         }
       }
       argsLength = args.length;
@@ -36522,7 +36519,7 @@ module.exports = invariant;
      * ];
      *
      * // using the `_.matches` callback shorthand
-     * _.some(users, { 'user': 'barney', 'active': false });
+     * _.some(users, { user': 'barney', 'active': false });
      * // => false
      *
      * // using the `_.matchesProperty` callback shorthand
@@ -37058,7 +37055,7 @@ module.exports = invariant;
      * @memberOf _
      * @category Function
      * @param {Function} func The function to debounce.
-     * @param {number} [wait=0] The number of milliseconds to delay.
+     * @param {number} wait The number of milliseconds to delay.
      * @param {Object} [options] The options object.
      * @param {boolean} [options.leading=false] Specify invoking on the leading
      *  edge of the timeout.
@@ -37116,7 +37113,7 @@ module.exports = invariant;
       if (typeof func != 'function') {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
-      wait = wait < 0 ? 0 : (+wait || 0);
+      wait = wait < 0 ? 0 : wait;
       if (options === true) {
         var leading = true;
         trailing = false;
@@ -37637,7 +37634,7 @@ module.exports = invariant;
      * @memberOf _
      * @category Function
      * @param {Function} func The function to throttle.
-     * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
+     * @param {number} wait The number of milliseconds to throttle invocations to.
      * @param {Object} [options] The options object.
      * @param {boolean} [options.leading=true] Specify invoking on the leading
      *  edge of the timeout.
@@ -39954,10 +39951,10 @@ module.exports = invariant;
      * var compiled = _.template('hi <%= data.user %>!', { 'variable': 'data' });
      * compiled.source;
      * // => function(data) {
-     * //   var __t, __p = '';
-     * //   __p += 'hi ' + ((__t = ( data.user )) == null ? '' : __t) + '!';
-     * //   return __p;
-     * // }
+     *   var __t, __p = '';
+     *   __p += 'hi ' + ((__t = ( data.user )) == null ? '' : __t) + '!';
+     *   return __p;
+     * }
      *
      * // using the `source` property to inline compiled templates for meaningful
      * // line numbers in error messages and a stack trace
@@ -41071,13 +41068,15 @@ module.exports = invariant;
 
     // Add `LazyWrapper` methods that accept an `iteratee` value.
     arrayEach(['filter', 'map', 'takeWhile'], function(methodName, index) {
-      var isFilter = index == LAZY_FILTER_FLAG || index == LAZY_WHILE_FLAG;
+      var isFilter = index == LAZY_FILTER_FLAG,
+          isWhile = index == LAZY_WHILE_FLAG;
 
       LazyWrapper.prototype[methodName] = function(iteratee, thisArg) {
         var result = this.clone(),
+            filtered = result.__filtered__,
             iteratees = result.__iteratees__ || (result.__iteratees__ = []);
 
-        result.__filtered__ = result.__filtered__ || isFilter;
+        result.__filtered__ = filtered || isFilter || (isWhile && result.__dir__ < 0);
         iteratees.push({ 'iteratee': getCallback(iteratee, thisArg, 3), 'type': index });
         return result;
       };
@@ -41144,14 +41143,9 @@ module.exports = invariant;
     };
 
     LazyWrapper.prototype.dropWhile = function(predicate, thisArg) {
-      var done,
-          lastIndex,
-          isRight = this.__dir__ < 0;
-
+      var done;
       predicate = getCallback(predicate, thisArg, 3);
       return this.filter(function(value, index, array) {
-        done = done && (isRight ? index < lastIndex : index > lastIndex);
-        lastIndex = index;
         return done || (done = !predicate(value, index, array));
       });
     };

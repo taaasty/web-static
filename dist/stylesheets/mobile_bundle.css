@@ -4648,6 +4648,9 @@ a.pagination__item:active {
   margin-top: 0;
   top: auto;
 }
+.message .message__text {
+  word-break: break-all;
+}
 .message .message__text a {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
