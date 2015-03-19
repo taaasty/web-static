@@ -1717,12 +1717,6 @@ body {
   background-color: #ffffff !important;
   opacity: 1 !important;
 }
-.tlog-mode-minimal .social-share-facebook-button,
-.designtlog-mode-minimal .social-share-facebook-button,
-.tlog-mode-minimal .social-share-vkontakte-button,
-.designtlog-mode-minimal .social-share-vkontakte-button {
-  box-shadow: inset 0 0 0 1px #b7b7b7;
-}
 .designtlog-headerfont-proximanova .design-settings__option--headerfont .design-settings__state,
 .designtlog-headerfont-proximanova .hero__title {
   font-family: 'Proxima Nova', Arial, 'Helvetica Neue', Helvetica, sans-serif;
@@ -2301,6 +2295,7 @@ body {
 .menu .add-post-button,
 .menu .social-share-facebook-button,
 .menu .social-share-vkontakte-button,
+.menu .social-share-twitter-button,
 .menu .action-menu-button,
 .menu .profile-settings-button,
 .menu .manage-persons-button,
@@ -2358,6 +2353,7 @@ body {
   .menu .add-post-button,
   .menu .social-share-facebook-button,
   .menu .social-share-vkontakte-button,
+  .menu .social-share-twitter-button,
   .menu .action-menu-button,
   .menu .profile-settings-button,
   .menu .manage-persons-button,
@@ -2384,6 +2380,7 @@ body {
   .menu .add-post-button,
   .menu .social-share-facebook-button,
   .menu .social-share-vkontakte-button,
+  .menu .social-share-twitter-button,
   .menu .action-menu-button,
   .menu .profile-settings-button,
   .menu .manage-persons-button,
@@ -2409,6 +2406,7 @@ body {
   .menu .add-post-button,
   .menu .social-share-facebook-button,
   .menu .social-share-vkontakte-button,
+  .menu .social-share-twitter-button,
   .menu .action-menu-button,
   .menu .profile-settings-button,
   .menu .manage-persons-button,
@@ -4159,6 +4157,7 @@ a.toolbar__subnav-link:active {
 .confirmation .add-post-button,
 .confirmation .social-share-facebook-button,
 .confirmation .social-share-vkontakte-button,
+.confirmation .social-share-twitter-button,
 .confirmation .action-menu-button,
 .confirmation .profile-settings-button,
 .confirmation .manage-persons-button,
@@ -5233,6 +5232,7 @@ a.toolbar__subnav-link:active {
 .add-post-button,
 .social-share-facebook-button,
 .social-share-vkontakte-button,
+.social-share-twitter-button,
 .action-menu-button,
 .profile-settings-button,
 .manage-persons-button,
@@ -5281,6 +5281,7 @@ a.more-button,
 a.add-post-button,
 a.social-share-facebook-button,
 a.social-share-vkontakte-button,
+a.social-share-twitter-button,
 a.action-menu-button,
 a.profile-settings-button,
 a.manage-persons-button,
@@ -5304,6 +5305,7 @@ a.write-message-button {
 .add-post-button:before,
 .social-share-facebook-button:before,
 .social-share-vkontakte-button:before,
+.social-share-twitter-button:before,
 .action-menu-button:before,
 .profile-settings-button:before,
 .manage-persons-button:before,
@@ -5335,6 +5337,7 @@ a.write-message-button {
 .add-post-button .icon,
 .social-share-facebook-button .icon,
 .social-share-vkontakte-button .icon,
+.social-share-twitter-button .icon,
 .action-menu-button .icon,
 .profile-settings-button .icon,
 .manage-persons-button .icon,
@@ -5362,6 +5365,7 @@ a.write-message-button {
 .add-post-button .icon--cross,
 .social-share-facebook-button .icon--cross,
 .social-share-vkontakte-button .icon--cross,
+.social-share-twitter-button .icon--cross,
 .action-menu-button .icon--cross,
 .profile-settings-button .icon--cross,
 .manage-persons-button .icon--cross,
@@ -5385,6 +5389,7 @@ a.write-message-button {
 .add-post-button .spinner,
 .social-share-facebook-button .spinner,
 .social-share-vkontakte-button .spinner,
+.social-share-twitter-button .spinner,
 .action-menu-button .spinner,
 .profile-settings-button .spinner,
 .manage-persons-button .spinner,
@@ -5413,6 +5418,7 @@ a.write-message-button {
 .button-group > .add-post-button:not(:first-of-type),
 .button-group > .social-share-facebook-button:not(:first-of-type),
 .button-group > .social-share-vkontakte-button:not(:first-of-type),
+.button-group > .social-share-twitter-button:not(:first-of-type),
 .button-group > .action-menu-button:not(:first-of-type),
 .button-group > .profile-settings-button:not(:first-of-type),
 .button-group > .manage-persons-button:not(:first-of-type),
@@ -5438,6 +5444,7 @@ a.write-message-button {
 .button-group > .add-post-button:not(:last-of-type),
 .button-group > .social-share-facebook-button:not(:last-of-type),
 .button-group > .social-share-vkontakte-button:not(:last-of-type),
+.button-group > .social-share-twitter-button:not(:last-of-type),
 .button-group > .action-menu-button:not(:last-of-type),
 .button-group > .profile-settings-button:not(:last-of-type),
 .button-group > .manage-persons-button:not(:last-of-type),
@@ -5462,6 +5469,7 @@ a.write-message-button {
 .button-group > .add-post-button:not(:first-of-type):not(:last-of-type),
 .button-group > .social-share-facebook-button:not(:first-of-type):not(:last-of-type),
 .button-group > .social-share-vkontakte-button:not(:first-of-type):not(:last-of-type),
+.button-group > .social-share-twitter-button:not(:first-of-type):not(:last-of-type),
 .button-group > .action-menu-button:not(:first-of-type):not(:last-of-type),
 .button-group > .profile-settings-button:not(:first-of-type):not(:last-of-type),
 .button-group > .manage-persons-button:not(:first-of-type):not(:last-of-type),
@@ -5485,6 +5493,7 @@ a.write-message-button {
 .button-group.state--expanded > .add-post-button,
 .button-group.state--expanded > .social-share-facebook-button,
 .button-group.state--expanded > .social-share-vkontakte-button,
+.button-group.state--expanded > .social-share-twitter-button,
 .button-group.state--expanded > .action-menu-button,
 .button-group.state--expanded > .profile-settings-button,
 .button-group.state--expanded > .manage-persons-button,
@@ -5518,6 +5527,7 @@ a.write-message-button {
 .button-group-dropdown:not(:first-child) .add-post-button,
 .button-group-dropdown:not(:first-child) .social-share-facebook-button,
 .button-group-dropdown:not(:first-child) .social-share-vkontakte-button,
+.button-group-dropdown:not(:first-child) .social-share-twitter-button,
 .button-group-dropdown:not(:first-child) .action-menu-button,
 .button-group-dropdown:not(:first-child) .profile-settings-button,
 .button-group-dropdown:not(:first-child) .manage-persons-button,
@@ -5542,6 +5552,7 @@ a.write-message-button {
 .button-group-dropdown:not(:last-child) .add-post-button,
 .button-group-dropdown:not(:last-child) .social-share-facebook-button,
 .button-group-dropdown:not(:last-child) .social-share-vkontakte-button,
+.button-group-dropdown:not(:last-child) .social-share-twitter-button,
 .button-group-dropdown:not(:last-child) .action-menu-button,
 .button-group-dropdown:not(:last-child) .profile-settings-button,
 .button-group-dropdown:not(:last-child) .manage-persons-button,
@@ -5566,6 +5577,7 @@ a.write-message-button {
 .button-group-dropdown:not(:first-child):not(:last-child) .add-post-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .social-share-facebook-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .social-share-vkontakte-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .social-share-twitter-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .action-menu-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .profile-settings-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .manage-persons-button,
@@ -5846,6 +5858,7 @@ a.write-message-button {
 .post-settings-button.add-post-button,
 .post-settings-button.social-share-facebook-button,
 .post-settings-button.social-share-vkontakte-button,
+.post-settings-button.social-share-twitter-button,
 .post-settings-button.action-menu-button,
 .post-settings-button.profile-settings-button,
 .post-settings-button.manage-persons-button,
@@ -5900,61 +5913,49 @@ a.write-message-button {
   width: 56px;
   height: 56px;
   padding: 0;
-  background-color: #ffffff;
-  font-size: 20px;
+  background-color: #44619d;
+  font-size: 18px;
   line-height: 56px;
-  color: #c2c2c2;
   letter-spacing: 0;
+  text-transform: none;
+  color: #ffffff;
   border-radius: 50%;
   transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-  /*.icon {
-    margin: 2px;
-    font-size: 38px;
-  }*/
-}
-.social-share-facebook-button:hover,
-.social-share-facebook-button:active,
-.social-share-facebook-button.state--active {
-  box-shadow: inset 0 0 0 1px transparent !important;
-  color: #ffffff;
 }
 .social-share-facebook-button:hover {
-  background: #44619d;
-}
-.social-share-facebook-button:active,
-.social-share-facebook-button.state--active {
-  background: #44619d;
+  background: #4c6caf;
 }
 .social-share-vkontakte-button {
   width: 56px;
   height: 56px;
   padding: 0;
-  background-color: #ffffff;
-  font-size: 20px;
+  background-color: #5c82ab;
+  font-size: 18px;
   line-height: 56px;
-  color: #c2c2c2;
   letter-spacing: 0;
+  text-transform: none;
+  color: #ffffff;
   border-radius: 50%;
   transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-  /*.icon {
-    margin: 2px;
-    font-size: 38px;
-  }*/
-}
-.social-share-vkontakte-button:hover,
-.social-share-vkontakte-button:active,
-.social-share-vkontakte-button.state--active {
-  box-shadow: inset 0 0 0 1px transparent !important;
-  color: #ffffff;
 }
 .social-share-vkontakte-button:hover {
-  background: #5c82ab;
+  background: #6d8fb4;
 }
-.social-share-vkontakte-button:active,
-.social-share-vkontakte-button.state--active {
-  background: #5c82ab;
+.social-share-twitter-button {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  background-color: #55acee;
+  font-size: 18px;
+  line-height: 56px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #ffffff;
+  border-radius: 50%;
+  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+.social-share-twitter-button:hover {
+  background: #6cb7f0;
 }
 .action-menu-button,
 .write-message-button {
@@ -9225,6 +9226,7 @@ a.types-posts__item:hover .types-posts__text {
 .messages__footer .add-post-button,
 .messages__footer .social-share-facebook-button,
 .messages__footer .social-share-vkontakte-button,
+.messages__footer .social-share-twitter-button,
 .messages__footer .action-menu-button,
 .messages__footer .profile-settings-button,
 .messages__footer .manage-persons-button,
@@ -10263,6 +10265,7 @@ a.types-posts__item:hover .types-posts__text {
 .nav-types.state--loading .add-post-button,
 .nav-types.state--loading .social-share-facebook-button,
 .nav-types.state--loading .social-share-vkontakte-button,
+.nav-types.state--loading .social-share-twitter-button,
 .nav-types.state--loading .action-menu-button,
 .nav-types.state--loading .profile-settings-button,
 .nav-types.state--loading .manage-persons-button,
@@ -10287,6 +10290,7 @@ a.types-posts__item:hover .types-posts__text {
 .nav-types.state--loading .add-post-button.state--active,
 .nav-types.state--loading .social-share-facebook-button.state--active,
 .nav-types.state--loading .social-share-vkontakte-button.state--active,
+.nav-types.state--loading .social-share-twitter-button.state--active,
 .nav-types.state--loading .action-menu-button.state--active,
 .nav-types.state--loading .profile-settings-button.state--active,
 .nav-types.state--loading .manage-persons-button.state--active,
@@ -10310,6 +10314,7 @@ a.types-posts__item:hover .types-posts__text {
 .nav-types .add-post-button,
 .nav-types .social-share-facebook-button,
 .nav-types .social-share-vkontakte-button,
+.nav-types .social-share-twitter-button,
 .nav-types .action-menu-button,
 .nav-types .profile-settings-button,
 .nav-types .manage-persons-button,
