@@ -1,7 +1,7 @@
 CurrentUserStore       = require '../stores/currentUser'
 NotificationStore      = require '../stores/notification'
 PageMixin              = require './mixins/page'
-NotificationsPageMixin = require './mixins/notifications'
+# NotificationsPageMixin = require './mixins/notifications'
 FeedToolbarManager     = require '../components/toolbars/feedManager'
 UserToolbarManager     = require '../components/toolbars/userManager'
 Notifications          = require '../components/notifications/notifications'
@@ -9,7 +9,7 @@ Notifications          = require '../components/notifications/notifications'
 
 NotificationsPage = React.createClass
   displayName: 'NotificationsPage'
-  mixins: [PageMixin, NotificationsPageMixin]
+  mixins: [PageMixin]
 
   propTypes:
     currentUser:   PropTypes.object.isRequired

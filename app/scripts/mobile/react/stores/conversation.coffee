@@ -10,10 +10,16 @@ _conversations = {}
 ConversationStore = assign new BaseStore(),
 
   initSingular: (conversation) ->
+    # При пререндере, стор общий для всех пользователей. Чтобы не показывать чужие беседы
+    # очистим их.
+    _conversations = {}
     _currentID = conversation.id
     _conversations[conversation.id] = conversation
 
   initPlural: (conversations) ->
+    # При пререндере, стор общий для всех пользователей. Чтобы не показывать чужие беседы
+    # очистим их.
+    _conversations = {}
     _.forEach conversations, (item) ->
       _conversations[item.id] = item
 

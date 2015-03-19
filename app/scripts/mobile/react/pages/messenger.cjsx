@@ -1,7 +1,7 @@
 CurrentUserStore   = require '../stores/currentUser'
 ConversationStore  = require '../stores/conversation'
 PageMixin          = require './mixins/page'
-MessengerPageMixin = require './mixins/messenger'
+# MessengerPageMixin = require './mixins/messenger'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
 Messenger          = require '../components/messenger/messenger'
@@ -9,7 +9,7 @@ Messenger          = require '../components/messenger/messenger'
 
 MessengerPage = React.createClass
   displayName: 'MessengerPage'
-  mixins: [PageMixin, MessengerPageMixin]
+  mixins: [PageMixin]
 
   propTypes:
     currentUser: PropTypes.object.isRequired
