@@ -32,6 +32,7 @@ addRemoteMessage = (message) ->
 MessageStore = assign new BaseStore(),
 
   initialize: (messages) ->
+    _messages = {}
     _.forEach messages, (item) ->
       _messages[item.id] = item
 

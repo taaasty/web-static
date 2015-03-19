@@ -10,6 +10,7 @@ _everythingLoaded = false
 NotificationStore = assign new BaseStore(),
 
   initialize: (notifications) ->
+    _notifications = {}
     _.forEach notifications, (item) ->
       _notifications[item.id] = item
 
