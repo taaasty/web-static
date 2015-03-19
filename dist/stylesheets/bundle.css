@@ -3645,6 +3645,9 @@ a.toolbar__subnav-link:active {
 .hero__title[class*="js"] {
   cursor: pointer;
 }
+.hero__title a {
+  transition: none;
+}
 .hero__text {
   font-size: 16px;
   line-height: 21px;
@@ -3652,6 +3655,9 @@ a.toolbar__subnav-link:active {
   -webkit-animation: hero-animate-close .6s 1 ease;
   -ms-animation: hero-animate-close .6s 1 ease;
   animation: hero-animate-close .6s 1 ease;
+}
+.hero__text a {
+  transition: none;
 }
 .hero__mask {
   width: 40px;
@@ -8793,6 +8799,7 @@ a.types-posts__item:hover .types-posts__text {
 }
 .brick__text p img {
   max-width: 100%;
+  height: auto;
 }
 .brick__text li ul,
 .brick__text li ol {
@@ -11351,6 +11358,7 @@ a.types-posts__item:hover .types-posts__text {
 .slider.__leftlimit .slider__btn--left,
 .slider.__leftlimit .slider__main:before {
   opacity: 0;
+  pointer-events: none;
 }
 .slider.__leftlimit .slider__btn--left {
   cursor: default;
@@ -11358,6 +11366,7 @@ a.types-posts__item:hover .types-posts__text {
 .slider.__rightlimit .slider__btn--right,
 .slider.__rightlimit .slider__main:after {
   opacity: 0;
+  pointer-events: none;
 }
 .slider.__rightlimit .slider__btn--right {
   cursor: default;
