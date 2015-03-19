@@ -27306,6 +27306,7 @@ addRemoteMessage = function(message) {
 
 MessageStore = assign(new BaseStore(), {
   initialize: function(messages) {
+    _messages = {};
     return _.forEach(messages, function(item) {
       return _messages[item.id] = item;
     });
@@ -27479,6 +27480,7 @@ _everythingLoaded = false;
 
 NotificationStore = assign(new BaseStore(), {
   initialize: function(notifications) {
+    _notifications = {};
     return _.forEach(notifications, function(item) {
       return _notifications[item.id] = item;
     });
