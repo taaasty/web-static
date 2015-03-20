@@ -6,19 +6,18 @@ window.ConversationActions =
       conversationId: conversationId
     }
 
-  openConversation: (recipientSlug) ->
-    conversation = ConversationsStore.getConversationBySlug recipientSlug
+  openConversation: (recipientId) ->
+    conversation = ConversationsStore.getConversationByUserId recipientId
 
     if conversation?
-      MessagingDispatcher.handleViewAction {
+      MessagingDispatcher.handleViewAction
         type: 'openConversation'
         conversationId: conversation.id
-      }
     else
-      messagingService.postNewConversation { recipientSlug }
+      messagingService.postNewConversation {recipientId}
 
     messagingService.openMessagesPopup()
     TastyEvents.emit TastyEvents.keys.command_hero_close()
 
-  postNewConversation: ({ recipientSlug, error }) ->
-    messagingService.postNewConversation { recipientSlug, error }
+  postNewConversation: ({recipientId, error}) ->
+    messagingService.postNewConversation { recipientId, error }

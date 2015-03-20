@@ -24965,6 +24965,7 @@ var FacebookSuggestionsItem, PropTypes;
 
 PropTypes = React.PropTypes;
 
+<<<<<<< HEAD
 FacebookSuggestionsItem = React.createClass({
   propTypes: {
     suggestion: PropTypes.object.isRequired
@@ -24975,6 +24976,39 @@ FacebookSuggestionsItem = React.createClass({
     }, React.createElement(FollowButton, {
       "relationship": this.props.suggestion
     }));
+=======
+},{}],258:[function(require,module,exports){
+window.ConversationActions = {
+  clickConversation: function(conversationId) {
+    return MessagingDispatcher.handleViewAction({
+      type: 'openConversation',
+      conversationId: conversationId
+    });
+  },
+  openConversation: function(recipientId) {
+    var conversation;
+    conversation = ConversationsStore.getConversationByUserId(recipientId);
+    if (conversation != null) {
+      MessagingDispatcher.handleViewAction({
+        type: 'openConversation',
+        conversationId: conversation.id
+      });
+    } else {
+      messagingService.postNewConversation({
+        recipientId: recipientId
+      });
+    }
+    messagingService.openMessagesPopup();
+    return TastyEvents.emit(TastyEvents.keys.command_hero_close());
+  },
+  postNewConversation: function(_arg) {
+    var error, recipientId;
+    recipientId = _arg.recipientId, error = _arg.error;
+    return messagingService.postNewConversation({
+      recipientId: recipientId,
+      error: error
+    });
+>>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 });
 
@@ -25137,8 +25171,13 @@ SuggestionsMixin = {
       return React.createElement(EmptyComponent, null);
     }
   },
+<<<<<<< HEAD
   hasSuggestions: function() {
     return this.props.suggestionsCount > 0;
+=======
+  handleClick: function() {
+    return ConversationActions.openConversation(this.props.user.id);
+>>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 };
 
@@ -25403,6 +25442,7 @@ window.PersonsPopup = React.createClass({
       "onSelect": this.selectTab
     }), this.renderCurrentPanel());
   },
+<<<<<<< HEAD
   renderCurrentPanel: function() {
     var CurrentPanel;
     CurrentPanel = (function() {
@@ -25443,6 +25483,31 @@ window.PersonsPopup = React.createClass({
   },
   onStoresChange: function() {
     return this.setState(this.getStateFromStores());
+=======
+  handleKeyDown: function(e) {
+    var chooserResults;
+    chooserResults = this.refs.chooserResults;
+    switch (e.key) {
+      case 'Enter':
+        e.preventDefault();
+        if (chooserResults != null) {
+          this.props.onSubmit(chooserResults.getSelectedUserId());
+        }
+        break;
+      case 'Escape':
+        e.preventDefault();
+        this.props.onCancel();
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        chooserResults.selectPreviousResult();
+        break;
+      case 'ArrowDown':
+        e.preventDefault();
+        chooserResults.selectNextResult();
+        break;
+    }
+>>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 });
 
@@ -25472,6 +25537,7 @@ window.PopupHeader = React.createClass({
       'popup__headbox': true,
       'cursor--move': this.props.isDraggable
     });
+<<<<<<< HEAD
     return React.createElement("div", {
       "className": "popup__header"
     }, React.createElement("div", {
@@ -25486,6 +25552,23 @@ window.PopupHeader = React.createClass({
     }, React.createElement("div", {
       "className": "icon icon--cross"
     })));
+=======
+  },
+  getSelectedUserId: function() {
+    return this.state.predictedUsers[this.state.selectedUserIndex].id;
+  },
+  _moveHighlight: function(delta) {
+    var userIndex, usersCount;
+    usersCount = this.state.predictedUsers.length;
+    userIndex = this.state.selectedUserIndex;
+    if (usersCount > 0) {
+      if ((userIndex > 0 && delta < 0) || (userIndex < usersCount - 1 && delta > 0)) {
+        return this.setState({
+          selectedUserIndex: userIndex + delta
+        });
+      }
+    }
+>>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 });
 
@@ -25516,9 +25599,24 @@ window.PopupLayout = React.createClass({
     }, React.createElement("div", {
       "className": 'popup-container__main'
     }, React.createElement("div", {
+<<<<<<< HEAD
       "className": 'popup-container__cell',
       "onClick": this.handleClick
     }, this.props.children)));
+=======
+      "className": "messages__person-avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.predictedUser,
+      "size": 35.
+    })), React.createElement("div", {
+      "className": "messages__person-name"
+    }, this.props.predictedUser.slug)));
+  },
+  handleClick: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    return this.props.onClick(this.props.predictedUser.id);
+>>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 });
 
@@ -25619,6 +25717,7 @@ window.PopupSpinner = React.createClass({
   propTypes: {
     hasActivities: React.PropTypes.bool.isRequired
   },
+<<<<<<< HEAD
   render: function() {
     if (this.props.hasActivities) {
       return React.createElement("div", {
@@ -25631,6 +25730,14 @@ window.PopupSpinner = React.createClass({
     } else {
       return null;
     }
+=======
+  postNewConversation: function(recipientId) {
+    this.activateProcessState();
+    return ConversationActions.postNewConversation({
+      recipientId: recipientId,
+      error: this.activateChooserState
+    });
+>>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 });
 
@@ -26698,8 +26805,41 @@ window.PostEditor_ImageEditor = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{"react/lib/ReactComponentWithPureRenderMixin":521,"react/lib/cx":598}],161:[function(require,module,exports){
 var cx;
+=======
+},{}],291:[function(require,module,exports){
+window.MessagingRequester = (function() {
+  function MessagingRequester(_arg) {
+    this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
+  }
+
+  MessagingRequester.prototype.notifyReady = function(_arg) {
+    var error, success;
+    success = _arg.success, error = _arg.error;
+    return $.ajax({
+      url: ApiRoutes.messenger_ready_url(),
+      data: {
+        socket_id: this.socket_id
+      },
+      method: 'POST',
+      success: success,
+      error: error
+    });
+  };
+
+  MessagingRequester.prototype.postNewConversation = function(recipientId, content) {
+    return $.ajax({
+      url: ApiRoutes.messengerConversationsByUserId(recipientId),
+      method: 'POST',
+      data: {
+        socket_id: this.socket_id,
+        content: content
+      }
+    });
+  };
+>>>>>>> Create & open conversation by userId [deliver #90091788]
 
 cx = require('react/lib/cx');
 
@@ -26927,8 +27067,26 @@ window.PostEditor_TextEditor = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":598}],166:[function(require,module,exports){
 var cx;
+=======
+  MessagingService.prototype.postNewConversation = function(_arg) {
+    var error, recipientId;
+    recipientId = _arg.recipientId, error = _arg.error;
+    return this.requester.postNewConversation(recipientId).done(function(conversation) {
+      return MessagingDispatcher.handleServerAction({
+        type: 'postNewConversation',
+        conversation: conversation
+      });
+    }).fail(function(errMsg) {
+      if (typeof error === "function") {
+        error();
+      }
+      return TastyNotifyController.errorResponse(errMsg);
+    });
+  };
+>>>>>>> Create & open conversation by userId [deliver #90091788]
 
 cx = require('react/lib/cx');
 
@@ -27268,6 +27426,7 @@ window.PostEditor_ImagesForm = {
       return this.saveAsAjax();
     }
   },
+<<<<<<< HEAD
   saveAsAjax: function() {
     var data;
     data = assign(this._getEditorData(), {
@@ -27309,6 +27468,15 @@ window.PostEditor_ImagesForm = {
     })(this));
     if (imageFiles.length === 0) {
       return TastyNotifyController.notifyError(i18n.t('editor_files_without_images'));
+=======
+  getConversationByUserId: function(recipientId) {
+    var conversation, _i, _len;
+    for (_i = 0, _len = _conversations.length; _i < _len; _i++) {
+      conversation = _conversations[_i];
+      if (conversation.recipient.id === recipientId) {
+        return conversation;
+      }
+>>>>>>> Create & open conversation by userId [deliver #90091788]
     }
     this.fileUploader = data;
     images = imageFiles.map((function(_this) {
@@ -30083,6 +30251,7 @@ SettingsMixin = {
       })(this)
     });
   },
+<<<<<<< HEAD
   cancelEmailConfirmation: function() {
     return CurrentUserViewActions.cancelEmailConfirmation({
       beforeSend: (function(_this) {
@@ -30101,6 +30270,127 @@ SettingsMixin = {
         };
       })(this)
     });
+=======
+  update_profile_url: function() {
+    return TastySettings.api_host + '/v1/users';
+  },
+  recovery_url: function() {
+    return TastySettings.api_host + '/v1/users/password/recovery';
+  },
+  request_confirm_url: function() {
+    return TastySettings.api_host + '/v1/users/confirmation';
+  },
+  userpic_url: function() {
+    return TastySettings.api_host + '/v1/users/userpic';
+  },
+  users_predict: function() {
+    return TastySettings.api_host + '/v1/users/predict';
+  },
+  create_entry_url: function(type) {
+    return TastySettings.api_host + '/v1/entries/' + type;
+  },
+  update_entry_url: function(entryId, entryType) {
+    return TastySettings.api_host + '/v1/entries/' + entryType + '/' + entryId;
+  },
+  update_images_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/image/' + entryId + '/images';
+  },
+  entry_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/' + entryId;
+  },
+  favorites_url: function() {
+    return TastySettings.api_host + '/v1/favorites';
+  },
+  watching_url: function() {
+    return TastySettings.api_host + '/v1/watching';
+  },
+  report_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/' + entryId + '/report';
+  },
+  relationships_summary_url: function() {
+    return TastySettings.api_host + '/v1/relationships/summary';
+  },
+  relationships_to_url: function(state) {
+    return TastySettings.api_host + '/v1/relationships/to/' + state;
+  },
+  relationships_by_url: function(state) {
+    return TastySettings.api_host + '/v1/relationships/by/' + state;
+  },
+  relationships_by_id_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/' + tlogId;
+  },
+  unfollow_from_yourself_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId;
+  },
+  relationships_by_tlog_approve_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/approve';
+  },
+  relationships_by_tlog_disapprove_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/disapprove';
+  },
+  tlog_followers: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followers';
+  },
+  tlog_followings: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followings';
+  },
+  tlog_tags: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/tags';
+  },
+  tlog_report: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/report';
+  },
+  get_my_relationship_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId;
+  },
+  comments_url: function(entryId) {
+    return TastySettings.api_host + '/v1/comments';
+  },
+  comments_edit_delete_url: function(commentId) {
+    return TastySettings.api_host + '/v1/comments/' + commentId;
+  },
+  comments_report_url: function(commentId) {
+    return TastySettings.api_host + '/v1/comments/' + commentId + '/report';
+  },
+  change_my_relationship_url: function(tlogId, state) {
+    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId + '/' + state;
+  },
+  messenger_ready_url: function() {
+    return TastySettings.api_host + '/v1/messenger/ready';
+  },
+  messengerConversationsByUserId: function(userId) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_user_id/' + userId;
+  },
+  messenger_new_message_url: function(conversationId) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
+  },
+  messenger_load_messages_url: function(conversationId) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
+  },
+  messenger_read_messages_url: function(conversationId) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages/read';
+  },
+  notificationsUrl: function() {
+    return TastySettings.api_host + '/v1/messenger/notifications';
+  },
+  notificationsReadAllUrl: function() {
+    return TastySettings.api_host + '/v1/messenger/notifications/read';
+  },
+  notifications_read_url: function(id) {
+    return TastySettings.api_host + '/v1/messenger/notifications/' + id + '/read';
+  },
+  suggestions_vkontakte: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/vkontakte';
+  },
+  suggestions_facebook: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/facebook';
+  },
+  feedLive: function() {
+    return TastySettings.api_host + '/v1/feeds/live';
+  },
+  feedBest: function() {
+    return TastySettings.api_host + '/v1/feeds/best';
+>>>>>>> Create & open conversation by userId [deliver #90091788]
   },
   resendEmailConfirmation: function(_arg) {
     var beforeSend, error, success;

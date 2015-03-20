@@ -64,8 +64,8 @@ window.MessagesPopup_ChooserResults = React.createClass
       error: (errMsg) =>
         TastyNotifyController.errorResponse errMsg
 
-  getSelectedUserSlug: ->
-    @state.predictedUsers[@state.selectedUserIndex].slug
+  getSelectedUserId: ->
+    @state.predictedUsers[@state.selectedUserIndex].id
 
   _moveHighlight: (delta) ->
     usersCount = @state.predictedUsers.length

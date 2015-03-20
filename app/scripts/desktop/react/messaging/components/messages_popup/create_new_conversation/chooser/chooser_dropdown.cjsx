@@ -35,7 +35,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass
       when 'Enter'
         e.preventDefault()
         if chooserResults?
-          @props.onSubmit chooserResults.getSelectedUserSlug()
+          @props.onSubmit chooserResults.getSelectedUserId()
         break
       when 'Escape'
         e.preventDefault()

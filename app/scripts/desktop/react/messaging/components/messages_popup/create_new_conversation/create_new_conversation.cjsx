@@ -22,10 +22,9 @@ window.MessagesPopup_CreateNewConversation = React.createClass
   activateProcessState: -> @setState(currentState: PROCESS_STATE)
   activateChooserState: -> @setState(currentState: CHOOSER_STATE)
 
-  postNewConversation: (recipientSlug) ->
+  postNewConversation: (recipientId) ->
     @activateProcessState()
 
-    ConversationActions.postNewConversation {
-      recipientSlug: recipientSlug
+    ConversationActions.postNewConversation
+      recipientId: recipientId
       error: @activateChooserState
-    }

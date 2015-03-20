@@ -10,4 +10,4 @@ window.WriteMessageButton = React.createClass
     </button>
 
   handleClick: ->
-    ConversationActions.openConversation @props.user.slug
+    ConversationActions.openConversation @props.user.id

@@ -11,9 +11,9 @@ class window.MessagingRequester
       success: success
       error:   error
 
-  postNewConversation: (recipientSlug, content) ->
+  postNewConversation: (recipientId, content) ->
     $.ajax
-      url: ApiRoutes.messenger_new_conversation_url(recipientSlug)
+      url: ApiRoutes.messengerConversationsByUserId recipientId
       method: 'POST'
       data:
         socket_id: @socket_id
