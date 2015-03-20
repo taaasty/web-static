@@ -1,6 +1,7 @@
-EntryMetaVoting   = require '../meta/voting'
-EntryMetaActions  = require '../meta/actions'
+EntryMetaVoting = require '../meta/voting'
+EntryMetaActions = require '../meta/actions'
 EntryMetaComments = require '../meta/comments'
+EntryMetaDate = require '../meta/date'
 { PropTypes } = React
 
 EntryTlogMeta = React.createClass
@@ -18,6 +19,9 @@ EntryTlogMeta = React.createClass
       <EntryMetaComments
           commentsCount={ @props.commentsCount }
           onClick={ @props.onMetaCommentsClick } />
+      <EntryMetaDate
+          date={ @props.entry.created_at }
+          entryUrl={ @props.entry.entry_url } />
     </div>
 
   renderVoting: ->

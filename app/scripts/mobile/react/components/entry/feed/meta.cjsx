@@ -1,7 +1,8 @@
-EntryMetaVoting   = require '../meta/voting'
-EntryMetaActions  = require '../meta/actions'
+EntryMetaVoting = require '../meta/voting'
+EntryMetaActions = require '../meta/actions'
 EntryMetaComments = require '../meta/comments'
-EntryMetaAuthor   = require '../meta/author'
+EntryMetaDate = require '../meta/date'
+EntryMetaAuthor = require '../meta/author'
 { PropTypes } = React
 
 EntryFeedMeta = React.createClass
@@ -19,6 +20,9 @@ EntryFeedMeta = React.createClass
       <EntryMetaComments
           commentsCount={ @props.commentsCount }
           onClick={ @props.onMetaCommentsClick } />
+      <EntryMetaDate
+          date={ @props.entry.created_at }
+          entryUrl={ @props.entry.entry_url } />
       <EntryMetaAuthor author={ @props.entry.author } />
     </div>
 

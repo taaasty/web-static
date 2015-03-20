@@ -24,6 +24,7 @@ CommentForm = React.createClass
       <div className="comment-form__field">
         <textarea
             ref="textField"
+            autoFocus={ true }
             defaultValue={ @props.text }
             placeholder={ @props.placeholder }
             disabled={ @props.disabled }
