@@ -34,7 +34,9 @@ EntryPage = React.createClass
           <HeroTlog tlog={ @props.tlog } />
         </div>
         <div className="layout__body">
-          <EntryTlog entry={ @props.entry } />
+          <EntryTlog
+              entry={ @props.entry }
+              commentFormVisible={ true } />
           <EntryPagination tlogUrl={ @props.tlog.tlog_url } />
         </div>
       </div>
