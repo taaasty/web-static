@@ -1131,7 +1131,7 @@ a:hover {
   transition: opacity .3s ease, visibility 0s ease;
 }
 .page-header {
-  min-height: 247px;
+  min-height: 226px;
   position: relative;
   transition: height .6s ease;
 }

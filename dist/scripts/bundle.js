@@ -23339,7 +23339,6 @@ window.HeroProfile = React.createClass({
   componentDidMount: function() {
     this.$hero = $(this.getDOMNode());
     this.heroClosedHeight = this.$hero.height();
-    this.setInitialHeroHeight();
     $(window).on('resize', this.onResize);
     $(window).on('scroll', this.scrollFade);
     TastyEvents.on(TastyEvents.keys.command_hero_open(), this.open);
@@ -23428,6 +23427,7 @@ window.HeroProfile = React.createClass({
       Mousetrap.unbind('esc', this.close);
       $(window).off('scroll.hero');
       this.restoreInitialHeroHeight();
+      this.unsetHeroHeight();
       $('body').removeClass(HERO_OPENED_CLASS);
       return TastyEvents.trigger(TastyEvents.keys.hero_closed());
     }
@@ -23443,6 +23443,9 @@ window.HeroProfile = React.createClass({
     })(this));
     this.initialHeroHeight = this.$hero.height();
     return this.$hero.css('height', this.heroClosedHeight);
+  },
+  unsetHeroHeight: function() {
+    return this.$hero.css('height', '');
   },
   restoreInitialHeroHeight: function() {
     return this.$hero.css('height', this.heroClosedHeight);
@@ -23477,6 +23480,7 @@ window.HeroProfile = React.createClass({
   },
   handleAvatarClick: function(e) {
     if (!this.isOpen()) {
+      this.setInitialHeroHeight();
       e.preventDefault();
       return this.open();
     }

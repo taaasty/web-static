@@ -18,8 +18,6 @@ window.HeroProfile = React.createClass
     @$hero = $( @getDOMNode() )
     @heroClosedHeight = @$hero.height()
 
-    @setInitialHeroHeight()
-
     $(window).on 'resize', @onResize
     $(window).on 'scroll', @scrollFade
 
@@ -93,6 +91,7 @@ window.HeroProfile = React.createClass
       $(window).off 'scroll.hero'
 
       @restoreInitialHeroHeight()
+      @unsetHeroHeight()
       $('body').removeClass HERO_OPENED_CLASS
       TastyEvents.trigger TastyEvents.keys.hero_closed()
 
@@ -106,6 +105,9 @@ window.HeroProfile = React.createClass
 
     @initialHeroHeight = @$hero.height()
     @$hero.css 'height', @heroClosedHeight
+
+  unsetHeroHeight: ->
+    @$hero.css 'height', ''
 
   restoreInitialHeroHeight: -> @$hero.css 'height', @heroClosedHeight
 
@@ -132,5 +134,6 @@ window.HeroProfile = React.createClass
 
   handleAvatarClick: (e) ->
     unless @isOpen()
+      @setInitialHeroHeight()
       e.preventDefault()
       @open()
