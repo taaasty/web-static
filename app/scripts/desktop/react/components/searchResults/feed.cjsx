@@ -1,7 +1,5 @@
+InfiniteScroll = require '../common/infiniteScroll/index'
 { PropTypes } = React
-
-windowHeight = $(window).height()
-THRESHOLD = windowHeight * 2
 
 SearchResultsFeed = React.createClass
   displayName: 'SearchResultsFeed'
@@ -12,30 +10,23 @@ SearchResultsFeed = React.createClass
     canLoad: PropTypes.bool.isRequired
     onLoadNextPage: PropTypes.func.isRequired
 
-  componentDidMount: ->
-    $(window).on 'scroll', @handleScroll
-
-  componentDidUpdate: (prevProps) ->
-    @initGridManager() if @props.html isnt prevProps.html
-
-  componentWillUnmount: ->
-    $(window).off 'scroll', @handleScroll
-
   render: ->
-    if @props.loading
-      spinner = <div className="page-loader"><Spinner size={ 24 } /></div>
-
-    return <div className="bricks-wrapper">
-             <section ref="container"
-                      className="bricks"
-                      dangerouslySetInnerHTML={{ __html: @props.html }} />
-             { spinner }
-           </div>
+    <div className="bricks-wrapper">
+      <InfiniteScroll
+          loading={ @props.loading }
+          canLoad={ @props.canLoad }
+          onLoad={ @props.onLoadNextPage }
+          onAfterLoad={ @initGridManager }>
+        <section ref="container"
+                 className="bricks"
+                 dangerouslySetInnerHTML={{ __html: @props.html }} />
+      </InfiniteScroll>
+    </div>
 
   initGridManager: ->
     $container = $( @refs.container.getDOMNode() )
 
-    $container.shapeshift {
+    $container.shapeshift
       selector: '.brick'
       colWidth: 302
       enableDrag: false
@@ -44,11 +35,5 @@ SearchResultsFeed = React.createClass
       gutterY: 20
       paddingX: 0
       paddingY: 0
-    }
-
-  handleScroll: ->
-    if @props.canLoad
-      nearBottom = $(window).scrollTop() + $(window).height() > $(document).height() - THRESHOLD
-      @props.onLoadNextPage() if nearBottom
 
 module.exports = SearchResultsFeed
