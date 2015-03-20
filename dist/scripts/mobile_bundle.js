@@ -27938,9 +27938,6 @@ ApiRoutes = {
   messenger_ready_url: function() {
     return TastySettings.api_host + '/v1/messenger/ready';
   },
-  messenger_new_conversation_url: function(slug) {
-    return TastySettings.api_host + '/v1/messenger/conversations/by_slug/' + slug;
-  },
   messengerConversationsByUserId: function(userId) {
     return TastySettings.api_host + '/v1/messenger/conversations/by_user_id/' + userId;
   },

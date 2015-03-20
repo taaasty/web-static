@@ -73,8 +73,8 @@ class window.MessagingService
   emitReconnect: =>
     @emit @RECONNECT_EVENT
 
-  postNewConversation: ({ recipientSlug, error }) ->
-    @requester.postNewConversation(recipientSlug)
+  postNewConversation: ({recipientId, error}) ->
+    @requester.postNewConversation(recipientId)
       .done (conversation) ->
         MessagingDispatcher.handleServerAction
           type: 'postNewConversation'

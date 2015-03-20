@@ -25,4 +25,4 @@ window.MessagesPopup_ChooserResultsItem = React.createClass
   handleClick: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    @props.onClick @props.predictedUser.slug
+    @props.onClick @props.predictedUser.id
