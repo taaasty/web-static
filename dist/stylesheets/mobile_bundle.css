@@ -3099,6 +3099,7 @@ a.toolbar__popup-link:active {
 .meta-item,
 .meta-voting,
 .meta-comments,
+.meta-date,
 .meta-author,
 .meta-actions {
   display: inline-block;
@@ -3140,13 +3141,23 @@ a.toolbar__popup-link:active {
 }
 .meta-comments {
   cursor: pointer;
-  margin-right: 12px;
 }
 .meta-comments:before {
   content: "\e62a";
 }
 .meta-comments:before {
   margin-right: 4px;
+}
+.meta-date {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 95%;
+  margin-right: 12px;
+  opacity: .4;
+}
+.meta-date:active {
+  opacity: .7;
 }
 .meta-author {
   white-space: nowrap;
