@@ -1,3 +1,4 @@
+InfiniteScroll = require '../common/infiniteScroll/index'
 { PropTypes } = React
 
 windowHeight = $(window).height()
@@ -12,28 +13,19 @@ SearchResultsTlog = React.createClass
     canLoad: PropTypes.bool.isRequired
     onLoadNextPage: PropTypes.func.isRequired
 
-  componentDidMount: ->
-    $(window).on 'scroll', @handleScroll
-
-  componentWillUnmount: ->
-    $(window).off 'scroll', @handleScroll
-
   render: ->
-    if @props.loading
-      spinner = <div className="page-loader"><Spinner size={ 24 } /></div>
-
-    return <div className="content-area">
-             <div className="content-area__bg" />
-             <div className="content-area__inner">
-               <section className="posts"
-                        dangerouslySetInnerHTML={{ __html: @props.html }} />
-               { spinner }
-             </div>
-           </div>
-
-  handleScroll: ->
-    if @props.canLoad
-      nearBottom = $(window).scrollTop() + $(window).height() > $(document).height() - THRESHOLD
-      @props.onLoadNextPage() if nearBottom
+    <div className="content-area">
+      <div className="content-area__bg" />
+      <div className="content-area__inner">
+        <InfiniteScroll
+            loading={ @props.loading }
+            canLoad={ @props.canLoad }
+            onLoad={ @props.onLoadNextPage }>
+          <section
+              className="posts"
+              dangerouslySetInnerHTML={{ __html: @props.html }} />
+        </InfiniteScroll>
+      </div>
+    </div>
 
 module.exports = SearchResultsTlog
