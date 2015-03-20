@@ -3,3487 +3,7 @@ require('./desktop/bundle');
 
 
 
-},{"./desktop/bundle":9}],"Modernizr":[function(require,module,exports){
-/*!
- * Modernizr v2.8.3
- * www.modernizr.com
- *
- * Copyright (c) Faruk Ates, Paul Irish, Alex Sexton
- * Available under the BSD and MIT licenses: www.modernizr.com/license/
- */
-
-/*
- * Modernizr tests which native CSS3 and HTML5 features are available in
- * the current UA and makes the results available to you in two ways:
- * as properties on a global Modernizr object, and as classes on the
- * <html> element. This information allows you to progressively enhance
- * your pages with a granular level of control over the experience.
- *
- * Modernizr has an optional (not included) conditional resource loader
- * called Modernizr.load(), based on Yepnope.js (yepnopejs.com).
- * To get a build that includes Modernizr.load(), as well as choosing
- * which tests to include, go to www.modernizr.com/download/
- *
- * Authors        Faruk Ates, Paul Irish, Alex Sexton
- * Contributors   Ryan Seddon, Ben Alman
- */
-
-Modernizr = (function( window, document, undefined ) {
-
-    var version = '2.8.3',
-
-    Modernizr = {},
-
-    /*>>cssclasses*/
-    // option for enabling the HTML classes to be added
-    enableClasses = true,
-    /*>>cssclasses*/
-
-    docElement = document.documentElement,
-
-    /**
-     * Create our "modernizr" element that we do most feature tests on.
-     */
-    mod = 'modernizr',
-    modElem = document.createElement(mod),
-    mStyle = modElem.style,
-
-    /**
-     * Create the input element for various Web Forms feature tests.
-     */
-    inputElem /*>>inputelem*/ = document.createElement('input') /*>>inputelem*/ ,
-
-    /*>>smile*/
-    smile = ':)',
-    /*>>smile*/
-
-    toString = {}.toString,
-
-    // TODO :: make the prefixes more granular
-    /*>>prefixes*/
-    // List of property values to set for css tests. See ticket #21
-    prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
-    /*>>prefixes*/
-
-    /*>>domprefixes*/
-    // Following spec is to expose vendor-specific style properties as:
-    //   elem.style.WebkitBorderRadius
-    // and the following would be incorrect:
-    //   elem.style.webkitBorderRadius
-
-    // Webkit ghosts their properties in lowercase but Opera & Moz do not.
-    // Microsoft uses a lowercase `ms` instead of the correct `Ms` in IE8+
-    //   erik.eae.net/archives/2008/03/10/21.48.10/
-
-    // More here: github.com/Modernizr/Modernizr/issues/issue/21
-    omPrefixes = 'Webkit Moz O ms',
-
-    cssomPrefixes = omPrefixes.split(' '),
-
-    domPrefixes = omPrefixes.toLowerCase().split(' '),
-    /*>>domprefixes*/
-
-    /*>>ns*/
-    ns = {'svg': 'http://www.w3.org/2000/svg'},
-    /*>>ns*/
-
-    tests = {},
-    inputs = {},
-    attrs = {},
-
-    classes = [],
-
-    slice = classes.slice,
-
-    featureName, // used in testing loop
-
-
-    /*>>teststyles*/
-    // Inject element with style element and some CSS rules
-    injectElementWithStyles = function( rule, callback, nodes, testnames ) {
-
-      var style, ret, node, docOverflow,
-          div = document.createElement('div'),
-          // After page load injecting a fake body doesn't work so check if body exists
-          body = document.body,
-          // IE6 and 7 won't return offsetWidth or offsetHeight unless it's in the body element, so we fake it.
-          fakeBody = body || document.createElement('body');
-
-      if ( parseInt(nodes, 10) ) {
-          // In order not to give false positives we create a node for each test
-          // This also allows the method to scale for unspecified uses
-          while ( nodes-- ) {
-              node = document.createElement('div');
-              node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
-              div.appendChild(node);
-          }
-      }
-
-      // <style> elements in IE6-9 are considered 'NoScope' elements and therefore will be removed
-      // when injected with innerHTML. To get around this you need to prepend the 'NoScope' element
-      // with a 'scoped' element, in our case the soft-hyphen entity as it won't mess with our measurements.
-      // msdn.microsoft.com/en-us/library/ms533897%28VS.85%29.aspx
-      // Documents served as xml will throw if using &shy; so use xml friendly encoded version. See issue #277
-      style = ['&#173;','<style id="s', mod, '">', rule, '</style>'].join('');
-      div.id = mod;
-      // IE6 will false positive on some tests due to the style element inside the test div somehow interfering offsetHeight, so insert it into body or fakebody.
-      // Opera will act all quirky when injecting elements in documentElement when page is served as xml, needs fakebody too. #270
-      (body ? div : fakeBody).innerHTML += style;
-      fakeBody.appendChild(div);
-      if ( !body ) {
-          //avoid crashing IE8, if background image is used
-          fakeBody.style.background = '';
-          //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
-          fakeBody.style.overflow = 'hidden';
-          docOverflow = docElement.style.overflow;
-          docElement.style.overflow = 'hidden';
-          docElement.appendChild(fakeBody);
-      }
-
-      ret = callback(div, rule);
-      // If this is done after page load we don't want to remove the body so check if body exists
-      if ( !body ) {
-          fakeBody.parentNode.removeChild(fakeBody);
-          docElement.style.overflow = docOverflow;
-      } else {
-          div.parentNode.removeChild(div);
-      }
-
-      return !!ret;
-
-    },
-    /*>>teststyles*/
-
-    /*>>mq*/
-    // adapted from matchMedia polyfill
-    // by Scott Jehl and Paul Irish
-    // gist.github.com/786768
-    testMediaQuery = function( mq ) {
-
-      var matchMedia = window.matchMedia || window.msMatchMedia;
-      if ( matchMedia ) {
-        return matchMedia(mq) && matchMedia(mq).matches || false;
-      }
-
-      var bool;
-
-      injectElementWithStyles('@media ' + mq + ' { #' + mod + ' { position: absolute; } }', function( node ) {
-        bool = (window.getComputedStyle ?
-                  getComputedStyle(node, null) :
-                  node.currentStyle)['position'] == 'absolute';
-      });
-
-      return bool;
-
-     },
-     /*>>mq*/
-
-
-    /*>>hasevent*/
-    //
-    // isEventSupported determines if a given element supports the given event
-    // kangax.github.com/iseventsupported/
-    //
-    // The following results are known incorrects:
-    //   Modernizr.hasEvent("webkitTransitionEnd", elem) // false negative
-    //   Modernizr.hasEvent("textInput") // in Webkit. github.com/Modernizr/Modernizr/issues/333
-    //   ...
-    isEventSupported = (function() {
-
-      var TAGNAMES = {
-        'select': 'input', 'change': 'input',
-        'submit': 'form', 'reset': 'form',
-        'error': 'img', 'load': 'img', 'abort': 'img'
-      };
-
-      function isEventSupported( eventName, element ) {
-
-        element = element || document.createElement(TAGNAMES[eventName] || 'div');
-        eventName = 'on' + eventName;
-
-        // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize", whereas `in` "catches" those
-        var isSupported = eventName in element;
-
-        if ( !isSupported ) {
-          // If it has no `setAttribute` (i.e. doesn't implement Node interface), try generic element
-          if ( !element.setAttribute ) {
-            element = document.createElement('div');
-          }
-          if ( element.setAttribute && element.removeAttribute ) {
-            element.setAttribute(eventName, '');
-            isSupported = is(element[eventName], 'function');
-
-            // If property was created, "remove it" (by setting value to `undefined`)
-            if ( !is(element[eventName], 'undefined') ) {
-              element[eventName] = undefined;
-            }
-            element.removeAttribute(eventName);
-          }
-        }
-
-        element = null;
-        return isSupported;
-      }
-      return isEventSupported;
-    })(),
-    /*>>hasevent*/
-
-    // TODO :: Add flag for hasownprop ? didn't last time
-
-    // hasOwnProperty shim by kangax needed for Safari 2.0 support
-    _hasOwnProperty = ({}).hasOwnProperty, hasOwnProp;
-
-    if ( !is(_hasOwnProperty, 'undefined') && !is(_hasOwnProperty.call, 'undefined') ) {
-      hasOwnProp = function (object, property) {
-        return _hasOwnProperty.call(object, property);
-      };
-    }
-    else {
-      hasOwnProp = function (object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
-        return ((property in object) && is(object.constructor.prototype[property], 'undefined'));
-      };
-    }
-
-    // Adapted from ES5-shim https://github.com/kriskowal/es5-shim/blob/master/es5-shim.js
-    // es5.github.com/#x15.3.4.5
-
-    if (!Function.prototype.bind) {
-      Function.prototype.bind = function bind(that) {
-
-        var target = this;
-
-        if (typeof target != "function") {
-            throw new TypeError();
-        }
-
-        var args = slice.call(arguments, 1),
-            bound = function () {
-
-            if (this instanceof bound) {
-
-              var F = function(){};
-              F.prototype = target.prototype;
-              var self = new F();
-
-              var result = target.apply(
-                  self,
-                  args.concat(slice.call(arguments))
-              );
-              if (Object(result) === result) {
-                  return result;
-              }
-              return self;
-
-            } else {
-
-              return target.apply(
-                  that,
-                  args.concat(slice.call(arguments))
-              );
-
-            }
-
-        };
-
-        return bound;
-      };
-    }
-
-    /**
-     * setCss applies given styles to the Modernizr DOM node.
-     */
-    function setCss( str ) {
-        mStyle.cssText = str;
-    }
-
-    /**
-     * setCssAll extrapolates all vendor-specific css strings.
-     */
-    function setCssAll( str1, str2 ) {
-        return setCss(prefixes.join(str1 + ';') + ( str2 || '' ));
-    }
-
-    /**
-     * is returns a boolean for if typeof obj is exactly type.
-     */
-    function is( obj, type ) {
-        return typeof obj === type;
-    }
-
-    /**
-     * contains returns a boolean for if substr is found within str.
-     */
-    function contains( str, substr ) {
-        return !!~('' + str).indexOf(substr);
-    }
-
-    /*>>testprop*/
-
-    // testProps is a generic CSS / DOM property test.
-
-    // In testing support for a given CSS property, it's legit to test:
-    //    `elem.style[styleName] !== undefined`
-    // If the property is supported it will return an empty string,
-    // if unsupported it will return undefined.
-
-    // We'll take advantage of this quick test and skip setting a style
-    // on our modernizr element, but instead just testing undefined vs
-    // empty string.
-
-    // Because the testing of the CSS property names (with "-", as
-    // opposed to the camelCase DOM properties) is non-portable and
-    // non-standard but works in WebKit and IE (but not Gecko or Opera),
-    // we explicitly reject properties with dashes so that authors
-    // developing in WebKit or IE first don't end up with
-    // browser-specific content by accident.
-
-    function testProps( props, prefixed ) {
-        for ( var i in props ) {
-            var prop = props[i];
-            if ( !contains(prop, "-") && mStyle[prop] !== undefined ) {
-                return prefixed == 'pfx' ? prop : true;
-            }
-        }
-        return false;
-    }
-    /*>>testprop*/
-
-    // TODO :: add testDOMProps
-    /**
-     * testDOMProps is a generic DOM property test; if a browser supports
-     *   a certain property, it won't return undefined for it.
-     */
-    function testDOMProps( props, obj, elem ) {
-        for ( var i in props ) {
-            var item = obj[props[i]];
-            if ( item !== undefined) {
-
-                // return the property name as a string
-                if (elem === false) return props[i];
-
-                // let's bind a function
-                if (is(item, 'function')){
-                  // default to autobind unless override
-                  return item.bind(elem || obj);
-                }
-
-                // return the unbound function or obj or value
-                return item;
-            }
-        }
-        return false;
-    }
-
-    /*>>testallprops*/
-    /**
-     * testPropsAll tests a list of DOM properties we want to check against.
-     *   We specify literally ALL possible (known and/or likely) properties on
-     *   the element including the non-vendor prefixed one, for forward-
-     *   compatibility.
-     */
-    function testPropsAll( prop, prefixed, elem ) {
-
-        var ucProp  = prop.charAt(0).toUpperCase() + prop.slice(1),
-            props   = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
-
-        // did they call .prefixed('boxSizing') or are we just testing a prop?
-        if(is(prefixed, "string") || is(prefixed, "undefined")) {
-          return testProps(props, prefixed);
-
-        // otherwise, they called .prefixed('requestAnimationFrame', window[, elem])
-        } else {
-          props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
-          return testDOMProps(props, prefixed, elem);
-        }
-    }
-    /*>>testallprops*/
-
-
-    /**
-     * Tests
-     * -----
-     */
-
-    // The *new* flexbox
-    // dev.w3.org/csswg/css3-flexbox
-
-    tests['flexbox'] = function() {
-      return testPropsAll('flexWrap');
-    };
-
-    // The *old* flexbox
-    // www.w3.org/TR/2009/WD-css3-flexbox-20090723/
-
-    tests['flexboxlegacy'] = function() {
-        return testPropsAll('boxDirection');
-    };
-
-    // On the S60 and BB Storm, getContext exists, but always returns undefined
-    // so we actually have to call getContext() to verify
-    // github.com/Modernizr/Modernizr/issues/issue/97/
-
-    tests['canvas'] = function() {
-        var elem = document.createElement('canvas');
-        return !!(elem.getContext && elem.getContext('2d'));
-    };
-
-    tests['canvastext'] = function() {
-        return !!(Modernizr['canvas'] && is(document.createElement('canvas').getContext('2d').fillText, 'function'));
-    };
-
-    // webk.it/70117 is tracking a legit WebGL feature detect proposal
-
-    // We do a soft detect which may false positive in order to avoid
-    // an expensive context creation: bugzil.la/732441
-
-    tests['webgl'] = function() {
-        return !!window.WebGLRenderingContext;
-    };
-
-    /*
-     * The Modernizr.touch test only indicates if the browser supports
-     *    touch events, which does not necessarily reflect a touchscreen
-     *    device, as evidenced by tablets running Windows 7 or, alas,
-     *    the Palm Pre / WebOS (touch) phones.
-     *
-     * Additionally, Chrome (desktop) used to lie about its support on this,
-     *    but that has since been rectified: crbug.com/36415
-     *
-     * We also test for Firefox 4 Multitouch Support.
-     *
-     * For more info, see: modernizr.github.com/Modernizr/touch.html
-     */
-
-    tests['touch'] = function() {
-        var bool;
-
-        if(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-          bool = true;
-        } else {
-          injectElementWithStyles(['@media (',prefixes.join('touch-enabled),('),mod,')','{#modernizr{top:9px;position:absolute}}'].join(''), function( node ) {
-            bool = node.offsetTop === 9;
-          });
-        }
-
-        return bool;
-    };
-
-
-    // geolocation is often considered a trivial feature detect...
-    // Turns out, it's quite tricky to get right:
-    //
-    // Using !!navigator.geolocation does two things we don't want. It:
-    //   1. Leaks memory in IE9: github.com/Modernizr/Modernizr/issues/513
-    //   2. Disables page caching in WebKit: webk.it/43956
-    //
-    // Meanwhile, in Firefox < 8, an about:config setting could expose
-    // a false positive that would throw an exception: bugzil.la/688158
-
-    tests['geolocation'] = function() {
-        return 'geolocation' in navigator;
-    };
-
-
-    tests['postmessage'] = function() {
-      return !!window.postMessage;
-    };
-
-
-    // Chrome incognito mode used to throw an exception when using openDatabase
-    // It doesn't anymore.
-    tests['websqldatabase'] = function() {
-      return !!window.openDatabase;
-    };
-
-    // Vendors had inconsistent prefixing with the experimental Indexed DB:
-    // - Webkit's implementation is accessible through webkitIndexedDB
-    // - Firefox shipped moz_indexedDB before FF4b9, but since then has been mozIndexedDB
-    // For speed, we don't test the legacy (and beta-only) indexedDB
-    tests['indexedDB'] = function() {
-      return !!testPropsAll("indexedDB", window);
-    };
-
-    // documentMode logic from YUI to filter out IE8 Compat Mode
-    //   which false positives.
-    tests['hashchange'] = function() {
-      return isEventSupported('hashchange', window) && (document.documentMode === undefined || document.documentMode > 7);
-    };
-
-    // Per 1.6:
-    // This used to be Modernizr.historymanagement but the longer
-    // name has been deprecated in favor of a shorter and property-matching one.
-    // The old API is still available in 1.6, but as of 2.0 will throw a warning,
-    // and in the first release thereafter disappear entirely.
-    tests['history'] = function() {
-      return !!(window.history && history.pushState);
-    };
-
-    tests['draganddrop'] = function() {
-        var div = document.createElement('div');
-        return ('draggable' in div) || ('ondragstart' in div && 'ondrop' in div);
-    };
-
-    // FF3.6 was EOL'ed on 4/24/12, but the ESR version of FF10
-    // will be supported until FF19 (2/12/13), at which time, ESR becomes FF17.
-    // FF10 still uses prefixes, so check for it until then.
-    // for more ESR info, see: mozilla.org/en-US/firefox/organizations/faq/
-    tests['websockets'] = function() {
-        return 'WebSocket' in window || 'MozWebSocket' in window;
-    };
-
-
-    // css-tricks.com/rgba-browser-support/
-    tests['rgba'] = function() {
-        // Set an rgba() color and check the returned value
-
-        setCss('background-color:rgba(150,255,150,.5)');
-
-        return contains(mStyle.backgroundColor, 'rgba');
-    };
-
-    tests['hsla'] = function() {
-        // Same as rgba(), in fact, browsers re-map hsla() to rgba() internally,
-        //   except IE9 who retains it as hsla
-
-        setCss('background-color:hsla(120,40%,100%,.5)');
-
-        return contains(mStyle.backgroundColor, 'rgba') || contains(mStyle.backgroundColor, 'hsla');
-    };
-
-    tests['multiplebgs'] = function() {
-        // Setting multiple images AND a color on the background shorthand property
-        //  and then querying the style.background property value for the number of
-        //  occurrences of "url(" is a reliable method for detecting ACTUAL support for this!
-
-        setCss('background:url(https://),url(https://),red url(https://)');
-
-        // If the UA supports multiple backgrounds, there should be three occurrences
-        //   of the string "url(" in the return value for elemStyle.background
-
-        return (/(url\s*\(.*?){3}/).test(mStyle.background);
-    };
-
-
-
-    // this will false positive in Opera Mini
-    //   github.com/Modernizr/Modernizr/issues/396
-
-    tests['backgroundsize'] = function() {
-        return testPropsAll('backgroundSize');
-    };
-
-    tests['borderimage'] = function() {
-        return testPropsAll('borderImage');
-    };
-
-
-    // Super comprehensive table about all the unique implementations of
-    // border-radius: muddledramblings.com/table-of-css3-border-radius-compliance
-
-    tests['borderradius'] = function() {
-        return testPropsAll('borderRadius');
-    };
-
-    // WebOS unfortunately false positives on this test.
-    tests['boxshadow'] = function() {
-        return testPropsAll('boxShadow');
-    };
-
-    // FF3.0 will false positive on this test
-    tests['textshadow'] = function() {
-        return document.createElement('div').style.textShadow === '';
-    };
-
-
-    tests['opacity'] = function() {
-        // Browsers that actually have CSS Opacity implemented have done so
-        //  according to spec, which means their return values are within the
-        //  range of [0.0,1.0] - including the leading zero.
-
-        setCssAll('opacity:.55');
-
-        // The non-literal . in this regex is intentional:
-        //   German Chrome returns this value as 0,55
-        // github.com/Modernizr/Modernizr/issues/#issue/59/comment/516632
-        return (/^0.55$/).test(mStyle.opacity);
-    };
-
-
-    // Note, Android < 4 will pass this test, but can only animate
-    //   a single property at a time
-    //   goo.gl/v3V4Gp
-    tests['cssanimations'] = function() {
-        return testPropsAll('animationName');
-    };
-
-
-    tests['csscolumns'] = function() {
-        return testPropsAll('columnCount');
-    };
-
-
-    tests['cssgradients'] = function() {
-        /**
-         * For CSS Gradients syntax, please see:
-         * webkit.org/blog/175/introducing-css-gradients/
-         * developer.mozilla.org/en/CSS/-moz-linear-gradient
-         * developer.mozilla.org/en/CSS/-moz-radial-gradient
-         * dev.w3.org/csswg/css3-images/#gradients-
-         */
-
-        var str1 = 'background-image:',
-            str2 = 'gradient(linear,left top,right bottom,from(#9f9),to(white));',
-            str3 = 'linear-gradient(left top,#9f9, white);';
-
-        setCss(
-             // legacy webkit syntax (FIXME: remove when syntax not in use anymore)
-              (str1 + '-webkit- '.split(' ').join(str2 + str1) +
-             // standard syntax             // trailing 'background-image:'
-              prefixes.join(str3 + str1)).slice(0, -str1.length)
-        );
-
-        return contains(mStyle.backgroundImage, 'gradient');
-    };
-
-
-    tests['cssreflections'] = function() {
-        return testPropsAll('boxReflect');
-    };
-
-
-    tests['csstransforms'] = function() {
-        return !!testPropsAll('transform');
-    };
-
-
-    tests['csstransforms3d'] = function() {
-
-        var ret = !!testPropsAll('perspective');
-
-        // Webkit's 3D transforms are passed off to the browser's own graphics renderer.
-        //   It works fine in Safari on Leopard and Snow Leopard, but not in Chrome in
-        //   some conditions. As a result, Webkit typically recognizes the syntax but
-        //   will sometimes throw a false positive, thus we must do a more thorough check:
-        if ( ret && 'webkitPerspective' in docElement.style ) {
-
-          // Webkit allows this media query to succeed only if the feature is enabled.
-          // `@media (transform-3d),(-webkit-transform-3d){ ... }`
-          injectElementWithStyles('@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}', function( node, rule ) {
-            ret = node.offsetLeft === 9 && node.offsetHeight === 3;
-          });
-        }
-        return ret;
-    };
-
-
-    tests['csstransitions'] = function() {
-        return testPropsAll('transition');
-    };
-
-
-    /*>>fontface*/
-    // @font-face detection routine by Diego Perini
-    // javascript.nwbox.com/CSSSupport/
-
-    // false positives:
-    //   WebOS github.com/Modernizr/Modernizr/issues/342
-    //   WP7   github.com/Modernizr/Modernizr/issues/538
-    tests['fontface'] = function() {
-        var bool;
-
-        injectElementWithStyles('@font-face {font-family:"font";src:url("https://")}', function( node, rule ) {
-          var style = document.getElementById('smodernizr'),
-              sheet = style.sheet || style.styleSheet,
-              cssText = sheet ? (sheet.cssRules && sheet.cssRules[0] ? sheet.cssRules[0].cssText : sheet.cssText || '') : '';
-
-          bool = /src/i.test(cssText) && cssText.indexOf(rule.split(' ')[0]) === 0;
-        });
-
-        return bool;
-    };
-    /*>>fontface*/
-
-    // CSS generated content detection
-    tests['generatedcontent'] = function() {
-        var bool;
-
-        injectElementWithStyles(['#',mod,'{font:0/0 a}#',mod,':after{content:"',smile,'";visibility:hidden;font:3px/1 a}'].join(''), function( node ) {
-          bool = node.offsetHeight >= 3;
-        });
-
-        return bool;
-    };
-
-
-
-    // These tests evaluate support of the video/audio elements, as well as
-    // testing what types of content they support.
-    //
-    // We're using the Boolean constructor here, so that we can extend the value
-    // e.g.  Modernizr.video     // true
-    //       Modernizr.video.ogg // 'probably'
-    //
-    // Codec values from : github.com/NielsLeenheer/html5test/blob/9106a8/index.html#L845
-    //                     thx to NielsLeenheer and zcorpan
-
-    // Note: in some older browsers, "no" was a return value instead of empty string.
-    //   It was live in FF3.5.0 and 3.5.1, but fixed in 3.5.2
-    //   It was also live in Safari 4.0.0 - 4.0.4, but fixed in 4.0.5
-
-    tests['video'] = function() {
-        var elem = document.createElement('video'),
-            bool = false;
-
-        // IE9 Running on Windows Server SKU can cause an exception to be thrown, bug #224
-        try {
-            if ( bool = !!elem.canPlayType ) {
-                bool      = new Boolean(bool);
-                bool.ogg  = elem.canPlayType('video/ogg; codecs="theora"')      .replace(/^no$/,'');
-
-                // Without QuickTime, this value will be `undefined`. github.com/Modernizr/Modernizr/issues/546
-                bool.h264 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/,'');
-
-                bool.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/,'');
-            }
-
-        } catch(e) { }
-
-        return bool;
-    };
-
-    tests['audio'] = function() {
-        var elem = document.createElement('audio'),
-            bool = false;
-
-        try {
-            if ( bool = !!elem.canPlayType ) {
-                bool      = new Boolean(bool);
-                bool.ogg  = elem.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,'');
-                bool.mp3  = elem.canPlayType('audio/mpeg;')               .replace(/^no$/,'');
-
-                // Mimetypes accepted:
-                //   developer.mozilla.org/En/Media_formats_supported_by_the_audio_and_video_elements
-                //   bit.ly/iphoneoscodecs
-                bool.wav  = elem.canPlayType('audio/wav; codecs="1"')     .replace(/^no$/,'');
-                bool.m4a  = ( elem.canPlayType('audio/x-m4a;')            ||
-                              elem.canPlayType('audio/aac;'))             .replace(/^no$/,'');
-            }
-        } catch(e) { }
-
-        return bool;
-    };
-
-
-    // In FF4, if disabled, window.localStorage should === null.
-
-    // Normally, we could not test that directly and need to do a
-    //   `('localStorage' in window) && ` test first because otherwise Firefox will
-    //   throw bugzil.la/365772 if cookies are disabled
-
-    // Also in iOS5 Private Browsing mode, attempting to use localStorage.setItem
-    // will throw the exception:
-    //   QUOTA_EXCEEDED_ERRROR DOM Exception 22.
-    // Peculiarly, getItem and removeItem calls do not throw.
-
-    // Because we are forced to try/catch this, we'll go aggressive.
-
-    // Just FWIW: IE8 Compat mode supports these features completely:
-    //   www.quirksmode.org/dom/html5.html
-    // But IE8 doesn't support either with local files
-
-    tests['localstorage'] = function() {
-        try {
-            localStorage.setItem(mod, mod);
-            localStorage.removeItem(mod);
-            return true;
-        } catch(e) {
-            return false;
-        }
-    };
-
-    tests['sessionstorage'] = function() {
-        try {
-            sessionStorage.setItem(mod, mod);
-            sessionStorage.removeItem(mod);
-            return true;
-        } catch(e) {
-            return false;
-        }
-    };
-
-
-    tests['webworkers'] = function() {
-        return !!window.Worker;
-    };
-
-
-    tests['applicationcache'] = function() {
-        return !!window.applicationCache;
-    };
-
-
-    // Thanks to Erik Dahlstrom
-    tests['svg'] = function() {
-        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
-    };
-
-    // specifically for SVG inline in HTML, not within XHTML
-    // test page: paulirish.com/demo/inline-svg
-    tests['inlinesvg'] = function() {
-      var div = document.createElement('div');
-      div.innerHTML = '<svg/>';
-      return (div.firstChild && div.firstChild.namespaceURI) == ns.svg;
-    };
-
-    // SVG SMIL animation
-    tests['smil'] = function() {
-        return !!document.createElementNS && /SVGAnimate/.test(toString.call(document.createElementNS(ns.svg, 'animate')));
-    };
-
-    // This test is only for clip paths in SVG proper, not clip paths on HTML content
-    // demo: srufaculty.sru.edu/david.dailey/svg/newstuff/clipPath4.svg
-
-    // However read the comments to dig into applying SVG clippaths to HTML content here:
-    //   github.com/Modernizr/Modernizr/issues/213#issuecomment-1149491
-    tests['svgclippaths'] = function() {
-        return !!document.createElementNS && /SVGClipPath/.test(toString.call(document.createElementNS(ns.svg, 'clipPath')));
-    };
-
-    /*>>webforms*/
-    // input features and input types go directly onto the ret object, bypassing the tests loop.
-    // Hold this guy to execute in a moment.
-    function webforms() {
-        /*>>input*/
-        // Run through HTML5's new input attributes to see if the UA understands any.
-        // We're using f which is the <input> element created early on
-        // Mike Taylr has created a comprehensive resource for testing these attributes
-        //   when applied to all input types:
-        //   miketaylr.com/code/input-type-attr.html
-        // spec: www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
-
-        // Only input placeholder is tested while textarea's placeholder is not.
-        // Currently Safari 4 and Opera 11 have support only for the input placeholder
-        // Both tests are available in feature-detects/forms-placeholder.js
-        Modernizr['input'] = (function( props ) {
-            for ( var i = 0, len = props.length; i < len; i++ ) {
-                attrs[ props[i] ] = !!(props[i] in inputElem);
-            }
-            if (attrs.list){
-              // safari false positive's on datalist: webk.it/74252
-              // see also github.com/Modernizr/Modernizr/issues/146
-              attrs.list = !!(document.createElement('datalist') && window.HTMLDataListElement);
-            }
-            return attrs;
-        })('autocomplete autofocus list placeholder max min multiple pattern required step'.split(' '));
-        /*>>input*/
-
-        /*>>inputtypes*/
-        // Run through HTML5's new input types to see if the UA understands any.
-        //   This is put behind the tests runloop because it doesn't return a
-        //   true/false like all the other tests; instead, it returns an object
-        //   containing each input type with its corresponding true/false value
-
-        // Big thanks to @miketaylr for the html5 forms expertise. miketaylr.com/
-        Modernizr['inputtypes'] = (function(props) {
-
-            for ( var i = 0, bool, inputElemType, defaultView, len = props.length; i < len; i++ ) {
-
-                inputElem.setAttribute('type', inputElemType = props[i]);
-                bool = inputElem.type !== 'text';
-
-                // We first check to see if the type we give it sticks..
-                // If the type does, we feed it a textual value, which shouldn't be valid.
-                // If the value doesn't stick, we know there's input sanitization which infers a custom UI
-                if ( bool ) {
-
-                    inputElem.value         = smile;
-                    inputElem.style.cssText = 'position:absolute;visibility:hidden;';
-
-                    if ( /^range$/.test(inputElemType) && inputElem.style.WebkitAppearance !== undefined ) {
-
-                      docElement.appendChild(inputElem);
-                      defaultView = document.defaultView;
-
-                      // Safari 2-4 allows the smiley as a value, despite making a slider
-                      bool =  defaultView.getComputedStyle &&
-                              defaultView.getComputedStyle(inputElem, null).WebkitAppearance !== 'textfield' &&
-                              // Mobile android web browser has false positive, so must
-                              // check the height to see if the widget is actually there.
-                              (inputElem.offsetHeight !== 0);
-
-                      docElement.removeChild(inputElem);
-
-                    } else if ( /^(search|tel)$/.test(inputElemType) ){
-                      // Spec doesn't define any special parsing or detectable UI
-                      //   behaviors so we pass these through as true
-
-                      // Interestingly, opera fails the earlier test, so it doesn't
-                      //  even make it here.
-
-                    } else if ( /^(url|email)$/.test(inputElemType) ) {
-                      // Real url and email support comes with prebaked validation.
-                      bool = inputElem.checkValidity && inputElem.checkValidity() === false;
-
-                    } else {
-                      // If the upgraded input compontent rejects the :) text, we got a winner
-                      bool = inputElem.value != smile;
-                    }
-                }
-
-                inputs[ props[i] ] = !!bool;
-            }
-            return inputs;
-        })('search tel url email datetime date month week time datetime-local number range color'.split(' '));
-        /*>>inputtypes*/
-    }
-    /*>>webforms*/
-
-
-    // End of test definitions
-    // -----------------------
-
-
-
-    // Run through all tests and detect their support in the current UA.
-    // todo: hypothetically we could be doing an array of tests and use a basic loop here.
-    for ( var feature in tests ) {
-        if ( hasOwnProp(tests, feature) ) {
-            // run the test, throw the return value into the Modernizr,
-            //   then based on that boolean, define an appropriate className
-            //   and push it into an array of classes we'll join later.
-            featureName  = feature.toLowerCase();
-            Modernizr[featureName] = tests[feature]();
-
-            classes.push((Modernizr[featureName] ? '' : 'no-') + featureName);
-        }
-    }
-
-    /*>>webforms*/
-    // input tests need to run.
-    Modernizr.input || webforms();
-    /*>>webforms*/
-
-
-    /**
-     * addTest allows the user to define their own feature tests
-     * the result will be added onto the Modernizr object,
-     * as well as an appropriate className set on the html element
-     *
-     * @param feature - String naming the feature
-     * @param test - Function returning true if feature is supported, false if not
-     */
-     Modernizr.addTest = function ( feature, test ) {
-       if ( typeof feature == 'object' ) {
-         for ( var key in feature ) {
-           if ( hasOwnProp( feature, key ) ) {
-             Modernizr.addTest( key, feature[ key ] );
-           }
-         }
-       } else {
-
-         feature = feature.toLowerCase();
-
-         if ( Modernizr[feature] !== undefined ) {
-           // we're going to quit if you're trying to overwrite an existing test
-           // if we were to allow it, we'd do this:
-           //   var re = new RegExp("\\b(no-)?" + feature + "\\b");
-           //   docElement.className = docElement.className.replace( re, '' );
-           // but, no rly, stuff 'em.
-           return Modernizr;
-         }
-
-         test = typeof test == 'function' ? test() : test;
-
-         if (typeof enableClasses !== "undefined" && enableClasses) {
-           docElement.className += " mod-" + (test ? '' : 'no-') + feature;
-         }
-         Modernizr[feature] = test;
-
-       }
-
-       return Modernizr; // allow chaining.
-     };
-
-
-    // Reset modElem.cssText to nothing to reduce memory footprint.
-    setCss('');
-    modElem = inputElem = null;
-
-    /*>>shiv*/
-    /**
-     * @preserve HTML5 Shiv prev3.7.1 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
-     */
-    ;(function(window, document) {
-        /*jshint evil:true */
-        /** version */
-        var version = '3.7.0';
-
-        /** Preset options */
-        var options = window.html5 || {};
-
-        /** Used to skip problem elements */
-        var reSkip = /^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i;
-
-        /** Not all elements can be cloned in IE **/
-        var saveClones = /^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i;
-
-        /** Detect whether the browser supports default html5 styles */
-        var supportsHtml5Styles;
-
-        /** Name of the expando, to work with multiple documents or to re-shiv one document */
-        var expando = '_html5shiv';
-
-        /** The id for the the documents expando */
-        var expanID = 0;
-
-        /** Cached data for each document */
-        var expandoData = {};
-
-        /** Detect whether the browser supports unknown elements */
-        var supportsUnknownElements;
-
-        (function() {
-          try {
-            var a = document.createElement('a');
-            a.innerHTML = '<xyz></xyz>';
-            //if the hidden property is implemented we can assume, that the browser supports basic HTML5 Styles
-            supportsHtml5Styles = ('hidden' in a);
-
-            supportsUnknownElements = a.childNodes.length == 1 || (function() {
-              // assign a false positive if unable to shiv
-              (document.createElement)('a');
-              var frag = document.createDocumentFragment();
-              return (
-                typeof frag.cloneNode == 'undefined' ||
-                typeof frag.createDocumentFragment == 'undefined' ||
-                typeof frag.createElement == 'undefined'
-              );
-            }());
-          } catch(e) {
-            // assign a false positive if detection fails => unable to shiv
-            supportsHtml5Styles = true;
-            supportsUnknownElements = true;
-          }
-
-        }());
-
-        /*--------------------------------------------------------------------------*/
-
-        /**
-         * Creates a style sheet with the given CSS text and adds it to the document.
-         * @private
-         * @param {Document} ownerDocument The document.
-         * @param {String} cssText The CSS text.
-         * @returns {StyleSheet} The style element.
-         */
-        function addStyleSheet(ownerDocument, cssText) {
-          var p = ownerDocument.createElement('p'),
-          parent = ownerDocument.getElementsByTagName('head')[0] || ownerDocument.documentElement;
-
-          p.innerHTML = 'x<style>' + cssText + '</style>';
-          return parent.insertBefore(p.lastChild, parent.firstChild);
-        }
-
-        /**
-         * Returns the value of `html5.elements` as an array.
-         * @private
-         * @returns {Array} An array of shived element node names.
-         */
-        function getElements() {
-          var elements = html5.elements;
-          return typeof elements == 'string' ? elements.split(' ') : elements;
-        }
-
-        /**
-         * Returns the data associated to the given document
-         * @private
-         * @param {Document} ownerDocument The document.
-         * @returns {Object} An object of data.
-         */
-        function getExpandoData(ownerDocument) {
-          var data = expandoData[ownerDocument[expando]];
-          if (!data) {
-            data = {};
-            expanID++;
-            ownerDocument[expando] = expanID;
-            expandoData[expanID] = data;
-          }
-          return data;
-        }
-
-        /**
-         * returns a shived element for the given nodeName and document
-         * @memberOf html5
-         * @param {String} nodeName name of the element
-         * @param {Document} ownerDocument The context document.
-         * @returns {Object} The shived element.
-         */
-        function createElement(nodeName, ownerDocument, data){
-          if (!ownerDocument) {
-            ownerDocument = document;
-          }
-          if(supportsUnknownElements){
-            return ownerDocument.createElement(nodeName);
-          }
-          if (!data) {
-            data = getExpandoData(ownerDocument);
-          }
-          var node;
-
-          if (data.cache[nodeName]) {
-            node = data.cache[nodeName].cloneNode();
-          } else if (saveClones.test(nodeName)) {
-            node = (data.cache[nodeName] = data.createElem(nodeName)).cloneNode();
-          } else {
-            node = data.createElem(nodeName);
-          }
-
-          // Avoid adding some elements to fragments in IE < 9 because
-          // * Attributes like `name` or `type` cannot be set/changed once an element
-          //   is inserted into a document/fragment
-          // * Link elements with `src` attributes that are inaccessible, as with
-          //   a 403 response, will cause the tab/window to crash
-          // * Script elements appended to fragments will execute when their `src`
-          //   or `text` property is set
-          return node.canHaveChildren && !reSkip.test(nodeName) && !node.tagUrn ? data.frag.appendChild(node) : node;
-        }
-
-        /**
-         * returns a shived DocumentFragment for the given document
-         * @memberOf html5
-         * @param {Document} ownerDocument The context document.
-         * @returns {Object} The shived DocumentFragment.
-         */
-        function createDocumentFragment(ownerDocument, data){
-          if (!ownerDocument) {
-            ownerDocument = document;
-          }
-          if(supportsUnknownElements){
-            return ownerDocument.createDocumentFragment();
-          }
-          data = data || getExpandoData(ownerDocument);
-          var clone = data.frag.cloneNode(),
-          i = 0,
-          elems = getElements(),
-          l = elems.length;
-          for(;i<l;i++){
-            clone.createElement(elems[i]);
-          }
-          return clone;
-        }
-
-        /**
-         * Shivs the `createElement` and `createDocumentFragment` methods of the document.
-         * @private
-         * @param {Document|DocumentFragment} ownerDocument The document.
-         * @param {Object} data of the document.
-         */
-        function shivMethods(ownerDocument, data) {
-          if (!data.cache) {
-            data.cache = {};
-            data.createElem = ownerDocument.createElement;
-            data.createFrag = ownerDocument.createDocumentFragment;
-            data.frag = data.createFrag();
-          }
-
-
-          ownerDocument.createElement = function(nodeName) {
-            //abort shiv
-            if (!html5.shivMethods) {
-              return data.createElem(nodeName);
-            }
-            return createElement(nodeName, ownerDocument, data);
-          };
-
-          ownerDocument.createDocumentFragment = Function('h,f', 'return function(){' +
-                                                          'var n=f.cloneNode(),c=n.createElement;' +
-                                                          'h.shivMethods&&(' +
-                                                          // unroll the `createElement` calls
-                                                          getElements().join().replace(/[\w\-]+/g, function(nodeName) {
-            data.createElem(nodeName);
-            data.frag.createElement(nodeName);
-            return 'c("' + nodeName + '")';
-          }) +
-            ');return n}'
-                                                         )(html5, data.frag);
-        }
-
-        /*--------------------------------------------------------------------------*/
-
-        /**
-         * Shivs the given document.
-         * @memberOf html5
-         * @param {Document} ownerDocument The document to shiv.
-         * @returns {Document} The shived document.
-         */
-        function shivDocument(ownerDocument) {
-          if (!ownerDocument) {
-            ownerDocument = document;
-          }
-          var data = getExpandoData(ownerDocument);
-
-          if (html5.shivCSS && !supportsHtml5Styles && !data.hasCSS) {
-            data.hasCSS = !!addStyleSheet(ownerDocument,
-                                          // corrects block display not defined in IE6/7/8/9
-                                          'article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}' +
-                                            // adds styling not present in IE6/7/8/9
-                                            'mark{background:#FF0;color:#000}' +
-                                            // hides non-rendered elements
-                                            'template{display:none}'
-                                         );
-          }
-          if (!supportsUnknownElements) {
-            shivMethods(ownerDocument, data);
-          }
-          return ownerDocument;
-        }
-
-        /*--------------------------------------------------------------------------*/
-
-        /**
-         * The `html5` object is exposed so that more elements can be shived and
-         * existing shiving can be detected on iframes.
-         * @type Object
-         * @example
-         *
-         * // options can be changed before the script is included
-         * html5 = { 'elements': 'mark section', 'shivCSS': false, 'shivMethods': false };
-         */
-        var html5 = {
-
-          /**
-           * An array or space separated string of node names of the elements to shiv.
-           * @memberOf html5
-           * @type Array|String
-           */
-          'elements': options.elements || 'abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video',
-
-          /**
-           * current version of html5shiv
-           */
-          'version': version,
-
-          /**
-           * A flag to indicate that the HTML5 style sheet should be inserted.
-           * @memberOf html5
-           * @type Boolean
-           */
-          'shivCSS': (options.shivCSS !== false),
-
-          /**
-           * Is equal to true if a browser supports creating unknown/HTML5 elements
-           * @memberOf html5
-           * @type boolean
-           */
-          'supportsUnknownElements': supportsUnknownElements,
-
-          /**
-           * A flag to indicate that the document's `createElement` and `createDocumentFragment`
-           * methods should be overwritten.
-           * @memberOf html5
-           * @type Boolean
-           */
-          'shivMethods': (options.shivMethods !== false),
-
-          /**
-           * A string to describe the type of `html5` object ("default" or "default print").
-           * @memberOf html5
-           * @type String
-           */
-          'type': 'default',
-
-          // shivs the document according to the specified `html5` object options
-          'shivDocument': shivDocument,
-
-          //creates a shived element
-          createElement: createElement,
-
-          //creates a shived documentFragment
-          createDocumentFragment: createDocumentFragment
-        };
-
-        /*--------------------------------------------------------------------------*/
-
-        // expose html5
-        window.html5 = html5;
-
-        // shiv the document
-        shivDocument(document);
-
-    }(this, document));
-    /*>>shiv*/
-
-    // Assign private properties to the return object with prefix
-    Modernizr._version      = version;
-
-    // expose these for the plugin API. Look in the source for how to join() them against your input
-    /*>>prefixes*/
-    Modernizr._prefixes     = prefixes;
-    /*>>prefixes*/
-    /*>>domprefixes*/
-    Modernizr._domPrefixes  = domPrefixes;
-    Modernizr._cssomPrefixes  = cssomPrefixes;
-    /*>>domprefixes*/
-
-    /*>>mq*/
-    // Modernizr.mq tests a given media query, live against the current state of the window
-    // A few important notes:
-    //   * If a browser does not support media queries at all (eg. oldIE) the mq() will always return false
-    //   * A max-width or orientation query will be evaluated against the current state, which may change later.
-    //   * You must specify values. Eg. If you are testing support for the min-width media query use:
-    //       Modernizr.mq('(min-width:0)')
-    // usage:
-    // Modernizr.mq('only screen and (max-width:768)')
-    Modernizr.mq            = testMediaQuery;
-    /*>>mq*/
-
-    /*>>hasevent*/
-    // Modernizr.hasEvent() detects support for a given event, with an optional element to test on
-    // Modernizr.hasEvent('gesturestart', elem)
-    Modernizr.hasEvent      = isEventSupported;
-    /*>>hasevent*/
-
-    /*>>testprop*/
-    // Modernizr.testProp() investigates whether a given style property is recognized
-    // Note that the property names must be provided in the camelCase variant.
-    // Modernizr.testProp('pointerEvents')
-    Modernizr.testProp      = function(prop){
-        return testProps([prop]);
-    };
-    /*>>testprop*/
-
-    /*>>testallprops*/
-    // Modernizr.testAllProps() investigates whether a given style property,
-    //   or any of its vendor-prefixed variants, is recognized
-    // Note that the property names must be provided in the camelCase variant.
-    // Modernizr.testAllProps('boxSizing')
-    Modernizr.testAllProps  = testPropsAll;
-    /*>>testallprops*/
-
-
-    /*>>teststyles*/
-    // Modernizr.testStyles() allows you to add custom styles to the document and test an element afterwards
-    // Modernizr.testStyles('#modernizr { position:absolute }', function(elem, rule){ ... })
-    Modernizr.testStyles    = injectElementWithStyles;
-    /*>>teststyles*/
-
-
-    /*>>prefixed*/
-    // Modernizr.prefixed() returns the prefixed or nonprefixed property name variant of your input
-    // Modernizr.prefixed('boxSizing') // 'MozBoxSizing'
-
-    // Properties must be passed as dom-style camelcase, rather than `box-sizing` hypentated style.
-    // Return values will also be the camelCase variant, if you need to translate that to hypenated style use:
-    //
-    //     str.replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-');
-
-    // If you're trying to ascertain which transition end event to bind to, you might do something like...
-    //
-    //     var transEndEventNames = {
-    //       'WebkitTransition' : 'webkitTransitionEnd',
-    //       'MozTransition'    : 'transitionend',
-    //       'OTransition'      : 'oTransitionEnd',
-    //       'msTransition'     : 'MSTransitionEnd',
-    //       'transition'       : 'transitionend'
-    //     },
-    //     transEndEventName = transEndEventNames[ Modernizr.prefixed('transition') ];
-
-    Modernizr.prefixed      = function(prop, obj, elem){
-      if(!obj) {
-        return testPropsAll(prop, 'pfx');
-      } else {
-        // Testing DOM property e.g. Modernizr.prefixed('requestAnimationFrame', window) // 'mozRequestAnimationFrame'
-        return testPropsAll(prop, obj, elem);
-      }
-    };
-    /*>>prefixed*/
-
-
-    /*>>cssclasses*/
-    // Remove "no-js" class from <html> element, if it exists:
-    docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2') +
-
-                            // Add the new classes to the <html> element.
-                            (enableClasses ? " mod-js mod-"+classes.join(" mod-") : '');
-    /*>>cssclasses*/
-
-    return Modernizr;
-
-})(this, document);
-
-module.exports = Modernizr;
-},{}],"aviator":[function(require,module,exports){
-// Modules
-var Navigator = require('./navigator');
-
-
-/**
-Only expose a tiny API to keep internal routing safe
-
-@singleton Aviator
-**/
-window.Aviator = {
-
-  /**
-  @property pushStateEnabled
-  @type {Boolean}
-  @default true if the browser supports pushState
-  **/
-  pushStateEnabled: ('pushState' in window.history),
-
-  /**
-  @property linkSelector
-  @type {String}
-  @default 'a.navigate'
-  **/
-  linkSelector: 'a.navigate',
-
-  /**
-  the root of the uri from which routing will append to
-
-  @property root
-  @type {String}
-  @default ''
-  **/
-  root: '',
-
-  /**
-  @property _navigator
-  @type {Navigator}
-
-  @private
-  **/
-  _navigator: new Navigator(),
-
-  /**
-  @method setRoutes
-  @param {Object} routes
-  **/
-  setRoutes: function (routes) {
-    this._navigator.setRoutes(routes);
-  },
-
-  /**
-  dispatches routes to targets and sets up event handlers
-
-  @method dispatch
-  **/
-  dispatch: function () {
-    var navigator = this._navigator;
-
-    navigator.setup({
-      pushStateEnabled: this.pushStateEnabled,
-      linkSelector:     this.linkSelector,
-      root:             this.root
-    });
-
-    navigator.dispatch();
-  },
-
-  /**
-  @method navigate
-  @param {String} uri to navigate to
-  @param {Object} [options]
-  **/
-  navigate: function (uri, options) {
-    this._navigator.navigate(uri, options);
-  },
-
-
-  /**
-  @method serializeQueryParams
-  @param {Object} queryParams
-  @return {String} queryString "?foo=bar&baz[]=boo&baz=[]oob"
-  **/
-  serializeQueryParams: function (queryParams) {
-    return this._navigator.serializeQueryParams(queryParams);
-  },
-
-  /**
-  @method getCurrentRequest
-  @return {String}
-  **/
-  getCurrentRequest: function () {
-    return this._navigator.getCurrentRequest();
-  },
-
-  /**
-  @method getCurrentURI
-  @return {String}
-  **/
-  getCurrentURI: function () {
-    return this._navigator.getCurrentURI();
-  },
-
-  /**
-  @method refresh
-  **/
-  refresh: function () {
-    this._navigator.refresh();
-  },
-
-  /**
-  @method rewriteRouteTo
-  @param {String} newRoute
-  @return {Object}
-  **/
-  rewriteRouteTo: function (newRoute) {
-    var target = {
-      rewrite: function (request) {
-        Aviator.navigate(newRoute, {
-          namedParams: request.namedParams,
-          replace: true
-        });
-      }
-    };
-
-    return {
-      target: target,
-      '/': 'rewrite'
-    };
-  }
-
-};
-
-},{"./navigator":3}],"baron":[function(require,module,exports){
-(function(window, $, undefined) {
-    'use strict';
-
-    if (!window) return; // Server side
-
-var
-    _baron = baron, // Stored baron value for noConflict usage
-    pos = ['left', 'top', 'right', 'bottom', 'width', 'height'],
-    origin = {
-        v: { // Vertical
-            x: 'Y', pos: pos[1], oppos: pos[3], crossPos: pos[0], crossOpPos: pos[2], size: pos[5], crossSize: pos[4],
-            client: 'clientHeight', crossClient: 'clientWidth', crossScroll: 'scrollWidth', offset: 'offsetHeight', crossOffset: 'offsetWidth', offsetPos: 'offsetTop',
-            scroll: 'scrollTop', scrollSize: 'scrollHeight'
-        },
-        h: { // Horizontal
-            x: 'X', pos: pos[0], oppos: pos[2], crossPos: pos[1], crossOpPos: pos[3], size: pos[4], crossSize: pos[5],
-            client: 'clientWidth', crossClient: 'clientHeight', crossScroll: 'scrollHeight', offset: 'offsetWidth', crossOffset: 'offsetHeight', offsetPos: 'offsetLeft',
-            scroll: 'scrollLeft', scrollSize: 'scrollWidth'
-        }
-    },
-
-    each = function(obj, iterator) {
-        var i = 0;
-
-        if (obj.length === undefined || obj === window) obj = [obj];
-
-        while (obj[i]) {
-            iterator.call(this, obj[i], i);
-            i++;
-        }
-    },
-
-    baron = function(params) {
-        var jQueryMode,
-            roots,
-            $;
-
-        params = params || {};
-        $ = params.$ || $ || window.jQuery;
-        jQueryMode = this instanceof $;  // this - window or jQuery instance
-
-        if (jQueryMode) {
-            params.root = roots = this;
-        } else {
-            roots = $(params.root || params.scroller);
-        }
-
-        var instance = new baron.fn.constructor(roots, params, $);
-
-        if (instance.autoUpdate) {
-            instance.autoUpdate();
-        }
-
-        return instance;
-    };
-
-    // shortcut for getTime
-    function getTime() {
-        return new Date().getTime();
-    }
-
-    baron.fn = {
-        constructor: function(roots, input, $) {
-            var params = validate(input);
-
-            params.$ = $;
-            each.call(this, roots, function(root, i) {
-                var localParams = clone(params);
-
-                if (params.root && params.scroller) {
-                    localParams.scroller = params.$(params.scroller, root);
-                    if (!localParams.scroller.length) {
-                        localParams.scroller = root;
-                    }
-                } else {
-                    localParams.scroller = root;
-                }
-
-                localParams.root = root;
-                this[i] = init(localParams);
-                this.length = i + 1;
-            });
-
-            this.params = params;
-        },
-
-        dispose: function() {
-            var params = this.params;
-
-            if (this[0]) { /* Если есть хотя бы 1 рабочий инстанс */
-                each(this, function(item) {
-                    item.dispose(params);
-                });
-            }
-            this.params = null;
-        },
-
-        update: function() {
-            var i = 0;
-
-            while (this[i]) {
-                this[i].update.apply(this[i], arguments);
-                i++;
-            }
-        },
-
-        baron: function(params) {
-            params.root = [];
-            params.scroller = this.params.scroller;
-
-            each.call(this, this, function(elem) {
-                params.root.push(elem.root);
-            });
-            params.direction = (this.params.direction == 'v') ? 'h' : 'v';
-            params._chain = true;
-
-            return baron(params);
-        }
-    };
-
-    function manageEvents(item, eventManager, mode) {
-        item._eventHandlers = item._eventHandlers || [ // Creating new functions for one baron item only one time
-            {
-                // onScroll:
-                element: item.scroller,
-
-                handler: function(e) {
-                    item.scroll(e);
-                },
-
-                type: 'scroll'
-            }, {
-                // css transitions & animations
-                element: item.root,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'transitionend animationend'
-            }, {
-                // onKeyup (textarea):
-                element: item.scroller,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'keyup'
-            }, {
-                // onMouseDown:
-                element: item.bar,
-
-                handler: function(e) {
-                    e.preventDefault(); // Text selection disabling in Opera... and all other browsers?
-                    item.selection(); // Disable text selection in ie8
-                    item.drag.now = 1; // Save private byte
-                },
-
-                type: 'touchstart mousedown'
-            }, {
-                // onMouseUp:
-                element: document,
-
-                handler: function() {
-                    item.selection(1); // Enable text selection
-                    item.drag.now = 0;
-                },
-
-                type: 'mouseup blur touchend'
-            }, {
-                // onCoordinateReset:
-                element: document,
-
-                handler: function(e) {
-                    if (e.button != 2) { // Not RM
-                        item._pos0(e);
-                    }
-                },
-
-                type: 'touchstart mousedown'
-            }, {
-                // onMouseMove:
-                element: document,
-
-                handler: function(e) {
-                    if (item.drag.now) {
-                        item.drag(e);
-                    }
-                },
-
-                type: 'mousemove touchmove'
-            }, {
-                // onResize:
-                element: window,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'resize'
-            }, {
-                // sizeChange:
-                element: item.root,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'sizeChange'
-            }
-        ];
-
-        each(item._eventHandlers, function(event) {
-            if (event.element) {
-                eventManager(event.element, event.type, event.handler, mode);
-            }
-        });
-
-        // if (item.scroller) {
-        //     event(item.scroller, 'scroll', item._eventHandlers.onScroll, mode);
-        // }
-        // if (item.bar) {
-        //     event(item.bar, 'touchstart mousedown', item._eventHandlers.onMouseDown, mode);
-        // }
-        // event(document, 'mouseup blur touchend', item._eventHandlers.onMouseUp, mode);
-        // event(document, 'touchstart mousedown', item._eventHandlers.onCoordinateReset, mode);
-        // event(document, 'mousemove touchmove', item._eventHandlers.onMouseMove, mode);
-        // event(window, 'resize', item._eventHandlers.onResize, mode);
-        // if (item.root) {
-        //     event(item.root, 'sizeChange', item._eventHandlers.onResize, mode); // Custon event for alternate baron update mechanism
-        // }
-    }
-
-    function manageAttr(node, direction, mode) {
-        var attrName = 'data-baron-' + direction;
-
-        if (mode == 'on') {
-            node.setAttribute(attrName, 'inited');
-        } else if (mode == 'off') {
-            node.removeAttribute(attrName);
-        } else {
-            return node.getAttribute(attrName);
-        }
-    }
-
-    function init(params) {
-        if (manageAttr(params.root, params.direction)) throw new Error('Second baron initialization');
-
-        var out = new item.prototype.constructor(params); // __proto__ of returning object is baron.prototype
-
-        manageEvents(out, params.event, 'on');
-
-        manageAttr(out.root, params.direction, 'on');
-
-        out.update();
-
-        return out;
-    }
-
-    function clone(input) {
-        var output = {};
-
-        input = input || {};
-
-        for (var key in input) {
-            if (input.hasOwnProperty(key)) {
-                output[key] = input[key];
-            }
-        }
-
-        return output;
-    }
-
-    function validate(input) {
-        var output = clone(input);
-
-        output.direction = output.direction || 'v';
-
-        var event = input.event || function(elem, event, func, mode) {
-            output.$(elem)[mode || 'on'](event, func);
-        };
-
-        output.event = function(elems, e, func, mode) {
-            each(elems, function(elem) {
-                event(elem, e, func, mode);
-            });
-        };
-
-        return output;
-    }
-
-    function fire(eventName) {
-        /* jshint validthis:true */
-        if (this.events && this.events[eventName]) {
-            for (var i = 0 ; i < this.events[eventName].length ; i++) {
-                var args = Array.prototype.slice.call( arguments, 1 );
-
-                this.events[eventName][i].apply(this, args);
-            }
-        }
-    }
-
-    var item = {};
-
-    item.prototype = {
-        // underscore.js realization
-        _debounce: function(func, wait) {
-            var self = this,
-                timeout,
-                // args, // right now there is no need for arguments
-                // context, // and for context
-                timestamp;
-                // result; // and for result
-
-            var later = function() {
-                if (self._disposed) {
-                    clearTimeout(timeout);
-                    timeout = self = null;
-                    return;
-                }
-
-                var last = getTime() - timestamp;
-
-                if (last < wait && last >= 0) {
-                    timeout = setTimeout(later, wait - last);
-                } else {
-                    timeout = null;
-                    // result = func.apply(context, args);
-                    func();
-                    // context = args = null;
-                }
-            };
-
-            return function() {
-                // context = this;
-                // args = arguments;
-                timestamp = getTime();
-
-                if (!timeout) {
-                    timeout = setTimeout(later, wait);
-                }
-
-                // return result;
-            };
-        },
-
-        constructor: function(params) {
-            var $,
-                barPos,
-                scrollerPos0,
-                track,
-                resizePauseTimer,
-                scrollPauseTimer,
-                scrollingTimer,
-                pause,
-                scrollLastFire,
-                resizeLastFire,
-                oldBarSize;
-
-            resizeLastFire = scrollLastFire = getTime();
-
-            $ = this.$ = params.$;
-            this.event = params.event;
-            this.events = {};
-
-            function getNode(sel, context) {
-                return $(sel, context)[0]; // Can be undefined
-            }
-
-            // DOM elements
-            this.root = params.root; // Always html node, not just selector
-            this.scroller = getNode(params.scroller); // (params.scroller) ? getNode(params.scroller, this.root) : this.root;
-            this.bar = getNode(params.bar, this.root);
-            track = this.track = getNode(params.track, this.root);
-            if (!this.track && this.bar) {
-                track = this.bar.parentNode;
-            }
-            this.clipper = this.scroller.parentNode;
-
-            // Parameters
-            this.direction = params.direction;
-            this.origin = origin[this.direction];
-            this.barOnCls = params.barOnCls || '_baron';
-            this.scrollingCls = params.scrollingCls;
-            this.barTopLimit = 0;
-            pause = params.pause * 1000 || 0;
-
-            // Updating height or width of bar
-            function setBarSize(size) {
-                /* jshint validthis:true */
-                var barMinSize = this.barMinSize || 20;
-
-                if (size > 0 && size < barMinSize) {
-                    size = barMinSize;
-                }
-
-                if (this.bar) {
-                    $(this.bar).css(this.origin.size, parseInt(size, 10) + 'px');
-                }
-            }
-
-            // Updating top or left bar position
-            function posBar(pos) {
-                /* jshint validthis:true */
-                if (this.bar) {
-                    var was = $(this.bar).css(this.origin.pos),
-                        will = +pos + 'px';
-
-                    if (will && will != was) {
-                        $(this.bar).css(this.origin.pos, will);
-                    }
-                }
-            }
-
-            // Free path for bar
-            function k() {
-                /* jshint validthis:true */
-                return track[this.origin.client] - this.barTopLimit - this.bar[this.origin.offset];
-            }
-
-            // Relative content top position to bar top position
-            function relToPos(r) {
-                /* jshint validthis:true */
-                return r * k.call(this) + this.barTopLimit;
-            }
-
-            // Bar position to relative content position
-            function posToRel(t) {
-                /* jshint validthis:true */
-                return (t - this.barTopLimit) / k.call(this);
-            }
-
-            // Cursor position in main direction in px // Now with iOs support
-            this.cursor = function(e) {
-                return e['client' + this.origin.x] || (((e.originalEvent || e).touches || {})[0] || {})['page' + this.origin.x];
-            };
-
-            // Text selection pos preventing
-            function dontPosSelect() {
-                return false;
-            }
-
-            this.pos = function(x) { // Absolute scroller position in px
-                var ie = 'page' + this.origin.x + 'Offset',
-                    key = (this.scroller[ie]) ? ie : this.origin.scroll;
-
-                if (x !== undefined) this.scroller[key] = x;
-
-                return this.scroller[key];
-            };
-
-            this.rpos = function(r) { // Relative scroller position (0..1)
-                var free = this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client],
-                    x;
-
-                if (r) {
-                    x = this.pos(r * free);
-                } else {
-                    x = this.pos();
-                }
-
-                return x / (free || 1);
-            };
-
-            // Switch on the bar by adding user-defined CSS classname to scroller
-            this.barOn = function(dispose) {
-                if (this.barOnCls) {
-                    if (dispose || this.scroller[this.origin.client] >= this.scroller[this.origin.scrollSize]) {
-                        if ($(this.root).hasClass(this.barOnCls)) $(this.root).removeClass(this.barOnCls);
-                    } else {
-                        if (!$(this.root).hasClass(this.barOnCls)) $(this.root).addClass(this.barOnCls);
-                    }
-                }
-            };
-
-            this._pos0 = function(e) {
-                scrollerPos0 = this.cursor(e) - barPos;
-            };
-
-            this.drag = function(e) {
-                this.scroller[this.origin.scroll] = posToRel.call(this, this.cursor(e) - scrollerPos0) * (this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client]);
-            };
-
-            // Text selection preventing on drag
-            this.selection = function(enable) {
-                this.event(document, 'selectpos selectstart', dontPosSelect, enable ? 'off' : 'on');
-            };
-
-            // onResize & DOM modified handler
-            this.resize = function() {
-                var self = this,
-                    delay = 0;
-
-                if (getTime() - resizeLastFire < pause) {
-                    clearTimeout(resizePauseTimer);
-                    delay = pause;
-                }
-
-                function upd() {
-                    var delta,
-                        client,
-                        offset,
-                        was,
-                        will;
-
-                    // Change a css inline rule only if it is really changing value
-                    // function tryCss(prop, value, ) {
-                    //     var was = $(self.clipper).css(self.origin.crossSize),
-                    //         will = self.clipper[self.origin.crossClient] - delta + 'px';
-                    // };
-
-                    self.barOn();
-
-                    client = self.scroller[self.origin.crossClient];
-                    offset = self.scroller[self.origin.crossOffset];
-                    delta = offset - client;
-
-                    if (offset) { // if there is no size, css should not be set
-                        if (params.freeze && !self.clipper.style[self.origin.crossSize]) { // Sould fire only once
-                            was = $(self.clipper).css(self.origin.crossSize);
-                            will = self.clipper[self.origin.crossClient] - delta + 'px';
-
-                            if (was != will) {
-                                $(self.clipper).css(self.origin.crossSize, will);
-                            }
-                        }
-
-                        was = $(self.clipper).css(self.origin.crossSize);
-                        will = self.clipper[self.origin.crossClient] + delta + 'px';
-
-                        if (was != will) {
-                            $(self.scroller).css(self.origin.crossSize, will);
-                        }
-                    }
-
-                    Array.prototype.unshift.call(arguments, 'resize');
-                    fire.apply(self, arguments);
-
-                    resizeLastFire = getTime();
-                }
-
-                if (delay) {
-                    resizePauseTimer = setTimeout(upd, delay);
-                } else {
-                    upd();
-                }
-            };
-
-            this.updatePositions = function() {
-                var newBarSize,
-                    self = this;
-
-                if (self.bar) {
-                    newBarSize = (track[self.origin.client] - self.barTopLimit) * self.scroller[self.origin.client] / self.scroller[self.origin.scrollSize];
-
-                    // Positioning bar
-                    if (parseInt(oldBarSize, 10) != parseInt(newBarSize, 10)) {
-                        setBarSize.call(self, newBarSize);
-                        oldBarSize = newBarSize;
-                    }
-
-                    barPos = relToPos.call(self, self.rpos());
-
-                    posBar.call(self, barPos);
-                }
-
-                Array.prototype.unshift.call( arguments, 'scroll' );
-                fire.apply(self, arguments);
-
-                scrollLastFire = getTime();
-            };
-
-            // onScroll handler
-            this.scroll = function() {
-                var delay = 0,
-                    self = this;
-
-                if (getTime() - scrollLastFire < pause) {
-                    clearTimeout(scrollPauseTimer);
-                    delay = pause;
-                }
-
-                if (getTime() - scrollLastFire < pause) {
-                    clearTimeout(scrollPauseTimer);
-                    delay = pause;
-                }
-
-                if (delay) {
-                    scrollPauseTimer = setTimeout(function() {
-                        self.updatePositions();
-                    }, delay);
-                } else {
-                    self.updatePositions();
-                }
-
-                if (self.scrollingCls) {
-                    if (!scrollingTimer) {
-                        this.$(this.scroller).addClass(this.scrollingCls);
-                    }
-                    clearTimeout(scrollingTimer);
-                    scrollingTimer = setTimeout(function() {
-                        self.$(self.scroller).removeClass(self.scrollingCls);
-                        scrollingTimer = undefined;
-                    }, 300);
-                }
-
-            };
-
-            return this;
-        },
-
-        update: function(params) {
-            fire.call(this, 'upd', params); // Update all plugins' params
-
-            this.resize(1);
-            this.updatePositions();
-
-            return this;
-        },
-
-        // One instance
-        dispose: function(params) {
-            manageEvents(this, this.event, 'off');
-            manageAttr(this.root, params.direction, 'off');
-            $(this.scroller).css(this.origin.crossSize, '');
-            this.barOn(true);
-            fire.call(this, 'dispose');
-            this._disposed = true;
-        },
-
-        on: function(eventName, func, arg) {
-            var names = eventName.split(' ');
-
-            for (var i = 0 ; i < names.length ; i++) {
-                if (names[i] == 'init') {
-                    func.call(this, arg);
-                } else {
-                    this.events[names[i]] = this.events[names[i]] || [];
-
-                    this.events[names[i]].push(function(userArg) {
-                        func.call(this, userArg || arg);
-                    });
-                }
-            }
-        }
-    };
-
-    baron.fn.constructor.prototype = baron.fn;
-    item.prototype.constructor.prototype = item.prototype;
-
-    // Use when you need "baron" global var for another purposes
-    baron.noConflict = function() {
-        window.baron = _baron; // Restoring original value of "baron" global var
-
-        return baron;
-    };
-
-    baron.version = '0.7.10';
-
-    if ($ && $.fn) { // Adding baron to jQuery as plugin
-        $.fn.baron = baron;
-    }
-
-    window.baron = baron; // Use noConflict method if you need window.baron var for another purposes
-    if (window['module'] && module.exports) {
-        module.exports = baron.noConflict();
-    }
-})(window, window.$);
-
-/* Fixable elements plugin for baron 0.6+ */
-(function(window, undefined) {
-    var fix = function(userParams) {
-        var elements, viewPortSize,
-            params = { // Default params
-                outside: '',
-                inside: '',
-                before: '',
-                after: '',
-                past: '',
-                future: '',
-                radius: 0,
-                minView: 0
-            },
-            topFixHeights = [], // inline style for element
-            topRealHeights = [], // ? something related to negative margins for fixable elements
-            headerTops = [], // offset positions when not fixed
-            scroller = this.scroller,
-            eventManager = this.event,
-            $ = this.$,
-            self = this;
-
-        // i - number of fixing element, pos - fix-position in px, flag - 1: top, 2: bottom
-        // Invocation only in case when fix-state changed
-        function fixElement(i, pos, flag) {
-            var ori = flag == 1 ? 'pos' : 'oppos';
-
-            if (viewPortSize < (params.minView || 0)) { // No headers fixing when no enought space for viewport
-                pos = undefined;
-            }
-
-            // Removing all fixing stuff - we can do this because fixElement triggers only when fixState really changed
-            this.$(elements[i]).css(this.origin.pos, '').css(this.origin.oppos, '').removeClass(params.outside);
-
-            // Fixing if needed
-            if (pos !== undefined) {
-                pos += 'px';
-                this.$(elements[i]).css(this.origin[ori], pos).addClass(params.outside);
-            }
-        }
-
-        function bubbleWheel(e) {
-            try {
-                i = document.createEvent('WheelEvent'); // i - for extra byte
-                // evt.initWebKitWheelEvent(deltaX, deltaY, window, screenX, screenY, clientX, clientY, ctrlKey, altKey, shiftKey, metaKey);
-                i.initWebKitWheelEvent(e.originalEvent.wheelDeltaX, e.originalEvent.wheelDeltaY);
-                scroller.dispatchEvent(i);
-                e.preventDefault();
-            } catch (e) {}
-        }
-
-        function init(_params) {
-            var pos;
-
-            for (var key in _params) {
-                params[key] = _params[key];
-            }
-
-            elements = this.$(params.elements, this.scroller);
-
-            if (elements) {
-                viewPortSize = this.scroller[this.origin.client];
-                for (var i = 0 ; i < elements.length ; i++) {
-                    // Variable header heights
-                    pos = {};
-                    pos[this.origin.size] = elements[i][this.origin.offset];
-                    if (elements[i].parentNode !== this.scroller) {
-                        this.$(elements[i].parentNode).css(pos);
-                    }
-                    pos = {};
-                    pos[this.origin.crossSize] = elements[i].parentNode[this.origin.crossClient];
-                    this.$(elements[i]).css(pos);
-
-                    // Between fixed headers
-                    viewPortSize -= elements[i][this.origin.offset];
-
-                    headerTops[i] = elements[i].parentNode[this.origin.offsetPos]; // No paddings for parentNode
-
-                    // Summary elements height above current
-                    topFixHeights[i] = (topFixHeights[i - 1] || 0); // Not zero because of negative margins
-                    topRealHeights[i] = (topRealHeights[i - 1] || Math.min(headerTops[i], 0));
-
-                    if (elements[i - 1]) {
-                        topFixHeights[i] += elements[i - 1][this.origin.offset];
-                        topRealHeights[i] += elements[i - 1][this.origin.offset];
-                    }
-
-                    if ( !(i == 0 && headerTops[i] == 0)/* && force */) {
-                        this.event(elements[i], 'mousewheel', bubbleWheel, 'off');
-                        this.event(elements[i], 'mousewheel', bubbleWheel);
-                    }
-                }
-
-                if (params.limiter && elements[0]) { // Bottom edge of first header as top limit for track
-                    if (this.track && this.track != this.scroller) {
-                        pos = {};
-                        pos[this.origin.pos] = elements[0].parentNode[this.origin.offset];
-                        this.$(this.track).css(pos);
-                    } else {
-                        this.barTopLimit = elements[0].parentNode[this.origin.offset];
-                    }
-                    // this.barTopLimit = elements[0].parentNode[this.origin.offset];
-                    this.scroll();
-                }
-
-                if (params.limiter === false) { // undefined (in second fix instance) should have no influence on bar limit
-                    this.barTopLimit = 0;
-                }
-            }
-
-            var event = {
-                element: elements,
-
-                handler: function() {
-                    var parent = $(this)[0].parentNode,
-                        top = parent.offsetTop,
-                        num;
-
-                    // finding num -> elements[num] === this
-                    for (var i = 0 ; i < elements.length ; i++ ) {
-                        if (elements[i] === this) num = i;
-                    }
-
-                    var pos = top - topFixHeights[num];
-
-                    if (params.scroll) { // User defined callback
-                        params.scroll({
-                            x1: self.scroller.scrollTop,
-                            x2: pos
-                        });
-                    } else {
-                        self.scroller.scrollTop = pos;
-                    }
-                },
-
-                type: 'click'
-            };
-
-            if (params.clickable) {
-                this._eventHandlers.push(event); // For auto-dispose
-                // eventManager(event.element, event.type, event.handler, 'off');
-                eventManager(event.element, event.type, event.handler, 'on');
-            }
-        }
-
-        this.on('init', init, userParams);
-
-        var fixFlag = [], // 1 - past, 2 - future, 3 - current (not fixed)
-            gradFlag = [];
-        this.on('init scroll', function() {
-            var fixState, hTop, gradState;
-
-            if (elements) {
-                var change;
-
-                // fixFlag update
-                for (var i = 0 ; i < elements.length ; i++) {
-                    fixState = 0;
-                    if (headerTops[i] - this.pos() < topRealHeights[i] + params.radius) {
-                        // Header trying to go up
-                        fixState = 1;
-                        hTop = topFixHeights[i];
-                    } else if (headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize - params.radius) {
-                        // Header trying to go down
-                        fixState = 2;
-                        // console.log('topFixHeights[i] + viewPortSize + topRealHeights[i]', topFixHeights[i], this.scroller[this.origin.client], topRealHeights[i]);
-                        hTop = this.scroller[this.origin.client] - elements[i][this.origin.offset] - topFixHeights[i] - viewPortSize;
-                        // console.log('hTop', hTop, viewPortSize, elements[this.origin.offset], topFixHeights[i]);
-                        //(topFixHeights[i] + viewPortSize + elements[this.origin.offset]) - this.scroller[this.origin.client];
-                    } else {
-                        // Header in viewport
-                        fixState = 3;
-                        hTop = undefined;
-                    }
-
-                    gradState = false;
-                    if (headerTops[i] - this.pos() < topRealHeights[i] || headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize) {
-                        gradState = true;
-                    }
-
-                    if (fixState != fixFlag[i] || gradState != gradFlag[i]) {
-                        fixElement.call(this, i, hTop, fixState);
-                        fixFlag[i] = fixState;
-                        gradFlag[i] = gradState;
-                        change = true;
-                    }
-                }
-
-                // Adding positioning classes (on last top and first bottom header)
-                if (change) { // At leats one change in elements flag structure occured
-                    for (i = 0 ; i < elements.length ; i++) {
-                        if (fixFlag[i] == 1 && params.past) {
-                            this.$(elements[i]).addClass(params.past).removeClass(params.future);
-                        }
-
-                        if (fixFlag[i] == 2 && params.future) {
-                            this.$(elements[i]).addClass(params.future).removeClass(params.past);
-                        }
-
-                        if (fixFlag[i] == 3) {
-                            if (params.future || params.past) this.$(elements[i]).removeClass(params.past).removeClass(params.future);
-                            if (params.inside) this.$(elements[i]).addClass(params.inside);
-                        } else if (params.inside) {
-                            this.$(elements[i]).removeClass(params.inside);
-                        }
-
-                        if (fixFlag[i] != fixFlag[i + 1] && fixFlag[i] == 1 && params.before) {
-                            this.$(elements[i]).addClass(params.before).removeClass(params.after); // Last top fixed header
-                        } else if (fixFlag[i] != fixFlag[i - 1] && fixFlag[i] == 2 && params.after) {
-                            this.$(elements[i]).addClass(params.after).removeClass(params.before); // First bottom fixed header
-                        } else {
-                            this.$(elements[i]).removeClass(params.before).removeClass(params.after);
-                        }
-
-                        if (params.grad) {
-                            if (gradFlag[i]) {
-                                this.$(elements[i]).addClass(params.grad);
-                            } else {
-                                this.$(elements[i]).removeClass(params.grad);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        this.on('resize upd', function(updParams) {
-            init.call(this, updParams && updParams.fix);
-        });
-    };
-
-    baron.fn.fix = function(params) {
-        var i = 0;
-
-        while (this[i]) {
-            fix.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-/* Controls plugin for baron 0.6+ */
-(function(window, undefined) {
-    var controls = function(params) {
-        var forward, backward, track, screen,
-            self = this, // AAAAAA!!!!!11
-            event;
-
-        screen = params.screen || 0.9;
-
-        if (params.forward) {
-            forward = this.$(params.forward, this.clipper);
-
-            event = {
-                element: forward,
-
-                handler: function() {
-                    var y = self.pos() - params.delta || 30;
-
-                    self.pos(y);
-                },
-
-                type: 'click'
-            };
-
-            this._eventHandlers.push(event); // For auto-dispose
-            this.event(event.element, event.type, event.handler, 'on');
-        }
-
-        if (params.backward) {
-            backward = this.$(params.backward, this.clipper);
-
-            event = {
-                element: backward,
-
-                handler: function() {
-                    var y = self.pos() + params.delta || 30;
-
-                    self.pos(y);
-                },
-
-                type: 'click'
-            };
-
-            this._eventHandlers.push(event); // For auto-dispose
-            this.event(event.element, event.type, event.handler, 'on');
-        }
-
-        if (params.track) {
-            if (params.track === true) {
-                track = this.track;
-            } else {
-                track = this.$(params.track, this.clipper)[0];
-            }
-
-            if (track) {
-                event = {
-                    element: track,
-
-                    handler: function(e) {
-                        var x = e['offset' + self.origin.x],
-                            xBar = self.bar[self.origin.offsetPos],
-                            sign = 0;
-
-                        if (x < xBar) {
-                            sign = -1;
-                        } else if (x > xBar + self.bar[self.origin.offset]) {
-                            sign = 1;
-                        }
-
-                        var y = self.pos() + sign * screen * self.scroller[self.origin.client];
-                        self.pos(y);
-                    },
-
-                    type: 'mousedown'
-                };
-
-                this._eventHandlers.push(event); // For auto-dispose
-                this.event(event.element, event.type, event.handler, 'on');
-            }
-        }
-    };
-
-    baron.fn.controls = function(params) {
-        var i = 0;
-
-        while (this[i]) {
-            controls.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-/* Pull to load plugin for baron 0.6+ */
-(function(window, undefined) {
-    var pull = function(params) {
-        var block = this.$(params.block),
-            size = params.size || this.origin.size,
-            limit = params.limit || 80,
-            onExpand = params.onExpand,
-            elements = params.elements || [],
-            inProgress = params.inProgress || '',
-            self = this,
-            _insistence = 0,
-            _zeroXCount = 0,
-            _interval,
-            _timer,
-            _x = 0,
-            _onExpandCalled,
-            _waiting = params.waiting || 500,
-            _on;
-
-        function getSize() {
-            return self.scroller[self.origin.scroll] + self.scroller[self.origin.offset];
-        }
-
-        // Scroller content height
-        function getContentSize() {
-            return self.scroller[self.origin.scrollSize];
-        }
-
-        // Scroller height
-        function getScrollerSize() {
-            return self.scroller[self.origin.client];
-        }
-
-        function step(x, force) {
-            var k = x * 0.0005;
-
-            return Math.floor(force - k * (x + 550));
-        }
-
-        function toggle(on) {
-            _on = on;
-
-            if (on) {
-                update(); // First time with no delay
-                _interval = setInterval(update, 200);
-            } else {
-                clearInterval(_interval);
-            }
-        }
-
-        function update() {
-            var pos = {},
-                height = getSize(),
-                scrollHeight = getContentSize(),
-                dx,
-                op4,
-                scrollInProgress = _insistence == 1;
-
-            op4 = 0; // Возвращающая сила
-            if (_insistence > 0) {
-                op4 = 40;
-            }
-            //if (_insistence > -1) {
-                dx = step(_x, op4);
-                if (height >= scrollHeight - _x && _insistence > -1) {
-                    if (scrollInProgress) {
-                        _x += dx;
-                    }
-                } else {
-                    _x = 0;
-                }
-
-                if (_x < 0) _x = 0;
-
-                pos[size] = _x + 'px';
-                if (getScrollerSize() <= getContentSize()) {
-                    self.$(block).css(pos);
-                    for (var i = 0 ; i < elements.length ; i++) {
-                        self.$(elements[i].self).css(elements[i].property, Math.min(_x / limit * 100, 100) + '%');
-                    }
-                }
-
-                if (inProgress && _x) {
-                    self.$(self.root).addClass(inProgress);
-                }
-
-                if (_x == 0) {
-                    if (params.onCollapse) {
-                        params.onCollapse();
-                    }
-                }
-
-                _insistence = 0;
-                _timer = setTimeout(function() {
-                    _insistence = -1;
-                }, _waiting);
-            //}
-
-            if (onExpand && _x > limit && !_onExpandCalled) {
-                onExpand();
-                _onExpandCalled = true;
-            }
-
-            if (_x == 0) {
-                _zeroXCount++;
-            } else {
-                _zeroXCount = 0;
-            }
-            if (_zeroXCount > 1) {
-                toggle(false);
-                _onExpandCalled = false;
-                if (inProgress) {
-                    self.$(self.root).removeClass(inProgress);
-                }
-            }
-        }
-
-        this.on('init', function() {
-            toggle(true);
-        });
-
-        this.on('dispose', function() {
-            toggle(false);
-        });
-
-        this.event(this.scroller, 'mousewheel DOMMouseScroll', function(e) {
-            var down = e.wheelDelta < 0 || (e.originalEvent && e.originalEvent.wheelDelta < 0) || e.detail > 0;
-
-            if (down) {
-                _insistence = 1;
-                clearTimeout(_timer);
-                if (!_on && getSize() >= getContentSize()) {
-                    toggle(true);
-                }
-            }
-            //  else {
-            //     toggle(false);
-            // }
-        });
-    };
-
-    baron.fn.pull = function(params) {
-        var i = 0;
-
-        while (this[i]) {
-            pull.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-/* Autoupdate plugin for baron 0.6+ */
-(function(window) {
-    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || null;
-
-    var autoUpdate = function() {
-        var self = this;
-        var watcher;
-
-        function actualizeWatcher() {
-            if (!self.root[self.origin.offset]) {
-                startWatch();
-            } else {
-                stopWatch();
-            }
-        }
-
-        // Set interval timeout for watching when root node will be visible
-        function startWatch() {
-            if (watcher) return;
-
-            watcher = setInterval(function() {
-                if (self.root[self.origin.offset]) {
-                    stopWatch();
-                    self.update();
-                }
-            }, 300); // is it good enought for you?)
-        }
-
-        function stopWatch() {
-            clearInterval(watcher);
-            watcher = null;
-        }
-
-        var debouncedUpdater = self._debounce(function() {
-            self.update();
-        }, 300);
-
-        this._observer = new MutationObserver(function() {
-            actualizeWatcher();
-            self.update();
-            debouncedUpdater();
-        });
-
-        this.on('init', function() {
-            self._observer.observe(self.root, {
-                childList: true,
-                subtree: true,
-                characterData: true
-                // attributes: true
-                // No reasons to set attributes to true
-                // The case when root/child node with already properly inited baron toggled to hidden and then back to visible,
-                // and the size of parent was changed during that hidden state, is very rare
-                // Other cases are covered by watcher, and you still can do .update by yourself
-            });
-
-            actualizeWatcher();
-        });
-
-        this.on('dispose', function() {
-            self._observer.disconnect();
-            stopWatch();
-            delete self._observer;
-        });
-    };
-
-    baron.fn.autoUpdate = function(params) {
-        if (!MutationObserver) return this;
-
-        var i = 0;
-
-        while (this[i]) {
-            autoUpdate.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-
-},{}],"bootstrap.tooltip":[function(require,module,exports){
-/* ========================================================================
- * Bootstrap: tooltip.js v3.2.0
- * http://getbootstrap.com/javascript/#tooltip
- * Inspired by the original jQuery.tipsy by Jason Frame
- * ========================================================================
- * Copyright 2011-2014 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- * ======================================================================== */
-
-
-+function ($) {
-  'use strict';
-
-  // TOOLTIP PUBLIC CLASS DEFINITION
-  // ===============================
-
-  var Tooltip = function (element, options) {
-    this.type       =
-    this.options    =
-    this.enabled    =
-    this.timeout    =
-    this.hoverState =
-    this.$element   = null
-
-    this.init('tooltip', element, options)
-  }
-
-  Tooltip.VERSION  = '3.2.0'
-
-  Tooltip.DEFAULTS = {
-    animation: true,
-    placement: 'top',
-    selector: false,
-    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
-    trigger: 'hover focus',
-    title: '',
-    delay: 0,
-    html: false,
-    container: false,
-    viewport: {
-      selector: 'body',
-      padding: 0
-    }
-  }
-
-  Tooltip.prototype.init = function (type, element, options) {
-    this.enabled   = true
-    this.type      = type
-    this.$element  = $(element)
-    this.options   = this.getOptions(options)
-    this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
-
-    var triggers = this.options.trigger.split(' ')
-
-    for (var i = triggers.length; i--;) {
-      var trigger = triggers[i]
-
-      if (trigger == 'click') {
-        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
-      } else if (trigger != 'manual') {
-        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
-        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
-
-        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
-        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
-      }
-    }
-
-    this.options.selector ?
-      (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
-      this.fixTitle()
-  }
-
-  Tooltip.prototype.getDefaults = function () {
-    return Tooltip.DEFAULTS
-  }
-
-  Tooltip.prototype.getOptions = function (options) {
-    options = $.extend({}, this.getDefaults(), this.$element.data(), options)
-
-    if (options.delay && typeof options.delay == 'number') {
-      options.delay = {
-        show: options.delay,
-        hide: options.delay
-      }
-    }
-
-    return options
-  }
-
-  Tooltip.prototype.getDelegateOptions = function () {
-    var options  = {}
-    var defaults = this.getDefaults()
-
-    this._options && $.each(this._options, function (key, value) {
-      if (defaults[key] != value) options[key] = value
-    })
-
-    return options
-  }
-
-  Tooltip.prototype.enter = function (obj) {
-    var self = obj instanceof this.constructor ?
-      obj : $(obj.currentTarget).data('bs.' + this.type)
-
-    if (!self) {
-      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
-      $(obj.currentTarget).data('bs.' + this.type, self)
-    }
-
-    clearTimeout(self.timeout)
-
-    self.hoverState = 'in'
-
-    if (!self.options.delay || !self.options.delay.show) return self.show()
-
-    self.timeout = setTimeout(function () {
-      if (self.hoverState == 'in') self.show()
-    }, self.options.delay.show)
-  }
-
-  Tooltip.prototype.leave = function (obj) {
-    var self = obj instanceof this.constructor ?
-      obj : $(obj.currentTarget).data('bs.' + this.type)
-
-    if (!self) {
-      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
-      $(obj.currentTarget).data('bs.' + this.type, self)
-    }
-
-    clearTimeout(self.timeout)
-
-    self.hoverState = 'out'
-
-    if (!self.options.delay || !self.options.delay.hide) return self.hide()
-
-    self.timeout = setTimeout(function () {
-      if (self.hoverState == 'out') self.hide()
-    }, self.options.delay.hide)
-  }
-
-  Tooltip.prototype.show = function () {
-    var e = $.Event('show.bs.' + this.type)
-
-    if (this.hasContent() && this.enabled) {
-      this.$element.trigger(e)
-
-      var inDom = $.contains(document.documentElement, this.$element[0])
-      if (e.isDefaultPrevented() || !inDom) return
-      var that = this
-
-      var $tip = this.tip()
-
-      var tipId = this.getUID(this.type)
-
-      this.setContent()
-      $tip.attr('id', tipId)
-      this.$element.attr('aria-describedby', tipId)
-
-      if (this.options.animation) $tip.addClass('fade')
-
-      var placement = typeof this.options.placement == 'function' ?
-        this.options.placement.call(this, $tip[0], this.$element[0]) :
-        this.options.placement
-
-      var autoToken = /\s?auto?\s?/i
-      var autoPlace = autoToken.test(placement)
-      if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
-
-      $tip
-        .detach()
-        .css({ top: 0, left: 0, display: 'block' })
-        .addClass(placement)
-        .data('bs.' + this.type, this)
-
-      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
-
-      var pos          = this.getPosition()
-      var actualWidth  = $tip[0].offsetWidth
-      var actualHeight = $tip[0].offsetHeight
-
-      if (autoPlace) {
-        var orgPlacement = placement
-        var $parent      = this.$element.parent()
-        var parentDim    = this.getPosition($parent)
-
-        placement = placement == 'bottom' && pos.top   + pos.height       + actualHeight - parentDim.scroll > parentDim.height ? 'top'    :
-                    placement == 'top'    && pos.top   - parentDim.scroll - actualHeight < 0                                   ? 'bottom' :
-                    placement == 'right'  && pos.right + actualWidth      > parentDim.width                                    ? 'left'   :
-                    placement == 'left'   && pos.left  - actualWidth      < parentDim.left                                     ? 'right'  :
-                    placement
-
-        $tip
-          .removeClass(orgPlacement)
-          .addClass(placement)
-      }
-
-      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
-
-      this.applyPlacement(calculatedOffset, placement)
-
-      var complete = function () {
-        that.$element.trigger('shown.bs.' + that.type)
-        that.hoverState = null
-      }
-
-      $.support.transition && this.$tip.hasClass('fade') ?
-        $tip
-          .one('bsTransitionEnd', complete)
-          .emulateTransitionEnd(150) :
-        complete()
-    }
-  }
-
-  Tooltip.prototype.applyPlacement = function (offset, placement) {
-    var $tip   = this.tip()
-    var width  = $tip[0].offsetWidth
-    var height = $tip[0].offsetHeight
-
-    // manually read margins because getBoundingClientRect includes difference
-    var marginTop = parseInt($tip.css('margin-top'), 10)
-    var marginLeft = parseInt($tip.css('margin-left'), 10)
-
-    // we must check for NaN for ie 8/9
-    if (isNaN(marginTop))  marginTop  = 0
-    if (isNaN(marginLeft)) marginLeft = 0
-
-    offset.top  = offset.top  + marginTop
-    offset.left = offset.left + marginLeft
-
-    // $.fn.offset doesn't round pixel values
-    // so we use setOffset directly with our own function B-0
-    $.offset.setOffset($tip[0], $.extend({
-      using: function (props) {
-        $tip.css({
-          top: Math.round(props.top),
-          left: Math.round(props.left)
-        })
-      }
-    }, offset), 0)
-
-    $tip.addClass('in')
-
-    // check to see if placing tip in new offset caused the tip to resize itself
-    var actualWidth  = $tip[0].offsetWidth
-    var actualHeight = $tip[0].offsetHeight
-
-    if (placement == 'top' && actualHeight != height) {
-      offset.top = offset.top + height - actualHeight
-    }
-
-    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
-
-    if (delta.left) offset.left += delta.left
-    else offset.top += delta.top
-
-    var arrowDelta          = delta.left ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
-    var arrowPosition       = delta.left ? 'left'        : 'top'
-    var arrowOffsetPosition = delta.left ? 'offsetWidth' : 'offsetHeight'
-
-    $tip.offset(offset)
-    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], arrowPosition)
-  }
-
-  Tooltip.prototype.replaceArrow = function (delta, dimension, position) {
-    this.arrow().css(position, delta ? (50 * (1 - delta / dimension) + '%') : '')
-  }
-
-  Tooltip.prototype.setContent = function () {
-    var $tip  = this.tip()
-    var title = this.getTitle()
-
-    $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
-    $tip.removeClass('fade in top bottom left right')
-  }
-
-  Tooltip.prototype.hide = function () {
-    var that = this
-    var $tip = this.tip()
-    var e    = $.Event('hide.bs.' + this.type)
-
-    this.$element.removeAttr('aria-describedby')
-
-    function complete() {
-      if (that.hoverState != 'in') $tip.detach()
-      that.$element.trigger('hidden.bs.' + that.type)
-    }
-
-    this.$element.trigger(e)
-
-    if (e.isDefaultPrevented()) return
-
-    $tip.removeClass('in')
-
-    $.support.transition && this.$tip.hasClass('fade') ?
-      $tip
-        .one('bsTransitionEnd', complete)
-        .emulateTransitionEnd(150) :
-      complete()
-
-    this.hoverState = null
-
-    return this
-  }
-
-  Tooltip.prototype.fixTitle = function () {
-    var $e = this.$element
-    if ($e.attr('title') || typeof ($e.attr('data-original-title')) != 'string') {
-      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
-    }
-  }
-
-  Tooltip.prototype.hasContent = function () {
-    return this.getTitle()
-  }
-
-  Tooltip.prototype.getPosition = function ($element) {
-    $element   = $element || this.$element
-    var el     = $element[0]
-    var isBody = el.tagName == 'BODY'
-    return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : null, {
-      scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop(),
-      width:  isBody ? $(window).width()  : $element.outerWidth(),
-      height: isBody ? $(window).height() : $element.outerHeight()
-    }, isBody ? { top: 0, left: 0 } : $element.offset())
-  }
-
-  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
-    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
-           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
-           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
-        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
-
-  }
-
-  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
-    var delta = { top: 0, left: 0 }
-    if (!this.$viewport) return delta
-
-    var viewportPadding = this.options.viewport && this.options.viewport.padding || 0
-    var viewportDimensions = this.getPosition(this.$viewport)
-
-    if (/right|left/.test(placement)) {
-      var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
-      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
-      if (topEdgeOffset < viewportDimensions.top) { // top overflow
-        delta.top = viewportDimensions.top - topEdgeOffset
-      } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
-        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
-      }
-    } else {
-      var leftEdgeOffset  = pos.left - viewportPadding
-      var rightEdgeOffset = pos.left + viewportPadding + actualWidth
-      if (leftEdgeOffset < viewportDimensions.left) { // left overflow
-        delta.left = viewportDimensions.left - leftEdgeOffset
-      } else if (rightEdgeOffset > viewportDimensions.width) { // right overflow
-        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
-      }
-    }
-
-    return delta
-  }
-
-  Tooltip.prototype.getTitle = function () {
-    var title
-    var $e = this.$element
-    var o  = this.options
-
-    title = $e.attr('data-original-title')
-      || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
-
-    return title
-  }
-
-  Tooltip.prototype.getUID = function (prefix) {
-    do prefix += ~~(Math.random() * 1000000)
-    while (document.getElementById(prefix))
-    return prefix
-  }
-
-  Tooltip.prototype.tip = function () {
-    return (this.$tip = this.$tip || $(this.options.template))
-  }
-
-  Tooltip.prototype.arrow = function () {
-    return (this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow'))
-  }
-
-  Tooltip.prototype.validate = function () {
-    if (!this.$element[0].parentNode) {
-      this.hide()
-      this.$element = null
-      this.options  = null
-    }
-  }
-
-  Tooltip.prototype.enable = function () {
-    this.enabled = true
-  }
-
-  Tooltip.prototype.disable = function () {
-    this.enabled = false
-  }
-
-  Tooltip.prototype.toggleEnabled = function () {
-    this.enabled = !this.enabled
-  }
-
-  Tooltip.prototype.toggle = function (e) {
-    var self = this
-    if (e) {
-      self = $(e.currentTarget).data('bs.' + this.type)
-      if (!self) {
-        self = new this.constructor(e.currentTarget, this.getDelegateOptions())
-        $(e.currentTarget).data('bs.' + this.type, self)
-      }
-    }
-
-    self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
-  }
-
-  Tooltip.prototype.destroy = function () {
-    clearTimeout(this.timeout)
-    this.hide().$element.off('.' + this.type).removeData('bs.' + this.type)
-  }
-
-
-  // TOOLTIP PLUGIN DEFINITION
-  // =========================
-
-  function Plugin(option) {
-    return this.each(function () {
-      var $this   = $(this)
-      var data    = $this.data('bs.tooltip')
-      var options = typeof option == 'object' && option
-
-      if (!data && option == 'destroy') return
-      if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
-      if (typeof option == 'string') data[option]()
-    })
-  }
-
-  var old = $.fn.tooltip
-
-  $.fn.tooltip             = Plugin
-  $.fn.tooltip.Constructor = Tooltip
-
-
-  // TOOLTIP NO CONFLICT
-  // ===================
-
-  $.fn.tooltip.noConflict = function () {
-    $.fn.tooltip = old
-    return this
-  }
-
-}(jQuery);
-
-},{}],"bowser":[function(require,module,exports){
-/*!
-  * Bowser - a browser detector
-  * https://github.com/ded/bowser
-  * MIT License | (c) Dustin Diaz 2014
-  */
-
-!function (name, definition) {
-  if (typeof module != 'undefined' && module.exports) module.exports['browser'] = definition()
-  else if (typeof define == 'function' && define.amd) define(definition)
-  else this[name] = definition()
-}('bowser', function () {
-  /**
-    * See useragents.js for examples of navigator.userAgent
-    */
-
-  var t = true
-
-  function detect(ua) {
-
-    function getFirstMatch(regex) {
-      var match = ua.match(regex);
-      return (match && match.length > 1 && match[1]) || '';
-    }
-
-    var iosdevice = getFirstMatch(/(ipod|iphone|ipad)/i).toLowerCase()
-      , likeAndroid = /like android/i.test(ua)
-      , android = !likeAndroid && /android/i.test(ua)
-      , versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i)
-      , tablet = /tablet/i.test(ua)
-      , mobile = !tablet && /[^-]mobi/i.test(ua)
-      , result
-
-    if (/opera|opr/i.test(ua)) {
-      result = {
-        name: 'Opera'
-      , opera: t
-      , version: versionIdentifier || getFirstMatch(/(?:opera|opr)[\s\/](\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/windows phone/i.test(ua)) {
-      result = {
-        name: 'Windows Phone'
-      , windowsphone: t
-      , msie: t
-      , version: getFirstMatch(/iemobile\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/msie|trident/i.test(ua)) {
-      result = {
-        name: 'Internet Explorer'
-      , msie: t
-      , version: getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/chrome|crios|crmo/i.test(ua)) {
-      result = {
-        name: 'Chrome'
-      , chrome: t
-      , version: getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (iosdevice) {
-      result = {
-        name : iosdevice == 'iphone' ? 'iPhone' : iosdevice == 'ipad' ? 'iPad' : 'iPod'
-      }
-      // WTF: version is not part of user agent in web apps
-      if (versionIdentifier) {
-        result.version = versionIdentifier
-      }
-    }
-    else if (/sailfish/i.test(ua)) {
-      result = {
-        name: 'Sailfish'
-      , sailfish: t
-      , version: getFirstMatch(/sailfish\s?browser\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/seamonkey\//i.test(ua)) {
-      result = {
-        name: 'SeaMonkey'
-      , seamonkey: t
-      , version: getFirstMatch(/seamonkey\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/firefox|iceweasel/i.test(ua)) {
-      result = {
-        name: 'Firefox'
-      , firefox: t
-      , version: getFirstMatch(/(?:firefox|iceweasel)[ \/](\d+(\.\d+)?)/i)
-      }
-      if (/\((mobile|tablet);[^\)]*rv:[\d\.]+\)/i.test(ua)) {
-        result.firefoxos = t
-      }
-    }
-    else if (/silk/i.test(ua)) {
-      result =  {
-        name: 'Amazon Silk'
-      , silk: t
-      , version : getFirstMatch(/silk\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (android) {
-      result = {
-        name: 'Android'
-      , version: versionIdentifier
-      }
-    }
-    else if (/phantom/i.test(ua)) {
-      result = {
-        name: 'PhantomJS'
-      , phantom: t
-      , version: getFirstMatch(/phantomjs\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/blackberry|\bbb\d+/i.test(ua) || /rim\stablet/i.test(ua)) {
-      result = {
-        name: 'BlackBerry'
-      , blackberry: t
-      , version: versionIdentifier || getFirstMatch(/blackberry[\d]+\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/(web|hpw)os/i.test(ua)) {
-      result = {
-        name: 'WebOS'
-      , webos: t
-      , version: versionIdentifier || getFirstMatch(/w(?:eb)?osbrowser\/(\d+(\.\d+)?)/i)
-      };
-      /touchpad\//i.test(ua) && (result.touchpad = t)
-    }
-    else if (/bada/i.test(ua)) {
-      result = {
-        name: 'Bada'
-      , bada: t
-      , version: getFirstMatch(/dolfin\/(\d+(\.\d+)?)/i)
-      };
-    }
-    else if (/tizen/i.test(ua)) {
-      result = {
-        name: 'Tizen'
-      , tizen: t
-      , version: getFirstMatch(/(?:tizen\s?)?browser\/(\d+(\.\d+)?)/i) || versionIdentifier
-      };
-    }
-    else if (/safari/i.test(ua)) {
-      result = {
-        name: 'Safari'
-      , safari: t
-      , version: versionIdentifier
-      }
-    }
-    else result = {}
-
-    // set webkit or gecko flag for browsers based on these engines
-    if (/(apple)?webkit/i.test(ua)) {
-      result.name = result.name || "Webkit"
-      result.webkit = t
-      if (!result.version && versionIdentifier) {
-        result.version = versionIdentifier
-      }
-    } else if (!result.opera && /gecko\//i.test(ua)) {
-      result.name = result.name || "Gecko"
-      result.gecko = t
-      result.version = result.version || getFirstMatch(/gecko\/(\d+(\.\d+)?)/i)
-    }
-
-    // set OS flags for platforms that have multiple browsers
-    if (android || result.silk) {
-      result.android = t
-    } else if (iosdevice) {
-      result[iosdevice] = t
-      result.ios = t
-    }
-
-    // OS version extraction
-    var osVersion = '';
-    if (iosdevice) {
-      osVersion = getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i);
-      osVersion = osVersion.replace(/[_\s]/g, '.');
-    } else if (android) {
-      osVersion = getFirstMatch(/android[ \/-](\d+(\.\d+)*)/i);
-    } else if (result.windowsphone) {
-      osVersion = getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i);
-    } else if (result.webos) {
-      osVersion = getFirstMatch(/(?:web|hpw)os\/(\d+(\.\d+)*)/i);
-    } else if (result.blackberry) {
-      osVersion = getFirstMatch(/rim\stablet\sos\s(\d+(\.\d+)*)/i);
-    } else if (result.bada) {
-      osVersion = getFirstMatch(/bada\/(\d+(\.\d+)*)/i);
-    } else if (result.tizen) {
-      osVersion = getFirstMatch(/tizen[\/\s](\d+(\.\d+)*)/i);
-    }
-    if (osVersion) {
-      result.osversion = osVersion;
-    }
-
-    // device type extraction
-    var osMajorVersion = osVersion.split('.')[0];
-    if (tablet || iosdevice == 'ipad' || (android && (osMajorVersion == 3 || (osMajorVersion == 4 && !mobile))) || result.silk) {
-      result.tablet = t
-    } else if (mobile || iosdevice == 'iphone' || iosdevice == 'ipod' || android || result.blackberry || result.webos || result.bada) {
-      result.mobile = t
-    }
-
-    // Graded Browser Support
-    // http://developer.yahoo.com/yui/articles/gbs
-    if ((result.msie && result.version >= 10) ||
-        (result.chrome && result.version >= 20) ||
-        (result.firefox && result.version >= 20.0) ||
-        (result.safari && result.version >= 6) ||
-        (result.opera && result.version >= 10.0) ||
-        (result.ios && result.osversion && result.osversion.split(".")[0] >= 6) ||
-        (result.blackberry && result.version >= 10.1)
-        ) {
-      result.a = t;
-    }
-    else if ((result.msie && result.version < 10) ||
-        (result.chrome && result.version < 20) ||
-        (result.firefox && result.version < 20.0) ||
-        (result.safari && result.version < 6) ||
-        (result.opera && result.version < 10.0) ||
-        (result.ios && result.osversion && result.osversion.split(".")[0] < 6)
-        ) {
-      result.c = t
-    } else result.x = t
-
-    return result
-  }
-
-  var bowser = detect(typeof navigator !== 'undefined' ? navigator.userAgent : '')
-
-
-  /*
-   * Set our detect method to the main bowser object so we can
-   * reuse it to test other user agents.
-   * This is needed to implement future tests.
-   */
-  bowser._detect = detect;
-
-  return bowser
-});
-
-},{}],2:[function(require,module,exports){
+},{"./desktop/bundle":9}],2:[function(require,module,exports){
 /**
 binds a function to a context
 
@@ -13258,17 +9778,11 @@ jQuery.offset = {
 			elem.style.position = "relative";
 		}
 
-<<<<<<< HEAD
 		curOffset = curElem.offset();
 		curCSSTop = jQuery.css( elem, "top" );
 		curCSSLeft = jQuery.css( elem, "left" );
 		calculatePosition = ( position === "absolute" || position === "fixed" ) &&
 			( curCSSTop + curCSSLeft ).indexOf("auto") > -1;
-=======
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../shared/react/services/thumbor":331,"../shared/routes/api":332,"../shared/routes/routes":333,"./react/application":16,"./react/components/auth/auth":17,"./react/components/auth/authorization/authorization":18,"./react/components/auth/authorization/facebook":19,"./react/components/auth/authorization/vk":20,"./react/components/auth/buttons/facebook_auth_button":21,"./react/components/auth/buttons/vk_auth_button":22,"./react/components/auth/email/email":26,"./react/components/auth/recovery":31,"./react/components/avatars/avatar":33,"./react/components/avatars/user_avatar":34,"./react/components/buttons/load_more":35,"./react/components/calendar/calendar":36,"./react/components/calendar/calendar_header":37,"./react/components/calendar/calendar_marker":38,"./react/components/calendar/calendar_period":39,"./react/components/calendar/calendar_timeline":40,"./react/components/common/adaptive_input":41,"./react/components/design_settings_popup/color_picker":44,"./react/components/design_settings_popup/color_picker_popup":45,"./react/components/design_settings_popup/controls":46,"./react/components/design_settings_popup/controls_items/_progressbar":47,"./react/components/design_settings_popup/controls_items/_radiobutton":48,"./react/components/design_settings_popup/controls_items/align_item":49,"./react/components/design_settings_popup/controls_items/background_item":50,"./react/components/design_settings_popup/controls_items/feed_color_item":51,"./react/components/design_settings_popup/controls_items/font_type_item":52,"./react/components/design_settings_popup/controls_items/header_color_item":53,"./react/components/design_settings_popup/controls_items/opacity_item":54,"./react/components/design_settings_popup/design_settings_popup":55,"./react/components/editable_field":56,"./react/components/embed":57,"./react/components/entry_comment_box/comment_form/buttons/submit":58,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":59,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":60,"./react/components/entry_comment_box/comment_form/comment_form":61,"./react/components/entry_comment_box/comment_list/comment":62,"./react/components/entry_comment_box/comment_list/comment_list":63,"./react/components/entry_comment_box/comment_list/comment_manager":64,"./react/components/entry_comment_box/comment_metabar/comment_metabar":65,"./react/components/entry_comment_box/comment_metabar/date":66,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":67,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":68,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":69,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":70,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":71,"./react/components/entry_comment_box/comment_metabar/reply":72,"./react/components/entry_comment_box/entry_comment_box":73,"./react/components/entry_comment_box/load_more":74,"./react/components/entry_comment_box/mixins/comments":75,"./react/components/entry_metabar/author":76,"./react/components/entry_metabar/comment":77,"./react/components/entry_metabar/date":78,"./react/components/entry_metabar/dropdown_menu":79,"./react/components/entry_metabar/dropdown_menu_items/delete_item":80,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":81,"./react/components/entry_metabar/dropdown_menu_items/item":82,"./react/components/entry_metabar/dropdown_menu_items/report_item":83,"./react/components/entry_metabar/dropdown_menu_items/watch_item":84,"./react/components/entry_metabar/entry_metabar":85,"./react/components/entry_metabar/tag":86,"./react/components/entry_metabar/tags":87,"./react/components/feed/bricks":88,"./react/components/feed/feed":89,"./react/components/feed/mixins/base":90,"./react/components/feed/tlog":91,"./react/components/follow_status":92,"./react/components/hero/profile/dropdown_menu":94,"./react/components/hero/profile/dropdown_menu_items/ignore":95,"./react/components/hero/profile/dropdown_menu_items/report":96,"./react/components/hero/profile/popup/followers_popup":97,"./react/components/hero/profile/popup/followings_popup":98,"./react/components/hero/profile/popup/items/follower_item":99,"./react/components/hero/profile/popup/items/following_item":100,"./react/components/hero/profile/popup/items/tag_item":101,"./react/components/hero/profile/popup/popup":102,"./react/components/hero/profile/popup/tags_popup":103,"./react/components/hero/profile/profile":104,"./react/components/hero/profile/profile_avatar":105,"./react/components/hero/profile/profile_head":106,"./react/components/hero/profile/profile_stats":107,"./react/components/hero/profile/profile_stats_item":108,"./react/components/images_collage":109,"./react/components/notifications/tasty_alert":110,"./react/components/notifications/tasty_confirm":111,"./react/components/notifications/tasty_locking_alert":112,"./react/components/notifications/tasty_notify":113,"./react/components/people/item":114,"./react/components/persons_popup/items/follower_relationship":115,"./react/components/persons_popup/items/following_relationship":116,"./react/components/persons_popup/items/guess_relationship":117,"./react/components/persons_popup/items/ignored_relationship":118,"./react/components/persons_popup/items/item":119,"./react/components/persons_popup/items/requested_relationship":120,"./react/components/persons_popup/menu":121,"./react/components/persons_popup/menu_item":122,"./react/components/persons_popup/mixins/panel_mixin":123,"./react/components/persons_popup/panels/followers_panel":124,"./react/components/persons_popup/panels/followings_panel":125,"./react/components/persons_popup/panels/guessed_panel":126,"./react/components/persons_popup/panels/ignored_panel":127,"./react/components/persons_popup/panels/requested_panel":128,"./react/components/persons_popup/panels/socialNetwork/facebook":129,"./react/components/persons_popup/panels/socialNetwork/vkontakte":139,"./react/components/persons_popup/persons_popup":146,"./react/components/popup/header":147,"./react/components/popup/layout":148,"./react/components/popup/popup":149,"./react/components/popup/spinner":150,"./react/components/popup_box":151,"./react/components/post_editor/actions/actions":152,"./react/components/post_editor/actions/buttons/privacy":153,"./react/components/post_editor/actions/buttons/vote":154,"./react/components/post_editor/choicer":155,"./react/components/post_editor/demo":156,"./react/components/post_editor/edit_post":157,"./react/components/post_editor/editor_container":158,"./react/components/post_editor/editors/_tasty":159,"./react/components/post_editor/editors/anonymous":160,"./react/components/post_editor/editors/image":161,"./react/components/post_editor/editors/instagram":162,"./react/components/post_editor/editors/mixins/autosave":163,"./react/components/post_editor/editors/music":164,"./react/components/post_editor/editors/quote":165,"./react/components/post_editor/editors/text":166,"./react/components/post_editor/editors/video":167,"./react/components/post_editor/images_mediabox/loaded":168,"./react/components/post_editor/images_mediabox/url_insert":169,"./react/components/post_editor/layout":170,"./react/components/post_editor/mediabox/actions":171,"./react/components/post_editor/mediabox/layout":172,"./react/components/post_editor/mediabox/loading_progress":173,"./react/components/post_editor/mixins/dragging":174,"./react/components/post_editor/mixins/images_form":175,"./react/components/post_editor/mixins/layout":176,"./react/components/post_editor/mixins/persistence":177,"./react/components/post_editor/mixins/video":178,"./react/components/post_editor/new_anonymous_post":179,"./react/components/post_editor/new_post":180,"./react/components/post_editor/video_mediabox/embeded":181,"./react/components/post_editor/video_mediabox/loading":182,"./react/components/post_editor/video_mediabox/url_insert":183,"./react/components/post_editor/video_mediabox/video_mediabox":184,"./react/components/post_editor/welcome_messages/image":185,"./react/components/post_editor/welcome_messages/instagram":186,"./react/components/post_editor/welcome_messages/music":187,"./react/components/post_editor/welcome_messages/video":188,"./react/components/relationship_buttons/follow_button":189,"./react/components/relationship_buttons/follower_button":190,"./react/components/relationship_buttons/guess_button":191,"./react/components/relationship_buttons/ignore_button":192,"./react/components/relationship_buttons/mixins/relationship":193,"./react/components/relationship_buttons/request_button":194,"./react/components/screen_viewer/screen_viewer":195,"./react/components/search/button":196,"./react/components/search/field":197,"./react/components/search/search":198,"./react/components/searchResults/index":200,"./react/components/settings/settings":218,"./react/components/shellbox_layer":221,"./react/components/shellboxes/confirm_registration":222,"./react/components/smart_follow_status":223,"./react/components/spinner":224,"./react/components/tlog_alert":225,"./react/components/toolbars/avatar":226,"./react/components/toolbars/close/close":227,"./react/components/toolbars/user":228,"./react/components/transition/timeout_transition_group":236,"./react/components/voting":237,"./react/controllers/popup":243,"./react/controllers/shellbox":245,"./react/controllers/tasty_alert":246,"./react/controllers/tasty_confirm":247,"./react/controllers/tasty_events":248,"./react/controllers/tasty_locking_alert":249,"./react/controllers/tasty_notify":250,"./react/controllers/tasty_sound":251,"./react/dispatchers/current_user":253,"./react/dispatchers/relationships":255,"./react/entities/normalized_entry":256,"./react/helpers/app":257,"./react/mediators/comments":258,"./react/messaging/actions/conversation":259,"./react/messaging/actions/message":260,"./react/messaging/actions/notification":261,"./react/messaging/actions/popup":262,"./react/messaging/components/buttons/write_message":263,"./react/messaging/components/messages_popup/conversations/conversations":264,"./react/messaging/components/messages_popup/conversations/list/empty":265,"./react/messaging/components/messages_popup/conversations/list/list":266,"./react/messaging/components/messages_popup/conversations/list/list_item":267,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":268,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":269,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":270,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":271,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":272,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":273,"./react/messaging/components/messages_popup/loading_message":274,"./react/messaging/components/messages_popup/messages_popup":275,"./react/messaging/components/messages_popup/thread/message_form/message_form":276,"./react/messaging/components/messages_popup/thread/message_list/empty":277,"./react/messaging/components/messages_popup/thread/message_list/message_list":278,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":279,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":280,"./react/messaging/components/messages_popup/thread/thread":281,"./react/messaging/components/messages_popup/ui/back_button":282,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":283,"./react/messaging/components/notifications_popup/notifications/empty":284,"./react/messaging/components/notifications_popup/notifications/notification":285,"./react/messaging/components/notifications_popup/notifications/notifications":286,"./react/messaging/components/notifications_popup/notifications_popup":287,"./react/messaging/components/toolbars/indicators/indicators":288,"./react/messaging/components/toolbars/indicators/messages":289,"./react/messaging/components/toolbars/indicators/notifications":290,"./react/messaging/dispatchers/messaging":291,"./react/messaging/messaging_requester":292,"./react/messaging/messaging_service":293,"./react/messaging/messaging_testing":294,"./react/messaging/stores/connection_state":296,"./react/messaging/stores/conversations":297,"./react/messaging/stores/messages":298,"./react/messaging/stores/messages_popup_state":299,"./react/messaging/stores/messaging_status":300,"./react/messaging/stores/notifications":301,"./react/mixins/activities":302,"./react/mixins/component_manipulations":303,"./react/mixins/dom_manipulations":304,"./react/mixins/error_timer":305,"./react/mixins/grammar":306,"./react/mixins/positions":307,"./react/mixins/requester":308,"./react/mixins/scroller":309,"./react/mixins/shake":310,"./react/mixins/touch":311,"./react/mixins/unmount":312,"./react/services/designPresenter":314,"./react/services/designSettings":315,"./react/services/designStates":316,"./react/services/entry_normalizer":317,"./react/services/entry_store":318,"./react/services/positions":319,"./react/services/uuid":320,"./react/stores/current_user":322,"./react/stores/relationships":323,"./resources/fileReceiver":324,"./resources/is_mobile":325,"./resources/libs":326,"./resources/locales":327,"./resources/tasty":328,"./resources/tasty_utils":329}],10:[function(require,module,exports){
-var CurrentUserStore, PopupActions, Searchbox;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 		// Need to be able to calculate position if either
 		// top or left is auto and position is either absolute or fixed
@@ -13302,7 +9816,6 @@ var CurrentUserStore, PopupActions, Searchbox;
 	}
 };
 
-<<<<<<< HEAD
 jQuery.fn.extend({
 	offset: function( options ) {
 		if ( arguments.length ) {
@@ -13312,10 +9825,6 @@ jQuery.fn.extend({
 					jQuery.offset.setOffset( this, options, i );
 				});
 		}
-=======
-},{"../components/searchbox/index":202,"../stores/current_user":322}],11:[function(require,module,exports){
-var Api, SearchActions;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 		var docElem, win,
 			elem = this[ 0 ],
@@ -13402,14 +9911,9 @@ jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
 		return access( this, function( elem, method, val ) {
 			var win = getWindow( elem );
 
-<<<<<<< HEAD
 			if ( val === undefined ) {
 				return win ? win[ prop ] : elem[ method ];
 			}
-=======
-},{"../constants/constants":239,"../dispatchers/dispatcher":254}],14:[function(require,module,exports){
-var CurrentUserResource, CurrentUserServerActions, CurrentUserViewActions;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 			if ( win ) {
 				win.scrollTo(
@@ -13456,17 +9960,12 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 			return access( this, function( elem, type, value ) {
 				var doc;
 
-<<<<<<< HEAD
 				if ( jQuery.isWindow( elem ) ) {
 					// As of 5/8/2012 this will yield incorrect results for Mobile Safari, but there
 					// isn't a whole lot we can do. See pull request at this URL for discussion:
 					// https://github.com/jquery/jquery/pull/764
 					return elem.document.documentElement[ "client" + name ];
 				}
-=======
-},{"../../resources/current_user":313,"../server/current_user":12}],15:[function(require,module,exports){
-var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _, _pendingRequests;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 				// Get document width or height
 				if ( elem.nodeType === 9 ) {
@@ -13553,11 +10052,6 @@ if ( typeof noGlobal === strundefined ) {
 
 
 
-<<<<<<< HEAD
-=======
-},{"../constants/constants":239,"../stores/current_user":322,"lodash":487}],16:[function(require,module,exports){
-var AppDispatcher, GuideController, LayoutStatesController, PopupActions, PopupController, ReactUjs;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 return jQuery;
 
@@ -13756,15 +10250,10 @@ return jQuery;
 //! license : MIT
 //! momentjs.com
 
-<<<<<<< HEAD
 (function (undefined) {
     /************************************
         Constants
     ************************************/
-=======
-},{"./actions/popup":10,"./controllers/guide":241,"./controllers/layoutStates":242,"./controllers/popuup":244,"./dispatchers/dispatcher":254,"i18next":undefined,"reactUjs":undefined}],17:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     var moment,
         VERSION = '2.8.4',
@@ -13789,80 +10278,8 @@ var cx;
         // extra moment internal properties (plugins register props here)
         momentProperties = [],
 
-<<<<<<< HEAD
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module && module.exports),
-=======
-},{"react/lib/cx":599}],18:[function(require,module,exports){
-window.AuthorizationShellbox = React.createClass({
-  render: function() {
-    var boxStyle, entriesCount, usersCount;
-    entriesCount = this._getEntriesCount();
-    usersCount = this._getUsersCount();
-    boxStyle = {
-      backgroundImage: "url(http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg)"
-    };
-    return React.createElement("div", {
-      "className": "inviter"
-    }, React.createElement("div", {
-      "className": "inviter__box",
-      "style": boxStyle
-    }, React.createElement("div", {
-      "className": "inviter__overlay"
-    }), React.createElement("div", {
-      "className": "grid-full"
-    }, React.createElement("div", {
-      "className": "grid-full__middle"
-    }, React.createElement("div", {
-      "className": "inviter__logo"
-    }, React.createElement("i", {
-      "className": "icon icon--ribbon"
-    })), React.createElement("div", {
-      "className": "inviter__title",
-      "dangerouslySetInnerHTML": {
-        __html: i18n.t('auth')
-      }
-    }), React.createElement("div", {
-      "className": "inviter__actions"
-    }, this.props.children), React.createElement("div", {
-      "className": "inviter__spacer"
-    }), React.createElement("div", {
-      "className": "inviter__stats"
-    }, React.createElement("div", {
-      "className": "inviter__stats-item"
-    }, this.renderEntriesCount()), React.createElement("div", {
-      "className": "inviter__stats-item"
-    }, this.renderUsersCount()), React.createElement("div", {
-      "className": "inviter__stats-item"
-    }, this.renderSecondsCount()))))));
-  },
-  renderEntriesCount: function() {
-    var formatedNumber, number;
-    number = parseInt(TastyUtils.formatNumber(window.gon.app_stats.entries_count, 100, ''));
-    formatedNumber = TastyUtils.formatNumber(window.gon.app_stats.entries_count, 100);
-    return React.createElement("span", null, React.createElement("strong", null, formatedNumber, "+"), React.createElement("span", null, i18n.t('entries_count', {
-      count: number
-    })));
-  },
-  renderUsersCount: function() {
-    var formatedNumber, number;
-    number = parseInt(TastyUtils.formatNumber(window.gon.app_stats.users_count, 100, ''));
-    formatedNumber = TastyUtils.formatNumber(window.gon.app_stats.users_count, 100);
-    return React.createElement("span", null, React.createElement("strong", null, formatedNumber, "+"), React.createElement("span", null, i18n.t('users_count', {
-      count: number
-    })));
-  },
-  renderSecondsCount: function() {
-    var number;
-    number = 30;
-    return React.createElement("span", null, React.createElement("strong", null, React.createElement("span", {
-      "className": "tilde"
-    }, "~"), number), React.createElement("span", null, i18n.t('seconds_count', {
-      count: number
-    })));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         // ASP.NET json date format regex
         aspNetJsonRegex = /^\/?Date\((\-?\d+)/i,
@@ -14336,13 +10753,8 @@ window.AuthorizationShellbox = React.createClass({
         return (sign ? (forceSign ? '+' : '') : '-') + output;
     }
 
-<<<<<<< HEAD
     function positiveMomentsDifference(base, other) {
         var res = {milliseconds: 0, months: 0};
-=======
-},{"react/lib/cx":599}],28:[function(require,module,exports){
-var EmailPasswordField, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         res.months = other.month() - base.month() +
             (other.year() - base.year()) * 12;
@@ -14369,7 +10781,6 @@ var EmailPasswordField, cx;
         return res;
     }
 
-<<<<<<< HEAD
     // TODO: remove 'name' arg after deprecation is removed
     function createAdder(direction, name) {
         return function (val, period) {
@@ -14379,10 +10790,6 @@ var EmailPasswordField, cx;
                 deprecateSimple(name, 'moment().' + name  + '(period, number) is deprecated. Please use moment().' + name + '(number, period).');
                 tmp = val; val = period; period = tmp;
             }
-=======
-},{"react/lib/cx":599}],29:[function(require,module,exports){
-var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWORD_MESSAGE, INVALID_SLUG_MESSAGE;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
             val = typeof val === 'string' ? +val : val;
             dur = moment.duration(val, period);
@@ -14567,7 +10974,6 @@ var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWOR
                 !m._pf.invalidFormat &&
                 !m._pf.userInvalidated;
 
-<<<<<<< HEAD
             if (m._strict) {
                 m._isValid = m._isValid &&
                     m._pf.charsLeftOver === 0 &&
@@ -14577,42 +10983,6 @@ var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWOR
         }
         return m._isValid;
     }
-=======
-},{"react/lib/cx":599}],34:[function(require,module,exports){
-window.UserAvatar = React.createClass({
-  displayName: 'UserAvatar',
-  propTypes: {
-    user: React.PropTypes.object.isRequired,
-    size: React.PropTypes.number
-  },
-  getInitialState: function() {
-    return {
-      user: this.props.user
-    };
-  },
-  componentDidMount: function() {
-    return TastyEvents.on(TastyEvents.keys.user_property_changed('avatar', this.props.user.id), this._updateUserpic);
-  },
-  componentWillUnmount: function() {
-    return TastyEvents.off(TastyEvents.keys.user_property_changed('avatar', this.props.user.id), this._updateUserpic);
-  },
-  render: function() {
-    return React.createElement(Avatar, {
-      "name": this.state.user.name,
-      "userpic": this.state.user.userpic,
-      "size": this.props.size
-    });
-  },
-  _updateUserpic: function(userpic) {
-    var newUser;
-    newUser = this.state.user;
-    newUser.userpic = userpic;
-    return this.setState({
-      user: newUser
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     function normalizeLocale(key) {
         return key ? key.toLowerCase().replace('_', '-') : key;
@@ -14747,37 +11117,10 @@ window.UserAvatar = React.createClass({
             return this._weekdaysShort[m.day()];
         },
 
-<<<<<<< HEAD
         _weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
         weekdaysMin : function (m) {
             return this._weekdaysMin[m.day()];
         },
-=======
-},{"react/lib/cx":599}],37:[function(require,module,exports){
-window.CalendarHeader = React.createClass({
-  propTypes: {
-    date: React.PropTypes.object.isRequired
-  },
-  render: function() {
-    var day, info;
-    day = this.props.date.format('D');
-    info = this.props.date.format('D MMMM <br/> dddd<br/> HH:mm').slice(2);
-    if (moment().year() !== this.props.date.year()) {
-      info = this.props.date.format('D MMMM <br/> dddd<br/> YYYY').slice(2);
-    }
-    return React.createElement("div", {
-      "className": "calendar__date"
-    }, React.createElement("div", {
-      "className": "calendar__date-day"
-    }, day), React.createElement("div", {
-      "className": "calendar__date-info",
-      "dangerouslySetInnerHTML": {
-        __html: info
-      }
-    }));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         weekdaysParse : function (weekdayName) {
             var i, mom, regex;
@@ -14847,7 +11190,6 @@ window.CalendarHeader = React.createClass({
             return typeof output === 'function' ? output.apply(mom, [now]) : output;
         },
 
-<<<<<<< HEAD
         _relativeTime : {
             future : 'in %s',
             past : '%s ago',
@@ -14863,38 +11205,6 @@ window.CalendarHeader = React.createClass({
             y : 'a year',
             yy : '%d years'
         },
-=======
-},{"react/lib/cx":599}],39:[function(require,module,exports){
-window.CalendarPeriod = React.createClass({
-  propTypes: {
-    period: React.PropTypes.object.isRequired,
-    selectedEntryId: React.PropTypes.number,
-    visibleMarkers: React.PropTypes.array
-  },
-  render: function() {
-    var markerNodes, that;
-    that = this;
-    markerNodes = this.props.period.markers.map(function(marker, i) {
-      var highlighted, selected;
-      selected = that.props.selectedEntryId === marker.entry_id;
-      highlighted = (_.indexOf(that.props.visibleMarkers, marker.entry_id)) > -1;
-      return React.createElement(CalendarMarker, {
-        "selected": selected,
-        "highlighted": highlighted,
-        "marker": marker,
-        "key": i
-      });
-    });
-    return React.createElement("li", {
-      "className": "calendar__period"
-    }, React.createElement("div", {
-      "className": "calendar__period-date"
-    }, this.props.period.title), React.createElement("ul", {
-      "className": "calendar__period-line"
-    }, markerNodes));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         relativeTime : function (number, withoutSuffix, string, isFuture) {
             var output = this._relativeTime[string];
@@ -14937,129 +11247,9 @@ window.CalendarPeriod = React.createClass({
         }
     });
 
-<<<<<<< HEAD
     /************************************
         Formatting
     ************************************/
-=======
-},{}],42:[function(require,module,exports){
-var InfiniteScroll, PropTypes, THRESHOLD, windowHeight;
-
-PropTypes = React.PropTypes;
-
-windowHeight = $(window).height();
-
-THRESHOLD = windowHeight * 2;
-
-InfiniteScroll = React.createClass({
-  displayName: 'InfiniteScroll',
-  propTypes: {
-    children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]).isRequired,
-    loading: PropTypes.bool.isRequired,
-    canLoad: PropTypes.bool.isRequired,
-    onLoad: PropTypes.func.isRequired,
-    onAfterLoad: PropTypes.func
-  },
-  componentDidMount: function() {
-    return $(window).on('scroll', this.handleScroll);
-  },
-  componentDidUpdate: function() {
-    var _base;
-    this._prefill();
-    return typeof (_base = this.props).onAfterLoad === "function" ? _base.onAfterLoad() : void 0;
-  },
-  componentWillUnmount: function() {
-    return $(window).off('scroll', this.handleScroll);
-  },
-  render: function() {
-    var spinner;
-    if (this.props.loading) {
-      spinner = React.createElement("div", {
-        "className": "page-loader"
-      }, React.createElement(Spinner, {
-        "size": 24.
-      }));
-    }
-    return React.createElement("div", null, this.props.children, spinner);
-  },
-  _prefill: function() {
-    var $node, $window, needsPrefill;
-    $node = $(this.getDOMNode());
-    $window = $(window);
-    needsPrefill = function() {
-      return $node.height() <= $window.height();
-    };
-    this._prefill = function() {
-      if (this.props.canLoad && needsPrefill()) {
-        return this.props.onLoad();
-      }
-    };
-    return this._prefill();
-  },
-  handleScroll: function() {
-    var nearBottom;
-    if (this.props.canLoad) {
-      nearBottom = $(window).scrollTop() + $(window).height() > $(document).height() - THRESHOLD;
-      if (nearBottom) {
-        return this.props.onLoad();
-      }
-    }
-  }
-});
-
-module.exports = InfiniteScroll;
-
-
-
-},{}],43:[function(require,module,exports){
-var PropTypes, Scroller;
-
-PropTypes = React.PropTypes;
-
-Scroller = React.createClass({
-  displayName: 'Scroller',
-  propTypes: {
-    children: PropTypes.element.isRequired
-  },
-  componentDidMount: function() {
-    var scroller;
-    scroller = this.getDOMNode();
-    return this.scroller = $(scroller).baron({
-      scroller: '.scroller__pane',
-      bar: '.scroller__bar',
-      track: '.scroller__track',
-      barOnCls: 'scroller--tracked',
-      pause: 0
-    });
-  },
-  componentWillUnmount: function() {
-    this.scroller.dispose();
-    return this.scroller = null;
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "scroller scroller--dark"
-    }, React.createElement("div", {
-      "className": "scroller__pane"
-    }, this.props.children), React.createElement("div", {
-      "className": "scroller__track"
-    }, React.createElement("div", {
-      "className": "scroller__bar"
-    })));
-  }
-});
-
-module.exports = Scroller;
-
-
-
-},{}],44:[function(require,module,exports){
-var ColorPicker, POPUP_WIDTH, STATE_CHOICE, STATE_VIEW;
-
-POPUP_WIDTH = 176;
-
-STATE_VIEW = 'view';
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
     function removeFormattingTokens(input) {
@@ -15072,7 +11262,6 @@ STATE_VIEW = 'view';
     function makeFormatFunction(format) {
         var array = format.match(formattingTokens), i, length;
 
-<<<<<<< HEAD
         for (i = 0, length = array.length; i < length; i++) {
             if (formatTokenFunctions[array[i]]) {
                 array[i] = formatTokenFunctions[array[i]];
@@ -15080,10 +11269,6 @@ STATE_VIEW = 'view';
                 array[i] = removeFormattingTokens(array[i]);
             }
         }
-=======
-},{}],45:[function(require,module,exports){
-var ColorPicker_Popup;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         return function (mom) {
             var output = '';
@@ -15106,53 +11291,8 @@ var ColorPicker_Popup;
             formatFunctions[format] = makeFormatFunction(format);
         }
 
-<<<<<<< HEAD
         return formatFunctions[format](m);
     }
-=======
-},{}],46:[function(require,module,exports){
-window.DesignSettingsPopup_Controls = React.createClass({
-  propTypes: {
-    design: React.PropTypes.object.isRequired,
-    userId: React.PropTypes.number.isRequired,
-    activitiesHandler: React.PropTypes.object.isRequired,
-    saveCallback: React.PropTypes.func.isRequired,
-    onBackgroundChanged: React.PropTypes.func.isRequired
-  },
-  shouldComponentUpdate: function(nextProps) {
-    return !_.isEqual(this.props.design, nextProps.design);
-  },
-  render: function() {
-    var saveCallback;
-    saveCallback = function() {
-      return this.props.saveCallback.apply(this, arguments);
-    };
-    return React.createElement("div", {
-      "className": "settings-design__controls"
-    }, React.createElement(DesignSettingsPopup_ControlsBackgroundItem, {
-      "userId": this.props.userId,
-      "backgroundUrl": this.props.design.background_url,
-      "activitiesHandler": this.props.activitiesHandler,
-      "onBackgroundChanged": this.props.onBackgroundChanged
-    }), React.createElement(DesignSettingsPopup_ControlsAlignItem, {
-      "coverAlign": this.props.design.coverAlign,
-      "saveCallback": saveCallback.bind(this, 'coverAlign')
-    }), React.createElement(DesignSettingsPopup_ControlsHeaderColorItem, {
-      "headerColor": this.props.design.headerColor,
-      "saveCallback": saveCallback.bind(this, 'headerColor')
-    }), React.createElement(DesignSettingsPopup_ControlsFeedColorItem, {
-      "feedColor": this.props.design.feedColor,
-      "saveCallback": saveCallback.bind(this, 'feedColor')
-    }), React.createElement(DesignSettingsPopup_ControlsFontTypeItem, {
-      "fontType": this.props.design.fontType,
-      "saveCallback": saveCallback.bind(this, 'fontType')
-    }), React.createElement(DesignSettingsPopup_ControlsOpacityItem, {
-      "feedOpacity": this.props.design.feedOpacity,
-      "saveCallback": saveCallback.bind(this, 'feedOpacity')
-    }));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     function expandFormat(format, locale) {
         var i = 5;
@@ -15161,51 +11301,20 @@ window.DesignSettingsPopup_Controls = React.createClass({
             return locale.longDateFormat(input) || input;
         }
 
-<<<<<<< HEAD
         localFormattingTokens.lastIndex = 0;
         while (i >= 0 && localFormattingTokens.test(format)) {
             format = format.replace(localFormattingTokens, replaceLongDateFormatTokens);
             localFormattingTokens.lastIndex = 0;
             i -= 1;
         }
-=======
-},{}],47:[function(require,module,exports){
-window.DesignSettingsPopup_ControlsProgressbar = React.createClass({
-  propTypes: {
-    progress: React.PropTypes.number.isRequired
-  },
-  shouldComponentUpdate: function(nextProps) {
-    return this.props.progress !== nextProps.progress;
-  },
-  render: function() {
-    var progressBarStyles, _ref;
-    progressBarStyles = {
-      width: this._getWidth(),
-      opacity: (100 > (_ref = this.props.progress) && _ref > 0) ? 1 : 0
-    };
-    return React.createElement("div", {
-      "style": progressBarStyles,
-      "className": "settings-design--progressbar"
-    });
-  },
-  _getWidth: function() {
-    return this.props.progress + '%';
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         return format;
     }
 
 
-<<<<<<< HEAD
     /************************************
         Parsing
     ************************************/
-=======
-},{}],48:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
     // get the regex to find the next token
@@ -15305,63 +11414,13 @@ var cx;
             parts = (tzChunk + '').match(parseTimezoneChunker) || ['-', 0, 0],
             minutes = +(parts[1] * 60) + toInt(parts[2]);
 
-<<<<<<< HEAD
         return parts[0] === '+' ? -minutes : minutes;
-=======
-},{"react/lib/cx":599}],49:[function(require,module,exports){
-window.DesignSettingsPopup_ControlsAlignItem = React.createClass({
-  propTypes: {
-    coverAlign: React.PropTypes.string.isRequired,
-    saveCallback: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      active: this.props.coverAlign
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "settings-design__control settings-design__control--cover-align"
-    }, React.createElement("div", {
-      "className": "settings-design__control-inner"
-    }, React.createElement("span", {
-      "className": "settings-design__valign"
-    }), React.createElement("span", {
-      "className": "settings-design__text absolute--left animate--down"
-    }, i18n.t('design_settings_align')), React.createElement("span", {
-      "className": "settings-design__state absolute--right animate--right"
-    }, React.createElement("span", {
-      "className": "settings-design__state-i"
-    })), React.createElement("span", {
-      "className": "form-radiogroup form-radiogroup--dotted-list absolute--left animate--up"
-    }, React.createElement(DesignSettingsPopup_ControlsRadioButton, {
-      "value": "justify",
-      "settingId": "coverAlign",
-      "isActive": this.state.active === "justify",
-      "text": i18n.t('design_settings_align_justify'),
-      "onChange": this.onChange
-    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
-      "value": "center",
-      "settingId": "coverAlign",
-      "isActive": this.state.active === "center",
-      "text": i18n.t('design_settings_align_center'),
-      "onChange": this.onChange
-    }))));
-  },
-  onChange: function(value) {
-    if (this.state.active !== value) {
-      this.setState({
-        active: value
-      });
-      return this.props.saveCallback(value);
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
 
     // function to convert string input to date
     function addTimeToArrayFromToken(token, input, config) {
         var a, datePartArray = config._a;
 
-<<<<<<< HEAD
         switch (token) {
         // QUARTER
         case 'Q':
@@ -15499,133 +11558,6 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass({
             config._w[token] = moment.parseTwoDigitYear(input);
         }
     }
-=======
-},{}],50:[function(require,module,exports){
-window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
-  mixins: ['ReactActivitiesUser', ComponentManipulationsMixin],
-  propTypes: {
-    userId: React.PropTypes.number.isRequired,
-    backgroundUrl: React.PropTypes.string.isRequired,
-    activitiesHandler: React.PropTypes.object.isRequired,
-    onBackgroundChanged: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      backgroundUrl: this.props.backgroundUrl,
-      progress: 0
-    };
-  },
-  componentDidMount: function() {
-    return this._bindCoverUpload();
-  },
-  componentWillUnmount: function() {
-    return this._unbindCoverUpload();
-  },
-  render: function() {
-    var backgroundStyles;
-    backgroundStyles = {
-      backgroundImage: 'url(' + this.state.backgroundUrl + ')'
-    };
-    return React.createElement("div", {
-      "className": "settings-design__control settings-design__control--cover"
-    }, React.createElement(DesignSettingsPopup_ControlsProgressbar, {
-      "progress": this.state.progress
-    }), React.createElement("div", {
-      "className": "settings-design__control-inner"
-    }, React.createElement("span", {
-      "className": "settings-design__valign"
-    }), React.createElement("span", {
-      "className": "settings-design__text absolute--left animate--down"
-    }, i18n.t('design_settings_background')), React.createElement("span", {
-      "className": "settings-design__text absolute--left animate--up"
-    }, i18n.t('design_settings_background_move_or'), React.createElement("span", {
-      "className": "form-upload form-upload--cover"
-    }, React.createElement("span", {
-      "className": "form-upload__text"
-    }, i18n.t('design_settings_background_load')), React.createElement("input", {
-      "ref": "uploadCoverInput",
-      "type": "file",
-      "name": "layout-cover",
-      "id": "layout-cover",
-      "className": "form-upload__input"
-    }))), React.createElement("span", {
-      "className": "settings-design__cover-pixel absolute--right animate--right",
-      "style": backgroundStyles
-    })));
-  },
-  _bindCoverUpload: function() {
-    this.$uploadCoverInput = $(this.refs.uploadCoverInput.getDOMNode());
-    return this.$uploadCoverInput.fileupload({
-      url: ApiRoutes.design_settings_cover_url(this.props.userId),
-      paramName: 'file',
-      autoUpload: true,
-      replaceFileInput: false,
-      add: (function(_this) {
-        return function(e, data) {
-          _this._readFile(data.files[0]);
-          return data.process().done(function() {
-            return data.submit();
-          });
-        };
-      })(this),
-      start: (function(_this) {
-        return function() {
-          return _this.incrementActivities();
-        };
-      })(this),
-      progress: (function(_this) {
-        return function(e, data) {
-          var progress;
-          progress = parseInt(data.loaded / data.total * 100, 10);
-          return _this.safeUpdateState({
-            progress: progress
-          });
-        };
-      })(this),
-      done: (function(_this) {
-        return function(e, data) {
-          _this.props.onBackgroundChanged(data.jqXHR.responseJSON);
-          return TastyNotifyController.notifySuccess(i18n.t('settings_saved'), 2000);
-        };
-      })(this),
-      fail: function(e, data) {
-        return TastyNotifyController.errorResponse(data.response().jqXHR);
-      },
-      always: (function(_this) {
-        return function() {
-          _this.decrementActivities();
-          return _this.safeUpdateState({
-            progress: 0
-          });
-        };
-      })(this)
-    });
-  },
-  _readFile: function(file) {
-    var fileReader;
-    fileReader = new FileReader();
-    fileReader.onload = (function(_this) {
-      return function(e) {
-        var url;
-        url = e.target.result;
-        return _this._setBodyBackgroundImage(url);
-      };
-    })(this);
-    return fileReader.readAsDataURL(file);
-  },
-  _unbindCoverUpload: function() {
-    return this.$uploadCoverInput.fileupload('destroy');
-  },
-  _setBodyBackgroundImage: function(url) {
-    var $coverBackground;
-    $coverBackground = $('.page-cover');
-    $coverBackground.css('background-image', 'url(' + url + ')');
-    return this.safeUpdateState({
-      backgroundUrl: url
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     function dayOfYearFromWeekInfo(config) {
         var w, weekYear, week, weekday, dow, doy, temp;
@@ -15635,7 +11567,6 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
             dow = 1;
             doy = 4;
 
-<<<<<<< HEAD
             // TODO: We need to take the current isoWeekYear, but that depends on
             // how we interpret now (local, utc, fixed offset). So create
             // a now version of current config (take local/utc/offset flags, and
@@ -15646,58 +11577,6 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
         } else {
             dow = config._locale._week.dow;
             doy = config._locale._week.doy;
-=======
-},{}],51:[function(require,module,exports){
-window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({
-  propTypes: {
-    feedColor: React.PropTypes.string.isRequired,
-    saveCallback: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      active: this.props.feedColor
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "settings-design__control settings-design__control--feed-color",
-      "data-key": "feedColor"
-    }, React.createElement("div", {
-      "className": "settings-design__control-inner"
-    }, React.createElement("span", {
-      "className": "settings-design__valign"
-    }), React.createElement("span", {
-      "className": "settings-design__text absolute--left animate--down"
-    }, i18n.t('design_settings_feed_color')), React.createElement("span", {
-      "className": "settings-design__state settings-design__state--radiobutton absolute--right animate--right"
-    }, React.createElement("span", {
-      "className": "settings-design__state-i"
-    })), React.createElement("span", {
-      "className": "form-radiogroup form-radiogroup--radiobuttons form-radiogroup--feed-color absolute--left animate--up"
-    }, React.createElement(DesignSettingsPopup_ControlsRadioButton, {
-      "value": "white",
-      "settingId": "feedColor",
-      "isActive": this.state.active === "white",
-      "text": i18n.t('design_settings_feed_color_white'),
-      "onChange": this.onChange
-    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
-      "value": "black",
-      "settingId": "feedColor",
-      "isActive": this.state.active === "black",
-      "text": i18n.t('design_settings_feed_color_black'),
-      "onChange": this.onChange
-    }))));
-  },
-  onChange: function(value) {
-    if (this.state.active !== value) {
-      this.setState({
-        active: value
-      });
-      return this.props.saveCallback(value);
-    }
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
             weekYear = dfl(w.gg, config._a[YEAR], weekOfYear(moment(), dow, doy).year);
             week = dfl(w.w, 1);
@@ -15718,59 +11597,8 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({
         }
         temp = dayOfYearFromWeeks(weekYear, week, weekday, doy, dow);
 
-<<<<<<< HEAD
         config._a[YEAR] = temp.year;
         config._dayOfYear = temp.dayOfYear;
-=======
-},{}],52:[function(require,module,exports){
-window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({
-  propTypes: {
-    fontType: React.PropTypes.string.isRequired,
-    saveCallback: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      active: this.props.fontType
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "settings-design__control settings-design__control--font-type",
-      "data-key": "fontType"
-    }, React.createElement("div", {
-      "className": "settings-design__control-inner"
-    }, React.createElement("span", {
-      "className": "settings-design__valign"
-    }), React.createElement("span", {
-      "className": "settings-design__text absolute--left animate--down"
-    }, i18n.t('design_settings_font_type')), React.createElement("span", {
-      "className": "settings-design__state absolute--right animate--right"
-    }, React.createElement("span", {
-      "className": "settings-design__state-i"
-    }, "Aa")), React.createElement("span", {
-      "className": "form-radiogroup form-radiogroup--type-font absolute--left animate--up"
-    }, React.createElement(DesignSettingsPopup_ControlsRadioButton, {
-      "value": "sans",
-      "settingId": "fontType",
-      "isActive": this.state.active === "sans",
-      "text": "Aa",
-      "className": "sans-serif",
-      "onChange": this.onChange
-    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
-      "value": "serif",
-      "settingId": "fontType",
-      "isActive": this.state.active === "serif",
-      "text": "Aa",
-      "onChange": this.onChange
-    }))));
-  },
-  onChange: function(value) {
-    if (this.state.active !== value) {
-      this.setState({
-        active: value
-      });
-      return this.props.saveCallback(value);
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
 
     // convert an array to a date.
@@ -15784,74 +11612,7 @@ window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({
             return;
         }
 
-<<<<<<< HEAD
         currentDate = currentDateArray(config);
-=======
-},{}],53:[function(require,module,exports){
-window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({
-  propTypes: {
-    headerColor: React.PropTypes.string.isRequired,
-    saveCallback: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      active: this.props.headerColor
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "settings-design__control settings-design__control--header-color",
-      "data-key": "headerColor"
-    }, React.createElement("div", {
-      "className": "settings-design__control-inner"
-    }, React.createElement("span", {
-      "className": "settings-design__valign"
-    }), React.createElement("span", {
-      "className": "settings-design__text absolute--left animate--down"
-    }, i18n.t('design_settings_header_color')), React.createElement("span", {
-      "className": "settings-design__state settings-design__state--radiobutton absolute--right animate--right"
-    }, React.createElement("span", {
-      "className": "settings-design__state-i"
-    })), React.createElement("span", {
-      "className": "form-radiogroup form-radiogroup--radiobuttons form-radiogroup--header-color absolute--left animate--up"
-    }, React.createElement(DesignSettingsPopup_ControlsRadioButton, {
-      "value": "white",
-      "settingId": "headerColor",
-      "isActive": this.state.active === "white",
-      "text": i18n.t('design_settings_header_color_white'),
-      "onChange": this.onChange
-    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
-      "value": "black",
-      "settingId": "headerColor",
-      "isActive": this.state.active === "black",
-      "text": i18n.t('design_settings_header_color_black'),
-      "onChange": this.onChange
-    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
-      "value": "whiteonblack",
-      "settingId": "headerColor",
-      "isActive": this.state.active === "whiteonblack",
-      "text": i18n.t('design_settings_header_color_white_on_black'),
-      "className": "white-on-black",
-      "onChange": this.onChange
-    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
-      "value": "blackonwhite",
-      "settingId": "headerColor",
-      "isActive": this.state.active === "blackonwhite",
-      "text": i18n.t('design_settings_header_color_black_on_white'),
-      "className": "black-on-white",
-      "onChange": this.onChange
-    }))));
-  },
-  onChange: function(value) {
-    if (this.state.active !== value) {
-      this.setState({
-        active: value
-      });
-      return this.props.saveCallback(value);
-    }
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         //compute day of the year from weeks and weekdays
         if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
@@ -15862,14 +11623,9 @@ window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({
         if (config._dayOfYear) {
             yearToUse = dfl(config._a[YEAR], currentDate[YEAR]);
 
-<<<<<<< HEAD
             if (config._dayOfYear > daysInYear(yearToUse)) {
                 config._pf._overflowDayOfYear = true;
             }
-=======
-},{}],54:[function(require,module,exports){
-var MAXIMUM_OPACITY, MINIMUM_OPACITY, STEP_OPACITY, TIMEOUT_BEFORE_SAVE;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
             date = makeUTCDate(yearToUse, 0, config._dayOfYear);
             config._a[MONTH] = date.getUTCMonth();
@@ -15914,14 +11670,9 @@ var MAXIMUM_OPACITY, MINIMUM_OPACITY, STEP_OPACITY, TIMEOUT_BEFORE_SAVE;
     function dateFromObject(config) {
         var normalizedInput;
 
-<<<<<<< HEAD
         if (config._d) {
             return;
         }
-=======
-},{}],55:[function(require,module,exports){
-var CurrentUserServerActions, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         normalizedInput = normalizeObjectUnits(config._i);
         config._a = [
@@ -16036,16 +11787,11 @@ var CurrentUserServerActions, cx;
             i,
             currentScore;
 
-<<<<<<< HEAD
         if (config._f.length === 0) {
             config._pf.invalidFormat = true;
             config._d = new Date(NaN);
             return;
         }
-=======
-},{"../../actions/server/current_user":12,"react/lib/cx":599}],56:[function(require,module,exports){
-var KEYCODE_ENTER, LinkedStateMixin, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         for (i = 0; i < config._f.length; i++) {
             currentScore = 0;
@@ -16075,24 +11821,7 @@ var KEYCODE_ENTER, LinkedStateMixin, cx;
             }
         }
 
-<<<<<<< HEAD
         extend(config, bestMoment || tempConfig);
-=======
-},{"react/lib/LinkedStateMixin":510,"react/lib/cx":599}],57:[function(require,module,exports){
-window.EmbedComponent = React.createClass({
-  propTypes: {
-    autoplay: React.PropTypes.bool.isRequired,
-    coverImageUrl: React.PropTypes.string,
-    frameWidth: React.PropTypes.number.isRequired,
-    frameHeight: React.PropTypes.number.isRequired,
-    embedHtml: React.PropTypes.string.isRequired
-  },
-  render: function() {
-    if ((this.props.coverImageUrl != null) && !this.props.autoplay) {
-      return this.transferPropsTo(new EmbedComponentWithCover);
-    } else {
-      return this.transferPropsTo(new EmbedComponentNoCover);
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
 
     // date from iso format
@@ -16142,7 +11871,6 @@ window.EmbedComponent = React.createClass({
         return res;
     }
 
-<<<<<<< HEAD
     function makeDateFromInput(config) {
         var input = config._i, matched;
         if (input === undefined) {
@@ -16166,23 +11894,6 @@ window.EmbedComponent = React.createClass({
         } else {
             moment.createFromInputFallback(config);
         }
-=======
-},{}],58:[function(require,module,exports){
-window.EntryCommentBox_CommentFormSubmit = React.createClass({
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired,
-    visible: React.PropTypes.bool.isRequired
-  },
-  render: function() {
-    if (this.props.visible) {
-      return React.createElement("button", {
-        "ref": "commentFormSubmit",
-        "className": "comment-form__submit",
-        "onClick": this.props.onClick
-      }, i18n.t('comment_form_submit'));
-    } else {
-      return React.createElement("span", null);
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
 
     function makeDate(y, m, d, h, M, s, ms) {
@@ -16197,7 +11908,6 @@ window.EntryCommentBox_CommentFormSubmit = React.createClass({
         return date;
     }
 
-<<<<<<< HEAD
     function makeUTCDate(y) {
         var date = new Date(Date.UTC.apply(null, arguments));
         if (y < 1970) {
@@ -16205,10 +11915,6 @@ window.EntryCommentBox_CommentFormSubmit = React.createClass({
         }
         return date;
     }
-=======
-},{}],59:[function(require,module,exports){
-var FORM_STATE, HIDDEN_STATE, LINK_STATE;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     function parseWeekday(input, locale) {
         if (typeof input === 'string') {
@@ -16266,7 +11972,6 @@ var FORM_STATE, HIDDEN_STATE, LINK_STATE;
         Week of Year
     ************************************/
 
-<<<<<<< HEAD
 
     // firstDayOfWeek       0 = sun, 6 = sat
     //                      the day of the week that starts the week
@@ -16293,56 +11998,6 @@ var FORM_STATE, HIDDEN_STATE, LINK_STATE;
         return {
             week: Math.ceil(adjustedMoment.dayOfYear() / 7),
             year: adjustedMoment.year()
-=======
-},{}],60:[function(require,module,exports){
-window.EntryCommentBox_CommentEditFormManager = React.createClass({
-  mixins: [RequesterMixin, ComponentManipulationsMixin],
-  propTypes: {
-    comment: React.PropTypes.object.isRequired,
-    user: React.PropTypes.object.isRequired,
-    onEditEnd: React.PropTypes.func.isRequired,
-    onCancel: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      isEditError: false,
-      isEditLoading: false
-    };
-  },
-  render: function() {
-    return React.createElement(EntryCommentBox_CommentForm, {
-      "ref": "commentForm",
-      "text": this.props.comment.comment_html,
-      "user": this.props.user,
-      "isLoading": this.state.isEditLoading,
-      "onSubmit": this.onSubmit,
-      "onCancel": this.props.onCancel
-    });
-  },
-  onSubmit: function(text) {
-    this.setState({
-      isEditError: false,
-      isEditLoading: true
-    });
-    return this.createRequest({
-      url: ApiRoutes.comments_edit_delete_url(this.props.comment.id),
-      method: 'POST',
-      data: {
-        _method: 'PUT',
-        text: text
-      },
-      success: (function(_this) {
-        return function(comment) {
-          return _this.props.onEditEnd(comment);
-        };
-      })(this),
-      error: (function(_this) {
-        return function(data) {
-          _this.safeUpdateState({
-            isEditError: true
-          });
-          return TastyNotifyController.errorResponse(data);
->>>>>>> Infinite scroll prefill [deliver #90599686]
         };
     }
 
@@ -16370,12 +12025,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({
             format = config._f,
             res;
 
-<<<<<<< HEAD
         config._locale = config._locale || moment.localeData(config._l);
-=======
-},{}],61:[function(require,module,exports){
-var REPLIES_LIMIT;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         if (input === null || (format === undefined && input === '')) {
             return moment.invalid({nullInput: true});
@@ -16428,12 +12078,7 @@ var REPLIES_LIMIT;
         return makeMoment(c);
     };
 
-<<<<<<< HEAD
     moment.suppressDeprecationWarnings = false;
-=======
-},{}],62:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     moment.createFromInputFallback = deprecate(
         'moment construction falls back to js Date. This is ' +
@@ -16473,61 +12118,8 @@ var cx;
         return pickBy('isBefore', args);
     };
 
-<<<<<<< HEAD
     moment.max = function () {
         var args = [].slice.call(arguments, 0);
-=======
-},{"react/lib/cx":599}],63:[function(require,module,exports){
-window.EntryCommentBox_CommentList = React.createClass({
-  propTypes: {
-    comments: React.PropTypes.array.isRequired,
-    entryId: React.PropTypes.number.isRequired,
-    entryUrl: React.PropTypes.string.isRequired,
-    sharedCommentId: React.PropTypes.number,
-    user: React.PropTypes.object,
-    onDelete: React.PropTypes.func
-  },
-  componentDidMount: function() {
-    if (this.props.sharedCommentId != null) {
-      if (!this._isSharedCommentExists()) {
-        return alert(i18n.t('shared_comment_doesnt_exist'));
-      }
-    }
-  },
-  render: function() {
-    var commentList, onDelete, that;
-    that = this;
-    onDelete = (function(_this) {
-      return function() {
-        return _this.props.onDelete.apply(_this, arguments);
-      };
-    })(this);
-    commentList = this.props.comments.map(function(comment) {
-      return React.createElement(EntryCommentBox_CommentManager, {
-        "comment": comment,
-        "commentId": comment.id,
-        "entryId": that.props.entryId,
-        "entryUrl": that.props.entryUrl,
-        "isShared": that.props.sharedCommentId === comment.id,
-        "onDelete": onDelete.bind(this, comment),
-        "key": comment.id
-      });
-    });
-    return React.createElement("div", {
-      "className": "comments__list"
-    }, commentList, " ");
-  },
-  _isSharedCommentExists: function() {
-    var result;
-    result = this.props.comments.filter((function(_this) {
-      return function(comment) {
-        return comment.id === _this.props.sharedCommentId;
-      };
-    })(this));
-    return result.length > 0;
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         return pickBy('isAfter', args);
     };
@@ -16536,7 +12128,6 @@ window.EntryCommentBox_CommentList = React.createClass({
     moment.utc = function (input, format, locale, strict) {
         var c;
 
-<<<<<<< HEAD
         if (typeof(locale) === 'boolean') {
             strict = locale;
             locale = undefined;
@@ -16552,10 +12143,6 @@ window.EntryCommentBox_CommentList = React.createClass({
         c._f = format;
         c._strict = strict;
         c._pf = defaultParsingFlags();
-=======
-},{}],64:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         return makeMoment(c).utc();
     };
@@ -16621,51 +12208,10 @@ var cx;
                 ('from' in duration || 'to' in duration)) {
             diffRes = momentsDifference(moment(duration.from), moment(duration.to));
 
-<<<<<<< HEAD
             duration = {};
             duration.ms = diffRes.milliseconds;
             duration.M = diffRes.months;
         }
-=======
-},{"react/lib/cx":599}],65:[function(require,module,exports){
-window.EntryCommentBox_CommentMetaBar = React.createClass({
-  propTypes: {
-    name: React.PropTypes.string.isRequired,
-    commentId: React.PropTypes.number.isRequired,
-    commentCreatedAt: React.PropTypes.string.isRequired,
-    canReport: React.PropTypes.bool,
-    canDelete: React.PropTypes.bool,
-    canEdit: React.PropTypes.bool,
-    entryId: React.PropTypes.number.isRequired,
-    entryUrl: React.PropTypes.string.isRequired,
-    onDelete: React.PropTypes.func
-  },
-  render: function() {
-    return React.createElement("span", {
-      "className": "comment__meta"
-    }, React.createElement(EntryCommentBox_CommentMetaBarReply, {
-      "name": this.props.name,
-      "entryId": this.props.entryId
-    }), React.createElement("span", {
-      "className": "comment__dot"
-    }, "\u00b7"), React.createElement(EntryCommentBox_CommentMetaBarDate, {
-      "entryUrl": this.props.entryUrl,
-      "commentId": this.props.commentId,
-      "time": this.props.commentCreatedAt
-    }), React.createElement("span", {
-      "className": "comment__dot"
-    }, "\u00b7"), React.createElement(EntryCommentBox_CommentMetaBarDropdownMenu, {
-      "commentId": this.props.commentId,
-      "entryId": this.props.entryId,
-      "entryUrl": this.props.entryUrl,
-      "canReport": this.props.canReport,
-      "canDelete": this.props.canDelete,
-      "canEdit": this.props.canEdit,
-      "onDelete": this.props.onDelete
-    }));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         ret = new Duration(duration);
 
@@ -16673,46 +12219,8 @@ window.EntryCommentBox_CommentMetaBar = React.createClass({
             ret._locale = input._locale;
         }
 
-<<<<<<< HEAD
         return ret;
     };
-=======
-},{}],66:[function(require,module,exports){
-window.EntryCommentBox_CommentMetaBarDate = React.createClass({
-  propTypes: {
-    time: React.PropTypes.string.isRequired,
-    commentId: React.PropTypes.number.isRequired,
-    entryUrl: React.PropTypes.string.isRequired
-  },
-  render: function() {
-    var createdAt, date, now;
-    now = moment();
-    createdAt = moment(this.props.time);
-    if (now.diff(createdAt, 'seconds') < 5) {
-      date = createdAt.subtract(5, 's').fromNow();
-    } else if (now.diff(createdAt, 'minutes') < 180) {
-      date = createdAt.fromNow();
-    } else if (now.diff(createdAt, 'days') < 1) {
-      date = createdAt.calendar();
-    } else {
-      if (now.year() !== createdAt.year()) {
-        date = createdAt.format('D MMMM YYYY');
-      } else {
-        date = createdAt.format('D MMMM');
-      }
-    }
-    return React.createElement("a", {
-      "className": "comment__date-link",
-      "href": this._getCommentUrl()
-    }, React.createElement("span", {
-      "className": "comment__date"
-    }, date));
-  },
-  _getCommentUrl: function() {
-    return this.props.entryUrl + '#comment-' + this.props.commentId;
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     // version number
     moment.version = VERSION;
@@ -16720,13 +12228,8 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass({
     // default format
     moment.defaultFormat = isoFormat;
 
-<<<<<<< HEAD
     // constant that refers to the ISO standard
     moment.ISO_8601 = function () {};
-=======
-},{}],67:[function(require,module,exports){
-var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     // Plugins that add properties should also add the key here (null value),
     // so we can properly clone ourselves.
@@ -16784,57 +12287,8 @@ var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MOUSE_L
             }
             locales[name].set(values);
 
-<<<<<<< HEAD
             // backwards compat for now: also set the locale
             moment.locale(name);
-=======
-},{"react/lib/cx":599}],68:[function(require,module,exports){
-window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass({
-  mixins: [RequesterMixin],
-  propTypes: {
-    commentId: React.PropTypes.number.isRequired,
-    onDelete: React.PropTypes.func
-  },
-  render: function() {
-    return React.createElement("a", {
-      "onClick": this.onClick,
-      "title": i18n.t('delete_comment_item'),
-      "className": "comment__dropdown-item"
-    }, React.createElement("i", {
-      "className": "icon icon--basket"
-    }), i18n.t('delete_comment_item'));
-  },
-  onClick: function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    return TastyConfirmController.show({
-      message: i18n.t('delete_comment_confirm'),
-      acceptButtonText: i18n.t('delete_comment_button'),
-      onAccept: this.deleteComment
-    });
-  },
-  deleteComment: function() {
-    return this.createRequest({
-      url: ApiRoutes.comments_edit_delete_url(this.props.commentId),
-      method: 'POST',
-      data: {
-        _method: 'DELETE'
-      },
-      success: (function(_this) {
-        return function() {
-          TastyNotifyController.notifySuccess(i18n.t('delete_comment_success'));
-          if (_this.props.onDelete != null) {
-            return _this.props.onDelete();
-          }
-        };
-      })(this),
-      error: function(data) {
-        return TastyNotifyController.errorResponse(data);
-      }
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
             return locales[name];
         } else {
@@ -16851,31 +12305,9 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
         }
     );
 
-<<<<<<< HEAD
     // returns locale data
     moment.localeData = function (key) {
         var locale;
-=======
-},{}],69:[function(require,module,exports){
-window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
-  propTypes: {
-    entryId: React.PropTypes.number.isRequired,
-    commentId: React.PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "onClick": this.onClick,
-      "title": i18n.t('edit_comment_item'),
-      "className": "comment__dropdown-item"
-    }, React.createElement("i", {
-      "className": "icon icon--pencil"
-    }), i18n.t('edit_comment_item'));
-  },
-  onClick: function() {
-    return window.commentsMediator.doEdit(this.props.entryId, this.props.commentId);
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         if (key && key._locale && key._locale._abbr) {
             key = key._locale._abbr;
@@ -16885,7 +12317,6 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
             return moment._locale;
         }
 
-<<<<<<< HEAD
         if (!isArray(key)) {
             //short-circuit everything else
             locale = loadLocale(key);
@@ -16894,26 +12325,6 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
             }
             key = [key];
         }
-=======
-},{}],70:[function(require,module,exports){
-window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
-  propTypes: {
-    commentId: React.PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "href": this._getCommentUrl(),
-      "title": i18n.t('link_comment_item'),
-      "className": "comment__dropdown-item"
-    }, React.createElement("i", {
-      "className": "icon icon--hyperlink"
-    }), i18n.t('link_comment_item'));
-  },
-  _getCommentUrl: function() {
-    return this.props.entryUrl + '#comment-' + this.props.commentId;
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         return chooseLocale(key);
     };
@@ -16924,52 +12335,10 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
             (obj != null && hasOwnProp(obj, '_isAMomentObject'));
     };
 
-<<<<<<< HEAD
     // for typechecking Duration objects
     moment.isDuration = function (obj) {
         return obj instanceof Duration;
     };
-=======
-},{}],71:[function(require,module,exports){
-window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass({
-  mixins: [RequesterMixin],
-  propTypes: {
-    commentId: React.PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "onClick": this.onClick,
-      "title": i18n.t('report_comment_item'),
-      "className": "comment__dropdown-item"
-    }, React.createElement("i", {
-      "className": "icon icon--exclamation-mark"
-    }), i18n.t('report_comment_item'));
-  },
-  onClick: function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    return TastyConfirmController.show({
-      message: i18n.t('report_comment_confirm'),
-      acceptButtonText: i18n.t('report_comment_button'),
-      onAccept: this.createReport
-    });
-  },
-  createReport: function() {
-    return this.createRequest({
-      url: ApiRoutes.comments_report_url(this.props.commentId),
-      method: 'POST',
-      success: (function(_this) {
-        return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('report_comment_success'));
-        };
-      })(this),
-      error: function(data) {
-        return TastyNotifyController.errorResponse(data);
-      }
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     for (i = lists.length - 1; i >= 0; --i) {
         makeList(lists[i]);
@@ -16979,7 +12348,6 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
         return normalizeUnits(units);
     };
 
-<<<<<<< HEAD
     moment.invalid = function (flags) {
         var m = moment.utc(NaN);
         if (flags != null) {
@@ -16988,24 +12356,6 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
         else {
             m._pf.userInvalidated = true;
         }
-=======
-},{}],72:[function(require,module,exports){
-window.EntryCommentBox_CommentMetaBarReply = React.createClass({
-  propTypes: {
-    name: React.PropTypes.string.isRequired,
-    entryId: React.PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("span", {
-      "className": "comment__reply",
-      "onClick": this.onClick
-    }, "\u041e\u0442\u0432\u0435\u0442\u0438\u0442\u044c");
-  },
-  onClick: function() {
-    return window.commentsMediator.doReplyClicked(this.props.entryId, this.props.name);
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         return m;
     };
@@ -17014,14 +12364,9 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass({
         return moment.apply(null, arguments).parseZone();
     };
 
-<<<<<<< HEAD
     moment.parseTwoDigitYear = function (input) {
         return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
     };
-=======
-},{}],73:[function(require,module,exports){
-var MORE_COMMENTS_LIMIT;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     /************************************
         Moment Prototype
@@ -17034,44 +12379,9 @@ var MORE_COMMENTS_LIMIT;
             return moment(this);
         },
 
-<<<<<<< HEAD
         valueOf : function () {
             return +this._d + ((this._offset || 0) * 60000);
         },
-=======
-},{}],74:[function(require,module,exports){
-window.EntryCommentBox_LoadMore = React.createClass({
-  propTypes: {
-    totalCount: React.PropTypes.number.isRequired,
-    loadedCount: React.PropTypes.number.isRequired,
-    limit: React.PropTypes.number.isRequired,
-    onClick: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "onClick": this.props.onClick,
-      "className": "comments__more"
-    }, React.createElement("a", {
-      "title": this._getTitle(),
-      "className": "comments__more-link"
-    }, this._getTitle()));
-  },
-  _getTitle: function() {
-    var possibleCount, remainingCount;
-    remainingCount = this.props.totalCount - this.props.loadedCount;
-    possibleCount = this.props.loadedCount + this.props.limit;
-    if (possibleCount < this.props.totalCount) {
-      return i18n.t('load_more_comments', {
-        count: this.props.limit
-      });
-    } else {
-      return i18n.t('load_more_comments_remaining', {
-        count: remainingCount
-      });
-    }
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         unix : function () {
             return Math.floor(+this / 1000);
@@ -17081,14 +12391,9 @@ window.EntryCommentBox_LoadMore = React.createClass({
             return this.clone().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ');
         },
 
-<<<<<<< HEAD
         toDate : function () {
             return this._offset ? new Date(+this) : this._d;
         },
-=======
-},{}],75:[function(require,module,exports){
-var CommentsMixin;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         toISOString : function () {
             var m = moment(this).utc();
@@ -17126,33 +12431,8 @@ var CommentsMixin;
                 return this.isValid() && compareArrays(this._a, (this._isUTC ? moment.utc(this._a) : moment(this._a)).toArray()) > 0;
             }
 
-<<<<<<< HEAD
             return false;
         },
-=======
-},{}],76:[function(require,module,exports){
-window.EntryMetabarAuthor = React.createClass({
-  propTypes: {
-    user: React.PropTypes.object.isRequired
-  },
-  render: function() {
-    return React.createElement("span", {
-      "className": "meta-item meta-item--user state--visible"
-    }, React.createElement("span", {
-      "className": "meta-item__content"
-    }, React.createElement("a", {
-      "href": this.props.user.tlog_url,
-      "title": this.props.user.name,
-      "className": "meta-item__common meta-item__link"
-    }, React.createElement("span", {
-      "className": "meta-item__ava"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.user,
-      "size": 64.
-    })), ' ' + this.props.user.name)));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         parsingFlags : function () {
             return extend({}, this._pf);
@@ -17162,53 +12442,9 @@ window.EntryMetabarAuthor = React.createClass({
             return this._pf.overflow;
         },
 
-<<<<<<< HEAD
         utc : function (keepLocalTime) {
             return this.zone(0, keepLocalTime);
         },
-=======
-},{}],77:[function(require,module,exports){
-window.EntryMetabarComment = React.createClass({
-  mixins: [ReactGrammarMixin],
-  propTypes: {
-    entryId: React.PropTypes.number.isRequired,
-    entryUrl: React.PropTypes.string.isRequired,
-    isLogged: React.PropTypes.bool.isRequired,
-    totalCommentsCount: React.PropTypes.number.isRequired
-  },
-  render: function() {
-    var commentText;
-    if (this.props.isLogged) {
-      commentText = React.createElement("a", {
-        "className": "meta-item__common meta__link",
-        "title": i18n.t('entry_meta_comment_link'),
-        "onClick": this.onClick
-      }, i18n.t('entry_meta_comment_link'));
-    } else {
-      commentText = React.createElement("a", {
-        "className": "meta-item__common meta__link",
-        "href": this.props.entryUrl,
-        "title": this._getNumberOfComments()
-      }, this._getNumberOfComments());
-    }
-    return React.createElement("span", {
-      "className": "meta-item meta-item_comments"
-    }, React.createElement("span", {
-      "className": "meta__content"
-    }, commentText));
-  },
-  onClick: function() {
-    return window.commentsMediator.doCommentClicked(this.props.entryId);
-  },
-  _getNumberOfComments: function() {
-    if (this.props.totalCommentsCount) {
-      return i18n.t('comments_count', {
-        count: this.props.totalCommentsCount
-      });
-    }
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         local : function (keepLocalTime) {
             if (this._isUTC) {
@@ -17222,57 +12458,19 @@ window.EntryMetabarComment = React.createClass({
             return this;
         },
 
-<<<<<<< HEAD
         format : function (inputString) {
             var output = formatMoment(this, inputString || moment.defaultFormat);
             return this.localeData().postformat(output);
         },
-=======
-},{}],78:[function(require,module,exports){
-window.EntryMetabarDate = React.createClass({
-  propTypes: {
-    time: React.PropTypes.string.isRequired,
-    entryUrl: React.PropTypes.string.isRequired
-  },
-  render: function() {
-    var createdAt, date, now;
-    now = moment();
-    createdAt = moment(this.props.time);
-    if (now.diff(createdAt, 'days') < 1) {
-      date = createdAt.calendar();
-    } else {
-      if (now.year() !== createdAt.year()) {
-        date = createdAt.format('D MMMM YYYY');
-      } else {
-        date = createdAt.format('D MMMM');
-      }
-    }
-    return React.createElement("span", {
-      "className": "meta-item meta-item--date"
-    }, React.createElement("span", {
-      "className": "meta-item__content"
-    }, React.createElement("a", {
-      "href": this.props.entryUrl
-    }, React.createElement("span", {
-      "className": "meta-item__common"
-    }, date))));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         add : createAdder(1, 'add'),
 
         subtract : createAdder(-1, 'subtract'),
 
-<<<<<<< HEAD
         diff : function (input, units, asFloat) {
             var that = makeAs(input, this),
                 zoneDiff = (this.zone() - that.zone()) * 6e4,
                 diff, output, daysAdjust;
-=======
-},{}],79:[function(require,module,exports){
-var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_BETWEEN_TOGGLER_AND_MENU, MOUSE_LEAVE_TIMEOUT, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
             units = normalizeUnits(units);
 
@@ -17348,7 +12546,6 @@ var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_
 
         month : makeAccessor('Month', true),
 
-<<<<<<< HEAD
         startOf : function (units) {
             units = normalizeUnits(units);
             // the following switch intentionally omits break keywords
@@ -17376,80 +12573,6 @@ var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_
                 this.milliseconds(0);
                 /* falls through */
             }
-=======
-},{"react/lib/cx":599}],80:[function(require,module,exports){
-window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
-  mixins: [RequesterMixin, 'ReactActivitiesUser', DOMManipulationsMixin],
-  propTypes: {
-    entryId: React.PropTypes.number.isRequired,
-    successDeleteUrl: React.PropTypes.string,
-    onDelete: React.PropTypes.func
-  },
-  getInitialState: function() {
-    return {
-      isProcess: false
-    };
-  },
-  render: function() {
-    var icon;
-    if (this.state.isProcess) {
-      icon = React.createElement("span", {
-        "className": "spinner spinner--15x15"
-      }, React.createElement("span", {
-        "className": "spinner__icon"
-      }));
-    } else {
-      icon = React.createElement("i", {
-        "className": "icon icon--basket"
-      });
-    }
-    return React.createElement("a", {
-      "onClick": this.onClick,
-      "className": "meta-item__dropdown-item"
-    }, icon, i18n.t('delete_entry_item'));
-  },
-  onClick: function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    return TastyConfirmController.show({
-      message: i18n.t('delete_entry_confirm'),
-      acceptButtonText: i18n.t('delete_entry_button'),
-      onAccept: this.deleteEntry
-    });
-  },
-  deleteEntry: function() {
-    this.setState({
-      isProcess: true
-    });
-    this.incrementActivities();
-    return this.createRequest({
-      url: ApiRoutes.entry_url(this.props.entryId),
-      method: 'POST',
-      data: {
-        _method: 'DELETE'
-      },
-      success: (function(_this) {
-        return function() {
-          return _this.removeEntryFromDOM(_this.props.entryId);
-        };
-      })(this),
-      error: (function(_this) {
-        return function(data) {
-          return TastyNotifyController.errorResponse(data);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          _this.setState({
-            isProcess: false
-          });
-          return _this.decrementActivities();
-        };
-      })(this)
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
             // weeks are a special case
             if (units === 'week') {
@@ -17463,13 +12586,8 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
                 this.month(Math.floor(this.month() / 3) * 3);
             }
 
-<<<<<<< HEAD
             return this;
         },
-=======
-},{}],81:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         endOf: function (units) {
             units = normalizeUnits(units);
@@ -17515,7 +12633,6 @@ var cx;
             }
         },
 
-<<<<<<< HEAD
         min: deprecate(
                  'moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548',
                  function (other) {
@@ -17523,24 +12640,6 @@ var cx;
                      return other < this ? this : other;
                  }
          ),
-=======
-},{"react/lib/cx":599}],82:[function(require,module,exports){
-window.EntryMetabarDropdownMenuItem = React.createClass({
-  propTypes: {
-    href: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.string.isRequired,
-    title: React.PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "href": this.props.href,
-      "className": "meta-item__dropdown-item"
-    }, React.createElement("i", {
-      "className": "icon " + this.props.icon
-    }), this.props.title);
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         max: deprecate(
                 'moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548',
@@ -17594,50 +12693,9 @@ window.EntryMetabarDropdownMenuItem = React.createClass({
             return this;
         },
 
-<<<<<<< HEAD
         zoneAbbr : function () {
             return this._isUTC ? 'UTC' : '';
         },
-=======
-},{}],83:[function(require,module,exports){
-window.EntryMetabarDropdownMenuReportItem = React.createClass({
-  mixins: [RequesterMixin],
-  propTypes: {
-    entryId: React.PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "onClick": this.onClick,
-      "className": "meta-item__dropdown-item"
-    }, React.createElement("i", {
-      "className": "icon icon--exclamation-mark"
-    }), i18n.t('report_entry_item'));
-  },
-  onClick: function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    return TastyConfirmController.show({
-      message: i18n.t('report_entry_confirm'),
-      acceptButtonText: i18n.t('report_entry_button'),
-      onAccept: this.createReport
-    });
-  },
-  createReport: function() {
-    return this.createRequest({
-      url: ApiRoutes.report_url(this.props.entryId),
-      method: 'POST',
-      success: (function(_this) {
-        return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('report_entry_success'));
-        };
-      })(this),
-      error: function(data) {
-        return TastyNotifyController.errorResponse(data);
-      }
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         zoneName : function () {
             return this._isUTC ? 'Coordinated Universal Time' : '';
@@ -17652,7 +12710,6 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
             return this;
         },
 
-<<<<<<< HEAD
         hasAlignedHourOffset : function (input) {
             if (!input) {
                 input = 0;
@@ -17660,103 +12717,6 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
             else {
                 input = moment(input).zone();
             }
-=======
-},{}],84:[function(require,module,exports){
-window.EntryMetabarDropdownMenuWatchItem = React.createClass({
-  mixins: [RequesterMixin, ComponentManipulationsMixin],
-  propTypes: {
-    entryId: React.PropTypes.number.isRequired,
-    isWatching: React.PropTypes.bool.isRequired
-  },
-  getInitialState: function() {
-    return {
-      isWatching: this.props.isWatching,
-      isHover: false
-    };
-  },
-  render: function() {
-    return React.createElement("a", {
-      "onClick": this.onClick,
-      "onMouseEnter": this.onMouseEnter,
-      "onMouseLeave": this.onMouseLeave,
-      "className": "meta-item__dropdown-item"
-    }, React.createElement("i", {
-      "className": "icon icon--comments-subscribe"
-    }), this.getTitle());
-  },
-  getTitle: function() {
-    if (this.state.isWatching) {
-      if (this.state.isHover) {
-        return i18n.t('stop_watch_entry_item');
-      } else {
-        return i18n.t('watching_entry_item');
-      }
-    } else {
-      return i18n.t('start_watch_entry_item');
-    }
-  },
-  onClick: function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    if (this.state.isWatching) {
-      return this.removeFromWatching();
-    } else {
-      return this.addToWatching();
-    }
-  },
-  addToWatching: function() {
-    return this.createRequest({
-      url: ApiRoutes.watching_url(),
-      method: 'POST',
-      data: {
-        entry_id: this.props.entryId
-      },
-      success: (function(_this) {
-        return function() {
-          _this.safeUpdateState({
-            isWatching: true
-          });
-          return console.info("Оформлена подписка на комментарии поста " + _this.props.entryId);
-        };
-      })(this),
-      error: function(data) {
-        return TastyNotifyController.errorResponse(data);
-      }
-    });
-  },
-  removeFromWatching: function() {
-    return this.createRequest({
-      url: ApiRoutes.watching_url(),
-      method: 'POST',
-      data: {
-        _method: 'DELETE',
-        entry_id: this.props.entryId
-      },
-      success: (function(_this) {
-        return function() {
-          _this.safeUpdateState({
-            isWatching: false
-          });
-          return console.info("Отменена подписка на комментарии поста " + _this.props.entryId);
-        };
-      })(this),
-      error: function(data) {
-        return TastyNotifyController.errorResponse(data);
-      }
-    });
-  },
-  onMouseEnter: function() {
-    return this.setState({
-      isHover: true
-    });
-  },
-  onMouseLeave: function() {
-    return this.setState({
-      isHover: false
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
             return (this.zone() - input) % 60 === 0;
         },
@@ -17765,79 +12725,10 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
             return daysInMonth(this.year(), this.month());
         },
 
-<<<<<<< HEAD
         dayOfYear : function (input) {
             var dayOfYear = round((moment(this).startOf('day') - moment(this).startOf('year')) / 864e5) + 1;
             return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
         },
-=======
-},{}],85:[function(require,module,exports){
-window.EntryMetabar = React.createClass({
-  propTypes: {
-    entryId: React.PropTypes.number.isRequired,
-    author: React.PropTypes.object,
-    isFavorited: React.PropTypes.bool.isRequired,
-    isWatching: React.PropTypes.bool.isRequired,
-    shouldRemoveFavoriteNode: React.PropTypes.bool,
-    entryUrl: React.PropTypes.string.isRequired,
-    editUrl: React.PropTypes.string,
-    successDeleteUrl: React.PropTypes.string,
-    canEdit: React.PropTypes.bool,
-    canFavorite: React.PropTypes.bool,
-    canWatch: React.PropTypes.bool,
-    canReport: React.PropTypes.bool,
-    canDelete: React.PropTypes.bool,
-    tags: React.PropTypes.array.isRequired,
-    createdAt: React.PropTypes.string.isRequired,
-    entryCommentsUrl: React.PropTypes.string.isRequired,
-    totalCommentsCount: React.PropTypes.number.isRequired,
-    isLogged: React.PropTypes.bool.isRequired,
-    isEntryPage: React.PropTypes.bool.isRequired
-  },
-  getDefaultProps: function() {
-    return {
-      tags: []
-    };
-  },
-  render: function() {
-    var entryAuthor, entryComment;
-    if (this.props.author) {
-      entryAuthor = React.createElement(EntryMetabarAuthor, {
-        "user": this.props.author
-      });
-    }
-    if (!(this.props.totalCommentsCount === 0 && this.props.isLogged === false || this.props.isEntryPage === true)) {
-      entryComment = React.createElement(EntryMetabarComment, {
-        "entryId": this.props.entryId,
-        "isLogged": this.props.isLogged,
-        "entryUrl": this.props.entryUrl,
-        "totalCommentsCount": this.props.totalCommentsCount
-      });
-    }
-    return React.createElement("span", {
-      "className": "meta-bar"
-    }, entryAuthor, entryComment, React.createElement(EntryMetabarDate, {
-      "time": this.props.createdAt,
-      "entryUrl": this.props.entryUrl
-    }), React.createElement(EntryMetabarTags, {
-      "tags": this.props.tags
-    }), React.createElement(EntryMetabarDropdownMenu, {
-      "entryId": this.props.entryId,
-      "isFavorited": this.props.isFavorited,
-      "isWatching": this.props.isWatching,
-      "shouldRemoveFavoriteNode": this.props.shouldRemoveFavoriteNode,
-      "entryUrl": this.props.entryUrl,
-      "editUrl": this.props.editUrl,
-      "successDeleteUrl": this.props.successDeleteUrl,
-      "canEdit": this.props.canEdit,
-      "canFavorite": this.props.canFavorite,
-      "canWatch": this.props.canWatch,
-      "canReport": this.props.canReport,
-      "canDelete": this.props.canDelete
-    }));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         quarter : function (input) {
             return input == null ? Math.ceil((this.month() + 1) / 3) : this.month((input - 1) * 3 + this.month() % 3);
@@ -17848,27 +12739,10 @@ window.EntryMetabar = React.createClass({
             return input == null ? year : this.add((input - year), 'y');
         },
 
-<<<<<<< HEAD
         isoWeekYear : function (input) {
             var year = weekOfYear(this, 1, 4).year;
             return input == null ? year : this.add((input - year), 'y');
         },
-=======
-},{}],86:[function(require,module,exports){
-window.EntryMetabarTag = React.createClass({
-  propTypes: {
-    tag: React.PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "href": Routes.tag_path(this.props.tag),
-      "target": "_blank",
-      "title": '#' + this.props.tag,
-      "className": "meta-item__common meta-item__link"
-    }, '#' + this.props.tag);
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         week : function (input) {
             var week = this.localeData().week(this);
@@ -17880,50 +12754,10 @@ window.EntryMetabarTag = React.createClass({
             return input == null ? week : this.add((input - week) * 7, 'd');
         },
 
-<<<<<<< HEAD
         weekday : function (input) {
             var weekday = (this.day() + 7 - this.localeData()._week.dow) % 7;
             return input == null ? weekday : this.add(input - weekday, 'd');
         },
-=======
-},{}],87:[function(require,module,exports){
-window.EntryMetabarTags = React.createClass({
-  propTypes: {
-    tags: React.PropTypes.array.isRequired
-  },
-  render: function() {
-    var tagList;
-    if (this.props.tags.length > 0) {
-      tagList = [];
-      this.props.tags.forEach((function(_this) {
-        return function(tag, i) {
-          if (i !== _this.props.tags.length - 1) {
-            return tagList.push(React.createElement(EntryMetabarTag, {
-              "tag": tag,
-              "key": i
-            }), React.createElement("span", {
-              "className": "meta-item__common",
-              "key": i + ' comma'
-            }, ", "));
-          } else {
-            return tagList.push(React.createElement(EntryMetabarTag, {
-              "tag": tag,
-              "key": i
-            }));
-          }
-        };
-      })(this));
-      return React.createElement("span", {
-        "className": "meta-item meta-item--tags"
-      }, React.createElement("span", {
-        "className": "meta-item__content"
-      }, tagList));
-    } else {
-      return React.createElement("span", null);
-    }
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         isoWeekday : function (input) {
             // behaves the same as moment#day except
@@ -17936,67 +12770,10 @@ window.EntryMetabarTags = React.createClass({
             return weeksInYear(this.year(), 1, 4);
         },
 
-<<<<<<< HEAD
         weeksInYear : function () {
             var weekInfo = this.localeData()._week;
             return weeksInYear(this.year(), weekInfo.dow, weekInfo.doy);
         },
-=======
-},{}],88:[function(require,module,exports){
-window.FeedBricks = React.createClass({
-  mixins: [FeedBaseMixin],
-  propTypes: {
-    feedHtml: React.PropTypes.string,
-    isLoadingNew: React.PropTypes.bool,
-    isLoadingPrevious: React.PropTypes.bool
-  },
-  componentDidUpdate: function(prevProps) {
-    if (this.props.feedHtml !== prevProps.feedHtml) {
-      return this.initGridManager();
-    }
-  },
-  render: function() {
-    var spinnerAfter, spinnerBefore;
-    if (this.props.isLoadingPrevious) {
-      spinnerAfter = React.createElement("div", {
-        "className": "page-loader"
-      }, React.createElement(Spinner, {
-        "size": 24.
-      }));
-    }
-    if (this.props.isLoadingNew) {
-      spinnerBefore = React.createElement("div", {
-        "className": "page-loader"
-      }, React.createElement(Spinner, {
-        "size": 24.
-      }));
-    }
-    return React.createElement("div", {
-      "className": "bricks-wrapper"
-    }, spinnerBefore, React.createElement("section", {
-      "ref": "container",
-      "className": "bricks",
-      "dangerouslySetInnerHTML": {
-        __html: this.props.feedHtml
-      }
-    }), spinnerAfter);
-  },
-  initGridManager: function() {
-    var $container;
-    $container = $(this.refs.container.getDOMNode());
-    return $container.shapeshift({
-      selector: '.brick',
-      colWidth: 302,
-      enableDrag: false,
-      enableCrossDrop: false,
-      gutterX: 20,
-      gutterY: 20,
-      paddingX: 0,
-      paddingY: 0
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         get : function (units) {
             units = normalizeUnits(units);
@@ -18011,16 +12788,11 @@ window.FeedBricks = React.createClass({
             return this;
         },
 
-<<<<<<< HEAD
         // If passed a locale key, it will set the locale for this
         // instance.  Otherwise, it will return the locale configuration
         // variables for this instance.
         locale : function (key) {
             var newLocaleData;
-=======
-},{}],89:[function(require,module,exports){
-var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
             if (key === undefined) {
                 return this._locale._abbr;
@@ -18058,7 +12830,6 @@ var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
     function rawMonthSetter(mom, value) {
         var dayOfMonth;
 
-<<<<<<< HEAD
         // TODO: Move this out of here!
         if (typeof value === 'string') {
             value = mom.localeData().monthsParse(value);
@@ -18067,12 +12838,6 @@ var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
                 return mom;
             }
         }
-=======
-},{}],90:[function(require,module,exports){
-var THRESHOLD;
-
-THRESHOLD = 400;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         dayOfMonth = Math.min(mom.date(),
                 daysInMonth(mom.year(), value));
@@ -18080,29 +12845,8 @@ THRESHOLD = 400;
         return mom;
     }
 
-<<<<<<< HEAD
     function rawGetter(mom, unit) {
         return mom._d['get' + (mom._isUTC ? 'UTC' : '') + unit]();
-=======
-
-
-},{}],91:[function(require,module,exports){
-window.FeedTlog = React.createClass({
-  mixins: [FeedBaseMixin],
-  propTypes: {
-    feedHtml: React.PropTypes.string,
-    isLoadingNew: React.PropTypes.bool,
-    isLoadingPrevious: React.PropTypes.bool
-  },
-  render: function() {
-    var spinnerAfter, spinnerBefore;
-    if (this.props.isLoadingPrevious) {
-      spinnerAfter = React.createElement("div", {
-        "className": "page-loader"
-      }, React.createElement(Spinner, {
-        "size": 24.
-      }));
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
 
     function rawSetter(mom, unit, value) {
@@ -18139,17 +12883,12 @@ window.FeedTlog = React.createClass({
     moment.fn.year = makeAccessor('FullYear', true);
     moment.fn.years = deprecate('years accessor is deprecated. Use year instead.', makeAccessor('FullYear', true));
 
-<<<<<<< HEAD
     // add plural methods
     moment.fn.days = moment.fn.day;
     moment.fn.months = moment.fn.month;
     moment.fn.weeks = moment.fn.week;
     moment.fn.isoWeeks = moment.fn.isoWeek;
     moment.fn.quarters = moment.fn.quarter;
-=======
-},{}],92:[function(require,module,exports){
-var CLASS_PREFIX_STATE, STATE_ERROR, STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_PROCESS, STATE_REQUESTED;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     // add aliased format methods
     moment.fn.toJSON = moment.fn.toISOString;
@@ -18192,12 +12931,7 @@ var CLASS_PREFIX_STATE, STATE_ERROR, STATE_FRIEND, STATE_GUESSED, STATE_IGNORED,
             hours = absRound(minutes / 60);
             data.hours = hours % 24;
 
-<<<<<<< HEAD
             days += absRound(hours / 24);
-=======
-},{}],93:[function(require,module,exports){
-var HeroProfile_SettingsButton;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
             // Accurately convert days to years, assume start from year 0.
             years = absRound(daysToYears(days));
@@ -18217,15 +12951,10 @@ var HeroProfile_SettingsButton;
             data.years = years;
         },
 
-<<<<<<< HEAD
         abs : function () {
             this._milliseconds = Math.abs(this._milliseconds);
             this._days = Math.abs(this._days);
             this._months = Math.abs(this._months);
-=======
-},{}],94:[function(require,module,exports){
-var DROPDOWN_CLOSED, DROPDOWN_OPENED, MOUSE_LEAVE_TIMEOUT, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
             this._data.milliseconds = Math.abs(this._data.milliseconds);
             this._data.seconds = Math.abs(this._data.seconds);
@@ -18459,410 +13188,49 @@ require('./resources/libs');
 
 require('./resources/locales');
 
-<<<<<<< HEAD
 require('./resources/is_mobile');
-=======
-},{"react/lib/cx":599}],95:[function(require,module,exports){
-window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
-  mixins: [RequesterMixin],
-  propTypes: {
-    userId: React.PropTypes.number.isRequired,
-    onRequestEnd: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "className": "action-dropdown-item",
-      "onClick": this.ignore
-    }, React.createElement("i", {
-      "className": "icon icon--not-allowed"
-    }), i18n.t('ignore_tlog_item'));
-  },
-  ignore: function() {
-    return this.createRequest({
-      url: ApiRoutes.change_my_relationship_url(this.props.userId, 'ignore'),
-      method: 'POST',
-      success: (function(_this) {
-        return function(relationship) {
-          TastyEvents.emit(TastyEvents.keys.follow_status_changed(_this.props.userId), relationship.state);
-          return _this.props.onRequestEnd();
-        };
-      })(this),
-      error: function(data) {
-        return TastyNotifyController.errorResponse(data);
-      }
-    }, {
-      progressBar: true
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./resources/fileReceiver');
 
 require('./resources/tasty');
 
-<<<<<<< HEAD
 require('./resources/tasty_utils');
-=======
-},{}],96:[function(require,module,exports){
-window.HeroProfile_DropdownMenuReportItem = React.createClass({
-  mixins: [RequesterMixin],
-  propTypes: {
-    userId: React.PropTypes.number.isRequired,
-    onRequestEnd: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "className": "action-dropdown-item",
-      "onClick": this.report
-    }, React.createElement("i", {
-      "className": "icon icon--exclamation-mark"
-    }), i18n.t('report_tlog_item'));
-  },
-  report: function() {
-    return this.createRequest({
-      url: ApiRoutes.tlog_report(this.props.userId),
-      method: 'POST',
-      success: function() {
-        TastyNotifyController.notifySuccess(i18n.t('report_user_success'));
-        return this.props.onRequestEnd();
-      },
-      error: function(data) {
-        return TastyNotifyController.errorResponse(data);
-      }
-    }, {
-      progressBar: true
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 window.Routes = require('../shared/routes/routes');
 
 window.ApiRoutes = require('../shared/routes/api');
 
-<<<<<<< HEAD
 require('./react/entities/normalized_entry');
-=======
-},{}],97:[function(require,module,exports){
-window.HeroProfileStats_FollowersPopup = React.createClass({
-  mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
-  propTypes: {
-    tlogId: React.PropTypes.number.isRequired,
-    onClose: React.PropTypes.func
-  },
-  getInitialState: function() {
-    return {
-      relationships: null,
-      isError: false,
-      isLoading: false
-    };
-  },
-  componentDidMount: function() {
-    return this.loadFollowers();
-  },
-  render: function() {
-    var followerList, message, relationships, _ref;
-    if (((_ref = this.state.relationships) != null ? _ref.length : void 0) > 0) {
-      relationships = this.state.relationships.map((function(_this) {
-        return function(relationship, i) {
-          return React.createElement(HeroProfileStats_FollowerItem, {
-            "relationship": relationship,
-            "key": i
-          });
-        };
-      })(this));
-      followerList = React.createElement("section", {
-        "className": "users"
-      }, relationships);
-    } else {
-      if (this.state.isError) {
-        message = React.createElement("div", {
-          "className": "popup__text"
-        }, i18n.t('hero_stats_popup_error'));
-      } else if (this.state.isLoading) {
-        message = React.createElement("div", {
-          "className": "popup__text"
-        }, i18n.t('hero_stats_popup_loading'));
-      } else {
-        message = React.createElement("div", {
-          "className": "popup__text"
-        }, i18n.t('hero_stats_popup_empty'));
-      }
-      followerList = React.createElement("div", {
-        "className": "grid-full"
-      }, React.createElement("div", {
-        "className": "grid-full__middle"
-      }, message));
-    }
-    return React.createElement("div", {
-      "className": "scroller scroller--users",
-      "ref": "scroller"
-    }, React.createElement("div", {
-      "className": "scroller__pane js-scroller-pane"
-    }, followerList), React.createElement("div", {
-      "className": "scroller__track js-scroller-track"
-    }, React.createElement("div", {
-      "className": "scroller__bar js-scroller-bar"
-    })));
-  },
-  loadFollowers: function() {
-    this.safeUpdate((function(_this) {
-      return function() {
-        return _this.incrementActivities();
-      };
-    })(this));
-    this.setState({
-      isError: false,
-      isLoading: true
-    });
-    return this.createRequest({
-      url: ApiRoutes.tlog_followers(this.props.tlogId),
-      success: (function(_this) {
-        return function(data) {
-          return _this.safeUpdateState({
-            relationships: data.relationships
-          });
-        };
-      })(this),
-      error: (function(_this) {
-        return function(data) {
-          _this.safeUpdateState({
-            isError: true
-          });
-          return TastyNotifyController.errorResponse(data);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          _this.safeUpdate(function() {
-            return _this.decrementActivities();
-          });
-          return _this.safeUpdateState({
-            isLoading: false
-          });
-        };
-      })(this)
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/services/positions');
 
 require('./react/services/entry_store');
 
-<<<<<<< HEAD
 require('./react/services/entry_normalizer');
-=======
-},{}],98:[function(require,module,exports){
-window.HeroProfileStats_FollowingsPopup = React.createClass({
-  mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
-  propTypes: {
-    tlogId: React.PropTypes.number.isRequired,
-    onClose: React.PropTypes.func
-  },
-  getInitialState: function() {
-    return {
-      relationships: null,
-      isError: false,
-      isLoading: false
-    };
-  },
-  componentDidMount: function() {
-    return this.loadFollowings();
-  },
-  render: function() {
-    var followingList, message, relationships, _ref;
-    if (((_ref = this.state.relationships) != null ? _ref.length : void 0) > 0) {
-      relationships = this.state.relationships.map((function(_this) {
-        return function(relationship, i) {
-          return React.createElement(HeroProfileStats_FollowingItem, {
-            "relationship": relationship,
-            "key": i
-          });
-        };
-      })(this));
-      followingList = React.createElement("section", {
-        "className": "users"
-      }, relationships);
-    } else {
-      if (this.state.isError) {
-        message = React.createElement("div", {
-          "className": "popup__text"
-        }, i18n.t('hero_stats_popup_error'));
-      } else if (this.state.isLoading) {
-        message = React.createElement("div", {
-          "className": "popup__text"
-        }, i18n.t('hero_stats_popup_loading'));
-      } else {
-        message = React.createElement("div", {
-          "className": "popup__text"
-        }, i18n.t('hero_stats_popup_empty'));
-      }
-      followingList = React.createElement("div", {
-        "className": "grid-full"
-      }, React.createElement("div", {
-        "className": "grid-full__middle"
-      }, message));
-    }
-    return React.createElement("div", {
-      "className": "scroller scroller--users",
-      "ref": "scroller"
-    }, React.createElement("div", {
-      "className": "scroller__pane js-scroller-pane"
-    }, followingList), React.createElement("div", {
-      "className": "scroller__track js-scroller-track"
-    }, React.createElement("div", {
-      "className": "scroller__bar js-scroller-bar"
-    })));
-  },
-  loadFollowings: function() {
-    this.safeUpdate((function(_this) {
-      return function() {
-        return _this.incrementActivities();
-      };
-    })(this));
-    this.setState({
-      isError: false,
-      isLoading: true
-    });
-    return this.createRequest({
-      url: ApiRoutes.tlog_followings(this.props.tlogId),
-      success: (function(_this) {
-        return function(data) {
-          return _this.safeUpdateState({
-            relationships: data.relationships
-          });
-        };
-      })(this),
-      error: (function(_this) {
-        return function(data) {
-          _this.safeUpdateState({
-            isError: true
-          });
-          return TastyNotifyController.errorResponse(data);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          _this.safeUpdate(function() {
-            return _this.decrementActivities();
-          });
-          return _this.safeUpdateState({
-            isLoading: false
-          });
-        };
-      })(this)
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 global.DesignSettingsService = require('./react/services/designSettings');
 
 global.DesignStatesService = require('./react/services/designStates');
 
-<<<<<<< HEAD
 global.DesignPresenterService = require('./react/services/designPresenter');
-=======
-},{}],99:[function(require,module,exports){
-window.HeroProfileStats_FollowerItem = React.createClass({
-  propTypes: {
-    relationship: React.PropTypes.object.isRequired
-  },
-  render: function() {
-    return React.createElement("article", {
-      "className": "user__item"
-    }, React.createElement("a", {
-      "className": "user__link",
-      "href": this.props.relationship.reader.tlog_url,
-      "title": this.props.relationship.reader.name
-    }, React.createElement("span", {
-      "className": "user__avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.relationship.reader,
-      "size": 64.
-    })), React.createElement("span", {
-      "className": "user__desc"
-    }, React.createElement("span", {
-      "className": "user__name"
-    }, this.props.relationship.reader.name))));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 window.ThumborService = require('../shared/react/services/thumbor');
 
 require('./react/services/uuid');
 
-<<<<<<< HEAD
 require('./react/helpers/app');
-=======
-},{}],100:[function(require,module,exports){
-window.HeroProfileStats_FollowingItem = React.createClass({
-  propTypes: {
-    relationship: React.PropTypes.object.isRequired
-  },
-  render: function() {
-    return React.createElement("article", {
-      "className": "user__item"
-    }, React.createElement("a", {
-      "className": "user__link",
-      "href": this.props.relationship.user.tlog_url,
-      "title": this.props.relationship.user.name
-    }, React.createElement("span", {
-      "className": "user__avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.relationship.user,
-      "size": 64.
-    })), React.createElement("span", {
-      "className": "user__desc"
-    }, React.createElement("span", {
-      "className": "user__name"
-    }, this.props.relationship.user.name))));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/mixins/unmount');
 
 require('./react/mixins/dom_manipulations');
 
-<<<<<<< HEAD
 require('./react/mixins/component_manipulations');
-=======
-},{}],101:[function(require,module,exports){
-window.HeroProfileStats_TagItem = React.createClass({
-  propTypes: {
-    tag: React.PropTypes.object.isRequired
-  },
-  render: function() {
-    return React.createElement("article", {
-      "className": "tag"
-    }, React.createElement("a", {
-      "href": Routes.tag_path(this.props.tag.name),
-      "title": '#' + this.props.tag.name,
-      "className": "tag__link"
-    }, React.createElement("span", {
-      "className": "tag__count"
-    }, this.props.tag.taggings_count), React.createElement("span", {
-      "className": "tag__text"
-    }, '#' + this.props.tag.name)));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/mixins/positions');
 
 require('./react/mixins/shake');
 
-<<<<<<< HEAD
 require('./react/mixins/grammar');
-=======
-},{}],102:[function(require,module,exports){
-var FADE_DURATION, MARGIN;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/mixins/error_timer');
 
@@ -18874,123 +13242,13 @@ require('./react/mixins/scroller');
 
 require('./react/mixins/touch');
 
-<<<<<<< HEAD
 require('./react/dispatchers/current_user');
-=======
-},{}],103:[function(require,module,exports){
-window.HeroProfileStats_TagsPopup = React.createClass({
-  mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
-  propTypes: {
-    tlogId: React.PropTypes.number.isRequired,
-    onClose: React.PropTypes.func
-  },
-  getInitialState: function() {
-    return {
-      tags: null,
-      isError: false,
-      isLoading: false
-    };
-  },
-  componentDidMount: function() {
-    return this.loadTags();
-  },
-  render: function() {
-    var message, tagList, tags, _ref;
-    if (((_ref = this.state.tags) != null ? _ref.length : void 0) > 0) {
-      tags = this.state.tags.map((function(_this) {
-        return function(tag, i) {
-          return React.createElement(HeroProfileStats_TagItem, {
-            "tag": tag,
-            "key": i
-          });
-        };
-      })(this));
-      tagList = React.createElement("section", {
-        "className": "users"
-      }, tags);
-    } else {
-      if (this.state.isError) {
-        message = React.createElement("div", {
-          "className": "popup__text"
-        }, i18n.t('hero_stats_popup_error'));
-      } else if (this.state.isLoading) {
-        message = React.createElement("div", {
-          "className": "popup__text"
-        }, i18n.t('hero_stats_popup_loading'));
-      } else {
-        message = React.createElement("div", {
-          "className": "popup__text"
-        }, i18n.t('hero_stats_popup_empty'));
-      }
-      tagList = React.createElement("div", {
-        "className": "grid-full"
-      }, React.createElement("div", {
-        "className": "grid-full__middle"
-      }, message));
-    }
-    return React.createElement("div", {
-      "className": "scroller scroller--tags",
-      "ref": "scroller"
-    }, React.createElement("div", {
-      "className": "scroller__pane js-scroller-pane"
-    }, tagList), React.createElement("div", {
-      "className": "scroller__track js-scroller-track"
-    }, React.createElement("div", {
-      "className": "scroller__bar js-scroller-bar"
-    })));
-  },
-  loadTags: function() {
-    this.safeUpdate((function(_this) {
-      return function() {
-        return _this.incrementActivities();
-      };
-    })(this));
-    this.setState({
-      isError: false,
-      isLoading: true
-    });
-    return this.createRequest({
-      url: ApiRoutes.tlog_tags(this.props.tlogId),
-      success: (function(_this) {
-        return function(data) {
-          return _this.safeUpdateState({
-            tags: data
-          });
-        };
-      })(this),
-      error: (function(_this) {
-        return function(data) {
-          _this.safeUpdateState({
-            isError: true
-          });
-          return TastyNotifyController.errorResponse(data);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          _this.safeUpdate(function() {
-            return _this.decrementActivities();
-          });
-          return _this.safeUpdateState({
-            isLoading: false
-          });
-        };
-      })(this)
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/dispatchers/relationships');
 
 global.CurrentUserStore = require('./react/stores/current_user');
 
-<<<<<<< HEAD
 require('./react/stores/relationships');
-=======
-},{}],104:[function(require,module,exports){
-var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS, HeroProfile_SettingsButton;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/transition/timeout_transition_group');
 
@@ -19006,12 +13264,7 @@ require('./react/messaging/stores/conversations');
 
 require('./react/messaging/stores/messages');
 
-<<<<<<< HEAD
 require('./react/messaging/stores/notifications');
-=======
-},{"./buttons/settings":93}],105:[function(require,module,exports){
-var HERO_AVATAR_SIZE;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/messaging/messaging_service');
 
@@ -19021,50 +13274,7 @@ require('./react/messaging/messaging_testing');
 
 require('./react/messaging/actions/popup');
 
-<<<<<<< HEAD
 require('./react/messaging/actions/conversation');
-=======
-},{}],106:[function(require,module,exports){
-window.HeroProfileHead = React.createClass({
-  propTypes: {
-    user: React.PropTypes.object.isRequired
-  },
-  getInitialState: function() {
-    return {
-      user: this.props.user
-    };
-  },
-  componentDidMount: function() {
-    TastyEvents.on(TastyEvents.keys.user_property_changed('title', this.state.user.id), this._updateTitle);
-    return TastyEvents.on(TastyEvents.keys.user_property_changed('slug', this.state.user.id), this._updateSlug);
-  },
-  componentWillUnmount: function() {
-    TastyEvents.off(TastyEvents.keys.user_property_changed('title', this.state.user.id), this._updateTitle);
-    return TastyEvents.off(TastyEvents.keys.user_property_changed('slug', this.state.user.id), this._updateSlug);
-  },
-  render: function() {
-    return React.createElement(HeroProfileHeadStatic, {
-      "user": this.state.user
-    });
-  },
-  _updateTitle: function(value) {
-    var newUser;
-    newUser = this.state.user;
-    newUser.title = value;
-    return this.setState({
-      user: newUser
-    });
-  },
-  _updateSlug: function(value) {
-    var newUser;
-    newUser = this.state.user;
-    newUser.slug = value;
-    return this.setState({
-      user: newUser
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/messaging/actions/message');
 
@@ -19072,157 +13282,13 @@ require('./react/messaging/actions/notification');
 
 require('./react/messaging/components/buttons/write_message');
 
-<<<<<<< HEAD
 require('./react/messaging/components/toolbars/indicators/indicators');
-=======
-},{}],107:[function(require,module,exports){
-window.HeroProfileStats = React.createClass({
-  mixins: [ReactGrammarMixin],
-  propTypes: {
-    stats: React.PropTypes.object.isRequired,
-    user: React.PropTypes.object.isRequired
-  },
-  componentDidMount: function() {
-    this.container = document.querySelectorAll('[popup-hero-stats-container]')[0];
-    if (!this.container) {
-      return this.container = $('<\div>', {
-        'popup-hero-stats-container': ''
-      }).appendTo('body').get(0);
-    }
-  },
-  render: function() {
-    var heroStats, onClick, url;
-    onClick = function(type, $el) {
-      switch (type) {
-        case 'followers':
-          return this.handleFollowersClick($el);
-        case 'followings':
-          return this.handleFollowingsClick($el);
-        case 'tags':
-          return this.handleTagsClick($el);
-        default:
-          return console.log("Неизвестный тип статистики профиля " + type);
-      }
-    };
-    heroStats = [];
-    if (this.props.stats.followers_count != null) {
-      heroStats.push(React.createElement(HeroProfileStatsItem, {
-        "count": this.props.stats.followers_count,
-        "title": i18n.t('stats_followers_count', {
-          count: this.props.stats.followers_count
-        }),
-        "onClick": onClick.bind(this, 'followers'),
-        "key": "followers"
-      }));
-    }
-    if (this.props.stats.followings_count != null) {
-      heroStats.push(React.createElement(HeroProfileStatsItem, {
-        "count": this.props.stats.followings_count,
-        "title": i18n.t('stats_followings_count', {
-          count: this.props.stats.followings_count
-        }),
-        "onClick": onClick.bind(this, 'followings'),
-        "key": "followings"
-      }));
-    }
-    if (this.props.stats.favorites_count != null) {
-      if (!this._isPrivate()) {
-        url = Routes.tlog_favorite_entries_path(this.props.user.slug);
-      }
-      heroStats.push(React.createElement(HeroProfileStatsItem, {
-        "href": url,
-        "count": this.props.stats.favorites_count,
-        "title": i18n.t('stats_favorites_count'),
-        "key": "favorites"
-      }));
-    }
-    if (this.props.stats.entries_count != null) {
-      if (!this._isPrivate()) {
-        url = this.props.user.tlog_url;
-      }
-      heroStats.push(React.createElement(HeroProfileStatsItem, {
-        "href": url,
-        "count": this.props.stats.entries_count,
-        "title": i18n.t('stats_entries_count', {
-          count: this.props.stats.entries_count
-        }),
-        "key": "entries"
-      }));
-    }
-    if (this.props.stats.comments_count != null) {
-      heroStats.push(React.createElement(HeroProfileStatsItem, {
-        "count": this.props.stats.comments_count,
-        "title": i18n.t('stats_comments_count', {
-          counts: this.props.stats.comments_count
-        }),
-        "key": "comments"
-      }));
-    }
-    if (this.props.stats.days_count != null) {
-      heroStats.push(React.createElement(HeroProfileStatsItem, {
-        "count": this.props.stats.days_count,
-        "title": i18n.t('stats_days_count', {
-          count: this.props.stats.days_count
-        }),
-        "key": "days"
-      }));
-    }
-    if (this.props.stats.tags_count != null) {
-      heroStats.push(React.createElement(HeroProfileStatsItem, {
-        "count": this.props.stats.tags_count,
-        "title": i18n.t('stats_tags_count', {
-          count: this.props.stats.tags_count
-        }),
-        "onClick": onClick.bind(this, 'tags'),
-        "key": "tags"
-      }));
-    }
-    return React.createElement("div", {
-      "className": "hero__stats"
-    }, React.createElement("div", {
-      "className": "hero__stats-list"
-    }, heroStats));
-  },
-  handleFollowersClick: function($el) {
-    return React.render(React.createElement(HeroProfileStats_Popup, {
-      "title": i18n.t('followers'),
-      "toggle": $el
-    }, React.createElement(HeroProfileStats_FollowersPopup, {
-      "tlogId": this.props.user.id
-    })), this.container);
-  },
-  handleFollowingsClick: function($el) {
-    return React.render(React.createElement(HeroProfileStats_Popup, {
-      "title": i18n.t('followings'),
-      "toggle": $el
-    }, React.createElement(HeroProfileStats_FollowingsPopup, {
-      "tlogId": this.props.user.id
-    })), this.container);
-  },
-  handleTagsClick: function($el) {
-    return React.render(React.createElement(HeroProfileStats_Popup, {
-      "title": i18n.t('tags'),
-      "toggle": $el
-    }, React.createElement(HeroProfileStats_TagsPopup, {
-      "tlogId": this.props.user.id
-    })), this.container);
-  },
-  _isPrivate: function() {
-    return this.props.user.is_privacy;
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/messaging/components/toolbars/indicators/messages');
 
 require('./react/messaging/components/toolbars/indicators/notifications');
 
-<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/ui/back_button');
-=======
-},{}],108:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/messaging/components/messages_popup/ui/create_new_conversation_button');
 
@@ -19232,12 +13298,7 @@ require('./react/messaging/components/messages_popup/loading_message');
 
 require('./react/messaging/components/messages_popup/conversations/conversations');
 
-<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/conversations/list/list');
-=======
-},{"react/lib/cx":599}],109:[function(require,module,exports){
-var FIRST_ROW_RATIO, NEXT_ROWS_RATIO, update;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/messaging/components/messages_popup/conversations/list/list_item');
 
@@ -19255,12 +13316,7 @@ require('./react/messaging/components/messages_popup/create_new_conversation/cho
 
 require('./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item');
 
-<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/thread/thread');
-=======
-},{"react/lib/update":640}],110:[function(require,module,exports){
-var FADE_DURATION;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/messaging/components/messages_popup/thread/message_form/message_form');
 
@@ -19270,12 +13326,7 @@ require('./react/messaging/components/messages_popup/thread/message_list/message
 
 require('./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager');
 
-<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/thread/message_list/empty');
-=======
-},{}],111:[function(require,module,exports){
-var FADE_DURATION;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/messaging/components/notifications_popup/notifications_popup');
 
@@ -19285,12 +13336,7 @@ require('./react/messaging/components/notifications_popup/notifications/notifica
 
 require('./react/messaging/components/notifications_popup/notifications/empty');
 
-<<<<<<< HEAD
 require('./react/components/common/adaptive_input');
-=======
-},{}],112:[function(require,module,exports){
-var FADE_DURATION, START_TIMEOUT;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/embed');
 
@@ -19302,12 +13348,7 @@ require('./react/components/avatars/user_avatar');
 
 require('./react/components/auth/auth');
 
-<<<<<<< HEAD
 require('./react/components/auth/authorization/authorization');
-=======
-},{}],113:[function(require,module,exports){
-var DEFAULT_TIMEOUT, DEFAULT_TYPE;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/auth/authorization/vk');
 
@@ -19319,356 +13360,55 @@ require('./react/components/auth/buttons/facebook_auth_button');
 
 require('./react/components/auth/email/email');
 
-<<<<<<< HEAD
 require('./react/components/auth/recovery');
-=======
-},{}],114:[function(require,module,exports){
-window.PeopleItem = React.createClass({
-  propTypes: {
-    title: React.PropTypes.string,
-    user: React.PropTypes.object.isRequired,
-    relationship: React.PropTypes.object
-  },
-  getInitialState: function() {
-    var _ref;
-    return {
-      title: (_ref = this.props.title) != null ? _ref : this.props.user.title
-    };
-  },
-  render: function() {
-    var followStatus;
-    if ((this.props.relationship != null) && this.props.relationship.state !== 'none') {
-      followStatus = React.createElement(FollowStatus, {
-        "status": this.props.relationship.state
-      });
-    }
-    return React.createElement("article", {
-      "className": "people-item"
-    }, React.createElement("div", {
-      "className": "people-item__inner"
-    }, React.createElement("a", {
-      "className": "people-item__link",
-      "href": this.props.user.tlog_url
-    }, React.createElement("div", {
-      "className": "people-item__avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.user
-    }), followStatus), React.createElement("h3", {
-      "className": "people-item__name"
-    }, this.props.user.slug), React.createElement("p", {
-      "dangerouslySetInnerHTML": {
-        __html: this.state.title
-      },
-      "className": "people-item__desc"
-    }))));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/settings/settings');
 
 global.UserToolbar = require('./react/components/toolbars/user');
 
-<<<<<<< HEAD
 global.AvatarToolbar = require('./react/components/toolbars/avatar');
-=======
-},{}],115:[function(require,module,exports){
-window.PersonsPopup_FollowerRelationship = React.createClass({
-  propTypes: {
-    relationship: React.PropTypes.object.isRequired
-  },
-  shouldComponentUpdate: function(nextProps) {
-    if (this.props.relationship.state !== nextProps.relationship.state) {
-      true;
-    }
-    return false;
-  },
-  render: function() {
-    return React.createElement(PersonsPopup_PersonItem, {
-      "user": this.props.relationship.reader
-    }, React.createElement(RelationshipFollowerButton, {
-      "relationship": this.props.relationship
-    }));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/toolbars/close/close');
 
 require('./react/components/shellboxes/confirm_registration');
 
-<<<<<<< HEAD
 require('./react/components/voting');
-=======
-},{}],116:[function(require,module,exports){
-window.PersonsPopup_FollowingRelationship = React.createClass({
-  propTypes: {
-    relationship: React.PropTypes.object.isRequired
-  },
-  shouldComponentUpdate: function(nextProps) {
-    if (this.props.relationship.state !== nextProps.relationship.state) {
-      true;
-    }
-    return false;
-  },
-  render: function() {
-    return React.createElement(PersonsPopup_PersonItem, {
-      "user": this.props.relationship.user
-    }, React.createElement(FollowButton, {
-      "relationship": this.props.relationship
-    }));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/shellbox_layer');
 
 require('./react/components/buttons/load_more');
 
-<<<<<<< HEAD
 require('./react/components/relationship_buttons/mixins/relationship');
-=======
-},{}],117:[function(require,module,exports){
-window.PersonsPopup_GuessRelationship = React.createClass({
-  propTypes: {
-    relationship: React.PropTypes.object.isRequired
-  },
-  shouldComponentUpdate: function(nextProps) {
-    if (this.props.relationship.state !== nextProps.relationship.state) {
-      true;
-    }
-    return false;
-  },
-  render: function() {
-    return React.createElement(PersonsPopup_PersonItem, {
-      "user": this.props.relationship.user
-    }, React.createElement(RelationshipGuessButton, {
-      "relationship": this.props.relationship,
-      "onRequestEnd": this.props.onRequestEnd,
-      "key": this.props.key
-    }));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/relationship_buttons/follow_button');
 
 require('./react/components/relationship_buttons/follower_button');
 
-<<<<<<< HEAD
 require('./react/components/relationship_buttons/ignore_button');
-=======
-},{}],118:[function(require,module,exports){
-window.PersonsPopup_IgnoredRelationship = React.createClass({
-  propTypes: {
-    relationship: React.PropTypes.object.isRequired
-  },
-  shouldComponentUpdate: function(nextProps) {
-    if (this.props.relationship.state !== nextProps.relationship.state) {
-      true;
-    }
-    return false;
-  },
-  render: function() {
-    return React.createElement(PersonsPopup_PersonItem, {
-      "user": this.props.relationship.user
-    }, React.createElement(RelationshipIgnoreButton, {
-      "relationship": this.props.relationship
-    }));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/relationship_buttons/request_button');
 
 require('./react/components/relationship_buttons/guess_button');
 
-<<<<<<< HEAD
 require('./react/components/follow_status');
-=======
-},{}],119:[function(require,module,exports){
-window.PersonsPopup_PersonItem = React.createClass({
-  propTypes: {
-    user: React.PropTypes.object.isRequired,
-    children: React.PropTypes.component.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "person"
-    }, React.createElement("div", {
-      "className": "person__in"
-    }, React.createElement("div", {
-      "className": "person__avatar"
-    }, React.createElement("a", {
-      "href": this.props.user.tlog_url
-    }, React.createElement(UserAvatar, {
-      "user": this.props.user,
-      "size": 48.
-    }))), React.createElement("div", {
-      "className": "person__desc"
-    }, React.createElement("a", {
-      "href": this.props.user.tlog_url
-    }, React.createElement("p", {
-      "className": "person__name"
-    }, this.props.user.name)), React.createElement("div", {
-      "className": "person__count"
-    }, this.renderEntriesCount())), React.createElement("div", {
-      "className": "person__actions"
-    }, this.props.children)));
-  },
-  renderEntriesCount: function() {
-    var count;
-    count = this.props.user.public_entries_count;
-    return React.createElement("span", null, count, " ", i18n.t('entries_count', {
-      count: this.props.user.public_entries_count
-    }));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/smart_follow_status');
 
 require('./react/components/editable_field');
 
-<<<<<<< HEAD
 require('./react/components/popup_box');
-=======
-},{}],120:[function(require,module,exports){
-window.PersonsPopup_RequestedRelationship = React.createClass({
-  propTypes: {
-    relationship: React.PropTypes.object.isRequired
-  },
-  shouldComponentUpdate: function(nextProps) {
-    if (this.props.relationship.state !== nextProps.relationship.state) {
-      true;
-    }
-    return false;
-  },
-  render: function() {
-    return React.createElement(PersonsPopup_PersonItem, {
-      "user": this.props.relationship.reader
-    }, React.createElement(RelationshipRequestButton, {
-      "relationship": this.props.relationship,
-      "key": this.props.key
-    }));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/popup/popup');
 
 require('./react/components/popup/layout');
 
-<<<<<<< HEAD
 require('./react/components/popup/spinner');
-=======
-},{}],121:[function(require,module,exports){
-window.PersonsPopup_Menu = React.createClass({
-  displayName: 'PersonsPopup_Menu',
-  mixins: [RequesterMixin],
-  propTypes: {
-    user: React.PropTypes.object.isRequired,
-    currentTab: React.PropTypes.string.isRequired,
-    onSelect: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return this.getStateFromStore();
-  },
-  componentWillMount: function() {
-    if (!this.isSummaryLoaded()) {
-      return this.loadSummary();
-    }
-  },
-  componentDidMount: function() {
-    return RelationshipsStore.addSummaryChangeListener(this.onStoreChange);
-  },
-  componentWillUnmount: function() {
-    return RelationshipsStore.removeSummaryChangeListener(this.onStoreChange);
-  },
-  render: function() {
-    var requestedMenuItem;
-    if (this.isProfilePrivate()) {
-      requestedMenuItem = React.createElement(PersonsPopup_MenuItem, {
-        "isActive": this.props.currentTab === 'requested',
-        "totalCount": this.state.requestedTotalCount,
-        "title": i18n.t('persons_popup_menu_requested'),
-        "onClick": this.props.onSelect.bind(null, 'requested')
-      });
-    }
-    return React.createElement("nav", {
-      "className": "tabs-nav tabs-nav--white"
-    }, React.createElement("ul", {
-      "className": "tabs-nav__list"
-    }, React.createElement(PersonsPopup_MenuItem, {
-      "isActive": this.props.currentTab === 'followings',
-      "totalCount": this.state.followingsTotalCount,
-      "title": i18n.t('persons_popup_menu_followings'),
-      "onClick": this.props.onSelect.bind(null, 'followings')
-    }), React.createElement(PersonsPopup_MenuItem, {
-      "isActive": this.props.currentTab === 'followers',
-      "totalCount": this.state.followersTotalCount,
-      "title": i18n.t('persons_popup_menu_followers'),
-      "onClick": this.props.onSelect.bind(null, 'followers')
-    }), requestedMenuItem, React.createElement(PersonsPopup_MenuItem, {
-      "isActive": this.props.currentTab === 'ignored',
-      "totalCount": this.state.ignoredTotalCount,
-      "title": i18n.t('persons_popup_menu_ignored'),
-      "onClick": this.props.onSelect.bind(null, 'ignored')
-    }), React.createElement(PersonsPopup_MenuItem, {
-      "isActive": this.props.currentTab === 'vkontakte',
-      "title": i18n.t('persons_popup_menu_vkontakte'),
-      "onClick": this.props.onSelect.bind(null, 'vkontakte')
-    }), React.createElement(PersonsPopup_MenuItem, {
-      "isActive": this.props.currentTab === 'facebook',
-      "title": i18n.t('persons_popup_menu_facebook'),
-      "onClick": this.props.onSelect.bind(null, 'facebook')
-    })));
-  },
-  isProfilePrivate: function() {
-    return this.props.user.is_privacy === true;
-  },
-  isSummaryLoaded: function() {
-    return RelationshipsStore.isSummaryLoaded();
-  },
-  loadSummary: function() {
-    return this.createRequest({
-      url: ApiRoutes.relationships_summary_url(),
-      success: function(summary) {
-        return RelationshipsDispatcher.handleServerAction({
-          type: 'summaryLoaded',
-          summary: summary
-        });
-      },
-      error: function(data) {
-        return TastyNotifyController.errorResponse(data);
-      }
-    });
-  },
-  getStateFromStore: function() {
-    return {
-      followersTotalCount: RelationshipsStore.getFollowersTotalCount(),
-      followingsTotalCount: RelationshipsStore.getFollowingsTotalCount(),
-      guessedTotalCount: RelationshipsStore.getGuessedTotalCount(),
-      ignoredTotalCount: RelationshipsStore.getIgnoredTotalCount(),
-      requestedTotalCount: RelationshipsStore.getRequestedTotalCount()
-    };
-  },
-  onStoreChange: function() {
-    return this.setState(this.getStateFromStore());
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/popup/header');
 
 require('./react/components/calendar/calendar');
 
-<<<<<<< HEAD
 require('./react/components/calendar/calendar_timeline');
-=======
-},{}],122:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/calendar/calendar_header');
 
@@ -19678,12 +13418,7 @@ require('./react/components/calendar/calendar_marker');
 
 require('./react/components/feed/mixins/base');
 
-<<<<<<< HEAD
 require('./react/components/feed/feed');
-=======
-},{"react/lib/cx":599}],123:[function(require,module,exports){
-var ERROR_STATE, LOADED_STATE, LOADING_STATE, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/feed/tlog');
 
@@ -19701,142 +13436,37 @@ require('./react/components/design_settings_popup/design_settings_popup');
 
 require('./react/components/design_settings_popup/controls');
 
-<<<<<<< HEAD
 require('./react/components/design_settings_popup/controls_items/background_item');
-=======
-},{"react/lib/cx":599}],124:[function(require,module,exports){
-window.PersonsPopup_FollowersPanel = React.createClass({
-  mixins: ['PersonsPopup_PanelMixin'],
-  relationshipType: 'followers',
-  itemClass: function() {
-    return PersonsPopup_FollowerRelationship;
-  },
-  relationUrl: function() {
-    return ApiRoutes.relationships_by_url('friend');
-  },
-  getStateFromStore: function() {
-    return {
-      relationships: RelationshipsStore.getFollowers(),
-      totalCount: RelationshipsStore.getFollowersTotalCount()
-    };
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/design_settings_popup/controls_items/align_item');
 
 require('./react/components/design_settings_popup/controls_items/header_color_item');
 
-<<<<<<< HEAD
 require('./react/components/design_settings_popup/controls_items/feed_color_item');
-=======
-},{}],125:[function(require,module,exports){
-window.PersonsPopup_FollowingsPanel = React.createClass({
-  mixins: ['PersonsPopup_PanelMixin'],
-  relationshipType: 'followings',
-  itemClass: function() {
-    return PersonsPopup_FollowingRelationship;
-  },
-  relationUrl: function() {
-    return ApiRoutes.relationships_to_url('friend');
-  },
-  getStateFromStore: function() {
-    return {
-      relationships: RelationshipsStore.getFollowings(),
-      totalCount: RelationshipsStore.getFollowingsTotalCount()
-    };
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/design_settings_popup/controls_items/font_type_item');
 
 require('./react/components/design_settings_popup/controls_items/opacity_item');
 
-<<<<<<< HEAD
 require('./react/components/design_settings_popup/controls_items/_radiobutton');
-=======
-},{}],126:[function(require,module,exports){
-window.PersonsPopup_GuessedPanel = React.createClass({
-  mixins: ['PersonsPopup_PanelMixin'],
-  relationshipType: 'guessed',
-  itemClass: function() {
-    return PersonsPopup_GuessRelationship;
-  },
-  relationUrl: function() {
-    return ApiRoutes.relationships_to_url('guessed');
-  },
-  getStateFromStore: function() {
-    return {
-      relationships: RelationshipsStore.getGuessed(),
-      totalCount: RelationshipsStore.getGuessedTotalCount()
-    };
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/design_settings_popup/controls_items/_progressbar');
 
 global.ColorPicker = require('./react/components/design_settings_popup/color_picker');
 
-<<<<<<< HEAD
 global.ColorPicker_Popup = require('./react/components/design_settings_popup/color_picker_popup');
-=======
-},{}],127:[function(require,module,exports){
-window.PersonsPopup_IgnoredPanel = React.createClass({
-  mixins: ['PersonsPopup_PanelMixin'],
-  relationshipType: 'ignored',
-  itemClass: function() {
-    return PersonsPopup_IgnoredRelationship;
-  },
-  relationUrl: function() {
-    return ApiRoutes.relationships_to_url('ignored');
-  },
-  getStateFromStore: function() {
-    return {
-      relationships: RelationshipsStore.getIgnored(),
-      totalCount: RelationshipsStore.getIgnoredTotalCount()
-    };
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/persons_popup/mixins/panel_mixin');
 
 require('./react/components/persons_popup/persons_popup');
 
-<<<<<<< HEAD
 require('./react/components/persons_popup/menu');
-=======
-},{}],128:[function(require,module,exports){
-window.PersonsPopup_RequestedPanel = React.createClass({
-  mixins: ['PersonsPopup_PanelMixin'],
-  relationshipType: 'requested',
-  itemClass: function() {
-    return PersonsPopup_RequestedRelationship;
-  },
-  relationUrl: function() {
-    return ApiRoutes.relationships_by_url('requested');
-  },
-  getStateFromStore: function() {
-    return {
-      relationships: RelationshipsStore.getRequested(),
-      totalCount: RelationshipsStore.getRequestedTotalCount()
-    };
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/persons_popup/menu_item');
 
 require('./react/components/persons_popup/items/item');
 
-<<<<<<< HEAD
 require('./react/components/persons_popup/items/following_relationship');
-=======
-},{}],129:[function(require,module,exports){
-var FacebookSignIn, FacebookSuggestions, SocialNetworkPanelMixin;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/persons_popup/items/follower_relationship');
 
@@ -19850,12 +13480,7 @@ require('./react/components/persons_popup/panels/followings_panel');
 
 require('./react/components/persons_popup/panels/followers_panel');
 
-<<<<<<< HEAD
 require('./react/components/persons_popup/panels/guessed_panel');
-=======
-},{"./facebook/signIn":130,"./facebook/suggestions":131,"./mixins/socialNetwork":136}],130:[function(require,module,exports){
-var VkontakteSignIn;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/persons_popup/panels/requested_panel');
 
@@ -19865,12 +13490,7 @@ require('./react/components/persons_popup/panels/socialNetwork/vkontakte');
 
 require('./react/components/persons_popup/panels/socialNetwork/facebook');
 
-<<<<<<< HEAD
 require('./react/components/people/item');
-=======
-},{}],131:[function(require,module,exports){
-var FacebookSuggestions, FacebookSuggestionsEmpty, FacebookSuggestionsList, PropTypes, SuggestionsMixin;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/post_editor/mixins/dragging');
 
@@ -19888,12 +13508,7 @@ require('./react/components/post_editor/welcome_messages/image');
 
 require('./react/components/post_editor/welcome_messages/music');
 
-<<<<<<< HEAD
 require('./react/components/post_editor/welcome_messages/video');
-=======
-},{"../mixins/suggestions":138,"./suggestions/empty":133,"./suggestions/list":134}],132:[function(require,module,exports){
-var FacebookSubscribeAllButton;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/post_editor/video_mediabox/video_mediabox');
 
@@ -19903,12 +13518,7 @@ require('./react/components/post_editor/video_mediabox/url_insert');
 
 require('./react/components/post_editor/video_mediabox/embeded');
 
-<<<<<<< HEAD
 require('./react/components/post_editor/images_mediabox/loaded');
-=======
-},{}],133:[function(require,module,exports){
-var FacebookSuggestionsEmpty, PropTypes;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/post_editor/images_mediabox/url_insert');
 
@@ -19920,12 +13530,7 @@ require('./react/components/post_editor/mediabox/loading_progress');
 
 require('./react/components/entry_metabar/entry_metabar');
 
-<<<<<<< HEAD
 require('./react/components/entry_metabar/author');
-=======
-},{}],134:[function(require,module,exports){
-var FacebookSubscribeAllButton, FacebookSuggestionsItem, FacebookSuggestionsList, SuggestionListMixin;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/entry_metabar/comment');
 
@@ -19941,12 +13546,7 @@ require('./react/components/entry_metabar/dropdown_menu_items/item');
 
 require('./react/components/entry_metabar/dropdown_menu_items/favorite_item');
 
-<<<<<<< HEAD
 require('./react/components/entry_metabar/dropdown_menu_items/watch_item');
-=======
-},{"../../mixins/suggestionList":137,"./buttons/subscribeAll":132,"./listItem":135}],135:[function(require,module,exports){
-var FacebookSuggestionsItem, PropTypes;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/entry_metabar/dropdown_menu_items/report_item');
 
@@ -19958,12 +13558,7 @@ require('./react/components/entry_comment_box/entry_comment_box');
 
 require('./react/components/entry_comment_box/comment_list/comment_list');
 
-<<<<<<< HEAD
 require('./react/components/entry_comment_box/comment_list/comment_manager');
-=======
-},{}],136:[function(require,module,exports){
-var ConnectStoreMixin, ERROR_STATE, LOADED_STATE, LOADING_STATE, SocialNetworkPanelMixin;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/entry_comment_box/comment_list/comment');
 
@@ -19981,12 +13576,7 @@ require('./react/components/entry_comment_box/comment_metabar/dropdown_menu_item
 
 require('./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item');
 
-<<<<<<< HEAD
 require('./react/components/entry_comment_box/comment_metabar/reply');
-=======
-},{"../../../../../../../shared/react/mixins/connectStore":330}],137:[function(require,module,exports){
-var PropTypes, SuggestionListMixin;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/entry_comment_box/comment_form/comment_form');
 
@@ -19998,12 +13588,7 @@ require('./react/components/entry_comment_box/comment_form/buttons/submit');
 
 require('./react/components/entry_comment_box/load_more');
 
-<<<<<<< HEAD
 require('./react/components/post_editor/actions/actions');
-=======
-},{}],138:[function(require,module,exports){
-var PropTypes, SuggestionsMixin;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/post_editor/actions/buttons/vote');
 
@@ -20015,12 +13600,7 @@ require('./react/components/post_editor/editors/_tasty');
 
 require('./react/components/post_editor/editors/anonymous');
 
-<<<<<<< HEAD
 require('./react/components/post_editor/editors/text');
-=======
-},{}],139:[function(require,module,exports){
-var SocialNetworkPanelMixin, VkontakteSignIn, VkontakteSuggestions;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/post_editor/editors/image');
 
@@ -20034,12 +13614,7 @@ require('./react/components/post_editor/editors/quote');
 
 require('./react/components/post_editor/choicer');
 
-<<<<<<< HEAD
 require('./react/components/post_editor/layout');
-=======
-},{"./mixins/socialNetwork":136,"./vkontakte/signIn":140,"./vkontakte/suggestions":141}],140:[function(require,module,exports){
-var VkontakteSignIn;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/post_editor/new_post');
 
@@ -20049,12 +13624,7 @@ require('./react/components/post_editor/edit_post');
 
 require('./react/components/post_editor/editor_container');
 
-<<<<<<< HEAD
 require('./react/components/post_editor/demo');
-=======
-},{}],141:[function(require,module,exports){
-var PropTypes, SuggestionsMixin, VkontakteSuggestions, VkontakteSuggestionsEmpty, VkontakteSuggestionsList;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/hero/profile/profile');
 
@@ -20072,12 +13642,7 @@ require('./react/components/hero/profile/dropdown_menu_items/ignore');
 
 require('./react/components/hero/profile/dropdown_menu_items/report');
 
-<<<<<<< HEAD
 require('./react/components/hero/profile/popup/popup');
-=======
-},{"../mixins/suggestions":138,"./suggestions/empty":143,"./suggestions/list":144}],142:[function(require,module,exports){
-var VkontakteSubscribeAllButton;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/hero/profile/popup/followers_popup');
 
@@ -20087,12 +13652,7 @@ require('./react/components/hero/profile/popup/tags_popup');
 
 require('./react/components/hero/profile/popup/items/follower_item');
 
-<<<<<<< HEAD
 require('./react/components/hero/profile/popup/items/following_item');
-=======
-},{}],143:[function(require,module,exports){
-var PropTypes, VkontakteSuggestionsEmpty;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/hero/profile/popup/items/tag_item');
 
@@ -20104,12 +13664,7 @@ require('./react/components/notifications/tasty_notify');
 
 require('./react/components/notifications/tasty_confirm');
 
-<<<<<<< HEAD
 require('./react/components/notifications/tasty_alert');
-=======
-},{}],144:[function(require,module,exports){
-var SuggestionListMixin, VkontakteSubscribeAllButton, VkontakteSuggestionsItem, VkontakteSuggestionsList;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/components/notifications/tasty_locking_alert');
 
@@ -20125,12 +13680,7 @@ require('./react/controllers/tasty_alert');
 
 require('./react/controllers/tasty_sound');
 
-<<<<<<< HEAD
 require('./react/controllers/tasty_locking_alert');
-=======
-},{"../../mixins/suggestionList":137,"./buttons/subscribeAll":142,"./listItem":145}],145:[function(require,module,exports){
-var PropTypes, VkontakteSuggestionsItem;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('./react/controllers/shellbox');
 
@@ -20141,14 +13691,9 @@ require('./react/mediators/comments');
 require('./react/application');
 
 
-<<<<<<< HEAD
-=======
-},{}],146:[function(require,module,exports){
-var DEFAULT_PANEL;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../shared/react/services/thumbor":330,"../shared/routes/api":331,"../shared/routes/routes":332,"./react/application":16,"./react/components/auth/auth":17,"./react/components/auth/authorization/authorization":18,"./react/components/auth/authorization/facebook":19,"./react/components/auth/authorization/vk":20,"./react/components/auth/buttons/facebook_auth_button":21,"./react/components/auth/buttons/vk_auth_button":22,"./react/components/auth/email/email":26,"./react/components/auth/recovery":31,"./react/components/avatars/avatar":33,"./react/components/avatars/user_avatar":34,"./react/components/buttons/load_more":35,"./react/components/calendar/calendar":36,"./react/components/calendar/calendar_header":37,"./react/components/calendar/calendar_marker":38,"./react/components/calendar/calendar_period":39,"./react/components/calendar/calendar_timeline":40,"./react/components/common/adaptive_input":41,"./react/components/design_settings_popup/color_picker":43,"./react/components/design_settings_popup/color_picker_popup":44,"./react/components/design_settings_popup/controls":45,"./react/components/design_settings_popup/controls_items/_progressbar":46,"./react/components/design_settings_popup/controls_items/_radiobutton":47,"./react/components/design_settings_popup/controls_items/align_item":48,"./react/components/design_settings_popup/controls_items/background_item":49,"./react/components/design_settings_popup/controls_items/feed_color_item":50,"./react/components/design_settings_popup/controls_items/font_type_item":51,"./react/components/design_settings_popup/controls_items/header_color_item":52,"./react/components/design_settings_popup/controls_items/opacity_item":53,"./react/components/design_settings_popup/design_settings_popup":54,"./react/components/editable_field":55,"./react/components/embed":56,"./react/components/entry_comment_box/comment_form/buttons/submit":57,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":58,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":59,"./react/components/entry_comment_box/comment_form/comment_form":60,"./react/components/entry_comment_box/comment_list/comment":61,"./react/components/entry_comment_box/comment_list/comment_list":62,"./react/components/entry_comment_box/comment_list/comment_manager":63,"./react/components/entry_comment_box/comment_metabar/comment_metabar":64,"./react/components/entry_comment_box/comment_metabar/date":65,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":66,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":67,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":68,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":69,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":70,"./react/components/entry_comment_box/comment_metabar/reply":71,"./react/components/entry_comment_box/entry_comment_box":72,"./react/components/entry_comment_box/load_more":73,"./react/components/entry_comment_box/mixins/comments":74,"./react/components/entry_metabar/author":75,"./react/components/entry_metabar/comment":76,"./react/components/entry_metabar/date":77,"./react/components/entry_metabar/dropdown_menu":78,"./react/components/entry_metabar/dropdown_menu_items/delete_item":79,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":80,"./react/components/entry_metabar/dropdown_menu_items/item":81,"./react/components/entry_metabar/dropdown_menu_items/report_item":82,"./react/components/entry_metabar/dropdown_menu_items/watch_item":83,"./react/components/entry_metabar/entry_metabar":84,"./react/components/entry_metabar/tag":85,"./react/components/entry_metabar/tags":86,"./react/components/feed/bricks":87,"./react/components/feed/feed":88,"./react/components/feed/mixins/base":89,"./react/components/feed/tlog":90,"./react/components/follow_status":91,"./react/components/hero/profile/dropdown_menu":93,"./react/components/hero/profile/dropdown_menu_items/ignore":94,"./react/components/hero/profile/dropdown_menu_items/report":95,"./react/components/hero/profile/popup/followers_popup":96,"./react/components/hero/profile/popup/followings_popup":97,"./react/components/hero/profile/popup/items/follower_item":98,"./react/components/hero/profile/popup/items/following_item":99,"./react/components/hero/profile/popup/items/tag_item":100,"./react/components/hero/profile/popup/popup":101,"./react/components/hero/profile/popup/tags_popup":102,"./react/components/hero/profile/profile":103,"./react/components/hero/profile/profile_avatar":104,"./react/components/hero/profile/profile_head":105,"./react/components/hero/profile/profile_stats":106,"./react/components/hero/profile/profile_stats_item":107,"./react/components/images_collage":108,"./react/components/notifications/tasty_alert":109,"./react/components/notifications/tasty_confirm":110,"./react/components/notifications/tasty_locking_alert":111,"./react/components/notifications/tasty_notify":112,"./react/components/people/item":113,"./react/components/persons_popup/items/follower_relationship":114,"./react/components/persons_popup/items/following_relationship":115,"./react/components/persons_popup/items/guess_relationship":116,"./react/components/persons_popup/items/ignored_relationship":117,"./react/components/persons_popup/items/item":118,"./react/components/persons_popup/items/requested_relationship":119,"./react/components/persons_popup/menu":120,"./react/components/persons_popup/menu_item":121,"./react/components/persons_popup/mixins/panel_mixin":122,"./react/components/persons_popup/panels/followers_panel":123,"./react/components/persons_popup/panels/followings_panel":124,"./react/components/persons_popup/panels/guessed_panel":125,"./react/components/persons_popup/panels/ignored_panel":126,"./react/components/persons_popup/panels/requested_panel":127,"./react/components/persons_popup/panels/socialNetwork/facebook":128,"./react/components/persons_popup/panels/socialNetwork/vkontakte":138,"./react/components/persons_popup/persons_popup":145,"./react/components/popup/header":146,"./react/components/popup/layout":147,"./react/components/popup/popup":148,"./react/components/popup/spinner":149,"./react/components/popup_box":150,"./react/components/post_editor/actions/actions":151,"./react/components/post_editor/actions/buttons/privacy":152,"./react/components/post_editor/actions/buttons/vote":153,"./react/components/post_editor/choicer":154,"./react/components/post_editor/demo":155,"./react/components/post_editor/edit_post":156,"./react/components/post_editor/editor_container":157,"./react/components/post_editor/editors/_tasty":158,"./react/components/post_editor/editors/anonymous":159,"./react/components/post_editor/editors/image":160,"./react/components/post_editor/editors/instagram":161,"./react/components/post_editor/editors/mixins/autosave":162,"./react/components/post_editor/editors/music":163,"./react/components/post_editor/editors/quote":164,"./react/components/post_editor/editors/text":165,"./react/components/post_editor/editors/video":166,"./react/components/post_editor/images_mediabox/loaded":167,"./react/components/post_editor/images_mediabox/url_insert":168,"./react/components/post_editor/layout":169,"./react/components/post_editor/mediabox/actions":170,"./react/components/post_editor/mediabox/layout":171,"./react/components/post_editor/mediabox/loading_progress":172,"./react/components/post_editor/mixins/dragging":173,"./react/components/post_editor/mixins/images_form":174,"./react/components/post_editor/mixins/layout":175,"./react/components/post_editor/mixins/persistence":176,"./react/components/post_editor/mixins/video":177,"./react/components/post_editor/new_anonymous_post":178,"./react/components/post_editor/new_post":179,"./react/components/post_editor/video_mediabox/embeded":180,"./react/components/post_editor/video_mediabox/loading":181,"./react/components/post_editor/video_mediabox/url_insert":182,"./react/components/post_editor/video_mediabox/video_mediabox":183,"./react/components/post_editor/welcome_messages/image":184,"./react/components/post_editor/welcome_messages/instagram":185,"./react/components/post_editor/welcome_messages/music":186,"./react/components/post_editor/welcome_messages/video":187,"./react/components/relationship_buttons/follow_button":188,"./react/components/relationship_buttons/follower_button":189,"./react/components/relationship_buttons/guess_button":190,"./react/components/relationship_buttons/ignore_button":191,"./react/components/relationship_buttons/mixins/relationship":192,"./react/components/relationship_buttons/request_button":193,"./react/components/screen_viewer/screen_viewer":194,"./react/components/search/button":198,"./react/components/search/field":199,"./react/components/search/search":200,"./react/components/searchResults/index":196,"./react/components/settings/settings":217,"./react/components/shellbox_layer":220,"./react/components/shellboxes/confirm_registration":221,"./react/components/smart_follow_status":222,"./react/components/spinner":223,"./react/components/tlog_alert":224,"./react/components/toolbars/avatar":225,"./react/components/toolbars/close/close":226,"./react/components/toolbars/user":227,"./react/components/transition/timeout_transition_group":235,"./react/components/voting":236,"./react/controllers/popup":242,"./react/controllers/shellbox":244,"./react/controllers/tasty_alert":245,"./react/controllers/tasty_confirm":246,"./react/controllers/tasty_events":247,"./react/controllers/tasty_locking_alert":248,"./react/controllers/tasty_notify":249,"./react/controllers/tasty_sound":250,"./react/dispatchers/current_user":252,"./react/dispatchers/relationships":254,"./react/entities/normalized_entry":255,"./react/helpers/app":256,"./react/mediators/comments":257,"./react/messaging/actions/conversation":258,"./react/messaging/actions/message":259,"./react/messaging/actions/notification":260,"./react/messaging/actions/popup":261,"./react/messaging/components/buttons/write_message":262,"./react/messaging/components/messages_popup/conversations/conversations":263,"./react/messaging/components/messages_popup/conversations/list/empty":264,"./react/messaging/components/messages_popup/conversations/list/list":265,"./react/messaging/components/messages_popup/conversations/list/list_item":266,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":267,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":268,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":269,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":270,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":271,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":272,"./react/messaging/components/messages_popup/loading_message":273,"./react/messaging/components/messages_popup/messages_popup":274,"./react/messaging/components/messages_popup/thread/message_form/message_form":275,"./react/messaging/components/messages_popup/thread/message_list/empty":276,"./react/messaging/components/messages_popup/thread/message_list/message_list":277,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":278,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":279,"./react/messaging/components/messages_popup/thread/thread":280,"./react/messaging/components/messages_popup/ui/back_button":281,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":282,"./react/messaging/components/notifications_popup/notifications/empty":283,"./react/messaging/components/notifications_popup/notifications/notification":284,"./react/messaging/components/notifications_popup/notifications/notifications":285,"./react/messaging/components/notifications_popup/notifications_popup":286,"./react/messaging/components/toolbars/indicators/indicators":287,"./react/messaging/components/toolbars/indicators/messages":288,"./react/messaging/components/toolbars/indicators/notifications":289,"./react/messaging/dispatchers/messaging":290,"./react/messaging/messaging_requester":291,"./react/messaging/messaging_service":292,"./react/messaging/messaging_testing":293,"./react/messaging/stores/connection_state":295,"./react/messaging/stores/conversations":296,"./react/messaging/stores/messages":297,"./react/messaging/stores/messages_popup_state":298,"./react/messaging/stores/messaging_status":299,"./react/messaging/stores/notifications":300,"./react/mixins/activities":301,"./react/mixins/component_manipulations":302,"./react/mixins/dom_manipulations":303,"./react/mixins/error_timer":304,"./react/mixins/grammar":305,"./react/mixins/positions":306,"./react/mixins/requester":307,"./react/mixins/scroller":308,"./react/mixins/shake":309,"./react/mixins/touch":310,"./react/mixins/unmount":311,"./react/services/designPresenter":313,"./react/services/designSettings":314,"./react/services/designStates":315,"./react/services/entry_normalizer":316,"./react/services/entry_store":317,"./react/services/positions":318,"./react/services/uuid":319,"./react/stores/current_user":321,"./react/stores/relationships":322,"./resources/fileReceiver":323,"./resources/is_mobile":324,"./resources/libs":325,"./resources/locales":326,"./resources/tasty":327,"./resources/tasty_utils":328}],10:[function(require,module,exports){
+},{"../shared/react/services/thumbor":331,"../shared/routes/api":332,"../shared/routes/routes":333,"./react/application":16,"./react/components/auth/auth":17,"./react/components/auth/authorization/authorization":18,"./react/components/auth/authorization/facebook":19,"./react/components/auth/authorization/vk":20,"./react/components/auth/buttons/facebook_auth_button":21,"./react/components/auth/buttons/vk_auth_button":22,"./react/components/auth/email/email":26,"./react/components/auth/recovery":31,"./react/components/avatars/avatar":33,"./react/components/avatars/user_avatar":34,"./react/components/buttons/load_more":35,"./react/components/calendar/calendar":36,"./react/components/calendar/calendar_header":37,"./react/components/calendar/calendar_marker":38,"./react/components/calendar/calendar_period":39,"./react/components/calendar/calendar_timeline":40,"./react/components/common/adaptive_input":41,"./react/components/design_settings_popup/color_picker":44,"./react/components/design_settings_popup/color_picker_popup":45,"./react/components/design_settings_popup/controls":46,"./react/components/design_settings_popup/controls_items/_progressbar":47,"./react/components/design_settings_popup/controls_items/_radiobutton":48,"./react/components/design_settings_popup/controls_items/align_item":49,"./react/components/design_settings_popup/controls_items/background_item":50,"./react/components/design_settings_popup/controls_items/feed_color_item":51,"./react/components/design_settings_popup/controls_items/font_type_item":52,"./react/components/design_settings_popup/controls_items/header_color_item":53,"./react/components/design_settings_popup/controls_items/opacity_item":54,"./react/components/design_settings_popup/design_settings_popup":55,"./react/components/editable_field":56,"./react/components/embed":57,"./react/components/entry_comment_box/comment_form/buttons/submit":58,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":59,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":60,"./react/components/entry_comment_box/comment_form/comment_form":61,"./react/components/entry_comment_box/comment_list/comment":62,"./react/components/entry_comment_box/comment_list/comment_list":63,"./react/components/entry_comment_box/comment_list/comment_manager":64,"./react/components/entry_comment_box/comment_metabar/comment_metabar":65,"./react/components/entry_comment_box/comment_metabar/date":66,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":67,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":68,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":69,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":70,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":71,"./react/components/entry_comment_box/comment_metabar/reply":72,"./react/components/entry_comment_box/entry_comment_box":73,"./react/components/entry_comment_box/load_more":74,"./react/components/entry_comment_box/mixins/comments":75,"./react/components/entry_metabar/author":76,"./react/components/entry_metabar/comment":77,"./react/components/entry_metabar/date":78,"./react/components/entry_metabar/dropdown_menu":79,"./react/components/entry_metabar/dropdown_menu_items/delete_item":80,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":81,"./react/components/entry_metabar/dropdown_menu_items/item":82,"./react/components/entry_metabar/dropdown_menu_items/report_item":83,"./react/components/entry_metabar/dropdown_menu_items/watch_item":84,"./react/components/entry_metabar/entry_metabar":85,"./react/components/entry_metabar/tag":86,"./react/components/entry_metabar/tags":87,"./react/components/feed/bricks":88,"./react/components/feed/feed":89,"./react/components/feed/mixins/base":90,"./react/components/feed/tlog":91,"./react/components/follow_status":92,"./react/components/hero/profile/dropdown_menu":94,"./react/components/hero/profile/dropdown_menu_items/ignore":95,"./react/components/hero/profile/dropdown_menu_items/report":96,"./react/components/hero/profile/popup/followers_popup":97,"./react/components/hero/profile/popup/followings_popup":98,"./react/components/hero/profile/popup/items/follower_item":99,"./react/components/hero/profile/popup/items/following_item":100,"./react/components/hero/profile/popup/items/tag_item":101,"./react/components/hero/profile/popup/popup":102,"./react/components/hero/profile/popup/tags_popup":103,"./react/components/hero/profile/profile":104,"./react/components/hero/profile/profile_avatar":105,"./react/components/hero/profile/profile_head":106,"./react/components/hero/profile/profile_stats":107,"./react/components/hero/profile/profile_stats_item":108,"./react/components/images_collage":109,"./react/components/notifications/tasty_alert":110,"./react/components/notifications/tasty_confirm":111,"./react/components/notifications/tasty_locking_alert":112,"./react/components/notifications/tasty_notify":113,"./react/components/people/item":114,"./react/components/persons_popup/items/follower_relationship":115,"./react/components/persons_popup/items/following_relationship":116,"./react/components/persons_popup/items/guess_relationship":117,"./react/components/persons_popup/items/ignored_relationship":118,"./react/components/persons_popup/items/item":119,"./react/components/persons_popup/items/requested_relationship":120,"./react/components/persons_popup/menu":121,"./react/components/persons_popup/menu_item":122,"./react/components/persons_popup/mixins/panel_mixin":123,"./react/components/persons_popup/panels/followers_panel":124,"./react/components/persons_popup/panels/followings_panel":125,"./react/components/persons_popup/panels/guessed_panel":126,"./react/components/persons_popup/panels/ignored_panel":127,"./react/components/persons_popup/panels/requested_panel":128,"./react/components/persons_popup/panels/socialNetwork/facebook":129,"./react/components/persons_popup/panels/socialNetwork/vkontakte":139,"./react/components/persons_popup/persons_popup":146,"./react/components/popup/header":147,"./react/components/popup/layout":148,"./react/components/popup/popup":149,"./react/components/popup/spinner":150,"./react/components/popup_box":151,"./react/components/post_editor/actions/actions":152,"./react/components/post_editor/actions/buttons/privacy":153,"./react/components/post_editor/actions/buttons/vote":154,"./react/components/post_editor/choicer":155,"./react/components/post_editor/demo":156,"./react/components/post_editor/edit_post":157,"./react/components/post_editor/editor_container":158,"./react/components/post_editor/editors/_tasty":159,"./react/components/post_editor/editors/anonymous":160,"./react/components/post_editor/editors/image":161,"./react/components/post_editor/editors/instagram":162,"./react/components/post_editor/editors/mixins/autosave":163,"./react/components/post_editor/editors/music":164,"./react/components/post_editor/editors/quote":165,"./react/components/post_editor/editors/text":166,"./react/components/post_editor/editors/video":167,"./react/components/post_editor/images_mediabox/loaded":168,"./react/components/post_editor/images_mediabox/url_insert":169,"./react/components/post_editor/layout":170,"./react/components/post_editor/mediabox/actions":171,"./react/components/post_editor/mediabox/layout":172,"./react/components/post_editor/mediabox/loading_progress":173,"./react/components/post_editor/mixins/dragging":174,"./react/components/post_editor/mixins/images_form":175,"./react/components/post_editor/mixins/layout":176,"./react/components/post_editor/mixins/persistence":177,"./react/components/post_editor/mixins/video":178,"./react/components/post_editor/new_anonymous_post":179,"./react/components/post_editor/new_post":180,"./react/components/post_editor/video_mediabox/embeded":181,"./react/components/post_editor/video_mediabox/loading":182,"./react/components/post_editor/video_mediabox/url_insert":183,"./react/components/post_editor/video_mediabox/video_mediabox":184,"./react/components/post_editor/welcome_messages/image":185,"./react/components/post_editor/welcome_messages/instagram":186,"./react/components/post_editor/welcome_messages/music":187,"./react/components/post_editor/welcome_messages/video":188,"./react/components/relationship_buttons/follow_button":189,"./react/components/relationship_buttons/follower_button":190,"./react/components/relationship_buttons/guess_button":191,"./react/components/relationship_buttons/ignore_button":192,"./react/components/relationship_buttons/mixins/relationship":193,"./react/components/relationship_buttons/request_button":194,"./react/components/screen_viewer/screen_viewer":195,"./react/components/search/button":196,"./react/components/search/field":197,"./react/components/search/search":198,"./react/components/searchResults/index":200,"./react/components/settings/settings":218,"./react/components/shellbox_layer":221,"./react/components/shellboxes/confirm_registration":222,"./react/components/smart_follow_status":223,"./react/components/spinner":224,"./react/components/tlog_alert":225,"./react/components/toolbars/avatar":226,"./react/components/toolbars/close/close":227,"./react/components/toolbars/user":228,"./react/components/transition/timeout_transition_group":236,"./react/components/voting":237,"./react/controllers/popup":243,"./react/controllers/shellbox":245,"./react/controllers/tasty_alert":246,"./react/controllers/tasty_confirm":247,"./react/controllers/tasty_events":248,"./react/controllers/tasty_locking_alert":249,"./react/controllers/tasty_notify":250,"./react/controllers/tasty_sound":251,"./react/dispatchers/current_user":253,"./react/dispatchers/relationships":255,"./react/entities/normalized_entry":256,"./react/helpers/app":257,"./react/mediators/comments":258,"./react/messaging/actions/conversation":259,"./react/messaging/actions/message":260,"./react/messaging/actions/notification":261,"./react/messaging/actions/popup":262,"./react/messaging/components/buttons/write_message":263,"./react/messaging/components/messages_popup/conversations/conversations":264,"./react/messaging/components/messages_popup/conversations/list/empty":265,"./react/messaging/components/messages_popup/conversations/list/list":266,"./react/messaging/components/messages_popup/conversations/list/list_item":267,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":268,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":269,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":270,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":271,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":272,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":273,"./react/messaging/components/messages_popup/loading_message":274,"./react/messaging/components/messages_popup/messages_popup":275,"./react/messaging/components/messages_popup/thread/message_form/message_form":276,"./react/messaging/components/messages_popup/thread/message_list/empty":277,"./react/messaging/components/messages_popup/thread/message_list/message_list":278,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":279,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":280,"./react/messaging/components/messages_popup/thread/thread":281,"./react/messaging/components/messages_popup/ui/back_button":282,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":283,"./react/messaging/components/notifications_popup/notifications/empty":284,"./react/messaging/components/notifications_popup/notifications/notification":285,"./react/messaging/components/notifications_popup/notifications/notifications":286,"./react/messaging/components/notifications_popup/notifications_popup":287,"./react/messaging/components/toolbars/indicators/indicators":288,"./react/messaging/components/toolbars/indicators/messages":289,"./react/messaging/components/toolbars/indicators/notifications":290,"./react/messaging/dispatchers/messaging":291,"./react/messaging/messaging_requester":292,"./react/messaging/messaging_service":293,"./react/messaging/messaging_testing":294,"./react/messaging/stores/connection_state":296,"./react/messaging/stores/conversations":297,"./react/messaging/stores/messages":298,"./react/messaging/stores/messages_popup_state":299,"./react/messaging/stores/messaging_status":300,"./react/messaging/stores/notifications":301,"./react/mixins/activities":302,"./react/mixins/component_manipulations":303,"./react/mixins/dom_manipulations":304,"./react/mixins/error_timer":305,"./react/mixins/grammar":306,"./react/mixins/positions":307,"./react/mixins/requester":308,"./react/mixins/scroller":309,"./react/mixins/shake":310,"./react/mixins/touch":311,"./react/mixins/unmount":312,"./react/services/designPresenter":314,"./react/services/designSettings":315,"./react/services/designStates":316,"./react/services/entry_normalizer":317,"./react/services/entry_store":318,"./react/services/positions":319,"./react/services/uuid":320,"./react/stores/current_user":322,"./react/stores/relationships":323,"./resources/fileReceiver":324,"./resources/is_mobile":325,"./resources/libs":326,"./resources/locales":327,"./resources/tasty":328,"./resources/tasty_utils":329}],10:[function(require,module,exports){
 var CurrentUserStore, PopupActions, Searchbox;
 
 CurrentUserStore = require('../stores/current_user');
@@ -20211,13 +13756,8 @@ PopupActions = {
 module.exports = PopupActions;
 
 
-<<<<<<< HEAD
-=======
-},{}],147:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"../components/searchbox/index":201,"../stores/current_user":321}],11:[function(require,module,exports){
+},{"../components/searchbox/index":202,"../stores/current_user":322}],11:[function(require,module,exports){
 var Api, SearchActions;
 
 Api = require('../api/api');
@@ -20238,7 +13778,6 @@ SearchActions = {
 module.exports = SearchActions;
 
 
-<<<<<<< HEAD
 
 },{"../api/api":15}],12:[function(require,module,exports){
 var CurrentUserServerActions;
@@ -20249,19 +13788,6 @@ CurrentUserServerActions = {
       type: 'userUpdated',
       user: user
     });
-=======
-},{"react/lib/cx":599}],148:[function(require,module,exports){
-window.PopupLayout = React.createClass({
-  mixins: [ReactUnmountMixin],
-  propTypes: {
-    onClose: React.PropTypes.func
-  },
-  handleClick: function(e) {
-    if ($(e.target).hasClass('popup-container__cell')) {
-      e.preventDefault();
-      return this.close();
-    }
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   updateUserpic: function(userpic) {
     return CurrentUserDispatcher.handleServerAction({
@@ -20279,11 +13805,6 @@ window.PopupLayout = React.createClass({
 module.exports = CurrentUserServerActions;
 
 
-<<<<<<< HEAD
-=======
-},{}],149:[function(require,module,exports){
-var NO_TRANSITION_CLASS, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 },{}],13:[function(require,module,exports){
 var AppDispatcher, Constants, UserToolbarActions;
@@ -20309,39 +13830,12 @@ UserToolbarActions = {
 
 module.exports = UserToolbarActions;
 
-<<<<<<< HEAD
-=======
-},{"react/lib/cx":599}],150:[function(require,module,exports){
-window.PopupSpinner = React.createClass({
-  propTypes: {
-    hasActivities: React.PropTypes.bool.isRequired
-  },
-  render: function() {
-    if (this.props.hasActivities) {
-      return React.createElement("div", {
-        "className": "popup__loader"
-      }, React.createElement("span", {
-        "className": "spinner spinner--8x8"
-      }, React.createElement("span", {
-        "className": "spinner__icon"
-      })));
-    } else {
-      return null;
-    }
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{"../constants/constants":238,"../dispatchers/dispatcher":253}],14:[function(require,module,exports){
+},{"../constants/constants":239,"../dispatchers/dispatcher":254}],14:[function(require,module,exports){
 var CurrentUserResource, CurrentUserServerActions, CurrentUserViewActions;
 
-<<<<<<< HEAD
 CurrentUserResource = require('../../resources/current_user');
-=======
-},{}],151:[function(require,module,exports){
-var LinkedStateMixin;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 CurrentUserServerActions = require('../server/current_user');
 
@@ -20479,13 +13973,8 @@ CurrentUserViewActions = {
 module.exports = CurrentUserViewActions;
 
 
-<<<<<<< HEAD
-=======
-},{"react/lib/LinkedStateMixin":510}],152:[function(require,module,exports){
-var ENTRY_PRIVACY_ANONYMOUS, ENTRY_PRIVACY_LIVE, ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, PREVIEW_BODY_CLASSES, TLOG_TYPE_ANONYMOUS, TLOG_TYPE_PRIVATE, TLOG_TYPE_PUBLIC, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"../../resources/current_user":312,"../server/current_user":12}],15:[function(require,module,exports){
+},{"../../resources/current_user":313,"../server/current_user":12}],15:[function(require,module,exports){
 var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _, _pendingRequests;
 
 _ = require('lodash');
@@ -20594,7 +14083,7 @@ module.exports = Api;
 
 
 
-},{"../constants/constants":238,"../stores/current_user":321,"lodash":486}],16:[function(require,module,exports){
+},{"../constants/constants":239,"../stores/current_user":322,"lodash":487}],16:[function(require,module,exports){
 var AppDispatcher, GuideController, LayoutStatesController, PopupActions, PopupController, ReactUjs;
 
 window.i18n = require('i18next');
@@ -20688,7 +14177,7 @@ window.ReactApp = {
 
 
 
-},{"./actions/popup":10,"./controllers/guide":240,"./controllers/layoutStates":241,"./controllers/popuup":243,"./dispatchers/dispatcher":253,"i18next":undefined,"reactUjs":undefined}],17:[function(require,module,exports){
+},{"./actions/popup":10,"./controllers/guide":241,"./controllers/layoutStates":242,"./controllers/popuup":244,"./dispatchers/dispatcher":254,"i18next":undefined,"reactUjs":undefined}],17:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -20787,7 +14276,7 @@ window.Auth = React.createClass({
 
 
 
-},{"react/lib/cx":598}],18:[function(require,module,exports){
+},{"react/lib/cx":599}],18:[function(require,module,exports){
 window.AuthorizationShellbox = React.createClass({
   render: function() {
     var boxStyle, entriesCount, usersCount;
@@ -20859,13 +14348,8 @@ window.AuthorizationShellbox = React.createClass({
 
 
 
-<<<<<<< HEAD
 },{}],19:[function(require,module,exports){
 var AUTH_TIMEOUT;
-=======
-},{"react/lib/cx":599}],153:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 AUTH_TIMEOUT = 30000;
 
@@ -20905,13 +14389,8 @@ window.FacebookAuthorizationShellbox = React.createClass({
 
 
 
-<<<<<<< HEAD
 },{}],20:[function(require,module,exports){
 var AUTH_TIMEOUT;
-=======
-},{"react/lib/cx":599}],154:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 AUTH_TIMEOUT = 30000;
 
@@ -20951,38 +14430,10 @@ window.VkAuthorizationShellbox = React.createClass({
 
 
 
-<<<<<<< HEAD
 },{}],21:[function(require,module,exports){
 window.Shellbox_FacebookAuthButton = React.createClass({
   propTypes: {
     isActive: React.PropTypes.bool
-=======
-},{"react/lib/cx":599}],155:[function(require,module,exports){
-var CHOICER_ITEMS, CHOICER_TYPES, cx;
-
-cx = require('react/lib/cx');
-
-CHOICER_TYPES = ['text', 'image', 'instagram', 'music', 'video', 'quote'];
-
-CHOICER_ITEMS = {
-  text: {
-    title: function() {
-      return i18n.t('editor_text_type');
-    },
-    icon: 'icon--text-circle'
-  },
-  image: {
-    title: function() {
-      return i18n.t('editor_image_type');
-    },
-    icon: 'icon--image-circle'
-  },
-  instagram: {
-    title: function() {
-      return i18n.t('editor_instagram_type');
-    },
-    icon: 'icon--instagram-circle'
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   getDefaultProps: function() {
     return {
@@ -21146,11 +14597,6 @@ EmailSubmitButton = React.createClass({
 module.exports = EmailSubmitButton;
 
 
-<<<<<<< HEAD
-=======
-},{"react/lib/cx":599}],156:[function(require,module,exports){
-var DEMO_IDS;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 },{}],25:[function(require,module,exports){
 var ConfirmRegistrationMixin, EmailConfirmRegistration;
@@ -21205,7 +14651,6 @@ EmailConfirmRegistration = React.createClass({
 module.exports = EmailConfirmRegistration;
 
 
-<<<<<<< HEAD
 
 },{"../mixins/confirm_registration":30}],26:[function(require,module,exports){
 var EmailFooter, EmailLoginField, EmailMixin, EmailPasswordField, EmailSubmitButton;
@@ -21222,11 +14667,6 @@ EmailMixin = require('./mixins/email');
 
 window.Email = React.createClass({
   mixins: [EmailMixin, ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin],
-=======
-},{}],157:[function(require,module,exports){
-window.PostEditor_EditPost = React.createClass({
-  mixins: ['ReactActivitiesMixin', PostEditor_LayoutMixin],
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     login: React.PropTypes.string,
     password: React.PropTypes.string
@@ -21283,18 +14723,12 @@ window.PostEditor_EditPost = React.createClass({
 
 
 
-<<<<<<< HEAD
 },{"./_partials/footer":23,"./buttons/submit":24,"./fields/login":27,"./fields/password":28,"./mixins/email":29}],27:[function(require,module,exports){
 var EmailLoginField, cx;
 
 cx = require('react/lib/cx');
 
 EmailLoginField = React.createClass({
-=======
-},{}],158:[function(require,module,exports){
-window.PostEditor_EditorContainer = React.createClass({
-  mixins: ['ReactActivitiesUser'],
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     value: React.PropTypes.string,
     isDisabled: React.PropTypes.bool,
@@ -21333,13 +14767,8 @@ window.PostEditor_EditorContainer = React.createClass({
 module.exports = EmailLoginField;
 
 
-<<<<<<< HEAD
-=======
-},{}],159:[function(require,module,exports){
-var EDITOR_MODES, EDITOR_OPTIONS;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"react/lib/cx":598}],28:[function(require,module,exports){
+},{"react/lib/cx":599}],28:[function(require,module,exports){
 var EmailPasswordField, cx;
 
 cx = require('react/lib/cx');
@@ -21383,13 +14812,8 @@ EmailPasswordField = React.createClass({
 module.exports = EmailPasswordField;
 
 
-<<<<<<< HEAD
-=======
-},{}],160:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"react/lib/cx":598}],29:[function(require,module,exports){
+},{"react/lib/cx":599}],29:[function(require,module,exports){
 var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWORD_MESSAGE, INVALID_SLUG_MESSAGE;
 
 EmailConfirmRegistration = require('../confirm_registration');
@@ -21521,11 +14945,6 @@ EmailMixin = {
 module.exports = EmailMixin;
 
 
-<<<<<<< HEAD
-=======
-},{"react/lib/cx":599}],161:[function(require,module,exports){
-var INSERT_MODE, LOADED_MODE, PureRenderMixin, WELCOME_MODE, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 },{"../confirm_registration":25}],30:[function(require,module,exports){
 var ConfirmRegistrationMixin, USER_EXISTS_MESSAGE;
@@ -21706,13 +15125,8 @@ window.RecoveryShellbox = React.createClass({
 
 
 
-<<<<<<< HEAD
 },{}],32:[function(require,module,exports){
 var ConfirmRegistrationMixin, SocialNetworksConfirmRegistration;
-=======
-},{"react/lib/ReactComponentWithPureRenderMixin":522,"react/lib/cx":599}],162:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 ConfirmRegistrationMixin = require('../mixins/confirm_registration');
 
@@ -21757,11 +15171,6 @@ SocialNetworksConfirmRegistration = React.createClass({
 module.exports = SocialNetworksConfirmRegistration;
 
 
-<<<<<<< HEAD
-=======
-},{"react/lib/cx":599}],163:[function(require,module,exports){
-var AUTOSAVE_TIME;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 },{"../mixins/confirm_registration":30}],33:[function(require,module,exports){
 var cx;
@@ -21826,14 +15235,9 @@ window.Avatar = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-},{}],164:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{"react/lib/cx":598}],34:[function(require,module,exports){
+},{"react/lib/cx":599}],34:[function(require,module,exports){
 window.UserAvatar = React.createClass({
   displayName: 'UserAvatar',
   propTypes: {
@@ -21870,57 +15274,10 @@ window.UserAvatar = React.createClass({
 
 
 
-<<<<<<< HEAD
 },{}],35:[function(require,module,exports){
 window.LoadMoreButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
-=======
-},{"react/lib/cx":599}],165:[function(require,module,exports){
-window.PostEditor_QuoteEditor = React.createClass({
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin],
-  render: function() {
-    return React.createElement("article", {
-      "className": "post post--quote post--edit"
-    }, React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("blockquote", {
-      "className": "blockquote"
-    }, React.createElement(TastyEditor, {
-      "ref": "textEditor",
-      "placeholder": i18n.t('editor_quote_text_placeholder'),
-      "mode": "partial",
-      "content": this.entryText(),
-      "autofocus": true,
-      "isLoading": this.hasActivities(),
-      "onChange": this.startAutosave
-    }), React.createElement("div", {
-      "className": "blockquote__caption"
-    }, React.createElement("span", {
-      "className": "blockquote__dash"
-    }, "\u2014"), React.createElement(TastyEditor, {
-      "ref": "sourceEditor",
-      "placeholder": i18n.t('editor_quote_source_placeholder'),
-      "content": this.entrySource(),
-      "isLoading": this.hasActivities(),
-      "onChange": this.startAutosave
-    })))));
-  },
-  entryText: function() {
-    return this.props.normalizedEntry.data2;
-  },
-  entrySource: function() {
-    return this.props.normalizedEntry.data1;
-  },
-  entryType: function() {
-    return 'quote';
-  },
-  _getNormalizedData: function() {
-    return {
-      data2: this.refs.textEditor.content(),
-      data1: this.refs.sourceEditor.content()
-    };
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   render: function() {
     return React.createElement("div", {
@@ -21934,13 +15291,8 @@ window.PostEditor_QuoteEditor = React.createClass({
 
 
 
-<<<<<<< HEAD
 },{}],36:[function(require,module,exports){
 var CALENDAR_CLOSED, CALENDAR_OPENED_BY_CLICK, CALENDAR_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, TARGET_POST_CLASS, TARGET_POST_PARENT_CLASS, cx;
-=======
-},{}],166:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -21952,12 +15304,7 @@ CALENDAR_OPENED_BY_HOVER = 'openedByHover';
 
 CALENDAR_OPENED_BY_CLICK = 'openedByClick';
 
-<<<<<<< HEAD
 TARGET_POST_CLASS = '.post';
-=======
-},{"react/lib/cx":599}],167:[function(require,module,exports){
-var cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 TARGET_POST_PARENT_CLASS = '.posts';
 
@@ -22162,13 +15509,8 @@ window.Calendar = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],37:[function(require,module,exports){
+},{"react/lib/cx":599}],37:[function(require,module,exports){
 window.CalendarHeader = React.createClass({
-=======
-},{"react/lib/cx":599}],168:[function(require,module,exports){
-window.ImagesMediaBox_Loaded = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     date: React.PropTypes.object.isRequired
   },
@@ -22194,13 +15536,8 @@ window.ImagesMediaBox_Loaded = React.createClass({
 
 
 
-<<<<<<< HEAD
 },{}],38:[function(require,module,exports){
 var cx;
-=======
-},{}],169:[function(require,module,exports){
-var PureRenderMixin;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -22252,13 +15589,8 @@ window.CalendarMarker = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],39:[function(require,module,exports){
+},{"react/lib/cx":599}],39:[function(require,module,exports){
 window.CalendarPeriod = React.createClass({
-=======
-},{"react/lib/ReactComponentWithPureRenderMixin":522}],170:[function(require,module,exports){
-window.PostEditor_Layout = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     period: React.PropTypes.object.isRequired,
     selectedEntryId: React.PropTypes.number,
@@ -22290,18 +15622,8 @@ window.PostEditor_Layout = React.createClass({
 
 
 
-<<<<<<< HEAD
 },{}],40:[function(require,module,exports){
 window.CalendarTimeline = React.createClass({
-=======
-},{}],171:[function(require,module,exports){
-var PureRenderMixin;
-
-PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
-
-window.MediaBox_Actions = React.createClass({
-  mixins: [PureRenderMixin],
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     periods: React.PropTypes.array.isRequired,
     selectedEntryId: React.PropTypes.number,
@@ -22333,20 +15655,8 @@ window.MediaBox_Actions = React.createClass({
 
 
 
-<<<<<<< HEAD
 },{}],41:[function(require,module,exports){
 window.AdaptiveInput = React.createClass({
-=======
-},{"react/lib/ReactComponentWithPureRenderMixin":522}],172:[function(require,module,exports){
-var PureRenderMixin, cx;
-
-cx = require('react/lib/cx');
-
-PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
-
-window.MediaBox_Layout = React.createClass({
-  mixins: [PureRenderMixin],
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     type: React.PropTypes.string,
     value: React.PropTypes.string,
@@ -22388,18 +15698,82 @@ window.MediaBox_Layout = React.createClass({
 
 
 
-<<<<<<< HEAD
 },{}],42:[function(require,module,exports){
+var InfiniteScroll, PropTypes, THRESHOLD, windowHeight;
+
+PropTypes = React.PropTypes;
+
+windowHeight = $(window).height();
+
+THRESHOLD = windowHeight * 2;
+
+InfiniteScroll = React.createClass({
+  displayName: 'InfiniteScroll',
+  propTypes: {
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]).isRequired,
+    loading: PropTypes.bool.isRequired,
+    canLoad: PropTypes.bool.isRequired,
+    onLoad: PropTypes.func.isRequired,
+    onAfterLoad: PropTypes.func
+  },
+  componentDidMount: function() {
+    return $(window).on('scroll', this.handleScroll);
+  },
+  componentDidUpdate: function() {
+    var _base;
+    this._prefill();
+    return typeof (_base = this.props).onAfterLoad === "function" ? _base.onAfterLoad() : void 0;
+  },
+  componentWillUnmount: function() {
+    return $(window).off('scroll', this.handleScroll);
+  },
+  render: function() {
+    var spinner;
+    if (this.props.loading) {
+      spinner = React.createElement("div", {
+        "className": "page-loader"
+      }, React.createElement(Spinner, {
+        "size": 24.
+      }));
+    }
+    return React.createElement("div", null, this.props.children, spinner);
+  },
+  _prefill: function() {
+    var $node, $window, needsPrefill;
+    $node = $(this.getDOMNode());
+    $window = $(window);
+    needsPrefill = function() {
+      return $node.height() <= $window.height();
+    };
+    this._prefill = function() {
+      if (this.props.canLoad && needsPrefill()) {
+        return this.props.onLoad();
+      }
+    };
+    return this._prefill();
+  },
+  handleScroll: function() {
+    var nearBottom;
+    if (this.props.canLoad) {
+      nearBottom = $(window).scrollTop() + $(window).height() > $(document).height() - THRESHOLD;
+      if (nearBottom) {
+        return this.props.onLoad();
+      }
+    }
+  }
+});
+
+module.exports = InfiniteScroll;
+
+
+
+},{}],43:[function(require,module,exports){
 var PropTypes, Scroller;
 
 PropTypes = React.PropTypes;
 
 Scroller = React.createClass({
   displayName: 'Scroller',
-=======
-},{"react/lib/ReactComponentWithPureRenderMixin":522,"react/lib/cx":599}],173:[function(require,module,exports){
-window.MediaBox_LoadingProgress = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     children: PropTypes.element.isRequired
   },
@@ -22434,13 +15808,8 @@ window.MediaBox_LoadingProgress = React.createClass({
 module.exports = Scroller;
 
 
-<<<<<<< HEAD
-=======
-},{}],174:[function(require,module,exports){
-var DRAGOFF_TIMEOUT, DRAG_HOVER_CLASS;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 var ColorPicker, POPUP_WIDTH, STATE_CHOICE, STATE_VIEW;
 
 POPUP_WIDTH = 176;
@@ -22542,22 +15911,13 @@ ColorPicker = React.createClass({
       };
     })(this));
   }
-<<<<<<< HEAD
 });
-=======
-};
-
-
-
-},{}],175:[function(require,module,exports){
-var ACCEPT_FILE_TYPES, MAX_FILE_SIZE, MAX_NUMBER_OF_FILES, assign;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 module.exports = ColorPicker;
 
 
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 var ColorPicker_Popup;
 
 ColorPicker_Popup = React.createClass({
@@ -22599,13 +15959,8 @@ ColorPicker_Popup = React.createClass({
 module.exports = ColorPicker_Popup;
 
 
-<<<<<<< HEAD
-=======
-},{"react/lib/Object.assign":514}],176:[function(require,module,exports){
-window.TLOG_TYPES = ['public', 'private', 'anonymous'];
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 window.DesignSettingsPopup_Controls = React.createClass({
   propTypes: {
     design: React.PropTypes.object.isRequired,
@@ -22650,7 +16005,7 @@ window.DesignSettingsPopup_Controls = React.createClass({
 
 
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsProgressbar = React.createClass({
   propTypes: {
     progress: React.PropTypes.number.isRequired
@@ -22676,17 +16031,12 @@ window.DesignSettingsPopup_ControlsProgressbar = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
 
 window.DesignSettingsPopup_ControlsRadioButton = React.createClass({
-=======
-},{}],177:[function(require,module,exports){
-window.PostEditor_PersistenceMixin = {
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     settingId: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired,
@@ -22751,13 +16101,8 @@ window.PostEditor_PersistenceMixin = {
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],48:[function(require,module,exports){
+},{"react/lib/cx":599}],49:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsAlignItem = React.createClass({
-=======
-},{}],178:[function(require,module,exports){
-window.PostEditor_VideoMixin = {
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     coverAlign: React.PropTypes.string.isRequired,
     saveCallback: React.PropTypes.func.isRequired
@@ -22808,8 +16153,7 @@ window.PostEditor_VideoMixin = {
 
 
 
-<<<<<<< HEAD
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
   mixins: ['ReactActivitiesUser', ComponentManipulationsMixin],
   propTypes: {
@@ -22817,22 +16161,12 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
     backgroundUrl: React.PropTypes.string.isRequired,
     activitiesHandler: React.PropTypes.object.isRequired,
     onBackgroundChanged: React.PropTypes.func.isRequired
-=======
-},{}],179:[function(require,module,exports){
-window.PostEditor_NewAnonymousPost = React.createClass({
-  mixins: [PostEditor_LayoutMixin, 'ReactActivitiesMixin'],
-  getDefaultProps: function() {
-    return {
-      tlogType: 'anonymous'
-    };
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   getInitialState: function() {
     return {
       backgroundUrl: this.props.backgroundUrl,
       progress: 0
     };
-<<<<<<< HEAD
   },
   componentDidMount: function() {
     return this._bindCoverUpload();
@@ -22844,25 +16178,6 @@ window.PostEditor_NewAnonymousPost = React.createClass({
     var backgroundStyles;
     backgroundStyles = {
       backgroundImage: 'url(' + this.state.backgroundUrl + ')'
-=======
-  }
-});
-
-
-
-},{}],180:[function(require,module,exports){
-var DEFAULT_POST_TYPE;
-
-DEFAULT_POST_TYPE = 'text';
-
-window.PostEditor_NewPost = React.createClass({
-  mixins: [PostEditor_LayoutMixin, 'ReactActivitiesMixin'],
-  getInitialState: function() {
-    return {
-      normalizedEntry: EntryStore.restoreNewEntry() || new NormalizedEntry(),
-      entryType: DEFAULT_POST_TYPE,
-      entryPrivacy: this.props.tlogType === 'public' ? 'live' : 'public'
->>>>>>> Infinite scroll prefill [deliver #90599686]
     };
     return React.createElement("div", {
       "className": "settings-design__control settings-design__control--cover"
@@ -22966,13 +16281,8 @@ window.PostEditor_NewPost = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({
-=======
-},{}],181:[function(require,module,exports){
-window.VideoMediaBox_Embeded = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     feedColor: React.PropTypes.string.isRequired,
     saveCallback: React.PropTypes.func.isRequired
@@ -23024,13 +16334,8 @@ window.VideoMediaBox_Embeded = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({
-=======
-},{}],182:[function(require,module,exports){
-window.VideoMediaBox_Loading = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     fontType: React.PropTypes.string.isRequired,
     saveCallback: React.PropTypes.func.isRequired
@@ -23083,13 +16388,8 @@ window.VideoMediaBox_Loading = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({
-=======
-},{}],183:[function(require,module,exports){
-window.VideoMediaBox_UrlInsert = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     headerColor: React.PropTypes.string.isRequired,
     saveCallback: React.PropTypes.func.isRequired
@@ -23155,15 +16455,8 @@ window.VideoMediaBox_UrlInsert = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 var MAXIMUM_OPACITY, MINIMUM_OPACITY, STEP_OPACITY, TIMEOUT_BEFORE_SAVE;
-=======
-},{}],184:[function(require,module,exports){
-var EMBEDED_MODE, INSERT_MODE, LOADING_MODE, WELCOME_MODE, cloneWithProps;
-
-cloneWithProps = require('react/lib/cloneWithProps');
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 MINIMUM_OPACITY = 0;
 
@@ -23266,7 +16559,7 @@ window.DesignSettingsPopup_ControlsOpacityItem = React.createClass({
 
 
 
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 var CurrentUserServerActions, cx;
 
 cx = require('react/lib/cx');
@@ -23406,13 +16699,8 @@ window.DesignSettingsPopup = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"../../actions/server/current_user":12,"react/lib/cx":598}],55:[function(require,module,exports){
+},{"../../actions/server/current_user":12,"react/lib/cx":599}],56:[function(require,module,exports){
 var KEYCODE_ENTER, LinkedStateMixin, cx;
-=======
-},{"react/lib/cloneWithProps":594}],185:[function(require,module,exports){
-var PureRenderMixin;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -23530,13 +16818,8 @@ window.EditableField = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/LinkedStateMixin":509,"react/lib/cx":598}],56:[function(require,module,exports){
+},{"react/lib/LinkedStateMixin":510,"react/lib/cx":599}],57:[function(require,module,exports){
 window.EmbedComponent = React.createClass({
-=======
-},{"react/lib/ReactComponentWithPureRenderMixin":522}],186:[function(require,module,exports){
-window.MediaBox_InstagramWelcome = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     autoplay: React.PropTypes.bool.isRequired,
     coverImageUrl: React.PropTypes.string,
@@ -23553,14 +16836,7 @@ window.MediaBox_InstagramWelcome = React.createClass({
   }
 });
 
-<<<<<<< HEAD
 window.EmbedComponentNoCover = React.createClass({
-=======
-
-
-},{}],187:[function(require,module,exports){
-window.MediaBox_MusicWelcome = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     frameWidth: React.PropTypes.number.isRequired,
     frameHeight: React.PropTypes.number.isRequired,
@@ -23589,14 +16865,7 @@ window.MediaBox_MusicWelcome = React.createClass({
   }
 });
 
-<<<<<<< HEAD
 window.EmbedComponentWithCover = React.createClass({
-=======
-
-
-},{}],188:[function(require,module,exports){
-window.MediaBox_VideoWelcome = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     coverImageUrl: React.PropTypes.string.isRequired,
     frameWidth: React.PropTypes.number.isRequired,
@@ -23647,8 +16916,7 @@ window.MediaBox_VideoWelcome = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 window.EntryCommentBox_CommentFormSubmit = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
@@ -23666,14 +16934,10 @@ window.EntryCommentBox_CommentFormSubmit = React.createClass({
     }
   }
 });
-=======
-},{}],189:[function(require,module,exports){
-var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 var FORM_STATE, HIDDEN_STATE, LINK_STATE;
 
 HIDDEN_STATE = 'hidden';
@@ -23754,30 +17018,11 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({
     if (this.isClosed()) {
       this.openForm();
     }
-<<<<<<< HEAD
     return _.defer((function(_this) {
       return function() {
         return _this.refs.commentForm.addReply(name);
       };
     })(this));
-=======
-  }
-});
-
-
-
-},{}],190:[function(require,module,exports){
-window.RelationshipFollowerButton = React.createClass({
-  mixins: ['RelationshipMixin'],
-  propTypes: {
-    relationship: React.PropTypes.object.isRequired
-  },
-  getInitialState: function() {
-    return this.getStateFromStore();
-  },
-  componentDidMount: function() {
-    return CurrentUserStore.addChangeListener(this.onStoreChange);
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   openForm: function() {
     this.setState({
@@ -23852,15 +17097,9 @@ window.RelationshipFollowerButton = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 window.EntryCommentBox_CommentEditFormManager = React.createClass({
   mixins: [RequesterMixin, ComponentManipulationsMixin],
-=======
-},{}],191:[function(require,module,exports){
-window.RelationshipGuessButton = React.createClass({
-  mixins: ['RelationshipMixin'],
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     comment: React.PropTypes.object.isRequired,
     user: React.PropTypes.object.isRequired,
@@ -23921,13 +17160,8 @@ window.RelationshipGuessButton = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 var REPLIES_LIMIT;
-=======
-},{}],192:[function(require,module,exports){
-var STATE_IGNORED;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 REPLIES_LIMIT = 5;
 
@@ -24011,22 +17245,10 @@ window.EntryCommentBox_CommentForm = React.createClass({
     if (replies.length > REPLIES_LIMIT) {
       newText = this._removeLastReply();
     }
-<<<<<<< HEAD
     if (!RegExp(name).exec(newText)) {
       newText = name + postfix + newText;
     }
     return this.$commentFormField.val(newText).focus();
-=======
-  }
-});
-
-
-
-},{}],193:[function(require,module,exports){
-window.RelationshipMixin = {
-  componentWillUnmount: function() {
-    return this.clearErrorTimer();
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   _getReplies: function() {
     var found, regExp, replies, text;
@@ -24089,14 +17311,9 @@ window.RelationshipMixin = {
   }
 });
 
-<<<<<<< HEAD
-=======
-},{}],194:[function(require,module,exports){
-var ERROR_STATE, LOADING_STATE, WAITING_STATE;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -24170,7 +17387,7 @@ window.EntryCommentBox_Comment = React.createClass({
 
 
 
-},{"react/lib/cx":598}],62:[function(require,module,exports){
+},{"react/lib/cx":599}],63:[function(require,module,exports){
 window.EntryCommentBox_CommentList = React.createClass({
   propTypes: {
     comments: React.PropTypes.array.isRequired,
@@ -24223,21 +17440,8 @@ window.EntryCommentBox_CommentList = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 var cx;
-=======
-},{}],195:[function(require,module,exports){
-var CLASSNAME_ACTIVE, CLASSNAME_READY, DELAY_SLIDESHOW, STATE_LOADING, STATE_READY, ScreenViewer_Item, ScreenViewer_Loader, ScreenViewer_Slideshow, ScreenViewer_Title;
-
-STATE_LOADING = 'loading';
-
-STATE_READY = 'ready';
-
-CLASSNAME_READY = '__ready';
-
-CLASSNAME_ACTIVE = '__active';
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -24310,13 +17514,8 @@ window.EntryCommentBox_CommentManager = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],64:[function(require,module,exports){
+},{"react/lib/cx":599}],65:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBar = React.createClass({
-=======
-},{}],196:[function(require,module,exports){
-window.SearchButton = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     name: React.PropTypes.string.isRequired,
     commentId: React.PropTypes.number.isRequired,
@@ -24356,13 +17555,8 @@ window.SearchButton = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],65:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDate = React.createClass({
-=======
-},{}],197:[function(require,module,exports){
-window.SearchField = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     time: React.PropTypes.string.isRequired,
     commentId: React.PropTypes.number.isRequired,
@@ -24399,13 +17593,8 @@ window.SearchField = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],66:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, cx;
-=======
-},{}],198:[function(require,module,exports){
-var CLOSED, OPENED, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -24528,8 +17717,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],67:[function(require,module,exports){
+},{"react/lib/cx":599}],68:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -24544,42 +17732,6 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
     }, React.createElement("i", {
       "className": "icon icon--basket"
     }), i18n.t('delete_comment_item'));
-=======
-},{"react/lib/cx":599}],199:[function(require,module,exports){
-var InfiniteScroll, PropTypes, SearchResultsFeed, THRESHOLD, windowHeight;
-
-InfiniteScroll = require('../common/infiniteScroll/index');
-
-PropTypes = React.PropTypes;
-
-windowHeight = $(window).height();
-
-THRESHOLD = windowHeight * 2;
-
-SearchResultsFeed = React.createClass({
-  displayName: 'SearchResultsFeed',
-  propTypes: {
-    html: PropTypes.string.isRequired,
-    loading: PropTypes.bool.isRequired,
-    canLoad: PropTypes.bool.isRequired,
-    onLoadNextPage: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "bricks-wrapper"
-    }, React.createElement(InfiniteScroll, {
-      "loading": this.props.loading,
-      "canLoad": this.props.canLoad,
-      "onLoad": this.props.onLoadNextPage,
-      "onAfterLoad": this.initGridManager
-    }, React.createElement("section", {
-      "ref": "container",
-      "className": "bricks",
-      "dangerouslySetInnerHTML": {
-        __html: this.props.html
-      }
-    })));
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   onClick: function(e) {
     e.stopPropagation();
@@ -24589,7 +17741,6 @@ SearchResultsFeed = React.createClass({
       acceptButtonText: i18n.t('delete_comment_button'),
       onAccept: this.deleteComment
     });
-<<<<<<< HEAD
   },
   deleteComment: function() {
     return this.createRequest({
@@ -24610,15 +17761,12 @@ SearchResultsFeed = React.createClass({
         return TastyNotifyController.errorResponse(data);
       }
     });
-=======
->>>>>>> Infinite scroll prefill [deliver #90599686]
   }
 });
 
 
 
-<<<<<<< HEAD
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
   propTypes: {
     entryId: React.PropTypes.number.isRequired,
@@ -24637,18 +17785,10 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
     return window.commentsMediator.doEdit(this.props.entryId, this.props.commentId);
   }
 });
-=======
-},{"../common/infiniteScroll/index":42}],200:[function(require,module,exports){
-var PropTypes, SearchActions, SearchResults, SearchResultsFeed, SearchResultsTlog;
-
-SearchActions = require('../../actions/search');
-
-SearchResultsTlog = require('./tlog');
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],69:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
   propTypes: {
     commentId: React.PropTypes.number.isRequired
@@ -24669,7 +17809,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
 
 
 
-},{}],70:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -24709,27 +17849,11 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
   }
 });
 
-<<<<<<< HEAD
-=======
-module.exports = SearchResults;
 
 
-
-},{"../../actions/search":11,"./feed":199,"./tlog":201}],201:[function(require,module,exports){
-var InfiniteScroll, PropTypes, SearchResultsTlog, THRESHOLD, windowHeight;
-
-InfiniteScroll = require('../common/infiniteScroll/index');
-
-PropTypes = React.PropTypes;
-
-windowHeight = $(window).height();
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-},{}],71:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarReply = React.createClass({
   propTypes: {
-<<<<<<< HEAD
     name: React.PropTypes.string.isRequired,
     entryId: React.PropTypes.number.isRequired
   },
@@ -24741,42 +17865,13 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass({
   },
   onClick: function() {
     return window.commentsMediator.doReplyClicked(this.props.entryId, this.props.name);
-=======
-    html: PropTypes.string.isRequired,
-    loading: PropTypes.bool.isRequired,
-    canLoad: PropTypes.bool.isRequired,
-    onLoadNextPage: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "content-area"
-    }, React.createElement("div", {
-      "className": "content-area__bg"
-    }), React.createElement("div", {
-      "className": "content-area__inner"
-    }, React.createElement(InfiniteScroll, {
-      "loading": this.props.loading,
-      "canLoad": this.props.canLoad,
-      "onLoad": this.props.onLoadNextPage
-    }, React.createElement("section", {
-      "className": "posts",
-      "dangerouslySetInnerHTML": {
-        __html: this.props.html
-      }
-    }))));
->>>>>>> Infinite scroll prefill [deliver #90599686]
   }
 });
 
 
 
-<<<<<<< HEAD
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 var MORE_COMMENTS_LIMIT;
-=======
-},{"../common/infiniteScroll/index":42}],202:[function(require,module,exports){
-var PropTypes, Searchbox;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 MORE_COMMENTS_LIMIT = 50;
 
@@ -24850,13 +17945,8 @@ window.EntryCommentBox = React.createClass({
 });
 
 
-<<<<<<< HEAD
-=======
-},{}],203:[function(require,module,exports){
-var SettingsAccounts;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 window.EntryCommentBox_LoadMore = React.createClass({
   propTypes: {
     totalCount: React.PropTypes.number.isRequired,
@@ -24890,15 +17980,8 @@ window.EntryCommentBox_LoadMore = React.createClass({
 });
 
 
-<<<<<<< HEAD
-=======
-},{}],204:[function(require,module,exports){
-var CurrentUserServerActions, PropTypes, SettingsAvatar;
 
-CurrentUserServerActions = require('../../actions/server/current_user');
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-},{}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 var CommentsMixin;
 
 CommentsMixin = {
@@ -25002,108 +18085,10 @@ CommentsMixin = {
       })(this)
     });
   },
-<<<<<<< HEAD
   loadMoreComments: function() {
     this.setState({
       isLoadMoreError: false,
       isLoadMoreLoading: true
-=======
-  componentWillUnmount: function() {
-    return $(this.refs.avatarInput.getDOMNode()).fileupload('destroy');
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "settings__hero__avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.user,
-      "size": 110.
-    }), React.createElement("span", {
-      "className": "settings__hero__avatar-overlay"
-    }, React.createElement("input", {
-      "ref": "avatarInput",
-      "type": "file",
-      "name": "file",
-      "accept": "image/*",
-      "className": "form-upload__input"
-    }), React.createElement("span", {
-      "className": "form-upload form-upload--icon"
-    }, React.createElement("span", {
-      "className": "form-upload__text"
-    }, React.createElement("i", {
-      "className": "icon icon--pencil"
-    })))));
-  }
-});
-
-module.exports = SettingsAvatar;
-
-
-
-},{"../../actions/server/current_user":12}],205:[function(require,module,exports){
-var ERROR_STATE, SENDING_STATE, SENT_STATE, SHOW_STATE, SettingsEmailConfirmation;
-
-SHOW_STATE = 'show';
-
-SENT_STATE = 'sent';
-
-SENDING_STATE = 'sending';
-
-ERROR_STATE = 'error';
-
-SettingsEmailConfirmation = React.createClass({
-  propTypes: {
-    email: React.PropTypes.any.isRequired,
-    confirmationEmail: React.PropTypes.any,
-    onResend: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: SHOW_STATE,
-      errorMessage: ''
-    };
-  },
-  render: function() {
-    var message;
-    message = (function() {
-      switch (this.state.currentState) {
-        case SHOW_STATE:
-          return React.createElement("span", null, i18n.t('settings_email_not_confirmed'), " ", React.createElement("a", {
-            "title": i18n.t('settings_email_resend_mail'),
-            "onClick": this.handleClick
-          }, i18n.t('settings_email_resend_mail')), " ", i18n.t('settings_email_check_spam'));
-        case SENDING_STATE:
-          return i18n.t('settings_email_confirmation_process');
-        case SENT_STATE:
-          return i18n.t('settings_email_confirmation_sent');
-        case ERROR_STATE:
-          return i18n.t('settings_email_confirmation_error', {
-            errorMessage: this.state.errorMessage
-          });
-        default:
-          return console.warn('Unknown currentState of SettingsEmailConfirmation component', this.state.currentState);
-      }
-    }).call(this);
-    return React.createElement("p", {
-      "className": "settings__error"
-    }, message);
-  },
-  isConfirmation: function() {
-    return (this.props.confirmationEmail != null) && this.props.confirmationEmail !== this.props.email;
-  },
-  activateSendingState: function() {
-    return this.setState({
-      currentState: SENDING_STATE
-    });
-  },
-  activateSentState: function() {
-    return this.setState({
-      currentState: SENT_STATE
-    });
-  },
-  activateErrorState: function() {
-    return this.setState({
-      currentState: ERROR_STATE
->>>>>>> Infinite scroll prefill [deliver #90599686]
     });
     return this.createRequest({
       url: ApiRoutes.comments_url(),
@@ -25170,14 +18155,9 @@ SettingsEmailConfirmation = React.createClass({
 
 React.mixins.add('CommentsMixin', [CommentsMixin, RequesterMixin, ComponentManipulationsMixin]);
 
-<<<<<<< HEAD
-=======
-},{}],206:[function(require,module,exports){
-var SettingsEmailEdit, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{}],75:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 window.EntryMetabarAuthor = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired
@@ -25202,7 +18182,7 @@ window.EntryMetabarAuthor = React.createClass({
 
 
 
-},{}],76:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 window.EntryMetabarComment = React.createClass({
   mixins: [ReactGrammarMixin],
   propTypes: {
@@ -25244,28 +18224,9 @@ window.EntryMetabarComment = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-module.exports = SettingsEmailEdit;
 
 
-
-},{"react/lib/cx":599}],207:[function(require,module,exports){
-var EDIT_STATE, ESTABLISH_STATE, SHOW_STATE, SettingsEmail, SettingsEmailEdit, SettingsEmailEstablish, SettingsEmailShow;
-
-SettingsEmailShow = require('./show');
-
-SettingsEmailEdit = require('./edit');
-
-SettingsEmailEstablish = require('./establish/establish');
-
-SHOW_STATE = 'show';
-
-EDIT_STATE = 'edit';
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-},{}],77:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 window.EntryMetabarDate = React.createClass({
   propTypes: {
     time: React.PropTypes.string.isRequired,
@@ -25298,13 +18259,8 @@ window.EntryMetabarDate = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],78:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_BETWEEN_TOGGLER_AND_MENU, MOUSE_LEAVE_TIMEOUT, cx;
-=======
-},{"./edit":206,"./establish/establish":209,"./show":211}],208:[function(require,module,exports){
-var SettingsEmailEstablishEdit, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -25489,8 +18445,7 @@ window.EntryMetabarDropdownMenu = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],79:[function(require,module,exports){
+},{"react/lib/cx":599}],80:[function(require,module,exports){
 window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
   mixins: [RequesterMixin, 'ReactActivitiesUser', DOMManipulationsMixin],
   propTypes: {
@@ -25562,14 +18517,10 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
     });
   }
 });
-=======
-},{"react/lib/cx":599}],209:[function(require,module,exports){
-var EDIT_STATE, SHOW_STATE, SettingsEmailEstablish, SettingsEmailEstablishEdit, SettingsEmailEstablishShow;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -25681,13 +18632,8 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({
 });
 
 
-<<<<<<< HEAD
-=======
-},{"./edit":208,"./show":210}],210:[function(require,module,exports){
-var SettingsEmailEstablishShow;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"react/lib/cx":598}],81:[function(require,module,exports){
+},{"react/lib/cx":599}],82:[function(require,module,exports){
 window.EntryMetabarDropdownMenuItem = React.createClass({
   propTypes: {
     href: React.PropTypes.string.isRequired,
@@ -25704,18 +18650,9 @@ window.EntryMetabarDropdownMenuItem = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-module.exports = SettingsEmailEstablishShow;
 
 
-
-},{}],211:[function(require,module,exports){
-var SettingsEmailConfirmation, SettingsEmailShow;
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-},{}],82:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 window.EntryMetabarDropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -25755,19 +18692,8 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
 });
 
 
-<<<<<<< HEAD
-=======
-},{"./confirmation":205}],212:[function(require,module,exports){
-var SettingsAvatar, SettingsHeader, SettingsSlug, SettingsTitle;
 
-SettingsAvatar = require('./avatar');
-
-SettingsSlug = require('./slug');
-
-SettingsTitle = require('./title');
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-},{}],83:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 window.EntryMetabarDropdownMenuWatchItem = React.createClass({
   mixins: [RequesterMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -25790,7 +18716,6 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
       "className": "icon icon--comments-subscribe"
     }), this.getTitle());
   },
-<<<<<<< HEAD
   getTitle: function() {
     if (this.state.isWatching) {
       if (this.state.isHover) {
@@ -25801,132 +18726,6 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
     } else {
       return i18n.t('start_watch_entry_item');
     }
-=======
-  _getHeroStyles: function() {
-    var backgroundUrl;
-    backgroundUrl = this.props.user.design.background_url;
-    return {
-      backgroundImage: "url(" + backgroundUrl + ")"
-    };
-  }
-});
-
-module.exports = SettingsHeader;
-
-
-
-},{"./avatar":204,"./slug":219,"./title":220}],213:[function(require,module,exports){
-var CurrentUserViewActions, SettingsMixin;
-
-CurrentUserViewActions = require('../../../actions/view/current_user');
-
-SettingsMixin = {
-  updateSlug: function(slug) {
-    return CurrentUserViewActions.updateSlug({
-      slug: slug,
-      beforeSend: (function(_this) {
-        return function() {
-          return _this.incrementActivities();
-        };
-      })(this),
-      success: function(data) {
-        return TastyLockingAlertController.show({
-          title: i18n.t('settings_alert_header'),
-          message: i18n.t('settings_redirect', {
-            tlogUrl: data.tlog_url
-          }),
-          action: function() {
-            return window.location = data.tlog_url;
-          }
-        });
-      },
-      complete: (function(_this) {
-        return function() {
-          return _this.decrementActivities();
-        };
-      })(this)
-    });
-  },
-  updateTitle: function(title) {
-    return CurrentUserViewActions.updateTitle({
-      title: title,
-      beforeSend: (function(_this) {
-        return function() {
-          return _this.incrementActivities();
-        };
-      })(this),
-      success: (function(_this) {
-        return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('settings_change_description_success'), 2000);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          return _this.decrementActivities();
-        };
-      })(this)
-    });
-  },
-  updatePrivacy: function(privacy) {
-    return CurrentUserViewActions.updatePrivacy({
-      privacy: privacy,
-      beforeSend: (function(_this) {
-        return function() {
-          return _this.incrementActivities();
-        };
-      })(this),
-      success: (function(_this) {
-        return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('settings_change_privacy_success'), 2000);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          return _this.decrementActivities();
-        };
-      })(this)
-    });
-  },
-  updateDaylog: function(daylog) {
-    return CurrentUserViewActions.updateDaylog({
-      daylog: daylog,
-      beforeSend: (function(_this) {
-        return function() {
-          return _this.incrementActivities();
-        };
-      })(this),
-      success: (function(_this) {
-        return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('settings_change_daylog_success'), 2000);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          return _this.decrementActivities();
-        };
-      })(this)
-    });
-  },
-  updateFemale: function(female) {
-    return CurrentUserViewActions.updateFemale({
-      female: female,
-      beforeSend: (function(_this) {
-        return function() {
-          return _this.incrementActivities();
-        };
-      })(this),
-      success: (function(_this) {
-        return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('settings_change_gender_success'), 2000);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          return _this.decrementActivities();
-        };
-      })(this)
-    });
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   onClick: function(e) {
     e.stopPropagation();
@@ -25988,22 +18787,11 @@ SettingsMixin = {
       isHover: false
     });
   }
-<<<<<<< HEAD
 });
-=======
-};
-
-module.exports = SettingsMixin;
 
 
 
-},{"../../../actions/view/current_user":14}],214:[function(require,module,exports){
-var CANCEL_TIMEOUT, SettingsPasswordEdit, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-
-},{}],84:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 window.EntryMetabar = React.createClass({
   propTypes: {
     entryId: React.PropTypes.number.isRequired,
@@ -26072,23 +18860,8 @@ window.EntryMetabar = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],85:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 window.EntryMetabarTag = React.createClass({
-=======
-},{"react/lib/cx":599}],215:[function(require,module,exports){
-var EDIT_STATE, SHOW_STATE, SettingsPassword, SettingsPasswordEdit, SettingsPasswordShow;
-
-SettingsPasswordShow = require('./show');
-
-SettingsPasswordEdit = require('./edit');
-
-SHOW_STATE = 'show';
-
-EDIT_STATE = 'edit';
-
-SettingsPassword = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     tag: React.PropTypes.string.isRequired
   },
@@ -26104,15 +18877,8 @@ SettingsPassword = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 window.EntryMetabarTags = React.createClass({
-=======
-},{"./edit":214,"./show":216}],216:[function(require,module,exports){
-var SettingsPasswordShow;
-
-SettingsPasswordShow = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     tags: React.PropTypes.array.isRequired
   },
@@ -26150,13 +18916,8 @@ SettingsPasswordShow = React.createClass({
 });
 
 
-<<<<<<< HEAD
-=======
-},{}],217:[function(require,module,exports){
-var SettingsRadioItem;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],87:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 window.FeedBricks = React.createClass({
   mixins: [FeedBaseMixin],
   propTypes: {
@@ -26211,20 +18972,9 @@ window.FeedBricks = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-module.exports = SettingsRadioItem;
 
 
-
-},{}],218:[function(require,module,exports){
-var LinkedStateMixin, SettingsAccounts, SettingsEmail, SettingsHeader, SettingsMixin, SettingsPassword, SettingsRadioItem;
-
-SettingsHeader = require('./header');
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-},{}],88:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
 
 APPEND_LOADING_STATE = 'appendLoading';
@@ -26321,13 +19071,8 @@ window.Feed = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],89:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 var THRESHOLD;
-=======
-},{"./accounts":203,"./email/email":207,"./header":212,"./mixins/settings":213,"./password/password":215,"./radio_item":217,"react/lib/LinkedStateMixin":510}],219:[function(require,module,exports){
-var PropTypes, SettingsSlug;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 THRESHOLD = 400;
 
@@ -26362,13 +19107,8 @@ window.FeedBaseMixin = {
 };
 
 
-<<<<<<< HEAD
-=======
-},{}],220:[function(require,module,exports){
-var SettingsTitle;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],90:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 window.FeedTlog = React.createClass({
   mixins: [FeedBaseMixin],
   propTypes: {
@@ -26410,92 +19150,16 @@ window.FeedTlog = React.createClass({
 
 
 
-},{}],91:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 var CLASS_PREFIX_STATE, STATE_ERROR, STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_PROCESS, STATE_REQUESTED;
 
-<<<<<<< HEAD
 CLASS_PREFIX_STATE = 'state--';
-=======
-},{}],221:[function(require,module,exports){
-window.ShellBox = React.createClass({
-  mixins: [ReactUnmountMixin],
-  getDefaultProps: function() {
-    return {
-      fadeSpeed: 1000
-    };
-  },
-  getInitialState: function() {
-    return {
-      isDisabled: false
-    };
-  },
-  handleClick: function(e) {
-    if (!this.state.isDisabled) {
-      if ($(e.target).hasClass('shellbox__cell')) {
-        e.preventDefault();
-        return this.unmount();
-      }
-    }
-  },
-  componentWillMount: function() {
-    this.blurScreen();
-    return Mousetrap.bind('esc', this.onClose);
-  },
-  componentDidMount: function() {},
-  componentWillUnmount: function() {
-    this.unblurScreen();
-    return Mousetrap.unbind('esc', this.onClose);
-  },
-  render: function() {
-    React.Children.map(this.props.children, (function(_this) {
-      return function(context) {
-        context.props.disableShellbox = _this.disableShellbox;
-        return context.props.enableShellbox = _this.enableShellbox;
-      };
-    })(this));
-    return React.createElement("div", {
-      "className": "shellbox"
-    }, React.createElement("div", {
-      "className": "shellbox__main"
-    }, React.createElement("div", {
-      "className": "shellbox__cell",
-      "onClick": this.handleClick
-    }, this.props.children)));
-  },
-  blurScreen: function() {
-    return $('html').addClass('shellbox-enabled');
-  },
-  unblurScreen: function() {
-    return $('html').removeClass('shellbox-enabled');
-  },
-  onClose: function() {
-    if (!this.state.isDisabled) {
-      return this.unmount();
-    }
-  },
-  disableShellbox: function() {
-    return this.setState({
-      isDisabled: true
-    });
-  },
-  enableShellbox: function() {
-    return this.setState({
-      isDisabled: false
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 STATE_NONE = 'none';
 
 STATE_FRIEND = 'friend';
 
-<<<<<<< HEAD
 STATE_IGNORED = 'ignored';
-=======
-},{}],222:[function(require,module,exports){
-var EmailConfirmRegistration, SocialNetworksConfirmRegistration;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 STATE_GUESSED = 'guessed';
 
@@ -26569,7 +19233,7 @@ window.FollowStatus = React.createClass({
 
 
 
-},{}],92:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 var HeroProfile_SettingsButton;
 
 HeroProfile_SettingsButton = React.createClass({
@@ -26589,13 +19253,8 @@ HeroProfile_SettingsButton = React.createClass({
 module.exports = HeroProfile_SettingsButton;
 
 
-<<<<<<< HEAD
-=======
-},{"../auth/email/confirm_registration":25,"../auth/social_networks/confirm_registration":32}],223:[function(require,module,exports){
-var STATE_GUESSED, STATE_NONE;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],93:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED, MOUSE_LEAVE_TIMEOUT, cx;
 
 cx = require('react/lib/cx');
@@ -26700,14 +19359,9 @@ window.HeroProfile_DropdownMenu = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],94:[function(require,module,exports){
+},{"react/lib/cx":599}],95:[function(require,module,exports){
 window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
   mixins: [RequesterMixin],
-=======
-},{}],224:[function(require,module,exports){
-window.Spinner = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     userId: React.PropTypes.number.isRequired,
     onRequestEnd: React.PropTypes.func.isRequired
@@ -26741,18 +19395,9 @@ window.Spinner = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],95:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 window.HeroProfile_DropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
-=======
-},{}],225:[function(require,module,exports){
-var FADE_SPEED;
-
-FADE_SPEED = 300;
-
-module.experts = window.TlogAlert = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     userId: React.PropTypes.number.isRequired,
     onRequestEnd: React.PropTypes.func.isRequired
@@ -26784,33 +19429,12 @@ module.experts = window.TlogAlert = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],96:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 window.HeroProfileStats_FollowersPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
     tlogId: React.PropTypes.number.isRequired,
     onClose: React.PropTypes.func
-=======
-},{}],226:[function(require,module,exports){
-var AvatarToolbar, ConnectStoreMixin, CurrentUserStore;
-
-CurrentUserStore = require('../../stores/current_user');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-AvatarToolbar = React.createClass({
-  displayName: 'AvatarToolbar',
-  mixins: [ConnectStoreMixin(CurrentUserStore)],
-  componentDidMount: function() {
-    var link;
-    link = this.refs.link.getDOMNode();
-    return $(link).tooltip({
-      title: i18n.t('avatar_toolbar_tooltip'),
-      placement: 'left',
-      container: '.toolbar--avatar'
-    });
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   getInitialState: function() {
     return {
@@ -26856,26 +19480,6 @@ AvatarToolbar = React.createClass({
         "className": "grid-full__middle"
       }, message));
     }
-<<<<<<< HEAD
-=======
-  },
-  getStateFromStore: function() {
-    return {
-      user: CurrentUserStore.getUser(),
-      logged: CurrentUserStore.isLogged()
-    };
-  }
-});
-
-module.exports = AvatarToolbar;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":330,"../../stores/current_user":322}],227:[function(require,module,exports){
-window.CloseToolbar = React.createClass({
-  mixins: [TouchMixin],
-  render: function() {
->>>>>>> Infinite scroll prefill [deliver #90599686]
     return React.createElement("div", {
       "className": "scroller scroller--users",
       "ref": "scroller"
@@ -26930,46 +19534,9 @@ window.CloseToolbar = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],97:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 window.HeroProfileStats_FollowingsPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
-=======
-},{}],228:[function(require,module,exports){
-var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, PopupActions, PropTypes, SEARCH_TITLE_I18N_KEYS, Scroller, UserToolbar, UserToolbarActions, UserToolbarAdditionalList, UserToolbarGuestList, UserToolbarList, UserToolbarToggle, cx, _;
-
-_ = require('lodash');
-
-cx = require('react/lib/cx');
-
-CurrentUserStore = require('../../stores/current_user');
-
-MessagingStatusStore = require('../../messaging/stores/messaging_status');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-UserToolbarActions = require('../../actions/userToolbar');
-
-PopupActions = require('../../actions/popup');
-
-Scroller = require('../common/scroller/scroller');
-
-UserToolbarToggle = require('./user/toggle');
-
-UserToolbarList = require('./user/list');
-
-UserToolbarGuestList = require('./user/guestList');
-
-UserToolbarAdditionalList = require('./user/additionalList');
-
-PropTypes = React.PropTypes;
-
-SEARCH_TITLE_I18N_KEYS = ['live', 'best', 'friends', 'anonymous', 'mytlog', 'tlog', 'favorites', 'privates', 'people'];
-
-UserToolbar = React.createClass({
-  displayName: 'UserToolbar',
-  mixins: [ConnectStoreMixin([CurrentUserStore, MessagingStatusStore])],
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     tlogId: React.PropTypes.number.isRequired,
     onClose: React.PropTypes.func
@@ -27070,20 +19637,9 @@ UserToolbar = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-module.exports = UserToolbar;
 
 
-
-},{"../../../../shared/react/mixins/connectStore":330,"../../actions/popup":10,"../../actions/userToolbar":13,"../../messaging/stores/messaging_status":300,"../../stores/current_user":322,"../common/scroller/scroller":43,"./user/additionalList":229,"./user/guestList":230,"./user/list":231,"./user/toggle":235,"lodash":487,"react/lib/cx":599}],229:[function(require,module,exports){
-var PropTypes, UserToolbarAdditionalList, UserToolbarListItem;
-
-UserToolbarListItem = require('./list/item');
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-},{}],98:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 window.HeroProfileStats_FollowerItem = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -27108,18 +19664,9 @@ window.HeroProfileStats_FollowerItem = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-module.exports = UserToolbarAdditionalList;
 
 
-
-},{"./list/item":232}],230:[function(require,module,exports){
-var UserToolbarGuestList, UserToolbarListItem;
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-},{}],99:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 window.HeroProfileStats_FollowingItem = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -27144,24 +19691,9 @@ window.HeroProfileStats_FollowingItem = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-module.exports = UserToolbarGuestList;
 
 
-
-},{"./list/item":232}],231:[function(require,module,exports){
-var PropTypes, UserToolbarList, UserToolbarListItem, UserToolbarListSubList, UserToolbarListSubListItem;
-
-UserToolbarListItem = require('./list/item');
-
-UserToolbarListSubList = require('./list/subList');
-
-UserToolbarListSubListItem = require('./list/subList/item');
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-},{}],100:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 window.HeroProfileStats_TagItem = React.createClass({
   propTypes: {
     tag: React.PropTypes.object.isRequired
@@ -27183,13 +19715,8 @@ window.HeroProfileStats_TagItem = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],101:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 var FADE_DURATION, MARGIN;
-=======
-},{"./list/item":232,"./list/subList":233,"./list/subList/item":234}],232:[function(require,module,exports){
-var PropTypes, UserToolbarListItem, cloneWithProps;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 MARGIN = 10;
 
@@ -27269,18 +19796,9 @@ window.HeroProfileStats_Popup = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-module.exports = UserToolbarListItem;
 
 
-
-},{"react/lib/cloneWithProps":594}],233:[function(require,module,exports){
-var PropTypes, UserToolbarListSubList;
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-},{}],102:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 window.HeroProfileStats_TagsPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -27385,15 +19903,10 @@ window.HeroProfileStats_TagsPopup = React.createClass({
 
 
 
-},{}],103:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS, HeroProfile_SettingsButton;
 
-<<<<<<< HEAD
 HeroProfile_SettingsButton = require('./buttons/settings');
-=======
-},{}],234:[function(require,module,exports){
-var PropTypes, UserToolbarListSubListItem;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 HERO_CLOSED = 'closed';
 
@@ -27423,44 +19936,11 @@ window.HeroProfile = React.createClass({
   shouldComponentUpdate: function(nextProps, nextState) {
     return this.state.currentState !== nextState.currentState;
   },
-<<<<<<< HEAD
   componentWillUnmount: function() {
     $(window).off('resize', this.onResize);
     $(window).off('scroll', this.scrollFade);
     TastyEvents.off(TastyEvents.keys.command_hero_open(), this.open);
     return TastyEvents.off(TastyEvents.keys.command_hero_close(), this.close);
-=======
-  render: function() {
-    return React.createElement("li", {
-      "className": "toolbar__subnav-item"
-    }, React.createElement("a", {
-      "ref": "link",
-      "href": this.props.href,
-      "className": "toolbar__subnav-link"
-    }, React.createElement("i", {
-      "className": 'icon ' + this.props.icon
-    }), React.createElement("span", {
-      "className": "toolbar__subnav-text"
-    }, this.props.title)));
-  }
-});
-
-module.exports = UserToolbarListSubListItem;
-
-
-
-},{}],235:[function(require,module,exports){
-var PropTypes, UserToolbarToggle;
-
-PropTypes = React.PropTypes;
-
-UserToolbarToggle = React.createClass({
-  displayName: 'UserToolbarToggle',
-  propTypes: {
-    hasConversations: PropTypes.bool.isRequired,
-    hasNotifications: PropTypes.bool.isRequired,
-    onClick: PropTypes.func.isRequired
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   render: function() {
     var actions, follow_status;
@@ -27512,7 +19992,6 @@ UserToolbarToggle = React.createClass({
       return CurrentUserStore.getUser().id === this.props.user.id;
     }
   },
-<<<<<<< HEAD
   open: function() {
     var transitionEnd;
     transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' + 'msTransitionEnd transitionend';
@@ -27528,31 +20007,6 @@ UserToolbarToggle = React.createClass({
         return _this.$hero.off(transitionEnd);
       };
     })(this));
-=======
-  handleClick: function() {
-    return this.props.onClick();
-  }
-});
-
-module.exports = UserToolbarToggle;
-
-
-
-},{}],236:[function(require,module,exports){
-var EVENT_NAME_MAP, ReactTransitionGroup, TICK, TimeoutTransitionGroupChild, animationAllowed, animationSupported, detectEvents, endEvents;
-
-ReactTransitionGroup = require('react/lib/ReactTransitionGroup');
-
-TICK = 17;
-
-EVENT_NAME_MAP = {
-  transitionend: {
-    transition: 'transitionend',
-    WebkitTransition: 'webkitTransitionEnd',
-    MozTransition: 'mozTransitionEnd',
-    OTransition: 'oTransitionEnd',
-    msTransition: 'MSTransitionEnd'
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   close: function() {
     if (this.isOpen()) {
@@ -27624,7 +20078,7 @@ EVENT_NAME_MAP = {
 
 
 
-},{"./buttons/settings":92}],104:[function(require,module,exports){
+},{"./buttons/settings":93}],105:[function(require,module,exports){
 var HERO_AVATAR_SIZE;
 
 HERO_AVATAR_SIZE = 220;
@@ -27649,20 +20103,8 @@ window.HeroProfileAvatar = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],105:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 window.HeroProfileHead = React.createClass({
-=======
-},{"react/lib/ReactTransitionGroup":571}],237:[function(require,module,exports){
-var PureRenderMixin, cx;
-
-cx = require('react/lib/cx');
-
-PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
-
-window.Voting = React.createClass({
-  mixins: [RequesterMixin, ComponentManipulationsMixin, PureRenderMixin],
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     user: React.PropTypes.object.isRequired
   },
@@ -27726,15 +20168,8 @@ window.HeroProfileHeadStatic = React.createClass({
 });
 
 
-<<<<<<< HEAD
-=======
-},{"react/lib/ReactComponentWithPureRenderMixin":522,"react/lib/cx":599}],238:[function(require,module,exports){
-var ApiConstants, keyMirror;
 
-keyMirror = require('react/lib/keyMirror');
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-},{}],106:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 window.HeroProfileStats = React.createClass({
   mixins: [ReactGrammarMixin],
   propTypes: {
@@ -27873,15 +20308,10 @@ window.HeroProfileStats = React.createClass({
 
 
 
-},{}],107:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 var cx;
 
-<<<<<<< HEAD
 cx = require('react/lib/cx');
-=======
-},{"react/lib/keyMirror":627}],239:[function(require,module,exports){
-var ApiConstants, UserToolbarConstants;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 window.HeroProfileStatsItem = React.createClass({
   propTypes: {
@@ -27920,17 +20350,12 @@ window.HeroProfileStatsItem = React.createClass({
 
 
 
-},{"react/lib/cx":598}],108:[function(require,module,exports){
+},{"react/lib/cx":599}],109:[function(require,module,exports){
 var FIRST_ROW_RATIO, NEXT_ROWS_RATIO, update;
 
 update = require('react/lib/update');
 
-<<<<<<< HEAD
 FIRST_ROW_RATIO = 2.5;
-=======
-},{"./api":238,"./userToolbar":240}],240:[function(require,module,exports){
-var UserToolbarConstants, keyMirror;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 NEXT_ROWS_RATIO = 4;
 
@@ -27952,7 +20377,6 @@ window.ImagesCollageUrl = React.createClass({
   }
 });
 
-<<<<<<< HEAD
 window.ImagesCollage = React.createClass({
   propTypes: {
     images: React.PropTypes.array.isRequired,
@@ -27980,56 +20404,6 @@ window.ImagesCollage = React.createClass({
   componentDidMount: function() {
     this.setState({
       width: $(this.getDOMNode()).width()
-=======
-module.exports = UserToolbarConstants;
-
-
-
-},{"react/lib/keyMirror":627}],241:[function(require,module,exports){
-var GuideController;
-
-GuideController = {
-  start: function() {
-    var intro, userToolbar, userToolbarClicked, userToolbarItem;
-    userToolbar = document.querySelectorAll(".toolbar--nav")[1];
-    userToolbarItem = $(userToolbar).find(".toolbar__popup-item").eq(0).get(0);
-    userToolbarClicked = false;
-    intro = introJs.introJs();
-    intro.setOptions({
-      steps: [
-        {
-          intro: "<div class='introjs-tooltiptitle'>Добро пожаловать на Taaasty!</div> Это дневник, в который хочется писать каждый день"
-        }, {
-          intro: "<div class='introjs-tooltiptitle'>Сейчас мы познакомим Вас с&nbsp;основными элементами</div> Мы постараемся рассказать про каждый элемент отдельно, чтобы Вы прочуствовали все возможности Taaasty. Жмите &laquo;Далее&raquo; и приступим :)"
-        }, {
-          element: document.querySelectorAll(".post")[1],
-          intro: "<div class='introjs-tooltiptitle'>Напишите что-нибудь или добавьте фотографию</div> Вы можете размещать фотографии, писать тексты, постить ссылки с любимых сервисов. Мы поддерживаем instagram, youtube и еще более 500 сервисов",
-          position: "left"
-        }, {
-          element: document.querySelector(".hero__box"),
-          intro: "<div class='introjs-tooltiptitle'>Заголовок тлога &mdash; это профиль</div> Вся информация о тлоге в одном месте. Просто раскройте кликом мыши. Там же можно подписаться/отписаться",
-          position: "bottom"
-        }, {
-          element: userToolbarItem,
-          intro: "<div class='introjs-tooltiptitle'>Делитесь своими мыслями в социальных сетях</div> Интересные мысли, которыми хотелось бы поделиться со всем миром?",
-          position: "left"
-        }, {
-          element: document.querySelector(".social-share"),
-          intro: "<div class='introjs-tooltiptitle'>Делитесь своими мыслями в социальных сетях</div> Интересные мысли, которыми хотелось бы поделиться со всем миром?",
-          position: "right"
-        }
-      ],
-      nextLabel: "Дальше",
-      prevLabel: "Назад",
-      skipLabel: "Отменить",
-      doneLabel: "Конец",
-      exitOnEsc: false,
-      exitOnOverlayClick: false,
-      showStepNumbers: false,
-      showBullets: false,
-      showProgress: true,
-      overlayOpacity: .92
->>>>>>> Infinite scroll prefill [deliver #90599686]
     });
     return this.loadImages(this.props.images);
   },
@@ -28088,7 +20462,6 @@ GuideController = {
   }
 });
 
-<<<<<<< HEAD
 window.ImagesCollage_Legacy = React.createClass({
   propTypes: {
     images: React.PropTypes.array.isRequired
@@ -28133,14 +20506,10 @@ window.ImagesCollage_Legacy = React.createClass({
     }, elements);
   }
 });
-=======
-},{}],242:[function(require,module,exports){
-var Constants, LayoutStatesController;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{"react/lib/update":639}],109:[function(require,module,exports){
+},{"react/lib/update":640}],110:[function(require,module,exports){
 var FADE_DURATION;
 
 FADE_DURATION = 300;
@@ -28208,12 +20577,11 @@ window.TastyAlert = React.createClass({
 
 
 
-},{}],110:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 var FADE_DURATION;
 
 FADE_DURATION = 300;
 
-<<<<<<< HEAD
 window.TastyConfirm = React.createClass({
   mixins: [ReactUnmountMixin],
   propTypes: {
@@ -28274,26 +20642,15 @@ window.TastyConfirm = React.createClass({
   onAccept: function() {
     this.close();
     return this.props.onAccept.call();
-=======
-},{"../constants/constants":239}],243:[function(require,module,exports){
-window.ReactPopup = (function() {
-  function ReactPopup() {
-    this.popupContainer = $('<\div>').appendTo('body').get(0);
->>>>>>> Infinite scroll prefill [deliver #90599686]
   }
 });
 
 
 
-},{}],111:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 var FADE_DURATION, START_TIMEOUT;
 
-<<<<<<< HEAD
 FADE_DURATION = 300;
-=======
-},{}],244:[function(require,module,exports){
-var PopupController, _;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 START_TIMEOUT = 3000;
 
@@ -28346,7 +20703,7 @@ window.TastyLockingAlert = React.createClass({
 
 
 
-},{}],112:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 var DEFAULT_TIMEOUT, DEFAULT_TYPE;
 
 DEFAULT_TYPE = 'success';
@@ -28396,7 +20753,7 @@ window.TastyNotify = React.createClass({
 
 
 
-},{}],113:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 window.PeopleItem = React.createClass({
   propTypes: {
     title: React.PropTypes.string,
@@ -28440,8 +20797,7 @@ window.PeopleItem = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],114:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 window.PersonsPopup_FollowerRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -28449,17 +20805,6 @@ window.PersonsPopup_FollowerRelationship = React.createClass({
   shouldComponentUpdate: function(nextProps) {
     if (this.props.relationship.state !== nextProps.relationship.state) {
       true;
-=======
-},{"lodash":487}],245:[function(require,module,exports){
-window.ReactShellBox = (function() {
-  function ReactShellBox() {
-    var container;
-    container = document.querySelectorAll('[shellbox-container]')[0];
-    if (!container) {
-      container = $('<\div>', {
-        'shellbox-container': ''
-      }).appendTo('body')[0];
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
     return false;
   },
@@ -28474,7 +20819,7 @@ window.ReactShellBox = (function() {
 
 
 
-},{}],115:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 window.PersonsPopup_FollowingRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -28496,8 +20841,7 @@ window.PersonsPopup_FollowingRelationship = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],116:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 window.PersonsPopup_GuessRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -28505,34 +20849,6 @@ window.PersonsPopup_GuessRelationship = React.createClass({
   shouldComponentUpdate: function(nextProps) {
     if (this.props.relationship.state !== nextProps.relationship.state) {
       true;
-=======
-},{}],246:[function(require,module,exports){
-window.TastyAlertController = {
-  show: function(_arg) {
-    var buttonColor, buttonText, container, message, onAccept, regex, title;
-    title = _arg.title, message = _arg.message, buttonText = _arg.buttonText, buttonColor = _arg.buttonColor, onAccept = _arg.onAccept;
-    if (isMobile()) {
-      regex = /<br\s*[\/]?>/gi;
-      message = message.replace(regex, '\n');
-      alert(message);
-      if (onAccept != null) {
-        return onAccept();
-      }
-    } else {
-      container = document.querySelectorAll('[tasty-alert-container]')[0];
-      if (!container) {
-        container = $('<\div>', {
-          'tasty-alert-container': ''
-        }).appendTo('body')[0];
-      }
-      return React.render(React.createElement(TastyAlert, {
-        "title": title,
-        "message": message,
-        "buttonText": buttonText,
-        "buttonColor": buttonColor,
-        "onAccept": onAccept
-      }), container);
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
     return false;
   },
@@ -28549,8 +20865,7 @@ window.TastyAlertController = {
 
 
 
-<<<<<<< HEAD
-},{}],117:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 window.PersonsPopup_IgnoredRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -28558,35 +20873,6 @@ window.PersonsPopup_IgnoredRelationship = React.createClass({
   shouldComponentUpdate: function(nextProps) {
     if (this.props.relationship.state !== nextProps.relationship.state) {
       true;
-=======
-},{}],247:[function(require,module,exports){
-window.TastyConfirmController = {
-  show: function(_arg) {
-    var acceptButtonColor, acceptButtonText, container, message, messageWithoutBR, onAccept, regex, rejectButtonText;
-    message = _arg.message, acceptButtonText = _arg.acceptButtonText, rejectButtonText = _arg.rejectButtonText, acceptButtonColor = _arg.acceptButtonColor, onAccept = _arg.onAccept;
-    if (isMobile()) {
-      regex = /<br\s*[\/]?>/gi;
-      messageWithoutBR = message.replace(regex, '\n');
-      if (confirm(messageWithoutBR)) {
-        if (_.isFunction(onAccept)) {
-          return onAccept.call();
-        }
-      }
-    } else {
-      container = document.querySelectorAll('[tasty-confirm-container]')[0];
-      if (!container) {
-        container = $('<\div>', {
-          'tasty-confirm-container': ''
-        }).appendTo('body')[0];
-      }
-      return React.render(React.createElement(TastyConfirm, {
-        "message": message,
-        "acceptButtonText": acceptButtonText,
-        "rejectButtonText": rejectButtonText,
-        "acceptButtonColor": acceptButtonColor,
-        "onAccept": onAccept
-      }), container);
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
     return false;
   },
@@ -28600,13 +20886,8 @@ window.TastyConfirmController = {
 });
 
 
-<<<<<<< HEAD
-=======
-},{}],248:[function(require,module,exports){
-window.TastyEvents = new EventEmitter();
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],118:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 window.PersonsPopup_PersonItem = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired,
@@ -28647,7 +20928,7 @@ window.PersonsPopup_PersonItem = React.createClass({
 
 
 
-},{}],119:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 window.PersonsPopup_RequestedRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -28670,7 +20951,7 @@ window.PersonsPopup_RequestedRelationship = React.createClass({
 
 
 
-},{}],120:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 window.PersonsPopup_Menu = React.createClass({
   displayName: 'PersonsPopup_Menu',
   mixins: [RequesterMixin],
@@ -28768,8 +21049,7 @@ window.PersonsPopup_Menu = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],121:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -28796,40 +21076,12 @@ window.PersonsPopup_MenuItem = React.createClass({
     }, this.props.title, React.createElement("span", {
       "className": "tabs-nav__count"
     }, " ", this.props.totalCount)));
-=======
-},{}],249:[function(require,module,exports){
-window.TastyLockingAlertController = {
-  show: function(_arg) {
-    var action, container, message, regex, title;
-    title = _arg.title, message = _arg.message, action = _arg.action;
-    if (isMobile()) {
-      regex = /<br\s*[\/]?>/gi;
-      message = message.replace(regex, '\n');
-      alert(message);
-      if (action != null) {
-        return action();
-      }
-    } else {
-      container = document.querySelectorAll('[tasty-alert-container]')[0];
-      if (!container) {
-        container = $('<\div>', {
-          'tasty-alert-container': ''
-        }).appendTo('body')[0];
-      }
-      return React.render(React.createElement(TastyLockingAlert, {
-        "title": title,
-        "message": message,
-        "action": action
-      }), container);
-    }
->>>>>>> Infinite scroll prefill [deliver #90599686]
   }
 });
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],122:[function(require,module,exports){
+},{"react/lib/cx":599}],123:[function(require,module,exports){
 var ERROR_STATE, LOADED_STATE, LOADING_STATE, cx;
 
 cx = require('react/lib/cx');
@@ -28845,24 +21097,6 @@ window.PersonsPopup_PanelMixin = {
     return _.extend(this.getStateFromStore(), {
       currentState: LOADING_STATE
     });
-=======
-},{}],250:[function(require,module,exports){
-window.TastyNotifyController = {
-  _notificationList: [],
-  notify: function(type, text, timeout) {
-    var container, notification;
-    if (timeout == null) {
-      timeout = 5000;
-    }
-    container = $('<\div>').appendTo('body').get(0);
-    notification = React.render(React.createElement(TastyNotify, {
-      "type": type,
-      "text": text,
-      "timeout": timeout,
-      "onClose": this._removeNotification.bind(this)
-    }), container);
-    return this._notificationList.push(notification);
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   componentWillMount: function() {
     return this.loadPanelData();
@@ -29025,13 +21259,8 @@ window.TastyNotifyController = {
 React.mixins.add('PersonsPopup_PanelMixin', [PersonsPopup_PanelMixin, window.RequesterMixin, 'ReactActivitiesUser', ComponentManipulationsMixin, ScrollerMixin]);
 
 
-<<<<<<< HEAD
-=======
-},{}],251:[function(require,module,exports){
-var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"react/lib/cx":598}],123:[function(require,module,exports){
+},{"react/lib/cx":599}],124:[function(require,module,exports){
 window.PersonsPopup_FollowersPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'followers',
@@ -29051,7 +21280,7 @@ window.PersonsPopup_FollowersPanel = React.createClass({
 
 
 
-},{}],124:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 window.PersonsPopup_FollowingsPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'followings',
@@ -29069,16 +21298,9 @@ window.PersonsPopup_FollowingsPanel = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-},{}],252:[function(require,module,exports){
-var BaseDispatcher,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{}],125:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 window.PersonsPopup_GuessedPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'guessed',
@@ -29098,7 +21320,7 @@ window.PersonsPopup_GuessedPanel = React.createClass({
 
 
 
-},{}],126:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 window.PersonsPopup_IgnoredPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'ignored',
@@ -29116,14 +21338,9 @@ window.PersonsPopup_IgnoredPanel = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-},{}],253:[function(require,module,exports){
-var BaseDispatcher;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{}],127:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 window.PersonsPopup_RequestedPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'requested',
@@ -29143,13 +21360,8 @@ window.PersonsPopup_RequestedPanel = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],128:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 var FacebookSignIn, FacebookSuggestions, SocialNetworkPanelMixin;
-=======
-},{"./_base":252}],254:[function(require,module,exports){
-var AppDispatcher, Dispatcher, _;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 SocialNetworkPanelMixin = require('./mixins/socialNetwork');
 
@@ -29209,10 +21421,9 @@ window.PersonsPopup_FacebookPanel = React.createClass({
 
 
 
-},{"./facebook/signIn":129,"./facebook/suggestions":130,"./mixins/socialNetwork":135}],129:[function(require,module,exports){
+},{"./facebook/signIn":130,"./facebook/suggestions":131,"./mixins/socialNetwork":136}],130:[function(require,module,exports){
 var VkontakteSignIn;
 
-<<<<<<< HEAD
 VkontakteSignIn = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -29225,17 +21436,6 @@ VkontakteSignIn = React.createClass({
       "className": "fb-auth-button",
       "onClick": this.handleClick
     }, i18n.t('facebook_suggestions_signin_button')))));
-=======
-},{"flux":481,"lodash":487}],255:[function(require,module,exports){
-window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
-  handleViewAction: function(action) {
-    var payload;
-    payload = {
-      source: 'viewAction',
-      action: action
-    };
-    return this.dispatch(payload);
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   handleClick: function() {
     return window.location = ApiRoutes.omniauth_url('facebook');
@@ -29245,16 +21445,8 @@ window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
 module.exports = VkontakteSignIn;
 
 
-<<<<<<< HEAD
-=======
-},{}],256:[function(require,module,exports){
-window.NormalizedEntry = (function() {
-  function NormalizedEntry(data) {
-    _.extend(this, data);
-  }
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],130:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 var FacebookSuggestions, FacebookSuggestionsEmpty, FacebookSuggestionsList, PropTypes, SuggestionsMixin;
 
 SuggestionsMixin = require('../mixins/suggestions');
@@ -29263,7 +21455,6 @@ FacebookSuggestionsList = require('./suggestions/list');
 
 FacebookSuggestionsEmpty = require('./suggestions/empty');
 
-<<<<<<< HEAD
 PropTypes = React.PropTypes;
 
 FacebookSuggestions = React.createClass({
@@ -29271,29 +21462,17 @@ FacebookSuggestions = React.createClass({
   mixins: [SuggestionsMixin],
   listComponent: function() {
     return FacebookSuggestionsList;
-=======
-},{}],257:[function(require,module,exports){
-window.AppHelpers = {
-  reselectAndFocus: function(node) {
-    node.focus();
-    return this.selectAllText(node);
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   emptyComponent: function() {
     return FacebookSuggestionsEmpty;
   }
 });
 
-<<<<<<< HEAD
 module.exports = FacebookSuggestions;
-=======
-},{}],258:[function(require,module,exports){
-var CLOSED_STATE, COMMENT_CREATE_STATE, COMMENT_EDIT_STATE;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{"../mixins/suggestions":137,"./suggestions/empty":132,"./suggestions/list":133}],131:[function(require,module,exports){
+},{"../mixins/suggestions":138,"./suggestions/empty":133,"./suggestions/list":134}],132:[function(require,module,exports){
 var FacebookSubscribeAllButton;
 
 FacebookSubscribeAllButton = React.createClass({
@@ -29328,7 +21507,7 @@ module.exports = FacebookSubscribeAllButton;
 
 
 
-},{}],132:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 var FacebookSuggestionsEmpty, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -29350,7 +21529,7 @@ module.exports = FacebookSuggestionsEmpty;
 
 
 
-},{}],133:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 var FacebookSubscribeAllButton, FacebookSuggestionsItem, FacebookSuggestionsList, SuggestionListMixin;
 
 SuggestionListMixin = require('../../mixins/suggestionList');
@@ -29374,13 +21553,11 @@ module.exports = FacebookSuggestionsList;
 
 
 
-},{"../../mixins/suggestionList":136,"./buttons/subscribeAll":131,"./listItem":134}],134:[function(require,module,exports){
+},{"../../mixins/suggestionList":137,"./buttons/subscribeAll":132,"./listItem":135}],135:[function(require,module,exports){
 var FacebookSuggestionsItem, PropTypes;
 
 PropTypes = React.PropTypes;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 FacebookSuggestionsItem = React.createClass({
   propTypes: {
     suggestion: PropTypes.object.isRequired
@@ -29391,51 +21568,14 @@ FacebookSuggestionsItem = React.createClass({
     }, React.createElement(FollowButton, {
       "relationship": this.props.suggestion
     }));
-=======
-},{}],258:[function(require,module,exports){
-=======
-},{}],259:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
-window.ConversationActions = {
-  clickConversation: function(conversationId) {
-    return MessagingDispatcher.handleViewAction({
-      type: 'openConversation',
-      conversationId: conversationId
-    });
-  },
-  openConversation: function(recipientId) {
-    var conversation;
-    conversation = ConversationsStore.getConversationByUserId(recipientId);
-    if (conversation != null) {
-      MessagingDispatcher.handleViewAction({
-        type: 'openConversation',
-        conversationId: conversation.id
-      });
-    } else {
-      messagingService.postNewConversation({
-        recipientId: recipientId
-      });
-    }
-    messagingService.openMessagesPopup();
-    return TastyEvents.emit(TastyEvents.keys.command_hero_close());
-  },
-  postNewConversation: function(_arg) {
-    var error, recipientId;
-    recipientId = _arg.recipientId, error = _arg.error;
-    return messagingService.postNewConversation({
-      recipientId: recipientId,
-      error: error
-    });
->>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 });
 
 module.exports = FacebookSuggestionsItem;
 
 
-<<<<<<< HEAD
 
-},{}],135:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 var ConnectStoreMixin, ERROR_STATE, LOADED_STATE, LOADING_STATE, SocialNetworkPanelMixin;
 
 ConnectStoreMixin = require('../../../../../../../shared/react/mixins/connectStore');
@@ -29452,24 +21592,6 @@ SocialNetworkPanelMixin = {
     return {
       currentState: LOADED_STATE
     };
-=======
-},{}],260:[function(require,module,exports){
-window.MessageActions = {
-  newMessage: function(_arg) {
-    var content, conversationId, uuid;
-    conversationId = _arg.conversationId, content = _arg.content;
-    uuid = UuidService.generate();
-    MessagingDispatcher.messageSubmitted({
-      conversationId: conversationId,
-      content: content,
-      uuid: uuid
-    });
-    return messagingService.postMessage({
-      conversationId: conversationId,
-      content: content,
-      uuid: uuid
-    });
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   componentWillMount: function() {
     if (this.isAuthorized()) {
@@ -29523,40 +21645,17 @@ window.MessageActions = {
 module.exports = SocialNetworkPanelMixin;
 
 
-<<<<<<< HEAD
-=======
-},{}],261:[function(require,module,exports){
-window.NotificationActions = {
-  readNotification: function(notificationId) {
-    console.log('читаем уведомление', notificationId);
-    return messagingService.markAsReadNotification(notificationId);
-  }
-};
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"../../../../../../../shared/react/mixins/connectStore":329}],136:[function(require,module,exports){
+},{"../../../../../../../shared/react/mixins/connectStore":330}],137:[function(require,module,exports){
 var PropTypes, SuggestionListMixin;
 
 PropTypes = React.PropTypes;
 
-<<<<<<< HEAD
 SuggestionListMixin = {
   mixins: [ReactGrammarMixin, ScrollerMixin],
   propTypes: {
     suggestions: PropTypes.array.isRequired,
     suggestionsCount: PropTypes.number.isRequired
-=======
-},{}],262:[function(require,module,exports){
-window.PopupActions = {
-  closeMessagesPopup: function() {
-    messagingService.closeMessagesPopup();
-    return MessagingDispatcher.handleViewAction({
-      type: 'closeMessagesPopup'
-    });
-  },
-  closeNotificationsPopup: function() {
-    return messagingService.closeNotificationsPopup();
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   render: function() {
     return React.createElement("div", {
@@ -29607,18 +21706,13 @@ window.PopupActions = {
 module.exports = SuggestionListMixin;
 
 
-<<<<<<< HEAD
 
-},{}],137:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 var PropTypes, SuggestionsMixin;
 
 PropTypes = React.PropTypes;
 
 SuggestionsMixin = {
-=======
-},{}],263:[function(require,module,exports){
-window.WriteMessageButton = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     suggestions: PropTypes.array,
     suggestionsCount: PropTypes.number
@@ -29636,65 +21730,24 @@ window.WriteMessageButton = React.createClass({
       return React.createElement(EmptyComponent, null);
     }
   },
-<<<<<<< HEAD
   hasSuggestions: function() {
     return this.props.suggestionsCount > 0;
-=======
-  handleClick: function() {
-    return ConversationActions.openConversation(this.props.user.id);
->>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 };
 
 module.exports = SuggestionsMixin;
 
-<<<<<<< HEAD
-=======
-},{}],264:[function(require,module,exports){
-window.MessagesPopup_Conversations = React.createClass({
-  render: function() {
-    return React.createElement("div", {
-      "className": "messages__section messages__section--dialogs"
-    }, React.createElement(MessagesPopup_ConversationsList, null), React.createElement("footer", {
-      "className": "messages__footer"
-    }, React.createElement(MessagesPopup_UICreateNewConversationButton, {
-      "onClick": this.handleCreateNewConversation
-    })));
-  },
-  handleCreateNewConversation: function() {
-    return MessagingDispatcher.handleViewAction({
-      type: 'clickNewConversation'
-    });
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{}],138:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 var SocialNetworkPanelMixin, VkontakteSignIn, VkontakteSuggestions;
 
-<<<<<<< HEAD
 SocialNetworkPanelMixin = require('./mixins/socialNetwork');
-=======
-},{}],265:[function(require,module,exports){
-window.MessagesPopup_ConversationsListEmpty = React.createClass({
-  render: function() {
-    return React.createElement("div", {
-      "className": "messages__list-cell"
-    }, React.createElement("div", {
-      "className": "messages__empty"
-    }, React.createElement("div", {
-      "className": "messages__empty-text"
-    }, i18n.t('conversations_empty_list'))));
-  }
-});
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 VkontakteSuggestions = require('./vkontakte/suggestions');
 
 VkontakteSignIn = require('./vkontakte/signIn');
 
-<<<<<<< HEAD
 window.PersonsPopup_VkontaktePanel = React.createClass({
   displayName: 'PersonsPopup_VkontaktePanel',
   mixins: [SocialNetworkPanelMixin, window.RequesterMixin],
@@ -29703,30 +21756,6 @@ window.PersonsPopup_VkontaktePanel = React.createClass({
       return React.createElement(VkontakteSuggestions, {
         "suggestions": this.state.suggestions,
         "suggestionsCount": this.state.suggestionsCount
-=======
-},{}],266:[function(require,module,exports){
-window.MessagesPopup_ConversationsList = React.createClass({
-  mixins: [ScrollerMixin],
-  getInitialState: function() {
-    return this.getStateFromStore();
-  },
-  componentDidMount: function() {
-    return ConversationsStore.addChangeListener(this._onStoreChange);
-  },
-  componentWillUnmount: function() {
-    return ConversationsStore.removeChangeListener(this._onStoreChange);
-  },
-  render: function() {
-    var conversations;
-    if (this.isEmpty()) {
-      conversations = React.createElement(MessagesPopup_ConversationsListEmpty, null);
-    } else {
-      conversations = this.state.activeConversations.map(function(conversation, i) {
-        return React.createElement(MessagesPopup_ConversationsListItem, {
-          "conversation": conversation,
-          "key": conversation.id
-        });
->>>>>>> Infinite scroll prefill [deliver #90599686]
       });
     } else {
       return React.createElement(VkontakteSignIn, null);
@@ -29771,15 +21800,8 @@ window.MessagesPopup_ConversationsList = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"./mixins/socialNetwork":135,"./vkontakte/signIn":139,"./vkontakte/suggestions":140}],139:[function(require,module,exports){
+},{"./mixins/socialNetwork":136,"./vkontakte/signIn":140,"./vkontakte/suggestions":141}],140:[function(require,module,exports){
 var VkontakteSignIn;
-=======
-},{}],267:[function(require,module,exports){
-var cx;
-
-cx = require('react/lib/cx');
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 VkontakteSignIn = React.createClass({
   render: function() {
@@ -29802,13 +21824,8 @@ VkontakteSignIn = React.createClass({
 module.exports = VkontakteSignIn;
 
 
-<<<<<<< HEAD
-=======
-},{"react/lib/cx":599}],268:[function(require,module,exports){
-var CLOSE_STATE, OPEN_STATE, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],140:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 var PropTypes, SuggestionsMixin, VkontakteSuggestions, VkontakteSuggestionsEmpty, VkontakteSuggestionsList;
 
 SuggestionsMixin = require('../mixins/suggestions');
@@ -29834,7 +21851,7 @@ module.exports = VkontakteSuggestions;
 
 
 
-},{"../mixins/suggestions":137,"./suggestions/empty":142,"./suggestions/list":143}],141:[function(require,module,exports){
+},{"../mixins/suggestions":138,"./suggestions/empty":143,"./suggestions/list":144}],142:[function(require,module,exports){
 var VkontakteSubscribeAllButton;
 
 VkontakteSubscribeAllButton = React.createClass({
@@ -29869,7 +21886,7 @@ module.exports = VkontakteSubscribeAllButton;
 
 
 
-},{}],142:[function(require,module,exports){
+},{}],143:[function(require,module,exports){
 var PropTypes, VkontakteSuggestionsEmpty;
 
 PropTypes = React.PropTypes;
@@ -29891,7 +21908,7 @@ module.exports = VkontakteSuggestionsEmpty;
 
 
 
-},{}],143:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 var SuggestionListMixin, VkontakteSubscribeAllButton, VkontakteSuggestionsItem, VkontakteSuggestionsList;
 
 SuggestionListMixin = require('../../mixins/suggestionList');
@@ -29914,18 +21931,13 @@ VkontakteSuggestionsList = React.createClass({
 module.exports = VkontakteSuggestionsList;
 
 
-<<<<<<< HEAD
 
-},{"../../mixins/suggestionList":136,"./buttons/subscribeAll":141,"./listItem":144}],144:[function(require,module,exports){
+},{"../../mixins/suggestionList":137,"./buttons/subscribeAll":142,"./listItem":145}],145:[function(require,module,exports){
 var PropTypes, VkontakteSuggestionsItem;
 
 PropTypes = React.PropTypes;
 
 VkontakteSuggestionsItem = React.createClass({
-=======
-},{"react/lib/cx":599}],269:[function(require,module,exports){
-window.MessagesPopup_ChooserButton = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     suggestion: PropTypes.object.isRequired
   },
@@ -29941,13 +21953,8 @@ window.MessagesPopup_ChooserButton = React.createClass({
 module.exports = VkontakteSuggestionsItem;
 
 
-<<<<<<< HEAD
-=======
-},{}],270:[function(require,module,exports){
-var LinkedStateMixin;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],145:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 var DEFAULT_PANEL;
 
 DEFAULT_PANEL = 'followings';
@@ -29989,7 +21996,6 @@ window.PersonsPopup = React.createClass({
       "onSelect": this.selectTab
     }), this.renderCurrentPanel());
   },
-<<<<<<< HEAD
   renderCurrentPanel: function() {
     var CurrentPanel;
     CurrentPanel = (function() {
@@ -30030,47 +22036,13 @@ window.PersonsPopup = React.createClass({
   },
   onStoresChange: function() {
     return this.setState(this.getStateFromStores());
-=======
-  handleKeyDown: function(e) {
-    var chooserResults;
-    chooserResults = this.refs.chooserResults;
-    switch (e.key) {
-      case 'Enter':
-        e.preventDefault();
-        if (chooserResults != null) {
-          this.props.onSubmit(chooserResults.getSelectedUserId());
-        }
-        break;
-      case 'Escape':
-        e.preventDefault();
-        this.props.onCancel();
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        chooserResults.selectPreviousResult();
-        break;
-      case 'ArrowDown':
-        e.preventDefault();
-        chooserResults.selectNextResult();
-        break;
-    }
->>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 });
 
 
 
-<<<<<<< HEAD
-},{}],146:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 var cx;
-=======
-},{"react/lib/LinkedStateMixin":510}],271:[function(require,module,exports){
-var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
-
-LOADING_STATE = 'loadingState';
-
-LOADED_STATE = 'loadedState';
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -30093,7 +22065,6 @@ window.PopupHeader = React.createClass({
       'popup__headbox': true,
       'cursor--move': this.props.isDraggable
     });
-<<<<<<< HEAD
     return React.createElement("div", {
       "className": "popup__header"
     }, React.createElement("div", {
@@ -30108,40 +22079,14 @@ window.PopupHeader = React.createClass({
     }, React.createElement("div", {
       "className": "icon icon--cross"
     })));
-=======
-  },
-  getSelectedUserId: function() {
-    return this.state.predictedUsers[this.state.selectedUserIndex].id;
-  },
-  _moveHighlight: function(delta) {
-    var userIndex, usersCount;
-    usersCount = this.state.predictedUsers.length;
-    userIndex = this.state.selectedUserIndex;
-    if (usersCount > 0) {
-      if ((userIndex > 0 && delta < 0) || (userIndex < usersCount - 1 && delta > 0)) {
-        return this.setState({
-          selectedUserIndex: userIndex + delta
-        });
-      }
-    }
->>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 });
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],147:[function(require,module,exports){
+},{"react/lib/cx":599}],148:[function(require,module,exports){
 window.PopupLayout = React.createClass({
   mixins: [ReactUnmountMixin],
-=======
-},{}],272:[function(require,module,exports){
-var cx;
-
-cx = require('react/lib/cx');
-
-window.MessagesPopup_ChooserResultsItem = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     onClose: React.PropTypes.func
   },
@@ -30164,36 +22109,16 @@ window.MessagesPopup_ChooserResultsItem = React.createClass({
     }, React.createElement("div", {
       "className": 'popup-container__main'
     }, React.createElement("div", {
-<<<<<<< HEAD
       "className": 'popup-container__cell',
       "onClick": this.handleClick
     }, this.props.children)));
-=======
-      "className": "messages__person-avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.predictedUser,
-      "size": 35.
-    })), React.createElement("div", {
-      "className": "messages__person-name"
-    }, this.props.predictedUser.slug)));
-  },
-  handleClick: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    return this.props.onClick(this.props.predictedUser.id);
->>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 });
 
 
 
-<<<<<<< HEAD
-},{}],148:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 var NO_TRANSITION_CLASS, cx;
-=======
-},{"react/lib/cx":599}],273:[function(require,module,exports){
-var CHOOSER_STATE, PROCESS_STATE;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -30282,12 +22207,11 @@ window.Popup = React.createClass({
 
 
 
-},{"react/lib/cx":598}],149:[function(require,module,exports){
+},{"react/lib/cx":599}],150:[function(require,module,exports){
 window.PopupSpinner = React.createClass({
   propTypes: {
     hasActivities: React.PropTypes.bool.isRequired
   },
-<<<<<<< HEAD
   render: function() {
     if (this.props.hasActivities) {
       return React.createElement("div", {
@@ -30300,31 +22224,18 @@ window.PopupSpinner = React.createClass({
     } else {
       return null;
     }
-=======
-  postNewConversation: function(recipientId) {
-    this.activateProcessState();
-    return ConversationActions.postNewConversation({
-      recipientId: recipientId,
-      error: this.activateChooserState
-    });
->>>>>>> Create & open conversation by userId [deliver #90091788]
   }
 });
 
 
 
-<<<<<<< HEAD
-},{}],150:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 var LinkedStateMixin;
 
 LinkedStateMixin = require('react/lib/LinkedStateMixin');
 
 window.PopupBox = React.createClass({
   mixins: [ReactUnmountMixin, LinkedStateMixin, 'ReactActivitiesMixin'],
-=======
-},{}],274:[function(require,module,exports){
-window.MessagesPopup_LoadingMessage = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     title: React.PropTypes.string.isRequired
   },
@@ -30374,13 +22285,8 @@ window.MessagesPopup_LoadingMessage = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/LinkedStateMixin":509}],151:[function(require,module,exports){
+},{"react/lib/LinkedStateMixin":510}],152:[function(require,module,exports){
 var ENTRY_PRIVACY_ANONYMOUS, ENTRY_PRIVACY_LIVE, ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, PREVIEW_BODY_CLASSES, TLOG_TYPE_ANONYMOUS, TLOG_TYPE_PRIVATE, TLOG_TYPE_PUBLIC, cx;
-=======
-},{}],275:[function(require,module,exports){
-var CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, ENTER_TIMEOUT, LEAVE_TIMEOUT, THREAD_STATE;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -30509,17 +22415,12 @@ window.PostActions = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],152:[function(require,module,exports){
+},{"react/lib/cx":599}],153:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
 
 window.PostActions_PrivacyButton = React.createClass({
-=======
-},{}],276:[function(require,module,exports){
-window.MessagesPopup_ThreadMessageForm = React.createClass({
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     "private": React.PropTypes.bool,
     isVoteEnabled: React.PropTypes.bool,
@@ -30565,26 +22466,8 @@ window.MessagesPopup_ThreadMessageForm = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],153:[function(require,module,exports){
+},{"react/lib/cx":599}],154:[function(require,module,exports){
 var cx;
-=======
-},{}],277:[function(require,module,exports){
-window.MessagesPopup_MessageListEmpty = React.createClass({
-  render: function() {
-    return React.createElement("div", {
-      "className": "messages__empty"
-    }, React.createElement("div", {
-      "className": "messages__empty-text"
-    }, i18n.t("messages_empty_list")));
-  }
-});
-
-
-
-},{}],278:[function(require,module,exports){
-var savedScrollHeight;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -30632,13 +22515,8 @@ window.PostActions_VoteButton = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],154:[function(require,module,exports){
+},{"react/lib/cx":599}],155:[function(require,module,exports){
 var CHOICER_ITEMS, CHOICER_TYPES, cx;
-=======
-},{}],279:[function(require,module,exports){
-var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -30775,13 +22653,8 @@ window.PostEditor_ChoicerItem = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],155:[function(require,module,exports){
+},{"react/lib/cx":599}],156:[function(require,module,exports){
 var DEMO_IDS;
-=======
-},{"react/lib/cx":599}],280:[function(require,module,exports){
-var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 window.PostEditor_NewDemo = window.PostEditor_NewPost;
 
@@ -30866,7 +22739,7 @@ window.PostEditor_Demo = React.createClass({
 
 
 
-},{}],156:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 window.PostEditor_EditPost = React.createClass({
   mixins: ['ReactActivitiesMixin', PostEditor_LayoutMixin],
   propTypes: {
@@ -30895,7 +22768,7 @@ window.PostEditor_EditPost = React.createClass({
 
 
 
-},{}],157:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 window.PostEditor_EditorContainer = React.createClass({
   mixins: ['ReactActivitiesUser'],
   propTypes: {
@@ -31035,8 +22908,7 @@ window.PostEditor_EditorContainer = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],158:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 var EDITOR_MODES, EDITOR_OPTIONS;
 
 EDITOR_MODES = ['inline', 'partial', 'rich'];
@@ -31065,11 +22937,6 @@ EDITOR_OPTIONS = {
 };
 
 window.TastyEditor = React.createClass({
-=======
-},{}],281:[function(require,module,exports){
-window.MessagesPopup_Thread = React.createClass({
-  displayName: 'MessagesPopup_Thread',
->>>>>>> Infinite scroll prefill [deliver #90599686]
   propTypes: {
     content: React.PropTypes.string,
     mode: React.PropTypes.string,
@@ -31096,7 +22963,6 @@ window.MessagesPopup_Thread = React.createClass({
     options = {
       placeholder: this.placeholder()
     };
-<<<<<<< HEAD
     this.$editor = $(this.refs.content.getDOMNode());
     this.mediumEditor = new MediumEditor(this.$editor.get(0), _.extend(options, EDITOR_OPTIONS[this.props.mode]));
     if (this.props.autofocus) {
@@ -31119,31 +22985,6 @@ window.MessagesPopup_Thread = React.createClass({
   componentWillUnmount: function() {
     var _base;
     return typeof (_base = this.mediumEditor).deactivate === "function" ? _base.deactivate() : void 0;
-=======
-    return React.createElement("div", {
-      "className": "messages__section messages__section--thread"
-    }, React.createElement("div", {
-      "className": "messages__body",
-      "style": threadStyles
-    }, React.createElement("div", {
-      "className": "messages__thread-overlay"
-    }), React.createElement(MessagesPopup_ThreadMessageList, {
-      "conversationId": this.props.conversationId
-    })), React.createElement("footer", {
-      "className": "messages__footer"
-    }, React.createElement(MessagesPopup_ThreadMessageForm, {
-      "conversationId": this.props.conversationId
-    })));
-  }
-});
-
-
-
-},{}],282:[function(require,module,exports){
-window.MessagesPopup_UIBackButton = React.createClass({
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   render: function() {
     return React.createElement("div", {
@@ -31156,7 +22997,6 @@ window.MessagesPopup_UIBackButton = React.createClass({
         __html: this.props.content
       }
     }));
-<<<<<<< HEAD
   },
   placeholder: function() {
     return this.props.placeholder.replace('<br>', "\r\n");
@@ -31188,50 +23028,13 @@ window.MessagesPopup_UIBackButton = React.createClass({
       textRange.collapse(false);
       return textRange.select();
     }
-=======
   }
 });
 
 
 
-},{}],283:[function(require,module,exports){
-window.MessagesPopup_UICreateNewConversationButton = React.createClass({
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("span", {
-      "className": "button button--green",
-      "onClick": this.props.onClick
-    }, React.createElement("span", {
-      "className": "button__inner"
-    }, React.createElement("span", {
-      "className": "button__text"
-    }, i18n.t('new_thread_button'))));
-  }
-});
-
-
-
-},{}],284:[function(require,module,exports){
-window.NotificationsPopup_NotificationsEmpty = React.createClass({
-  render: function() {
-    return React.createElement("div", {
-      "className": "notifications__empty"
-    }, i18n.t('notifications_empty_list'));
->>>>>>> Infinite scroll prefill [deliver #90599686]
-  }
-});
-
-
-
-<<<<<<< HEAD
-},{}],159:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 var cx;
-=======
-},{}],285:[function(require,module,exports){
-var IMAGE_SIZE, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -31269,38 +23072,8 @@ window.PostEditor_AnonymousEditor = React.createClass({
       "onChange": this.startAutosave
     }));
   },
-<<<<<<< HEAD
   entryTitle: function() {
     return this.props.normalizedEntry.data1;
-=======
-  calculateAspectRatioFit: function(srcWidth, srcHeight, maxWidth, maxHeight) {
-    var ratio;
-    ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-    return {
-      width: srcWidth * ratio,
-      height: srcHeight * ratio
-    };
-  },
-  handleClick: function() {
-    if (this.isUnread()) {
-      return NotificationActions.readNotification(this.props.notification.id);
-    }
-  }
-});
-
-
-
-},{"react/lib/cx":599}],286:[function(require,module,exports){
-window.NotificationsPopup_Notifications = React.createClass({
-  getInitialState: function() {
-    return this.getStateFromStore();
-  },
-  componentDidMount: function() {
-    return NotificationsStore.addChangeListener(this._onStoreChange);
-  },
-  componentWillUnmount: function() {
-    return NotificationsStore.removeChangeListener(this._onStoreChange);
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   entryText: function() {
     return this.props.normalizedEntry.data2;
@@ -31314,58 +23087,18 @@ window.NotificationsPopup_Notifications = React.createClass({
       data2: this.refs.textEditor.content()
     };
   },
-<<<<<<< HEAD
   _getEditorData: function() {
     return {
       title: this.refs.titleEditor.content(),
       text: this.refs.textEditor.content()
     };
-=======
-  _onStoreChange: function() {
-    return this.setState(this.getStateFromStore());
   }
 });
 
 
 
-},{}],287:[function(require,module,exports){
-window.NotificationsPopup = React.createClass({
-  mixins: [ScrollerMixin],
-  render: function() {
-    return React.createElement("div", {
-      "className": "popup popup--notifications popup--dark"
-    }, React.createElement("div", {
-      "className": "popup__arrow popup__arrow--left"
-    }), React.createElement("div", {
-      "className": "popup__content"
-    }, React.createElement("div", {
-      "className": "popup__body"
-    }, React.createElement("div", {
-      "className": "notifications"
-    }, React.createElement("div", {
-      "ref": "scroller",
-      "className": "scroller scroller--dark scroller--notifications"
-    }, React.createElement("div", {
-      "ref": "scrollerPane",
-      "className": "scroller__pane js-scroller-pane"
-    }, React.createElement(NotificationsPopup_Notifications, null)), React.createElement("div", {
-      "className": "scroller__track js-scroller-track"
-    }, React.createElement("div", {
-      "className": "scroller__bar js-scroller-bar"
-    })))))));
->>>>>>> Infinite scroll prefill [deliver #90599686]
-  }
-});
-
-
-
-<<<<<<< HEAD
-},{"react/lib/cx":598}],160:[function(require,module,exports){
+},{"react/lib/cx":599}],161:[function(require,module,exports){
 var INSERT_MODE, LOADED_MODE, PureRenderMixin, WELCOME_MODE, cx;
-=======
-},{}],288:[function(require,module,exports){
-var ADVANCED_STATE, BASIC_STATE, MOUSE_LEAVE_TIMEOUT, cx;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -31505,55 +23238,8 @@ window.PostEditor_ImageEditor = React.createClass({
     if (this.isInsertMode()) {
       return 'insert';
     }
-<<<<<<< HEAD
     if (this.state.images.length > 0) {
       return 'loaded';
-=======
-  },
-  _onStoreChange: function() {
-    return this.setState(this.getStateFromStore());
-  }
-});
-
-
-
-},{"react/lib/cx":599}],289:[function(require,module,exports){
-var cx;
-
-cx = require('react/lib/cx');
-
-window.IndicatorsToolbar_Messages = React.createClass({
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return this.getStateFromStore();
-  },
-  componentDidMount: function() {
-    return MessagingStatusStore.addChangeListener(this._onStoreChange);
-  },
-  componentWillUnmount: function() {
-    return MessagingStatusStore.removeChangeListener(this._onStoreChange);
-  },
-  render: function() {
-    var indicatorClasses;
-    indicatorClasses = cx({
-      'toolbar__indicator': true,
-      'toolbar__indicator--messages': true,
-      'state--empty': this.state.unreadConversationsCount === 0
-    });
-    if (this.hasUnreadConversations()) {
-      return React.createElement("div", {
-        "className": indicatorClasses,
-        "onClick": this.props.onClick
-      }, React.createElement("span", {
-        "className": "messages-badge"
-      }, this.state.unreadConversationsCount), React.createElement("i", {
-        "className": "icon icon--messages"
-      }));
-    } else {
-      return null;
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
   },
   _getTitle: function() {
@@ -31605,45 +23291,8 @@ window.IndicatorsToolbar_Messages = React.createClass({
 
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-},{"react/lib/ReactComponentWithPureRenderMixin":521,"react/lib/cx":598}],161:[function(require,module,exports){
-=======
-},{"react/lib/cx":599}],290:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"react/lib/ReactComponentWithPureRenderMixin":522,"react/lib/cx":599}],162:[function(require,module,exports){
 var cx;
-=======
-},{}],291:[function(require,module,exports){
-window.MessagingRequester = (function() {
-  function MessagingRequester(_arg) {
-    this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
-  }
-
-  MessagingRequester.prototype.notifyReady = function(_arg) {
-    var error, success;
-    success = _arg.success, error = _arg.error;
-    return $.ajax({
-      url: ApiRoutes.messenger_ready_url(),
-      data: {
-        socket_id: this.socket_id
-      },
-      method: 'POST',
-      success: success,
-      error: error
-    });
-  };
-
-  MessagingRequester.prototype.postNewConversation = function(recipientId, content) {
-    return $.ajax({
-      url: ApiRoutes.messengerConversationsByUserId(recipientId),
-      method: 'POST',
-      data: {
-        socket_id: this.socket_id,
-        content: content
-      }
-    });
-  };
->>>>>>> Create & open conversation by userId [deliver #90091788]
 
 cx = require('react/lib/cx');
 
@@ -31680,8 +23329,7 @@ window.PostEditor_InstagramEditor = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],162:[function(require,module,exports){
+},{"react/lib/cx":599}],163:[function(require,module,exports){
 var AUTOSAVE_TIME;
 
 AUTOSAVE_TIME = 10000;
@@ -31689,21 +23337,6 @@ AUTOSAVE_TIME = 10000;
 window.PostEditor_AutosaveMixin = {
   propTypes: {
     storeCallback: React.PropTypes.func.isRequired
-=======
-},{"react/lib/cx":599}],291:[function(require,module,exports){
-window.MessagingDispatcher = _.extend(new Dispatcher(), {
-  handleViewAction: function(action) {
-    return this.dispatch({
-      source: 'VIEW_ACTION',
-      action: action
-    });
-  },
-  handleServerAction: function(action) {
-    return this.dispatch({
-      source: 'SERVER_ACTION',
-      action: action
-    });
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   componentWillUnmount: function() {
     return this.stopAutosave();
@@ -31729,7 +23362,7 @@ window.MessagingDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],163:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -31767,7 +23400,7 @@ window.PostEditor_MusicEditor = React.createClass({
 
 
 
-},{"react/lib/cx":598}],164:[function(require,module,exports){
+},{"react/lib/cx":599}],165:[function(require,module,exports){
 window.PostEditor_QuoteEditor = React.createClass({
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin],
   render: function() {
@@ -31822,16 +23455,8 @@ window.PostEditor_QuoteEditor = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],165:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 var cx;
-=======
-},{}],292:[function(require,module,exports){
-window.MessagingRequester = (function() {
-  function MessagingRequester(_arg) {
-    this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
-  }
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -31895,26 +23520,8 @@ window.PostEditor_TextEditor = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],166:[function(require,module,exports){
+},{"react/lib/cx":599}],167:[function(require,module,exports){
 var cx;
-=======
-  MessagingService.prototype.postNewConversation = function(_arg) {
-    var error, recipientId;
-    recipientId = _arg.recipientId, error = _arg.error;
-    return this.requester.postNewConversation(recipientId).done(function(conversation) {
-      return MessagingDispatcher.handleServerAction({
-        type: 'postNewConversation',
-        conversation: conversation
-      });
-    }).fail(function(errMsg) {
-      if (typeof error === "function") {
-        error();
-      }
-      return TastyNotifyController.errorResponse(errMsg);
-    });
-  };
->>>>>>> Create & open conversation by userId [deliver #90091788]
 
 cx = require('react/lib/cx');
 
@@ -31951,7 +23558,7 @@ window.PostEditor_VideoEditor = React.createClass({
 
 
 
-},{"react/lib/cx":598}],167:[function(require,module,exports){
+},{"react/lib/cx":599}],168:[function(require,module,exports){
 window.ImagesMediaBox_Loaded = React.createClass({
   propTypes: {
     images: React.PropTypes.array.isRequired,
@@ -31977,13 +23584,8 @@ window.ImagesMediaBox_Loaded = React.createClass({
 });
 
 
-<<<<<<< HEAD
-=======
-},{}],293:[function(require,module,exports){
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],168:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 var PureRenderMixin;
 
 PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
@@ -32018,7 +23620,7 @@ window.ImagesMediaBox_UrlInsert = React.createClass({
 
 
 
-},{"react/lib/ReactComponentWithPureRenderMixin":521}],169:[function(require,module,exports){
+},{"react/lib/ReactComponentWithPureRenderMixin":522}],170:[function(require,module,exports){
 window.PostEditor_Layout = React.createClass({
   propTypes: {
     backUrl: React.PropTypes.string,
@@ -32047,7 +23649,7 @@ window.PostEditor_Layout = React.createClass({
 
 
 
-},{}],170:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 var PureRenderMixin;
 
 PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
@@ -32089,45 +23691,19 @@ window.MediaBox_Actions = React.createClass({
 
 
 
-},{"react/lib/ReactComponentWithPureRenderMixin":521}],171:[function(require,module,exports){
+},{"react/lib/ReactComponentWithPureRenderMixin":522}],172:[function(require,module,exports){
 var PureRenderMixin, cx;
 
 cx = require('react/lib/cx');
 
 PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
 
-<<<<<<< HEAD
 window.MediaBox_Layout = React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {
     children: React.PropTypes.renderable.isRequired,
     state: React.PropTypes.string,
     type: React.PropTypes.string.isRequired
-=======
-},{}],294:[function(require,module,exports){
-window.MessagingMock = {
-  message: function() {
-    var conversation, recipient, sender;
-    sender = new Sender({
-      id: 1,
-      name: 'Вася'
-    });
-    recipient = new Recipient({
-      id: 1,
-      name: 'Петя'
-    });
-    conversation = new Conversation({
-      id: 123,
-      participants: [sender, recipient]
-    });
-    return new Message({
-      conversation_id: 123,
-      sender_id: sender.id,
-      recipient_id: recipient.id,
-      content: 'Сообщение',
-      content_html: 'Сообщение'
-    });
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   getDefaultProps: function() {
     return {
@@ -32150,22 +23726,11 @@ window.MessagingMock = {
       "ref": "dropZone"
     }, this.props.children));
   }
-<<<<<<< HEAD
 });
-=======
-};
 
 
 
-},{}],295:[function(require,module,exports){
-var BaseStore, CHANGE_EVENT,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-
-},{"react/lib/ReactComponentWithPureRenderMixin":521,"react/lib/cx":598}],172:[function(require,module,exports){
+},{"react/lib/ReactComponentWithPureRenderMixin":522,"react/lib/cx":599}],173:[function(require,module,exports){
 window.MediaBox_LoadingProgress = React.createClass({
   propTypes: {
     progress: React.PropTypes.number.isRequired
@@ -32186,13 +23751,8 @@ window.MediaBox_LoadingProgress = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],173:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 var DRAGOFF_TIMEOUT, DRAG_HOVER_CLASS;
-=======
-},{}],296:[function(require,module,exports){
-var CONNECTION_EVENT, _connectionState;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 DRAG_HOVER_CLASS = 'state--drag-hover';
 
@@ -32259,17 +23819,12 @@ window.PostEditor_Dragging = {
 
 
 
-},{}],174:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 var ACCEPT_FILE_TYPES, MAX_FILE_SIZE, MAX_NUMBER_OF_FILES, assign;
 
 assign = require('react/lib/Object.assign');
 
-<<<<<<< HEAD
 ACCEPT_FILE_TYPES = /(\.|\/)(gif|jpe?g|png)$/i;
-=======
-},{}],297:[function(require,module,exports){
-var CHANGE_EVENT, _conversations;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 MAX_FILE_SIZE = 10 * 1000 * 1000;
 
@@ -32306,7 +23861,6 @@ window.PostEditor_ImagesForm = {
       return this.saveAsAjax();
     }
   },
-<<<<<<< HEAD
   saveAsAjax: function() {
     var data;
     data = assign(this._getEditorData(), {
@@ -32348,15 +23902,6 @@ window.PostEditor_ImagesForm = {
     })(this));
     if (imageFiles.length === 0) {
       return TastyNotifyController.notifyError(i18n.t('editor_files_without_images'));
-=======
-  getConversationByUserId: function(recipientId) {
-    var conversation, _i, _len;
-    for (_i = 0, _len = _conversations.length; _i < _len; _i++) {
-      conversation = _conversations[_i];
-      if (conversation.recipient.id === recipientId) {
-        return conversation;
-      }
->>>>>>> Create & open conversation by userId [deliver #90091788]
     }
     this.fileUploader = data;
     images = imageFiles.map((function(_this) {
@@ -32460,13 +24005,8 @@ window.PostEditor_ImagesForm = {
 
 
 
-<<<<<<< HEAD
-},{"react/lib/Object.assign":513}],175:[function(require,module,exports){
+},{"react/lib/Object.assign":514}],176:[function(require,module,exports){
 window.TLOG_TYPES = ['public', 'private', 'anonymous'];
-=======
-},{}],298:[function(require,module,exports){
-var CHANGE_EVENT, _allMessagesLoaded, _messages;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 window.PostEditor_LayoutMixin = {
   propTypes: {
@@ -32520,7 +24060,7 @@ window.PostEditor_LayoutMixin = {
 
 
 
-},{}],176:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 window.PostEditor_PersistenceMixin = {
   propTypes: {
     activitiesHandler: React.PropTypes.object.isRequired,
@@ -32584,7 +24124,7 @@ React.mixins.add('PostEditor_PersistenceMixin', [window.PostEditor_PersistenceMi
 
 
 
-},{}],177:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 window.PostEditor_VideoMixin = {
   propTypes: {
     normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
@@ -32630,8 +24170,7 @@ window.PostEditor_VideoMixin = {
 
 
 
-<<<<<<< HEAD
-},{}],178:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 window.PostEditor_NewAnonymousPost = React.createClass({
   mixins: [PostEditor_LayoutMixin, 'ReactActivitiesMixin'],
   getDefaultProps: function() {
@@ -32649,14 +24188,10 @@ window.PostEditor_NewAnonymousPost = React.createClass({
     };
   }
 });
-=======
-},{}],299:[function(require,module,exports){
-var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],179:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 var DEFAULT_POST_TYPE;
 
 DEFAULT_POST_TYPE = 'text';
@@ -32685,7 +24220,7 @@ window.PostEditor_NewPost = React.createClass({
 
 
 
-},{}],180:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 window.VideoMediaBox_Embeded = React.createClass({
   propTypes: {
     embedHtml: React.PropTypes.string.isRequired,
@@ -32708,8 +24243,7 @@ window.VideoMediaBox_Embeded = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],181:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 window.VideoMediaBox_Loading = React.createClass({
   propTypes: {
     embedUrl: React.PropTypes.string.isRequired
@@ -32724,16 +24258,10 @@ window.VideoMediaBox_Loading = React.createClass({
     }, React.createElement("span", null, this.props.embedUrl), React.createElement("br", null), React.createElement("span", null, i18n.t('editor_video_mediabox_loading')))));
   }
 });
-=======
-},{}],300:[function(require,module,exports){
-var BaseStore, MessagingStatusStore, _, _messagingStatus;
-
-_ = require('lodash');
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],182:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 window.VideoMediaBox_UrlInsert = React.createClass({
   propTypes: {
     embedUrl: React.PropTypes.string,
@@ -32767,17 +24295,12 @@ window.VideoMediaBox_UrlInsert = React.createClass({
 
 
 
-},{}],183:[function(require,module,exports){
+},{}],184:[function(require,module,exports){
 var EMBEDED_MODE, INSERT_MODE, LOADING_MODE, WELCOME_MODE, cloneWithProps;
 
 cloneWithProps = require('react/lib/cloneWithProps');
 
-<<<<<<< HEAD
 WELCOME_MODE = 'welcome';
-=======
-},{"./_base":295,"lodash":487}],301:[function(require,module,exports){
-var CHANGE_EVENT, _notifications;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 EMBEDED_MODE = 'embeded';
 
@@ -32924,7 +24447,7 @@ window.VideoMediaBox = React.createClass({
 
 
 
-},{"react/lib/cloneWithProps":593}],184:[function(require,module,exports){
+},{"react/lib/cloneWithProps":594}],185:[function(require,module,exports){
 var PureRenderMixin;
 
 PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
@@ -32959,8 +24482,7 @@ window.MediaBox_ImageWelcome = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{"react/lib/ReactComponentWithPureRenderMixin":521}],185:[function(require,module,exports){
+},{"react/lib/ReactComponentWithPureRenderMixin":522}],186:[function(require,module,exports){
 window.MediaBox_InstagramWelcome = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -32978,14 +24500,10 @@ window.MediaBox_InstagramWelcome = React.createClass({
     }, i18n.t('editor_welcome_instagram_insert')), React.createElement("span", null, " ", i18n.t('editor_welcome_instagram_link')))));
   }
 });
-=======
-},{}],302:[function(require,module,exports){
-var BaseMixin, ERROR_TIMEOUT, ram, rau;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],186:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 window.MediaBox_MusicWelcome = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -33006,7 +24524,7 @@ window.MediaBox_MusicWelcome = React.createClass({
 
 
 
-},{}],187:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 window.MediaBox_VideoWelcome = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -33027,7 +24545,7 @@ window.MediaBox_VideoWelcome = React.createClass({
 
 
 
-},{}],188:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
 
 STATE_FRIEND = 'friend';
@@ -33059,29 +24577,10 @@ window.FollowButton = React.createClass({
   componentWillUnmount: function() {
     return TastyEvents.off(TastyEvents.keys.follow_status_changed(this.state.relationship.user_id), this.updateFollowStatus);
   },
-<<<<<<< HEAD
   render: function() {
     var rootClass;
     if (this.isFollow() && !this.state.isError && !this.state.isProcess) {
       rootClass = 'state--active';
-=======
-  componentWillReceiveProps: function(nextProps) {
-    return this.setActivitiesHandler(nextProps.activitiesHandler);
-  }
-};
-
-React.mixins.add('ReactActivitiesMixin', [ram, BaseMixin]);
-
-React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
-
-
-
-},{}],303:[function(require,module,exports){
-window.ComponentManipulationsMixin = {
-  safeUpdate: function(func) {
-    if (!this._isUnmounted()) {
-      func();
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
     return React.createElement("button", {
       "style": {
@@ -33096,7 +24595,6 @@ window.ComponentManipulationsMixin = {
   isFollow: function() {
     return this.state.relationship.state === STATE_FRIEND;
   },
-<<<<<<< HEAD
   onClick: function() {
     switch (this.state.relationship.state) {
       case STATE_FRIEND:
@@ -33112,48 +24610,6 @@ window.ComponentManipulationsMixin = {
       default:
         return console.warn('Неизвестный статус', this.state.relationship.state);
     }
-=======
-  _isUnmounted: function() {
-    return this._compositeLifeCycleState === 'UNMOUNTING' || this._compositeLifeCycleState === 'UNMOUNTED' || this._lifeCycleState === 'UNMOUNTING' || this._lifeCycleState === 'UNMOUNTED';
-  }
-};
-
-
-
-},{}],304:[function(require,module,exports){
-var ENTRY_DELETE_ANIMATION_SPEED;
-
-ENTRY_DELETE_ANIMATION_SPEED = 300;
-
-window.DOMManipulationsMixin = {
-  removeEntryFromDOM: function(entryId, speed) {
-    var $entryNode;
-    if (speed == null) {
-      speed = ENTRY_DELETE_ANIMATION_SPEED;
-    }
-    $entryNode = $("[data-id='" + entryId + "']");
-    return $entryNode.slideUp(speed, (function(_this) {
-      return function() {
-        if (_this.props.onDelete != null) {
-          _this.props.onDelete();
-        }
-        return $entryNode.remove();
-      };
-    })(this));
-  }
-};
-
-
-
-},{}],305:[function(require,module,exports){
-var ERROR_TIMEOUT;
-
-ERROR_TIMEOUT = 1000;
-
-window.ErrorTimerMixin = {
-  componentWillUnmount: function() {
-    return this.clearErrorTimer();
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   onMouseOver: function() {
     return this.setState({
@@ -33172,25 +24628,10 @@ window.ErrorTimerMixin = {
     return this.setState({
       relationship: newRelationship
     });
-<<<<<<< HEAD
   },
   _getTitle: function() {
     if (this.state.isError) {
       return i18n.t('follow_button_error');
-=======
-  }
-};
-
-
-
-},{}],306:[function(require,module,exports){
-window.ReactGrammarMixin = {
-  declension: function(number, titles) {
-    var cases;
-    cases = [2, 0, 1, 1, 1, 2];
-    if (number % 100 > 4 && number % 100 < 20) {
-      return titles[2];
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
     if (this.state.isProcess) {
       return i18n.t('follow_button_process');
@@ -33247,20 +24688,11 @@ window.ReactGrammarMixin = {
       }
     }
   }
-<<<<<<< HEAD
 });
-=======
-};
 
 
 
-},{}],307:[function(require,module,exports){
-var COMPONENT_WIDTH, REPOSITION_TIMEOUT;
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-
-},{}],189:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 window.RelationshipFollowerButton = React.createClass({
   mixins: ['RelationshipMixin'],
   propTypes: {
@@ -33316,8 +24748,7 @@ window.RelationshipFollowerButton = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],190:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 window.RelationshipGuessButton = React.createClass({
   mixins: ['RelationshipMixin'],
   propTypes: {
@@ -33350,14 +24781,10 @@ window.RelationshipGuessButton = React.createClass({
     });
   }
 });
-=======
-},{}],308:[function(require,module,exports){
-var Nanobar, nanobar, oldXHR;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],191:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 var STATE_IGNORED;
 
 STATE_IGNORED = 'ignored';
@@ -33427,24 +24854,11 @@ window.RelationshipIgnoreButton = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],192:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 window.RelationshipMixin = {
-=======
-},{"nanobar":undefined}],309:[function(require,module,exports){
-window.ScrollerMixin = {
-  componentDidMount: function() {
-    $(document).on('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
-    return this.initScroll();
-  },
-  componentDidUpdate: function() {
-    return this.scroller.update();
-  },
->>>>>>> Infinite scroll prefill [deliver #90599686]
   componentWillUnmount: function() {
     return this.clearErrorTimer();
   },
-<<<<<<< HEAD
   follow: function() {
     this.closeError();
     this.setState({
@@ -33657,90 +25071,22 @@ window.ScrollerMixin = {
           return TastyNotifyController.errorResponse(data);
         };
       })(this)
-=======
-  handleMouseWheel: function(ev) {
-    var delta, el, height, prevent, scrollHeight, scrollTop, up;
-    el = ev.currentTarget;
-    scrollTop = el.scrollTop;
-    scrollHeight = el.scrollHeight;
-    height = $(el).height();
-    delta = (ev.type === 'DOMMouseScroll' ? ev.originalEvent.detail * -40 : ev.originalEvent.wheelDelta);
-    up = delta > 0;
-    prevent = function() {
-      ev.stopPropagation();
-      ev.preventDefault();
-      ev.returnValue = false;
-      return false;
-    };
-    if (!up && -delta > scrollHeight - height - scrollTop) {
-      $(el).scrollTop(scrollHeight);
-      return prevent();
-    } else if (up && delta > scrollTop) {
-      $(el).scrollTop(0);
-      return prevent();
-    }
-  }
-};
-
-
-
-},{}],310:[function(require,module,exports){
-window.ReactShakeMixin = {
-  shake: function() {
-    var animationEnd, form;
-    form = $(this.getDOMNode());
-    animationEnd = "webkitAnimationEnd oanimationend msAnimationEnd animationend";
-    return form.addClass("shake animated").one(animationEnd, function() {
-      return form.removeClass("shake animated");
->>>>>>> Infinite scroll prefill [deliver #90599686]
     });
   }
 };
 
-<<<<<<< HEAD
 React.mixins.add('RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, RequesterMixin, ComponentManipulationsMixin]);
 
 
 
-},{}],193:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 var ERROR_STATE, LOADING_STATE, WAITING_STATE;
-=======
-
-
-},{}],311:[function(require,module,exports){
-window.TouchMixin = {
-  componentWillMount: function() {
-    if (isMobile()) {
-      this.onMouseEnter = function() {};
-      return this.onMouseLeave = function() {};
-    }
-  }
-};
-
-
-
-},{}],312:[function(require,module,exports){
-window.ReactUnmountMixin = {
-  unmount: function() {
-    return _.defer((function(_this) {
-      return function() {
-        return React.unmountComponentAtNode(_this.getDOMNode().parentNode);
-      };
-    })(this));
-  }
-};
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 ERROR_STATE = 'error';
 
 LOADING_STATE = 'loading';
 
-<<<<<<< HEAD
 WAITING_STATE = 'waiting';
-=======
-},{}],313:[function(require,module,exports){
-var CurrentUserResource;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 window.RelationshipRequestButton = React.createClass({
   mixins: ['RelationshipMixin'],
@@ -33815,15 +25161,10 @@ window.RelationshipRequestButton = React.createClass({
 
 
 
-},{}],194:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 var CLASSNAME_ACTIVE, CLASSNAME_READY, DELAY_SLIDESHOW, STATE_LOADING, STATE_READY, ScreenViewer_Item, ScreenViewer_Loader, ScreenViewer_Slideshow, ScreenViewer_Title;
 
-<<<<<<< HEAD
 STATE_LOADING = 'loading';
-=======
-},{}],314:[function(require,module,exports){
-var DesignPresenterService;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 STATE_READY = 'ready';
 
@@ -34006,19 +25347,153 @@ ScreenViewer_Title = React.createClass({
 
 
 
-},{}],195:[function(require,module,exports){
-var PropTypes, SearchResultsFeed, THRESHOLD, windowHeight;
+},{}],196:[function(require,module,exports){
+window.SearchButton = React.createClass({
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "search__button",
+      "onClick": this.props.onClick
+    }, React.createElement("i", {
+      "className": "icon icon--magnifier"
+    }));
+  }
+});
 
-<<<<<<< HEAD
+
+
+},{}],197:[function(require,module,exports){
+window.SearchField = React.createClass({
+  propTypes: {
+    query: React.PropTypes.string,
+    onCancel: React.PropTypes.func.isRequired,
+    onSubmit: React.PropTypes.func.isRequired
+  },
+  componentDidMount: function() {
+    return this.selectAllText();
+  },
+  render: function() {
+    return React.createElement("form", {
+      "className": "search__form"
+    }, React.createElement("input", {
+      "ref": "searchInput",
+      "type": "text",
+      "placeholder": i18n.t('search_placeholder'),
+      "defaultValue": this.props.query,
+      "className": "search__input",
+      "onBlur": this.props.onCancel,
+      "onFocus": this.putCursorAtEnd,
+      "onKeyDown": this.handleKeyDown
+    }));
+  },
+  selectAllText: function() {
+    var searchInput;
+    searchInput = this.refs.searchInput.getDOMNode();
+    return searchInput.setSelectionRange(0, searchInput.value.length);
+  },
+  putCursorAtEnd: function() {
+    var searchInput;
+    searchInput = this.refs.searchInput.getDOMNode();
+    return searchInput.value = searchInput.value;
+  },
+  handleKeyDown: function(e) {
+    switch (e.key) {
+      case 'Escape':
+        e.preventDefault();
+        return this.props.onCancel();
+      case 'Enter':
+        e.preventDefault();
+        return this.props.onSubmit();
+    }
+  }
+});
+
+
+
+},{}],198:[function(require,module,exports){
+var CLOSED, OPENED, cx;
+
+cx = require('react/lib/cx');
+
+CLOSED = 'closed';
+
+OPENED = 'opened';
+
+window.Search = React.createClass({
+  propTypes: {
+    searchUrl: React.PropTypes.string,
+    query: React.PropTypes.string
+  },
+  getInitialState: function() {
+    return {
+      currentState: this.props.query ? OPENED : CLOSED
+    };
+  },
+  render: function() {
+    var searchClasses;
+    searchClasses = cx({
+      'search': true,
+      'state--active': this.isOpen()
+    });
+    return React.createElement("div", {
+      "className": searchClasses
+    }, React.createElement(SearchField, {
+      "ref": "searchField",
+      "query": this.props.query,
+      "onCancel": this.closeSearch,
+      "onSubmit": this.submit
+    }), React.createElement(SearchButton, {
+      "onClick": this.handleButtonClick
+    }));
+  },
+  openSearch: function() {
+    this.setState({
+      currentState: OPENED
+    });
+    return this.refs.searchField.refs.searchInput.getDOMNode().focus();
+  },
+  closeSearch: function() {
+    return this.setState({
+      currentState: CLOSED
+    });
+  },
+  submit: function() {
+    var query, url;
+    query = this.refs.searchField.refs.searchInput.getDOMNode().value;
+    if (query.length === 0) {
+      return;
+    }
+    url = this._prepareSearchUrl(query);
+    return window.location = url;
+  },
+  isOpen: function() {
+    return this.state.currentState !== CLOSED;
+  },
+  _prepareSearchUrl: function(query) {
+    var url;
+    url = this.props.searchUrl || window.location.origin + window.location.pathname;
+    return url + '?q=' + query;
+  },
+  handleButtonClick: function(e) {
+    e.stopPropagation();
+    if (this.isOpen()) {
+      return this.submit();
+    } else {
+      return this.openSearch();
+    }
+  }
+});
+
+
+
+},{"react/lib/cx":599}],199:[function(require,module,exports){
+var InfiniteScroll, PropTypes, SearchResultsFeed;
+
+InfiniteScroll = require('../common/infiniteScroll/index');
+
 PropTypes = React.PropTypes;
-=======
-},{}],315:[function(require,module,exports){
-var DesignSettingsService;
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-windowHeight = $(window).height();
-
-THRESHOLD = windowHeight * 2;
 
 SearchResultsFeed = React.createClass({
   displayName: 'SearchResultsFeed',
@@ -34028,35 +25503,21 @@ SearchResultsFeed = React.createClass({
     canLoad: PropTypes.bool.isRequired,
     onLoadNextPage: PropTypes.func.isRequired
   },
-  componentDidMount: function() {
-    return $(window).on('scroll', this.handleScroll);
-  },
-  componentDidUpdate: function(prevProps) {
-    if (this.props.html !== prevProps.html) {
-      return this.initGridManager();
-    }
-  },
-  componentWillUnmount: function() {
-    return $(window).off('scroll', this.handleScroll);
-  },
   render: function() {
-    var spinner;
-    if (this.props.loading) {
-      spinner = React.createElement("div", {
-        "className": "page-loader"
-      }, React.createElement(Spinner, {
-        "size": 24.
-      }));
-    }
     return React.createElement("div", {
       "className": "bricks-wrapper"
+    }, React.createElement(InfiniteScroll, {
+      "loading": this.props.loading,
+      "canLoad": this.props.canLoad,
+      "onLoad": this.props.onLoadNextPage,
+      "onAfterLoad": this.initGridManager
     }, React.createElement("section", {
       "ref": "container",
       "className": "bricks",
       "dangerouslySetInnerHTML": {
         __html: this.props.html
       }
-    }), spinner);
+    })));
   },
   initGridManager: function() {
     var $container;
@@ -34071,15 +25532,6 @@ SearchResultsFeed = React.createClass({
       paddingX: 0,
       paddingY: 0
     });
-  },
-  handleScroll: function() {
-    var nearBottom;
-    if (this.props.canLoad) {
-      nearBottom = $(window).scrollTop() + $(window).height() > $(document).height() - THRESHOLD;
-      if (nearBottom) {
-        return this.props.onLoadNextPage();
-      }
-    }
   }
 });
 
@@ -34087,13 +25539,8 @@ module.exports = SearchResultsFeed;
 
 
 
-<<<<<<< HEAD
-},{}],196:[function(require,module,exports){
+},{"../common/infiniteScroll/index":42}],200:[function(require,module,exports){
 var PropTypes, SearchActions, SearchResults, SearchResultsFeed, SearchResultsTlog;
-=======
-},{}],316:[function(require,module,exports){
-var DesignStatesService, _;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 SearchActions = require('../../actions/search');
 
@@ -34194,62 +25641,13 @@ SearchResults = React.createClass({
 module.exports = SearchResults;
 
 
-<<<<<<< HEAD
-=======
-},{"lodash":487}],317:[function(require,module,exports){
-window.EntryNormalizer = {
-  normalize: function(entryData) {
-    var attr;
-    attr = (function() {
-      switch (entryData.type) {
-        case 'text':
-          return {
-            data1: entryData.title,
-            data2: entryData.text
-          };
-        case 'image':
-          return {
-            data2: entryData.title,
-            embedUrl: entryData.image_url,
-            imageAttachments: entryData.image_attachments
-          };
-        case 'instagram':
-        case 'music':
-        case 'video':
-          return {
-            data2: entryData.title,
-            embedHtml: entryData.iframely.html,
-            embedUrl: entryData.iframely.url
-          };
-        case 'quote':
-          return {
-            data1: entryData.source,
-            data2: entryData.text
-          };
-        default:
-          return typeof console.error === "function" ? console.error("Unknown entry type " + entryData.type) : void 0;
-      }
-    })();
-    attr.id = entryData.id;
-    attr.updatedAt = new Date(entryData.updated_at).getTime();
-    return new NormalizedEntry(attr);
-  }
-};
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"../../actions/search":11,"./feed":195,"./tlog":197}],197:[function(require,module,exports){
-var PropTypes, SearchResultsTlog, THRESHOLD, windowHeight;
+},{"../../actions/search":11,"./feed":199,"./tlog":201}],201:[function(require,module,exports){
+var InfiniteScroll, PropTypes, SearchResultsTlog;
+
+InfiniteScroll = require('../common/infiniteScroll/index');
 
 PropTypes = React.PropTypes;
-
-<<<<<<< HEAD
-windowHeight = $(window).height();
-=======
-},{}],318:[function(require,module,exports){
-var STORAGE_PREFIX;
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-THRESHOLD = windowHeight * 2;
 
 SearchResultsTlog = React.createClass({
   displayName: 'SearchResultsTlog',
@@ -34259,226 +25657,31 @@ SearchResultsTlog = React.createClass({
     canLoad: PropTypes.bool.isRequired,
     onLoadNextPage: PropTypes.func.isRequired
   },
-  componentDidMount: function() {
-    return $(window).on('scroll', this.handleScroll);
-  },
-  componentWillUnmount: function() {
-    return $(window).off('scroll', this.handleScroll);
-  },
   render: function() {
-    var spinner;
-    if (this.props.loading) {
-      spinner = React.createElement("div", {
-        "className": "page-loader"
-      }, React.createElement(Spinner, {
-        "size": 24.
-      }));
-    }
     return React.createElement("div", {
       "className": "content-area"
     }, React.createElement("div", {
       "className": "content-area__bg"
     }), React.createElement("div", {
       "className": "content-area__inner"
+    }, React.createElement(InfiniteScroll, {
+      "loading": this.props.loading,
+      "canLoad": this.props.canLoad,
+      "onLoad": this.props.onLoadNextPage
     }, React.createElement("section", {
       "className": "posts",
       "dangerouslySetInnerHTML": {
         __html: this.props.html
       }
-    }), spinner));
-  },
-  handleScroll: function() {
-    var nearBottom;
-    if (this.props.canLoad) {
-      nearBottom = $(window).scrollTop() + $(window).height() > $(document).height() - THRESHOLD;
-      if (nearBottom) {
-        return this.props.onLoadNextPage();
-      }
-    }
+    }))));
   }
 });
 
 module.exports = SearchResultsTlog;
 
 
-<<<<<<< HEAD
-=======
-},{}],319:[function(require,module,exports){
-var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],198:[function(require,module,exports){
-window.SearchButton = React.createClass({
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "search__button",
-      "onClick": this.props.onClick
-    }, React.createElement("i", {
-      "className": "icon icon--magnifier"
-    }));
-  }
-});
-
-
-
-},{}],199:[function(require,module,exports){
-window.SearchField = React.createClass({
-  propTypes: {
-    query: React.PropTypes.string,
-    onCancel: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func.isRequired
-  },
-  componentDidMount: function() {
-    return this.selectAllText();
-  },
-  render: function() {
-    return React.createElement("form", {
-      "className": "search__form"
-    }, React.createElement("input", {
-      "ref": "searchInput",
-      "type": "text",
-      "placeholder": i18n.t('search_placeholder'),
-      "defaultValue": this.props.query,
-      "className": "search__input",
-      "onBlur": this.props.onCancel,
-      "onFocus": this.putCursorAtEnd,
-      "onKeyDown": this.handleKeyDown
-    }));
-  },
-<<<<<<< HEAD
-  selectAllText: function() {
-    var searchInput;
-    searchInput = this.refs.searchInput.getDOMNode();
-    return searchInput.setSelectionRange(0, searchInput.value.length);
-  },
-  putCursorAtEnd: function() {
-    var searchInput;
-    searchInput = this.refs.searchInput.getDOMNode();
-    return searchInput.value = searchInput.value;
-  },
-  handleKeyDown: function(e) {
-    switch (e.key) {
-      case 'Escape':
-        e.preventDefault();
-        return this.props.onCancel();
-      case 'Enter':
-        e.preventDefault();
-        return this.props.onSubmit();
-    }
-=======
-  _positionKey: function(key) {
-    return STORAGE_PREFIX + ':' + key;
-  }
-};
-
-
-
-},{}],320:[function(require,module,exports){
-window.UuidService = {
-  generate: function() {
-    var s4;
-    s4 = function() {
-      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    };
-    return "" + (s4() + s4()) + "-" + (s4()) + "-" + (s4()) + "-" + (s4()) + "-" + (s4() + s4() + s4());
->>>>>>> Infinite scroll prefill [deliver #90599686]
-  }
-});
-
-<<<<<<< HEAD
-=======
-},{}],321:[function(require,module,exports){
-var BaseStore, CHANGE_EVENT,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-
-},{}],200:[function(require,module,exports){
-var CLOSED, OPENED, cx;
-
-cx = require('react/lib/cx');
-
-CLOSED = 'closed';
-
-OPENED = 'opened';
-
-window.Search = React.createClass({
-  propTypes: {
-    searchUrl: React.PropTypes.string,
-    query: React.PropTypes.string
-  },
-  getInitialState: function() {
-    return {
-      currentState: this.props.query ? OPENED : CLOSED
-    };
-  },
-  render: function() {
-    var searchClasses;
-    searchClasses = cx({
-      'search': true,
-      'state--active': this.isOpen()
-    });
-    return React.createElement("div", {
-      "className": searchClasses
-    }, React.createElement(SearchField, {
-      "ref": "searchField",
-      "query": this.props.query,
-      "onCancel": this.closeSearch,
-      "onSubmit": this.submit
-    }), React.createElement(SearchButton, {
-      "onClick": this.handleButtonClick
-    }));
-  },
-  openSearch: function() {
-    this.setState({
-      currentState: OPENED
-    });
-    return this.refs.searchField.refs.searchInput.getDOMNode().focus();
-  },
-  closeSearch: function() {
-    return this.setState({
-      currentState: CLOSED
-    });
-  },
-  submit: function() {
-    var query, url;
-    query = this.refs.searchField.refs.searchInput.getDOMNode().value;
-    if (query.length === 0) {
-      return;
-    }
-    url = this._prepareSearchUrl(query);
-    return window.location = url;
-  },
-  isOpen: function() {
-    return this.state.currentState !== CLOSED;
-  },
-  _prepareSearchUrl: function(query) {
-    var url;
-    url = this.props.searchUrl || window.location.origin + window.location.pathname;
-    return url + '?q=' + query;
-  },
-  handleButtonClick: function(e) {
-    e.stopPropagation();
-    if (this.isOpen()) {
-      return this.submit();
-    } else {
-      return this.openSearch();
-    }
-  }
-});
-
-
-<<<<<<< HEAD
-=======
-},{}],322:[function(require,module,exports){
-var BaseStore, CurrentUserStore, currentUser;
->>>>>>> Infinite scroll prefill [deliver #90599686]
-
-},{"react/lib/cx":598}],201:[function(require,module,exports){
+},{"../common/infiniteScroll/index":42}],202:[function(require,module,exports){
 var PropTypes, Searchbox;
 
 PropTypes = React.PropTypes;
@@ -34538,7 +25741,7 @@ module.exports = Searchbox;
 
 
 
-},{}],202:[function(require,module,exports){
+},{}],203:[function(require,module,exports){
 var SettingsAccounts;
 
 SettingsAccounts = React.createClass({
@@ -34584,13 +25787,8 @@ SettingsAccounts = React.createClass({
 module.exports = SettingsAccounts;
 
 
-<<<<<<< HEAD
-=======
-},{"./_base":321}],323:[function(require,module,exports){
-var CHANGE_EVENT, SUMMARY_CHANGE_EVENT, _relationships;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],203:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 var CurrentUserServerActions, PropTypes, SettingsAvatar;
 
 CurrentUserServerActions = require('../../actions/server/current_user');
@@ -34662,7 +25860,7 @@ module.exports = SettingsAvatar;
 
 
 
-},{"../../actions/server/current_user":12}],204:[function(require,module,exports){
+},{"../../actions/server/current_user":12}],205:[function(require,module,exports){
 var ERROR_STATE, SENDING_STATE, SENT_STATE, SHOW_STATE, SettingsEmailConfirmation;
 
 SHOW_STATE = 'show';
@@ -34748,7 +25946,7 @@ module.exports = SettingsEmailConfirmation;
 
 
 
-},{}],205:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 var SettingsEmailEdit, cx;
 
 cx = require('react/lib/cx');
@@ -34856,7 +26054,7 @@ module.exports = SettingsEmailEdit;
 
 
 
-},{"react/lib/cx":598}],206:[function(require,module,exports){
+},{"react/lib/cx":599}],207:[function(require,module,exports){
 var EDIT_STATE, ESTABLISH_STATE, SHOW_STATE, SettingsEmail, SettingsEmailEdit, SettingsEmailEstablish, SettingsEmailShow;
 
 SettingsEmailShow = require('./show');
@@ -34947,14 +26145,8 @@ module.exports = SettingsEmail;
 
 
 
-<<<<<<< HEAD
-},{"./edit":205,"./establish/establish":208,"./show":210}],207:[function(require,module,exports){
+},{"./edit":206,"./establish/establish":209,"./show":211}],208:[function(require,module,exports){
 var SettingsEmailEstablishEdit, cx;
-=======
-},{}],324:[function(require,module,exports){
-var defaults,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -35053,7 +26245,7 @@ module.exports = SettingsEmailEstablishEdit;
 
 
 
-},{"react/lib/cx":598}],208:[function(require,module,exports){
+},{"react/lib/cx":599}],209:[function(require,module,exports){
 var EDIT_STATE, SHOW_STATE, SettingsEmailEstablish, SettingsEmailEstablishEdit, SettingsEmailEstablishShow;
 
 SettingsEmailEstablishShow = require('./show');
@@ -35064,7 +26256,6 @@ SHOW_STATE = 'show';
 
 EDIT_STATE = 'edit';
 
-<<<<<<< HEAD
 SettingsEmailEstablish = React.createClass({
   propTypes: {
     onSubmit: React.PropTypes.func.isRequired
@@ -35100,29 +26291,14 @@ SettingsEmailEstablish = React.createClass({
     });
   }
 });
-=======
-},{}],325:[function(require,module,exports){
-window.isMobile = function() {
-  var userAgent;
-  userAgent = navigator.userAgent || navigator.vendor || window.opera;
-  return /iPhone|iPod|iPad|Android|BlackBerry|Opera Mini|IEMobile/.test(userAgent);
-};
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 module.exports = SettingsEmailEstablish;
 
 
-<<<<<<< HEAD
-=======
-},{}],326:[function(require,module,exports){
-(function (global){
-global._ = require('lodash');
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"./edit":207,"./show":209}],209:[function(require,module,exports){
+},{"./edit":208,"./show":210}],210:[function(require,module,exports){
 var SettingsEmailEstablishShow;
 
-<<<<<<< HEAD
 SettingsEmailEstablishShow = React.createClass({
   propTypes: {
     onEditStart: React.PropTypes.func.isRequired
@@ -35146,133 +26322,16 @@ SettingsEmailEstablishShow = React.createClass({
     }, i18n.t('settings_email_description'))));
   }
 });
-=======
-global.MouseTrap = require('mousetrap');
-
-global.React = require('react');
-
-global.Dispatcher = require('flux').Dispatcher;
-
-global.EventEmitter = require('eventEmitter');
-
-global.bowser = require('bowser');
-
-global.moment = require('../../../bower_components/momentjs/moment');
-
-global.Pusher = require('pusher');
-
-global.Modernizr = require('Modernizr');
-
-global.imagesLoaded = require('imagesloaded');
-
-global.MediumEditor = require('medium-editor');
-
-global.Undo = require('undo');
-
-global.introJs = require('introJs');
-
-global.VendorColorPicker = require('react-color-picker');
-
-require('aviator');
-
-require('swfobject');
-
-require('es5-shim');
-
-require('jquery.mousewheel')(global.jQuery);
-
-require('jquery.scrollto');
-
-require('screenviewer');
-
-require('baron');
-
-require('react-mixin-manager')(global.React);
-
-require('bootstrap.tooltip');
-
-require('jquery.ui.core');
-
-require('jquery.ui.widget');
-
-require('jquery.ui.mouse');
-
-require('jquery.ui.slider');
-
-require('jquery.ui.draggable');
-
-require('jquery.autosize');
-
-require('jquery.autosize.input');
-
-require('jquery.collage');
-
-require('jquery.waypoints');
-
-require('jquery.fileupload');
-
-require('jquery.shapeshift');
-
-
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../../bower_components/momentjs/moment":8,"Modernizr":undefined,"aviator":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":481,"imagesloaded":484,"introJs":undefined,"jquery":6,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"lodash":487,"medium-editor":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-color-picker":undefined,"react-mixin-manager":undefined,"screenviewer":undefined,"swfobject":undefined,"undo":undefined}],327:[function(require,module,exports){
-var momentLocales;
-
-momentLocales = {
-  'ru': require('../../../bower_components/momentjs/locale/ru')
-};
-
-window.moment.locale('ru', momentLocales.ru);
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 module.exports = SettingsEmailEstablishShow;
 
 
-<<<<<<< HEAD
-=======
-},{"../../../bower_components/momentjs/locale/ru":7}],328:[function(require,module,exports){
-window.Tasty = {
-  start: function(options) {
-    var flashes, headers, locale, user;
-    if (options == null) {
-      options = {};
-    }
-    user = options.user, locale = options.locale, flashes = options.flashes;
-    headers = {};
-    if (user != null) {
-      headers['X-User-Token'] = user.api_key.access_token;
-    }
-    headers['X-Requested-With'] = 'XMLHttpRequest';
-    headers['X-Tasty-Client-Name'] = 'web_desktop';
-    headers['X-Tasty-Client-Version'] = TastySettings.version;
-    if (flashes != null) {
-      TastyUtils.showFlashes(flashes);
-    }
-    $.ajaxSetup({
-      headers: headers,
-      cache: true,
-      xhrFields: {
-        withCredentials: true
-      },
-      error: function(e) {
-        return TastyNotifyController.errorResponse(e);
-      }
-    });
-    return ReactApp.start({
-      user: user,
-      locale: locale
-    });
-  }
-};
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],210:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 var SettingsEmailConfirmation, SettingsEmailShow;
 
 SettingsEmailConfirmation = require('./confirmation');
 
-<<<<<<< HEAD
 SettingsEmailShow = React.createClass({
   mixins: [ReactShakeMixin],
   propTypes: {
@@ -35281,33 +26340,6 @@ SettingsEmailShow = React.createClass({
     onEditStart: React.PropTypes.func.isRequired,
     onCancel: React.PropTypes.func.isRequired,
     onResend: React.PropTypes.func.isRequired
-=======
-},{}],329:[function(require,module,exports){
-window.TastyUtils = {
-  showFlashes: function(flashes) {
-    if (flashes == null) {
-      flashes = [];
-    }
-    return _.each(flashes, function(flash) {
-      return TastyNotifyController.notify(flash[0], flash[1]);
-    });
-  },
-  centerHorizontally: function(element) {
-    $(element).each(function() {
-      var e;
-      e = $(this);
-      e.css("margin-left", -(e.width() / 2));
-    });
-  },
-  scrollFade: function(container, element) {
-    var height, scrollTop;
-    height = container.outerHeight() - element.outerHeight() / 2;
-    scrollTop = $(window).scrollTop();
-    return element.css({
-      "margin-top": scrollTop,
-      "opacity": Math.max(1 - scrollTop / height, 0)
-    });
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   render: function() {
     var button, confirmation, email;
@@ -35358,28 +26390,18 @@ window.TastyUtils = {
   }
 });
 
-<<<<<<< HEAD
 module.exports = SettingsEmailShow;
-=======
-},{}],330:[function(require,module,exports){
-var ConnectStoreMixin, _;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{"./confirmation":204}],211:[function(require,module,exports){
+},{"./confirmation":205}],212:[function(require,module,exports){
 var SettingsAvatar, SettingsHeader, SettingsSlug, SettingsTitle;
 
 SettingsAvatar = require('./avatar');
 
 SettingsSlug = require('./slug');
 
-<<<<<<< HEAD
 SettingsTitle = require('./title');
-=======
-},{"lodash":487}],331:[function(require,module,exports){
-var ThumborService;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 SettingsHeader = React.createClass({
   displayName: 'SettingsHeader',
@@ -35428,13 +26450,8 @@ module.exports = SettingsHeader;
 
 
 
-<<<<<<< HEAD
-},{"./avatar":203,"./slug":218,"./title":219}],212:[function(require,module,exports){
+},{"./avatar":204,"./slug":219,"./title":220}],213:[function(require,module,exports){
 var CurrentUserViewActions, SettingsMixin;
-=======
-},{}],332:[function(require,module,exports){
-var ApiRoutes;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 CurrentUserViewActions = require('../../../actions/view/current_user');
 
@@ -35613,7 +26630,6 @@ SettingsMixin = {
       })(this)
     });
   },
-<<<<<<< HEAD
   cancelEmailConfirmation: function() {
     return CurrentUserViewActions.cancelEmailConfirmation({
       beforeSend: (function(_this) {
@@ -35632,127 +26648,6 @@ SettingsMixin = {
         };
       })(this)
     });
-=======
-  update_profile_url: function() {
-    return TastySettings.api_host + '/v1/users';
-  },
-  recovery_url: function() {
-    return TastySettings.api_host + '/v1/users/password/recovery';
-  },
-  request_confirm_url: function() {
-    return TastySettings.api_host + '/v1/users/confirmation';
-  },
-  userpic_url: function() {
-    return TastySettings.api_host + '/v1/users/userpic';
-  },
-  users_predict: function() {
-    return TastySettings.api_host + '/v1/users/predict';
-  },
-  create_entry_url: function(type) {
-    return TastySettings.api_host + '/v1/entries/' + type;
-  },
-  update_entry_url: function(entryId, entryType) {
-    return TastySettings.api_host + '/v1/entries/' + entryType + '/' + entryId;
-  },
-  update_images_url: function(entryId) {
-    return TastySettings.api_host + '/v1/entries/image/' + entryId + '/images';
-  },
-  entry_url: function(entryId) {
-    return TastySettings.api_host + '/v1/entries/' + entryId;
-  },
-  favorites_url: function() {
-    return TastySettings.api_host + '/v1/favorites';
-  },
-  watching_url: function() {
-    return TastySettings.api_host + '/v1/watching';
-  },
-  report_url: function(entryId) {
-    return TastySettings.api_host + '/v1/entries/' + entryId + '/report';
-  },
-  relationships_summary_url: function() {
-    return TastySettings.api_host + '/v1/relationships/summary';
-  },
-  relationships_to_url: function(state) {
-    return TastySettings.api_host + '/v1/relationships/to/' + state;
-  },
-  relationships_by_url: function(state) {
-    return TastySettings.api_host + '/v1/relationships/by/' + state;
-  },
-  relationships_by_id_url: function(tlogId) {
-    return TastySettings.api_host + '/v1/relationships/by/' + tlogId;
-  },
-  unfollow_from_yourself_url: function(tlogId) {
-    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId;
-  },
-  relationships_by_tlog_approve_url: function(tlogId) {
-    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/approve';
-  },
-  relationships_by_tlog_disapprove_url: function(tlogId) {
-    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/disapprove';
-  },
-  tlog_followers: function(tlogId) {
-    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followers';
-  },
-  tlog_followings: function(tlogId) {
-    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followings';
-  },
-  tlog_tags: function(tlogId) {
-    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/tags';
-  },
-  tlog_report: function(tlogId) {
-    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/report';
-  },
-  get_my_relationship_url: function(tlogId) {
-    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId;
-  },
-  comments_url: function(entryId) {
-    return TastySettings.api_host + '/v1/comments';
-  },
-  comments_edit_delete_url: function(commentId) {
-    return TastySettings.api_host + '/v1/comments/' + commentId;
-  },
-  comments_report_url: function(commentId) {
-    return TastySettings.api_host + '/v1/comments/' + commentId + '/report';
-  },
-  change_my_relationship_url: function(tlogId, state) {
-    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId + '/' + state;
-  },
-  messenger_ready_url: function() {
-    return TastySettings.api_host + '/v1/messenger/ready';
-  },
-  messengerConversationsByUserId: function(userId) {
-    return TastySettings.api_host + '/v1/messenger/conversations/by_user_id/' + userId;
-  },
-  messenger_new_message_url: function(conversationId) {
-    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
-  },
-  messenger_load_messages_url: function(conversationId) {
-    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
-  },
-  messenger_read_messages_url: function(conversationId) {
-    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages/read';
-  },
-  notificationsUrl: function() {
-    return TastySettings.api_host + '/v1/messenger/notifications';
-  },
-  notificationsReadAllUrl: function() {
-    return TastySettings.api_host + '/v1/messenger/notifications/read';
-  },
-  notifications_read_url: function(id) {
-    return TastySettings.api_host + '/v1/messenger/notifications/' + id + '/read';
-  },
-  suggestions_vkontakte: function() {
-    return TastySettings.api_host + '/v1/relationships/suggestions/vkontakte';
-  },
-  suggestions_facebook: function() {
-    return TastySettings.api_host + '/v1/relationships/suggestions/facebook';
-  },
-  feedLive: function() {
-    return TastySettings.api_host + '/v1/feeds/live';
-  },
-  feedBest: function() {
-    return TastySettings.api_host + '/v1/feeds/best';
->>>>>>> Create & open conversation by userId [deliver #90091788]
   },
   resendEmailConfirmation: function(_arg) {
     var beforeSend, error, success;
@@ -35782,13 +26677,8 @@ module.exports = SettingsMixin;
 
 
 
-<<<<<<< HEAD
-},{"../../../actions/view/current_user":14}],213:[function(require,module,exports){
+},{"../../../actions/view/current_user":14}],214:[function(require,module,exports){
 var CANCEL_TIMEOUT, SettingsPasswordEdit, cx;
-=======
-},{}],333:[function(require,module,exports){
-var Routes;
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 cx = require('react/lib/cx');
 
@@ -35934,23 +26824,8 @@ module.exports = SettingsPasswordEdit;
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],214:[function(require,module,exports){
+},{"react/lib/cx":599}],215:[function(require,module,exports){
 var EDIT_STATE, SHOW_STATE, SettingsPassword, SettingsPasswordEdit, SettingsPasswordShow;
-=======
-},{}],334:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule AutoFocusMixin
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 SettingsPasswordShow = require('./show');
 
@@ -36004,24 +26879,9 @@ SettingsPassword = React.createClass({
 
 module.exports = SettingsPassword;
 
-<<<<<<< HEAD
-=======
-},{"./focusNode":444}],335:[function(require,module,exports){
-/**
- * Copyright 2013 Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule BeforeInputEventPlugin
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{"./edit":213,"./show":215}],215:[function(require,module,exports){
+},{"./edit":214,"./show":216}],216:[function(require,module,exports){
 var SettingsPasswordShow;
 
 SettingsPasswordShow = React.createClass({
@@ -36056,7 +26916,7 @@ module.exports = SettingsPasswordShow;
 
 
 
-},{}],216:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 var SettingsRadioItem;
 
 SettingsRadioItem = React.createClass({
@@ -36110,7 +26970,7 @@ module.exports = SettingsRadioItem;
 
 
 
-},{}],217:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 var LinkedStateMixin, SettingsAccounts, SettingsEmail, SettingsHeader, SettingsMixin, SettingsPassword, SettingsRadioItem;
 
 SettingsHeader = require('./header');
@@ -36197,7 +27057,7 @@ window.Settings = React.createClass({
 
 
 
-},{"./accounts":202,"./email/email":206,"./header":211,"./mixins/settings":212,"./password/password":214,"./radio_item":216,"react/lib/LinkedStateMixin":509}],218:[function(require,module,exports){
+},{"./accounts":203,"./email/email":207,"./header":212,"./mixins/settings":213,"./password/password":215,"./radio_item":217,"react/lib/LinkedStateMixin":510}],219:[function(require,module,exports){
 var PropTypes, SettingsSlug;
 
 PropTypes = React.PropTypes;
@@ -36237,23 +27097,9 @@ SettingsSlug = React.createClass({
 
 module.exports = SettingsSlug;
 
-<<<<<<< HEAD
-=======
-},{"./EventConstants":348,"./EventPropagators":353,"./ExecutionEnvironment":354,"./SyntheticInputEvent":422,"./keyOf":466}],336:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule CSSProperty
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{}],219:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 var SettingsTitle;
 
 SettingsTitle = React.createClass({
@@ -36292,7 +27138,7 @@ module.exports = SettingsTitle;
 
 
 
-},{}],220:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 window.ShellBox = React.createClass({
   mixins: [ReactUnmountMixin],
   getDefaultProps: function() {
@@ -36362,24 +27208,8 @@ window.ShellBox = React.createClass({
 });
 
 
-<<<<<<< HEAD
-=======
-},{}],337:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule CSSPropertyOperations
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],221:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 var EmailConfirmRegistration, SocialNetworksConfirmRegistration;
 
 EmailConfirmRegistration = require('../auth/email/confirm_registration');
@@ -36422,7 +27252,7 @@ window.ConfirmRegistrationShellbox = React.createClass({
 
 
 
-},{"../auth/email/confirm_registration":25,"../auth/social_networks/confirm_registration":32}],222:[function(require,module,exports){
+},{"../auth/email/confirm_registration":25,"../auth/social_networks/confirm_registration":32}],223:[function(require,module,exports){
 var STATE_GUESSED, STATE_NONE;
 
 STATE_NONE = 'none';
@@ -36476,24 +27306,8 @@ window.SmartFollowStatus = React.createClass({
 });
 
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./CSSProperty":336,"./ExecutionEnvironment":354,"./camelizeStyleName":433,"./dangerousStyleValue":438,"./hyphenateStyleName":457,"./memoizeStringOnly":468,"./warning":478,"_process":480}],338:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule CallbackQueue
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],223:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 window.Spinner = React.createClass({
   propTypes: {
     size: React.PropTypes.number
@@ -36517,7 +27331,7 @@ window.Spinner = React.createClass({
 
 
 
-},{}],224:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 var FADE_SPEED;
 
 FADE_SPEED = 300;
@@ -36562,28 +27376,9 @@ module.experts = window.TlogAlert = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-PooledClass.addPoolingTo(CallbackQueue);
-
-module.exports = CallbackQueue;
-
-}).call(this,require('_process'))
-},{"./Object.assign":359,"./PooledClass":360,"./invariant":459,"_process":480}],339:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ChangeEventPlugin
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{}],225:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 var AvatarToolbar, ConnectStoreMixin, CurrentUserStore;
 
 CurrentUserStore = require('../../stores/current_user');
@@ -36635,7 +27430,7 @@ module.exports = AvatarToolbar;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":329,"../../stores/current_user":321}],226:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":330,"../../stores/current_user":322}],227:[function(require,module,exports){
 window.CloseToolbar = React.createClass({
   mixins: [TouchMixin],
   render: function() {
@@ -36652,7 +27447,7 @@ window.CloseToolbar = React.createClass({
 
 
 
-},{}],227:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, PopupActions, PropTypes, SEARCH_TITLE_I18N_KEYS, Scroller, UserToolbar, UserToolbarActions, UserToolbarAdditionalList, UserToolbarGuestList, UserToolbarList, UserToolbarToggle, cx, _;
 
 _ = require('lodash');
@@ -36803,7 +27598,7 @@ module.exports = UserToolbar;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":329,"../../actions/popup":10,"../../actions/userToolbar":13,"../../messaging/stores/messaging_status":299,"../../stores/current_user":321,"../common/scroller/scroller":42,"./user/additionalList":228,"./user/guestList":229,"./user/list":230,"./user/toggle":234,"lodash":486,"react/lib/cx":598}],228:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":330,"../../actions/popup":10,"../../actions/userToolbar":13,"../../messaging/stores/messaging_status":300,"../../stores/current_user":322,"../common/scroller/scroller":43,"./user/additionalList":229,"./user/guestList":230,"./user/list":231,"./user/toggle":235,"lodash":487,"react/lib/cx":599}],229:[function(require,module,exports){
 var PropTypes, UserToolbarAdditionalList, UserToolbarListItem;
 
 UserToolbarListItem = require('./list/item');
@@ -36841,23 +27636,8 @@ UserToolbarAdditionalList = React.createClass({
 module.exports = UserToolbarAdditionalList;
 
 
-<<<<<<< HEAD
-=======
-},{"./EventConstants":348,"./EventPluginHub":350,"./EventPropagators":353,"./ExecutionEnvironment":354,"./ReactUpdates":412,"./SyntheticEvent":420,"./isEventSupported":460,"./isTextInputElement":462,"./keyOf":466}],340:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ClientReactRootIndex
- * @typechecks
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"./list/item":231}],229:[function(require,module,exports){
+},{"./list/item":232}],230:[function(require,module,exports){
 var UserToolbarGuestList, UserToolbarListItem;
 
 UserToolbarListItem = require('./list/item');
@@ -36883,26 +27663,11 @@ UserToolbarGuestList = React.createClass({
   }
 });
 
-<<<<<<< HEAD
 module.exports = UserToolbarGuestList;
-=======
-},{}],341:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule CompositionEventPlugin
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{"./list/item":231}],230:[function(require,module,exports){
+},{"./list/item":232}],231:[function(require,module,exports){
 var PropTypes, UserToolbarList, UserToolbarListItem, UserToolbarListSubList, UserToolbarListSubListItem;
 
 UserToolbarListItem = require('./list/item');
@@ -36985,7 +27750,7 @@ module.exports = UserToolbarList;
 
 
 
-},{"./list/item":231,"./list/subList":232,"./list/subList/item":233}],231:[function(require,module,exports){
+},{"./list/item":232,"./list/subList":233,"./list/subList/item":234}],232:[function(require,module,exports){
 var PropTypes, UserToolbarListItem, cloneWithProps;
 
 cloneWithProps = require('react/lib/cloneWithProps');
@@ -37091,7 +27856,7 @@ module.exports = UserToolbarListItem;
 
 
 
-},{"react/lib/cloneWithProps":593}],232:[function(require,module,exports){
+},{"react/lib/cloneWithProps":594}],233:[function(require,module,exports){
 var PropTypes, UserToolbarListSubList;
 
 PropTypes = React.PropTypes;
@@ -37121,25 +27886,9 @@ UserToolbarListSubList = React.createClass({
 
 module.exports = UserToolbarListSubList;
 
-<<<<<<< HEAD
-=======
-},{"./EventConstants":348,"./EventPropagators":353,"./ExecutionEnvironment":354,"./ReactInputSelection":392,"./SyntheticCompositionEvent":418,"./getTextContentAccessor":454,"./keyOf":466}],342:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule DOMChildrenOperations
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{}],233:[function(require,module,exports){
+},{}],234:[function(require,module,exports){
 var PropTypes, UserToolbarListSubListItem;
 
 PropTypes = React.PropTypes;
@@ -37185,7 +27934,7 @@ module.exports = UserToolbarListSubListItem;
 
 
 
-},{}],234:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 var PropTypes, UserToolbarToggle;
 
 PropTypes = React.PropTypes;
@@ -37233,7 +27982,7 @@ module.exports = UserToolbarToggle;
 
 
 
-},{}],235:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 var EVENT_NAME_MAP, ReactTransitionGroup, TICK, TimeoutTransitionGroupChild, animationAllowed, animationSupported, detectEvents, endEvents;
 
 ReactTransitionGroup = require('react/lib/ReactTransitionGroup');
@@ -37286,7 +28035,6 @@ animationSupported = function() {
   return endEvents.length !== 0;
 };
 
-<<<<<<< HEAD
 animationAllowed = function() {
   var browser, browserName, browserVersion;
   browser = bowser.browser || bowser;
@@ -37297,78 +28045,6 @@ animationAllowed = function() {
   }
   return true;
 };
-=======
-module.exports = DOMChildrenOperations;
-
-}).call(this,require('_process'))
-},{"./Danger":345,"./ReactMultiChildUpdateTypes":398,"./getTextContentAccessor":454,"./invariant":459,"_process":480}],343:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule DOMProperty
- * @typechecks static-only
- */
-
-/*jslint bitwise: true */
-
-"use strict";
-
-var invariant = require("./invariant");
-
-function checkMask(value, bitmask) {
-  return (value & bitmask) === bitmask;
-}
-
-var DOMPropertyInjection = {
-  /**
-   * Mapping from normalized, camelcased property names to a configuration that
-   * specifies how the associated DOM property should be accessed or rendered.
-   */
-  MUST_USE_ATTRIBUTE: 0x1,
-  MUST_USE_PROPERTY: 0x2,
-  HAS_SIDE_EFFECTS: 0x4,
-  HAS_BOOLEAN_VALUE: 0x8,
-  HAS_NUMERIC_VALUE: 0x10,
-  HAS_POSITIVE_NUMERIC_VALUE: 0x20 | 0x10,
-  HAS_OVERLOADED_BOOLEAN_VALUE: 0x40,
-
-  /**
-   * Inject some specialized knowledge about the DOM. This takes a config object
-   * with the following properties:
-   *
-   * isCustomAttribute: function that given an attribute name will return true
-   * if it can be inserted into the DOM verbatim. Useful for data-* or aria-*
-   * attributes where it's impossible to enumerate all of the possible
-   * attribute names,
-   *
-   * Properties: object mapping DOM property name to one of the
-   * DOMPropertyInjection constants or null. If your attribute isn't in here,
-   * it won't get written to the DOM.
-   *
-   * DOMAttributeNames: object mapping React attribute name to the DOM
-   * attribute name. Attribute names not specified use the **lowercase**
-   * normalized name.
-   *
-   * DOMPropertyNames: similar to DOMAttributeNames but for DOM properties.
-   * Property names not specified use the normalized name.
-   *
-   * DOMMutationMethods: Properties that require special mutation methods. If
-   * `value` is undefined, the mutation method should unset the property.
-   *
-   * @param {object} domPropertyConfig the config as described above.
-   */
-  injectDOMPropertyConfig: function(domPropertyConfig) {
-    var Properties = domPropertyConfig.Properties || {};
-    var DOMAttributeNames = domPropertyConfig.DOMAttributeNames || {};
-    var DOMPropertyNames = domPropertyConfig.DOMPropertyNames || {};
-    var DOMMutationMethods = domPropertyConfig.DOMMutationMethods || {};
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 TimeoutTransitionGroupChild = React.createClass({
   transition: function(animationType, finishCallback) {
@@ -37473,7 +28149,7 @@ window.TimeoutTransitionGroup = React.createClass({
 
 
 
-},{"react/lib/ReactTransitionGroup":570}],236:[function(require,module,exports){
+},{"react/lib/ReactTransitionGroup":571}],237:[function(require,module,exports){
 var PureRenderMixin, cx;
 
 cx = require('react/lib/cx');
@@ -37572,7 +28248,7 @@ window.Voting = React.createClass({
 
 
 
-},{"react/lib/ReactComponentWithPureRenderMixin":521,"react/lib/cx":598}],237:[function(require,module,exports){
+},{"react/lib/ReactComponentWithPureRenderMixin":522,"react/lib/cx":599}],238:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -37585,7 +28261,7 @@ module.exports = ApiConstants;
 
 
 
-},{"react/lib/keyMirror":626}],238:[function(require,module,exports){
+},{"react/lib/keyMirror":627}],239:[function(require,module,exports){
 var ApiConstants, UserToolbarConstants;
 
 ApiConstants = require('./api');
@@ -37599,7 +28275,7 @@ module.exports = {
 
 
 
-},{"./api":237,"./userToolbar":239}],239:[function(require,module,exports){
+},{"./api":238,"./userToolbar":240}],240:[function(require,module,exports){
 var UserToolbarConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -37609,28 +28285,11 @@ UserToolbarConstants = keyMirror({
   TOGGLE_VISIBILITY: null
 });
 
-<<<<<<< HEAD
 module.exports = UserToolbarConstants;
-=======
-}).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],344:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule DOMPropertyOperations
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{"react/lib/keyMirror":626}],240:[function(require,module,exports){
+},{"react/lib/keyMirror":627}],241:[function(require,module,exports){
 var GuideController;
 
 GuideController = {
@@ -37698,7 +28357,7 @@ module.exports = GuideController;
 
 
 
-},{}],241:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 var Constants, LayoutStatesController;
 
 Constants = require('../constants/constants');
@@ -37740,30 +28399,13 @@ LayoutStatesController = (function() {
 
   return LayoutStatesController;
 
-<<<<<<< HEAD
 })();
-=======
-}).call(this,require('_process'))
-},{"./DOMProperty":343,"./escapeTextForBrowser":442,"./memoizeStringOnly":468,"./warning":478,"_process":480}],345:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule Danger
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 module.exports = LayoutStatesController;
 
 
 
-},{"../constants/constants":238}],242:[function(require,module,exports){
+},{"../constants/constants":239}],243:[function(require,module,exports){
 window.ReactPopup = (function() {
   function ReactPopup() {
     this.popupContainer = $('<\div>').appendTo('body').get(0);
@@ -37787,7 +28429,7 @@ window.ReactPopup = (function() {
 
 
 
-},{}],243:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 var PopupController, _;
 
 _ = require('lodash');
@@ -37856,23 +28498,8 @@ PopupController = (function() {
 module.exports = PopupController;
 
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./ExecutionEnvironment":354,"./createNodesFromMarkup":437,"./emptyFunction":440,"./getMarkupWrap":451,"./invariant":459,"_process":480}],346:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule DefaultEventPluginOrder
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"lodash":486}],244:[function(require,module,exports){
+},{"lodash":487}],245:[function(require,module,exports){
 window.ReactShellBox = (function() {
   function ReactShellBox() {
     var container;
@@ -37899,26 +28526,11 @@ window.ReactShellBox = (function() {
 
   return ReactShellBox;
 
-<<<<<<< HEAD
 })();
-=======
-},{"./keyOf":466}],347:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule EnterLeaveEventPlugin
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],245:[function(require,module,exports){
+},{}],246:[function(require,module,exports){
 window.TastyAlertController = {
   show: function(_arg) {
     var buttonColor, buttonText, container, message, onAccept, regex, title;
@@ -37950,7 +28562,7 @@ window.TastyAlertController = {
 
 
 
-},{}],246:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 window.TastyConfirmController = {
   show: function(_arg) {
     var acceptButtonColor, acceptButtonText, container, message, messageWithoutBR, onAccept, regex, rejectButtonText;
@@ -37983,7 +28595,7 @@ window.TastyConfirmController = {
 
 
 
-},{}],247:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 window.TastyEvents = new EventEmitter();
 
 TastyEvents.keys = {
@@ -38039,7 +28651,7 @@ TastyEvents.keys = {
 
 
 
-},{}],248:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 window.TastyLockingAlertController = {
   show: function(_arg) {
     var action, container, message, regex, title;
@@ -38069,7 +28681,7 @@ window.TastyLockingAlertController = {
 
 
 
-},{}],249:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 window.TastyNotifyController = {
   _notificationList: [],
   notify: function(type, text, timeout) {
@@ -38148,7 +28760,7 @@ TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() 
 
 
 
-},{}],250:[function(require,module,exports){
+},{}],251:[function(require,module,exports){
 var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
 
 window.TastySoundController = {
@@ -38175,7 +28787,7 @@ INCOMING_NOTIFICATION = TastySoundController._buildAudioElement('incoming_messag
 
 
 
-},{}],251:[function(require,module,exports){
+},{}],252:[function(require,module,exports){
 var BaseDispatcher,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -38201,21 +28813,7 @@ BaseDispatcher = (function(_super) {
     });
   };
 
-<<<<<<< HEAD
   return BaseDispatcher;
-=======
-},{"./EventConstants":348,"./EventPropagators":353,"./ReactMount":396,"./SyntheticMouseEvent":424,"./keyOf":466}],348:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule EventConstants
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 })(Dispatcher);
 
@@ -38223,7 +28821,7 @@ module.exports = BaseDispatcher;
 
 
 
-},{}],252:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 var BaseDispatcher;
 
 BaseDispatcher = require('./_base');
@@ -38239,31 +28837,8 @@ window.CurrentUserDispatcher = _.extend(new BaseDispatcher(), {
 
 
 
-<<<<<<< HEAD
-},{"./_base":251}],253:[function(require,module,exports){
+},{"./_base":252}],254:[function(require,module,exports){
 var AppDispatcher, Dispatcher, _;
-=======
-},{"./keyMirror":465}],349:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014 Facebook, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @providesModule EventListener
- * @typechecks
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 _ = require('lodash');
 
@@ -38287,24 +28862,8 @@ AppDispatcher = _.extend(new Dispatcher(), {
 module.exports = AppDispatcher;
 
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./emptyFunction":440,"_process":480}],350:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule EventPluginHub
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{"flux":480,"lodash":486}],254:[function(require,module,exports){
+},{"flux":481,"lodash":487}],255:[function(require,module,exports){
 window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     var payload;
@@ -38326,7 +28885,7 @@ window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],255:[function(require,module,exports){
+},{}],256:[function(require,module,exports){
 window.NormalizedEntry = (function() {
   function NormalizedEntry(data) {
     _.extend(this, data);
@@ -38338,7 +28897,7 @@ window.NormalizedEntry = (function() {
 
 
 
-},{}],256:[function(require,module,exports){
+},{}],257:[function(require,module,exports){
 window.AppHelpers = {
   reselectAndFocus: function(node) {
     node.focus();
@@ -38358,7 +28917,7 @@ window.AppHelpers = {
 
 
 
-},{}],257:[function(require,module,exports){
+},{}],258:[function(require,module,exports){
 var CLOSED_STATE, COMMENT_CREATE_STATE, COMMENT_EDIT_STATE;
 
 CLOSED_STATE = 'closed';
@@ -38492,26 +29051,9 @@ window.CommentsMediator = (function() {
 
 window.commentsMediator = new CommentsMediator();
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./EventPluginRegistry":351,"./EventPluginUtils":352,"./accumulateInto":430,"./forEachAccumulated":445,"./invariant":459,"_process":480}],351:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule EventPluginRegistry
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{}],258:[function(require,module,exports){
+},{}],259:[function(require,module,exports){
 window.ConversationActions = {
   clickConversation: function(conversationId) {
     return MessagingDispatcher.handleViewAction({
@@ -38519,9 +29061,9 @@ window.ConversationActions = {
       conversationId: conversationId
     });
   },
-  openConversation: function(recipientSlug) {
+  openConversation: function(recipientId) {
     var conversation;
-    conversation = ConversationsStore.getConversationBySlug(recipientSlug);
+    conversation = ConversationsStore.getConversationByUserId(recipientId);
     if (conversation != null) {
       MessagingDispatcher.handleViewAction({
         type: 'openConversation',
@@ -38529,17 +29071,17 @@ window.ConversationActions = {
       });
     } else {
       messagingService.postNewConversation({
-        recipientSlug: recipientSlug
+        recipientId: recipientId
       });
     }
     messagingService.openMessagesPopup();
     return TastyEvents.emit(TastyEvents.keys.command_hero_close());
   },
   postNewConversation: function(_arg) {
-    var error, recipientSlug;
-    recipientSlug = _arg.recipientSlug, error = _arg.error;
+    var error, recipientId;
+    recipientId = _arg.recipientId, error = _arg.error;
     return messagingService.postNewConversation({
-      recipientSlug: recipientSlug,
+      recipientId: recipientId,
       error: error
     });
   }
@@ -38547,7 +29089,7 @@ window.ConversationActions = {
 
 
 
-},{}],259:[function(require,module,exports){
+},{}],260:[function(require,module,exports){
 window.MessageActions = {
   newMessage: function(_arg) {
     var content, conversationId, uuid;
@@ -38585,7 +29127,7 @@ window.MessageActions = {
 
 
 
-},{}],260:[function(require,module,exports){
+},{}],261:[function(require,module,exports){
 window.NotificationActions = {
   readNotification: function(notificationId) {
     console.log('читаем уведомление', notificationId);
@@ -38595,7 +29137,7 @@ window.NotificationActions = {
 
 
 
-},{}],261:[function(require,module,exports){
+},{}],262:[function(require,module,exports){
 window.PopupActions = {
   closeMessagesPopup: function() {
     messagingService.closeMessagesPopup();
@@ -38622,7 +29164,7 @@ window.PopupActions = {
 
 
 
-},{}],262:[function(require,module,exports){
+},{}],263:[function(require,module,exports){
 window.WriteMessageButton = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired
@@ -38636,13 +29178,13 @@ window.WriteMessageButton = React.createClass({
     }));
   },
   handleClick: function() {
-    return ConversationActions.openConversation(this.props.user.slug);
+    return ConversationActions.openConversation(this.props.user.id);
   }
 });
 
 
 
-},{}],263:[function(require,module,exports){
+},{}],264:[function(require,module,exports){
 window.MessagesPopup_Conversations = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -38662,7 +29204,7 @@ window.MessagesPopup_Conversations = React.createClass({
 
 
 
-},{}],264:[function(require,module,exports){
+},{}],265:[function(require,module,exports){
 window.MessagesPopup_ConversationsListEmpty = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -38677,8 +29219,7 @@ window.MessagesPopup_ConversationsListEmpty = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],265:[function(require,module,exports){
+},{}],266:[function(require,module,exports){
 window.MessagesPopup_ConversationsList = React.createClass({
   mixins: [ScrollerMixin],
   getInitialState: function() {
@@ -38729,25 +29270,10 @@ window.MessagesPopup_ConversationsList = React.createClass({
     return this.setState(this.getStateFromStore());
   }
 });
-=======
-}).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],352:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule EventPluginUtils
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],266:[function(require,module,exports){
+},{}],267:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -38834,7 +29360,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({
 
 
 
-},{"react/lib/cx":598}],267:[function(require,module,exports){
+},{"react/lib/cx":599}],268:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, cx;
 
 cx = require('react/lib/cx');
@@ -38906,7 +29432,7 @@ window.MessagesPopup_Chooser = React.createClass({
 
 
 
-},{"react/lib/cx":598}],268:[function(require,module,exports){
+},{"react/lib/cx":599}],269:[function(require,module,exports){
 window.MessagesPopup_ChooserButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -38923,7 +29449,7 @@ window.MessagesPopup_ChooserButton = React.createClass({
 
 
 
-},{}],269:[function(require,module,exports){
+},{}],270:[function(require,module,exports){
 var LinkedStateMixin;
 
 LinkedStateMixin = require('react/lib/LinkedStateMixin');
@@ -38968,7 +29494,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass({
       case 'Enter':
         e.preventDefault();
         if (chooserResults != null) {
-          this.props.onSubmit(chooserResults.getSelectedUserSlug());
+          this.props.onSubmit(chooserResults.getSelectedUserId());
         }
         break;
       case 'Escape':
@@ -38987,25 +29513,9 @@ window.MessagesPopup_ChooserDropdown = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./EventConstants":348,"./invariant":459,"_process":480}],353:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule EventPropagators
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{"react/lib/LinkedStateMixin":509}],270:[function(require,module,exports){
+},{"react/lib/LinkedStateMixin":510}],271:[function(require,module,exports){
 var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
 
 LOADING_STATE = 'loadingState';
@@ -39101,8 +29611,8 @@ window.MessagesPopup_ChooserResults = React.createClass({
       })(this)
     });
   },
-  getSelectedUserSlug: function() {
-    return this.state.predictedUsers[this.state.selectedUserIndex].slug;
+  getSelectedUserId: function() {
+    return this.state.predictedUsers[this.state.selectedUserIndex].id;
   },
   _moveHighlight: function(delta) {
     var userIndex, usersCount;
@@ -39120,7 +29630,7 @@ window.MessagesPopup_ChooserResults = React.createClass({
 
 
 
-},{}],271:[function(require,module,exports){
+},{}],272:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -39154,28 +29664,13 @@ window.MessagesPopup_ChooserResultsItem = React.createClass({
   handleClick: function(e) {
     e.preventDefault();
     e.stopPropagation();
-    return this.props.onClick(this.props.predictedUser.slug);
+    return this.props.onClick(this.props.predictedUser.id);
   }
 });
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./EventConstants":348,"./EventPluginHub":350,"./accumulateInto":430,"./forEachAccumulated":445,"_process":480}],354:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ExecutionEnvironment
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{"react/lib/cx":598}],272:[function(require,module,exports){
+},{"react/lib/cx":599}],273:[function(require,module,exports){
 var CHOOSER_STATE, PROCESS_STATE;
 
 PROCESS_STATE = 'process';
@@ -39217,10 +29712,10 @@ window.MessagesPopup_CreateNewConversation = React.createClass({
       currentState: CHOOSER_STATE
     });
   },
-  postNewConversation: function(recipientSlug) {
+  postNewConversation: function(recipientId) {
     this.activateProcessState();
     return ConversationActions.postNewConversation({
-      recipientSlug: recipientSlug,
+      recipientId: recipientId,
       error: this.activateChooserState
     });
   }
@@ -39228,7 +29723,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass({
 
 
 
-},{}],273:[function(require,module,exports){
+},{}],274:[function(require,module,exports){
 window.MessagesPopup_LoadingMessage = React.createClass({
   propTypes: {
     content: React.PropTypes.string.isRequired
@@ -39252,24 +29747,10 @@ window.MessagesPopup_LoadingMessage = React.createClass({
 
 
 
-},{}],274:[function(require,module,exports){
+},{}],275:[function(require,module,exports){
 var CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, ENTER_TIMEOUT, LEAVE_TIMEOUT, THREAD_STATE;
 
-<<<<<<< HEAD
 CONVERSATIONS_STATE = 'conversations';
-=======
-},{}],355:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule HTMLDOMPropertyConfig
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 CREATE_NEW_CONVERSATION_STATE = 'createNewConversation';
 
@@ -39374,7 +29855,7 @@ window.MessagesPopup = React.createClass({
 
 
 
-},{}],275:[function(require,module,exports){
+},{}],276:[function(require,module,exports){
 window.MessagesPopup_ThreadMessageForm = React.createClass({
   propTypes: {
     conversationId: React.PropTypes.number.isRequired
@@ -39437,24 +29918,8 @@ window.MessagesPopup_ThreadMessageForm = React.createClass({
 });
 
 
-<<<<<<< HEAD
-=======
-},{"./DOMProperty":343,"./ExecutionEnvironment":354}],356:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule LinkedValueUtils
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],276:[function(require,module,exports){
+},{}],277:[function(require,module,exports){
 window.MessagesPopup_MessageListEmpty = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -39467,7 +29932,7 @@ window.MessagesPopup_MessageListEmpty = React.createClass({
 
 
 
-},{}],277:[function(require,module,exports){
+},{}],278:[function(require,module,exports){
 var savedScrollHeight;
 
 savedScrollHeight = null;
@@ -39523,7 +29988,6 @@ window.MessagesPopup_ThreadMessageList = React.createClass({
         });
       });
     }
-<<<<<<< HEAD
     return React.createElement("div", {
       "ref": "scroller",
       "className": "scroller scroller--dark scroller--messages"
@@ -39541,50 +30005,6 @@ window.MessagesPopup_ThreadMessageList = React.createClass({
     }, React.createElement("div", {
       "className": "scroller__bar js-scroller-bar"
     })));
-=======
-    return input.props.onChange;
-  }
-};
-
-module.exports = LinkedValueUtils;
-
-}).call(this,require('_process'))
-},{"./ReactPropTypes":405,"./invariant":459,"_process":480}],357:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule LocalEventTrapMixin
- */
-
-"use strict";
-
-var ReactBrowserEventEmitter = require("./ReactBrowserEventEmitter");
-
-var accumulateInto = require("./accumulateInto");
-var forEachAccumulated = require("./forEachAccumulated");
-var invariant = require("./invariant");
-
-function remove(event) {
-  event.remove();
-}
-
-var LocalEventTrapMixin = {
-  trapBubbledEvent:function(topLevelType, handlerBaseName) {
-    ("production" !== process.env.NODE_ENV ? invariant(this.isMounted(), 'Must be mounted to trap events') : invariant(this.isMounted()));
-    var listener = ReactBrowserEventEmitter.trapBubbledEvent(
-      topLevelType,
-      handlerBaseName,
-      this.getDOMNode()
-    );
-    this._localEventListeners =
-      accumulateInto(this._localEventListeners, listener);
->>>>>>> Infinite scroll prefill [deliver #90599686]
   },
   isEmpty: function() {
     return this.state.messages.length === 0;
@@ -39623,24 +30043,8 @@ var LocalEventTrapMixin = {
 });
 
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./ReactBrowserEventEmitter":363,"./accumulateInto":430,"./forEachAccumulated":445,"./invariant":459,"_process":480}],358:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule MobileSafariClickEventPlugin
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],278:[function(require,module,exports){
+},{}],279:[function(require,module,exports){
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, cx;
 
 cx = require('react/lib/cx');
@@ -39670,43 +30074,8 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({
     if (this.isOutgoing()) {
       deliveryStatus = this._getDeliveryStatus();
     }
-<<<<<<< HEAD
     if (this.props.message.created_at) {
       messageCreatedAt = this._getMessageCreatedAt();
-=======
-  }
-
-};
-
-module.exports = MobileSafariClickEventPlugin;
-
-},{"./EventConstants":348,"./emptyFunction":440}],359:[function(require,module,exports){
-/**
- * Copyright 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule Object.assign
- */
-
-// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign
-
-function assign(target, sources) {
-  if (target == null) {
-    throw new TypeError('Object.assign target cannot be null or undefined');
-  }
-
-  var to = Object(target);
-  var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-  for (var nextIndex = 1; nextIndex < arguments.length; nextIndex++) {
-    var nextSource = arguments[nextIndex];
-    if (nextSource == null) {
-      continue;
->>>>>>> Infinite scroll prefill [deliver #90599686]
     }
     if (this.isIncoming()) {
       userSlug = React.createElement("span", {
@@ -39778,23 +30147,8 @@ function assign(target, sources) {
 
 
 
-<<<<<<< HEAD
-},{"react/lib/cx":598}],279:[function(require,module,exports){
+},{"react/lib/cx":599}],280:[function(require,module,exports){
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
-=======
-},{}],360:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule PooledClass
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 ERROR_STATE = 'error';
 
@@ -39917,7 +30271,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass({
 
 
 
-},{}],280:[function(require,module,exports){
+},{}],281:[function(require,module,exports){
 window.MessagesPopup_Thread = React.createClass({
   displayName: 'MessagesPopup_Thread',
   propTypes: {
@@ -39951,25 +30305,9 @@ window.MessagesPopup_Thread = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],361:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule React
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{}],281:[function(require,module,exports){
+},{}],282:[function(require,module,exports){
 window.MessagesPopup_UIBackButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -39986,7 +30324,7 @@ window.MessagesPopup_UIBackButton = React.createClass({
 
 
 
-},{}],282:[function(require,module,exports){
+},{}],283:[function(require,module,exports){
 window.MessagesPopup_UICreateNewConversationButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -40005,7 +30343,7 @@ window.MessagesPopup_UICreateNewConversationButton = React.createClass({
 
 
 
-},{}],283:[function(require,module,exports){
+},{}],284:[function(require,module,exports){
 window.NotificationsPopup_NotificationsEmpty = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -40016,7 +30354,7 @@ window.NotificationsPopup_NotificationsEmpty = React.createClass({
 
 
 
-},{}],284:[function(require,module,exports){
+},{}],285:[function(require,module,exports){
 var IMAGE_SIZE, cx;
 
 cx = require('react/lib/cx');
@@ -40111,7 +30449,7 @@ window.NotificationsPopup_Notification = React.createClass({
 
 
 
-},{"react/lib/cx":598}],285:[function(require,module,exports){
+},{"react/lib/cx":599}],286:[function(require,module,exports){
 window.NotificationsPopup_Notifications = React.createClass({
   getInitialState: function() {
     return this.getStateFromStore();
@@ -40154,8 +30492,7 @@ window.NotificationsPopup_Notifications = React.createClass({
 
 
 
-<<<<<<< HEAD
-},{}],286:[function(require,module,exports){
+},{}],287:[function(require,module,exports){
 window.NotificationsPopup = React.createClass({
   mixins: [ScrollerMixin],
   render: function() {
@@ -40182,79 +30519,10 @@ window.NotificationsPopup = React.createClass({
     })))))));
   }
 });
-=======
-}).call(this,require('_process'))
-},{"./DOMPropertyOperations":344,"./EventPluginUtils":352,"./ExecutionEnvironment":354,"./Object.assign":359,"./ReactChildren":364,"./ReactComponent":365,"./ReactCompositeComponent":367,"./ReactContext":368,"./ReactCurrentOwner":369,"./ReactDOM":370,"./ReactDOMComponent":372,"./ReactDefaultInjection":382,"./ReactElement":385,"./ReactElementValidator":386,"./ReactInstanceHandles":393,"./ReactLegacyElement":394,"./ReactMount":396,"./ReactMultiChild":397,"./ReactPerf":401,"./ReactPropTypes":405,"./ReactServerRendering":409,"./ReactTextComponent":411,"./deprecated":439,"./onlyChild":470,"_process":480}],362:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactBrowserComponentMixin
- */
-
-"use strict";
-
-var ReactEmptyComponent = require("./ReactEmptyComponent");
-var ReactMount = require("./ReactMount");
-
-var invariant = require("./invariant");
-
-var ReactBrowserComponentMixin = {
-  /**
-   * Returns the DOM node rendered by this component.
-   *
-   * @return {DOMElement} The root node of this component.
-   * @final
-   * @protected
-   */
-  getDOMNode: function() {
-    ("production" !== process.env.NODE_ENV ? invariant(
-      this.isMounted(),
-      'getDOMNode(): A component must be mounted to have a DOM node.'
-    ) : invariant(this.isMounted()));
-    if (ReactEmptyComponent.isNullComponentID(this._rootNodeID)) {
-      return null;
-    }
-    return ReactMount.getNode(this._rootNodeID);
-  }
-};
-
-module.exports = ReactBrowserComponentMixin;
-
-}).call(this,require('_process'))
-},{"./ReactEmptyComponent":387,"./ReactMount":396,"./invariant":459,"_process":480}],363:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactBrowserEventEmitter
- * @typechecks static-only
- */
-
-"use strict";
-
-var EventConstants = require("./EventConstants");
-var EventPluginHub = require("./EventPluginHub");
-var EventPluginRegistry = require("./EventPluginRegistry");
-var ReactEventEmitterMixin = require("./ReactEventEmitterMixin");
-var ViewportMetrics = require("./ViewportMetrics");
-
-var assign = require("./Object.assign");
-var isEventSupported = require("./isEventSupported");
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],287:[function(require,module,exports){
+},{}],288:[function(require,module,exports){
 var ADVANCED_STATE, BASIC_STATE, MOUSE_LEAVE_TIMEOUT, cx;
 
 cx = require('react/lib/cx');
@@ -40392,7 +30660,7 @@ window.IndicatorsToolbar = React.createClass({
 
 
 
-},{"react/lib/cx":598}],288:[function(require,module,exports){
+},{"react/lib/cx":599}],289:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -40444,24 +30712,9 @@ window.IndicatorsToolbar_Messages = React.createClass({
   }
 });
 
-<<<<<<< HEAD
-=======
-},{"./EventConstants":348,"./EventPluginHub":350,"./EventPluginRegistry":351,"./Object.assign":359,"./ReactEventEmitterMixin":389,"./ViewportMetrics":429,"./isEventSupported":460}],364:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactChildren
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{"react/lib/cx":598}],289:[function(require,module,exports){
+},{"react/lib/cx":599}],290:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -40519,7 +30772,7 @@ window.IndicatorsToolbar_Notifications = React.createClass({
 
 
 
-},{"react/lib/cx":598}],290:[function(require,module,exports){
+},{"react/lib/cx":599}],291:[function(require,module,exports){
 window.MessagingDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     return this.dispatch({
@@ -40614,7 +30867,7 @@ window.MessagingDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],291:[function(require,module,exports){
+},{}],292:[function(require,module,exports){
 window.MessagingRequester = (function() {
   function MessagingRequester(_arg) {
     this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
@@ -40634,9 +30887,9 @@ window.MessagingRequester = (function() {
     });
   };
 
-  MessagingRequester.prototype.postNewConversation = function(recipientSlug, content) {
+  MessagingRequester.prototype.postNewConversation = function(recipientId, content) {
     return $.ajax({
-      url: ApiRoutes.messenger_new_conversation_url(recipientSlug),
+      url: ApiRoutes.messengerConversationsByUserId(recipientId),
       method: 'POST',
       data: {
         socket_id: this.socket_id,
@@ -40703,27 +30956,11 @@ window.MessagingRequester = (function() {
 
   return MessagingRequester;
 
-<<<<<<< HEAD
 })();
-=======
-}).call(this,require('_process'))
-},{"./PooledClass":360,"./traverseAllChildren":477,"./warning":478,"_process":480}],365:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactComponent
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],292:[function(require,module,exports){
+},{}],293:[function(require,module,exports){
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 window.MessagingService = (function() {
@@ -40824,9 +31061,9 @@ window.MessagingService = (function() {
   };
 
   MessagingService.prototype.postNewConversation = function(_arg) {
-    var error, recipientSlug;
-    recipientSlug = _arg.recipientSlug, error = _arg.error;
-    return this.requester.postNewConversation(recipientSlug).done(function(conversation) {
+    var error, recipientId;
+    recipientId = _arg.recipientId, error = _arg.error;
+    return this.requester.postNewConversation(recipientId).done(function(conversation) {
       return MessagingDispatcher.handleServerAction({
         type: 'postNewConversation',
         conversation: conversation
@@ -40929,7 +31166,6 @@ window.MessagingService = (function() {
     }
   };
 
-<<<<<<< HEAD
   MessagingService.prototype.toggleMessagesPopup = function() {
     if (this.isMessagesPopupShown()) {
       return this.closeMessagesPopup();
@@ -40937,21 +31173,6 @@ window.MessagingService = (function() {
       return this.openMessagesPopup();
     }
   };
-=======
-}).call(this,require('_process'))
-},{"./Object.assign":359,"./ReactElement":385,"./ReactOwner":400,"./ReactUpdates":412,"./invariant":459,"./keyMirror":465,"_process":480}],366:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactComponentBrowserEnvironment
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
   MessagingService.prototype.toggleNotificationsPopup = function() {
     if (this.isNotificationsPopupShown()) {
@@ -41007,7 +31228,7 @@ window.MessagingService = (function() {
 
 
 
-},{}],293:[function(require,module,exports){
+},{}],294:[function(require,module,exports){
 window.MessagingMock = {
   message: function() {
     var conversation, recipient, sender;
@@ -41046,24 +31267,8 @@ window.MessagingMock = {
 };
 
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./ReactDOMIDOperations":374,"./ReactMarkupChecksum":395,"./ReactMount":396,"./ReactPerf":401,"./ReactReconcileTransaction":407,"./getReactRootElementInContainer":453,"./invariant":459,"./setInnerHTML":473,"_process":480}],367:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactCompositeComponent
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],294:[function(require,module,exports){
+},{}],295:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -41097,7 +31302,7 @@ module.exports = BaseStore;
 
 
 
-},{}],295:[function(require,module,exports){
+},{}],296:[function(require,module,exports){
 var CONNECTION_EVENT, _connectionState;
 
 CONNECTION_EVENT = 'connectionStateUpdated';
@@ -41141,7 +31346,7 @@ ConnectionStateStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],296:[function(require,module,exports){
+},{}],297:[function(require,module,exports){
 var CHANGE_EVENT, _conversations;
 
 CHANGE_EVENT = 'change';
@@ -41200,11 +31405,11 @@ window.ConversationsStore = _.extend({}, EventEmitter.prototype, {
       }
     }
   },
-  getConversationBySlug: function(recipientSlug) {
+  getConversationByUserId: function(recipientId) {
     var conversation, _i, _len;
     for (_i = 0, _len = _conversations.length; _i < _len; _i++) {
       conversation = _conversations[_i];
-      if (conversation.recipient.slug === recipientSlug) {
+      if (conversation.recipient.id === recipientId) {
         return conversation;
       }
     }
@@ -41259,7 +31464,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],297:[function(require,module,exports){
+},{}],298:[function(require,module,exports){
 var CHANGE_EVENT, _allMessagesLoaded, _messages;
 
 CHANGE_EVENT = 'change';
@@ -41413,7 +31618,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(function(payload) {
 
 
 
-},{}],298:[function(require,module,exports){
+},{}],299:[function(require,module,exports){
 var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
 
 CHANGE_EVENT = 'change';
@@ -41490,7 +31695,7 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
 
 
 
-},{}],299:[function(require,module,exports){
+},{}],300:[function(require,module,exports){
 var BaseStore, MessagingStatusStore, _, _messagingStatus;
 
 _ = require('lodash');
@@ -41532,7 +31737,7 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{"./_base":294,"lodash":486}],300:[function(require,module,exports){
+},{"./_base":295,"lodash":487}],301:[function(require,module,exports){
 var CHANGE_EVENT, _notifications;
 
 CHANGE_EVENT = 'change';
@@ -41636,7 +31841,7 @@ NotificationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],301:[function(require,module,exports){
+},{}],302:[function(require,module,exports){
 var BaseMixin, ERROR_TIMEOUT, ram, rau;
 
 ERROR_TIMEOUT = 1000;
@@ -41718,7 +31923,7 @@ React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
 
 
-},{}],302:[function(require,module,exports){
+},{}],303:[function(require,module,exports){
 window.ComponentManipulationsMixin = {
   safeUpdate: function(func) {
     if (!this._isUnmounted()) {
@@ -41737,7 +31942,7 @@ window.ComponentManipulationsMixin = {
 
 
 
-},{}],303:[function(require,module,exports){
+},{}],304:[function(require,module,exports){
 var ENTRY_DELETE_ANIMATION_SPEED;
 
 ENTRY_DELETE_ANIMATION_SPEED = 300;
@@ -41762,7 +31967,7 @@ window.DOMManipulationsMixin = {
 
 
 
-},{}],304:[function(require,module,exports){
+},{}],305:[function(require,module,exports){
 var ERROR_TIMEOUT;
 
 ERROR_TIMEOUT = 1000;
@@ -41793,7 +31998,7 @@ window.ErrorTimerMixin = {
 
 
 
-},{}],305:[function(require,module,exports){
+},{}],306:[function(require,module,exports){
 window.ReactGrammarMixin = {
   declension: function(number, titles) {
     var cases;
@@ -41828,7 +32033,7 @@ window.ReactGrammarMixin = {
 
 
 
-},{}],306:[function(require,module,exports){
+},{}],307:[function(require,module,exports){
 var COMPONENT_WIDTH, REPOSITION_TIMEOUT;
 
 REPOSITION_TIMEOUT = 500;
@@ -41895,7 +32100,7 @@ window.ReactPositionsMixin = {
 
 
 
-},{}],307:[function(require,module,exports){
+},{}],308:[function(require,module,exports){
 var Nanobar, nanobar, oldXHR;
 
 Nanobar = require('nanobar');
@@ -41975,7 +32180,7 @@ window.RequesterMixin = {
 
 
 
-},{"nanobar":undefined}],308:[function(require,module,exports){
+},{"nanobar":undefined}],309:[function(require,module,exports){
 window.ScrollerMixin = {
   componentDidMount: function() {
     $(document).on('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
@@ -42025,7 +32230,7 @@ window.ScrollerMixin = {
 
 
 
-},{}],309:[function(require,module,exports){
+},{}],310:[function(require,module,exports){
 window.ReactShakeMixin = {
   shake: function() {
     var animationEnd, form;
@@ -42039,7 +32244,7 @@ window.ReactShakeMixin = {
 
 
 
-},{}],310:[function(require,module,exports){
+},{}],311:[function(require,module,exports){
 window.TouchMixin = {
   componentWillMount: function() {
     if (isMobile()) {
@@ -42051,7 +32256,7 @@ window.TouchMixin = {
 
 
 
-},{}],311:[function(require,module,exports){
+},{}],312:[function(require,module,exports){
 window.ReactUnmountMixin = {
   unmount: function() {
     return _.defer((function(_this) {
@@ -42064,7 +32269,7 @@ window.ReactUnmountMixin = {
 
 
 
-},{}],312:[function(require,module,exports){
+},{}],313:[function(require,module,exports){
 var CurrentUserResource;
 
 CurrentUserResource = {
@@ -42115,7 +32320,7 @@ module.exports = CurrentUserResource;
 
 
 
-},{}],313:[function(require,module,exports){
+},{}],314:[function(require,module,exports){
 var DesignPresenterService;
 
 DesignPresenterService = {
@@ -42380,7 +32585,7 @@ module.exports = DesignPresenterService;
 
 
 
-},{}],314:[function(require,module,exports){
+},{}],315:[function(require,module,exports){
 var DesignSettingsService;
 
 DesignSettingsService = {
@@ -42419,28 +32624,11 @@ DesignSettingsService = {
   }
 };
 
-<<<<<<< HEAD
 module.exports = DesignSettingsService;
-=======
-module.exports = ReactCompositeComponent;
-
-}).call(this,require('_process'))
-},{"./Object.assign":359,"./ReactComponent":365,"./ReactContext":368,"./ReactCurrentOwner":369,"./ReactElement":385,"./ReactElementValidator":386,"./ReactEmptyComponent":387,"./ReactErrorUtils":388,"./ReactLegacyElement":394,"./ReactOwner":400,"./ReactPerf":401,"./ReactPropTransferer":402,"./ReactPropTypeLocationNames":403,"./ReactPropTypeLocations":404,"./ReactUpdates":412,"./instantiateReactComponent":458,"./invariant":459,"./keyMirror":465,"./keyOf":466,"./mapObject":467,"./monitorCodeUse":469,"./shouldUpdateReactComponent":475,"./warning":478,"_process":480}],368:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactContext
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{}],315:[function(require,module,exports){
+},{}],316:[function(require,module,exports){
 var DesignStatesService, _;
 
 _ = require('lodash');
@@ -42734,29 +32922,11 @@ DesignStatesService = {
   }
 };
 
-<<<<<<< HEAD
 module.exports = DesignStatesService;
-=======
-module.exports = ReactContext;
-
-},{"./Object.assign":359}],369:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactCurrentOwner
- */
-
-"use strict";
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
 
-},{"lodash":486}],316:[function(require,module,exports){
+},{"lodash":487}],317:[function(require,module,exports){
 window.EntryNormalizer = {
   normalize: function(entryData) {
     var attr;
@@ -42797,24 +32967,8 @@ window.EntryNormalizer = {
 };
 
 
-<<<<<<< HEAD
-=======
-},{}],370:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactDOM
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
-},{}],317:[function(require,module,exports){
+},{}],318:[function(require,module,exports){
 var STORAGE_PREFIX;
 
 STORAGE_PREFIX = 'entries';
@@ -42880,27 +33034,12 @@ window.EntryStore = {
 
 
 
-},{}],318:[function(require,module,exports){
+},{}],319:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
 
 MOVE_OFFSET = 100;
 
-<<<<<<< HEAD
 MIN_OFFSET = 50;
-=======
-}).call(this,require('_process'))
-},{"./ReactElement":385,"./ReactElementValidator":386,"./ReactLegacyElement":394,"./mapObject":467,"_process":480}],371:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactDOMButton
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 STORAGE_PREFIX = 'positions:';
 
@@ -42941,7 +33080,7 @@ window.PositionsService = {
 
 
 
-},{}],319:[function(require,module,exports){
+},{}],320:[function(require,module,exports){
 window.UuidService = {
   generate: function() {
     var s4;
@@ -42954,7 +33093,7 @@ window.UuidService = {
 
 
 
-},{}],320:[function(require,module,exports){
+},{}],321:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -42976,25 +33115,9 @@ BaseStore = (function(_super) {
     return this.on(CHANGE_EVENT, cb);
   };
 
-<<<<<<< HEAD
   BaseStore.prototype.removeChangeListener = function(cb) {
     return this.off(CHANGE_EVENT, cb);
   };
-=======
-},{"./AutoFocusMixin":334,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./keyMirror":465}],372:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactDOMComponent
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
   return BaseStore;
 
@@ -43004,7 +33127,7 @@ module.exports = BaseStore;
 
 
 
-},{}],321:[function(require,module,exports){
+},{}],322:[function(require,module,exports){
 var BaseStore, CurrentUserStore, currentUser;
 
 BaseStore = require('./_base');
@@ -43086,7 +33209,7 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 
 
 
-},{"./_base":320}],322:[function(require,module,exports){
+},{"./_base":321}],323:[function(require,module,exports){
 var CHANGE_EVENT, SUMMARY_CHANGE_EVENT, _relationships;
 
 CHANGE_EVENT = 'changed';
@@ -43344,11 +33467,10 @@ RelationshipsStore.dispatchToken = RelationshipsDispatcher.register(function(pay
 
 
 
-},{}],323:[function(require,module,exports){
+},{}],324:[function(require,module,exports){
 var defaults,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-<<<<<<< HEAD
 defaults = {
   hoverClass: "_hover",
   onStart: function() {},
@@ -43359,20 +33481,6 @@ defaults = {
   dropables: null,
   inputs: null
 };
-=======
-}).call(this,require('_process'))
-},{"./CSSPropertyOperations":337,"./DOMProperty":343,"./DOMPropertyOperations":344,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactBrowserEventEmitter":363,"./ReactComponent":365,"./ReactMount":396,"./ReactMultiChild":397,"./ReactPerf":401,"./escapeTextForBrowser":442,"./invariant":459,"./isEventSupported":460,"./keyOf":466,"./monitorCodeUse":469,"_process":480}],373:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactDOMForm
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 window.FileReceiver = (function() {
   function FileReceiver(options) {
@@ -43482,7 +33590,6 @@ window.FileReceiver = (function() {
     }
   };
 
-<<<<<<< HEAD
   FileReceiver.prototype.toggleInput = function(input, state) {
     this.coverInput.forEach(function(input) {
       if (state) {
@@ -43492,21 +33599,6 @@ window.FileReceiver = (function() {
       }
     });
   };
-=======
-},{"./EventConstants":348,"./LocalEventTrapMixin":357,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385}],374:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactDOMIDOperations
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
   return FileReceiver;
 
@@ -43514,7 +33606,7 @@ window.FileReceiver = (function() {
 
 
 
-},{}],324:[function(require,module,exports){
+},{}],325:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -43523,7 +33615,7 @@ window.isMobile = function() {
 
 
 
-},{}],325:[function(require,module,exports){
+},{}],326:[function(require,module,exports){
 (function (global){
 global._ = require('lodash');
 
@@ -43541,22 +33633,7 @@ global.bowser = require('bowser');
 
 global.moment = require('../../../bower_components/momentjs/moment');
 
-<<<<<<< HEAD
 global.Pusher = require('pusher');
-=======
-}).call(this,require('_process'))
-},{"./CSSPropertyOperations":337,"./DOMChildrenOperations":342,"./DOMPropertyOperations":344,"./ReactMount":396,"./ReactPerf":401,"./invariant":459,"./setInnerHTML":473,"_process":480}],375:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactDOMImg
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 global.Modernizr = require('Modernizr');
 
@@ -43574,22 +33651,7 @@ require('aviator');
 
 require('swfobject');
 
-<<<<<<< HEAD
 require('es5-shim');
-=======
-},{"./EventConstants":348,"./LocalEventTrapMixin":357,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385}],376:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactDOMInput
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 require('jquery.mousewheel')(global.jQuery);
 
@@ -43628,7 +33690,7 @@ require('jquery.shapeshift');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../../bower_components/momentjs/moment":8,"Modernizr":undefined,"aviator":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":480,"imagesloaded":483,"introJs":undefined,"jquery":6,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"lodash":486,"medium-editor":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-color-picker":undefined,"react-mixin-manager":undefined,"screenviewer":undefined,"swfobject":undefined,"undo":undefined}],326:[function(require,module,exports){
+},{"../../../bower_components/momentjs/moment":8,"Modernizr":undefined,"aviator":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":481,"imagesloaded":484,"introJs":undefined,"jquery":6,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"lodash":487,"medium-editor":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-color-picker":undefined,"react-mixin-manager":undefined,"screenviewer":undefined,"swfobject":undefined,"undo":undefined}],327:[function(require,module,exports){
 var momentLocales;
 
 momentLocales = {
@@ -43639,7 +33701,7 @@ window.moment.locale('ru', momentLocales.ru);
 
 
 
-},{"../../../bower_components/momentjs/locale/ru":7}],327:[function(require,module,exports){
+},{"../../../bower_components/momentjs/locale/ru":7}],328:[function(require,module,exports){
 window.Tasty = {
   start: function(options) {
     var flashes, headers, locale, user;
@@ -43674,47 +33736,9 @@ window.Tasty = {
   }
 };
 
-<<<<<<< HEAD
-=======
-});
-
-module.exports = ReactDOMInput;
-
-}).call(this,require('_process'))
-},{"./AutoFocusMixin":334,"./DOMPropertyOperations":344,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactMount":396,"./ReactUpdates":412,"./invariant":459,"_process":480}],377:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactDOMOption
- */
-
-"use strict";
-
-var ReactBrowserComponentMixin = require("./ReactBrowserComponentMixin");
-var ReactCompositeComponent = require("./ReactCompositeComponent");
-var ReactElement = require("./ReactElement");
-var ReactDOM = require("./ReactDOM");
-
-var warning = require("./warning");
-
-// Store a reference to the <option> `ReactDOMComponent`. TODO: use string
-var option = ReactElement.createFactory(ReactDOM.option.type);
-
-/**
- * Implements an <option> native component that warns when `selected` is set.
- */
-var ReactDOMOption = ReactCompositeComponent.createClass({
-  displayName: 'ReactDOMOption',
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
-},{}],328:[function(require,module,exports){
+},{}],329:[function(require,module,exports){
 window.TastyUtils = {
   showFlashes: function(flashes) {
     if (flashes == null) {
@@ -43780,23 +33804,8 @@ window.TastyUtils = {
 
 
 
-<<<<<<< HEAD
-},{}],329:[function(require,module,exports){
+},{}],330:[function(require,module,exports){
 var ConnectStoreMixin, _;
-=======
-}).call(this,require('_process'))
-},{"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./warning":478,"_process":480}],378:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactDOMSelect
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 _ = require('lodash');
 
@@ -43837,7 +33846,7 @@ module.exports = ConnectStoreMixin;
 
 
 
-},{"lodash":486}],330:[function(require,module,exports){
+},{"lodash":487}],331:[function(require,module,exports){
 var ThumborService;
 
 ThumborService = {
@@ -43858,7 +33867,7 @@ module.exports = ThumborService;
 
 
 
-},{}],331:[function(require,module,exports){
+},{}],332:[function(require,module,exports){
 var ApiRoutes;
 
 ApiRoutes = {
@@ -43880,7 +33889,6 @@ ApiRoutes = {
   embed_url: function() {
     return TastySettings.api_host + '/v1/embed';
   },
-<<<<<<< HEAD
   design_settings_url: function(slug) {
     return TastySettings.api_host + '/v1/design_settings/' + slug;
   },
@@ -43980,9 +33988,6 @@ ApiRoutes = {
   messenger_ready_url: function() {
     return TastySettings.api_host + '/v1/messenger/ready';
   },
-  messenger_new_conversation_url: function(slug) {
-    return TastySettings.api_host + '/v1/messenger/conversations/by_slug/' + slug;
-  },
   messengerConversationsByUserId: function(userId) {
     return TastySettings.api_host + '/v1/messenger/conversations/by_user_id/' + userId;
   },
@@ -44018,108 +34023,6 @@ ApiRoutes = {
   },
   feedFriends: function() {
     return TastySettings.api_host + '/v1/my_feeds/friends';
-=======
-
-  _handleChange: function(event) {
-    var returnValue;
-    var onChange = LinkedValueUtils.getOnChange(this);
-    if (onChange) {
-      returnValue = onChange.call(this, event);
-    }
-
-    var selectedValue;
-    if (this.props.multiple) {
-      selectedValue = [];
-      var options = event.target.options;
-      for (var i = 0, l = options.length; i < l; i++) {
-        if (options[i].selected) {
-          selectedValue.push(options[i].value);
-        }
-      }
-    } else {
-      selectedValue = event.target.value;
-    }
-
-    this._pendingValue = selectedValue;
-    ReactUpdates.asap(updateWithPendingValueIfMounted, this);
-    return returnValue;
-  }
-
-});
-
-module.exports = ReactDOMSelect;
-
-},{"./AutoFocusMixin":334,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactUpdates":412}],379:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactDOMSelection
- */
-
-"use strict";
-
-var ExecutionEnvironment = require("./ExecutionEnvironment");
-
-var getNodeForCharacterOffset = require("./getNodeForCharacterOffset");
-var getTextContentAccessor = require("./getTextContentAccessor");
-
-/**
- * While `isCollapsed` is available on the Selection object and `collapsed`
- * is available on the Range object, IE11 sometimes gets them wrong.
- * If the anchor/focus nodes and offsets are the same, the range is collapsed.
- */
-function isCollapsed(anchorNode, anchorOffset, focusNode, focusOffset) {
-  return anchorNode === focusNode && anchorOffset === focusOffset;
-}
-
-/**
- * Get the appropriate anchor and focus node/offset pairs for IE.
- *
- * The catch here is that IE's selection API doesn't provide information
- * about whether the selection is forward or backward, so we have to
- * behave as though it's always forward.
- *
- * IE text differs from modern selection in that it behaves as though
- * block elements end with a new line. This means character offsets will
- * differ between the two APIs.
- *
- * @param {DOMElement} node
- * @return {object}
- */
-function getIEOffsets(node) {
-  var selection = document.selection;
-  var selectedRange = selection.createRange();
-  var selectedLength = selectedRange.text.length;
-
-  // Duplicate selection so we can move range without breaking user selection.
-  var fromStart = selectedRange.duplicate();
-  fromStart.moveToElementText(node);
-  fromStart.setEndPoint('EndToStart', selectedRange);
-
-  var startOffset = fromStart.text.length;
-  var endOffset = startOffset + selectedLength;
-
-  return {
-    start: startOffset,
-    end: endOffset
-  };
-}
-
-/**
- * @param {DOMElement} node
- * @return {?object}
- */
-function getModernOffsets(node) {
-  var selection = window.getSelection && window.getSelection();
-
-  if (!selection || selection.rangeCount === 0) {
-    return null;
->>>>>>> Infinite scroll prefill [deliver #90599686]
   }
 };
 
@@ -44127,7 +34030,7 @@ module.exports = ApiRoutes;
 
 
 
-},{}],332:[function(require,module,exports){
+},{}],333:[function(require,module,exports){
 var Routes;
 
 Routes = {
@@ -44200,7 +34103,7 @@ module.exports = Routes;
 
 
 
-},{}],333:[function(require,module,exports){
+},{}],334:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44227,12 +34130,7 @@ var AutoFocusMixin = {
 
 module.exports = AutoFocusMixin;
 
-<<<<<<< HEAD
-},{"./focusNode":443}],334:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":354,"./getNodeForCharacterOffset":452,"./getTextContentAccessor":454}],380:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./focusNode":444}],335:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -44452,14 +34350,9 @@ var BeforeInputEventPlugin = {
   }
 };
 
-<<<<<<< HEAD
 module.exports = BeforeInputEventPlugin;
 
-},{"./EventConstants":347,"./EventPropagators":352,"./ExecutionEnvironment":353,"./SyntheticInputEvent":421,"./keyOf":465}],335:[function(require,module,exports){
-=======
-}).call(this,require('_process'))
-},{"./AutoFocusMixin":334,"./DOMPropertyOperations":344,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactUpdates":412,"./invariant":459,"./warning":478,"_process":480}],381:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./EventConstants":348,"./EventPropagators":353,"./ExecutionEnvironment":354,"./SyntheticInputEvent":422,"./keyOf":466}],336:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44576,13 +34469,9 @@ var CSSProperty = {
   shorthandPropertyExpansions: shorthandPropertyExpansions
 };
 
-<<<<<<< HEAD
 module.exports = CSSProperty;
 
-},{}],336:[function(require,module,exports){
-=======
-},{"./Object.assign":359,"./ReactUpdates":412,"./Transaction":428,"./emptyFunction":440}],382:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{}],337:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -44717,12 +34606,8 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./CSSProperty":335,"./ExecutionEnvironment":353,"./camelizeStyleName":432,"./dangerousStyleValue":437,"./hyphenateStyleName":456,"./memoizeStringOnly":467,"./warning":477,"_process":479}],337:[function(require,module,exports){
+},{"./CSSProperty":336,"./ExecutionEnvironment":354,"./camelizeStyleName":433,"./dangerousStyleValue":438,"./hyphenateStyleName":457,"./memoizeStringOnly":468,"./warning":478,"_process":480}],338:[function(require,module,exports){
 (function (process){
-=======
-},{"./BeforeInputEventPlugin":335,"./ChangeEventPlugin":339,"./ClientReactRootIndex":340,"./CompositionEventPlugin":341,"./DefaultEventPluginOrder":346,"./EnterLeaveEventPlugin":347,"./ExecutionEnvironment":354,"./HTMLDOMPropertyConfig":355,"./MobileSafariClickEventPlugin":358,"./ReactBrowserComponentMixin":362,"./ReactComponentBrowserEnvironment":366,"./ReactDOMButton":371,"./ReactDOMComponent":372,"./ReactDOMForm":373,"./ReactDOMImg":375,"./ReactDOMInput":376,"./ReactDOMOption":377,"./ReactDOMSelect":378,"./ReactDOMTextarea":380,"./ReactDefaultBatchingStrategy":381,"./ReactDefaultPerf":383,"./ReactEventListener":390,"./ReactInjection":391,"./ReactInstanceHandles":393,"./ReactMount":396,"./SVGDOMPropertyConfig":413,"./SelectEventPlugin":414,"./ServerReactRootIndex":415,"./SimpleEventPlugin":416,"./createFullPageComponent":436,"_process":480}],383:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44820,12 +34705,8 @@ PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
 
-<<<<<<< HEAD
 }).call(this,require('_process'))
-},{"./Object.assign":358,"./PooledClass":359,"./invariant":458,"_process":479}],338:[function(require,module,exports){
-=======
-},{"./DOMProperty":343,"./ReactDefaultPerfAnalysis":384,"./ReactMount":396,"./ReactPerf":401,"./performanceNow":472}],384:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./Object.assign":359,"./PooledClass":360,"./invariant":459,"_process":480}],339:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45207,12 +35088,7 @@ var ChangeEventPlugin = {
 
 module.exports = ChangeEventPlugin;
 
-<<<<<<< HEAD
-},{"./EventConstants":347,"./EventPluginHub":349,"./EventPropagators":352,"./ExecutionEnvironment":353,"./ReactUpdates":411,"./SyntheticEvent":419,"./isEventSupported":459,"./isTextInputElement":461,"./keyOf":465}],339:[function(require,module,exports){
-=======
-},{"./Object.assign":359}],385:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./EventConstants":348,"./EventPluginHub":350,"./EventPropagators":353,"./ExecutionEnvironment":354,"./ReactUpdates":412,"./SyntheticEvent":420,"./isEventSupported":460,"./isTextInputElement":462,"./keyOf":466}],340:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45237,7 +35113,7 @@ var ClientReactRootIndex = {
 
 module.exports = ClientReactRootIndex;
 
-},{}],340:[function(require,module,exports){
+},{}],341:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45496,12 +35372,7 @@ var CompositionEventPlugin = {
 
 module.exports = CompositionEventPlugin;
 
-<<<<<<< HEAD
-},{"./EventConstants":347,"./EventPropagators":352,"./ExecutionEnvironment":353,"./ReactInputSelection":391,"./SyntheticCompositionEvent":417,"./getTextContentAccessor":453,"./keyOf":465}],341:[function(require,module,exports){
-=======
-}).call(this,require('_process'))
-},{"./ReactContext":368,"./ReactCurrentOwner":369,"./warning":478,"_process":480}],386:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./EventConstants":348,"./EventPropagators":353,"./ExecutionEnvironment":354,"./ReactInputSelection":392,"./SyntheticCompositionEvent":418,"./getTextContentAccessor":454,"./keyOf":466}],342:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -45676,11 +35547,7 @@ var DOMChildrenOperations = {
 module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./Danger":344,"./ReactMultiChildUpdateTypes":397,"./getTextContentAccessor":453,"./invariant":458,"_process":479}],342:[function(require,module,exports){
-=======
-},{"./ReactCurrentOwner":369,"./ReactElement":385,"./ReactPropTypeLocations":404,"./monitorCodeUse":469,"./warning":478,"_process":480}],387:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./Danger":345,"./ReactMultiChildUpdateTypes":398,"./getTextContentAccessor":454,"./invariant":459,"_process":480}],343:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -45833,11 +35700,6 @@ var DOMPropertyInjection = {
 };
 var defaultValueCache = {};
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./ReactElement":385,"./invariant":459,"_process":480}],388:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * DOMProperty exports lookup objects that can be used like functions:
  *
@@ -45868,26 +35730,12 @@ var DOMProperty = {
    */
   getPossibleStandardName: {},
 
-<<<<<<< HEAD
   /**
    * Mapping from normalized names to attribute names that differ. Attribute
    * names are used when rendering markup or with `*Attribute()`.
    * @type {Object}
    */
   getAttributeName: {},
-=======
-},{}],389:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactEventEmitterMixin
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
   /**
    * Mapping from normalized names to properties on DOM node instances.
@@ -45997,13 +35845,9 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 
-<<<<<<< HEAD
 }).call(this,require('_process'))
-},{"./invariant":458,"_process":479}],343:[function(require,module,exports){
+},{"./invariant":459,"_process":480}],344:[function(require,module,exports){
 (function (process){
-=======
-},{"./EventPluginHub":350}],390:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46198,13 +36042,9 @@ var DOMPropertyOperations = {
 
 module.exports = DOMPropertyOperations;
 
-<<<<<<< HEAD
 }).call(this,require('_process'))
-},{"./DOMProperty":342,"./escapeTextForBrowser":441,"./memoizeStringOnly":467,"./warning":477,"_process":479}],344:[function(require,module,exports){
+},{"./DOMProperty":343,"./escapeTextForBrowser":442,"./memoizeStringOnly":468,"./warning":478,"_process":480}],345:[function(require,module,exports){
 (function (process){
-=======
-},{"./EventListener":349,"./ExecutionEnvironment":354,"./Object.assign":359,"./PooledClass":360,"./ReactInstanceHandles":393,"./ReactMount":396,"./ReactUpdates":412,"./getEventTarget":450,"./getUnboundedScrollPosition":455}],391:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46231,10 +36071,6 @@ var invariant = require("./invariant");
 var OPEN_TAG_NAME_EXP = /^(<[^ \/>]+)/;
 var RESULT_INDEX_ATTR = 'data-danger-index';
 
-<<<<<<< HEAD
-=======
-},{"./DOMProperty":343,"./EventPluginHub":350,"./ReactBrowserEventEmitter":363,"./ReactComponent":365,"./ReactCompositeComponent":367,"./ReactEmptyComponent":387,"./ReactNativeComponent":399,"./ReactPerf":401,"./ReactRootIndex":408,"./ReactUpdates":412}],392:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Extracts the `nodeName` from a string of markup.
  *
@@ -46392,13 +36228,8 @@ var Danger = {
 
 module.exports = Danger;
 
-<<<<<<< HEAD
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":353,"./createNodesFromMarkup":436,"./emptyFunction":439,"./getMarkupWrap":450,"./invariant":458,"_process":479}],345:[function(require,module,exports){
-=======
-},{"./ReactDOMSelection":379,"./containsNode":434,"./focusNode":444,"./getActiveElement":446}],393:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./ExecutionEnvironment":354,"./createNodesFromMarkup":437,"./emptyFunction":440,"./getMarkupWrap":451,"./invariant":459,"_process":480}],346:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46438,7 +36269,7 @@ var DefaultEventPluginOrder = [
 
 module.exports = DefaultEventPluginOrder;
 
-},{"./keyOf":465}],346:[function(require,module,exports){
+},{"./keyOf":466}],347:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46578,13 +36409,7 @@ var EnterLeaveEventPlugin = {
 
 module.exports = EnterLeaveEventPlugin;
 
-<<<<<<< HEAD
-},{"./EventConstants":347,"./EventPropagators":352,"./ReactMount":395,"./SyntheticMouseEvent":423,"./keyOf":465}],347:[function(require,module,exports){
-=======
-}).call(this,require('_process'))
-},{"./ReactRootIndex":408,"./invariant":459,"_process":480}],394:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./EventConstants":348,"./EventPropagators":353,"./ReactMount":396,"./SyntheticMouseEvent":424,"./keyOf":466}],348:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46656,7 +36481,7 @@ var EventConstants = {
 
 module.exports = EventConstants;
 
-},{"./keyMirror":464}],348:[function(require,module,exports){
+},{"./keyMirror":465}],349:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -46679,11 +36504,6 @@ module.exports = EventConstants;
 
 var emptyFunction = require("./emptyFunction");
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./ReactCurrentOwner":369,"./invariant":459,"./monitorCodeUse":469,"./warning":478,"_process":480}],395:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Upstream version of event listener. Does not take into account specific
  * nature of platform.
@@ -46750,12 +36570,8 @@ var EventListener = {
 
 module.exports = EventListener;
 
-<<<<<<< HEAD
 }).call(this,require('_process'))
-},{"./emptyFunction":439,"_process":479}],349:[function(require,module,exports){
-=======
-},{"./adler32":431}],396:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./emptyFunction":440,"_process":480}],350:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -47031,12 +36847,8 @@ var EventPluginHub = {
 module.exports = EventPluginHub;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./EventPluginRegistry":350,"./EventPluginUtils":351,"./accumulateInto":429,"./forEachAccumulated":444,"./invariant":458,"_process":479}],350:[function(require,module,exports){
+},{"./EventPluginRegistry":351,"./EventPluginUtils":352,"./accumulateInto":430,"./forEachAccumulated":445,"./invariant":459,"_process":480}],351:[function(require,module,exports){
 (function (process){
-=======
-},{"./DOMProperty":343,"./ReactBrowserEventEmitter":363,"./ReactCurrentOwner":369,"./ReactElement":385,"./ReactInstanceHandles":393,"./ReactLegacyElement":394,"./ReactPerf":401,"./containsNode":434,"./deprecated":439,"./getReactRootElementInContainer":453,"./instantiateReactComponent":458,"./invariant":459,"./shouldUpdateReactComponent":475,"./warning":478,"_process":480}],397:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47315,7 +37127,7 @@ var EventPluginRegistry = {
 module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
-},{"./invariant":458,"_process":479}],351:[function(require,module,exports){
+},{"./invariant":459,"_process":480}],352:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -47536,7 +37348,7 @@ var EventPluginUtils = {
 module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
-},{"./EventConstants":347,"./invariant":458,"_process":479}],352:[function(require,module,exports){
+},{"./EventConstants":348,"./invariant":459,"_process":480}],353:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -47626,10 +37438,6 @@ function accumulateDispatches(id, ignoredDirection, event) {
   }
 }
 
-<<<<<<< HEAD
-=======
-},{"./ReactComponent":365,"./ReactMultiChildUpdateTypes":398,"./flattenChildren":443,"./instantiateReactComponent":458,"./shouldUpdateReactComponent":475}],398:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Accumulates dispatches on an `SyntheticEvent`, but only for the
  * `dispatchMarker`.
@@ -47681,13 +37489,8 @@ var EventPropagators = {
 
 module.exports = EventPropagators;
 
-<<<<<<< HEAD
 }).call(this,require('_process'))
-},{"./EventConstants":347,"./EventPluginHub":349,"./accumulateInto":429,"./forEachAccumulated":444,"_process":479}],353:[function(require,module,exports){
-=======
-},{"./keyMirror":465}],399:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./EventConstants":348,"./EventPluginHub":350,"./accumulateInto":430,"./forEachAccumulated":445,"_process":480}],354:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47732,13 +37535,7 @@ var ExecutionEnvironment = {
 
 module.exports = ExecutionEnvironment;
 
-<<<<<<< HEAD
-},{}],354:[function(require,module,exports){
-=======
-}).call(this,require('_process'))
-},{"./Object.assign":359,"./invariant":459,"_process":480}],400:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{}],355:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47930,12 +37727,7 @@ var HTMLDOMPropertyConfig = {
 
 module.exports = HTMLDOMPropertyConfig;
 
-<<<<<<< HEAD
-},{"./DOMProperty":342,"./ExecutionEnvironment":353}],355:[function(require,module,exports){
-=======
-}).call(this,require('_process'))
-},{"./emptyObject":441,"./invariant":459,"_process":480}],401:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./DOMProperty":343,"./ExecutionEnvironment":354}],356:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -48091,7 +37883,7 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
-},{"./ReactPropTypes":404,"./invariant":458,"_process":479}],356:[function(require,module,exports){
+},{"./ReactPropTypes":405,"./invariant":459,"_process":480}],357:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -48141,12 +37933,7 @@ var LocalEventTrapMixin = {
 module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./ReactBrowserEventEmitter":362,"./accumulateInto":429,"./forEachAccumulated":444,"./invariant":458,"_process":479}],357:[function(require,module,exports){
-=======
-},{"_process":480}],402:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./ReactBrowserEventEmitter":363,"./accumulateInto":430,"./forEachAccumulated":445,"./invariant":459,"_process":480}],358:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -48204,7 +37991,7 @@ var MobileSafariClickEventPlugin = {
 
 module.exports = MobileSafariClickEventPlugin;
 
-},{"./EventConstants":347,"./emptyFunction":439}],358:[function(require,module,exports){
+},{"./EventConstants":348,"./emptyFunction":440}],359:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -48251,7 +38038,7 @@ function assign(target, sources) {
 
 module.exports = assign;
 
-},{}],359:[function(require,module,exports){
+},{}],360:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -48367,11 +38154,7 @@ var PooledClass = {
 module.exports = PooledClass;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./invariant":458,"_process":479}],360:[function(require,module,exports){
-=======
-},{"./Object.assign":359,"./emptyFunction":440,"./invariant":459,"./joinClasses":464,"./warning":478,"_process":480}],403:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./invariant":459,"_process":480}],361:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -48559,12 +38342,8 @@ React.version = '0.12.2';
 module.exports = React;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./DOMPropertyOperations":343,"./EventPluginUtils":351,"./ExecutionEnvironment":353,"./Object.assign":358,"./ReactChildren":363,"./ReactComponent":364,"./ReactCompositeComponent":366,"./ReactContext":367,"./ReactCurrentOwner":368,"./ReactDOM":369,"./ReactDOMComponent":371,"./ReactDefaultInjection":381,"./ReactElement":384,"./ReactElementValidator":385,"./ReactInstanceHandles":392,"./ReactLegacyElement":393,"./ReactMount":395,"./ReactMultiChild":396,"./ReactPerf":400,"./ReactPropTypes":404,"./ReactServerRendering":408,"./ReactTextComponent":410,"./deprecated":438,"./onlyChild":469,"_process":479}],361:[function(require,module,exports){
+},{"./DOMPropertyOperations":344,"./EventPluginUtils":352,"./ExecutionEnvironment":354,"./Object.assign":359,"./ReactChildren":364,"./ReactComponent":365,"./ReactCompositeComponent":367,"./ReactContext":368,"./ReactCurrentOwner":369,"./ReactDOM":370,"./ReactDOMComponent":372,"./ReactDefaultInjection":382,"./ReactElement":385,"./ReactElementValidator":386,"./ReactInstanceHandles":393,"./ReactLegacyElement":394,"./ReactMount":396,"./ReactMultiChild":397,"./ReactPerf":401,"./ReactPropTypes":405,"./ReactServerRendering":409,"./ReactTextComponent":411,"./deprecated":439,"./onlyChild":470,"_process":480}],362:[function(require,module,exports){
 (function (process){
-=======
-},{"_process":480}],404:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -48603,14 +38382,10 @@ var ReactBrowserComponentMixin = {
   }
 };
 
-<<<<<<< HEAD
 module.exports = ReactBrowserComponentMixin;
 
 }).call(this,require('_process'))
-},{"./ReactEmptyComponent":386,"./ReactMount":395,"./invariant":458,"_process":479}],362:[function(require,module,exports){
-=======
-},{"./keyMirror":465}],405:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./ReactEmptyComponent":387,"./ReactMount":396,"./invariant":459,"_process":480}],363:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -48949,82 +38724,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
     }
   },
 
-<<<<<<< HEAD
   eventNameDispatchConfigs: EventPluginHub.eventNameDispatchConfigs,
-=======
-function isNode(propValue) {
-  switch(typeof propValue) {
-    case 'number':
-    case 'string':
-      return true;
-    case 'boolean':
-      return !propValue;
-    case 'object':
-      if (Array.isArray(propValue)) {
-        return propValue.every(isNode);
-      }
-      if (ReactElement.isValidElement(propValue)) {
-        return true;
-      }
-      for (var k in propValue) {
-        if (!isNode(propValue[k])) {
-          return false;
-        }
-      }
-      return true;
-    default:
-      return false;
-  }
-}
-
-// Equivalent of `typeof` but with special handling for array and regexp.
-function getPropType(propValue) {
-  var propType = typeof propValue;
-  if (Array.isArray(propValue)) {
-    return 'array';
-  }
-  if (propValue instanceof RegExp) {
-    // Old webkits (at least until Android 4.0) return 'function' rather than
-    // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
-    // passes PropTypes.object.
-    return 'object';
-  }
-  return propType;
-}
-
-// This handles more types than `getPropType`. Only used for error messages.
-// See `createPrimitiveTypeChecker`.
-function getPreciseType(propValue) {
-  var propType = getPropType(propValue);
-  if (propType === 'object') {
-    if (propValue instanceof Date) {
-      return 'date';
-    } else if (propValue instanceof RegExp) {
-      return 'regexp';
-    }
-  }
-  return propType;
-}
-
-module.exports = ReactPropTypes;
-
-},{"./ReactElement":385,"./ReactPropTypeLocationNames":403,"./deprecated":439,"./emptyFunction":440}],406:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactPutListenerQueue
- */
-
-"use strict";
-
-var PooledClass = require("./PooledClass");
-var ReactBrowserEventEmitter = require("./ReactBrowserEventEmitter");
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
   registrationNameModules: EventPluginHub.registrationNameModules,
 
@@ -49040,12 +38740,8 @@ var ReactBrowserEventEmitter = require("./ReactBrowserEventEmitter");
 
 module.exports = ReactBrowserEventEmitter;
 
-<<<<<<< HEAD
-},{"./EventConstants":347,"./EventPluginHub":349,"./EventPluginRegistry":350,"./Object.assign":358,"./ReactEventEmitterMixin":388,"./ViewportMetrics":428,"./isEventSupported":459}],363:[function(require,module,exports){
+},{"./EventConstants":348,"./EventPluginHub":350,"./EventPluginRegistry":351,"./Object.assign":359,"./ReactEventEmitterMixin":389,"./ViewportMetrics":429,"./isEventSupported":460}],364:[function(require,module,exports){
 (function (process){
-=======
-},{"./Object.assign":359,"./PooledClass":360,"./ReactBrowserEventEmitter":363}],407:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49144,45 +38840,11 @@ function mapSingleChildIntoContext(traverseContext, child, name, i) {
   }
 }
 
-<<<<<<< HEAD
-=======
-},{"./CallbackQueue":338,"./Object.assign":359,"./PooledClass":360,"./ReactBrowserEventEmitter":363,"./ReactInputSelection":392,"./ReactPutListenerQueue":406,"./Transaction":428}],408:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Maps children that are typically specified as `props.children`.
  *
-<<<<<<< HEAD
  * The provided mapFunction(child, key, index) will be called for each
  * leaf child.
-=======
- * @providesModule ReactRootIndex
- * @typechecks
- */
-
-"use strict";
-
-var ReactRootIndexInjection = {
-  /**
-   * @param {function} _createReactRootIndex
-   */
-  injectCreateReactRootIndex: function(_createReactRootIndex) {
-    ReactRootIndex.createReactRootIndex = _createReactRootIndex;
-  }
-};
-
-var ReactRootIndex = {
-  createReactRootIndex: null,
-  injection: ReactRootIndexInjection
-};
-
-module.exports = ReactRootIndex;
-
-},{}],409:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
->>>>>>> Infinite scroll prefill [deliver #90599686]
  *
  * TODO: This may likely break any calls to `ReactChildren.map` that were
  * previously relying on the fact that we guarded against null children.
@@ -49228,12 +38890,8 @@ var ReactChildren = {
 module.exports = ReactChildren;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./PooledClass":359,"./traverseAllChildren":476,"./warning":477,"_process":479}],364:[function(require,module,exports){
+},{"./PooledClass":360,"./traverseAllChildren":477,"./warning":478,"_process":480}],365:[function(require,module,exports){
 (function (process){
-=======
-},{"./ReactElement":385,"./ReactInstanceHandles":393,"./ReactMarkupChecksum":395,"./ReactServerRenderingTransaction":410,"./instantiateReactComponent":458,"./invariant":459,"_process":480}],410:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49454,23 +39112,8 @@ var ReactComponent = {
       // incremental update. TODO: Consider deprecating this field.
       this._owner = element._owner;
 
-<<<<<<< HEAD
       // All components start unmounted.
       this._lifeCycleState = ComponentLifeCycle.UNMOUNTED;
-=======
-},{"./CallbackQueue":338,"./Object.assign":359,"./PooledClass":360,"./ReactPutListenerQueue":406,"./Transaction":428,"./emptyFunction":440}],411:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactTextComponent
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
       // See ReactUpdates.
       this._pendingCallbacks = null;
@@ -49689,12 +39332,8 @@ var ReactComponent = {
 
 module.exports = ReactComponent;
 
-<<<<<<< HEAD
 }).call(this,require('_process'))
-},{"./Object.assign":358,"./ReactElement":384,"./ReactOwner":399,"./ReactUpdates":411,"./invariant":458,"./keyMirror":464,"_process":479}],365:[function(require,module,exports){
-=======
-},{"./DOMPropertyOperations":344,"./Object.assign":359,"./ReactComponent":365,"./ReactElement":385,"./escapeTextForBrowser":442}],412:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./Object.assign":359,"./ReactElement":385,"./ReactOwner":400,"./ReactUpdates":412,"./invariant":459,"./keyMirror":465,"_process":480}],366:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -49816,12 +39455,8 @@ var ReactComponentBrowserEnvironment = {
 module.exports = ReactComponentBrowserEnvironment;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./ReactDOMIDOperations":373,"./ReactMarkupChecksum":394,"./ReactMount":395,"./ReactPerf":400,"./ReactReconcileTransaction":406,"./getReactRootElementInContainer":452,"./invariant":458,"./setInnerHTML":472,"_process":479}],366:[function(require,module,exports){
+},{"./ReactDOMIDOperations":374,"./ReactMarkupChecksum":395,"./ReactMount":396,"./ReactPerf":401,"./ReactReconcileTransaction":407,"./getReactRootElementInContainer":453,"./invariant":459,"./setInnerHTML":473,"_process":480}],367:[function(require,module,exports){
 (function (process){
-=======
-},{"./CallbackQueue":338,"./Object.assign":359,"./PooledClass":360,"./ReactCurrentOwner":369,"./ReactPerf":401,"./Transaction":428,"./invariant":459,"./warning":478,"_process":480}],413:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49890,10 +39525,6 @@ var SpecPolicy = keyMirror({
 
 var injectedMixins = [];
 
-<<<<<<< HEAD
-=======
-},{"./DOMProperty":343}],414:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Composite components are higher-level components that compose other composite
  * or native components.
@@ -50125,21 +39756,6 @@ var ReactCompositeComponentInterface = {
    */
   componentWillUnmount: SpecPolicy.DEFINE_MANY,
 
-<<<<<<< HEAD
-=======
-},{"./EventConstants":348,"./EventPropagators":353,"./ReactInputSelection":392,"./SyntheticEvent":420,"./getActiveElement":446,"./isTextInputElement":462,"./keyOf":466,"./shallowEqual":474}],415:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ServerReactRootIndex
- * @typechecks
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 
   // ==== Advanced methods ====
@@ -50158,11 +39774,6 @@ var ReactCompositeComponentInterface = {
 
 };
 
-<<<<<<< HEAD
-=======
-},{}],416:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Mapping from class specification keys to special processing functions.
  *
@@ -50451,11 +40062,6 @@ function mixStaticSpecIntoComponent(Constructor, statics) {
   }
 }
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./EventConstants":348,"./EventPluginUtils":352,"./EventPropagators":353,"./SyntheticClipboardEvent":417,"./SyntheticDragEvent":419,"./SyntheticEvent":420,"./SyntheticFocusEvent":421,"./SyntheticKeyboardEvent":423,"./SyntheticMouseEvent":424,"./SyntheticTouchEvent":425,"./SyntheticUIEvent":426,"./SyntheticWheelEvent":427,"./getEventCharCode":447,"./invariant":459,"./keyOf":466,"./warning":478,"_process":480}],417:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Merge two objects, but throw if both contain the same key.
  *
@@ -50520,15 +40126,6 @@ function createChainedFunction(one, two) {
   };
 }
 
-<<<<<<< HEAD
-=======
-SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
-
-module.exports = SyntheticClipboardEvent;
-
-
-},{"./SyntheticEvent":420}],418:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * `ReactCompositeComponent` maintains an auxiliary life cycle state in
  * `this._compositeLifeCycleState` (which can be null).
@@ -50573,10 +40170,6 @@ var CompositeLifeCycle = keyMirror({
   RECEIVING_PROPS: null
 });
 
-<<<<<<< HEAD
-=======
-},{"./SyntheticEvent":420}],419:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * @lends {ReactCompositeComponent.prototype}
  */
@@ -50637,24 +40230,9 @@ var ReactCompositeComponentMixin = {
       );
       this._compositeLifeCycleState = CompositeLifeCycle.MOUNTING;
 
-<<<<<<< HEAD
       if (this.__reactAutoBindMap) {
         this._bindAutoBindMethods();
       }
-=======
-},{"./SyntheticMouseEvent":424}],420:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule SyntheticEvent
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
       this.context = this._processContext(this._currentElement._context);
       this.props = this._processProps(this.props);
@@ -50908,26 +40486,11 @@ var ReactCompositeComponentMixin = {
       return;
     }
 
-<<<<<<< HEAD
     if (this._pendingElement == null &&
         this._pendingState == null &&
         !this._pendingForceUpdate) {
       return;
     }
-=======
-},{"./Object.assign":359,"./PooledClass":360,"./emptyFunction":440,"./getEventTarget":450}],421:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule SyntheticFocusEvent
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     var nextContext = this.context;
     var nextProps = this.props;
@@ -50964,7 +40527,6 @@ var ReactCompositeComponentMixin = {
       }
     }
 
-<<<<<<< HEAD
     if (shouldUpdate) {
       this._pendingForceUpdate = false;
       // Will set `this.props`, `this.state` and `this.context`.
@@ -50982,20 +40544,6 @@ var ReactCompositeComponentMixin = {
       this.props = nextProps;
       this.state = nextState;
       this.context = nextContext;
-=======
-},{"./SyntheticUIEvent":426}],422:[function(require,module,exports){
-/**
- * Copyright 2013 Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule SyntheticInputEvent
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
       // Owner cannot change because shouldUpdateReactComponent doesn't allow
       // it. TODO: Remove this._owner completely.
@@ -51052,7 +40600,6 @@ var ReactCompositeComponentMixin = {
     }
   },
 
-<<<<<<< HEAD
   receiveComponent: function(nextElement, transaction) {
     if (nextElement === this._currentElement &&
         nextElement._owner != null) {
@@ -51065,20 +40612,6 @@ var ReactCompositeComponentMixin = {
       // deeply mutated and reused.
       return;
     }
-=======
-},{"./SyntheticEvent":420}],423:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule SyntheticKeyboardEvent
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     ReactComponent.Mixin.receiveComponent.call(
       this,
@@ -51274,10 +40807,6 @@ assign(
   ReactCompositeComponentMixin
 );
 
-<<<<<<< HEAD
-=======
-},{"./SyntheticUIEvent":426,"./getEventCharCode":447,"./getEventKey":448,"./getEventModifierState":449}],424:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Module for creating composite components.
  *
@@ -51365,12 +40894,8 @@ var ReactCompositeComponent = {
 
 module.exports = ReactCompositeComponent;
 
-<<<<<<< HEAD
 }).call(this,require('_process'))
-},{"./Object.assign":358,"./ReactComponent":364,"./ReactContext":367,"./ReactCurrentOwner":368,"./ReactElement":384,"./ReactElementValidator":385,"./ReactEmptyComponent":386,"./ReactErrorUtils":387,"./ReactLegacyElement":393,"./ReactOwner":399,"./ReactPerf":400,"./ReactPropTransferer":401,"./ReactPropTypeLocationNames":402,"./ReactPropTypeLocations":403,"./ReactUpdates":411,"./instantiateReactComponent":457,"./invariant":458,"./keyMirror":464,"./keyOf":465,"./mapObject":466,"./monitorCodeUse":468,"./shouldUpdateReactComponent":474,"./warning":477,"_process":479}],367:[function(require,module,exports){
-=======
-},{"./SyntheticUIEvent":426,"./ViewportMetrics":429,"./getEventModifierState":449}],425:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./Object.assign":359,"./ReactComponent":365,"./ReactContext":368,"./ReactCurrentOwner":369,"./ReactElement":385,"./ReactElementValidator":386,"./ReactEmptyComponent":387,"./ReactErrorUtils":388,"./ReactLegacyElement":394,"./ReactOwner":400,"./ReactPerf":401,"./ReactPropTransferer":402,"./ReactPropTypeLocationNames":403,"./ReactPropTypeLocations":404,"./ReactUpdates":412,"./instantiateReactComponent":458,"./invariant":459,"./keyMirror":465,"./keyOf":466,"./mapObject":467,"./monitorCodeUse":469,"./shouldUpdateReactComponent":475,"./warning":478,"_process":480}],368:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51432,7 +40957,7 @@ var ReactContext = {
 
 module.exports = ReactContext;
 
-},{"./Object.assign":358}],368:[function(require,module,exports){
+},{"./Object.assign":359}],369:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51456,7 +40981,6 @@ module.exports = ReactContext;
  */
 var ReactCurrentOwner = {
 
-<<<<<<< HEAD
   /**
    * @internal
    * @type {ReactComponent}
@@ -51467,11 +40991,8 @@ var ReactCurrentOwner = {
 
 module.exports = ReactCurrentOwner;
 
-},{}],369:[function(require,module,exports){
+},{}],370:[function(require,module,exports){
 (function (process){
-=======
-},{"./SyntheticUIEvent":426,"./getEventModifierState":449}],426:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51650,14 +41171,10 @@ var ReactDOM = mapObject({
 
 }, createDOMFactory);
 
-<<<<<<< HEAD
 module.exports = ReactDOM;
 
 }).call(this,require('_process'))
-},{"./ReactElement":384,"./ReactElementValidator":385,"./ReactLegacyElement":393,"./mapObject":466,"_process":479}],370:[function(require,module,exports){
-=======
-},{"./SyntheticEvent":420,"./getEventTarget":450}],427:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./ReactElement":385,"./ReactElementValidator":386,"./ReactLegacyElement":394,"./mapObject":467,"_process":480}],371:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51707,7 +41224,6 @@ var ReactDOMButton = ReactCompositeComponent.createClass({
   render: function() {
     var props = {};
 
-<<<<<<< HEAD
     // Copy the props; except the mouse listeners if we're disabled
     for (var key in this.props) {
       if (this.props.hasOwnProperty(key) &&
@@ -51723,10 +41239,7 @@ var ReactDOMButton = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMButton;
 
-},{"./AutoFocusMixin":333,"./ReactBrowserComponentMixin":361,"./ReactCompositeComponent":366,"./ReactDOM":369,"./ReactElement":384,"./keyMirror":464}],371:[function(require,module,exports){
-=======
-},{"./SyntheticMouseEvent":424}],428:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./AutoFocusMixin":334,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./keyMirror":465}],372:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -51770,11 +41283,6 @@ var STYLE = keyOf({style: null});
 
 var ELEMENT_NODE_TYPE = 1;
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],429:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * @param {?object} props
  */
@@ -51782,47 +41290,7 @@ function assertValidProps(props) {
   if (!props) {
     return;
   }
-<<<<<<< HEAD
   // Note the use of `==` which checks for null or undefined.
-=======
-
-};
-
-module.exports = ViewportMetrics;
-
-},{"./getUnboundedScrollPosition":455}],430:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule accumulateInto
- */
-
-"use strict";
-
-var invariant = require("./invariant");
-
-/**
- *
- * Accumulates items that must not be null or undefined into the first one. This
- * is used to conserve memory by avoiding array allocations, and thus sacrifices
- * API cleanness. Since `current` can be null before being passed in and not
- * null after this function, make sure to assign it back to `current`:
- *
- * `a = accumulateInto(a, b);`
- *
- * This API should be sparingly used. Try `accumulate` for something cleaner.
- *
- * @return {*|array<*>} An accumulation of items.
- */
-
-function accumulateInto(current, next) {
->>>>>>> Infinite scroll prefill [deliver #90599686]
   ("production" !== process.env.NODE_ENV ? invariant(
     props.children == null || props.dangerouslySetInnerHTML == null,
     'Can only set one of `children` or `props.dangerouslySetInnerHTML`.'
@@ -51868,25 +41336,8 @@ function putListener(id, registrationName, listener, transaction) {
   );
 }
 
-<<<<<<< HEAD
 // For HTML, certain tags should omit their close tag. We keep a whitelist for
 // those special cased tags.
-=======
-module.exports = accumulateInto;
-
-}).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],431:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule adler32
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 var omittedCloseTags = {
   'area': true,
@@ -51922,12 +41373,6 @@ function validateDangerousTag(tag) {
   }
 }
 
-<<<<<<< HEAD
-=======
-module.exports = adler32;
-
-},{}],432:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Creates a new React class that is idempotent and capable of containing other
  * React components. It accepts event listeners and DOM properties that are
@@ -51951,22 +41396,7 @@ function ReactDOMComponent(tag) {
 
 ReactDOMComponent.displayName = 'ReactDOMComponent';
 
-<<<<<<< HEAD
 ReactDOMComponent.Mixin = {
-=======
-},{}],433:[function(require,module,exports){
-/**
- * Copyright 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule camelizeStyleName
- * @typechecks
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
   /**
    * Generates root tag markup then recurses. This method has side effects and
@@ -52049,7 +41479,6 @@ ReactDOMComponent.Mixin = {
     return ret + ' ' + markupForID + '>';
   },
 
-<<<<<<< HEAD
   /**
    * Creates markup for the content between the tags.
    *
@@ -52080,20 +41509,6 @@ ReactDOMComponent.Mixin = {
     }
     return '';
   },
-=======
-},{"./camelize":432}],434:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule containsNode
- * @typechecks
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
   receiveComponent: function(nextElement, transaction) {
     if (nextElement === this._currentElement &&
@@ -52234,7 +41649,6 @@ ReactDOMComponent.Mixin = {
     }
   },
 
-<<<<<<< HEAD
   /**
    * Reconciles the children with the various properties that affect the
    * children content.
@@ -52244,20 +41658,6 @@ ReactDOMComponent.Mixin = {
    */
   _updateDOMChildren: function(lastProps, transaction) {
     var nextProps = this.props;
-=======
-},{"./isTextNode":463}],435:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule createArrayFrom
- * @typechecks
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     var lastContent =
       CONTENT_TYPES[typeof lastProps.children] ? lastProps.children : null;
@@ -52315,7 +41715,6 @@ ReactDOMComponent.Mixin = {
 
 };
 
-<<<<<<< HEAD
 assign(
   ReactDOMComponent.prototype,
   ReactComponent.Mixin,
@@ -52327,11 +41726,7 @@ assign(
 module.exports = ReactDOMComponent;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":336,"./DOMProperty":342,"./DOMPropertyOperations":343,"./Object.assign":358,"./ReactBrowserComponentMixin":361,"./ReactBrowserEventEmitter":362,"./ReactComponent":364,"./ReactMount":395,"./ReactMultiChild":396,"./ReactPerf":400,"./escapeTextForBrowser":441,"./invariant":458,"./isEventSupported":459,"./keyOf":465,"./monitorCodeUse":468,"_process":479}],372:[function(require,module,exports){
-=======
-},{"./toArray":476}],436:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./CSSPropertyOperations":337,"./DOMProperty":343,"./DOMPropertyOperations":344,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactBrowserEventEmitter":363,"./ReactComponent":365,"./ReactMount":396,"./ReactMultiChild":397,"./ReactPerf":401,"./escapeTextForBrowser":442,"./invariant":459,"./isEventSupported":460,"./keyOf":466,"./monitorCodeUse":469,"_process":480}],373:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52381,12 +41776,7 @@ var ReactDOMForm = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMForm;
 
-<<<<<<< HEAD
-},{"./EventConstants":347,"./LocalEventTrapMixin":356,"./ReactBrowserComponentMixin":361,"./ReactCompositeComponent":366,"./ReactDOM":369,"./ReactElement":384}],373:[function(require,module,exports){
-=======
-}).call(this,require('_process'))
-},{"./ReactCompositeComponent":367,"./ReactElement":385,"./invariant":459,"_process":480}],437:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./EventConstants":348,"./LocalEventTrapMixin":357,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385}],374:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -52572,11 +41962,7 @@ var ReactDOMIDOperations = {
 module.exports = ReactDOMIDOperations;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./CSSPropertyOperations":336,"./DOMChildrenOperations":341,"./DOMPropertyOperations":343,"./ReactMount":395,"./ReactPerf":400,"./invariant":458,"./setInnerHTML":472,"_process":479}],374:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":354,"./createArrayFrom":435,"./getMarkupWrap":451,"./invariant":459,"_process":480}],438:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./CSSPropertyOperations":337,"./DOMChildrenOperations":342,"./DOMPropertyOperations":344,"./ReactMount":396,"./ReactPerf":401,"./invariant":459,"./setInnerHTML":473,"_process":480}],375:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52624,11 +42010,7 @@ var ReactDOMImg = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMImg;
 
-<<<<<<< HEAD
-},{"./EventConstants":347,"./LocalEventTrapMixin":356,"./ReactBrowserComponentMixin":361,"./ReactCompositeComponent":366,"./ReactDOM":369,"./ReactElement":384}],375:[function(require,module,exports){
-=======
-},{"./CSSProperty":336}],439:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./EventConstants":348,"./LocalEventTrapMixin":357,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385}],376:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -52806,12 +42188,8 @@ var ReactDOMInput = ReactCompositeComponent.createClass({
 module.exports = ReactDOMInput;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./AutoFocusMixin":333,"./DOMPropertyOperations":343,"./LinkedValueUtils":355,"./Object.assign":358,"./ReactBrowserComponentMixin":361,"./ReactCompositeComponent":366,"./ReactDOM":369,"./ReactElement":384,"./ReactMount":395,"./ReactUpdates":411,"./invariant":458,"_process":479}],376:[function(require,module,exports){
+},{"./AutoFocusMixin":334,"./DOMPropertyOperations":344,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactMount":396,"./ReactUpdates":412,"./invariant":459,"_process":480}],377:[function(require,module,exports){
 (function (process){
-=======
-},{"./Object.assign":359,"./warning":478,"_process":480}],440:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52835,11 +42213,6 @@ var warning = require("./warning");
 // Store a reference to the <option> `ReactDOMComponent`. TODO: use string
 var option = ReactElement.createFactory(ReactDOM.option.type);
 
-<<<<<<< HEAD
-=======
-},{}],441:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Implements an <option> native component that warns when `selected` is set.
  */
@@ -52868,11 +42241,7 @@ var ReactDOMOption = ReactCompositeComponent.createClass({
 module.exports = ReactDOMOption;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./ReactBrowserComponentMixin":361,"./ReactCompositeComponent":366,"./ReactDOM":369,"./ReactElement":384,"./warning":477,"_process":479}],377:[function(require,module,exports){
-=======
-},{"_process":480}],442:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./warning":478,"_process":480}],378:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52963,11 +42332,6 @@ function updateOptions(component, propValue) {
   }
 }
 
-<<<<<<< HEAD
-=======
-},{}],443:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Implements a <select> native component that allows optionally setting the
  * props `value` and `defaultValue`. If `multiple` is false, the prop must be a
@@ -53061,12 +42425,7 @@ var ReactDOMSelect = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMSelect;
 
-<<<<<<< HEAD
-},{"./AutoFocusMixin":333,"./LinkedValueUtils":355,"./Object.assign":358,"./ReactBrowserComponentMixin":361,"./ReactCompositeComponent":366,"./ReactDOM":369,"./ReactElement":384,"./ReactUpdates":411}],378:[function(require,module,exports){
-=======
-}).call(this,require('_process'))
-},{"./ReactTextComponent":411,"./traverseAllChildren":477,"./warning":478,"_process":480}],444:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./AutoFocusMixin":334,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactUpdates":412}],379:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53094,12 +42453,6 @@ function isCollapsed(anchorNode, anchorOffset, focusNode, focusOffset) {
   return anchorNode === focusNode && anchorOffset === focusOffset;
 }
 
-<<<<<<< HEAD
-=======
-module.exports = focusNode;
-
-},{}],445:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Get the appropriate anchor and focus node/offset pairs for IE.
  *
@@ -53149,7 +42502,6 @@ function getModernOffsets(node) {
   var focusNode = selection.focusNode;
   var focusOffset = selection.focusOffset;
 
-<<<<<<< HEAD
   var currentRange = selection.getRangeAt(0);
 
   // If the node and offset values are the same, the selection is collapsed.
@@ -53189,20 +42541,6 @@ function getModernOffsets(node) {
     end: isBackward ? start : end
   };
 }
-=======
-},{}],446:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule getActiveElement
- * @typechecks
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 /**
  * @param {DOMElement|DOMTextNode} node
@@ -53230,10 +42568,6 @@ function setIEOffsets(node, offsets) {
   range.select();
 }
 
-<<<<<<< HEAD
-=======
-},{}],447:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * In modern non-IE browsers, we can support both forward and backward
  * selections.
@@ -53298,14 +42632,10 @@ var ReactDOMSelection = {
   setOffsets: useIEOffsets ? setIEOffsets : setModernOffsets
 };
 
-<<<<<<< HEAD
 module.exports = ReactDOMSelection;
 
-},{"./ExecutionEnvironment":353,"./getNodeForCharacterOffset":451,"./getTextContentAccessor":453}],379:[function(require,module,exports){
+},{"./ExecutionEnvironment":354,"./getNodeForCharacterOffset":452,"./getTextContentAccessor":454}],380:[function(require,module,exports){
 (function (process){
-=======
-},{}],448:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53343,12 +42673,6 @@ function forceUpdateIfMounted() {
   }
 }
 
-<<<<<<< HEAD
-=======
-module.exports = getEventKey;
-
-},{"./getEventCharCode":447}],449:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Implements a <textarea> native component that allows setting `value`, and
  * `defaultValue`. This differs from the traditional DOM API because value is
@@ -53450,12 +42774,8 @@ var ReactDOMTextarea = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMTextarea;
 
-<<<<<<< HEAD
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":333,"./DOMPropertyOperations":343,"./LinkedValueUtils":355,"./Object.assign":358,"./ReactBrowserComponentMixin":361,"./ReactCompositeComponent":366,"./ReactDOM":369,"./ReactElement":384,"./ReactUpdates":411,"./invariant":458,"./warning":477,"_process":479}],380:[function(require,module,exports){
-=======
-},{}],450:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./AutoFocusMixin":334,"./DOMPropertyOperations":344,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactUpdates":412,"./invariant":459,"./warning":478,"_process":480}],381:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53503,7 +42823,6 @@ assign(
   }
 );
 
-<<<<<<< HEAD
 var transaction = new ReactDefaultBatchingStrategyTransaction();
 
 var ReactDefaultBatchingStrategy = {
@@ -53529,10 +42848,7 @@ var ReactDefaultBatchingStrategy = {
 
 module.exports = ReactDefaultBatchingStrategy;
 
-},{"./Object.assign":358,"./ReactUpdates":411,"./Transaction":427,"./emptyFunction":439}],381:[function(require,module,exports){
-=======
-},{}],451:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./Object.assign":359,"./ReactUpdates":412,"./Transaction":428,"./emptyFunction":440}],382:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -53661,11 +42977,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./BeforeInputEventPlugin":334,"./ChangeEventPlugin":338,"./ClientReactRootIndex":339,"./CompositionEventPlugin":340,"./DefaultEventPluginOrder":345,"./EnterLeaveEventPlugin":346,"./ExecutionEnvironment":353,"./HTMLDOMPropertyConfig":354,"./MobileSafariClickEventPlugin":357,"./ReactBrowserComponentMixin":361,"./ReactComponentBrowserEnvironment":365,"./ReactDOMButton":370,"./ReactDOMComponent":371,"./ReactDOMForm":372,"./ReactDOMImg":374,"./ReactDOMInput":375,"./ReactDOMOption":376,"./ReactDOMSelect":377,"./ReactDOMTextarea":379,"./ReactDefaultBatchingStrategy":380,"./ReactDefaultPerf":382,"./ReactEventListener":389,"./ReactInjection":390,"./ReactInstanceHandles":392,"./ReactMount":395,"./SVGDOMPropertyConfig":412,"./SelectEventPlugin":413,"./ServerReactRootIndex":414,"./SimpleEventPlugin":415,"./createFullPageComponent":435,"_process":479}],382:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":354,"./invariant":459,"_process":480}],452:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./BeforeInputEventPlugin":335,"./ChangeEventPlugin":339,"./ClientReactRootIndex":340,"./CompositionEventPlugin":341,"./DefaultEventPluginOrder":346,"./EnterLeaveEventPlugin":347,"./ExecutionEnvironment":354,"./HTMLDOMPropertyConfig":355,"./MobileSafariClickEventPlugin":358,"./ReactBrowserComponentMixin":362,"./ReactComponentBrowserEnvironment":366,"./ReactDOMButton":371,"./ReactDOMComponent":372,"./ReactDOMForm":373,"./ReactDOMImg":375,"./ReactDOMInput":376,"./ReactDOMOption":377,"./ReactDOMSelect":378,"./ReactDOMTextarea":380,"./ReactDefaultBatchingStrategy":381,"./ReactDefaultPerf":383,"./ReactEventListener":390,"./ReactInjection":391,"./ReactInstanceHandles":393,"./ReactMount":396,"./SVGDOMPropertyConfig":413,"./SelectEventPlugin":414,"./ServerReactRootIndex":415,"./SimpleEventPlugin":416,"./createFullPageComponent":436,"_process":480}],383:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53735,7 +43047,6 @@ var ReactDefaultPerf = {
     // number.
   },
 
-<<<<<<< HEAD
   printInclusive: function(measurements) {
     measurements = measurements || ReactDefaultPerf._allMeasurements;
     var summary = ReactDefaultPerfAnalysis.getInclusiveSummary(measurements);
@@ -53751,19 +43062,6 @@ var ReactDefaultPerf = {
       ReactDefaultPerfAnalysis.getTotalTime(measurements).toFixed(2) + ' ms'
     );
   },
-=======
-},{}],453:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule getReactRootElementInContainer
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
   getMeasurementsSummaryMap: function(measurements) {
     var summary = ReactDefaultPerfAnalysis.getInclusiveSummary(
@@ -53824,7 +43122,6 @@ var ReactDefaultPerf = {
       var rv;
       var start;
 
-<<<<<<< HEAD
       if (fnName === '_renderNewRootComponent' ||
           fnName === 'flushBatchedUpdates') {
         // A "measurement" is a set of metrics recorded for each flush. We want
@@ -53851,19 +43148,6 @@ var ReactDefaultPerf = {
         start = performanceNow();
         rv = func.apply(this, args);
         totalTime = performanceNow() - start;
-=======
-},{}],454:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule getTextContentAccessor
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         if (fnName === 'mountImageIntoNode') {
           var mountID = ReactMount.getID(args[1]);
@@ -53927,7 +43211,6 @@ var ReactDefaultPerf = {
         rv = func.apply(this, args);
         totalTime = performanceNow() - start;
 
-<<<<<<< HEAD
         if (isRender) {
           addValue(entry.render, rootNodeID, totalTime);
         } else if (isMount) {
@@ -53938,20 +43221,6 @@ var ReactDefaultPerf = {
         } else {
           addValue(entry.inclusive, rootNodeID, totalTime);
         }
-=======
-},{"./ExecutionEnvironment":354}],455:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule getUnboundedScrollPosition
- * @typechecks
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
         entry.displayNames[rootNodeID] = {
           current: this.constructor.displayName,
@@ -53968,11 +43237,7 @@ var ReactDefaultPerf = {
 
 module.exports = ReactDefaultPerf;
 
-<<<<<<< HEAD
-},{"./DOMProperty":342,"./ReactDefaultPerfAnalysis":383,"./ReactMount":395,"./ReactPerf":400,"./performanceNow":471}],383:[function(require,module,exports){
-=======
-},{}],456:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./DOMProperty":343,"./ReactDefaultPerfAnalysis":384,"./ReactMount":396,"./ReactPerf":401,"./performanceNow":472}],384:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54020,7 +43285,6 @@ function getDOMSummary(measurements) {
     var measurement = measurements[i];
     var id;
 
-<<<<<<< HEAD
     for (id in measurement.writes) {
       measurement.writes[id].forEach(function(write) {
         items.push({
@@ -54033,20 +43297,6 @@ function getDOMSummary(measurements) {
   }
   return items;
 }
-=======
-},{}],457:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule hyphenateStyleName
- * @typechecks
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 function getExclusiveSummary(measurements) {
   var candidates = {};
@@ -54093,25 +43343,9 @@ function getExclusiveSummary(measurements) {
     }
   }
 
-<<<<<<< HEAD
   arr.sort(function(a, b) {
     return b.exclusive - a.exclusive;
   });
-=======
-},{"./hyphenate":456}],458:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule instantiateReactComponent
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
   return arr;
 }
@@ -54207,14 +43441,9 @@ var ReactDefaultPerfAnalysis = {
   getTotalTime: getTotalTime
 };
 
-<<<<<<< HEAD
 module.exports = ReactDefaultPerfAnalysis;
 
-},{"./Object.assign":358}],384:[function(require,module,exports){
-=======
-}).call(this,require('_process'))
-},{"./ReactElement":385,"./ReactEmptyComponent":387,"./ReactLegacyElement":394,"./ReactNativeComponent":399,"./warning":478,"_process":480}],459:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./Object.assign":359}],385:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -54276,11 +43505,6 @@ function defineWarningProperty(object, key) {
  */
 var useMutationMembrane = false;
 
-<<<<<<< HEAD
-=======
-}).call(this,require('_process'))
-},{"_process":480}],460:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Warn for mutations.
  *
@@ -54416,7 +43640,6 @@ ReactElement.createElement = function(type, config, children) {
   );
 };
 
-<<<<<<< HEAD
 ReactElement.createFactory = function(type) {
   var factory = ReactElement.createElement.bind(null, type);
   // Expose the type on the factory and the prototype so that it can be
@@ -54443,20 +43666,6 @@ ReactElement.cloneAndReplaceProps = function(oldElement, newProps) {
   }
   return newElement;
 };
-=======
-},{"./ExecutionEnvironment":354}],461:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule isNode
- * @typechecks
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
 /**
  * @param {?object} object
@@ -54479,13 +43688,9 @@ ReactElement.isValidElement = function(object) {
 
 module.exports = ReactElement;
 
-<<<<<<< HEAD
 }).call(this,require('_process'))
-},{"./ReactContext":367,"./ReactCurrentOwner":368,"./warning":477,"_process":479}],385:[function(require,module,exports){
+},{"./ReactContext":368,"./ReactCurrentOwner":369,"./warning":478,"_process":480}],386:[function(require,module,exports){
 (function (process){
-=======
-},{}],462:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -54513,10 +43718,6 @@ var ReactCurrentOwner = require("./ReactCurrentOwner");
 var monitorCodeUse = require("./monitorCodeUse");
 var warning = require("./warning");
 
-<<<<<<< HEAD
-=======
-},{}],463:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Warn if there's no key explicitly set on dynamic arrays of children or
  * object keys are not valid. This allows us to keep track of children between
@@ -54543,12 +43744,6 @@ function getCurrentOwnerDisplayName() {
   return current && current.constructor.displayName || undefined;
 }
 
-<<<<<<< HEAD
-=======
-module.exports = isTextNode;
-
-},{"./isNode":461}],464:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Warn if the component doesn't have an explicit key assigned to it.
  * This component is in an array. The array could grow and shrink or be
@@ -54594,13 +43789,6 @@ function validatePropertyKey(name, component, parentType) {
   );
 }
 
-<<<<<<< HEAD
-=======
-module.exports = joinClasses;
-
-},{}],465:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Shared warning and monitoring code for the key warnings.
  *
@@ -54625,7 +43813,6 @@ function warnAndMonitorForKeyUse(warningID, message, component, parentType) {
     (" Check the render method of " + ownerName + ".") :
     (" Check the renderComponent call using <" + parentName + ">.");
 
-<<<<<<< HEAD
   // Usually the current owner is the offender, but if it accepts children as a
   // property, it may be the creator of the child that's responsible for
   // assigning it a key.
@@ -54633,20 +43820,6 @@ function warnAndMonitorForKeyUse(warningID, message, component, parentType) {
   if (component._owner && component._owner !== ReactCurrentOwner.current) {
     // Name of the component that originally created this child.
     childOwnerName = component._owner.constructor.displayName;
-=======
-}).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],466:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule keyOf
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     message += (" It was passed a child from " + childOwnerName + ".");
   }
@@ -54659,12 +43832,6 @@ function warnAndMonitorForKeyUse(warningID, message, component, parentType) {
   console.warn(message);
 }
 
-<<<<<<< HEAD
-=======
-module.exports = keyOf;
-
-},{}],467:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Log that we're using an object map. We're considering deprecating this
  * feature and replace it with proper Map and ImmutableMap data structures.
@@ -54709,26 +43876,6 @@ function validateChildKeys(component, parentType) {
   }
 }
 
-<<<<<<< HEAD
-=======
-module.exports = mapObject;
-
-},{}],468:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule memoizeStringOnly
- * @typechecks static-only
- */
-
-"use strict";
-
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Assert that the props are valid
  *
@@ -54766,7 +43913,6 @@ function checkPropTypes(componentName, propTypes, props, location) {
 
 var ReactElementValidator = {
 
-<<<<<<< HEAD
   createElement: function(type, props, children) {
     // We warn in this case but don't throw. We expect the element creation to
     // succeed and there will likely be errors in render.
@@ -54776,20 +43922,6 @@ var ReactElementValidator = {
         'be a string (for DOM elements) or a ReactClass (for composite ' +
         'components).'
     ) : null);
-=======
-},{}],469:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule monitorCodeUse
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     var element = ReactElement.createElement.apply(this, arguments);
 
@@ -54839,11 +43971,7 @@ var ReactElementValidator = {
 module.exports = ReactElementValidator;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./ReactCurrentOwner":368,"./ReactElement":384,"./ReactPropTypeLocations":403,"./monitorCodeUse":468,"./warning":477,"_process":479}],386:[function(require,module,exports){
-=======
-},{"./invariant":459,"_process":480}],470:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./ReactCurrentOwner":369,"./ReactElement":385,"./ReactPropTypeLocations":404,"./monitorCodeUse":469,"./warning":478,"_process":480}],387:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -54885,13 +44013,6 @@ function getEmptyComponent() {
   return component();
 }
 
-<<<<<<< HEAD
-=======
-module.exports = onlyChild;
-
-}).call(this,require('_process'))
-},{"./ReactElement":385,"./invariant":459,"_process":480}],471:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Mark the component as having rendered to null.
  * @param {string} id Component's `_rootNodeID`.
@@ -54924,14 +44045,10 @@ var ReactEmptyComponent = {
   registerNullComponentID: registerNullComponentID
 };
 
-<<<<<<< HEAD
 module.exports = ReactEmptyComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":384,"./invariant":458,"_process":479}],387:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":354}],472:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./ReactElement":385,"./invariant":459,"_process":480}],388:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54963,11 +44080,7 @@ var ReactErrorUtils = {
 
 module.exports = ReactErrorUtils;
 
-<<<<<<< HEAD
-},{}],388:[function(require,module,exports){
-=======
-},{"./performance":471}],473:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{}],389:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55017,11 +44130,7 @@ var ReactEventEmitterMixin = {
 
 module.exports = ReactEventEmitterMixin;
 
-<<<<<<< HEAD
-},{"./EventPluginHub":349}],389:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":354}],474:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./EventPluginHub":350}],390:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55115,7 +44224,6 @@ function scrollValueMonitor(cb) {
   cb(scrollPosition);
 }
 
-<<<<<<< HEAD
 var ReactEventListener = {
   _enabled: true,
   _handleTopLevel: null,
@@ -55206,10 +44314,7 @@ var ReactEventListener = {
 
 module.exports = ReactEventListener;
 
-},{"./EventListener":348,"./ExecutionEnvironment":353,"./Object.assign":358,"./PooledClass":359,"./ReactInstanceHandles":392,"./ReactMount":395,"./ReactUpdates":411,"./getEventTarget":449,"./getUnboundedScrollPosition":454}],390:[function(require,module,exports){
-=======
-},{}],475:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./EventListener":349,"./ExecutionEnvironment":354,"./Object.assign":359,"./PooledClass":360,"./ReactInstanceHandles":393,"./ReactMount":396,"./ReactUpdates":412,"./getEventTarget":450,"./getUnboundedScrollPosition":455}],391:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55247,14 +44352,9 @@ var ReactInjection = {
   Updates: ReactUpdates.injection
 };
 
-<<<<<<< HEAD
 module.exports = ReactInjection;
 
-},{"./DOMProperty":342,"./EventPluginHub":349,"./ReactBrowserEventEmitter":362,"./ReactComponent":364,"./ReactCompositeComponent":366,"./ReactEmptyComponent":386,"./ReactNativeComponent":398,"./ReactPerf":400,"./ReactRootIndex":407,"./ReactUpdates":411}],391:[function(require,module,exports){
-=======
-},{}],476:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./DOMProperty":343,"./EventPluginHub":350,"./ReactBrowserEventEmitter":363,"./ReactComponent":365,"./ReactCompositeComponent":367,"./ReactEmptyComponent":387,"./ReactNativeComponent":399,"./ReactPerf":401,"./ReactRootIndex":408,"./ReactUpdates":412}],392:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55390,12 +44490,7 @@ var ReactInputSelection = {
 
 module.exports = ReactInputSelection;
 
-<<<<<<< HEAD
-},{"./ReactDOMSelection":378,"./containsNode":433,"./focusNode":443,"./getActiveElement":445}],392:[function(require,module,exports){
-=======
-}).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],477:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./ReactDOMSelection":379,"./containsNode":434,"./focusNode":444,"./getActiveElement":446}],393:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -55522,14 +44617,6 @@ function getNextDescendantID(ancestorID, destinationID) {
   return destinationID.substr(0, i);
 }
 
-<<<<<<< HEAD
-=======
-module.exports = traverseAllChildren;
-
-}).call(this,require('_process'))
-},{"./ReactElement":385,"./ReactInstanceHandles":393,"./invariant":459,"_process":480}],478:[function(require,module,exports){
-(function (process){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 /**
  * Gets the nearest common ancestor ID of two IDs.
  *
@@ -55615,7 +44702,6 @@ function traverseParentPath(start, stop, cb, arg, skipFirst, skipLast) {
   }
 }
 
-<<<<<<< HEAD
 /**
  * Manages the IDs assigned to DOM representations of React components. This
  * uses a specific scheme in order to traverse the DOM efficiently (e.g. in
@@ -55624,16 +44710,6 @@ function traverseParentPath(start, stop, cb, arg, skipFirst, skipLast) {
  * @internal
  */
 var ReactInstanceHandles = {
-=======
-module.exports = warning;
-
-}).call(this,require('_process'))
-},{"./emptyFunction":440,"_process":480}],479:[function(require,module,exports){
-module.exports = require('./lib/React');
-
-},{"./lib/React":361}],480:[function(require,module,exports){
-// shim for using process in browser
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
   /**
    * Constructs a React root ID
@@ -55746,31 +44822,13 @@ module.exports = require('./lib/React');
 
 };
 
-<<<<<<< HEAD
 module.exports = ReactInstanceHandles;
 
 }).call(this,require('_process'))
-},{"./ReactRootIndex":407,"./invariant":458,"_process":479}],393:[function(require,module,exports){
+},{"./ReactRootIndex":408,"./invariant":459,"_process":480}],394:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
-=======
-},{}],481:[function(require,module,exports){
-/**
- * Copyright (c) 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-module.exports.Dispatcher = require('./lib/Dispatcher')
-
-},{"./lib/Dispatcher":482}],482:[function(require,module,exports){
-/*
- * Copyright (c) 2014, Facebook, Inc.
->>>>>>> Infinite scroll prefill [deliver #90599686]
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -56009,16 +45067,12 @@ ReactLegacyElementFactory.isValidClass = function(factory) {
   return ReactLegacyElementFactory.isValidFactory(factory);
 };
 
-<<<<<<< HEAD
 ReactLegacyElementFactory._isLegacyCallWarningEnabled = true;
 
 module.exports = ReactLegacyElementFactory;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":368,"./invariant":458,"./monitorCodeUse":468,"./warning":477,"_process":479}],394:[function(require,module,exports){
-=======
-},{"./invariant":483}],483:[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./ReactCurrentOwner":369,"./invariant":459,"./monitorCodeUse":469,"./warning":478,"_process":480}],395:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -56066,8 +45120,7 @@ var ReactMarkupChecksum = {
 
 module.exports = ReactMarkupChecksum;
 
-<<<<<<< HEAD
-},{"./adler32":430}],395:[function(require,module,exports){
+},{"./adler32":431}],396:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -56078,13 +45131,6 @@ module.exports = ReactMarkupChecksum;
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule ReactMount
-=======
-},{}],484:[function(require,module,exports){
-/*!
- * imagesLoaded v3.1.8
- * JavaScript is all like "You images are done yet or what?"
- * MIT License
->>>>>>> Infinite scroll prefill [deliver #90599686]
  */
 
 "use strict";
@@ -56665,7 +45711,6 @@ var ReactMount = {
     return null;
   },
 
-<<<<<<< HEAD
   /**
    * Finds a node with the supplied `targetID` inside of the supplied
    * `ancestorNode`.  Exploits the ID naming scheme to perform the search
@@ -56679,16 +45724,6 @@ var ReactMount = {
   findComponentRoot: function(ancestorNode, targetID) {
     var firstChildren = findComponentRootReusableArray;
     var childIndex = 0;
-=======
-},{"eventie":485,"wolfy87-eventemitter":486}],485:[function(require,module,exports){
-/*!
- * eventie v1.0.6
- * event binding helper
- *   eventie.bind( elem, 'click', myFn )
- *   eventie.unbind( elem, 'click', myFn )
- * MIT license
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     var deepestAncestor = findDeepestCachedAncestor(targetID) || ancestorNode;
 
@@ -56756,19 +45791,9 @@ var ReactMount = {
   },
 
 
-<<<<<<< HEAD
   /**
    * React ID utilities.
    */
-=======
-},{}],486:[function(require,module,exports){
-/*!
- * EventEmitter v4.2.11 - git.io/ee
- * Unlicense - http://unlicense.org/
- * Oliver Caldwell - http://oli.me.uk/
- * @preserve
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
   getReactRootID: getReactRootID,
 
@@ -56793,7 +45818,7 @@ ReactMount.renderComponent = deprecated(
 module.exports = ReactMount;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":342,"./ReactBrowserEventEmitter":362,"./ReactCurrentOwner":368,"./ReactElement":384,"./ReactInstanceHandles":392,"./ReactLegacyElement":393,"./ReactPerf":400,"./containsNode":433,"./deprecated":438,"./getReactRootElementInContainer":452,"./instantiateReactComponent":457,"./invariant":458,"./shouldUpdateReactComponent":474,"./warning":477,"_process":479}],396:[function(require,module,exports){
+},{"./DOMProperty":343,"./ReactBrowserEventEmitter":363,"./ReactCurrentOwner":369,"./ReactElement":385,"./ReactInstanceHandles":393,"./ReactLegacyElement":394,"./ReactPerf":401,"./containsNode":434,"./deprecated":439,"./getReactRootElementInContainer":453,"./instantiateReactComponent":458,"./invariant":459,"./shouldUpdateReactComponent":475,"./warning":478,"_process":480}],397:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -57221,12 +46246,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 
-<<<<<<< HEAD
-},{"./ReactComponent":364,"./ReactMultiChildUpdateTypes":397,"./flattenChildren":442,"./instantiateReactComponent":457,"./shouldUpdateReactComponent":474}],397:[function(require,module,exports){
-=======
-},{}],487:[function(require,module,exports){
-(function (global){
->>>>>>> Infinite scroll prefill [deliver #90599686]
+},{"./ReactComponent":365,"./ReactMultiChildUpdateTypes":398,"./flattenChildren":443,"./instantiateReactComponent":458,"./shouldUpdateReactComponent":475}],398:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -57259,7 +46279,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 
 module.exports = ReactMultiChildUpdateTypes;
 
-},{"./keyMirror":464}],398:[function(require,module,exports){
+},{"./keyMirror":465}],399:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -57332,7 +46352,7 @@ var ReactNativeComponent = {
 module.exports = ReactNativeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":358,"./invariant":458,"_process":479}],399:[function(require,module,exports){
+},{"./Object.assign":359,"./invariant":459,"_process":480}],400:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -57488,7 +46508,7 @@ var ReactOwner = {
 module.exports = ReactOwner;
 
 }).call(this,require('_process'))
-},{"./emptyObject":440,"./invariant":458,"_process":479}],400:[function(require,module,exports){
+},{"./emptyObject":441,"./invariant":459,"_process":480}],401:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -57572,7 +46592,7 @@ function _noMeasure(objName, fnName, func) {
 module.exports = ReactPerf;
 
 }).call(this,require('_process'))
-},{"_process":479}],401:[function(require,module,exports){
+},{"_process":480}],402:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -57739,7 +46759,7 @@ var ReactPropTransferer = {
 module.exports = ReactPropTransferer;
 
 }).call(this,require('_process'))
-},{"./Object.assign":358,"./emptyFunction":439,"./invariant":458,"./joinClasses":463,"./warning":477,"_process":479}],402:[function(require,module,exports){
+},{"./Object.assign":359,"./emptyFunction":440,"./invariant":459,"./joinClasses":464,"./warning":478,"_process":480}],403:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -57767,7 +46787,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = ReactPropTypeLocationNames;
 
 }).call(this,require('_process'))
-},{"_process":479}],403:[function(require,module,exports){
+},{"_process":480}],404:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -57791,7 +46811,7 @@ var ReactPropTypeLocations = keyMirror({
 
 module.exports = ReactPropTypeLocations;
 
-},{"./keyMirror":464}],404:[function(require,module,exports){
+},{"./keyMirror":465}],405:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -58145,7 +47165,7 @@ function getPreciseType(propValue) {
 
 module.exports = ReactPropTypes;
 
-},{"./ReactElement":384,"./ReactPropTypeLocationNames":402,"./deprecated":438,"./emptyFunction":439}],405:[function(require,module,exports){
+},{"./ReactElement":385,"./ReactPropTypeLocationNames":403,"./deprecated":439,"./emptyFunction":440}],406:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -58201,7 +47221,7 @@ PooledClass.addPoolingTo(ReactPutListenerQueue);
 
 module.exports = ReactPutListenerQueue;
 
-},{"./Object.assign":358,"./PooledClass":359,"./ReactBrowserEventEmitter":362}],406:[function(require,module,exports){
+},{"./Object.assign":359,"./PooledClass":360,"./ReactBrowserEventEmitter":363}],407:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -58377,7 +47397,7 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
 
-},{"./CallbackQueue":337,"./Object.assign":358,"./PooledClass":359,"./ReactBrowserEventEmitter":362,"./ReactInputSelection":391,"./ReactPutListenerQueue":405,"./Transaction":427}],407:[function(require,module,exports){
+},{"./CallbackQueue":338,"./Object.assign":359,"./PooledClass":360,"./ReactBrowserEventEmitter":363,"./ReactInputSelection":392,"./ReactPutListenerQueue":406,"./Transaction":428}],408:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -58408,7 +47428,7 @@ var ReactRootIndex = {
 
 module.exports = ReactRootIndex;
 
-},{}],408:[function(require,module,exports){
+},{}],409:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -58488,7 +47508,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./ReactElement":384,"./ReactInstanceHandles":392,"./ReactMarkupChecksum":394,"./ReactServerRenderingTransaction":409,"./instantiateReactComponent":457,"./invariant":458,"_process":479}],409:[function(require,module,exports){
+},{"./ReactElement":385,"./ReactInstanceHandles":393,"./ReactMarkupChecksum":395,"./ReactServerRenderingTransaction":410,"./instantiateReactComponent":458,"./invariant":459,"_process":480}],410:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -58601,7 +47621,7 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 
-},{"./CallbackQueue":337,"./Object.assign":358,"./PooledClass":359,"./ReactPutListenerQueue":405,"./Transaction":427,"./emptyFunction":439}],410:[function(require,module,exports){
+},{"./CallbackQueue":338,"./Object.assign":359,"./PooledClass":360,"./ReactPutListenerQueue":406,"./Transaction":428,"./emptyFunction":440}],411:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -58707,7 +47727,7 @@ ReactTextComponentFactory.type = ReactTextComponent;
 
 module.exports = ReactTextComponentFactory;
 
-},{"./DOMPropertyOperations":343,"./Object.assign":358,"./ReactComponent":364,"./ReactElement":384,"./escapeTextForBrowser":441}],411:[function(require,module,exports){
+},{"./DOMPropertyOperations":344,"./Object.assign":359,"./ReactComponent":365,"./ReactElement":385,"./escapeTextForBrowser":442}],412:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -58997,7 +48017,7 @@ var ReactUpdates = {
 module.exports = ReactUpdates;
 
 }).call(this,require('_process'))
-},{"./CallbackQueue":337,"./Object.assign":358,"./PooledClass":359,"./ReactCurrentOwner":368,"./ReactPerf":400,"./Transaction":427,"./invariant":458,"./warning":477,"_process":479}],412:[function(require,module,exports){
+},{"./CallbackQueue":338,"./Object.assign":359,"./PooledClass":360,"./ReactCurrentOwner":369,"./ReactPerf":401,"./Transaction":428,"./invariant":459,"./warning":478,"_process":480}],413:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -59089,7 +48109,7 @@ var SVGDOMPropertyConfig = {
 
 module.exports = SVGDOMPropertyConfig;
 
-},{"./DOMProperty":342}],413:[function(require,module,exports){
+},{"./DOMProperty":343}],414:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -59284,7 +48304,7 @@ var SelectEventPlugin = {
 
 module.exports = SelectEventPlugin;
 
-},{"./EventConstants":347,"./EventPropagators":352,"./ReactInputSelection":391,"./SyntheticEvent":419,"./getActiveElement":445,"./isTextInputElement":461,"./keyOf":465,"./shallowEqual":473}],414:[function(require,module,exports){
+},{"./EventConstants":348,"./EventPropagators":353,"./ReactInputSelection":392,"./SyntheticEvent":420,"./getActiveElement":446,"./isTextInputElement":462,"./keyOf":466,"./shallowEqual":474}],415:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -59315,7 +48335,7 @@ var ServerReactRootIndex = {
 
 module.exports = ServerReactRootIndex;
 
-},{}],415:[function(require,module,exports){
+},{}],416:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -59743,7 +48763,7 @@ var SimpleEventPlugin = {
 module.exports = SimpleEventPlugin;
 
 }).call(this,require('_process'))
-},{"./EventConstants":347,"./EventPluginUtils":351,"./EventPropagators":352,"./SyntheticClipboardEvent":416,"./SyntheticDragEvent":418,"./SyntheticEvent":419,"./SyntheticFocusEvent":420,"./SyntheticKeyboardEvent":422,"./SyntheticMouseEvent":423,"./SyntheticTouchEvent":424,"./SyntheticUIEvent":425,"./SyntheticWheelEvent":426,"./getEventCharCode":446,"./invariant":458,"./keyOf":465,"./warning":477,"_process":479}],416:[function(require,module,exports){
+},{"./EventConstants":348,"./EventPluginUtils":352,"./EventPropagators":353,"./SyntheticClipboardEvent":417,"./SyntheticDragEvent":419,"./SyntheticEvent":420,"./SyntheticFocusEvent":421,"./SyntheticKeyboardEvent":423,"./SyntheticMouseEvent":424,"./SyntheticTouchEvent":425,"./SyntheticUIEvent":426,"./SyntheticWheelEvent":427,"./getEventCharCode":447,"./invariant":459,"./keyOf":466,"./warning":478,"_process":480}],417:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -59789,7 +48809,7 @@ SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 module.exports = SyntheticClipboardEvent;
 
 
-},{"./SyntheticEvent":419}],417:[function(require,module,exports){
+},{"./SyntheticEvent":420}],418:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -59835,7 +48855,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticCompositionEvent;
 
 
-},{"./SyntheticEvent":419}],418:[function(require,module,exports){
+},{"./SyntheticEvent":420}],419:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -59874,7 +48894,7 @@ SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
 
-},{"./SyntheticMouseEvent":423}],419:[function(require,module,exports){
+},{"./SyntheticMouseEvent":424}],420:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60032,7 +49052,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.threeArgumentPooler);
 
 module.exports = SyntheticEvent;
 
-},{"./Object.assign":358,"./PooledClass":359,"./emptyFunction":439,"./getEventTarget":449}],420:[function(require,module,exports){
+},{"./Object.assign":359,"./PooledClass":360,"./emptyFunction":440,"./getEventTarget":450}],421:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60071,7 +49091,7 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
 
-},{"./SyntheticUIEvent":425}],421:[function(require,module,exports){
+},{"./SyntheticUIEvent":426}],422:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -60118,7 +49138,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticInputEvent;
 
 
-},{"./SyntheticEvent":419}],422:[function(require,module,exports){
+},{"./SyntheticEvent":420}],423:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60205,7 +49225,7 @@ SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
 
-},{"./SyntheticUIEvent":425,"./getEventCharCode":446,"./getEventKey":447,"./getEventModifierState":448}],423:[function(require,module,exports){
+},{"./SyntheticUIEvent":426,"./getEventCharCode":447,"./getEventKey":448,"./getEventModifierState":449}],424:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60288,7 +49308,7 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
 
-},{"./SyntheticUIEvent":425,"./ViewportMetrics":428,"./getEventModifierState":448}],424:[function(require,module,exports){
+},{"./SyntheticUIEvent":426,"./ViewportMetrics":429,"./getEventModifierState":449}],425:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60336,7 +49356,7 @@ SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
 
-},{"./SyntheticUIEvent":425,"./getEventModifierState":448}],425:[function(require,module,exports){
+},{"./SyntheticUIEvent":426,"./getEventModifierState":449}],426:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60398,7 +49418,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
 
-},{"./SyntheticEvent":419,"./getEventTarget":449}],426:[function(require,module,exports){
+},{"./SyntheticEvent":420,"./getEventTarget":450}],427:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60459,7 +49479,7 @@ SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
 
-},{"./SyntheticMouseEvent":423}],427:[function(require,module,exports){
+},{"./SyntheticMouseEvent":424}],428:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -60700,7 +49720,7 @@ var Transaction = {
 module.exports = Transaction;
 
 }).call(this,require('_process'))
-},{"./invariant":458,"_process":479}],428:[function(require,module,exports){
+},{"./invariant":459,"_process":480}],429:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60732,7 +49752,7 @@ var ViewportMetrics = {
 
 module.exports = ViewportMetrics;
 
-},{"./getUnboundedScrollPosition":454}],429:[function(require,module,exports){
+},{"./getUnboundedScrollPosition":455}],430:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -60798,7 +49818,7 @@ function accumulateInto(current, next) {
 module.exports = accumulateInto;
 
 }).call(this,require('_process'))
-},{"./invariant":458,"_process":479}],430:[function(require,module,exports){
+},{"./invariant":459,"_process":480}],431:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60832,7 +49852,7 @@ function adler32(data) {
 
 module.exports = adler32;
 
-},{}],431:[function(require,module,exports){
+},{}],432:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60864,7 +49884,7 @@ function camelize(string) {
 
 module.exports = camelize;
 
-},{}],432:[function(require,module,exports){
+},{}],433:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -60906,7 +49926,7 @@ function camelizeStyleName(string) {
 
 module.exports = camelizeStyleName;
 
-},{"./camelize":431}],433:[function(require,module,exports){
+},{"./camelize":432}],434:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60950,7 +49970,7 @@ function containsNode(outerNode, innerNode) {
 
 module.exports = containsNode;
 
-},{"./isTextNode":462}],434:[function(require,module,exports){
+},{"./isTextNode":463}],435:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -61036,7 +50056,7 @@ function createArrayFrom(obj) {
 
 module.exports = createArrayFrom;
 
-},{"./toArray":475}],435:[function(require,module,exports){
+},{"./toArray":476}],436:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -61097,7 +50117,7 @@ function createFullPageComponent(tag) {
 module.exports = createFullPageComponent;
 
 }).call(this,require('_process'))
-},{"./ReactCompositeComponent":366,"./ReactElement":384,"./invariant":458,"_process":479}],436:[function(require,module,exports){
+},{"./ReactCompositeComponent":367,"./ReactElement":385,"./invariant":459,"_process":480}],437:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -61187,7 +50207,7 @@ function createNodesFromMarkup(markup, handleScript) {
 module.exports = createNodesFromMarkup;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":353,"./createArrayFrom":434,"./getMarkupWrap":450,"./invariant":458,"_process":479}],437:[function(require,module,exports){
+},{"./ExecutionEnvironment":354,"./createArrayFrom":435,"./getMarkupWrap":451,"./invariant":459,"_process":480}],438:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -61245,7 +50265,7 @@ function dangerousStyleValue(name, value) {
 
 module.exports = dangerousStyleValue;
 
-},{"./CSSProperty":335}],438:[function(require,module,exports){
+},{"./CSSProperty":336}],439:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -61296,7 +50316,7 @@ function deprecated(namespace, oldName, newName, ctx, fn) {
 module.exports = deprecated;
 
 }).call(this,require('_process'))
-},{"./Object.assign":358,"./warning":477,"_process":479}],439:[function(require,module,exports){
+},{"./Object.assign":359,"./warning":478,"_process":480}],440:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -61330,7 +50350,7 @@ emptyFunction.thatReturnsArgument = function(arg) { return arg; };
 
 module.exports = emptyFunction;
 
-},{}],440:[function(require,module,exports){
+},{}],441:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -61354,7 +50374,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = emptyObject;
 
 }).call(this,require('_process'))
-},{"_process":479}],441:[function(require,module,exports){
+},{"_process":480}],442:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -61395,7 +50415,7 @@ function escapeTextForBrowser(text) {
 
 module.exports = escapeTextForBrowser;
 
-},{}],442:[function(require,module,exports){
+},{}],443:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -61464,7 +50484,7 @@ function flattenChildren(children) {
 module.exports = flattenChildren;
 
 }).call(this,require('_process'))
-},{"./ReactTextComponent":410,"./traverseAllChildren":476,"./warning":477,"_process":479}],443:[function(require,module,exports){
+},{"./ReactTextComponent":411,"./traverseAllChildren":477,"./warning":478,"_process":480}],444:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -61493,7 +50513,7 @@ function focusNode(node) {
 
 module.exports = focusNode;
 
-},{}],444:[function(require,module,exports){
+},{}],445:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -61524,7 +50544,7 @@ var forEachAccumulated = function(arr, cb, scope) {
 
 module.exports = forEachAccumulated;
 
-},{}],445:[function(require,module,exports){
+},{}],446:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -61553,7 +50573,7 @@ function getActiveElement() /*?DOMElement*/ {
 
 module.exports = getActiveElement;
 
-},{}],446:[function(require,module,exports){
+},{}],447:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -61605,7 +50625,7 @@ function getEventCharCode(nativeEvent) {
 
 module.exports = getEventCharCode;
 
-},{}],447:[function(require,module,exports){
+},{}],448:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -61710,7 +50730,7 @@ function getEventKey(nativeEvent) {
 
 module.exports = getEventKey;
 
-},{"./getEventCharCode":446}],448:[function(require,module,exports){
+},{"./getEventCharCode":447}],449:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -61757,7 +50777,7 @@ function getEventModifierState(nativeEvent) {
 
 module.exports = getEventModifierState;
 
-},{}],449:[function(require,module,exports){
+},{}],450:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -61788,7 +50808,7 @@ function getEventTarget(nativeEvent) {
 
 module.exports = getEventTarget;
 
-},{}],450:[function(require,module,exports){
+},{}],451:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -61905,7 +50925,7 @@ function getMarkupWrap(nodeName) {
 module.exports = getMarkupWrap;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":353,"./invariant":458,"_process":479}],451:[function(require,module,exports){
+},{"./ExecutionEnvironment":354,"./invariant":459,"_process":480}],452:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -61980,7 +51000,7 @@ function getNodeForCharacterOffset(root, offset) {
 
 module.exports = getNodeForCharacterOffset;
 
-},{}],452:[function(require,module,exports){
+},{}],453:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62015,7 +51035,7 @@ function getReactRootElementInContainer(container) {
 
 module.exports = getReactRootElementInContainer;
 
-},{}],453:[function(require,module,exports){
+},{}],454:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62052,7 +51072,7 @@ function getTextContentAccessor() {
 
 module.exports = getTextContentAccessor;
 
-},{"./ExecutionEnvironment":353}],454:[function(require,module,exports){
+},{"./ExecutionEnvironment":354}],455:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62092,7 +51112,7 @@ function getUnboundedScrollPosition(scrollable) {
 
 module.exports = getUnboundedScrollPosition;
 
-},{}],455:[function(require,module,exports){
+},{}],456:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62125,7 +51145,7 @@ function hyphenate(string) {
 
 module.exports = hyphenate;
 
-},{}],456:[function(require,module,exports){
+},{}],457:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62166,7 +51186,7 @@ function hyphenateStyleName(string) {
 
 module.exports = hyphenateStyleName;
 
-},{"./hyphenate":455}],457:[function(require,module,exports){
+},{"./hyphenate":456}],458:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -62280,7 +51300,7 @@ function instantiateReactComponent(element, parentCompositeType) {
 module.exports = instantiateReactComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":384,"./ReactEmptyComponent":386,"./ReactLegacyElement":393,"./ReactNativeComponent":398,"./warning":477,"_process":479}],458:[function(require,module,exports){
+},{"./ReactElement":385,"./ReactEmptyComponent":387,"./ReactLegacyElement":394,"./ReactNativeComponent":399,"./warning":478,"_process":480}],459:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -62337,7 +51357,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":479}],459:[function(require,module,exports){
+},{"_process":480}],460:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62402,7 +51422,7 @@ function isEventSupported(eventNameSuffix, capture) {
 
 module.exports = isEventSupported;
 
-},{"./ExecutionEnvironment":353}],460:[function(require,module,exports){
+},{"./ExecutionEnvironment":354}],461:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62430,7 +51450,7 @@ function isNode(object) {
 
 module.exports = isNode;
 
-},{}],461:[function(require,module,exports){
+},{}],462:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62474,7 +51494,7 @@ function isTextInputElement(elem) {
 
 module.exports = isTextInputElement;
 
-},{}],462:[function(require,module,exports){
+},{}],463:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62499,7 +51519,7 @@ function isTextNode(object) {
 
 module.exports = isTextNode;
 
-},{"./isNode":460}],463:[function(require,module,exports){
+},{"./isNode":461}],464:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62540,7 +51560,7 @@ function joinClasses(className/*, ... */) {
 
 module.exports = joinClasses;
 
-},{}],464:[function(require,module,exports){
+},{}],465:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -62595,7 +51615,7 @@ var keyMirror = function(obj) {
 module.exports = keyMirror;
 
 }).call(this,require('_process'))
-},{"./invariant":458,"_process":479}],465:[function(require,module,exports){
+},{"./invariant":459,"_process":480}],466:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62631,7 +51651,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 
-},{}],466:[function(require,module,exports){
+},{}],467:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62684,7 +51704,7 @@ function mapObject(object, callback, context) {
 
 module.exports = mapObject;
 
-},{}],467:[function(require,module,exports){
+},{}],468:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62718,7 +51738,7 @@ function memoizeStringOnly(callback) {
 
 module.exports = memoizeStringOnly;
 
-},{}],468:[function(require,module,exports){
+},{}],469:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -62752,7 +51772,7 @@ function monitorCodeUse(eventName, data) {
 module.exports = monitorCodeUse;
 
 }).call(this,require('_process'))
-},{"./invariant":458,"_process":479}],469:[function(require,module,exports){
+},{"./invariant":459,"_process":480}],470:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -62792,7 +51812,7 @@ function onlyChild(children) {
 module.exports = onlyChild;
 
 }).call(this,require('_process'))
-},{"./ReactElement":384,"./invariant":458,"_process":479}],470:[function(require,module,exports){
+},{"./ReactElement":385,"./invariant":459,"_process":480}],471:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62820,7 +51840,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = performance || {};
 
-},{"./ExecutionEnvironment":353}],471:[function(require,module,exports){
+},{"./ExecutionEnvironment":354}],472:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62848,7 +51868,7 @@ var performanceNow = performance.now.bind(performance);
 
 module.exports = performanceNow;
 
-},{"./performance":470}],472:[function(require,module,exports){
+},{"./performance":471}],473:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62926,7 +51946,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setInnerHTML;
 
-},{"./ExecutionEnvironment":353}],473:[function(require,module,exports){
+},{"./ExecutionEnvironment":354}],474:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -62970,7 +51990,7 @@ function shallowEqual(objA, objB) {
 
 module.exports = shallowEqual;
 
-},{}],474:[function(require,module,exports){
+},{}],475:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -63008,7 +52028,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 
 module.exports = shouldUpdateReactComponent;
 
-},{}],475:[function(require,module,exports){
+},{}],476:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -63080,7 +52100,7 @@ function toArray(obj) {
 module.exports = toArray;
 
 }).call(this,require('_process'))
-},{"./invariant":458,"_process":479}],476:[function(require,module,exports){
+},{"./invariant":459,"_process":480}],477:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -63263,7 +52283,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 module.exports = traverseAllChildren;
 
 }).call(this,require('_process'))
-},{"./ReactElement":384,"./ReactInstanceHandles":392,"./invariant":458,"_process":479}],477:[function(require,module,exports){
+},{"./ReactElement":385,"./ReactInstanceHandles":393,"./invariant":459,"_process":480}],478:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -63308,10 +52328,10 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":439,"_process":479}],478:[function(require,module,exports){
+},{"./emptyFunction":440,"_process":480}],479:[function(require,module,exports){
 module.exports = require('./lib/React');
 
-},{"./lib/React":360}],479:[function(require,module,exports){
+},{"./lib/React":361}],480:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -63399,7 +52419,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],480:[function(require,module,exports){
+},{}],481:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -63411,7 +52431,7 @@ process.chdir = function (dir) {
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":481}],481:[function(require,module,exports){
+},{"./lib/Dispatcher":482}],482:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -63663,7 +52683,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":482}],482:[function(require,module,exports){
+},{"./invariant":483}],483:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -63718,7 +52738,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],483:[function(require,module,exports){
+},{}],484:[function(require,module,exports){
 /*!
  * imagesLoaded v3.1.8
  * JavaScript is all like "You images are done yet or what?"
@@ -64055,7 +53075,7 @@ function makeArray( obj ) {
 
 });
 
-},{"eventie":484,"wolfy87-eventemitter":485}],484:[function(require,module,exports){
+},{"eventie":485,"wolfy87-eventemitter":486}],485:[function(require,module,exports){
 /*!
  * eventie v1.0.6
  * event binding helper
@@ -64139,7 +53159,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( window );
 
-},{}],485:[function(require,module,exports){
+},{}],486:[function(require,module,exports){
 /*!
  * EventEmitter v4.2.11 - git.io/ee
  * Unlicense - http://unlicense.org/
@@ -64613,14 +53633,14 @@ if ( typeof define === 'function' && define.amd ) {
     }
 }.call(this));
 
-},{}],486:[function(require,module,exports){
+},{}],487:[function(require,module,exports){
 (function (global){
 /**
  * @license
- * lodash 3.3.0 (Custom Build) <https://lodash.com/>
+ * lodash 3.3.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern -d -o ./index.js`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.7.0 <http://underscorejs.org/LICENSE>
+ * Based on Underscore.js 1.8.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <https://lodash.com/license>
  */
@@ -64630,7 +53650,7 @@ if ( typeof define === 'function' && define.amd ) {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '3.3.0';
+  var VERSION = '3.3.1';
 
   /** Used to compose bitmasks for wrapper metadata. */
   var BIND_FLAG = 1,
@@ -66421,7 +55441,7 @@ if ( typeof define === 'function' && define.amd ) {
       var index = -1,
           indexOf = getIndexOf(),
           isCommon = indexOf == baseIndexOf,
-          cache = isCommon && values.length >= 200 && createCache(values),
+          cache = (isCommon && values.length >= 200) ? createCache(values) : null,
           valuesLength = values.length;
 
       if (cache) {
@@ -66766,7 +55786,6 @@ if ( typeof define === 'function' && define.amd ) {
       return result;
     }
 
-<<<<<<< HEAD
     /**
      * The base implementation of `_.isEqual` without support for `this` binding
      * `customizer` functions.
@@ -66788,65 +55807,6 @@ if ( typeof define === 'function' && define.amd ) {
       }
       var valType = typeof value,
           othType = typeof other;
-=======
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],488:[function(require,module,exports){
-module.exports=require(334)
-},{"./focusNode":606,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/AutoFocusMixin.js":334}],489:[function(require,module,exports){
-module.exports=require(335)
-},{"./EventConstants":502,"./EventPropagators":507,"./ExecutionEnvironment":508,"./SyntheticInputEvent":582,"./keyOf":628,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/BeforeInputEventPlugin.js":335}],490:[function(require,module,exports){
-module.exports=require(336)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSProperty.js":336}],491:[function(require,module,exports){
-module.exports=require(337)
-},{"./CSSProperty":490,"./ExecutionEnvironment":508,"./camelizeStyleName":593,"./dangerousStyleValue":600,"./hyphenateStyleName":619,"./memoizeStringOnly":630,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSPropertyOperations.js":337,"_process":480}],492:[function(require,module,exports){
-module.exports=require(338)
-},{"./Object.assign":514,"./PooledClass":515,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CallbackQueue.js":338,"_process":480}],493:[function(require,module,exports){
-module.exports=require(339)
-},{"./EventConstants":502,"./EventPluginHub":504,"./EventPropagators":507,"./ExecutionEnvironment":508,"./ReactUpdates":572,"./SyntheticEvent":580,"./isEventSupported":622,"./isTextInputElement":624,"./keyOf":628,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ChangeEventPlugin.js":339}],494:[function(require,module,exports){
-module.exports=require(340)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ClientReactRootIndex.js":340}],495:[function(require,module,exports){
-module.exports=require(341)
-},{"./EventConstants":502,"./EventPropagators":507,"./ExecutionEnvironment":508,"./ReactInputSelection":548,"./SyntheticCompositionEvent":578,"./getTextContentAccessor":616,"./keyOf":628,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CompositionEventPlugin.js":341}],496:[function(require,module,exports){
-module.exports=require(342)
-},{"./Danger":499,"./ReactMultiChildUpdateTypes":555,"./getTextContentAccessor":616,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMChildrenOperations.js":342,"_process":480}],497:[function(require,module,exports){
-module.exports=require(343)
-},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMProperty.js":343,"_process":480}],498:[function(require,module,exports){
-module.exports=require(344)
-},{"./DOMProperty":497,"./escapeTextForBrowser":604,"./memoizeStringOnly":630,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMPropertyOperations.js":344,"_process":480}],499:[function(require,module,exports){
-module.exports=require(345)
-},{"./ExecutionEnvironment":508,"./createNodesFromMarkup":598,"./emptyFunction":602,"./getMarkupWrap":613,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Danger.js":345,"_process":480}],500:[function(require,module,exports){
-module.exports=require(346)
-},{"./keyOf":628,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DefaultEventPluginOrder.js":346}],501:[function(require,module,exports){
-module.exports=require(347)
-},{"./EventConstants":502,"./EventPropagators":507,"./ReactMount":553,"./SyntheticMouseEvent":584,"./keyOf":628,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EnterLeaveEventPlugin.js":347}],502:[function(require,module,exports){
-module.exports=require(348)
-},{"./keyMirror":627,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventConstants.js":348}],503:[function(require,module,exports){
-module.exports=require(349)
-},{"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventListener.js":349,"_process":480}],504:[function(require,module,exports){
-module.exports=require(350)
-},{"./EventPluginRegistry":505,"./EventPluginUtils":506,"./accumulateInto":590,"./forEachAccumulated":607,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginHub.js":350,"_process":480}],505:[function(require,module,exports){
-module.exports=require(351)
-},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginRegistry.js":351,"_process":480}],506:[function(require,module,exports){
-module.exports=require(352)
-},{"./EventConstants":502,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginUtils.js":352,"_process":480}],507:[function(require,module,exports){
-module.exports=require(353)
-},{"./EventConstants":502,"./EventPluginHub":504,"./accumulateInto":590,"./forEachAccumulated":607,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPropagators.js":353,"_process":480}],508:[function(require,module,exports){
-module.exports=require(354)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ExecutionEnvironment.js":354}],509:[function(require,module,exports){
-module.exports=require(355)
-},{"./DOMProperty":497,"./ExecutionEnvironment":508,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/HTMLDOMPropertyConfig.js":355}],510:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule LinkedStateMixin
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
       // Exit early for unlike primitive values.
       if ((valType != 'function' && valType != 'object' && othType != 'function' && othType != 'object') ||
@@ -66904,7 +55864,6 @@ module.exports=require(355)
       var valWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
           othWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
 
-<<<<<<< HEAD
       if (valWrapped || othWrapped) {
         return equalFunc(valWrapped ? object.value() : object, othWrapped ? other.value() : other, customizer, isWhere, stackA, stackB);
       }
@@ -66915,41 +55874,6 @@ module.exports=require(355)
       // For more information on detecting circular references see https://es5.github.io/#JO.
       stackA || (stackA = []);
       stackB || (stackB = []);
-=======
-},{"./ReactLink":551,"./ReactStateSetters":568}],511:[function(require,module,exports){
-module.exports=require(356)
-},{"./ReactPropTypes":562,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/LinkedValueUtils.js":356,"_process":480}],512:[function(require,module,exports){
-module.exports=require(357)
-},{"./ReactBrowserEventEmitter":518,"./accumulateInto":590,"./forEachAccumulated":607,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/LocalEventTrapMixin.js":357,"_process":480}],513:[function(require,module,exports){
-module.exports=require(358)
-},{"./EventConstants":502,"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/MobileSafariClickEventPlugin.js":358}],514:[function(require,module,exports){
-module.exports=require(359)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Object.assign.js":359}],515:[function(require,module,exports){
-module.exports=require(360)
-},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/PooledClass.js":360,"_process":480}],516:[function(require,module,exports){
-module.exports=require(361)
-},{"./DOMPropertyOperations":498,"./EventPluginUtils":506,"./ExecutionEnvironment":508,"./Object.assign":514,"./ReactChildren":519,"./ReactComponent":520,"./ReactCompositeComponent":523,"./ReactContext":524,"./ReactCurrentOwner":525,"./ReactDOM":526,"./ReactDOMComponent":528,"./ReactDefaultInjection":538,"./ReactElement":541,"./ReactElementValidator":542,"./ReactInstanceHandles":549,"./ReactLegacyElement":550,"./ReactMount":553,"./ReactMultiChild":554,"./ReactPerf":558,"./ReactPropTypes":562,"./ReactServerRendering":566,"./ReactTextComponent":569,"./deprecated":601,"./onlyChild":632,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/React.js":361,"_process":480}],517:[function(require,module,exports){
-module.exports=require(362)
-},{"./ReactEmptyComponent":543,"./ReactMount":553,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserComponentMixin.js":362,"_process":480}],518:[function(require,module,exports){
-module.exports=require(363)
-},{"./EventConstants":502,"./EventPluginHub":504,"./EventPluginRegistry":505,"./Object.assign":514,"./ReactEventEmitterMixin":545,"./ViewportMetrics":589,"./isEventSupported":622,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserEventEmitter.js":363}],519:[function(require,module,exports){
-module.exports=require(364)
-},{"./PooledClass":515,"./traverseAllChildren":639,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactChildren.js":364,"_process":480}],520:[function(require,module,exports){
-module.exports=require(365)
-},{"./Object.assign":514,"./ReactElement":541,"./ReactOwner":557,"./ReactUpdates":572,"./invariant":621,"./keyMirror":627,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponent.js":365,"_process":480}],521:[function(require,module,exports){
-module.exports=require(366)
-},{"./ReactDOMIDOperations":530,"./ReactMarkupChecksum":552,"./ReactMount":553,"./ReactPerf":558,"./ReactReconcileTransaction":564,"./getReactRootElementInContainer":615,"./invariant":621,"./setInnerHTML":635,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponentBrowserEnvironment.js":366,"_process":480}],522:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
-* @providesModule ReactComponentWithPureRenderMixin
-*/
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
       var length = stackA.length;
       while (length--) {
@@ -66969,7 +55893,6 @@ module.exports=require(366)
       return result;
     }
 
-<<<<<<< HEAD
     /**
      * The base implementation of `_.isMatch` without support for callback
      * shorthands or `this` binding.
@@ -66989,76 +55912,6 @@ module.exports=require(366)
       }
       var index = -1,
           noCustomizer = !customizer;
-=======
-},{"./shallowEqual":636}],523:[function(require,module,exports){
-module.exports=require(367)
-},{"./Object.assign":514,"./ReactComponent":520,"./ReactContext":524,"./ReactCurrentOwner":525,"./ReactElement":541,"./ReactElementValidator":542,"./ReactEmptyComponent":543,"./ReactErrorUtils":544,"./ReactLegacyElement":550,"./ReactOwner":557,"./ReactPerf":558,"./ReactPropTransferer":559,"./ReactPropTypeLocationNames":560,"./ReactPropTypeLocations":561,"./ReactUpdates":572,"./instantiateReactComponent":620,"./invariant":621,"./keyMirror":627,"./keyOf":628,"./mapObject":629,"./monitorCodeUse":631,"./shouldUpdateReactComponent":637,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactCompositeComponent.js":367,"_process":480}],524:[function(require,module,exports){
-module.exports=require(368)
-},{"./Object.assign":514,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactContext.js":368}],525:[function(require,module,exports){
-module.exports=require(369)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactCurrentOwner.js":369}],526:[function(require,module,exports){
-module.exports=require(370)
-},{"./ReactElement":541,"./ReactElementValidator":542,"./ReactLegacyElement":550,"./mapObject":629,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOM.js":370,"_process":480}],527:[function(require,module,exports){
-module.exports=require(371)
-},{"./AutoFocusMixin":488,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./keyMirror":627,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMButton.js":371}],528:[function(require,module,exports){
-module.exports=require(372)
-},{"./CSSPropertyOperations":491,"./DOMProperty":497,"./DOMPropertyOperations":498,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactBrowserEventEmitter":518,"./ReactComponent":520,"./ReactMount":553,"./ReactMultiChild":554,"./ReactPerf":558,"./escapeTextForBrowser":604,"./invariant":621,"./isEventSupported":622,"./keyOf":628,"./monitorCodeUse":631,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMComponent.js":372,"_process":480}],529:[function(require,module,exports){
-module.exports=require(373)
-},{"./EventConstants":502,"./LocalEventTrapMixin":512,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMForm.js":373}],530:[function(require,module,exports){
-module.exports=require(374)
-},{"./CSSPropertyOperations":491,"./DOMChildrenOperations":496,"./DOMPropertyOperations":498,"./ReactMount":553,"./ReactPerf":558,"./invariant":621,"./setInnerHTML":635,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMIDOperations.js":374,"_process":480}],531:[function(require,module,exports){
-module.exports=require(375)
-},{"./EventConstants":502,"./LocalEventTrapMixin":512,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMImg.js":375}],532:[function(require,module,exports){
-module.exports=require(376)
-},{"./AutoFocusMixin":488,"./DOMPropertyOperations":498,"./LinkedValueUtils":511,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./ReactMount":553,"./ReactUpdates":572,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMInput.js":376,"_process":480}],533:[function(require,module,exports){
-module.exports=require(377)
-},{"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMOption.js":377,"_process":480}],534:[function(require,module,exports){
-module.exports=require(378)
-},{"./AutoFocusMixin":488,"./LinkedValueUtils":511,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./ReactUpdates":572,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelect.js":378}],535:[function(require,module,exports){
-module.exports=require(379)
-},{"./ExecutionEnvironment":508,"./getNodeForCharacterOffset":614,"./getTextContentAccessor":616,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelection.js":379}],536:[function(require,module,exports){
-module.exports=require(380)
-},{"./AutoFocusMixin":488,"./DOMPropertyOperations":498,"./LinkedValueUtils":511,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./ReactUpdates":572,"./invariant":621,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMTextarea.js":380,"_process":480}],537:[function(require,module,exports){
-module.exports=require(381)
-},{"./Object.assign":514,"./ReactUpdates":572,"./Transaction":588,"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultBatchingStrategy.js":381}],538:[function(require,module,exports){
-module.exports=require(382)
-},{"./BeforeInputEventPlugin":489,"./ChangeEventPlugin":493,"./ClientReactRootIndex":494,"./CompositionEventPlugin":495,"./DefaultEventPluginOrder":500,"./EnterLeaveEventPlugin":501,"./ExecutionEnvironment":508,"./HTMLDOMPropertyConfig":509,"./MobileSafariClickEventPlugin":513,"./ReactBrowserComponentMixin":517,"./ReactComponentBrowserEnvironment":521,"./ReactDOMButton":527,"./ReactDOMComponent":528,"./ReactDOMForm":529,"./ReactDOMImg":531,"./ReactDOMInput":532,"./ReactDOMOption":533,"./ReactDOMSelect":534,"./ReactDOMTextarea":536,"./ReactDefaultBatchingStrategy":537,"./ReactDefaultPerf":539,"./ReactEventListener":546,"./ReactInjection":547,"./ReactInstanceHandles":549,"./ReactMount":553,"./SVGDOMPropertyConfig":573,"./SelectEventPlugin":574,"./ServerReactRootIndex":575,"./SimpleEventPlugin":576,"./createFullPageComponent":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultInjection.js":382,"_process":480}],539:[function(require,module,exports){
-module.exports=require(383)
-},{"./DOMProperty":497,"./ReactDefaultPerfAnalysis":540,"./ReactMount":553,"./ReactPerf":558,"./performanceNow":634,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerf.js":383}],540:[function(require,module,exports){
-module.exports=require(384)
-},{"./Object.assign":514,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerfAnalysis.js":384}],541:[function(require,module,exports){
-module.exports=require(385)
-},{"./ReactContext":524,"./ReactCurrentOwner":525,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElement.js":385,"_process":480}],542:[function(require,module,exports){
-module.exports=require(386)
-},{"./ReactCurrentOwner":525,"./ReactElement":541,"./ReactPropTypeLocations":561,"./monitorCodeUse":631,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElementValidator.js":386,"_process":480}],543:[function(require,module,exports){
-module.exports=require(387)
-},{"./ReactElement":541,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEmptyComponent.js":387,"_process":480}],544:[function(require,module,exports){
-module.exports=require(388)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactErrorUtils.js":388}],545:[function(require,module,exports){
-module.exports=require(389)
-},{"./EventPluginHub":504,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventEmitterMixin.js":389}],546:[function(require,module,exports){
-module.exports=require(390)
-},{"./EventListener":503,"./ExecutionEnvironment":508,"./Object.assign":514,"./PooledClass":515,"./ReactInstanceHandles":549,"./ReactMount":553,"./ReactUpdates":572,"./getEventTarget":612,"./getUnboundedScrollPosition":617,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventListener.js":390}],547:[function(require,module,exports){
-module.exports=require(391)
-},{"./DOMProperty":497,"./EventPluginHub":504,"./ReactBrowserEventEmitter":518,"./ReactComponent":520,"./ReactCompositeComponent":523,"./ReactEmptyComponent":543,"./ReactNativeComponent":556,"./ReactPerf":558,"./ReactRootIndex":565,"./ReactUpdates":572,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInjection.js":391}],548:[function(require,module,exports){
-module.exports=require(392)
-},{"./ReactDOMSelection":535,"./containsNode":595,"./focusNode":606,"./getActiveElement":608,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInputSelection.js":392}],549:[function(require,module,exports){
-module.exports=require(393)
-},{"./ReactRootIndex":565,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInstanceHandles.js":393,"_process":480}],550:[function(require,module,exports){
-module.exports=require(394)
-},{"./ReactCurrentOwner":525,"./invariant":621,"./monitorCodeUse":631,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactLegacyElement.js":394,"_process":480}],551:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactLink
- * @typechecks static-only
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
       while (++index < length) {
         if ((noCustomizer && strictCompareFlags[index])
@@ -67140,7 +55993,6 @@ module.exports=require(394)
       };
     }
 
-<<<<<<< HEAD
     /**
      * The base implementation of `_.matchesProperty` which does not coerce `key`
      * to a string.
@@ -67160,51 +56012,6 @@ module.exports=require(394)
         return object != null && baseIsEqual(value, object[key], null, true);
       };
     }
-=======
-},{"./React":516}],552:[function(require,module,exports){
-module.exports=require(395)
-},{"./adler32":591,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMarkupChecksum.js":395}],553:[function(require,module,exports){
-module.exports=require(396)
-},{"./DOMProperty":497,"./ReactBrowserEventEmitter":518,"./ReactCurrentOwner":525,"./ReactElement":541,"./ReactInstanceHandles":549,"./ReactLegacyElement":550,"./ReactPerf":558,"./containsNode":595,"./deprecated":601,"./getReactRootElementInContainer":615,"./instantiateReactComponent":620,"./invariant":621,"./shouldUpdateReactComponent":637,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMount.js":396,"_process":480}],554:[function(require,module,exports){
-module.exports=require(397)
-},{"./ReactComponent":520,"./ReactMultiChildUpdateTypes":555,"./flattenChildren":605,"./instantiateReactComponent":620,"./shouldUpdateReactComponent":637,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMultiChild.js":397}],555:[function(require,module,exports){
-module.exports=require(398)
-},{"./keyMirror":627,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMultiChildUpdateTypes.js":398}],556:[function(require,module,exports){
-module.exports=require(399)
-},{"./Object.assign":514,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactNativeComponent.js":399,"_process":480}],557:[function(require,module,exports){
-module.exports=require(400)
-},{"./emptyObject":603,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactOwner.js":400,"_process":480}],558:[function(require,module,exports){
-module.exports=require(401)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPerf.js":401,"_process":480}],559:[function(require,module,exports){
-module.exports=require(402)
-},{"./Object.assign":514,"./emptyFunction":602,"./invariant":621,"./joinClasses":626,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTransferer.js":402,"_process":480}],560:[function(require,module,exports){
-module.exports=require(403)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocationNames.js":403,"_process":480}],561:[function(require,module,exports){
-module.exports=require(404)
-},{"./keyMirror":627,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocations.js":404}],562:[function(require,module,exports){
-module.exports=require(405)
-},{"./ReactElement":541,"./ReactPropTypeLocationNames":560,"./deprecated":601,"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypes.js":405}],563:[function(require,module,exports){
-module.exports=require(406)
-},{"./Object.assign":514,"./PooledClass":515,"./ReactBrowserEventEmitter":518,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPutListenerQueue.js":406}],564:[function(require,module,exports){
-module.exports=require(407)
-},{"./CallbackQueue":492,"./Object.assign":514,"./PooledClass":515,"./ReactBrowserEventEmitter":518,"./ReactInputSelection":548,"./ReactPutListenerQueue":563,"./Transaction":588,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactReconcileTransaction.js":407}],565:[function(require,module,exports){
-module.exports=require(408)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactRootIndex.js":408}],566:[function(require,module,exports){
-module.exports=require(409)
-},{"./ReactElement":541,"./ReactInstanceHandles":549,"./ReactMarkupChecksum":552,"./ReactServerRenderingTransaction":567,"./instantiateReactComponent":620,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRendering.js":409,"_process":480}],567:[function(require,module,exports){
-module.exports=require(410)
-},{"./CallbackQueue":492,"./Object.assign":514,"./PooledClass":515,"./ReactPutListenerQueue":563,"./Transaction":588,"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRenderingTransaction.js":410}],568:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactStateSetters
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     /**
      * The base implementation of `_.merge` without support for argument juggling,
@@ -67339,7 +56146,6 @@ module.exports=require(410)
       return result;
     }
 
-<<<<<<< HEAD
     /**
      * The base implementation of `_.random` without support for argument juggling
      * and returning floating-point numbers.
@@ -67352,22 +56158,6 @@ module.exports=require(410)
     function baseRandom(min, max) {
       return min + floor(nativeRandom() * (max - min + 1));
     }
-=======
-},{}],569:[function(require,module,exports){
-module.exports=require(411)
-},{"./DOMPropertyOperations":498,"./Object.assign":514,"./ReactComponent":520,"./ReactElement":541,"./escapeTextForBrowser":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactTextComponent.js":411}],570:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @typechecks static-only
- * @providesModule ReactTransitionChildMapping
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     /**
      * The base implementation of `_.reduce` and `_.reduceRight` without support
@@ -67471,7 +56261,7 @@ module.exports=require(411)
           length = array.length,
           isCommon = indexOf == baseIndexOf,
           isLarge = isCommon && length >= 200,
-          seen = isLarge && createCache(),
+          seen = isLarge ? createCache() : null,
           result = [];
 
       if (seen) {
@@ -67523,25 +56313,11 @@ module.exports=require(411)
           length = props.length,
           result = Array(length);
 
-<<<<<<< HEAD
       while (++index < length) {
         result[index] = object[props[index]];
       }
       return result;
     }
-=======
-},{"./ReactChildren":519}],571:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactTransitionGroup
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     /**
      * The base implementation of `wrapperValue` which returns the result of
@@ -67892,76 +56668,6 @@ module.exports=require(411)
         return result;
       };
     }
-<<<<<<< HEAD
-=======
-    return React.createElement(
-      this.props.component,
-      this.props,
-      childrenToRender
-    );
-  }
-});
-
-module.exports = ReactTransitionGroup;
-
-},{"./Object.assign":514,"./React":516,"./ReactTransitionChildMapping":570,"./cloneWithProps":594,"./emptyFunction":602}],572:[function(require,module,exports){
-module.exports=require(412)
-},{"./CallbackQueue":492,"./Object.assign":514,"./PooledClass":515,"./ReactCurrentOwner":525,"./ReactPerf":558,"./Transaction":588,"./invariant":621,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactUpdates.js":412,"_process":480}],573:[function(require,module,exports){
-module.exports=require(413)
-},{"./DOMProperty":497,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SVGDOMPropertyConfig.js":413}],574:[function(require,module,exports){
-module.exports=require(414)
-},{"./EventConstants":502,"./EventPropagators":507,"./ReactInputSelection":548,"./SyntheticEvent":580,"./getActiveElement":608,"./isTextInputElement":624,"./keyOf":628,"./shallowEqual":636,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SelectEventPlugin.js":414}],575:[function(require,module,exports){
-module.exports=require(415)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ServerReactRootIndex.js":415}],576:[function(require,module,exports){
-module.exports=require(416)
-},{"./EventConstants":502,"./EventPluginUtils":506,"./EventPropagators":507,"./SyntheticClipboardEvent":577,"./SyntheticDragEvent":579,"./SyntheticEvent":580,"./SyntheticFocusEvent":581,"./SyntheticKeyboardEvent":583,"./SyntheticMouseEvent":584,"./SyntheticTouchEvent":585,"./SyntheticUIEvent":586,"./SyntheticWheelEvent":587,"./getEventCharCode":609,"./invariant":621,"./keyOf":628,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SimpleEventPlugin.js":416,"_process":480}],577:[function(require,module,exports){
-module.exports=require(417)
-},{"./SyntheticEvent":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticClipboardEvent.js":417}],578:[function(require,module,exports){
-module.exports=require(418)
-},{"./SyntheticEvent":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticCompositionEvent.js":418}],579:[function(require,module,exports){
-module.exports=require(419)
-},{"./SyntheticMouseEvent":584,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticDragEvent.js":419}],580:[function(require,module,exports){
-module.exports=require(420)
-},{"./Object.assign":514,"./PooledClass":515,"./emptyFunction":602,"./getEventTarget":612,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticEvent.js":420}],581:[function(require,module,exports){
-module.exports=require(421)
-},{"./SyntheticUIEvent":586,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticFocusEvent.js":421}],582:[function(require,module,exports){
-module.exports=require(422)
-},{"./SyntheticEvent":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticInputEvent.js":422}],583:[function(require,module,exports){
-module.exports=require(423)
-},{"./SyntheticUIEvent":586,"./getEventCharCode":609,"./getEventKey":610,"./getEventModifierState":611,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticKeyboardEvent.js":423}],584:[function(require,module,exports){
-module.exports=require(424)
-},{"./SyntheticUIEvent":586,"./ViewportMetrics":589,"./getEventModifierState":611,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticMouseEvent.js":424}],585:[function(require,module,exports){
-module.exports=require(425)
-},{"./SyntheticUIEvent":586,"./getEventModifierState":611,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticTouchEvent.js":425}],586:[function(require,module,exports){
-module.exports=require(426)
-},{"./SyntheticEvent":580,"./getEventTarget":612,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticUIEvent.js":426}],587:[function(require,module,exports){
-module.exports=require(427)
-},{"./SyntheticMouseEvent":584,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticWheelEvent.js":427}],588:[function(require,module,exports){
-module.exports=require(428)
-},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Transaction.js":428,"_process":480}],589:[function(require,module,exports){
-module.exports=require(429)
-},{"./getUnboundedScrollPosition":617,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ViewportMetrics.js":429}],590:[function(require,module,exports){
-module.exports=require(430)
-},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/accumulateInto.js":430,"_process":480}],591:[function(require,module,exports){
-module.exports=require(431)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/adler32.js":431}],592:[function(require,module,exports){
-module.exports=require(432)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelize.js":432}],593:[function(require,module,exports){
-module.exports=require(433)
-},{"./camelize":592,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelizeStyleName.js":433}],594:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @typechecks
- * @providesModule cloneWithProps
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     /**
      * Creates a function that produces an instance of `Ctor` regardless of
@@ -68072,31 +56778,8 @@ module.exports=require(433)
                 newPartials = isCurry ? args : null,
                 newPartialsRight = isCurry ? null : args;
 
-<<<<<<< HEAD
             bitmask |= (isCurry ? PARTIAL_FLAG : PARTIAL_RIGHT_FLAG);
             bitmask &= ~(isCurry ? PARTIAL_RIGHT_FLAG : PARTIAL_FLAG);
-=======
-}).call(this,require('_process'))
-},{"./ReactElement":541,"./ReactPropTransferer":559,"./keyOf":628,"./warning":641,"_process":480}],595:[function(require,module,exports){
-module.exports=require(434)
-},{"./isTextNode":625,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/containsNode.js":434}],596:[function(require,module,exports){
-module.exports=require(435)
-},{"./toArray":638,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createArrayFrom.js":435}],597:[function(require,module,exports){
-module.exports=require(436)
-},{"./ReactCompositeComponent":523,"./ReactElement":541,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createFullPageComponent.js":436,"_process":480}],598:[function(require,module,exports){
-module.exports=require(437)
-},{"./ExecutionEnvironment":508,"./createArrayFrom":596,"./getMarkupWrap":613,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createNodesFromMarkup.js":437,"_process":480}],599:[function(require,module,exports){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule cx
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
             if (!isCurryBound) {
               bitmask &= ~(BIND_FLAG | BIND_KEY_FLAG);
@@ -68136,7 +56819,6 @@ module.exports=require(437)
       var strLength = string.length;
       length = +length;
 
-<<<<<<< HEAD
       if (strLength >= length || !nativeIsFinite(length)) {
         return '';
       }
@@ -68144,100 +56826,6 @@ module.exports=require(437)
       chars = chars == null ? ' ' : (chars + '');
       return repeat(chars, ceil(padLength / chars.length)).slice(0, padLength);
     }
-=======
-},{}],600:[function(require,module,exports){
-module.exports=require(438)
-},{"./CSSProperty":490,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/dangerousStyleValue.js":438}],601:[function(require,module,exports){
-module.exports=require(439)
-},{"./Object.assign":514,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/deprecated.js":439,"_process":480}],602:[function(require,module,exports){
-module.exports=require(440)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyFunction.js":440}],603:[function(require,module,exports){
-module.exports=require(441)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyObject.js":441,"_process":480}],604:[function(require,module,exports){
-module.exports=require(442)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/escapeTextForBrowser.js":442}],605:[function(require,module,exports){
-module.exports=require(443)
-},{"./ReactTextComponent":569,"./traverseAllChildren":639,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/flattenChildren.js":443,"_process":480}],606:[function(require,module,exports){
-module.exports=require(444)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/focusNode.js":444}],607:[function(require,module,exports){
-module.exports=require(445)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/forEachAccumulated.js":445}],608:[function(require,module,exports){
-module.exports=require(446)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getActiveElement.js":446}],609:[function(require,module,exports){
-module.exports=require(447)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventCharCode.js":447}],610:[function(require,module,exports){
-module.exports=require(448)
-},{"./getEventCharCode":609,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventKey.js":448}],611:[function(require,module,exports){
-module.exports=require(449)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventModifierState.js":449}],612:[function(require,module,exports){
-module.exports=require(450)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventTarget.js":450}],613:[function(require,module,exports){
-module.exports=require(451)
-},{"./ExecutionEnvironment":508,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getMarkupWrap.js":451,"_process":480}],614:[function(require,module,exports){
-module.exports=require(452)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getNodeForCharacterOffset.js":452}],615:[function(require,module,exports){
-module.exports=require(453)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getReactRootElementInContainer.js":453}],616:[function(require,module,exports){
-module.exports=require(454)
-},{"./ExecutionEnvironment":508,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getTextContentAccessor.js":454}],617:[function(require,module,exports){
-module.exports=require(455)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getUnboundedScrollPosition.js":455}],618:[function(require,module,exports){
-module.exports=require(456)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenate.js":456}],619:[function(require,module,exports){
-module.exports=require(457)
-},{"./hyphenate":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenateStyleName.js":457}],620:[function(require,module,exports){
-module.exports=require(458)
-},{"./ReactElement":541,"./ReactEmptyComponent":543,"./ReactLegacyElement":550,"./ReactNativeComponent":556,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/instantiateReactComponent.js":458,"_process":480}],621:[function(require,module,exports){
-module.exports=require(459)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/invariant.js":459,"_process":480}],622:[function(require,module,exports){
-module.exports=require(460)
-},{"./ExecutionEnvironment":508,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isEventSupported.js":460}],623:[function(require,module,exports){
-module.exports=require(461)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isNode.js":461}],624:[function(require,module,exports){
-module.exports=require(462)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextInputElement.js":462}],625:[function(require,module,exports){
-module.exports=require(463)
-},{"./isNode":623,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextNode.js":463}],626:[function(require,module,exports){
-module.exports=require(464)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/joinClasses.js":464}],627:[function(require,module,exports){
-module.exports=require(465)
-},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyMirror.js":465,"_process":480}],628:[function(require,module,exports){
-module.exports=require(466)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyOf.js":466}],629:[function(require,module,exports){
-module.exports=require(467)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/mapObject.js":467}],630:[function(require,module,exports){
-module.exports=require(468)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/memoizeStringOnly.js":468}],631:[function(require,module,exports){
-module.exports=require(469)
-},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/monitorCodeUse.js":469,"_process":480}],632:[function(require,module,exports){
-module.exports=require(470)
-},{"./ReactElement":541,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/onlyChild.js":470,"_process":480}],633:[function(require,module,exports){
-module.exports=require(471)
-},{"./ExecutionEnvironment":508,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performance.js":471}],634:[function(require,module,exports){
-module.exports=require(472)
-},{"./performance":633,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performanceNow.js":472}],635:[function(require,module,exports){
-module.exports=require(473)
-},{"./ExecutionEnvironment":508,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/setInnerHTML.js":473}],636:[function(require,module,exports){
-module.exports=require(474)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shallowEqual.js":474}],637:[function(require,module,exports){
-module.exports=require(475)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shouldUpdateReactComponent.js":475}],638:[function(require,module,exports){
-module.exports=require(476)
-},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/toArray.js":476,"_process":480}],639:[function(require,module,exports){
-module.exports=require(477)
-},{"./ReactElement":541,"./ReactInstanceHandles":549,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/traverseAllChildren.js":477,"_process":480}],640:[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule update
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
     /**
      * Creates a function that wraps `func` and invokes it with the optional `this`
@@ -68496,7 +57084,6 @@ module.exports=require(477)
       return true;
     }
 
-<<<<<<< HEAD
     /**
      * Gets the extremum value of `collection` invoking `iteratee` for each value
      * in `collection` to generate the criterion by which the value is ranked.
@@ -68513,19 +57100,6 @@ module.exports=require(477)
       var exValue = isMin ? POSITIVE_INFINITY : NEGATIVE_INFINITY,
           computed = exValue,
           result = computed;
-=======
-}).call(this,require('_process'))
-},{"./Object.assign":514,"./invariant":621,"./keyOf":628,"_process":480}],641:[function(require,module,exports){
-module.exports=require(478)
-},{"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/warning.js":478,"_process":480}],"Modernizr":[function(require,module,exports){
-/*!
- * Modernizr v2.8.3
- * www.modernizr.com
- *
- * Copyright (c) Faruk Ates, Paul Irish, Alex Sexton
- * Available under the BSD and MIT licenses: www.modernizr.com/license/
- */
->>>>>>> Infinite scroll prefill [deliver #90599686]
 
       baseEach(collection, function(value, index, collection) {
         var current = iteratee(value, index, collection);
@@ -68739,8 +57313,11 @@ module.exports=require(478)
       } else {
         prereq = type == 'string' && index in object;
       }
-      var other = object[index];
-      return prereq && (value === value ? value === other : other !== other);
+      if (prereq) {
+        var other = object[index];
+        return value === value ? value === other : other !== other;
+      }
+      return false;
     }
 
     /**
@@ -69466,7 +58043,7 @@ module.exports=require(478)
      * // => 2
      *
      * // using the `_.matches` callback shorthand
-     * _.findLastIndex(users, { user': 'barney', 'active': true });
+     * _.findLastIndex(users, { 'user': 'barney', 'active': true });
      * // => 0
      *
      * // using the `_.matchesProperty` callback shorthand
@@ -69577,7 +58154,7 @@ module.exports=require(478)
      * @example
      *
      * _.indexOf([1, 2, 1, 2], 2);
-     * // => 2
+     * // => 1
      *
      * // using `fromIndex`
      * _.indexOf([1, 2, 1, 2], 2, 2);
@@ -69650,7 +58227,7 @@ module.exports=require(478)
         var value = arguments[argsIndex];
         if (isArray(value) || isArguments(value)) {
           args.push(value);
-          caches.push(isCommon && value.length >= 120 && createCache(argsIndex && value));
+          caches.push((isCommon && value.length >= 120) ? createCache(argsIndex && value) : null);
         }
       }
       argsLength = args.length;
@@ -71718,7 +60295,7 @@ module.exports=require(478)
      * ];
      *
      * // using the `_.matches` callback shorthand
-     * _.some(users, { user': 'barney', 'active': false });
+     * _.some(users, { 'user': 'barney', 'active': false });
      * // => false
      *
      * // using the `_.matchesProperty` callback shorthand
@@ -72254,7 +60831,7 @@ module.exports=require(478)
      * @memberOf _
      * @category Function
      * @param {Function} func The function to debounce.
-     * @param {number} wait The number of milliseconds to delay.
+     * @param {number} [wait=0] The number of milliseconds to delay.
      * @param {Object} [options] The options object.
      * @param {boolean} [options.leading=false] Specify invoking on the leading
      *  edge of the timeout.
@@ -72312,7 +60889,7 @@ module.exports=require(478)
       if (typeof func != 'function') {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
-      wait = wait < 0 ? 0 : wait;
+      wait = wait < 0 ? 0 : (+wait || 0);
       if (options === true) {
         var leading = true;
         trailing = false;
@@ -72833,7 +61410,7 @@ module.exports=require(478)
      * @memberOf _
      * @category Function
      * @param {Function} func The function to throttle.
-     * @param {number} wait The number of milliseconds to throttle invocations to.
+     * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
      * @param {Object} [options] The options object.
      * @param {boolean} [options.leading=true] Specify invoking on the leading
      *  edge of the timeout.
@@ -75150,10 +63727,10 @@ module.exports=require(478)
      * var compiled = _.template('hi <%= data.user %>!', { 'variable': 'data' });
      * compiled.source;
      * // => function(data) {
-     *   var __t, __p = '';
-     *   __p += 'hi ' + ((__t = ( data.user )) == null ? '' : __t) + '!';
-     *   return __p;
-     * }
+     * //   var __t, __p = '';
+     * //   __p += 'hi ' + ((__t = ( data.user )) == null ? '' : __t) + '!';
+     * //   return __p;
+     * // }
      *
      * // using the `source` property to inline compiled templates for meaningful
      * // line numbers in error messages and a stack trace
@@ -76267,15 +64844,13 @@ module.exports=require(478)
 
     // Add `LazyWrapper` methods that accept an `iteratee` value.
     arrayEach(['filter', 'map', 'takeWhile'], function(methodName, index) {
-      var isFilter = index == LAZY_FILTER_FLAG,
-          isWhile = index == LAZY_WHILE_FLAG;
+      var isFilter = index == LAZY_FILTER_FLAG || index == LAZY_WHILE_FLAG;
 
       LazyWrapper.prototype[methodName] = function(iteratee, thisArg) {
         var result = this.clone(),
-            filtered = result.__filtered__,
             iteratees = result.__iteratees__ || (result.__iteratees__ = []);
 
-        result.__filtered__ = filtered || isFilter || (isWhile && result.__dir__ < 0);
+        result.__filtered__ = result.__filtered__ || isFilter;
         iteratees.push({ 'iteratee': getCallback(iteratee, thisArg, 3), 'type': index });
         return result;
       };
@@ -76342,9 +64917,14 @@ module.exports=require(478)
     };
 
     LazyWrapper.prototype.dropWhile = function(predicate, thisArg) {
-      var done;
+      var done,
+          lastIndex,
+          isRight = this.__dir__ < 0;
+
       predicate = getCallback(predicate, thisArg, 3);
       return this.filter(function(value, index, array) {
+        done = done && (isRight ? index < lastIndex : index > lastIndex);
+        lastIndex = index;
         return done || (done = !predicate(value, index, array));
       });
     };
@@ -76484,51 +65064,51 @@ module.exports=require(478)
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],487:[function(require,module,exports){
-module.exports=require(333)
-},{"./focusNode":605,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\AutoFocusMixin.js":333}],488:[function(require,module,exports){
+},{}],488:[function(require,module,exports){
 module.exports=require(334)
-},{"./EventConstants":501,"./EventPropagators":506,"./ExecutionEnvironment":507,"./SyntheticInputEvent":581,"./keyOf":627,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\BeforeInputEventPlugin.js":334}],489:[function(require,module,exports){
+},{"./focusNode":606,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/AutoFocusMixin.js":334}],489:[function(require,module,exports){
 module.exports=require(335)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\CSSProperty.js":335}],490:[function(require,module,exports){
+},{"./EventConstants":502,"./EventPropagators":507,"./ExecutionEnvironment":508,"./SyntheticInputEvent":582,"./keyOf":628,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/BeforeInputEventPlugin.js":335}],490:[function(require,module,exports){
 module.exports=require(336)
-},{"./CSSProperty":489,"./ExecutionEnvironment":507,"./camelizeStyleName":592,"./dangerousStyleValue":599,"./hyphenateStyleName":618,"./memoizeStringOnly":629,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\CSSPropertyOperations.js":336}],491:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSProperty.js":336}],491:[function(require,module,exports){
 module.exports=require(337)
-},{"./Object.assign":513,"./PooledClass":514,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\CallbackQueue.js":337}],492:[function(require,module,exports){
+},{"./CSSProperty":490,"./ExecutionEnvironment":508,"./camelizeStyleName":593,"./dangerousStyleValue":600,"./hyphenateStyleName":619,"./memoizeStringOnly":630,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSPropertyOperations.js":337,"_process":480}],492:[function(require,module,exports){
 module.exports=require(338)
-},{"./EventConstants":501,"./EventPluginHub":503,"./EventPropagators":506,"./ExecutionEnvironment":507,"./ReactUpdates":571,"./SyntheticEvent":579,"./isEventSupported":621,"./isTextInputElement":623,"./keyOf":627,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ChangeEventPlugin.js":338}],493:[function(require,module,exports){
+},{"./Object.assign":514,"./PooledClass":515,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CallbackQueue.js":338,"_process":480}],493:[function(require,module,exports){
 module.exports=require(339)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ClientReactRootIndex.js":339}],494:[function(require,module,exports){
+},{"./EventConstants":502,"./EventPluginHub":504,"./EventPropagators":507,"./ExecutionEnvironment":508,"./ReactUpdates":572,"./SyntheticEvent":580,"./isEventSupported":622,"./isTextInputElement":624,"./keyOf":628,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ChangeEventPlugin.js":339}],494:[function(require,module,exports){
 module.exports=require(340)
-},{"./EventConstants":501,"./EventPropagators":506,"./ExecutionEnvironment":507,"./ReactInputSelection":547,"./SyntheticCompositionEvent":577,"./getTextContentAccessor":615,"./keyOf":627,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\CompositionEventPlugin.js":340}],495:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ClientReactRootIndex.js":340}],495:[function(require,module,exports){
 module.exports=require(341)
-},{"./Danger":498,"./ReactMultiChildUpdateTypes":554,"./getTextContentAccessor":615,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\DOMChildrenOperations.js":341}],496:[function(require,module,exports){
+},{"./EventConstants":502,"./EventPropagators":507,"./ExecutionEnvironment":508,"./ReactInputSelection":548,"./SyntheticCompositionEvent":578,"./getTextContentAccessor":616,"./keyOf":628,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CompositionEventPlugin.js":341}],496:[function(require,module,exports){
 module.exports=require(342)
-},{"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\DOMProperty.js":342}],497:[function(require,module,exports){
+},{"./Danger":499,"./ReactMultiChildUpdateTypes":555,"./getTextContentAccessor":616,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMChildrenOperations.js":342,"_process":480}],497:[function(require,module,exports){
 module.exports=require(343)
-},{"./DOMProperty":496,"./escapeTextForBrowser":603,"./memoizeStringOnly":629,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\DOMPropertyOperations.js":343}],498:[function(require,module,exports){
+},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMProperty.js":343,"_process":480}],498:[function(require,module,exports){
 module.exports=require(344)
-},{"./ExecutionEnvironment":507,"./createNodesFromMarkup":597,"./emptyFunction":601,"./getMarkupWrap":612,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\Danger.js":344}],499:[function(require,module,exports){
+},{"./DOMProperty":497,"./escapeTextForBrowser":604,"./memoizeStringOnly":630,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMPropertyOperations.js":344,"_process":480}],499:[function(require,module,exports){
 module.exports=require(345)
-},{"./keyOf":627,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\DefaultEventPluginOrder.js":345}],500:[function(require,module,exports){
+},{"./ExecutionEnvironment":508,"./createNodesFromMarkup":598,"./emptyFunction":602,"./getMarkupWrap":613,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Danger.js":345,"_process":480}],500:[function(require,module,exports){
 module.exports=require(346)
-},{"./EventConstants":501,"./EventPropagators":506,"./ReactMount":552,"./SyntheticMouseEvent":583,"./keyOf":627,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EnterLeaveEventPlugin.js":346}],501:[function(require,module,exports){
+},{"./keyOf":628,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DefaultEventPluginOrder.js":346}],501:[function(require,module,exports){
 module.exports=require(347)
-},{"./keyMirror":626,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventConstants.js":347}],502:[function(require,module,exports){
+},{"./EventConstants":502,"./EventPropagators":507,"./ReactMount":553,"./SyntheticMouseEvent":584,"./keyOf":628,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EnterLeaveEventPlugin.js":347}],502:[function(require,module,exports){
 module.exports=require(348)
-},{"./emptyFunction":601,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventListener.js":348}],503:[function(require,module,exports){
+},{"./keyMirror":627,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventConstants.js":348}],503:[function(require,module,exports){
 module.exports=require(349)
-},{"./EventPluginRegistry":504,"./EventPluginUtils":505,"./accumulateInto":589,"./forEachAccumulated":606,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventPluginHub.js":349}],504:[function(require,module,exports){
+},{"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventListener.js":349,"_process":480}],504:[function(require,module,exports){
 module.exports=require(350)
-},{"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventPluginRegistry.js":350}],505:[function(require,module,exports){
+},{"./EventPluginRegistry":505,"./EventPluginUtils":506,"./accumulateInto":590,"./forEachAccumulated":607,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginHub.js":350,"_process":480}],505:[function(require,module,exports){
 module.exports=require(351)
-},{"./EventConstants":501,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventPluginUtils.js":351}],506:[function(require,module,exports){
+},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginRegistry.js":351,"_process":480}],506:[function(require,module,exports){
 module.exports=require(352)
-},{"./EventConstants":501,"./EventPluginHub":503,"./accumulateInto":589,"./forEachAccumulated":606,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventPropagators.js":352}],507:[function(require,module,exports){
+},{"./EventConstants":502,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginUtils.js":352,"_process":480}],507:[function(require,module,exports){
 module.exports=require(353)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ExecutionEnvironment.js":353}],508:[function(require,module,exports){
+},{"./EventConstants":502,"./EventPluginHub":504,"./accumulateInto":590,"./forEachAccumulated":607,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPropagators.js":353,"_process":480}],508:[function(require,module,exports){
 module.exports=require(354)
-},{"./DOMProperty":496,"./ExecutionEnvironment":507,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\HTMLDOMPropertyConfig.js":354}],509:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ExecutionEnvironment.js":354}],509:[function(require,module,exports){
+module.exports=require(355)
+},{"./DOMProperty":497,"./ExecutionEnvironment":508,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/HTMLDOMPropertyConfig.js":355}],510:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -76569,29 +65149,29 @@ var LinkedStateMixin = {
 
 module.exports = LinkedStateMixin;
 
-},{"./ReactLink":550,"./ReactStateSetters":567}],510:[function(require,module,exports){
-module.exports=require(355)
-},{"./ReactPropTypes":561,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\LinkedValueUtils.js":355}],511:[function(require,module,exports){
+},{"./ReactLink":551,"./ReactStateSetters":568}],511:[function(require,module,exports){
 module.exports=require(356)
-},{"./ReactBrowserEventEmitter":517,"./accumulateInto":589,"./forEachAccumulated":606,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\LocalEventTrapMixin.js":356}],512:[function(require,module,exports){
+},{"./ReactPropTypes":562,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/LinkedValueUtils.js":356,"_process":480}],512:[function(require,module,exports){
 module.exports=require(357)
-},{"./EventConstants":501,"./emptyFunction":601,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\MobileSafariClickEventPlugin.js":357}],513:[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":518,"./accumulateInto":590,"./forEachAccumulated":607,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/LocalEventTrapMixin.js":357,"_process":480}],513:[function(require,module,exports){
 module.exports=require(358)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\Object.assign.js":358}],514:[function(require,module,exports){
+},{"./EventConstants":502,"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/MobileSafariClickEventPlugin.js":358}],514:[function(require,module,exports){
 module.exports=require(359)
-},{"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\PooledClass.js":359}],515:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Object.assign.js":359}],515:[function(require,module,exports){
 module.exports=require(360)
-},{"./DOMPropertyOperations":497,"./EventPluginUtils":505,"./ExecutionEnvironment":507,"./Object.assign":513,"./ReactChildren":518,"./ReactComponent":519,"./ReactCompositeComponent":522,"./ReactContext":523,"./ReactCurrentOwner":524,"./ReactDOM":525,"./ReactDOMComponent":527,"./ReactDefaultInjection":537,"./ReactElement":540,"./ReactElementValidator":541,"./ReactInstanceHandles":548,"./ReactLegacyElement":549,"./ReactMount":552,"./ReactMultiChild":553,"./ReactPerf":557,"./ReactPropTypes":561,"./ReactServerRendering":565,"./ReactTextComponent":568,"./deprecated":600,"./onlyChild":631,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\React.js":360}],516:[function(require,module,exports){
+},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/PooledClass.js":360,"_process":480}],516:[function(require,module,exports){
 module.exports=require(361)
-},{"./ReactEmptyComponent":542,"./ReactMount":552,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactBrowserComponentMixin.js":361}],517:[function(require,module,exports){
+},{"./DOMPropertyOperations":498,"./EventPluginUtils":506,"./ExecutionEnvironment":508,"./Object.assign":514,"./ReactChildren":519,"./ReactComponent":520,"./ReactCompositeComponent":523,"./ReactContext":524,"./ReactCurrentOwner":525,"./ReactDOM":526,"./ReactDOMComponent":528,"./ReactDefaultInjection":538,"./ReactElement":541,"./ReactElementValidator":542,"./ReactInstanceHandles":549,"./ReactLegacyElement":550,"./ReactMount":553,"./ReactMultiChild":554,"./ReactPerf":558,"./ReactPropTypes":562,"./ReactServerRendering":566,"./ReactTextComponent":569,"./deprecated":601,"./onlyChild":632,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/React.js":361,"_process":480}],517:[function(require,module,exports){
 module.exports=require(362)
-},{"./EventConstants":501,"./EventPluginHub":503,"./EventPluginRegistry":504,"./Object.assign":513,"./ReactEventEmitterMixin":544,"./ViewportMetrics":588,"./isEventSupported":621,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactBrowserEventEmitter.js":362}],518:[function(require,module,exports){
+},{"./ReactEmptyComponent":543,"./ReactMount":553,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserComponentMixin.js":362,"_process":480}],518:[function(require,module,exports){
 module.exports=require(363)
-},{"./PooledClass":514,"./traverseAllChildren":638,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactChildren.js":363}],519:[function(require,module,exports){
+},{"./EventConstants":502,"./EventPluginHub":504,"./EventPluginRegistry":505,"./Object.assign":514,"./ReactEventEmitterMixin":545,"./ViewportMetrics":589,"./isEventSupported":622,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserEventEmitter.js":363}],519:[function(require,module,exports){
 module.exports=require(364)
-},{"./Object.assign":513,"./ReactElement":540,"./ReactOwner":556,"./ReactUpdates":571,"./invariant":620,"./keyMirror":626,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactComponent.js":364}],520:[function(require,module,exports){
+},{"./PooledClass":515,"./traverseAllChildren":639,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactChildren.js":364,"_process":480}],520:[function(require,module,exports){
 module.exports=require(365)
-},{"./ReactDOMIDOperations":529,"./ReactMarkupChecksum":551,"./ReactMount":552,"./ReactPerf":557,"./ReactReconcileTransaction":563,"./getReactRootElementInContainer":614,"./invariant":620,"./setInnerHTML":634,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactComponentBrowserEnvironment.js":365}],521:[function(require,module,exports){
+},{"./Object.assign":514,"./ReactElement":541,"./ReactOwner":557,"./ReactUpdates":572,"./invariant":621,"./keyMirror":627,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponent.js":365,"_process":480}],521:[function(require,module,exports){
+module.exports=require(366)
+},{"./ReactDOMIDOperations":530,"./ReactMarkupChecksum":552,"./ReactMount":553,"./ReactPerf":558,"./ReactReconcileTransaction":564,"./getReactRootElementInContainer":615,"./invariant":621,"./setInnerHTML":635,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponentBrowserEnvironment.js":366,"_process":480}],522:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -76640,63 +65220,63 @@ var ReactComponentWithPureRenderMixin = {
 
 module.exports = ReactComponentWithPureRenderMixin;
 
-},{"./shallowEqual":635}],522:[function(require,module,exports){
-module.exports=require(366)
-},{"./Object.assign":513,"./ReactComponent":519,"./ReactContext":523,"./ReactCurrentOwner":524,"./ReactElement":540,"./ReactElementValidator":541,"./ReactEmptyComponent":542,"./ReactErrorUtils":543,"./ReactLegacyElement":549,"./ReactOwner":556,"./ReactPerf":557,"./ReactPropTransferer":558,"./ReactPropTypeLocationNames":559,"./ReactPropTypeLocations":560,"./ReactUpdates":571,"./instantiateReactComponent":619,"./invariant":620,"./keyMirror":626,"./keyOf":627,"./mapObject":628,"./monitorCodeUse":630,"./shouldUpdateReactComponent":636,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactCompositeComponent.js":366}],523:[function(require,module,exports){
+},{"./shallowEqual":636}],523:[function(require,module,exports){
 module.exports=require(367)
-},{"./Object.assign":513,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactContext.js":367}],524:[function(require,module,exports){
+},{"./Object.assign":514,"./ReactComponent":520,"./ReactContext":524,"./ReactCurrentOwner":525,"./ReactElement":541,"./ReactElementValidator":542,"./ReactEmptyComponent":543,"./ReactErrorUtils":544,"./ReactLegacyElement":550,"./ReactOwner":557,"./ReactPerf":558,"./ReactPropTransferer":559,"./ReactPropTypeLocationNames":560,"./ReactPropTypeLocations":561,"./ReactUpdates":572,"./instantiateReactComponent":620,"./invariant":621,"./keyMirror":627,"./keyOf":628,"./mapObject":629,"./monitorCodeUse":631,"./shouldUpdateReactComponent":637,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactCompositeComponent.js":367,"_process":480}],524:[function(require,module,exports){
 module.exports=require(368)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactCurrentOwner.js":368}],525:[function(require,module,exports){
+},{"./Object.assign":514,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactContext.js":368}],525:[function(require,module,exports){
 module.exports=require(369)
-},{"./ReactElement":540,"./ReactElementValidator":541,"./ReactLegacyElement":549,"./mapObject":628,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOM.js":369}],526:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactCurrentOwner.js":369}],526:[function(require,module,exports){
 module.exports=require(370)
-},{"./AutoFocusMixin":487,"./ReactBrowserComponentMixin":516,"./ReactCompositeComponent":522,"./ReactDOM":525,"./ReactElement":540,"./keyMirror":626,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMButton.js":370}],527:[function(require,module,exports){
+},{"./ReactElement":541,"./ReactElementValidator":542,"./ReactLegacyElement":550,"./mapObject":629,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOM.js":370,"_process":480}],527:[function(require,module,exports){
 module.exports=require(371)
-},{"./CSSPropertyOperations":490,"./DOMProperty":496,"./DOMPropertyOperations":497,"./Object.assign":513,"./ReactBrowserComponentMixin":516,"./ReactBrowserEventEmitter":517,"./ReactComponent":519,"./ReactMount":552,"./ReactMultiChild":553,"./ReactPerf":557,"./escapeTextForBrowser":603,"./invariant":620,"./isEventSupported":621,"./keyOf":627,"./monitorCodeUse":630,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMComponent.js":371}],528:[function(require,module,exports){
+},{"./AutoFocusMixin":488,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./keyMirror":627,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMButton.js":371}],528:[function(require,module,exports){
 module.exports=require(372)
-},{"./EventConstants":501,"./LocalEventTrapMixin":511,"./ReactBrowserComponentMixin":516,"./ReactCompositeComponent":522,"./ReactDOM":525,"./ReactElement":540,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMForm.js":372}],529:[function(require,module,exports){
+},{"./CSSPropertyOperations":491,"./DOMProperty":497,"./DOMPropertyOperations":498,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactBrowserEventEmitter":518,"./ReactComponent":520,"./ReactMount":553,"./ReactMultiChild":554,"./ReactPerf":558,"./escapeTextForBrowser":604,"./invariant":621,"./isEventSupported":622,"./keyOf":628,"./monitorCodeUse":631,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMComponent.js":372,"_process":480}],529:[function(require,module,exports){
 module.exports=require(373)
-},{"./CSSPropertyOperations":490,"./DOMChildrenOperations":495,"./DOMPropertyOperations":497,"./ReactMount":552,"./ReactPerf":557,"./invariant":620,"./setInnerHTML":634,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMIDOperations.js":373}],530:[function(require,module,exports){
+},{"./EventConstants":502,"./LocalEventTrapMixin":512,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMForm.js":373}],530:[function(require,module,exports){
 module.exports=require(374)
-},{"./EventConstants":501,"./LocalEventTrapMixin":511,"./ReactBrowserComponentMixin":516,"./ReactCompositeComponent":522,"./ReactDOM":525,"./ReactElement":540,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMImg.js":374}],531:[function(require,module,exports){
+},{"./CSSPropertyOperations":491,"./DOMChildrenOperations":496,"./DOMPropertyOperations":498,"./ReactMount":553,"./ReactPerf":558,"./invariant":621,"./setInnerHTML":635,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMIDOperations.js":374,"_process":480}],531:[function(require,module,exports){
 module.exports=require(375)
-},{"./AutoFocusMixin":487,"./DOMPropertyOperations":497,"./LinkedValueUtils":510,"./Object.assign":513,"./ReactBrowserComponentMixin":516,"./ReactCompositeComponent":522,"./ReactDOM":525,"./ReactElement":540,"./ReactMount":552,"./ReactUpdates":571,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMInput.js":375}],532:[function(require,module,exports){
+},{"./EventConstants":502,"./LocalEventTrapMixin":512,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMImg.js":375}],532:[function(require,module,exports){
 module.exports=require(376)
-},{"./ReactBrowserComponentMixin":516,"./ReactCompositeComponent":522,"./ReactDOM":525,"./ReactElement":540,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMOption.js":376}],533:[function(require,module,exports){
+},{"./AutoFocusMixin":488,"./DOMPropertyOperations":498,"./LinkedValueUtils":511,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./ReactMount":553,"./ReactUpdates":572,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMInput.js":376,"_process":480}],533:[function(require,module,exports){
 module.exports=require(377)
-},{"./AutoFocusMixin":487,"./LinkedValueUtils":510,"./Object.assign":513,"./ReactBrowserComponentMixin":516,"./ReactCompositeComponent":522,"./ReactDOM":525,"./ReactElement":540,"./ReactUpdates":571,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMSelect.js":377}],534:[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMOption.js":377,"_process":480}],534:[function(require,module,exports){
 module.exports=require(378)
-},{"./ExecutionEnvironment":507,"./getNodeForCharacterOffset":613,"./getTextContentAccessor":615,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMSelection.js":378}],535:[function(require,module,exports){
+},{"./AutoFocusMixin":488,"./LinkedValueUtils":511,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./ReactUpdates":572,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelect.js":378}],535:[function(require,module,exports){
 module.exports=require(379)
-},{"./AutoFocusMixin":487,"./DOMPropertyOperations":497,"./LinkedValueUtils":510,"./Object.assign":513,"./ReactBrowserComponentMixin":516,"./ReactCompositeComponent":522,"./ReactDOM":525,"./ReactElement":540,"./ReactUpdates":571,"./invariant":620,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMTextarea.js":379}],536:[function(require,module,exports){
+},{"./ExecutionEnvironment":508,"./getNodeForCharacterOffset":614,"./getTextContentAccessor":616,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelection.js":379}],536:[function(require,module,exports){
 module.exports=require(380)
-},{"./Object.assign":513,"./ReactUpdates":571,"./Transaction":587,"./emptyFunction":601,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDefaultBatchingStrategy.js":380}],537:[function(require,module,exports){
+},{"./AutoFocusMixin":488,"./DOMPropertyOperations":498,"./LinkedValueUtils":511,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./ReactUpdates":572,"./invariant":621,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMTextarea.js":380,"_process":480}],537:[function(require,module,exports){
 module.exports=require(381)
-},{"./BeforeInputEventPlugin":488,"./ChangeEventPlugin":492,"./ClientReactRootIndex":493,"./CompositionEventPlugin":494,"./DefaultEventPluginOrder":499,"./EnterLeaveEventPlugin":500,"./ExecutionEnvironment":507,"./HTMLDOMPropertyConfig":508,"./MobileSafariClickEventPlugin":512,"./ReactBrowserComponentMixin":516,"./ReactComponentBrowserEnvironment":520,"./ReactDOMButton":526,"./ReactDOMComponent":527,"./ReactDOMForm":528,"./ReactDOMImg":530,"./ReactDOMInput":531,"./ReactDOMOption":532,"./ReactDOMSelect":533,"./ReactDOMTextarea":535,"./ReactDefaultBatchingStrategy":536,"./ReactDefaultPerf":538,"./ReactEventListener":545,"./ReactInjection":546,"./ReactInstanceHandles":548,"./ReactMount":552,"./SVGDOMPropertyConfig":572,"./SelectEventPlugin":573,"./ServerReactRootIndex":574,"./SimpleEventPlugin":575,"./createFullPageComponent":596,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDefaultInjection.js":381}],538:[function(require,module,exports){
+},{"./Object.assign":514,"./ReactUpdates":572,"./Transaction":588,"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultBatchingStrategy.js":381}],538:[function(require,module,exports){
 module.exports=require(382)
-},{"./DOMProperty":496,"./ReactDefaultPerfAnalysis":539,"./ReactMount":552,"./ReactPerf":557,"./performanceNow":633,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDefaultPerf.js":382}],539:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":489,"./ChangeEventPlugin":493,"./ClientReactRootIndex":494,"./CompositionEventPlugin":495,"./DefaultEventPluginOrder":500,"./EnterLeaveEventPlugin":501,"./ExecutionEnvironment":508,"./HTMLDOMPropertyConfig":509,"./MobileSafariClickEventPlugin":513,"./ReactBrowserComponentMixin":517,"./ReactComponentBrowserEnvironment":521,"./ReactDOMButton":527,"./ReactDOMComponent":528,"./ReactDOMForm":529,"./ReactDOMImg":531,"./ReactDOMInput":532,"./ReactDOMOption":533,"./ReactDOMSelect":534,"./ReactDOMTextarea":536,"./ReactDefaultBatchingStrategy":537,"./ReactDefaultPerf":539,"./ReactEventListener":546,"./ReactInjection":547,"./ReactInstanceHandles":549,"./ReactMount":553,"./SVGDOMPropertyConfig":573,"./SelectEventPlugin":574,"./ServerReactRootIndex":575,"./SimpleEventPlugin":576,"./createFullPageComponent":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultInjection.js":382,"_process":480}],539:[function(require,module,exports){
 module.exports=require(383)
-},{"./Object.assign":513,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDefaultPerfAnalysis.js":383}],540:[function(require,module,exports){
+},{"./DOMProperty":497,"./ReactDefaultPerfAnalysis":540,"./ReactMount":553,"./ReactPerf":558,"./performanceNow":634,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerf.js":383}],540:[function(require,module,exports){
 module.exports=require(384)
-},{"./ReactContext":523,"./ReactCurrentOwner":524,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactElement.js":384}],541:[function(require,module,exports){
+},{"./Object.assign":514,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerfAnalysis.js":384}],541:[function(require,module,exports){
 module.exports=require(385)
-},{"./ReactCurrentOwner":524,"./ReactElement":540,"./ReactPropTypeLocations":560,"./monitorCodeUse":630,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactElementValidator.js":385}],542:[function(require,module,exports){
+},{"./ReactContext":524,"./ReactCurrentOwner":525,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElement.js":385,"_process":480}],542:[function(require,module,exports){
 module.exports=require(386)
-},{"./ReactElement":540,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactEmptyComponent.js":386}],543:[function(require,module,exports){
+},{"./ReactCurrentOwner":525,"./ReactElement":541,"./ReactPropTypeLocations":561,"./monitorCodeUse":631,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElementValidator.js":386,"_process":480}],543:[function(require,module,exports){
 module.exports=require(387)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactErrorUtils.js":387}],544:[function(require,module,exports){
+},{"./ReactElement":541,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEmptyComponent.js":387,"_process":480}],544:[function(require,module,exports){
 module.exports=require(388)
-},{"./EventPluginHub":503,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactEventEmitterMixin.js":388}],545:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactErrorUtils.js":388}],545:[function(require,module,exports){
 module.exports=require(389)
-},{"./EventListener":502,"./ExecutionEnvironment":507,"./Object.assign":513,"./PooledClass":514,"./ReactInstanceHandles":548,"./ReactMount":552,"./ReactUpdates":571,"./getEventTarget":611,"./getUnboundedScrollPosition":616,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactEventListener.js":389}],546:[function(require,module,exports){
+},{"./EventPluginHub":504,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventEmitterMixin.js":389}],546:[function(require,module,exports){
 module.exports=require(390)
-},{"./DOMProperty":496,"./EventPluginHub":503,"./ReactBrowserEventEmitter":517,"./ReactComponent":519,"./ReactCompositeComponent":522,"./ReactEmptyComponent":542,"./ReactNativeComponent":555,"./ReactPerf":557,"./ReactRootIndex":564,"./ReactUpdates":571,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactInjection.js":390}],547:[function(require,module,exports){
+},{"./EventListener":503,"./ExecutionEnvironment":508,"./Object.assign":514,"./PooledClass":515,"./ReactInstanceHandles":549,"./ReactMount":553,"./ReactUpdates":572,"./getEventTarget":612,"./getUnboundedScrollPosition":617,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventListener.js":390}],547:[function(require,module,exports){
 module.exports=require(391)
-},{"./ReactDOMSelection":534,"./containsNode":594,"./focusNode":605,"./getActiveElement":607,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactInputSelection.js":391}],548:[function(require,module,exports){
+},{"./DOMProperty":497,"./EventPluginHub":504,"./ReactBrowserEventEmitter":518,"./ReactComponent":520,"./ReactCompositeComponent":523,"./ReactEmptyComponent":543,"./ReactNativeComponent":556,"./ReactPerf":558,"./ReactRootIndex":565,"./ReactUpdates":572,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInjection.js":391}],548:[function(require,module,exports){
 module.exports=require(392)
-},{"./ReactRootIndex":564,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactInstanceHandles.js":392}],549:[function(require,module,exports){
+},{"./ReactDOMSelection":535,"./containsNode":595,"./focusNode":606,"./getActiveElement":608,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInputSelection.js":392}],549:[function(require,module,exports){
 module.exports=require(393)
-},{"./ReactCurrentOwner":524,"./invariant":620,"./monitorCodeUse":630,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactLegacyElement.js":393}],550:[function(require,module,exports){
+},{"./ReactRootIndex":565,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInstanceHandles.js":393,"_process":480}],550:[function(require,module,exports){
+module.exports=require(394)
+},{"./ReactCurrentOwner":525,"./invariant":621,"./monitorCodeUse":631,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactLegacyElement.js":394,"_process":480}],551:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -76769,39 +65349,39 @@ ReactLink.PropTypes = {
 
 module.exports = ReactLink;
 
-},{"./React":515}],551:[function(require,module,exports){
-module.exports=require(394)
-},{"./adler32":590,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactMarkupChecksum.js":394}],552:[function(require,module,exports){
+},{"./React":516}],552:[function(require,module,exports){
 module.exports=require(395)
-},{"./DOMProperty":496,"./ReactBrowserEventEmitter":517,"./ReactCurrentOwner":524,"./ReactElement":540,"./ReactInstanceHandles":548,"./ReactLegacyElement":549,"./ReactPerf":557,"./containsNode":594,"./deprecated":600,"./getReactRootElementInContainer":614,"./instantiateReactComponent":619,"./invariant":620,"./shouldUpdateReactComponent":636,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactMount.js":395}],553:[function(require,module,exports){
+},{"./adler32":591,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMarkupChecksum.js":395}],553:[function(require,module,exports){
 module.exports=require(396)
-},{"./ReactComponent":519,"./ReactMultiChildUpdateTypes":554,"./flattenChildren":604,"./instantiateReactComponent":619,"./shouldUpdateReactComponent":636,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactMultiChild.js":396}],554:[function(require,module,exports){
+},{"./DOMProperty":497,"./ReactBrowserEventEmitter":518,"./ReactCurrentOwner":525,"./ReactElement":541,"./ReactInstanceHandles":549,"./ReactLegacyElement":550,"./ReactPerf":558,"./containsNode":595,"./deprecated":601,"./getReactRootElementInContainer":615,"./instantiateReactComponent":620,"./invariant":621,"./shouldUpdateReactComponent":637,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMount.js":396,"_process":480}],554:[function(require,module,exports){
 module.exports=require(397)
-},{"./keyMirror":626,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactMultiChildUpdateTypes.js":397}],555:[function(require,module,exports){
+},{"./ReactComponent":520,"./ReactMultiChildUpdateTypes":555,"./flattenChildren":605,"./instantiateReactComponent":620,"./shouldUpdateReactComponent":637,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMultiChild.js":397}],555:[function(require,module,exports){
 module.exports=require(398)
-},{"./Object.assign":513,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactNativeComponent.js":398}],556:[function(require,module,exports){
+},{"./keyMirror":627,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMultiChildUpdateTypes.js":398}],556:[function(require,module,exports){
 module.exports=require(399)
-},{"./emptyObject":602,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactOwner.js":399}],557:[function(require,module,exports){
+},{"./Object.assign":514,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactNativeComponent.js":399,"_process":480}],557:[function(require,module,exports){
 module.exports=require(400)
-},{"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPerf.js":400}],558:[function(require,module,exports){
+},{"./emptyObject":603,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactOwner.js":400,"_process":480}],558:[function(require,module,exports){
 module.exports=require(401)
-},{"./Object.assign":513,"./emptyFunction":601,"./invariant":620,"./joinClasses":625,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPropTransferer.js":401}],559:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPerf.js":401,"_process":480}],559:[function(require,module,exports){
 module.exports=require(402)
-},{"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPropTypeLocationNames.js":402}],560:[function(require,module,exports){
+},{"./Object.assign":514,"./emptyFunction":602,"./invariant":621,"./joinClasses":626,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTransferer.js":402,"_process":480}],560:[function(require,module,exports){
 module.exports=require(403)
-},{"./keyMirror":626,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPropTypeLocations.js":403}],561:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocationNames.js":403,"_process":480}],561:[function(require,module,exports){
 module.exports=require(404)
-},{"./ReactElement":540,"./ReactPropTypeLocationNames":559,"./deprecated":600,"./emptyFunction":601,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPropTypes.js":404}],562:[function(require,module,exports){
+},{"./keyMirror":627,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocations.js":404}],562:[function(require,module,exports){
 module.exports=require(405)
-},{"./Object.assign":513,"./PooledClass":514,"./ReactBrowserEventEmitter":517,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPutListenerQueue.js":405}],563:[function(require,module,exports){
+},{"./ReactElement":541,"./ReactPropTypeLocationNames":560,"./deprecated":601,"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypes.js":405}],563:[function(require,module,exports){
 module.exports=require(406)
-},{"./CallbackQueue":491,"./Object.assign":513,"./PooledClass":514,"./ReactBrowserEventEmitter":517,"./ReactInputSelection":547,"./ReactPutListenerQueue":562,"./Transaction":587,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactReconcileTransaction.js":406}],564:[function(require,module,exports){
+},{"./Object.assign":514,"./PooledClass":515,"./ReactBrowserEventEmitter":518,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPutListenerQueue.js":406}],564:[function(require,module,exports){
 module.exports=require(407)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactRootIndex.js":407}],565:[function(require,module,exports){
+},{"./CallbackQueue":492,"./Object.assign":514,"./PooledClass":515,"./ReactBrowserEventEmitter":518,"./ReactInputSelection":548,"./ReactPutListenerQueue":563,"./Transaction":588,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactReconcileTransaction.js":407}],565:[function(require,module,exports){
 module.exports=require(408)
-},{"./ReactElement":540,"./ReactInstanceHandles":548,"./ReactMarkupChecksum":551,"./ReactServerRenderingTransaction":566,"./instantiateReactComponent":619,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactServerRendering.js":408}],566:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactRootIndex.js":408}],566:[function(require,module,exports){
 module.exports=require(409)
-},{"./CallbackQueue":491,"./Object.assign":513,"./PooledClass":514,"./ReactPutListenerQueue":562,"./Transaction":587,"./emptyFunction":601,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactServerRenderingTransaction.js":409}],567:[function(require,module,exports){
+},{"./ReactElement":541,"./ReactInstanceHandles":549,"./ReactMarkupChecksum":552,"./ReactServerRenderingTransaction":567,"./instantiateReactComponent":620,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRendering.js":409,"_process":480}],567:[function(require,module,exports){
+module.exports=require(410)
+},{"./CallbackQueue":492,"./Object.assign":514,"./PooledClass":515,"./ReactPutListenerQueue":563,"./Transaction":588,"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRenderingTransaction.js":410}],568:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -76907,9 +65487,9 @@ ReactStateSetters.Mixin = {
 
 module.exports = ReactStateSetters;
 
-},{}],568:[function(require,module,exports){
-module.exports=require(410)
-},{"./DOMPropertyOperations":497,"./Object.assign":513,"./ReactComponent":519,"./ReactElement":540,"./escapeTextForBrowser":603,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactTextComponent.js":410}],569:[function(require,module,exports){
+},{}],569:[function(require,module,exports){
+module.exports=require(411)
+},{"./DOMPropertyOperations":498,"./Object.assign":514,"./ReactComponent":520,"./ReactElement":541,"./escapeTextForBrowser":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactTextComponent.js":411}],570:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -77010,7 +65590,7 @@ var ReactTransitionChildMapping = {
 
 module.exports = ReactTransitionChildMapping;
 
-},{"./ReactChildren":518}],570:[function(require,module,exports){
+},{"./ReactChildren":519}],571:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -77199,51 +65779,51 @@ var ReactTransitionGroup = React.createClass({
 
 module.exports = ReactTransitionGroup;
 
-},{"./Object.assign":513,"./React":515,"./ReactTransitionChildMapping":569,"./cloneWithProps":593,"./emptyFunction":601}],571:[function(require,module,exports){
-module.exports=require(411)
-},{"./CallbackQueue":491,"./Object.assign":513,"./PooledClass":514,"./ReactCurrentOwner":524,"./ReactPerf":557,"./Transaction":587,"./invariant":620,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactUpdates.js":411}],572:[function(require,module,exports){
+},{"./Object.assign":514,"./React":516,"./ReactTransitionChildMapping":570,"./cloneWithProps":594,"./emptyFunction":602}],572:[function(require,module,exports){
 module.exports=require(412)
-},{"./DOMProperty":496,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SVGDOMPropertyConfig.js":412}],573:[function(require,module,exports){
+},{"./CallbackQueue":492,"./Object.assign":514,"./PooledClass":515,"./ReactCurrentOwner":525,"./ReactPerf":558,"./Transaction":588,"./invariant":621,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactUpdates.js":412,"_process":480}],573:[function(require,module,exports){
 module.exports=require(413)
-},{"./EventConstants":501,"./EventPropagators":506,"./ReactInputSelection":547,"./SyntheticEvent":579,"./getActiveElement":607,"./isTextInputElement":623,"./keyOf":627,"./shallowEqual":635,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SelectEventPlugin.js":413}],574:[function(require,module,exports){
+},{"./DOMProperty":497,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SVGDOMPropertyConfig.js":413}],574:[function(require,module,exports){
 module.exports=require(414)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ServerReactRootIndex.js":414}],575:[function(require,module,exports){
+},{"./EventConstants":502,"./EventPropagators":507,"./ReactInputSelection":548,"./SyntheticEvent":580,"./getActiveElement":608,"./isTextInputElement":624,"./keyOf":628,"./shallowEqual":636,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SelectEventPlugin.js":414}],575:[function(require,module,exports){
 module.exports=require(415)
-},{"./EventConstants":501,"./EventPluginUtils":505,"./EventPropagators":506,"./SyntheticClipboardEvent":576,"./SyntheticDragEvent":578,"./SyntheticEvent":579,"./SyntheticFocusEvent":580,"./SyntheticKeyboardEvent":582,"./SyntheticMouseEvent":583,"./SyntheticTouchEvent":584,"./SyntheticUIEvent":585,"./SyntheticWheelEvent":586,"./getEventCharCode":608,"./invariant":620,"./keyOf":627,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SimpleEventPlugin.js":415}],576:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ServerReactRootIndex.js":415}],576:[function(require,module,exports){
 module.exports=require(416)
-},{"./SyntheticEvent":579,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticClipboardEvent.js":416}],577:[function(require,module,exports){
+},{"./EventConstants":502,"./EventPluginUtils":506,"./EventPropagators":507,"./SyntheticClipboardEvent":577,"./SyntheticDragEvent":579,"./SyntheticEvent":580,"./SyntheticFocusEvent":581,"./SyntheticKeyboardEvent":583,"./SyntheticMouseEvent":584,"./SyntheticTouchEvent":585,"./SyntheticUIEvent":586,"./SyntheticWheelEvent":587,"./getEventCharCode":609,"./invariant":621,"./keyOf":628,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SimpleEventPlugin.js":416,"_process":480}],577:[function(require,module,exports){
 module.exports=require(417)
-},{"./SyntheticEvent":579,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticCompositionEvent.js":417}],578:[function(require,module,exports){
+},{"./SyntheticEvent":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticClipboardEvent.js":417}],578:[function(require,module,exports){
 module.exports=require(418)
-},{"./SyntheticMouseEvent":583,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticDragEvent.js":418}],579:[function(require,module,exports){
+},{"./SyntheticEvent":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticCompositionEvent.js":418}],579:[function(require,module,exports){
 module.exports=require(419)
-},{"./Object.assign":513,"./PooledClass":514,"./emptyFunction":601,"./getEventTarget":611,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticEvent.js":419}],580:[function(require,module,exports){
+},{"./SyntheticMouseEvent":584,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticDragEvent.js":419}],580:[function(require,module,exports){
 module.exports=require(420)
-},{"./SyntheticUIEvent":585,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticFocusEvent.js":420}],581:[function(require,module,exports){
+},{"./Object.assign":514,"./PooledClass":515,"./emptyFunction":602,"./getEventTarget":612,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticEvent.js":420}],581:[function(require,module,exports){
 module.exports=require(421)
-},{"./SyntheticEvent":579,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticInputEvent.js":421}],582:[function(require,module,exports){
+},{"./SyntheticUIEvent":586,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticFocusEvent.js":421}],582:[function(require,module,exports){
 module.exports=require(422)
-},{"./SyntheticUIEvent":585,"./getEventCharCode":608,"./getEventKey":609,"./getEventModifierState":610,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticKeyboardEvent.js":422}],583:[function(require,module,exports){
+},{"./SyntheticEvent":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticInputEvent.js":422}],583:[function(require,module,exports){
 module.exports=require(423)
-},{"./SyntheticUIEvent":585,"./ViewportMetrics":588,"./getEventModifierState":610,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticMouseEvent.js":423}],584:[function(require,module,exports){
+},{"./SyntheticUIEvent":586,"./getEventCharCode":609,"./getEventKey":610,"./getEventModifierState":611,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticKeyboardEvent.js":423}],584:[function(require,module,exports){
 module.exports=require(424)
-},{"./SyntheticUIEvent":585,"./getEventModifierState":610,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticTouchEvent.js":424}],585:[function(require,module,exports){
+},{"./SyntheticUIEvent":586,"./ViewportMetrics":589,"./getEventModifierState":611,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticMouseEvent.js":424}],585:[function(require,module,exports){
 module.exports=require(425)
-},{"./SyntheticEvent":579,"./getEventTarget":611,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticUIEvent.js":425}],586:[function(require,module,exports){
+},{"./SyntheticUIEvent":586,"./getEventModifierState":611,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticTouchEvent.js":425}],586:[function(require,module,exports){
 module.exports=require(426)
-},{"./SyntheticMouseEvent":583,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticWheelEvent.js":426}],587:[function(require,module,exports){
+},{"./SyntheticEvent":580,"./getEventTarget":612,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticUIEvent.js":426}],587:[function(require,module,exports){
 module.exports=require(427)
-},{"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\Transaction.js":427}],588:[function(require,module,exports){
+},{"./SyntheticMouseEvent":584,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticWheelEvent.js":427}],588:[function(require,module,exports){
 module.exports=require(428)
-},{"./getUnboundedScrollPosition":616,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ViewportMetrics.js":428}],589:[function(require,module,exports){
+},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Transaction.js":428,"_process":480}],589:[function(require,module,exports){
 module.exports=require(429)
-},{"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\accumulateInto.js":429}],590:[function(require,module,exports){
+},{"./getUnboundedScrollPosition":617,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ViewportMetrics.js":429}],590:[function(require,module,exports){
 module.exports=require(430)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\adler32.js":430}],591:[function(require,module,exports){
+},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/accumulateInto.js":430,"_process":480}],591:[function(require,module,exports){
 module.exports=require(431)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\camelize.js":431}],592:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/adler32.js":431}],592:[function(require,module,exports){
 module.exports=require(432)
-},{"./camelize":591,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\camelizeStyleName.js":432}],593:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelize.js":432}],593:[function(require,module,exports){
+module.exports=require(433)
+},{"./camelize":592,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelizeStyleName.js":433}],594:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -77302,15 +65882,15 @@ function cloneWithProps(child, props) {
 module.exports = cloneWithProps;
 
 }).call(this,require('_process'))
-},{"./ReactElement":540,"./ReactPropTransferer":558,"./keyOf":627,"./warning":640,"_process":479}],594:[function(require,module,exports){
-module.exports=require(433)
-},{"./isTextNode":624,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\containsNode.js":433}],595:[function(require,module,exports){
+},{"./ReactElement":541,"./ReactPropTransferer":559,"./keyOf":628,"./warning":641,"_process":480}],595:[function(require,module,exports){
 module.exports=require(434)
-},{"./toArray":637,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\createArrayFrom.js":434}],596:[function(require,module,exports){
+},{"./isTextNode":625,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/containsNode.js":434}],596:[function(require,module,exports){
 module.exports=require(435)
-},{"./ReactCompositeComponent":522,"./ReactElement":540,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\createFullPageComponent.js":435}],597:[function(require,module,exports){
+},{"./toArray":638,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createArrayFrom.js":435}],597:[function(require,module,exports){
 module.exports=require(436)
-},{"./ExecutionEnvironment":507,"./createArrayFrom":595,"./getMarkupWrap":612,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\createNodesFromMarkup.js":436}],598:[function(require,module,exports){
+},{"./ReactCompositeComponent":523,"./ReactElement":541,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createFullPageComponent.js":436,"_process":480}],598:[function(require,module,exports){
+module.exports=require(437)
+},{"./ExecutionEnvironment":508,"./createArrayFrom":596,"./getMarkupWrap":613,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createNodesFromMarkup.js":437,"_process":480}],599:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -77349,87 +65929,87 @@ function cx(classNames) {
 
 module.exports = cx;
 
-},{}],599:[function(require,module,exports){
-module.exports=require(437)
-},{"./CSSProperty":489,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\dangerousStyleValue.js":437}],600:[function(require,module,exports){
+},{}],600:[function(require,module,exports){
 module.exports=require(438)
-},{"./Object.assign":513,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\deprecated.js":438}],601:[function(require,module,exports){
+},{"./CSSProperty":490,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/dangerousStyleValue.js":438}],601:[function(require,module,exports){
 module.exports=require(439)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\emptyFunction.js":439}],602:[function(require,module,exports){
+},{"./Object.assign":514,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/deprecated.js":439,"_process":480}],602:[function(require,module,exports){
 module.exports=require(440)
-},{"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\emptyObject.js":440}],603:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyFunction.js":440}],603:[function(require,module,exports){
 module.exports=require(441)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\escapeTextForBrowser.js":441}],604:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyObject.js":441,"_process":480}],604:[function(require,module,exports){
 module.exports=require(442)
-},{"./ReactTextComponent":568,"./traverseAllChildren":638,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\flattenChildren.js":442}],605:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/escapeTextForBrowser.js":442}],605:[function(require,module,exports){
 module.exports=require(443)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\focusNode.js":443}],606:[function(require,module,exports){
+},{"./ReactTextComponent":569,"./traverseAllChildren":639,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/flattenChildren.js":443,"_process":480}],606:[function(require,module,exports){
 module.exports=require(444)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\forEachAccumulated.js":444}],607:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/focusNode.js":444}],607:[function(require,module,exports){
 module.exports=require(445)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getActiveElement.js":445}],608:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/forEachAccumulated.js":445}],608:[function(require,module,exports){
 module.exports=require(446)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getEventCharCode.js":446}],609:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getActiveElement.js":446}],609:[function(require,module,exports){
 module.exports=require(447)
-},{"./getEventCharCode":608,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getEventKey.js":447}],610:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventCharCode.js":447}],610:[function(require,module,exports){
 module.exports=require(448)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getEventModifierState.js":448}],611:[function(require,module,exports){
+},{"./getEventCharCode":609,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventKey.js":448}],611:[function(require,module,exports){
 module.exports=require(449)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getEventTarget.js":449}],612:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventModifierState.js":449}],612:[function(require,module,exports){
 module.exports=require(450)
-},{"./ExecutionEnvironment":507,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getMarkupWrap.js":450}],613:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventTarget.js":450}],613:[function(require,module,exports){
 module.exports=require(451)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getNodeForCharacterOffset.js":451}],614:[function(require,module,exports){
+},{"./ExecutionEnvironment":508,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getMarkupWrap.js":451,"_process":480}],614:[function(require,module,exports){
 module.exports=require(452)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getReactRootElementInContainer.js":452}],615:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getNodeForCharacterOffset.js":452}],615:[function(require,module,exports){
 module.exports=require(453)
-},{"./ExecutionEnvironment":507,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getTextContentAccessor.js":453}],616:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getReactRootElementInContainer.js":453}],616:[function(require,module,exports){
 module.exports=require(454)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getUnboundedScrollPosition.js":454}],617:[function(require,module,exports){
+},{"./ExecutionEnvironment":508,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getTextContentAccessor.js":454}],617:[function(require,module,exports){
 module.exports=require(455)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\hyphenate.js":455}],618:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getUnboundedScrollPosition.js":455}],618:[function(require,module,exports){
 module.exports=require(456)
-},{"./hyphenate":617,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\hyphenateStyleName.js":456}],619:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenate.js":456}],619:[function(require,module,exports){
 module.exports=require(457)
-},{"./ReactElement":540,"./ReactEmptyComponent":542,"./ReactLegacyElement":549,"./ReactNativeComponent":555,"./warning":640,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\instantiateReactComponent.js":457}],620:[function(require,module,exports){
+},{"./hyphenate":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenateStyleName.js":457}],620:[function(require,module,exports){
 module.exports=require(458)
-},{"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\invariant.js":458}],621:[function(require,module,exports){
+},{"./ReactElement":541,"./ReactEmptyComponent":543,"./ReactLegacyElement":550,"./ReactNativeComponent":556,"./warning":641,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/instantiateReactComponent.js":458,"_process":480}],621:[function(require,module,exports){
 module.exports=require(459)
-},{"./ExecutionEnvironment":507,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\isEventSupported.js":459}],622:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/invariant.js":459,"_process":480}],622:[function(require,module,exports){
 module.exports=require(460)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\isNode.js":460}],623:[function(require,module,exports){
+},{"./ExecutionEnvironment":508,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isEventSupported.js":460}],623:[function(require,module,exports){
 module.exports=require(461)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\isTextInputElement.js":461}],624:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isNode.js":461}],624:[function(require,module,exports){
 module.exports=require(462)
-},{"./isNode":622,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\isTextNode.js":462}],625:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextInputElement.js":462}],625:[function(require,module,exports){
 module.exports=require(463)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\joinClasses.js":463}],626:[function(require,module,exports){
+},{"./isNode":623,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextNode.js":463}],626:[function(require,module,exports){
 module.exports=require(464)
-},{"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\keyMirror.js":464}],627:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/joinClasses.js":464}],627:[function(require,module,exports){
 module.exports=require(465)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\keyOf.js":465}],628:[function(require,module,exports){
+},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyMirror.js":465,"_process":480}],628:[function(require,module,exports){
 module.exports=require(466)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\mapObject.js":466}],629:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyOf.js":466}],629:[function(require,module,exports){
 module.exports=require(467)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\memoizeStringOnly.js":467}],630:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/mapObject.js":467}],630:[function(require,module,exports){
 module.exports=require(468)
-},{"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\monitorCodeUse.js":468}],631:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/memoizeStringOnly.js":468}],631:[function(require,module,exports){
 module.exports=require(469)
-},{"./ReactElement":540,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\onlyChild.js":469}],632:[function(require,module,exports){
+},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/monitorCodeUse.js":469,"_process":480}],632:[function(require,module,exports){
 module.exports=require(470)
-},{"./ExecutionEnvironment":507,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\performance.js":470}],633:[function(require,module,exports){
+},{"./ReactElement":541,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/onlyChild.js":470,"_process":480}],633:[function(require,module,exports){
 module.exports=require(471)
-},{"./performance":632,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\performanceNow.js":471}],634:[function(require,module,exports){
+},{"./ExecutionEnvironment":508,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performance.js":471}],634:[function(require,module,exports){
 module.exports=require(472)
-},{"./ExecutionEnvironment":507,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\setInnerHTML.js":472}],635:[function(require,module,exports){
+},{"./performance":633,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performanceNow.js":472}],635:[function(require,module,exports){
 module.exports=require(473)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\shallowEqual.js":473}],636:[function(require,module,exports){
+},{"./ExecutionEnvironment":508,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/setInnerHTML.js":473}],636:[function(require,module,exports){
 module.exports=require(474)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\shouldUpdateReactComponent.js":474}],637:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shallowEqual.js":474}],637:[function(require,module,exports){
 module.exports=require(475)
-},{"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\toArray.js":475}],638:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shouldUpdateReactComponent.js":475}],638:[function(require,module,exports){
 module.exports=require(476)
-},{"./ReactElement":540,"./ReactInstanceHandles":548,"./invariant":620,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\traverseAllChildren.js":476}],639:[function(require,module,exports){
+},{"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/toArray.js":476,"_process":480}],639:[function(require,module,exports){
+module.exports=require(477)
+},{"./ReactElement":541,"./ReactInstanceHandles":549,"./invariant":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/traverseAllChildren.js":477,"_process":480}],640:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -77597,9 +66177,3489 @@ function update(value, spec) {
 module.exports = update;
 
 }).call(this,require('_process'))
-},{"./Object.assign":513,"./invariant":620,"./keyOf":627,"_process":479}],640:[function(require,module,exports){
-module.exports=require(477)
-},{"./emptyFunction":601,"_process":479,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\warning.js":477}],"es5-shim":[function(require,module,exports){
+},{"./Object.assign":514,"./invariant":621,"./keyOf":628,"_process":480}],641:[function(require,module,exports){
+module.exports=require(478)
+},{"./emptyFunction":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/warning.js":478,"_process":480}],"Modernizr":[function(require,module,exports){
+/*!
+ * Modernizr v2.8.3
+ * www.modernizr.com
+ *
+ * Copyright (c) Faruk Ates, Paul Irish, Alex Sexton
+ * Available under the BSD and MIT licenses: www.modernizr.com/license/
+ */
+
+/*
+ * Modernizr tests which native CSS3 and HTML5 features are available in
+ * the current UA and makes the results available to you in two ways:
+ * as properties on a global Modernizr object, and as classes on the
+ * <html> element. This information allows you to progressively enhance
+ * your pages with a granular level of control over the experience.
+ *
+ * Modernizr has an optional (not included) conditional resource loader
+ * called Modernizr.load(), based on Yepnope.js (yepnopejs.com).
+ * To get a build that includes Modernizr.load(), as well as choosing
+ * which tests to include, go to www.modernizr.com/download/
+ *
+ * Authors        Faruk Ates, Paul Irish, Alex Sexton
+ * Contributors   Ryan Seddon, Ben Alman
+ */
+
+Modernizr = (function( window, document, undefined ) {
+
+    var version = '2.8.3',
+
+    Modernizr = {},
+
+    /*>>cssclasses*/
+    // option for enabling the HTML classes to be added
+    enableClasses = true,
+    /*>>cssclasses*/
+
+    docElement = document.documentElement,
+
+    /**
+     * Create our "modernizr" element that we do most feature tests on.
+     */
+    mod = 'modernizr',
+    modElem = document.createElement(mod),
+    mStyle = modElem.style,
+
+    /**
+     * Create the input element for various Web Forms feature tests.
+     */
+    inputElem /*>>inputelem*/ = document.createElement('input') /*>>inputelem*/ ,
+
+    /*>>smile*/
+    smile = ':)',
+    /*>>smile*/
+
+    toString = {}.toString,
+
+    // TODO :: make the prefixes more granular
+    /*>>prefixes*/
+    // List of property values to set for css tests. See ticket #21
+    prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
+    /*>>prefixes*/
+
+    /*>>domprefixes*/
+    // Following spec is to expose vendor-specific style properties as:
+    //   elem.style.WebkitBorderRadius
+    // and the following would be incorrect:
+    //   elem.style.webkitBorderRadius
+
+    // Webkit ghosts their properties in lowercase but Opera & Moz do not.
+    // Microsoft uses a lowercase `ms` instead of the correct `Ms` in IE8+
+    //   erik.eae.net/archives/2008/03/10/21.48.10/
+
+    // More here: github.com/Modernizr/Modernizr/issues/issue/21
+    omPrefixes = 'Webkit Moz O ms',
+
+    cssomPrefixes = omPrefixes.split(' '),
+
+    domPrefixes = omPrefixes.toLowerCase().split(' '),
+    /*>>domprefixes*/
+
+    /*>>ns*/
+    ns = {'svg': 'http://www.w3.org/2000/svg'},
+    /*>>ns*/
+
+    tests = {},
+    inputs = {},
+    attrs = {},
+
+    classes = [],
+
+    slice = classes.slice,
+
+    featureName, // used in testing loop
+
+
+    /*>>teststyles*/
+    // Inject element with style element and some CSS rules
+    injectElementWithStyles = function( rule, callback, nodes, testnames ) {
+
+      var style, ret, node, docOverflow,
+          div = document.createElement('div'),
+          // After page load injecting a fake body doesn't work so check if body exists
+          body = document.body,
+          // IE6 and 7 won't return offsetWidth or offsetHeight unless it's in the body element, so we fake it.
+          fakeBody = body || document.createElement('body');
+
+      if ( parseInt(nodes, 10) ) {
+          // In order not to give false positives we create a node for each test
+          // This also allows the method to scale for unspecified uses
+          while ( nodes-- ) {
+              node = document.createElement('div');
+              node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
+              div.appendChild(node);
+          }
+      }
+
+      // <style> elements in IE6-9 are considered 'NoScope' elements and therefore will be removed
+      // when injected with innerHTML. To get around this you need to prepend the 'NoScope' element
+      // with a 'scoped' element, in our case the soft-hyphen entity as it won't mess with our measurements.
+      // msdn.microsoft.com/en-us/library/ms533897%28VS.85%29.aspx
+      // Documents served as xml will throw if using &shy; so use xml friendly encoded version. See issue #277
+      style = ['&#173;','<style id="s', mod, '">', rule, '</style>'].join('');
+      div.id = mod;
+      // IE6 will false positive on some tests due to the style element inside the test div somehow interfering offsetHeight, so insert it into body or fakebody.
+      // Opera will act all quirky when injecting elements in documentElement when page is served as xml, needs fakebody too. #270
+      (body ? div : fakeBody).innerHTML += style;
+      fakeBody.appendChild(div);
+      if ( !body ) {
+          //avoid crashing IE8, if background image is used
+          fakeBody.style.background = '';
+          //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
+          fakeBody.style.overflow = 'hidden';
+          docOverflow = docElement.style.overflow;
+          docElement.style.overflow = 'hidden';
+          docElement.appendChild(fakeBody);
+      }
+
+      ret = callback(div, rule);
+      // If this is done after page load we don't want to remove the body so check if body exists
+      if ( !body ) {
+          fakeBody.parentNode.removeChild(fakeBody);
+          docElement.style.overflow = docOverflow;
+      } else {
+          div.parentNode.removeChild(div);
+      }
+
+      return !!ret;
+
+    },
+    /*>>teststyles*/
+
+    /*>>mq*/
+    // adapted from matchMedia polyfill
+    // by Scott Jehl and Paul Irish
+    // gist.github.com/786768
+    testMediaQuery = function( mq ) {
+
+      var matchMedia = window.matchMedia || window.msMatchMedia;
+      if ( matchMedia ) {
+        return matchMedia(mq) && matchMedia(mq).matches || false;
+      }
+
+      var bool;
+
+      injectElementWithStyles('@media ' + mq + ' { #' + mod + ' { position: absolute; } }', function( node ) {
+        bool = (window.getComputedStyle ?
+                  getComputedStyle(node, null) :
+                  node.currentStyle)['position'] == 'absolute';
+      });
+
+      return bool;
+
+     },
+     /*>>mq*/
+
+
+    /*>>hasevent*/
+    //
+    // isEventSupported determines if a given element supports the given event
+    // kangax.github.com/iseventsupported/
+    //
+    // The following results are known incorrects:
+    //   Modernizr.hasEvent("webkitTransitionEnd", elem) // false negative
+    //   Modernizr.hasEvent("textInput") // in Webkit. github.com/Modernizr/Modernizr/issues/333
+    //   ...
+    isEventSupported = (function() {
+
+      var TAGNAMES = {
+        'select': 'input', 'change': 'input',
+        'submit': 'form', 'reset': 'form',
+        'error': 'img', 'load': 'img', 'abort': 'img'
+      };
+
+      function isEventSupported( eventName, element ) {
+
+        element = element || document.createElement(TAGNAMES[eventName] || 'div');
+        eventName = 'on' + eventName;
+
+        // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize", whereas `in` "catches" those
+        var isSupported = eventName in element;
+
+        if ( !isSupported ) {
+          // If it has no `setAttribute` (i.e. doesn't implement Node interface), try generic element
+          if ( !element.setAttribute ) {
+            element = document.createElement('div');
+          }
+          if ( element.setAttribute && element.removeAttribute ) {
+            element.setAttribute(eventName, '');
+            isSupported = is(element[eventName], 'function');
+
+            // If property was created, "remove it" (by setting value to `undefined`)
+            if ( !is(element[eventName], 'undefined') ) {
+              element[eventName] = undefined;
+            }
+            element.removeAttribute(eventName);
+          }
+        }
+
+        element = null;
+        return isSupported;
+      }
+      return isEventSupported;
+    })(),
+    /*>>hasevent*/
+
+    // TODO :: Add flag for hasownprop ? didn't last time
+
+    // hasOwnProperty shim by kangax needed for Safari 2.0 support
+    _hasOwnProperty = ({}).hasOwnProperty, hasOwnProp;
+
+    if ( !is(_hasOwnProperty, 'undefined') && !is(_hasOwnProperty.call, 'undefined') ) {
+      hasOwnProp = function (object, property) {
+        return _hasOwnProperty.call(object, property);
+      };
+    }
+    else {
+      hasOwnProp = function (object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
+        return ((property in object) && is(object.constructor.prototype[property], 'undefined'));
+      };
+    }
+
+    // Adapted from ES5-shim https://github.com/kriskowal/es5-shim/blob/master/es5-shim.js
+    // es5.github.com/#x15.3.4.5
+
+    if (!Function.prototype.bind) {
+      Function.prototype.bind = function bind(that) {
+
+        var target = this;
+
+        if (typeof target != "function") {
+            throw new TypeError();
+        }
+
+        var args = slice.call(arguments, 1),
+            bound = function () {
+
+            if (this instanceof bound) {
+
+              var F = function(){};
+              F.prototype = target.prototype;
+              var self = new F();
+
+              var result = target.apply(
+                  self,
+                  args.concat(slice.call(arguments))
+              );
+              if (Object(result) === result) {
+                  return result;
+              }
+              return self;
+
+            } else {
+
+              return target.apply(
+                  that,
+                  args.concat(slice.call(arguments))
+              );
+
+            }
+
+        };
+
+        return bound;
+      };
+    }
+
+    /**
+     * setCss applies given styles to the Modernizr DOM node.
+     */
+    function setCss( str ) {
+        mStyle.cssText = str;
+    }
+
+    /**
+     * setCssAll extrapolates all vendor-specific css strings.
+     */
+    function setCssAll( str1, str2 ) {
+        return setCss(prefixes.join(str1 + ';') + ( str2 || '' ));
+    }
+
+    /**
+     * is returns a boolean for if typeof obj is exactly type.
+     */
+    function is( obj, type ) {
+        return typeof obj === type;
+    }
+
+    /**
+     * contains returns a boolean for if substr is found within str.
+     */
+    function contains( str, substr ) {
+        return !!~('' + str).indexOf(substr);
+    }
+
+    /*>>testprop*/
+
+    // testProps is a generic CSS / DOM property test.
+
+    // In testing support for a given CSS property, it's legit to test:
+    //    `elem.style[styleName] !== undefined`
+    // If the property is supported it will return an empty string,
+    // if unsupported it will return undefined.
+
+    // We'll take advantage of this quick test and skip setting a style
+    // on our modernizr element, but instead just testing undefined vs
+    // empty string.
+
+    // Because the testing of the CSS property names (with "-", as
+    // opposed to the camelCase DOM properties) is non-portable and
+    // non-standard but works in WebKit and IE (but not Gecko or Opera),
+    // we explicitly reject properties with dashes so that authors
+    // developing in WebKit or IE first don't end up with
+    // browser-specific content by accident.
+
+    function testProps( props, prefixed ) {
+        for ( var i in props ) {
+            var prop = props[i];
+            if ( !contains(prop, "-") && mStyle[prop] !== undefined ) {
+                return prefixed == 'pfx' ? prop : true;
+            }
+        }
+        return false;
+    }
+    /*>>testprop*/
+
+    // TODO :: add testDOMProps
+    /**
+     * testDOMProps is a generic DOM property test; if a browser supports
+     *   a certain property, it won't return undefined for it.
+     */
+    function testDOMProps( props, obj, elem ) {
+        for ( var i in props ) {
+            var item = obj[props[i]];
+            if ( item !== undefined) {
+
+                // return the property name as a string
+                if (elem === false) return props[i];
+
+                // let's bind a function
+                if (is(item, 'function')){
+                  // default to autobind unless override
+                  return item.bind(elem || obj);
+                }
+
+                // return the unbound function or obj or value
+                return item;
+            }
+        }
+        return false;
+    }
+
+    /*>>testallprops*/
+    /**
+     * testPropsAll tests a list of DOM properties we want to check against.
+     *   We specify literally ALL possible (known and/or likely) properties on
+     *   the element including the non-vendor prefixed one, for forward-
+     *   compatibility.
+     */
+    function testPropsAll( prop, prefixed, elem ) {
+
+        var ucProp  = prop.charAt(0).toUpperCase() + prop.slice(1),
+            props   = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
+
+        // did they call .prefixed('boxSizing') or are we just testing a prop?
+        if(is(prefixed, "string") || is(prefixed, "undefined")) {
+          return testProps(props, prefixed);
+
+        // otherwise, they called .prefixed('requestAnimationFrame', window[, elem])
+        } else {
+          props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
+          return testDOMProps(props, prefixed, elem);
+        }
+    }
+    /*>>testallprops*/
+
+
+    /**
+     * Tests
+     * -----
+     */
+
+    // The *new* flexbox
+    // dev.w3.org/csswg/css3-flexbox
+
+    tests['flexbox'] = function() {
+      return testPropsAll('flexWrap');
+    };
+
+    // The *old* flexbox
+    // www.w3.org/TR/2009/WD-css3-flexbox-20090723/
+
+    tests['flexboxlegacy'] = function() {
+        return testPropsAll('boxDirection');
+    };
+
+    // On the S60 and BB Storm, getContext exists, but always returns undefined
+    // so we actually have to call getContext() to verify
+    // github.com/Modernizr/Modernizr/issues/issue/97/
+
+    tests['canvas'] = function() {
+        var elem = document.createElement('canvas');
+        return !!(elem.getContext && elem.getContext('2d'));
+    };
+
+    tests['canvastext'] = function() {
+        return !!(Modernizr['canvas'] && is(document.createElement('canvas').getContext('2d').fillText, 'function'));
+    };
+
+    // webk.it/70117 is tracking a legit WebGL feature detect proposal
+
+    // We do a soft detect which may false positive in order to avoid
+    // an expensive context creation: bugzil.la/732441
+
+    tests['webgl'] = function() {
+        return !!window.WebGLRenderingContext;
+    };
+
+    /*
+     * The Modernizr.touch test only indicates if the browser supports
+     *    touch events, which does not necessarily reflect a touchscreen
+     *    device, as evidenced by tablets running Windows 7 or, alas,
+     *    the Palm Pre / WebOS (touch) phones.
+     *
+     * Additionally, Chrome (desktop) used to lie about its support on this,
+     *    but that has since been rectified: crbug.com/36415
+     *
+     * We also test for Firefox 4 Multitouch Support.
+     *
+     * For more info, see: modernizr.github.com/Modernizr/touch.html
+     */
+
+    tests['touch'] = function() {
+        var bool;
+
+        if(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+          bool = true;
+        } else {
+          injectElementWithStyles(['@media (',prefixes.join('touch-enabled),('),mod,')','{#modernizr{top:9px;position:absolute}}'].join(''), function( node ) {
+            bool = node.offsetTop === 9;
+          });
+        }
+
+        return bool;
+    };
+
+
+    // geolocation is often considered a trivial feature detect...
+    // Turns out, it's quite tricky to get right:
+    //
+    // Using !!navigator.geolocation does two things we don't want. It:
+    //   1. Leaks memory in IE9: github.com/Modernizr/Modernizr/issues/513
+    //   2. Disables page caching in WebKit: webk.it/43956
+    //
+    // Meanwhile, in Firefox < 8, an about:config setting could expose
+    // a false positive that would throw an exception: bugzil.la/688158
+
+    tests['geolocation'] = function() {
+        return 'geolocation' in navigator;
+    };
+
+
+    tests['postmessage'] = function() {
+      return !!window.postMessage;
+    };
+
+
+    // Chrome incognito mode used to throw an exception when using openDatabase
+    // It doesn't anymore.
+    tests['websqldatabase'] = function() {
+      return !!window.openDatabase;
+    };
+
+    // Vendors had inconsistent prefixing with the experimental Indexed DB:
+    // - Webkit's implementation is accessible through webkitIndexedDB
+    // - Firefox shipped moz_indexedDB before FF4b9, but since then has been mozIndexedDB
+    // For speed, we don't test the legacy (and beta-only) indexedDB
+    tests['indexedDB'] = function() {
+      return !!testPropsAll("indexedDB", window);
+    };
+
+    // documentMode logic from YUI to filter out IE8 Compat Mode
+    //   which false positives.
+    tests['hashchange'] = function() {
+      return isEventSupported('hashchange', window) && (document.documentMode === undefined || document.documentMode > 7);
+    };
+
+    // Per 1.6:
+    // This used to be Modernizr.historymanagement but the longer
+    // name has been deprecated in favor of a shorter and property-matching one.
+    // The old API is still available in 1.6, but as of 2.0 will throw a warning,
+    // and in the first release thereafter disappear entirely.
+    tests['history'] = function() {
+      return !!(window.history && history.pushState);
+    };
+
+    tests['draganddrop'] = function() {
+        var div = document.createElement('div');
+        return ('draggable' in div) || ('ondragstart' in div && 'ondrop' in div);
+    };
+
+    // FF3.6 was EOL'ed on 4/24/12, but the ESR version of FF10
+    // will be supported until FF19 (2/12/13), at which time, ESR becomes FF17.
+    // FF10 still uses prefixes, so check for it until then.
+    // for more ESR info, see: mozilla.org/en-US/firefox/organizations/faq/
+    tests['websockets'] = function() {
+        return 'WebSocket' in window || 'MozWebSocket' in window;
+    };
+
+
+    // css-tricks.com/rgba-browser-support/
+    tests['rgba'] = function() {
+        // Set an rgba() color and check the returned value
+
+        setCss('background-color:rgba(150,255,150,.5)');
+
+        return contains(mStyle.backgroundColor, 'rgba');
+    };
+
+    tests['hsla'] = function() {
+        // Same as rgba(), in fact, browsers re-map hsla() to rgba() internally,
+        //   except IE9 who retains it as hsla
+
+        setCss('background-color:hsla(120,40%,100%,.5)');
+
+        return contains(mStyle.backgroundColor, 'rgba') || contains(mStyle.backgroundColor, 'hsla');
+    };
+
+    tests['multiplebgs'] = function() {
+        // Setting multiple images AND a color on the background shorthand property
+        //  and then querying the style.background property value for the number of
+        //  occurrences of "url(" is a reliable method for detecting ACTUAL support for this!
+
+        setCss('background:url(https://),url(https://),red url(https://)');
+
+        // If the UA supports multiple backgrounds, there should be three occurrences
+        //   of the string "url(" in the return value for elemStyle.background
+
+        return (/(url\s*\(.*?){3}/).test(mStyle.background);
+    };
+
+
+
+    // this will false positive in Opera Mini
+    //   github.com/Modernizr/Modernizr/issues/396
+
+    tests['backgroundsize'] = function() {
+        return testPropsAll('backgroundSize');
+    };
+
+    tests['borderimage'] = function() {
+        return testPropsAll('borderImage');
+    };
+
+
+    // Super comprehensive table about all the unique implementations of
+    // border-radius: muddledramblings.com/table-of-css3-border-radius-compliance
+
+    tests['borderradius'] = function() {
+        return testPropsAll('borderRadius');
+    };
+
+    // WebOS unfortunately false positives on this test.
+    tests['boxshadow'] = function() {
+        return testPropsAll('boxShadow');
+    };
+
+    // FF3.0 will false positive on this test
+    tests['textshadow'] = function() {
+        return document.createElement('div').style.textShadow === '';
+    };
+
+
+    tests['opacity'] = function() {
+        // Browsers that actually have CSS Opacity implemented have done so
+        //  according to spec, which means their return values are within the
+        //  range of [0.0,1.0] - including the leading zero.
+
+        setCssAll('opacity:.55');
+
+        // The non-literal . in this regex is intentional:
+        //   German Chrome returns this value as 0,55
+        // github.com/Modernizr/Modernizr/issues/#issue/59/comment/516632
+        return (/^0.55$/).test(mStyle.opacity);
+    };
+
+
+    // Note, Android < 4 will pass this test, but can only animate
+    //   a single property at a time
+    //   goo.gl/v3V4Gp
+    tests['cssanimations'] = function() {
+        return testPropsAll('animationName');
+    };
+
+
+    tests['csscolumns'] = function() {
+        return testPropsAll('columnCount');
+    };
+
+
+    tests['cssgradients'] = function() {
+        /**
+         * For CSS Gradients syntax, please see:
+         * webkit.org/blog/175/introducing-css-gradients/
+         * developer.mozilla.org/en/CSS/-moz-linear-gradient
+         * developer.mozilla.org/en/CSS/-moz-radial-gradient
+         * dev.w3.org/csswg/css3-images/#gradients-
+         */
+
+        var str1 = 'background-image:',
+            str2 = 'gradient(linear,left top,right bottom,from(#9f9),to(white));',
+            str3 = 'linear-gradient(left top,#9f9, white);';
+
+        setCss(
+             // legacy webkit syntax (FIXME: remove when syntax not in use anymore)
+              (str1 + '-webkit- '.split(' ').join(str2 + str1) +
+             // standard syntax             // trailing 'background-image:'
+              prefixes.join(str3 + str1)).slice(0, -str1.length)
+        );
+
+        return contains(mStyle.backgroundImage, 'gradient');
+    };
+
+
+    tests['cssreflections'] = function() {
+        return testPropsAll('boxReflect');
+    };
+
+
+    tests['csstransforms'] = function() {
+        return !!testPropsAll('transform');
+    };
+
+
+    tests['csstransforms3d'] = function() {
+
+        var ret = !!testPropsAll('perspective');
+
+        // Webkit's 3D transforms are passed off to the browser's own graphics renderer.
+        //   It works fine in Safari on Leopard and Snow Leopard, but not in Chrome in
+        //   some conditions. As a result, Webkit typically recognizes the syntax but
+        //   will sometimes throw a false positive, thus we must do a more thorough check:
+        if ( ret && 'webkitPerspective' in docElement.style ) {
+
+          // Webkit allows this media query to succeed only if the feature is enabled.
+          // `@media (transform-3d),(-webkit-transform-3d){ ... }`
+          injectElementWithStyles('@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}', function( node, rule ) {
+            ret = node.offsetLeft === 9 && node.offsetHeight === 3;
+          });
+        }
+        return ret;
+    };
+
+
+    tests['csstransitions'] = function() {
+        return testPropsAll('transition');
+    };
+
+
+    /*>>fontface*/
+    // @font-face detection routine by Diego Perini
+    // javascript.nwbox.com/CSSSupport/
+
+    // false positives:
+    //   WebOS github.com/Modernizr/Modernizr/issues/342
+    //   WP7   github.com/Modernizr/Modernizr/issues/538
+    tests['fontface'] = function() {
+        var bool;
+
+        injectElementWithStyles('@font-face {font-family:"font";src:url("https://")}', function( node, rule ) {
+          var style = document.getElementById('smodernizr'),
+              sheet = style.sheet || style.styleSheet,
+              cssText = sheet ? (sheet.cssRules && sheet.cssRules[0] ? sheet.cssRules[0].cssText : sheet.cssText || '') : '';
+
+          bool = /src/i.test(cssText) && cssText.indexOf(rule.split(' ')[0]) === 0;
+        });
+
+        return bool;
+    };
+    /*>>fontface*/
+
+    // CSS generated content detection
+    tests['generatedcontent'] = function() {
+        var bool;
+
+        injectElementWithStyles(['#',mod,'{font:0/0 a}#',mod,':after{content:"',smile,'";visibility:hidden;font:3px/1 a}'].join(''), function( node ) {
+          bool = node.offsetHeight >= 3;
+        });
+
+        return bool;
+    };
+
+
+
+    // These tests evaluate support of the video/audio elements, as well as
+    // testing what types of content they support.
+    //
+    // We're using the Boolean constructor here, so that we can extend the value
+    // e.g.  Modernizr.video     // true
+    //       Modernizr.video.ogg // 'probably'
+    //
+    // Codec values from : github.com/NielsLeenheer/html5test/blob/9106a8/index.html#L845
+    //                     thx to NielsLeenheer and zcorpan
+
+    // Note: in some older browsers, "no" was a return value instead of empty string.
+    //   It was live in FF3.5.0 and 3.5.1, but fixed in 3.5.2
+    //   It was also live in Safari 4.0.0 - 4.0.4, but fixed in 4.0.5
+
+    tests['video'] = function() {
+        var elem = document.createElement('video'),
+            bool = false;
+
+        // IE9 Running on Windows Server SKU can cause an exception to be thrown, bug #224
+        try {
+            if ( bool = !!elem.canPlayType ) {
+                bool      = new Boolean(bool);
+                bool.ogg  = elem.canPlayType('video/ogg; codecs="theora"')      .replace(/^no$/,'');
+
+                // Without QuickTime, this value will be `undefined`. github.com/Modernizr/Modernizr/issues/546
+                bool.h264 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/,'');
+
+                bool.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/,'');
+            }
+
+        } catch(e) { }
+
+        return bool;
+    };
+
+    tests['audio'] = function() {
+        var elem = document.createElement('audio'),
+            bool = false;
+
+        try {
+            if ( bool = !!elem.canPlayType ) {
+                bool      = new Boolean(bool);
+                bool.ogg  = elem.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,'');
+                bool.mp3  = elem.canPlayType('audio/mpeg;')               .replace(/^no$/,'');
+
+                // Mimetypes accepted:
+                //   developer.mozilla.org/En/Media_formats_supported_by_the_audio_and_video_elements
+                //   bit.ly/iphoneoscodecs
+                bool.wav  = elem.canPlayType('audio/wav; codecs="1"')     .replace(/^no$/,'');
+                bool.m4a  = ( elem.canPlayType('audio/x-m4a;')            ||
+                              elem.canPlayType('audio/aac;'))             .replace(/^no$/,'');
+            }
+        } catch(e) { }
+
+        return bool;
+    };
+
+
+    // In FF4, if disabled, window.localStorage should === null.
+
+    // Normally, we could not test that directly and need to do a
+    //   `('localStorage' in window) && ` test first because otherwise Firefox will
+    //   throw bugzil.la/365772 if cookies are disabled
+
+    // Also in iOS5 Private Browsing mode, attempting to use localStorage.setItem
+    // will throw the exception:
+    //   QUOTA_EXCEEDED_ERRROR DOM Exception 22.
+    // Peculiarly, getItem and removeItem calls do not throw.
+
+    // Because we are forced to try/catch this, we'll go aggressive.
+
+    // Just FWIW: IE8 Compat mode supports these features completely:
+    //   www.quirksmode.org/dom/html5.html
+    // But IE8 doesn't support either with local files
+
+    tests['localstorage'] = function() {
+        try {
+            localStorage.setItem(mod, mod);
+            localStorage.removeItem(mod);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    };
+
+    tests['sessionstorage'] = function() {
+        try {
+            sessionStorage.setItem(mod, mod);
+            sessionStorage.removeItem(mod);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    };
+
+
+    tests['webworkers'] = function() {
+        return !!window.Worker;
+    };
+
+
+    tests['applicationcache'] = function() {
+        return !!window.applicationCache;
+    };
+
+
+    // Thanks to Erik Dahlstrom
+    tests['svg'] = function() {
+        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+    };
+
+    // specifically for SVG inline in HTML, not within XHTML
+    // test page: paulirish.com/demo/inline-svg
+    tests['inlinesvg'] = function() {
+      var div = document.createElement('div');
+      div.innerHTML = '<svg/>';
+      return (div.firstChild && div.firstChild.namespaceURI) == ns.svg;
+    };
+
+    // SVG SMIL animation
+    tests['smil'] = function() {
+        return !!document.createElementNS && /SVGAnimate/.test(toString.call(document.createElementNS(ns.svg, 'animate')));
+    };
+
+    // This test is only for clip paths in SVG proper, not clip paths on HTML content
+    // demo: srufaculty.sru.edu/david.dailey/svg/newstuff/clipPath4.svg
+
+    // However read the comments to dig into applying SVG clippaths to HTML content here:
+    //   github.com/Modernizr/Modernizr/issues/213#issuecomment-1149491
+    tests['svgclippaths'] = function() {
+        return !!document.createElementNS && /SVGClipPath/.test(toString.call(document.createElementNS(ns.svg, 'clipPath')));
+    };
+
+    /*>>webforms*/
+    // input features and input types go directly onto the ret object, bypassing the tests loop.
+    // Hold this guy to execute in a moment.
+    function webforms() {
+        /*>>input*/
+        // Run through HTML5's new input attributes to see if the UA understands any.
+        // We're using f which is the <input> element created early on
+        // Mike Taylr has created a comprehensive resource for testing these attributes
+        //   when applied to all input types:
+        //   miketaylr.com/code/input-type-attr.html
+        // spec: www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
+
+        // Only input placeholder is tested while textarea's placeholder is not.
+        // Currently Safari 4 and Opera 11 have support only for the input placeholder
+        // Both tests are available in feature-detects/forms-placeholder.js
+        Modernizr['input'] = (function( props ) {
+            for ( var i = 0, len = props.length; i < len; i++ ) {
+                attrs[ props[i] ] = !!(props[i] in inputElem);
+            }
+            if (attrs.list){
+              // safari false positive's on datalist: webk.it/74252
+              // see also github.com/Modernizr/Modernizr/issues/146
+              attrs.list = !!(document.createElement('datalist') && window.HTMLDataListElement);
+            }
+            return attrs;
+        })('autocomplete autofocus list placeholder max min multiple pattern required step'.split(' '));
+        /*>>input*/
+
+        /*>>inputtypes*/
+        // Run through HTML5's new input types to see if the UA understands any.
+        //   This is put behind the tests runloop because it doesn't return a
+        //   true/false like all the other tests; instead, it returns an object
+        //   containing each input type with its corresponding true/false value
+
+        // Big thanks to @miketaylr for the html5 forms expertise. miketaylr.com/
+        Modernizr['inputtypes'] = (function(props) {
+
+            for ( var i = 0, bool, inputElemType, defaultView, len = props.length; i < len; i++ ) {
+
+                inputElem.setAttribute('type', inputElemType = props[i]);
+                bool = inputElem.type !== 'text';
+
+                // We first check to see if the type we give it sticks..
+                // If the type does, we feed it a textual value, which shouldn't be valid.
+                // If the value doesn't stick, we know there's input sanitization which infers a custom UI
+                if ( bool ) {
+
+                    inputElem.value         = smile;
+                    inputElem.style.cssText = 'position:absolute;visibility:hidden;';
+
+                    if ( /^range$/.test(inputElemType) && inputElem.style.WebkitAppearance !== undefined ) {
+
+                      docElement.appendChild(inputElem);
+                      defaultView = document.defaultView;
+
+                      // Safari 2-4 allows the smiley as a value, despite making a slider
+                      bool =  defaultView.getComputedStyle &&
+                              defaultView.getComputedStyle(inputElem, null).WebkitAppearance !== 'textfield' &&
+                              // Mobile android web browser has false positive, so must
+                              // check the height to see if the widget is actually there.
+                              (inputElem.offsetHeight !== 0);
+
+                      docElement.removeChild(inputElem);
+
+                    } else if ( /^(search|tel)$/.test(inputElemType) ){
+                      // Spec doesn't define any special parsing or detectable UI
+                      //   behaviors so we pass these through as true
+
+                      // Interestingly, opera fails the earlier test, so it doesn't
+                      //  even make it here.
+
+                    } else if ( /^(url|email)$/.test(inputElemType) ) {
+                      // Real url and email support comes with prebaked validation.
+                      bool = inputElem.checkValidity && inputElem.checkValidity() === false;
+
+                    } else {
+                      // If the upgraded input compontent rejects the :) text, we got a winner
+                      bool = inputElem.value != smile;
+                    }
+                }
+
+                inputs[ props[i] ] = !!bool;
+            }
+            return inputs;
+        })('search tel url email datetime date month week time datetime-local number range color'.split(' '));
+        /*>>inputtypes*/
+    }
+    /*>>webforms*/
+
+
+    // End of test definitions
+    // -----------------------
+
+
+
+    // Run through all tests and detect their support in the current UA.
+    // todo: hypothetically we could be doing an array of tests and use a basic loop here.
+    for ( var feature in tests ) {
+        if ( hasOwnProp(tests, feature) ) {
+            // run the test, throw the return value into the Modernizr,
+            //   then based on that boolean, define an appropriate className
+            //   and push it into an array of classes we'll join later.
+            featureName  = feature.toLowerCase();
+            Modernizr[featureName] = tests[feature]();
+
+            classes.push((Modernizr[featureName] ? '' : 'no-') + featureName);
+        }
+    }
+
+    /*>>webforms*/
+    // input tests need to run.
+    Modernizr.input || webforms();
+    /*>>webforms*/
+
+
+    /**
+     * addTest allows the user to define their own feature tests
+     * the result will be added onto the Modernizr object,
+     * as well as an appropriate className set on the html element
+     *
+     * @param feature - String naming the feature
+     * @param test - Function returning true if feature is supported, false if not
+     */
+     Modernizr.addTest = function ( feature, test ) {
+       if ( typeof feature == 'object' ) {
+         for ( var key in feature ) {
+           if ( hasOwnProp( feature, key ) ) {
+             Modernizr.addTest( key, feature[ key ] );
+           }
+         }
+       } else {
+
+         feature = feature.toLowerCase();
+
+         if ( Modernizr[feature] !== undefined ) {
+           // we're going to quit if you're trying to overwrite an existing test
+           // if we were to allow it, we'd do this:
+           //   var re = new RegExp("\\b(no-)?" + feature + "\\b");
+           //   docElement.className = docElement.className.replace( re, '' );
+           // but, no rly, stuff 'em.
+           return Modernizr;
+         }
+
+         test = typeof test == 'function' ? test() : test;
+
+         if (typeof enableClasses !== "undefined" && enableClasses) {
+           docElement.className += " mod-" + (test ? '' : 'no-') + feature;
+         }
+         Modernizr[feature] = test;
+
+       }
+
+       return Modernizr; // allow chaining.
+     };
+
+
+    // Reset modElem.cssText to nothing to reduce memory footprint.
+    setCss('');
+    modElem = inputElem = null;
+
+    /*>>shiv*/
+    /**
+     * @preserve HTML5 Shiv prev3.7.1 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
+     */
+    ;(function(window, document) {
+        /*jshint evil:true */
+        /** version */
+        var version = '3.7.0';
+
+        /** Preset options */
+        var options = window.html5 || {};
+
+        /** Used to skip problem elements */
+        var reSkip = /^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i;
+
+        /** Not all elements can be cloned in IE **/
+        var saveClones = /^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i;
+
+        /** Detect whether the browser supports default html5 styles */
+        var supportsHtml5Styles;
+
+        /** Name of the expando, to work with multiple documents or to re-shiv one document */
+        var expando = '_html5shiv';
+
+        /** The id for the the documents expando */
+        var expanID = 0;
+
+        /** Cached data for each document */
+        var expandoData = {};
+
+        /** Detect whether the browser supports unknown elements */
+        var supportsUnknownElements;
+
+        (function() {
+          try {
+            var a = document.createElement('a');
+            a.innerHTML = '<xyz></xyz>';
+            //if the hidden property is implemented we can assume, that the browser supports basic HTML5 Styles
+            supportsHtml5Styles = ('hidden' in a);
+
+            supportsUnknownElements = a.childNodes.length == 1 || (function() {
+              // assign a false positive if unable to shiv
+              (document.createElement)('a');
+              var frag = document.createDocumentFragment();
+              return (
+                typeof frag.cloneNode == 'undefined' ||
+                typeof frag.createDocumentFragment == 'undefined' ||
+                typeof frag.createElement == 'undefined'
+              );
+            }());
+          } catch(e) {
+            // assign a false positive if detection fails => unable to shiv
+            supportsHtml5Styles = true;
+            supportsUnknownElements = true;
+          }
+
+        }());
+
+        /*--------------------------------------------------------------------------*/
+
+        /**
+         * Creates a style sheet with the given CSS text and adds it to the document.
+         * @private
+         * @param {Document} ownerDocument The document.
+         * @param {String} cssText The CSS text.
+         * @returns {StyleSheet} The style element.
+         */
+        function addStyleSheet(ownerDocument, cssText) {
+          var p = ownerDocument.createElement('p'),
+          parent = ownerDocument.getElementsByTagName('head')[0] || ownerDocument.documentElement;
+
+          p.innerHTML = 'x<style>' + cssText + '</style>';
+          return parent.insertBefore(p.lastChild, parent.firstChild);
+        }
+
+        /**
+         * Returns the value of `html5.elements` as an array.
+         * @private
+         * @returns {Array} An array of shived element node names.
+         */
+        function getElements() {
+          var elements = html5.elements;
+          return typeof elements == 'string' ? elements.split(' ') : elements;
+        }
+
+        /**
+         * Returns the data associated to the given document
+         * @private
+         * @param {Document} ownerDocument The document.
+         * @returns {Object} An object of data.
+         */
+        function getExpandoData(ownerDocument) {
+          var data = expandoData[ownerDocument[expando]];
+          if (!data) {
+            data = {};
+            expanID++;
+            ownerDocument[expando] = expanID;
+            expandoData[expanID] = data;
+          }
+          return data;
+        }
+
+        /**
+         * returns a shived element for the given nodeName and document
+         * @memberOf html5
+         * @param {String} nodeName name of the element
+         * @param {Document} ownerDocument The context document.
+         * @returns {Object} The shived element.
+         */
+        function createElement(nodeName, ownerDocument, data){
+          if (!ownerDocument) {
+            ownerDocument = document;
+          }
+          if(supportsUnknownElements){
+            return ownerDocument.createElement(nodeName);
+          }
+          if (!data) {
+            data = getExpandoData(ownerDocument);
+          }
+          var node;
+
+          if (data.cache[nodeName]) {
+            node = data.cache[nodeName].cloneNode();
+          } else if (saveClones.test(nodeName)) {
+            node = (data.cache[nodeName] = data.createElem(nodeName)).cloneNode();
+          } else {
+            node = data.createElem(nodeName);
+          }
+
+          // Avoid adding some elements to fragments in IE < 9 because
+          // * Attributes like `name` or `type` cannot be set/changed once an element
+          //   is inserted into a document/fragment
+          // * Link elements with `src` attributes that are inaccessible, as with
+          //   a 403 response, will cause the tab/window to crash
+          // * Script elements appended to fragments will execute when their `src`
+          //   or `text` property is set
+          return node.canHaveChildren && !reSkip.test(nodeName) && !node.tagUrn ? data.frag.appendChild(node) : node;
+        }
+
+        /**
+         * returns a shived DocumentFragment for the given document
+         * @memberOf html5
+         * @param {Document} ownerDocument The context document.
+         * @returns {Object} The shived DocumentFragment.
+         */
+        function createDocumentFragment(ownerDocument, data){
+          if (!ownerDocument) {
+            ownerDocument = document;
+          }
+          if(supportsUnknownElements){
+            return ownerDocument.createDocumentFragment();
+          }
+          data = data || getExpandoData(ownerDocument);
+          var clone = data.frag.cloneNode(),
+          i = 0,
+          elems = getElements(),
+          l = elems.length;
+          for(;i<l;i++){
+            clone.createElement(elems[i]);
+          }
+          return clone;
+        }
+
+        /**
+         * Shivs the `createElement` and `createDocumentFragment` methods of the document.
+         * @private
+         * @param {Document|DocumentFragment} ownerDocument The document.
+         * @param {Object} data of the document.
+         */
+        function shivMethods(ownerDocument, data) {
+          if (!data.cache) {
+            data.cache = {};
+            data.createElem = ownerDocument.createElement;
+            data.createFrag = ownerDocument.createDocumentFragment;
+            data.frag = data.createFrag();
+          }
+
+
+          ownerDocument.createElement = function(nodeName) {
+            //abort shiv
+            if (!html5.shivMethods) {
+              return data.createElem(nodeName);
+            }
+            return createElement(nodeName, ownerDocument, data);
+          };
+
+          ownerDocument.createDocumentFragment = Function('h,f', 'return function(){' +
+                                                          'var n=f.cloneNode(),c=n.createElement;' +
+                                                          'h.shivMethods&&(' +
+                                                          // unroll the `createElement` calls
+                                                          getElements().join().replace(/[\w\-]+/g, function(nodeName) {
+            data.createElem(nodeName);
+            data.frag.createElement(nodeName);
+            return 'c("' + nodeName + '")';
+          }) +
+            ');return n}'
+                                                         )(html5, data.frag);
+        }
+
+        /*--------------------------------------------------------------------------*/
+
+        /**
+         * Shivs the given document.
+         * @memberOf html5
+         * @param {Document} ownerDocument The document to shiv.
+         * @returns {Document} The shived document.
+         */
+        function shivDocument(ownerDocument) {
+          if (!ownerDocument) {
+            ownerDocument = document;
+          }
+          var data = getExpandoData(ownerDocument);
+
+          if (html5.shivCSS && !supportsHtml5Styles && !data.hasCSS) {
+            data.hasCSS = !!addStyleSheet(ownerDocument,
+                                          // corrects block display not defined in IE6/7/8/9
+                                          'article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}' +
+                                            // adds styling not present in IE6/7/8/9
+                                            'mark{background:#FF0;color:#000}' +
+                                            // hides non-rendered elements
+                                            'template{display:none}'
+                                         );
+          }
+          if (!supportsUnknownElements) {
+            shivMethods(ownerDocument, data);
+          }
+          return ownerDocument;
+        }
+
+        /*--------------------------------------------------------------------------*/
+
+        /**
+         * The `html5` object is exposed so that more elements can be shived and
+         * existing shiving can be detected on iframes.
+         * @type Object
+         * @example
+         *
+         * // options can be changed before the script is included
+         * html5 = { 'elements': 'mark section', 'shivCSS': false, 'shivMethods': false };
+         */
+        var html5 = {
+
+          /**
+           * An array or space separated string of node names of the elements to shiv.
+           * @memberOf html5
+           * @type Array|String
+           */
+          'elements': options.elements || 'abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video',
+
+          /**
+           * current version of html5shiv
+           */
+          'version': version,
+
+          /**
+           * A flag to indicate that the HTML5 style sheet should be inserted.
+           * @memberOf html5
+           * @type Boolean
+           */
+          'shivCSS': (options.shivCSS !== false),
+
+          /**
+           * Is equal to true if a browser supports creating unknown/HTML5 elements
+           * @memberOf html5
+           * @type boolean
+           */
+          'supportsUnknownElements': supportsUnknownElements,
+
+          /**
+           * A flag to indicate that the document's `createElement` and `createDocumentFragment`
+           * methods should be overwritten.
+           * @memberOf html5
+           * @type Boolean
+           */
+          'shivMethods': (options.shivMethods !== false),
+
+          /**
+           * A string to describe the type of `html5` object ("default" or "default print").
+           * @memberOf html5
+           * @type String
+           */
+          'type': 'default',
+
+          // shivs the document according to the specified `html5` object options
+          'shivDocument': shivDocument,
+
+          //creates a shived element
+          createElement: createElement,
+
+          //creates a shived documentFragment
+          createDocumentFragment: createDocumentFragment
+        };
+
+        /*--------------------------------------------------------------------------*/
+
+        // expose html5
+        window.html5 = html5;
+
+        // shiv the document
+        shivDocument(document);
+
+    }(this, document));
+    /*>>shiv*/
+
+    // Assign private properties to the return object with prefix
+    Modernizr._version      = version;
+
+    // expose these for the plugin API. Look in the source for how to join() them against your input
+    /*>>prefixes*/
+    Modernizr._prefixes     = prefixes;
+    /*>>prefixes*/
+    /*>>domprefixes*/
+    Modernizr._domPrefixes  = domPrefixes;
+    Modernizr._cssomPrefixes  = cssomPrefixes;
+    /*>>domprefixes*/
+
+    /*>>mq*/
+    // Modernizr.mq tests a given media query, live against the current state of the window
+    // A few important notes:
+    //   * If a browser does not support media queries at all (eg. oldIE) the mq() will always return false
+    //   * A max-width or orientation query will be evaluated against the current state, which may change later.
+    //   * You must specify values. Eg. If you are testing support for the min-width media query use:
+    //       Modernizr.mq('(min-width:0)')
+    // usage:
+    // Modernizr.mq('only screen and (max-width:768)')
+    Modernizr.mq            = testMediaQuery;
+    /*>>mq*/
+
+    /*>>hasevent*/
+    // Modernizr.hasEvent() detects support for a given event, with an optional element to test on
+    // Modernizr.hasEvent('gesturestart', elem)
+    Modernizr.hasEvent      = isEventSupported;
+    /*>>hasevent*/
+
+    /*>>testprop*/
+    // Modernizr.testProp() investigates whether a given style property is recognized
+    // Note that the property names must be provided in the camelCase variant.
+    // Modernizr.testProp('pointerEvents')
+    Modernizr.testProp      = function(prop){
+        return testProps([prop]);
+    };
+    /*>>testprop*/
+
+    /*>>testallprops*/
+    // Modernizr.testAllProps() investigates whether a given style property,
+    //   or any of its vendor-prefixed variants, is recognized
+    // Note that the property names must be provided in the camelCase variant.
+    // Modernizr.testAllProps('boxSizing')
+    Modernizr.testAllProps  = testPropsAll;
+    /*>>testallprops*/
+
+
+    /*>>teststyles*/
+    // Modernizr.testStyles() allows you to add custom styles to the document and test an element afterwards
+    // Modernizr.testStyles('#modernizr { position:absolute }', function(elem, rule){ ... })
+    Modernizr.testStyles    = injectElementWithStyles;
+    /*>>teststyles*/
+
+
+    /*>>prefixed*/
+    // Modernizr.prefixed() returns the prefixed or nonprefixed property name variant of your input
+    // Modernizr.prefixed('boxSizing') // 'MozBoxSizing'
+
+    // Properties must be passed as dom-style camelcase, rather than `box-sizing` hypentated style.
+    // Return values will also be the camelCase variant, if you need to translate that to hypenated style use:
+    //
+    //     str.replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-');
+
+    // If you're trying to ascertain which transition end event to bind to, you might do something like...
+    //
+    //     var transEndEventNames = {
+    //       'WebkitTransition' : 'webkitTransitionEnd',
+    //       'MozTransition'    : 'transitionend',
+    //       'OTransition'      : 'oTransitionEnd',
+    //       'msTransition'     : 'MSTransitionEnd',
+    //       'transition'       : 'transitionend'
+    //     },
+    //     transEndEventName = transEndEventNames[ Modernizr.prefixed('transition') ];
+
+    Modernizr.prefixed      = function(prop, obj, elem){
+      if(!obj) {
+        return testPropsAll(prop, 'pfx');
+      } else {
+        // Testing DOM property e.g. Modernizr.prefixed('requestAnimationFrame', window) // 'mozRequestAnimationFrame'
+        return testPropsAll(prop, obj, elem);
+      }
+    };
+    /*>>prefixed*/
+
+
+    /*>>cssclasses*/
+    // Remove "no-js" class from <html> element, if it exists:
+    docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2') +
+
+                            // Add the new classes to the <html> element.
+                            (enableClasses ? " mod-js mod-"+classes.join(" mod-") : '');
+    /*>>cssclasses*/
+
+    return Modernizr;
+
+})(this, document);
+
+module.exports = Modernizr;
+},{}],"aviator":[function(require,module,exports){
+// Modules
+var Navigator = require('./navigator');
+
+
+/**
+Only expose a tiny API to keep internal routing safe
+
+@singleton Aviator
+**/
+window.Aviator = {
+
+  /**
+  @property pushStateEnabled
+  @type {Boolean}
+  @default true if the browser supports pushState
+  **/
+  pushStateEnabled: ('pushState' in window.history),
+
+  /**
+  @property linkSelector
+  @type {String}
+  @default 'a.navigate'
+  **/
+  linkSelector: 'a.navigate',
+
+  /**
+  the root of the uri from which routing will append to
+
+  @property root
+  @type {String}
+  @default ''
+  **/
+  root: '',
+
+  /**
+  @property _navigator
+  @type {Navigator}
+
+  @private
+  **/
+  _navigator: new Navigator(),
+
+  /**
+  @method setRoutes
+  @param {Object} routes
+  **/
+  setRoutes: function (routes) {
+    this._navigator.setRoutes(routes);
+  },
+
+  /**
+  dispatches routes to targets and sets up event handlers
+
+  @method dispatch
+  **/
+  dispatch: function () {
+    var navigator = this._navigator;
+
+    navigator.setup({
+      pushStateEnabled: this.pushStateEnabled,
+      linkSelector:     this.linkSelector,
+      root:             this.root
+    });
+
+    navigator.dispatch();
+  },
+
+  /**
+  @method navigate
+  @param {String} uri to navigate to
+  @param {Object} [options]
+  **/
+  navigate: function (uri, options) {
+    this._navigator.navigate(uri, options);
+  },
+
+
+  /**
+  @method serializeQueryParams
+  @param {Object} queryParams
+  @return {String} queryString "?foo=bar&baz[]=boo&baz=[]oob"
+  **/
+  serializeQueryParams: function (queryParams) {
+    return this._navigator.serializeQueryParams(queryParams);
+  },
+
+  /**
+  @method getCurrentRequest
+  @return {String}
+  **/
+  getCurrentRequest: function () {
+    return this._navigator.getCurrentRequest();
+  },
+
+  /**
+  @method getCurrentURI
+  @return {String}
+  **/
+  getCurrentURI: function () {
+    return this._navigator.getCurrentURI();
+  },
+
+  /**
+  @method refresh
+  **/
+  refresh: function () {
+    this._navigator.refresh();
+  },
+
+  /**
+  @method rewriteRouteTo
+  @param {String} newRoute
+  @return {Object}
+  **/
+  rewriteRouteTo: function (newRoute) {
+    var target = {
+      rewrite: function (request) {
+        Aviator.navigate(newRoute, {
+          namedParams: request.namedParams,
+          replace: true
+        });
+      }
+    };
+
+    return {
+      target: target,
+      '/': 'rewrite'
+    };
+  }
+
+};
+
+},{"./navigator":3}],"baron":[function(require,module,exports){
+(function(window, $, undefined) {
+    'use strict';
+
+    if (!window) return; // Server side
+
+var
+    _baron = baron, // Stored baron value for noConflict usage
+    pos = ['left', 'top', 'right', 'bottom', 'width', 'height'],
+    origin = {
+        v: { // Vertical
+            x: 'Y', pos: pos[1], oppos: pos[3], crossPos: pos[0], crossOpPos: pos[2], size: pos[5], crossSize: pos[4],
+            client: 'clientHeight', crossClient: 'clientWidth', crossScroll: 'scrollWidth', offset: 'offsetHeight', crossOffset: 'offsetWidth', offsetPos: 'offsetTop',
+            scroll: 'scrollTop', scrollSize: 'scrollHeight'
+        },
+        h: { // Horizontal
+            x: 'X', pos: pos[0], oppos: pos[2], crossPos: pos[1], crossOpPos: pos[3], size: pos[4], crossSize: pos[5],
+            client: 'clientWidth', crossClient: 'clientHeight', crossScroll: 'scrollHeight', offset: 'offsetWidth', crossOffset: 'offsetHeight', offsetPos: 'offsetLeft',
+            scroll: 'scrollLeft', scrollSize: 'scrollWidth'
+        }
+    },
+
+    each = function(obj, iterator) {
+        var i = 0;
+
+        if (obj.length === undefined || obj === window) obj = [obj];
+
+        while (obj[i]) {
+            iterator.call(this, obj[i], i);
+            i++;
+        }
+    },
+
+    baron = function(params) {
+        var jQueryMode,
+            roots,
+            $;
+
+        params = params || {};
+        $ = params.$ || $ || window.jQuery;
+        jQueryMode = this instanceof $;  // this - window or jQuery instance
+
+        if (jQueryMode) {
+            params.root = roots = this;
+        } else {
+            roots = $(params.root || params.scroller);
+        }
+
+        var instance = new baron.fn.constructor(roots, params, $);
+
+        if (instance.autoUpdate) {
+            instance.autoUpdate();
+        }
+
+        return instance;
+    };
+
+    // shortcut for getTime
+    function getTime() {
+        return new Date().getTime();
+    }
+
+    baron.fn = {
+        constructor: function(roots, input, $) {
+            var params = validate(input);
+
+            params.$ = $;
+            each.call(this, roots, function(root, i) {
+                var localParams = clone(params);
+
+                if (params.root && params.scroller) {
+                    localParams.scroller = params.$(params.scroller, root);
+                    if (!localParams.scroller.length) {
+                        localParams.scroller = root;
+                    }
+                } else {
+                    localParams.scroller = root;
+                }
+
+                localParams.root = root;
+                this[i] = init(localParams);
+                this.length = i + 1;
+            });
+
+            this.params = params;
+        },
+
+        dispose: function() {
+            var params = this.params;
+
+            if (this[0]) { /* Если есть хотя бы 1 рабочий инстанс */
+                each(this, function(item) {
+                    item.dispose(params);
+                });
+            }
+            this.params = null;
+        },
+
+        update: function() {
+            var i = 0;
+
+            while (this[i]) {
+                this[i].update.apply(this[i], arguments);
+                i++;
+            }
+        },
+
+        baron: function(params) {
+            params.root = [];
+            params.scroller = this.params.scroller;
+
+            each.call(this, this, function(elem) {
+                params.root.push(elem.root);
+            });
+            params.direction = (this.params.direction == 'v') ? 'h' : 'v';
+            params._chain = true;
+
+            return baron(params);
+        }
+    };
+
+    function manageEvents(item, eventManager, mode) {
+        item._eventHandlers = item._eventHandlers || [ // Creating new functions for one baron item only one time
+            {
+                // onScroll:
+                element: item.scroller,
+
+                handler: function(e) {
+                    item.scroll(e);
+                },
+
+                type: 'scroll'
+            }, {
+                // css transitions & animations
+                element: item.root,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'transitionend animationend'
+            }, {
+                // onKeyup (textarea):
+                element: item.scroller,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'keyup'
+            }, {
+                // onMouseDown:
+                element: item.bar,
+
+                handler: function(e) {
+                    e.preventDefault(); // Text selection disabling in Opera... and all other browsers?
+                    item.selection(); // Disable text selection in ie8
+                    item.drag.now = 1; // Save private byte
+                },
+
+                type: 'touchstart mousedown'
+            }, {
+                // onMouseUp:
+                element: document,
+
+                handler: function() {
+                    item.selection(1); // Enable text selection
+                    item.drag.now = 0;
+                },
+
+                type: 'mouseup blur touchend'
+            }, {
+                // onCoordinateReset:
+                element: document,
+
+                handler: function(e) {
+                    if (e.button != 2) { // Not RM
+                        item._pos0(e);
+                    }
+                },
+
+                type: 'touchstart mousedown'
+            }, {
+                // onMouseMove:
+                element: document,
+
+                handler: function(e) {
+                    if (item.drag.now) {
+                        item.drag(e);
+                    }
+                },
+
+                type: 'mousemove touchmove'
+            }, {
+                // onResize:
+                element: window,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'resize'
+            }, {
+                // sizeChange:
+                element: item.root,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'sizeChange'
+            }
+        ];
+
+        each(item._eventHandlers, function(event) {
+            if (event.element) {
+                eventManager(event.element, event.type, event.handler, mode);
+            }
+        });
+
+        // if (item.scroller) {
+        //     event(item.scroller, 'scroll', item._eventHandlers.onScroll, mode);
+        // }
+        // if (item.bar) {
+        //     event(item.bar, 'touchstart mousedown', item._eventHandlers.onMouseDown, mode);
+        // }
+        // event(document, 'mouseup blur touchend', item._eventHandlers.onMouseUp, mode);
+        // event(document, 'touchstart mousedown', item._eventHandlers.onCoordinateReset, mode);
+        // event(document, 'mousemove touchmove', item._eventHandlers.onMouseMove, mode);
+        // event(window, 'resize', item._eventHandlers.onResize, mode);
+        // if (item.root) {
+        //     event(item.root, 'sizeChange', item._eventHandlers.onResize, mode); // Custon event for alternate baron update mechanism
+        // }
+    }
+
+    function manageAttr(node, direction, mode) {
+        var attrName = 'data-baron-' + direction;
+
+        if (mode == 'on') {
+            node.setAttribute(attrName, 'inited');
+        } else if (mode == 'off') {
+            node.removeAttribute(attrName);
+        } else {
+            return node.getAttribute(attrName);
+        }
+    }
+
+    function init(params) {
+        if (manageAttr(params.root, params.direction)) throw new Error('Second baron initialization');
+
+        var out = new item.prototype.constructor(params); // __proto__ of returning object is baron.prototype
+
+        manageEvents(out, params.event, 'on');
+
+        manageAttr(out.root, params.direction, 'on');
+
+        out.update();
+
+        return out;
+    }
+
+    function clone(input) {
+        var output = {};
+
+        input = input || {};
+
+        for (var key in input) {
+            if (input.hasOwnProperty(key)) {
+                output[key] = input[key];
+            }
+        }
+
+        return output;
+    }
+
+    function validate(input) {
+        var output = clone(input);
+
+        output.direction = output.direction || 'v';
+
+        var event = input.event || function(elem, event, func, mode) {
+            output.$(elem)[mode || 'on'](event, func);
+        };
+
+        output.event = function(elems, e, func, mode) {
+            each(elems, function(elem) {
+                event(elem, e, func, mode);
+            });
+        };
+
+        return output;
+    }
+
+    function fire(eventName) {
+        /* jshint validthis:true */
+        if (this.events && this.events[eventName]) {
+            for (var i = 0 ; i < this.events[eventName].length ; i++) {
+                var args = Array.prototype.slice.call( arguments, 1 );
+
+                this.events[eventName][i].apply(this, args);
+            }
+        }
+    }
+
+    var item = {};
+
+    item.prototype = {
+        // underscore.js realization
+        _debounce: function(func, wait) {
+            var self = this,
+                timeout,
+                // args, // right now there is no need for arguments
+                // context, // and for context
+                timestamp;
+                // result; // and for result
+
+            var later = function() {
+                if (self._disposed) {
+                    clearTimeout(timeout);
+                    timeout = self = null;
+                    return;
+                }
+
+                var last = getTime() - timestamp;
+
+                if (last < wait && last >= 0) {
+                    timeout = setTimeout(later, wait - last);
+                } else {
+                    timeout = null;
+                    // result = func.apply(context, args);
+                    func();
+                    // context = args = null;
+                }
+            };
+
+            return function() {
+                // context = this;
+                // args = arguments;
+                timestamp = getTime();
+
+                if (!timeout) {
+                    timeout = setTimeout(later, wait);
+                }
+
+                // return result;
+            };
+        },
+
+        constructor: function(params) {
+            var $,
+                barPos,
+                scrollerPos0,
+                track,
+                resizePauseTimer,
+                scrollPauseTimer,
+                scrollingTimer,
+                pause,
+                scrollLastFire,
+                resizeLastFire,
+                oldBarSize;
+
+            resizeLastFire = scrollLastFire = getTime();
+
+            $ = this.$ = params.$;
+            this.event = params.event;
+            this.events = {};
+
+            function getNode(sel, context) {
+                return $(sel, context)[0]; // Can be undefined
+            }
+
+            // DOM elements
+            this.root = params.root; // Always html node, not just selector
+            this.scroller = getNode(params.scroller); // (params.scroller) ? getNode(params.scroller, this.root) : this.root;
+            this.bar = getNode(params.bar, this.root);
+            track = this.track = getNode(params.track, this.root);
+            if (!this.track && this.bar) {
+                track = this.bar.parentNode;
+            }
+            this.clipper = this.scroller.parentNode;
+
+            // Parameters
+            this.direction = params.direction;
+            this.origin = origin[this.direction];
+            this.barOnCls = params.barOnCls || '_baron';
+            this.scrollingCls = params.scrollingCls;
+            this.barTopLimit = 0;
+            pause = params.pause * 1000 || 0;
+
+            // Updating height or width of bar
+            function setBarSize(size) {
+                /* jshint validthis:true */
+                var barMinSize = this.barMinSize || 20;
+
+                if (size > 0 && size < barMinSize) {
+                    size = barMinSize;
+                }
+
+                if (this.bar) {
+                    $(this.bar).css(this.origin.size, parseInt(size, 10) + 'px');
+                }
+            }
+
+            // Updating top or left bar position
+            function posBar(pos) {
+                /* jshint validthis:true */
+                if (this.bar) {
+                    var was = $(this.bar).css(this.origin.pos),
+                        will = +pos + 'px';
+
+                    if (will && will != was) {
+                        $(this.bar).css(this.origin.pos, will);
+                    }
+                }
+            }
+
+            // Free path for bar
+            function k() {
+                /* jshint validthis:true */
+                return track[this.origin.client] - this.barTopLimit - this.bar[this.origin.offset];
+            }
+
+            // Relative content top position to bar top position
+            function relToPos(r) {
+                /* jshint validthis:true */
+                return r * k.call(this) + this.barTopLimit;
+            }
+
+            // Bar position to relative content position
+            function posToRel(t) {
+                /* jshint validthis:true */
+                return (t - this.barTopLimit) / k.call(this);
+            }
+
+            // Cursor position in main direction in px // Now with iOs support
+            this.cursor = function(e) {
+                return e['client' + this.origin.x] || (((e.originalEvent || e).touches || {})[0] || {})['page' + this.origin.x];
+            };
+
+            // Text selection pos preventing
+            function dontPosSelect() {
+                return false;
+            }
+
+            this.pos = function(x) { // Absolute scroller position in px
+                var ie = 'page' + this.origin.x + 'Offset',
+                    key = (this.scroller[ie]) ? ie : this.origin.scroll;
+
+                if (x !== undefined) this.scroller[key] = x;
+
+                return this.scroller[key];
+            };
+
+            this.rpos = function(r) { // Relative scroller position (0..1)
+                var free = this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client],
+                    x;
+
+                if (r) {
+                    x = this.pos(r * free);
+                } else {
+                    x = this.pos();
+                }
+
+                return x / (free || 1);
+            };
+
+            // Switch on the bar by adding user-defined CSS classname to scroller
+            this.barOn = function(dispose) {
+                if (this.barOnCls) {
+                    if (dispose || this.scroller[this.origin.client] >= this.scroller[this.origin.scrollSize]) {
+                        if ($(this.root).hasClass(this.barOnCls)) $(this.root).removeClass(this.barOnCls);
+                    } else {
+                        if (!$(this.root).hasClass(this.barOnCls)) $(this.root).addClass(this.barOnCls);
+                    }
+                }
+            };
+
+            this._pos0 = function(e) {
+                scrollerPos0 = this.cursor(e) - barPos;
+            };
+
+            this.drag = function(e) {
+                this.scroller[this.origin.scroll] = posToRel.call(this, this.cursor(e) - scrollerPos0) * (this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client]);
+            };
+
+            // Text selection preventing on drag
+            this.selection = function(enable) {
+                this.event(document, 'selectpos selectstart', dontPosSelect, enable ? 'off' : 'on');
+            };
+
+            // onResize & DOM modified handler
+            this.resize = function() {
+                var self = this,
+                    delay = 0;
+
+                if (getTime() - resizeLastFire < pause) {
+                    clearTimeout(resizePauseTimer);
+                    delay = pause;
+                }
+
+                function upd() {
+                    var delta,
+                        client,
+                        offset,
+                        was,
+                        will;
+
+                    // Change a css inline rule only if it is really changing value
+                    // function tryCss(prop, value, ) {
+                    //     var was = $(self.clipper).css(self.origin.crossSize),
+                    //         will = self.clipper[self.origin.crossClient] - delta + 'px';
+                    // };
+
+                    self.barOn();
+
+                    client = self.scroller[self.origin.crossClient];
+                    offset = self.scroller[self.origin.crossOffset];
+                    delta = offset - client;
+
+                    if (offset) { // if there is no size, css should not be set
+                        if (params.freeze && !self.clipper.style[self.origin.crossSize]) { // Sould fire only once
+                            was = $(self.clipper).css(self.origin.crossSize);
+                            will = self.clipper[self.origin.crossClient] - delta + 'px';
+
+                            if (was != will) {
+                                $(self.clipper).css(self.origin.crossSize, will);
+                            }
+                        }
+
+                        was = $(self.clipper).css(self.origin.crossSize);
+                        will = self.clipper[self.origin.crossClient] + delta + 'px';
+
+                        if (was != will) {
+                            $(self.scroller).css(self.origin.crossSize, will);
+                        }
+                    }
+
+                    Array.prototype.unshift.call(arguments, 'resize');
+                    fire.apply(self, arguments);
+
+                    resizeLastFire = getTime();
+                }
+
+                if (delay) {
+                    resizePauseTimer = setTimeout(upd, delay);
+                } else {
+                    upd();
+                }
+            };
+
+            this.updatePositions = function() {
+                var newBarSize,
+                    self = this;
+
+                if (self.bar) {
+                    newBarSize = (track[self.origin.client] - self.barTopLimit) * self.scroller[self.origin.client] / self.scroller[self.origin.scrollSize];
+
+                    // Positioning bar
+                    if (parseInt(oldBarSize, 10) != parseInt(newBarSize, 10)) {
+                        setBarSize.call(self, newBarSize);
+                        oldBarSize = newBarSize;
+                    }
+
+                    barPos = relToPos.call(self, self.rpos());
+
+                    posBar.call(self, barPos);
+                }
+
+                Array.prototype.unshift.call( arguments, 'scroll' );
+                fire.apply(self, arguments);
+
+                scrollLastFire = getTime();
+            };
+
+            // onScroll handler
+            this.scroll = function() {
+                var delay = 0,
+                    self = this;
+
+                if (getTime() - scrollLastFire < pause) {
+                    clearTimeout(scrollPauseTimer);
+                    delay = pause;
+                }
+
+                if (getTime() - scrollLastFire < pause) {
+                    clearTimeout(scrollPauseTimer);
+                    delay = pause;
+                }
+
+                if (delay) {
+                    scrollPauseTimer = setTimeout(function() {
+                        self.updatePositions();
+                    }, delay);
+                } else {
+                    self.updatePositions();
+                }
+
+                if (self.scrollingCls) {
+                    if (!scrollingTimer) {
+                        this.$(this.scroller).addClass(this.scrollingCls);
+                    }
+                    clearTimeout(scrollingTimer);
+                    scrollingTimer = setTimeout(function() {
+                        self.$(self.scroller).removeClass(self.scrollingCls);
+                        scrollingTimer = undefined;
+                    }, 300);
+                }
+
+            };
+
+            return this;
+        },
+
+        update: function(params) {
+            fire.call(this, 'upd', params); // Update all plugins' params
+
+            this.resize(1);
+            this.updatePositions();
+
+            return this;
+        },
+
+        // One instance
+        dispose: function(params) {
+            manageEvents(this, this.event, 'off');
+            manageAttr(this.root, params.direction, 'off');
+            $(this.scroller).css(this.origin.crossSize, '');
+            this.barOn(true);
+            fire.call(this, 'dispose');
+            this._disposed = true;
+        },
+
+        on: function(eventName, func, arg) {
+            var names = eventName.split(' ');
+
+            for (var i = 0 ; i < names.length ; i++) {
+                if (names[i] == 'init') {
+                    func.call(this, arg);
+                } else {
+                    this.events[names[i]] = this.events[names[i]] || [];
+
+                    this.events[names[i]].push(function(userArg) {
+                        func.call(this, userArg || arg);
+                    });
+                }
+            }
+        }
+    };
+
+    baron.fn.constructor.prototype = baron.fn;
+    item.prototype.constructor.prototype = item.prototype;
+
+    // Use when you need "baron" global var for another purposes
+    baron.noConflict = function() {
+        window.baron = _baron; // Restoring original value of "baron" global var
+
+        return baron;
+    };
+
+    baron.version = '0.7.10';
+
+    if ($ && $.fn) { // Adding baron to jQuery as plugin
+        $.fn.baron = baron;
+    }
+
+    window.baron = baron; // Use noConflict method if you need window.baron var for another purposes
+    if (window['module'] && module.exports) {
+        module.exports = baron.noConflict();
+    }
+})(window, window.$);
+
+/* Fixable elements plugin for baron 0.6+ */
+(function(window, undefined) {
+    var fix = function(userParams) {
+        var elements, viewPortSize,
+            params = { // Default params
+                outside: '',
+                inside: '',
+                before: '',
+                after: '',
+                past: '',
+                future: '',
+                radius: 0,
+                minView: 0
+            },
+            topFixHeights = [], // inline style for element
+            topRealHeights = [], // ? something related to negative margins for fixable elements
+            headerTops = [], // offset positions when not fixed
+            scroller = this.scroller,
+            eventManager = this.event,
+            $ = this.$,
+            self = this;
+
+        // i - number of fixing element, pos - fix-position in px, flag - 1: top, 2: bottom
+        // Invocation only in case when fix-state changed
+        function fixElement(i, pos, flag) {
+            var ori = flag == 1 ? 'pos' : 'oppos';
+
+            if (viewPortSize < (params.minView || 0)) { // No headers fixing when no enought space for viewport
+                pos = undefined;
+            }
+
+            // Removing all fixing stuff - we can do this because fixElement triggers only when fixState really changed
+            this.$(elements[i]).css(this.origin.pos, '').css(this.origin.oppos, '').removeClass(params.outside);
+
+            // Fixing if needed
+            if (pos !== undefined) {
+                pos += 'px';
+                this.$(elements[i]).css(this.origin[ori], pos).addClass(params.outside);
+            }
+        }
+
+        function bubbleWheel(e) {
+            try {
+                i = document.createEvent('WheelEvent'); // i - for extra byte
+                // evt.initWebKitWheelEvent(deltaX, deltaY, window, screenX, screenY, clientX, clientY, ctrlKey, altKey, shiftKey, metaKey);
+                i.initWebKitWheelEvent(e.originalEvent.wheelDeltaX, e.originalEvent.wheelDeltaY);
+                scroller.dispatchEvent(i);
+                e.preventDefault();
+            } catch (e) {}
+        }
+
+        function init(_params) {
+            var pos;
+
+            for (var key in _params) {
+                params[key] = _params[key];
+            }
+
+            elements = this.$(params.elements, this.scroller);
+
+            if (elements) {
+                viewPortSize = this.scroller[this.origin.client];
+                for (var i = 0 ; i < elements.length ; i++) {
+                    // Variable header heights
+                    pos = {};
+                    pos[this.origin.size] = elements[i][this.origin.offset];
+                    if (elements[i].parentNode !== this.scroller) {
+                        this.$(elements[i].parentNode).css(pos);
+                    }
+                    pos = {};
+                    pos[this.origin.crossSize] = elements[i].parentNode[this.origin.crossClient];
+                    this.$(elements[i]).css(pos);
+
+                    // Between fixed headers
+                    viewPortSize -= elements[i][this.origin.offset];
+
+                    headerTops[i] = elements[i].parentNode[this.origin.offsetPos]; // No paddings for parentNode
+
+                    // Summary elements height above current
+                    topFixHeights[i] = (topFixHeights[i - 1] || 0); // Not zero because of negative margins
+                    topRealHeights[i] = (topRealHeights[i - 1] || Math.min(headerTops[i], 0));
+
+                    if (elements[i - 1]) {
+                        topFixHeights[i] += elements[i - 1][this.origin.offset];
+                        topRealHeights[i] += elements[i - 1][this.origin.offset];
+                    }
+
+                    if ( !(i == 0 && headerTops[i] == 0)/* && force */) {
+                        this.event(elements[i], 'mousewheel', bubbleWheel, 'off');
+                        this.event(elements[i], 'mousewheel', bubbleWheel);
+                    }
+                }
+
+                if (params.limiter && elements[0]) { // Bottom edge of first header as top limit for track
+                    if (this.track && this.track != this.scroller) {
+                        pos = {};
+                        pos[this.origin.pos] = elements[0].parentNode[this.origin.offset];
+                        this.$(this.track).css(pos);
+                    } else {
+                        this.barTopLimit = elements[0].parentNode[this.origin.offset];
+                    }
+                    // this.barTopLimit = elements[0].parentNode[this.origin.offset];
+                    this.scroll();
+                }
+
+                if (params.limiter === false) { // undefined (in second fix instance) should have no influence on bar limit
+                    this.barTopLimit = 0;
+                }
+            }
+
+            var event = {
+                element: elements,
+
+                handler: function() {
+                    var parent = $(this)[0].parentNode,
+                        top = parent.offsetTop,
+                        num;
+
+                    // finding num -> elements[num] === this
+                    for (var i = 0 ; i < elements.length ; i++ ) {
+                        if (elements[i] === this) num = i;
+                    }
+
+                    var pos = top - topFixHeights[num];
+
+                    if (params.scroll) { // User defined callback
+                        params.scroll({
+                            x1: self.scroller.scrollTop,
+                            x2: pos
+                        });
+                    } else {
+                        self.scroller.scrollTop = pos;
+                    }
+                },
+
+                type: 'click'
+            };
+
+            if (params.clickable) {
+                this._eventHandlers.push(event); // For auto-dispose
+                // eventManager(event.element, event.type, event.handler, 'off');
+                eventManager(event.element, event.type, event.handler, 'on');
+            }
+        }
+
+        this.on('init', init, userParams);
+
+        var fixFlag = [], // 1 - past, 2 - future, 3 - current (not fixed)
+            gradFlag = [];
+        this.on('init scroll', function() {
+            var fixState, hTop, gradState;
+
+            if (elements) {
+                var change;
+
+                // fixFlag update
+                for (var i = 0 ; i < elements.length ; i++) {
+                    fixState = 0;
+                    if (headerTops[i] - this.pos() < topRealHeights[i] + params.radius) {
+                        // Header trying to go up
+                        fixState = 1;
+                        hTop = topFixHeights[i];
+                    } else if (headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize - params.radius) {
+                        // Header trying to go down
+                        fixState = 2;
+                        // console.log('topFixHeights[i] + viewPortSize + topRealHeights[i]', topFixHeights[i], this.scroller[this.origin.client], topRealHeights[i]);
+                        hTop = this.scroller[this.origin.client] - elements[i][this.origin.offset] - topFixHeights[i] - viewPortSize;
+                        // console.log('hTop', hTop, viewPortSize, elements[this.origin.offset], topFixHeights[i]);
+                        //(topFixHeights[i] + viewPortSize + elements[this.origin.offset]) - this.scroller[this.origin.client];
+                    } else {
+                        // Header in viewport
+                        fixState = 3;
+                        hTop = undefined;
+                    }
+
+                    gradState = false;
+                    if (headerTops[i] - this.pos() < topRealHeights[i] || headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize) {
+                        gradState = true;
+                    }
+
+                    if (fixState != fixFlag[i] || gradState != gradFlag[i]) {
+                        fixElement.call(this, i, hTop, fixState);
+                        fixFlag[i] = fixState;
+                        gradFlag[i] = gradState;
+                        change = true;
+                    }
+                }
+
+                // Adding positioning classes (on last top and first bottom header)
+                if (change) { // At leats one change in elements flag structure occured
+                    for (i = 0 ; i < elements.length ; i++) {
+                        if (fixFlag[i] == 1 && params.past) {
+                            this.$(elements[i]).addClass(params.past).removeClass(params.future);
+                        }
+
+                        if (fixFlag[i] == 2 && params.future) {
+                            this.$(elements[i]).addClass(params.future).removeClass(params.past);
+                        }
+
+                        if (fixFlag[i] == 3) {
+                            if (params.future || params.past) this.$(elements[i]).removeClass(params.past).removeClass(params.future);
+                            if (params.inside) this.$(elements[i]).addClass(params.inside);
+                        } else if (params.inside) {
+                            this.$(elements[i]).removeClass(params.inside);
+                        }
+
+                        if (fixFlag[i] != fixFlag[i + 1] && fixFlag[i] == 1 && params.before) {
+                            this.$(elements[i]).addClass(params.before).removeClass(params.after); // Last top fixed header
+                        } else if (fixFlag[i] != fixFlag[i - 1] && fixFlag[i] == 2 && params.after) {
+                            this.$(elements[i]).addClass(params.after).removeClass(params.before); // First bottom fixed header
+                        } else {
+                            this.$(elements[i]).removeClass(params.before).removeClass(params.after);
+                        }
+
+                        if (params.grad) {
+                            if (gradFlag[i]) {
+                                this.$(elements[i]).addClass(params.grad);
+                            } else {
+                                this.$(elements[i]).removeClass(params.grad);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        this.on('resize upd', function(updParams) {
+            init.call(this, updParams && updParams.fix);
+        });
+    };
+
+    baron.fn.fix = function(params) {
+        var i = 0;
+
+        while (this[i]) {
+            fix.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+/* Controls plugin for baron 0.6+ */
+(function(window, undefined) {
+    var controls = function(params) {
+        var forward, backward, track, screen,
+            self = this, // AAAAAA!!!!!11
+            event;
+
+        screen = params.screen || 0.9;
+
+        if (params.forward) {
+            forward = this.$(params.forward, this.clipper);
+
+            event = {
+                element: forward,
+
+                handler: function() {
+                    var y = self.pos() - params.delta || 30;
+
+                    self.pos(y);
+                },
+
+                type: 'click'
+            };
+
+            this._eventHandlers.push(event); // For auto-dispose
+            this.event(event.element, event.type, event.handler, 'on');
+        }
+
+        if (params.backward) {
+            backward = this.$(params.backward, this.clipper);
+
+            event = {
+                element: backward,
+
+                handler: function() {
+                    var y = self.pos() + params.delta || 30;
+
+                    self.pos(y);
+                },
+
+                type: 'click'
+            };
+
+            this._eventHandlers.push(event); // For auto-dispose
+            this.event(event.element, event.type, event.handler, 'on');
+        }
+
+        if (params.track) {
+            if (params.track === true) {
+                track = this.track;
+            } else {
+                track = this.$(params.track, this.clipper)[0];
+            }
+
+            if (track) {
+                event = {
+                    element: track,
+
+                    handler: function(e) {
+                        var x = e['offset' + self.origin.x],
+                            xBar = self.bar[self.origin.offsetPos],
+                            sign = 0;
+
+                        if (x < xBar) {
+                            sign = -1;
+                        } else if (x > xBar + self.bar[self.origin.offset]) {
+                            sign = 1;
+                        }
+
+                        var y = self.pos() + sign * screen * self.scroller[self.origin.client];
+                        self.pos(y);
+                    },
+
+                    type: 'mousedown'
+                };
+
+                this._eventHandlers.push(event); // For auto-dispose
+                this.event(event.element, event.type, event.handler, 'on');
+            }
+        }
+    };
+
+    baron.fn.controls = function(params) {
+        var i = 0;
+
+        while (this[i]) {
+            controls.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+/* Pull to load plugin for baron 0.6+ */
+(function(window, undefined) {
+    var pull = function(params) {
+        var block = this.$(params.block),
+            size = params.size || this.origin.size,
+            limit = params.limit || 80,
+            onExpand = params.onExpand,
+            elements = params.elements || [],
+            inProgress = params.inProgress || '',
+            self = this,
+            _insistence = 0,
+            _zeroXCount = 0,
+            _interval,
+            _timer,
+            _x = 0,
+            _onExpandCalled,
+            _waiting = params.waiting || 500,
+            _on;
+
+        function getSize() {
+            return self.scroller[self.origin.scroll] + self.scroller[self.origin.offset];
+        }
+
+        // Scroller content height
+        function getContentSize() {
+            return self.scroller[self.origin.scrollSize];
+        }
+
+        // Scroller height
+        function getScrollerSize() {
+            return self.scroller[self.origin.client];
+        }
+
+        function step(x, force) {
+            var k = x * 0.0005;
+
+            return Math.floor(force - k * (x + 550));
+        }
+
+        function toggle(on) {
+            _on = on;
+
+            if (on) {
+                update(); // First time with no delay
+                _interval = setInterval(update, 200);
+            } else {
+                clearInterval(_interval);
+            }
+        }
+
+        function update() {
+            var pos = {},
+                height = getSize(),
+                scrollHeight = getContentSize(),
+                dx,
+                op4,
+                scrollInProgress = _insistence == 1;
+
+            op4 = 0; // Возвращающая сила
+            if (_insistence > 0) {
+                op4 = 40;
+            }
+            //if (_insistence > -1) {
+                dx = step(_x, op4);
+                if (height >= scrollHeight - _x && _insistence > -1) {
+                    if (scrollInProgress) {
+                        _x += dx;
+                    }
+                } else {
+                    _x = 0;
+                }
+
+                if (_x < 0) _x = 0;
+
+                pos[size] = _x + 'px';
+                if (getScrollerSize() <= getContentSize()) {
+                    self.$(block).css(pos);
+                    for (var i = 0 ; i < elements.length ; i++) {
+                        self.$(elements[i].self).css(elements[i].property, Math.min(_x / limit * 100, 100) + '%');
+                    }
+                }
+
+                if (inProgress && _x) {
+                    self.$(self.root).addClass(inProgress);
+                }
+
+                if (_x == 0) {
+                    if (params.onCollapse) {
+                        params.onCollapse();
+                    }
+                }
+
+                _insistence = 0;
+                _timer = setTimeout(function() {
+                    _insistence = -1;
+                }, _waiting);
+            //}
+
+            if (onExpand && _x > limit && !_onExpandCalled) {
+                onExpand();
+                _onExpandCalled = true;
+            }
+
+            if (_x == 0) {
+                _zeroXCount++;
+            } else {
+                _zeroXCount = 0;
+            }
+            if (_zeroXCount > 1) {
+                toggle(false);
+                _onExpandCalled = false;
+                if (inProgress) {
+                    self.$(self.root).removeClass(inProgress);
+                }
+            }
+        }
+
+        this.on('init', function() {
+            toggle(true);
+        });
+
+        this.on('dispose', function() {
+            toggle(false);
+        });
+
+        this.event(this.scroller, 'mousewheel DOMMouseScroll', function(e) {
+            var down = e.wheelDelta < 0 || (e.originalEvent && e.originalEvent.wheelDelta < 0) || e.detail > 0;
+
+            if (down) {
+                _insistence = 1;
+                clearTimeout(_timer);
+                if (!_on && getSize() >= getContentSize()) {
+                    toggle(true);
+                }
+            }
+            //  else {
+            //     toggle(false);
+            // }
+        });
+    };
+
+    baron.fn.pull = function(params) {
+        var i = 0;
+
+        while (this[i]) {
+            pull.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+/* Autoupdate plugin for baron 0.6+ */
+(function(window) {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || null;
+
+    var autoUpdate = function() {
+        var self = this;
+        var watcher;
+
+        function actualizeWatcher() {
+            if (!self.root[self.origin.offset]) {
+                startWatch();
+            } else {
+                stopWatch();
+            }
+        }
+
+        // Set interval timeout for watching when root node will be visible
+        function startWatch() {
+            if (watcher) return;
+
+            watcher = setInterval(function() {
+                if (self.root[self.origin.offset]) {
+                    stopWatch();
+                    self.update();
+                }
+            }, 300); // is it good enought for you?)
+        }
+
+        function stopWatch() {
+            clearInterval(watcher);
+            watcher = null;
+        }
+
+        var debouncedUpdater = self._debounce(function() {
+            self.update();
+        }, 300);
+
+        this._observer = new MutationObserver(function() {
+            actualizeWatcher();
+            self.update();
+            debouncedUpdater();
+        });
+
+        this.on('init', function() {
+            self._observer.observe(self.root, {
+                childList: true,
+                subtree: true,
+                characterData: true
+                // attributes: true
+                // No reasons to set attributes to true
+                // The case when root/child node with already properly inited baron toggled to hidden and then back to visible,
+                // and the size of parent was changed during that hidden state, is very rare
+                // Other cases are covered by watcher, and you still can do .update by yourself
+            });
+
+            actualizeWatcher();
+        });
+
+        this.on('dispose', function() {
+            self._observer.disconnect();
+            stopWatch();
+            delete self._observer;
+        });
+    };
+
+    baron.fn.autoUpdate = function(params) {
+        if (!MutationObserver) return this;
+
+        var i = 0;
+
+        while (this[i]) {
+            autoUpdate.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+
+},{}],"bootstrap.tooltip":[function(require,module,exports){
+/* ========================================================================
+ * Bootstrap: tooltip.js v3.2.0
+ * http://getbootstrap.com/javascript/#tooltip
+ * Inspired by the original jQuery.tipsy by Jason Frame
+ * ========================================================================
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
+
++function ($) {
+  'use strict';
+
+  // TOOLTIP PUBLIC CLASS DEFINITION
+  // ===============================
+
+  var Tooltip = function (element, options) {
+    this.type       =
+    this.options    =
+    this.enabled    =
+    this.timeout    =
+    this.hoverState =
+    this.$element   = null
+
+    this.init('tooltip', element, options)
+  }
+
+  Tooltip.VERSION  = '3.2.0'
+
+  Tooltip.DEFAULTS = {
+    animation: true,
+    placement: 'top',
+    selector: false,
+    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+    trigger: 'hover focus',
+    title: '',
+    delay: 0,
+    html: false,
+    container: false,
+    viewport: {
+      selector: 'body',
+      padding: 0
+    }
+  }
+
+  Tooltip.prototype.init = function (type, element, options) {
+    this.enabled   = true
+    this.type      = type
+    this.$element  = $(element)
+    this.options   = this.getOptions(options)
+    this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
+
+    var triggers = this.options.trigger.split(' ')
+
+    for (var i = triggers.length; i--;) {
+      var trigger = triggers[i]
+
+      if (trigger == 'click') {
+        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
+      } else if (trigger != 'manual') {
+        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
+        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
+
+        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
+        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
+      }
+    }
+
+    this.options.selector ?
+      (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
+      this.fixTitle()
+  }
+
+  Tooltip.prototype.getDefaults = function () {
+    return Tooltip.DEFAULTS
+  }
+
+  Tooltip.prototype.getOptions = function (options) {
+    options = $.extend({}, this.getDefaults(), this.$element.data(), options)
+
+    if (options.delay && typeof options.delay == 'number') {
+      options.delay = {
+        show: options.delay,
+        hide: options.delay
+      }
+    }
+
+    return options
+  }
+
+  Tooltip.prototype.getDelegateOptions = function () {
+    var options  = {}
+    var defaults = this.getDefaults()
+
+    this._options && $.each(this._options, function (key, value) {
+      if (defaults[key] != value) options[key] = value
+    })
+
+    return options
+  }
+
+  Tooltip.prototype.enter = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget).data('bs.' + this.type)
+
+    if (!self) {
+      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+      $(obj.currentTarget).data('bs.' + this.type, self)
+    }
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'in'
+
+    if (!self.options.delay || !self.options.delay.show) return self.show()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'in') self.show()
+    }, self.options.delay.show)
+  }
+
+  Tooltip.prototype.leave = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget).data('bs.' + this.type)
+
+    if (!self) {
+      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+      $(obj.currentTarget).data('bs.' + this.type, self)
+    }
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'out'
+
+    if (!self.options.delay || !self.options.delay.hide) return self.hide()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'out') self.hide()
+    }, self.options.delay.hide)
+  }
+
+  Tooltip.prototype.show = function () {
+    var e = $.Event('show.bs.' + this.type)
+
+    if (this.hasContent() && this.enabled) {
+      this.$element.trigger(e)
+
+      var inDom = $.contains(document.documentElement, this.$element[0])
+      if (e.isDefaultPrevented() || !inDom) return
+      var that = this
+
+      var $tip = this.tip()
+
+      var tipId = this.getUID(this.type)
+
+      this.setContent()
+      $tip.attr('id', tipId)
+      this.$element.attr('aria-describedby', tipId)
+
+      if (this.options.animation) $tip.addClass('fade')
+
+      var placement = typeof this.options.placement == 'function' ?
+        this.options.placement.call(this, $tip[0], this.$element[0]) :
+        this.options.placement
+
+      var autoToken = /\s?auto?\s?/i
+      var autoPlace = autoToken.test(placement)
+      if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
+
+      $tip
+        .detach()
+        .css({ top: 0, left: 0, display: 'block' })
+        .addClass(placement)
+        .data('bs.' + this.type, this)
+
+      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
+
+      var pos          = this.getPosition()
+      var actualWidth  = $tip[0].offsetWidth
+      var actualHeight = $tip[0].offsetHeight
+
+      if (autoPlace) {
+        var orgPlacement = placement
+        var $parent      = this.$element.parent()
+        var parentDim    = this.getPosition($parent)
+
+        placement = placement == 'bottom' && pos.top   + pos.height       + actualHeight - parentDim.scroll > parentDim.height ? 'top'    :
+                    placement == 'top'    && pos.top   - parentDim.scroll - actualHeight < 0                                   ? 'bottom' :
+                    placement == 'right'  && pos.right + actualWidth      > parentDim.width                                    ? 'left'   :
+                    placement == 'left'   && pos.left  - actualWidth      < parentDim.left                                     ? 'right'  :
+                    placement
+
+        $tip
+          .removeClass(orgPlacement)
+          .addClass(placement)
+      }
+
+      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
+
+      this.applyPlacement(calculatedOffset, placement)
+
+      var complete = function () {
+        that.$element.trigger('shown.bs.' + that.type)
+        that.hoverState = null
+      }
+
+      $.support.transition && this.$tip.hasClass('fade') ?
+        $tip
+          .one('bsTransitionEnd', complete)
+          .emulateTransitionEnd(150) :
+        complete()
+    }
+  }
+
+  Tooltip.prototype.applyPlacement = function (offset, placement) {
+    var $tip   = this.tip()
+    var width  = $tip[0].offsetWidth
+    var height = $tip[0].offsetHeight
+
+    // manually read margins because getBoundingClientRect includes difference
+    var marginTop = parseInt($tip.css('margin-top'), 10)
+    var marginLeft = parseInt($tip.css('margin-left'), 10)
+
+    // we must check for NaN for ie 8/9
+    if (isNaN(marginTop))  marginTop  = 0
+    if (isNaN(marginLeft)) marginLeft = 0
+
+    offset.top  = offset.top  + marginTop
+    offset.left = offset.left + marginLeft
+
+    // $.fn.offset doesn't round pixel values
+    // so we use setOffset directly with our own function B-0
+    $.offset.setOffset($tip[0], $.extend({
+      using: function (props) {
+        $tip.css({
+          top: Math.round(props.top),
+          left: Math.round(props.left)
+        })
+      }
+    }, offset), 0)
+
+    $tip.addClass('in')
+
+    // check to see if placing tip in new offset caused the tip to resize itself
+    var actualWidth  = $tip[0].offsetWidth
+    var actualHeight = $tip[0].offsetHeight
+
+    if (placement == 'top' && actualHeight != height) {
+      offset.top = offset.top + height - actualHeight
+    }
+
+    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
+
+    if (delta.left) offset.left += delta.left
+    else offset.top += delta.top
+
+    var arrowDelta          = delta.left ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
+    var arrowPosition       = delta.left ? 'left'        : 'top'
+    var arrowOffsetPosition = delta.left ? 'offsetWidth' : 'offsetHeight'
+
+    $tip.offset(offset)
+    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], arrowPosition)
+  }
+
+  Tooltip.prototype.replaceArrow = function (delta, dimension, position) {
+    this.arrow().css(position, delta ? (50 * (1 - delta / dimension) + '%') : '')
+  }
+
+  Tooltip.prototype.setContent = function () {
+    var $tip  = this.tip()
+    var title = this.getTitle()
+
+    $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
+    $tip.removeClass('fade in top bottom left right')
+  }
+
+  Tooltip.prototype.hide = function () {
+    var that = this
+    var $tip = this.tip()
+    var e    = $.Event('hide.bs.' + this.type)
+
+    this.$element.removeAttr('aria-describedby')
+
+    function complete() {
+      if (that.hoverState != 'in') $tip.detach()
+      that.$element.trigger('hidden.bs.' + that.type)
+    }
+
+    this.$element.trigger(e)
+
+    if (e.isDefaultPrevented()) return
+
+    $tip.removeClass('in')
+
+    $.support.transition && this.$tip.hasClass('fade') ?
+      $tip
+        .one('bsTransitionEnd', complete)
+        .emulateTransitionEnd(150) :
+      complete()
+
+    this.hoverState = null
+
+    return this
+  }
+
+  Tooltip.prototype.fixTitle = function () {
+    var $e = this.$element
+    if ($e.attr('title') || typeof ($e.attr('data-original-title')) != 'string') {
+      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
+    }
+  }
+
+  Tooltip.prototype.hasContent = function () {
+    return this.getTitle()
+  }
+
+  Tooltip.prototype.getPosition = function ($element) {
+    $element   = $element || this.$element
+    var el     = $element[0]
+    var isBody = el.tagName == 'BODY'
+    return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : null, {
+      scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop(),
+      width:  isBody ? $(window).width()  : $element.outerWidth(),
+      height: isBody ? $(window).height() : $element.outerHeight()
+    }, isBody ? { top: 0, left: 0 } : $element.offset())
+  }
+
+  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
+    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
+           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
+           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
+        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
+
+  }
+
+  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
+    var delta = { top: 0, left: 0 }
+    if (!this.$viewport) return delta
+
+    var viewportPadding = this.options.viewport && this.options.viewport.padding || 0
+    var viewportDimensions = this.getPosition(this.$viewport)
+
+    if (/right|left/.test(placement)) {
+      var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
+      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
+      if (topEdgeOffset < viewportDimensions.top) { // top overflow
+        delta.top = viewportDimensions.top - topEdgeOffset
+      } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
+        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
+      }
+    } else {
+      var leftEdgeOffset  = pos.left - viewportPadding
+      var rightEdgeOffset = pos.left + viewportPadding + actualWidth
+      if (leftEdgeOffset < viewportDimensions.left) { // left overflow
+        delta.left = viewportDimensions.left - leftEdgeOffset
+      } else if (rightEdgeOffset > viewportDimensions.width) { // right overflow
+        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
+      }
+    }
+
+    return delta
+  }
+
+  Tooltip.prototype.getTitle = function () {
+    var title
+    var $e = this.$element
+    var o  = this.options
+
+    title = $e.attr('data-original-title')
+      || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
+
+    return title
+  }
+
+  Tooltip.prototype.getUID = function (prefix) {
+    do prefix += ~~(Math.random() * 1000000)
+    while (document.getElementById(prefix))
+    return prefix
+  }
+
+  Tooltip.prototype.tip = function () {
+    return (this.$tip = this.$tip || $(this.options.template))
+  }
+
+  Tooltip.prototype.arrow = function () {
+    return (this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow'))
+  }
+
+  Tooltip.prototype.validate = function () {
+    if (!this.$element[0].parentNode) {
+      this.hide()
+      this.$element = null
+      this.options  = null
+    }
+  }
+
+  Tooltip.prototype.enable = function () {
+    this.enabled = true
+  }
+
+  Tooltip.prototype.disable = function () {
+    this.enabled = false
+  }
+
+  Tooltip.prototype.toggleEnabled = function () {
+    this.enabled = !this.enabled
+  }
+
+  Tooltip.prototype.toggle = function (e) {
+    var self = this
+    if (e) {
+      self = $(e.currentTarget).data('bs.' + this.type)
+      if (!self) {
+        self = new this.constructor(e.currentTarget, this.getDelegateOptions())
+        $(e.currentTarget).data('bs.' + this.type, self)
+      }
+    }
+
+    self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
+  }
+
+  Tooltip.prototype.destroy = function () {
+    clearTimeout(this.timeout)
+    this.hide().$element.off('.' + this.type).removeData('bs.' + this.type)
+  }
+
+
+  // TOOLTIP PLUGIN DEFINITION
+  // =========================
+
+  function Plugin(option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.tooltip')
+      var options = typeof option == 'object' && option
+
+      if (!data && option == 'destroy') return
+      if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  var old = $.fn.tooltip
+
+  $.fn.tooltip             = Plugin
+  $.fn.tooltip.Constructor = Tooltip
+
+
+  // TOOLTIP NO CONFLICT
+  // ===================
+
+  $.fn.tooltip.noConflict = function () {
+    $.fn.tooltip = old
+    return this
+  }
+
+}(jQuery);
+
+},{}],"bowser":[function(require,module,exports){
+/*!
+  * Bowser - a browser detector
+  * https://github.com/ded/bowser
+  * MIT License | (c) Dustin Diaz 2014
+  */
+
+!function (name, definition) {
+  if (typeof module != 'undefined' && module.exports) module.exports['browser'] = definition()
+  else if (typeof define == 'function' && define.amd) define(definition)
+  else this[name] = definition()
+}('bowser', function () {
+  /**
+    * See useragents.js for examples of navigator.userAgent
+    */
+
+  var t = true
+
+  function detect(ua) {
+
+    function getFirstMatch(regex) {
+      var match = ua.match(regex);
+      return (match && match.length > 1 && match[1]) || '';
+    }
+
+    var iosdevice = getFirstMatch(/(ipod|iphone|ipad)/i).toLowerCase()
+      , likeAndroid = /like android/i.test(ua)
+      , android = !likeAndroid && /android/i.test(ua)
+      , versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i)
+      , tablet = /tablet/i.test(ua)
+      , mobile = !tablet && /[^-]mobi/i.test(ua)
+      , result
+
+    if (/opera|opr/i.test(ua)) {
+      result = {
+        name: 'Opera'
+      , opera: t
+      , version: versionIdentifier || getFirstMatch(/(?:opera|opr)[\s\/](\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/windows phone/i.test(ua)) {
+      result = {
+        name: 'Windows Phone'
+      , windowsphone: t
+      , msie: t
+      , version: getFirstMatch(/iemobile\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/msie|trident/i.test(ua)) {
+      result = {
+        name: 'Internet Explorer'
+      , msie: t
+      , version: getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/chrome|crios|crmo/i.test(ua)) {
+      result = {
+        name: 'Chrome'
+      , chrome: t
+      , version: getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (iosdevice) {
+      result = {
+        name : iosdevice == 'iphone' ? 'iPhone' : iosdevice == 'ipad' ? 'iPad' : 'iPod'
+      }
+      // WTF: version is not part of user agent in web apps
+      if (versionIdentifier) {
+        result.version = versionIdentifier
+      }
+    }
+    else if (/sailfish/i.test(ua)) {
+      result = {
+        name: 'Sailfish'
+      , sailfish: t
+      , version: getFirstMatch(/sailfish\s?browser\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/seamonkey\//i.test(ua)) {
+      result = {
+        name: 'SeaMonkey'
+      , seamonkey: t
+      , version: getFirstMatch(/seamonkey\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/firefox|iceweasel/i.test(ua)) {
+      result = {
+        name: 'Firefox'
+      , firefox: t
+      , version: getFirstMatch(/(?:firefox|iceweasel)[ \/](\d+(\.\d+)?)/i)
+      }
+      if (/\((mobile|tablet);[^\)]*rv:[\d\.]+\)/i.test(ua)) {
+        result.firefoxos = t
+      }
+    }
+    else if (/silk/i.test(ua)) {
+      result =  {
+        name: 'Amazon Silk'
+      , silk: t
+      , version : getFirstMatch(/silk\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (android) {
+      result = {
+        name: 'Android'
+      , version: versionIdentifier
+      }
+    }
+    else if (/phantom/i.test(ua)) {
+      result = {
+        name: 'PhantomJS'
+      , phantom: t
+      , version: getFirstMatch(/phantomjs\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/blackberry|\bbb\d+/i.test(ua) || /rim\stablet/i.test(ua)) {
+      result = {
+        name: 'BlackBerry'
+      , blackberry: t
+      , version: versionIdentifier || getFirstMatch(/blackberry[\d]+\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/(web|hpw)os/i.test(ua)) {
+      result = {
+        name: 'WebOS'
+      , webos: t
+      , version: versionIdentifier || getFirstMatch(/w(?:eb)?osbrowser\/(\d+(\.\d+)?)/i)
+      };
+      /touchpad\//i.test(ua) && (result.touchpad = t)
+    }
+    else if (/bada/i.test(ua)) {
+      result = {
+        name: 'Bada'
+      , bada: t
+      , version: getFirstMatch(/dolfin\/(\d+(\.\d+)?)/i)
+      };
+    }
+    else if (/tizen/i.test(ua)) {
+      result = {
+        name: 'Tizen'
+      , tizen: t
+      , version: getFirstMatch(/(?:tizen\s?)?browser\/(\d+(\.\d+)?)/i) || versionIdentifier
+      };
+    }
+    else if (/safari/i.test(ua)) {
+      result = {
+        name: 'Safari'
+      , safari: t
+      , version: versionIdentifier
+      }
+    }
+    else result = {}
+
+    // set webkit or gecko flag for browsers based on these engines
+    if (/(apple)?webkit/i.test(ua)) {
+      result.name = result.name || "Webkit"
+      result.webkit = t
+      if (!result.version && versionIdentifier) {
+        result.version = versionIdentifier
+      }
+    } else if (!result.opera && /gecko\//i.test(ua)) {
+      result.name = result.name || "Gecko"
+      result.gecko = t
+      result.version = result.version || getFirstMatch(/gecko\/(\d+(\.\d+)?)/i)
+    }
+
+    // set OS flags for platforms that have multiple browsers
+    if (android || result.silk) {
+      result.android = t
+    } else if (iosdevice) {
+      result[iosdevice] = t
+      result.ios = t
+    }
+
+    // OS version extraction
+    var osVersion = '';
+    if (iosdevice) {
+      osVersion = getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i);
+      osVersion = osVersion.replace(/[_\s]/g, '.');
+    } else if (android) {
+      osVersion = getFirstMatch(/android[ \/-](\d+(\.\d+)*)/i);
+    } else if (result.windowsphone) {
+      osVersion = getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i);
+    } else if (result.webos) {
+      osVersion = getFirstMatch(/(?:web|hpw)os\/(\d+(\.\d+)*)/i);
+    } else if (result.blackberry) {
+      osVersion = getFirstMatch(/rim\stablet\sos\s(\d+(\.\d+)*)/i);
+    } else if (result.bada) {
+      osVersion = getFirstMatch(/bada\/(\d+(\.\d+)*)/i);
+    } else if (result.tizen) {
+      osVersion = getFirstMatch(/tizen[\/\s](\d+(\.\d+)*)/i);
+    }
+    if (osVersion) {
+      result.osversion = osVersion;
+    }
+
+    // device type extraction
+    var osMajorVersion = osVersion.split('.')[0];
+    if (tablet || iosdevice == 'ipad' || (android && (osMajorVersion == 3 || (osMajorVersion == 4 && !mobile))) || result.silk) {
+      result.tablet = t
+    } else if (mobile || iosdevice == 'iphone' || iosdevice == 'ipod' || android || result.blackberry || result.webos || result.bada) {
+      result.mobile = t
+    }
+
+    // Graded Browser Support
+    // http://developer.yahoo.com/yui/articles/gbs
+    if ((result.msie && result.version >= 10) ||
+        (result.chrome && result.version >= 20) ||
+        (result.firefox && result.version >= 20.0) ||
+        (result.safari && result.version >= 6) ||
+        (result.opera && result.version >= 10.0) ||
+        (result.ios && result.osversion && result.osversion.split(".")[0] >= 6) ||
+        (result.blackberry && result.version >= 10.1)
+        ) {
+      result.a = t;
+    }
+    else if ((result.msie && result.version < 10) ||
+        (result.chrome && result.version < 20) ||
+        (result.firefox && result.version < 20.0) ||
+        (result.safari && result.version < 6) ||
+        (result.opera && result.version < 10.0) ||
+        (result.ios && result.osversion && result.osversion.split(".")[0] < 6)
+        ) {
+      result.c = t
+    } else result.x = t
+
+    return result
+  }
+
+  var bowser = detect(typeof navigator !== 'undefined' ? navigator.userAgent : '')
+
+
+  /*
+   * Set our detect method to the main bowser object so we can
+   * reuse it to test other user agents.
+   * This is needed to implement future tests.
+   */
+  bowser._detect = detect;
+
+  return bowser
+});
+
+},{}],"es5-shim":[function(require,module,exports){
 /*!
  * https://github.com/es-shims/es5-shim
  * @license es5-shim Copyright 2009-2014 by contributors, MIT License
@@ -79037,13 +71097,8 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 }));
 
 },{}],"eventEmitter":[function(require,module,exports){
-<<<<<<< HEAD
-module.exports=require(485)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\imagesloaded\\node_modules\\wolfy87-eventemitter\\EventEmitter.js":485}],"i18next":[function(require,module,exports){
-=======
 module.exports=require(486)
 },{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":486}],"i18next":[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 // i18next, v1.7.7
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
@@ -85693,7 +77748,7 @@ var Plugins;
 
 },{}],"jquery.ui.core":[function(require,module,exports){
 /*!
- * jQuery UI Core 1.11.3
+ * jQuery UI Core 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -85718,7 +77773,7 @@ var Plugins;
 $.ui = $.ui || {};
 
 $.extend( $.ui, {
-	version: "1.11.3",
+	version: "1.11.4",
 
 	keyCode: {
 		BACKSPACE: 8,
@@ -85999,7 +78054,7 @@ $.ui.plugin = {
 
 },{}],"jquery.ui.draggable":[function(require,module,exports){
 /*!
- * jQuery UI Draggable 1.11.3
+ * jQuery UI Draggable 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -86026,7 +78081,7 @@ $.ui.plugin = {
 }(function( $ ) {
 
 $.widget("ui.draggable", $.ui.mouse, {
-	version: "1.11.3",
+	version: "1.11.4",
 	widgetEventPrefix: "drag",
 	options: {
 		addClasses: true,
@@ -86800,6 +78855,9 @@ $.ui.plugin.add( "draggable", "connectToSortable", {
 				if ( !sortable.isOver ) {
 					sortable.isOver = 1;
 
+					// Store draggable's parent in case we need to reappend to it later.
+					draggable._parent = ui.helper.parent();
+
 					sortable.currentItem = ui.helper
 						.appendTo( sortable.element )
 						.data( "ui-sortable-item", true );
@@ -86876,8 +78934,9 @@ $.ui.plugin.add( "draggable", "connectToSortable", {
 						sortable.placeholder.remove();
 					}
 
-					// Recalculate the draggable's offset considering the sortable
-					// may have modified them in unexpected ways (#8809)
+					// Restore and recalculate the draggable's offset considering the sortable
+					// may have modified them in unexpected ways. (#8809, #10669)
+					ui.helper.appendTo( draggable._parent );
 					draggable._refreshOffsets( event );
 					ui.position = draggable._generatePosition( event, true );
 
@@ -87129,7 +79188,7 @@ return $.ui.draggable;
 
 },{}],"jquery.ui.mouse":[function(require,module,exports){
 /*!
- * jQuery UI Mouse 1.11.3
+ * jQuery UI Mouse 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -87159,7 +79218,7 @@ $( document ).mouseup( function() {
 });
 
 return $.widget("ui.mouse", {
-	version: "1.11.3",
+	version: "1.11.4",
 	options: {
 		cancel: "input,textarea,button,select,option",
 		distance: 1,
@@ -87330,7 +79389,7 @@ return $.widget("ui.mouse", {
 
 },{}],"jquery.ui.slider":[function(require,module,exports){
 /*!
- * jQuery UI Slider 1.11.3
+ * jQuery UI Slider 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -87357,7 +79416,7 @@ return $.widget("ui.mouse", {
 }(function( $ ) {
 
 return $.widget( "ui.slider", $.ui.mouse, {
-	version: "1.11.3",
+	version: "1.11.4",
 	widgetEventPrefix: "slide",
 
 	options: {
@@ -87881,7 +79940,7 @@ return $.widget( "ui.slider", $.ui.mouse, {
 		var max = this.options.max,
 			min = this._valueMin(),
 			step = this.options.step,
-			aboveMin = Math.floor( ( max - min ) / step ) * step;
+			aboveMin = Math.floor( ( +( max - min ).toFixed( this._precision() ) ) / step ) * step;
 		max = aboveMin + min;
 		this.max = parseFloat( max.toFixed( this._precision() ) );
 	},
@@ -88049,7 +80108,7 @@ return $.widget( "ui.slider", $.ui.mouse, {
 
 },{}],"jquery.ui.widget":[function(require,module,exports){
 /*!
- * jQuery UI Widget 1.11.3
+ * jQuery UI Widget 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -111850,13 +103909,8 @@ module.exports = {
 
 
 },{}],"react":[function(require,module,exports){
-<<<<<<< HEAD
-module.exports=require(478)
-},{"./lib/React":515,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\react.js":478}],"screenviewer":[function(require,module,exports){
-=======
 module.exports=require(479)
 },{"./lib/React":516,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/react.js":479}],"screenviewer":[function(require,module,exports){
->>>>>>> Infinite scroll prefill [deliver #90599686]
 (function($){
   ScreenViewer = function(container, options){
     this.$viewer = $(container);

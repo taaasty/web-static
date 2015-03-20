@@ -1,9 +1,6 @@
 InfiniteScroll = require '../common/infiniteScroll/index'
 { PropTypes } = React
 
-windowHeight = $(window).height()
-THRESHOLD = windowHeight * 2
-
 SearchResultsFeed = React.createClass
   displayName: 'SearchResultsFeed'
 
