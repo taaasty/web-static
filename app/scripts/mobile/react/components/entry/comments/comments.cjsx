@@ -7,17 +7,18 @@ EntryComments = React.createClass
   displayName: 'EntryComments'
 
   propTypes:
-    user:               PropTypes.object
-    entry:              PropTypes.object.isRequired
-    comments:           PropTypes.array.isRequired
-    commentsCount:      PropTypes.number.isRequired
-    loading:            PropTypes.bool.isRequired
-    loadPerTime:        PropTypes.number
+    user: PropTypes.object
+    entry: PropTypes.object.isRequired
+    comments: PropTypes.array.isRequired
+    commentsCount: PropTypes.number.isRequired
+    loading: PropTypes.bool.isRequired
+    loadPerTime: PropTypes.number
+    formVisible: PropTypes.bool.isRequired
     onCommentsLoadMore: PropTypes.func.isRequired
-    onCommentCreate:    PropTypes.func.isRequired
-    onCommentEdit:      PropTypes.func.isRequired
-    onCommentDelete:    PropTypes.func.isRequired
-    onCommentReport:    PropTypes.func.isRequired
+    onCommentCreate: PropTypes.func.isRequired
+    onCommentEdit: PropTypes.func.isRequired
+    onCommentDelete: PropTypes.func.isRequired
+    onCommentReport: PropTypes.func.isRequired
 
   render: ->
     <div className="post__comments">
@@ -47,7 +48,7 @@ EntryComments = React.createClass
           onCommentReport={ @props.onCommentReport } />
 
   renderCommentForm: ->
-    if @props.user?
+    if @props.user? and @props.formVisible
       <CommentCreateForm
           entryId={ @props.entry.id }
           loading={ @props.loading }

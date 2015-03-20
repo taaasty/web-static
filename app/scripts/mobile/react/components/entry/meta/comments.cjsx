@@ -5,10 +5,15 @@ EntryMetaComments = React.createClass
 
   propTypes:
     commentsCount: PropTypes.number.isRequired
+    onClick: PropTypes.func.isRequired
 
   render: ->
-    <div className="meta-comments">
+    <div className="meta-comments"
+         onClick={ @handleClick }>
       { @props.commentsCount }
     </div>
+
+  handleClick: ->
+    @props.onClick()
 
 module.exports = EntryMetaComments

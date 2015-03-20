@@ -15793,6 +15793,7 @@ EntryComments = React.createClass({
     commentsCount: PropTypes.number.isRequired,
     loading: PropTypes.bool.isRequired,
     loadPerTime: PropTypes.number,
+    formVisible: PropTypes.bool.isRequired,
     onCommentsLoadMore: PropTypes.func.isRequired,
     onCommentCreate: PropTypes.func.isRequired,
     onCommentEdit: PropTypes.func.isRequired,
@@ -15829,7 +15830,7 @@ EntryComments = React.createClass({
     }
   },
   renderCommentForm: function() {
-    if (this.props.user != null) {
+    if ((this.props.user != null) && this.props.formVisible) {
       return React.createElement(CommentCreateForm, {
         "entryId": this.props.entry.id,
         "loading": this.props.loading,
@@ -16244,7 +16245,18 @@ EntryFeed = React.createClass({
   mixins: [ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin],
   propTypes: {
     entry: PropTypes.object.isRequired,
-    loadPerTime: PropTypes.number
+    loadPerTime: PropTypes.number,
+    commentFormVisible: PropTypes.bool
+  },
+  getDefaultProps: function() {
+    return {
+      commentFormVisible: false
+    };
+  },
+  getInitialState: function() {
+    return {
+      commentFormVisible: this.props.commentFormVisible
+    };
   },
   render: function() {
     return React.createElement("div", {
@@ -16253,7 +16265,8 @@ EntryFeed = React.createClass({
       "entry": this.props.entry
     }), React.createElement(EntryFeedMeta, {
       "entry": this.props.entry,
-      "commentsCount": this.state.commentsCount
+      "commentsCount": this.state.commentsCount,
+      "onMetaCommentsClick": this.toggleCommentForm
     }), React.createElement(EntryComments, {
       "user": this.state.user,
       "entry": this.props.entry,
@@ -16261,12 +16274,18 @@ EntryFeed = React.createClass({
       "commentsCount": this.state.commentsCount,
       "loading": this.isLoadingState(),
       "loadPerTime": this.props.loadPerTime,
+      "formVisible": this.state.commentFormVisible,
       "onCommentsLoadMore": this.loadMoreComments,
       "onCommentCreate": this.createComment,
       "onCommentEdit": this.editComment,
       "onCommentDelete": this.deleteComment,
       "onCommentReport": this.reportComment
     }));
+  },
+  toggleCommentForm: function() {
+    return this.setState({
+      commentFormVisible: !this.state.commentFormVisible
+    });
   },
   getStateFromStore: function() {
     return {
@@ -16296,7 +16315,8 @@ EntryFeedMeta = React.createClass({
   displayName: 'EntryFeedMeta',
   propTypes: {
     entry: PropTypes.object.isRequired,
-    commentsCount: PropTypes.number.isRequired
+    commentsCount: PropTypes.number.isRequired,
+    onMetaCommentsClick: PropTypes.func.isRequired
   },
   render: function() {
     return React.createElement("div", {
@@ -16304,7 +16324,8 @@ EntryFeedMeta = React.createClass({
     }, React.createElement(EntryMetaActions, {
       "entry": this.props.entry
     }), this.renderVoting(), React.createElement(EntryMetaComments, {
-      "commentsCount": this.props.commentsCount
+      "commentsCount": this.props.commentsCount,
+      "onClick": this.props.onMetaCommentsClick
     }), React.createElement(EntryMetaAuthor, {
       "author": this.props.entry.author
     }));
@@ -16807,12 +16828,17 @@ PropTypes = React.PropTypes;
 EntryMetaComments = React.createClass({
   displayName: 'EntryMetaComments',
   propTypes: {
-    commentsCount: PropTypes.number.isRequired
+    commentsCount: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired
   },
   render: function() {
     return React.createElement("div", {
-      "className": "meta-comments"
+      "className": "meta-comments",
+      "onClick": this.handleClick
     }, this.props.commentsCount);
+  },
+  handleClick: function() {
+    return this.props.onClick();
   }
 });
 
@@ -17051,7 +17077,18 @@ EntryTlog = React.createClass({
   mixins: [ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin],
   propTypes: {
     entry: PropTypes.object.isRequired,
-    loadPerTime: PropTypes.number
+    loadPerTime: PropTypes.number,
+    commentFormVisible: PropTypes.bool
+  },
+  getDefaultProps: function() {
+    return {
+      commentFormVisible: false
+    };
+  },
+  getInitialState: function() {
+    return {
+      commentFormVisible: this.props.commentFormVisible
+    };
   },
   render: function() {
     return React.createElement("div", {
@@ -17060,7 +17097,8 @@ EntryTlog = React.createClass({
       "entry": this.props.entry
     }), React.createElement(EntryTlogMeta, {
       "entry": this.props.entry,
-      "commentsCount": this.state.commentsCount
+      "commentsCount": this.state.commentsCount,
+      "onMetaCommentsClick": this.toggleCommentForm
     }), React.createElement(EntryComments, {
       "user": this.state.user,
       "entry": this.props.entry,
@@ -17068,12 +17106,18 @@ EntryTlog = React.createClass({
       "commentsCount": this.state.commentsCount,
       "loading": this.isLoadingState(),
       "loadPerTime": this.props.loadPerTime,
+      "formVisible": this.state.commentFormVisible,
       "onCommentsLoadMore": this.loadMoreComments,
       "onCommentCreate": this.createComment,
       "onCommentEdit": this.editComment,
       "onCommentDelete": this.deleteComment,
       "onCommentReport": this.reportComment
     }));
+  },
+  toggleCommentForm: function() {
+    return this.setState({
+      commentFormVisible: !this.state.commentFormVisible
+    });
   },
   getStateFromStore: function() {
     return {
@@ -17101,7 +17145,8 @@ EntryTlogMeta = React.createClass({
   displayName: 'EntryTlogMeta',
   propTypes: {
     entry: PropTypes.object.isRequired,
-    commentsCount: PropTypes.number.isRequired
+    commentsCount: PropTypes.number.isRequired,
+    onMetaCommentsClick: PropTypes.func.isRequired
   },
   render: function() {
     return React.createElement("div", {
@@ -17109,7 +17154,8 @@ EntryTlogMeta = React.createClass({
     }, React.createElement(EntryMetaActions, {
       "entry": this.props.entry
     }), this.renderVoting(), React.createElement(EntryMetaComments, {
-      "commentsCount": this.props.commentsCount
+      "commentsCount": this.props.commentsCount,
+      "onClick": this.props.onMetaCommentsClick
     }));
   },
   renderVoting: function() {
@@ -22315,7 +22361,8 @@ EntryPage = React.createClass({
     })), React.createElement("div", {
       "className": "layout__body"
     }, React.createElement(EntryTlog, {
-      "entry": this.props.entry
+      "entry": this.props.entry,
+      "commentFormVisible": true
     }), React.createElement(EntryPagination, {
       "tlogUrl": this.props.tlog.tlog_url
     }))), React.createElement(AuthManager, null));
