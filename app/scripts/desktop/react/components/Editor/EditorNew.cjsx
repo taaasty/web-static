@@ -18,7 +18,10 @@ EditorNew = React.createClass
       tlogType: @props.tlogType
 
   render: ->
-    <Editor {...@state} />
+    <Editor {...@state}
+        tlogType={ @props.tlogType }
+        backUrl={ @props.backUrl }
+        canChangeType={ true } />
 
   getStateFromStore: ->
     entry: EditorStore.getEntry()

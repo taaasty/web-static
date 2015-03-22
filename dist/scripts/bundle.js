@@ -13294,7 +13294,7 @@ jQuery.offset = {
 			( curCSSTop + curCSSLeft ).indexOf("auto") > -1;
 =======
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../shared/react/services/thumbor":300,"../shared/routes/api":301,"../shared/routes/routes":302,"./react/application":17,"./react/components/Editor/EditorEdit":19,"./react/components/Editor/EditorNew":20,"./react/components/auth/auth":21,"./react/components/auth/authorization/authorization":22,"./react/components/auth/authorization/facebook":23,"./react/components/auth/authorization/vk":24,"./react/components/auth/buttons/facebook_auth_button":25,"./react/components/auth/buttons/vk_auth_button":26,"./react/components/auth/email/email":30,"./react/components/auth/recovery":35,"./react/components/avatars/avatar":37,"./react/components/avatars/user_avatar":38,"./react/components/buttons/load_more":39,"./react/components/calendar/calendar":40,"./react/components/calendar/calendar_header":41,"./react/components/calendar/calendar_marker":42,"./react/components/calendar/calendar_period":43,"./react/components/calendar/calendar_timeline":44,"./react/components/common/adaptive_input":45,"./react/components/design_settings_popup/color_picker":48,"./react/components/design_settings_popup/color_picker_popup":49,"./react/components/design_settings_popup/controls":50,"./react/components/design_settings_popup/controls_items/_progressbar":51,"./react/components/design_settings_popup/controls_items/_radiobutton":52,"./react/components/design_settings_popup/controls_items/align_item":53,"./react/components/design_settings_popup/controls_items/background_item":54,"./react/components/design_settings_popup/controls_items/feed_color_item":55,"./react/components/design_settings_popup/controls_items/font_type_item":56,"./react/components/design_settings_popup/controls_items/header_color_item":57,"./react/components/design_settings_popup/controls_items/opacity_item":58,"./react/components/design_settings_popup/design_settings_popup":59,"./react/components/editable_field":60,"./react/components/embed":61,"./react/components/entry_comment_box/comment_form/buttons/submit":62,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":63,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":64,"./react/components/entry_comment_box/comment_form/comment_form":65,"./react/components/entry_comment_box/comment_list/comment":66,"./react/components/entry_comment_box/comment_list/comment_list":67,"./react/components/entry_comment_box/comment_list/comment_manager":68,"./react/components/entry_comment_box/comment_metabar/comment_metabar":69,"./react/components/entry_comment_box/comment_metabar/date":70,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":71,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":72,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":73,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":74,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":75,"./react/components/entry_comment_box/comment_metabar/reply":76,"./react/components/entry_comment_box/entry_comment_box":77,"./react/components/entry_comment_box/load_more":78,"./react/components/entry_comment_box/mixins/comments":79,"./react/components/entry_metabar/author":80,"./react/components/entry_metabar/comment":81,"./react/components/entry_metabar/date":82,"./react/components/entry_metabar/dropdown_menu":83,"./react/components/entry_metabar/dropdown_menu_items/delete_item":84,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":85,"./react/components/entry_metabar/dropdown_menu_items/item":86,"./react/components/entry_metabar/dropdown_menu_items/report_item":87,"./react/components/entry_metabar/dropdown_menu_items/watch_item":88,"./react/components/entry_metabar/entry_metabar":89,"./react/components/entry_metabar/tag":90,"./react/components/entry_metabar/tags":91,"./react/components/feed/bricks":92,"./react/components/feed/feed":93,"./react/components/feed/mixins/base":94,"./react/components/feed/tlog":95,"./react/components/follow_status":96,"./react/components/hero/profile/dropdown_menu":98,"./react/components/hero/profile/dropdown_menu_items/ignore":99,"./react/components/hero/profile/dropdown_menu_items/report":100,"./react/components/hero/profile/popup/followers_popup":101,"./react/components/hero/profile/popup/followings_popup":102,"./react/components/hero/profile/popup/items/follower_item":103,"./react/components/hero/profile/popup/items/following_item":104,"./react/components/hero/profile/popup/items/tag_item":105,"./react/components/hero/profile/popup/popup":106,"./react/components/hero/profile/popup/tags_popup":107,"./react/components/hero/profile/profile":108,"./react/components/hero/profile/profile_avatar":109,"./react/components/hero/profile/profile_head":110,"./react/components/hero/profile/profile_stats":111,"./react/components/hero/profile/profile_stats_item":112,"./react/components/images_collage":113,"./react/components/notifications/tasty_alert":114,"./react/components/notifications/tasty_confirm":115,"./react/components/notifications/tasty_locking_alert":116,"./react/components/notifications/tasty_notify":117,"./react/components/people/item":118,"./react/components/persons_popup/items/follower_relationship":119,"./react/components/persons_popup/items/following_relationship":120,"./react/components/persons_popup/items/guess_relationship":121,"./react/components/persons_popup/items/ignored_relationship":122,"./react/components/persons_popup/items/item":123,"./react/components/persons_popup/items/requested_relationship":124,"./react/components/persons_popup/menu":125,"./react/components/persons_popup/menu_item":126,"./react/components/persons_popup/mixins/panel_mixin":127,"./react/components/persons_popup/panels/followers_panel":128,"./react/components/persons_popup/panels/followings_panel":129,"./react/components/persons_popup/panels/guessed_panel":130,"./react/components/persons_popup/panels/ignored_panel":131,"./react/components/persons_popup/panels/requested_panel":132,"./react/components/persons_popup/panels/socialNetwork/facebook":133,"./react/components/persons_popup/panels/socialNetwork/vkontakte":143,"./react/components/persons_popup/persons_popup":150,"./react/components/popup/header":151,"./react/components/popup/layout":152,"./react/components/popup/popup":153,"./react/components/popup/spinner":154,"./react/components/popup_box":155,"./react/components/relationship_buttons/follow_button":156,"./react/components/relationship_buttons/follower_button":157,"./react/components/relationship_buttons/guess_button":158,"./react/components/relationship_buttons/ignore_button":159,"./react/components/relationship_buttons/mixins/relationship":160,"./react/components/relationship_buttons/request_button":161,"./react/components/screen_viewer/screen_viewer":162,"./react/components/search/button":163,"./react/components/search/field":164,"./react/components/search/search":165,"./react/components/searchResults/index":167,"./react/components/settings/settings":185,"./react/components/shellbox_layer":188,"./react/components/shellboxes/confirm_registration":189,"./react/components/smart_follow_status":190,"./react/components/spinner":191,"./react/components/tlog_alert":192,"./react/components/toolbars/avatar":193,"./react/components/toolbars/close/close":194,"./react/components/toolbars/user":195,"./react/components/transition/timeout_transition_group":203,"./react/components/voting":204,"./react/controllers/popup":211,"./react/controllers/shellbox":213,"./react/controllers/tasty_alert":214,"./react/controllers/tasty_confirm":215,"./react/controllers/tasty_events":216,"./react/controllers/tasty_locking_alert":217,"./react/controllers/tasty_notify":218,"./react/controllers/tasty_sound":219,"./react/dispatchers/current_user":221,"./react/dispatchers/relationships":223,"./react/helpers/app":225,"./react/mediators/comments":226,"./react/messaging/actions/conversation":227,"./react/messaging/actions/message":228,"./react/messaging/actions/notification":229,"./react/messaging/actions/popup":230,"./react/messaging/components/buttons/write_message":231,"./react/messaging/components/messages_popup/conversations/conversations":232,"./react/messaging/components/messages_popup/conversations/list/empty":233,"./react/messaging/components/messages_popup/conversations/list/list":234,"./react/messaging/components/messages_popup/conversations/list/list_item":235,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":236,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":237,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":238,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":239,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":240,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":241,"./react/messaging/components/messages_popup/loading_message":242,"./react/messaging/components/messages_popup/messages_popup":243,"./react/messaging/components/messages_popup/thread/message_form/message_form":244,"./react/messaging/components/messages_popup/thread/message_list/empty":245,"./react/messaging/components/messages_popup/thread/message_list/message_list":246,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":247,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":248,"./react/messaging/components/messages_popup/thread/thread":249,"./react/messaging/components/messages_popup/ui/back_button":250,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":251,"./react/messaging/components/notifications_popup/notifications/empty":252,"./react/messaging/components/notifications_popup/notifications/notification":253,"./react/messaging/components/notifications_popup/notifications/notifications":254,"./react/messaging/components/notifications_popup/notifications_popup":255,"./react/messaging/components/toolbars/indicators/indicators":256,"./react/messaging/components/toolbars/indicators/messages":257,"./react/messaging/components/toolbars/indicators/notifications":258,"./react/messaging/dispatchers/messaging":259,"./react/messaging/messaging_requester":260,"./react/messaging/messaging_service":261,"./react/messaging/messaging_testing":262,"./react/messaging/stores/connection_state":264,"./react/messaging/stores/conversations":265,"./react/messaging/stores/messages":266,"./react/messaging/stores/messages_popup_state":267,"./react/messaging/stores/messaging_status":268,"./react/messaging/stores/notifications":269,"./react/mixins/activities":270,"./react/mixins/component_manipulations":271,"./react/mixins/dom_manipulations":272,"./react/mixins/error_timer":273,"./react/mixins/grammar":274,"./react/mixins/positions":275,"./react/mixins/requester":276,"./react/mixins/scroller":277,"./react/mixins/shake":278,"./react/mixins/touch":279,"./react/mixins/unmount":280,"./react/services/designPresenter":282,"./react/services/designSettings":283,"./react/services/designStates":284,"./react/services/positions":287,"./react/services/uuid":288,"./react/stores/current_user":290,"./react/stores/editor":291,"./react/stores/relationships":292,"./resources/fileReceiver":293,"./resources/is_mobile":294,"./resources/libs":295,"./resources/locales":296,"./resources/tasty":297,"./resources/tasty_utils":298}],10:[function(require,module,exports){
+},{"../shared/react/services/thumbor":308,"../shared/routes/api":309,"../shared/routes/routes":310,"./react/application":17,"./react/components/Editor/EditorEdit":20,"./react/components/Editor/EditorNew":21,"./react/components/auth/auth":29,"./react/components/auth/authorization/authorization":30,"./react/components/auth/authorization/facebook":31,"./react/components/auth/authorization/vk":32,"./react/components/auth/buttons/facebook_auth_button":33,"./react/components/auth/buttons/vk_auth_button":34,"./react/components/auth/email/email":38,"./react/components/auth/recovery":43,"./react/components/avatars/avatar":45,"./react/components/avatars/user_avatar":46,"./react/components/buttons/load_more":47,"./react/components/calendar/calendar":48,"./react/components/calendar/calendar_header":49,"./react/components/calendar/calendar_marker":50,"./react/components/calendar/calendar_period":51,"./react/components/calendar/calendar_timeline":52,"./react/components/common/adaptive_input":53,"./react/components/design_settings_popup/color_picker":56,"./react/components/design_settings_popup/color_picker_popup":57,"./react/components/design_settings_popup/controls":58,"./react/components/design_settings_popup/controls_items/_progressbar":59,"./react/components/design_settings_popup/controls_items/_radiobutton":60,"./react/components/design_settings_popup/controls_items/align_item":61,"./react/components/design_settings_popup/controls_items/background_item":62,"./react/components/design_settings_popup/controls_items/feed_color_item":63,"./react/components/design_settings_popup/controls_items/font_type_item":64,"./react/components/design_settings_popup/controls_items/header_color_item":65,"./react/components/design_settings_popup/controls_items/opacity_item":66,"./react/components/design_settings_popup/design_settings_popup":67,"./react/components/editable_field":68,"./react/components/embed":69,"./react/components/entry_comment_box/comment_form/buttons/submit":70,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":71,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":72,"./react/components/entry_comment_box/comment_form/comment_form":73,"./react/components/entry_comment_box/comment_list/comment":74,"./react/components/entry_comment_box/comment_list/comment_list":75,"./react/components/entry_comment_box/comment_list/comment_manager":76,"./react/components/entry_comment_box/comment_metabar/comment_metabar":77,"./react/components/entry_comment_box/comment_metabar/date":78,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":79,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":80,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":81,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":82,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":83,"./react/components/entry_comment_box/comment_metabar/reply":84,"./react/components/entry_comment_box/entry_comment_box":85,"./react/components/entry_comment_box/load_more":86,"./react/components/entry_comment_box/mixins/comments":87,"./react/components/entry_metabar/author":88,"./react/components/entry_metabar/comment":89,"./react/components/entry_metabar/date":90,"./react/components/entry_metabar/dropdown_menu":91,"./react/components/entry_metabar/dropdown_menu_items/delete_item":92,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":93,"./react/components/entry_metabar/dropdown_menu_items/item":94,"./react/components/entry_metabar/dropdown_menu_items/report_item":95,"./react/components/entry_metabar/dropdown_menu_items/watch_item":96,"./react/components/entry_metabar/entry_metabar":97,"./react/components/entry_metabar/tag":98,"./react/components/entry_metabar/tags":99,"./react/components/feed/bricks":100,"./react/components/feed/feed":101,"./react/components/feed/mixins/base":102,"./react/components/feed/tlog":103,"./react/components/follow_status":104,"./react/components/hero/profile/dropdown_menu":106,"./react/components/hero/profile/dropdown_menu_items/ignore":107,"./react/components/hero/profile/dropdown_menu_items/report":108,"./react/components/hero/profile/popup/followers_popup":109,"./react/components/hero/profile/popup/followings_popup":110,"./react/components/hero/profile/popup/items/follower_item":111,"./react/components/hero/profile/popup/items/following_item":112,"./react/components/hero/profile/popup/items/tag_item":113,"./react/components/hero/profile/popup/popup":114,"./react/components/hero/profile/popup/tags_popup":115,"./react/components/hero/profile/profile":116,"./react/components/hero/profile/profile_avatar":117,"./react/components/hero/profile/profile_head":118,"./react/components/hero/profile/profile_stats":119,"./react/components/hero/profile/profile_stats_item":120,"./react/components/images_collage":121,"./react/components/notifications/tasty_alert":122,"./react/components/notifications/tasty_confirm":123,"./react/components/notifications/tasty_locking_alert":124,"./react/components/notifications/tasty_notify":125,"./react/components/people/item":126,"./react/components/persons_popup/items/follower_relationship":127,"./react/components/persons_popup/items/following_relationship":128,"./react/components/persons_popup/items/guess_relationship":129,"./react/components/persons_popup/items/ignored_relationship":130,"./react/components/persons_popup/items/item":131,"./react/components/persons_popup/items/requested_relationship":132,"./react/components/persons_popup/menu":133,"./react/components/persons_popup/menu_item":134,"./react/components/persons_popup/mixins/panel_mixin":135,"./react/components/persons_popup/panels/followers_panel":136,"./react/components/persons_popup/panels/followings_panel":137,"./react/components/persons_popup/panels/guessed_panel":138,"./react/components/persons_popup/panels/ignored_panel":139,"./react/components/persons_popup/panels/requested_panel":140,"./react/components/persons_popup/panels/socialNetwork/facebook":141,"./react/components/persons_popup/panels/socialNetwork/vkontakte":151,"./react/components/persons_popup/persons_popup":158,"./react/components/popup/header":159,"./react/components/popup/layout":160,"./react/components/popup/popup":161,"./react/components/popup/spinner":162,"./react/components/popup_box":163,"./react/components/relationship_buttons/follow_button":164,"./react/components/relationship_buttons/follower_button":165,"./react/components/relationship_buttons/guess_button":166,"./react/components/relationship_buttons/ignore_button":167,"./react/components/relationship_buttons/mixins/relationship":168,"./react/components/relationship_buttons/request_button":169,"./react/components/screen_viewer/screen_viewer":170,"./react/components/search/button":171,"./react/components/search/field":172,"./react/components/search/search":173,"./react/components/searchResults/index":175,"./react/components/settings/settings":193,"./react/components/shellbox_layer":196,"./react/components/shellboxes/confirm_registration":197,"./react/components/smart_follow_status":198,"./react/components/spinner":199,"./react/components/tlog_alert":200,"./react/components/toolbars/avatar":201,"./react/components/toolbars/close/close":202,"./react/components/toolbars/user":203,"./react/components/transition/timeout_transition_group":211,"./react/components/voting":212,"./react/controllers/popup":219,"./react/controllers/shellbox":221,"./react/controllers/tasty_alert":222,"./react/controllers/tasty_confirm":223,"./react/controllers/tasty_events":224,"./react/controllers/tasty_locking_alert":225,"./react/controllers/tasty_notify":226,"./react/controllers/tasty_sound":227,"./react/dispatchers/current_user":229,"./react/dispatchers/relationships":231,"./react/helpers/app":233,"./react/mediators/comments":234,"./react/messaging/actions/conversation":235,"./react/messaging/actions/message":236,"./react/messaging/actions/notification":237,"./react/messaging/actions/popup":238,"./react/messaging/components/buttons/write_message":239,"./react/messaging/components/messages_popup/conversations/conversations":240,"./react/messaging/components/messages_popup/conversations/list/empty":241,"./react/messaging/components/messages_popup/conversations/list/list":242,"./react/messaging/components/messages_popup/conversations/list/list_item":243,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":244,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":245,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":246,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":247,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":248,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":249,"./react/messaging/components/messages_popup/loading_message":250,"./react/messaging/components/messages_popup/messages_popup":251,"./react/messaging/components/messages_popup/thread/message_form/message_form":252,"./react/messaging/components/messages_popup/thread/message_list/empty":253,"./react/messaging/components/messages_popup/thread/message_list/message_list":254,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":255,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":256,"./react/messaging/components/messages_popup/thread/thread":257,"./react/messaging/components/messages_popup/ui/back_button":258,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":259,"./react/messaging/components/notifications_popup/notifications/empty":260,"./react/messaging/components/notifications_popup/notifications/notification":261,"./react/messaging/components/notifications_popup/notifications/notifications":262,"./react/messaging/components/notifications_popup/notifications_popup":263,"./react/messaging/components/toolbars/indicators/indicators":264,"./react/messaging/components/toolbars/indicators/messages":265,"./react/messaging/components/toolbars/indicators/notifications":266,"./react/messaging/dispatchers/messaging":267,"./react/messaging/messaging_requester":268,"./react/messaging/messaging_service":269,"./react/messaging/messaging_testing":270,"./react/messaging/stores/connection_state":272,"./react/messaging/stores/conversations":273,"./react/messaging/stores/messages":274,"./react/messaging/stores/messages_popup_state":275,"./react/messaging/stores/messaging_status":276,"./react/messaging/stores/notifications":277,"./react/mixins/activities":278,"./react/mixins/component_manipulations":279,"./react/mixins/dom_manipulations":280,"./react/mixins/error_timer":281,"./react/mixins/grammar":282,"./react/mixins/positions":283,"./react/mixins/requester":284,"./react/mixins/scroller":285,"./react/mixins/shake":286,"./react/mixins/touch":287,"./react/mixins/unmount":288,"./react/services/designPresenter":290,"./react/services/designSettings":291,"./react/services/designStates":292,"./react/services/positions":295,"./react/services/uuid":296,"./react/stores/current_user":298,"./react/stores/editor":299,"./react/stores/relationships":300,"./resources/fileReceiver":301,"./resources/is_mobile":302,"./resources/libs":303,"./resources/locales":304,"./resources/tasty":305,"./resources/tasty_utils":306}],10:[function(require,module,exports){
 var AppDispatcher, EditorActions, EditorConstants;
 
 EditorConstants = require('../constants/constants').editor;
@@ -13317,7 +13317,7 @@ module.exports = EditorActions;
 
 
 
-},{"../constants/constants":206,"../dispatchers/dispatcher":222}],11:[function(require,module,exports){
+},{"../constants/constants":214,"../dispatchers/dispatcher":230}],11:[function(require,module,exports){
 var CurrentUserStore, PopupActions, Searchbox;
 >>>>>>> Editor store and services [#89871770]
 
@@ -13354,6 +13354,7 @@ var CurrentUserStore, PopupActions, Searchbox;
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 jQuery.fn.extend({
 	offset: function( options ) {
 		if ( arguments.length ) {
@@ -13365,6 +13366,9 @@ jQuery.fn.extend({
 		}
 =======
 },{"../components/searchbox/index":169,"../stores/current_user":290}],12:[function(require,module,exports){
+=======
+},{"../components/searchbox/index":177,"../stores/current_user":298}],12:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var Api, SearchActions;
 >>>>>>> Editor store and services [#89871770]
 
@@ -13464,11 +13468,15 @@ jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
 			var win = getWindow( elem );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if ( val === undefined ) {
 				return win ? win[ prop ] : elem[ method ];
 			}
 =======
 },{"../constants/constants":206,"../dispatchers/dispatcher":222}],15:[function(require,module,exports){
+=======
+},{"../constants/constants":214,"../dispatchers/dispatcher":230}],15:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CurrentUserResource, CurrentUserServerActions, CurrentUserViewActions;
 >>>>>>> Editor store and services [#89871770]
 
@@ -13518,6 +13526,7 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 				var doc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if ( jQuery.isWindow( elem ) ) {
 					// As of 5/8/2012 this will yield incorrect results for Mobile Safari, but there
 					// isn't a whole lot we can do. See pull request at this URL for discussion:
@@ -13526,6 +13535,9 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 				}
 =======
 },{"../../resources/current_user":281,"../server/current_user":13}],16:[function(require,module,exports){
+=======
+},{"../../resources/current_user":289,"../server/current_user":13}],16:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _, _pendingRequests;
 >>>>>>> Editor store and services [#89871770]
 
@@ -13586,6 +13598,7 @@ if ( typeof define === "function" && define.amd ) {
 
 
 
+<<<<<<< HEAD
 var
 	// Map over jQuery in case of overwrite
 	_jQuery = window.jQuery,
@@ -13617,6 +13630,9 @@ if ( typeof noGlobal === strundefined ) {
 <<<<<<< HEAD
 =======
 },{"../constants/constants":206,"../stores/current_user":290,"lodash":456}],17:[function(require,module,exports){
+=======
+},{"../constants/constants":214,"../stores/current_user":298,"lodash":464}],17:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var AppDispatcher, GuideController, LayoutStatesController, PopupActions, PopupController, ReactUjs;
 >>>>>>> Editor store and services [#89871770]
 
@@ -13818,6 +13834,7 @@ return jQuery;
 //! momentjs.com
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 (function (undefined) {
     /************************************
         Constants
@@ -13825,8 +13842,143 @@ return jQuery;
 =======
 },{"./actions/popup":11,"./controllers/guide":209,"./controllers/layoutStates":210,"./controllers/popuup":212,"./dispatchers/dispatcher":222,"i18next":undefined,"reactUjs":undefined}],18:[function(require,module,exports){
 var Editor, NormalizedEntry, PropTypes;
+=======
+},{"./actions/popup":11,"./controllers/guide":217,"./controllers/layoutStates":218,"./controllers/popuup":220,"./dispatchers/dispatcher":230,"i18next":undefined,"reactUjs":undefined}],18:[function(require,module,exports){
+var ENTRY_PRIVACY_ANONYMOUS, ENTRY_PRIVACY_LIVE, ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, EditorActions, EditorPreviewButton, EditorPrivacyButton, EditorSaveButton, EditorVoteButton, PropTypes, TLOG_TYPE_ANONYMOUS, TLOG_TYPE_PRIVATE, TLOG_TYPE_PUBLIC, classSet;
+
+classSet = require('react/lib/cx');
+
+EditorVoteButton = require('../buttons/Vote');
+
+EditorPrivacyButton = require('../buttons/Privacy');
+
+EditorPreviewButton = require('../buttons/Preview');
+
+EditorSaveButton = require('../buttons/Save');
+
+PropTypes = React.PropTypes;
+
+ENTRY_PRIVACY_PRIVATE = TLOG_TYPE_PRIVATE = 'private';
+
+ENTRY_PRIVACY_PUBLIC = TLOG_TYPE_PUBLIC = 'public';
+
+ENTRY_PRIVACY_ANONYMOUS = TLOG_TYPE_ANONYMOUS = 'anonymous';
+
+ENTRY_PRIVACY_LIVE = 'live';
+
+EditorActions = React.createClass({
+  displayName: 'EditorActions',
+  propTypes: {
+    entryPrivacy: PropTypes.string.isRequired,
+    tlogType: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired
+  },
+  render: function() {
+    var actionsClasses;
+    actionsClasses = classSet({
+      'post-actions': true,
+      'state--loading': this.props.loading
+    });
+    return React.createElement("div", {
+      "className": actionsClasses
+    }, this.renderSpinner(), this.renderVoteButton(), this.renderPrivacyButton(), React.createElement("div", {
+      "className": "post-action post-action--button"
+    }, React.createElement(EditorPreviewButton, {
+      "onClick": this.togglePreview
+    })), React.createElement("div", {
+      "className": "post-action post-action--button"
+    }, React.createElement("div", {
+      "className": "button-group"
+    }, React.createElement(EditorSaveButton, {
+      "private": this.isEntryPrivate(),
+      "onClick": this.saveEntry
+    }))));
+  },
+  renderVoteButton: function() {
+    if (!(this.isEntryPrivate() || this.isTlogPrivate())) {
+      return React.createElement("div", {
+        "className": "post-action post-action--button"
+      }, React.createElement(EditorVoteButton, {
+        "enabled": this.isEntryLive(),
+        "onClick": this.handleVoteButtonClick
+      }));
+    }
+  },
+  renderPrivacyButton: function() {
+    return React.createElement("div", {
+      "className": "post-action post-action--button"
+    }, React.createElement(EditorPrivacyButton, {
+      "live": this.isEntryLive(),
+      "private": this.isEntryPrivate(),
+      "onClick": this.handlePrivacyButtonClick
+    }));
+  },
+  renderSpinner: function() {
+    if (this.props.loading) {
+      return React.createElement("div", {
+        "className": "post-action post-action--loader"
+      }, React.createElement(Spinner, {
+        "size": 8.
+      }));
+    }
+  },
+  isEntryLive: function() {
+    return this.props.entryPrivacy === ENTRY_PRIVACY_LIVE;
+  },
+  isEntryPublic: function() {
+    return this.props.entryPrivacy === ENTRY_PRIVACY_PUBLIC;
+  },
+  isEntryPrivate: function() {
+    return this.props.entryPrivacy === ENTRY_PRIVACY_PRIVATE;
+  },
+  isEntryAnonymous: function() {
+    return this.props.entryPrivacy === ENTRY_PRIVACY_ANONYMOUS;
+  },
+  isTlogPublic: function() {
+    return this.props.tlogType === TLOG_TYPE_PUBLIC;
+  },
+  isTlogPrivate: function() {
+    return this.props.tlogType === TLOG_TYPE_PRIVATE;
+  },
+  isTlogAnonymous: function() {
+    return this.props.tlogType === TLOG_TYPE_ANONYMOUS;
+  },
+  togglePreview: function() {
+    return console.log('toggle preview action');
+  },
+  changePrivacy: function(privacy) {
+    return console.log('change privacy action', privacy);
+  },
+  saveEntry: function() {
+    return console.log('save entry action');
+  },
+  handleVoteButtonClick: function() {
+    var newEntryPrivacy;
+    newEntryPrivacy = this.isEntryLive() ? ENTRY_PRIVACY_PUBLIC : ENTRY_PRIVACY_LIVE;
+    return this.changePrivacy(newEntryPrivacy);
+  },
+  handlePrivacyButtonClick: function() {
+    var newEntryPrivacy;
+    newEntryPrivacy = this.isEntryPrivate() ? ENTRY_PRIVACY_PUBLIC : ENTRY_PRIVACY_PRIVATE;
+    return this.changePrivacy(newEntryPrivacy);
+  }
+});
+
+module.exports = EditorActions;
+
+
+
+},{"../buttons/Preview":25,"../buttons/Privacy":26,"../buttons/Save":27,"../buttons/Vote":28,"react/lib/cx":576}],19:[function(require,module,exports){
+var Editor, EditorActions, EditorLayout, EditorTypeSwitcher, NormalizedEntry, PropTypes;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 NormalizedEntry = require('../../entities/normalizedEntry');
+
+EditorLayout = require('./Layout/Layout');
+
+EditorActions = require('./Actions/Actions');
+
+EditorTypeSwitcher = require('./TypeSwitcher/TypeSwitcher');
 
 PropTypes = React.PropTypes;
 
@@ -13835,10 +13987,29 @@ Editor = React.createClass({
   propTypes: {
     entry: PropTypes.instanceOf(NormalizedEntry).isRequired,
     entryType: PropTypes.string.isRequired,
-    entryPrivacy: PropTypes.string.isRequired
+    entryPrivacy: PropTypes.string.isRequired,
+    tlogType: PropTypes.string.isRequired,
+    backUrl: PropTypes.string,
+    canChangeType: PropTypes.bool.isRequired
+  },
+  getInitialState: function() {
+    return {
+      loading: false
+    };
   },
   render: function() {
-    return React.createElement("span", null);
+    return React.createElement(EditorLayout, {
+      "backUrl": this.props.backUrl,
+      "loading": this.state.loading
+    }, React.createElement(EditorActions, {
+      "entryPrivacy": this.props.entryPrivacy,
+      "tlogType": this.props.tlogType,
+      "loading": this.state.loading
+    }), React.createElement(EditorTypeSwitcher, {
+      "entryType": this.props.entryType,
+      "canChangeType": this.props.canChangeType,
+      "loading": this.state.loading
+    }));
   }
 });
 
@@ -13846,7 +14017,7 @@ module.exports = Editor;
 
 
 
-},{"../../entities/normalizedEntry":224}],19:[function(require,module,exports){
+},{"../../entities/normalizedEntry":232,"./Actions/Actions":18,"./Layout/Layout":22,"./TypeSwitcher/TypeSwitcher":23}],20:[function(require,module,exports){
 var ConnectStoreMixin, Editor, EditorActions, EditorEdit, EditorStore, PropTypes;
 
 EditorStore = require('../../stores/editor');
@@ -13876,7 +14047,11 @@ EditorEdit = React.createClass({
     });
   },
   render: function() {
-    return React.createElement(Editor, React.__spread({}, this.state));
+    return React.createElement(Editor, React.__spread({}, this.state, {
+      "tlogType": this.props.tlogType,
+      "backUrl": this.props.backUrl,
+      "canChangeType": false
+    }));
   },
   getStateFromStore: function() {
     return {
@@ -13891,7 +14066,7 @@ module.exports = EditorEdit;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":299,"../../actions/editor":10,"../../stores/editor":291,"./Editor":18}],20:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":307,"../../actions/editor":10,"../../stores/editor":299,"./Editor":19}],21:[function(require,module,exports){
 var ConnectStoreMixin, Editor, EditorActions, EditorNew, EditorStore, PropTypes;
 
 EditorStore = require('../../stores/editor');
@@ -13918,7 +14093,11 @@ EditorNew = React.createClass({
     });
   },
   render: function() {
-    return React.createElement(Editor, React.__spread({}, this.state));
+    return React.createElement(Editor, React.__spread({}, this.state, {
+      "tlogType": this.props.tlogType,
+      "backUrl": this.props.backUrl,
+      "canChangeType": true
+    }));
   },
   getStateFromStore: function() {
     return {
@@ -13933,7 +14112,387 @@ module.exports = EditorNew;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":299,"../../actions/editor":10,"../../stores/editor":291,"./Editor":18}],21:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":307,"../../actions/editor":10,"../../stores/editor":299,"./Editor":19}],22:[function(require,module,exports){
+var EditorLayout, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EditorLayout = React.createClass({
+  displayName: 'EditorLayout',
+  propTypes: {
+    backUrl: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]).isRequired
+  },
+  render: function() {
+    return React.createElement("div", null, this.renderBackButton(), this.props.children);
+  },
+  renderBackButton: function() {
+    if (!this.props.loading) {
+      return React.createElement("a", {
+        "className": "back-button",
+        "onClick": this.handleClick
+      });
+    }
+  },
+  handleClick: function() {
+    if (this.props.backUrl) {
+      return window.location.href = this.props.backUrl;
+    } else {
+      return window.history.back();
+    }
+  }
+});
+
+module.exports = EditorLayout;
+
+
+
+},{}],23:[function(require,module,exports){
+var AVAILABLE_TYPES, ENTRY_TYPES, EditorTypeSwitcher, EditorTypeSwitcherItem, PropTypes, classSet, _;
+
+_ = require('lodash');
+
+classSet = require('react/lib/cx');
+
+EditorTypeSwitcherItem = require('./TypeSwitcherItem');
+
+PropTypes = React.PropTypes;
+
+AVAILABLE_TYPES = ['text', 'image', 'instagram', 'music', 'video', 'quote'];
+
+ENTRY_TYPES = {
+  text: {
+    title: function() {
+      return i18n.t('editor_text_type');
+    },
+    icon: 'icon--text-circle'
+  },
+  image: {
+    title: function() {
+      return i18n.t('editor_image_type');
+    },
+    icon: 'icon--image-circle'
+  },
+  instagram: {
+    title: function() {
+      return i18n.t('editor_instagram_type');
+    },
+    icon: 'icon--instagram-circle'
+  },
+  music: {
+    title: function() {
+      return i18n.t('editor_music_type');
+    },
+    icon: 'icon--music-circle'
+  },
+  video: {
+    title: function() {
+      return i18n.t('editor_video_type');
+    },
+    icon: 'icon--video-circle'
+  },
+  quote: {
+    title: function() {
+      return i18n.t('editor_quote_type');
+    },
+    icon: 'icon--quote-circle'
+  },
+  anonymous: {
+    title: function() {
+      return i18n.t('editor_anonymous_type');
+    },
+    icon: 'icon--text-circle'
+  }
+};
+
+EditorTypeSwitcher = React.createClass({
+  displayName: 'EditorTypeSwitcher',
+  propTypes: {
+    entryType: PropTypes.string.isRequired,
+    canChangeType: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired
+  },
+  render: function() {
+    var switcherClasses;
+    switcherClasses = classSet({
+      'nav-types': true,
+      'state--loading': this.props.loading
+    });
+    return React.createElement("nav", {
+      "className": switcherClasses
+    }, this.renderListItems());
+  },
+  renderListItems: function() {
+    var listItems;
+    if (this.props.canChangeType) {
+      return listItems = _.map(AVAILABLE_TYPES, (function(_this) {
+        return function(type) {
+          return React.createElement(EditorTypeSwitcherItem, {
+            "title": ENTRY_TYPES[type].title(),
+            "icon": ENTRY_TYPES[type].icon,
+            "active": _this.props.entryType === type,
+            "loading": _this.props.loading,
+            "onClick": _this.changeType.bind(null, type),
+            "key": type
+          });
+        };
+      })(this));
+    } else {
+      return React.createElement(EditorTypeSwitcherItem, {
+        "title": ENTRY_TYPES[this.props.entryType].title(),
+        "icon": ENTRY_TYPES[this.props.entryType].icon,
+        "active": true,
+        "loading": this.props.loading
+      });
+    }
+  },
+  changeType: function(name) {
+    return console.log('change entry type action', name);
+  }
+});
+
+module.exports = EditorTypeSwitcher;
+
+
+
+},{"./TypeSwitcherItem":24,"lodash":464,"react/lib/cx":576}],24:[function(require,module,exports){
+var EditorTypeSwitcherItem, PropTypes, classSet;
+
+classSet = require('react/lib/cx');
+
+PropTypes = React.PropTypes;
+
+EditorTypeSwitcherItem = React.createClass({
+  displayName: 'EditorTypeSwitcherItem',
+  propTypes: {
+    title: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    active: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onClick: PropTypes.func
+  },
+  componentDidMount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip();
+  },
+  componentWillUnmount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip('destroy');
+  },
+  render: function() {
+    var itemClasses;
+    itemClasses = classSet({
+      'button': true,
+      'button--circle': true,
+      'state--disable': this.props.loading,
+      'state--active': this.props.active
+    });
+    return React.createElement("button", {
+      "title": this.props.title,
+      "className": itemClasses,
+      "onClick": this.handleClick
+    }, React.createElement("i", {
+      "className": 'icon ' + this.props.icon
+    }));
+  },
+  handleClick: function() {
+    var _base;
+    if (!(this.props.loading && this.props.active)) {
+      return typeof (_base = this.props).onClick === "function" ? _base.onClick() : void 0;
+    }
+  }
+});
+
+module.exports = EditorTypeSwitcherItem;
+
+
+
+},{"react/lib/cx":576}],25:[function(require,module,exports){
+var EditorPreviewButton, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EditorPreviewButton = React.createClass({
+  displayName: 'EditorPreviewButton',
+  propTypes: {
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "button button--grey",
+      "onClick": this.handleClick
+    }, React.createElement("span", {
+      "className": "button__text"
+    }, i18n.t('editor_preview_button')));
+  },
+  handleClick: function() {
+    return this.props.onClick();
+  }
+});
+
+module.exports = EditorPreviewButton;
+
+
+
+},{}],26:[function(require,module,exports){
+var EditorPrivacyButton, PropTypes, classSet;
+
+classSet = require('react/lib/cx');
+
+PropTypes = React.PropTypes;
+
+EditorPrivacyButton = React.createClass({
+  displayName: 'EditorPrivacyButton',
+  propTypes: {
+    live: PropTypes.bool.isRequired,
+    "private": PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+  },
+  componentDidMount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip({
+      placement: 'bottom'
+    });
+  },
+  componentWillUnmount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip('destroy');
+  },
+  render: function() {
+    var iconClasses;
+    iconClasses = classSet({
+      'icon': true,
+      'icon--unlock': !this.props["private"],
+      'icon--lock': this.props["private"]
+    });
+    return React.createElement("button", {
+      "title": this.getTitle(),
+      "className": "button button--outline-grey post-settings-button",
+      "onClick": this.handleClick
+    }, React.createElement("span", {
+      "className": iconClasses
+    }));
+  },
+  getTitle: function() {
+    var title;
+    title = this.props["private"] ? i18n.t('editor_private_entry') : i18n.t('editor_public_entry');
+    if (this.props.live) {
+      title = i18n.t('editor_live_entry');
+    }
+    return title;
+  },
+  handleClick: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    $button.tooltip('hide');
+    return this.props.onClick();
+  }
+});
+
+module.exports = EditorPrivacyButton;
+
+
+
+},{"react/lib/cx":576}],27:[function(require,module,exports){
+var EditorSaveButton, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EditorSaveButton = React.createClass({
+  displayName: 'EditorSaveButton',
+  propTypes: {
+    "private": PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "button button--green",
+      "onClick": this.handleClick
+    }, React.createElement("span", {
+      "className": "button__text"
+    }, this.getTitle()));
+  },
+  getTitle: function() {
+    if (this.props["private"]) {
+      return i18n.t('editor_save_button');
+    } else {
+      return i18n.t('editor_publish_button');
+    }
+  },
+  handleClick: function() {
+    return this.props.onClick();
+  }
+});
+
+module.exports = EditorSaveButton;
+
+
+
+},{}],28:[function(require,module,exports){
+var EditorVoteButton, PropTypes, classSet;
+
+classSet = require('react/lib/cx');
+
+PropTypes = React.PropTypes;
+
+EditorVoteButton = React.createClass({
+  displayName: 'EditorVoteButton',
+  propTypes: {
+    enabled: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+  },
+  componentDidMount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip({
+      placement: 'bottom'
+    });
+  },
+  componentWillUnmount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip('destroy');
+  },
+  render: function() {
+    var iconClasses;
+    iconClasses = classSet({
+      'icon': true,
+      'post-settings-voting': true,
+      'post-settings-voted': this.props.enabled
+    });
+    return React.createElement("button", {
+      "title": this.getTitle(),
+      "className": "button button--outline-grey post-settings-button",
+      "onClick": this.handleClick
+    }, React.createElement("span", {
+      "className": iconClasses
+    }));
+  },
+  getTitle: function() {
+    if (this.props.enabled) {
+      return i18n.t('editor_disable_voting');
+    } else {
+      return i18n.t('editor_enable_voting');
+    }
+  },
+  handleClick: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    $button.tooltip('hide');
+    return this.props.onClick();
+  }
+});
+
+module.exports = EditorVoteButton;
+
+
+
+},{"react/lib/cx":576}],29:[function(require,module,exports){
 var cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -13961,10 +14520,14 @@ var cx;
         momentProperties = [],
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module && module.exports),
 =======
 },{"react/lib/cx":568}],22:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],30:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.AuthorizationShellbox = React.createClass({
   render: function() {
     var boxStyle, entriesCount, usersCount;
@@ -14044,11 +14607,15 @@ window.AuthorizationShellbox = React.createClass({
         isoDurationRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/,
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // format tokens
         formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|x|X|zz?|ZZ?|.)/g,
         localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g,
 =======
 },{}],23:[function(require,module,exports){
+=======
+},{}],31:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var AUTH_TIMEOUT;
 >>>>>>> Editor store and services [#89871770]
 
@@ -14079,6 +14646,7 @@ var AUTH_TIMEOUT;
         isoFormat = 'YYYY-MM-DDTHH:mm:ssZ',
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         isoDates = [
             ['YYYYYY-MM-DD', /[+-]\d{6}-\d{2}-\d{2}/],
             ['YYYY-MM-DD', /\d{4}-\d{2}-\d{2}/],
@@ -14088,6 +14656,9 @@ var AUTH_TIMEOUT;
         ],
 =======
 },{}],24:[function(require,module,exports){
+=======
+},{}],32:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var AUTH_TIMEOUT;
 >>>>>>> Editor store and services [#89871770]
 
@@ -14134,6 +14705,7 @@ var AUTH_TIMEOUT;
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         camelFunctions = {
             dayofyear : 'dayOfYear',
             isoweekday : 'isoWeekday',
@@ -14143,6 +14715,9 @@ var AUTH_TIMEOUT;
         },
 =======
 },{}],25:[function(require,module,exports){
+=======
+},{}],33:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.Shellbox_FacebookAuthButton = React.createClass({
   propTypes: {
     isActive: React.PropTypes.bool
@@ -14203,11 +14778,15 @@ window.Shellbox_FacebookAuthButton = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // tokens to ordinalize and pad
         ordinalizeTokens = 'DDD w W M D d'.split(' '),
         paddedTokens = 'M D H h m s w W'.split(' '),
 =======
 },{}],26:[function(require,module,exports){
+=======
+},{}],34:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.Shellbox_VkAuthButton = React.createClass({
   propTypes: {
     isActive: React.PropTypes.bool
@@ -14394,9 +14973,13 @@ window.Shellbox_VkAuthButton = React.createClass({
         deprecations = {},
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         lists = ['months', 'monthsShort', 'weekdays', 'weekdaysShort', 'weekdaysMin'];
 =======
 },{}],27:[function(require,module,exports){
+=======
+},{}],35:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var EmailFooter;
 >>>>>>> Editor store and services [#89871770]
 
@@ -14439,6 +15022,7 @@ var EmailFooter;
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     function deprecate(msg, fn) {
         var firstTime = true;
         return extend(function () {
@@ -14451,6 +15035,9 @@ var EmailFooter;
     }
 =======
 },{}],28:[function(require,module,exports){
+=======
+},{}],36:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var EmailSubmitButton;
 >>>>>>> Editor store and services [#89871770]
 
@@ -14484,11 +15071,15 @@ var EmailSubmitButton;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /************************************
         Constructors
     ************************************/
 =======
 },{}],29:[function(require,module,exports){
+=======
+},{}],37:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var ConfirmRegistrationMixin, EmailConfirmRegistration;
 >>>>>>> Editor store and services [#89871770]
 
@@ -14536,9 +15127,13 @@ var ConfirmRegistrationMixin, EmailConfirmRegistration;
         this._data = {};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         this._locale = moment.localeData();
 =======
 },{"../mixins/confirm_registration":34}],30:[function(require,module,exports){
+=======
+},{"../mixins/confirm_registration":42}],38:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var EmailFooter, EmailLoginField, EmailMixin, EmailPasswordField, EmailSubmitButton;
 >>>>>>> Editor store and services [#89871770]
 
@@ -14565,8 +15160,13 @@ var EmailFooter, EmailLoginField, EmailMixin, EmailPasswordField, EmailSubmitBut
             a.valueOf = b.valueOf;
         }
 
+<<<<<<< HEAD
         return a;
     }
+=======
+},{"./_partials/footer":35,"./buttons/submit":36,"./fields/login":39,"./fields/password":40,"./mixins/email":41}],39:[function(require,module,exports){
+var EmailLoginField, cx;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
     function copyConfig(to, from) {
         var i, prop, val;
@@ -14641,10 +15241,14 @@ var EmailLoginField, cx;
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     function positiveMomentsDifference(base, other) {
         var res = {milliseconds: 0, months: 0};
 =======
 },{"react/lib/cx":568}],32:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],40:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var EmailPasswordField, cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -14674,6 +15278,7 @@ var EmailPasswordField, cx;
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // TODO: remove 'name' arg after deprecation is removed
     function createAdder(direction, name) {
         return function (val, period) {
@@ -14685,6 +15290,9 @@ var EmailPasswordField, cx;
             }
 =======
 },{"react/lib/cx":568}],33:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],41:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWORD_MESSAGE, INVALID_SLUG_MESSAGE;
 >>>>>>> Editor store and services [#89871770]
 
@@ -14754,6 +15362,7 @@ var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWOR
             prop;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         for (prop in inputObject) {
             if (hasOwnProp(inputObject, prop)) {
                 normalizedProp = normalizeUnits(prop);
@@ -14764,6 +15373,9 @@ var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWOR
         }
 =======
 },{"../confirm_registration":29}],34:[function(require,module,exports){
+=======
+},{"../confirm_registration":37}],42:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var ConfirmRegistrationMixin, USER_EXISTS_MESSAGE;
 >>>>>>> Editor store and services [#89871770]
 
@@ -14801,6 +15413,7 @@ var ConfirmRegistrationMixin, USER_EXISTS_MESSAGE;
                 return method.call(moment._locale, m, format || '');
             };
 
+<<<<<<< HEAD
             if (index != null) {
                 return getter(index);
             }
@@ -14812,6 +15425,9 @@ var ConfirmRegistrationMixin, USER_EXISTS_MESSAGE;
             }
 =======
 },{}],35:[function(require,module,exports){
+=======
+},{}],43:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.RecoveryShellbox = React.createClass({
   mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin],
   getInitialState: function() {
@@ -14872,6 +15488,7 @@ window.RecoveryShellbox = React.createClass({
             value = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (coercedNumber !== 0 && isFinite(coercedNumber)) {
             if (coercedNumber >= 0) {
                 value = Math.floor(coercedNumber);
@@ -14881,6 +15498,9 @@ window.RecoveryShellbox = React.createClass({
         }
 =======
 },{}],36:[function(require,module,exports){
+=======
+},{}],44:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var ConfirmRegistrationMixin, SocialNetworksConfirmRegistration;
 >>>>>>> Editor store and services [#89871770]
 
@@ -14904,6 +15524,7 @@ var ConfirmRegistrationMixin, SocialNetworksConfirmRegistration;
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     function checkOverflow(m) {
         var overflow;
         if (m._a && m._pf.overflow === -2) {
@@ -14920,6 +15541,9 @@ var ConfirmRegistrationMixin, SocialNetworksConfirmRegistration;
                 -1;
 =======
 },{"../mixins/confirm_registration":34}],37:[function(require,module,exports){
+=======
+},{"../mixins/confirm_registration":42}],45:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -14942,6 +15566,7 @@ var cx;
                 !m._pf.userInvalidated;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (m._strict) {
                 m._isValid = m._isValid &&
                     m._pf.charsLeftOver === 0 &&
@@ -14953,6 +15578,9 @@ var cx;
     }
 =======
 },{"react/lib/cx":568}],38:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],46:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.UserAvatar = React.createClass({
   displayName: 'UserAvatar',
   propTypes: {
@@ -14999,6 +15627,7 @@ window.UserAvatar = React.createClass({
         var i = 0, j, next, locale, split;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         while (i < names.length) {
             split = normalizeLocale(names[i]).split('-');
             j = split.length;
@@ -15021,6 +15650,9 @@ window.UserAvatar = React.createClass({
     }
 =======
 },{}],39:[function(require,module,exports){
+=======
+},{}],47:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.LoadMoreButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -15066,11 +15698,15 @@ window.LoadMoreButton = React.createClass({
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /************************************
         Locale
     ************************************/
 =======
 },{}],40:[function(require,module,exports){
+=======
+},{}],48:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CALENDAR_CLOSED, CALENDAR_OPENED_BY_CLICK, CALENDAR_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, TARGET_POST_CLASS, TARGET_POST_PARENT_CLASS, cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -15144,12 +15780,16 @@ var CALENDAR_CLOSED, CALENDAR_OPENED_BY_CLICK, CALENDAR_OPENED_BY_HOVER, MOUSE_L
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         _weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
         weekdaysMin : function (m) {
             return this._weekdaysMin[m.day()];
         },
 =======
 },{"react/lib/cx":568}],41:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],49:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.CalendarHeader = React.createClass({
   propTypes: {
     date: React.PropTypes.object.isRequired
@@ -15183,6 +15823,7 @@ window.CalendarHeader = React.createClass({
             }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             for (i = 0; i < 7; i++) {
                 // make the regex if we don't have it already
                 if (!this._weekdaysParse[i]) {
@@ -15198,6 +15839,9 @@ window.CalendarHeader = React.createClass({
         },
 =======
 },{}],42:[function(require,module,exports){
+=======
+},{}],50:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -15249,6 +15893,7 @@ var cx;
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         _relativeTime : {
             future : 'in %s',
             past : '%s ago',
@@ -15266,6 +15911,9 @@ var cx;
         },
 =======
 },{"react/lib/cx":568}],43:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],51:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.CalendarPeriod = React.createClass({
   propTypes: {
     period: React.PropTypes.object.isRequired,
@@ -15310,6 +15958,7 @@ window.CalendarPeriod = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         ordinal : function (number) {
             return this._ordinal.replace('%d', number);
         },
@@ -15317,6 +15966,9 @@ window.CalendarPeriod = React.createClass({
         _ordinalParse : /\d{1,2}/,
 =======
 },{}],44:[function(require,module,exports){
+=======
+},{}],52:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.CalendarTimeline = React.createClass({
   propTypes: {
     periods: React.PropTypes.array.isRequired,
@@ -15357,11 +16009,15 @@ window.CalendarTimeline = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         week : function (mom) {
             return weekOfYear(mom, this._week.dow, this._week.doy).week;
         },
 =======
 },{}],45:[function(require,module,exports){
+=======
+},{}],53:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.AdaptiveInput = React.createClass({
   propTypes: {
     type: React.PropTypes.string,
@@ -15415,11 +16071,15 @@ window.AdaptiveInput = React.createClass({
     });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /************************************
         Formatting
     ************************************/
 =======
 },{}],46:[function(require,module,exports){
+=======
+},{}],54:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var InfiniteScroll, PropTypes, THRESHOLD, windowHeight;
 >>>>>>> Editor store and services [#89871770]
 
@@ -15464,10 +16124,14 @@ var InfiniteScroll, PropTypes, THRESHOLD, windowHeight;
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         return formatFunctions[format](m);
     }
 =======
 },{}],47:[function(require,module,exports){
+=======
+},{}],55:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var PropTypes, Scroller;
 >>>>>>> Editor store and services [#89871770]
 
@@ -15490,11 +16154,15 @@ var PropTypes, Scroller;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /************************************
         Parsing
     ************************************/
 =======
 },{}],48:[function(require,module,exports){
+=======
+},{}],56:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var ColorPicker, POPUP_WIDTH, STATE_CHOICE, STATE_VIEW;
 >>>>>>> Editor store and services [#89871770]
 
@@ -15770,6 +16438,111 @@ var ColorPicker_Popup;
 ColorPicker_Popup = React.createClass({
   propTypes: {
     color: React.PropTypes.string,
+<<<<<<< HEAD
+=======
+    disabled: React.PropTypes.bool
+  },
+  getInitialState: function() {
+    return {
+      currentState: STATE_VIEW,
+      currentColor: this.props.color
+    };
+  },
+  getDefaultProps: function() {
+    return {
+      color: '#2ac67e'
+    };
+  },
+  componentDidMount: function() {
+    $(window).on('scroll', this.closePopup);
+    return Mousetrap.bind('esc', this.closePopup);
+  },
+  componentWillUnmount: function() {
+    $(window).off('scroll', this.closePopup);
+    return Mousetrap.unbind('esc', this.closePopup);
+  },
+  render: function() {
+    return React.createElement("span", {
+      "ref": "activator",
+      "style": {
+        background: this.state.currentColor
+      },
+      "className": "color-picker",
+      "onClick": this.handleClickActivator
+    });
+  },
+  activateViewState: function() {
+    return this.setState({
+      currentState: STATE_VIEW
+    });
+  },
+  activateChoiceState: function() {
+    return this.setState({
+      currentState: STATE_CHOICE
+    });
+  },
+  onDrag: function(color, c) {
+    return this.setState({
+      currentColor: color
+    });
+  },
+  handleClickActivator: function(e) {
+    if (!this.props.disabled) {
+      if (this.state.currentState !== STATE_CHOICE) {
+        return this.openPopup();
+      } else {
+        return this.closePopup();
+      }
+    }
+  },
+  getCoordsPopup: function() {
+    var $activator, heightActivator, widthActivator;
+    $activator = $(this.refs.activator.getDOMNode());
+    widthActivator = $activator.outerWidth();
+    heightActivator = $activator.outerHeight();
+    return {
+      top: $activator.offset().top + heightActivator,
+      left: $activator.offset().left - (POPUP_WIDTH - widthActivator) / 2
+    };
+  },
+  openPopup: function() {
+    var container, position;
+    container = document.querySelectorAll('[color-picker-popup-container]')[0];
+    if (!container) {
+      container = document.createElement('div');
+      container.setAttribute('color-picker-popup-container', '');
+      document.body.appendChild(container);
+    }
+    position = this.getCoordsPopup();
+    React.render(React.createElement(ColorPicker_Popup, {
+      "color": this.state.currentColor,
+      "position": position,
+      "onDrag": this.onDrag
+    }), container);
+    this.popupContainer = container;
+    return this.activateChoiceState();
+  },
+  closePopup: function() {
+    return _.defer((function(_this) {
+      return function() {
+        React.unmountComponentAtNode(_this.popupContainer);
+        return _this.activateViewState();
+      };
+    })(this));
+  }
+});
+
+module.exports = ColorPicker;
+
+
+
+},{}],57:[function(require,module,exports){
+var ColorPicker_Popup;
+
+ColorPicker_Popup = React.createClass({
+  propTypes: {
+    color: React.PropTypes.string,
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
     isDrag: React.PropTypes.func,
     position: React.PropTypes.object
   },
@@ -15827,6 +16600,7 @@ module.exports = ColorPicker_Popup;
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // convert an array to a date.
     // the array should mirror the parameters below
     // note: all values past the year are optional and will default to the lowest possible value.
@@ -15835,6 +16609,9 @@ module.exports = ColorPicker_Popup;
         var i, date, input = [], currentDate, yearToUse;
 =======
 },{}],50:[function(require,module,exports){
+=======
+},{}],58:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.DesignSettingsPopup_Controls = React.createClass({
   propTypes: {
     design: React.PropTypes.object.isRequired,
@@ -15885,12 +16662,16 @@ window.DesignSettingsPopup_Controls = React.createClass({
         currentDate = currentDateArray(config);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         //compute day of the year from weeks and weekdays
         if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
             dayOfYearFromWeekInfo(config);
         }
 =======
 },{}],51:[function(require,module,exports){
+=======
+},{}],59:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.DesignSettingsPopup_ControlsProgressbar = React.createClass({
   propTypes: {
     progress: React.PropTypes.number.isRequired
@@ -15924,12 +16705,16 @@ window.DesignSettingsPopup_ControlsProgressbar = React.createClass({
             }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             date = makeUTCDate(yearToUse, 0, config._dayOfYear);
             config._a[MONTH] = date.getUTCMonth();
             config._a[DATE] = date.getUTCDate();
         }
 =======
 },{}],52:[function(require,module,exports){
+=======
+},{}],60:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -15964,11 +16749,15 @@ var cx;
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (config._nextDay) {
             config._a[HOUR] = 24;
         }
 =======
 },{"react/lib/cx":568}],53:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],61:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.DesignSettingsPopup_ControlsAlignItem = React.createClass({
   propTypes: {
     coverAlign: React.PropTypes.string.isRequired,
@@ -16021,11 +16810,15 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass({
         var normalizedInput;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (config._d) {
             return;
         }
 =======
 },{}],54:[function(require,module,exports){
+=======
+},{}],62:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
   mixins: ['ReactActivitiesUser', ComponentManipulationsMixin],
   propTypes: {
@@ -16167,6 +16960,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     function currentDateArray(config) {
         var now = new Date();
         if (config._useUTC) {
@@ -16180,6 +16974,9 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
         }
 =======
 },{}],55:[function(require,module,exports){
+=======
+},{}],63:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({
   propTypes: {
     feedColor: React.PropTypes.string.isRequired,
@@ -16240,6 +17037,7 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({
         config._pf.empty = true;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // This array is used to make a Date, either with `new Date` or `Date.UTC`
         var string = '' + config._i,
             i, parsedInput, tokens, token, skipped,
@@ -16247,6 +17045,9 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({
             totalParsedInputLength = 0;
 =======
 },{}],56:[function(require,module,exports){
+=======
+},{}],64:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({
   propTypes: {
     fontType: React.PropTypes.string.isRequired,
@@ -16334,6 +17135,7 @@ window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({
             config._pf.unusedInput.push(string);
         }
 
+<<<<<<< HEAD
         // clear _12h flag if hour is <= 12
         if (config._pf.bigHour === true && config._a[HOUR] <= 12) {
             config._pf.bigHour = undefined;
@@ -16350,6 +17152,9 @@ window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({
         checkOverflow(config);
 =======
 },{}],57:[function(require,module,exports){
+=======
+},{}],65:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({
   propTypes: {
     headerColor: React.PropTypes.string.isRequired,
@@ -16425,12 +17230,16 @@ window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // date from string and array of format strings
     function makeDateFromStringAndArray(config) {
         var tempConfig,
             bestMoment,
 =======
 },{}],58:[function(require,module,exports){
+=======
+},{}],66:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var MAXIMUM_OPACITY, MINIMUM_OPACITY, STEP_OPACITY, TIMEOUT_BEFORE_SAVE;
 >>>>>>> Editor store and services [#89871770]
 
@@ -16467,6 +17276,7 @@ var MAXIMUM_OPACITY, MINIMUM_OPACITY, STEP_OPACITY, TIMEOUT_BEFORE_SAVE;
             tempConfig._pf.score = currentScore;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (scoreToBeat == null || currentScore < scoreToBeat) {
                 scoreToBeat = currentScore;
                 bestMoment = tempConfig;
@@ -16474,6 +17284,9 @@ var MAXIMUM_OPACITY, MINIMUM_OPACITY, STEP_OPACITY, TIMEOUT_BEFORE_SAVE;
         }
 =======
 },{}],59:[function(require,module,exports){
+=======
+},{}],67:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CurrentUserServerActions, cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -16528,6 +17341,7 @@ var CurrentUserServerActions, cx;
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     function makeDateFromInput(config) {
         var input = config._i, matched;
         if (input === undefined) {
@@ -16554,6 +17368,9 @@ var CurrentUserServerActions, cx;
     }
 =======
 },{"../../actions/server/current_user":13,"react/lib/cx":568}],60:[function(require,module,exports){
+=======
+},{"../../actions/server/current_user":13,"react/lib/cx":576}],68:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var KEYCODE_ENTER, LinkedStateMixin, cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -16598,11 +17415,15 @@ var KEYCODE_ENTER, LinkedStateMixin, cx;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
     function substituteTimeAgo(string, number, withoutSuffix, isFuture, locale) {
         return locale.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
 =======
 },{"react/lib/LinkedStateMixin":479,"react/lib/cx":568}],61:[function(require,module,exports){
+=======
+},{"react/lib/LinkedStateMixin":487,"react/lib/cx":576}],69:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EmbedComponent = React.createClass({
   propTypes: {
     autoplay: React.PropTypes.bool.isRequired,
@@ -16640,12 +17461,16 @@ window.EmbedComponent = React.createClass({
                 years === 1 && ['y'] || ['yy', years];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         args[2] = withoutSuffix;
         args[3] = +posNegDuration > 0;
         args[4] = locale;
         return substituteTimeAgo.apply({}, args);
 =======
 },{}],62:[function(require,module,exports){
+=======
+},{}],70:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryCommentBox_CommentFormSubmit = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
@@ -16669,8 +17494,12 @@ window.EntryCommentBox_CommentFormSubmit = React.createClass({
     ************************************/
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 },{}],63:[function(require,module,exports){
+=======
+},{}],71:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FORM_STATE, HIDDEN_STATE, LINK_STATE;
 >>>>>>> Editor store and services [#89871770]
 
@@ -16732,6 +17561,141 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({
     };
   },
   render: function() {
+<<<<<<< HEAD
+=======
+    var form;
+    switch (this.state.currentState) {
+      case FORM_STATE:
+        form = React.createElement(EntryCommentBox_CommentForm, {
+          "ref": "commentForm",
+          "user": this.props.user,
+          "isLoading": this.state.isPostLoading,
+          "onSubmit": this.onSubmit,
+          "onCancel": this.onCancel
+        });
+        break;
+      case HIDDEN_STATE:
+        form = React.createElement("div", null);
+        break;
+      case LINK_STATE:
+        form = React.createElement("div", {
+          "className": "comments__more"
+        }, React.createElement("a", {
+          "onClick": this.onClick,
+          "className": "comments__more-link"
+        }, i18n.t('comment_more_link')));
+        break;
+      default:
+        console.warn('Неизвестное состояние формы ввода комментария', this.state.currentState);
+    }
+    return form;
+  },
+  isCurrentlyOpen: function() {
+    return this.props.isEntryPage;
+  },
+  isClosed: function() {
+    return this.state.currentState !== FORM_STATE;
+  },
+  openAndReply: function(name) {
+    if (this.isClosed()) {
+      this.openForm();
+    }
+    return _.defer((function(_this) {
+      return function() {
+        return _this.refs.commentForm.addReply(name);
+      };
+    })(this));
+  },
+  openForm: function() {
+    this.setState({
+      currentState: FORM_STATE
+    });
+    return _.defer((function(_this) {
+      return function() {
+        return _this.refs.commentForm.refs.commentFormField.getDOMNode().focus();
+      };
+    })(this));
+  },
+  closeForm: function() {
+    if (this.props.totalCommentsCount === 0) {
+      return this.setState({
+        currentState: HIDDEN_STATE
+      });
+    } else {
+      return this.setState({
+        currentState: LINK_STATE
+      });
+    }
+  },
+  clearForm: function() {
+    return this.refs.commentForm.refs.commentFormField.getDOMNode().value = '';
+  },
+  onClick: function() {
+    return window.commentsMediator.doCommentClicked(this.props.entryId);
+  },
+  onSubmit: function(text) {
+    this.setState({
+      isPostError: false,
+      isPostLoading: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.comments_url(),
+      method: 'POST',
+      data: {
+        entry_id: this.props.entryId,
+        text: text
+      },
+      success: (function(_this) {
+        return function(comment) {
+          _this.props.onCommentAdded(comment);
+          if (_this.isCurrentlyOpen()) {
+            return _this.clearForm();
+          } else {
+            return window.commentsMediator.doFormClosed(_this);
+          }
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            isPostError: true
+          });
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            isPostLoading: false
+          });
+        };
+      })(this)
+    });
+  },
+  onCancel: function() {
+    return window.commentsMediator.doFormClosed();
+  }
+});
+
+
+
+},{}],72:[function(require,module,exports){
+window.EntryCommentBox_CommentEditFormManager = React.createClass({
+  mixins: [RequesterMixin, ComponentManipulationsMixin],
+  propTypes: {
+    comment: React.PropTypes.object.isRequired,
+    user: React.PropTypes.object.isRequired,
+    onEditEnd: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      isEditError: false,
+      isEditLoading: false
+    };
+  },
+  render: function() {
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
     return React.createElement(EntryCommentBox_CommentForm, {
       "ref": "commentForm",
       "text": this.props.comment.comment_html,
@@ -16785,9 +17749,13 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({
             res;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         config._locale = config._locale || moment.localeData(config._l);
 =======
 },{}],65:[function(require,module,exports){
+=======
+},{}],73:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var REPLIES_LIMIT;
 
 REPLIES_LIMIT = 5;
@@ -16948,6 +17916,7 @@ window.EntryCommentBox_CommentForm = React.createClass({
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (moment.isMoment(input)) {
             return new Moment(input, true);
         } else if (format) {
@@ -16961,6 +17930,9 @@ window.EntryCommentBox_CommentForm = React.createClass({
         }
 =======
 },{}],66:[function(require,module,exports){
+=======
+},{}],74:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -16996,9 +17968,13 @@ var cx;
         return makeMoment(c);
     };
 
+<<<<<<< HEAD
     moment.suppressDeprecationWarnings = false;
 =======
 },{"react/lib/cx":568}],67:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],75:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryCommentBox_CommentList = React.createClass({
   propTypes: {
     comments: React.PropTypes.array.isRequired,
@@ -17051,7 +18027,7 @@ window.EntryCommentBox_CommentList = React.createClass({
 
 
 
-},{}],68:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 var cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -17091,10 +18067,14 @@ var cx;
         var args = [].slice.call(arguments, 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         return pickBy('isBefore', args);
     };
 =======
 },{"react/lib/cx":568}],69:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],77:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryCommentBox_CommentMetaBar = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
@@ -17141,11 +18121,15 @@ window.EntryCommentBox_CommentMetaBar = React.createClass({
     };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // creating with utc
     moment.utc = function (input, format, locale, strict) {
         var c;
 =======
 },{}],70:[function(require,module,exports){
+=======
+},{}],78:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryCommentBox_CommentMetaBarDate = React.createClass({
   propTypes: {
     time: React.PropTypes.string.isRequired,
@@ -17202,12 +18186,16 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass({
     };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // creating with unix timestamp (in seconds)
     moment.unix = function (input) {
         return moment(input * 1000);
     };
 =======
 },{}],71:[function(require,module,exports){
+=======
+},{}],79:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -17304,6 +18292,73 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
       "title": i18n.t('delete_comment_item'),
       "className": "comment__dropdown-item"
     }, React.createElement("i", {
+<<<<<<< HEAD
+=======
+      "className": "icon icon--dots"
+    }), React.createElement("span", {
+      "className": menuClasses
+    }, actionList));
+  },
+  onMouseEnter: function() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+    if (this.state.currentState === DROPDOWN_CLOSED) {
+      return this.setState({
+        currentState: DROPDOWN_OPENED_BY_HOVER
+      });
+    }
+  },
+  onMouseLeave: function() {
+    if (this.state.currentState === DROPDOWN_OPENED_BY_HOVER) {
+      return this.timeout = setTimeout(((function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            currentState: DROPDOWN_CLOSED
+          });
+        };
+      })(this)), MOUSE_LEAVE_TIMEOUT);
+    }
+  },
+  onClick: function() {
+    switch (this.state.currentState) {
+      case DROPDOWN_CLOSED:
+        return this.setState({
+          currentState: DROPDOWN_OPENED_BY_CLICK
+        });
+      case DROPDOWN_OPENED_BY_CLICK:
+        return this.setState({
+          currentState: DROPDOWN_CLOSED
+        });
+      case DROPDOWN_OPENED_BY_HOVER:
+        return this.setState({
+          currentState: DROPDOWN_CLOSED
+        });
+      default:
+        return typeof console.error === "function" ? console.error("Unknown state.currentState", this.state.currentState) : void 0;
+    }
+  },
+  isOpen: function() {
+    return this.state.currentState !== DROPDOWN_CLOSED;
+  }
+});
+
+
+
+},{"react/lib/cx":576}],80:[function(require,module,exports){
+window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass({
+  mixins: [RequesterMixin],
+  propTypes: {
+    commentId: React.PropTypes.number.isRequired,
+    onDelete: React.PropTypes.func
+  },
+  render: function() {
+    return React.createElement("a", {
+      "onClick": this.onClick,
+      "title": i18n.t('delete_comment_item'),
+      "className": "comment__dropdown-item"
+    }, React.createElement("i", {
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
       "className": "icon icon--basket"
     }), i18n.t('delete_comment_item'));
   },
@@ -17348,6 +18403,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
     moment.updateOffset = function () {};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // This function allows you to set a threshold for relative time strings
     moment.relativeTimeThreshold = function (threshold, limit) {
         if (relativeTimeThresholds[threshold] === undefined) {
@@ -17361,6 +18417,9 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
     };
 =======
 },{}],73:[function(require,module,exports){
+=======
+},{}],81:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
   propTypes: {
     entryId: React.PropTypes.number.isRequired,
@@ -17402,12 +18461,16 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
             }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (data) {
                 moment.duration._locale = moment._locale = data;
             }
         }
 =======
 },{}],74:[function(require,module,exports){
+=======
+},{}],82:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
   propTypes: {
     commentId: React.PropTypes.number.isRequired
@@ -17439,10 +18502,14 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
             locales[name].set(values);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             // backwards compat for now: also set the locale
             moment.locale(name);
 =======
 },{}],75:[function(require,module,exports){
+=======
+},{}],83:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -17499,11 +18566,15 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
     );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // returns locale data
     moment.localeData = function (key) {
         var locale;
 =======
 },{}],76:[function(require,module,exports){
+=======
+},{}],84:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryCommentBox_CommentMetaBarReply = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
@@ -17530,6 +18601,7 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass({
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (!isArray(key)) {
             //short-circuit everything else
             locale = loadLocale(key);
@@ -17540,6 +18612,9 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass({
         }
 =======
 },{}],77:[function(require,module,exports){
+=======
+},{}],85:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var MORE_COMMENTS_LIMIT;
 >>>>>>> Editor store and services [#89871770]
 
@@ -17575,10 +18650,14 @@ var MORE_COMMENTS_LIMIT;
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         return m;
     };
 =======
 },{}],78:[function(require,module,exports){
+=======
+},{}],86:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryCommentBox_LoadMore = React.createClass({
   propTypes: {
     totalCount: React.PropTypes.number.isRequired,
@@ -17621,11 +18700,15 @@ window.EntryCommentBox_LoadMore = React.createClass({
     };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /************************************
         Moment Prototype
     ************************************/
 =======
 },{}],79:[function(require,module,exports){
+=======
+},{}],87:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CommentsMixin;
 >>>>>>> Editor store and services [#89871770]
 
@@ -17641,11 +18724,15 @@ var CommentsMixin;
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         unix : function () {
             return Math.floor(+this / 1000);
         },
 =======
 },{}],80:[function(require,module,exports){
+=======
+},{}],88:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryMetabarAuthor = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired
@@ -17678,6 +18765,7 @@ window.EntryMetabarAuthor = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         toISOString : function () {
             var m = moment(this).utc();
             if (0 < m.year() && m.year() <= 9999) {
@@ -17693,6 +18781,9 @@ window.EntryMetabarAuthor = React.createClass({
         },
 =======
 },{}],81:[function(require,module,exports){
+=======
+},{}],89:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryMetabarComment = React.createClass({
   mixins: [ReactGrammarMixin],
   propTypes: {
@@ -17753,12 +18844,16 @@ window.EntryMetabarComment = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         isDSTShifted : function () {
             if (this._a) {
                 return this.isValid() && compareArrays(this._a, (this._isUTC ? moment.utc(this._a) : moment(this._a)).toArray()) > 0;
             }
 =======
 },{}],82:[function(require,module,exports){
+=======
+},{}],90:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryMetabarDate = React.createClass({
   propTypes: {
     time: React.PropTypes.string.isRequired,
@@ -17798,11 +18893,15 @@ window.EntryMetabarDate = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         invalidAt: function () {
             return this._pf.overflow;
         },
 =======
 },{}],83:[function(require,module,exports){
+=======
+},{}],91:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_BETWEEN_TOGGLER_AND_MENU, MOUSE_LEAVE_TIMEOUT, cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -17839,6 +18938,7 @@ var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_
             units = normalizeUnits(units);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (units === 'year' || units === 'month') {
                 // average number of days in the months in the given dates
                 diff = (this.daysInMonth() + that.daysInMonth()) * 432e5; // 24 * 60 * 60 * 1000 / 2
@@ -17868,6 +18968,9 @@ var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_
         },
 =======
 },{"react/lib/cx":568}],84:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],92:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
   mixins: [RequesterMixin, 'ReactActivitiesUser', DOMManipulationsMixin],
   propTypes: {
@@ -17950,6 +19053,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         calendar : function (time) {
             // We want to compare the start of today, vs this.
             // Getting start-of-today depends on whether we're zone'd or not.
@@ -17966,6 +19070,9 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
         },
 =======
 },{}],85:[function(require,module,exports){
+=======
+},{}],93:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -17990,6 +19097,7 @@ var cx;
 
         month : makeAccessor('Month', true),
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         startOf : function (units) {
             units = normalizeUnits(units);
@@ -18020,6 +19128,9 @@ var cx;
             }
 =======
 },{"react/lib/cx":568}],86:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],94:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryMetabarDropdownMenuItem = React.createClass({
   propTypes: {
     href: React.PropTypes.string.isRequired,
@@ -18050,10 +19161,14 @@ window.EntryMetabarDropdownMenuItem = React.createClass({
             }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             return this;
         },
 =======
 },{}],87:[function(require,module,exports){
+=======
+},{}],95:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryMetabarDropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -18114,6 +19229,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         isBefore: function (input, units) {
             var inputMs;
             units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
@@ -18127,6 +19243,9 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
         },
 =======
 },{}],88:[function(require,module,exports){
+=======
+},{}],96:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryMetabarDropdownMenuWatchItem = React.createClass({
   mixins: [RequesterMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -18244,6 +19363,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
          ),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         max: deprecate(
                 'moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548',
                 function (other) {
@@ -18253,6 +19373,9 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
         ),
 =======
 },{}],89:[function(require,module,exports){
+=======
+},{}],97:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryMetabar = React.createClass({
   propTypes: {
     entryId: React.PropTypes.number.isRequired,
@@ -18366,11 +19489,15 @@ window.EntryMetabar = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         zoneAbbr : function () {
             return this._isUTC ? 'UTC' : '';
         },
 =======
 },{}],90:[function(require,module,exports){
+=======
+},{}],98:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryMetabarTag = React.createClass({
   propTypes: {
     tag: React.PropTypes.string.isRequired
@@ -18400,6 +19527,7 @@ window.EntryMetabarTag = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         hasAlignedHourOffset : function (input) {
             if (!input) {
                 input = 0;
@@ -18409,6 +19537,9 @@ window.EntryMetabarTag = React.createClass({
             }
 =======
 },{}],91:[function(require,module,exports){
+=======
+},{}],99:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.EntryMetabarTags = React.createClass({
   propTypes: {
     tags: React.PropTypes.array.isRequired
@@ -18455,12 +19586,16 @@ window.EntryMetabarTags = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         dayOfYear : function (input) {
             var dayOfYear = round((moment(this).startOf('day') - moment(this).startOf('year')) / 864e5) + 1;
             return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
         },
 =======
 },{}],92:[function(require,module,exports){
+=======
+},{}],100:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.FeedBricks = React.createClass({
   mixins: [FeedBaseMixin],
   propTypes: {
@@ -18526,12 +19661,16 @@ window.FeedBricks = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         isoWeekYear : function (input) {
             var year = weekOfYear(this, 1, 4).year;
             return input == null ? year : this.add((input - year), 'y');
         },
 =======
 },{}],93:[function(require,module,exports){
+=======
+},{}],101:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
 >>>>>>> Editor store and services [#89871770]
 
@@ -18567,12 +19706,16 @@ var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         get : function (units) {
             units = normalizeUnits(units);
             return this[units]();
         },
 =======
 },{}],94:[function(require,module,exports){
+=======
+},{}],102:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var THRESHOLD;
 >>>>>>> Editor store and services [#89871770]
 
@@ -18613,11 +19756,15 @@ var THRESHOLD;
         ),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         localeData : function () {
             return this._locale;
         },
 =======
 },{}],95:[function(require,module,exports){
+=======
+},{}],103:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.FeedTlog = React.createClass({
   mixins: [FeedBaseMixin],
   propTypes: {
@@ -18669,6 +19816,7 @@ window.FeedTlog = React.createClass({
         var dayOfMonth;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // TODO: Move this out of here!
         if (typeof value === 'string') {
             value = mom.localeData().monthsParse(value);
@@ -18679,6 +19827,9 @@ window.FeedTlog = React.createClass({
         }
 =======
 },{}],96:[function(require,module,exports){
+=======
+},{}],104:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CLASS_PREFIX_STATE, STATE_ERROR, STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_PROCESS, STATE_REQUESTED;
 >>>>>>> Editor store and services [#89871770]
 
@@ -18762,11 +19913,15 @@ var CLASS_PREFIX_STATE, STATE_ERROR, STATE_FRIEND, STATE_GUESSED, STATE_IGNORED,
                 seconds, minutes, hours, years = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             // The following code bubbles up values, see the tests for
             // examples of what that means.
             data.milliseconds = milliseconds % 1000;
 =======
 },{}],97:[function(require,module,exports){
+=======
+},{}],105:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var HeroProfile_SettingsButton;
 >>>>>>> Editor store and services [#89871770]
 
@@ -18782,11 +19937,15 @@ var HeroProfile_SettingsButton;
             days += absRound(hours / 24);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             // Accurately convert days to years, assume start from year 0.
             years = absRound(daysToYears(days));
             days -= absRound(yearsToDays(years));
 =======
 },{}],98:[function(require,module,exports){
+=======
+},{}],106:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var DROPDOWN_CLOSED, DROPDOWN_OPENED, MOUSE_LEAVE_TIMEOUT, cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -18824,6 +19983,7 @@ var DROPDOWN_CLOSED, DROPDOWN_OPENED, MOUSE_LEAVE_TIMEOUT, cx;
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         valueOf : function () {
             return this._milliseconds +
               this._days * 864e5 +
@@ -18832,6 +19992,9 @@ var DROPDOWN_CLOSED, DROPDOWN_OPENED, MOUSE_LEAVE_TIMEOUT, cx;
         },
 =======
 },{"react/lib/cx":568}],99:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],107:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -18874,10 +20037,14 @@ window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
             }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             return this.localeData().postformat(output);
         },
 =======
 },{}],100:[function(require,module,exports){
+=======
+},{}],108:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.HeroProfile_DropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -18919,9 +20086,13 @@ window.HeroProfile_DropdownMenuReportItem = React.createClass({
             this._months += dur._months;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             this._bubble();
 =======
 },{}],101:[function(require,module,exports){
+=======
+},{}],109:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.HeroProfileStats_FollowersPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -19032,11 +20203,15 @@ window.HeroProfileStats_FollowersPopup = React.createClass({
             var dur = moment.duration(input, val);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             this._milliseconds -= dur._milliseconds;
             this._days -= dur._days;
             this._months -= dur._months;
 =======
 },{}],102:[function(require,module,exports){
+=======
+},{}],110:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.HeroProfileStats_FollowingsPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -19146,12 +20321,16 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         get : function (units) {
             units = normalizeUnits(units);
             return this[units.toLowerCase() + 's']();
         },
 =======
 },{}],103:[function(require,module,exports){
+=======
+},{}],111:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.HeroProfileStats_FollowerItem = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -19181,6 +20360,7 @@ window.HeroProfileStats_FollowerItem = React.createClass({
             var days, months;
             units = normalizeUnits(units);
 
+<<<<<<< HEAD
             if (units === 'month' || units === 'year') {
                 days = this._days + this._milliseconds / 864e5;
                 months = this._months + daysToYears(days) * 12;
@@ -19206,6 +20386,10 @@ window.HeroProfileStats_FollowerItem = React.createClass({
         locale : moment.fn.locale,
 =======
 },{}],104:[function(require,module,exports){
+=======
+
+},{}],112:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.HeroProfileStats_FollowingItem = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -19249,6 +20433,7 @@ window.HeroProfileStats_FollowingItem = React.createClass({
                 seconds = Math.abs(this.seconds() + this.milliseconds() / 1000);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (!this.asSeconds()) {
                 // this is the same as C#'s (Noda) and python (isodate)...
                 // but not other JS (goog.date)
@@ -19256,6 +20441,9 @@ window.HeroProfileStats_FollowingItem = React.createClass({
             }
 =======
 },{}],105:[function(require,module,exports){
+=======
+},{}],113:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.HeroProfileStats_TagItem = React.createClass({
   propTypes: {
     tag: React.PropTypes.object.isRequired
@@ -19293,9 +20481,13 @@ window.HeroProfileStats_TagItem = React.createClass({
     });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     moment.duration.fn.toString = moment.duration.fn.toISOString;
 =======
 },{}],106:[function(require,module,exports){
+=======
+},{}],114:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FADE_DURATION, MARGIN;
 >>>>>>> Editor store and services [#89871770]
 
@@ -19388,11 +20580,15 @@ var FADE_DURATION, MARGIN;
                 globalScope.moment = oldGlobalMoment;
             }
 
+<<<<<<< HEAD
             return moment;
         });
         makeGlobal(true);
 =======
 },{}],107:[function(require,module,exports){
+=======
+},{}],115:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.HeroProfileStats_TagsPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -19437,9 +20633,13 @@ require('./resources/libs');
 require('./resources/locales');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./resources/is_mobile');
 =======
 },{}],108:[function(require,module,exports){
+=======
+},{}],116:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS, HeroProfile_SettingsButton;
 >>>>>>> Editor store and services [#89871770]
 
@@ -19458,9 +20658,13 @@ require('./react/entities/normalized_entry');
 require('./react/services/positions');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/services/entry_store');
 =======
 },{"./buttons/settings":97}],109:[function(require,module,exports){
+=======
+},{"./buttons/settings":105}],117:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var HERO_AVATAR_SIZE;
 >>>>>>> Editor store and services [#89871770]
 
@@ -19473,9 +20677,13 @@ global.DesignStatesService = require('./react/services/designStates');
 global.DesignPresenterService = require('./react/services/designPresenter');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 window.ThumborService = require('../shared/react/services/thumbor');
 =======
 },{}],110:[function(require,module,exports){
+=======
+},{}],118:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.HeroProfileHead = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired
@@ -19533,6 +20741,37 @@ window.HeroProfileStats = React.createClass({
     stats: React.PropTypes.object.isRequired,
     user: React.PropTypes.object.isRequired
   },
+<<<<<<< HEAD
+=======
+  render: function() {
+    return React.createElement("div", {
+      "className": "hero__head"
+    }, React.createElement("div", {
+      "className": "hero__mask"
+    }), React.createElement("div", {
+      "className": "hero__title"
+    }, React.createElement("span", null, React.createElement("a", {
+      "href": this.props.user.tlog_url
+    }, this.props.user.slug))), React.createElement("div", {
+      "className": "hero__text"
+    }, React.createElement("span", {
+      "dangerouslySetInnerHTML": {
+        __html: this.props.user.title
+      }
+    })));
+  }
+});
+
+
+
+},{}],119:[function(require,module,exports){
+window.HeroProfileStats = React.createClass({
+  mixins: [ReactGrammarMixin],
+  propTypes: {
+    stats: React.PropTypes.object.isRequired,
+    user: React.PropTypes.object.isRequired
+  },
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
   componentDidMount: function() {
     this.container = document.querySelectorAll('[popup-hero-stats-container]')[0];
     if (!this.container) {
@@ -19669,9 +20908,13 @@ require('./react/mixins/component_manipulations');
 require('./react/mixins/positions');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/mixins/shake');
 =======
 },{}],112:[function(require,module,exports){
+=======
+},{}],120:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -19684,9 +20927,13 @@ require('./react/mixins/activities');
 require('./react/mixins/requester');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/mixins/scroller');
 =======
 },{"react/lib/cx":568}],113:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],121:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FIRST_ROW_RATIO, NEXT_ROWS_RATIO, update;
 >>>>>>> Editor store and services [#89871770]
 
@@ -19707,9 +20954,13 @@ require('./react/messaging/dispatchers/messaging');
 global.MessagingStatusStore = require('./react/messaging/stores/messaging_status');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/messaging/stores/connection_state');
 =======
 },{"react/lib/update":609}],114:[function(require,module,exports){
+=======
+},{"react/lib/update":617}],122:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FADE_DURATION;
 >>>>>>> Editor store and services [#89871770]
 
@@ -19722,9 +20973,13 @@ require('./react/messaging/stores/messages');
 require('./react/messaging/stores/notifications');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/messaging/messaging_service');
 =======
 },{}],115:[function(require,module,exports){
+=======
+},{}],123:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FADE_DURATION;
 >>>>>>> Editor store and services [#89871770]
 
@@ -19737,9 +20992,13 @@ require('./react/messaging/actions/popup');
 require('./react/messaging/actions/conversation');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/messaging/actions/message');
 =======
 },{}],116:[function(require,module,exports){
+=======
+},{}],124:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FADE_DURATION, START_TIMEOUT;
 >>>>>>> Editor store and services [#89871770]
 
@@ -19754,9 +21013,13 @@ require('./react/messaging/components/toolbars/indicators/messages');
 require('./react/messaging/components/toolbars/indicators/notifications');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/ui/back_button');
 =======
 },{}],117:[function(require,module,exports){
+=======
+},{}],125:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var DEFAULT_TIMEOUT, DEFAULT_TYPE;
 >>>>>>> Editor store and services [#89871770]
 
@@ -19771,9 +21034,13 @@ require('./react/messaging/components/messages_popup/conversations/conversations
 require('./react/messaging/components/messages_popup/conversations/list/list');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/conversations/list/list_item');
 =======
 },{}],118:[function(require,module,exports){
+=======
+},{}],126:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PeopleItem = React.createClass({
   propTypes: {
     title: React.PropTypes.string,
@@ -19821,9 +21088,13 @@ require('./react/messaging/components/messages_popup/conversations/list/empty');
 require('./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser');
 =======
 },{}],119:[function(require,module,exports){
+=======
+},{}],127:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_FollowerRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -19849,9 +21120,13 @@ require('./react/messaging/components/messages_popup/create_new_conversation/cho
 require('./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results');
 =======
 },{}],120:[function(require,module,exports){
+=======
+},{}],128:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_FollowingRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -19877,9 +21152,13 @@ require('./react/messaging/components/messages_popup/create_new_conversation/cho
 require('./react/messaging/components/messages_popup/thread/thread');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/thread/message_form/message_form');
 =======
 },{}],121:[function(require,module,exports){
+=======
+},{}],129:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_GuessRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -19907,9 +21186,13 @@ require('./react/messaging/components/messages_popup/thread/message_list/message
 require('./react/messaging/components/messages_popup/thread/message_list/message_list_item');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager');
 =======
 },{}],122:[function(require,module,exports){
+=======
+},{}],130:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_IgnoredRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -19935,9 +21218,13 @@ require('./react/messaging/components/messages_popup/thread/message_list/empty')
 require('./react/messaging/components/notifications_popup/notifications_popup');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/messaging/components/notifications_popup/notifications/notifications');
 =======
 },{}],123:[function(require,module,exports){
+=======
+},{}],131:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_PersonItem = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired,
@@ -19982,9 +21269,13 @@ require('./react/messaging/components/notifications_popup/notifications/notifica
 require('./react/messaging/components/notifications_popup/notifications/empty');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/common/adaptive_input');
 =======
 },{}],124:[function(require,module,exports){
+=======
+},{}],132:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_RequestedRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -20011,9 +21302,13 @@ require('./react/components/embed');
 require('./react/components/tlog_alert');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/avatars/avatar');
 =======
 },{}],125:[function(require,module,exports){
+=======
+},{}],133:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_Menu = React.createClass({
   displayName: 'PersonsPopup_Menu',
   mixins: [RequesterMixin],
@@ -20115,9 +21410,13 @@ require('./react/components/avatars/user_avatar');
 require('./react/components/auth/auth');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/auth/authorization/authorization');
 =======
 },{}],126:[function(require,module,exports){
+=======
+},{}],134:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20130,9 +21429,13 @@ require('./react/components/auth/buttons/vk_auth_button');
 require('./react/components/auth/buttons/facebook_auth_button');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/auth/email/email');
 =======
 },{"react/lib/cx":568}],127:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],135:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var ERROR_STATE, LOADED_STATE, LOADING_STATE, cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20153,9 +21456,13 @@ require('./react/components/voting');
 require('./react/components/shellbox_layer');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/buttons/load_more');
 =======
 },{"react/lib/cx":568}],128:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],136:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_FollowersPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'followers',
@@ -20179,9 +21486,13 @@ require('./react/components/relationship_buttons/mixins/relationship');
 require('./react/components/relationship_buttons/follow_button');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/relationship_buttons/follower_button');
 =======
 },{}],129:[function(require,module,exports){
+=======
+},{}],137:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_FollowingsPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'followings',
@@ -20205,9 +21516,13 @@ require('./react/components/relationship_buttons/ignore_button');
 require('./react/components/relationship_buttons/request_button');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/relationship_buttons/guess_button');
 =======
 },{}],130:[function(require,module,exports){
+=======
+},{}],138:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_GuessedPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'guessed',
@@ -20231,9 +21546,13 @@ require('./react/components/follow_status');
 require('./react/components/smart_follow_status');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/editable_field');
 =======
 },{}],131:[function(require,module,exports){
+=======
+},{}],139:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_IgnoredPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'ignored',
@@ -20257,9 +21576,13 @@ require('./react/components/popup_box');
 require('./react/components/popup/popup');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/popup/layout');
 =======
 },{}],132:[function(require,module,exports){
+=======
+},{}],140:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PersonsPopup_RequestedPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'requested',
@@ -20283,9 +21606,13 @@ require('./react/components/popup/spinner');
 require('./react/components/popup/header');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/calendar/calendar');
 =======
 },{}],133:[function(require,module,exports){
+=======
+},{}],141:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FacebookSignIn, FacebookSuggestions, SocialNetworkPanelMixin;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20302,9 +21629,13 @@ require('./react/components/feed/mixins/base');
 require('./react/components/feed/feed');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/feed/tlog');
 =======
 },{"./facebook/signIn":134,"./facebook/suggestions":135,"./mixins/socialNetwork":140}],134:[function(require,module,exports){
+=======
+},{"./facebook/signIn":142,"./facebook/suggestions":143,"./mixins/socialNetwork":148}],142:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var VkontakteSignIn;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20317,9 +21648,13 @@ require('./react/components/search/search');
 require('./react/components/search/button');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/search/field');
 =======
 },{}],135:[function(require,module,exports){
+=======
+},{}],143:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FacebookSuggestions, FacebookSuggestionsEmpty, FacebookSuggestionsList, PropTypes, SuggestionsMixin;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20340,9 +21675,13 @@ require('./react/components/design_settings_popup/controls_items/font_type_item'
 require('./react/components/design_settings_popup/controls_items/opacity_item');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/design_settings_popup/controls_items/_radiobutton');
 =======
 },{"../mixins/suggestions":142,"./suggestions/empty":137,"./suggestions/list":138}],136:[function(require,module,exports){
+=======
+},{"../mixins/suggestions":150,"./suggestions/empty":145,"./suggestions/list":146}],144:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FacebookSubscribeAllButton;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20355,9 +21694,13 @@ global.ColorPicker_Popup = require('./react/components/design_settings_popup/col
 require('./react/components/persons_popup/mixins/panel_mixin');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/persons_popup/persons_popup');
 =======
 },{}],137:[function(require,module,exports){
+=======
+},{}],145:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FacebookSuggestionsEmpty, PropTypes;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20372,9 +21715,13 @@ require('./react/components/persons_popup/items/following_relationship');
 require('./react/components/persons_popup/items/follower_relationship');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/persons_popup/items/requested_relationship');
 =======
 },{}],138:[function(require,module,exports){
+=======
+},{}],146:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FacebookSubscribeAllButton, FacebookSuggestionsItem, FacebookSuggestionsList, SuggestionListMixin;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20393,9 +21740,13 @@ require('./react/components/persons_popup/panels/requested_panel');
 require('./react/components/persons_popup/panels/ignored_panel');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/persons_popup/panels/socialNetwork/vkontakte');
 =======
 },{"../../mixins/suggestionList":141,"./buttons/subscribeAll":136,"./listItem":139}],139:[function(require,module,exports){
+=======
+},{"../../mixins/suggestionList":149,"./buttons/subscribeAll":144,"./listItem":147}],147:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FacebookSuggestionsItem, PropTypes;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20410,9 +21761,13 @@ require('./react/components/post_editor/mixins/persistence');
 require('./react/components/post_editor/mixins/images_form');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/post_editor/mixins/layout');
 =======
 },{}],140:[function(require,module,exports){
+=======
+},{}],148:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var ConnectStoreMixin, ERROR_STATE, LOADED_STATE, LOADING_STATE, SocialNetworkPanelMixin;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20433,9 +21788,13 @@ require('./react/components/post_editor/video_mediabox/loading');
 require('./react/components/post_editor/video_mediabox/url_insert');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/post_editor/video_mediabox/embeded');
 =======
 },{"../../../../../../../shared/react/mixins/connectStore":299}],141:[function(require,module,exports){
+=======
+},{"../../../../../../../shared/react/mixins/connectStore":307}],149:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var PropTypes, SuggestionListMixin;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20450,9 +21809,13 @@ require('./react/components/post_editor/mediabox/layout');
 require('./react/components/post_editor/mediabox/loading_progress');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/entry_metabar/entry_metabar');
 =======
 },{}],142:[function(require,module,exports){
+=======
+},{}],150:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var PropTypes, SuggestionsMixin;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20467,9 +21830,13 @@ require('./react/components/entry_metabar/tags');
 require('./react/components/entry_metabar/tag');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/entry_metabar/dropdown_menu');
 =======
 },{}],143:[function(require,module,exports){
+=======
+},{}],151:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var SocialNetworkPanelMixin, VkontakteSignIn, VkontakteSuggestions;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20486,9 +21853,13 @@ require('./react/components/entry_metabar/dropdown_menu_items/delete_item');
 require('./react/components/entry_comment_box/mixins/comments');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/entry_comment_box/entry_comment_box');
 =======
 },{"./mixins/socialNetwork":140,"./vkontakte/signIn":144,"./vkontakte/suggestions":145}],144:[function(require,module,exports){
+=======
+},{"./mixins/socialNetwork":148,"./vkontakte/signIn":152,"./vkontakte/suggestions":153}],152:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var VkontakteSignIn;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20501,9 +21872,13 @@ require('./react/components/entry_comment_box/comment_list/comment');
 require('./react/components/entry_comment_box/comment_metabar/comment_metabar');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/entry_comment_box/comment_metabar/date');
 =======
 },{}],145:[function(require,module,exports){
+=======
+},{}],153:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var PropTypes, SuggestionsMixin, VkontakteSuggestions, VkontakteSuggestionsEmpty, VkontakteSuggestionsList;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20524,9 +21899,13 @@ require('./react/components/entry_comment_box/comment_form/comment_form');
 require('./react/components/entry_comment_box/comment_form/comment_create_form_manager');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/entry_comment_box/comment_form/comment_edit_form_manager');
 =======
 },{"../mixins/suggestions":142,"./suggestions/empty":147,"./suggestions/list":148}],146:[function(require,module,exports){
+=======
+},{"../mixins/suggestions":150,"./suggestions/empty":155,"./suggestions/list":156}],154:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var VkontakteSubscribeAllButton;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20539,9 +21918,13 @@ require('./react/components/post_editor/actions/actions');
 require('./react/components/post_editor/actions/buttons/vote');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/post_editor/actions/buttons/privacy');
 =======
 },{}],147:[function(require,module,exports){
+=======
+},{}],155:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var PropTypes, VkontakteSuggestionsEmpty;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20556,9 +21939,13 @@ require('./react/components/post_editor/editors/text');
 require('./react/components/post_editor/editors/image');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/post_editor/editors/instagram');
 =======
 },{}],148:[function(require,module,exports){
+=======
+},{}],156:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var SuggestionListMixin, VkontakteSubscribeAllButton, VkontakteSuggestionsItem, VkontakteSuggestionsList;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20577,9 +21964,13 @@ require('./react/components/post_editor/new_post');
 require('./react/components/post_editor/new_anonymous_post');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/post_editor/edit_post');
 =======
 },{"../../mixins/suggestionList":141,"./buttons/subscribeAll":146,"./listItem":149}],149:[function(require,module,exports){
+=======
+},{"../../mixins/suggestionList":149,"./buttons/subscribeAll":154,"./listItem":157}],157:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var PropTypes, VkontakteSuggestionsItem;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20594,9 +21985,13 @@ require('./react/components/hero/profile/profile_avatar');
 require('./react/components/hero/profile/profile_head');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/hero/profile/profile_stats');
 =======
 },{}],150:[function(require,module,exports){
+=======
+},{}],158:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var DEFAULT_PANEL;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20609,9 +22004,13 @@ require('./react/components/hero/profile/dropdown_menu_items/ignore');
 require('./react/components/hero/profile/dropdown_menu_items/report');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/hero/profile/popup/popup');
 =======
 },{}],151:[function(require,module,exports){
+=======
+},{}],159:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20624,9 +22023,13 @@ require('./react/components/hero/profile/popup/tags_popup');
 require('./react/components/hero/profile/popup/items/follower_item');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/hero/profile/popup/items/following_item');
 =======
 },{"react/lib/cx":568}],152:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],160:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PopupLayout = React.createClass({
   mixins: [ReactUnmountMixin],
   propTypes: {
@@ -20663,9 +22066,13 @@ require('./react/components/hero/profile/popup/items/tag_item');
 require('./react/components/images_collage');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/components/spinner');
 =======
 },{}],153:[function(require,module,exports){
+=======
+},{}],161:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var NO_TRANSITION_CLASS, cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20680,9 +22087,13 @@ require('./react/components/notifications/tasty_locking_alert');
 require('./react/components/screen_viewer/screen_viewer');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/controllers/tasty_events');
 =======
 },{"react/lib/cx":568}],154:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],162:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.PopupSpinner = React.createClass({
   propTypes: {
     hasActivities: React.PropTypes.bool.isRequired
@@ -20708,9 +22119,13 @@ require('./react/controllers/tasty_notify');
 require('./react/controllers/tasty_confirm');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/controllers/tasty_alert');
 =======
 },{}],155:[function(require,module,exports){
+=======
+},{}],163:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var LinkedStateMixin;
 >>>>>>> Editor store and services [#89871770]
 
@@ -20723,7 +22138,12 @@ require('./react/controllers/shellbox');
 require('./react/controllers/popup');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./react/mediators/comments');
+=======
+},{"react/lib/LinkedStateMixin":487}],164:[function(require,module,exports){
+var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 require('./react/application');
 
@@ -20944,6 +22364,7 @@ var Api, SearchActions;
 
 Api = require('../api/api');
 
+<<<<<<< HEAD
 SearchActions = {
   loadNextPage: function(_arg) {
     var page, q, style, url;
@@ -20956,6 +22377,9 @@ SearchActions = {
     });
 =======
 },{}],157:[function(require,module,exports){
+=======
+},{}],165:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.RelationshipFollowerButton = React.createClass({
   mixins: ['RelationshipMixin'],
   propTypes: {
@@ -21015,6 +22439,7 @@ module.exports = SearchActions;
 
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 },{"../api/api":15}],12:[function(require,module,exports){
 var CurrentUserServerActions;
 
@@ -21036,6 +22461,9 @@ CurrentUserServerActions = {
       type: 'confirmationEmailCanceled'
 =======
 },{}],158:[function(require,module,exports){
+=======
+},{}],166:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.RelationshipGuessButton = React.createClass({
   mixins: ['RelationshipMixin'],
   propTypes: {
@@ -21108,6 +22536,7 @@ CurrentUserResource = require('../../resources/current_user');
 
 CurrentUserServerActions = require('../server/current_user');
 
+<<<<<<< HEAD
 CurrentUserViewActions = {
   updateSlug: function(options) {
     if (options == null) {
@@ -21119,6 +22548,9 @@ CurrentUserViewActions = {
       }
 =======
 },{}],159:[function(require,module,exports){
+=======
+},{}],167:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var STATE_IGNORED;
 
 STATE_IGNORED = 'ignored';
@@ -21188,7 +22620,7 @@ window.RelationshipIgnoreButton = React.createClass({
 
 
 
-},{}],160:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 window.RelationshipMixin = {
   componentWillUnmount: function() {
     return this.clearErrorTimer();
@@ -21745,7 +23177,7 @@ React.mixins.add('RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, Reque
 
 
 
-},{}],161:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 var ERROR_STATE, LOADING_STATE, WAITING_STATE;
 >>>>>>> Editor store and services [#89871770]
 
@@ -22124,6 +23556,7 @@ window.Shellbox_FacebookAuthButton = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{}],22:[function(require,module,exports){
 window.Shellbox_VkAuthButton = React.createClass({
   propTypes: {
@@ -22170,6 +23603,9 @@ window.Shellbox_VkAuthButton = React.createClass({
     }
 =======
 },{}],162:[function(require,module,exports){
+=======
+},{}],170:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CLASSNAME_ACTIVE, CLASSNAME_READY, DELAY_SLIDESHOW, STATE_LOADING, STATE_READY, ScreenViewer_Item, ScreenViewer_Loader, ScreenViewer_Slideshow, ScreenViewer_Title;
 
 STATE_LOADING = 'loading';
@@ -22391,6 +23827,7 @@ module.exports = EmailFooter;
 },{}],24:[function(require,module,exports){
 var EmailSubmitButton;
 
+<<<<<<< HEAD
 EmailSubmitButton = React.createClass({
   propTypes: {
     isProcess: React.PropTypes.bool,
@@ -22420,6 +23857,9 @@ EmailSubmitButton = React.createClass({
     return this.props.onSubmit();
 =======
 },{}],163:[function(require,module,exports){
+=======
+},{}],171:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.SearchButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -22436,7 +23876,7 @@ window.SearchButton = React.createClass({
 
 
 
-},{}],164:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 window.SearchField = React.createClass({
   propTypes: {
     query: React.PropTypes.string,
@@ -22487,8 +23927,12 @@ module.exports = EmailSubmitButton;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 },{}],165:[function(require,module,exports){
+=======
+},{}],173:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CLOSED, OPENED, cx;
 >>>>>>> Editor store and services [#89871770]
 
@@ -22549,7 +23993,12 @@ module.exports = EmailConfirmRegistration;
 CLOSED = 'closed';
 >>>>>>> Editor store and services [#89871770]
 
+<<<<<<< HEAD
 OPENED = 'opened';
+=======
+},{"react/lib/cx":576}],174:[function(require,module,exports){
+var InfiniteScroll, PropTypes, SearchResultsFeed;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 <<<<<<< HEAD
 },{"../mixins/confirm_registration":30}],26:[function(require,module,exports){
@@ -22956,7 +24405,7 @@ module.exports = SearchResultsFeed;
 
 
 
-},{"../common/infiniteScroll/index":46}],167:[function(require,module,exports){
+},{"../common/infiniteScroll/index":54}],175:[function(require,module,exports){
 var PropTypes, SearchActions, SearchResults, SearchResultsFeed, SearchResultsTlog;
 
 SearchActions = require('../../actions/search');
@@ -23129,7 +24578,7 @@ module.exports = SearchResults;
 
 
 
-},{"../../actions/search":12,"./feed":166,"./tlog":168}],168:[function(require,module,exports){
+},{"../../actions/search":12,"./feed":174,"./tlog":176}],176:[function(require,module,exports){
 var InfiniteScroll, PropTypes, SearchResultsTlog;
 
 InfiniteScroll = require('../common/infiniteScroll/index');
@@ -23168,6 +24617,11 @@ SearchResultsTlog = React.createClass({
 <<<<<<< HEAD
 module.exports = ConfirmRegistrationMixin;
 
+<<<<<<< HEAD
+=======
+},{"../common/infiniteScroll/index":54}],177:[function(require,module,exports){
+var PropTypes, Searchbox;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 },{}],31:[function(require,module,exports){
@@ -23341,6 +24795,7 @@ module.exports = Searchbox;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{}],32:[function(require,module,exports){
 var ConfirmRegistrationMixin, SocialNetworksConfirmRegistration;
 
@@ -23486,6 +24941,9 @@ window.UserAvatar = React.createClass({
       user: newUser
 =======
 },{}],170:[function(require,module,exports){
+=======
+},{}],178:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var SettingsAccounts;
 
 SettingsAccounts = React.createClass({
@@ -23532,7 +24990,7 @@ module.exports = SettingsAccounts;
 
 
 
-},{}],171:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 var CurrentUserServerActions, PropTypes, SettingsAvatar;
 
 CurrentUserServerActions = require('../../actions/server/current_user');
@@ -23898,7 +25356,7 @@ module.exports = SettingsAvatar;
 
 
 
-},{"../../actions/server/current_user":13}],172:[function(require,module,exports){
+},{"../../actions/server/current_user":13}],180:[function(require,module,exports){
 var ERROR_STATE, SENDING_STATE, SENT_STATE, SHOW_STATE, SettingsEmailConfirmation;
 
 SHOW_STATE = 'show';
@@ -23984,7 +25442,7 @@ module.exports = SettingsEmailConfirmation;
 
 
 
-},{}],173:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 var SettingsEmailEdit, cx;
 
 cx = require('react/lib/cx');
@@ -24092,7 +25550,7 @@ module.exports = SettingsEmailEdit;
 
 
 
-},{"react/lib/cx":568}],174:[function(require,module,exports){
+},{"react/lib/cx":576}],182:[function(require,module,exports){
 var EDIT_STATE, ESTABLISH_STATE, SHOW_STATE, SettingsEmail, SettingsEmailEdit, SettingsEmailEstablish, SettingsEmailShow;
 
 SettingsEmailShow = require('./show');
@@ -24239,7 +25697,7 @@ window.CalendarPeriod = React.createClass({
 =======
 >>>>>>> Editor store and services [#89871770]
 
-},{"./edit":173,"./establish/establish":176,"./show":178}],175:[function(require,module,exports){
+},{"./edit":181,"./establish/establish":184,"./show":186}],183:[function(require,module,exports){
 var SettingsEmailEstablishEdit, cx;
 
 cx = require('react/lib/cx');
@@ -24487,7 +25945,7 @@ module.exports = InfiniteScroll;
 var PropTypes, Scroller;
 =======
 
-},{"react/lib/cx":568}],176:[function(require,module,exports){
+},{"react/lib/cx":576}],184:[function(require,module,exports){
 var EDIT_STATE, SHOW_STATE, SettingsEmailEstablish, SettingsEmailEstablishEdit, SettingsEmailEstablishShow;
 
 SettingsEmailEstablishShow = require('./show');
@@ -24538,7 +25996,7 @@ module.exports = SettingsEmailEstablish;
 
 
 
-},{"./edit":175,"./show":177}],177:[function(require,module,exports){
+},{"./edit":183,"./show":185}],185:[function(require,module,exports){
 var SettingsEmailEstablishShow;
 
 SettingsEmailEstablishShow = React.createClass({
@@ -24571,8 +26029,19 @@ module.exports = SettingsEmailEstablishShow;
 PropTypes = React.PropTypes;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Scroller = React.createClass({
   displayName: 'Scroller',
+=======
+
+},{}],186:[function(require,module,exports){
+var SettingsEmailConfirmation, SettingsEmailShow;
+
+SettingsEmailConfirmation = require('./confirmation');
+
+SettingsEmailShow = React.createClass({
+  mixins: [ReactShakeMixin],
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
   propTypes: {
     children: PropTypes.element.isRequired
   },
@@ -24608,8 +26077,13 @@ module.exports = Scroller;
 
 
 
+<<<<<<< HEAD
 },{}],44:[function(require,module,exports){
 var ColorPicker, POPUP_WIDTH, STATE_CHOICE, STATE_VIEW;
+=======
+},{"./confirmation":180}],187:[function(require,module,exports){
+var SettingsAvatar, SettingsHeader, SettingsSlug, SettingsTitle;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 POPUP_WIDTH = 176;
 
@@ -24715,6 +26189,11 @@ ColorPicker = React.createClass({
 module.exports = ColorPicker;
 
 
+<<<<<<< HEAD
+=======
+},{"./avatar":179,"./slug":194,"./title":195}],188:[function(require,module,exports){
+var CurrentUserViewActions, SettingsMixin;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 },{}],45:[function(require,module,exports){
 var ColorPicker_Popup;
@@ -25533,7 +27012,7 @@ module.exports = SettingsMixin;
 
 
 
-},{"../../../actions/view/current_user":15}],181:[function(require,module,exports){
+},{"../../../actions/view/current_user":15}],189:[function(require,module,exports){
 var CANCEL_TIMEOUT, SettingsPasswordEdit, cx;
 
 cx = require('react/lib/cx');
@@ -25766,7 +27245,7 @@ window.DesignSettingsPopup_ControlsOpacityItem = React.createClass({
     saveCallback: React.PropTypes.func.isRequired
 =======
 
-},{"react/lib/cx":568}],182:[function(require,module,exports){
+},{"react/lib/cx":576}],190:[function(require,module,exports){
 var EDIT_STATE, SHOW_STATE, SettingsPassword, SettingsPasswordEdit, SettingsPasswordShow;
 
 SettingsPasswordShow = require('./show');
@@ -25823,7 +27302,7 @@ module.exports = SettingsPassword;
 
 
 
-},{"./edit":181,"./show":183}],183:[function(require,module,exports){
+},{"./edit":189,"./show":191}],191:[function(require,module,exports){
 var SettingsPasswordShow;
 
 SettingsPasswordShow = React.createClass({
@@ -25858,7 +27337,7 @@ module.exports = SettingsPasswordShow;
 
 
 
-},{}],184:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 var SettingsRadioItem;
 
 SettingsRadioItem = React.createClass({
@@ -25995,7 +27474,7 @@ module.exports = SettingsRadioItem;
 
 
 
-},{}],185:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 var LinkedStateMixin, SettingsAccounts, SettingsEmail, SettingsHeader, SettingsMixin, SettingsPassword, SettingsRadioItem;
 
 SettingsHeader = require('./header');
@@ -26083,6 +27562,7 @@ window.Settings = React.createClass({
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 },{}],55:[function(require,module,exports){
 var CurrentUserServerActions, cx;
@@ -26212,6 +27692,9 @@ window.DesignSettingsPopup = React.createClass({
       return i18n.t('settings_still_saving_confirm');
 =======
 },{"./accounts":170,"./email/email":174,"./header":179,"./mixins/settings":180,"./password/password":182,"./radio_item":184,"react/lib/LinkedStateMixin":479}],186:[function(require,module,exports){
+=======
+},{"./accounts":178,"./email/email":182,"./header":187,"./mixins/settings":188,"./password/password":190,"./radio_item":192,"react/lib/LinkedStateMixin":487}],194:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var PropTypes, SettingsSlug;
 
 PropTypes = React.PropTypes;
@@ -26253,7 +27736,7 @@ module.exports = SettingsSlug;
 
 
 
-},{}],187:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 var SettingsTitle;
 
 SettingsTitle = React.createClass({
@@ -26323,7 +27806,7 @@ window.EditableField = React.createClass({
       maxLength: 140
 =======
 
-},{}],188:[function(require,module,exports){
+},{}],196:[function(require,module,exports){
 window.ShellBox = React.createClass({
   mixins: [ReactUnmountMixin],
   getDefaultProps: function() {
@@ -26586,8 +28069,12 @@ window.EmbedComponentWithCover = React.createClass({
 });
 
 
+<<<<<<< HEAD
 =======
 },{}],189:[function(require,module,exports){
+=======
+},{}],197:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var EmailConfirmRegistration, SocialNetworksConfirmRegistration;
 
 EmailConfirmRegistration = require('../auth/email/confirm_registration');
@@ -26661,6 +28148,7 @@ FORM_STATE = 'form';
 
 LINK_STATE = 'link';
 
+<<<<<<< HEAD
 window.EntryCommentBox_CommentCreateFormManager = React.createClass({
   mixins: [RequesterMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -26809,6 +28297,9 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({
     return window.commentsMediator.doFormClosed();
 =======
 },{"../auth/email/confirm_registration":29,"../auth/social_networks/confirm_registration":36}],190:[function(require,module,exports){
+=======
+},{"../auth/email/confirm_registration":37,"../auth/social_networks/confirm_registration":44}],198:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var STATE_GUESSED, STATE_NONE;
 
 STATE_NONE = 'none';
@@ -26864,6 +28355,7 @@ window.SmartFollowStatus = React.createClass({
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 },{}],60:[function(require,module,exports){
 window.EntryCommentBox_CommentEditFormManager = React.createClass({
@@ -26925,6 +28417,9 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({
     });
 =======
 },{}],191:[function(require,module,exports){
+=======
+},{}],199:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.Spinner = React.createClass({
   propTypes: {
     size: React.PropTypes.number
@@ -26950,6 +28445,7 @@ window.Spinner = React.createClass({
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{}],61:[function(require,module,exports){
 var REPLIES_LIMIT;
 
@@ -26973,6 +28469,9 @@ window.EntryCommentBox_CommentForm = React.createClass({
       disabled: false
 =======
 },{}],192:[function(require,module,exports){
+=======
+},{}],200:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var FADE_SPEED;
 
 FADE_SPEED = 300;
@@ -27020,7 +28519,7 @@ module.experts = window.TlogAlert = React.createClass({
 
 
 
-},{}],193:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 var AvatarToolbar, ConnectStoreMixin, CurrentUserStore;
 
 CurrentUserStore = require('../../stores/current_user');
@@ -27054,9 +28553,30 @@ AvatarToolbar = React.createClass({
         "size": 64.
       });
     }
+<<<<<<< HEAD
+=======
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser(),
+      logged: CurrentUserStore.isLogged()
+    };
+  }
+});
+
+module.exports = AvatarToolbar;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":307,"../../stores/current_user":298}],202:[function(require,module,exports){
+window.CloseToolbar = React.createClass({
+  mixins: [TouchMixin],
+  render: function() {
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
     return React.createElement("div", {
       "className": "comment-form"
     }, React.createElement("div", {
+<<<<<<< HEAD
       "className": "comment-form__table"
     }, React.createElement("div", {
       "className": "comment-form__table-cell"
@@ -27411,6 +28931,8 @@ window.CloseToolbar = React.createClass({
       "onClick": this.props.onClick,
       "className": "toolbar toolbar--close"
     }, React.createElement("div", {
+=======
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
       "className": "toolbar__toggle"
     }, React.createElement("i", {
       "className": "icon icon--cross"
@@ -27420,7 +28942,11 @@ window.CloseToolbar = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{}],195:[function(require,module,exports){
+=======
+},{}],203:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, PopupActions, PropTypes, SEARCH_TITLE_I18N_KEYS, Scroller, UserToolbar, UserToolbarActions, UserToolbarAdditionalList, UserToolbarGuestList, UserToolbarList, UserToolbarToggle, cx, _;
 
 _ = require('lodash');
@@ -27571,8 +29097,21 @@ module.exports = UserToolbar;
 >>>>>>> Editor store and services [#89871770]
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],65:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBar = React.createClass({
+=======
+
+},{"../../../../shared/react/mixins/connectStore":307,"../../actions/popup":11,"../../actions/userToolbar":14,"../../messaging/stores/messaging_status":276,"../../stores/current_user":298,"../common/scroller/scroller":55,"./user/additionalList":204,"./user/guestList":205,"./user/list":206,"./user/toggle":210,"lodash":464,"react/lib/cx":576}],204:[function(require,module,exports){
+var PropTypes, UserToolbarAdditionalList, UserToolbarListItem;
+
+UserToolbarListItem = require('./list/item');
+
+PropTypes = React.PropTypes;
+
+UserToolbarAdditionalList = React.createClass({
+  displayName: 'UserToolbarAdditionalList',
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
   propTypes: {
     name: React.PropTypes.string.isRequired,
     commentId: React.PropTypes.number.isRequired,
@@ -27611,6 +29150,15 @@ window.EntryCommentBox_CommentMetaBar = React.createClass({
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+module.exports = UserToolbarAdditionalList;
+
+
+
+},{"./list/item":207}],205:[function(require,module,exports){
+var UserToolbarGuestList, UserToolbarListItem;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 },{}],66:[function(require,module,exports){
@@ -27654,7 +29202,12 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass({
 },{}],67:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, cx;
 
+<<<<<<< HEAD
 cx = require('react/lib/cx');
+=======
+},{"./list/item":207}],206:[function(require,module,exports){
+var PropTypes, UserToolbarList, UserToolbarListItem, UserToolbarListSubList, UserToolbarListSubListItem;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 MOUSE_LEAVE_TIMEOUT = 300;
 
@@ -28190,7 +29743,7 @@ module.exports = UserToolbarList;
 
 
 
-},{"./list/item":199,"./list/subList":200,"./list/subList/item":201}],199:[function(require,module,exports){
+},{"./list/item":207,"./list/subList":208,"./list/subList/item":209}],207:[function(require,module,exports){
 var PropTypes, UserToolbarListItem, cloneWithProps;
 
 cloneWithProps = require('react/lib/cloneWithProps');
@@ -28296,7 +29849,7 @@ module.exports = UserToolbarListItem;
 
 
 
-},{"react/lib/cloneWithProps":563}],200:[function(require,module,exports){
+},{"react/lib/cloneWithProps":571}],208:[function(require,module,exports){
 var PropTypes, UserToolbarListSubList;
 
 PropTypes = React.PropTypes;
@@ -28328,7 +29881,7 @@ module.exports = UserToolbarListSubList;
 
 
 
-},{}],201:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 var PropTypes, UserToolbarListSubListItem;
 
 PropTypes = React.PropTypes;
@@ -28374,7 +29927,7 @@ module.exports = UserToolbarListSubListItem;
 
 
 
-},{}],202:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 var PropTypes, UserToolbarToggle;
 
 PropTypes = React.PropTypes;
@@ -28422,7 +29975,7 @@ module.exports = UserToolbarToggle;
 
 
 
-},{}],203:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 var EVENT_NAME_MAP, ReactTransitionGroup, TICK, TimeoutTransitionGroupChild, animationAllowed, animationSupported, detectEvents, endEvents;
 
 ReactTransitionGroup = require('react/lib/ReactTransitionGroup');
@@ -28590,7 +30143,7 @@ window.TimeoutTransitionGroup = React.createClass({
 
 >>>>>>> Editor store and services [#89871770]
 
-},{"react/lib/ReactTransitionGroup":540}],204:[function(require,module,exports){
+},{"react/lib/ReactTransitionGroup":548}],212:[function(require,module,exports){
 var PureRenderMixin, cx;
 
 <<<<<<< HEAD
@@ -28862,7 +30415,7 @@ React.mixins.add('CommentsMixin', [CommentsMixin, RequesterMixin, ComponentManip
 >>>>>>> Editor store and services [#89871770]
 
 
-},{"react/lib/ReactComponentWithPureRenderMixin":491,"react/lib/cx":568}],205:[function(require,module,exports){
+},{"react/lib/ReactComponentWithPureRenderMixin":499,"react/lib/cx":576}],213:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 <<<<<<< HEAD
@@ -28977,7 +30530,7 @@ module.exports = ApiConstants;
 
 
 
-},{"react/lib/keyMirror":596}],206:[function(require,module,exports){
+},{"react/lib/keyMirror":604}],214:[function(require,module,exports){
 var ApiConstants, EditorConstants, UserToolbarConstants;
 
 ApiConstants = require('./api');
@@ -28994,7 +30547,7 @@ module.exports = {
 
 
 
-},{"./api":205,"./editor":207,"./userToolbar":208}],207:[function(require,module,exports){
+},{"./api":213,"./editor":215,"./userToolbar":216}],215:[function(require,module,exports){
 var EditorConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -29023,6 +30576,7 @@ DROPDOWN_OPENED_BY_CLICK = 'openedByClick';
 
 MARGIN_BETWEEN_TOGGLER_AND_MENU = 20;
 
+<<<<<<< HEAD
 window.EntryMetabarDropdownMenu = React.createClass({
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', ComponentManipulationsMixin],
   propTypes: {
@@ -29191,6 +30745,9 @@ window.EntryMetabarDropdownMenu = React.createClass({
     }
 =======
 },{"react/lib/keyMirror":596}],208:[function(require,module,exports){
+=======
+},{"react/lib/keyMirror":604}],216:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var UserToolbarConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -29204,7 +30761,7 @@ module.exports = UserToolbarConstants;
 
 
 
-},{"react/lib/keyMirror":596}],209:[function(require,module,exports){
+},{"react/lib/keyMirror":604}],217:[function(require,module,exports){
 var GuideController;
 
 GuideController = {
@@ -29270,6 +30827,66 @@ GuideController = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+module.exports = GuideController;
+
+
+
+},{}],218:[function(require,module,exports){
+var Constants, LayoutStatesController;
+
+Constants = require('../constants/constants');
+
+LayoutStatesController = (function() {
+  LayoutStatesController.prototype.layoutEl = null;
+
+  LayoutStatesController.prototype.states = {
+    userToolbar: 'main-toolbar-open'
+  };
+
+  function LayoutStatesController(_arg) {
+    var layoutEl;
+    this.dispatcher = _arg.dispatcher, layoutEl = _arg.layoutEl;
+    this.layoutEl = layoutEl != null ? layoutEl : document.body;
+    this.listenDispatcher();
+  }
+
+  LayoutStatesController.prototype.toggleState = function(UIelement, value) {
+    var methodName, stateName;
+    stateName = this.states[UIelement];
+    methodName = value ? 'add' : 'remove';
+    return this.layoutEl.classList[methodName](stateName);
+  };
+
+  LayoutStatesController.prototype.listenDispatcher = function() {
+    return this.dispatcher.register((function(_this) {
+      return function(payload) {
+        var action;
+        action = payload.action;
+        switch (action.type) {
+          case Constants.userToolbar.INIT_VISIBILITY:
+          case Constants.userToolbar.TOGGLE_VISIBILITY:
+            return _this.toggleState('userToolbar', action.value);
+        }
+      };
+    })(this));
+  };
+
+  return LayoutStatesController;
+
+})();
+
+module.exports = LayoutStatesController;
+
+
+
+},{"../constants/constants":214}],219:[function(require,module,exports){
+window.ReactPopup = (function() {
+  function ReactPopup() {
+    this.popupContainer = $('<\div>').appendTo('body').get(0);
+  }
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 },{"react/lib/cx":599}],80:[function(require,module,exports){
@@ -29535,7 +31152,7 @@ window.ReactPopup = (function() {
 
 
 
-},{}],212:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 var PopupController, _;
 
 _ = require('lodash');
@@ -29622,7 +31239,7 @@ module.exports = PopupController;
 
 
 
-},{"lodash":456}],213:[function(require,module,exports){
+},{"lodash":464}],221:[function(require,module,exports){
 window.ReactShellBox = (function() {
   function ReactShellBox() {
     var container;
@@ -29695,7 +31312,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
 
 
 
-},{}],214:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 window.TastyAlertController = {
   show: function(_arg) {
     var buttonColor, buttonText, container, message, onAccept, regex, title;
@@ -29894,7 +31511,7 @@ window.EntryMetabar = React.createClass({
 =======
 
 
-},{}],215:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 window.TastyConfirmController = {
   show: function(_arg) {
     var acceptButtonColor, acceptButtonText, container, message, messageWithoutBR, onAccept, regex, rejectButtonText;
@@ -29927,7 +31544,7 @@ window.TastyConfirmController = {
 
 
 
-},{}],216:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 window.TastyEvents = new EventEmitter();
 
 TastyEvents.keys = {
@@ -29985,6 +31602,7 @@ TastyEvents.keys = {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{}],86:[function(require,module,exports){
 window.EntryMetabarTag = React.createClass({
   propTypes: {
@@ -30039,6 +31657,9 @@ window.EntryMetabarTags = React.createClass({
     }
 =======
 },{}],217:[function(require,module,exports){
+=======
+},{}],225:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.TastyLockingAlertController = {
   show: function(_arg) {
     var action, container, message, regex, title;
@@ -30068,7 +31689,7 @@ window.TastyLockingAlertController = {
 
 
 
-},{}],218:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 window.TastyNotifyController = {
   _notificationList: [],
   notify: function(type, text, timeout) {
@@ -30149,6 +31770,7 @@ TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() 
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{}],88:[function(require,module,exports){
 window.FeedBricks = React.createClass({
   mixins: [FeedBaseMixin],
@@ -30203,6 +31825,9 @@ window.FeedBricks = React.createClass({
     });
 =======
 },{}],219:[function(require,module,exports){
+=======
+},{}],227:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
 
 window.TastySoundController = {
@@ -30326,7 +31951,7 @@ window.Feed = React.createClass({
 =======
 
 
-},{}],220:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 var BaseDispatcher,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -30361,7 +31986,7 @@ module.exports = BaseDispatcher;
 >>>>>>> Editor store and services [#89871770]
 
 
-},{}],221:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 var BaseDispatcher;
 
 <<<<<<< HEAD
@@ -30455,10 +32080,14 @@ window.CurrentUserDispatcher = _.extend(new BaseDispatcher(), {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{}],92:[function(require,module,exports){
 var CLASS_PREFIX_STATE, STATE_ERROR, STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_PROCESS, STATE_REQUESTED;
 =======
 },{"./_base":220}],222:[function(require,module,exports){
+=======
+},{"./_base":228}],230:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var AppDispatcher, Dispatcher, _;
 >>>>>>> Editor store and services [#89871770]
 
@@ -30685,7 +32314,7 @@ module.exports = AppDispatcher;
 
 
 
-},{"flux":450,"lodash":456}],223:[function(require,module,exports){
+},{"flux":458,"lodash":464}],231:[function(require,module,exports){
 window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     var payload;
@@ -30707,7 +32336,7 @@ window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],224:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 var NormalizedEntry, _;
 
 _ = require('lodash');
@@ -30725,7 +32354,7 @@ module.exports = NormalizedEntry;
 
 
 
-},{"lodash":456}],225:[function(require,module,exports){
+},{"lodash":464}],233:[function(require,module,exports){
 window.AppHelpers = {
   reselectAndFocus: function(node) {
     node.focus();
@@ -30784,7 +32413,7 @@ window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
 =======
 
 
-},{}],226:[function(require,module,exports){
+},{}],234:[function(require,module,exports){
 var CLOSED_STATE, COMMENT_CREATE_STATE, COMMENT_EDIT_STATE;
 
 CLOSED_STATE = 'closed';
@@ -31162,7 +32791,7 @@ window.commentsMediator = new CommentsMediator();
 
 
 
-},{}],227:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 window.ConversationActions = {
   clickConversation: function(conversationId) {
     return MessagingDispatcher.handleViewAction({
@@ -31198,7 +32827,7 @@ window.ConversationActions = {
 
 
 
-},{}],228:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 window.MessageActions = {
   newMessage: function(_arg) {
     var content, conversationId, uuid;
@@ -31245,7 +32874,7 @@ window.HeroProfileStats_FollowerItem = React.createClass({
 =======
 
 
-},{}],229:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 window.NotificationActions = {
   readNotification: function(notificationId) {
     console.log('читаем уведомление', notificationId);
@@ -31255,7 +32884,7 @@ window.NotificationActions = {
 
 
 
-},{}],230:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 window.PopupActions = {
   closeMessagesPopup: function() {
     messagingService.closeMessagesPopup();
@@ -31282,7 +32911,7 @@ window.PopupActions = {
 
 
 
-},{}],231:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 window.WriteMessageButton = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired
@@ -31303,7 +32932,7 @@ window.WriteMessageButton = React.createClass({
 
 
 
-},{}],232:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 window.MessagesPopup_Conversations = React.createClass({
   render: function() {
 <<<<<<< HEAD
@@ -31343,6 +32972,7 @@ window.MessagesPopup_Conversations = React.createClass({
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{}],100:[function(require,module,exports){
 window.HeroProfileStats_FollowingItem = React.createClass({
   propTypes: {
@@ -31367,6 +32997,9 @@ window.HeroProfileStats_FollowingItem = React.createClass({
     }, this.props.relationship.user.name))));
 =======
 },{}],233:[function(require,module,exports){
+=======
+},{}],241:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.MessagesPopup_ConversationsListEmpty = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -31382,6 +33015,7 @@ window.MessagesPopup_ConversationsListEmpty = React.createClass({
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 },{}],101:[function(require,module,exports){
 window.HeroProfileStats_TagItem = React.createClass({
@@ -31406,6 +33040,9 @@ window.HeroProfileStats_TagItem = React.createClass({
 
 =======
 },{}],234:[function(require,module,exports){
+=======
+},{}],242:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.MessagesPopup_ConversationsList = React.createClass({
   mixins: [ScrollerMixin],
   getInitialState: function() {
@@ -31541,8 +33178,12 @@ window.HeroProfileStats_Popup = React.createClass({
   }
 });
 
+<<<<<<< HEAD
 =======
 },{}],235:[function(require,module,exports){
+=======
+},{}],243:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var cx;
 
 cx = require('react/lib/cx');
@@ -31630,7 +33271,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({
 
 >>>>>>> Editor store and services [#89871770]
 
-},{"react/lib/cx":568}],236:[function(require,module,exports){
+},{"react/lib/cx":576}],244:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, cx;
 
 <<<<<<< HEAD
@@ -31739,6 +33380,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{}],104:[function(require,module,exports){
 var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS, HeroProfile_SettingsButton;
 
@@ -31980,6 +33622,9 @@ window.MessagesPopup_Chooser = React.createClass({
 
 
 },{"react/lib/cx":568}],237:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],245:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.MessagesPopup_ChooserButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -31997,6 +33642,7 @@ window.MessagesPopup_ChooserButton = React.createClass({
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 },{"./buttons/settings":93}],105:[function(require,module,exports){
 var HERO_AVATAR_SIZE;
@@ -32020,6 +33666,9 @@ window.HeroProfileAvatar = React.createClass({
     })));
 =======
 },{}],238:[function(require,module,exports){
+=======
+},{}],246:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var LinkedStateMixin;
 
 LinkedStateMixin = require('react/lib/LinkedStateMixin');
@@ -32087,6 +33736,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass({
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{}],106:[function(require,module,exports){
 window.HeroProfileHead = React.createClass({
   propTypes: {
@@ -32127,6 +33777,9 @@ window.HeroProfileHead = React.createClass({
     });
 =======
 },{"react/lib/LinkedStateMixin":479}],239:[function(require,module,exports){
+=======
+},{"react/lib/LinkedStateMixin":487}],247:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
 
 LOADING_STATE = 'loadingState';
@@ -32266,6 +33919,7 @@ window.HeroProfileHeadStatic = React.createClass({
 
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 },{}],107:[function(require,module,exports){
 window.HeroProfileStats = React.createClass({
   mixins: [ReactGrammarMixin],
@@ -32402,6 +34056,9 @@ window.HeroProfileStats = React.createClass({
     return this.props.user.is_privacy;
 =======
 },{}],240:[function(require,module,exports){
+=======
+},{}],248:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var cx;
 
 cx = require('react/lib/cx');
@@ -32442,6 +34099,7 @@ window.MessagesPopup_ChooserResultsItem = React.createClass({
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 },{}],108:[function(require,module,exports){
 var cx;
@@ -32485,6 +34143,9 @@ window.HeroProfileStatsItem = React.createClass({
 
 =======
 },{"react/lib/cx":568}],241:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],249:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CHOOSER_STATE, PROCESS_STATE;
 
 PROCESS_STATE = 'process';
@@ -32541,6 +34202,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass({
 var FIRST_ROW_RATIO, NEXT_ROWS_RATIO, update;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 update = require('react/lib/update');
 
 FIRST_ROW_RATIO = 2.5;
@@ -32548,6 +34210,10 @@ FIRST_ROW_RATIO = 2.5;
 NEXT_ROWS_RATIO = 4;
 
 window.ImagesCollageUrl = React.createClass({
+=======
+},{}],250:[function(require,module,exports){
+window.MessagesPopup_LoadingMessage = React.createClass({
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
   propTypes: {
     imageUrls: React.PropTypes.array.isRequired
   },
@@ -32717,7 +34383,7 @@ window.MessagesPopup_LoadingMessage = React.createClass({
 
 
 
-},{}],243:[function(require,module,exports){
+},{}],251:[function(require,module,exports){
 var CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, ENTER_TIMEOUT, LEAVE_TIMEOUT, THREAD_STATE;
 
 CONVERSATIONS_STATE = 'conversations';
@@ -32825,7 +34491,7 @@ window.MessagesPopup = React.createClass({
 
 
 
-},{}],244:[function(require,module,exports){
+},{}],252:[function(require,module,exports){
 window.MessagesPopup_ThreadMessageForm = React.createClass({
   propTypes: {
     conversationId: React.PropTypes.number.isRequired
@@ -32959,6 +34625,7 @@ window.TastyAlert = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{}],111:[function(require,module,exports){
 var FADE_DURATION;
 
@@ -33028,6 +34695,9 @@ window.TastyConfirm = React.createClass({
 });
 =======
 },{}],245:[function(require,module,exports){
+=======
+},{}],253:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.MessagesPopup_MessageListEmpty = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -33040,7 +34710,7 @@ window.MessagesPopup_MessageListEmpty = React.createClass({
 
 
 
-},{}],246:[function(require,module,exports){
+},{}],254:[function(require,module,exports){
 var savedScrollHeight;
 
 savedScrollHeight = null;
@@ -33153,7 +34823,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass({
 
 >>>>>>> Editor store and services [#89871770]
 
-},{}],247:[function(require,module,exports){
+},{}],255:[function(require,module,exports){
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, cx;
 
 cx = require('react/lib/cx');
@@ -33215,8 +34885,21 @@ window.TastyLockingAlert = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{}],113:[function(require,module,exports){
 var DEFAULT_TIMEOUT, DEFAULT_TYPE;
+=======
+},{"react/lib/cx":576}],256:[function(require,module,exports){
+var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
+
+ERROR_STATE = 'error';
+
+SENT_STATE = 'sent';
+
+READ_STATE = 'read';
+
+SENDING_STATE = 'sending';
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 DEFAULT_TYPE = 'success';
 
@@ -33781,6 +35464,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass({
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{}],122:[function(require,module,exports){
 var cx;
 
@@ -33810,6 +35494,9 @@ window.PersonsPopup_MenuItem = React.createClass({
     }, " ", this.props.totalCount)));
 =======
 },{}],249:[function(require,module,exports){
+=======
+},{}],257:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.MessagesPopup_Thread = React.createClass({
   displayName: 'MessagesPopup_Thread',
   propTypes: {
@@ -33847,13 +35534,31 @@ window.MessagesPopup_Thread = React.createClass({
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{"react/lib/cx":599}],123:[function(require,module,exports){
 var ERROR_STATE, LOADED_STATE, LOADING_STATE, cx;
+=======
+},{}],258:[function(require,module,exports){
+window.MessagesPopup_UIBackButton = React.createClass({
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "onClick": this.props.onClick,
+      "className": "messages__back js-messages-back"
+    }, React.createElement("div", {
+      "className": "icon icon--arrow-left"
+    }));
+  }
+});
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 cx = require('react/lib/cx');
 
 ERROR_STATE = 'error';
 
+<<<<<<< HEAD
 LOADED_STATE = 'loaded';
 
 LOADING_STATE = 'loading';
@@ -34063,6 +35768,9 @@ window.MessagesPopup_UIBackButton = React.createClass({
 
 
 },{}],251:[function(require,module,exports){
+=======
+},{}],259:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.MessagesPopup_UICreateNewConversationButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -34122,6 +35830,7 @@ window.PersonsPopup_GuessedPanel = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{}],127:[function(require,module,exports){
 window.PersonsPopup_IgnoredPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
@@ -34159,6 +35868,9 @@ window.PersonsPopup_RequestedPanel = React.createClass({
     };
 =======
 },{}],252:[function(require,module,exports){
+=======
+},{}],260:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.NotificationsPopup_NotificationsEmpty = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -34232,6 +35944,7 @@ window.PersonsPopup_FacebookPanel = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{"./facebook/signIn":130,"./facebook/suggestions":131,"./mixins/socialNetwork":136}],130:[function(require,module,exports){
 var VkontakteSignIn;
 
@@ -34252,6 +35965,9 @@ VkontakteSignIn = React.createClass({
     return window.location = ApiRoutes.omniauth_url('facebook');
 =======
 },{}],253:[function(require,module,exports){
+=======
+},{}],261:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var IMAGE_SIZE, cx;
 
 cx = require('react/lib/cx');
@@ -34462,6 +36178,7 @@ var FacebookSuggestionsItem, PropTypes;
 
 PropTypes = React.PropTypes;
 
+<<<<<<< HEAD
 FacebookSuggestionsItem = React.createClass({
   propTypes: {
     suggestion: PropTypes.object.isRequired
@@ -34474,6 +36191,9 @@ FacebookSuggestionsItem = React.createClass({
     }));
 =======
 },{"react/lib/cx":568}],254:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],262:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.NotificationsPopup_Notifications = React.createClass({
   getInitialState: function() {
     return this.getStateFromStore();
@@ -34516,7 +36236,7 @@ window.NotificationsPopup_Notifications = React.createClass({
 
 
 
-},{}],255:[function(require,module,exports){
+},{}],263:[function(require,module,exports){
 window.NotificationsPopup = React.createClass({
   mixins: [ScrollerMixin],
   render: function() {
@@ -34546,7 +36266,7 @@ window.NotificationsPopup = React.createClass({
 
 
 
-},{}],256:[function(require,module,exports){
+},{}],264:[function(require,module,exports){
 var ADVANCED_STATE, BASIC_STATE, MOUSE_LEAVE_TIMEOUT, cx;
 
 cx = require('react/lib/cx');
@@ -34688,10 +36408,14 @@ module.exports = FacebookSuggestionsItem;
 
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 },{}],136:[function(require,module,exports){
 var ConnectStoreMixin, ERROR_STATE, LOADED_STATE, LOADING_STATE, SocialNetworkPanelMixin;
 =======
 },{"react/lib/cx":568}],257:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],265:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var cx;
 
 cx = require('react/lib/cx');
@@ -34749,7 +36473,12 @@ ConnectStoreMixin = require('../../../../../../../shared/react/mixins/connectSto
 <<<<<<< HEAD
 ERROR_STATE = 'error';
 
+<<<<<<< HEAD
 LOADED_STATE = 'loaded';
+=======
+},{"react/lib/cx":576}],266:[function(require,module,exports){
+var cx;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 LOADING_STATE = 'loading';
 
@@ -34928,6 +36657,7 @@ module.exports = SuggestionListMixin;
 
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 },{}],138:[function(require,module,exports){
 var PropTypes, SuggestionsMixin;
 
@@ -34951,6 +36681,9 @@ SuggestionsMixin = {
       return React.createElement(EmptyComponent, null);
 =======
 },{"react/lib/cx":568}],259:[function(require,module,exports){
+=======
+},{"react/lib/cx":576}],267:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.MessagingDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     return this.dispatch({
@@ -35063,6 +36796,7 @@ VkontakteSuggestions = require('./vkontakte/suggestions');
 
 VkontakteSignIn = require('./vkontakte/signIn');
 
+<<<<<<< HEAD
 window.PersonsPopup_VkontaktePanel = React.createClass({
   displayName: 'PersonsPopup_VkontaktePanel',
   mixins: [SocialNetworkPanelMixin, window.RequesterMixin],
@@ -35114,6 +36848,9 @@ window.PersonsPopup_VkontaktePanel = React.createClass({
 });
 =======
 },{}],260:[function(require,module,exports){
+=======
+},{}],268:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.MessagingRequester = (function() {
   function MessagingRequester(_arg) {
     this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
@@ -35290,9 +37027,13 @@ VkontakteSubscribeAllButton = React.createClass({
   }
 });
 
+<<<<<<< HEAD
 module.exports = VkontakteSubscribeAllButton;
 =======
 },{}],261:[function(require,module,exports){
+=======
+},{}],269:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 window.MessagingService = (function() {
@@ -35902,7 +37643,7 @@ window.PopupSpinner = React.createClass({
 
 
 
-},{}],262:[function(require,module,exports){
+},{}],270:[function(require,module,exports){
 window.MessagingMock = {
   message: function() {
     var conversation, recipient, sender;
@@ -35943,6 +37684,7 @@ window.MessagingMock = {
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 },{}],151:[function(require,module,exports){
 var LinkedStateMixin;
@@ -35997,6 +37739,9 @@ window.PopupBox = React.createClass({
     }
 =======
 },{}],263:[function(require,module,exports){
+=======
+},{}],271:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -36158,7 +37903,7 @@ module.exports = BaseStore;
 
 
 
-},{}],264:[function(require,module,exports){
+},{}],272:[function(require,module,exports){
 var CONNECTION_EVENT, _connectionState;
 
 CONNECTION_EVENT = 'connectionStateUpdated';
@@ -36255,6 +38000,7 @@ window.PostActions_PrivacyButton = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],154:[function(require,module,exports){
 var cx;
 
@@ -36301,6 +38047,9 @@ window.PostActions_VoteButton = React.createClass({
     return this.$button.tooltip('hide');
 =======
 },{}],265:[function(require,module,exports){
+=======
+},{}],273:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CHANGE_EVENT, _conversations;
 
 CHANGE_EVENT = 'change';
@@ -36419,6 +38168,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 },{"react/lib/cx":599}],155:[function(require,module,exports){
 var CHOICER_ITEMS, CHOICER_TYPES, cx;
@@ -36555,6 +38305,9 @@ window.PostEditor_ChoicerItem = React.createClass({
     }
 =======
 },{}],266:[function(require,module,exports){
+=======
+},{}],274:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CHANGE_EVENT, _allMessagesLoaded, _messages;
 
 CHANGE_EVENT = 'change';
@@ -36710,6 +38463,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(function(payload) {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{"react/lib/cx":599}],156:[function(require,module,exports){
 var DEMO_IDS;
 
@@ -36793,6 +38547,9 @@ window.PostEditor_Demo = React.createClass({
     }
 =======
 },{}],267:[function(require,module,exports){
+=======
+},{}],275:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
 
 CHANGE_EVENT = 'change';
@@ -37008,7 +38765,7 @@ window.PostEditor_EditorContainer = React.createClass({
       "doneCallback": this.redirectToEntryPage
 =======
 
-},{}],268:[function(require,module,exports){
+},{}],276:[function(require,module,exports){
 var BaseStore, MessagingStatusStore, _, _messagingStatus;
 
 _ = require('lodash');
@@ -37050,7 +38807,7 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{"./_base":263,"lodash":456}],269:[function(require,module,exports){
+},{"./_base":271,"lodash":464}],277:[function(require,module,exports){
 var CHANGE_EVENT, _notifications;
 
 CHANGE_EVENT = 'change';
@@ -37185,6 +38942,7 @@ NotificationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{}],159:[function(require,module,exports){
 var EDITOR_MODES, EDITOR_OPTIONS;
 
@@ -37309,6 +39067,9 @@ window.TastyEditor = React.createClass({
 });
 =======
 },{}],270:[function(require,module,exports){
+=======
+},{}],278:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var BaseMixin, ERROR_TIMEOUT, ram, rau;
 
 ERROR_TIMEOUT = 1000;
@@ -37390,7 +39151,7 @@ React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
 
 
-},{}],271:[function(require,module,exports){
+},{}],279:[function(require,module,exports){
 window.ComponentManipulationsMixin = {
   safeUpdate: function(func) {
     if (!this._isUnmounted()) {
@@ -37409,7 +39170,7 @@ window.ComponentManipulationsMixin = {
 
 
 
-},{}],272:[function(require,module,exports){
+},{}],280:[function(require,module,exports){
 var ENTRY_DELETE_ANIMATION_SPEED;
 
 ENTRY_DELETE_ANIMATION_SPEED = 300;
@@ -37440,7 +39201,7 @@ var cx;
 =======
 >>>>>>> Editor store and services [#89871770]
 
-},{}],273:[function(require,module,exports){
+},{}],281:[function(require,module,exports){
 var ERROR_TIMEOUT;
 
 <<<<<<< HEAD
@@ -37527,7 +39288,7 @@ window.ErrorTimerMixin = {
 
 
 
-},{}],274:[function(require,module,exports){
+},{}],282:[function(require,module,exports){
 window.ReactGrammarMixin = {
   declension: function(number, titles) {
     var cases;
@@ -37569,7 +39330,12 @@ var INSERT_MODE, LOADED_MODE, PureRenderMixin, WELCOME_MODE, cx;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
+=======
+},{}],283:[function(require,module,exports){
+var COMPONENT_WIDTH, REPOSITION_TIMEOUT;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 WELCOME_MODE = 'welcome';
 
@@ -37764,7 +39530,7 @@ window.ReactPositionsMixin = {
 
 
 
-},{}],276:[function(require,module,exports){
+},{}],284:[function(require,module,exports){
 var Nanobar, nanobar, oldXHR;
 
 Nanobar = require('nanobar');
@@ -37909,6 +39675,7 @@ var cx;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 window.PostEditor_InstagramEditor = React.createClass({
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin, PostEditor_VideoMixin],
   render: function() {
@@ -37939,6 +39706,9 @@ window.PostEditor_InstagramEditor = React.createClass({
     })));
 =======
 },{"nanobar":undefined}],277:[function(require,module,exports){
+=======
+},{"nanobar":undefined}],285:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.ScrollerMixin = {
   componentDidMount: function() {
     $(document).on('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
@@ -38023,6 +39793,7 @@ window.PostEditor_AutosaveMixin = {
 
 
 
+<<<<<<< HEAD
 },{}],164:[function(require,module,exports){
 var cx;
 
@@ -38113,6 +39884,9 @@ window.PostEditor_QuoteEditor = React.createClass({
     };
 =======
 },{}],278:[function(require,module,exports){
+=======
+},{}],286:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.ReactShakeMixin = {
   shake: function() {
     var animationEnd, form;
@@ -38126,7 +39900,7 @@ window.ReactShakeMixin = {
 
 
 
-},{}],279:[function(require,module,exports){
+},{}],287:[function(require,module,exports){
 window.TouchMixin = {
   componentWillMount: function() {
     if (isMobile()) {
@@ -38139,6 +39913,7 @@ window.TouchMixin = {
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 },{}],166:[function(require,module,exports){
 var cx;
@@ -38202,6 +39977,9 @@ window.PostEditor_TextEditor = React.createClass({
     };
 =======
 },{}],280:[function(require,module,exports){
+=======
+},{}],288:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.ReactUnmountMixin = {
   unmount: function() {
     return _.defer((function(_this) {
@@ -38215,6 +39993,7 @@ window.ReactUnmountMixin = {
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 },{"react/lib/cx":599}],167:[function(require,module,exports){
 var cx;
@@ -38254,6 +40033,9 @@ window.PostEditor_VideoEditor = React.createClass({
 
 =======
 },{}],281:[function(require,module,exports){
+=======
+},{}],289:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var CurrentUserResource;
 
 CurrentUserResource = {
@@ -38304,7 +40086,7 @@ module.exports = CurrentUserResource;
 
 
 
-},{}],282:[function(require,module,exports){
+},{}],290:[function(require,module,exports){
 var DesignPresenterService;
 >>>>>>> Editor store and services [#89871770]
 
@@ -38707,7 +40489,7 @@ module.exports = DesignPresenterService;
 
 
 
-},{}],283:[function(require,module,exports){
+},{}],291:[function(require,module,exports){
 var DesignSettingsService;
 
 DesignSettingsService = {
@@ -38750,7 +40532,7 @@ module.exports = DesignSettingsService;
 
 
 
-},{}],284:[function(require,module,exports){
+},{}],292:[function(require,module,exports){
 var DesignStatesService, _;
 
 _ = require('lodash');
@@ -39048,7 +40830,7 @@ module.exports = DesignStatesService;
 
 
 
-},{"lodash":456}],285:[function(require,module,exports){
+},{"lodash":464}],293:[function(require,module,exports){
 var EntryKeeper, NormalizedEntry, STORAGE_PREFIX, keyAnonymous, keyExisting, keyNew, storage;
 
 NormalizedEntry = require('../entities/normalizedEntry');
@@ -39119,7 +40901,7 @@ module.exports = EntryKeeper;
 
 
 
-},{"../entities/normalizedEntry":224}],286:[function(require,module,exports){
+},{"../entities/normalizedEntry":232}],294:[function(require,module,exports){
 var EntryNormalizationService, NormalizedEntry, _;
 
 _ = require('lodash');
@@ -39177,7 +40959,7 @@ module.exports = EntryNormalizationService;
 
 
 
-},{"../entities/normalizedEntry":224,"lodash":456}],287:[function(require,module,exports){
+},{"../entities/normalizedEntry":232,"lodash":464}],295:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
 
 MOVE_OFFSET = 100;
@@ -39227,6 +41009,7 @@ cx = require('react/lib/cx');
 PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 window.MediaBox_Layout = React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {
@@ -39258,6 +41041,9 @@ window.MediaBox_Layout = React.createClass({
 });
 =======
 },{}],288:[function(require,module,exports){
+=======
+},{}],296:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 window.UuidService = {
   generate: function() {
     var s4;
@@ -39270,7 +41056,7 @@ window.UuidService = {
 
 
 
-},{}],289:[function(require,module,exports){
+},{}],297:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -39307,6 +41093,7 @@ DRAG_HOVER_CLASS = 'state--drag-hover';
 
 DRAGOFF_TIMEOUT = 500;
 
+<<<<<<< HEAD
 window.PostEditor_Dragging = {
   getInitialState: function() {
     return {
@@ -39365,6 +41152,9 @@ window.PostEditor_Dragging = {
     return this.refs.layout.refs.dropZone.getDOMNode();
 =======
 },{}],290:[function(require,module,exports){
+=======
+},{}],298:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var BaseStore, CurrentUserStore, currentUser;
 
 BaseStore = require('./_base');
@@ -39924,8 +41714,12 @@ window.VideoMediaBox_UrlInsert = React.createClass({
   }
 });
 
+<<<<<<< HEAD
 =======
 },{"./_base":289}],291:[function(require,module,exports){
+=======
+},{"./_base":297}],299:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (global){
 var AppDispatcher, BaseStore, Constants, EntryKeeperService, EntryNormalizationService, NormalizedEntry, _, _entry;
 
@@ -39984,7 +41778,7 @@ EditorStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../constants/constants":206,"../dispatchers/dispatcher":222,"../entities/normalizedEntry":224,"../services/entryKeeper":285,"../services/entryNormalization":286,"./_base":289,"lodash":456}],292:[function(require,module,exports){
+},{"../constants/constants":214,"../dispatchers/dispatcher":230,"../entities/normalizedEntry":232,"../services/entryKeeper":293,"../services/entryNormalization":294,"./_base":297,"lodash":464}],300:[function(require,module,exports){
 var CHANGE_EVENT, SUMMARY_CHANGE_EVENT, _relationships;
 
 CHANGE_EVENT = 'changed';
@@ -40256,6 +42050,7 @@ INSERT_MODE = 'insert';
 
 LOADING_MODE = 'loading';
 
+<<<<<<< HEAD
 window.VideoMediaBox = React.createClass({
   mixins: ['ReactActivitiesUser', RequesterMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -40394,6 +42189,9 @@ window.VideoMediaBox = React.createClass({
 });
 =======
 },{}],293:[function(require,module,exports){
+=======
+},{}],301:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var defaults,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -40609,7 +42407,7 @@ window.MediaBox_MusicWelcome = React.createClass({
 
 
 
-},{}],294:[function(require,module,exports){
+},{}],302:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -40618,7 +42416,7 @@ window.isMobile = function() {
 
 
 
-},{}],295:[function(require,module,exports){
+},{}],303:[function(require,module,exports){
 (function (global){
 global._ = require('lodash');
 
@@ -40659,23 +42457,140 @@ global.bowser = require('bowser');
 global.moment = require('../../../bower_components/momentjs/moment');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{}],189:[function(require,module,exports){
 var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
+=======
+global.Pusher = require('pusher');
+
+global.Modernizr = require('Modernizr');
+
+global.imagesLoaded = require('imagesloaded');
+
+global.MediumEditor = require('medium-editor');
+
+global.Undo = require('undo');
+
+global.introJs = require('introJs');
+
+global.VendorColorPicker = require('react-color-picker');
+
+require('aviator');
+
+require('swfobject');
+
+require('es5-shim');
+
+require('jquery.mousewheel')(global.jQuery);
+
+require('jquery.scrollto');
+
+require('screenviewer');
+
+require('baron');
+
+require('react-mixin-manager')(global.React);
+
+require('bootstrap.tooltip');
+
+require('jquery.ui.core');
+
+require('jquery.ui.widget');
+
+require('jquery.ui.mouse');
+
+require('jquery.ui.slider');
+
+require('jquery.ui.draggable');
+
+require('jquery.autosize');
+
+require('jquery.autosize.input');
+
+require('jquery.collage');
+
+require('jquery.waypoints');
+
+require('jquery.fileupload');
+
+require('jquery.shapeshift');
+
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../../../bower_components/momentjs/moment":8,"Modernizr":undefined,"aviator":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":458,"imagesloaded":461,"introJs":undefined,"jquery":6,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"lodash":464,"medium-editor":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-color-picker":undefined,"react-mixin-manager":undefined,"screenviewer":undefined,"swfobject":undefined,"undo":undefined}],304:[function(require,module,exports){
+var momentLocales;
+
+momentLocales = {
+  'ru': require('../../../bower_components/momentjs/locale/ru')
+};
+
+window.moment.locale('ru', momentLocales.ru);
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 STATE_FRIEND = 'friend';
 
 STATE_REQUESTED = 'requested';
 
+<<<<<<< HEAD
 STATE_IGNORED = 'ignored';
+=======
+},{"../../../bower_components/momentjs/locale/ru":7}],305:[function(require,module,exports){
+window.Tasty = {
+  start: function(options) {
+    var flashes, headers, locale, user;
+    if (options == null) {
+      options = {};
+    }
+    user = options.user, locale = options.locale, flashes = options.flashes;
+    headers = {};
+    if (user != null) {
+      headers['X-User-Token'] = user.api_key.access_token;
+    }
+    headers['X-Requested-With'] = 'XMLHttpRequest';
+    headers['X-Tasty-Client-Name'] = 'web_desktop';
+    headers['X-Tasty-Client-Version'] = TastySettings.version;
+    if (flashes != null) {
+      TastyUtils.showFlashes(flashes);
+    }
+    $.ajaxSetup({
+      headers: headers,
+      cache: true,
+      xhrFields: {
+        withCredentials: true
+      },
+      error: function(e) {
+        return TastyNotifyController.errorResponse(e);
+      }
+    });
+    return ReactApp.start({
+      user: user,
+      locale: locale
+    });
+  }
+};
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 STATE_GUESSED = 'guessed';
 
 STATE_NONE = 'none';
 
+<<<<<<< HEAD
 window.FollowButton = React.createClass({
   mixins: ['RelationshipMixin'],
   propTypes: {
     relationship: React.PropTypes.object.isRequired
+=======
+},{}],306:[function(require,module,exports){
+window.TastyUtils = {
+  showFlashes: function(flashes) {
+    if (flashes == null) {
+      flashes = [];
+    }
+    return _.each(flashes, function(flash) {
+      return TastyNotifyController.notify(flash[0], flash[1]);
+    });
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
   },
   getInitialState: function() {
     return {
@@ -41063,8 +42978,12 @@ window.TastyUtils = {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 },{}],299:[function(require,module,exports){
+=======
+},{}],307:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var ConnectStoreMixin, _;
 
 _ = require('lodash');
@@ -41111,10 +43030,49 @@ var STATE_IGNORED;
 <<<<<<< HEAD
 STATE_IGNORED = 'ignored';
 
+<<<<<<< HEAD
 window.RelationshipIgnoreButton = React.createClass({
   mixins: ['RelationshipMixin'],
   propTypes: {
     relationship: React.PropTypes.object.isRequired
+=======
+},{"lodash":464}],308:[function(require,module,exports){
+var ThumborService;
+
+ThumborService = {
+  thumborUrl: 'http://thumbor0.tasty0.ru',
+  imageUrl: function(_arg) {
+    var path, size, url;
+    url = _arg.url, path = _arg.path, size = _arg.size;
+    switch (TastySettings.env) {
+      case 'development':
+        return url;
+      default:
+        return this.thumborUrl + ("/unsafe/" + size + "/filters:no_upscale()/") + path;
+    }
+  }
+};
+
+module.exports = ThumborService;
+
+
+
+},{}],309:[function(require,module,exports){
+var ApiRoutes;
+
+ApiRoutes = {
+  omniauth_url: function(provider) {
+    return TastySettings.host + '/auth/' + provider;
+  },
+  iframely_url: function() {
+    return TastySettings.api_host + '/v1/embeding/iframely.json';
+  },
+  pusher_auth_url: function() {
+    return TastySettings.api_host + '/v1/messenger/auth';
+  },
+  calendar_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/calendar';
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
   },
   getInitialState: function() {
     return {
@@ -41401,8 +43359,13 @@ React.mixins.add('RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, Reque
 
 
 
+<<<<<<< HEAD
 },{}],194:[function(require,module,exports){
 var ERROR_STATE, LOADING_STATE, WAITING_STATE;
+=======
+},{}],310:[function(require,module,exports){
+var Routes;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 ERROR_STATE = 'error';
 
@@ -41488,7 +43451,22 @@ var CLASSNAME_ACTIVE, CLASSNAME_READY, DELAY_SLIDESHOW, STATE_LOADING, STATE_REA
 
 STATE_LOADING = 'loading';
 
+<<<<<<< HEAD
 STATE_READY = 'ready';
+=======
+},{}],311:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule AutoFocusMixin
+ * @typechecks static-only
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 CLASSNAME_READY = '__ready';
 
@@ -41562,7 +43540,41 @@ window.ScreenViewer = React.createClass({
   isReadyState: function() {
     return this.state.currentState === STATE_READY;
   }
+<<<<<<< HEAD
 });
+=======
+};
+
+module.exports = AutoFocusMixin;
+
+},{"./focusNode":421}],312:[function(require,module,exports){
+/**
+ * Copyright 2013 Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule BeforeInputEventPlugin
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var EventConstants = require("./EventConstants");
+var EventPropagators = require("./EventPropagators");
+var ExecutionEnvironment = require("./ExecutionEnvironment");
+var SyntheticInputEvent = require("./SyntheticInputEvent");
+
+var keyOf = require("./keyOf");
+
+var canUseTextInputEvent = (
+  ExecutionEnvironment.canUseDOM &&
+  'TextEvent' in window &&
+  !('documentMode' in document || isPresto())
+);
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 ScreenViewer_Slideshow = React.createClass({
   propTypes: {
@@ -41732,7 +43744,48 @@ ThumborService = {
   }
 };
 
+<<<<<<< HEAD
 module.exports = ThumborService;
+=======
+module.exports = BeforeInputEventPlugin;
+
+},{"./EventConstants":325,"./EventPropagators":330,"./ExecutionEnvironment":331,"./SyntheticInputEvent":399,"./keyOf":443}],313:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule CSSProperty
+ */
+
+"use strict";
+
+/**
+ * CSS properties which accept numbers but are not in units of "px".
+ */
+var isUnitlessNumber = {
+  columnCount: true,
+  flex: true,
+  flexGrow: true,
+  flexShrink: true,
+  fontWeight: true,
+  lineClamp: true,
+  lineHeight: true,
+  opacity: true,
+  order: true,
+  orphans: true,
+  widows: true,
+  zIndex: true,
+  zoom: true,
+
+  // SVG-related properties
+  fillOpacity: true,
+  strokeOpacity: true
+};
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 
@@ -41758,8 +43811,117 @@ ApiRoutes = {
   embed_url: function() {
     return TastySettings.api_host + '/v1/embed';
   },
+<<<<<<< HEAD
   design_settings_url: function(slug) {
     return TastySettings.api_host + '/v1/design_settings/' + slug;
+=======
+  font: {
+    fontStyle: true,
+    fontVariant: true,
+    fontWeight: true,
+    fontSize: true,
+    lineHeight: true,
+    fontFamily: true
+  }
+};
+
+var CSSProperty = {
+  isUnitlessNumber: isUnitlessNumber,
+  shorthandPropertyExpansions: shorthandPropertyExpansions
+};
+
+module.exports = CSSProperty;
+
+},{}],314:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule CSSPropertyOperations
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var CSSProperty = require("./CSSProperty");
+var ExecutionEnvironment = require("./ExecutionEnvironment");
+
+var camelizeStyleName = require("./camelizeStyleName");
+var dangerousStyleValue = require("./dangerousStyleValue");
+var hyphenateStyleName = require("./hyphenateStyleName");
+var memoizeStringOnly = require("./memoizeStringOnly");
+var warning = require("./warning");
+
+var processStyleName = memoizeStringOnly(function(styleName) {
+  return hyphenateStyleName(styleName);
+});
+
+var styleFloatAccessor = 'cssFloat';
+if (ExecutionEnvironment.canUseDOM) {
+  // IE8 only supports accessing cssFloat (standard) as styleFloat
+  if (document.documentElement.style.cssFloat === undefined) {
+    styleFloatAccessor = 'styleFloat';
+  }
+}
+
+if ("production" !== process.env.NODE_ENV) {
+  var warnedStyleNames = {};
+
+  var warnHyphenatedStyleName = function(name) {
+    if (warnedStyleNames.hasOwnProperty(name) && warnedStyleNames[name]) {
+      return;
+    }
+
+    warnedStyleNames[name] = true;
+    ("production" !== process.env.NODE_ENV ? warning(
+      false,
+      'Unsupported style property ' + name + '. Did you mean ' +
+      camelizeStyleName(name) + '?'
+    ) : null);
+  };
+}
+
+/**
+ * Operations for dealing with CSS properties.
+ */
+var CSSPropertyOperations = {
+
+  /**
+   * Serializes a mapping of style properties for use as inline styles:
+   *
+   *   > createMarkupForStyles({width: '200px', height: 0})
+   *   "width:200px;height:0;"
+   *
+   * Undefined values are ignored so that declarative programming is easier.
+   * The result should be HTML-escaped before insertion into the DOM.
+   *
+   * @param {object} styles
+   * @return {?string}
+   */
+  createMarkupForStyles: function(styles) {
+    var serialized = '';
+    for (var styleName in styles) {
+      if (!styles.hasOwnProperty(styleName)) {
+        continue;
+      }
+      if ("production" !== process.env.NODE_ENV) {
+        if (styleName.indexOf('-') > -1) {
+          warnHyphenatedStyleName(styleName);
+        }
+      }
+      var styleValue = styles[styleName];
+      if (styleValue != null) {
+        serialized += processStyleName(styleName) + ':';
+        serialized += dangerousStyleValue(styleName, styleValue) + ';';
+      }
+    }
+    return serialized || null;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
   },
   design_settings_cover_url: function(slug) {
     return TastySettings.api_host + '/v1/design_settings/' + slug + '/cover';
@@ -41900,6 +44062,22 @@ ApiRoutes = {
 module.exports = SearchResultsFeed;
 
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./CSSProperty":313,"./ExecutionEnvironment":331,"./camelizeStyleName":410,"./dangerousStyleValue":415,"./hyphenateStyleName":434,"./memoizeStringOnly":445,"./warning":455,"_process":457}],315:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule CallbackQueue
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 },{"../common/infiniteScroll/index":42}],197:[function(require,module,exports){
 var PropTypes, SearchActions, SearchResults, SearchResultsFeed, SearchResultsTlog;
@@ -42002,6 +44180,21 @@ SearchResults = React.createClass({
 
 module.exports = SearchResults;
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./Object.assign":336,"./PooledClass":337,"./invariant":436,"_process":457}],316:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ChangeEventPlugin
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 },{"../../actions/search":11,"./feed":196,"./tlog":198}],198:[function(require,module,exports){
@@ -42312,9 +44505,13 @@ Routes = {
 
 module.exports = Routes;
 
+<<<<<<< HEAD
 
 
 },{}],303:[function(require,module,exports){
+=======
+},{"./EventConstants":325,"./EventPluginHub":327,"./EventPropagators":330,"./ExecutionEnvironment":331,"./ReactUpdates":389,"./SyntheticEvent":397,"./isEventSupported":437,"./isTextInputElement":439,"./keyOf":443}],317:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -42346,7 +44543,11 @@ module.exports = Searchbox;
 module.exports = AutoFocusMixin;
 >>>>>>> Editor store and services [#89871770]
 
+<<<<<<< HEAD
 },{"./focusNode":413}],304:[function(require,module,exports){
+=======
+},{}],318:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -42754,6 +44955,7 @@ var BeforeInputEventPlugin = {
       return;
     }
 
+<<<<<<< HEAD
     var event = SyntheticInputEvent.getPooled(
       eventTypes.beforeInput,
       topLevelTargetID,
@@ -42775,6 +44977,10 @@ module.exports = BeforeInputEventPlugin;
 >>>>>>> Editor store and services [#89871770]
 
 },{"./EventConstants":317,"./EventPropagators":322,"./ExecutionEnvironment":323,"./SyntheticInputEvent":391,"./keyOf":435}],305:[function(require,module,exports){
+=======
+},{"./EventConstants":325,"./EventPropagators":330,"./ExecutionEnvironment":331,"./ReactInputSelection":369,"./SyntheticCompositionEvent":395,"./getTextContentAccessor":431,"./keyOf":443}],319:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -42986,6 +45192,23 @@ SettingsEmail = React.createClass({
 module.exports = SettingsEmail;
 
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./Danger":322,"./ReactMultiChildUpdateTypes":375,"./getTextContentAccessor":431,"./invariant":436,"_process":457}],320:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule DOMProperty
+ * @typechecks static-only
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 },{"./edit":206,"./establish/establish":209,"./show":211}],208:[function(require,module,exports){
 var SettingsEmailEstablishEdit, cx;
@@ -43243,7 +45466,12 @@ var CSSProperty = {
 
 module.exports = CSSProperty;
 
+<<<<<<< HEAD
 },{}],306:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"./invariant":436,"_process":457}],321:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -43378,7 +45606,11 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./CSSProperty":305,"./ExecutionEnvironment":323,"./camelizeStyleName":402,"./dangerousStyleValue":407,"./hyphenateStyleName":426,"./memoizeStringOnly":437,"./warning":447,"_process":449}],307:[function(require,module,exports){
+=======
+},{"./DOMProperty":320,"./escapeTextForBrowser":419,"./memoizeStringOnly":445,"./warning":455,"_process":457}],322:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -43574,7 +45806,22 @@ module.exports = SettingsEmailShow;
 },{"./confirmation":205}],212:[function(require,module,exports){
 var SettingsAvatar, SettingsHeader, SettingsSlug, SettingsTitle;
 
+<<<<<<< HEAD
 SettingsAvatar = require('./avatar');
+=======
+}).call(this,require('_process'))
+},{"./ExecutionEnvironment":331,"./createNodesFromMarkup":414,"./emptyFunction":417,"./getMarkupWrap":428,"./invariant":436,"_process":457}],323:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule DefaultEventPluginOrder
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 SettingsSlug = require('./slug');
 
@@ -43586,8 +45833,12 @@ PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./Object.assign":328,"./PooledClass":329,"./invariant":428,"_process":449}],308:[function(require,module,exports){
+=======
+},{"./keyOf":443}],324:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -43724,6 +45975,10 @@ function handleEventsForChangeEventIE8(
 }
 
 
+<<<<<<< HEAD
+=======
+},{"./EventConstants":325,"./EventPropagators":330,"./ReactMount":373,"./SyntheticMouseEvent":401,"./keyOf":443}],325:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * SECTION: handle `input` event
  */
@@ -43751,6 +46006,34 @@ var newValueProp =  {
   }
 };
 
+<<<<<<< HEAD
+=======
+module.exports = EventConstants;
+
+},{"./keyMirror":442}],326:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014 Facebook, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @providesModule EventListener
+ * @typechecks
+ */
+
+var emptyFunction = require("./emptyFunction");
+
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * (For old IE.) Starts tracking propertychange events on the passed-in element
  * and override the value property so that we can distinguish user events from
@@ -43769,6 +46052,12 @@ function startWatchingForValueChange(target, targetID) {
   activeElement.attachEvent('onpropertychange', handlePropertyChange);
 }
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./emptyFunction":417,"_process":457}],327:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * (For old IE.) Removes the event listeners from the currently-tracked element,
  * if any exists.
@@ -44242,7 +46531,13 @@ var ChangeEventPlugin = {
 
 module.exports = ChangeEventPlugin;
 
+<<<<<<< HEAD
 },{"./EventConstants":317,"./EventPluginHub":319,"./EventPropagators":322,"./ExecutionEnvironment":323,"./ReactUpdates":381,"./SyntheticEvent":389,"./isEventSupported":429,"./isTextInputElement":431,"./keyOf":435}],309:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"./EventPluginRegistry":328,"./EventPluginUtils":329,"./accumulateInto":407,"./forEachAccumulated":422,"./invariant":436,"_process":457}],328:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44462,6 +46757,22 @@ SettingsPasswordEdit = React.createClass({
 module.exports = SettingsPasswordEdit;
 
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./invariant":436,"_process":457}],329:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule EventPluginUtils
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 },{"react/lib/cx":599}],215:[function(require,module,exports){
 var EDIT_STATE, SHOW_STATE, SettingsPassword, SettingsPasswordEdit, SettingsPasswordShow;
@@ -44622,7 +46933,23 @@ SettingsPassword = require('./password/password');
 
 SettingsAccounts = require('./accounts');
 
+<<<<<<< HEAD
 SettingsMixin = require('./mixins/settings');
+=======
+}).call(this,require('_process'))
+},{"./EventConstants":325,"./invariant":436,"_process":457}],330:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule EventPropagators
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 LinkedStateMixin = require('react/lib/LinkedStateMixin');
 
@@ -44829,6 +47156,13 @@ FallbackCompositionState.prototype.getText = function() {
   return this.root.value || this.root[getTextContentAccessor()];
 };
 
+<<<<<<< HEAD
+=======
+module.exports = EventPropagators;
+
+}).call(this,require('_process'))
+},{"./EventConstants":325,"./EventPluginHub":327,"./accumulateInto":407,"./forEachAccumulated":422,"_process":457}],331:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Text that has changed since the start of composition.
  *
@@ -44894,6 +47228,7 @@ module.exports = SettingsSlug;
 },{}],220:[function(require,module,exports){
 var SettingsTitle;
 
+<<<<<<< HEAD
 SettingsTitle = React.createClass({
   displayName: 'SettingsTitle',
   propTypes: {
@@ -44925,6 +47260,19 @@ SettingsTitle = React.createClass({
     }
   }
 });
+=======
+},{}],332:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule HTMLDOMPropertyConfig
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 module.exports = SettingsTitle;
 
@@ -44943,12 +47291,141 @@ window.ShellBox = React.createClass({
       isDisabled: false
     };
   },
+<<<<<<< HEAD
   handleClick: function(e) {
     if (!this.state.isDisabled) {
       if ($(e.target).hasClass('shellbox__cell')) {
         e.preventDefault();
         return this.unmount();
       }
+=======
+  DOMPropertyNames: {
+    autoCapitalize: 'autocapitalize',
+    autoComplete: 'autocomplete',
+    autoCorrect: 'autocorrect',
+    autoFocus: 'autofocus',
+    autoPlay: 'autoplay',
+    encType: 'enctype',
+    hrefLang: 'hreflang',
+    radioGroup: 'radiogroup',
+    spellCheck: 'spellcheck',
+    srcDoc: 'srcdoc',
+    srcSet: 'srcset'
+  }
+};
+
+module.exports = HTMLDOMPropertyConfig;
+
+},{"./DOMProperty":320,"./ExecutionEnvironment":331}],333:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule LinkedValueUtils
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var ReactPropTypes = require("./ReactPropTypes");
+
+var invariant = require("./invariant");
+
+var hasReadOnlyValue = {
+  'button': true,
+  'checkbox': true,
+  'image': true,
+  'hidden': true,
+  'radio': true,
+  'reset': true,
+  'submit': true
+};
+
+function _assertSingleLink(input) {
+  ("production" !== process.env.NODE_ENV ? invariant(
+    input.props.checkedLink == null || input.props.valueLink == null,
+    'Cannot provide a checkedLink and a valueLink. If you want to use ' +
+    'checkedLink, you probably don\'t want to use valueLink and vice versa.'
+  ) : invariant(input.props.checkedLink == null || input.props.valueLink == null));
+}
+function _assertValueLink(input) {
+  _assertSingleLink(input);
+  ("production" !== process.env.NODE_ENV ? invariant(
+    input.props.value == null && input.props.onChange == null,
+    'Cannot provide a valueLink and a value or onChange event. If you want ' +
+    'to use value or onChange, you probably don\'t want to use valueLink.'
+  ) : invariant(input.props.value == null && input.props.onChange == null));
+}
+
+function _assertCheckedLink(input) {
+  _assertSingleLink(input);
+  ("production" !== process.env.NODE_ENV ? invariant(
+    input.props.checked == null && input.props.onChange == null,
+    'Cannot provide a checkedLink and a checked property or onChange event. ' +
+    'If you want to use checked or onChange, you probably don\'t want to ' +
+    'use checkedLink'
+  ) : invariant(input.props.checked == null && input.props.onChange == null));
+}
+
+/**
+ * @param {SyntheticEvent} e change event to handle
+ */
+function _handleLinkedValueChange(e) {
+  /*jshint validthis:true */
+  this.props.valueLink.requestChange(e.target.value);
+}
+
+/**
+  * @param {SyntheticEvent} e change event to handle
+  */
+function _handleLinkedCheckChange(e) {
+  /*jshint validthis:true */
+  this.props.checkedLink.requestChange(e.target.checked);
+}
+
+/**
+ * Provide a linked `value` attribute for controlled forms. You should not use
+ * this outside of the ReactDOM controlled form components.
+ */
+var LinkedValueUtils = {
+  Mixin: {
+    propTypes: {
+      value: function(props, propName, componentName) {
+        if (!props[propName] ||
+            hasReadOnlyValue[props.type] ||
+            props.onChange ||
+            props.readOnly ||
+            props.disabled) {
+          return;
+        }
+        return new Error(
+          'You provided a `value` prop to a form field without an ' +
+          '`onChange` handler. This will render a read-only field. If ' +
+          'the field should be mutable use `defaultValue`. Otherwise, ' +
+          'set either `onChange` or `readOnly`.'
+        );
+      },
+      checked: function(props, propName, componentName) {
+        if (!props[propName] ||
+            props.onChange ||
+            props.readOnly ||
+            props.disabled) {
+          return;
+        }
+        return new Error(
+          'You provided a `checked` prop to a form field without an ' +
+          '`onChange` handler. This will render a read-only field. If ' +
+          'the field should be mutable use `defaultChecked`. Otherwise, ' +
+          'set either `onChange` or `readOnly`.'
+        );
+      },
+      onChange: ReactPropTypes.func
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
     }
   },
   componentWillMount: function() {
@@ -44997,7 +47474,27 @@ window.ShellBox = React.createClass({
       isDisabled: false
     });
   }
+<<<<<<< HEAD
 });
+=======
+};
+
+module.exports = LinkedValueUtils;
+
+}).call(this,require('_process'))
+},{"./ReactPropTypes":382,"./invariant":436,"_process":457}],334:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule LocalEventTrapMixin
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 
@@ -45051,8 +47548,13 @@ EmailConfirmRegistration = require('../auth/email/confirm_registration');
 
 module.exports = CompositionEventPlugin;
 
+<<<<<<< HEAD
 },{"./EventConstants":317,"./EventPropagators":322,"./ExecutionEnvironment":323,"./ReactInputSelection":361,"./SyntheticCompositionEvent":387,"./getTextContentAccessor":423,"./keyOf":435}],311:[function(require,module,exports){
 (function (process){
+=======
+}).call(this,require('_process'))
+},{"./ReactBrowserEventEmitter":340,"./accumulateInto":407,"./forEachAccumulated":422,"./invariant":436,"_process":457}],335:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45160,6 +47662,7 @@ window.SmartFollowStatus = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{}],224:[function(require,module,exports){
 window.Spinner = React.createClass({
   propTypes: {
@@ -45232,6 +47735,9 @@ var ReactMultiChildUpdateTypes = require("./ReactMultiChildUpdateTypes");
 var getTextContentAccessor = require("./getTextContentAccessor");
 var invariant = require("./invariant");
 
+=======
+},{"./EventConstants":325,"./emptyFunction":417}],336:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * The DOM property to use when setting text content.
  *
@@ -45385,8 +47891,23 @@ var DOMChildrenOperations = {
 <<<<<<< HEAD
 
 
+<<<<<<< HEAD
 },{}],226:[function(require,module,exports){
 var AvatarToolbar, ConnectStoreMixin, CurrentUserStore;
+=======
+},{}],337:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule PooledClass
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 CurrentUserStore = require('../../stores/current_user');
 
@@ -45459,7 +47980,23 @@ var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, PopupActions, Pro
 
 _ = require('lodash');
 
+<<<<<<< HEAD
 cx = require('react/lib/cx');
+=======
+}).call(this,require('_process'))
+},{"./invariant":436,"_process":457}],338:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule React
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 CurrentUserStore = require('../../stores/current_user');
 
@@ -45686,7 +48223,11 @@ UserToolbarListSubList = require('./list/subList');
 module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./Danger":314,"./ReactMultiChildUpdateTypes":367,"./getTextContentAccessor":423,"./invariant":428,"_process":449}],312:[function(require,module,exports){
+=======
+},{"./DOMPropertyOperations":321,"./EventPluginUtils":329,"./ExecutionEnvironment":331,"./Object.assign":336,"./ReactChildren":341,"./ReactComponent":342,"./ReactCompositeComponent":344,"./ReactContext":345,"./ReactCurrentOwner":346,"./ReactDOM":347,"./ReactDOMComponent":349,"./ReactDefaultInjection":359,"./ReactElement":362,"./ReactElementValidator":363,"./ReactInstanceHandles":370,"./ReactLegacyElement":371,"./ReactMount":373,"./ReactMultiChild":374,"./ReactPerf":378,"./ReactPropTypes":382,"./ReactServerRendering":386,"./ReactTextComponent":388,"./deprecated":416,"./onlyChild":447,"_process":457}],339:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -45839,6 +48380,13 @@ var DOMPropertyInjection = {
 };
 var defaultValueCache = {};
 
+<<<<<<< HEAD
+=======
+module.exports = ReactBrowserComponentMixin;
+
+}).call(this,require('_process'))
+},{"./ReactEmptyComponent":364,"./ReactMount":373,"./invariant":436,"_process":457}],340:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * DOMProperty exports lookup objects that can be used like functions:
  *
@@ -45984,8 +48532,12 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./invariant":428,"_process":449}],313:[function(require,module,exports){
+=======
+},{"./EventConstants":325,"./EventPluginHub":327,"./EventPluginRegistry":328,"./Object.assign":336,"./ReactEventEmitterMixin":366,"./ViewportMetrics":406,"./isEventSupported":437}],341:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -46537,7 +49089,11 @@ var DOMPropertyOperations = {
 module.exports = DOMPropertyOperations;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./DOMProperty":312,"./escapeTextForBrowser":411,"./memoizeStringOnly":437,"./warning":447,"_process":449}],314:[function(require,module,exports){
+=======
+},{"./PooledClass":337,"./traverseAllChildren":454,"./warning":455,"_process":457}],342:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -46725,6 +49281,7 @@ animationSupported = function() {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 animationAllowed = function() {
   var browser, browserName, browserVersion;
   browser = bowser.browser || bowser;
@@ -46735,6 +49292,21 @@ animationAllowed = function() {
   }
   return true;
 };
+=======
+}).call(this,require('_process'))
+},{"./Object.assign":336,"./ReactElement":362,"./ReactOwner":377,"./ReactUpdates":389,"./invariant":436,"./keyMirror":442,"_process":457}],343:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactComponentBrowserEnvironment
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 TimeoutTransitionGroupChild = React.createClass({
   transition: function(animationType, finishCallback) {
@@ -47048,7 +49620,12 @@ module.exports = GuideController;
 module.exports = Danger;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ExecutionEnvironment":323,"./createNodesFromMarkup":406,"./emptyFunction":409,"./getMarkupWrap":420,"./invariant":428,"_process":449}],315:[function(require,module,exports){
+=======
+},{"./ReactDOMIDOperations":351,"./ReactMarkupChecksum":372,"./ReactMount":373,"./ReactPerf":378,"./ReactReconcileTransaction":384,"./getReactRootElementInContainer":430,"./invariant":436,"./setInnerHTML":450,"_process":457}],344:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -48148,6 +50725,11 @@ module.exports = BaseDispatcher;
 =======
 var invariant = require("./invariant");
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./Object.assign":336,"./ReactComponent":342,"./ReactContext":345,"./ReactCurrentOwner":346,"./ReactElement":362,"./ReactElementValidator":363,"./ReactEmptyComponent":364,"./ReactErrorUtils":365,"./ReactLegacyElement":371,"./ReactOwner":377,"./ReactPerf":378,"./ReactPropTransferer":379,"./ReactPropTypeLocationNames":380,"./ReactPropTypeLocations":381,"./ReactUpdates":389,"./instantiateReactComponent":435,"./invariant":436,"./keyMirror":442,"./keyOf":443,"./mapObject":444,"./monitorCodeUse":446,"./shouldUpdateReactComponent":452,"./warning":455,"_process":457}],345:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Injectable ordering of event plugins.
  */
@@ -48207,6 +50789,14 @@ function recomputePluginOrdering() {
   }
 }
 
+<<<<<<< HEAD
+=======
+};
+
+module.exports = ReactContext;
+
+},{"./Object.assign":336}],346:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Publishes an event so that it can be dispatched by the supplied plugin.
  *
@@ -48290,10 +50880,26 @@ var EventPluginRegistry = {
    */
   registrationNameModules: {},
 
+<<<<<<< HEAD
   /**
    * Mapping from registration name to event name
    */
   registrationNameDependencies: {},
+=======
+},{}],347:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOM
+ * @typechecks static-only
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
   /**
    * Injects an ordering of plugins (by plugin name). This allows the ordering
@@ -48416,8 +51022,12 @@ BaseDispatcher = require('./_base');
 module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./invariant":428,"_process":449}],321:[function(require,module,exports){
 (function (process){
+=======
+},{"./ReactElement":362,"./ReactElementValidator":363,"./ReactLegacyElement":371,"./mapObject":444,"_process":457}],348:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -48666,6 +51276,7 @@ function executeDirectDispatch(event) {
   return res;
 }
 
+<<<<<<< HEAD
 /**
  * @param {SyntheticEvent} event
  * @return {bool} True iff number of dispatches accumulated is greater than 0.
@@ -48695,6 +51306,9 @@ module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
 },{"./EventConstants":317,"./invariant":428,"_process":449}],322:[function(require,module,exports){
+=======
+},{"./AutoFocusMixin":311,"./ReactBrowserComponentMixin":339,"./ReactCompositeComponent":344,"./ReactDOM":347,"./ReactElement":362,"./keyMirror":442}],349:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -48999,7 +51613,11 @@ var EventPropagators = {
 module.exports = EventPropagators;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./EventConstants":317,"./EventPluginHub":319,"./accumulateInto":399,"./forEachAccumulated":414,"_process":449}],323:[function(require,module,exports){
+=======
+},{"./CSSPropertyOperations":314,"./DOMProperty":320,"./DOMPropertyOperations":321,"./Object.assign":336,"./ReactBrowserComponentMixin":339,"./ReactBrowserEventEmitter":340,"./ReactComponent":342,"./ReactMount":373,"./ReactMultiChild":374,"./ReactPerf":378,"./escapeTextForBrowser":419,"./invariant":436,"./isEventSupported":437,"./keyOf":443,"./monitorCodeUse":446,"_process":457}],350:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49038,6 +51656,7 @@ var ExecutionEnvironment = {
 
   canUseViewport: canUseDOM && !!window.screen,
 
+<<<<<<< HEAD
   isInWorker: !canUseDOM // For now, this is true - might change in the future.
 
 };
@@ -49045,6 +51664,10 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 },{}],324:[function(require,module,exports){
+=======
+},{"./EventConstants":325,"./LocalEventTrapMixin":334,"./ReactBrowserComponentMixin":339,"./ReactCompositeComponent":344,"./ReactDOM":347,"./ReactElement":362}],351:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49236,8 +51859,13 @@ var HTMLDOMPropertyConfig = {
 
 module.exports = HTMLDOMPropertyConfig;
 
+<<<<<<< HEAD
 },{"./DOMProperty":312,"./ExecutionEnvironment":323}],325:[function(require,module,exports){
 (function (process){
+=======
+}).call(this,require('_process'))
+},{"./CSSPropertyOperations":314,"./DOMChildrenOperations":319,"./DOMPropertyOperations":321,"./ReactMount":373,"./ReactPerf":378,"./invariant":436,"./setInnerHTML":450,"_process":457}],352:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49290,7 +51918,26 @@ window.ConversationActions = {
       error: error
     });
   }
+<<<<<<< HEAD
 };
+=======
+});
+
+module.exports = ReactDOMImg;
+
+},{"./EventConstants":325,"./LocalEventTrapMixin":334,"./ReactBrowserComponentMixin":339,"./ReactCompositeComponent":344,"./ReactDOM":347,"./ReactElement":362}],353:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOMInput
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 
@@ -49547,7 +52194,11 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ReactPropTypes":374,"./invariant":428,"_process":449}],326:[function(require,module,exports){
+=======
+},{"./AutoFocusMixin":311,"./DOMPropertyOperations":321,"./LinkedValueUtils":333,"./Object.assign":336,"./ReactBrowserComponentMixin":339,"./ReactCompositeComponent":344,"./ReactDOM":347,"./ReactElement":362,"./ReactMount":373,"./ReactUpdates":389,"./invariant":436,"_process":457}],354:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -49597,7 +52248,11 @@ var LocalEventTrapMixin = {
 module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ReactBrowserEventEmitter":332,"./accumulateInto":399,"./forEachAccumulated":414,"./invariant":428,"_process":449}],327:[function(require,module,exports){
+=======
+},{"./ReactBrowserComponentMixin":339,"./ReactCompositeComponent":344,"./ReactDOM":347,"./ReactElement":362,"./warning":455,"_process":457}],355:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49751,6 +52406,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({
     } else {
       lastCreatedAt = this._getLastConversationCreatedAt();
     }
+<<<<<<< HEAD
     return React.createElement("div", {
       "className": listItemClasses,
       "onClick": this.handleClick
@@ -49789,6 +52445,206 @@ window.MessagesPopup_ConversationsListItem = React.createClass({
       return React.createElement("div", {
         "className": "messages__counter"
       }, this.props.conversation.unread_messages_count);
+=======
+
+    this._pendingValue = selectedValue;
+    ReactUpdates.asap(updateWithPendingValueIfMounted, this);
+    return returnValue;
+  }
+
+});
+
+module.exports = ReactDOMSelect;
+
+},{"./AutoFocusMixin":311,"./LinkedValueUtils":333,"./Object.assign":336,"./ReactBrowserComponentMixin":339,"./ReactCompositeComponent":344,"./ReactDOM":347,"./ReactElement":362,"./ReactUpdates":389}],356:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOMSelection
+ */
+
+"use strict";
+
+var ExecutionEnvironment = require("./ExecutionEnvironment");
+
+var getNodeForCharacterOffset = require("./getNodeForCharacterOffset");
+var getTextContentAccessor = require("./getTextContentAccessor");
+
+/**
+ * While `isCollapsed` is available on the Selection object and `collapsed`
+ * is available on the Range object, IE11 sometimes gets them wrong.
+ * If the anchor/focus nodes and offsets are the same, the range is collapsed.
+ */
+function isCollapsed(anchorNode, anchorOffset, focusNode, focusOffset) {
+  return anchorNode === focusNode && anchorOffset === focusOffset;
+}
+
+/**
+ * Get the appropriate anchor and focus node/offset pairs for IE.
+ *
+ * The catch here is that IE's selection API doesn't provide information
+ * about whether the selection is forward or backward, so we have to
+ * behave as though it's always forward.
+ *
+ * IE text differs from modern selection in that it behaves as though
+ * block elements end with a new line. This means character offsets will
+ * differ between the two APIs.
+ *
+ * @param {DOMElement} node
+ * @return {object}
+ */
+function getIEOffsets(node) {
+  var selection = document.selection;
+  var selectedRange = selection.createRange();
+  var selectedLength = selectedRange.text.length;
+
+  // Duplicate selection so we can move range without breaking user selection.
+  var fromStart = selectedRange.duplicate();
+  fromStart.moveToElementText(node);
+  fromStart.setEndPoint('EndToStart', selectedRange);
+
+  var startOffset = fromStart.text.length;
+  var endOffset = startOffset + selectedLength;
+
+  return {
+    start: startOffset,
+    end: endOffset
+  };
+}
+
+/**
+ * @param {DOMElement} node
+ * @return {?object}
+ */
+function getModernOffsets(node) {
+  var selection = window.getSelection && window.getSelection();
+
+  if (!selection || selection.rangeCount === 0) {
+    return null;
+  }
+
+  var anchorNode = selection.anchorNode;
+  var anchorOffset = selection.anchorOffset;
+  var focusNode = selection.focusNode;
+  var focusOffset = selection.focusOffset;
+
+  var currentRange = selection.getRangeAt(0);
+
+  // If the node and offset values are the same, the selection is collapsed.
+  // `Selection.isCollapsed` is available natively, but IE sometimes gets
+  // this value wrong.
+  var isSelectionCollapsed = isCollapsed(
+    selection.anchorNode,
+    selection.anchorOffset,
+    selection.focusNode,
+    selection.focusOffset
+  );
+
+  var rangeLength = isSelectionCollapsed ? 0 : currentRange.toString().length;
+
+  var tempRange = currentRange.cloneRange();
+  tempRange.selectNodeContents(node);
+  tempRange.setEnd(currentRange.startContainer, currentRange.startOffset);
+
+  var isTempRangeCollapsed = isCollapsed(
+    tempRange.startContainer,
+    tempRange.startOffset,
+    tempRange.endContainer,
+    tempRange.endOffset
+  );
+
+  var start = isTempRangeCollapsed ? 0 : tempRange.toString().length;
+  var end = start + rangeLength;
+
+  // Detect whether the selection is backward.
+  var detectionRange = document.createRange();
+  detectionRange.setStart(anchorNode, anchorOffset);
+  detectionRange.setEnd(focusNode, focusOffset);
+  var isBackward = detectionRange.collapsed;
+
+  return {
+    start: isBackward ? end : start,
+    end: isBackward ? start : end
+  };
+}
+
+/**
+ * @param {DOMElement|DOMTextNode} node
+ * @param {object} offsets
+ */
+function setIEOffsets(node, offsets) {
+  var range = document.selection.createRange().duplicate();
+  var start, end;
+
+  if (typeof offsets.end === 'undefined') {
+    start = offsets.start;
+    end = start;
+  } else if (offsets.start > offsets.end) {
+    start = offsets.end;
+    end = offsets.start;
+  } else {
+    start = offsets.start;
+    end = offsets.end;
+  }
+
+  range.moveToElementText(node);
+  range.moveStart('character', start);
+  range.setEndPoint('EndToStart', range);
+  range.moveEnd('character', end - start);
+  range.select();
+}
+
+/**
+ * In modern non-IE browsers, we can support both forward and backward
+ * selections.
+ *
+ * Note: IE10+ supports the Selection object, but it does not support
+ * the `extend` method, which means that even in modern IE, it's not possible
+ * to programatically create a backward selection. Thus, for all IE
+ * versions, we use the old IE API to create our selections.
+ *
+ * @param {DOMElement|DOMTextNode} node
+ * @param {object} offsets
+ */
+function setModernOffsets(node, offsets) {
+  if (!window.getSelection) {
+    return;
+  }
+
+  var selection = window.getSelection();
+  var length = node[getTextContentAccessor()].length;
+  var start = Math.min(offsets.start, length);
+  var end = typeof offsets.end === 'undefined' ?
+            start : Math.min(offsets.end, length);
+
+  // IE 11 uses modern selection, but doesn't support the extend method.
+  // Flip backward selections, so we can set with a single range.
+  if (!selection.extend && start > end) {
+    var temp = end;
+    end = start;
+    start = temp;
+  }
+
+  var startMarker = getNodeForCharacterOffset(node, start);
+  var endMarker = getNodeForCharacterOffset(node, end);
+
+  if (startMarker && endMarker) {
+    var range = document.createRange();
+    range.setStart(startMarker.node, startMarker.offset);
+    selection.removeAllRanges();
+
+    if (start > end) {
+      selection.addRange(range);
+      selection.extend(endMarker.node, endMarker.offset);
+    } else {
+      range.setEnd(endMarker.node, endMarker.offset);
+      selection.addRange(range);
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
     }
   },
   _getLastMessageText: function() {
@@ -49811,7 +52667,12 @@ window.MessagesPopup_ConversationsListItem = React.createClass({
 
 module.exports = MobileSafariClickEventPlugin;
 
+<<<<<<< HEAD
 },{"./EventConstants":317,"./emptyFunction":409}],328:[function(require,module,exports){
+=======
+},{"./ExecutionEnvironment":331,"./getNodeForCharacterOffset":429,"./getTextContentAccessor":431}],357:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -49858,8 +52719,13 @@ function assign(target, sources) {
 
 module.exports = assign;
 
+<<<<<<< HEAD
 },{}],329:[function(require,module,exports){
 (function (process){
+=======
+}).call(this,require('_process'))
+},{"./AutoFocusMixin":311,"./DOMPropertyOperations":321,"./LinkedValueUtils":333,"./Object.assign":336,"./ReactBrowserComponentMixin":339,"./ReactCompositeComponent":344,"./ReactDOM":347,"./ReactElement":362,"./ReactUpdates":389,"./invariant":436,"./warning":455,"_process":457}],358:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49971,10 +52837,14 @@ var PooledClass = {
   fiveArgumentPooler: fiveArgumentPooler
 };
 
+<<<<<<< HEAD
 module.exports = PooledClass;
 
 }).call(this,require('_process'))
 },{"./invariant":428,"_process":449}],330:[function(require,module,exports){
+=======
+},{"./Object.assign":336,"./ReactUpdates":389,"./Transaction":405,"./emptyFunction":417}],359:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -50141,6 +53011,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass({
         break;
     }
   }
+<<<<<<< HEAD
 });
 =======
 var DOMPropertyOperations = require("./DOMPropertyOperations");
@@ -50157,6 +53028,32 @@ var ReactDOMComponent = require("./ReactDOMComponent");
 var ReactDefaultInjection = require("./ReactDefaultInjection");
 var ReactInstanceHandles = require("./ReactInstanceHandles");
 var ReactLegacyElement = require("./ReactLegacyElement");
+=======
+}
+
+module.exports = {
+  inject: inject
+};
+
+}).call(this,require('_process'))
+},{"./BeforeInputEventPlugin":312,"./ChangeEventPlugin":316,"./ClientReactRootIndex":317,"./CompositionEventPlugin":318,"./DefaultEventPluginOrder":323,"./EnterLeaveEventPlugin":324,"./ExecutionEnvironment":331,"./HTMLDOMPropertyConfig":332,"./MobileSafariClickEventPlugin":335,"./ReactBrowserComponentMixin":339,"./ReactComponentBrowserEnvironment":343,"./ReactDOMButton":348,"./ReactDOMComponent":349,"./ReactDOMForm":350,"./ReactDOMImg":352,"./ReactDOMInput":353,"./ReactDOMOption":354,"./ReactDOMSelect":355,"./ReactDOMTextarea":357,"./ReactDefaultBatchingStrategy":358,"./ReactDefaultPerf":360,"./ReactEventListener":367,"./ReactInjection":368,"./ReactInstanceHandles":370,"./ReactMount":373,"./SVGDOMPropertyConfig":390,"./SelectEventPlugin":391,"./ServerReactRootIndex":392,"./SimpleEventPlugin":393,"./createFullPageComponent":413,"_process":457}],360:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDefaultPerf
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var DOMProperty = require("./DOMProperty");
+var ReactDefaultPerfAnalysis = require("./ReactDefaultPerfAnalysis");
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 var ReactMount = require("./ReactMount");
 var ReactMultiChild = require("./ReactMultiChild");
 var ReactPerf = require("./ReactPerf");
@@ -50332,6 +53229,20 @@ window.MessagesPopup_ChooserResults = React.createClass({
 });
 
 
+<<<<<<< HEAD
+=======
+},{"./DOMProperty":320,"./ReactDefaultPerfAnalysis":361,"./ReactMount":373,"./ReactPerf":378,"./performanceNow":449}],361:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDefaultPerfAnalysis
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 },{}],272:[function(require,module,exports){
 var cx;
@@ -50521,8 +53432,12 @@ React.version = '0.12.2';
 
 module.exports = React;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./DOMPropertyOperations":313,"./EventPluginUtils":321,"./ExecutionEnvironment":323,"./Object.assign":328,"./ReactChildren":333,"./ReactComponent":334,"./ReactCompositeComponent":336,"./ReactContext":337,"./ReactCurrentOwner":338,"./ReactDOM":339,"./ReactDOMComponent":341,"./ReactDefaultInjection":351,"./ReactElement":354,"./ReactElementValidator":355,"./ReactInstanceHandles":362,"./ReactLegacyElement":363,"./ReactMount":365,"./ReactMultiChild":366,"./ReactPerf":370,"./ReactPropTypes":374,"./ReactServerRendering":378,"./ReactTextComponent":380,"./deprecated":408,"./onlyChild":439,"_process":449}],331:[function(require,module,exports){
+=======
+},{"./Object.assign":336}],362:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -50713,6 +53628,12 @@ var ViewportMetrics = require("./ViewportMetrics");
 var assign = require("./Object.assign");
 var isEventSupported = require("./isEventSupported");
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./ReactContext":345,"./ReactCurrentOwner":346,"./warning":455,"_process":457}],363:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Summary of `ReactBrowserEventEmitter` event handling:
  *
@@ -51230,7 +54151,23 @@ window.MessagesPopup_ThreadMessageList = React.createClass({
     }
   },
 
+<<<<<<< HEAD
   eventNameDispatchConfigs: EventPluginHub.eventNameDispatchConfigs,
+=======
+}).call(this,require('_process'))
+},{"./ReactCurrentOwner":346,"./ReactElement":362,"./ReactPropTypeLocations":381,"./monitorCodeUse":446,"./warning":455,"_process":457}],364:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactEmptyComponent
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
   registrationNameModules: EventPluginHub.registrationNameModules,
 
@@ -51246,8 +54183,13 @@ window.MessagesPopup_ThreadMessageList = React.createClass({
 
 module.exports = ReactBrowserEventEmitter;
 
+<<<<<<< HEAD
 },{"./EventConstants":317,"./EventPluginHub":319,"./EventPluginRegistry":320,"./Object.assign":328,"./ReactEventEmitterMixin":358,"./ViewportMetrics":398,"./isEventSupported":429}],333:[function(require,module,exports){
 (function (process){
+=======
+}).call(this,require('_process'))
+},{"./ReactElement":362,"./invariant":436,"_process":457}],365:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51363,6 +54305,20 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({
 });
 
 
+<<<<<<< HEAD
+=======
+},{}],366:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactEventEmitterMixin
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 },{"react/lib/cx":599}],280:[function(require,module,exports){
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
@@ -51394,6 +54350,7 @@ getElementPosition = function(el, parent) {
   };
 };
 
+<<<<<<< HEAD
 window.MessagesPopup_ThreadMessageListItemManager = React.createClass({
   mixins: [ReactGrammarMixin],
   propTypes: {
@@ -51485,6 +54442,20 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass({
     }
   }
 });
+=======
+},{"./EventPluginHub":327}],367:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactEventListener
+ * @typechecks static-only
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 
@@ -51665,6 +54636,20 @@ window.NotificationsPopup_Notification = React.createClass({
 });
 
 
+<<<<<<< HEAD
+=======
+},{"./EventListener":326,"./ExecutionEnvironment":331,"./Object.assign":336,"./PooledClass":337,"./ReactInstanceHandles":370,"./ReactMount":373,"./ReactUpdates":389,"./getEventTarget":427,"./getUnboundedScrollPosition":432}],368:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactInjection
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 },{"react/lib/cx":599}],286:[function(require,module,exports){
 window.NotificationsPopup_Notifications = React.createClass({
@@ -51737,6 +54722,20 @@ window.NotificationsPopup = React.createClass({
   }
 });
 
+<<<<<<< HEAD
+=======
+},{"./DOMProperty":320,"./EventPluginHub":327,"./ReactBrowserEventEmitter":340,"./ReactComponent":342,"./ReactCompositeComponent":344,"./ReactEmptyComponent":364,"./ReactNativeComponent":376,"./ReactPerf":378,"./ReactRootIndex":385,"./ReactUpdates":389}],369:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactInputSelection
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 },{}],288:[function(require,module,exports){
@@ -51873,7 +54872,31 @@ window.IndicatorsToolbar = React.createClass({
   _onStoreChange: function() {
     return this.setState(this.getStateFromStore());
   }
+<<<<<<< HEAD
 });
+=======
+};
+
+module.exports = ReactInputSelection;
+
+},{"./ReactDOMSelection":356,"./containsNode":411,"./focusNode":421,"./getActiveElement":423}],370:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactInstanceHandles
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var ReactRootIndex = require("./ReactRootIndex");
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 =======
 var PooledClass = require("./PooledClass");
@@ -52011,7 +55034,11 @@ var ReactChildren = {
 module.exports = ReactChildren;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./PooledClass":329,"./traverseAllChildren":446,"./warning":447,"_process":449}],334:[function(require,module,exports){
+=======
+},{"./ReactRootIndex":385,"./invariant":436,"_process":457}],371:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -52323,7 +55350,22 @@ window.MessagingRequester = (function() {
 
   return MessagingRequester;
 
+<<<<<<< HEAD
 })();
+=======
+}).call(this,require('_process'))
+},{"./ReactCurrentOwner":346,"./invariant":436,"./monitorCodeUse":446,"./warning":455,"_process":457}],372:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactMarkupChecksum
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 
@@ -52337,7 +55379,22 @@ window.MessagingService = (function() {
 
   MessagingService.prototype.EVENT_UPDATE_CONVERSATION = 'update_conversation';
 
+<<<<<<< HEAD
   MessagingService.prototype.EVENT_PUSH_MESSAGE = 'push_message';
+=======
+},{"./adler32":408}],373:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactMount
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
   MessagingService.prototype.EVENT_PUSH_NOTIFICATION = 'push_notification';
 
@@ -52791,8 +55848,12 @@ window.ConnectionStateStore = _.extend({}, EventEmitter.prototype, {
 _connectionState = ConnectionStateStore.NOT_CONNECTED_STATE;
 =======
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ReactDOMIDOperations":343,"./ReactMarkupChecksum":364,"./ReactMount":365,"./ReactPerf":370,"./ReactReconcileTransaction":376,"./getReactRootElementInContainer":422,"./invariant":428,"./setInnerHTML":442,"_process":449}],336:[function(require,module,exports){
 (function (process){
+=======
+},{"./DOMProperty":320,"./ReactBrowserEventEmitter":340,"./ReactCurrentOwner":346,"./ReactElement":362,"./ReactInstanceHandles":370,"./ReactLegacyElement":371,"./ReactPerf":378,"./containsNode":411,"./deprecated":416,"./getReactRootElementInContainer":430,"./instantiateReactComponent":435,"./invariant":436,"./shouldUpdateReactComponent":452,"./warning":455,"_process":457}],374:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53135,6 +56196,7 @@ window.MessagesPopupStateStore = _.extend({}, EventEmitter.prototype, {
   }
 });
 
+<<<<<<< HEAD
 MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(payload) {
   var action;
   action = payload.action;
@@ -53164,11 +56226,56 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
       break;
   }
 });
+=======
+},{"./ReactComponent":342,"./ReactMultiChildUpdateTypes":375,"./flattenChildren":420,"./instantiateReactComponent":435,"./shouldUpdateReactComponent":452}],375:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactMultiChildUpdateTypes
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 
+<<<<<<< HEAD
 },{}],300:[function(require,module,exports){
 var BaseStore, MessagingStatusStore, _, _messagingStatus;
+=======
+/**
+ * When a component's children are updated, a series of update configuration
+ * objects are created in order to batch and serialize the required changes.
+ *
+ * Enumerates all the possible types of update configurations.
+ *
+ * @internal
+ */
+var ReactMultiChildUpdateTypes = keyMirror({
+  INSERT_MARKUP: null,
+  MOVE_EXISTING: null,
+  REMOVE_NODE: null,
+  TEXT_CONTENT: null
+});
+
+module.exports = ReactMultiChildUpdateTypes;
+
+},{"./keyMirror":442}],376:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactNativeComponent
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 _ = require('lodash');
 
@@ -53208,6 +56315,22 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(paylo
 });
 
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./Object.assign":336,"./invariant":436,"_process":457}],377:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactOwner
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 },{"./_base":295,"lodash":487}],301:[function(require,module,exports){
 var CHANGE_EVENT, _notifications;
@@ -53389,7 +56512,24 @@ rau = {
   }
 };
 
+<<<<<<< HEAD
 React.mixins.add('ReactActivitiesMixin', [ram, BaseMixin]);
+=======
+}).call(this,require('_process'))
+},{"./emptyObject":418,"./invariant":436,"_process":457}],378:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactPerf
+ * @typechecks static-only
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
@@ -53414,8 +56554,24 @@ window.ComponentManipulationsMixin = {
 
 
 
+<<<<<<< HEAD
 },{}],304:[function(require,module,exports){
 var ENTRY_DELETE_ANIMATION_SPEED;
+=======
+}).call(this,require('_process'))
+},{"_process":457}],379:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactPropTransferer
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 ENTRY_DELETE_ANIMATION_SPEED = 300;
 
@@ -53744,7 +56900,12 @@ window.ReactUnmountMixin = {
 module.exports = ReactCompositeComponent;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./Object.assign":328,"./ReactComponent":334,"./ReactContext":337,"./ReactCurrentOwner":338,"./ReactElement":354,"./ReactElementValidator":355,"./ReactEmptyComponent":356,"./ReactErrorUtils":357,"./ReactLegacyElement":363,"./ReactOwner":369,"./ReactPerf":370,"./ReactPropTransferer":371,"./ReactPropTypeLocationNames":372,"./ReactPropTypeLocations":373,"./ReactUpdates":381,"./instantiateReactComponent":427,"./invariant":428,"./keyMirror":434,"./keyOf":435,"./mapObject":436,"./monitorCodeUse":438,"./shouldUpdateReactComponent":444,"./warning":447,"_process":449}],337:[function(require,module,exports){
+=======
+},{"./Object.assign":336,"./emptyFunction":417,"./invariant":436,"./joinClasses":441,"./warning":455,"_process":457}],380:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53765,6 +56926,7 @@ var assign = require("./Object.assign");
 },{}],313:[function(require,module,exports){
 var CurrentUserResource;
 
+<<<<<<< HEAD
 CurrentUserResource = {
   update: function(_arg) {
     var beforeSend, complete, data, error, success;
@@ -53815,6 +56977,10 @@ module.exports = CurrentUserResource;
 module.exports = ReactContext;
 
 },{"./Object.assign":328}],338:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"_process":457}],381:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53828,6 +56994,20 @@ module.exports = ReactContext;
 
 "use strict";
 
+<<<<<<< HEAD
+=======
+var keyMirror = require("./keyMirror");
+
+var ReactPropTypeLocations = keyMirror({
+  prop: null,
+  context: null,
+  childContext: null
+});
+
+module.exports = ReactPropTypeLocations;
+
+},{"./keyMirror":442}],382:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Keeps track of the current owner.
  *
@@ -54499,10 +57679,14 @@ module.exports = DesignStatesService;
 =======
 });
 
+<<<<<<< HEAD
 module.exports = ReactDOMButton;
 
 },{"./AutoFocusMixin":303,"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354,"./keyMirror":434}],341:[function(require,module,exports){
 (function (process){
+=======
+},{"./ReactElement":362,"./ReactPropTypeLocationNames":380,"./deprecated":416,"./emptyFunction":417}],383:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54625,6 +57809,21 @@ window.EntryStore = {
 };
 
 
+<<<<<<< HEAD
+=======
+},{"./Object.assign":336,"./PooledClass":337,"./ReactBrowserEventEmitter":340}],384:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactReconcileTransaction
+ * @typechecks static-only
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 },{}],319:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
@@ -54690,7 +57889,22 @@ var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
+<<<<<<< HEAD
 CHANGE_EVENT = 'change';
+=======
+},{"./CallbackQueue":315,"./Object.assign":336,"./PooledClass":337,"./ReactBrowserEventEmitter":340,"./ReactInputSelection":369,"./ReactPutListenerQueue":383,"./Transaction":405}],385:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactRootIndex
+ * @typechecks
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 BaseStore = (function(_super) {
   __extends(BaseStore, _super);
@@ -54707,6 +57921,7 @@ BaseStore = (function(_super) {
     return this.on(CHANGE_EVENT, cb);
   };
 
+<<<<<<< HEAD
   BaseStore.prototype.removeChangeListener = function(cb) {
     return this.off(CHANGE_EVENT, cb);
   };
@@ -54716,6 +57931,10 @@ BaseStore = (function(_super) {
 =======
 }).call(this,require('_process'))
 },{"./CSSPropertyOperations":306,"./DOMProperty":312,"./DOMPropertyOperations":313,"./Object.assign":328,"./ReactBrowserComponentMixin":331,"./ReactBrowserEventEmitter":332,"./ReactComponent":334,"./ReactMount":365,"./ReactMultiChild":366,"./ReactPerf":370,"./escapeTextForBrowser":411,"./invariant":428,"./isEventSupported":429,"./keyOf":435,"./monitorCodeUse":438,"_process":449}],342:[function(require,module,exports){
+=======
+},{}],386:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54733,6 +57952,22 @@ BaseStore = (function(_super) {
 module.exports = BaseStore;
 
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./ReactElement":362,"./ReactInstanceHandles":370,"./ReactMarkupChecksum":372,"./ReactServerRenderingTransaction":387,"./instantiateReactComponent":435,"./invariant":436,"_process":457}],387:[function(require,module,exports){
+/**
+ * Copyright 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactServerRenderingTransaction
+ * @typechecks
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 },{}],322:[function(require,module,exports){
 var BaseStore, CurrentUserStore, currentUser;
@@ -54816,9 +58051,13 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 },{"./EventConstants":317,"./LocalEventTrapMixin":326,"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354}],343:[function(require,module,exports){
 (function (process){
+=======
+},{"./CallbackQueue":315,"./Object.assign":336,"./PooledClass":337,"./ReactPutListenerQueue":383,"./Transaction":405,"./emptyFunction":417}],388:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55044,8 +58283,13 @@ window.RelationshipsStore = _.extend({}, EventEmitter.prototype, {
 
 module.exports = ReactDOMIDOperations;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./CSSPropertyOperations":306,"./DOMChildrenOperations":311,"./DOMPropertyOperations":313,"./ReactMount":365,"./ReactPerf":370,"./invariant":428,"./setInnerHTML":442,"_process":449}],344:[function(require,module,exports){
+=======
+},{"./DOMPropertyOperations":321,"./Object.assign":336,"./ReactComponent":342,"./ReactElement":362,"./escapeTextForBrowser":419}],389:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55295,8 +58539,12 @@ window.FileReceiver = (function() {
 <<<<<<< HEAD
 =======
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./AutoFocusMixin":303,"./DOMPropertyOperations":313,"./LinkedValueUtils":325,"./Object.assign":328,"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354,"./ReactMount":365,"./ReactUpdates":381,"./invariant":428,"_process":449}],346:[function(require,module,exports){
 (function (process){
+=======
+},{"./CallbackQueue":315,"./Object.assign":336,"./PooledClass":337,"./ReactCurrentOwner":346,"./ReactPerf":378,"./Transaction":405,"./invariant":436,"./warning":455,"_process":457}],390:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55326,6 +58574,7 @@ global.$ = global.jQuery = require('jquery');
 
 global.MouseTrap = require('mousetrap');
 
+<<<<<<< HEAD
 global.React = require('react');
 
 global.Dispatcher = require('flux').Dispatcher;
@@ -55339,6 +58588,9 @@ global.moment = require('../../../bower_components/momentjs/moment');
 =======
 }).call(this,require('_process'))
 },{"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354,"./warning":447,"_process":449}],347:[function(require,module,exports){
+=======
+},{"./DOMProperty":320}],391:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55389,7 +58641,22 @@ require('jquery.ui.widget');
 
 require('jquery.ui.mouse');
 
+<<<<<<< HEAD
 require('jquery.ui.slider');
+=======
+},{"./EventConstants":325,"./EventPropagators":330,"./ReactInputSelection":369,"./SyntheticEvent":397,"./getActiveElement":423,"./isTextInputElement":439,"./keyOf":443,"./shallowEqual":451}],392:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ServerReactRootIndex
+ * @typechecks
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 require('jquery.ui.draggable');
 
@@ -55400,9 +58667,14 @@ require('jquery.autosize.input');
 require('jquery.collage');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('jquery.waypoints');
 =======
 },{"./AutoFocusMixin":303,"./LinkedValueUtils":325,"./Object.assign":328,"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354,"./ReactUpdates":381}],348:[function(require,module,exports){
+=======
+},{}],393:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55834,6 +59106,7 @@ Routes = {
 module.exports = Routes;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 },{}],334:[function(require,module,exports){
@@ -55841,6 +59114,10 @@ module.exports = Routes;
 },{"./ExecutionEnvironment":323,"./getNodeForCharacterOffset":421,"./getTextContentAccessor":423}],349:[function(require,module,exports){
 (function (process){
 >>>>>>> Editor store and services [#89871770]
+=======
+}).call(this,require('_process'))
+},{"./EventConstants":325,"./EventPluginUtils":329,"./EventPropagators":330,"./SyntheticClipboardEvent":394,"./SyntheticDragEvent":396,"./SyntheticEvent":397,"./SyntheticFocusEvent":398,"./SyntheticKeyboardEvent":400,"./SyntheticMouseEvent":401,"./SyntheticTouchEvent":402,"./SyntheticUIEvent":403,"./SyntheticWheelEvent":404,"./getEventCharCode":424,"./invariant":436,"./keyOf":443,"./warning":455,"_process":457}],394:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55867,7 +59144,11 @@ var AutoFocusMixin = {
 
 module.exports = AutoFocusMixin;
 
+<<<<<<< HEAD
 },{"./focusNode":444}],335:[function(require,module,exports){
+=======
+},{"./SyntheticEvent":397}],395:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -55935,6 +59216,10 @@ var fallbackChars = null;
 // Track whether we've ever handled a keypress on the space key.
 var hasSpaceKeypress = false;
 
+<<<<<<< HEAD
+=======
+},{"./SyntheticEvent":397}],396:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Return whether a native keypress event is assumed to be a command.
  * This is required because Firefox fires `keypress` events for key commands
@@ -56012,6 +59297,7 @@ var BeforeInputEventPlugin = {
           // Record the characters to be added to the DOM.
           chars = nativeEvent.data;
 
+<<<<<<< HEAD
           // If it's a spacebar character, assume that we have already handled
           // it at the keypress level and bail immediately. Android Chrome
           // doesn't give us keycodes, so we need to blacklist it.
@@ -56095,6 +59381,9 @@ module.exports = BeforeInputEventPlugin;
 }).call(this,require('_process'))
 },{"./AutoFocusMixin":303,"./DOMPropertyOperations":313,"./LinkedValueUtils":325,"./Object.assign":328,"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354,"./ReactUpdates":381,"./invariant":428,"./warning":447,"_process":449}],350:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+},{"./SyntheticMouseEvent":401}],397:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -56214,11 +59503,15 @@ var CSSProperty = {
 <<<<<<< HEAD
 module.exports = CSSProperty;
 
+<<<<<<< HEAD
 },{}],337:[function(require,module,exports){
 =======
 },{"./Object.assign":328,"./ReactUpdates":381,"./Transaction":397,"./emptyFunction":409}],351:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
 (function (process){
+=======
+},{"./Object.assign":336,"./PooledClass":337,"./emptyFunction":417,"./getEventTarget":427}],398:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -56254,8 +59547,23 @@ if (ExecutionEnvironment.canUseDOM) {
   }
 }
 
+<<<<<<< HEAD
 if ("production" !== process.env.NODE_ENV) {
   var warnedStyleNames = {};
+=======
+},{"./SyntheticUIEvent":403}],399:[function(require,module,exports){
+/**
+ * Copyright 2013 Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule SyntheticInputEvent
+ * @typechecks static-only
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
   var warnHyphenatedStyleName = function(name) {
     if (warnedStyleNames.hasOwnProperty(name) && warnedStyleNames[name]) {
@@ -56351,6 +59659,7 @@ var CSSPropertyOperations = {
 
 module.exports = CSSPropertyOperations;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 <<<<<<< HEAD
 },{"./CSSProperty":336,"./ExecutionEnvironment":354,"./camelizeStyleName":433,"./dangerousStyleValue":438,"./hyphenateStyleName":457,"./memoizeStringOnly":468,"./warning":478,"_process":480}],338:[function(require,module,exports){
@@ -56358,6 +59667,9 @@ module.exports = CSSPropertyOperations;
 =======
 },{"./BeforeInputEventPlugin":304,"./ChangeEventPlugin":308,"./ClientReactRootIndex":309,"./CompositionEventPlugin":310,"./DefaultEventPluginOrder":315,"./EnterLeaveEventPlugin":316,"./ExecutionEnvironment":323,"./HTMLDOMPropertyConfig":324,"./MobileSafariClickEventPlugin":327,"./ReactBrowserComponentMixin":331,"./ReactComponentBrowserEnvironment":335,"./ReactDOMButton":340,"./ReactDOMComponent":341,"./ReactDOMForm":342,"./ReactDOMImg":344,"./ReactDOMInput":345,"./ReactDOMOption":346,"./ReactDOMSelect":347,"./ReactDOMTextarea":349,"./ReactDefaultBatchingStrategy":350,"./ReactDefaultPerf":352,"./ReactEventListener":359,"./ReactInjection":360,"./ReactInstanceHandles":362,"./ReactMount":365,"./SVGDOMPropertyConfig":382,"./SelectEventPlugin":383,"./ServerReactRootIndex":384,"./SimpleEventPlugin":385,"./createFullPageComponent":405,"_process":449}],352:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+},{"./SyntheticEvent":397}],400:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -56456,11 +59768,15 @@ PooledClass.addPoolingTo(CallbackQueue);
 module.exports = CallbackQueue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./Object.assign":359,"./PooledClass":360,"./invariant":459,"_process":480}],339:[function(require,module,exports){
 =======
 },{"./DOMProperty":312,"./ReactDefaultPerfAnalysis":353,"./ReactMount":365,"./ReactPerf":370,"./performanceNow":441}],353:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+},{"./SyntheticUIEvent":403,"./getEventCharCode":424,"./getEventKey":425,"./getEventModifierState":426}],401:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -56540,6 +59856,7 @@ function manualDispatchChangeEvent(nativeEvent) {
   );
   EventPropagators.accumulateTwoPhaseDispatches(event);
 
+<<<<<<< HEAD
   // If change and propertychange bubbled, we'd just bind to it like all the
   // other events and have it go through ReactBrowserEventEmitter. Since it
   // doesn't, we manually listen for the events and so we have to enqueue and
@@ -56553,6 +59870,20 @@ function manualDispatchChangeEvent(nativeEvent) {
   // handlers can run. See https://github.com/facebook/react/issues/708.
   ReactUpdates.batchedUpdates(runEventInBatch, event);
 }
+=======
+},{"./SyntheticUIEvent":403,"./ViewportMetrics":406,"./getEventModifierState":426}],402:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule SyntheticTouchEvent
+ * @typechecks static-only
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 function runEventInBatch(event) {
   EventPluginHub.enqueueEvents(event);
@@ -56642,6 +59973,10 @@ function startWatchingForValueChange(target, targetID) {
   activeElement.attachEvent('onpropertychange', handlePropertyChange);
 }
 
+<<<<<<< HEAD
+=======
+},{"./SyntheticUIEvent":403,"./getEventModifierState":426}],403:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * (For old IE.) Removes the event listeners from the currently-tracked element,
  * if any exists.
@@ -56778,6 +60113,7 @@ function getTargetIDForClickEvent(
  */
 var ChangeEventPlugin = {
 
+<<<<<<< HEAD
   eventTypes: eventTypes,
 
   /**
@@ -56848,6 +60184,9 @@ module.exports = ChangeEventPlugin;
 },{"./Object.assign":328}],354:[function(require,module,exports){
 (function (process){
 >>>>>>> Editor store and services [#89871770]
+=======
+},{"./SyntheticEvent":397,"./getEventTarget":427}],404:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -56872,7 +60211,12 @@ var ClientReactRootIndex = {
 
 module.exports = ClientReactRootIndex;
 
+<<<<<<< HEAD
 },{}],341:[function(require,module,exports){
+=======
+},{"./SyntheticMouseEvent":401}],405:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -56968,6 +60312,24 @@ var eventTypes = {
   }
 };
 
+<<<<<<< HEAD
+=======
+var Transaction = {
+
+  Mixin: Mixin,
+
+  /**
+   * Token to look for to determine if an error occured.
+   */
+  OBSERVED_ERROR: {}
+
+};
+
+module.exports = Transaction;
+
+}).call(this,require('_process'))
+},{"./invariant":436,"_process":457}],406:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Translate native top level events into event types.
  *
@@ -57026,6 +60388,11 @@ function isFallbackEnd(topLevelType, nativeEvent) {
   }
 }
 
+<<<<<<< HEAD
+=======
+},{"./getUnboundedScrollPosition":432}],407:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Helper class stores information about selection and document state
  * so we can figure out what changed at a later date.
@@ -57135,9 +60502,13 @@ module.exports = CompositionEventPlugin;
 },{"./EventConstants":348,"./EventPropagators":353,"./ExecutionEnvironment":354,"./ReactInputSelection":392,"./SyntheticCompositionEvent":418,"./getTextContentAccessor":454,"./keyOf":466}],342:[function(require,module,exports){
 =======
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ReactContext":337,"./ReactCurrentOwner":338,"./warning":447,"_process":449}],355:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
 (function (process){
+=======
+},{"./invariant":436,"_process":457}],408:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -57158,6 +60529,10 @@ var ReactMultiChildUpdateTypes = require("./ReactMultiChildUpdateTypes");
 var getTextContentAccessor = require("./getTextContentAccessor");
 var invariant = require("./invariant");
 
+<<<<<<< HEAD
+=======
+},{}],409:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * The DOM property to use when setting text content.
  *
@@ -57185,6 +60560,7 @@ function insertChildAt(parentNode, childNode, index) {
   );
 }
 
+<<<<<<< HEAD
 var updateTextContent;
 if (textContentAccessor === 'textContent') {
   /**
@@ -57218,6 +60594,21 @@ if (textContentAccessor === 'textContent') {
 
 /**
  * Operations for updating with DOM children.
+=======
+module.exports = camelize;
+
+},{}],410:[function(require,module,exports){
+/**
+ * Copyright 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule camelizeStyleName
+ * @typechecks
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
  */
 var DOMChildrenOperations = {
 
@@ -57259,9 +60650,24 @@ var DOMChildrenOperations = {
           parentID
         ) : invariant(updatedChild));
 
+<<<<<<< HEAD
         initialChildren = initialChildren || {};
         initialChildren[parentID] = initialChildren[parentID] || [];
         initialChildren[parentID][updatedIndex] = updatedChild;
+=======
+},{"./camelize":409}],411:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule containsNode
+ * @typechecks
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
         updatedChildren = updatedChildren || [];
         updatedChildren.push(updatedChild);
@@ -57308,6 +60714,7 @@ var DOMChildrenOperations = {
 
 };
 
+<<<<<<< HEAD
 module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
@@ -57317,6 +60724,9 @@ module.exports = DOMChildrenOperations;
 },{"./ReactCurrentOwner":338,"./ReactElement":354,"./ReactPropTypeLocations":373,"./monitorCodeUse":438,"./warning":447,"_process":449}],356:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
 (function (process){
+=======
+},{"./isTextNode":440}],412:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -57352,6 +60762,7 @@ var DOMPropertyInjection = {
   HAS_POSITIVE_NUMERIC_VALUE: 0x20 | 0x10,
   HAS_OVERLOADED_BOOLEAN_VALUE: 0x40,
 
+<<<<<<< HEAD
   /**
    * Inject some specialized knowledge about the DOM. This takes a config object
    * with the following properties:
@@ -57420,6 +60831,10 @@ var DOMPropertyInjection = {
 =======
 }).call(this,require('_process'))
 },{"./ReactElement":354,"./invariant":428,"_process":449}],357:[function(require,module,exports){
+=======
+},{"./toArray":453}],413:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -57534,6 +60949,7 @@ var DOMProperty = {
    */
   getPropertyName: {},
 
+<<<<<<< HEAD
   /**
    * Mapping from normalized names to mutation methods. This will only exist if
    * mutation cannot be set simply by the property or `setAttribute()`.
@@ -57556,6 +60972,11 @@ var DOMProperty = {
   mustUseProperty: {},
 =======
 },{"./EventPluginHub":319}],359:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"./ReactCompositeComponent":344,"./ReactElement":362,"./invariant":436,"_process":457}],414:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -57652,11 +61073,15 @@ module.exports = DOMProperty;
 
 <<<<<<< HEAD
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./invariant":459,"_process":480}],344:[function(require,module,exports){
 (function (process){
 =======
 },{"./EventListener":318,"./ExecutionEnvironment":323,"./Object.assign":328,"./PooledClass":329,"./ReactInstanceHandles":362,"./ReactMount":365,"./ReactUpdates":381,"./getEventTarget":419,"./getUnboundedScrollPosition":424}],360:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+},{"./ExecutionEnvironment":331,"./createArrayFrom":412,"./getMarkupWrap":428,"./invariant":436,"_process":457}],415:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -57686,11 +61111,18 @@ function shouldIgnoreValue(name, value) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var processAttributeNameAndPrefix = memoizeStringOnly(function(name) {
   return escapeTextForBrowser(name) + '="';
 });
 =======
 },{"./DOMProperty":312,"./EventPluginHub":319,"./ReactBrowserEventEmitter":332,"./ReactComponent":334,"./ReactCompositeComponent":336,"./ReactEmptyComponent":356,"./ReactNativeComponent":368,"./ReactPerf":370,"./ReactRootIndex":377,"./ReactUpdates":381}],361:[function(require,module,exports){
+=======
+module.exports = dangerousStyleValue;
+
+},{"./CSSProperty":313}],416:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -57730,12 +61162,27 @@ if ("production" !== process.env.NODE_ENV) {
         null
     );
 
+<<<<<<< HEAD
     // For now, only warn when we have a suggested correction. This prevents
     // logging too much when using transferPropsTo.
     ("production" !== process.env.NODE_ENV ? warning(
       standardName == null,
       'Unknown DOM property ' + name + '. Did you mean ' + standardName + '?'
     ) : null);
+=======
+}).call(this,require('_process'))
+},{"./Object.assign":336,"./warning":455,"_process":457}],417:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule emptyFunction
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
   };
 }
@@ -57756,6 +61203,7 @@ var DOMPropertyOperations = {
       escapeTextForBrowser(id) + '"';
   },
 
+<<<<<<< HEAD
   /**
    * Creates markup for a property.
    *
@@ -57787,6 +61235,20 @@ var DOMPropertyOperations = {
     }
     return null;
   },
+=======
+},{}],418:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule emptyObject
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
   /**
    * Sets the value for a property on a node.
@@ -57867,11 +61329,15 @@ module.exports = DOMPropertyOperations;
 
 <<<<<<< HEAD
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./DOMProperty":343,"./escapeTextForBrowser":442,"./memoizeStringOnly":468,"./warning":478,"_process":480}],345:[function(require,module,exports){
 =======
 },{"./ReactDOMSelection":348,"./containsNode":403,"./focusNode":413,"./getActiveElement":415}],362:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
 (function (process){
+=======
+},{"_process":457}],419:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -57913,7 +61379,24 @@ function getNodeName(markup) {
   return markup.substring(1, markup.indexOf(' '));
 }
 
+<<<<<<< HEAD
 var Danger = {
+=======
+module.exports = escapeTextForBrowser;
+
+},{}],420:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule flattenChildren
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
   /**
    * Renders markup into an array of nodes. The markup is expected to render
@@ -58056,7 +61539,11 @@ var Danger = {
 module.exports = Danger;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ExecutionEnvironment":354,"./createNodesFromMarkup":437,"./emptyFunction":440,"./getMarkupWrap":451,"./invariant":459,"_process":480}],346:[function(require,module,exports){
+=======
+},{"./ReactTextComponent":388,"./traverseAllChildren":454,"./warning":455,"_process":457}],421:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -58102,7 +61589,11 @@ var DefaultEventPluginOrder = [
 
 module.exports = DefaultEventPluginOrder;
 
+<<<<<<< HEAD
 },{"./keyOf":466}],347:[function(require,module,exports){
+=======
+},{}],422:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -58146,6 +61637,7 @@ var eventTypes = {
 
 var extractedEvents = [null, null];
 
+<<<<<<< HEAD
 var EnterLeaveEventPlugin = {
 
   eventTypes: eventTypes,
@@ -58248,6 +61740,9 @@ module.exports = EnterLeaveEventPlugin;
 }).call(this,require('_process'))
 },{"./ReactCurrentOwner":338,"./invariant":428,"./monitorCodeUse":438,"./warning":447,"_process":449}],364:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+},{}],423:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -58317,10 +61812,14 @@ var EventConstants = {
   PropagationPhases: PropagationPhases
 };
 
+<<<<<<< HEAD
 module.exports = EventConstants;
 
 },{"./keyMirror":465}],349:[function(require,module,exports){
 (function (process){
+=======
+},{}],424:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014 Facebook, Inc.
  *
@@ -58409,12 +61908,16 @@ var EventListener = {
 module.exports = EventListener;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./emptyFunction":440,"_process":480}],350:[function(require,module,exports){
 =======
 },{"./adler32":400}],365:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
 (function (process){
+=======
+},{}],425:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -58466,7 +61969,29 @@ var executeDispatchesAndRelease = function(event) {
       event.constructor.release(event);
     }
   }
+<<<<<<< HEAD
 };
+=======
+  return '';
+}
+
+module.exports = getEventKey;
+
+},{"./getEventCharCode":424}],426:[function(require,module,exports){
+/**
+ * Copyright 2013 Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule getEventModifierState
+ * @typechecks static-only
+ */
+
+"use strict";
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 /**
  * - `InstanceHandle`: [required] Module that performs logical traversals of DOM
@@ -58483,6 +62008,12 @@ function validateInstanceHandle() {
   }
 }
 
+<<<<<<< HEAD
+=======
+module.exports = getEventModifierState;
+
+},{}],427:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * This is a unified interface for event plugins to be installed and configured.
  *
@@ -58492,10 +62023,30 @@ function validateInstanceHandle() {
  *     Required. When a top-level event is fired, this method is expected to
  *     extract synthetic events that will in turn be queued and dispatched.
  *
+<<<<<<< HEAD
  *   `eventTypes` {object}
  *     Optional, plugins that fire events must publish a mapping of registration
  *     names that are used to register listeners. Values of this mapping must
  *     be objects that contain `registrationName` or `phasedRegistrationNames`.
+=======
+ * @param {object} nativeEvent Native browser event.
+ * @return {DOMEventTarget} Target node.
+ */
+function getEventTarget(nativeEvent) {
+  var target = nativeEvent.target || nativeEvent.srcElement || window;
+  // Safari may fire events on text nodes (Node.TEXT_NODE is 3).
+  // @see http://www.quirksmode.org/js/events_properties.html
+  return target.nodeType === 3 ? target.parentNode : target;
+}
+
+module.exports = getEventTarget;
+
+},{}],428:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
  *
  *   `executeDispatch` {function(object, function, string)}
  *     Optional, allows plugins to override how an event gets dispatched. By
@@ -58689,8 +62240,12 @@ var EventPluginHub = {
 module.exports = EventPluginHub;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./EventPluginRegistry":351,"./EventPluginUtils":352,"./accumulateInto":430,"./forEachAccumulated":445,"./invariant":459,"_process":480}],351:[function(require,module,exports){
 (function (process){
+=======
+},{"./ExecutionEnvironment":331,"./invariant":436,"_process":457}],429:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -58807,6 +62362,12 @@ function publishEventForPlugin(dispatchConfig, PluginModule, eventName) {
   return false;
 }
 
+<<<<<<< HEAD
+=======
+module.exports = getNodeForCharacterOffset;
+
+},{}],430:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Publishes a registration name that is used to identify dispatched events and
  * can be used with `EventPluginHub.putListener` to register listeners.
@@ -58966,6 +62527,7 @@ var EventPluginRegistry = {
 
 };
 
+<<<<<<< HEAD
 module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
@@ -58975,6 +62537,9 @@ module.exports = EventPluginRegistry;
 =======
 },{"./DOMProperty":312,"./ReactBrowserEventEmitter":332,"./ReactCurrentOwner":338,"./ReactElement":354,"./ReactInstanceHandles":362,"./ReactLegacyElement":363,"./ReactPerf":370,"./containsNode":403,"./deprecated":408,"./getReactRootElementInContainer":422,"./instantiateReactComponent":427,"./invariant":428,"./shouldUpdateReactComponent":444,"./warning":447,"_process":449}],366:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+},{}],431:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -59031,6 +62596,21 @@ function isStartish(topLevelType) {
          topLevelType === topLevelTypes.topTouchStart;
 }
 
+<<<<<<< HEAD
+=======
+},{"./ExecutionEnvironment":331}],432:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule getUnboundedScrollPosition
+ * @typechecks
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 var validateEventDispatches;
 if ("production" !== process.env.NODE_ENV) {
@@ -59076,6 +62656,12 @@ function forEachEventDispatch(event, cb) {
   }
 }
 
+<<<<<<< HEAD
+=======
+module.exports = getUnboundedScrollPosition;
+
+},{}],433:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Default implementation of PluginModule.executeDispatch().
  * @param {SyntheticEvent} SyntheticEvent to handle
@@ -59139,6 +62725,10 @@ function executeDispatchesInOrderStopAtTrue(event) {
   return ret;
 }
 
+<<<<<<< HEAD
+=======
+},{}],434:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Execution of a "direct" dispatch - there must be at most one dispatch
  * accumulated on the event or it is considered an error. It doesn't really make
@@ -59182,6 +62772,7 @@ var EventPluginUtils = {
   isMoveish: isMoveish,
   isStartish: isStartish,
 
+<<<<<<< HEAD
   executeDirectDispatch: executeDirectDispatch,
   executeDispatch: executeDispatch,
   executeDispatchesInOrder: executeDispatchesInOrder,
@@ -59195,6 +62786,9 @@ module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
 },{"./EventConstants":348,"./invariant":459,"_process":480}],353:[function(require,module,exports){
+=======
+},{"./hyphenate":433}],435:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -59249,6 +62843,14 @@ function accumulateDirectionalDispatches(domID, upwards, event) {
   }
 }
 
+<<<<<<< HEAD
+=======
+module.exports = instantiateReactComponent;
+
+}).call(this,require('_process'))
+},{"./ReactElement":362,"./ReactEmptyComponent":364,"./ReactLegacyElement":371,"./ReactNativeComponent":376,"./warning":455,"_process":457}],436:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Collect dispatches (must be entirely collected before dispatching - see unit
  * tests). Lazily allocate the array to conserve memory.  We must loop through
@@ -59282,6 +62884,38 @@ function accumulateDispatches(id, ignoredDirection, event) {
       event._dispatchIDs = accumulateInto(event._dispatchIDs, id);
     }
   }
+<<<<<<< HEAD
+=======
+};
+
+module.exports = invariant;
+
+}).call(this,require('_process'))
+},{"_process":457}],437:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule isEventSupported
+ */
+
+"use strict";
+
+var ExecutionEnvironment = require("./ExecutionEnvironment");
+
+var useHasFeature;
+if (ExecutionEnvironment.canUseDOM) {
+  useHasFeature =
+    document.implementation &&
+    document.implementation.hasFeature &&
+    // always returns true in newer browsers as per the standard.
+    // @see http://dom.spec.whatwg.org/#dom-domimplementation-hasfeature
+    document.implementation.hasFeature('', '') !== true;
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 }
 
 /**
@@ -59309,11 +62943,42 @@ function accumulateEnterLeaveDispatches(leave, enter, fromID, toID) {
   );
 }
 
+<<<<<<< HEAD
+=======
+},{"./ExecutionEnvironment":331}],438:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule isNode
+ * @typechecks
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 function accumulateDirectDispatches(events) {
   forEachAccumulated(events, accumulateDirectDispatchesSingle);
 }
 
+<<<<<<< HEAD
+=======
+module.exports = isNode;
+
+},{}],439:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule isTextInputElement
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 
 /**
@@ -59336,11 +63001,15 @@ var EventPropagators = {
 module.exports = EventPropagators;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./EventConstants":348,"./EventPluginHub":350,"./accumulateInto":430,"./forEachAccumulated":445,"_process":480}],354:[function(require,module,exports){
 =======
 },{"./ReactComponent":334,"./ReactMultiChildUpdateTypes":367,"./flattenChildren":412,"./instantiateReactComponent":427,"./shouldUpdateReactComponent":444}],367:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+},{}],440:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -59362,6 +63031,10 @@ var canUseDOM = !!(
   window.document.createElement
 );
 
+<<<<<<< HEAD
+=======
+},{"./isNode":438}],441:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Simple, lightweight module assisting with the detection and context of
  * Worker. Helps avoid circular dependencies and allows code to reason about
@@ -59375,8 +63048,24 @@ var ExecutionEnvironment = {
 <<<<<<< HEAD
   canUseWorkers: typeof Worker !== 'undefined',
 
+<<<<<<< HEAD
   canUseEventListeners:
     canUseDOM && !!(window.addEventListener || window.attachEvent),
+=======
+},{}],442:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule keyMirror
+ * @typechecks static-only
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
   canUseViewport: canUseDOM && !!window.screen,
 
@@ -59386,11 +63075,16 @@ var ExecutionEnvironment = {
 
 module.exports = ExecutionEnvironment;
 
+<<<<<<< HEAD
 },{}],355:[function(require,module,exports){
 =======
 },{"./keyMirror":434}],368:[function(require,module,exports){
 (function (process){
 >>>>>>> Editor store and services [#89871770]
+=======
+}).call(this,require('_process'))
+},{"./invariant":436,"_process":457}],443:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -59404,7 +63098,23 @@ module.exports = ExecutionEnvironment;
 
 /*jslint bitwise: true*/
 
+<<<<<<< HEAD
 "use strict";
+=======
+module.exports = keyOf;
+
+},{}],444:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule mapObject
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 var DOMProperty = require("./DOMProperty");
 var ExecutionEnvironment = require("./ExecutionEnvironment");
@@ -59433,6 +63143,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 
+<<<<<<< HEAD
 var HTMLDOMPropertyConfig = {
   isCustomAttribute: RegExp.prototype.test.bind(
     /^(data|aria)-[a-z_][a-z\d_.\-]*$/
@@ -59589,6 +63300,9 @@ module.exports = HTMLDOMPropertyConfig;
 },{"./Object.assign":328,"./invariant":428,"_process":449}],369:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
 (function (process){
+=======
+},{}],445:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -59659,6 +63373,7 @@ function _handleLinkedCheckChange(e) {
   this.props.checkedLink.requestChange(e.target.checked);
 }
 
+<<<<<<< HEAD
 /**
  * Provide a linked `value` attribute for controlled forms. You should not use
  * this outside of the ReactDOM controlled form components.
@@ -59748,6 +63463,9 @@ module.exports = LinkedValueUtils;
 =======
 },{"./emptyObject":410,"./invariant":428,"_process":449}],370:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+},{}],446:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -59798,9 +63516,13 @@ module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
 <<<<<<< HEAD
+<<<<<<< HEAD
 },{"./ReactBrowserEventEmitter":363,"./accumulateInto":430,"./forEachAccumulated":445,"./invariant":459,"_process":480}],358:[function(require,module,exports){
 =======
 },{"_process":449}],371:[function(require,module,exports){
+=======
+},{"./invariant":436,"_process":457}],447:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 >>>>>>> Editor store and services [#89871770]
 /**
@@ -59835,6 +63557,7 @@ var MobileSafariClickEventPlugin = {
 
   eventTypes: null,
 
+<<<<<<< HEAD
   /**
    * @param {string} topLevelType Record from `EventConstants`.
    * @param {DOMEventTarget} topLevelTarget The listening component root node.
@@ -59861,6 +63584,10 @@ var MobileSafariClickEventPlugin = {
 module.exports = MobileSafariClickEventPlugin;
 
 },{"./EventConstants":348,"./emptyFunction":440}],359:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"./ReactElement":362,"./invariant":436,"_process":457}],448:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -59890,6 +63617,7 @@ function assign(target, sources) {
 
     var from = Object(nextSource);
 
+<<<<<<< HEAD
     // We don't currently support accessors nor proxies. Therefore this
     // copy cannot throw. If we ever supported this then we must handle
     // exceptions and side-effects. We don't support symbols so they won't
@@ -59914,6 +63642,9 @@ module.exports = assign;
 },{"./Object.assign":328,"./emptyFunction":409,"./invariant":428,"./joinClasses":433,"./warning":447,"_process":449}],372:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
 (function (process){
+=======
+},{"./ExecutionEnvironment":331}],449:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -59929,6 +63660,10 @@ module.exports = assign;
 
 var invariant = require("./invariant");
 
+<<<<<<< HEAD
+=======
+},{"./performance":448}],450:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Static poolers. Several custom versions for each potential number of
  * arguments. A completely generic pooler is easy to implement, but would
@@ -60033,12 +63768,16 @@ var PooledClass = {
 module.exports = PooledClass;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./invariant":459,"_process":480}],361:[function(require,module,exports){
 (function (process){
 =======
 },{"./keyMirror":434}],374:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+},{"./ExecutionEnvironment":331}],451:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -60077,7 +63816,22 @@ var assign = require("./Object.assign");
 var deprecated = require("./deprecated");
 var onlyChild = require("./onlyChild");
 
+<<<<<<< HEAD
 ReactDefaultInjection.inject();
+=======
+},{}],452:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule shouldUpdateReactComponent
+ * @typechecks static-only
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 var createElement = ReactElement.createElement;
 var createFactory = ReactElement.createFactory;
@@ -60095,7 +63849,23 @@ createFactory = ReactLegacyElement.wrapCreateFactory(
   createFactory
 );
 
+<<<<<<< HEAD
 var render = ReactPerf.measure('React', 'render', ReactMount.render);
+=======
+},{}],453:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule toArray
+ * @typechecks
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
 var React = {
   Children: {
@@ -60226,7 +63996,11 @@ module.exports = React;
 
 <<<<<<< HEAD
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./DOMPropertyOperations":344,"./EventPluginUtils":352,"./ExecutionEnvironment":354,"./Object.assign":359,"./ReactChildren":364,"./ReactComponent":365,"./ReactCompositeComponent":367,"./ReactContext":368,"./ReactCurrentOwner":369,"./ReactDOM":370,"./ReactDOMComponent":372,"./ReactDefaultInjection":382,"./ReactElement":385,"./ReactElementValidator":386,"./ReactInstanceHandles":393,"./ReactLegacyElement":394,"./ReactMount":396,"./ReactMultiChild":397,"./ReactPerf":401,"./ReactPropTypes":405,"./ReactServerRendering":409,"./ReactTextComponent":411,"./deprecated":439,"./onlyChild":470,"_process":480}],362:[function(require,module,exports){
+=======
+},{"./invariant":436,"_process":457}],454:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 =======
 },{"./ReactElement":354,"./ReactPropTypeLocationNames":372,"./deprecated":408,"./emptyFunction":409}],375:[function(require,module,exports){
@@ -60630,6 +64404,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
     }
   },
 
+<<<<<<< HEAD
   eventNameDispatchConfigs: EventPluginHub.eventNameDispatchConfigs,
 
   registrationNameModules: EventPluginHub.registrationNameModules,
@@ -60651,6 +64426,10 @@ module.exports = ReactBrowserEventEmitter;
 =======
 },{}],378:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+}).call(this,require('_process'))
+},{"./ReactElement":362,"./ReactInstanceHandles":370,"./invariant":436,"_process":457}],455:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -60714,6 +64493,7 @@ function forEachChildren(children, forEachFunc, forEachContext) {
   ForEachBookKeeping.release(traverseContext);
 }
 
+<<<<<<< HEAD
 /**
  * PooledClass representing the bookkeeping associated with performing a child
  * mapping. Allows avoiding binding callbacks.
@@ -60733,6 +64513,31 @@ PooledClass.addPoolingTo(MapBookKeeping, threeArgumentPooler);
 function mapSingleChildIntoContext(traverseContext, child, name, i) {
   var mapBookKeeping = traverseContext;
   var mapResult = mapBookKeeping.mapResult;
+=======
+module.exports = warning;
+
+}).call(this,require('_process'))
+},{"./emptyFunction":417,"_process":457}],456:[function(require,module,exports){
+module.exports = require('./lib/React');
+
+},{"./lib/React":338}],457:[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+
+process.nextTick = (function () {
+    var canSetImmediate = typeof window !== 'undefined'
+    && window.setImmediate;
+    var canMutationObserver = typeof window !== 'undefined'
+    && window.MutationObserver;
+    var canPost = typeof window !== 'undefined'
+    && window.postMessage && window.addEventListener
+    ;
+
+    if (canSetImmediate) {
+        return function (f) { return window.setImmediate(f) };
+    }
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
   var keyUnique = !mapResult.hasOwnProperty(name);
   ("production" !== process.env.NODE_ENV ? warning(
@@ -60824,10 +64629,28 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 
+<<<<<<< HEAD
 },{"./CallbackQueue":307,"./Object.assign":328,"./PooledClass":329,"./ReactPutListenerQueue":375,"./Transaction":397,"./emptyFunction":409}],380:[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
+=======
+},{}],458:[function(require,module,exports){
+/**
+ * Copyright (c) 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+module.exports.Dispatcher = require('./lib/Dispatcher')
+
+},{"./lib/Dispatcher":459}],459:[function(require,module,exports){
+/*
+ * Copyright (c) 2014, Facebook, Inc.
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -60946,7 +64769,29 @@ var ReactComponent = {
    *
    * @lends {ReactComponent.prototype}
    */
+<<<<<<< HEAD
   Mixin: {
+=======
+  Dispatcher.prototype.$Dispatcher_stopDispatching=function() {
+    this.$Dispatcher_pendingPayload = null;
+    this.$Dispatcher_isDispatching = false;
+  };
+
+
+module.exports = Dispatcher;
+
+},{"./invariant":460}],460:[function(require,module,exports){
+/**
+ * Copyright (c) 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule invariant
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
     /**
      * Checks whether or not this component is mounted.
@@ -61064,8 +64909,17 @@ var ReactComponent = {
       // All components start unmounted.
       this._lifeCycleState = ComponentLifeCycle.UNMOUNTED;
 
+<<<<<<< HEAD
       // See ReactUpdates.
       this._pendingCallbacks = null;
+=======
+},{}],461:[function(require,module,exports){
+/*!
+ * imagesLoaded v3.1.8
+ * JavaScript is all like "You images are done yet or what?"
+ * MIT License
+ */
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
       // We keep the old element and a reference to the pending element
       // to track updates.
@@ -61662,6 +65516,7 @@ var ReactCompositeComponentInterface = {
    */
   componentWillReceiveProps: SpecPolicy.DEFINE_MANY,
 
+<<<<<<< HEAD
   /**
    * Invoked while deciding if the component should be updated as a result of
    * receiving new props, state and/or context.
@@ -61713,6 +65568,15 @@ var ReactCompositeComponentInterface = {
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule SimpleEventPlugin
+=======
+},{"eventie":462,"wolfy87-eventemitter":463}],462:[function(require,module,exports){
+/*!
+ * eventie v1.0.6
+ * event binding helper
+ *   eventie.bind( elem, 'click', myFn )
+ *   eventie.unbind( elem, 'click', myFn )
+ * MIT license
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
  */
 >>>>>>> Editor store and services [#89871770]
 
@@ -61926,9 +65790,18 @@ function validateLifeCycleOnReplaceState(instance) {
   ) : invariant(compositeLifeCycleState !== CompositeLifeCycle.UNMOUNTING));
 }
 
+<<<<<<< HEAD
 /**
  * Mixin helper which handles policy validation and reserved
  * specification keys when building `ReactCompositeComponent` classses.
+=======
+},{}],463:[function(require,module,exports){
+/*!
+ * EventEmitter v4.2.11 - git.io/ee
+ * Unlicense - http://unlicense.org/
+ * Oliver Caldwell - http://oli.me.uk/
+ * @preserve
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
  */
 function mixSpecIntoComponent(Constructor, spec) {
   if (!spec) {
@@ -62430,7 +66303,46 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
 
+<<<<<<< HEAD
 },{"./SyntheticUIEvent":395}],391:[function(require,module,exports){
+=======
+    /**
+     * Fetches the events object and creates one if required.
+     *
+     * @return {Object} The events storage object.
+     * @api private
+     */
+    proto._getEvents = function _getEvents() {
+        return this._events || (this._events = {});
+    };
+
+    /**
+     * Reverts the global {@link EventEmitter} to its previous value and returns a reference to this version.
+     *
+     * @return {Function} Non conflicting EventEmitter class.
+     */
+    EventEmitter.noConflict = function noConflict() {
+        exports.EventEmitter = originalGlobalValue;
+        return EventEmitter;
+    };
+
+    // Expose the class either via AMD, CommonJS or the global object
+    if (typeof define === 'function' && define.amd) {
+        define(function () {
+            return EventEmitter;
+        });
+    }
+    else if (typeof module === 'object' && module.exports){
+        module.exports = EventEmitter;
+    }
+    else {
+        exports.EventEmitter = EventEmitter;
+    }
+}.call(this));
+
+},{}],464:[function(require,module,exports){
+(function (global){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -78418,51 +82330,51 @@ if ( typeof define === 'function' && define.amd ) {
           othType = typeof other;
 =======
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],457:[function(require,module,exports){
-module.exports=require(303)
-},{"./focusNode":575,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/AutoFocusMixin.js":303}],458:[function(require,module,exports){
-module.exports=require(304)
-},{"./EventConstants":471,"./EventPropagators":476,"./ExecutionEnvironment":477,"./SyntheticInputEvent":551,"./keyOf":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/BeforeInputEventPlugin.js":304}],459:[function(require,module,exports){
-module.exports=require(305)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSProperty.js":305}],460:[function(require,module,exports){
-module.exports=require(306)
-},{"./CSSProperty":459,"./ExecutionEnvironment":477,"./camelizeStyleName":562,"./dangerousStyleValue":569,"./hyphenateStyleName":588,"./memoizeStringOnly":599,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSPropertyOperations.js":306,"_process":449}],461:[function(require,module,exports){
-module.exports=require(307)
-},{"./Object.assign":483,"./PooledClass":484,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CallbackQueue.js":307,"_process":449}],462:[function(require,module,exports){
-module.exports=require(308)
-},{"./EventConstants":471,"./EventPluginHub":473,"./EventPropagators":476,"./ExecutionEnvironment":477,"./ReactUpdates":541,"./SyntheticEvent":549,"./isEventSupported":591,"./isTextInputElement":593,"./keyOf":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ChangeEventPlugin.js":308}],463:[function(require,module,exports){
-module.exports=require(309)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ClientReactRootIndex.js":309}],464:[function(require,module,exports){
-module.exports=require(310)
-},{"./EventConstants":471,"./EventPropagators":476,"./ExecutionEnvironment":477,"./ReactInputSelection":517,"./SyntheticCompositionEvent":547,"./getTextContentAccessor":585,"./keyOf":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CompositionEventPlugin.js":310}],465:[function(require,module,exports){
+},{}],465:[function(require,module,exports){
 module.exports=require(311)
-},{"./Danger":468,"./ReactMultiChildUpdateTypes":524,"./getTextContentAccessor":585,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMChildrenOperations.js":311,"_process":449}],466:[function(require,module,exports){
+},{"./focusNode":583,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/AutoFocusMixin.js":311}],466:[function(require,module,exports){
 module.exports=require(312)
-},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMProperty.js":312,"_process":449}],467:[function(require,module,exports){
+},{"./EventConstants":479,"./EventPropagators":484,"./ExecutionEnvironment":485,"./SyntheticInputEvent":559,"./keyOf":605,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/BeforeInputEventPlugin.js":312}],467:[function(require,module,exports){
 module.exports=require(313)
-},{"./DOMProperty":466,"./escapeTextForBrowser":573,"./memoizeStringOnly":599,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMPropertyOperations.js":313,"_process":449}],468:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSProperty.js":313}],468:[function(require,module,exports){
 module.exports=require(314)
-},{"./ExecutionEnvironment":477,"./createNodesFromMarkup":567,"./emptyFunction":571,"./getMarkupWrap":582,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Danger.js":314,"_process":449}],469:[function(require,module,exports){
+},{"./CSSProperty":467,"./ExecutionEnvironment":485,"./camelizeStyleName":570,"./dangerousStyleValue":577,"./hyphenateStyleName":596,"./memoizeStringOnly":607,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSPropertyOperations.js":314,"_process":457}],469:[function(require,module,exports){
 module.exports=require(315)
-},{"./keyOf":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DefaultEventPluginOrder.js":315}],470:[function(require,module,exports){
+},{"./Object.assign":491,"./PooledClass":492,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CallbackQueue.js":315,"_process":457}],470:[function(require,module,exports){
 module.exports=require(316)
-},{"./EventConstants":471,"./EventPropagators":476,"./ReactMount":522,"./SyntheticMouseEvent":553,"./keyOf":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EnterLeaveEventPlugin.js":316}],471:[function(require,module,exports){
+},{"./EventConstants":479,"./EventPluginHub":481,"./EventPropagators":484,"./ExecutionEnvironment":485,"./ReactUpdates":549,"./SyntheticEvent":557,"./isEventSupported":599,"./isTextInputElement":601,"./keyOf":605,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ChangeEventPlugin.js":316}],471:[function(require,module,exports){
 module.exports=require(317)
-},{"./keyMirror":596,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventConstants.js":317}],472:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ClientReactRootIndex.js":317}],472:[function(require,module,exports){
 module.exports=require(318)
-},{"./emptyFunction":571,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventListener.js":318,"_process":449}],473:[function(require,module,exports){
+},{"./EventConstants":479,"./EventPropagators":484,"./ExecutionEnvironment":485,"./ReactInputSelection":525,"./SyntheticCompositionEvent":555,"./getTextContentAccessor":593,"./keyOf":605,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CompositionEventPlugin.js":318}],473:[function(require,module,exports){
 module.exports=require(319)
-},{"./EventPluginRegistry":474,"./EventPluginUtils":475,"./accumulateInto":559,"./forEachAccumulated":576,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginHub.js":319,"_process":449}],474:[function(require,module,exports){
+},{"./Danger":476,"./ReactMultiChildUpdateTypes":532,"./getTextContentAccessor":593,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMChildrenOperations.js":319,"_process":457}],474:[function(require,module,exports){
 module.exports=require(320)
-},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginRegistry.js":320,"_process":449}],475:[function(require,module,exports){
+},{"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMProperty.js":320,"_process":457}],475:[function(require,module,exports){
 module.exports=require(321)
-},{"./EventConstants":471,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginUtils.js":321,"_process":449}],476:[function(require,module,exports){
+},{"./DOMProperty":474,"./escapeTextForBrowser":581,"./memoizeStringOnly":607,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMPropertyOperations.js":321,"_process":457}],476:[function(require,module,exports){
 module.exports=require(322)
-},{"./EventConstants":471,"./EventPluginHub":473,"./accumulateInto":559,"./forEachAccumulated":576,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPropagators.js":322,"_process":449}],477:[function(require,module,exports){
+},{"./ExecutionEnvironment":485,"./createNodesFromMarkup":575,"./emptyFunction":579,"./getMarkupWrap":590,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Danger.js":322,"_process":457}],477:[function(require,module,exports){
 module.exports=require(323)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ExecutionEnvironment.js":323}],478:[function(require,module,exports){
+},{"./keyOf":605,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DefaultEventPluginOrder.js":323}],478:[function(require,module,exports){
 module.exports=require(324)
-},{"./DOMProperty":466,"./ExecutionEnvironment":477,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/HTMLDOMPropertyConfig.js":324}],479:[function(require,module,exports){
+},{"./EventConstants":479,"./EventPropagators":484,"./ReactMount":530,"./SyntheticMouseEvent":561,"./keyOf":605,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EnterLeaveEventPlugin.js":324}],479:[function(require,module,exports){
+module.exports=require(325)
+},{"./keyMirror":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventConstants.js":325}],480:[function(require,module,exports){
+module.exports=require(326)
+},{"./emptyFunction":579,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventListener.js":326,"_process":457}],481:[function(require,module,exports){
+module.exports=require(327)
+},{"./EventPluginRegistry":482,"./EventPluginUtils":483,"./accumulateInto":567,"./forEachAccumulated":584,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginHub.js":327,"_process":457}],482:[function(require,module,exports){
+module.exports=require(328)
+},{"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginRegistry.js":328,"_process":457}],483:[function(require,module,exports){
+module.exports=require(329)
+},{"./EventConstants":479,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginUtils.js":329,"_process":457}],484:[function(require,module,exports){
+module.exports=require(330)
+},{"./EventConstants":479,"./EventPluginHub":481,"./accumulateInto":567,"./forEachAccumulated":584,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPropagators.js":330,"_process":457}],485:[function(require,module,exports){
+module.exports=require(331)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ExecutionEnvironment.js":331}],486:[function(require,module,exports){
+module.exports=require(332)
+},{"./DOMProperty":474,"./ExecutionEnvironment":485,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/HTMLDOMPropertyConfig.js":332}],487:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -78533,6 +82445,7 @@ module.exports=require(324)
           othWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (valWrapped || othWrapped) {
         return equalFunc(valWrapped ? object.value() : object, othWrapped ? other.value() : other, customizer, isWhere, stackA, stackB);
       }
@@ -78561,12 +82474,31 @@ module.exports=require(331)
 },{"./ReactEmptyComponent":512,"./ReactMount":522,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserComponentMixin.js":331,"_process":449}],487:[function(require,module,exports){
 module.exports=require(332)
 },{"./EventConstants":471,"./EventPluginHub":473,"./EventPluginRegistry":474,"./Object.assign":483,"./ReactEventEmitterMixin":514,"./ViewportMetrics":558,"./isEventSupported":591,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserEventEmitter.js":332}],488:[function(require,module,exports){
+=======
+},{"./ReactLink":528,"./ReactStateSetters":545}],488:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 module.exports=require(333)
-},{"./PooledClass":484,"./traverseAllChildren":608,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactChildren.js":333,"_process":449}],489:[function(require,module,exports){
+},{"./ReactPropTypes":539,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/LinkedValueUtils.js":333,"_process":457}],489:[function(require,module,exports){
 module.exports=require(334)
-},{"./Object.assign":483,"./ReactElement":510,"./ReactOwner":526,"./ReactUpdates":541,"./invariant":590,"./keyMirror":596,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponent.js":334,"_process":449}],490:[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":495,"./accumulateInto":567,"./forEachAccumulated":584,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/LocalEventTrapMixin.js":334,"_process":457}],490:[function(require,module,exports){
 module.exports=require(335)
-},{"./ReactDOMIDOperations":499,"./ReactMarkupChecksum":521,"./ReactMount":522,"./ReactPerf":527,"./ReactReconcileTransaction":533,"./getReactRootElementInContainer":584,"./invariant":590,"./setInnerHTML":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponentBrowserEnvironment.js":335,"_process":449}],491:[function(require,module,exports){
+},{"./EventConstants":479,"./emptyFunction":579,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/MobileSafariClickEventPlugin.js":335}],491:[function(require,module,exports){
+module.exports=require(336)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Object.assign.js":336}],492:[function(require,module,exports){
+module.exports=require(337)
+},{"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/PooledClass.js":337,"_process":457}],493:[function(require,module,exports){
+module.exports=require(338)
+},{"./DOMPropertyOperations":475,"./EventPluginUtils":483,"./ExecutionEnvironment":485,"./Object.assign":491,"./ReactChildren":496,"./ReactComponent":497,"./ReactCompositeComponent":500,"./ReactContext":501,"./ReactCurrentOwner":502,"./ReactDOM":503,"./ReactDOMComponent":505,"./ReactDefaultInjection":515,"./ReactElement":518,"./ReactElementValidator":519,"./ReactInstanceHandles":526,"./ReactLegacyElement":527,"./ReactMount":530,"./ReactMultiChild":531,"./ReactPerf":535,"./ReactPropTypes":539,"./ReactServerRendering":543,"./ReactTextComponent":546,"./deprecated":578,"./onlyChild":609,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/React.js":338,"_process":457}],494:[function(require,module,exports){
+module.exports=require(339)
+},{"./ReactEmptyComponent":520,"./ReactMount":530,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserComponentMixin.js":339,"_process":457}],495:[function(require,module,exports){
+module.exports=require(340)
+},{"./EventConstants":479,"./EventPluginHub":481,"./EventPluginRegistry":482,"./Object.assign":491,"./ReactEventEmitterMixin":522,"./ViewportMetrics":566,"./isEventSupported":599,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserEventEmitter.js":340}],496:[function(require,module,exports){
+module.exports=require(341)
+},{"./PooledClass":492,"./traverseAllChildren":616,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactChildren.js":341,"_process":457}],497:[function(require,module,exports){
+module.exports=require(342)
+},{"./Object.assign":491,"./ReactElement":518,"./ReactOwner":534,"./ReactUpdates":549,"./invariant":598,"./keyMirror":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponent.js":342,"_process":457}],498:[function(require,module,exports){
+module.exports=require(343)
+},{"./ReactDOMIDOperations":507,"./ReactMarkupChecksum":529,"./ReactMount":530,"./ReactPerf":535,"./ReactReconcileTransaction":541,"./getReactRootElementInContainer":592,"./invariant":598,"./setInnerHTML":612,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponentBrowserEnvironment.js":343,"_process":457}],499:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -78597,6 +82529,7 @@ module.exports=require(335)
       return result;
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     /**
      * The base implementation of `_.isMatch` without support for callback
@@ -78635,46 +82568,65 @@ module.exports=require(342)
 },{"./EventConstants":471,"./LocalEventTrapMixin":481,"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMForm.js":342}],499:[function(require,module,exports){
 module.exports=require(343)
 },{"./CSSPropertyOperations":460,"./DOMChildrenOperations":465,"./DOMPropertyOperations":467,"./ReactMount":522,"./ReactPerf":527,"./invariant":590,"./setInnerHTML":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMIDOperations.js":343,"_process":449}],500:[function(require,module,exports){
+=======
+},{"./shallowEqual":613}],500:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 module.exports=require(344)
-},{"./EventConstants":471,"./LocalEventTrapMixin":481,"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMImg.js":344}],501:[function(require,module,exports){
+},{"./Object.assign":491,"./ReactComponent":497,"./ReactContext":501,"./ReactCurrentOwner":502,"./ReactElement":518,"./ReactElementValidator":519,"./ReactEmptyComponent":520,"./ReactErrorUtils":521,"./ReactLegacyElement":527,"./ReactOwner":534,"./ReactPerf":535,"./ReactPropTransferer":536,"./ReactPropTypeLocationNames":537,"./ReactPropTypeLocations":538,"./ReactUpdates":549,"./instantiateReactComponent":597,"./invariant":598,"./keyMirror":604,"./keyOf":605,"./mapObject":606,"./monitorCodeUse":608,"./shouldUpdateReactComponent":614,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactCompositeComponent.js":344,"_process":457}],501:[function(require,module,exports){
 module.exports=require(345)
-},{"./AutoFocusMixin":457,"./DOMPropertyOperations":467,"./LinkedValueUtils":480,"./Object.assign":483,"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"./ReactMount":522,"./ReactUpdates":541,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMInput.js":345,"_process":449}],502:[function(require,module,exports){
+},{"./Object.assign":491,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactContext.js":345}],502:[function(require,module,exports){
 module.exports=require(346)
-},{"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMOption.js":346,"_process":449}],503:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactCurrentOwner.js":346}],503:[function(require,module,exports){
 module.exports=require(347)
-},{"./AutoFocusMixin":457,"./LinkedValueUtils":480,"./Object.assign":483,"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"./ReactUpdates":541,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelect.js":347}],504:[function(require,module,exports){
+},{"./ReactElement":518,"./ReactElementValidator":519,"./ReactLegacyElement":527,"./mapObject":606,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOM.js":347,"_process":457}],504:[function(require,module,exports){
 module.exports=require(348)
-},{"./ExecutionEnvironment":477,"./getNodeForCharacterOffset":583,"./getTextContentAccessor":585,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelection.js":348}],505:[function(require,module,exports){
+},{"./AutoFocusMixin":465,"./ReactBrowserComponentMixin":494,"./ReactCompositeComponent":500,"./ReactDOM":503,"./ReactElement":518,"./keyMirror":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMButton.js":348}],505:[function(require,module,exports){
 module.exports=require(349)
-},{"./AutoFocusMixin":457,"./DOMPropertyOperations":467,"./LinkedValueUtils":480,"./Object.assign":483,"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"./ReactUpdates":541,"./invariant":590,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMTextarea.js":349,"_process":449}],506:[function(require,module,exports){
+},{"./CSSPropertyOperations":468,"./DOMProperty":474,"./DOMPropertyOperations":475,"./Object.assign":491,"./ReactBrowserComponentMixin":494,"./ReactBrowserEventEmitter":495,"./ReactComponent":497,"./ReactMount":530,"./ReactMultiChild":531,"./ReactPerf":535,"./escapeTextForBrowser":581,"./invariant":598,"./isEventSupported":599,"./keyOf":605,"./monitorCodeUse":608,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMComponent.js":349,"_process":457}],506:[function(require,module,exports){
 module.exports=require(350)
-},{"./Object.assign":483,"./ReactUpdates":541,"./Transaction":557,"./emptyFunction":571,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultBatchingStrategy.js":350}],507:[function(require,module,exports){
+},{"./EventConstants":479,"./LocalEventTrapMixin":489,"./ReactBrowserComponentMixin":494,"./ReactCompositeComponent":500,"./ReactDOM":503,"./ReactElement":518,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMForm.js":350}],507:[function(require,module,exports){
 module.exports=require(351)
-},{"./BeforeInputEventPlugin":458,"./ChangeEventPlugin":462,"./ClientReactRootIndex":463,"./CompositionEventPlugin":464,"./DefaultEventPluginOrder":469,"./EnterLeaveEventPlugin":470,"./ExecutionEnvironment":477,"./HTMLDOMPropertyConfig":478,"./MobileSafariClickEventPlugin":482,"./ReactBrowserComponentMixin":486,"./ReactComponentBrowserEnvironment":490,"./ReactDOMButton":496,"./ReactDOMComponent":497,"./ReactDOMForm":498,"./ReactDOMImg":500,"./ReactDOMInput":501,"./ReactDOMOption":502,"./ReactDOMSelect":503,"./ReactDOMTextarea":505,"./ReactDefaultBatchingStrategy":506,"./ReactDefaultPerf":508,"./ReactEventListener":515,"./ReactInjection":516,"./ReactInstanceHandles":518,"./ReactMount":522,"./SVGDOMPropertyConfig":542,"./SelectEventPlugin":543,"./ServerReactRootIndex":544,"./SimpleEventPlugin":545,"./createFullPageComponent":566,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultInjection.js":351,"_process":449}],508:[function(require,module,exports){
+},{"./CSSPropertyOperations":468,"./DOMChildrenOperations":473,"./DOMPropertyOperations":475,"./ReactMount":530,"./ReactPerf":535,"./invariant":598,"./setInnerHTML":612,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMIDOperations.js":351,"_process":457}],508:[function(require,module,exports){
 module.exports=require(352)
-},{"./DOMProperty":466,"./ReactDefaultPerfAnalysis":509,"./ReactMount":522,"./ReactPerf":527,"./performanceNow":603,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerf.js":352}],509:[function(require,module,exports){
+},{"./EventConstants":479,"./LocalEventTrapMixin":489,"./ReactBrowserComponentMixin":494,"./ReactCompositeComponent":500,"./ReactDOM":503,"./ReactElement":518,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMImg.js":352}],509:[function(require,module,exports){
 module.exports=require(353)
-},{"./Object.assign":483,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerfAnalysis.js":353}],510:[function(require,module,exports){
+},{"./AutoFocusMixin":465,"./DOMPropertyOperations":475,"./LinkedValueUtils":488,"./Object.assign":491,"./ReactBrowserComponentMixin":494,"./ReactCompositeComponent":500,"./ReactDOM":503,"./ReactElement":518,"./ReactMount":530,"./ReactUpdates":549,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMInput.js":353,"_process":457}],510:[function(require,module,exports){
 module.exports=require(354)
-},{"./ReactContext":493,"./ReactCurrentOwner":494,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElement.js":354,"_process":449}],511:[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":494,"./ReactCompositeComponent":500,"./ReactDOM":503,"./ReactElement":518,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMOption.js":354,"_process":457}],511:[function(require,module,exports){
 module.exports=require(355)
-},{"./ReactCurrentOwner":494,"./ReactElement":510,"./ReactPropTypeLocations":530,"./monitorCodeUse":600,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElementValidator.js":355,"_process":449}],512:[function(require,module,exports){
+},{"./AutoFocusMixin":465,"./LinkedValueUtils":488,"./Object.assign":491,"./ReactBrowserComponentMixin":494,"./ReactCompositeComponent":500,"./ReactDOM":503,"./ReactElement":518,"./ReactUpdates":549,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelect.js":355}],512:[function(require,module,exports){
 module.exports=require(356)
-},{"./ReactElement":510,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEmptyComponent.js":356,"_process":449}],513:[function(require,module,exports){
+},{"./ExecutionEnvironment":485,"./getNodeForCharacterOffset":591,"./getTextContentAccessor":593,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelection.js":356}],513:[function(require,module,exports){
 module.exports=require(357)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactErrorUtils.js":357}],514:[function(require,module,exports){
+},{"./AutoFocusMixin":465,"./DOMPropertyOperations":475,"./LinkedValueUtils":488,"./Object.assign":491,"./ReactBrowserComponentMixin":494,"./ReactCompositeComponent":500,"./ReactDOM":503,"./ReactElement":518,"./ReactUpdates":549,"./invariant":598,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMTextarea.js":357,"_process":457}],514:[function(require,module,exports){
 module.exports=require(358)
-},{"./EventPluginHub":473,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventEmitterMixin.js":358}],515:[function(require,module,exports){
+},{"./Object.assign":491,"./ReactUpdates":549,"./Transaction":565,"./emptyFunction":579,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultBatchingStrategy.js":358}],515:[function(require,module,exports){
 module.exports=require(359)
-},{"./EventListener":472,"./ExecutionEnvironment":477,"./Object.assign":483,"./PooledClass":484,"./ReactInstanceHandles":518,"./ReactMount":522,"./ReactUpdates":541,"./getEventTarget":581,"./getUnboundedScrollPosition":586,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventListener.js":359}],516:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":466,"./ChangeEventPlugin":470,"./ClientReactRootIndex":471,"./CompositionEventPlugin":472,"./DefaultEventPluginOrder":477,"./EnterLeaveEventPlugin":478,"./ExecutionEnvironment":485,"./HTMLDOMPropertyConfig":486,"./MobileSafariClickEventPlugin":490,"./ReactBrowserComponentMixin":494,"./ReactComponentBrowserEnvironment":498,"./ReactDOMButton":504,"./ReactDOMComponent":505,"./ReactDOMForm":506,"./ReactDOMImg":508,"./ReactDOMInput":509,"./ReactDOMOption":510,"./ReactDOMSelect":511,"./ReactDOMTextarea":513,"./ReactDefaultBatchingStrategy":514,"./ReactDefaultPerf":516,"./ReactEventListener":523,"./ReactInjection":524,"./ReactInstanceHandles":526,"./ReactMount":530,"./SVGDOMPropertyConfig":550,"./SelectEventPlugin":551,"./ServerReactRootIndex":552,"./SimpleEventPlugin":553,"./createFullPageComponent":574,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultInjection.js":359,"_process":457}],516:[function(require,module,exports){
 module.exports=require(360)
-},{"./DOMProperty":466,"./EventPluginHub":473,"./ReactBrowserEventEmitter":487,"./ReactComponent":489,"./ReactCompositeComponent":492,"./ReactEmptyComponent":512,"./ReactNativeComponent":525,"./ReactPerf":527,"./ReactRootIndex":534,"./ReactUpdates":541,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInjection.js":360}],517:[function(require,module,exports){
+},{"./DOMProperty":474,"./ReactDefaultPerfAnalysis":517,"./ReactMount":530,"./ReactPerf":535,"./performanceNow":611,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerf.js":360}],517:[function(require,module,exports){
 module.exports=require(361)
-},{"./ReactDOMSelection":504,"./containsNode":564,"./focusNode":575,"./getActiveElement":577,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInputSelection.js":361}],518:[function(require,module,exports){
+},{"./Object.assign":491,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerfAnalysis.js":361}],518:[function(require,module,exports){
 module.exports=require(362)
-},{"./ReactRootIndex":534,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInstanceHandles.js":362,"_process":449}],519:[function(require,module,exports){
+},{"./ReactContext":501,"./ReactCurrentOwner":502,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElement.js":362,"_process":457}],519:[function(require,module,exports){
 module.exports=require(363)
-},{"./ReactCurrentOwner":494,"./invariant":590,"./monitorCodeUse":600,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactLegacyElement.js":363,"_process":449}],520:[function(require,module,exports){
+},{"./ReactCurrentOwner":502,"./ReactElement":518,"./ReactPropTypeLocations":538,"./monitorCodeUse":608,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElementValidator.js":363,"_process":457}],520:[function(require,module,exports){
+module.exports=require(364)
+},{"./ReactElement":518,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEmptyComponent.js":364,"_process":457}],521:[function(require,module,exports){
+module.exports=require(365)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactErrorUtils.js":365}],522:[function(require,module,exports){
+module.exports=require(366)
+},{"./EventPluginHub":481,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventEmitterMixin.js":366}],523:[function(require,module,exports){
+module.exports=require(367)
+},{"./EventListener":480,"./ExecutionEnvironment":485,"./Object.assign":491,"./PooledClass":492,"./ReactInstanceHandles":526,"./ReactMount":530,"./ReactUpdates":549,"./getEventTarget":589,"./getUnboundedScrollPosition":594,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventListener.js":367}],524:[function(require,module,exports){
+module.exports=require(368)
+},{"./DOMProperty":474,"./EventPluginHub":481,"./ReactBrowserEventEmitter":495,"./ReactComponent":497,"./ReactCompositeComponent":500,"./ReactEmptyComponent":520,"./ReactNativeComponent":533,"./ReactPerf":535,"./ReactRootIndex":542,"./ReactUpdates":549,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInjection.js":368}],525:[function(require,module,exports){
+module.exports=require(369)
+},{"./ReactDOMSelection":512,"./containsNode":572,"./focusNode":583,"./getActiveElement":585,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInputSelection.js":369}],526:[function(require,module,exports){
+module.exports=require(370)
+},{"./ReactRootIndex":542,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInstanceHandles.js":370,"_process":457}],527:[function(require,module,exports){
+module.exports=require(371)
+},{"./ReactCurrentOwner":502,"./invariant":598,"./monitorCodeUse":608,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactLegacyElement.js":371,"_process":457}],528:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -78769,6 +82721,7 @@ module.exports=require(363)
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /**
      * The base implementation of `_.matchesProperty` which does not coerce `key`
      * to a string.
@@ -78806,22 +82759,41 @@ module.exports=require(370)
 },{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPerf.js":370,"_process":449}],528:[function(require,module,exports){
 module.exports=require(371)
 },{"./Object.assign":483,"./emptyFunction":571,"./invariant":590,"./joinClasses":595,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTransferer.js":371,"_process":449}],529:[function(require,module,exports){
+=======
+},{"./React":493}],529:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 module.exports=require(372)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocationNames.js":372,"_process":449}],530:[function(require,module,exports){
+},{"./adler32":568,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMarkupChecksum.js":372}],530:[function(require,module,exports){
 module.exports=require(373)
-},{"./keyMirror":596,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocations.js":373}],531:[function(require,module,exports){
+},{"./DOMProperty":474,"./ReactBrowserEventEmitter":495,"./ReactCurrentOwner":502,"./ReactElement":518,"./ReactInstanceHandles":526,"./ReactLegacyElement":527,"./ReactPerf":535,"./containsNode":572,"./deprecated":578,"./getReactRootElementInContainer":592,"./instantiateReactComponent":597,"./invariant":598,"./shouldUpdateReactComponent":614,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMount.js":373,"_process":457}],531:[function(require,module,exports){
 module.exports=require(374)
-},{"./ReactElement":510,"./ReactPropTypeLocationNames":529,"./deprecated":570,"./emptyFunction":571,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypes.js":374}],532:[function(require,module,exports){
+},{"./ReactComponent":497,"./ReactMultiChildUpdateTypes":532,"./flattenChildren":582,"./instantiateReactComponent":597,"./shouldUpdateReactComponent":614,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMultiChild.js":374}],532:[function(require,module,exports){
 module.exports=require(375)
-},{"./Object.assign":483,"./PooledClass":484,"./ReactBrowserEventEmitter":487,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPutListenerQueue.js":375}],533:[function(require,module,exports){
+},{"./keyMirror":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMultiChildUpdateTypes.js":375}],533:[function(require,module,exports){
 module.exports=require(376)
-},{"./CallbackQueue":461,"./Object.assign":483,"./PooledClass":484,"./ReactBrowserEventEmitter":487,"./ReactInputSelection":517,"./ReactPutListenerQueue":532,"./Transaction":557,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactReconcileTransaction.js":376}],534:[function(require,module,exports){
+},{"./Object.assign":491,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactNativeComponent.js":376,"_process":457}],534:[function(require,module,exports){
 module.exports=require(377)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactRootIndex.js":377}],535:[function(require,module,exports){
+},{"./emptyObject":580,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactOwner.js":377,"_process":457}],535:[function(require,module,exports){
 module.exports=require(378)
-},{"./ReactElement":510,"./ReactInstanceHandles":518,"./ReactMarkupChecksum":521,"./ReactServerRenderingTransaction":536,"./instantiateReactComponent":589,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRendering.js":378,"_process":449}],536:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPerf.js":378,"_process":457}],536:[function(require,module,exports){
 module.exports=require(379)
-},{"./CallbackQueue":461,"./Object.assign":483,"./PooledClass":484,"./ReactPutListenerQueue":532,"./Transaction":557,"./emptyFunction":571,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRenderingTransaction.js":379}],537:[function(require,module,exports){
+},{"./Object.assign":491,"./emptyFunction":579,"./invariant":598,"./joinClasses":603,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTransferer.js":379,"_process":457}],537:[function(require,module,exports){
+module.exports=require(380)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocationNames.js":380,"_process":457}],538:[function(require,module,exports){
+module.exports=require(381)
+},{"./keyMirror":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocations.js":381}],539:[function(require,module,exports){
+module.exports=require(382)
+},{"./ReactElement":518,"./ReactPropTypeLocationNames":537,"./deprecated":578,"./emptyFunction":579,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypes.js":382}],540:[function(require,module,exports){
+module.exports=require(383)
+},{"./Object.assign":491,"./PooledClass":492,"./ReactBrowserEventEmitter":495,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPutListenerQueue.js":383}],541:[function(require,module,exports){
+module.exports=require(384)
+},{"./CallbackQueue":469,"./Object.assign":491,"./PooledClass":492,"./ReactBrowserEventEmitter":495,"./ReactInputSelection":525,"./ReactPutListenerQueue":540,"./Transaction":565,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactReconcileTransaction.js":384}],542:[function(require,module,exports){
+module.exports=require(385)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactRootIndex.js":385}],543:[function(require,module,exports){
+module.exports=require(386)
+},{"./ReactElement":518,"./ReactInstanceHandles":526,"./ReactMarkupChecksum":529,"./ReactServerRenderingTransaction":544,"./instantiateReactComponent":597,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRendering.js":386,"_process":457}],544:[function(require,module,exports){
+module.exports=require(387)
+},{"./CallbackQueue":469,"./Object.assign":491,"./PooledClass":492,"./ReactPutListenerQueue":540,"./Transaction":565,"./emptyFunction":579,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRenderingTransaction.js":387}],545:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -78968,6 +82940,7 @@ module.exports=require(379)
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /**
      * The base implementation of `_.random` without support for argument juggling
      * and returning floating-point numbers.
@@ -78984,6 +82957,11 @@ module.exports=require(379)
 },{}],538:[function(require,module,exports){
 module.exports=require(380)
 },{"./DOMPropertyOperations":467,"./Object.assign":483,"./ReactComponent":489,"./ReactElement":510,"./escapeTextForBrowser":573,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactTextComponent.js":380}],539:[function(require,module,exports){
+=======
+},{}],546:[function(require,module,exports){
+module.exports=require(388)
+},{"./DOMPropertyOperations":475,"./Object.assign":491,"./ReactComponent":497,"./ReactElement":518,"./escapeTextForBrowser":581,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactTextComponent.js":388}],547:[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -79328,6 +83306,7 @@ module.exports=require(380)
             offset = floatLength * FLOAT64_BYTES_PER_ELEMENT,
             result = new ArrayBuffer(byteLength);
 
+<<<<<<< HEAD
         if (floatLength) {
           var view = new Float64Array(result, 0, floatLength);
           view.set(new Float64Array(buffer, 0, floatLength));
@@ -79339,6 +83318,30 @@ module.exports=require(380)
         return result;
       };
     }
+=======
+    return childMapping;
+  }
+};
+
+module.exports = ReactTransitionChildMapping;
+
+},{"./ReactChildren":496}],548:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactTransitionGroup
+ */
+
+"use strict";
+
+var React = require("./React");
+var ReactTransitionChildMapping = require("./ReactTransitionChildMapping");
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 
     /**
      * Creates an array that is the composition of partially applied arguments,
@@ -79690,51 +83693,51 @@ module.exports=require(380)
 
 module.exports = ReactTransitionGroup;
 
-},{"./Object.assign":483,"./React":485,"./ReactTransitionChildMapping":539,"./cloneWithProps":563,"./emptyFunction":571}],541:[function(require,module,exports){
-module.exports=require(381)
-},{"./CallbackQueue":461,"./Object.assign":483,"./PooledClass":484,"./ReactCurrentOwner":494,"./ReactPerf":527,"./Transaction":557,"./invariant":590,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactUpdates.js":381,"_process":449}],542:[function(require,module,exports){
-module.exports=require(382)
-},{"./DOMProperty":466,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SVGDOMPropertyConfig.js":382}],543:[function(require,module,exports){
-module.exports=require(383)
-},{"./EventConstants":471,"./EventPropagators":476,"./ReactInputSelection":517,"./SyntheticEvent":549,"./getActiveElement":577,"./isTextInputElement":593,"./keyOf":597,"./shallowEqual":605,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SelectEventPlugin.js":383}],544:[function(require,module,exports){
-module.exports=require(384)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ServerReactRootIndex.js":384}],545:[function(require,module,exports){
-module.exports=require(385)
-},{"./EventConstants":471,"./EventPluginUtils":475,"./EventPropagators":476,"./SyntheticClipboardEvent":546,"./SyntheticDragEvent":548,"./SyntheticEvent":549,"./SyntheticFocusEvent":550,"./SyntheticKeyboardEvent":552,"./SyntheticMouseEvent":553,"./SyntheticTouchEvent":554,"./SyntheticUIEvent":555,"./SyntheticWheelEvent":556,"./getEventCharCode":578,"./invariant":590,"./keyOf":597,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SimpleEventPlugin.js":385,"_process":449}],546:[function(require,module,exports){
-module.exports=require(386)
-},{"./SyntheticEvent":549,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticClipboardEvent.js":386}],547:[function(require,module,exports){
-module.exports=require(387)
-},{"./SyntheticEvent":549,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticCompositionEvent.js":387}],548:[function(require,module,exports){
-module.exports=require(388)
-},{"./SyntheticMouseEvent":553,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticDragEvent.js":388}],549:[function(require,module,exports){
+},{"./Object.assign":491,"./React":493,"./ReactTransitionChildMapping":547,"./cloneWithProps":571,"./emptyFunction":579}],549:[function(require,module,exports){
 module.exports=require(389)
-},{"./Object.assign":483,"./PooledClass":484,"./emptyFunction":571,"./getEventTarget":581,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticEvent.js":389}],550:[function(require,module,exports){
+},{"./CallbackQueue":469,"./Object.assign":491,"./PooledClass":492,"./ReactCurrentOwner":502,"./ReactPerf":535,"./Transaction":565,"./invariant":598,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactUpdates.js":389,"_process":457}],550:[function(require,module,exports){
 module.exports=require(390)
-},{"./SyntheticUIEvent":555,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticFocusEvent.js":390}],551:[function(require,module,exports){
+},{"./DOMProperty":474,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SVGDOMPropertyConfig.js":390}],551:[function(require,module,exports){
 module.exports=require(391)
-},{"./SyntheticEvent":549,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticInputEvent.js":391}],552:[function(require,module,exports){
+},{"./EventConstants":479,"./EventPropagators":484,"./ReactInputSelection":525,"./SyntheticEvent":557,"./getActiveElement":585,"./isTextInputElement":601,"./keyOf":605,"./shallowEqual":613,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SelectEventPlugin.js":391}],552:[function(require,module,exports){
 module.exports=require(392)
-},{"./SyntheticUIEvent":555,"./getEventCharCode":578,"./getEventKey":579,"./getEventModifierState":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticKeyboardEvent.js":392}],553:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ServerReactRootIndex.js":392}],553:[function(require,module,exports){
 module.exports=require(393)
-},{"./SyntheticUIEvent":555,"./ViewportMetrics":558,"./getEventModifierState":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticMouseEvent.js":393}],554:[function(require,module,exports){
+},{"./EventConstants":479,"./EventPluginUtils":483,"./EventPropagators":484,"./SyntheticClipboardEvent":554,"./SyntheticDragEvent":556,"./SyntheticEvent":557,"./SyntheticFocusEvent":558,"./SyntheticKeyboardEvent":560,"./SyntheticMouseEvent":561,"./SyntheticTouchEvent":562,"./SyntheticUIEvent":563,"./SyntheticWheelEvent":564,"./getEventCharCode":586,"./invariant":598,"./keyOf":605,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SimpleEventPlugin.js":393,"_process":457}],554:[function(require,module,exports){
 module.exports=require(394)
-},{"./SyntheticUIEvent":555,"./getEventModifierState":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticTouchEvent.js":394}],555:[function(require,module,exports){
+},{"./SyntheticEvent":557,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticClipboardEvent.js":394}],555:[function(require,module,exports){
 module.exports=require(395)
-},{"./SyntheticEvent":549,"./getEventTarget":581,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticUIEvent.js":395}],556:[function(require,module,exports){
+},{"./SyntheticEvent":557,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticCompositionEvent.js":395}],556:[function(require,module,exports){
 module.exports=require(396)
-},{"./SyntheticMouseEvent":553,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticWheelEvent.js":396}],557:[function(require,module,exports){
+},{"./SyntheticMouseEvent":561,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticDragEvent.js":396}],557:[function(require,module,exports){
 module.exports=require(397)
-},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Transaction.js":397,"_process":449}],558:[function(require,module,exports){
+},{"./Object.assign":491,"./PooledClass":492,"./emptyFunction":579,"./getEventTarget":589,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticEvent.js":397}],558:[function(require,module,exports){
 module.exports=require(398)
-},{"./getUnboundedScrollPosition":586,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ViewportMetrics.js":398}],559:[function(require,module,exports){
+},{"./SyntheticUIEvent":563,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticFocusEvent.js":398}],559:[function(require,module,exports){
 module.exports=require(399)
-},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/accumulateInto.js":399,"_process":449}],560:[function(require,module,exports){
+},{"./SyntheticEvent":557,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticInputEvent.js":399}],560:[function(require,module,exports){
 module.exports=require(400)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/adler32.js":400}],561:[function(require,module,exports){
+},{"./SyntheticUIEvent":563,"./getEventCharCode":586,"./getEventKey":587,"./getEventModifierState":588,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticKeyboardEvent.js":400}],561:[function(require,module,exports){
 module.exports=require(401)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelize.js":401}],562:[function(require,module,exports){
+},{"./SyntheticUIEvent":563,"./ViewportMetrics":566,"./getEventModifierState":588,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticMouseEvent.js":401}],562:[function(require,module,exports){
 module.exports=require(402)
-},{"./camelize":561,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelizeStyleName.js":402}],563:[function(require,module,exports){
+},{"./SyntheticUIEvent":563,"./getEventModifierState":588,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticTouchEvent.js":402}],563:[function(require,module,exports){
+module.exports=require(403)
+},{"./SyntheticEvent":557,"./getEventTarget":589,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticUIEvent.js":403}],564:[function(require,module,exports){
+module.exports=require(404)
+},{"./SyntheticMouseEvent":561,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticWheelEvent.js":404}],565:[function(require,module,exports){
+module.exports=require(405)
+},{"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Transaction.js":405,"_process":457}],566:[function(require,module,exports){
+module.exports=require(406)
+},{"./getUnboundedScrollPosition":594,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ViewportMetrics.js":406}],567:[function(require,module,exports){
+module.exports=require(407)
+},{"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/accumulateInto.js":407,"_process":457}],568:[function(require,module,exports){
+module.exports=require(408)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/adler32.js":408}],569:[function(require,module,exports){
+module.exports=require(409)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelize.js":409}],570:[function(require,module,exports){
+module.exports=require(410)
+},{"./camelize":569,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelizeStyleName.js":410}],571:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -79793,15 +83796,15 @@ function cloneWithProps(child, props) {
 module.exports = cloneWithProps;
 
 }).call(this,require('_process'))
-},{"./ReactElement":510,"./ReactPropTransferer":528,"./keyOf":597,"./warning":610,"_process":449}],564:[function(require,module,exports){
-module.exports=require(403)
-},{"./isTextNode":594,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/containsNode.js":403}],565:[function(require,module,exports){
-module.exports=require(404)
-},{"./toArray":607,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createArrayFrom.js":404}],566:[function(require,module,exports){
-module.exports=require(405)
-},{"./ReactCompositeComponent":492,"./ReactElement":510,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createFullPageComponent.js":405,"_process":449}],567:[function(require,module,exports){
-module.exports=require(406)
-},{"./ExecutionEnvironment":477,"./createArrayFrom":565,"./getMarkupWrap":582,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createNodesFromMarkup.js":406,"_process":449}],568:[function(require,module,exports){
+},{"./ReactElement":518,"./ReactPropTransferer":536,"./keyOf":605,"./warning":618,"_process":457}],572:[function(require,module,exports){
+module.exports=require(411)
+},{"./isTextNode":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/containsNode.js":411}],573:[function(require,module,exports){
+module.exports=require(412)
+},{"./toArray":615,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createArrayFrom.js":412}],574:[function(require,module,exports){
+module.exports=require(413)
+},{"./ReactCompositeComponent":500,"./ReactElement":518,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createFullPageComponent.js":413,"_process":457}],575:[function(require,module,exports){
+module.exports=require(414)
+},{"./ExecutionEnvironment":485,"./createArrayFrom":573,"./getMarkupWrap":590,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createNodesFromMarkup.js":414,"_process":457}],576:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -79840,87 +83843,87 @@ function cx(classNames) {
 
 module.exports = cx;
 
-},{}],569:[function(require,module,exports){
-module.exports=require(407)
-},{"./CSSProperty":459,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/dangerousStyleValue.js":407}],570:[function(require,module,exports){
-module.exports=require(408)
-},{"./Object.assign":483,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/deprecated.js":408,"_process":449}],571:[function(require,module,exports){
-module.exports=require(409)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyFunction.js":409}],572:[function(require,module,exports){
-module.exports=require(410)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyObject.js":410,"_process":449}],573:[function(require,module,exports){
-module.exports=require(411)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/escapeTextForBrowser.js":411}],574:[function(require,module,exports){
-module.exports=require(412)
-},{"./ReactTextComponent":538,"./traverseAllChildren":608,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/flattenChildren.js":412,"_process":449}],575:[function(require,module,exports){
-module.exports=require(413)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/focusNode.js":413}],576:[function(require,module,exports){
-module.exports=require(414)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/forEachAccumulated.js":414}],577:[function(require,module,exports){
+},{}],577:[function(require,module,exports){
 module.exports=require(415)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getActiveElement.js":415}],578:[function(require,module,exports){
+},{"./CSSProperty":467,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/dangerousStyleValue.js":415}],578:[function(require,module,exports){
 module.exports=require(416)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventCharCode.js":416}],579:[function(require,module,exports){
+},{"./Object.assign":491,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/deprecated.js":416,"_process":457}],579:[function(require,module,exports){
 module.exports=require(417)
-},{"./getEventCharCode":578,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventKey.js":417}],580:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyFunction.js":417}],580:[function(require,module,exports){
 module.exports=require(418)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventModifierState.js":418}],581:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyObject.js":418,"_process":457}],581:[function(require,module,exports){
 module.exports=require(419)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventTarget.js":419}],582:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/escapeTextForBrowser.js":419}],582:[function(require,module,exports){
 module.exports=require(420)
-},{"./ExecutionEnvironment":477,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getMarkupWrap.js":420,"_process":449}],583:[function(require,module,exports){
+},{"./ReactTextComponent":546,"./traverseAllChildren":616,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/flattenChildren.js":420,"_process":457}],583:[function(require,module,exports){
 module.exports=require(421)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getNodeForCharacterOffset.js":421}],584:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/focusNode.js":421}],584:[function(require,module,exports){
 module.exports=require(422)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getReactRootElementInContainer.js":422}],585:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/forEachAccumulated.js":422}],585:[function(require,module,exports){
 module.exports=require(423)
-},{"./ExecutionEnvironment":477,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getTextContentAccessor.js":423}],586:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getActiveElement.js":423}],586:[function(require,module,exports){
 module.exports=require(424)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getUnboundedScrollPosition.js":424}],587:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventCharCode.js":424}],587:[function(require,module,exports){
 module.exports=require(425)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenate.js":425}],588:[function(require,module,exports){
+},{"./getEventCharCode":586,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventKey.js":425}],588:[function(require,module,exports){
 module.exports=require(426)
-},{"./hyphenate":587,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenateStyleName.js":426}],589:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventModifierState.js":426}],589:[function(require,module,exports){
 module.exports=require(427)
-},{"./ReactElement":510,"./ReactEmptyComponent":512,"./ReactLegacyElement":519,"./ReactNativeComponent":525,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/instantiateReactComponent.js":427,"_process":449}],590:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventTarget.js":427}],590:[function(require,module,exports){
 module.exports=require(428)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/invariant.js":428,"_process":449}],591:[function(require,module,exports){
+},{"./ExecutionEnvironment":485,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getMarkupWrap.js":428,"_process":457}],591:[function(require,module,exports){
 module.exports=require(429)
-},{"./ExecutionEnvironment":477,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isEventSupported.js":429}],592:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getNodeForCharacterOffset.js":429}],592:[function(require,module,exports){
 module.exports=require(430)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isNode.js":430}],593:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getReactRootElementInContainer.js":430}],593:[function(require,module,exports){
 module.exports=require(431)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextInputElement.js":431}],594:[function(require,module,exports){
+},{"./ExecutionEnvironment":485,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getTextContentAccessor.js":431}],594:[function(require,module,exports){
 module.exports=require(432)
-},{"./isNode":592,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextNode.js":432}],595:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getUnboundedScrollPosition.js":432}],595:[function(require,module,exports){
 module.exports=require(433)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/joinClasses.js":433}],596:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenate.js":433}],596:[function(require,module,exports){
 module.exports=require(434)
-},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyMirror.js":434,"_process":449}],597:[function(require,module,exports){
+},{"./hyphenate":595,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenateStyleName.js":434}],597:[function(require,module,exports){
 module.exports=require(435)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyOf.js":435}],598:[function(require,module,exports){
+},{"./ReactElement":518,"./ReactEmptyComponent":520,"./ReactLegacyElement":527,"./ReactNativeComponent":533,"./warning":618,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/instantiateReactComponent.js":435,"_process":457}],598:[function(require,module,exports){
 module.exports=require(436)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/mapObject.js":436}],599:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/invariant.js":436,"_process":457}],599:[function(require,module,exports){
 module.exports=require(437)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/memoizeStringOnly.js":437}],600:[function(require,module,exports){
+},{"./ExecutionEnvironment":485,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isEventSupported.js":437}],600:[function(require,module,exports){
 module.exports=require(438)
-},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/monitorCodeUse.js":438,"_process":449}],601:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isNode.js":438}],601:[function(require,module,exports){
 module.exports=require(439)
-},{"./ReactElement":510,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/onlyChild.js":439,"_process":449}],602:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextInputElement.js":439}],602:[function(require,module,exports){
 module.exports=require(440)
-},{"./ExecutionEnvironment":477,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performance.js":440}],603:[function(require,module,exports){
+},{"./isNode":600,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextNode.js":440}],603:[function(require,module,exports){
 module.exports=require(441)
-},{"./performance":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performanceNow.js":441}],604:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/joinClasses.js":441}],604:[function(require,module,exports){
 module.exports=require(442)
-},{"./ExecutionEnvironment":477,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/setInnerHTML.js":442}],605:[function(require,module,exports){
+},{"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyMirror.js":442,"_process":457}],605:[function(require,module,exports){
 module.exports=require(443)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shallowEqual.js":443}],606:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyOf.js":443}],606:[function(require,module,exports){
 module.exports=require(444)
-},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shouldUpdateReactComponent.js":444}],607:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/mapObject.js":444}],607:[function(require,module,exports){
 module.exports=require(445)
-},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/toArray.js":445,"_process":449}],608:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/memoizeStringOnly.js":445}],608:[function(require,module,exports){
 module.exports=require(446)
-},{"./ReactElement":510,"./ReactInstanceHandles":518,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/traverseAllChildren.js":446,"_process":449}],609:[function(require,module,exports){
+},{"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/monitorCodeUse.js":446,"_process":457}],609:[function(require,module,exports){
+module.exports=require(447)
+},{"./ReactElement":518,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/onlyChild.js":447,"_process":457}],610:[function(require,module,exports){
+module.exports=require(448)
+},{"./ExecutionEnvironment":485,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performance.js":448}],611:[function(require,module,exports){
+module.exports=require(449)
+},{"./performance":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performanceNow.js":449}],612:[function(require,module,exports){
+module.exports=require(450)
+},{"./ExecutionEnvironment":485,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/setInnerHTML.js":450}],613:[function(require,module,exports){
+module.exports=require(451)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shallowEqual.js":451}],614:[function(require,module,exports){
+module.exports=require(452)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shouldUpdateReactComponent.js":452}],615:[function(require,module,exports){
+module.exports=require(453)
+},{"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/toArray.js":453,"_process":457}],616:[function(require,module,exports){
+module.exports=require(454)
+},{"./ReactElement":518,"./ReactInstanceHandles":526,"./invariant":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/traverseAllChildren.js":454,"_process":457}],617:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -80210,9 +84213,9 @@ module.exports=require(446)
           result = computed;
 =======
 }).call(this,require('_process'))
-},{"./Object.assign":483,"./invariant":590,"./keyOf":597,"_process":449}],610:[function(require,module,exports){
-module.exports=require(447)
-},{"./emptyFunction":571,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/warning.js":447,"_process":449}],"Modernizr":[function(require,module,exports){
+},{"./Object.assign":491,"./invariant":598,"./keyOf":605,"_process":457}],618:[function(require,module,exports){
+module.exports=require(455)
+},{"./emptyFunction":579,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/warning.js":455,"_process":457}],"Modernizr":[function(require,module,exports){
 /*!
  * Modernizr v2.8.3
  * www.modernizr.com
@@ -90733,12 +94736,17 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 
 },{}],"eventEmitter":[function(require,module,exports){
 <<<<<<< HEAD
+<<<<<<< HEAD
 module.exports=require(486)
 },{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\imagesloaded\\node_modules\\wolfy87-eventemitter\\EventEmitter.js":486}],"i18next":[function(require,module,exports){
 =======
 module.exports=require(455)
 },{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":455}],"i18next":[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+module.exports=require(463)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":463}],"i18next":[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 // i18next, v1.7.7
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
@@ -125096,7 +129104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 
-},{"React":448}],"react-mixin-manager":[function(require,module,exports){
+},{"React":456}],"react-mixin-manager":[function(require,module,exports){
 /*!
  * react-mixin-manager v0.7.0
  * https://github.com/jhudson8/react-mixin-manager
@@ -125431,12 +129439,17 @@ module.exports = {
 
 },{}],"react":[function(require,module,exports){
 <<<<<<< HEAD
+<<<<<<< HEAD
 module.exports=require(479)
 },{"./lib/React":516,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\react.js":479}],"screenviewer":[function(require,module,exports){
 =======
 module.exports=require(448)
 },{"./lib/React":485,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/react.js":448}],"screenviewer":[function(require,module,exports){
 >>>>>>> Editor store and services [#89871770]
+=======
+module.exports=require(456)
+},{"./lib/React":493,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/react.js":456}],"screenviewer":[function(require,module,exports){
+>>>>>>> Editor's Layout, TypeSwitcher and Actions [#89871770]
 (function($){
   ScreenViewer = function(container, options){
     this.$viewer = $(container);
