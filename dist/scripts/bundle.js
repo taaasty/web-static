@@ -11883,6 +11883,7 @@ var
 	rprotocol = /^\/\//,
 	rurl = /^([\w.+-]+:)(?:\/\/(?:[^\/?#]*@|)([^\/?#:]*)(?::(\d+)|)|)/,
 
+<<<<<<< HEAD
 	/* Prefilters
 	 * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
 	 * 2) These are called:
@@ -11909,6 +11910,11 @@ var
 
 	// Segment location into parts
 	ajaxLocParts = rurl.exec( ajaxLocation.toLowerCase() ) || [];
+=======
+require('./react/services/positions');
+
+global.DesignSettingsService = require('./react/services/designSettings');
+>>>>>>> Editor store and services [#89871770]
 
 // Base "constructor" for jQuery.ajaxPrefilter and jQuery.ajaxTransport
 function addToPrefiltersOrTransports( structure ) {
@@ -12043,6 +12049,7 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 	}
 }
 
+<<<<<<< HEAD
 /* Chain conversions given the request and the original response
  * Also sets the responseXXX fields on the jqXHR instance
  */
@@ -12051,6 +12058,11 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 		converters = {},
 		// Work with a copy of dataTypes in case we need to modify it for conversion
 		dataTypes = s.dataTypes.slice();
+=======
+require('./react/stores/editor');
+
+require('./react/stores/relationships');
+>>>>>>> Editor store and services [#89871770]
 
 	// Create converters map with lowercased keys
 	if ( dataTypes[ 1 ] ) {
@@ -12730,6 +12742,7 @@ jQuery.fn.extend({
 });
 
 
+<<<<<<< HEAD
 jQuery.expr.filters.hidden = function( elem ) {
 	// Support: Opera <= 12.12
 	// Opera reports offsetWidths and offsetHeights less than zero on some elements
@@ -12843,6 +12856,9 @@ jQuery.fn.extend({
 	}
 });
 
+=======
+require('./react/components/entry_metabar/entry_metabar');
+>>>>>>> Editor store and services [#89871770]
 
 jQuery.ajaxSettings.xhr = function() {
 	try {
@@ -13053,6 +13069,7 @@ jQuery.ajaxSetup({
 // Detect, normalize options and install callbacks for jsonp requests
 jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 
+<<<<<<< HEAD
 	var callbackName, overwritten, responseContainer,
 		jsonProp = s.jsonp !== false && ( rjsonp.test( s.url ) ?
 			"url" :
@@ -13143,6 +13160,9 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 	}
 
 	parsed = jQuery.buildFragment( [ data ], context, scripts );
+=======
+require('./react/components/hero/profile/profile');
+>>>>>>> Editor store and services [#89871770]
 
 	if ( scripts && scripts.length ) {
 		jQuery( scripts ).remove();
@@ -13200,9 +13220,17 @@ jQuery.fn.load = function( url, params, callback ) {
 
 			self.html( selector ?
 
+<<<<<<< HEAD
 				// If a selector was specified, locate the right elements in a dummy div
 				// Exclude scripts to avoid IE 'Permission Denied' errors
 				jQuery("<div>").append( jQuery.parseHTML( responseText ) ).find( selector ) :
+=======
+global.EditorNew = require('./react/components/Editor/EditorNew');
+
+global.EditorEdit = require('./react/components/Editor/EditorEdit');
+
+require('./react/components/images_collage');
+>>>>>>> Editor store and services [#89871770]
 
 				// Otherwise use the full result
 				responseText );
@@ -13258,11 +13286,40 @@ jQuery.offset = {
 			elem.style.position = "relative";
 		}
 
+<<<<<<< HEAD
 		curOffset = curElem.offset();
 		curCSSTop = jQuery.css( elem, "top" );
 		curCSSLeft = jQuery.css( elem, "left" );
 		calculatePosition = ( position === "absolute" || position === "fixed" ) &&
 			( curCSSTop + curCSSLeft ).indexOf("auto") > -1;
+=======
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../shared/react/services/thumbor":300,"../shared/routes/api":301,"../shared/routes/routes":302,"./react/application":17,"./react/components/Editor/EditorEdit":19,"./react/components/Editor/EditorNew":20,"./react/components/auth/auth":21,"./react/components/auth/authorization/authorization":22,"./react/components/auth/authorization/facebook":23,"./react/components/auth/authorization/vk":24,"./react/components/auth/buttons/facebook_auth_button":25,"./react/components/auth/buttons/vk_auth_button":26,"./react/components/auth/email/email":30,"./react/components/auth/recovery":35,"./react/components/avatars/avatar":37,"./react/components/avatars/user_avatar":38,"./react/components/buttons/load_more":39,"./react/components/calendar/calendar":40,"./react/components/calendar/calendar_header":41,"./react/components/calendar/calendar_marker":42,"./react/components/calendar/calendar_period":43,"./react/components/calendar/calendar_timeline":44,"./react/components/common/adaptive_input":45,"./react/components/design_settings_popup/color_picker":48,"./react/components/design_settings_popup/color_picker_popup":49,"./react/components/design_settings_popup/controls":50,"./react/components/design_settings_popup/controls_items/_progressbar":51,"./react/components/design_settings_popup/controls_items/_radiobutton":52,"./react/components/design_settings_popup/controls_items/align_item":53,"./react/components/design_settings_popup/controls_items/background_item":54,"./react/components/design_settings_popup/controls_items/feed_color_item":55,"./react/components/design_settings_popup/controls_items/font_type_item":56,"./react/components/design_settings_popup/controls_items/header_color_item":57,"./react/components/design_settings_popup/controls_items/opacity_item":58,"./react/components/design_settings_popup/design_settings_popup":59,"./react/components/editable_field":60,"./react/components/embed":61,"./react/components/entry_comment_box/comment_form/buttons/submit":62,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":63,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":64,"./react/components/entry_comment_box/comment_form/comment_form":65,"./react/components/entry_comment_box/comment_list/comment":66,"./react/components/entry_comment_box/comment_list/comment_list":67,"./react/components/entry_comment_box/comment_list/comment_manager":68,"./react/components/entry_comment_box/comment_metabar/comment_metabar":69,"./react/components/entry_comment_box/comment_metabar/date":70,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":71,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":72,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":73,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":74,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":75,"./react/components/entry_comment_box/comment_metabar/reply":76,"./react/components/entry_comment_box/entry_comment_box":77,"./react/components/entry_comment_box/load_more":78,"./react/components/entry_comment_box/mixins/comments":79,"./react/components/entry_metabar/author":80,"./react/components/entry_metabar/comment":81,"./react/components/entry_metabar/date":82,"./react/components/entry_metabar/dropdown_menu":83,"./react/components/entry_metabar/dropdown_menu_items/delete_item":84,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":85,"./react/components/entry_metabar/dropdown_menu_items/item":86,"./react/components/entry_metabar/dropdown_menu_items/report_item":87,"./react/components/entry_metabar/dropdown_menu_items/watch_item":88,"./react/components/entry_metabar/entry_metabar":89,"./react/components/entry_metabar/tag":90,"./react/components/entry_metabar/tags":91,"./react/components/feed/bricks":92,"./react/components/feed/feed":93,"./react/components/feed/mixins/base":94,"./react/components/feed/tlog":95,"./react/components/follow_status":96,"./react/components/hero/profile/dropdown_menu":98,"./react/components/hero/profile/dropdown_menu_items/ignore":99,"./react/components/hero/profile/dropdown_menu_items/report":100,"./react/components/hero/profile/popup/followers_popup":101,"./react/components/hero/profile/popup/followings_popup":102,"./react/components/hero/profile/popup/items/follower_item":103,"./react/components/hero/profile/popup/items/following_item":104,"./react/components/hero/profile/popup/items/tag_item":105,"./react/components/hero/profile/popup/popup":106,"./react/components/hero/profile/popup/tags_popup":107,"./react/components/hero/profile/profile":108,"./react/components/hero/profile/profile_avatar":109,"./react/components/hero/profile/profile_head":110,"./react/components/hero/profile/profile_stats":111,"./react/components/hero/profile/profile_stats_item":112,"./react/components/images_collage":113,"./react/components/notifications/tasty_alert":114,"./react/components/notifications/tasty_confirm":115,"./react/components/notifications/tasty_locking_alert":116,"./react/components/notifications/tasty_notify":117,"./react/components/people/item":118,"./react/components/persons_popup/items/follower_relationship":119,"./react/components/persons_popup/items/following_relationship":120,"./react/components/persons_popup/items/guess_relationship":121,"./react/components/persons_popup/items/ignored_relationship":122,"./react/components/persons_popup/items/item":123,"./react/components/persons_popup/items/requested_relationship":124,"./react/components/persons_popup/menu":125,"./react/components/persons_popup/menu_item":126,"./react/components/persons_popup/mixins/panel_mixin":127,"./react/components/persons_popup/panels/followers_panel":128,"./react/components/persons_popup/panels/followings_panel":129,"./react/components/persons_popup/panels/guessed_panel":130,"./react/components/persons_popup/panels/ignored_panel":131,"./react/components/persons_popup/panels/requested_panel":132,"./react/components/persons_popup/panels/socialNetwork/facebook":133,"./react/components/persons_popup/panels/socialNetwork/vkontakte":143,"./react/components/persons_popup/persons_popup":150,"./react/components/popup/header":151,"./react/components/popup/layout":152,"./react/components/popup/popup":153,"./react/components/popup/spinner":154,"./react/components/popup_box":155,"./react/components/relationship_buttons/follow_button":156,"./react/components/relationship_buttons/follower_button":157,"./react/components/relationship_buttons/guess_button":158,"./react/components/relationship_buttons/ignore_button":159,"./react/components/relationship_buttons/mixins/relationship":160,"./react/components/relationship_buttons/request_button":161,"./react/components/screen_viewer/screen_viewer":162,"./react/components/search/button":163,"./react/components/search/field":164,"./react/components/search/search":165,"./react/components/searchResults/index":167,"./react/components/settings/settings":185,"./react/components/shellbox_layer":188,"./react/components/shellboxes/confirm_registration":189,"./react/components/smart_follow_status":190,"./react/components/spinner":191,"./react/components/tlog_alert":192,"./react/components/toolbars/avatar":193,"./react/components/toolbars/close/close":194,"./react/components/toolbars/user":195,"./react/components/transition/timeout_transition_group":203,"./react/components/voting":204,"./react/controllers/popup":211,"./react/controllers/shellbox":213,"./react/controllers/tasty_alert":214,"./react/controllers/tasty_confirm":215,"./react/controllers/tasty_events":216,"./react/controllers/tasty_locking_alert":217,"./react/controllers/tasty_notify":218,"./react/controllers/tasty_sound":219,"./react/dispatchers/current_user":221,"./react/dispatchers/relationships":223,"./react/helpers/app":225,"./react/mediators/comments":226,"./react/messaging/actions/conversation":227,"./react/messaging/actions/message":228,"./react/messaging/actions/notification":229,"./react/messaging/actions/popup":230,"./react/messaging/components/buttons/write_message":231,"./react/messaging/components/messages_popup/conversations/conversations":232,"./react/messaging/components/messages_popup/conversations/list/empty":233,"./react/messaging/components/messages_popup/conversations/list/list":234,"./react/messaging/components/messages_popup/conversations/list/list_item":235,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":236,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":237,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":238,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":239,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":240,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":241,"./react/messaging/components/messages_popup/loading_message":242,"./react/messaging/components/messages_popup/messages_popup":243,"./react/messaging/components/messages_popup/thread/message_form/message_form":244,"./react/messaging/components/messages_popup/thread/message_list/empty":245,"./react/messaging/components/messages_popup/thread/message_list/message_list":246,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":247,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":248,"./react/messaging/components/messages_popup/thread/thread":249,"./react/messaging/components/messages_popup/ui/back_button":250,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":251,"./react/messaging/components/notifications_popup/notifications/empty":252,"./react/messaging/components/notifications_popup/notifications/notification":253,"./react/messaging/components/notifications_popup/notifications/notifications":254,"./react/messaging/components/notifications_popup/notifications_popup":255,"./react/messaging/components/toolbars/indicators/indicators":256,"./react/messaging/components/toolbars/indicators/messages":257,"./react/messaging/components/toolbars/indicators/notifications":258,"./react/messaging/dispatchers/messaging":259,"./react/messaging/messaging_requester":260,"./react/messaging/messaging_service":261,"./react/messaging/messaging_testing":262,"./react/messaging/stores/connection_state":264,"./react/messaging/stores/conversations":265,"./react/messaging/stores/messages":266,"./react/messaging/stores/messages_popup_state":267,"./react/messaging/stores/messaging_status":268,"./react/messaging/stores/notifications":269,"./react/mixins/activities":270,"./react/mixins/component_manipulations":271,"./react/mixins/dom_manipulations":272,"./react/mixins/error_timer":273,"./react/mixins/grammar":274,"./react/mixins/positions":275,"./react/mixins/requester":276,"./react/mixins/scroller":277,"./react/mixins/shake":278,"./react/mixins/touch":279,"./react/mixins/unmount":280,"./react/services/designPresenter":282,"./react/services/designSettings":283,"./react/services/designStates":284,"./react/services/positions":287,"./react/services/uuid":288,"./react/stores/current_user":290,"./react/stores/editor":291,"./react/stores/relationships":292,"./resources/fileReceiver":293,"./resources/is_mobile":294,"./resources/libs":295,"./resources/locales":296,"./resources/tasty":297,"./resources/tasty_utils":298}],10:[function(require,module,exports){
+var AppDispatcher, EditorActions, EditorConstants;
+
+EditorConstants = require('../constants/constants').editor;
+
+AppDispatcher = require('../dispatchers/dispatcher');
+
+EditorActions = {
+  init: function(_arg) {
+    var entry, tlogType;
+    entry = _arg.entry, tlogType = _arg.tlogType;
+    return AppDispatcher.handleViewAction({
+      type: EditorConstants.INIT,
+      entry: entry,
+      tlogType: tlogType
+    });
+  }
+};
+
+module.exports = EditorActions;
+
+
+
+},{"../constants/constants":206,"../dispatchers/dispatcher":222}],11:[function(require,module,exports){
+var CurrentUserStore, PopupActions, Searchbox;
+>>>>>>> Editor store and services [#89871770]
 
 		// Need to be able to calculate position if either
 		// top or left is auto and position is either absolute or fixed
@@ -13296,6 +13353,7 @@ jQuery.offset = {
 	}
 };
 
+<<<<<<< HEAD
 jQuery.fn.extend({
 	offset: function( options ) {
 		if ( arguments.length ) {
@@ -13305,6 +13363,10 @@ jQuery.fn.extend({
 					jQuery.offset.setOffset( this, options, i );
 				});
 		}
+=======
+},{"../components/searchbox/index":169,"../stores/current_user":290}],12:[function(require,module,exports){
+var Api, SearchActions;
+>>>>>>> Editor store and services [#89871770]
 
 		var docElem, win,
 			elem = this[ 0 ],
@@ -13334,10 +13396,15 @@ jQuery.fn.extend({
 		};
 	},
 
+<<<<<<< HEAD
 	position: function() {
 		if ( !this[ 0 ] ) {
 			return;
 		}
+=======
+},{"../api/api":16}],13:[function(require,module,exports){
+var CurrentUserServerActions;
+>>>>>>> Editor store and services [#89871770]
 
 		var offsetParent, offset,
 			elem = this[ 0 ],
@@ -13358,10 +13425,15 @@ jQuery.fn.extend({
 				parentOffset = offsetParent.offset();
 			}
 
+<<<<<<< HEAD
 			// Add offsetParent borders
 			parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true );
 			parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true );
 		}
+=======
+},{}],14:[function(require,module,exports){
+var AppDispatcher, Constants, UserToolbarActions;
+>>>>>>> Editor store and services [#89871770]
 
 		// Subtract parent offsets and element margins
 		return {
@@ -13391,9 +13463,14 @@ jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
 		return access( this, function( elem, method, val ) {
 			var win = getWindow( elem );
 
+<<<<<<< HEAD
 			if ( val === undefined ) {
 				return win ? win[ prop ] : elem[ method ];
 			}
+=======
+},{"../constants/constants":206,"../dispatchers/dispatcher":222}],15:[function(require,module,exports){
+var CurrentUserResource, CurrentUserServerActions, CurrentUserViewActions;
+>>>>>>> Editor store and services [#89871770]
 
 			if ( win ) {
 				win.scrollTo(
@@ -13440,12 +13517,17 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 			return access( this, function( elem, type, value ) {
 				var doc;
 
+<<<<<<< HEAD
 				if ( jQuery.isWindow( elem ) ) {
 					// As of 5/8/2012 this will yield incorrect results for Mobile Safari, but there
 					// isn't a whole lot we can do. See pull request at this URL for discussion:
 					// https://github.com/jquery/jquery/pull/764
 					return elem.document.documentElement[ "client" + name ];
 				}
+=======
+},{"../../resources/current_user":281,"../server/current_user":13}],16:[function(require,module,exports){
+var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _, _pendingRequests;
+>>>>>>> Editor store and services [#89871770]
 
 				// Get document width or height
 				if ( elem.nodeType === 9 ) {
@@ -13532,6 +13614,11 @@ if ( typeof noGlobal === strundefined ) {
 
 
 
+<<<<<<< HEAD
+=======
+},{"../constants/constants":206,"../stores/current_user":290,"lodash":456}],17:[function(require,module,exports){
+var AppDispatcher, GuideController, LayoutStatesController, PopupActions, PopupController, ReactUjs;
+>>>>>>> Editor store and services [#89871770]
 
 return jQuery;
 
@@ -13730,10 +13817,125 @@ return jQuery;
 //! license : MIT
 //! momentjs.com
 
+<<<<<<< HEAD
 (function (undefined) {
     /************************************
         Constants
     ************************************/
+=======
+},{"./actions/popup":11,"./controllers/guide":209,"./controllers/layoutStates":210,"./controllers/popuup":212,"./dispatchers/dispatcher":222,"i18next":undefined,"reactUjs":undefined}],18:[function(require,module,exports){
+var Editor, NormalizedEntry, PropTypes;
+
+NormalizedEntry = require('../../entities/normalizedEntry');
+
+PropTypes = React.PropTypes;
+
+Editor = React.createClass({
+  displayName: 'Editor',
+  propTypes: {
+    entry: PropTypes.instanceOf(NormalizedEntry).isRequired,
+    entryType: PropTypes.string.isRequired,
+    entryPrivacy: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("span", null);
+  }
+});
+
+module.exports = Editor;
+
+
+
+},{"../../entities/normalizedEntry":224}],19:[function(require,module,exports){
+var ConnectStoreMixin, Editor, EditorActions, EditorEdit, EditorStore, PropTypes;
+
+EditorStore = require('../../stores/editor');
+
+EditorActions = require('../../actions/editor');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+Editor = require('./Editor');
+
+PropTypes = React.PropTypes;
+
+EditorEdit = React.createClass({
+  displayName: 'EditorEdit',
+  mixins: [ConnectStoreMixin(EditorStore)],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    tlogType: PropTypes.oneOf(['public', 'private', 'anonymous']).isRequired,
+    backUrl: PropTypes.string
+  },
+  componentWillMount: function() {
+    var entry, tlogType, _ref;
+    _ref = this.props, entry = _ref.entry, tlogType = _ref.tlogType;
+    return EditorActions.init({
+      entry: entry,
+      tlogType: tlogType
+    });
+  },
+  render: function() {
+    return React.createElement(Editor, React.__spread({}, this.state));
+  },
+  getStateFromStore: function() {
+    return {
+      entry: EditorStore.getEntry(),
+      entryType: EditorStore.getEntryType(),
+      entryPrivacy: EditorStore.getEntryPrivacy()
+    };
+  }
+});
+
+module.exports = EditorEdit;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":299,"../../actions/editor":10,"../../stores/editor":291,"./Editor":18}],20:[function(require,module,exports){
+var ConnectStoreMixin, Editor, EditorActions, EditorNew, EditorStore, PropTypes;
+
+EditorStore = require('../../stores/editor');
+
+EditorActions = require('../../actions/editor');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+Editor = require('./Editor');
+
+PropTypes = React.PropTypes;
+
+EditorNew = React.createClass({
+  displayName: 'EditorNew',
+  mixins: [ConnectStoreMixin(EditorStore)],
+  propTypes: {
+    tlogType: PropTypes.oneOf(['public', 'private', 'anonymous']).isRequired,
+    backUrl: PropTypes.string
+  },
+  componentWillMount: function() {
+    return EditorActions.init({
+      entry: null,
+      tlogType: this.props.tlogType
+    });
+  },
+  render: function() {
+    return React.createElement(Editor, React.__spread({}, this.state));
+  },
+  getStateFromStore: function() {
+    return {
+      entry: EditorStore.getEntry(),
+      entryType: EditorStore.getEntryType(),
+      entryPrivacy: EditorStore.getEntryPrivacy()
+    };
+  }
+});
+
+module.exports = EditorNew;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":299,"../../actions/editor":10,"../../stores/editor":291,"./Editor":18}],21:[function(require,module,exports){
+var cx;
+>>>>>>> Editor store and services [#89871770]
 
     var moment,
         VERSION = '2.8.4',
@@ -13758,8 +13960,80 @@ return jQuery;
         // extra moment internal properties (plugins register props here)
         momentProperties = [],
 
+<<<<<<< HEAD
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module && module.exports),
+=======
+},{"react/lib/cx":568}],22:[function(require,module,exports){
+window.AuthorizationShellbox = React.createClass({
+  render: function() {
+    var boxStyle, entriesCount, usersCount;
+    entriesCount = this._getEntriesCount();
+    usersCount = this._getUsersCount();
+    boxStyle = {
+      backgroundImage: "url(http://thumbor0.tasty0.ru/unsafe/712x416/smart//images/inviter_bg.jpg)"
+    };
+    return React.createElement("div", {
+      "className": "inviter"
+    }, React.createElement("div", {
+      "className": "inviter__box",
+      "style": boxStyle
+    }, React.createElement("div", {
+      "className": "inviter__overlay"
+    }), React.createElement("div", {
+      "className": "grid-full"
+    }, React.createElement("div", {
+      "className": "grid-full__middle"
+    }, React.createElement("div", {
+      "className": "inviter__logo"
+    }, React.createElement("i", {
+      "className": "icon icon--ribbon"
+    })), React.createElement("div", {
+      "className": "inviter__title",
+      "dangerouslySetInnerHTML": {
+        __html: i18n.t('auth')
+      }
+    }), React.createElement("div", {
+      "className": "inviter__actions"
+    }, this.props.children), React.createElement("div", {
+      "className": "inviter__spacer"
+    }), React.createElement("div", {
+      "className": "inviter__stats"
+    }, React.createElement("div", {
+      "className": "inviter__stats-item"
+    }, this.renderEntriesCount()), React.createElement("div", {
+      "className": "inviter__stats-item"
+    }, this.renderUsersCount()), React.createElement("div", {
+      "className": "inviter__stats-item"
+    }, this.renderSecondsCount()))))));
+  },
+  renderEntriesCount: function() {
+    var formatedNumber, number;
+    number = parseInt(TastyUtils.formatNumber(window.gon.app_stats.entries_count, 100, ''));
+    formatedNumber = TastyUtils.formatNumber(window.gon.app_stats.entries_count, 100);
+    return React.createElement("span", null, React.createElement("strong", null, formatedNumber, "+"), React.createElement("span", null, i18n.t('entries_count', {
+      count: number
+    })));
+  },
+  renderUsersCount: function() {
+    var formatedNumber, number;
+    number = parseInt(TastyUtils.formatNumber(window.gon.app_stats.users_count, 100, ''));
+    formatedNumber = TastyUtils.formatNumber(window.gon.app_stats.users_count, 100);
+    return React.createElement("span", null, React.createElement("strong", null, formatedNumber, "+"), React.createElement("span", null, i18n.t('users_count', {
+      count: number
+    })));
+  },
+  renderSecondsCount: function() {
+    var number;
+    number = 30;
+    return React.createElement("span", null, React.createElement("strong", null, React.createElement("span", {
+      "className": "tilde"
+    }, "~"), number), React.createElement("span", null, i18n.t('seconds_count', {
+      count: number
+    })));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         // ASP.NET json date format regex
         aspNetJsonRegex = /^\/?Date\((\-?\d+)/i,
@@ -13769,9 +14043,14 @@ return jQuery;
         // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
         isoDurationRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/,
 
+<<<<<<< HEAD
         // format tokens
         formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|x|X|zz?|ZZ?|.)/g,
         localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g,
+=======
+},{}],23:[function(require,module,exports){
+var AUTH_TIMEOUT;
+>>>>>>> Editor store and services [#89871770]
 
         // parsing token regexes
         parseTokenOneOrTwoDigits = /\d\d?/, // 0 - 99
@@ -13799,6 +14078,7 @@ return jQuery;
 
         isoFormat = 'YYYY-MM-DDTHH:mm:ssZ',
 
+<<<<<<< HEAD
         isoDates = [
             ['YYYYYY-MM-DD', /[+-]\d{6}-\d{2}-\d{2}/],
             ['YYYY-MM-DD', /\d{4}-\d{2}-\d{2}/],
@@ -13806,6 +14086,10 @@ return jQuery;
             ['GGGG-[W]WW', /\d{4}-W\d{2}/],
             ['YYYY-DDD', /\d{4}-\d{3}/]
         ],
+=======
+},{}],24:[function(require,module,exports){
+var AUTH_TIMEOUT;
+>>>>>>> Editor store and services [#89871770]
 
         // iso time formats and regexes
         isoTimes = [
@@ -13849,6 +14133,7 @@ return jQuery;
             GG: 'isoWeekYear'
         },
 
+<<<<<<< HEAD
         camelFunctions = {
             dayofyear : 'dayOfYear',
             isoweekday : 'isoWeekday',
@@ -13856,6 +14141,54 @@ return jQuery;
             weekyear : 'weekYear',
             isoweekyear : 'isoWeekYear'
         },
+=======
+},{}],25:[function(require,module,exports){
+window.Shellbox_FacebookAuthButton = React.createClass({
+  propTypes: {
+    isActive: React.PropTypes.bool
+  },
+  getDefaultProps: function() {
+    return {
+      isActive: false
+    };
+  },
+  render: function() {
+    var icon;
+    if (this.props.isActive) {
+      icon = React.createElement("span", {
+        "className": "icon"
+      }, React.createElement(Spinner, {
+        "size": 15.
+      }));
+    } else {
+      icon = React.createElement("span", {
+        "className": "icon icon--vkontakte"
+      });
+    }
+    return React.createElement("a", {
+      "href": ApiRoutes.omniauth_url('vkontakte'),
+      "onClick": this.onClick
+    }, React.createElement("button", {
+      "className": "button button--vkontakte"
+    }, icon, React.createElement("span", {
+      "className": "button__text"
+    }, this._getTitle())));
+  },
+  onClick: function(e) {
+    e.preventDefault();
+    if (this.props.onClick != null) {
+      return this.props.onClick();
+    }
+  },
+  _getTitle: function() {
+    if (this.props.isActive) {
+      return i18n.t('facebook_signin_process_button');
+    } else {
+      return i18n.t('facebook_signup_process_button');
+    }
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         // format function strings
         formatFunctions = {},
@@ -13869,9 +14202,58 @@ return jQuery;
             M: 11   // months to year
         },
 
+<<<<<<< HEAD
         // tokens to ordinalize and pad
         ordinalizeTokens = 'DDD w W M D d'.split(' '),
         paddedTokens = 'M D H h m s w W'.split(' '),
+=======
+},{}],26:[function(require,module,exports){
+window.Shellbox_VkAuthButton = React.createClass({
+  propTypes: {
+    isActive: React.PropTypes.bool
+  },
+  getDefaultProps: function() {
+    return {
+      isActive: false
+    };
+  },
+  render: function() {
+    var icon;
+    if (this.props.isActive) {
+      icon = React.createElement("span", {
+        "className": "icon"
+      }, React.createElement(Spinner, {
+        "size": 15.
+      }));
+    } else {
+      icon = React.createElement("span", {
+        "className": "icon icon--vkontakte"
+      });
+    }
+    return React.createElement("a", {
+      "href": ApiRoutes.omniauth_url('vkontakte'),
+      "onClick": this.onClick
+    }, React.createElement("button", {
+      "className": "button button--vkontakte"
+    }, icon, React.createElement("span", {
+      "className": "button__text"
+    }, this._getTitle())));
+  },
+  onClick: function(e) {
+    e.preventDefault();
+    if (this.props.onClick != null) {
+      return this.props.onClick();
+    }
+  },
+  _getTitle: function() {
+    if (this.props.isActive) {
+      return i18n.t('vkontakte_signin_process_button');
+    } else {
+      return i18n.t('vkontakte_signup_process_button');
+    }
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         formatTokenFunctions = {
             M    : function () {
@@ -14011,7 +14393,12 @@ return jQuery;
 
         deprecations = {},
 
+<<<<<<< HEAD
         lists = ['months', 'monthsShort', 'weekdays', 'weekdaysShort', 'weekdaysMin'];
+=======
+},{}],27:[function(require,module,exports){
+var EmailFooter;
+>>>>>>> Editor store and services [#89871770]
 
     // Pick the first defined of two or three arguments. dfl comes from
     // default.
@@ -14051,6 +14438,7 @@ return jQuery;
         }
     }
 
+<<<<<<< HEAD
     function deprecate(msg, fn) {
         var firstTime = true;
         return extend(function () {
@@ -14061,6 +14449,10 @@ return jQuery;
             return fn.apply(this, arguments);
         }, fn);
     }
+=======
+},{}],28:[function(require,module,exports){
+var EmailSubmitButton;
+>>>>>>> Editor store and services [#89871770]
 
     function deprecateSimple(name, msg) {
         if (!deprecations[name]) {
@@ -14091,9 +14483,14 @@ return jQuery;
     formatTokenFunctions.DDDD = padToken(formatTokenFunctions.DDD, 3);
 
 
+<<<<<<< HEAD
     /************************************
         Constructors
     ************************************/
+=======
+},{}],29:[function(require,module,exports){
+var ConfirmRegistrationMixin, EmailConfirmRegistration;
+>>>>>>> Editor store and services [#89871770]
 
     function Locale() {
     }
@@ -14138,7 +14535,12 @@ return jQuery;
 
         this._data = {};
 
+<<<<<<< HEAD
         this._locale = moment.localeData();
+=======
+},{"../mixins/confirm_registration":34}],30:[function(require,module,exports){
+var EmailFooter, EmailLoginField, EmailMixin, EmailPasswordField, EmailSubmitButton;
+>>>>>>> Editor store and services [#89871770]
 
         this._bubble();
     }
@@ -14169,6 +14571,7 @@ return jQuery;
     function copyConfig(to, from) {
         var i, prop, val;
 
+<<<<<<< HEAD
         if (typeof from._isAMomentObject !== 'undefined') {
             to._isAMomentObject = from._isAMomentObject;
         }
@@ -14199,6 +14602,10 @@ return jQuery;
         if (typeof from._locale !== 'undefined') {
             to._locale = from._locale;
         }
+=======
+},{"./_partials/footer":27,"./buttons/submit":28,"./fields/login":31,"./fields/password":32,"./mixins/email":33}],31:[function(require,module,exports){
+var EmailLoginField, cx;
+>>>>>>> Editor store and services [#89871770]
 
         if (momentProperties.length > 0) {
             for (i in momentProperties) {
@@ -14233,8 +14640,13 @@ return jQuery;
         return (sign ? (forceSign ? '+' : '') : '-') + output;
     }
 
+<<<<<<< HEAD
     function positiveMomentsDifference(base, other) {
         var res = {milliseconds: 0, months: 0};
+=======
+},{"react/lib/cx":568}],32:[function(require,module,exports){
+var EmailPasswordField, cx;
+>>>>>>> Editor store and services [#89871770]
 
         res.months = other.month() - base.month() +
             (other.year() - base.year()) * 12;
@@ -14261,6 +14673,7 @@ return jQuery;
         return res;
     }
 
+<<<<<<< HEAD
     // TODO: remove 'name' arg after deprecation is removed
     function createAdder(direction, name) {
         return function (val, period) {
@@ -14270,6 +14683,10 @@ return jQuery;
                 deprecateSimple(name, 'moment().' + name  + '(period, number) is deprecated. Please use moment().' + name + '(number, period).');
                 tmp = val; val = period; period = tmp;
             }
+=======
+},{"react/lib/cx":568}],33:[function(require,module,exports){
+var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWORD_MESSAGE, INVALID_SLUG_MESSAGE;
+>>>>>>> Editor store and services [#89871770]
 
             val = typeof val === 'string' ? +val : val;
             dur = moment.duration(val, period);
@@ -14336,6 +14753,7 @@ return jQuery;
             normalizedProp,
             prop;
 
+<<<<<<< HEAD
         for (prop in inputObject) {
             if (hasOwnProp(inputObject, prop)) {
                 normalizedProp = normalizeUnits(prop);
@@ -14344,6 +14762,10 @@ return jQuery;
                 }
             }
         }
+=======
+},{"../confirm_registration":29}],34:[function(require,module,exports){
+var ConfirmRegistrationMixin, USER_EXISTS_MESSAGE;
+>>>>>>> Editor store and services [#89871770]
 
         return normalizedInput;
     }
@@ -14368,6 +14790,7 @@ return jQuery;
                 method = moment._locale[field],
                 results = [];
 
+<<<<<<< HEAD
             if (typeof format === 'number') {
                 index = format;
                 format = undefined;
@@ -14387,6 +14810,60 @@ return jQuery;
                 }
                 return results;
             }
+=======
+},{}],35:[function(require,module,exports){
+window.RecoveryShellbox = React.createClass({
+  mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin],
+  getInitialState: function() {
+    return {
+      inProcess: false
+    };
+  },
+  gotoSelectSignin: function() {
+    event.preventDefault();
+    event.stopPropagation();
+    return ReactApp.shellbox.show(Auth);
+  },
+  submit: function(event) {
+    var slug;
+    event.preventDefault();
+    if (this.state.inProcess) {
+      return;
+    }
+    slug = this.refs.slug.getDOMNode().value;
+    if (slug.length < 1) {
+      this.shake();
+      TastyNotifyController.notifyError(i18n.t('empty_login_error'));
+      return;
+    }
+    this.setState({
+      inProcess: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.recovery_url(),
+      data: {
+        slug_or_email: slug
+      },
+      method: 'POST',
+      success: (function(_this) {
+        return function(data) {
+          TastyNotifyController.notifySuccess(i18n.t('recovery_mail_sent'), 10000);
+          return ReactApp.shellbox.close();
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.shake();
+          _this.refs.slug.getDOMNode().focus();
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            inProcess: false
+          });
+>>>>>>> Editor store and services [#89871770]
         };
     }
 
@@ -14394,6 +14871,7 @@ return jQuery;
         var coercedNumber = +argumentForCoercion,
             value = 0;
 
+<<<<<<< HEAD
         if (coercedNumber !== 0 && isFinite(coercedNumber)) {
             if (coercedNumber >= 0) {
                 value = Math.floor(coercedNumber);
@@ -14401,6 +14879,10 @@ return jQuery;
                 value = Math.ceil(coercedNumber);
             }
         }
+=======
+},{}],36:[function(require,module,exports){
+var ConfirmRegistrationMixin, SocialNetworksConfirmRegistration;
+>>>>>>> Editor store and services [#89871770]
 
         return value;
     }
@@ -14421,6 +14903,7 @@ return jQuery;
         return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
     }
 
+<<<<<<< HEAD
     function checkOverflow(m) {
         var overflow;
         if (m._a && m._pf.overflow === -2) {
@@ -14435,6 +14918,10 @@ return jQuery;
                 m._a[SECOND] < 0 || m._a[SECOND] > 59 ? SECOND :
                 m._a[MILLISECOND] < 0 || m._a[MILLISECOND] > 999 ? MILLISECOND :
                 -1;
+=======
+},{"../mixins/confirm_registration":34}],37:[function(require,module,exports){
+var cx;
+>>>>>>> Editor store and services [#89871770]
 
             if (m._pf._overflowDayOfYear && (overflow < YEAR || overflow > DATE)) {
                 overflow = DATE;
@@ -14454,6 +14941,7 @@ return jQuery;
                 !m._pf.invalidFormat &&
                 !m._pf.userInvalidated;
 
+<<<<<<< HEAD
             if (m._strict) {
                 m._isValid = m._isValid &&
                     m._pf.charsLeftOver === 0 &&
@@ -14463,6 +14951,42 @@ return jQuery;
         }
         return m._isValid;
     }
+=======
+},{"react/lib/cx":568}],38:[function(require,module,exports){
+window.UserAvatar = React.createClass({
+  displayName: 'UserAvatar',
+  propTypes: {
+    user: React.PropTypes.object.isRequired,
+    size: React.PropTypes.number
+  },
+  getInitialState: function() {
+    return {
+      user: this.props.user
+    };
+  },
+  componentDidMount: function() {
+    return TastyEvents.on(TastyEvents.keys.user_property_changed('avatar', this.props.user.id), this._updateUserpic);
+  },
+  componentWillUnmount: function() {
+    return TastyEvents.off(TastyEvents.keys.user_property_changed('avatar', this.props.user.id), this._updateUserpic);
+  },
+  render: function() {
+    return React.createElement(Avatar, {
+      "name": this.state.user.name,
+      "userpic": this.state.user.userpic,
+      "size": this.props.size
+    });
+  },
+  _updateUserpic: function(userpic) {
+    var newUser;
+    newUser = this.state.user;
+    newUser.userpic = userpic;
+    return this.setState({
+      user: newUser
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
     function normalizeLocale(key) {
         return key ? key.toLowerCase().replace('_', '-') : key;
@@ -14474,6 +14998,7 @@ return jQuery;
     function chooseLocale(names) {
         var i = 0, j, next, locale, split;
 
+<<<<<<< HEAD
         while (i < names.length) {
             split = normalizeLocale(names[i]).split('-');
             j = split.length;
@@ -14494,6 +15019,22 @@ return jQuery;
         }
         return null;
     }
+=======
+},{}],39:[function(require,module,exports){
+window.LoadMoreButton = React.createClass({
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "popup__more"
+    }, React.createElement("button", {
+      "onClick": this.props.onClick,
+      "className": "more-button"
+    }, i18n.t('load_more_button')));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
     function loadLocale(name) {
         var oldLocale = null;
@@ -14524,9 +15065,14 @@ return jQuery;
         }
     }
 
+<<<<<<< HEAD
     /************************************
         Locale
     ************************************/
+=======
+},{}],40:[function(require,module,exports){
+var CALENDAR_CLOSED, CALENDAR_OPENED_BY_CLICK, CALENDAR_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, TARGET_POST_CLASS, TARGET_POST_PARENT_CLASS, cx;
+>>>>>>> Editor store and services [#89871770]
 
 
     extend(Locale.prototype, {
@@ -14597,10 +15143,37 @@ return jQuery;
             return this._weekdaysShort[m.day()];
         },
 
+<<<<<<< HEAD
         _weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
         weekdaysMin : function (m) {
             return this._weekdaysMin[m.day()];
         },
+=======
+},{"react/lib/cx":568}],41:[function(require,module,exports){
+window.CalendarHeader = React.createClass({
+  propTypes: {
+    date: React.PropTypes.object.isRequired
+  },
+  render: function() {
+    var day, info;
+    day = this.props.date.format('D');
+    info = this.props.date.format('D MMMM <br/> dddd<br/> HH:mm').slice(2);
+    if (moment().year() !== this.props.date.year()) {
+      info = this.props.date.format('D MMMM <br/> dddd<br/> YYYY').slice(2);
+    }
+    return React.createElement("div", {
+      "className": "calendar__date"
+    }, React.createElement("div", {
+      "className": "calendar__date-day"
+    }, day), React.createElement("div", {
+      "className": "calendar__date-info",
+      "dangerouslySetInnerHTML": {
+        __html: info
+      }
+    }));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         weekdaysParse : function (weekdayName) {
             var i, mom, regex;
@@ -14609,6 +15182,7 @@ return jQuery;
                 this._weekdaysParse = [];
             }
 
+<<<<<<< HEAD
             for (i = 0; i < 7; i++) {
                 // make the regex if we don't have it already
                 if (!this._weekdaysParse[i]) {
@@ -14622,6 +15196,10 @@ return jQuery;
                 }
             }
         },
+=======
+},{}],42:[function(require,module,exports){
+var cx;
+>>>>>>> Editor store and services [#89871770]
 
         _longDateFormat : {
             LTS : 'h:mm:ss A',
@@ -14670,6 +15248,7 @@ return jQuery;
             return typeof output === 'function' ? output.apply(mom, [now]) : output;
         },
 
+<<<<<<< HEAD
         _relativeTime : {
             future : 'in %s',
             past : '%s ago',
@@ -14685,6 +15264,38 @@ return jQuery;
             y : 'a year',
             yy : '%d years'
         },
+=======
+},{"react/lib/cx":568}],43:[function(require,module,exports){
+window.CalendarPeriod = React.createClass({
+  propTypes: {
+    period: React.PropTypes.object.isRequired,
+    selectedEntryId: React.PropTypes.number,
+    visibleMarkers: React.PropTypes.array
+  },
+  render: function() {
+    var markerNodes, that;
+    that = this;
+    markerNodes = this.props.period.markers.map(function(marker, i) {
+      var highlighted, selected;
+      selected = that.props.selectedEntryId === marker.entry_id;
+      highlighted = (_.indexOf(that.props.visibleMarkers, marker.entry_id)) > -1;
+      return React.createElement(CalendarMarker, {
+        "selected": selected,
+        "highlighted": highlighted,
+        "marker": marker,
+        "key": i
+      });
+    });
+    return React.createElement("li", {
+      "className": "calendar__period"
+    }, React.createElement("div", {
+      "className": "calendar__period-date"
+    }, this.props.period.title), React.createElement("ul", {
+      "className": "calendar__period-line"
+    }, markerNodes));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         relativeTime : function (number, withoutSuffix, string, isFuture) {
             var output = this._relativeTime[string];
@@ -14698,11 +15309,44 @@ return jQuery;
             return typeof format === 'function' ? format(output) : format.replace(/%s/i, output);
         },
 
+<<<<<<< HEAD
         ordinal : function (number) {
             return this._ordinal.replace('%d', number);
         },
         _ordinal : '%d',
         _ordinalParse : /\d{1,2}/,
+=======
+},{}],44:[function(require,module,exports){
+window.CalendarTimeline = React.createClass({
+  propTypes: {
+    periods: React.PropTypes.array.isRequired,
+    selectedEntryId: React.PropTypes.number,
+    visibleMarkers: React.PropTypes.array
+  },
+  render: function() {
+    var periodNodes, that;
+    that = this;
+    periodNodes = this.props.periods.map(function(period, i) {
+      return React.createElement(CalendarPeriod, {
+        "period": period,
+        "activePost": that.props.activePost,
+        "selectedEntryId": that.props.selectedEntryId,
+        "visibleMarkers": that.props.visibleMarkers,
+        "key": i
+      });
+    });
+    return React.createElement("div", {
+      "className": "calendar__timeline-viewport calendar__timeline-viewport--active"
+    }, React.createElement("div", {
+      "className": "calendar__timeline",
+      "ref": "timeline"
+    }, React.createElement("ul", {
+      "className": "calendar__periods nav",
+      "ref": "periodsList"
+    }, periodNodes)));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         preparse : function (string) {
             return string;
@@ -14712,9 +15356,52 @@ return jQuery;
             return string;
         },
 
+<<<<<<< HEAD
         week : function (mom) {
             return weekOfYear(mom, this._week.dow, this._week.doy).week;
         },
+=======
+},{}],45:[function(require,module,exports){
+window.AdaptiveInput = React.createClass({
+  propTypes: {
+    type: React.PropTypes.string,
+    value: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
+    required: React.PropTypes.bool,
+    checked: React.PropTypes.bool,
+    disabled: React.PropTypes.bool,
+    autoFocus: React.PropTypes.bool,
+    id: React.PropTypes.string,
+    className: React.PropTypes.string,
+    onChange: React.PropTypes.func.isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      type: 'text'
+    };
+  },
+  render: function() {
+    return React.createElement("input", {
+      "type": this.props.type,
+      "value": this.props.value,
+      "placeholder": this.props.placeholder,
+      "required": this.props.required,
+      "checked": this.props.checked,
+      "disabled": this.props.disabled,
+      "autoFocus": this.props.autoFocus,
+      "id": this.props.id,
+      "className": this.props.className,
+      "onChange": this.handleChange
+    });
+  },
+  getValue: function() {
+    return this.getDOMNode().value;
+  },
+  handleChange: function() {
+    return this.props.onChange(this.getDOMNode().value);
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         _week : {
             dow : 0, // Sunday is the first day of the week.
@@ -14727,9 +15414,14 @@ return jQuery;
         }
     });
 
+<<<<<<< HEAD
     /************************************
         Formatting
     ************************************/
+=======
+},{}],46:[function(require,module,exports){
+var InfiniteScroll, PropTypes, THRESHOLD, windowHeight;
+>>>>>>> Editor store and services [#89871770]
 
 
     function removeFormattingTokens(input) {
@@ -14771,8 +15463,13 @@ return jQuery;
             formatFunctions[format] = makeFormatFunction(format);
         }
 
+<<<<<<< HEAD
         return formatFunctions[format](m);
     }
+=======
+},{}],47:[function(require,module,exports){
+var PropTypes, Scroller;
+>>>>>>> Editor store and services [#89871770]
 
     function expandFormat(format, locale) {
         var i = 5;
@@ -14792,9 +15489,14 @@ return jQuery;
     }
 
 
+<<<<<<< HEAD
     /************************************
         Parsing
     ************************************/
+=======
+},{}],48:[function(require,module,exports){
+var ColorPicker, POPUP_WIDTH, STATE_CHOICE, STATE_VIEW;
+>>>>>>> Editor store and services [#89871770]
 
 
     // get the regex to find the next token
@@ -15058,8 +15760,51 @@ return jQuery;
             dow = config._locale._week.dow;
             doy = config._locale._week.doy;
 
+<<<<<<< HEAD
             weekYear = dfl(w.gg, config._a[YEAR], weekOfYear(moment(), dow, doy).year);
             week = dfl(w.w, 1);
+=======
+},{}],49:[function(require,module,exports){
+var ColorPicker_Popup;
+
+ColorPicker_Popup = React.createClass({
+  propTypes: {
+    color: React.PropTypes.string,
+    isDrag: React.PropTypes.func,
+    position: React.PropTypes.object
+  },
+  getInitialState: function() {
+    return {
+      currentColor: this.props.color
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "color-picker-popup",
+      "style": {
+        top: this.props.position.top,
+        left: this.props.position.left
+      }
+    }, React.createElement("i", {
+      "className": "color-picker-popup__arrow"
+    }), React.createElement(VendorColorPicker, {
+      "defaultValue": this.state.currentColor,
+      "saturationWidth": 140.,
+      "saturationHeight": 140.,
+      "hueWidth": 6.,
+      "onDrag": this.handleDrag
+    }));
+  },
+  handleDrag: function(color, c) {
+    this.setState({
+      currentColor: color
+    });
+    return this.props.onDrag(color, c);
+  }
+});
+
+module.exports = ColorPicker_Popup;
+>>>>>>> Editor store and services [#89871770]
 
             if (w.d != null) {
                 // weekday -- low day numbers are considered next week
@@ -15081,12 +15826,57 @@ return jQuery;
         config._dayOfYear = temp.dayOfYear;
     }
 
+<<<<<<< HEAD
     // convert an array to a date.
     // the array should mirror the parameters below
     // note: all values past the year are optional and will default to the lowest possible value.
     // [year, month, day , hour, minute, second, millisecond]
     function dateFromConfig(config) {
         var i, date, input = [], currentDate, yearToUse;
+=======
+},{}],50:[function(require,module,exports){
+window.DesignSettingsPopup_Controls = React.createClass({
+  propTypes: {
+    design: React.PropTypes.object.isRequired,
+    userId: React.PropTypes.number.isRequired,
+    activitiesHandler: React.PropTypes.object.isRequired,
+    saveCallback: React.PropTypes.func.isRequired,
+    onBackgroundChanged: React.PropTypes.func.isRequired
+  },
+  shouldComponentUpdate: function(nextProps) {
+    return !_.isEqual(this.props.design, nextProps.design);
+  },
+  render: function() {
+    var saveCallback;
+    saveCallback = function() {
+      return this.props.saveCallback.apply(this, arguments);
+    };
+    return React.createElement("div", {
+      "className": "settings-design__controls"
+    }, React.createElement(DesignSettingsPopup_ControlsBackgroundItem, {
+      "userId": this.props.userId,
+      "backgroundUrl": this.props.design.background_url,
+      "activitiesHandler": this.props.activitiesHandler,
+      "onBackgroundChanged": this.props.onBackgroundChanged
+    }), React.createElement(DesignSettingsPopup_ControlsAlignItem, {
+      "coverAlign": this.props.design.coverAlign,
+      "saveCallback": saveCallback.bind(this, 'coverAlign')
+    }), React.createElement(DesignSettingsPopup_ControlsHeaderColorItem, {
+      "headerColor": this.props.design.headerColor,
+      "saveCallback": saveCallback.bind(this, 'headerColor')
+    }), React.createElement(DesignSettingsPopup_ControlsFeedColorItem, {
+      "feedColor": this.props.design.feedColor,
+      "saveCallback": saveCallback.bind(this, 'feedColor')
+    }), React.createElement(DesignSettingsPopup_ControlsFontTypeItem, {
+      "fontType": this.props.design.fontType,
+      "saveCallback": saveCallback.bind(this, 'fontType')
+    }), React.createElement(DesignSettingsPopup_ControlsOpacityItem, {
+      "feedOpacity": this.props.design.feedOpacity,
+      "saveCallback": saveCallback.bind(this, 'feedOpacity')
+    }));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         if (config._d) {
             return;
@@ -15094,10 +15884,36 @@ return jQuery;
 
         currentDate = currentDateArray(config);
 
+<<<<<<< HEAD
         //compute day of the year from weeks and weekdays
         if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
             dayOfYearFromWeekInfo(config);
         }
+=======
+},{}],51:[function(require,module,exports){
+window.DesignSettingsPopup_ControlsProgressbar = React.createClass({
+  propTypes: {
+    progress: React.PropTypes.number.isRequired
+  },
+  shouldComponentUpdate: function(nextProps) {
+    return this.props.progress !== nextProps.progress;
+  },
+  render: function() {
+    var progressBarStyles, _ref;
+    progressBarStyles = {
+      width: this._getWidth(),
+      opacity: (100 > (_ref = this.props.progress) && _ref > 0) ? 1 : 0
+    };
+    return React.createElement("div", {
+      "style": progressBarStyles,
+      "className": "settings-design--progressbar"
+    });
+  },
+  _getWidth: function() {
+    return this.props.progress + '%';
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         //if the day of the year is set, figure out what it is
         if (config._dayOfYear) {
@@ -15107,10 +15923,15 @@ return jQuery;
                 config._pf._overflowDayOfYear = true;
             }
 
+<<<<<<< HEAD
             date = makeUTCDate(yearToUse, 0, config._dayOfYear);
             config._a[MONTH] = date.getUTCMonth();
             config._a[DATE] = date.getUTCDate();
         }
+=======
+},{}],52:[function(require,module,exports){
+var cx;
+>>>>>>> Editor store and services [#89871770]
 
         // Default to current date.
         // * if no year, month, day of month are given, default to today
@@ -15142,17 +15963,194 @@ return jQuery;
             config._d.setUTCMinutes(config._d.getUTCMinutes() + config._tzm);
         }
 
+<<<<<<< HEAD
         if (config._nextDay) {
             config._a[HOUR] = 24;
         }
+=======
+},{"react/lib/cx":568}],53:[function(require,module,exports){
+window.DesignSettingsPopup_ControlsAlignItem = React.createClass({
+  propTypes: {
+    coverAlign: React.PropTypes.string.isRequired,
+    saveCallback: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      active: this.props.coverAlign
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings-design__control settings-design__control--cover-align"
+    }, React.createElement("div", {
+      "className": "settings-design__control-inner"
+    }, React.createElement("span", {
+      "className": "settings-design__valign"
+    }), React.createElement("span", {
+      "className": "settings-design__text absolute--left animate--down"
+    }, i18n.t('design_settings_align')), React.createElement("span", {
+      "className": "settings-design__state absolute--right animate--right"
+    }, React.createElement("span", {
+      "className": "settings-design__state-i"
+    })), React.createElement("span", {
+      "className": "form-radiogroup form-radiogroup--dotted-list absolute--left animate--up"
+    }, React.createElement(DesignSettingsPopup_ControlsRadioButton, {
+      "value": "justify",
+      "settingId": "coverAlign",
+      "isActive": this.state.active === "justify",
+      "text": i18n.t('design_settings_align_justify'),
+      "onChange": this.onChange
+    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
+      "value": "center",
+      "settingId": "coverAlign",
+      "isActive": this.state.active === "center",
+      "text": i18n.t('design_settings_align_center'),
+      "onChange": this.onChange
+    }))));
+  },
+  onChange: function(value) {
+    if (this.state.active !== value) {
+      this.setState({
+        active: value
+      });
+      return this.props.saveCallback(value);
+>>>>>>> Editor store and services [#89871770]
     }
 
     function dateFromObject(config) {
         var normalizedInput;
 
+<<<<<<< HEAD
         if (config._d) {
             return;
         }
+=======
+},{}],54:[function(require,module,exports){
+window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
+  mixins: ['ReactActivitiesUser', ComponentManipulationsMixin],
+  propTypes: {
+    userId: React.PropTypes.number.isRequired,
+    backgroundUrl: React.PropTypes.string.isRequired,
+    activitiesHandler: React.PropTypes.object.isRequired,
+    onBackgroundChanged: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      backgroundUrl: this.props.backgroundUrl,
+      progress: 0
+    };
+  },
+  componentDidMount: function() {
+    return this._bindCoverUpload();
+  },
+  componentWillUnmount: function() {
+    return this._unbindCoverUpload();
+  },
+  render: function() {
+    var backgroundStyles;
+    backgroundStyles = {
+      backgroundImage: 'url(' + this.state.backgroundUrl + ')'
+    };
+    return React.createElement("div", {
+      "className": "settings-design__control settings-design__control--cover"
+    }, React.createElement(DesignSettingsPopup_ControlsProgressbar, {
+      "progress": this.state.progress
+    }), React.createElement("div", {
+      "className": "settings-design__control-inner"
+    }, React.createElement("span", {
+      "className": "settings-design__valign"
+    }), React.createElement("span", {
+      "className": "settings-design__text absolute--left animate--down"
+    }, i18n.t('design_settings_background')), React.createElement("span", {
+      "className": "settings-design__text absolute--left animate--up"
+    }, i18n.t('design_settings_background_move_or'), React.createElement("span", {
+      "className": "form-upload form-upload--cover"
+    }, React.createElement("span", {
+      "className": "form-upload__text"
+    }, i18n.t('design_settings_background_load')), React.createElement("input", {
+      "ref": "uploadCoverInput",
+      "type": "file",
+      "name": "layout-cover",
+      "id": "layout-cover",
+      "className": "form-upload__input"
+    }))), React.createElement("span", {
+      "className": "settings-design__cover-pixel absolute--right animate--right",
+      "style": backgroundStyles
+    })));
+  },
+  _bindCoverUpload: function() {
+    this.$uploadCoverInput = $(this.refs.uploadCoverInput.getDOMNode());
+    return this.$uploadCoverInput.fileupload({
+      url: ApiRoutes.design_settings_cover_url(this.props.userId),
+      paramName: 'file',
+      autoUpload: true,
+      replaceFileInput: false,
+      add: (function(_this) {
+        return function(e, data) {
+          _this._readFile(data.files[0]);
+          return data.process().done(function() {
+            return data.submit();
+          });
+        };
+      })(this),
+      start: (function(_this) {
+        return function() {
+          return _this.incrementActivities();
+        };
+      })(this),
+      progress: (function(_this) {
+        return function(e, data) {
+          var progress;
+          progress = parseInt(data.loaded / data.total * 100, 10);
+          return _this.safeUpdateState({
+            progress: progress
+          });
+        };
+      })(this),
+      done: (function(_this) {
+        return function(e, data) {
+          _this.props.onBackgroundChanged(data.jqXHR.responseJSON);
+          return TastyNotifyController.notifySuccess(i18n.t('settings_saved'), 2000);
+        };
+      })(this),
+      fail: function(e, data) {
+        return TastyNotifyController.errorResponse(data.response().jqXHR);
+      },
+      always: (function(_this) {
+        return function() {
+          _this.decrementActivities();
+          return _this.safeUpdateState({
+            progress: 0
+          });
+        };
+      })(this)
+    });
+  },
+  _readFile: function(file) {
+    var fileReader;
+    fileReader = new FileReader();
+    fileReader.onload = (function(_this) {
+      return function(e) {
+        var url;
+        url = e.target.result;
+        return _this._setBodyBackgroundImage(url);
+      };
+    })(this);
+    return fileReader.readAsDataURL(file);
+  },
+  _unbindCoverUpload: function() {
+    return this.$uploadCoverInput.fileupload('destroy');
+  },
+  _setBodyBackgroundImage: function(url) {
+    var $coverBackground;
+    $coverBackground = $('.page-cover');
+    $coverBackground.css('background-image', 'url(' + url + ')');
+    return this.safeUpdateState({
+      backgroundUrl: url
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         normalizedInput = normalizeObjectUnits(config._i);
         config._a = [
@@ -15168,6 +16166,7 @@ return jQuery;
         dateFromConfig(config);
     }
 
+<<<<<<< HEAD
     function currentDateArray(config) {
         var now = new Date();
         if (config._useUTC) {
@@ -15179,6 +16178,55 @@ return jQuery;
         } else {
             return [now.getFullYear(), now.getMonth(), now.getDate()];
         }
+=======
+},{}],55:[function(require,module,exports){
+window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({
+  propTypes: {
+    feedColor: React.PropTypes.string.isRequired,
+    saveCallback: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      active: this.props.feedColor
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings-design__control settings-design__control--feed-color",
+      "data-key": "feedColor"
+    }, React.createElement("div", {
+      "className": "settings-design__control-inner"
+    }, React.createElement("span", {
+      "className": "settings-design__valign"
+    }), React.createElement("span", {
+      "className": "settings-design__text absolute--left animate--down"
+    }, i18n.t('design_settings_feed_color')), React.createElement("span", {
+      "className": "settings-design__state settings-design__state--radiobutton absolute--right animate--right"
+    }, React.createElement("span", {
+      "className": "settings-design__state-i"
+    })), React.createElement("span", {
+      "className": "form-radiogroup form-radiogroup--radiobuttons form-radiogroup--feed-color absolute--left animate--up"
+    }, React.createElement(DesignSettingsPopup_ControlsRadioButton, {
+      "value": "white",
+      "settingId": "feedColor",
+      "isActive": this.state.active === "white",
+      "text": i18n.t('design_settings_feed_color_white'),
+      "onChange": this.onChange
+    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
+      "value": "black",
+      "settingId": "feedColor",
+      "isActive": this.state.active === "black",
+      "text": i18n.t('design_settings_feed_color_black'),
+      "onChange": this.onChange
+    }))));
+  },
+  onChange: function(value) {
+    if (this.state.active !== value) {
+      this.setState({
+        active: value
+      });
+      return this.props.saveCallback(value);
+>>>>>>> Editor store and services [#89871770]
     }
 
     // date from string and format string
@@ -15191,11 +16239,65 @@ return jQuery;
         config._a = [];
         config._pf.empty = true;
 
+<<<<<<< HEAD
         // This array is used to make a Date, either with `new Date` or `Date.UTC`
         var string = '' + config._i,
             i, parsedInput, tokens, token, skipped,
             stringLength = string.length,
             totalParsedInputLength = 0;
+=======
+},{}],56:[function(require,module,exports){
+window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({
+  propTypes: {
+    fontType: React.PropTypes.string.isRequired,
+    saveCallback: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      active: this.props.fontType
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings-design__control settings-design__control--font-type",
+      "data-key": "fontType"
+    }, React.createElement("div", {
+      "className": "settings-design__control-inner"
+    }, React.createElement("span", {
+      "className": "settings-design__valign"
+    }), React.createElement("span", {
+      "className": "settings-design__text absolute--left animate--down"
+    }, i18n.t('design_settings_font_type')), React.createElement("span", {
+      "className": "settings-design__state absolute--right animate--right"
+    }, React.createElement("span", {
+      "className": "settings-design__state-i"
+    }, "Aa")), React.createElement("span", {
+      "className": "form-radiogroup form-radiogroup--type-font absolute--left animate--up"
+    }, React.createElement(DesignSettingsPopup_ControlsRadioButton, {
+      "value": "sans",
+      "settingId": "fontType",
+      "isActive": this.state.active === "sans",
+      "text": "Aa",
+      "className": "sans-serif",
+      "onChange": this.onChange
+    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
+      "value": "serif",
+      "settingId": "fontType",
+      "isActive": this.state.active === "serif",
+      "text": "Aa",
+      "onChange": this.onChange
+    }))));
+  },
+  onChange: function(value) {
+    if (this.state.active !== value) {
+      this.setState({
+        active: value
+      });
+      return this.props.saveCallback(value);
+    }
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         tokens = expandFormat(config._f, config._locale).match(formattingTokens) || [];
 
@@ -15225,6 +16327,7 @@ return jQuery;
             }
         }
 
+<<<<<<< HEAD
         // add remaining unparsed input length to the string
         config._pf.charsLeftOver = stringLength - totalParsedInputLength;
         if (string.length > 0) {
@@ -15245,6 +16348,69 @@ return jQuery;
         }
         dateFromConfig(config);
         checkOverflow(config);
+=======
+},{}],57:[function(require,module,exports){
+window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({
+  propTypes: {
+    headerColor: React.PropTypes.string.isRequired,
+    saveCallback: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      active: this.props.headerColor
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings-design__control settings-design__control--header-color",
+      "data-key": "headerColor"
+    }, React.createElement("div", {
+      "className": "settings-design__control-inner"
+    }, React.createElement("span", {
+      "className": "settings-design__valign"
+    }), React.createElement("span", {
+      "className": "settings-design__text absolute--left animate--down"
+    }, i18n.t('design_settings_header_color')), React.createElement("span", {
+      "className": "settings-design__state settings-design__state--radiobutton absolute--right animate--right"
+    }, React.createElement("span", {
+      "className": "settings-design__state-i"
+    })), React.createElement("span", {
+      "className": "form-radiogroup form-radiogroup--radiobuttons form-radiogroup--header-color absolute--left animate--up"
+    }, React.createElement(DesignSettingsPopup_ControlsRadioButton, {
+      "value": "white",
+      "settingId": "headerColor",
+      "isActive": this.state.active === "white",
+      "text": i18n.t('design_settings_header_color_white'),
+      "onChange": this.onChange
+    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
+      "value": "black",
+      "settingId": "headerColor",
+      "isActive": this.state.active === "black",
+      "text": i18n.t('design_settings_header_color_black'),
+      "onChange": this.onChange
+    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
+      "value": "whiteonblack",
+      "settingId": "headerColor",
+      "isActive": this.state.active === "whiteonblack",
+      "text": i18n.t('design_settings_header_color_white_on_black'),
+      "className": "white-on-black",
+      "onChange": this.onChange
+    }), React.createElement(DesignSettingsPopup_ControlsRadioButton, {
+      "value": "blackonwhite",
+      "settingId": "headerColor",
+      "isActive": this.state.active === "blackonwhite",
+      "text": i18n.t('design_settings_header_color_black_on_white'),
+      "className": "black-on-white",
+      "onChange": this.onChange
+    }))));
+  },
+  onChange: function(value) {
+    if (this.state.active !== value) {
+      this.setState({
+        active: value
+      });
+      return this.props.saveCallback(value);
+>>>>>>> Editor store and services [#89871770]
     }
 
     function unescapeFormat(s) {
@@ -15258,10 +16424,15 @@ return jQuery;
         return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     }
 
+<<<<<<< HEAD
     // date from string and array of format strings
     function makeDateFromStringAndArray(config) {
         var tempConfig,
             bestMoment,
+=======
+},{}],58:[function(require,module,exports){
+var MAXIMUM_OPACITY, MINIMUM_OPACITY, STEP_OPACITY, TIMEOUT_BEFORE_SAVE;
+>>>>>>> Editor store and services [#89871770]
 
             scoreToBeat,
             i,
@@ -15295,11 +16466,16 @@ return jQuery;
 
             tempConfig._pf.score = currentScore;
 
+<<<<<<< HEAD
             if (scoreToBeat == null || currentScore < scoreToBeat) {
                 scoreToBeat = currentScore;
                 bestMoment = tempConfig;
             }
         }
+=======
+},{}],59:[function(require,module,exports){
+var CurrentUserServerActions, cx;
+>>>>>>> Editor store and services [#89871770]
 
         extend(config, bestMoment || tempConfig);
     }
@@ -15351,6 +16527,7 @@ return jQuery;
         return res;
     }
 
+<<<<<<< HEAD
     function makeDateFromInput(config) {
         var input = config._i, matched;
         if (input === undefined) {
@@ -15375,6 +16552,10 @@ return jQuery;
             moment.createFromInputFallback(config);
         }
     }
+=======
+},{"../../actions/server/current_user":13,"react/lib/cx":568}],60:[function(require,module,exports){
+var KEYCODE_ENTER, LinkedStateMixin, cx;
+>>>>>>> Editor store and services [#89871770]
 
     function makeDate(y, m, d, h, M, s, ms) {
         //can't just apply() to create a date:
@@ -15416,9 +16597,26 @@ return jQuery;
     ************************************/
 
 
+<<<<<<< HEAD
     // helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
     function substituteTimeAgo(string, number, withoutSuffix, isFuture, locale) {
         return locale.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
+=======
+},{"react/lib/LinkedStateMixin":479,"react/lib/cx":568}],61:[function(require,module,exports){
+window.EmbedComponent = React.createClass({
+  propTypes: {
+    autoplay: React.PropTypes.bool.isRequired,
+    coverImageUrl: React.PropTypes.string,
+    frameWidth: React.PropTypes.number.isRequired,
+    frameHeight: React.PropTypes.number.isRequired,
+    embedHtml: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    if ((this.props.coverImageUrl != null) && !this.props.autoplay) {
+      return this.transferPropsTo(new EmbedComponentWithCover);
+    } else {
+      return this.transferPropsTo(new EmbedComponentNoCover);
+>>>>>>> Editor store and services [#89871770]
     }
 
     function relativeTime(posNegDuration, withoutSuffix, locale) {
@@ -15441,10 +16639,28 @@ return jQuery;
                 months < relativeTimeThresholds.M && ['MM', months] ||
                 years === 1 && ['y'] || ['yy', years];
 
+<<<<<<< HEAD
         args[2] = withoutSuffix;
         args[3] = +posNegDuration > 0;
         args[4] = locale;
         return substituteTimeAgo.apply({}, args);
+=======
+},{}],62:[function(require,module,exports){
+window.EntryCommentBox_CommentFormSubmit = React.createClass({
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired,
+    visible: React.PropTypes.bool.isRequired
+  },
+  render: function() {
+    if (this.props.visible) {
+      return React.createElement("button", {
+        "ref": "commentFormSubmit",
+        "className": "comment-form__submit",
+        "onClick": this.props.onClick
+      }, i18n.t('comment_form_submit'));
+    } else {
+      return React.createElement("span", null);
+>>>>>>> Editor store and services [#89871770]
     }
 
 
@@ -15452,6 +16668,11 @@ return jQuery;
         Week of Year
     ************************************/
 
+<<<<<<< HEAD
+=======
+},{}],63:[function(require,module,exports){
+var FORM_STATE, HIDDEN_STATE, LINK_STATE;
+>>>>>>> Editor store and services [#89871770]
 
     // firstDayOfWeek       0 = sun, 6 = sat
     //                      the day of the week that starts the week
@@ -15490,9 +16711,67 @@ return jQuery;
         daysToAdd = firstDayOfWeek - d + (d > firstDayOfWeekOfYear ? 7 : 0) - (d < firstDayOfWeek ? 7 : 0);
         dayOfYear = 7 * (week - 1) + (weekday - firstDayOfWeek) + daysToAdd + 1;
 
+<<<<<<< HEAD
         return {
             year: dayOfYear > 0 ? year : year - 1,
             dayOfYear: dayOfYear > 0 ?  dayOfYear : daysInYear(year - 1) + dayOfYear
+=======
+},{}],64:[function(require,module,exports){
+window.EntryCommentBox_CommentEditFormManager = React.createClass({
+  mixins: [RequesterMixin, ComponentManipulationsMixin],
+  propTypes: {
+    comment: React.PropTypes.object.isRequired,
+    user: React.PropTypes.object.isRequired,
+    onEditEnd: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      isEditError: false,
+      isEditLoading: false
+    };
+  },
+  render: function() {
+    return React.createElement(EntryCommentBox_CommentForm, {
+      "ref": "commentForm",
+      "text": this.props.comment.comment_html,
+      "user": this.props.user,
+      "isLoading": this.state.isEditLoading,
+      "onSubmit": this.onSubmit,
+      "onCancel": this.props.onCancel
+    });
+  },
+  onSubmit: function(text) {
+    this.setState({
+      isEditError: false,
+      isEditLoading: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.comments_edit_delete_url(this.props.comment.id),
+      method: 'POST',
+      data: {
+        _method: 'PUT',
+        text: text
+      },
+      success: (function(_this) {
+        return function(comment) {
+          return _this.props.onEditEnd(comment);
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            isEditError: true
+          });
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            isEditLoading: false
+          });
+>>>>>>> Editor store and services [#89871770]
         };
     }
 
@@ -15505,7 +16784,160 @@ return jQuery;
             format = config._f,
             res;
 
+<<<<<<< HEAD
         config._locale = config._locale || moment.localeData(config._l);
+=======
+},{}],65:[function(require,module,exports){
+var REPLIES_LIMIT;
+
+REPLIES_LIMIT = 5;
+
+window.EntryCommentBox_CommentForm = React.createClass({
+  propTypes: {
+    user: React.PropTypes.object.isRequired,
+    text: React.PropTypes.string,
+    onSubmit: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func.isRequired,
+    isLoading: React.PropTypes.bool
+  },
+  getInitialState: function() {
+    return {
+      visibleSubmit: (this.props.text != null) && typeof this.props.text !== "undefined" && this.props.text !== ""
+    };
+  },
+  getDefaultProps: function() {
+    return {
+      disabled: false
+    };
+  },
+  componentDidMount: function() {
+    return this._initAutosize();
+  },
+  componentDidUpdate: function() {
+    return this.$commentFormField.trigger('autosize.resize');
+  },
+  componentWillUnmount: function() {
+    return this.$commentFormField.trigger('autosize.destroy');
+  },
+  render: function() {
+    var avatar;
+    if (this.props.isLoading) {
+      avatar = React.createElement("span", {
+        "className": "spinner spinner--31x31"
+      }, React.createElement("span", {
+        "className": "spinner__icon"
+      }));
+    } else {
+      avatar = React.createElement(UserAvatar, {
+        "user": this.props.user,
+        "size": 64.
+      });
+    }
+    return React.createElement("div", {
+      "className": "comment-form"
+    }, React.createElement("div", {
+      "className": "comment-form__table"
+    }, React.createElement("div", {
+      "className": "comment-form__table-cell"
+    }, React.createElement("form", null, React.createElement("span", {
+      "className": "comment-form__avatar"
+    }, avatar), React.createElement(EntryCommentBox_CommentFormSubmit, {
+      "visible": this.state.visibleSubmit,
+      "onClick": this.onSubmit
+    }), React.createElement("span", {
+      "className": "comment-form__field"
+    }, React.createElement("textarea", {
+      "ref": "commentFormField",
+      "placeholder": i18n.t('comment_form_placeholder'),
+      "defaultValue": this.props.text,
+      "disabled": this.props.isLoading,
+      "className": "comment-form__field-textarea",
+      "onFocus": this.onFocus,
+      "onBlur": this.onBlur,
+      "onKeyDown": this.onKeyDown
+    }))))));
+  },
+  getValue: function() {
+    return this.refs.commentFormField.getDOMNode().value;
+  },
+  isEmpty: function() {
+    return this.getValue().trim() === '';
+  },
+  addReply: function(name) {
+    var newText, postfix, replies;
+    name = '@' + name;
+    postfix = /^@/.exec(this.$commentFormField.val()) ? ', ' : ' ';
+    newText = this.$commentFormField.val();
+    replies = this._getReplies();
+    if (replies.length > REPLIES_LIMIT) {
+      newText = this._removeLastReply();
+    }
+    if (!RegExp(name).exec(newText)) {
+      newText = name + postfix + newText;
+    }
+    return this.$commentFormField.val(newText).focus();
+  },
+  _getReplies: function() {
+    var found, regExp, replies, text;
+    replies = [];
+    text = this.$commentFormField.val();
+    regExp = /@[^, ]{1,}/g;
+    return replies = ((function() {
+      var _results;
+      _results = [];
+      while (found = regExp.exec(text)) {
+        _results.push(found[0]);
+      }
+      return _results;
+    })());
+  },
+  _removeLastReply: function() {
+    var regExp, text;
+    text = this.$commentFormField.val();
+    regExp = /, @\w+(?=\s)/g;
+    return text.replace(regExp, '');
+  },
+  _submitComment: function() {
+    return this.props.onSubmit(this.getValue());
+  },
+  onFocus: function() {
+    var valueLength;
+    valueLength = this.$commentFormField.val().length;
+    if (this.$commentFormField.get(0).setSelectionRange !== void 0) {
+      this.$commentFormField.get(0).setSelectionRange(valueLength, valueLength);
+    } else {
+      this.$commentFormField.val(this.$commentFormField.val());
+    }
+    return this.setState({
+      visibleSubmit: true
+    });
+  },
+  onBlur: function() {
+    return this.setState({
+      visibleSubmit: !this.isEmpty()
+    });
+  },
+  onKeyDown: function(e) {
+    if (e.which === 13 && this.$commentFormField.val().match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey) {
+      e.preventDefault();
+      this._submitComment();
+    }
+    if (e.which === 27) {
+      return this.props.onCancel();
+    }
+  },
+  onSubmit: function(e) {
+    e.preventDefault();
+    return this._submitComment();
+  },
+  _initAutosize: function() {
+    this.$commentFormField = $(this.refs.commentFormField.getDOMNode());
+    return this.$commentFormField.autosize({
+      append: ''
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         if (input === null || (format === undefined && input === '')) {
             return moment.invalid({nullInput: true});
@@ -15515,6 +16947,7 @@ return jQuery;
             config._i = input = config._locale.preparse(input);
         }
 
+<<<<<<< HEAD
         if (moment.isMoment(input)) {
             return new Moment(input, true);
         } else if (format) {
@@ -15526,6 +16959,10 @@ return jQuery;
         } else {
             makeDateFromInput(config);
         }
+=======
+},{}],66:[function(require,module,exports){
+var cx;
+>>>>>>> Editor store and services [#89871770]
 
         res = new Moment(config);
         if (res._nextDay) {
@@ -15555,10 +16992,68 @@ return jQuery;
         c._isUTC = false;
         c._pf = defaultParsingFlags();
 
+<<<<<<< HEAD
         return makeMoment(c);
     };
 
     moment.suppressDeprecationWarnings = false;
+=======
+},{"react/lib/cx":568}],67:[function(require,module,exports){
+window.EntryCommentBox_CommentList = React.createClass({
+  propTypes: {
+    comments: React.PropTypes.array.isRequired,
+    entryId: React.PropTypes.number.isRequired,
+    entryUrl: React.PropTypes.string.isRequired,
+    sharedCommentId: React.PropTypes.number,
+    user: React.PropTypes.object,
+    onDelete: React.PropTypes.func
+  },
+  componentDidMount: function() {
+    if (this.props.sharedCommentId != null) {
+      if (!this._isSharedCommentExists()) {
+        return alert(i18n.t('shared_comment_doesnt_exist'));
+      }
+    }
+  },
+  render: function() {
+    var commentList, onDelete, that;
+    that = this;
+    onDelete = (function(_this) {
+      return function() {
+        return _this.props.onDelete.apply(_this, arguments);
+      };
+    })(this);
+    commentList = this.props.comments.map(function(comment) {
+      return React.createElement(EntryCommentBox_CommentManager, {
+        "comment": comment,
+        "commentId": comment.id,
+        "entryId": that.props.entryId,
+        "entryUrl": that.props.entryUrl,
+        "isShared": that.props.sharedCommentId === comment.id,
+        "onDelete": onDelete.bind(this, comment),
+        "key": comment.id
+      });
+    });
+    return React.createElement("div", {
+      "className": "comments__list"
+    }, commentList, " ");
+  },
+  _isSharedCommentExists: function() {
+    var result;
+    result = this.props.comments.filter((function(_this) {
+      return function(comment) {
+        return comment.id === _this.props.sharedCommentId;
+      };
+    })(this));
+    return result.length > 0;
+  }
+});
+
+
+
+},{}],68:[function(require,module,exports){
+var cx;
+>>>>>>> Editor store and services [#89871770]
 
     moment.createFromInputFallback = deprecate(
         'moment construction falls back to js Date. This is ' +
@@ -15595,8 +17090,49 @@ return jQuery;
     moment.min = function () {
         var args = [].slice.call(arguments, 0);
 
+<<<<<<< HEAD
         return pickBy('isBefore', args);
     };
+=======
+},{"react/lib/cx":568}],69:[function(require,module,exports){
+window.EntryCommentBox_CommentMetaBar = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired,
+    commentId: React.PropTypes.number.isRequired,
+    commentCreatedAt: React.PropTypes.string.isRequired,
+    canReport: React.PropTypes.bool,
+    canDelete: React.PropTypes.bool,
+    canEdit: React.PropTypes.bool,
+    entryId: React.PropTypes.number.isRequired,
+    entryUrl: React.PropTypes.string.isRequired,
+    onDelete: React.PropTypes.func
+  },
+  render: function() {
+    return React.createElement("span", {
+      "className": "comment__meta"
+    }, React.createElement(EntryCommentBox_CommentMetaBarReply, {
+      "name": this.props.name,
+      "entryId": this.props.entryId
+    }), React.createElement("span", {
+      "className": "comment__dot"
+    }, "\u00b7"), React.createElement(EntryCommentBox_CommentMetaBarDate, {
+      "entryUrl": this.props.entryUrl,
+      "commentId": this.props.commentId,
+      "time": this.props.commentCreatedAt
+    }), React.createElement("span", {
+      "className": "comment__dot"
+    }, "\u00b7"), React.createElement(EntryCommentBox_CommentMetaBarDropdownMenu, {
+      "commentId": this.props.commentId,
+      "entryId": this.props.entryId,
+      "entryUrl": this.props.entryUrl,
+      "canReport": this.props.canReport,
+      "canDelete": this.props.canDelete,
+      "canEdit": this.props.canEdit,
+      "onDelete": this.props.onDelete
+    }));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
     moment.max = function () {
         var args = [].slice.call(arguments, 0);
@@ -15604,9 +17140,47 @@ return jQuery;
         return pickBy('isAfter', args);
     };
 
+<<<<<<< HEAD
     // creating with utc
     moment.utc = function (input, format, locale, strict) {
         var c;
+=======
+},{}],70:[function(require,module,exports){
+window.EntryCommentBox_CommentMetaBarDate = React.createClass({
+  propTypes: {
+    time: React.PropTypes.string.isRequired,
+    commentId: React.PropTypes.number.isRequired,
+    entryUrl: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    var createdAt, date, now;
+    now = moment();
+    createdAt = moment(this.props.time);
+    if (now.diff(createdAt, 'seconds') < 5) {
+      date = createdAt.subtract(5, 's').fromNow();
+    } else if (now.diff(createdAt, 'minutes') < 180) {
+      date = createdAt.fromNow();
+    } else if (now.diff(createdAt, 'days') < 1) {
+      date = createdAt.calendar();
+    } else {
+      if (now.year() !== createdAt.year()) {
+        date = createdAt.format('D MMMM YYYY');
+      } else {
+        date = createdAt.format('D MMMM');
+      }
+    }
+    return React.createElement("a", {
+      "className": "comment__date-link",
+      "href": this._getCommentUrl()
+    }, React.createElement("span", {
+      "className": "comment__date"
+    }, date));
+  },
+  _getCommentUrl: function() {
+    return this.props.entryUrl + '#comment-' + this.props.commentId;
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         if (typeof(locale) === 'boolean') {
             strict = locale;
@@ -15627,10 +17201,15 @@ return jQuery;
         return makeMoment(c).utc();
     };
 
+<<<<<<< HEAD
     // creating with unix timestamp (in seconds)
     moment.unix = function (input) {
         return moment(input * 1000);
     };
+=======
+},{}],71:[function(require,module,exports){
+var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, cx;
+>>>>>>> Editor store and services [#89871770]
 
     // duration
     moment.duration = function (input, key) {
@@ -15708,8 +17287,57 @@ return jQuery;
     // default format
     moment.defaultFormat = isoFormat;
 
+<<<<<<< HEAD
     // constant that refers to the ISO standard
     moment.ISO_8601 = function () {};
+=======
+},{"react/lib/cx":568}],72:[function(require,module,exports){
+window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass({
+  mixins: [RequesterMixin],
+  propTypes: {
+    commentId: React.PropTypes.number.isRequired,
+    onDelete: React.PropTypes.func
+  },
+  render: function() {
+    return React.createElement("a", {
+      "onClick": this.onClick,
+      "title": i18n.t('delete_comment_item'),
+      "className": "comment__dropdown-item"
+    }, React.createElement("i", {
+      "className": "icon icon--basket"
+    }), i18n.t('delete_comment_item'));
+  },
+  onClick: function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    return TastyConfirmController.show({
+      message: i18n.t('delete_comment_confirm'),
+      acceptButtonText: i18n.t('delete_comment_button'),
+      onAccept: this.deleteComment
+    });
+  },
+  deleteComment: function() {
+    return this.createRequest({
+      url: ApiRoutes.comments_edit_delete_url(this.props.commentId),
+      method: 'POST',
+      data: {
+        _method: 'DELETE'
+      },
+      success: (function(_this) {
+        return function() {
+          TastyNotifyController.notifySuccess(i18n.t('delete_comment_success'));
+          if (_this.props.onDelete != null) {
+            return _this.props.onDelete();
+          }
+        };
+      })(this),
+      error: function(data) {
+        return TastyNotifyController.errorResponse(data);
+      }
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
     // Plugins that add properties should also add the key here (null value),
     // so we can properly clone ourselves.
@@ -15719,6 +17347,7 @@ return jQuery;
     // It is intended to keep the offset in sync with the timezone.
     moment.updateOffset = function () {};
 
+<<<<<<< HEAD
     // This function allows you to set a threshold for relative time strings
     moment.relativeTimeThreshold = function (threshold, limit) {
         if (relativeTimeThresholds[threshold] === undefined) {
@@ -15730,6 +17359,27 @@ return jQuery;
         relativeTimeThresholds[threshold] = limit;
         return true;
     };
+=======
+},{}],73:[function(require,module,exports){
+window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
+  propTypes: {
+    entryId: React.PropTypes.number.isRequired,
+    commentId: React.PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "onClick": this.onClick,
+      "title": i18n.t('edit_comment_item'),
+      "className": "comment__dropdown-item"
+    }, React.createElement("i", {
+      "className": "icon icon--pencil"
+    }), i18n.t('edit_comment_item'));
+  },
+  onClick: function() {
+    return window.commentsMediator.doEdit(this.props.entryId, this.props.commentId);
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
     moment.lang = deprecate(
         'moment.lang is deprecated. Use moment.locale instead.',
@@ -15751,10 +17401,31 @@ return jQuery;
                 data = moment.localeData(key);
             }
 
+<<<<<<< HEAD
             if (data) {
                 moment.duration._locale = moment._locale = data;
             }
         }
+=======
+},{}],74:[function(require,module,exports){
+window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
+  propTypes: {
+    commentId: React.PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "href": this._getCommentUrl(),
+      "title": i18n.t('link_comment_item'),
+      "className": "comment__dropdown-item"
+    }, React.createElement("i", {
+      "className": "icon icon--hyperlink"
+    }), i18n.t('link_comment_item'));
+  },
+  _getCommentUrl: function() {
+    return this.props.entryUrl + '#comment-' + this.props.commentId;
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         return moment._locale._abbr;
     };
@@ -15767,8 +17438,50 @@ return jQuery;
             }
             locales[name].set(values);
 
+<<<<<<< HEAD
             // backwards compat for now: also set the locale
             moment.locale(name);
+=======
+},{}],75:[function(require,module,exports){
+window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass({
+  mixins: [RequesterMixin],
+  propTypes: {
+    commentId: React.PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "onClick": this.onClick,
+      "title": i18n.t('report_comment_item'),
+      "className": "comment__dropdown-item"
+    }, React.createElement("i", {
+      "className": "icon icon--exclamation-mark"
+    }), i18n.t('report_comment_item'));
+  },
+  onClick: function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    return TastyConfirmController.show({
+      message: i18n.t('report_comment_confirm'),
+      acceptButtonText: i18n.t('report_comment_button'),
+      onAccept: this.createReport
+    });
+  },
+  createReport: function() {
+    return this.createRequest({
+      url: ApiRoutes.comments_report_url(this.props.commentId),
+      method: 'POST',
+      success: (function(_this) {
+        return function() {
+          return TastyNotifyController.notifySuccess(i18n.t('report_comment_success'));
+        };
+      })(this),
+      error: function(data) {
+        return TastyNotifyController.errorResponse(data);
+      }
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
             return locales[name];
         } else {
@@ -15785,9 +17498,28 @@ return jQuery;
         }
     );
 
+<<<<<<< HEAD
     // returns locale data
     moment.localeData = function (key) {
         var locale;
+=======
+},{}],76:[function(require,module,exports){
+window.EntryCommentBox_CommentMetaBarReply = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired,
+    entryId: React.PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("span", {
+      "className": "comment__reply",
+      "onClick": this.onClick
+    }, "\u041e\u0442\u0432\u0435\u0442\u0438\u0442\u044c");
+  },
+  onClick: function() {
+    return window.commentsMediator.doReplyClicked(this.props.entryId, this.props.name);
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         if (key && key._locale && key._locale._abbr) {
             key = key._locale._abbr;
@@ -15797,6 +17529,7 @@ return jQuery;
             return moment._locale;
         }
 
+<<<<<<< HEAD
         if (!isArray(key)) {
             //short-circuit everything else
             locale = loadLocale(key);
@@ -15805,6 +17538,10 @@ return jQuery;
             }
             key = [key];
         }
+=======
+},{}],77:[function(require,module,exports){
+var MORE_COMMENTS_LIMIT;
+>>>>>>> Editor store and services [#89871770]
 
         return chooseLocale(key);
     };
@@ -15837,8 +17574,43 @@ return jQuery;
             m._pf.userInvalidated = true;
         }
 
+<<<<<<< HEAD
         return m;
     };
+=======
+},{}],78:[function(require,module,exports){
+window.EntryCommentBox_LoadMore = React.createClass({
+  propTypes: {
+    totalCount: React.PropTypes.number.isRequired,
+    loadedCount: React.PropTypes.number.isRequired,
+    limit: React.PropTypes.number.isRequired,
+    onClick: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "onClick": this.props.onClick,
+      "className": "comments__more"
+    }, React.createElement("a", {
+      "title": this._getTitle(),
+      "className": "comments__more-link"
+    }, this._getTitle()));
+  },
+  _getTitle: function() {
+    var possibleCount, remainingCount;
+    remainingCount = this.props.totalCount - this.props.loadedCount;
+    possibleCount = this.props.loadedCount + this.props.limit;
+    if (possibleCount < this.props.totalCount) {
+      return i18n.t('load_more_comments', {
+        count: this.props.limit
+      });
+    } else {
+      return i18n.t('load_more_comments_remaining', {
+        count: remainingCount
+      });
+    }
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
     moment.parseZone = function () {
         return moment.apply(null, arguments).parseZone();
@@ -15848,9 +17620,14 @@ return jQuery;
         return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
     };
 
+<<<<<<< HEAD
     /************************************
         Moment Prototype
     ************************************/
+=======
+},{}],79:[function(require,module,exports){
+var CommentsMixin;
+>>>>>>> Editor store and services [#89871770]
 
 
     extend(moment.fn = Moment.prototype, {
@@ -15863,9 +17640,34 @@ return jQuery;
             return +this._d + ((this._offset || 0) * 60000);
         },
 
+<<<<<<< HEAD
         unix : function () {
             return Math.floor(+this / 1000);
         },
+=======
+},{}],80:[function(require,module,exports){
+window.EntryMetabarAuthor = React.createClass({
+  propTypes: {
+    user: React.PropTypes.object.isRequired
+  },
+  render: function() {
+    return React.createElement("span", {
+      "className": "meta-item meta-item--user state--visible"
+    }, React.createElement("span", {
+      "className": "meta-item__content"
+    }, React.createElement("a", {
+      "href": this.props.user.tlog_url,
+      "title": this.props.user.name,
+      "className": "meta-item__common meta-item__link"
+    }, React.createElement("span", {
+      "className": "meta-item__ava"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.user,
+      "size": 64.
+    })), ' ' + this.props.user.name)));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         toString : function () {
             return this.clone().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ');
@@ -15875,6 +17677,7 @@ return jQuery;
             return this._offset ? new Date(+this) : this._d;
         },
 
+<<<<<<< HEAD
         toISOString : function () {
             var m = moment(this).utc();
             if (0 < m.year() && m.year() <= 9999) {
@@ -15888,6 +17691,49 @@ return jQuery;
                 return formatMoment(m, 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
             }
         },
+=======
+},{}],81:[function(require,module,exports){
+window.EntryMetabarComment = React.createClass({
+  mixins: [ReactGrammarMixin],
+  propTypes: {
+    entryId: React.PropTypes.number.isRequired,
+    entryUrl: React.PropTypes.string.isRequired,
+    isLogged: React.PropTypes.bool.isRequired,
+    totalCommentsCount: React.PropTypes.number.isRequired
+  },
+  render: function() {
+    var commentText;
+    if (this.props.isLogged) {
+      commentText = React.createElement("a", {
+        "className": "meta-item__common meta__link",
+        "title": i18n.t('entry_meta_comment_link'),
+        "onClick": this.onClick
+      }, i18n.t('entry_meta_comment_link'));
+    } else {
+      commentText = React.createElement("a", {
+        "className": "meta-item__common meta__link",
+        "href": this.props.entryUrl,
+        "title": this._getNumberOfComments()
+      }, this._getNumberOfComments());
+    }
+    return React.createElement("span", {
+      "className": "meta-item meta-item_comments"
+    }, React.createElement("span", {
+      "className": "meta__content"
+    }, commentText));
+  },
+  onClick: function() {
+    return window.commentsMediator.doCommentClicked(this.props.entryId);
+  },
+  _getNumberOfComments: function() {
+    if (this.props.totalCommentsCount) {
+      return i18n.t('comments_count', {
+        count: this.props.totalCommentsCount
+      });
+    }
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         toArray : function () {
             var m = this;
@@ -15906,10 +17752,43 @@ return jQuery;
             return isValid(this);
         },
 
+<<<<<<< HEAD
         isDSTShifted : function () {
             if (this._a) {
                 return this.isValid() && compareArrays(this._a, (this._isUTC ? moment.utc(this._a) : moment(this._a)).toArray()) > 0;
             }
+=======
+},{}],82:[function(require,module,exports){
+window.EntryMetabarDate = React.createClass({
+  propTypes: {
+    time: React.PropTypes.string.isRequired,
+    entryUrl: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    var createdAt, date, now;
+    now = moment();
+    createdAt = moment(this.props.time);
+    if (now.diff(createdAt, 'days') < 1) {
+      date = createdAt.calendar();
+    } else {
+      if (now.year() !== createdAt.year()) {
+        date = createdAt.format('D MMMM YYYY');
+      } else {
+        date = createdAt.format('D MMMM');
+      }
+    }
+    return React.createElement("span", {
+      "className": "meta-item meta-item--date"
+    }, React.createElement("span", {
+      "className": "meta-item__content"
+    }, React.createElement("a", {
+      "href": this.props.entryUrl
+    }, React.createElement("span", {
+      "className": "meta-item__common"
+    }, date))));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
             return false;
         },
@@ -15918,9 +17797,14 @@ return jQuery;
             return extend({}, this._pf);
         },
 
+<<<<<<< HEAD
         invalidAt: function () {
             return this._pf.overflow;
         },
+=======
+},{}],83:[function(require,module,exports){
+var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_BETWEEN_TOGGLER_AND_MENU, MOUSE_LEAVE_TIMEOUT, cx;
+>>>>>>> Editor store and services [#89871770]
 
         utc : function (keepLocalTime) {
             return this.zone(0, keepLocalTime);
@@ -15954,6 +17838,7 @@ return jQuery;
 
             units = normalizeUnits(units);
 
+<<<<<<< HEAD
             if (units === 'year' || units === 'month') {
                 // average number of days in the months in the given dates
                 diff = (this.daysInMonth() + that.daysInMonth()) * 432e5; // 24 * 60 * 60 * 1000 / 2
@@ -15981,6 +17866,80 @@ return jQuery;
             }
             return asFloat ? output : absRound(output);
         },
+=======
+},{"react/lib/cx":568}],84:[function(require,module,exports){
+window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
+  mixins: [RequesterMixin, 'ReactActivitiesUser', DOMManipulationsMixin],
+  propTypes: {
+    entryId: React.PropTypes.number.isRequired,
+    successDeleteUrl: React.PropTypes.string,
+    onDelete: React.PropTypes.func
+  },
+  getInitialState: function() {
+    return {
+      isProcess: false
+    };
+  },
+  render: function() {
+    var icon;
+    if (this.state.isProcess) {
+      icon = React.createElement("span", {
+        "className": "spinner spinner--15x15"
+      }, React.createElement("span", {
+        "className": "spinner__icon"
+      }));
+    } else {
+      icon = React.createElement("i", {
+        "className": "icon icon--basket"
+      });
+    }
+    return React.createElement("a", {
+      "onClick": this.onClick,
+      "className": "meta-item__dropdown-item"
+    }, icon, i18n.t('delete_entry_item'));
+  },
+  onClick: function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    return TastyConfirmController.show({
+      message: i18n.t('delete_entry_confirm'),
+      acceptButtonText: i18n.t('delete_entry_button'),
+      onAccept: this.deleteEntry
+    });
+  },
+  deleteEntry: function() {
+    this.setState({
+      isProcess: true
+    });
+    this.incrementActivities();
+    return this.createRequest({
+      url: ApiRoutes.entry_url(this.props.entryId),
+      method: 'POST',
+      data: {
+        _method: 'DELETE'
+      },
+      success: (function(_this) {
+        return function() {
+          return _this.removeEntryFromDOM(_this.props.entryId);
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          _this.setState({
+            isProcess: false
+          });
+          return _this.decrementActivities();
+        };
+      })(this)
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         from : function (time, withoutSuffix) {
             return moment.duration({to: this, from: time}).locale(this.locale()).humanize(!withoutSuffix);
@@ -15990,6 +17949,7 @@ return jQuery;
             return this.from(moment(), withoutSuffix);
         },
 
+<<<<<<< HEAD
         calendar : function (time) {
             // We want to compare the start of today, vs this.
             // Getting start-of-today depends on whether we're zone'd or not.
@@ -16004,6 +17964,10 @@ return jQuery;
                     diff < 7 ? 'nextWeek' : 'sameElse';
             return this.format(this.localeData().calendar(format, this, moment(now)));
         },
+=======
+},{}],85:[function(require,module,exports){
+var cx;
+>>>>>>> Editor store and services [#89871770]
 
         isLeapYear : function () {
             return isLeapYear(this.year());
@@ -16026,6 +17990,7 @@ return jQuery;
 
         month : makeAccessor('Month', true),
 
+<<<<<<< HEAD
         startOf : function (units) {
             units = normalizeUnits(units);
             // the following switch intentionally omits break keywords
@@ -16053,6 +18018,24 @@ return jQuery;
                 this.milliseconds(0);
                 /* falls through */
             }
+=======
+},{"react/lib/cx":568}],86:[function(require,module,exports){
+window.EntryMetabarDropdownMenuItem = React.createClass({
+  propTypes: {
+    href: React.PropTypes.string.isRequired,
+    icon: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "href": this.props.href,
+      "className": "meta-item__dropdown-item"
+    }, React.createElement("i", {
+      "className": "icon " + this.props.icon
+    }), this.props.title);
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
             // weeks are a special case
             if (units === 'week') {
@@ -16066,8 +18049,49 @@ return jQuery;
                 this.month(Math.floor(this.month() / 3) * 3);
             }
 
+<<<<<<< HEAD
             return this;
         },
+=======
+},{}],87:[function(require,module,exports){
+window.EntryMetabarDropdownMenuReportItem = React.createClass({
+  mixins: [RequesterMixin],
+  propTypes: {
+    entryId: React.PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "onClick": this.onClick,
+      "className": "meta-item__dropdown-item"
+    }, React.createElement("i", {
+      "className": "icon icon--exclamation-mark"
+    }), i18n.t('report_entry_item'));
+  },
+  onClick: function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    return TastyConfirmController.show({
+      message: i18n.t('report_entry_confirm'),
+      acceptButtonText: i18n.t('report_entry_button'),
+      onAccept: this.createReport
+    });
+  },
+  createReport: function() {
+    return this.createRequest({
+      url: ApiRoutes.report_url(this.props.entryId),
+      method: 'POST',
+      success: (function(_this) {
+        return function() {
+          return TastyNotifyController.notifySuccess(i18n.t('report_entry_success'));
+        };
+      })(this),
+      error: function(data) {
+        return TastyNotifyController.errorResponse(data);
+      }
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         endOf: function (units) {
             units = normalizeUnits(units);
@@ -16089,6 +18113,7 @@ return jQuery;
             }
         },
 
+<<<<<<< HEAD
         isBefore: function (input, units) {
             var inputMs;
             units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
@@ -16100,6 +18125,103 @@ return jQuery;
                 return +this.clone().endOf(units) < inputMs;
             }
         },
+=======
+},{}],88:[function(require,module,exports){
+window.EntryMetabarDropdownMenuWatchItem = React.createClass({
+  mixins: [RequesterMixin, ComponentManipulationsMixin],
+  propTypes: {
+    entryId: React.PropTypes.number.isRequired,
+    isWatching: React.PropTypes.bool.isRequired
+  },
+  getInitialState: function() {
+    return {
+      isWatching: this.props.isWatching,
+      isHover: false
+    };
+  },
+  render: function() {
+    return React.createElement("a", {
+      "onClick": this.onClick,
+      "onMouseEnter": this.onMouseEnter,
+      "onMouseLeave": this.onMouseLeave,
+      "className": "meta-item__dropdown-item"
+    }, React.createElement("i", {
+      "className": "icon icon--comments-subscribe"
+    }), this.getTitle());
+  },
+  getTitle: function() {
+    if (this.state.isWatching) {
+      if (this.state.isHover) {
+        return i18n.t('stop_watch_entry_item');
+      } else {
+        return i18n.t('watching_entry_item');
+      }
+    } else {
+      return i18n.t('start_watch_entry_item');
+    }
+  },
+  onClick: function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    if (this.state.isWatching) {
+      return this.removeFromWatching();
+    } else {
+      return this.addToWatching();
+    }
+  },
+  addToWatching: function() {
+    return this.createRequest({
+      url: ApiRoutes.watching_url(),
+      method: 'POST',
+      data: {
+        entry_id: this.props.entryId
+      },
+      success: (function(_this) {
+        return function() {
+          _this.safeUpdateState({
+            isWatching: true
+          });
+          return console.info("Оформлена подписка на комментарии поста " + _this.props.entryId);
+        };
+      })(this),
+      error: function(data) {
+        return TastyNotifyController.errorResponse(data);
+      }
+    });
+  },
+  removeFromWatching: function() {
+    return this.createRequest({
+      url: ApiRoutes.watching_url(),
+      method: 'POST',
+      data: {
+        _method: 'DELETE',
+        entry_id: this.props.entryId
+      },
+      success: (function(_this) {
+        return function() {
+          _this.safeUpdateState({
+            isWatching: false
+          });
+          return console.info("Отменена подписка на комментарии поста " + _this.props.entryId);
+        };
+      })(this),
+      error: function(data) {
+        return TastyNotifyController.errorResponse(data);
+      }
+    });
+  },
+  onMouseEnter: function() {
+    return this.setState({
+      isHover: true
+    });
+  },
+  onMouseLeave: function() {
+    return this.setState({
+      isHover: false
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         isSame: function (input, units) {
             var inputMs;
@@ -16121,6 +18243,7 @@ return jQuery;
                  }
          ),
 
+<<<<<<< HEAD
         max: deprecate(
                 'moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548',
                 function (other) {
@@ -16128,6 +18251,75 @@ return jQuery;
                     return other > this ? this : other;
                 }
         ),
+=======
+},{}],89:[function(require,module,exports){
+window.EntryMetabar = React.createClass({
+  propTypes: {
+    entryId: React.PropTypes.number.isRequired,
+    author: React.PropTypes.object,
+    isFavorited: React.PropTypes.bool.isRequired,
+    isWatching: React.PropTypes.bool.isRequired,
+    shouldRemoveFavoriteNode: React.PropTypes.bool,
+    entryUrl: React.PropTypes.string.isRequired,
+    editUrl: React.PropTypes.string,
+    successDeleteUrl: React.PropTypes.string,
+    canEdit: React.PropTypes.bool,
+    canFavorite: React.PropTypes.bool,
+    canWatch: React.PropTypes.bool,
+    canReport: React.PropTypes.bool,
+    canDelete: React.PropTypes.bool,
+    tags: React.PropTypes.array.isRequired,
+    createdAt: React.PropTypes.string.isRequired,
+    entryCommentsUrl: React.PropTypes.string.isRequired,
+    totalCommentsCount: React.PropTypes.number.isRequired,
+    isLogged: React.PropTypes.bool.isRequired,
+    isEntryPage: React.PropTypes.bool.isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      tags: []
+    };
+  },
+  render: function() {
+    var entryAuthor, entryComment;
+    if (this.props.author) {
+      entryAuthor = React.createElement(EntryMetabarAuthor, {
+        "user": this.props.author
+      });
+    }
+    if (!(this.props.totalCommentsCount === 0 && this.props.isLogged === false || this.props.isEntryPage === true)) {
+      entryComment = React.createElement(EntryMetabarComment, {
+        "entryId": this.props.entryId,
+        "isLogged": this.props.isLogged,
+        "entryUrl": this.props.entryUrl,
+        "totalCommentsCount": this.props.totalCommentsCount
+      });
+    }
+    return React.createElement("span", {
+      "className": "meta-bar"
+    }, entryAuthor, entryComment, React.createElement(EntryMetabarDate, {
+      "time": this.props.createdAt,
+      "entryUrl": this.props.entryUrl
+    }), React.createElement(EntryMetabarTags, {
+      "tags": this.props.tags
+    }), React.createElement(EntryMetabarDropdownMenu, {
+      "entryId": this.props.entryId,
+      "isFavorited": this.props.isFavorited,
+      "isWatching": this.props.isWatching,
+      "shouldRemoveFavoriteNode": this.props.shouldRemoveFavoriteNode,
+      "entryUrl": this.props.entryUrl,
+      "editUrl": this.props.editUrl,
+      "successDeleteUrl": this.props.successDeleteUrl,
+      "canEdit": this.props.canEdit,
+      "canFavorite": this.props.canFavorite,
+      "canWatch": this.props.canWatch,
+      "canReport": this.props.canReport,
+      "canDelete": this.props.canDelete
+    }));
+  }
+});
+
+>>>>>>> Editor store and services [#89871770]
 
         // keepLocalTime = true means only change the timezone, without
         // affecting the local hour. So 5:31:26 +0300 --[zone(2, true)]-->
@@ -16173,9 +18365,26 @@ return jQuery;
             return this;
         },
 
+<<<<<<< HEAD
         zoneAbbr : function () {
             return this._isUTC ? 'UTC' : '';
         },
+=======
+},{}],90:[function(require,module,exports){
+window.EntryMetabarTag = React.createClass({
+  propTypes: {
+    tag: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "href": Routes.tag_path(this.props.tag),
+      "target": "_blank",
+      "title": '#' + this.props.tag,
+      "className": "meta-item__common meta-item__link"
+    }, '#' + this.props.tag);
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         zoneName : function () {
             return this._isUTC ? 'Coordinated Universal Time' : '';
@@ -16190,6 +18399,7 @@ return jQuery;
             return this;
         },
 
+<<<<<<< HEAD
         hasAlignedHourOffset : function (input) {
             if (!input) {
                 input = 0;
@@ -16197,6 +18407,45 @@ return jQuery;
             else {
                 input = moment(input).zone();
             }
+=======
+},{}],91:[function(require,module,exports){
+window.EntryMetabarTags = React.createClass({
+  propTypes: {
+    tags: React.PropTypes.array.isRequired
+  },
+  render: function() {
+    var tagList;
+    if (this.props.tags.length > 0) {
+      tagList = [];
+      this.props.tags.forEach((function(_this) {
+        return function(tag, i) {
+          if (i !== _this.props.tags.length - 1) {
+            return tagList.push(React.createElement(EntryMetabarTag, {
+              "tag": tag,
+              "key": i
+            }), React.createElement("span", {
+              "className": "meta-item__common",
+              "key": i + ' comma'
+            }, ", "));
+          } else {
+            return tagList.push(React.createElement(EntryMetabarTag, {
+              "tag": tag,
+              "key": i
+            }));
+          }
+        };
+      })(this));
+      return React.createElement("span", {
+        "className": "meta-item meta-item--tags"
+      }, React.createElement("span", {
+        "className": "meta-item__content"
+      }, tagList));
+    } else {
+      return React.createElement("span", null);
+    }
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
             return (this.zone() - input) % 60 === 0;
         },
@@ -16205,10 +18454,67 @@ return jQuery;
             return daysInMonth(this.year(), this.month());
         },
 
+<<<<<<< HEAD
         dayOfYear : function (input) {
             var dayOfYear = round((moment(this).startOf('day') - moment(this).startOf('year')) / 864e5) + 1;
             return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
         },
+=======
+},{}],92:[function(require,module,exports){
+window.FeedBricks = React.createClass({
+  mixins: [FeedBaseMixin],
+  propTypes: {
+    feedHtml: React.PropTypes.string,
+    isLoadingNew: React.PropTypes.bool,
+    isLoadingPrevious: React.PropTypes.bool
+  },
+  componentDidUpdate: function(prevProps) {
+    if (this.props.feedHtml !== prevProps.feedHtml) {
+      return this.initGridManager();
+    }
+  },
+  render: function() {
+    var spinnerAfter, spinnerBefore;
+    if (this.props.isLoadingPrevious) {
+      spinnerAfter = React.createElement("div", {
+        "className": "page-loader"
+      }, React.createElement(Spinner, {
+        "size": 24.
+      }));
+    }
+    if (this.props.isLoadingNew) {
+      spinnerBefore = React.createElement("div", {
+        "className": "page-loader"
+      }, React.createElement(Spinner, {
+        "size": 24.
+      }));
+    }
+    return React.createElement("div", {
+      "className": "bricks-wrapper"
+    }, spinnerBefore, React.createElement("section", {
+      "ref": "container",
+      "className": "bricks",
+      "dangerouslySetInnerHTML": {
+        __html: this.props.feedHtml
+      }
+    }), spinnerAfter);
+  },
+  initGridManager: function() {
+    var $container;
+    $container = $(this.refs.container.getDOMNode());
+    return $container.shapeshift({
+      selector: '.brick',
+      colWidth: 302,
+      enableDrag: false,
+      enableCrossDrop: false,
+      gutterX: 20,
+      gutterY: 20,
+      paddingX: 0,
+      paddingY: 0
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         quarter : function (input) {
             return input == null ? Math.ceil((this.month() + 1) / 3) : this.month((input - 1) * 3 + this.month() % 3);
@@ -16219,10 +18525,15 @@ return jQuery;
             return input == null ? year : this.add((input - year), 'y');
         },
 
+<<<<<<< HEAD
         isoWeekYear : function (input) {
             var year = weekOfYear(this, 1, 4).year;
             return input == null ? year : this.add((input - year), 'y');
         },
+=======
+},{}],93:[function(require,module,exports){
+var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
+>>>>>>> Editor store and services [#89871770]
 
         week : function (input) {
             var week = this.localeData().week(this);
@@ -16255,10 +18566,15 @@ return jQuery;
             return weeksInYear(this.year(), weekInfo.dow, weekInfo.doy);
         },
 
+<<<<<<< HEAD
         get : function (units) {
             units = normalizeUnits(units);
             return this[units]();
         },
+=======
+},{}],94:[function(require,module,exports){
+var THRESHOLD;
+>>>>>>> Editor store and services [#89871770]
 
         set : function (units, value) {
             units = normalizeUnits(units);
@@ -16296,9 +18612,51 @@ return jQuery;
             }
         ),
 
+<<<<<<< HEAD
         localeData : function () {
             return this._locale;
         },
+=======
+},{}],95:[function(require,module,exports){
+window.FeedTlog = React.createClass({
+  mixins: [FeedBaseMixin],
+  propTypes: {
+    feedHtml: React.PropTypes.string,
+    isLoadingNew: React.PropTypes.bool,
+    isLoadingPrevious: React.PropTypes.bool
+  },
+  render: function() {
+    var spinnerAfter, spinnerBefore;
+    if (this.props.isLoadingPrevious) {
+      spinnerAfter = React.createElement("div", {
+        "className": "page-loader"
+      }, React.createElement(Spinner, {
+        "size": 24.
+      }));
+    }
+    if (this.props.isLoadingNew) {
+      spinnerBefore = React.createElement("div", {
+        "className": "page-loader"
+      }, React.createElement(Spinner, {
+        "size": 24.
+      }));
+    }
+    return React.createElement("div", {
+      "className": "content-area"
+    }, React.createElement("div", {
+      "className": "content-area__bg"
+    }), React.createElement("div", {
+      "className": "content-area__inner"
+    }, spinnerBefore, React.createElement("section", {
+      "ref": "container",
+      "className": "posts",
+      "dangerouslySetInnerHTML": {
+        __html: this.props.feedHtml
+      }
+    }), spinnerAfter));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         _dateTzOffset : function () {
             // On Firefox.24 Date#getTimezoneOffset returns a floating point.
@@ -16310,6 +18668,7 @@ return jQuery;
     function rawMonthSetter(mom, value) {
         var dayOfMonth;
 
+<<<<<<< HEAD
         // TODO: Move this out of here!
         if (typeof value === 'string') {
             value = mom.localeData().monthsParse(value);
@@ -16318,6 +18677,10 @@ return jQuery;
                 return mom;
             }
         }
+=======
+},{}],96:[function(require,module,exports){
+var CLASS_PREFIX_STATE, STATE_ERROR, STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_PROCESS, STATE_REQUESTED;
+>>>>>>> Editor store and services [#89871770]
 
         dayOfMonth = Math.min(mom.date(),
                 daysInMonth(mom.year(), value));
@@ -16398,9 +18761,14 @@ return jQuery;
                 data = this._data,
                 seconds, minutes, hours, years = 0;
 
+<<<<<<< HEAD
             // The following code bubbles up values, see the tests for
             // examples of what that means.
             data.milliseconds = milliseconds % 1000;
+=======
+},{}],97:[function(require,module,exports){
+var HeroProfile_SettingsButton;
+>>>>>>> Editor store and services [#89871770]
 
             seconds = absRound(milliseconds / 1000);
             data.seconds = seconds % 60;
@@ -16413,9 +18781,14 @@ return jQuery;
 
             days += absRound(hours / 24);
 
+<<<<<<< HEAD
             // Accurately convert days to years, assume start from year 0.
             years = absRound(daysToYears(days));
             days -= absRound(yearsToDays(years));
+=======
+},{}],98:[function(require,module,exports){
+var DROPDOWN_CLOSED, DROPDOWN_OPENED, MOUSE_LEAVE_TIMEOUT, cx;
+>>>>>>> Editor store and services [#89871770]
 
             // 30 days to a month
             // TODO (iskren): Use anchor date (like 1st Jan) to compute this.
@@ -16450,12 +18823,48 @@ return jQuery;
             return absRound(this.days() / 7);
         },
 
+<<<<<<< HEAD
         valueOf : function () {
             return this._milliseconds +
               this._days * 864e5 +
               (this._months % 12) * 2592e6 +
               toInt(this._months / 12) * 31536e6;
         },
+=======
+},{"react/lib/cx":568}],99:[function(require,module,exports){
+window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
+  mixins: [RequesterMixin],
+  propTypes: {
+    userId: React.PropTypes.number.isRequired,
+    onRequestEnd: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "className": "action-dropdown-item",
+      "onClick": this.ignore
+    }, React.createElement("i", {
+      "className": "icon icon--not-allowed"
+    }), i18n.t('ignore_tlog_item'));
+  },
+  ignore: function() {
+    return this.createRequest({
+      url: ApiRoutes.change_my_relationship_url(this.props.userId, 'ignore'),
+      method: 'POST',
+      success: (function(_this) {
+        return function(relationship) {
+          TastyEvents.emit(TastyEvents.keys.follow_status_changed(_this.props.userId), relationship.state);
+          return _this.props.onRequestEnd();
+        };
+      })(this),
+      error: function(data) {
+        return TastyNotifyController.errorResponse(data);
+      }
+    }, {
+      progressBar: true
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         humanize : function (withSuffix) {
             var output = relativeTime(this, !withSuffix, this.localeData());
@@ -16464,8 +18873,42 @@ return jQuery;
                 output = this.localeData().pastFuture(+this, output);
             }
 
+<<<<<<< HEAD
             return this.localeData().postformat(output);
         },
+=======
+},{}],100:[function(require,module,exports){
+window.HeroProfile_DropdownMenuReportItem = React.createClass({
+  mixins: [RequesterMixin],
+  propTypes: {
+    userId: React.PropTypes.number.isRequired,
+    onRequestEnd: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "className": "action-dropdown-item",
+      "onClick": this.report
+    }, React.createElement("i", {
+      "className": "icon icon--exclamation-mark"
+    }), i18n.t('report_tlog_item'));
+  },
+  report: function() {
+    return this.createRequest({
+      url: ApiRoutes.tlog_report(this.props.userId),
+      method: 'POST',
+      success: function() {
+        TastyNotifyController.notifySuccess(i18n.t('report_user_success'));
+        return this.props.onRequestEnd();
+      },
+      error: function(data) {
+        return TastyNotifyController.errorResponse(data);
+      }
+    }, {
+      progressBar: true
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         add : function (input, val) {
             // supports only 2.0-style add(1, 's') or add(moment)
@@ -16475,7 +18918,112 @@ return jQuery;
             this._days += dur._days;
             this._months += dur._months;
 
+<<<<<<< HEAD
             this._bubble();
+=======
+},{}],101:[function(require,module,exports){
+window.HeroProfileStats_FollowersPopup = React.createClass({
+  mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
+  propTypes: {
+    tlogId: React.PropTypes.number.isRequired,
+    onClose: React.PropTypes.func
+  },
+  getInitialState: function() {
+    return {
+      relationships: null,
+      isError: false,
+      isLoading: false
+    };
+  },
+  componentDidMount: function() {
+    return this.loadFollowers();
+  },
+  render: function() {
+    var followerList, message, relationships, _ref;
+    if (((_ref = this.state.relationships) != null ? _ref.length : void 0) > 0) {
+      relationships = this.state.relationships.map((function(_this) {
+        return function(relationship, i) {
+          return React.createElement(HeroProfileStats_FollowerItem, {
+            "relationship": relationship,
+            "key": i
+          });
+        };
+      })(this));
+      followerList = React.createElement("section", {
+        "className": "users"
+      }, relationships);
+    } else {
+      if (this.state.isError) {
+        message = React.createElement("div", {
+          "className": "popup__text"
+        }, i18n.t('hero_stats_popup_error'));
+      } else if (this.state.isLoading) {
+        message = React.createElement("div", {
+          "className": "popup__text"
+        }, i18n.t('hero_stats_popup_loading'));
+      } else {
+        message = React.createElement("div", {
+          "className": "popup__text"
+        }, i18n.t('hero_stats_popup_empty'));
+      }
+      followerList = React.createElement("div", {
+        "className": "grid-full"
+      }, React.createElement("div", {
+        "className": "grid-full__middle"
+      }, message));
+    }
+    return React.createElement("div", {
+      "className": "scroller scroller--users",
+      "ref": "scroller"
+    }, React.createElement("div", {
+      "className": "scroller__pane js-scroller-pane"
+    }, followerList), React.createElement("div", {
+      "className": "scroller__track js-scroller-track"
+    }, React.createElement("div", {
+      "className": "scroller__bar js-scroller-bar"
+    })));
+  },
+  loadFollowers: function() {
+    this.safeUpdate((function(_this) {
+      return function() {
+        return _this.incrementActivities();
+      };
+    })(this));
+    this.setState({
+      isError: false,
+      isLoading: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.tlog_followers(this.props.tlogId),
+      success: (function(_this) {
+        return function(data) {
+          return _this.safeUpdateState({
+            relationships: data.relationships
+          });
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            isError: true
+          });
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          _this.safeUpdate(function() {
+            return _this.decrementActivities();
+          });
+          return _this.safeUpdateState({
+            isLoading: false
+          });
+        };
+      })(this)
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
             return this;
         },
@@ -16483,19 +19031,151 @@ return jQuery;
         subtract : function (input, val) {
             var dur = moment.duration(input, val);
 
+<<<<<<< HEAD
             this._milliseconds -= dur._milliseconds;
             this._days -= dur._days;
             this._months -= dur._months;
+=======
+},{}],102:[function(require,module,exports){
+window.HeroProfileStats_FollowingsPopup = React.createClass({
+  mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
+  propTypes: {
+    tlogId: React.PropTypes.number.isRequired,
+    onClose: React.PropTypes.func
+  },
+  getInitialState: function() {
+    return {
+      relationships: null,
+      isError: false,
+      isLoading: false
+    };
+  },
+  componentDidMount: function() {
+    return this.loadFollowings();
+  },
+  render: function() {
+    var followingList, message, relationships, _ref;
+    if (((_ref = this.state.relationships) != null ? _ref.length : void 0) > 0) {
+      relationships = this.state.relationships.map((function(_this) {
+        return function(relationship, i) {
+          return React.createElement(HeroProfileStats_FollowingItem, {
+            "relationship": relationship,
+            "key": i
+          });
+        };
+      })(this));
+      followingList = React.createElement("section", {
+        "className": "users"
+      }, relationships);
+    } else {
+      if (this.state.isError) {
+        message = React.createElement("div", {
+          "className": "popup__text"
+        }, i18n.t('hero_stats_popup_error'));
+      } else if (this.state.isLoading) {
+        message = React.createElement("div", {
+          "className": "popup__text"
+        }, i18n.t('hero_stats_popup_loading'));
+      } else {
+        message = React.createElement("div", {
+          "className": "popup__text"
+        }, i18n.t('hero_stats_popup_empty'));
+      }
+      followingList = React.createElement("div", {
+        "className": "grid-full"
+      }, React.createElement("div", {
+        "className": "grid-full__middle"
+      }, message));
+    }
+    return React.createElement("div", {
+      "className": "scroller scroller--users",
+      "ref": "scroller"
+    }, React.createElement("div", {
+      "className": "scroller__pane js-scroller-pane"
+    }, followingList), React.createElement("div", {
+      "className": "scroller__track js-scroller-track"
+    }, React.createElement("div", {
+      "className": "scroller__bar js-scroller-bar"
+    })));
+  },
+  loadFollowings: function() {
+    this.safeUpdate((function(_this) {
+      return function() {
+        return _this.incrementActivities();
+      };
+    })(this));
+    this.setState({
+      isError: false,
+      isLoading: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.tlog_followings(this.props.tlogId),
+      success: (function(_this) {
+        return function(data) {
+          return _this.safeUpdateState({
+            relationships: data.relationships
+          });
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            isError: true
+          });
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          _this.safeUpdate(function() {
+            return _this.decrementActivities();
+          });
+          return _this.safeUpdateState({
+            isLoading: false
+          });
+        };
+      })(this)
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
             this._bubble();
 
             return this;
         },
 
+<<<<<<< HEAD
         get : function (units) {
             units = normalizeUnits(units);
             return this[units.toLowerCase() + 's']();
         },
+=======
+},{}],103:[function(require,module,exports){
+window.HeroProfileStats_FollowerItem = React.createClass({
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired
+  },
+  render: function() {
+    return React.createElement("article", {
+      "className": "user__item"
+    }, React.createElement("a", {
+      "className": "user__link",
+      "href": this.props.relationship.reader.tlog_url,
+      "title": this.props.relationship.reader.name
+    }, React.createElement("span", {
+      "className": "user__avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.relationship.reader,
+      "size": 64.
+    })), React.createElement("span", {
+      "className": "user__desc"
+    }, React.createElement("span", {
+      "className": "user__name"
+    }, this.props.relationship.reader.name))));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         as : function (units) {
             var days, months;
@@ -16521,8 +19201,35 @@ return jQuery;
             }
         },
 
+<<<<<<< HEAD
         lang : moment.fn.lang,
         locale : moment.fn.locale,
+=======
+},{}],104:[function(require,module,exports){
+window.HeroProfileStats_FollowingItem = React.createClass({
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired
+  },
+  render: function() {
+    return React.createElement("article", {
+      "className": "user__item"
+    }, React.createElement("a", {
+      "className": "user__link",
+      "href": this.props.relationship.user.tlog_url,
+      "title": this.props.relationship.user.name
+    }, React.createElement("span", {
+      "className": "user__avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.relationship.user,
+      "size": 64.
+    })), React.createElement("span", {
+      "className": "user__desc"
+    }, React.createElement("span", {
+      "className": "user__name"
+    }, this.props.relationship.user.name))));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
         toIsoString : deprecate(
             'toIsoString() is deprecated. Please use toISOString() instead ' +
@@ -16541,11 +19248,33 @@ return jQuery;
                 minutes = Math.abs(this.minutes()),
                 seconds = Math.abs(this.seconds() + this.milliseconds() / 1000);
 
+<<<<<<< HEAD
             if (!this.asSeconds()) {
                 // this is the same as C#'s (Noda) and python (isodate)...
                 // but not other JS (goog.date)
                 return 'P0D';
             }
+=======
+},{}],105:[function(require,module,exports){
+window.HeroProfileStats_TagItem = React.createClass({
+  propTypes: {
+    tag: React.PropTypes.object.isRequired
+  },
+  render: function() {
+    return React.createElement("article", {
+      "className": "tag"
+    }, React.createElement("a", {
+      "href": Routes.tag_path(this.props.tag.name),
+      "title": '#' + this.props.tag.name,
+      "className": "tag__link"
+    }, React.createElement("span", {
+      "className": "tag__count"
+    }, this.props.tag.taggings_count), React.createElement("span", {
+      "className": "tag__text"
+    }, '#' + this.props.tag.name)));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
             return (this.asSeconds() < 0 ? '-' : '') +
                 'P' +
@@ -16563,7 +19292,12 @@ return jQuery;
         }
     });
 
+<<<<<<< HEAD
     moment.duration.fn.toString = moment.duration.fn.toISOString;
+=======
+},{}],106:[function(require,module,exports){
+var FADE_DURATION, MARGIN;
+>>>>>>> Editor store and services [#89871770]
 
     function makeDurationGetter(name) {
         moment.duration.fn[name] = function () {
@@ -16643,6 +19377,7 @@ return jQuery;
         }
     }
 
+<<<<<<< HEAD
     // CommonJS module is defined
     if (hasModule) {
         module.exports = moment;
@@ -16656,6 +19391,39 @@ return jQuery;
             return moment;
         });
         makeGlobal(true);
+=======
+},{}],107:[function(require,module,exports){
+window.HeroProfileStats_TagsPopup = React.createClass({
+  mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
+  propTypes: {
+    tlogId: React.PropTypes.number.isRequired,
+    onClose: React.PropTypes.func
+  },
+  getInitialState: function() {
+    return {
+      tags: null,
+      isError: false,
+      isLoading: false
+    };
+  },
+  componentDidMount: function() {
+    return this.loadTags();
+  },
+  render: function() {
+    var message, tagList, tags, _ref;
+    if (((_ref = this.state.tags) != null ? _ref.length : void 0) > 0) {
+      tags = this.state.tags.map((function(_this) {
+        return function(tag, i) {
+          return React.createElement(HeroProfileStats_TagItem, {
+            "tag": tag,
+            "key": i
+          });
+        };
+      })(this));
+      tagList = React.createElement("section", {
+        "className": "users"
+      }, tags);
+>>>>>>> Editor store and services [#89871770]
     } else {
         makeGlobal();
     }
@@ -16668,7 +19436,12 @@ require('./resources/libs');
 
 require('./resources/locales');
 
+<<<<<<< HEAD
 require('./resources/is_mobile');
+=======
+},{}],108:[function(require,module,exports){
+var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS, HeroProfile_SettingsButton;
+>>>>>>> Editor store and services [#89871770]
 
 require('./resources/fileReceiver');
 
@@ -16684,7 +19457,12 @@ require('./react/entities/normalized_entry');
 
 require('./react/services/positions');
 
+<<<<<<< HEAD
 require('./react/services/entry_store');
+=======
+},{"./buttons/settings":97}],109:[function(require,module,exports){
+var HERO_AVATAR_SIZE;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/services/entry_normalizer');
 
@@ -16694,7 +19472,50 @@ global.DesignStatesService = require('./react/services/designStates');
 
 global.DesignPresenterService = require('./react/services/designPresenter');
 
+<<<<<<< HEAD
 window.ThumborService = require('../shared/react/services/thumbor');
+=======
+},{}],110:[function(require,module,exports){
+window.HeroProfileHead = React.createClass({
+  propTypes: {
+    user: React.PropTypes.object.isRequired
+  },
+  getInitialState: function() {
+    return {
+      user: this.props.user
+    };
+  },
+  componentDidMount: function() {
+    TastyEvents.on(TastyEvents.keys.user_property_changed('title', this.state.user.id), this._updateTitle);
+    return TastyEvents.on(TastyEvents.keys.user_property_changed('slug', this.state.user.id), this._updateSlug);
+  },
+  componentWillUnmount: function() {
+    TastyEvents.off(TastyEvents.keys.user_property_changed('title', this.state.user.id), this._updateTitle);
+    return TastyEvents.off(TastyEvents.keys.user_property_changed('slug', this.state.user.id), this._updateSlug);
+  },
+  render: function() {
+    return React.createElement(HeroProfileHeadStatic, {
+      "user": this.state.user
+    });
+  },
+  _updateTitle: function(value) {
+    var newUser;
+    newUser = this.state.user;
+    newUser.title = value;
+    return this.setState({
+      user: newUser
+    });
+  },
+  _updateSlug: function(value) {
+    var newUser;
+    newUser = this.state.user;
+    newUser.slug = value;
+    return this.setState({
+      user: newUser
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/services/uuid');
 
@@ -16702,13 +19523,157 @@ require('./react/helpers/app');
 
 require('./react/mixins/unmount');
 
+<<<<<<< HEAD
 require('./react/mixins/dom_manipulations');
+=======
+},{}],111:[function(require,module,exports){
+window.HeroProfileStats = React.createClass({
+  mixins: [ReactGrammarMixin],
+  propTypes: {
+    stats: React.PropTypes.object.isRequired,
+    user: React.PropTypes.object.isRequired
+  },
+  componentDidMount: function() {
+    this.container = document.querySelectorAll('[popup-hero-stats-container]')[0];
+    if (!this.container) {
+      return this.container = $('<\div>', {
+        'popup-hero-stats-container': ''
+      }).appendTo('body').get(0);
+    }
+  },
+  render: function() {
+    var heroStats, onClick, url;
+    onClick = function(type, $el) {
+      switch (type) {
+        case 'followers':
+          return this.handleFollowersClick($el);
+        case 'followings':
+          return this.handleFollowingsClick($el);
+        case 'tags':
+          return this.handleTagsClick($el);
+        default:
+          return console.log("Неизвестный тип статистики профиля " + type);
+      }
+    };
+    heroStats = [];
+    if (this.props.stats.followers_count != null) {
+      heroStats.push(React.createElement(HeroProfileStatsItem, {
+        "count": this.props.stats.followers_count,
+        "title": i18n.t('stats_followers_count', {
+          count: this.props.stats.followers_count
+        }),
+        "onClick": onClick.bind(this, 'followers'),
+        "key": "followers"
+      }));
+    }
+    if (this.props.stats.followings_count != null) {
+      heroStats.push(React.createElement(HeroProfileStatsItem, {
+        "count": this.props.stats.followings_count,
+        "title": i18n.t('stats_followings_count', {
+          count: this.props.stats.followings_count
+        }),
+        "onClick": onClick.bind(this, 'followings'),
+        "key": "followings"
+      }));
+    }
+    if (this.props.stats.favorites_count != null) {
+      if (!this._isPrivate()) {
+        url = Routes.tlog_favorite_entries_path(this.props.user.slug);
+      }
+      heroStats.push(React.createElement(HeroProfileStatsItem, {
+        "href": url,
+        "count": this.props.stats.favorites_count,
+        "title": i18n.t('stats_favorites_count'),
+        "key": "favorites"
+      }));
+    }
+    if (this.props.stats.entries_count != null) {
+      if (!this._isPrivate()) {
+        url = this.props.user.tlog_url;
+      }
+      heroStats.push(React.createElement(HeroProfileStatsItem, {
+        "href": url,
+        "count": this.props.stats.entries_count,
+        "title": i18n.t('stats_entries_count', {
+          count: this.props.stats.entries_count
+        }),
+        "key": "entries"
+      }));
+    }
+    if (this.props.stats.comments_count != null) {
+      heroStats.push(React.createElement(HeroProfileStatsItem, {
+        "count": this.props.stats.comments_count,
+        "title": i18n.t('stats_comments_count', {
+          counts: this.props.stats.comments_count
+        }),
+        "key": "comments"
+      }));
+    }
+    if (this.props.stats.days_count != null) {
+      heroStats.push(React.createElement(HeroProfileStatsItem, {
+        "count": this.props.stats.days_count,
+        "title": i18n.t('stats_days_count', {
+          count: this.props.stats.days_count
+        }),
+        "key": "days"
+      }));
+    }
+    if (this.props.stats.tags_count != null) {
+      heroStats.push(React.createElement(HeroProfileStatsItem, {
+        "count": this.props.stats.tags_count,
+        "title": i18n.t('stats_tags_count', {
+          count: this.props.stats.tags_count
+        }),
+        "onClick": onClick.bind(this, 'tags'),
+        "key": "tags"
+      }));
+    }
+    return React.createElement("div", {
+      "className": "hero__stats"
+    }, React.createElement("div", {
+      "className": "hero__stats-list"
+    }, heroStats));
+  },
+  handleFollowersClick: function($el) {
+    return React.render(React.createElement(HeroProfileStats_Popup, {
+      "title": i18n.t('followers'),
+      "toggle": $el
+    }, React.createElement(HeroProfileStats_FollowersPopup, {
+      "tlogId": this.props.user.id
+    })), this.container);
+  },
+  handleFollowingsClick: function($el) {
+    return React.render(React.createElement(HeroProfileStats_Popup, {
+      "title": i18n.t('followings'),
+      "toggle": $el
+    }, React.createElement(HeroProfileStats_FollowingsPopup, {
+      "tlogId": this.props.user.id
+    })), this.container);
+  },
+  handleTagsClick: function($el) {
+    return React.render(React.createElement(HeroProfileStats_Popup, {
+      "title": i18n.t('tags'),
+      "toggle": $el
+    }, React.createElement(HeroProfileStats_TagsPopup, {
+      "tlogId": this.props.user.id
+    })), this.container);
+  },
+  _isPrivate: function() {
+    return this.props.user.is_privacy;
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/mixins/component_manipulations');
 
 require('./react/mixins/positions');
 
+<<<<<<< HEAD
 require('./react/mixins/shake');
+=======
+},{}],112:[function(require,module,exports){
+var cx;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/mixins/grammar');
 
@@ -16718,7 +19683,12 @@ require('./react/mixins/activities');
 
 require('./react/mixins/requester');
 
+<<<<<<< HEAD
 require('./react/mixins/scroller');
+=======
+},{"react/lib/cx":568}],113:[function(require,module,exports){
+var FIRST_ROW_RATIO, NEXT_ROWS_RATIO, update;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/mixins/touch');
 
@@ -16736,7 +19706,12 @@ require('./react/messaging/dispatchers/messaging');
 
 global.MessagingStatusStore = require('./react/messaging/stores/messaging_status');
 
+<<<<<<< HEAD
 require('./react/messaging/stores/connection_state');
+=======
+},{"react/lib/update":609}],114:[function(require,module,exports){
+var FADE_DURATION;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/messaging/stores/messages_popup_state');
 
@@ -16746,7 +19721,12 @@ require('./react/messaging/stores/messages');
 
 require('./react/messaging/stores/notifications');
 
+<<<<<<< HEAD
 require('./react/messaging/messaging_service');
+=======
+},{}],115:[function(require,module,exports){
+var FADE_DURATION;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/messaging/messaging_requester');
 
@@ -16756,7 +19736,12 @@ require('./react/messaging/actions/popup');
 
 require('./react/messaging/actions/conversation');
 
+<<<<<<< HEAD
 require('./react/messaging/actions/message');
+=======
+},{}],116:[function(require,module,exports){
+var FADE_DURATION, START_TIMEOUT;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/messaging/actions/notification');
 
@@ -16768,7 +19753,12 @@ require('./react/messaging/components/toolbars/indicators/messages');
 
 require('./react/messaging/components/toolbars/indicators/notifications');
 
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/ui/back_button');
+=======
+},{}],117:[function(require,module,exports){
+var DEFAULT_TIMEOUT, DEFAULT_TYPE;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/messaging/components/messages_popup/ui/create_new_conversation_button');
 
@@ -16780,55 +19770,356 @@ require('./react/messaging/components/messages_popup/conversations/conversations
 
 require('./react/messaging/components/messages_popup/conversations/list/list');
 
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/conversations/list/list_item');
+=======
+},{}],118:[function(require,module,exports){
+window.PeopleItem = React.createClass({
+  propTypes: {
+    title: React.PropTypes.string,
+    user: React.PropTypes.object.isRequired,
+    relationship: React.PropTypes.object
+  },
+  getInitialState: function() {
+    var _ref;
+    return {
+      title: (_ref = this.props.title) != null ? _ref : this.props.user.title
+    };
+  },
+  render: function() {
+    var followStatus;
+    if ((this.props.relationship != null) && this.props.relationship.state !== 'none') {
+      followStatus = React.createElement(FollowStatus, {
+        "status": this.props.relationship.state
+      });
+    }
+    return React.createElement("article", {
+      "className": "people-item"
+    }, React.createElement("div", {
+      "className": "people-item__inner"
+    }, React.createElement("a", {
+      "className": "people-item__link",
+      "href": this.props.user.tlog_url
+    }, React.createElement("div", {
+      "className": "people-item__avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.user
+    }), followStatus), React.createElement("h3", {
+      "className": "people-item__name"
+    }, this.props.user.slug), React.createElement("p", {
+      "dangerouslySetInnerHTML": {
+        __html: this.state.title
+      },
+      "className": "people-item__desc"
+    }))));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/messaging/components/messages_popup/conversations/list/empty');
 
 require('./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation');
 
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser');
+=======
+},{}],119:[function(require,module,exports){
+window.PersonsPopup_FollowerRelationship = React.createClass({
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired
+  },
+  shouldComponentUpdate: function(nextProps) {
+    if (this.props.relationship.state !== nextProps.relationship.state) {
+      true;
+    }
+    return false;
+  },
+  render: function() {
+    return React.createElement(PersonsPopup_PersonItem, {
+      "user": this.props.relationship.reader
+    }, React.createElement(RelationshipFollowerButton, {
+      "relationship": this.props.relationship
+    }));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button');
 
 require('./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown');
 
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results');
+=======
+},{}],120:[function(require,module,exports){
+window.PersonsPopup_FollowingRelationship = React.createClass({
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired
+  },
+  shouldComponentUpdate: function(nextProps) {
+    if (this.props.relationship.state !== nextProps.relationship.state) {
+      true;
+    }
+    return false;
+  },
+  render: function() {
+    return React.createElement(PersonsPopup_PersonItem, {
+      "user": this.props.relationship.user
+    }, React.createElement(FollowButton, {
+      "relationship": this.props.relationship
+    }));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item');
 
 require('./react/messaging/components/messages_popup/thread/thread');
 
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/thread/message_form/message_form');
+=======
+},{}],121:[function(require,module,exports){
+window.PersonsPopup_GuessRelationship = React.createClass({
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired
+  },
+  shouldComponentUpdate: function(nextProps) {
+    if (this.props.relationship.state !== nextProps.relationship.state) {
+      true;
+    }
+    return false;
+  },
+  render: function() {
+    return React.createElement(PersonsPopup_PersonItem, {
+      "user": this.props.relationship.user
+    }, React.createElement(RelationshipGuessButton, {
+      "relationship": this.props.relationship,
+      "onRequestEnd": this.props.onRequestEnd,
+      "key": this.props.key
+    }));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/messaging/components/messages_popup/thread/message_list/message_list');
 
 require('./react/messaging/components/messages_popup/thread/message_list/message_list_item');
 
+<<<<<<< HEAD
 require('./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager');
+=======
+},{}],122:[function(require,module,exports){
+window.PersonsPopup_IgnoredRelationship = React.createClass({
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired
+  },
+  shouldComponentUpdate: function(nextProps) {
+    if (this.props.relationship.state !== nextProps.relationship.state) {
+      true;
+    }
+    return false;
+  },
+  render: function() {
+    return React.createElement(PersonsPopup_PersonItem, {
+      "user": this.props.relationship.user
+    }, React.createElement(RelationshipIgnoreButton, {
+      "relationship": this.props.relationship
+    }));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/messaging/components/messages_popup/thread/message_list/empty');
 
 require('./react/messaging/components/notifications_popup/notifications_popup');
 
+<<<<<<< HEAD
 require('./react/messaging/components/notifications_popup/notifications/notifications');
+=======
+},{}],123:[function(require,module,exports){
+window.PersonsPopup_PersonItem = React.createClass({
+  propTypes: {
+    user: React.PropTypes.object.isRequired,
+    children: React.PropTypes.component.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "person"
+    }, React.createElement("div", {
+      "className": "person__in"
+    }, React.createElement("div", {
+      "className": "person__avatar"
+    }, React.createElement("a", {
+      "href": this.props.user.tlog_url
+    }, React.createElement(UserAvatar, {
+      "user": this.props.user,
+      "size": 48.
+    }))), React.createElement("div", {
+      "className": "person__desc"
+    }, React.createElement("a", {
+      "href": this.props.user.tlog_url
+    }, React.createElement("p", {
+      "className": "person__name"
+    }, this.props.user.name)), React.createElement("div", {
+      "className": "person__count"
+    }, this.renderEntriesCount())), React.createElement("div", {
+      "className": "person__actions"
+    }, this.props.children)));
+  },
+  renderEntriesCount: function() {
+    var count;
+    count = this.props.user.public_entries_count;
+    return React.createElement("span", null, count, " ", i18n.t('entries_count', {
+      count: this.props.user.public_entries_count
+    }));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/messaging/components/notifications_popup/notifications/notification');
 
 require('./react/messaging/components/notifications_popup/notifications/empty');
 
+<<<<<<< HEAD
 require('./react/components/common/adaptive_input');
+=======
+},{}],124:[function(require,module,exports){
+window.PersonsPopup_RequestedRelationship = React.createClass({
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired
+  },
+  shouldComponentUpdate: function(nextProps) {
+    if (this.props.relationship.state !== nextProps.relationship.state) {
+      true;
+    }
+    return false;
+  },
+  render: function() {
+    return React.createElement(PersonsPopup_PersonItem, {
+      "user": this.props.relationship.reader
+    }, React.createElement(RelationshipRequestButton, {
+      "relationship": this.props.relationship,
+      "key": this.props.key
+    }));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/embed');
 
 require('./react/components/tlog_alert');
 
+<<<<<<< HEAD
 require('./react/components/avatars/avatar');
+=======
+},{}],125:[function(require,module,exports){
+window.PersonsPopup_Menu = React.createClass({
+  displayName: 'PersonsPopup_Menu',
+  mixins: [RequesterMixin],
+  propTypes: {
+    user: React.PropTypes.object.isRequired,
+    currentTab: React.PropTypes.string.isRequired,
+    onSelect: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentWillMount: function() {
+    if (!this.isSummaryLoaded()) {
+      return this.loadSummary();
+    }
+  },
+  componentDidMount: function() {
+    return RelationshipsStore.addSummaryChangeListener(this.onStoreChange);
+  },
+  componentWillUnmount: function() {
+    return RelationshipsStore.removeSummaryChangeListener(this.onStoreChange);
+  },
+  render: function() {
+    var requestedMenuItem;
+    if (this.isProfilePrivate()) {
+      requestedMenuItem = React.createElement(PersonsPopup_MenuItem, {
+        "isActive": this.props.currentTab === 'requested',
+        "totalCount": this.state.requestedTotalCount,
+        "title": i18n.t('persons_popup_menu_requested'),
+        "onClick": this.props.onSelect.bind(null, 'requested')
+      });
+    }
+    return React.createElement("nav", {
+      "className": "tabs-nav tabs-nav--white"
+    }, React.createElement("ul", {
+      "className": "tabs-nav__list"
+    }, React.createElement(PersonsPopup_MenuItem, {
+      "isActive": this.props.currentTab === 'followings',
+      "totalCount": this.state.followingsTotalCount,
+      "title": i18n.t('persons_popup_menu_followings'),
+      "onClick": this.props.onSelect.bind(null, 'followings')
+    }), React.createElement(PersonsPopup_MenuItem, {
+      "isActive": this.props.currentTab === 'followers',
+      "totalCount": this.state.followersTotalCount,
+      "title": i18n.t('persons_popup_menu_followers'),
+      "onClick": this.props.onSelect.bind(null, 'followers')
+    }), requestedMenuItem, React.createElement(PersonsPopup_MenuItem, {
+      "isActive": this.props.currentTab === 'ignored',
+      "totalCount": this.state.ignoredTotalCount,
+      "title": i18n.t('persons_popup_menu_ignored'),
+      "onClick": this.props.onSelect.bind(null, 'ignored')
+    }), React.createElement(PersonsPopup_MenuItem, {
+      "isActive": this.props.currentTab === 'vkontakte',
+      "title": i18n.t('persons_popup_menu_vkontakte'),
+      "onClick": this.props.onSelect.bind(null, 'vkontakte')
+    }), React.createElement(PersonsPopup_MenuItem, {
+      "isActive": this.props.currentTab === 'facebook',
+      "title": i18n.t('persons_popup_menu_facebook'),
+      "onClick": this.props.onSelect.bind(null, 'facebook')
+    })));
+  },
+  isProfilePrivate: function() {
+    return this.props.user.is_privacy === true;
+  },
+  isSummaryLoaded: function() {
+    return RelationshipsStore.isSummaryLoaded();
+  },
+  loadSummary: function() {
+    return this.createRequest({
+      url: ApiRoutes.relationships_summary_url(),
+      success: function(summary) {
+        return RelationshipsDispatcher.handleServerAction({
+          type: 'summaryLoaded',
+          summary: summary
+        });
+      },
+      error: function(data) {
+        return TastyNotifyController.errorResponse(data);
+      }
+    });
+  },
+  getStateFromStore: function() {
+    return {
+      followersTotalCount: RelationshipsStore.getFollowersTotalCount(),
+      followingsTotalCount: RelationshipsStore.getFollowingsTotalCount(),
+      guessedTotalCount: RelationshipsStore.getGuessedTotalCount(),
+      ignoredTotalCount: RelationshipsStore.getIgnoredTotalCount(),
+      requestedTotalCount: RelationshipsStore.getRequestedTotalCount()
+    };
+  },
+  onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/avatars/user_avatar');
 
 require('./react/components/auth/auth');
 
+<<<<<<< HEAD
 require('./react/components/auth/authorization/authorization');
+=======
+},{}],126:[function(require,module,exports){
+var cx;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/auth/authorization/vk');
 
@@ -16838,7 +20129,12 @@ require('./react/components/auth/buttons/vk_auth_button');
 
 require('./react/components/auth/buttons/facebook_auth_button');
 
+<<<<<<< HEAD
 require('./react/components/auth/email/email');
+=======
+},{"react/lib/cx":568}],127:[function(require,module,exports){
+var ERROR_STATE, LOADED_STATE, LOADING_STATE, cx;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/auth/recovery');
 
@@ -16856,37 +20152,142 @@ require('./react/components/voting');
 
 require('./react/components/shellbox_layer');
 
+<<<<<<< HEAD
 require('./react/components/buttons/load_more');
+=======
+},{"react/lib/cx":568}],128:[function(require,module,exports){
+window.PersonsPopup_FollowersPanel = React.createClass({
+  mixins: ['PersonsPopup_PanelMixin'],
+  relationshipType: 'followers',
+  itemClass: function() {
+    return PersonsPopup_FollowerRelationship;
+  },
+  relationUrl: function() {
+    return ApiRoutes.relationships_by_url('friend');
+  },
+  getStateFromStore: function() {
+    return {
+      relationships: RelationshipsStore.getFollowers(),
+      totalCount: RelationshipsStore.getFollowersTotalCount()
+    };
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/relationship_buttons/mixins/relationship');
 
 require('./react/components/relationship_buttons/follow_button');
 
+<<<<<<< HEAD
 require('./react/components/relationship_buttons/follower_button');
+=======
+},{}],129:[function(require,module,exports){
+window.PersonsPopup_FollowingsPanel = React.createClass({
+  mixins: ['PersonsPopup_PanelMixin'],
+  relationshipType: 'followings',
+  itemClass: function() {
+    return PersonsPopup_FollowingRelationship;
+  },
+  relationUrl: function() {
+    return ApiRoutes.relationships_to_url('friend');
+  },
+  getStateFromStore: function() {
+    return {
+      relationships: RelationshipsStore.getFollowings(),
+      totalCount: RelationshipsStore.getFollowingsTotalCount()
+    };
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/relationship_buttons/ignore_button');
 
 require('./react/components/relationship_buttons/request_button');
 
+<<<<<<< HEAD
 require('./react/components/relationship_buttons/guess_button');
+=======
+},{}],130:[function(require,module,exports){
+window.PersonsPopup_GuessedPanel = React.createClass({
+  mixins: ['PersonsPopup_PanelMixin'],
+  relationshipType: 'guessed',
+  itemClass: function() {
+    return PersonsPopup_GuessRelationship;
+  },
+  relationUrl: function() {
+    return ApiRoutes.relationships_to_url('guessed');
+  },
+  getStateFromStore: function() {
+    return {
+      relationships: RelationshipsStore.getGuessed(),
+      totalCount: RelationshipsStore.getGuessedTotalCount()
+    };
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/follow_status');
 
 require('./react/components/smart_follow_status');
 
+<<<<<<< HEAD
 require('./react/components/editable_field');
+=======
+},{}],131:[function(require,module,exports){
+window.PersonsPopup_IgnoredPanel = React.createClass({
+  mixins: ['PersonsPopup_PanelMixin'],
+  relationshipType: 'ignored',
+  itemClass: function() {
+    return PersonsPopup_IgnoredRelationship;
+  },
+  relationUrl: function() {
+    return ApiRoutes.relationships_to_url('ignored');
+  },
+  getStateFromStore: function() {
+    return {
+      relationships: RelationshipsStore.getIgnored(),
+      totalCount: RelationshipsStore.getIgnoredTotalCount()
+    };
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/popup_box');
 
 require('./react/components/popup/popup');
 
+<<<<<<< HEAD
 require('./react/components/popup/layout');
+=======
+},{}],132:[function(require,module,exports){
+window.PersonsPopup_RequestedPanel = React.createClass({
+  mixins: ['PersonsPopup_PanelMixin'],
+  relationshipType: 'requested',
+  itemClass: function() {
+    return PersonsPopup_RequestedRelationship;
+  },
+  relationUrl: function() {
+    return ApiRoutes.relationships_by_url('requested');
+  },
+  getStateFromStore: function() {
+    return {
+      relationships: RelationshipsStore.getRequested(),
+      totalCount: RelationshipsStore.getRequestedTotalCount()
+    };
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/popup/spinner');
 
 require('./react/components/popup/header');
 
+<<<<<<< HEAD
 require('./react/components/calendar/calendar');
+=======
+},{}],133:[function(require,module,exports){
+var FacebookSignIn, FacebookSuggestions, SocialNetworkPanelMixin;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/calendar/calendar_timeline');
 
@@ -16900,7 +20301,12 @@ require('./react/components/feed/mixins/base');
 
 require('./react/components/feed/feed');
 
+<<<<<<< HEAD
 require('./react/components/feed/tlog');
+=======
+},{"./facebook/signIn":134,"./facebook/suggestions":135,"./mixins/socialNetwork":140}],134:[function(require,module,exports){
+var VkontakteSignIn;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/feed/bricks');
 
@@ -16910,7 +20316,12 @@ require('./react/components/search/search');
 
 require('./react/components/search/button');
 
+<<<<<<< HEAD
 require('./react/components/search/field');
+=======
+},{}],135:[function(require,module,exports){
+var FacebookSuggestions, FacebookSuggestionsEmpty, FacebookSuggestionsList, PropTypes, SuggestionsMixin;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/design_settings_popup/design_settings_popup');
 
@@ -16928,7 +20339,12 @@ require('./react/components/design_settings_popup/controls_items/font_type_item'
 
 require('./react/components/design_settings_popup/controls_items/opacity_item');
 
+<<<<<<< HEAD
 require('./react/components/design_settings_popup/controls_items/_radiobutton');
+=======
+},{"../mixins/suggestions":142,"./suggestions/empty":137,"./suggestions/list":138}],136:[function(require,module,exports){
+var FacebookSubscribeAllButton;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/design_settings_popup/controls_items/_progressbar');
 
@@ -16938,7 +20354,12 @@ global.ColorPicker_Popup = require('./react/components/design_settings_popup/col
 
 require('./react/components/persons_popup/mixins/panel_mixin');
 
+<<<<<<< HEAD
 require('./react/components/persons_popup/persons_popup');
+=======
+},{}],137:[function(require,module,exports){
+var FacebookSuggestionsEmpty, PropTypes;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/persons_popup/menu');
 
@@ -16950,7 +20371,12 @@ require('./react/components/persons_popup/items/following_relationship');
 
 require('./react/components/persons_popup/items/follower_relationship');
 
+<<<<<<< HEAD
 require('./react/components/persons_popup/items/requested_relationship');
+=======
+},{}],138:[function(require,module,exports){
+var FacebookSubscribeAllButton, FacebookSuggestionsItem, FacebookSuggestionsList, SuggestionListMixin;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/persons_popup/items/guess_relationship');
 
@@ -16966,7 +20392,12 @@ require('./react/components/persons_popup/panels/requested_panel');
 
 require('./react/components/persons_popup/panels/ignored_panel');
 
+<<<<<<< HEAD
 require('./react/components/persons_popup/panels/socialNetwork/vkontakte');
+=======
+},{"../../mixins/suggestionList":141,"./buttons/subscribeAll":136,"./listItem":139}],139:[function(require,module,exports){
+var FacebookSuggestionsItem, PropTypes;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/persons_popup/panels/socialNetwork/facebook');
 
@@ -16978,7 +20409,12 @@ require('./react/components/post_editor/mixins/persistence');
 
 require('./react/components/post_editor/mixins/images_form');
 
+<<<<<<< HEAD
 require('./react/components/post_editor/mixins/layout');
+=======
+},{}],140:[function(require,module,exports){
+var ConnectStoreMixin, ERROR_STATE, LOADED_STATE, LOADING_STATE, SocialNetworkPanelMixin;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/post_editor/mixins/video');
 
@@ -16996,7 +20432,12 @@ require('./react/components/post_editor/video_mediabox/loading');
 
 require('./react/components/post_editor/video_mediabox/url_insert');
 
+<<<<<<< HEAD
 require('./react/components/post_editor/video_mediabox/embeded');
+=======
+},{"../../../../../../../shared/react/mixins/connectStore":299}],141:[function(require,module,exports){
+var PropTypes, SuggestionListMixin;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/post_editor/images_mediabox/loaded');
 
@@ -17008,7 +20449,12 @@ require('./react/components/post_editor/mediabox/layout');
 
 require('./react/components/post_editor/mediabox/loading_progress');
 
+<<<<<<< HEAD
 require('./react/components/entry_metabar/entry_metabar');
+=======
+},{}],142:[function(require,module,exports){
+var PropTypes, SuggestionsMixin;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/entry_metabar/author');
 
@@ -17020,7 +20466,12 @@ require('./react/components/entry_metabar/tags');
 
 require('./react/components/entry_metabar/tag');
 
+<<<<<<< HEAD
 require('./react/components/entry_metabar/dropdown_menu');
+=======
+},{}],143:[function(require,module,exports){
+var SocialNetworkPanelMixin, VkontakteSignIn, VkontakteSuggestions;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/entry_metabar/dropdown_menu_items/item');
 
@@ -17034,7 +20485,12 @@ require('./react/components/entry_metabar/dropdown_menu_items/delete_item');
 
 require('./react/components/entry_comment_box/mixins/comments');
 
+<<<<<<< HEAD
 require('./react/components/entry_comment_box/entry_comment_box');
+=======
+},{"./mixins/socialNetwork":140,"./vkontakte/signIn":144,"./vkontakte/suggestions":145}],144:[function(require,module,exports){
+var VkontakteSignIn;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/entry_comment_box/comment_list/comment_list');
 
@@ -17044,7 +20500,12 @@ require('./react/components/entry_comment_box/comment_list/comment');
 
 require('./react/components/entry_comment_box/comment_metabar/comment_metabar');
 
+<<<<<<< HEAD
 require('./react/components/entry_comment_box/comment_metabar/date');
+=======
+},{}],145:[function(require,module,exports){
+var PropTypes, SuggestionsMixin, VkontakteSuggestions, VkontakteSuggestionsEmpty, VkontakteSuggestionsList;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/entry_comment_box/comment_metabar/dropdown_menu');
 
@@ -17062,7 +20523,12 @@ require('./react/components/entry_comment_box/comment_form/comment_form');
 
 require('./react/components/entry_comment_box/comment_form/comment_create_form_manager');
 
+<<<<<<< HEAD
 require('./react/components/entry_comment_box/comment_form/comment_edit_form_manager');
+=======
+},{"../mixins/suggestions":142,"./suggestions/empty":147,"./suggestions/list":148}],146:[function(require,module,exports){
+var VkontakteSubscribeAllButton;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/entry_comment_box/comment_form/buttons/submit');
 
@@ -17072,7 +20538,12 @@ require('./react/components/post_editor/actions/actions');
 
 require('./react/components/post_editor/actions/buttons/vote');
 
+<<<<<<< HEAD
 require('./react/components/post_editor/actions/buttons/privacy');
+=======
+},{}],147:[function(require,module,exports){
+var PropTypes, VkontakteSuggestionsEmpty;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/post_editor/editors/mixins/autosave');
 
@@ -17084,7 +20555,12 @@ require('./react/components/post_editor/editors/text');
 
 require('./react/components/post_editor/editors/image');
 
+<<<<<<< HEAD
 require('./react/components/post_editor/editors/instagram');
+=======
+},{}],148:[function(require,module,exports){
+var SuggestionListMixin, VkontakteSubscribeAllButton, VkontakteSuggestionsItem, VkontakteSuggestionsList;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/post_editor/editors/music');
 
@@ -17100,7 +20576,12 @@ require('./react/components/post_editor/new_post');
 
 require('./react/components/post_editor/new_anonymous_post');
 
+<<<<<<< HEAD
 require('./react/components/post_editor/edit_post');
+=======
+},{"../../mixins/suggestionList":141,"./buttons/subscribeAll":146,"./listItem":149}],149:[function(require,module,exports){
+var PropTypes, VkontakteSuggestionsItem;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/post_editor/editor_container');
 
@@ -17112,7 +20593,12 @@ require('./react/components/hero/profile/profile_avatar');
 
 require('./react/components/hero/profile/profile_head');
 
+<<<<<<< HEAD
 require('./react/components/hero/profile/profile_stats');
+=======
+},{}],150:[function(require,module,exports){
+var DEFAULT_PANEL;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/hero/profile/profile_stats_item');
 
@@ -17122,7 +20608,12 @@ require('./react/components/hero/profile/dropdown_menu_items/ignore');
 
 require('./react/components/hero/profile/dropdown_menu_items/report');
 
+<<<<<<< HEAD
 require('./react/components/hero/profile/popup/popup');
+=======
+},{}],151:[function(require,module,exports){
+var cx;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/hero/profile/popup/followers_popup');
 
@@ -17132,13 +20623,51 @@ require('./react/components/hero/profile/popup/tags_popup');
 
 require('./react/components/hero/profile/popup/items/follower_item');
 
+<<<<<<< HEAD
 require('./react/components/hero/profile/popup/items/following_item');
+=======
+},{"react/lib/cx":568}],152:[function(require,module,exports){
+window.PopupLayout = React.createClass({
+  mixins: [ReactUnmountMixin],
+  propTypes: {
+    onClose: React.PropTypes.func
+  },
+  handleClick: function(e) {
+    if ($(e.target).hasClass('popup-container__cell')) {
+      e.preventDefault();
+      return this.close();
+    }
+  },
+  close: function() {
+    if (this.props.onClose != null) {
+      return this.props.onClose();
+    } else {
+      return this.unmount();
+    }
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": 'popup-container'
+    }, React.createElement("div", {
+      "className": 'popup-container__main'
+    }, React.createElement("div", {
+      "className": 'popup-container__cell',
+      "onClick": this.handleClick
+    }, this.props.children)));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/hero/profile/popup/items/tag_item');
 
 require('./react/components/images_collage');
 
+<<<<<<< HEAD
 require('./react/components/spinner');
+=======
+},{}],153:[function(require,module,exports){
+var NO_TRANSITION_CLASS, cx;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/components/notifications/tasty_notify');
 
@@ -17150,13 +20679,40 @@ require('./react/components/notifications/tasty_locking_alert');
 
 require('./react/components/screen_viewer/screen_viewer');
 
+<<<<<<< HEAD
 require('./react/controllers/tasty_events');
+=======
+},{"react/lib/cx":568}],154:[function(require,module,exports){
+window.PopupSpinner = React.createClass({
+  propTypes: {
+    hasActivities: React.PropTypes.bool.isRequired
+  },
+  render: function() {
+    if (this.props.hasActivities) {
+      return React.createElement("div", {
+        "className": "popup__loader"
+      }, React.createElement("span", {
+        "className": "spinner spinner--8x8"
+      }, React.createElement("span", {
+        "className": "spinner__icon"
+      })));
+    } else {
+      return null;
+    }
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/controllers/tasty_notify');
 
 require('./react/controllers/tasty_confirm');
 
+<<<<<<< HEAD
 require('./react/controllers/tasty_alert');
+=======
+},{}],155:[function(require,module,exports){
+var LinkedStateMixin;
+>>>>>>> Editor store and services [#89871770]
 
 require('./react/controllers/tasty_sound');
 
@@ -17166,6 +20722,7 @@ require('./react/controllers/shellbox');
 
 require('./react/controllers/popup');
 
+<<<<<<< HEAD
 require('./react/mediators/comments');
 
 require('./react/application');
@@ -17230,12 +20787,157 @@ PopupActions = {
   },
   toggleNotifications: function() {
     return messagingService.toggleNotificationsPopup();
+=======
+},{"react/lib/LinkedStateMixin":479}],156:[function(require,module,exports){
+var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
+
+STATE_FRIEND = 'friend';
+
+STATE_REQUESTED = 'requested';
+
+STATE_IGNORED = 'ignored';
+
+STATE_GUESSED = 'guessed';
+
+STATE_NONE = 'none';
+
+window.FollowButton = React.createClass({
+  mixins: ['RelationshipMixin'],
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired
+  },
+  getInitialState: function() {
+    return {
+      relationship: this.props.relationship,
+      isHover: false,
+      isError: false,
+      isProcess: false
+    };
+  },
+  componentDidMount: function() {
+    return TastyEvents.on(TastyEvents.keys.follow_status_changed(this.state.relationship.user_id), this.updateFollowStatus);
+  },
+  componentWillUnmount: function() {
+    return TastyEvents.off(TastyEvents.keys.follow_status_changed(this.state.relationship.user_id), this.updateFollowStatus);
+  },
+  render: function() {
+    var rootClass;
+    if (this.isFollow() && !this.state.isError && !this.state.isProcess) {
+      rootClass = 'state--active';
+    }
+    return React.createElement("button", {
+      "style": {
+        display: 'inline-block!important'
+      },
+      "className": 'follow-button ' + rootClass,
+      "onClick": this.onClick,
+      "onMouseOver": this.onMouseOver,
+      "onMouseLeave": this.onMouseLeave
+    }, this._getTitle());
+  },
+  isFollow: function() {
+    return this.state.relationship.state === STATE_FRIEND;
+  },
+  onClick: function() {
+    switch (this.state.relationship.state) {
+      case STATE_FRIEND:
+        return this.unfollow();
+      case STATE_REQUESTED:
+        return this.cancel();
+      case STATE_IGNORED:
+        return this.cancel();
+      case STATE_GUESSED:
+        return this.follow();
+      case STATE_NONE:
+        return this.follow();
+      default:
+        return console.warn('Неизвестный статус', this.state.relationship.state);
+    }
+  },
+  onMouseOver: function() {
+    return this.setState({
+      isHover: true
+    });
+  },
+  onMouseLeave: function() {
+    return this.setState({
+      isHover: false
+    });
+  },
+  updateFollowStatus: function(newStatus) {
+    var newRelationship;
+    newRelationship = this.state.relationship;
+    newRelationship.state = newStatus;
+    return this.setState({
+      relationship: newRelationship
+    });
+  },
+  _getTitle: function() {
+    if (this.state.isError) {
+      return i18n.t('follow_button_error');
+    }
+    if (this.state.isProcess) {
+      return i18n.t('follow_button_process');
+    }
+    if (this.state.isHover) {
+      switch (this.state.relationship.state) {
+        case STATE_FRIEND:
+          return i18n.t('follow_button_unsubscribe');
+        case STATE_REQUESTED:
+          return i18n.t('follow_button_cancel');
+        case STATE_IGNORED:
+          return i18n.t('follow_button_unblock');
+        case STATE_GUESSED:
+          if (this.state.relationship.user.is_privacy) {
+            return i18n.t('follow_button_send_request');
+          } else {
+            return i18n.t('follow_button_subscribe');
+          }
+          break;
+        case STATE_NONE:
+          if (this.state.relationship.user.is_privacy) {
+            return i18n.t('follow_button_send_request');
+          } else {
+            return i18n.t('follow_button_subscribe');
+          }
+          break;
+        default:
+          return console.log('Неизвестный статус', this.state.relationship.state);
+      }
+    } else {
+      switch (this.state.relationship.state) {
+        case STATE_FRIEND:
+          return i18n.t('follow_button_subscribed');
+        case STATE_REQUESTED:
+          return i18n.t('follow_button_requested');
+        case STATE_IGNORED:
+          return i18n.t('follow_button_ignored');
+        case STATE_GUESSED:
+          if (this.state.relationship.user.is_privacy) {
+            return i18n.t('follow_button_send_request');
+          } else {
+            return i18n.t('follow_button_subscribe');
+          }
+          break;
+        case STATE_NONE:
+          if (this.state.relationship.user.is_privacy) {
+            return i18n.t('follow_button_send_request');
+          } else {
+            return i18n.t('follow_button_subscribe');
+          }
+          break;
+        default:
+          return console.log('Неизвестный статус', this.state.relationship.state);
+      }
+    }
+>>>>>>> Editor store and services [#89871770]
   }
 };
 
 module.exports = PopupActions;
 
 
+<<<<<<< HEAD
 
 },{"../components/searchbox/index":202,"../stores/current_user":322}],11:[function(require,module,exports){
 var Api, SearchActions;
@@ -17252,12 +20954,66 @@ SearchActions = {
       page: page,
       style: style
     });
+=======
+},{}],157:[function(require,module,exports){
+window.RelationshipFollowerButton = React.createClass({
+  mixins: ['RelationshipMixin'],
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired
+  },
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentDidMount: function() {
+    return CurrentUserStore.addChangeListener(this.onStoreChange);
+  },
+  componentWillUnmount: function() {
+    return CurrentUserStore.removeChangeListener(this.onStoreChange);
+  },
+  render: function() {
+    var unfollowButton;
+    if (this.isProfilePrivate()) {
+      unfollowButton = React.createElement("button", {
+        "className": "button button--small button--outline-light-white button--icon",
+        "onClick": this.handleDisapproveClick
+      }, React.createElement("i", {
+        "className": "icon icon--cross"
+      }));
+    }
+    return React.createElement("div", null, React.createElement(FollowButton, {
+      "relationship": this.props.relationship.reverse_relationship
+    }), unfollowButton);
+  },
+  isProfilePrivate: function() {
+    return this.state.user.is_privacy === true;
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser()
+    };
+  },
+  handleDisapproveClick: function() {
+    return this.unfollowFromYourself({
+      success: (function(_this) {
+        return function() {
+          return RelationshipsDispatcher.handleServerAction({
+            type: 'relationshipUnfollowedFromYourself',
+            relationship: _this.props.relationship
+          });
+        };
+      })(this)
+    });
+  },
+  onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
+>>>>>>> Editor store and services [#89871770]
   }
 };
 
 module.exports = SearchActions;
 
 
+<<<<<<< HEAD
 
 },{"../api/api":15}],12:[function(require,module,exports){
 var CurrentUserServerActions;
@@ -17278,6 +21034,38 @@ CurrentUserServerActions = {
   cancelEmailConfirmation: function() {
     return CurrentUserDispatcher.handleServerAction({
       type: 'confirmationEmailCanceled'
+=======
+},{}],158:[function(require,module,exports){
+window.RelationshipGuessButton = React.createClass({
+  mixins: ['RelationshipMixin'],
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired,
+    onRequestEnd: React.PropTypes.func
+  },
+  getInitialState: function() {
+    return {
+      isError: false,
+      isProcess: false
+    };
+  },
+  render: function() {
+    return React.createElement("div", null, React.createElement(FollowButton, {
+      "relationship": this.props.relationship
+    }), React.createElement("button", {
+      "onClick": this.handleDisapproveClick,
+      "className": "button button--small button--outline-light-white button--icon"
+    }, React.createElement("i", {
+      "className": "icon icon--cross"
+    })));
+  },
+  handleDisapproveClick: function() {
+    return this.cancel({
+      success: (function(_this) {
+        return function() {
+          return _this.props.onRequestEnd(_this.props.relationship);
+        };
+      })(this)
+>>>>>>> Editor store and services [#89871770]
     });
   }
 };
@@ -17285,6 +21073,7 @@ CurrentUserServerActions = {
 module.exports = CurrentUserServerActions;
 
 
+<<<<<<< HEAD
 
 },{}],13:[function(require,module,exports){
 var AppDispatcher, Constants, UserToolbarActions;
@@ -17328,9 +21117,116 @@ CurrentUserViewActions = {
       data: {
         slug: options.slug
       }
+=======
+},{}],159:[function(require,module,exports){
+var STATE_IGNORED;
+
+STATE_IGNORED = 'ignored';
+
+window.RelationshipIgnoreButton = React.createClass({
+  mixins: ['RelationshipMixin'],
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired
+  },
+  getInitialState: function() {
+    return {
+      relationship: this.props.relationship,
+      isHover: false,
+      isError: false,
+      isProcess: false
+    };
+  },
+  render: function() {
+    return React.createElement("button", {
+      "style": {
+        display: 'inline-block!important'
+      },
+      "className": "follow-button",
+      "onClick": this.onClick,
+      "onMouseOver": this.onMouseOver,
+      "onMouseLeave": this.onMouseLeave
+    }, this._getTitle());
+  },
+  isIgnored: function() {
+    return this.state.relationship.state === STATE_IGNORED;
+  },
+  onClick: function() {
+    if (this.isIgnored()) {
+      return this.cancel();
+    } else {
+      return this.ignore();
+    }
+  },
+  onMouseOver: function() {
+    return this.setState({
+      isHover: true
+    });
+  },
+  onMouseLeave: function() {
+    return this.setState({
+      isHover: false
+    });
+  },
+  _getTitle: function() {
+    if (this.state.isError) {
+      return i18n.t('follow_button_error');
+    }
+    if (this.state.isProcess) {
+      return i18n.t('follow_button_process');
+    }
+    if (this.state.relationship.state === STATE_IGNORED) {
+      if (this.state.isHover) {
+        return i18n.t('follow_button_unblock');
+      } else {
+        return i18n.t('follow_button_ignored');
+      }
+    } else {
+      return i18n.t('follow_button_block');
+    }
+  }
+});
+
+
+
+},{}],160:[function(require,module,exports){
+window.RelationshipMixin = {
+  componentWillUnmount: function() {
+    return this.clearErrorTimer();
+  },
+  follow: function() {
+    this.closeError();
+    this.setState({
+      isProcess: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.change_my_relationship_url(this.state.relationship.user_id, 'follow'),
+      method: 'POST',
+      success: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            relationship: data
+          });
+          return TastyEvents.trigger(TastyEvents.keys.follow_status_changed(data.user_id), [data.state]);
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.startErrorTimer();
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            isProcess: false
+          });
+        };
+      })(this)
+>>>>>>> Editor store and services [#89871770]
     });
     return this.update(options);
   },
+<<<<<<< HEAD
   updateTitle: function(options) {
     if (options == null) {
       options = {};
@@ -17659,9 +21555,205 @@ window.ReactApp = {
 
 },{"./actions/popup":10,"./controllers/guide":241,"./controllers/layoutStates":242,"./controllers/popuup":244,"./dispatchers/dispatcher":254,"i18next":undefined,"reactUjs":undefined}],17:[function(require,module,exports){
 var cx;
+=======
+  unfollow: function() {
+    this.closeError();
+    this.setState({
+      isProcess: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.change_my_relationship_url(this.state.relationship.user_id, 'unfollow'),
+      method: 'POST',
+      success: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            relationship: data
+          });
+          return TastyEvents.trigger(TastyEvents.keys.follow_status_changed(data.user_id), [data.state]);
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.startErrorTimer();
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            isProcess: false
+          });
+        };
+      })(this)
+    });
+  },
+  unfollowFromYourself: function(options) {
+    return this.createRequest({
+      url: ApiRoutes.unfollow_from_yourself_url(this.props.relationship.reader_id),
+      method: 'POST',
+      data: {
+        _method: 'DELETE'
+      },
+      success: function() {
+        return options != null ? typeof options.success === "function" ? options.success() : void 0 : void 0;
+      },
+      error: (function(_this) {
+        return function(data) {
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this)
+    });
+  },
+  cancel: function(options) {
+    this.closeError();
+    this.setState({
+      isProcess: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.change_my_relationship_url(this.state.relationship.user_id, 'cancel'),
+      method: 'POST',
+      success: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            relationship: data
+          });
+          if (options != null ? options.success : void 0) {
+            if (options != null) {
+              options.success();
+            }
+          }
+          return TastyEvents.trigger(TastyEvents.keys.follow_status_changed(data.user_id), [data.state]);
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.startErrorTimer();
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            isProcess: false
+          });
+        };
+      })(this)
+    });
+  },
+  ignore: function() {
+    this.closeError();
+    this.setState({
+      isProcess: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.change_my_relationship_url(this.state.relationship.user_id, 'ignore'),
+      method: 'POST',
+      success: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            relationship: data
+          });
+          return TastyEvents.trigger(TastyEvents.keys.follow_status_changed(data.user_id), [data.state]);
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.startErrorTimer();
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            isProcess: false
+          });
+        };
+      })(this)
+    });
+  },
+  approve: function(options) {
+    this.activateLoadingState();
+    return this.createRequest({
+      url: ApiRoutes.relationships_by_tlog_approve_url(this.props.relationship.reader.id),
+      method: 'POST',
+      data: {
+        expose_reverse: 1
+      },
+      success: (function(_this) {
+        return function(relationship) {
+          return options != null ? typeof options.success === "function" ? options.success(relationship) : void 0 : void 0;
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.activateWaitingState();
+        };
+      })(this)
+    });
+  },
+  disapprove: function(options) {
+    this.activateLoadingState();
+    return this.createRequest({
+      url: ApiRoutes.relationships_by_tlog_disapprove_url(this.props.relationship.reader.id),
+      method: 'POST',
+      success: (function(_this) {
+        return function(relationship) {
+          return options != null ? typeof options.success === "function" ? options.success(relationship) : void 0 : void 0;
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.activateWaitingState();
+        };
+      })(this)
+    });
+  },
+  _loadRelationship: function() {
+    return this.createRequest({
+      url: ApiRoutes.get_my_relationship_url(this.props.tlogId),
+      success: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            relationship: data
+          });
+          return TastyEvents.trigger(TastyEvents.keys.follow_status_changed(data.user_id), [data.state]);
+        };
+      })(this),
+      error: (function(_this) {
+        return function(data) {
+          _this.safeUpdateState({
+            isError: true
+          });
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this)
+    });
+  }
+};
 
-cx = require('react/lib/cx');
+React.mixins.add('RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, RequesterMixin, ComponentManipulationsMixin]);
 
+
+
+},{}],161:[function(require,module,exports){
+var ERROR_STATE, LOADING_STATE, WAITING_STATE;
+>>>>>>> Editor store and services [#89871770]
+
+ERROR_STATE = 'error';
+
+LOADING_STATE = 'loading';
+
+<<<<<<< HEAD
 window.Auth = React.createClass({
   propTypes: {
     fixed: React.PropTypes.bool
@@ -17823,11 +21915,84 @@ window.AuthorizationShellbox = React.createClass({
     }, "~"), number), React.createElement("span", null, i18n.t('seconds_count', {
       count: number
     })));
+=======
+WAITING_STATE = 'waiting';
+
+window.RelationshipRequestButton = React.createClass({
+  mixins: ['RelationshipMixin'],
+  propTypes: {
+    relationship: React.PropTypes.object.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: WAITING_STATE,
+      isError: false,
+      isProcess: false
+    };
+  },
+  render: function() {
+    var title;
+    title = this._getTitle();
+    return React.createElement("div", null, React.createElement("button", {
+      "className": "button button--small button--outline-light-white",
+      "onClick": this.handleApproveClick
+    }, title), React.createElement("button", {
+      "className": "button button--small button--outline-light-white button--icon",
+      "onClick": this.handleDisapproveClick
+    }, React.createElement("i", {
+      "className": "icon icon--cross"
+    })));
+  },
+  activateLoadingState: function() {
+    return this.safeUpdateState({
+      currentState: LOADING_STATE
+    });
+  },
+  activateWaitingState: function() {
+    return this.safeUpdateState({
+      currentState: WAITING_STATE
+    });
+  },
+  _getTitle: function() {
+    switch (this.state.currentState) {
+      case ERROR_STATE:
+        return i18n.t('follow_button_error');
+      case LOADING_STATE:
+        return i18n.t('follow_button_process');
+      default:
+        return i18n.t('follow_button_approve');
+    }
+  },
+  handleApproveClick: function() {
+    return this.approve({
+      success: (function(_this) {
+        return function(relationship) {
+          return RelationshipsDispatcher.handleServerAction({
+            type: 'requestedRelationshipApproved',
+            relationship: relationship
+          });
+        };
+      })(this)
+    });
+  },
+  handleDisapproveClick: function() {
+    return this.disapprove({
+      success: (function(_this) {
+        return function(relationship) {
+          return RelationshipsDispatcher.handleServerAction({
+            type: 'requestedRelationshipDisapproved',
+            relationship: relationship
+          });
+        };
+      })(this)
+    });
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],19:[function(require,module,exports){
 var AUTH_TIMEOUT;
 
@@ -18003,11 +22168,179 @@ window.Shellbox_VkAuthButton = React.createClass({
     } else {
       return i18n.t('vkontakte_signup_process_button');
     }
+=======
+},{}],162:[function(require,module,exports){
+var CLASSNAME_ACTIVE, CLASSNAME_READY, DELAY_SLIDESHOW, STATE_LOADING, STATE_READY, ScreenViewer_Item, ScreenViewer_Loader, ScreenViewer_Slideshow, ScreenViewer_Title;
+
+STATE_LOADING = 'loading';
+
+STATE_READY = 'ready';
+
+CLASSNAME_READY = '__ready';
+
+CLASSNAME_ACTIVE = '__active';
+
+DELAY_SLIDESHOW = 8000;
+
+window.ScreenViewer = React.createClass({
+  propTypes: {
+    title: React.PropTypes.string,
+    sourceImages: React.PropTypes.array.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: STATE_LOADING,
+      images: []
+    };
+  },
+  componentDidMount: function() {
+    return this.loadImages();
+  },
+  render: function() {
+    var readyClass, viewerContent, viewerTitle;
+    viewerContent = (function() {
+      switch (this.state.currentState) {
+        case STATE_LOADING:
+          return React.createElement(ScreenViewer_Loader, null);
+        case STATE_READY:
+          return React.createElement(ScreenViewer_Slideshow, {
+            "images": this.state.images
+          });
+        default:
+          return console.warn('Неизвестное состояние #{@state.currentState}');
+      }
+    }).call(this);
+    if (this.props.title != null) {
+      viewerTitle = React.createElement(ScreenViewer_Title, {
+        "title": this.props.title
+      });
+    }
+    readyClass = this.isReadyState() ? CLASSNAME_READY : '';
+    return React.createElement("div", {
+      "className": 'screen-viewer ' + readyClass
+    }, React.createElement("div", {
+      "className": 'screen-viewer__spacer'
+    }), viewerContent, viewerTitle);
+  },
+  loadImages: function() {
+    return _.each(this.props.sourceImages, (function(_this) {
+      return function(sourceImage) {
+        var image;
+        image = new Image;
+        image.src = sourceImage.imgSrc;
+        return image.onload = function() {
+          var images;
+          images = _this.state.images;
+          images.push({
+            isAnimate: false,
+            imgSrc: sourceImage.imgSrc,
+            tlogUrl: sourceImage.tlogUrl,
+            userName: sourceImage.userName
+          });
+          return _this.setState({
+            images: images,
+            currentState: STATE_READY
+          });
+        };
+      };
+    })(this));
+  },
+  isReadyState: function() {
+    return this.state.currentState === STATE_READY;
   }
 });
 
+ScreenViewer_Slideshow = React.createClass({
+  propTypes: {
+    images: React.PropTypes.array.isRequired
+  },
+  getInitialState: function() {
+    return {
+      index: 0,
+      currentImage: this.props.images[0]
+    };
+  },
+  componentDidMount: function() {
+    return this.startTimeout();
+  },
+  render: function() {
+    var items, that;
+    that = this;
+    items = this.props.images.map((function(_this) {
+      return function(image, index) {
+        return React.createElement(ScreenViewer_Item, {
+          "key": index,
+          "active": that.state.index === index,
+          "imgSrc": image.imgSrc,
+          "userName": image.userName,
+          "tlogUrl": image.tlogUrl
+        });
+      };
+    })(this));
+    return React.createElement("div", {
+      "className": "screen-viewer__slideshow"
+    }, items);
+  },
+  startTimeout: function() {
+    return setTimeout(((function(_this) {
+      return function() {
+        _this.nextImage();
+        return _this.startTimeout();
+      };
+    })(this)), DELAY_SLIDESHOW);
+  },
+  nextImage: function() {
+    var nextIndex;
+    if (this.state.index === this.props.images.length - 1) {
+      nextIndex = 0;
+    } else {
+      nextIndex = this.state.index + 1;
+    }
+    return this.setState({
+      index: nextIndex
+    });
+>>>>>>> Editor store and services [#89871770]
+  }
+});
 
+ScreenViewer_Item = React.createClass({
+  propTypes: {
+    active: React.PropTypes.bool.isRequired,
+    imgSrc: React.PropTypes.string.isRequired,
+    tlogUrl: React.PropTypes.string.isRequired,
+    userName: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    var activeClass, style;
+    activeClass = this.props.active ? CLASSNAME_ACTIVE : '';
+    style = {
+      backgroundImage: "url(" + this.props.imgSrc + ")"
+    };
+    return React.createElement("div", {
+      "className": 'screen-viewer__item ' + activeClass
+    }, React.createElement("div", {
+      "style": style,
+      "className": 'screen-viewer__bg'
+    }), React.createElement("div", {
+      "className": 'screen-viewer__user'
+    }, React.createElement("a", {
+      "href": this.props.tlogUrl,
+      "title": this.props.userName
+    }, "\u0424\u043e\u0442\u043e\u0433\u0440\u0430\u0444\u0438\u044f \u2013 ", this.props.userName)));
+  }
+});
 
+ScreenViewer_Loader = React.createClass({
+  render: function() {
+    return React.createElement("div", {
+      "className": 'screen-viewer__loader'
+    }, React.createElement(Spinner, {
+      "size": 24.
+    }));
+  }
+});
+
+<<<<<<< HEAD
 },{}],23:[function(require,module,exports){
 var EmailFooter;
 
@@ -18034,12 +22367,26 @@ EmailFooter = React.createClass({
   handleRecoveryClick: function(e) {
     e.preventDefault();
     return ReactApp.shellbox.show(RecoveryShellbox);
+=======
+ScreenViewer_Title = React.createClass({
+  propTypes: {
+    title: React.PropTypes.string
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": 'screen-viewer__title',
+      "dangerouslySetInnerHTML": {
+        __html: this.props.title
+      }
+    });
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 module.exports = EmailFooter;
 
 
+<<<<<<< HEAD
 
 },{}],24:[function(require,module,exports){
 var EmailSubmitButton;
@@ -18071,16 +22418,84 @@ EmailSubmitButton = React.createClass({
   handleClick: function(e) {
     e.preventDefault();
     return this.props.onSubmit();
+=======
+},{}],163:[function(require,module,exports){
+window.SearchButton = React.createClass({
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "search__button",
+      "onClick": this.props.onClick
+    }, React.createElement("i", {
+      "className": "icon icon--magnifier"
+    }));
+  }
+});
+
+
+
+},{}],164:[function(require,module,exports){
+window.SearchField = React.createClass({
+  propTypes: {
+    query: React.PropTypes.string,
+    onCancel: React.PropTypes.func.isRequired,
+    onSubmit: React.PropTypes.func.isRequired
+  },
+  componentDidMount: function() {
+    return this.selectAllText();
+  },
+  render: function() {
+    return React.createElement("form", {
+      "className": "search__form"
+    }, React.createElement("input", {
+      "ref": "searchInput",
+      "type": "text",
+      "placeholder": i18n.t('search_placeholder'),
+      "defaultValue": this.props.query,
+      "className": "search__input",
+      "onBlur": this.props.onCancel,
+      "onFocus": this.putCursorAtEnd,
+      "onKeyDown": this.handleKeyDown
+    }));
+  },
+  selectAllText: function() {
+    var searchInput;
+    searchInput = this.refs.searchInput.getDOMNode();
+    return searchInput.setSelectionRange(0, searchInput.value.length);
+  },
+  putCursorAtEnd: function() {
+    var searchInput;
+    searchInput = this.refs.searchInput.getDOMNode();
+    return searchInput.value = searchInput.value;
+  },
+  handleKeyDown: function(e) {
+    switch (e.key) {
+      case 'Escape':
+        e.preventDefault();
+        return this.props.onCancel();
+      case 'Enter':
+        e.preventDefault();
+        return this.props.onSubmit();
+    }
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 module.exports = EmailSubmitButton;
 
 
+<<<<<<< HEAD
+=======
+},{}],165:[function(require,module,exports){
+var CLOSED, OPENED, cx;
+>>>>>>> Editor store and services [#89871770]
 
 },{}],25:[function(require,module,exports){
 var ConfirmRegistrationMixin, EmailConfirmRegistration;
 
+<<<<<<< HEAD
 ConfirmRegistrationMixin = require('../mixins/confirm_registration');
 
 EmailConfirmRegistration = React.createClass({
@@ -18130,8 +22545,13 @@ EmailConfirmRegistration = React.createClass({
 
 module.exports = EmailConfirmRegistration;
 
+=======
+CLOSED = 'closed';
+>>>>>>> Editor store and services [#89871770]
 
+OPENED = 'opened';
 
+<<<<<<< HEAD
 },{"../mixins/confirm_registration":30}],26:[function(require,module,exports){
 var EmailFooter, EmailLoginField, EmailMixin, EmailPasswordField, EmailSubmitButton;
 
@@ -18241,6 +22661,70 @@ EmailLoginField = React.createClass({
   },
   getValue: function() {
     return this.refs.input.getValue();
+=======
+window.Search = React.createClass({
+  propTypes: {
+    searchUrl: React.PropTypes.string,
+    query: React.PropTypes.string
+  },
+  getInitialState: function() {
+    return {
+      currentState: this.props.query ? OPENED : CLOSED
+    };
+  },
+  render: function() {
+    var searchClasses;
+    searchClasses = cx({
+      'search': true,
+      'state--active': this.isOpen()
+    });
+    return React.createElement("div", {
+      "className": searchClasses
+    }, React.createElement(SearchField, {
+      "ref": "searchField",
+      "query": this.props.query,
+      "onCancel": this.closeSearch,
+      "onSubmit": this.submit
+    }), React.createElement(SearchButton, {
+      "onClick": this.handleButtonClick
+    }));
+  },
+  openSearch: function() {
+    this.setState({
+      currentState: OPENED
+    });
+    return this.refs.searchField.refs.searchInput.getDOMNode().focus();
+  },
+  closeSearch: function() {
+    return this.setState({
+      currentState: CLOSED
+    });
+  },
+  submit: function() {
+    var query, url;
+    query = this.refs.searchField.refs.searchInput.getDOMNode().value;
+    if (query.length === 0) {
+      return;
+    }
+    url = this._prepareSearchUrl(query);
+    return window.location = url;
+  },
+  isOpen: function() {
+    return this.state.currentState !== CLOSED;
+  },
+  _prepareSearchUrl: function(query) {
+    var url;
+    url = this.props.searchUrl || window.location.origin + window.location.pathname;
+    return url + '?q=' + query;
+  },
+  handleButtonClick: function(e) {
+    e.stopPropagation();
+    if (this.isOpen()) {
+      return this.submit();
+    } else {
+      return this.openSearch();
+    }
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
@@ -18248,6 +22732,7 @@ module.exports = EmailLoginField;
 
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],28:[function(require,module,exports){
 var EmailPasswordField, cx;
 
@@ -18419,9 +22904,159 @@ EmailMixin = {
     return this.setState({
       formData: newFormData
     });
+=======
+},{"react/lib/cx":568}],166:[function(require,module,exports){
+var InfiniteScroll, PropTypes, SearchResultsFeed;
+
+InfiniteScroll = require('../common/infiniteScroll/index');
+
+PropTypes = React.PropTypes;
+
+SearchResultsFeed = React.createClass({
+  displayName: 'SearchResultsFeed',
+  propTypes: {
+    html: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
+    canLoad: PropTypes.bool.isRequired,
+    onLoadNextPage: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "bricks-wrapper"
+    }, React.createElement(InfiniteScroll, {
+      "loading": this.props.loading,
+      "canLoad": this.props.canLoad,
+      "onLoad": this.props.onLoadNextPage,
+      "onAfterLoad": this.initGridManager
+    }, React.createElement("section", {
+      "ref": "container",
+      "className": "bricks",
+      "dangerouslySetInnerHTML": {
+        __html: this.props.html
+      }
+    })));
+  },
+  initGridManager: function() {
+    var $container;
+    $container = $(this.refs.container.getDOMNode());
+    return $container.shapeshift({
+      selector: '.brick',
+      colWidth: 302,
+      enableDrag: false,
+      enableCrossDrop: false,
+      gutterX: 20,
+      gutterY: 20,
+      paddingX: 0,
+      paddingY: 0
+    });
+  }
+});
+
+module.exports = SearchResultsFeed;
+
+
+
+},{"../common/infiniteScroll/index":46}],167:[function(require,module,exports){
+var PropTypes, SearchActions, SearchResults, SearchResultsFeed, SearchResultsTlog;
+
+SearchActions = require('../../actions/search');
+
+SearchResultsTlog = require('./tlog');
+
+SearchResultsFeed = require('./feed');
+
+PropTypes = React.PropTypes;
+
+SearchResults = React.createClass({
+  displayName: 'SearchResults',
+  propTypes: {
+    q: PropTypes.string.isRequired,
+    style: PropTypes.string.isRequired,
+    searchUrl: PropTypes.string
+  },
+  getDefaultProps: function() {
+    return {
+      searchUrl: window.location.href
+    };
+  },
+  getInitialState: function() {
+    return {
+      html: '',
+      page: 1,
+      loading: false,
+      everythingLoaded: false
+    };
+  },
+  componentDidMount: function() {
+    return this.loadPage(this.state.page);
+  },
+  render: function() {
+    switch (this.props.style) {
+      case 'tlog':
+        return React.createElement(SearchResultsTlog, {
+          "html": this.state.html,
+          "loading": this.state.loading,
+          "canLoad": !this.state.loading || !this.state.everythingLoaded,
+          "onLoadNextPage": this.loadNextPage
+        });
+      case 'feed':
+        return React.createElement(SearchResultsFeed, {
+          "html": this.state.html,
+          "loading": this.state.loading,
+          "canLoad": !this.state.loading || !this.state.everythingLoaded,
+          "onLoadNextPage": this.loadNextPage
+        });
+      default:
+        return null;
+    }
+  },
+  loadPage: function(page) {
+    var q, searchUrl, style, _ref;
+    if (this.state.loading) {
+      return;
+    }
+    _ref = this.props, q = _ref.q, searchUrl = _ref.searchUrl, style = _ref.style;
+    this.setState({
+      loading: true
+    });
+    return SearchActions.loadNextPage({
+      q: q,
+      url: searchUrl,
+      page: page,
+      style: style
+    }).then((function(_this) {
+      return function(html) {
+        var newHtml;
+        if (html === '') {
+          _this.setState({
+            everythingLoaded: true
+          });
+          return;
+        }
+        newHtml = _this.state.html ? _this.state.html + html : html;
+        _this.setState({
+          html: newHtml,
+          page: page
+        });
+        return $(document).trigger('page:change');
+      };
+    })(this)).always((function(_this) {
+      return function() {
+        return _this.setState({
+          loading: false
+        });
+      };
+    })(this));
+  },
+  loadNextPage: function() {
+    var nextPage;
+    nextPage = this.state.page + 1;
+    return this.loadPage(nextPage);
+>>>>>>> Editor store and services [#89871770]
   }
 };
 
+<<<<<<< HEAD
 module.exports = EmailMixin;
 
 
@@ -18489,9 +23124,48 @@ ConfirmRegistrationMixin = {
   },
   returnToAuth: function() {
     return ReactApp.shellbox.show(Auth);
+=======
+module.exports = SearchResults;
+
+
+
+},{"../../actions/search":12,"./feed":166,"./tlog":168}],168:[function(require,module,exports){
+var InfiniteScroll, PropTypes, SearchResultsTlog;
+
+InfiniteScroll = require('../common/infiniteScroll/index');
+
+PropTypes = React.PropTypes;
+
+SearchResultsTlog = React.createClass({
+  displayName: 'SearchResultsTlog',
+  propTypes: {
+    html: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
+    canLoad: PropTypes.bool.isRequired,
+    onLoadNextPage: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "content-area"
+    }, React.createElement("div", {
+      "className": "content-area__bg"
+    }), React.createElement("div", {
+      "className": "content-area__inner"
+    }, React.createElement(InfiniteScroll, {
+      "loading": this.props.loading,
+      "canLoad": this.props.canLoad,
+      "onLoad": this.props.onLoadNextPage
+    }, React.createElement("section", {
+      "className": "posts",
+      "dangerouslySetInnerHTML": {
+        __html: this.props.html
+      }
+    }))));
+>>>>>>> Editor store and services [#89871770]
   }
 };
 
+<<<<<<< HEAD
 module.exports = ConfirmRegistrationMixin;
 
 
@@ -18600,11 +23274,73 @@ window.RecoveryShellbox = React.createClass({
       "title": i18n.t('remembered_password_link'),
       "onClick": this.gotoSelectSignin
     }, i18n.t('remembered_password_link')));
+=======
+module.exports = SearchResultsTlog;
+
+
+
+},{"../common/infiniteScroll/index":46}],169:[function(require,module,exports){
+var PropTypes, Searchbox;
+
+PropTypes = React.PropTypes;
+
+Searchbox = React.createClass({
+  displayName: 'Searchbox',
+  propTypes: {
+    searchUrl: PropTypes.string.isRequired,
+    searchTitleI18nKey: PropTypes.string.isRequired,
+    searchParam: PropTypes.string,
+    onClose: PropTypes.func.isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      searchParam: 'q'
+    };
+  },
+  componentDidMount: function() {
+    return Mousetrap.bind('esc', this.close);
+  },
+  componentWillUnmount: function() {
+    return Mousetrap.unbind('esc', this.close);
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "searchbox"
+    }, React.createElement("div", {
+      "className": "searchbox__close",
+      "onClick": this.close
+    }, React.createElement("i", {
+      "className": "icon icon--cross"
+    })), React.createElement("form", {
+      "action": this.props.searchUrl,
+      "className": "searchbox__form"
+    }, React.createElement("h5", {
+      "className": "searchbox__title"
+    }, i18n.t('searchbox_titles.' + this.props.searchTitleI18nKey)), React.createElement("input", {
+      "type": "text",
+      "name": this.props.searchParam,
+      "placeholder": i18n.t('searchbox_placeholder'),
+      "autoFocus": "true",
+      "onKeyDown": this.handleKeyDown,
+      "className": "searchbox__input"
+    })));
+  },
+  close: function() {
+    return this.props.onClose();
+  },
+  handleKeyDown: function(e) {
+    if (e.key === 'Escape') {
+      return this.close();
+    }
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
+module.exports = Searchbox;
 
 
+
+<<<<<<< HEAD
 },{}],32:[function(require,module,exports){
 var ConfirmRegistrationMixin, SocialNetworksConfirmRegistration;
 
@@ -18748,6 +23484,94 @@ window.UserAvatar = React.createClass({
     newUser.userpic = userpic;
     return this.setState({
       user: newUser
+=======
+},{}],170:[function(require,module,exports){
+var SettingsAccounts;
+
+SettingsAccounts = React.createClass({
+  propTypes: {
+    user: React.PropTypes.object.isRequired,
+    accounts: React.PropTypes.array.isRequired
+  },
+  render: function() {
+    var anotherAccounts;
+    anotherAccounts = null;
+    return React.createElement("div", {
+      "className": "settings__item"
+    }, React.createElement("div", {
+      "className": "accounts"
+    }, React.createElement("div", {
+      "className": "account state--active"
+    }, React.createElement("div", {
+      "className": "account__actions"
+    }, React.createElement("a", {
+      "href": Routes.logout_path(),
+      "data-method": 'delete'
+    }, React.createElement("button", {
+      "className": "button button--outline"
+    }, React.createElement("span", {
+      "className": "button__text"
+    }, i18n.t('settings_accounts_logout_button'))))), React.createElement("div", {
+      "className": "account__info"
+    }, React.createElement("div", {
+      "className": "account__avatar"
+    }, React.createElement(Avatar, {
+      "userpic": this.props.user.userpic,
+      "name": this.props.user.name
+    })), React.createElement("div", {
+      "className": "account__desc"
+    }, React.createElement("div", {
+      "className": "account__name"
+    }, this.props.user.name), React.createElement("div", {
+      "className": "account__status"
+    }, i18n.t('settings_accounts_account_status'))))), anotherAccounts));
+  }
+});
+
+module.exports = SettingsAccounts;
+
+
+
+},{}],171:[function(require,module,exports){
+var CurrentUserServerActions, PropTypes, SettingsAvatar;
+
+CurrentUserServerActions = require('../../actions/server/current_user');
+
+PropTypes = React.PropTypes;
+
+SettingsAvatar = React.createClass({
+  mixins: ['ReactActivitiesUser'],
+  propTypes: {
+    user: PropTypes.object.isRequired,
+    activitiesHandler: PropTypes.object.isRequired
+  },
+  componentDidMount: function() {
+    return $(this.refs.avatarInput.getDOMNode()).fileupload({
+      url: ApiRoutes.userpic_url(),
+      replaceFileInput: false,
+      start: (function(_this) {
+        return function() {
+          return _this.incrementActivities();
+        };
+      })(this),
+      fail: (function(_this) {
+        return function(e, data) {
+          return TastyNotifyController.errorResponse(data);
+        };
+      })(this),
+      done: (function(_this) {
+        return function(e, data) {
+          var userpic;
+          userpic = data.response().jqXHR.responseJSON;
+          return CurrentUserServerActions.updateUserpic(userpic);
+        };
+      })(this),
+      always: (function(_this) {
+        return function() {
+          return _this.decrementActivities();
+        };
+      })(this)
+>>>>>>> Editor store and services [#89871770]
     });
   }
 });
@@ -18759,6 +23583,7 @@ window.LoadMoreButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
   },
+<<<<<<< HEAD
   render: function() {
     return React.createElement("div", {
       "className": "popup__more"
@@ -19041,6 +23866,316 @@ window.CalendarMarker = React.createClass({
       'calendar__period-marker': true,
       'calendar__period-marker--current': this.props.selected,
       'calendar__period-marker--highlighted': this.props.highlighted
+=======
+  componentWillUnmount: function() {
+    return $(this.refs.avatarInput.getDOMNode()).fileupload('destroy');
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings__hero__avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.user,
+      "size": 110.
+    }), React.createElement("span", {
+      "className": "settings__hero__avatar-overlay"
+    }, React.createElement("input", {
+      "ref": "avatarInput",
+      "type": "file",
+      "name": "file",
+      "accept": "image/*",
+      "className": "form-upload__input"
+    }), React.createElement("span", {
+      "className": "form-upload form-upload--icon"
+    }, React.createElement("span", {
+      "className": "form-upload__text"
+    }, React.createElement("i", {
+      "className": "icon icon--pencil"
+    })))));
+  }
+});
+
+module.exports = SettingsAvatar;
+
+
+
+},{"../../actions/server/current_user":13}],172:[function(require,module,exports){
+var ERROR_STATE, SENDING_STATE, SENT_STATE, SHOW_STATE, SettingsEmailConfirmation;
+
+SHOW_STATE = 'show';
+
+SENT_STATE = 'sent';
+
+SENDING_STATE = 'sending';
+
+ERROR_STATE = 'error';
+
+SettingsEmailConfirmation = React.createClass({
+  propTypes: {
+    email: React.PropTypes.any.isRequired,
+    confirmationEmail: React.PropTypes.any,
+    onResend: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: SHOW_STATE,
+      errorMessage: ''
+    };
+  },
+  render: function() {
+    var message;
+    message = (function() {
+      switch (this.state.currentState) {
+        case SHOW_STATE:
+          return React.createElement("span", null, i18n.t('settings_email_not_confirmed'), " ", React.createElement("a", {
+            "title": i18n.t('settings_email_resend_mail'),
+            "onClick": this.handleClick
+          }, i18n.t('settings_email_resend_mail')), " ", i18n.t('settings_email_check_spam'));
+        case SENDING_STATE:
+          return i18n.t('settings_email_confirmation_process');
+        case SENT_STATE:
+          return i18n.t('settings_email_confirmation_sent');
+        case ERROR_STATE:
+          return i18n.t('settings_email_confirmation_error', {
+            errorMessage: this.state.errorMessage
+          });
+        default:
+          return console.warn('Unknown currentState of SettingsEmailConfirmation component', this.state.currentState);
+      }
+    }).call(this);
+    return React.createElement("p", {
+      "className": "settings__error"
+    }, message);
+  },
+  isConfirmation: function() {
+    return (this.props.confirmationEmail != null) && this.props.confirmationEmail !== this.props.email;
+  },
+  activateSendingState: function() {
+    return this.setState({
+      currentState: SENDING_STATE
+    });
+  },
+  activateSentState: function() {
+    return this.setState({
+      currentState: SENT_STATE
+    });
+  },
+  activateErrorState: function() {
+    return this.setState({
+      currentState: ERROR_STATE
+    });
+  },
+  handleClick: function() {
+    return this.props.onResend({
+      beforeSend: this.activateSendingState,
+      success: this.activateSentState,
+      error: (function(_this) {
+        return function(data) {
+          return _this.setState({
+            currentState: ERROR_STATE,
+            errorMessage: data.responseJSON.error
+          });
+        };
+      })(this)
+    });
+  }
+});
+
+module.exports = SettingsEmailConfirmation;
+
+
+
+},{}],173:[function(require,module,exports){
+var SettingsEmailEdit, cx;
+
+cx = require('react/lib/cx');
+
+SettingsEmailEdit = React.createClass({
+  propTypes: {
+    email: React.PropTypes.any.isRequired,
+    onSubmit: React.PropTypes.func.isRequired,
+    onEditCancel: React.PropTypes.func.isRequired
+  },
+  componentDidMount: function() {
+    var emailField;
+    emailField = this.refs.email.getDOMNode();
+    return emailField.focus();
+  },
+  getInitialState: function() {
+    return {
+      hasInput: this.props.email.length >= 5
+    };
+  },
+  render: function() {
+    var buttonClasses;
+    buttonClasses = cx({
+      'button': true,
+      'button--yellow': this.state.hasInput,
+      'button--outline': !this.state.hasInput
+    });
+    return React.createElement("div", {
+      "className": "settings__item settings__item--full"
+    }, React.createElement("div", {
+      "className": "settings__right"
+    }, React.createElement("button", {
+      "ref": "saveButton",
+      "className": buttonClasses,
+      "onMouseDown": this.handleButtonMouseDown,
+      "onClick": this.handleButtonClick
+    }, React.createElement("span", {
+      "className": "button__text"
+    }, this.getButtonTitle()))), React.createElement("div", {
+      "className": "settings__left"
+    }, React.createElement("h3", {
+      "className": "settings__title"
+    }, i18n.t('settings_email')), React.createElement("div", {
+      "className": "form-field form-field--default"
+    }, React.createElement("input", {
+      "ref": "email",
+      "defaultValue": this.props.email,
+      "onChange": this.handleInputChange,
+      "onKeyDown": this.handleInputKeyDown,
+      "onFocus": this.handleFocus,
+      "onBlur": this.props.onEditCancel,
+      "className": "form-field__input"
+    }), React.createElement("div", {
+      "className": "form-field__bg"
+    }))));
+  },
+  getButtonTitle: function() {
+    if (this.state.hasInput) {
+      return i18n.t('settings_email_edit_save');
+    } else {
+      return i18n.t('settings_email_edit_cancel');
+    }
+  },
+  handleButtonMouseDown: function(e) {
+    var emailField, newEmail;
+    emailField = this.refs.email.getDOMNode();
+    newEmail = emailField.value;
+    if (this.state.hasInput && this.props.email !== newEmail) {
+      return this.props.onSubmit(newEmail);
+    } else {
+      return this.props.onEditCancel();
+    }
+  },
+  handleButtonClick: function(e) {
+    return e.preventDefault();
+  },
+  handleInputChange: function(e) {
+    var hasInput, newEmail;
+    newEmail = e.target.value;
+    hasInput = newEmail.length >= 5;
+    return this.setState({
+      hasInput: hasInput
+    });
+  },
+  handleInputKeyDown: function(e) {
+    var newEmail;
+    newEmail = e.target.value;
+    switch (e.key) {
+      case 'Enter':
+        e.preventDefault();
+        return this.props.onSubmit(newEmail);
+      case 'Escape':
+        e.preventDefault();
+        return this.props.onEditCancel();
+    }
+  },
+  handleFocus: function(e) {
+    var emailField;
+    emailField = e.target;
+    return AppHelpers.selectAllText(emailField);
+  }
+});
+
+module.exports = SettingsEmailEdit;
+
+
+
+},{"react/lib/cx":568}],174:[function(require,module,exports){
+var EDIT_STATE, ESTABLISH_STATE, SHOW_STATE, SettingsEmail, SettingsEmailEdit, SettingsEmailEstablish, SettingsEmailShow;
+
+SettingsEmailShow = require('./show');
+
+SettingsEmailEdit = require('./edit');
+
+SettingsEmailEstablish = require('./establish/establish');
+
+SHOW_STATE = 'show';
+
+EDIT_STATE = 'edit';
+
+ESTABLISH_STATE = 'establish';
+
+SettingsEmail = React.createClass({
+  propTypes: {
+    email: React.PropTypes.any.isRequired,
+    confirmationEmail: React.PropTypes.any,
+    onUpdate: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func.isRequired,
+    onResend: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: this.getCurrentStateFromProps(this.props)
+    };
+  },
+  componentWillReceiveProps: function(nextProps) {
+    return this.setState({
+      currentState: this.getCurrentStateFromProps(nextProps)
+    });
+  },
+  render: function() {
+    switch (this.state.currentState) {
+      case SHOW_STATE:
+        return React.createElement(SettingsEmailShow, {
+          "email": this.props.email,
+          "confirmationEmail": this.props.confirmationEmail,
+          "onEditStart": this.activateEditState,
+          "onCancel": this.handleCancel,
+          "onResend": this.props.onResend
+        });
+      case ESTABLISH_STATE:
+        return React.createElement(SettingsEmailEstablish, {
+          "onSubmit": this.handleSubmit
+        });
+      case EDIT_STATE:
+        return React.createElement(SettingsEmailEdit, {
+          "email": this.props.email,
+          "onEditCancel": this.activateShowState,
+          "onSubmit": this.handleSubmit
+        });
+      default:
+        return console.warn('Unknown currentState of SettingsEmail component', this.state.currentState);
+    }
+  },
+  activateEditState: function() {
+    return this.setState({
+      currentState: EDIT_STATE
+    });
+  },
+  activateShowState: function() {
+    return this.setState({
+      currentState: SHOW_STATE
+    });
+  },
+  getCurrentStateFromProps: function(props) {
+    if ((props.email != null) || (props.confirmationEmail != null)) {
+      return SHOW_STATE;
+    } else {
+      return ESTABLISH_STATE;
+    }
+  },
+  handleSubmit: function(newEmail) {
+    return this.props.onUpdate({
+      email: newEmail,
+      success: this.activateShowState
+    });
+  },
+  handleCancel: function() {
+    return this.props.onCancel({
+      success: this.activateShowState
+>>>>>>> Editor store and services [#89871770]
     });
     return React.createElement("li", null, React.createElement("a", {
       "href": this.props.marker.entry_url,
@@ -19067,8 +24202,10 @@ window.CalendarMarker = React.createClass({
   }
 });
 
+module.exports = SettingsEmail;
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],39:[function(require,module,exports){
 window.CalendarPeriod = React.createClass({
   propTypes: {
@@ -19099,9 +24236,15 @@ window.CalendarPeriod = React.createClass({
     }, markerNodes));
   }
 });
+=======
+>>>>>>> Editor store and services [#89871770]
 
+},{"./edit":173,"./establish/establish":176,"./show":178}],175:[function(require,module,exports){
+var SettingsEmailEstablishEdit, cx;
 
+cx = require('react/lib/cx');
 
+<<<<<<< HEAD
 },{}],40:[function(require,module,exports){
 window.CalendarTimeline = React.createClass({
   propTypes: {
@@ -19148,6 +24291,22 @@ window.AdaptiveInput = React.createClass({
     id: React.PropTypes.string,
     className: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired
+=======
+SettingsEmailEstablishEdit = React.createClass({
+  propTypes: {
+    onSubmit: React.PropTypes.func.isRequired,
+    onEditCancel: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      hasInput: false
+    };
+  },
+  componentDidMount: function() {
+    var emailField;
+    emailField = this.refs.email.getDOMNode();
+    return emailField.focus();
+>>>>>>> Editor store and services [#89871770]
   },
   getDefaultProps: function() {
     return {
@@ -19155,6 +24314,7 @@ window.AdaptiveInput = React.createClass({
     };
   },
   render: function() {
+<<<<<<< HEAD
     return React.createElement("input", {
       "type": this.props.type,
       "value": this.props.value,
@@ -19173,11 +24333,87 @@ window.AdaptiveInput = React.createClass({
   },
   handleChange: function() {
     return this.props.onChange(this.getDOMNode().value);
+=======
+    var buttonClasses;
+    buttonClasses = cx({
+      'button': true,
+      'button--yellow': this.state.hasInput,
+      'button--outline': !this.state.hasInput
+    });
+    return React.createElement("div", {
+      "className": "settings__item settings__item--full"
+    }, React.createElement("div", {
+      "className": "settings__right"
+    }, React.createElement("button", {
+      "ref": "establishButton",
+      "className": buttonClasses,
+      "onMouseDown": this.handleButtonMouseDown,
+      "onClick": this.handleButtonClick
+    }, React.createElement("span", {
+      "className": "button__text"
+    }, this.getButtonTitle()))), React.createElement("div", {
+      "className": "settings__left"
+    }, React.createElement("h3", {
+      "className": "settings__title"
+    }, "\u0415\u043c\u0435\u0439\u043b"), React.createElement("div", {
+      "className": "form-field form-field--default"
+    }, React.createElement("input", {
+      "ref": "email",
+      "onChange": this.handleInputChange,
+      "onKeyDown": this.handleInputKeyDown,
+      "onBlur": this.props.onEditCancel,
+      "className": "form-field__input"
+    }), React.createElement("div", {
+      "className": "form-field__bg"
+    }))));
+  },
+  getButtonTitle: function() {
+    if (this.state.hasInput) {
+      return i18n.t('settings_email_establish_approve');
+    } else {
+      return i18n.t('settings_email_establish_disapprove');
+    }
+  },
+  handleButtonClick: function(e) {
+    return e.preventDefault();
+  },
+  handleButtonMouseDown: function(e) {
+    var emailField, newEmail;
+    emailField = this.refs.email.getDOMNode();
+    newEmail = emailField.value;
+    if (this.state.hasInput) {
+      return this.props.onSubmit(newEmail);
+    } else {
+      return this.props.onEditCancel();
+    }
+  },
+  handleInputChange: function(e) {
+    var hasInput, newEmail;
+    newEmail = e.target.value;
+    hasInput = newEmail.length >= 5;
+    return this.setState({
+      hasInput: hasInput
+    });
+  },
+  handleInputKeyDown: function(e) {
+    var newEmail;
+    newEmail = e.target.value;
+    switch (e.key) {
+      case 'Enter':
+        e.preventDefault();
+        return this.props.onSubmit(newEmail);
+      case 'Escape':
+        e.preventDefault();
+        return this.props.onEditCancel();
+    }
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
+module.exports = SettingsEmailEstablishEdit;
 
 
+<<<<<<< HEAD
 },{}],42:[function(require,module,exports){
 var InfiniteScroll, PropTypes, THRESHOLD, windowHeight;
 
@@ -19249,9 +24485,92 @@ module.exports = InfiniteScroll;
 
 },{}],43:[function(require,module,exports){
 var PropTypes, Scroller;
+=======
+
+},{"react/lib/cx":568}],176:[function(require,module,exports){
+var EDIT_STATE, SHOW_STATE, SettingsEmailEstablish, SettingsEmailEstablishEdit, SettingsEmailEstablishShow;
+
+SettingsEmailEstablishShow = require('./show');
+
+SettingsEmailEstablishEdit = require('./edit');
+
+SHOW_STATE = 'show';
+
+EDIT_STATE = 'edit';
+
+SettingsEmailEstablish = React.createClass({
+  propTypes: {
+    onSubmit: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: SHOW_STATE
+    };
+  },
+  render: function() {
+    switch (this.state.currentState) {
+      case SHOW_STATE:
+        return React.createElement(SettingsEmailEstablishShow, {
+          "onEditStart": this.activateEditState
+        });
+      case EDIT_STATE:
+        return React.createElement(SettingsEmailEstablishEdit, {
+          "onSubmit": this.props.onSubmit,
+          "onEditCancel": this.activateShowState
+        });
+      default:
+        return console.warn('Unknown currentState of SettingsEmailEstablish component', this.state.currentState);
+    }
+  },
+  activateShowState: function() {
+    return this.setState({
+      currentState: SHOW_STATE
+    });
+  },
+  activateEditState: function() {
+    return this.setState({
+      currentState: EDIT_STATE
+    });
+  }
+});
+
+module.exports = SettingsEmailEstablish;
+
+
+
+},{"./edit":175,"./show":177}],177:[function(require,module,exports){
+var SettingsEmailEstablishShow;
+
+SettingsEmailEstablishShow = React.createClass({
+  propTypes: {
+    onEditStart: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings__item settings__item--full"
+    }, React.createElement("div", {
+      "className": "settings__right"
+    }, React.createElement("button", {
+      "onClick": this.props.onEditStart,
+      "className": "button button--outline"
+    }, React.createElement("span", {
+      "className": "button__text"
+    }, i18n.t('settings_email_establish')))), React.createElement("div", {
+      "className": "settings__left"
+    }, React.createElement("h3", {
+      "className": "settings__title"
+    }, i18n.t('settings_email')), React.createElement("p", {
+      "className": "settings__desc"
+    }, i18n.t('settings_email_description'))));
+  }
+});
+
+module.exports = SettingsEmailEstablishShow;
+>>>>>>> Editor store and services [#89871770]
 
 PropTypes = React.PropTypes;
 
+<<<<<<< HEAD
 Scroller = React.createClass({
   displayName: 'Scroller',
   propTypes: {
@@ -19719,6 +25038,235 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
         return function(e, data) {
           _this.props.onBackgroundChanged(data.jqXHR.responseJSON);
           return TastyNotifyController.notifySuccess(i18n.t('settings_saved'), 2000);
+=======
+
+},{}],178:[function(require,module,exports){
+var SettingsEmailConfirmation, SettingsEmailShow;
+
+SettingsEmailConfirmation = require('./confirmation');
+
+SettingsEmailShow = React.createClass({
+  mixins: [ReactShakeMixin],
+  propTypes: {
+    email: React.PropTypes.any.isRequired,
+    confirmationEmail: React.PropTypes.any,
+    onEditStart: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func.isRequired,
+    onResend: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    var button, confirmation, email;
+    if (this.isConfirmation()) {
+      email = this.props.confirmationEmail;
+      button = React.createElement("button", {
+        "className": "button button--outline",
+        "onClick": this.handleCancelClick
+      }, React.createElement("span", {
+        "className": "button__text"
+      }, i18n.t('settings_email_cancel_button')));
+      confirmation = React.createElement(SettingsEmailConfirmation, {
+        "email": email,
+        "confirmationEmail": this.props.confirmationEmail,
+        "onResend": this.props.onResend
+      });
+    } else {
+      email = this.props.email;
+      button = React.createElement("button", {
+        "className": "button button--outline",
+        "onClick": this.handleEditClick
+      }, React.createElement("span", {
+        "className": "button__text"
+      }, i18n.t('settings_email_edit_button')));
+    }
+    return React.createElement("div", {
+      "className": "settings__item settings__item--full"
+    }, React.createElement("div", {
+      "className": "settings__right"
+    }, button), React.createElement("div", {
+      "className": "settings__left"
+    }, React.createElement("h3", {
+      "className": "settings__title"
+    }, i18n.t('settings_email')), React.createElement("p", {
+      "className": "settings__desc"
+    }, email), confirmation));
+  },
+  isConfirmation: function() {
+    return this.props.confirmationEmail != null;
+  },
+  handleEditClick: function(e) {
+    e.preventDefault();
+    return this.props.onEditStart();
+  },
+  handleCancelClick: function(e) {
+    e.preventDefault();
+    return this.props.onCancel();
+  }
+});
+
+module.exports = SettingsEmailShow;
+
+
+
+},{"./confirmation":172}],179:[function(require,module,exports){
+var SettingsAvatar, SettingsHeader, SettingsSlug, SettingsTitle;
+
+SettingsAvatar = require('./avatar');
+
+SettingsSlug = require('./slug');
+
+SettingsTitle = require('./title');
+
+SettingsHeader = React.createClass({
+  displayName: 'SettingsHeader',
+  propTypes: {
+    user: React.PropTypes.object.isRequired,
+    activitiesHandler: React.PropTypes.object.isRequired,
+    onSlugChange: React.PropTypes.func.isRequired,
+    onTitleChange: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      isEditing: false
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings__header"
+    }, React.createElement("div", {
+      "style": this._getHeroStyles(),
+      "className": "settings__hero"
+    }, React.createElement("div", {
+      "className": "settings__hero__overlay"
+    }), React.createElement("div", {
+      "className": "settings__hero__box"
+    }, React.createElement(SettingsAvatar, {
+      "user": this.props.user,
+      "activitiesHandler": this.props.activitiesHandler
+    }), React.createElement(SettingsSlug, {
+      "slug": this.props.user.slug,
+      "onChange": this.props.onSlugChange
+    }), React.createElement(SettingsTitle, {
+      "title": this.props.user.title,
+      "onChange": this.props.onTitleChange
+    }))));
+  },
+  _getHeroStyles: function() {
+    var backgroundUrl;
+    backgroundUrl = this.props.user.design.background_url;
+    return {
+      backgroundImage: "url(" + backgroundUrl + ")"
+    };
+  }
+});
+
+module.exports = SettingsHeader;
+
+
+
+},{"./avatar":171,"./slug":186,"./title":187}],180:[function(require,module,exports){
+var CurrentUserViewActions, SettingsMixin;
+
+CurrentUserViewActions = require('../../../actions/view/current_user');
+
+SettingsMixin = {
+  updateSlug: function(slug) {
+    return CurrentUserViewActions.updateSlug({
+      slug: slug,
+      beforeSend: (function(_this) {
+        return function() {
+          return _this.incrementActivities();
+        };
+      })(this),
+      success: function(data) {
+        return TastyLockingAlertController.show({
+          title: i18n.t('settings_alert_header'),
+          message: i18n.t('settings_redirect', {
+            tlogUrl: data.tlog_url
+          }),
+          action: function() {
+            return window.location = data.tlog_url;
+          }
+        });
+      },
+      complete: (function(_this) {
+        return function() {
+          return _this.decrementActivities();
+        };
+      })(this)
+    });
+  },
+  updateTitle: function(title) {
+    return CurrentUserViewActions.updateTitle({
+      title: title,
+      beforeSend: (function(_this) {
+        return function() {
+          return _this.incrementActivities();
+        };
+      })(this),
+      success: (function(_this) {
+        return function() {
+          return TastyNotifyController.notifySuccess(i18n.t('settings_change_description_success'), 2000);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.decrementActivities();
+        };
+      })(this)
+    });
+  },
+  updatePrivacy: function(privacy) {
+    return CurrentUserViewActions.updatePrivacy({
+      privacy: privacy,
+      beforeSend: (function(_this) {
+        return function() {
+          return _this.incrementActivities();
+        };
+      })(this),
+      success: (function(_this) {
+        return function() {
+          return TastyNotifyController.notifySuccess(i18n.t('settings_change_privacy_success'), 2000);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.decrementActivities();
+        };
+      })(this)
+    });
+  },
+  updateDaylog: function(daylog) {
+    return CurrentUserViewActions.updateDaylog({
+      daylog: daylog,
+      beforeSend: (function(_this) {
+        return function() {
+          return _this.incrementActivities();
+        };
+      })(this),
+      success: (function(_this) {
+        return function() {
+          return TastyNotifyController.notifySuccess(i18n.t('settings_change_daylog_success'), 2000);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.decrementActivities();
+        };
+      })(this)
+    });
+  },
+  updateFemale: function(female) {
+    return CurrentUserViewActions.updateFemale({
+      female: female,
+      beforeSend: (function(_this) {
+        return function() {
+          return _this.incrementActivities();
+        };
+      })(this),
+      success: (function(_this) {
+        return function() {
+          return TastyNotifyController.notifySuccess(i18n.t('settings_change_gender_success'), 2000);
+>>>>>>> Editor store and services [#89871770]
         };
       })(this),
       fail: function(e, data) {
@@ -19726,14 +25274,19 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
       },
       always: (function(_this) {
         return function() {
+<<<<<<< HEAD
           _this.decrementActivities();
           return _this.safeUpdateState({
             progress: 0
           });
+=======
+          return _this.decrementActivities();
+>>>>>>> Editor store and services [#89871770]
         };
       })(this)
     });
   },
+<<<<<<< HEAD
   _readFile: function(file) {
     var fileReader;
     fileReader = new FileReader();
@@ -19755,6 +25308,49 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
     $coverBackground.css('background-image', 'url(' + url + ')');
     return this.safeUpdateState({
       backgroundUrl: url
+=======
+  updatePassword: function(_arg) {
+    var password, success;
+    password = _arg.password, success = _arg.success;
+    return CurrentUserViewActions.updatePassword({
+      password: password,
+      beforeSend: (function(_this) {
+        return function() {
+          return _this.incrementActivities();
+        };
+      })(this),
+      success: (function(_this) {
+        return function() {
+          TastyNotifyController.notifySuccess(i18n.t('settings_change_password_success'), 2000);
+          return typeof success === "function" ? success() : void 0;
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.decrementActivities();
+        };
+      })(this)
+    });
+  },
+  updateAvailableNotifications: function(availableNotifications) {
+    return CurrentUserViewActions.updateAvailableNotifications({
+      availableNotifications: availableNotifications,
+      beforeSend: (function(_this) {
+        return function() {
+          return _this.incrementActivities();
+        };
+      })(this),
+      success: (function(_this) {
+        return function() {
+          return TastyNotifyController.notifySuccess(i18n.t('settings_change_notifications_success'), 2000);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.decrementActivities();
+        };
+      })(this)
+>>>>>>> Editor store and services [#89871770]
     });
   }
 });
@@ -19767,6 +25363,7 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({
     feedColor: React.PropTypes.string.isRequired,
     saveCallback: React.PropTypes.func.isRequired
   },
+<<<<<<< HEAD
   getInitialState: function() {
     return {
       active: this.props.feedColor
@@ -19863,11 +25460,227 @@ window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({
       });
       return this.props.saveCallback(value);
     }
+=======
+  updateEmail: function(_arg) {
+    var email, success;
+    email = _arg.email, success = _arg.success;
+    return CurrentUserViewActions.updateEmail({
+      email: email,
+      beforeSend: (function(_this) {
+        return function() {
+          return _this.incrementActivities();
+        };
+      })(this),
+      success: (function(_this) {
+        return function() {
+          if (typeof success === "function") {
+            success();
+          }
+          return TastyNotifyController.notifySuccess(i18n.t('settings_change_email_mail_sent'), 2000);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.decrementActivities();
+        };
+      })(this)
+    });
+  },
+  cancelEmailConfirmation: function() {
+    return CurrentUserViewActions.cancelEmailConfirmation({
+      beforeSend: (function(_this) {
+        return function() {
+          return _this.incrementActivities();
+        };
+      })(this),
+      success: (function(_this) {
+        return function() {
+          return TastyNotifyController.notifySuccess(i18n.t('settings_change_email_canceled'), 2000);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function() {
+          return _this.decrementActivities();
+        };
+      })(this)
+    });
+  },
+  resendEmailConfirmation: function(_arg) {
+    var beforeSend, error, success;
+    beforeSend = _arg.beforeSend, error = _arg.error, success = _arg.success;
+    return CurrentUserViewActions.resendEmailConfirmation({
+      beforeSend: (function(_this) {
+        return function() {
+          _this.incrementActivities();
+          return typeof beforeSend === "function" ? beforeSend() : void 0;
+        };
+      })(this),
+      error: error,
+      success: function() {
+        TastyNotifyController.notifySuccess(i18n.t('settings_change_email_mail_resent'), 2000);
+        return typeof success === "function" ? success() : void 0;
+      },
+      complete: (function(_this) {
+        return function() {
+          return _this.decrementActivities();
+        };
+      })(this)
+    });
+  }
+};
+
+module.exports = SettingsMixin;
+
+
+
+},{"../../../actions/view/current_user":15}],181:[function(require,module,exports){
+var CANCEL_TIMEOUT, SettingsPasswordEdit, cx;
+
+cx = require('react/lib/cx');
+
+CANCEL_TIMEOUT = 500;
+
+SettingsPasswordEdit = React.createClass({
+  propTypes: {
+    onSubmit: React.PropTypes.func.isRequired,
+    onEditCancel: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      hasInput: false
+    };
+  },
+  componentWillUnmount: function() {
+    return this.cancelTimeout = null;
+  },
+  render: function() {
+    var buttonClasses;
+    buttonClasses = cx({
+      'button': true,
+      'button--yellow': this.state.hasInput,
+      'button--outline': !this.state.hasInput
+    });
+    return React.createElement("div", {
+      "className": "settings__item setting_item--full"
+    }, React.createElement("div", {
+      "className": "settings__right"
+    }, React.createElement("button", {
+      "className": buttonClasses,
+      "onClick": this.handleButtonClick
+    }, React.createElement("span", {
+      "className": "button__text"
+    }, this.getButtonTitle()))), React.createElement("div", {
+      "className": "settings__left"
+    }, React.createElement("h3", {
+      "className": "settings__title"
+    }, i18n.t('settings_password')), React.createElement("div", {
+      "className": "form-field form-field--default"
+    }, React.createElement("input", {
+      "ref": "password",
+      "autoFocus": true,
+      "type": "password",
+      "placeholder": i18n.t('settings_password_new'),
+      "className": "form-field__input",
+      "onKeyDown": this.handleInputKeyDown,
+      "onBlur": this.handleInputBlur,
+      "onChange": this.handleInputChange,
+      "onFocus": this.handleInputFocus
+    }), React.createElement("div", {
+      "className": "form-field__bg"
+    })), React.createElement("div", {
+      "className": "form-field form-field--default"
+    }, React.createElement("input", {
+      "ref": "password_confirm",
+      "type": "password",
+      "placeholder": i18n.t('settings_password_new_repeat'),
+      "className": "form-field__input",
+      "onKeyDown": this.handleInputKeyDown,
+      "onBlur": this.handleInputBlur,
+      "onChange": this.handleInputChange,
+      "onFocus": this.handleInputFocus
+    }), React.createElement("div", {
+      "className": "form-field__bg"
+    }))));
+  },
+  isValid: function() {
+    var password, passwordConfirm;
+    password = this.refs.password.getDOMNode().value;
+    passwordConfirm = this.refs.password_confirm.getDOMNode().value;
+    switch (false) {
+      case password.length !== 0:
+      case passwordConfirm.length !== 0:
+        TastyNotifyController.notifyError(i18n.t('settings_password_empty_error'));
+        return false;
+      case password === passwordConfirm:
+        TastyNotifyController.notifyError(i18n.t('settings_password_arent_equals'));
+        return false;
+      default:
+        return true;
+    }
+  },
+  hasInput: function() {
+    var passwordConfirmLength, passwordLength;
+    passwordLength = this.refs.password.getDOMNode().value.length;
+    passwordConfirmLength = this.refs.password_confirm.getDOMNode().value.length;
+    return passwordLength > 0 && passwordConfirmLength > 0;
+  },
+  getButtonTitle: function() {
+    if (this.state.hasInput) {
+      return i18n.t('settings_password_save');
+    } else {
+      return i18n.t('settings_password_cancel');
+    }
+  },
+  setCancelTimeout: function() {
+    return this.cancelTimeout = setTimeout(this.props.onEditCancel, CANCEL_TIMEOUT);
+  },
+  clearCancelTimeout: function() {
+    if (this.cancelTimeout) {
+      return clearTimeout(this.cancelTimeout);
+    }
+  },
+  handleButtonClick: function(e) {
+    var newPassword;
+    newPassword = this.refs.password.getDOMNode().value;
+    e.preventDefault();
+    this.clearCancelTimeout();
+    if (this.state.hasInput && this.isValid()) {
+      return this.props.onSubmit(newPassword);
+    }
+  },
+  handleInputBlur: function() {
+    return this.setCancelTimeout();
+  },
+  handleInputFocus: function() {
+    return this.clearCancelTimeout();
+  },
+  handleInputChange: function(e) {
+    return this.setState({
+      hasInput: this.hasInput()
+    });
+  },
+  handleInputKeyDown: function(e) {
+    var newPassword;
+    newPassword = e.target.value;
+    switch (e.key) {
+      case 'Enter':
+        e.preventDefault();
+        if (this.isValid()) {
+          return this.props.onSubmit(newPassword);
+        }
+        break;
+      case 'Escape':
+        e.preventDefault();
+        return this.props.onEditCancel();
+    }
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
+module.exports = SettingsPasswordEdit;
 
 
+<<<<<<< HEAD
 },{}],53:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({
   propTypes: {
@@ -19951,9 +25764,116 @@ window.DesignSettingsPopup_ControlsOpacityItem = React.createClass({
   propTypes: {
     feedOpacity: React.PropTypes.number.isRequired,
     saveCallback: React.PropTypes.func.isRequired
+=======
+
+},{"react/lib/cx":568}],182:[function(require,module,exports){
+var EDIT_STATE, SHOW_STATE, SettingsPassword, SettingsPasswordEdit, SettingsPasswordShow;
+
+SettingsPasswordShow = require('./show');
+
+SettingsPasswordEdit = require('./edit');
+
+SHOW_STATE = 'show';
+
+EDIT_STATE = 'edit';
+
+SettingsPassword = React.createClass({
+  propTypes: {
+    onUpdate: React.PropTypes.func.isRequired
   },
   getInitialState: function() {
     return {
+      currentState: SHOW_STATE
+    };
+  },
+  render: function() {
+    switch (this.state.currentState) {
+      case SHOW_STATE:
+        return React.createElement(SettingsPasswordShow, {
+          "onEditStart": this.activateEditState
+        });
+      case EDIT_STATE:
+        return React.createElement(SettingsPasswordEdit, {
+          "onSubmit": this.handleSubmit,
+          "onEditCancel": this.activateShowState
+        });
+      default:
+        return console.warn('Unknown currentState of SettingsPassword component', this.state.currentState);
+    }
+  },
+  activateShowState: function() {
+    return this.setState({
+      currentState: SHOW_STATE
+    });
+  },
+  activateEditState: function() {
+    return this.setState({
+      currentState: EDIT_STATE
+    });
+  },
+  handleSubmit: function(newPassword) {
+    return this.props.onUpdate({
+      password: newPassword,
+      success: this.activateShowState
+    });
+  }
+});
+
+module.exports = SettingsPassword;
+
+
+
+},{"./edit":181,"./show":183}],183:[function(require,module,exports){
+var SettingsPasswordShow;
+
+SettingsPasswordShow = React.createClass({
+  propTypes: {
+    onEditStart: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings__item settings__item--full"
+    }, React.createElement("div", {
+      "className": "settings__right"
+    }, React.createElement("button", {
+      "className": "button button--outline",
+      "onClick": this.handleButtonClick
+    }, React.createElement("span", {
+      "className": "button__text"
+    }, i18n.t('settings_password_edit_button')))), React.createElement("div", {
+      "className": "settings__left"
+    }, React.createElement("h3", {
+      "className": "settings__title"
+    }, i18n.t('settings_password')), React.createElement("p", {
+      "className": "settings__desc"
+    }, i18n.t('settings_password_description'))));
+  },
+  handleButtonClick: function(e) {
+    e.preventDefault();
+    return this.props.onEditStart();
+  }
+});
+
+module.exports = SettingsPasswordShow;
+
+
+
+},{}],184:[function(require,module,exports){
+var SettingsRadioItem;
+
+SettingsRadioItem = React.createClass({
+  displayName: 'SettingsRadioItem',
+  propTypes: {
+    title: React.PropTypes.string.isRequired,
+    description: React.PropTypes.string.isRequired,
+    checked: React.PropTypes.bool,
+    id: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func.isRequired
+>>>>>>> Editor store and services [#89871770]
+  },
+  getDefaultProps: function() {
+    return {
+<<<<<<< HEAD
       feedOpacity: this.props.feedOpacity
     };
   },
@@ -20034,11 +25954,136 @@ window.DesignSettingsPopup_ControlsOpacityItem = React.createClass({
   },
   _getFeedOpacityPercentage: function() {
     return (this.state.feedOpacity * 100).toFixed() + '%';
+=======
+      checked: false
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings__item"
+    }, React.createElement("div", {
+      "className": "settings__right"
+    }, React.createElement("div", {
+      "className": "switcher"
+    }, React.createElement("input", {
+      "type": "checkbox",
+      "checked": this.props.checked,
+      "id": this.props.id,
+      "className": "switcher__input",
+      "onChange": this.handleChange
+    }), React.createElement("label", {
+      "htmlFor": this.props.id,
+      "className": "switcher__label"
+    }, React.createElement("span", {
+      "className": "switcher__btn switcher__btn--on"
+    }, i18n.t('settings_radio_button_on')), React.createElement("span", {
+      "className": "switcher__btn switcher__btn--off"
+    }, i18n.t('settings_radio_button_off'))))), React.createElement("div", {
+      "className": "settings__left"
+    }, React.createElement("h3", {
+      "className": "settings__title"
+    }, this.props.title), React.createElement("p", {
+      "className": "settings__desc"
+    }, this.props.description)));
+  },
+  handleChange: function(e) {
+    return this.props.onChange(e.target.checked);
+  }
+});
+
+module.exports = SettingsRadioItem;
+
+
+
+},{}],185:[function(require,module,exports){
+var LinkedStateMixin, SettingsAccounts, SettingsEmail, SettingsHeader, SettingsMixin, SettingsPassword, SettingsRadioItem;
+
+SettingsHeader = require('./header');
+
+SettingsRadioItem = require('./radio_item');
+
+SettingsEmail = require('./email/email');
+
+SettingsPassword = require('./password/password');
+
+SettingsAccounts = require('./accounts');
+
+SettingsMixin = require('./mixins/settings');
+
+LinkedStateMixin = require('react/lib/LinkedStateMixin');
+
+window.Settings = React.createClass({
+  mixins: [SettingsMixin, 'ReactActivitiesUser', ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin, LinkedStateMixin],
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentDidMount: function() {
+    return CurrentUserStore.addChangeListener(this._onStoreChange);
+  },
+  componentWillUnmount: function() {
+    return CurrentUserStore.removeChangeListener(this._onStoreChange);
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings"
+    }, React.createElement("form", null, React.createElement(SettingsHeader, {
+      "user": this.state.user,
+      "activitiesHandler": this.props.activitiesHandler,
+      "onSlugChange": this.updateSlug,
+      "onTitleChange": this.updateTitle
+    }), React.createElement("div", {
+      "className": "settings__body"
+    }, React.createElement(SettingsRadioItem, {
+      "title": i18n.t('settings_privacy'),
+      "description": i18n.t('settings_privacy_description'),
+      "checked": this.state.user.is_privacy,
+      "id": "isPrivacy",
+      "onChange": this.updatePrivacy
+    }), React.createElement(SettingsRadioItem, {
+      "title": i18n.t('settings_daylog'),
+      "description": i18n.t('settings_daylog_description'),
+      "checked": this.state.user.is_daylog,
+      "id": "isDaylog",
+      "onChange": this.updateDaylog
+    }), React.createElement(SettingsRadioItem, {
+      "title": i18n.t('settings_gender'),
+      "description": i18n.t('settings_gender_description'),
+      "checked": this.state.user.is_female,
+      "id": "isFemale",
+      "onChange": this.updateFemale
+    }), React.createElement(SettingsEmail, {
+      "email": this.state.user.email,
+      "confirmationEmail": this.state.user.confirmation_email,
+      "onUpdate": this.updateEmail,
+      "onCancel": this.cancelEmailConfirmation,
+      "onResend": this.resendEmailConfirmation
+    }), React.createElement(SettingsRadioItem, {
+      "title": i18n.t('settings_notifications'),
+      "description": i18n.t('settings_notifications_description'),
+      "checked": this.state.user.available_notifications,
+      "id": "availableNotifications",
+      "onChange": this.updateAvailableNotifications
+    }), React.createElement(SettingsPassword, {
+      "onUpdate": this.updatePassword
+    }), React.createElement(SettingsAccounts, {
+      "user": this.state.user,
+      "accounts": []
+    }))));
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser()
+    };
+  },
+  _onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],55:[function(require,module,exports){
 var CurrentUserServerActions, cx;
 
@@ -20165,6 +26210,81 @@ window.DesignSettingsPopup = React.createClass({
   onPageClose: function(e) {
     if (this.hasActivities()) {
       return i18n.t('settings_still_saving_confirm');
+=======
+},{"./accounts":170,"./email/email":174,"./header":179,"./mixins/settings":180,"./password/password":182,"./radio_item":184,"react/lib/LinkedStateMixin":479}],186:[function(require,module,exports){
+var PropTypes, SettingsSlug;
+
+PropTypes = React.PropTypes;
+
+SettingsSlug = React.createClass({
+  displayName: 'SettingsSlug',
+  propTypes: {
+    slug: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      slug: this.props.slug
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings__hero__name"
+    }, React.createElement(EditableField, {
+      "defaultValue": this.state.slug,
+      "placeholder": i18n.t('settings_slug_placeholder'),
+      "onEditEnd": this.handleEditEnd
+    }));
+  },
+  handleEditEnd: function(slug) {
+    if (slug && slug !== this.state.slug) {
+      this.setState({
+        slug: slug
+      });
+      return this.props.onChange(slug);
+    } else {
+      TastyNotifyController.notifyError(i18n.t('settings_empty_slug_error'), 2000);
+      return this.forceUpdate();
+    }
+  }
+});
+
+module.exports = SettingsSlug;
+
+
+
+},{}],187:[function(require,module,exports){
+var SettingsTitle;
+
+SettingsTitle = React.createClass({
+  displayName: 'SettingsTitle',
+  propTypes: {
+    title: React.PropTypes.string,
+    onChange: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      title: this.props.title || ''
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "settings__hero__text"
+    }, React.createElement(EditableField, {
+      "defaultValue": this.state.title,
+      "placeholder": i18n.t('settings_description_placeholder'),
+      "onEditEnd": this.handleEditEnd
+    }));
+  },
+  handleEditEnd: function(title) {
+    if (title !== this.props.title) {
+      this.setState({
+        title: title
+      });
+      return this.props.onChange(title);
+    } else {
+      return this.forceUpdate();
+>>>>>>> Editor store and services [#89871770]
     }
   },
   getStateFromStore: function() {
@@ -20177,8 +26297,10 @@ window.DesignSettingsPopup = React.createClass({
   }
 });
 
+module.exports = SettingsTitle;
 
 
+<<<<<<< HEAD
 },{"../../actions/server/current_user":12,"react/lib/cx":599}],56:[function(require,module,exports){
 var KEYCODE_ENTER, LinkedStateMixin, cx;
 
@@ -20199,10 +26321,20 @@ window.EditableField = React.createClass({
   getDefaultProps: function() {
     return {
       maxLength: 140
+=======
+
+},{}],188:[function(require,module,exports){
+window.ShellBox = React.createClass({
+  mixins: [ReactUnmountMixin],
+  getDefaultProps: function() {
+    return {
+      fadeSpeed: 1000
+>>>>>>> Editor store and services [#89871770]
     };
   },
   getInitialState: function() {
     return {
+<<<<<<< HEAD
       value: this.props.defaultValue,
       isFocus: false
     };
@@ -20293,11 +26425,70 @@ window.EditableField = React.createClass({
     textarea = this.refs.textarea.getDOMNode();
     textareaValue = textarea.value.replace(/\n/g, '');
     return textareaValue.trim();
+=======
+      isDisabled: false
+    };
+  },
+  handleClick: function(e) {
+    if (!this.state.isDisabled) {
+      if ($(e.target).hasClass('shellbox__cell')) {
+        e.preventDefault();
+        return this.unmount();
+      }
+    }
+  },
+  componentWillMount: function() {
+    this.blurScreen();
+    return Mousetrap.bind('esc', this.onClose);
+  },
+  componentDidMount: function() {},
+  componentWillUnmount: function() {
+    this.unblurScreen();
+    return Mousetrap.unbind('esc', this.onClose);
+  },
+  render: function() {
+    React.Children.map(this.props.children, (function(_this) {
+      return function(context) {
+        context.props.disableShellbox = _this.disableShellbox;
+        return context.props.enableShellbox = _this.enableShellbox;
+      };
+    })(this));
+    return React.createElement("div", {
+      "className": "shellbox"
+    }, React.createElement("div", {
+      "className": "shellbox__main"
+    }, React.createElement("div", {
+      "className": "shellbox__cell",
+      "onClick": this.handleClick
+    }, this.props.children)));
+  },
+  blurScreen: function() {
+    return $('html').addClass('shellbox-enabled');
+  },
+  unblurScreen: function() {
+    return $('html').removeClass('shellbox-enabled');
+  },
+  onClose: function() {
+    if (!this.state.isDisabled) {
+      return this.unmount();
+    }
+  },
+  disableShellbox: function() {
+    return this.setState({
+      isDisabled: true
+    });
+  },
+  enableShellbox: function() {
+    return this.setState({
+      isDisabled: false
+    });
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{"react/lib/LinkedStateMixin":510,"react/lib/cx":599}],57:[function(require,module,exports){
 window.EmbedComponent = React.createClass({
   propTypes: {
@@ -20395,6 +26586,49 @@ window.EmbedComponentWithCover = React.createClass({
 });
 
 
+=======
+},{}],189:[function(require,module,exports){
+var EmailConfirmRegistration, SocialNetworksConfirmRegistration;
+
+EmailConfirmRegistration = require('../auth/email/confirm_registration');
+
+SocialNetworksConfirmRegistration = require('../auth/social_networks/confirm_registration');
+
+window.ConfirmRegistrationShellbox = React.createClass({
+  propTypes: {
+    type: React.PropTypes.oneOf(['email', 'socialNetwork']).isRequired,
+    postUrl: React.PropTypes.string.isRequired,
+    email: React.PropTypes.string,
+    password: React.PropTypes.string,
+    proposedSlug: React.PropTypes.string.isRequired
+  },
+  getInitialState: function() {
+    return {
+      isProcess: false
+    };
+  },
+  render: function() {
+    var ConfirmRegistration;
+    ConfirmRegistration = (function() {
+      switch (this.props.type) {
+        case 'email':
+          return EmailConfirmRegistration;
+        case 'socialNetwork':
+          return SocialNetworksConfirmRegistration;
+        default:
+          return console.warn('Unknown type of confirm registration component', this.props.type);
+      }
+    }).call(this);
+    return React.createElement(ShellBox, null, React.createElement(ConfirmRegistration, {
+      "email": this.props.email,
+      "postUrl": this.props.postUrl,
+      "password": this.props.password,
+      "proposedSlug": this.props.proposedSlug
+    }));
+  }
+});
+
+>>>>>>> Editor store and services [#89871770]
 
 },{}],58:[function(require,module,exports){
 window.EntryCommentBox_CommentFormSubmit = React.createClass({
@@ -20415,6 +26649,7 @@ window.EntryCommentBox_CommentFormSubmit = React.createClass({
   }
 });
 
+<<<<<<< HEAD
 
 
 },{}],59:[function(require,module,exports){
@@ -20572,11 +26807,64 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({
   },
   onCancel: function() {
     return window.commentsMediator.doFormClosed();
+=======
+},{"../auth/email/confirm_registration":29,"../auth/social_networks/confirm_registration":36}],190:[function(require,module,exports){
+var STATE_GUESSED, STATE_NONE;
+
+STATE_NONE = 'none';
+
+STATE_GUESSED = 'guessed';
+
+window.SmartFollowStatus = React.createClass({
+  mixins: ['RelationshipMixin'],
+  propTypes: {
+    status: React.PropTypes.string.isRequired,
+    tlogId: React.PropTypes.number.isRequired
+  },
+  getInitialState: function() {
+    return {
+      relationship: {
+        user_id: this.props.tlogId
+      },
+      status: this.props.status,
+      isError: false,
+      isProcess: false
+    };
+  },
+  componentDidMount: function() {
+    return TastyEvents.on(TastyEvents.keys.follow_status_changed(this.props.tlogId), this.updateFollowStatus);
+  },
+  componentWillUnmount: function() {
+    return TastyEvents.off(TastyEvents.keys.follow_status_changed(this.props.tlogId), this.updateFollowStatus);
+  },
+  render: function() {
+    return React.createElement(FollowStatus, {
+      "status": this.state.status,
+      "error": this.state.isError,
+      "process": this.state.isProcess,
+      "onClick": this.handleClick
+    });
+  },
+  handleClick: function() {
+    if (!this.state.isError && !this.state.isProcess) {
+      switch (this.state.status) {
+        case STATE_NONE:
+        case STATE_GUESSED:
+          return this.follow();
+      }
+    }
+  },
+  updateFollowStatus: function(newStatus) {
+    return this.setState({
+      status: newStatus
+    });
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],60:[function(require,module,exports){
 window.EntryCommentBox_CommentEditFormManager = React.createClass({
   mixins: [RequesterMixin, ComponentManipulationsMixin],
@@ -20635,11 +26923,33 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({
         };
       })(this)
     });
+=======
+},{}],191:[function(require,module,exports){
+window.Spinner = React.createClass({
+  propTypes: {
+    size: React.PropTypes.number
+  },
+  getDefaultProps: function() {
+    return {
+      size: 8
+    };
+  },
+  render: function() {
+    return React.createElement("span", {
+      "className": 'spinner spinner--' + this._getSize()
+    }, React.createElement("span", {
+      "className": "spinner__icon"
+    }));
+  },
+  _getSize: function() {
+    return this.props.size + 'x' + this.props.size;
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],61:[function(require,module,exports){
 var REPLIES_LIMIT;
 
@@ -20661,9 +26971,67 @@ window.EntryCommentBox_CommentForm = React.createClass({
   getDefaultProps: function() {
     return {
       disabled: false
+=======
+},{}],192:[function(require,module,exports){
+var FADE_SPEED;
+
+FADE_SPEED = 300;
+
+module.experts = window.TlogAlert = React.createClass({
+  propTypes: {
+    text: React.PropTypes.string,
+    canClose: React.PropTypes.bool
+  },
+  getDefaultProps: function() {
+    return {
+      canClose: false
+>>>>>>> Editor store and services [#89871770]
     };
   },
+  close: function() {
+    return $(this.getDOMNode()).fadeOut(FADE_SPEED, function() {
+      return React.unmountComponentAtNode(this.getDOMNode());
+    });
+  },
+  render: function() {
+    var closeElement;
+    if ((this.props.text != null) && this.props.text.length > 0) {
+      if (this.props.canClose) {
+        closeElement = React.createElement("div", {
+          "className": "alert__close",
+          "onClick": this.close
+        }, React.createElement("i", {
+          "className": "icon icon--cross"
+        }));
+      }
+      return React.createElement("div", {
+        "className": "alert"
+      }, React.createElement("div", {
+        "className": "alert__text",
+        "dangerouslySetInnerHTML": {
+          __html: this.props.text
+        }
+      }), closeElement);
+    } else {
+      return null;
+    }
+  }
+});
+
+
+
+},{}],193:[function(require,module,exports){
+var AvatarToolbar, ConnectStoreMixin, CurrentUserStore;
+
+CurrentUserStore = require('../../stores/current_user');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+AvatarToolbar = React.createClass({
+  displayName: 'AvatarToolbar',
+  mixins: [ConnectStoreMixin(CurrentUserStore)],
   componentDidMount: function() {
+<<<<<<< HEAD
     return this._initAutosize();
   },
   componentDidUpdate: function() {
@@ -20792,10 +27160,51 @@ window.EntryCommentBox_CommentForm = React.createClass({
 });
 
 
+=======
+    var link;
+    link = this.refs.link.getDOMNode();
+    return $(link).tooltip({
+      title: i18n.t('avatar_toolbar_tooltip'),
+      placement: 'left',
+      container: '.toolbar--avatar'
+    });
+  },
+  componentWillUnmount: function() {
+    var link;
+    link = this.refs.link.getDOMNode();
+    return $(link).tooltip('destroy');
+  },
+  render: function() {
+    if (this.state.logged) {
+      return React.createElement("a", {
+        "ref": "link",
+        "href": this.state.user.tlog_url,
+        "className": "toolbar toolbar--avatar"
+      }, React.createElement("div", {
+        "className": "toolbar__toggle"
+      }, React.createElement(UserAvatar, {
+        "user": this.state.user,
+        "size": 56.
+      })));
+    } else {
+      return null;
+    }
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser(),
+      logged: CurrentUserStore.isLogged()
+    };
+  }
+});
+
+module.exports = AvatarToolbar;
+>>>>>>> Editor store and services [#89871770]
 
 },{}],62:[function(require,module,exports){
 var cx;
 
+<<<<<<< HEAD
 cx = require('react/lib/cx');
 
 window.EntryCommentBox_Comment = React.createClass({
@@ -20992,6 +27401,174 @@ window.EntryCommentBox_CommentManager = React.createClass({
   }
 });
 
+=======
+
+},{"../../../../shared/react/mixins/connectStore":299,"../../stores/current_user":290}],194:[function(require,module,exports){
+window.CloseToolbar = React.createClass({
+  mixins: [TouchMixin],
+  render: function() {
+    return React.createElement("div", {
+      "onClick": this.props.onClick,
+      "className": "toolbar toolbar--close"
+    }, React.createElement("div", {
+      "className": "toolbar__toggle"
+    }, React.createElement("i", {
+      "className": "icon icon--cross"
+    })));
+  }
+});
+
+
+
+},{}],195:[function(require,module,exports){
+var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, PopupActions, PropTypes, SEARCH_TITLE_I18N_KEYS, Scroller, UserToolbar, UserToolbarActions, UserToolbarAdditionalList, UserToolbarGuestList, UserToolbarList, UserToolbarToggle, cx, _;
+
+_ = require('lodash');
+
+cx = require('react/lib/cx');
+
+CurrentUserStore = require('../../stores/current_user');
+
+MessagingStatusStore = require('../../messaging/stores/messaging_status');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+UserToolbarActions = require('../../actions/userToolbar');
+
+PopupActions = require('../../actions/popup');
+
+Scroller = require('../common/scroller/scroller');
+
+UserToolbarToggle = require('./user/toggle');
+
+UserToolbarList = require('./user/list');
+
+UserToolbarGuestList = require('./user/guestList');
+
+UserToolbarAdditionalList = require('./user/additionalList');
+
+PropTypes = React.PropTypes;
+
+SEARCH_TITLE_I18N_KEYS = ['live', 'best', 'friends', 'anonymous', 'mytlog', 'tlog', 'favorites', 'privates', 'people'];
+
+UserToolbar = React.createClass({
+  displayName: 'UserToolbar',
+  mixins: [ConnectStoreMixin([CurrentUserStore, MessagingStatusStore])],
+  propTypes: {
+    searchUrl: PropTypes.string.isRequired,
+    searchTitleI18nKey: PropTypes.oneOf(SEARCH_TITLE_I18N_KEYS).isRequired
+  },
+  getInitialState: function() {
+    return _.extend(this.getStateFromLocalStorage(), {
+      hover: false
+    });
+  },
+  componentWillMount: function() {
+    return UserToolbarActions.initVisibility(this.state.open);
+  },
+  render: function() {
+    var navbarClasses;
+    navbarClasses = cx({
+      'toolbar__navbar': true,
+      'toolbar__navbar--complex': this.state.logged
+    });
+    return React.createElement("div", {
+      "className": "toolbar toolbar--main",
+      "onMouseEnter": this.handleMouseEnter,
+      "onMouseLeave": this.handleMouseLeave
+    }, React.createElement(UserToolbarToggle, {
+      "hasConversations": !!this.state.unreadConversationsCount,
+      "hasNotifications": !!this.state.unreadNotificationsCount,
+      "onClick": this.toggleVisibility
+    }), React.createElement("div", {
+      "className": navbarClasses
+    }, React.createElement(Scroller, null, this.renderList()), this.renderAdditionList()));
+  },
+  renderList: function() {
+    if (this.state.logged) {
+      return React.createElement(UserToolbarList, {
+        "user": this.state.user,
+        "unreadConversationsCount": this.state.unreadConversationsCount,
+        "unreadNotificationsCount": this.state.unreadNotificationsCount,
+        "stayOpen": this.state.hover,
+        "onMessagesItemClick": this.toggleMessages,
+        "onNotificationsItemClick": this.toggleNotifications,
+        "onFriendsItemClick": this.showFriends,
+        "onDesignSettingsItemClick": this.showDesignSettings
+      });
+    } else {
+      return React.createElement(UserToolbarGuestList, null);
+    }
+  },
+  renderAdditionList: function() {
+    if (this.state.logged) {
+      return React.createElement(UserToolbarAdditionalList, {
+        "user": this.state.user,
+        "searchTitleI18nKey": this.props.searchTitleI18nKey,
+        "onSettingsItemClick": this.showSettings,
+        "onSearchItemClick": this.showSearch
+      });
+    }
+  },
+  toggleVisibility: function() {
+    var visibility;
+    visibility = !this.state.open;
+    localStorage.setItem('states:mainToolbarOpened', visibility);
+    UserToolbarActions.toggleVisibility(visibility);
+    return this.setState({
+      open: visibility
+    });
+  },
+  toggleMessages: function() {
+    return PopupActions.toggleMessages();
+  },
+  toggleNotifications: function() {
+    return PopupActions.toggleNotifications();
+  },
+  showDesignSettings: function() {
+    return PopupActions.showDesignSettings();
+  },
+  showFriends: function() {
+    return PopupActions.showFriends();
+  },
+  showSettings: function() {
+    return PopupActions.showSettings();
+  },
+  showSearch: function() {
+    return PopupActions.showSearch({
+      searchUrl: this.props.searchUrl,
+      searchTitleI18nKey: this.props.searchTitleI18nKey
+    });
+  },
+  handleMouseEnter: function() {
+    return this.setState({
+      hover: true
+    });
+  },
+  handleMouseLeave: function() {
+    return this.setState({
+      hover: false
+    });
+  },
+  getStateFromLocalStorage: function() {
+    var storedState;
+    storedState = localStorage.getItem('states:mainToolbarOpened');
+    return {
+      open: storedState != null ? JSON.parse(storedState) : true
+    };
+  },
+  getStateFromStore: function() {
+    return {
+      user: CurrentUserStore.getUser(),
+      logged: CurrentUserStore.isLogged(),
+      unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount(),
+      unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount()
+    };
+  }
+});
+
+module.exports = UserToolbar;
+>>>>>>> Editor store and services [#89871770]
 
 
 },{"react/lib/cx":599}],65:[function(require,module,exports){
@@ -21033,6 +27610,7 @@ window.EntryCommentBox_CommentMetaBar = React.createClass({
   }
 });
 
+<<<<<<< HEAD
 
 
 },{}],66:[function(require,module,exports){
@@ -21459,8 +28037,563 @@ window.EntryCommentBox_LoadMore = React.createClass({
   }
 });
 
+=======
+},{"../../../../shared/react/mixins/connectStore":299,"../../actions/popup":11,"../../actions/userToolbar":14,"../../messaging/stores/messaging_status":268,"../../stores/current_user":290,"../common/scroller/scroller":47,"./user/additionalList":196,"./user/guestList":197,"./user/list":198,"./user/toggle":202,"lodash":456,"react/lib/cx":568}],196:[function(require,module,exports){
+var PropTypes, UserToolbarAdditionalList, UserToolbarListItem;
+
+UserToolbarListItem = require('./list/item');
+
+PropTypes = React.PropTypes;
+
+UserToolbarAdditionalList = React.createClass({
+  displayName: 'UserToolbarAdditionalList',
+  propTypes: {
+    user: PropTypes.object.isRequired,
+    searchTitleI18nKey: PropTypes.string.isRequired,
+    onSettingsItemClick: PropTypes.func.isRequired,
+    onSearchItemClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("ul", {
+      "className": "toolbar__nav toolbar__nav--bottom"
+    }, React.createElement(UserToolbarListItem, {
+      "title": i18n.t('searchbox_titles.' + this.props.searchTitleI18nKey),
+      "icon": "icon--magnifier",
+      "onClick": this.props.onSearchItemClick
+    }), React.createElement(UserToolbarListItem, {
+      "title": i18n.t('toolbar_settings_item'),
+      "icon": "icon--cogwheel",
+      "href": Routes.userSettings(this.props.user.slug),
+      "onClick": this.props.onSettingsItemClick
+    }), React.createElement(UserToolbarListItem, {
+      "title": i18n.t('toolbar_logout_item'),
+      "icon": "icon--logout",
+      "href": Routes.logout_path(this.props.user.slug)
+    }));
+  }
+});
+
+module.exports = UserToolbarAdditionalList;
 
 
+
+},{"./list/item":199}],197:[function(require,module,exports){
+var UserToolbarGuestList, UserToolbarListItem;
+
+UserToolbarListItem = require('./list/item');
+
+UserToolbarGuestList = React.createClass({
+  displayName: 'UserToolbarGuestList',
+  render: function() {
+    return React.createElement("ul", {
+      "className": "toolbar__nav"
+    }, React.createElement(UserToolbarListItem, {
+      "title": i18n.t('feed_live'),
+      "icon": "icon--wave",
+      "href": Routes.live_feed_path()
+    }), React.createElement(UserToolbarListItem, {
+      "title": i18n.t('feed_best'),
+      "icon": "icon--rating",
+      "href": Routes.best_feed_path()
+    }), React.createElement(UserToolbarListItem, {
+      "title": i18n.t('feed_anonymous'),
+      "icon": "icon--anonymous",
+      "href": Routes.anonymous_feed_path()
+    }));
+  }
+});
+
+module.exports = UserToolbarGuestList;
+
+
+
+},{"./list/item":199}],198:[function(require,module,exports){
+var PropTypes, UserToolbarList, UserToolbarListItem, UserToolbarListSubList, UserToolbarListSubListItem;
+
+UserToolbarListItem = require('./list/item');
+
+UserToolbarListSubList = require('./list/subList');
+
+UserToolbarListSubListItem = require('./list/subList/item');
+
+PropTypes = React.PropTypes;
+
+UserToolbarList = React.createClass({
+  propTypes: {
+    user: PropTypes.object.isRequired,
+    unreadConversationsCount: PropTypes.number.isRequired,
+    unreadNotificationsCount: PropTypes.number.isRequired,
+    stayOpen: PropTypes.bool.isRequired,
+    onMessagesItemClick: PropTypes.func.isRequired,
+    onNotificationsItemClick: PropTypes.func.isRequired,
+    onFriendsItemClick: PropTypes.func.isRequired,
+    onDesignSettingsItemClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("ul", {
+      "className": "toolbar__nav"
+    }, React.createElement(UserToolbarListItem, {
+      "title": i18n.t('toolbar_new_entry_item'),
+      "icon": "icon--plus",
+      "href": Routes.new_entry_url(this.props.user.slug)
+    }), React.createElement(UserToolbarListItem, {
+      "title": i18n.t('feed_friends'),
+      "icon": "icon--friends",
+      "href": Routes.friends_feed_path(),
+      "stayOpen": this.props.stayOpen
+    }, React.createElement(UserToolbarListSubList, null, React.createElement(UserToolbarListSubListItem, {
+      "title": i18n.t('feed_live'),
+      "icon": "icon--wave",
+      "href": Routes.live_feed_path()
+    }), React.createElement(UserToolbarListSubListItem, {
+      "title": i18n.t('feed_best'),
+      "icon": "icon--rating",
+      "href": Routes.best_feed_path()
+    }), React.createElement(UserToolbarListSubListItem, {
+      "title": i18n.t('feed_anonymous'),
+      "icon": "icon--anonymous",
+      "href": Routes.anonymous_feed_path()
+    }))), React.createElement(UserToolbarListItem, {
+      "title": i18n.t('toolbar_messages_item'),
+      "badgeCount": this.props.unreadConversationsCount,
+      "badgeClassName": "messages-badge",
+      "icon": "icon--messages",
+      "onClick": this.props.onMessagesItemClick
+    }), React.createElement(UserToolbarListItem, {
+      "title": i18n.t('toolbar_notifications_item'),
+      "badgeCount": this.props.unreadNotificationsCount,
+      "badgeClassName": "notifications-badge",
+      "icon": "icon--bell",
+      "onClick": this.props.onNotificationsItemClick
+    }), React.createElement(UserToolbarListItem, {
+      "title": i18n.t('toolbar_favorites_item'),
+      "icon": "icon--star",
+      "href": Routes.favorites_url(this.props.user.slug)
+    }), React.createElement(UserToolbarListItem, {
+      "title": i18n.t('toolbar_privates_item'),
+      "icon": "icon--lock",
+      "href": Routes.private_entries_url(this.props.user.slug)
+    }), React.createElement(UserToolbarListItem, {
+      "title": i18n.t('toolbar_friends_item'),
+      "icon": "icon--friends",
+      "onClick": this.props.onFriendsItemClick
+    }), React.createElement(UserToolbarListItem, {
+      "title": i18n.t('toolbar_design_item'),
+      "icon": "icon--drawing",
+      "href": Routes.userDesignSettings(this.props.user.slug),
+      "onClick": this.props.onDesignSettingsItemClick
+    }));
+  }
+});
+
+module.exports = UserToolbarList;
+
+
+
+},{"./list/item":199,"./list/subList":200,"./list/subList/item":201}],199:[function(require,module,exports){
+var PropTypes, UserToolbarListItem, cloneWithProps;
+
+cloneWithProps = require('react/lib/cloneWithProps');
+
+PropTypes = React.PropTypes;
+
+UserToolbarListItem = React.createClass({
+  displayName: 'UserToolbarListItem',
+  propTypes: {
+    title: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    href: PropTypes.string,
+    badgeCount: PropTypes.number,
+    badgeClassName: PropTypes.string,
+    stayOpen: PropTypes.bool,
+    onClick: PropTypes.func
+  },
+  getInitialState: function() {
+    return {
+      open: false
+    };
+  },
+  componentDidMount: function() {
+    var link;
+    link = this.refs.link.getDOMNode();
+    return $(link).tooltip({
+      title: this.props.title,
+      placement: 'right',
+      container: '.toolbar--main'
+    });
+  },
+  componentWillReceiveProps: function(nextProps) {
+    if (!(nextProps.stayOpen && this.isOpen())) {
+      return this.close();
+    }
+  },
+  componentWillUnmount: function() {
+    var link;
+    link = this.refs.link.getDOMNode();
+    return $(link).tooltip('destroy');
+  },
+  render: function() {
+    var children;
+    children = React.Children.map(this.props.children, (function(_this) {
+      return function(child) {
+        return cloneWithProps(child, {
+          opened: _this.isOpen()
+        });
+      };
+    })(this));
+    return React.createElement("li", {
+      "className": "toolbar__nav-item",
+      "onMouseEnter": this.handleMouseEnter,
+      "onMouseLeave": this.handleMouseLeave
+    }, React.createElement("a", {
+      "ref": "link",
+      "href": this.props.href,
+      "className": "toolbar__nav-link",
+      "onClick": this.handeLinkClick
+    }, React.createElement("i", {
+      "className": 'icon ' + this.props.icon
+    }), React.createElement("span", {
+      "className": "toolbar__nav-text"
+    }, this.props.title), this.renderBadge()), children);
+  },
+  renderBadge: function() {
+    if (this.props.badgeCount) {
+      return React.createElement("span", {
+        "className": this.props.badgeClassName
+      }, this.props.badgeCount);
+    }
+  },
+  isOpen: function() {
+    return !!this.state.open;
+  },
+  open: function() {
+    return this.setState({
+      open: true
+    });
+  },
+  close: function() {
+    return this.setState({
+      open: false
+    });
+  },
+  handleMouseEnter: function() {
+    return this.open();
+  },
+  handleMouseLeave: function() {
+    if (!this.props.stayOpen) {
+      return this.close();
+    }
+  },
+  handeLinkClick: function(e) {
+    if (this.props.onClick != null) {
+      e.preventDefault();
+      return this.props.onClick();
+    }
+  }
+});
+
+module.exports = UserToolbarListItem;
+
+
+
+},{"react/lib/cloneWithProps":563}],200:[function(require,module,exports){
+var PropTypes, UserToolbarListSubList;
+
+PropTypes = React.PropTypes;
+
+UserToolbarListSubList = React.createClass({
+  displayName: 'UserToolbarListSubList',
+  propTypes: {
+    opened: PropTypes.bool.isRequired
+  },
+  componentDidUpdate: function(prevProps, prevState) {
+    var subNav;
+    subNav = this.getDOMNode();
+    if (prevProps.opened !== this.props.opened) {
+      if (this.props.opened) {
+        return $(subNav).stop().slideDown(300);
+      } else {
+        return $(subNav).stop().slideUp(300);
+      }
+    }
+  },
+  render: function() {
+    return React.createElement("ul", {
+      "className": "toolbar__subnav"
+    }, this.props.children);
+  }
+});
+
+module.exports = UserToolbarListSubList;
+
+
+
+},{}],201:[function(require,module,exports){
+var PropTypes, UserToolbarListSubListItem;
+
+PropTypes = React.PropTypes;
+
+UserToolbarListSubListItem = React.createClass({
+  displayName: 'UserToolbarListSubListItem',
+  propTypes: {
+    title: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    href: PropTypes.string,
+    onClick: PropTypes.func
+  },
+  componentDidMount: function() {
+    var link;
+    link = this.refs.link.getDOMNode();
+    return $(link).tooltip({
+      title: this.props.title,
+      placement: 'right',
+      container: '.toolbar--main'
+    });
+  },
+  componentWillUnmount: function() {
+    var link;
+    link = this.refs.link.getDOMNode();
+    return $(link).tooltip('destroy');
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "toolbar__subnav-item"
+    }, React.createElement("a", {
+      "ref": "link",
+      "href": this.props.href,
+      "className": "toolbar__subnav-link"
+    }, React.createElement("i", {
+      "className": 'icon ' + this.props.icon
+    }), React.createElement("span", {
+      "className": "toolbar__subnav-text"
+    }, this.props.title)));
+  }
+});
+
+module.exports = UserToolbarListSubListItem;
+
+
+
+},{}],202:[function(require,module,exports){
+var PropTypes, UserToolbarToggle;
+
+PropTypes = React.PropTypes;
+
+UserToolbarToggle = React.createClass({
+  displayName: 'UserToolbarToggle',
+  propTypes: {
+    hasConversations: PropTypes.bool.isRequired,
+    hasNotifications: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "toolbar__toggle",
+      "onClick": this.handleClick
+    }, this.renderIndicators(), React.createElement("i", {
+      "className": "icon icon--menu"
+    }));
+  },
+  renderIndicators: function() {
+    var indicators;
+    indicators = [];
+    if (this.props.hasConversations) {
+      indicators.push(React.createElement("i", {
+        "className": "toolbar__m-indicator toolbar__m-indicator--messages",
+        "key": "conversations"
+      }));
+    }
+    if (this.props.hasNotifications) {
+      indicators.push(React.createElement("i", {
+        "className": "toolbar__m-indicator toolbar__m-indicator--notifications",
+        "key": "notifications"
+      }));
+    }
+    return React.createElement("span", {
+      "className": "toolbar__m-indicators"
+    }, indicators);
+  },
+  handleClick: function() {
+    return this.props.onClick();
+  }
+});
+
+module.exports = UserToolbarToggle;
+
+
+
+},{}],203:[function(require,module,exports){
+var EVENT_NAME_MAP, ReactTransitionGroup, TICK, TimeoutTransitionGroupChild, animationAllowed, animationSupported, detectEvents, endEvents;
+
+ReactTransitionGroup = require('react/lib/ReactTransitionGroup');
+
+TICK = 17;
+
+EVENT_NAME_MAP = {
+  transitionend: {
+    transition: 'transitionend',
+    WebkitTransition: 'webkitTransitionEnd',
+    MozTransition: 'mozTransitionEnd',
+    OTransition: 'oTransitionEnd',
+    msTransition: 'MSTransitionEnd'
+  },
+  animationend: {
+    animation: 'animationend',
+    WebkitAnimation: 'webkitAnimationEnd',
+    MozAnimation: 'mozAnimationEnd',
+    OAnimation: 'oAnimationEnd',
+    msAnimation: 'MSAnimationEnd'
+  }
+};
+
+endEvents = [];
+
+(detectEvents = function() {
+  var baseEventName, baseEvents, style, styleName, testEl;
+  testEl = document.createElement('div');
+  style = testEl.style;
+  if (!('AnimationEvent' in window)) {
+    delete EVENT_NAME_MAP.animationend.animation;
+  }
+  if (!('TransitionEvent' in window)) {
+    delete EVENT_NAME_MAP.transitionend.transition;
+  }
+  for (baseEventName in EVENT_NAME_MAP) {
+    if (EVENT_NAME_MAP.hasOwnProperty(baseEventName)) {
+      baseEvents = EVENT_NAME_MAP[baseEventName];
+      for (styleName in baseEvents) {
+        if (styleName in style) {
+          endEvents.push(baseEvents[styleName]);
+          break;
+        }
+      }
+    }
+  }
+})();
+
+animationSupported = function() {
+  return endEvents.length !== 0;
+};
+
+animationAllowed = function() {
+  var browser, browserName, browserVersion;
+  browser = bowser.browser || bowser;
+  browserName = browser.name;
+  browserVersion = parseInt(browser.version);
+  if (browserName === 'Firefox' && browserVersion < 34) {
+    return false;
+  }
+  return true;
+};
+
+TimeoutTransitionGroupChild = React.createClass({
+  transition: function(animationType, finishCallback) {
+    var activeClassName, className, endListener, node;
+    if (!animationAllowed()) {
+      return typeof finishCallback === "function" ? finishCallback() : void 0;
+    }
+    node = this.getDOMNode();
+    className = this.props.name + '-' + animationType;
+    activeClassName = className + '-active';
+    endListener = function() {
+      $(node).removeClass(className);
+      $(node).removeClass(activeClassName);
+      return typeof finishCallback === "function" ? finishCallback() : void 0;
+    };
+    if (!animationSupported()) {
+      endListener();
+    } else {
+      switch (animationType) {
+        case 'enter':
+          this.animationTimeout = setTimeout(endListener, this.props.enterTimeout);
+          break;
+        case 'leave':
+          this.animationTimeout = setTimeout(endListener, this.props.leaveTimeout);
+      }
+    }
+    $(node).addClass(className);
+    return this.queueClass(activeClassName);
+  },
+  queueClass: function(className) {
+    this.classNameQueue.push(className);
+    if (!this.timeout) {
+      return this.timeout = setTimeout(this.flushClassNameQueue, TICK);
+    }
+  },
+  flushClassNameQueue: function() {
+    if (this.isMounted()) {
+      $(this.getDOMNode()).addClass(this.classNameQueue.join(' '));
+    }
+    this.classNameQueue.length = 0;
+    return this.timeout = null;
+  },
+  componentWillMount: function() {
+    return this.classNameQueue = [];
+  },
+  componentWillUnmount: function() {
+    if (this.timeout != null) {
+      clearTimeout(this.timeout);
+    }
+    if (this.animationTimeout != null) {
+      return clearTimeout(this.animationTimeout);
+    }
+  },
+  componentWillEnter: function(done) {
+    if (this.props.enter) {
+      return this.transition('enter', done);
+    } else {
+      return done();
+    }
+  },
+  componentWillLeave: function(done) {
+    if (this.props.leave) {
+      return this.transition('leave', done);
+    } else {
+      return done();
+    }
+  },
+  render: function() {
+    return React.Children.only(this.props.children);
+  }
+});
+
+window.TimeoutTransitionGroup = React.createClass({
+  propTypes: {
+    enterTimeout: React.PropTypes.number.isRequired,
+    leaveTimeout: React.PropTypes.number.isRequired,
+    transitionName: React.PropTypes.string.isRequired,
+    transitionEnter: React.PropTypes.bool,
+    transitionLeave: React.PropTypes.bool
+  },
+  getDefaultProps: function() {
+    return {
+      transitionEnter: true,
+      transitionLeave: true
+    };
+  },
+  _wrapChild: function(child) {
+    return React.createElement(TimeoutTransitionGroupChild, {
+      "enterTimeout": this.props.enterTimeout,
+      "leaveTimeout": this.props.leaveTimeout,
+      "name": this.props.transitionName,
+      "enter": this.props.transitionEnter,
+      "leave": this.props.transitionLeave
+    }, child);
+  },
+  render: function() {
+    return React.createElement(ReactTransitionGroup, React.__spread({}, this.props, {
+      "childFactory": this._wrapChild
+    }));
+  }
+});
+
+
+>>>>>>> Editor store and services [#89871770]
+
+},{"react/lib/ReactTransitionGroup":540}],204:[function(require,module,exports){
+var PureRenderMixin, cx;
+
+<<<<<<< HEAD
 },{}],75:[function(require,module,exports){
 var CommentsMixin;
 
@@ -21563,8 +28696,61 @@ CommentsMixin = {
           });
         };
       })(this)
+=======
+cx = require('react/lib/cx');
+
+PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
+
+window.Voting = React.createClass({
+  mixins: [RequesterMixin, ComponentManipulationsMixin, PureRenderMixin],
+  propTypes: {
+    entryId: React.PropTypes.number.isRequired,
+    isVoteable: React.PropTypes.bool.isRequired,
+    isVoted: React.PropTypes.bool.isRequired,
+    votes: React.PropTypes.number.isRequired,
+    rating: React.PropTypes.number.isRequired
+  },
+  getInitialState: function() {
+    return {
+      canVote: this.props.isVoteable,
+      isVoted: this.props.isVoted,
+      votes: this.props.votes,
+      rating: this.props.rating,
+      process: false
+    };
+  },
+  componentDidMount: function() {
+    var $voting;
+    $voting = $(this.getDOMNode());
+    return $voting.tooltip({
+      placement: 'top'
     });
   },
+  componentWillUnmount: function() {
+    var $voting;
+    $voting = $(this.getDOMNode());
+    return $voting.tooltip('destroy');
+  },
+  render: function() {
+    var title, votes, votingClasses;
+    title = this.getTitle();
+    votingClasses = cx({
+      'voting': true,
+      'votable': this.state.canVote,
+      'unvotable': !this.state.canVote,
+      'voted': this.state.isVoted
+>>>>>>> Editor store and services [#89871770]
+    });
+    votes = this.state.process ? React.createElement(Spinner, {
+      "size": 8.
+    }) : this.state.votes;
+    return React.createElement("span", {
+      "className": votingClasses,
+      "data-original-title": title,
+      "onClick": this.handleClick
+    }, votes);
+  },
+<<<<<<< HEAD
   loadMoreComments: function() {
     this.setState({
       isLoadMoreError: false,
@@ -21596,17 +28782,42 @@ CommentsMixin = {
             isLoadMoreError: true
           });
           return TastyNotifyController.errorResponse(data);
+=======
+  handleClick: function() {
+    if (this.state.isVoted || !this.state.canVote) {
+      return;
+    }
+    this.setState({
+      process: true
+    });
+    return this.createRequest({
+      url: ApiRoutes.votes_url(this.props.entryId),
+      method: 'POST',
+      success: (function(_this) {
+        return function(data) {
+          return _this.safeUpdateState({
+            isVoted: data.is_voted,
+            canVote: data.is_voteable,
+            votes: data.votes,
+            rating: data.votes
+          });
+>>>>>>> Editor store and services [#89871770]
         };
       })(this),
       complete: (function(_this) {
         return function() {
           return _this.safeUpdateState({
+<<<<<<< HEAD
             isLoadMoreLoading: false
+=======
+            process: false
+>>>>>>> Editor store and services [#89871770]
           });
         };
       })(this)
     });
   },
+<<<<<<< HEAD
   removeComment: function(comment) {
     var newComments;
     newComments = _.without(this.state.comments, comment);
@@ -21630,13 +28841,31 @@ CommentsMixin = {
     var hash, _ref;
     hash = window.location.hash;
     return parseInt((_ref = hash.match(/^#comment-(\d+)/)) != null ? _ref[1] : void 0);
+=======
+  getTitle: function() {
+    var title;
+    if (this.state.canVote && !this.state.isVoted) {
+      title = i18n.t('vote');
+    } else if (this.state.isVoted) {
+      title = i18n.t('voted');
+    } else {
+      title = i18n.t('cant_vote');
+    }
+    return '(Рейтинг ' + this.state.rating + ') ' + title;
+>>>>>>> Editor store and services [#89871770]
   }
-};
+});
 
+<<<<<<< HEAD
 React.mixins.add('CommentsMixin', [CommentsMixin, RequesterMixin, ComponentManipulationsMixin]);
+=======
+>>>>>>> Editor store and services [#89871770]
 
 
+},{"react/lib/ReactComponentWithPureRenderMixin":491,"react/lib/cx":568}],205:[function(require,module,exports){
+var ApiConstants, keyMirror;
 
+<<<<<<< HEAD
 },{}],76:[function(require,module,exports){
 window.EntryMetabarAuthor = React.createClass({
   propTypes: {
@@ -21737,11 +28966,51 @@ window.EntryMetabarDate = React.createClass({
   }
 });
 
+=======
+keyMirror = require('react/lib/keyMirror');
+
+ApiConstants = keyMirror({
+  SEARCH_LOAD_NEXT_PAGE: null
+});
+
+module.exports = ApiConstants;
+
+
+
+},{"react/lib/keyMirror":596}],206:[function(require,module,exports){
+var ApiConstants, EditorConstants, UserToolbarConstants;
+
+ApiConstants = require('./api');
+
+UserToolbarConstants = require('./userToolbar');
+
+EditorConstants = require('./editor');
+
+module.exports = {
+  api: ApiConstants,
+  userToolbar: UserToolbarConstants,
+  editor: EditorConstants
+};
+
+
+
+},{"./api":205,"./editor":207,"./userToolbar":208}],207:[function(require,module,exports){
+var EditorConstants, keyMirror;
+
+keyMirror = require('react/lib/keyMirror');
+
+EditorConstants = keyMirror({
+  INIT: null
+});
+
+module.exports = EditorConstants;
+>>>>>>> Editor store and services [#89871770]
 
 
 },{}],79:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_BETWEEN_TOGGLER_AND_MENU, MOUSE_LEAVE_TIMEOUT, cx;
 
+<<<<<<< HEAD
 cx = require('react/lib/cx');
 
 MOUSE_LEAVE_TIMEOUT = 300;
@@ -21920,9 +29189,87 @@ window.EntryMetabarDropdownMenu = React.createClass({
       default:
         return typeof console.error === "function" ? console.error("Unknown state.currentState", this.state.currentState) : void 0;
     }
-  }
+=======
+},{"react/lib/keyMirror":596}],208:[function(require,module,exports){
+var UserToolbarConstants, keyMirror;
+
+keyMirror = require('react/lib/keyMirror');
+
+UserToolbarConstants = keyMirror({
+  INIT_VISIBILITY: null,
+  TOGGLE_VISIBILITY: null
 });
 
+module.exports = UserToolbarConstants;
+
+
+
+},{"react/lib/keyMirror":596}],209:[function(require,module,exports){
+var GuideController;
+
+GuideController = {
+  start: function() {
+    var intro, userToolbar, userToolbarClicked, userToolbarItem;
+    userToolbar = document.querySelectorAll(".toolbar--nav")[1];
+    userToolbarItem = $(userToolbar).find(".toolbar__popup-item").eq(0).get(0);
+    userToolbarClicked = false;
+    intro = introJs.introJs();
+    intro.setOptions({
+      steps: [
+        {
+          intro: "<div class='introjs-tooltiptitle'>Добро пожаловать на Taaasty!</div> Это дневник, в который хочется писать каждый день"
+        }, {
+          intro: "<div class='introjs-tooltiptitle'>Сейчас мы познакомим Вас с&nbsp;основными элементами</div> Мы постараемся рассказать про каждый элемент отдельно, чтобы Вы прочуствовали все возможности Taaasty. Жмите &laquo;Далее&raquo; и приступим :)"
+        }, {
+          element: document.querySelectorAll(".post")[1],
+          intro: "<div class='introjs-tooltiptitle'>Напишите что-нибудь или добавьте фотографию</div> Вы можете размещать фотографии, писать тексты, постить ссылки с любимых сервисов. Мы поддерживаем instagram, youtube и еще более 500 сервисов",
+          position: "left"
+        }, {
+          element: document.querySelector(".hero__box"),
+          intro: "<div class='introjs-tooltiptitle'>Заголовок тлога &mdash; это профиль</div> Вся информация о тлоге в одном месте. Просто раскройте кликом мыши. Там же можно подписаться/отписаться",
+          position: "bottom"
+        }, {
+          element: userToolbarItem,
+          intro: "<div class='introjs-tooltiptitle'>Делитесь своими мыслями в социальных сетях</div> Интересные мысли, которыми хотелось бы поделиться со всем миром?",
+          position: "left"
+        }, {
+          element: document.querySelector(".social-share"),
+          intro: "<div class='introjs-tooltiptitle'>Делитесь своими мыслями в социальных сетях</div> Интересные мысли, которыми хотелось бы поделиться со всем миром?",
+          position: "right"
+        }
+      ],
+      nextLabel: "Дальше",
+      prevLabel: "Назад",
+      skipLabel: "Отменить",
+      doneLabel: "Конец",
+      exitOnEsc: false,
+      exitOnOverlayClick: false,
+      showStepNumbers: false,
+      showBullets: false,
+      showProgress: true,
+      overlayOpacity: .92
+    });
+    intro.onafterchange(function() {
+      var className, skipButton;
+      skipButton = document.querySelector(".introjs-skipbutton");
+      className = skipButton.className + "introjs-visible";
+      if (intro._currentStep === (intro._introItems.length - 1)) {
+        skipButton.className = className;
+      }
+      if (intro._currentStep === 4) {
+        userToolbar.click();
+        return userToolbarClicked = true;
+      } else if (userToolbarClicked) {
+        userToolbar.click();
+        return userToolbarClicked = false;
+      }
+    });
+    return intro.start();
+>>>>>>> Editor store and services [#89871770]
+  }
+};
+
+<<<<<<< HEAD
 
 
 },{"react/lib/cx":599}],80:[function(require,module,exports){
@@ -21995,11 +29342,56 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
         };
       })(this)
     });
+=======
+module.exports = GuideController;
+
+
+
+},{}],210:[function(require,module,exports){
+var Constants, LayoutStatesController;
+
+Constants = require('../constants/constants');
+
+LayoutStatesController = (function() {
+  LayoutStatesController.prototype.layoutEl = null;
+
+  LayoutStatesController.prototype.states = {
+    userToolbar: 'main-toolbar-open'
+  };
+
+  function LayoutStatesController(_arg) {
+    var layoutEl;
+    this.dispatcher = _arg.dispatcher, layoutEl = _arg.layoutEl;
+    this.layoutEl = layoutEl != null ? layoutEl : document.body;
+    this.listenDispatcher();
+>>>>>>> Editor store and services [#89871770]
   }
-});
 
+<<<<<<< HEAD
+=======
+  LayoutStatesController.prototype.toggleState = function(UIelement, value) {
+    var methodName, stateName;
+    stateName = this.states[UIelement];
+    methodName = value ? 'add' : 'remove';
+    return this.layoutEl.classList[methodName](stateName);
+  };
+>>>>>>> Editor store and services [#89871770]
 
+  LayoutStatesController.prototype.listenDispatcher = function() {
+    return this.dispatcher.register((function(_this) {
+      return function(payload) {
+        var action;
+        action = payload.action;
+        switch (action.type) {
+          case Constants.userToolbar.INIT_VISIBILITY:
+          case Constants.userToolbar.TOGGLE_VISIBILITY:
+            return _this.toggleState('userToolbar', action.value);
+        }
+      };
+    })(this));
+  };
 
+<<<<<<< HEAD
 },{}],81:[function(require,module,exports){
 var cx;
 
@@ -22110,9 +29502,99 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({
     });
   }
 });
+=======
+  return LayoutStatesController;
+
+})();
+
+module.exports = LayoutStatesController;
 
 
 
+},{"../constants/constants":206}],211:[function(require,module,exports){
+window.ReactPopup = (function() {
+  function ReactPopup() {
+    this.popupContainer = $('<\div>').appendTo('body').get(0);
+  }
+
+  ReactPopup.prototype.show = function(reactClass, args) {
+    return React.render(React.createElement(PopupBox, React.__spread({}, args), React.createElement(reactClass, React.__spread({}, args))), this.popupContainer);
+  };
+
+  ReactPopup.prototype.close = function() {
+    return _.defer((function(_this) {
+      return function() {
+        return React.unmountComponentAtNode(_this.popupContainer);
+      };
+    })(this));
+  };
+
+  return ReactPopup;
+
+})();
+
+
+
+},{}],212:[function(require,module,exports){
+var PopupController, _;
+
+_ = require('lodash');
+
+PopupController = (function() {
+  function PopupController() {}
+
+  PopupController.prototype.containerAttribute = 'popup-container';
+
+  PopupController.prototype.addContainer = function(containerAttribute) {
+    var container;
+    container = document.querySelector("[" + containerAttribute + "]");
+    if (container == null) {
+      container = document.createElement('div');
+      container.setAttribute(containerAttribute, '');
+      document.body.appendChild(container);
+    }
+    return container;
+  };
+
+  PopupController.prototype.removeContainer = function(container) {
+    var _ref;
+    return (_ref = container.parentNode) != null ? _ref.removeChild(container) : void 0;
+  };
+
+  PopupController.prototype.open = function(Component, props, containerAttribute) {
+    var container;
+    if (containerAttribute == null) {
+      containerAttribute = this.containerAttribute;
+    }
+    container = this.addContainer(containerAttribute);
+    return React.render(React.createElement(Popup, {
+      "onClose": this.handleClose.bind(this, containerAttribute)
+    }, React.createElement(Component, React.__spread({}, props))), container);
+  };
+>>>>>>> Editor store and services [#89871770]
+
+  PopupController.prototype.openPopup = function(PopupComponent, props, containerAttribute) {
+    var container;
+    if (containerAttribute == null) {
+      containerAttribute = this.containerAttribute;
+    }
+    container = this.addContainer(containerAttribute);
+    return React.render(React.createElement(PopupComponent, React.__spread({}, props, {
+      "onClose": this.handleClose.bind(this, containerAttribute)
+    })), container);
+  };
+
+  PopupController.prototype.close = function(containerAttribute) {
+    var container;
+    if (containerAttribute == null) {
+      containerAttribute = this.containerAttribute;
+    }
+    container = document.querySelector("[" + containerAttribute + "]");
+    React.unmountComponentAtNode(container);
+    return this.removeContainer(container);
+  };
+
+<<<<<<< HEAD
 },{"react/lib/cx":599}],82:[function(require,module,exports){
 window.EntryMetabarDropdownMenuItem = React.createClass({
   propTypes: {
@@ -22127,11 +29609,51 @@ window.EntryMetabarDropdownMenuItem = React.createClass({
     }, React.createElement("i", {
       "className": "icon " + this.props.icon
     }), this.props.title);
+=======
+  PopupController.prototype.handleClose = function(containerAttribute) {
+    return this.close(containerAttribute);
+  };
+
+  return PopupController;
+
+})();
+
+module.exports = PopupController;
+
+
+
+},{"lodash":456}],213:[function(require,module,exports){
+window.ReactShellBox = (function() {
+  function ReactShellBox() {
+    var container;
+    container = document.querySelectorAll('[shellbox-container]')[0];
+    if (!container) {
+      container = $('<\div>', {
+        'shellbox-container': ''
+      }).appendTo('body')[0];
+    }
+    this.shellboxContainer = container;
+>>>>>>> Editor store and services [#89871770]
   }
-});
 
+<<<<<<< HEAD
+=======
+  ReactShellBox.prototype.show = function(reactClass, args) {
+    return React.render(React.createElement(ShellBox, null, React.createElement(reactClass, React.__spread({}, args))), this.shellboxContainer);
+  };
 
+  ReactShellBox.prototype.close = function() {
+    return _.defer((function(_this) {
+      return function() {
+        return React.unmountComponentAtNode(_this.shellboxContainer);
+      };
+    })(this));
+  };
+>>>>>>> Editor store and services [#89871770]
 
+  return ReactShellBox;
+
+<<<<<<< HEAD
 },{}],83:[function(require,module,exports){
 window.EntryMetabarDropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
@@ -22168,9 +29690,43 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
         return TastyNotifyController.errorResponse(data);
       }
     });
-  }
-});
+=======
+})();
 
+
+
+},{}],214:[function(require,module,exports){
+window.TastyAlertController = {
+  show: function(_arg) {
+    var buttonColor, buttonText, container, message, onAccept, regex, title;
+    title = _arg.title, message = _arg.message, buttonText = _arg.buttonText, buttonColor = _arg.buttonColor, onAccept = _arg.onAccept;
+    if (isMobile()) {
+      regex = /<br\s*[\/]?>/gi;
+      message = message.replace(regex, '\n');
+      alert(message);
+      if (onAccept != null) {
+        return onAccept();
+      }
+    } else {
+      container = document.querySelectorAll('[tasty-alert-container]')[0];
+      if (!container) {
+        container = $('<\div>', {
+          'tasty-alert-container': ''
+        }).appendTo('body')[0];
+      }
+      return React.render(React.createElement(TastyAlert, {
+        "title": title,
+        "message": message,
+        "buttonText": buttonText,
+        "buttonColor": buttonColor,
+        "onAccept": onAccept
+      }), container);
+    }
+>>>>>>> Editor store and services [#89871770]
+  }
+};
+
+<<<<<<< HEAD
 
 
 },{}],84:[function(require,module,exports){
@@ -22335,11 +29891,100 @@ window.EntryMetabar = React.createClass({
       "canReport": this.props.canReport,
       "canDelete": this.props.canDelete
     }));
+=======
+
+
+},{}],215:[function(require,module,exports){
+window.TastyConfirmController = {
+  show: function(_arg) {
+    var acceptButtonColor, acceptButtonText, container, message, messageWithoutBR, onAccept, regex, rejectButtonText;
+    message = _arg.message, acceptButtonText = _arg.acceptButtonText, rejectButtonText = _arg.rejectButtonText, acceptButtonColor = _arg.acceptButtonColor, onAccept = _arg.onAccept;
+    if (isMobile()) {
+      regex = /<br\s*[\/]?>/gi;
+      messageWithoutBR = message.replace(regex, '\n');
+      if (confirm(messageWithoutBR)) {
+        if (_.isFunction(onAccept)) {
+          return onAccept.call();
+        }
+      }
+    } else {
+      container = document.querySelectorAll('[tasty-confirm-container]')[0];
+      if (!container) {
+        container = $('<\div>', {
+          'tasty-confirm-container': ''
+        }).appendTo('body')[0];
+      }
+      return React.render(React.createElement(TastyConfirm, {
+        "message": message,
+        "acceptButtonText": acceptButtonText,
+        "rejectButtonText": rejectButtonText,
+        "acceptButtonColor": acceptButtonColor,
+        "onAccept": onAccept
+      }), container);
+    }
   }
-});
+};
 
 
 
+},{}],216:[function(require,module,exports){
+window.TastyEvents = new EventEmitter();
+
+TastyEvents.keys = {
+  follow_status_changed: function(tlogId) {
+    return "follow_status:" + tlogId + ":changed";
+  },
+  hero_closed: function() {
+    return 'hero:closed';
+  },
+  comment_replied: function(entryId) {
+    return "comment:" + entryId + ":replied";
+  },
+  comment_form_toggled: function() {
+    return 'comment_form:toggled';
+  },
+  user_property_changed: function(propertyName, userId) {
+    return "" + propertyName + ":" + userId + ":changed";
+  },
+  command_current_notification_hide: function() {
+    return 'command:current_notification:hide';
+  },
+  message_list_scrolled: function() {
+    return 'message_list:scrolled';
+  },
+  user_toolbar_closed: function() {
+    return 'user_toolbar:closed';
+  },
+  user_toolbar_opened: function() {
+    return 'user_toolbar:opened';
+  },
+  command_hero_open: function() {
+    return 'command:hero:open';
+  },
+  command_hero_close: function() {
+    return 'command:hero:close';
+  },
+  command_settings_open: function() {
+    return 'command:settings:open';
+  },
+  command_design_settings_open: function() {
+    return 'command:design_settings:open';
+  },
+  command_requested_open: function() {
+    return 'command:requested:open';
+  },
+  command_vkontakte_open: function() {
+    return 'command:vkontakte:open';
+  },
+  command_facebook_open: function() {
+    return 'command:facebook:open';
+>>>>>>> Editor store and services [#89871770]
+  }
+};
+
+
+
+<<<<<<< HEAD
 },{}],86:[function(require,module,exports){
 window.EntryMetabarTag = React.createClass({
   propTypes: {
@@ -22392,11 +30037,118 @@ window.EntryMetabarTags = React.createClass({
     } else {
       return React.createElement("span", null);
     }
+=======
+},{}],217:[function(require,module,exports){
+window.TastyLockingAlertController = {
+  show: function(_arg) {
+    var action, container, message, regex, title;
+    title = _arg.title, message = _arg.message, action = _arg.action;
+    if (isMobile()) {
+      regex = /<br\s*[\/]?>/gi;
+      message = message.replace(regex, '\n');
+      alert(message);
+      if (action != null) {
+        return action();
+      }
+    } else {
+      container = document.querySelectorAll('[tasty-alert-container]')[0];
+      if (!container) {
+        container = $('<\div>', {
+          'tasty-alert-container': ''
+        }).appendTo('body')[0];
+      }
+      return React.render(React.createElement(TastyLockingAlert, {
+        "title": title,
+        "message": message,
+        "action": action
+      }), container);
+    }
   }
+};
+
+
+
+},{}],218:[function(require,module,exports){
+window.TastyNotifyController = {
+  _notificationList: [],
+  notify: function(type, text, timeout) {
+    var container, notification;
+    if (timeout == null) {
+      timeout = 5000;
+    }
+    container = $('<\div>').appendTo('body').get(0);
+    notification = React.render(React.createElement(TastyNotify, {
+      "type": type,
+      "text": text,
+      "timeout": timeout,
+      "onClose": this._removeNotification.bind(this)
+    }), container);
+    return this._notificationList.push(notification);
+  },
+  notifySuccess: function(text, timeout) {
+    if (timeout == null) {
+      timeout = 5000;
+    }
+    return this.notify('success', text, timeout);
+  },
+  notifyError: function(text, timeout) {
+    if (timeout == null) {
+      timeout = 5000;
+    }
+    return this.notify('error', text, timeout);
+  },
+  errorResponse: function(response, timeout) {
+    var json, message;
+    if (timeout == null) {
+      timeout = 5000;
+    }
+    if (response.statusText === 'abort') {
+      return;
+    }
+    if (response.responseJSON != null) {
+      json = response.responseJSON;
+      if (typeof console.error === "function") {
+        console.error('errorResponse JSON', json);
+      }
+      if (json.message != null) {
+        message = json.message;
+      }
+      if (json.long_message != null) {
+        message = json.long_message;
+      }
+      if ((json.error != null) && json.error.length > 0) {
+        message || (message = json.error);
+      }
+    } else {
+      message = i18n.t('network_error', {
+        text: response.statusText
+      });
+    }
+    if (!this._isPageLoadingCanceled(response)) {
+      return this.notify('error', message, timeout);
+    }
+  },
+  hideAll: function() {
+    return this._notificationList.forEach(function(notification) {
+      return notification.close();
+    });
+  },
+  _removeNotification: function(notification) {
+    return this._notificationList = _.without(this._notificationList, notification);
+  },
+  _isPageLoadingCanceled: function(response) {
+    return response.statusText === 'error' && response.status === 0 && response.readyState === 0;
+>>>>>>> Editor store and services [#89871770]
+  }
+};
+
+TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() {
+  return TastyNotifyController.hideAll();
 });
 
 
 
+<<<<<<< HEAD
 },{}],88:[function(require,module,exports){
 window.FeedBricks = React.createClass({
   mixins: [FeedBaseMixin],
@@ -22449,11 +30201,34 @@ window.FeedBricks = React.createClass({
       paddingX: 0,
       paddingY: 0
     });
+=======
+},{}],219:[function(require,module,exports){
+var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
+
+window.TastySoundController = {
+  _buildAudioElement: function(url) {
+    var audioElement;
+    audioElement = document.createElement('audio');
+    audioElement.src = TastySettings.sound_asset_url + url;
+    return audioElement;
+  },
+  play: function(audio) {
+    return audio.play();
+  },
+  incomingMessage: function() {
+    return this.play(INCOMING_MESSAGE);
+  },
+  incomingNotification: function() {
+    return this.play(INCOMING_NOTIFICATION);
+>>>>>>> Editor store and services [#89871770]
   }
-});
+};
 
+INCOMING_MESSAGE = TastySoundController._buildAudioElement('incoming_message.mp3');
 
+INCOMING_NOTIFICATION = TastySoundController._buildAudioElement('incoming_message.mp3');
 
+<<<<<<< HEAD
 },{}],89:[function(require,module,exports){
 var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
 
@@ -22548,9 +30323,48 @@ window.Feed = React.createClass({
     }
   }
 });
+=======
 
 
+},{}],220:[function(require,module,exports){
+var BaseDispatcher,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
+BaseDispatcher = (function(_super) {
+  __extends(BaseDispatcher, _super);
+
+  function BaseDispatcher() {
+    return BaseDispatcher.__super__.constructor.apply(this, arguments);
+  }
+
+  BaseDispatcher.prototype.handleViewAction = function(action) {
+    return this.dispatch({
+      source: 'VIEW_ACTION',
+      action: action
+    });
+  };
+
+  BaseDispatcher.prototype.handleServerAction = function(action) {
+    return this.dispatch({
+      source: 'SERVER_ACTION',
+      action: action
+    });
+  };
+
+  return BaseDispatcher;
+
+})(Dispatcher);
+
+module.exports = BaseDispatcher;
+
+>>>>>>> Editor store and services [#89871770]
+
+
+},{}],221:[function(require,module,exports){
+var BaseDispatcher;
+
+<<<<<<< HEAD
 },{}],90:[function(require,module,exports){
 var THRESHOLD;
 
@@ -22625,16 +30439,32 @@ window.FeedTlog = React.createClass({
         __html: this.props.feedHtml
       }
     }), spinnerAfter));
+=======
+BaseDispatcher = require('./_base');
+
+window.CurrentUserDispatcher = _.extend(new BaseDispatcher(), {
+  setupUser: function(user) {
+    return this.handleServerAction({
+      type: 'setup',
+      user: user
+    });
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],92:[function(require,module,exports){
 var CLASS_PREFIX_STATE, STATE_ERROR, STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_PROCESS, STATE_REQUESTED;
+=======
+},{"./_base":220}],222:[function(require,module,exports){
+var AppDispatcher, Dispatcher, _;
+>>>>>>> Editor store and services [#89871770]
 
 CLASS_PREFIX_STATE = 'state--';
 
+<<<<<<< HEAD
 STATE_NONE = 'none';
 
 STATE_FRIEND = 'friend';
@@ -22833,10 +30663,88 @@ window.HeroProfile_DropdownMenu = React.createClass({
           return _this.activateClosedState();
         };
       })(this)), MOUSE_LEAVE_TIMEOUT);
-    }
+=======
+Dispatcher = require('flux').Dispatcher;
+
+AppDispatcher = _.extend(new Dispatcher(), {
+  handleViewAction: function(action) {
+    return this.dispatch({
+      source: 'VIEW_ACTION',
+      action: action
+    });
+  },
+  handleServerAction: function(action) {
+    return this.dispatch({
+      source: 'SERVER_ACTION',
+      action: action
+    });
   }
 });
 
+module.exports = AppDispatcher;
+
+
+
+},{"flux":450,"lodash":456}],223:[function(require,module,exports){
+window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
+  handleViewAction: function(action) {
+    var payload;
+    payload = {
+      source: 'viewAction',
+      action: action
+    };
+    return this.dispatch(payload);
+  },
+  handleServerAction: function(action) {
+    var payload;
+    payload = {
+      source: 'serverAction',
+      action: action
+    };
+    return this.dispatch(payload);
+  }
+});
+
+
+
+},{}],224:[function(require,module,exports){
+var NormalizedEntry, _;
+
+_ = require('lodash');
+
+NormalizedEntry = (function() {
+  function NormalizedEntry(data) {
+    _.extend(this, data);
+  }
+
+  return NormalizedEntry;
+
+})();
+
+module.exports = NormalizedEntry;
+
+
+
+},{"lodash":456}],225:[function(require,module,exports){
+window.AppHelpers = {
+  reselectAndFocus: function(node) {
+    node.focus();
+    return this.selectAllText(node);
+  },
+  selectAllText: function(node) {
+    var value, valueLength;
+    value = node.value;
+    valueLength = value.length;
+    if (node.setSelectionRange != null) {
+      return node.setSelectionRange(0, valueLength);
+    } else {
+      return node.value = value;
+>>>>>>> Editor store and services [#89871770]
+    }
+  }
+};
+
+<<<<<<< HEAD
 
 
 },{"react/lib/cx":599}],95:[function(require,module,exports){
@@ -22873,8 +30781,30 @@ window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
   }
 });
 
+=======
 
 
+},{}],226:[function(require,module,exports){
+var CLOSED_STATE, COMMENT_CREATE_STATE, COMMENT_EDIT_STATE;
+
+CLOSED_STATE = 'closed';
+
+COMMENT_CREATE_STATE = 'commentCreateForm';
+
+COMMENT_EDIT_STATE = 'commentEditForm';
+
+window.CommentsMediator = (function() {
+  function CommentsMediator() {
+    this._state = CLOSED_STATE;
+    this._forms = [];
+  }
+>>>>>>> Editor store and services [#89871770]
+
+  CommentsMediator.prototype.setState = function(newState) {
+    return this._state = newState;
+  };
+
+<<<<<<< HEAD
 },{}],96:[function(require,module,exports){
 window.HeroProfile_DropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
@@ -23114,17 +31044,269 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({
         };
       })(this)
     });
-  }
-});
+=======
+  CommentsMediator.prototype.registerForm = function(component) {
+    if (!this._isFormRegistered(component)) {
+      if (typeof component.isCurrentlyOpen === "function" ? component.isCurrentlyOpen() : void 0) {
+        this.setState(component);
+      }
+      return this._forms.push(component);
+    }
+  };
 
+  CommentsMediator.prototype.unregisterForm = function(component) {
+    return this._forms = _.without(this._forms, component);
+  };
+
+  CommentsMediator.prototype.openAndReply = function(entryId, name) {
+    var form;
+    form = this._getForm(entryId);
+    form.openAndReply(name);
+    return this.setState(form);
+  };
+
+  CommentsMediator.prototype.openForm = function(entryId, commentId) {
+    var form;
+    form = this._getForm(entryId, commentId);
+    form.openForm();
+    return this.setState(form);
+  };
+
+  CommentsMediator.prototype.closeCurrentForm = function() {
+    var _base;
+    if (typeof (_base = this._state).closeForm === "function") {
+      _base.closeForm();
+    }
+    return this.setState(CLOSED_STATE);
+  };
+
+  CommentsMediator.prototype.doCommentClicked = function(entryId) {
+    if (!this._isFormOpened(entryId)) {
+      this.closeCurrentForm();
+    }
+    return this.openForm(entryId);
+  };
+
+  CommentsMediator.prototype.doReplyClicked = function(entryId, name) {
+    if (!this._isFormOpened(entryId)) {
+      this.closeCurrentForm();
+    }
+    return this.openAndReply(entryId, name);
+  };
+
+  CommentsMediator.prototype.doEdit = function(entryId, commentId) {
+    if (!this._isFormOpened(entryId, commentId)) {
+      this.closeCurrentForm();
+    }
+    return this.openForm(entryId, commentId);
+  };
+
+  CommentsMediator.prototype.doFormClosed = function() {
+    this.closeCurrentForm();
+    return this.setState(CLOSED_STATE);
+  };
+
+  CommentsMediator.prototype._getForm = function(entryId, commentId) {
+    var result;
+    if (commentId != null) {
+      result = this._forms.filter((function(_this) {
+        return function(form) {
+          return form.props.commentId === commentId;
+        };
+      })(this));
+    } else {
+      result = this._forms.filter((function(_this) {
+        return function(form) {
+          return form.props.entryId === entryId;
+        };
+      })(this));
+    }
+    return result[0];
+  };
+
+  CommentsMediator.prototype._isFormRegistered = function(component) {
+    var result;
+    if (component.props.commentId != null) {
+      result = this._forms.filter((function(_this) {
+        return function(form) {
+          return form.props.commentId === component.props.commentId;
+        };
+      })(this));
+    } else {
+      result = this._forms.filter((function(_this) {
+        return function(form) {
+          return form.props.entryId === component.props.entryId;
+        };
+      })(this));
+    }
+    return result.length > 0;
+  };
+
+  CommentsMediator.prototype._isFormOpened = function(entryId, commentId) {
+    if (!this._isClosed()) {
+      return this._state.props.entryId === entryId && this._state.props.commentId === commentId;
+    } else {
+      return false;
+    }
+  };
+
+  CommentsMediator.prototype._isClosed = function() {
+    return this._state === CLOSED_STATE;
+  };
+
+  return CommentsMediator;
+
+})();
+
+window.commentsMediator = new CommentsMediator();
+
+
+
+},{}],227:[function(require,module,exports){
+window.ConversationActions = {
+  clickConversation: function(conversationId) {
+    return MessagingDispatcher.handleViewAction({
+      type: 'openConversation',
+      conversationId: conversationId
+    });
+  },
+  openConversation: function(recipientId) {
+    var conversation;
+    conversation = ConversationsStore.getConversationByUserId(recipientId);
+    if (conversation != null) {
+      MessagingDispatcher.handleViewAction({
+        type: 'openConversation',
+        conversationId: conversation.id
+      });
+    } else {
+      messagingService.postNewConversation({
+        recipientId: recipientId
+      });
+    }
+    messagingService.openMessagesPopup();
+    return TastyEvents.emit(TastyEvents.keys.command_hero_close());
+  },
+  postNewConversation: function(_arg) {
+    var error, recipientId;
+    recipientId = _arg.recipientId, error = _arg.error;
+    return messagingService.postNewConversation({
+      recipientId: recipientId,
+      error: error
+    });
+  }
+};
+
+
+
+},{}],228:[function(require,module,exports){
+window.MessageActions = {
+  newMessage: function(_arg) {
+    var content, conversationId, uuid;
+    conversationId = _arg.conversationId, content = _arg.content;
+    uuid = UuidService.generate();
+    MessagingDispatcher.messageSubmitted({
+      conversationId: conversationId,
+      content: content,
+      uuid: uuid
+    });
+    return messagingService.postMessage({
+      conversationId: conversationId,
+      content: content,
+      uuid: uuid
+    });
+  },
+  readMessage: function(conversationId, messageId) {
+    return messagingService.markAsReadMessage(conversationId, messageId);
+  },
+  resendMessage: function(_arg) {
+    var content, conversationId, uuid;
+    conversationId = _arg.conversationId, content = _arg.content, uuid = _arg.uuid;
+    return messagingService.postMessage({
+      conversationId: conversationId,
+      content: content,
+      uuid: uuid
+    });
+  },
+  loadMoreMessages: function(_arg) {
+    var conversationId, toMessageId;
+    conversationId = _arg.conversationId, toMessageId = _arg.toMessageId;
+    return messagingService.loadMoreMessages(conversationId, toMessageId);
+>>>>>>> Editor store and services [#89871770]
+  }
+};
+
+<<<<<<< HEAD
 
 
 },{}],99:[function(require,module,exports){
 window.HeroProfileStats_FollowerItem = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
+=======
+
+
+},{}],229:[function(require,module,exports){
+window.NotificationActions = {
+  readNotification: function(notificationId) {
+    console.log('читаем уведомление', notificationId);
+    return messagingService.markAsReadNotification(notificationId);
+  }
+};
+
+
+
+},{}],230:[function(require,module,exports){
+window.PopupActions = {
+  closeMessagesPopup: function() {
+    messagingService.closeMessagesPopup();
+    return MessagingDispatcher.handleViewAction({
+      type: 'closeMessagesPopup'
+    });
+  },
+  closeNotificationsPopup: function() {
+    return messagingService.closeNotificationsPopup();
+  },
+  openMessagesPopup: function() {
+    return messagingService.openMessagesPopup();
+  },
+  openNotificationsPopup: function() {
+    return messagingService.openNotificationsPopup();
+  },
+  toggleMessagesPopup: function() {
+    return messagingService.toggleMessagesPopup();
+  },
+  toggleNotificationsPopup: function() {
+    return messagingService.toggleNotificationsPopup();
+  }
+};
+
+
+
+},{}],231:[function(require,module,exports){
+window.WriteMessageButton = React.createClass({
+  propTypes: {
+    user: React.PropTypes.object.isRequired
   },
   render: function() {
+    return React.createElement("button", {
+      "className": "write-message-button",
+      "onClick": this.handleClick
+    }, React.createElement("i", {
+      "className": "icon icon--letter"
+    }));
+>>>>>>> Editor store and services [#89871770]
+  },
+  handleClick: function() {
+    return ConversationActions.openConversation(this.props.user.id);
+  }
+});
+
+
+
+},{}],232:[function(require,module,exports){
+window.MessagesPopup_Conversations = React.createClass({
+  render: function() {
+<<<<<<< HEAD
     return React.createElement("article", {
       "className": "user__item"
     }, React.createElement("a", {
@@ -23141,11 +31323,26 @@ window.HeroProfileStats_FollowerItem = React.createClass({
     }, React.createElement("span", {
       "className": "user__name"
     }, this.props.relationship.reader.name))));
+=======
+    return React.createElement("div", {
+      "className": "messages__section messages__section--dialogs"
+    }, React.createElement(MessagesPopup_ConversationsList, null), React.createElement("footer", {
+      "className": "messages__footer"
+    }, React.createElement(MessagesPopup_UICreateNewConversationButton, {
+      "onClick": this.handleCreateNewConversation
+    })));
+  },
+  handleCreateNewConversation: function() {
+    return MessagingDispatcher.handleViewAction({
+      type: 'clickNewConversation'
+    });
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],100:[function(require,module,exports){
 window.HeroProfileStats_FollowingItem = React.createClass({
   propTypes: {
@@ -23168,11 +31365,24 @@ window.HeroProfileStats_FollowingItem = React.createClass({
     }, React.createElement("span", {
       "className": "user__name"
     }, this.props.relationship.user.name))));
+=======
+},{}],233:[function(require,module,exports){
+window.MessagesPopup_ConversationsListEmpty = React.createClass({
+  render: function() {
+    return React.createElement("div", {
+      "className": "messages__list-cell"
+    }, React.createElement("div", {
+      "className": "messages__empty"
+    }, React.createElement("div", {
+      "className": "messages__empty-text"
+    }, i18n.t('conversations_empty_list'))));
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],101:[function(require,module,exports){
 window.HeroProfileStats_TagItem = React.createClass({
   propTypes: {
@@ -23194,10 +31404,65 @@ window.HeroProfileStats_TagItem = React.createClass({
 });
 
 
+=======
+},{}],234:[function(require,module,exports){
+window.MessagesPopup_ConversationsList = React.createClass({
+  mixins: [ScrollerMixin],
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentDidMount: function() {
+    return ConversationsStore.addChangeListener(this._onStoreChange);
+  },
+  componentWillUnmount: function() {
+    return ConversationsStore.removeChangeListener(this._onStoreChange);
+  },
+  render: function() {
+    var conversations;
+    if (this.isEmpty()) {
+      conversations = React.createElement(MessagesPopup_ConversationsListEmpty, null);
+    } else {
+      conversations = this.state.activeConversations.map(function(conversation, i) {
+        return React.createElement(MessagesPopup_ConversationsListItem, {
+          "conversation": conversation,
+          "key": conversation.id
+        });
+      });
+    }
+    return React.createElement("div", {
+      "className": "messages__body"
+    }, React.createElement("div", {
+      "ref": "scroller",
+      "className": "scroller scroller--dark"
+    }, React.createElement("div", {
+      "className": "scroller__pane js-scroller-pane"
+    }, React.createElement("div", {
+      "className": "messages__dialogs"
+    }, conversations)), React.createElement("div", {
+      "className": "scroller__track js-scroller-track"
+    }, React.createElement("div", {
+      "className": "scroller__bar js-scroller-bar"
+    }))));
+  },
+  isEmpty: function() {
+    return this.state.activeConversations.length === 0;
+  },
+  getStateFromStore: function() {
+    return {
+      activeConversations: ConversationsStore.getActiveConversations()
+    };
+  },
+  _onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
+  }
+});
+
+>>>>>>> Editor store and services [#89871770]
 
 },{}],102:[function(require,module,exports){
 var FADE_DURATION, MARGIN;
 
+<<<<<<< HEAD
 MARGIN = 10;
 
 FADE_DURATION = 300;
@@ -23276,8 +31541,99 @@ window.HeroProfileStats_Popup = React.createClass({
   }
 });
 
+=======
+},{}],235:[function(require,module,exports){
+var cx;
+
+cx = require('react/lib/cx');
+
+window.MessagesPopup_ConversationsListItem = React.createClass({
+  mixins: [ReactGrammarMixin],
+  propTypes: {
+    conversation: React.PropTypes.object.isRequired
+  },
+  render: function() {
+    var lastCreatedAt, lastMessageText, listItemClasses, online;
+    if (this.props.conversation.online) {
+      online = React.createElement("span", {
+        "className": "messages__user-online"
+      });
+    }
+    listItemClasses = cx({
+      'messages__dialog': true,
+      'state--read': !this.hasUnreadMessages()
+    });
+    if (this.props.conversation.last_message != null) {
+      lastMessageText = React.createElement("span", {
+        "dangerouslySetInnerHTML": {
+          __html: this._getLastMessageText()
+        }
+      });
+      lastCreatedAt = this._getLastMessageCreatedAt();
+    } else {
+      lastCreatedAt = this._getLastConversationCreatedAt();
+    }
+    return React.createElement("div", {
+      "className": listItemClasses,
+      "onClick": this.handleClick
+    }, this._getMessagesIndicator(), React.createElement("span", {
+      "className": "messages__user-avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.conversation.recipient,
+      "size": 35.
+    }), online), React.createElement("div", {
+      "className": "messages__dialog-text"
+    }, React.createElement("span", {
+      "className": "messages__user-name"
+    }, this.props.conversation.recipient.slug), lastMessageText), React.createElement("span", {
+      "className": "messages__date"
+    }, lastCreatedAt));
+  },
+  hasUnreadMessages: function() {
+    return this.props.conversation.unread_messages_count > 0;
+  },
+  hasUnreceivedMessages: function() {
+    return this.props.conversation.unreceived_messages_count > 0;
+  },
+  _getMessagesIndicator: function() {
+    if (this.hasUnreadMessages()) {
+      return React.createElement("div", {
+        "className": "unread-messages__counter"
+      }, this.props.conversation.unread_messages_count);
+    } else if (this.hasUnreceivedMessages()) {
+      return React.createElement("div", {
+        "className": "unreceived-messages__counter"
+      });
+    }
+  },
+  _getUnreadMessagesCount: function() {
+    if (this.hasUnreadMessages()) {
+      return React.createElement("div", {
+        "className": "messages__counter"
+      }, this.props.conversation.unread_messages_count);
+    }
+  },
+  _getLastMessageText: function() {
+    return this.props.conversation.last_message.content_html;
+  },
+  _getLastMessageCreatedAt: function() {
+    return moment(this.props.conversation.last_message.created_at).format('D MMMM HH:mm');
+  },
+  _getLastConversationCreatedAt: function() {
+    return moment(this.props.conversation.created_at).format('D MMMM HH:mm');
+  },
+  handleClick: function() {
+    return ConversationActions.clickConversation(this.props.conversation.id);
+  }
+});
 
 
+>>>>>>> Editor store and services [#89871770]
+
+},{"react/lib/cx":568}],236:[function(require,module,exports){
+var CLOSE_STATE, OPEN_STATE, cx;
+
+<<<<<<< HEAD
 },{}],103:[function(require,module,exports){
 window.HeroProfileStats_TagsPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
@@ -23553,11 +31909,95 @@ window.HeroProfile = React.createClass({
       e.preventDefault();
       return this.open();
     }
+=======
+cx = require('react/lib/cx');
+
+OPEN_STATE = 'openState';
+
+CLOSE_STATE = 'closeState';
+
+window.MessagesPopup_Chooser = React.createClass({
+  propTypes: {
+    onSubmit: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: OPEN_STATE
+    };
+  },
+  render: function() {
+    var chooser, chooserClasses;
+    chooserClasses = cx({
+      'messages__chooser': true,
+      'state--open': this.isOpenState()
+    });
+    switch (this.state.currentState) {
+      case CLOSE_STATE:
+        chooser = React.createElement(MessagesPopup_ChooserButton, {
+          "onClick": this.activateOpenState
+        });
+        break;
+      case OPEN_STATE:
+        chooser = React.createElement(MessagesPopup_ChooserDropdown, {
+          "onCancel": this.activateCloseState,
+          "onSubmit": this.props.onSubmit
+        });
+    }
+    return React.createElement("div", {
+      "className": "messages__box"
+    }, React.createElement("div", {
+      "className": chooserClasses
+    }, chooser), React.createElement("div", {
+      "className": "messages__field"
+    }, React.createElement("input", {
+      "type": "hidden",
+      "data-placeholder": "Введите имя",
+      "style": {
+        'width': '100%'
+      }
+    })), React.createElement("div", {
+      "className": "messages__hint"
+    }, i18n.t('new_thread_hint')));
+  },
+  activateOpenState: function() {
+    return this.setState({
+      currentState: OPEN_STATE
+    });
+  },
+  activateCloseState: function() {
+    return this.setState({
+      currentState: CLOSE_STATE
+    });
+  },
+  isOpenState: function() {
+    return this.state.currentState === OPEN_STATE;
+  },
+  isCloseState: function() {
+    return this.state.currentState === CLOSE_STATE;
   }
 });
 
 
 
+},{"react/lib/cx":568}],237:[function(require,module,exports){
+window.MessagesPopup_ChooserButton = React.createClass({
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "messages__chooser-button",
+      "onClick": this.props.onClick
+    }, React.createElement("span", {
+      "className": "messages__chooser-button-text"
+    }, i18n.t('new_thread_placeholder')));
+>>>>>>> Editor store and services [#89871770]
+  }
+});
+
+
+
+<<<<<<< HEAD
 },{"./buttons/settings":93}],105:[function(require,module,exports){
 var HERO_AVATAR_SIZE;
 
@@ -23578,11 +32018,75 @@ window.HeroProfileAvatar = React.createClass({
       "user": this.props.user,
       "size": HERO_AVATAR_SIZE
     })));
+=======
+},{}],238:[function(require,module,exports){
+var LinkedStateMixin;
+
+LinkedStateMixin = require('react/lib/LinkedStateMixin');
+
+window.MessagesPopup_ChooserDropdown = React.createClass({
+  mixins: [LinkedStateMixin],
+  propTypes: {
+    onCancel: React.PropTypes.func.isRequired,
+    onSubmit: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      query: ''
+    };
+  },
+  componentDidMount: function() {
+    return this.refs.chooserInput.getDOMNode().focus();
+  },
+  render: function() {
+    var chooserResults;
+    if (this.state.query) {
+      chooserResults = React.createElement(MessagesPopup_ChooserResults, {
+        "ref": "chooserResults",
+        "query": this.state.query,
+        "onSubmit": this.props.onSubmit
+      });
+    }
+    return React.createElement("div", {
+      "className": "messages__chooser-dropdown"
+    }, React.createElement("input", {
+      "ref": "chooserInput",
+      "type": "text",
+      "className": "messages__chooser-input",
+      "valueLink": this.linkState('query'),
+      "onKeyDown": this.handleKeyDown
+    }), chooserResults);
+  },
+  handleKeyDown: function(e) {
+    var chooserResults;
+    chooserResults = this.refs.chooserResults;
+    switch (e.key) {
+      case 'Enter':
+        e.preventDefault();
+        if (chooserResults != null) {
+          this.props.onSubmit(chooserResults.getSelectedUserId());
+        }
+        break;
+      case 'Escape':
+        e.preventDefault();
+        this.props.onCancel();
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        chooserResults.selectPreviousResult();
+        break;
+      case 'ArrowDown':
+        e.preventDefault();
+        chooserResults.selectNextResult();
+        break;
+    }
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],106:[function(require,module,exports){
 window.HeroProfileHead = React.createClass({
   propTypes: {
@@ -23621,6 +32125,118 @@ window.HeroProfileHead = React.createClass({
     return this.setState({
       user: newUser
     });
+=======
+},{"react/lib/LinkedStateMixin":479}],239:[function(require,module,exports){
+var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
+
+LOADING_STATE = 'loadingState';
+
+LOADED_STATE = 'loadedState';
+
+EMPTY_STATE = 'emptyState';
+
+window.MessagesPopup_ChooserResults = React.createClass({
+  mixins: [RequesterMixin],
+  propTypes: {
+    query: React.PropTypes.string.isRequired,
+    onSubmit: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: LOADING_STATE,
+      predictedUsers: [],
+      selectedUserIndex: 0
+    };
+  },
+  componentDidMount: function() {
+    return this.loadPredictions(this.props.query);
+  },
+  componentWillReceiveProps: function(nextProps) {
+    if (this.props.query !== nextProps.query) {
+      return this.loadPredictions(nextProps.query);
+    }
+  },
+  render: function() {
+    var content, predictedUsers, that;
+    switch (this.state.currentState) {
+      case LOADED_STATE:
+        that = this;
+        predictedUsers = this.state.predictedUsers.map(function(predictedUser, i) {
+          return React.createElement(MessagesPopup_ChooserResultsItem, {
+            "predictedUser": predictedUser,
+            "selected": that.state.selectedUserIndex === i,
+            "onClick": that.props.onSubmit,
+            "key": predictedUser.id
+          });
+        });
+        content = React.createElement("div", null, predictedUsers);
+        break;
+      case EMPTY_STATE:
+        content = React.createElement("div", {
+          "className": "messages__chooser-empty"
+        }, i18n.t('new_thread_unknown_user'));
+    }
+    return React.createElement("div", {
+      "className": "messages__chooser-results"
+    }, content);
+  },
+  activateEmptyState: function() {
+    return this.setState({
+      currentState: EMPTY_STATE
+    });
+  },
+  activateLoadedState: function() {
+    return this.setState({
+      currentState: LOADED_STATE
+    });
+  },
+  selectPreviousResult: function() {
+    return this._moveHighlight(-1);
+  },
+  selectNextResult: function() {
+    return this._moveHighlight(1);
+  },
+  loadPredictions: function(query) {
+    return this.createRequest({
+      url: ApiRoutes.users_predict(),
+      method: 'GET',
+      data: {
+        query: query
+      },
+      success: (function(_this) {
+        return function(predictedUsers) {
+          _this.setState({
+            predictedUsers: predictedUsers
+          });
+          if (predictedUsers.length === 0) {
+            return _this.activateEmptyState();
+          } else {
+            return _this.activateLoadedState();
+          }
+        };
+      })(this),
+      error: (function(_this) {
+        return function(errMsg) {
+          return TastyNotifyController.errorResponse(errMsg);
+        };
+      })(this)
+    });
+  },
+  getSelectedUserId: function() {
+    return this.state.predictedUsers[this.state.selectedUserIndex].id;
+  },
+  _moveHighlight: function(delta) {
+    var userIndex, usersCount;
+    usersCount = this.state.predictedUsers.length;
+    userIndex = this.state.selectedUserIndex;
+    if (usersCount > 0) {
+      if ((userIndex > 0 && delta < 0) || (userIndex < usersCount - 1 && delta > 0)) {
+        return this.setState({
+          selectedUserIndex: userIndex + delta
+        });
+      }
+    }
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
@@ -23648,6 +32264,7 @@ window.HeroProfileHeadStatic = React.createClass({
 });
 
 
+<<<<<<< HEAD
 
 },{}],107:[function(require,module,exports){
 window.HeroProfileStats = React.createClass({
@@ -23783,11 +32400,49 @@ window.HeroProfileStats = React.createClass({
   },
   _isPrivate: function() {
     return this.props.user.is_privacy;
+=======
+},{}],240:[function(require,module,exports){
+var cx;
+
+cx = require('react/lib/cx');
+
+window.MessagesPopup_ChooserResultsItem = React.createClass({
+  propTypes: {
+    predictedUser: React.PropTypes.object.isRequired,
+    selected: React.PropTypes.bool.isRequired,
+    onClick: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    var itemClasses;
+    itemClasses = cx({
+      'messages__chooser-result': true,
+      'state--active': this.props.selected
+    });
+    return React.createElement("div", {
+      "className": itemClasses,
+      "onClick": this.handleClick
+    }, React.createElement("div", {
+      "className": "messages__person"
+    }, React.createElement("div", {
+      "className": "messages__person-avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.predictedUser,
+      "size": 35.
+    })), React.createElement("div", {
+      "className": "messages__person-name"
+    }, this.props.predictedUser.slug)));
+  },
+  handleClick: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    return this.props.onClick(this.props.predictedUser.id);
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],108:[function(require,module,exports){
 var cx;
 
@@ -23828,11 +32483,64 @@ window.HeroProfileStatsItem = React.createClass({
   }
 });
 
+=======
+},{"react/lib/cx":568}],241:[function(require,module,exports){
+var CHOOSER_STATE, PROCESS_STATE;
+
+PROCESS_STATE = 'process';
+
+CHOOSER_STATE = 'chooser';
+
+window.MessagesPopup_CreateNewConversation = React.createClass({
+  getInitialState: function() {
+    return {
+      currentState: CHOOSER_STATE
+    };
+  },
+  render: function() {
+    var content;
+    switch (this.state.currentState) {
+      case PROCESS_STATE:
+        content = React.createElement(MessagesPopup_LoadingMessage, {
+          "content": i18n.t('new_thread_process')
+        });
+        break;
+      case CHOOSER_STATE:
+        content = React.createElement(MessagesPopup_Chooser, {
+          "onSubmit": this.postNewConversation
+        });
+    }
+    return React.createElement("div", {
+      "className": "messages__section messages__section--recipients"
+    }, React.createElement("div", {
+      "className": "messages__body"
+    }, content));
+  },
+  activateProcessState: function() {
+    return this.setState({
+      currentState: PROCESS_STATE
+    });
+  },
+  activateChooserState: function() {
+    return this.setState({
+      currentState: CHOOSER_STATE
+    });
+  },
+  postNewConversation: function(recipientId) {
+    this.activateProcessState();
+    return ConversationActions.postNewConversation({
+      recipientId: recipientId,
+      error: this.activateChooserState
+    });
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 
 },{"react/lib/cx":599}],109:[function(require,module,exports){
 var FIRST_ROW_RATIO, NEXT_ROWS_RATIO, update;
 
+<<<<<<< HEAD
 update = require('react/lib/update');
 
 FIRST_ROW_RATIO = 2.5;
@@ -23984,11 +32692,205 @@ window.ImagesCollage_Legacy = React.createClass({
     return React.createElement("div", {
       "className": "collage"
     }, elements);
+=======
+},{}],242:[function(require,module,exports){
+window.MessagesPopup_LoadingMessage = React.createClass({
+  propTypes: {
+    content: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "grid-full"
+    }, React.createElement("div", {
+      "className": "grid-full__middle"
+    }, React.createElement("div", {
+      "className": "messages-loading"
+    }, React.createElement("div", {
+      "className": "messages-loading__header"
+    }, React.createElement(Spinner, {
+      "size": 31.
+    })), React.createElement("div", {
+      "className": "messages-loading__body"
+    }, this.props.content))));
   }
 });
 
 
 
+},{}],243:[function(require,module,exports){
+var CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, ENTER_TIMEOUT, LEAVE_TIMEOUT, THREAD_STATE;
+
+CONVERSATIONS_STATE = 'conversations';
+
+CREATE_NEW_CONVERSATION_STATE = 'createNewConversation';
+
+THREAD_STATE = 'thread';
+
+ENTER_TIMEOUT = 300;
+
+LEAVE_TIMEOUT = 300;
+
+window.MessagesPopup = React.createClass({
+  mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin],
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentDidMount: function() {
+    return MessagesPopupStateStore.addChangeListener(this._onStoreChange);
+  },
+  componentWillUnmount: function() {
+    return MessagesPopupStateStore.removeChangeListener(this._onStoreChange);
+  },
+  render: function() {
+    var backButton, content, popupTitle, transitionName;
+    popupTitle = this.getPopupTitle();
+    switch (this.state.currentState) {
+      case CONVERSATIONS_STATE:
+        content = React.createElement(MessagesPopup_Conversations, {
+          "key": "conversations"
+        });
+        transitionName = 'conversations';
+        break;
+      case CREATE_NEW_CONVERSATION_STATE:
+        content = React.createElement(MessagesPopup_CreateNewConversation, {
+          "key": "newConversation"
+        });
+        transitionName = 'new-conversation';
+        break;
+      case THREAD_STATE:
+        content = React.createElement(MessagesPopup_Thread, {
+          "conversationId": this.state.currentConversationId,
+          "key": "thread"
+        });
+        transitionName = 'thread';
+    }
+    if (!this.isConversationsState()) {
+      backButton = React.createElement(MessagesPopup_UIBackButton, {
+        "onClick": this.handleBackButtonClick
+      });
+    }
+    return React.createElement(Popup, {
+      "hasActivities": this.hasActivities(),
+      "title": popupTitle,
+      "type": "messages",
+      "isDraggable": true,
+      "colorScheme": "light",
+      "position": {
+        top: 30,
+        left: 30
+      },
+      "className": "popup--messages",
+      "onClose": PopupActions.closeMessagesPopup
+    }, React.createElement("div", {
+      "className": "messages"
+    }, backButton, content));
+  },
+  isConversationsState: function() {
+    return this.state.currentState === CONVERSATIONS_STATE;
+  },
+  isCreateNewConversationState: function() {
+    return this.state.currentState === CREATE_NEW_CONVERSATION_STATE;
+  },
+  isThreadState: function() {
+    return this.state.currentState === THREAD_STATE;
+  },
+  getStateFromStore: function() {
+    return {
+      currentState: MessagesPopupStateStore.getCurrentState(),
+      currentConversationId: MessagesPopupStateStore.getCurrentConversationId()
+    };
+  },
+  getPopupTitle: function() {
+    var conversation, popupTitle, recipientSlug;
+    if (this.isThreadState()) {
+      conversation = ConversationsStore.getConversation(this.state.currentConversationId);
+      recipientSlug = conversation.recipient.slug;
+      popupTitle = i18n.t('messages_thread_title', {
+        slug: recipientSlug
+      });
+    } else {
+      popupTitle = i18n.t('messages_popup_title');
+    }
+    return popupTitle;
+  },
+  handleBackButtonClick: function() {
+    return MessagingDispatcher.handleViewAction({
+      type: 'clickBackButton'
+    });
+  },
+  _onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
+  }
+});
+
+
+
+},{}],244:[function(require,module,exports){
+window.MessagesPopup_ThreadMessageForm = React.createClass({
+  propTypes: {
+    conversationId: React.PropTypes.number.isRequired
+  },
+  getInitialState: function() {
+    var state;
+    return state = _.extend({}, this.getStateFromStores(), {
+      isLoading: false
+    });
+  },
+  componentDidMount: function() {
+    return this.refs.messageForm.getDOMNode().focus();
+  },
+  render: function() {
+    var avatar;
+    if (this.state.isLoading) {
+      avatar = React.createElement("span", {
+        "className": "spinner spinner--31x31"
+      }, React.createElement("span", {
+        "className": "spinner__icon"
+      }));
+    } else {
+      avatar = React.createElement(UserAvatar, {
+        "user": this.state.user,
+        "size": 35.
+      });
+    }
+    return React.createElement("div", {
+      "className": "message-form"
+    }, React.createElement("span", {
+      "className": "messages__user-avatar"
+    }, avatar), React.createElement("textarea", {
+      "ref": "messageForm",
+      "onKeyDown": this.handleKeyDown,
+      "placeholder": i18n.t("new_message_placeholder"),
+      "className": "message-form__textarea"
+    }));
+  },
+  isFormEmpty: function() {
+    return this.refs.messageForm.getDOMNode().value === '';
+  },
+  clearForm: function() {
+    return this.refs.messageForm.getDOMNode().value = '';
+  },
+  getStateFromStores: function() {
+    return {
+      user: CurrentUserStore.getUser()
+    };
+  },
+  handleKeyDown: function(e) {
+    if (e.key === 'Enter' && !this.isFormEmpty() && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {
+      e.preventDefault();
+      MessageActions.newMessage({
+        content: e.target.value,
+        conversationId: this.props.conversationId
+      });
+      return this.clearForm();
+    }
+>>>>>>> Editor store and services [#89871770]
+  }
+});
+
+
+
+<<<<<<< HEAD
 },{"react/lib/update":640}],110:[function(require,module,exports){
 var FADE_DURATION;
 
@@ -24124,9 +33026,139 @@ window.TastyConfirm = React.createClass({
     return this.props.onAccept.call();
   }
 });
+=======
+},{}],245:[function(require,module,exports){
+window.MessagesPopup_MessageListEmpty = React.createClass({
+  render: function() {
+    return React.createElement("div", {
+      "className": "messages__empty"
+    }, React.createElement("div", {
+      "className": "messages__empty-text"
+    }, i18n.t("messages_empty_list")));
+  }
+});
 
 
 
+},{}],246:[function(require,module,exports){
+var savedScrollHeight;
+
+savedScrollHeight = null;
+
+window.MessagesPopup_ThreadMessageList = React.createClass({
+  mixins: [ScrollerMixin],
+  propTypes: {
+    conversationId: React.PropTypes.number.isRequired
+  },
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentDidMount: function() {
+    this._scrollToBottom();
+    MessagesStore.addChangeListener(this._onStoreChange);
+    return messagingService.openConversation(this.props.conversationId);
+  },
+  componentWillUpdate: function(nextProps, nextState) {
+    var scrollerNode, _ref, _ref1;
+    if (this.state.messages[0] != null) {
+      if (((_ref = this.state.messages[0]) != null ? _ref.uuid : void 0) !== ((_ref1 = nextState.messages[0]) != null ? _ref1.uuid : void 0)) {
+        scrollerNode = this.refs.scrollerPane.getDOMNode();
+        return savedScrollHeight = scrollerNode.scrollHeight;
+      }
+    }
+  },
+  componentDidUpdate: function(prevProps, prevState) {
+    var _ref, _ref1;
+    if (prevState.messages[0] != null) {
+      if (((_ref = prevState.messages[0]) != null ? _ref.uuid : void 0) !== ((_ref1 = this.state.messages[0]) != null ? _ref1.uuid : void 0)) {
+        return this._holdScroll();
+      } else if (prevState.messages.length !== this.state.messages.length) {
+        return this._scrollToBottom();
+      }
+    } else {
+      return this._scrollToBottom();
+    }
+  },
+  componentWillUnmount: function() {
+    return MessagesStore.removeChangeListener(this._onStoreChange);
+  },
+  render: function() {
+    var messages, that;
+    if (this.isEmpty()) {
+      messages = React.createElement(MessagesPopup_MessageListEmpty, null);
+    } else {
+      that = this;
+      messages = this.state.messages.map(function(message, i) {
+        return React.createElement(MessagesPopup_ThreadMessageListItemManager, {
+          "message": message,
+          "messagesCount": that.state.messages.length,
+          "key": message.uuid
+        });
+      });
+    }
+    return React.createElement("div", {
+      "ref": "scroller",
+      "className": "scroller scroller--dark scroller--messages"
+    }, React.createElement("div", {
+      "ref": "scrollerPane",
+      "className": "scroller__pane js-scroller-pane",
+      "onScroll": this.handleScroll
+    }, React.createElement("div", {
+      "ref": "messageList",
+      "className": "messages__list"
+    }, React.createElement("div", {
+      "className": "messages__list-cell"
+    }, messages))), React.createElement("div", {
+      "className": "scroller__track js-scroller-track"
+    }, React.createElement("div", {
+      "className": "scroller__bar js-scroller-bar"
+    })));
+  },
+  isEmpty: function() {
+    return this.state.messages.length === 0;
+  },
+  handleScroll: function() {
+    var scrollerPaneNode;
+    scrollerPaneNode = this.refs.scrollerPane.getDOMNode();
+    if (scrollerPaneNode.scrollTop === 0 && !this.state.isAllMessagesLoaded) {
+      MessageActions.loadMoreMessages({
+        conversationId: this.props.conversationId,
+        toMessageId: this.state.messages[0].id
+      });
+    }
+    return TastyEvents.emit(TastyEvents.keys.message_list_scrolled(), scrollerPaneNode);
+  },
+  getStateFromStore: function() {
+    return {
+      messages: MessagesStore.getMessages(this.props.conversationId),
+      isAllMessagesLoaded: MessagesStore.isAllMessagesLoaded(this.props.conversationId)
+    };
+  },
+  _scrollToBottom: function() {
+    var scrollerNode;
+    scrollerNode = this.refs.scrollerPane.getDOMNode();
+    return scrollerNode.scrollTop = scrollerNode.scrollHeight;
+  },
+  _holdScroll: function() {
+    var scrollerNode;
+    scrollerNode = this.refs.scrollerPane.getDOMNode();
+    scrollerNode.scrollTop = scrollerNode.scrollHeight - savedScrollHeight;
+    return savedScrollHeight = null;
+  },
+  _onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
+  }
+});
+
+
+>>>>>>> Editor store and services [#89871770]
+
+},{}],247:[function(require,module,exports){
+var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, cx;
+
+cx = require('react/lib/cx');
+
+<<<<<<< HEAD
 },{}],112:[function(require,module,exports){
 var FADE_DURATION, START_TIMEOUT;
 
@@ -24524,11 +33556,231 @@ window.PersonsPopup_Menu = React.createClass({
   },
   onStoreChange: function() {
     return this.setState(this.getStateFromStore());
+=======
+ERROR_STATE = 'error';
+
+SENT_STATE = 'sent';
+
+READ_STATE = 'read';
+
+SENDING_STATE = 'sending';
+
+window.MessagesPopup_ThreadMessageListItem = React.createClass({
+  mixins: [ReactGrammarMixin],
+  propTypes: {
+    message: React.PropTypes.object.isRequired,
+    messageInfo: React.PropTypes.object.isRequired,
+    onResendMessage: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    var deliveryStatus, messageClasses, messageCreatedAt, userSlug;
+    messageClasses = cx({
+      'message': true,
+      'message--from': this.props.messageInfo.type === 'outgoing',
+      'message--to': this.props.messageInfo.type === 'incoming'
+    });
+    if (this.isOutgoing()) {
+      deliveryStatus = this._getDeliveryStatus();
+    }
+    if (this.props.message.created_at) {
+      messageCreatedAt = this._getMessageCreatedAt();
+    }
+    if (this.isIncoming()) {
+      userSlug = React.createElement("span", {
+        "className": "messages__user-name"
+      }, React.createElement("a", {
+        "href": this.props.messageInfo.user.tlog_url,
+        "target": "_blank"
+      }, this.props.messageInfo.user.slug));
+    } else {
+      userSlug = React.createElement("span", {
+        "className": "messages__user-name"
+      }, this.props.messageInfo.user.slug);
+    }
+    return React.createElement("div", {
+      "className": messageClasses
+    }, React.createElement("span", {
+      "className": "messages__user-avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.messageInfo.user,
+      "size": 35.
+    })), React.createElement("div", {
+      "className": "messages__bubble"
+    }, userSlug, React.createElement("span", {
+      "className": "messages__text",
+      "dangerouslySetInnerHTML": {
+        __html: this.props.message.content_html
+      }
+    })), React.createElement("span", {
+      "className": "messages__date"
+    }, messageCreatedAt, deliveryStatus));
+  },
+  isUnread: function() {
+    return this.props.message.read_at === null;
+  },
+  isOutgoing: function() {
+    return this.props.messageInfo.type === 'outgoing';
+  },
+  isIncoming: function() {
+    return this.props.messageInfo.type === 'incoming';
+  },
+  _getDeliveryStatus: function() {
+    var deliveryClass, onClick;
+    switch (this.props.deliveryStatus) {
+      case ERROR_STATE:
+        deliveryClass = 'icon--refresh';
+        onClick = (function(_this) {
+          return function() {
+            return _this.props.onResendMessage();
+          };
+        })(this);
+        break;
+      case SENT_STATE:
+        deliveryClass = 'icon--tick';
+        break;
+      case READ_STATE:
+        deliveryClass = 'icon--double-tick';
+    }
+    return React.createElement("span", {
+      "className": "message-delivery__status",
+      "onClick": onClick
+    }, React.createElement("span", {
+      "className": 'icon ' + deliveryClass
+    }));
+  },
+  _getMessageCreatedAt: function() {
+    return moment(this.props.message.created_at).format('D MMMM HH:mm');
   }
 });
 
 
 
+},{"react/lib/cx":568}],248:[function(require,module,exports){
+var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
+
+ERROR_STATE = 'error';
+
+SENT_STATE = 'sent';
+
+READ_STATE = 'read';
+
+SENDING_STATE = 'sending';
+
+isElementInViewport = function(el, parent) {
+  var position;
+  position = getElementPosition(el, parent);
+  if (position.viewportHeight > position.elemBottomBorder || position.viewportHeight > position.elemTopBorder) {
+    return position.elemTopBorder > 0 || position.elemBottomBorder > 0;
+  }
+};
+
+getElementPosition = function(el, parent) {
+  var _topBorder;
+  _topBorder = el.offsetTop - parent.scrollTop;
+  return {
+    elemTopBorder: _topBorder,
+    elemBottomBorder: _topBorder + el.offsetHeight,
+    viewport: parent,
+    viewportHeight: parent.offsetHeight
+  };
+};
+
+window.MessagesPopup_ThreadMessageListItemManager = React.createClass({
+  mixins: [ReactGrammarMixin],
+  propTypes: {
+    message: React.PropTypes.object.isRequired,
+    messagesCount: React.PropTypes.number
+  },
+  getInitialState: function() {
+    return this.stateFromProps(this.props);
+  },
+  componentDidMount: function() {
+    if (this.isUnread() && this.state.messageInfo.type === 'incoming') {
+      if (this.props.messagesCount > 10) {
+        TastyEvents.on(TastyEvents.keys.message_list_scrolled(), this.handleMessageListScroll);
+      } else {
+        this.readMessage();
+      }
+    }
+    if (this.isErrorState()) {
+      return messagingService.addReconnectListener(this.resendMessage);
+    }
+  },
+  componentDidUpdate: function() {
+    if (this.isErrorState()) {
+      return messagingService.addReconnectListener(this.resendMessage);
+    }
+  },
+  componentWillReceiveProps: function(nextProps) {
+    return this.setState(this.stateFromProps(nextProps));
+  },
+  componentWillUnmount: function() {
+    TastyEvents.off(TastyEvents.keys.message_list_scrolled(), this.handleMessageListScroll);
+    return messagingService.removeReconnectListener(this.resendMessage);
+  },
+  render: function() {
+    return React.createElement(MessagesPopup_ThreadMessageListItem, {
+      "message": this.props.message,
+      "messageInfo": this.state.messageInfo,
+      "deliveryStatus": this.state.currentState,
+      "onResendMessage": this.resendMessage
+    });
+  },
+  activateSendingState: function() {
+    return this.setState({
+      currentState: SENDING_STATE
+    });
+  },
+  activateErrorState: function() {
+    return this.setState({
+      currentState: ERROR_STATE
+    });
+  },
+  isErrorState: function() {
+    return this.state.currentState === ERROR_STATE;
+  },
+  isUnread: function() {
+    return this.props.message.read_at === null;
+  },
+  resendMessage: function() {
+    this.activateSendingState();
+    return MessageActions.resendMessage({
+      conversationId: this.props.message.conversation_id,
+      content: this.props.message.content,
+      uuid: this.props.message.uuid
+    });
+  },
+  readMessage: function() {
+    return MessageActions.readMessage(this.props.message.conversation_id, this.props.message.id);
+  },
+  stateFromProps: function(props) {
+    var currentState;
+    if (props.message.sendingState != null) {
+      currentState = ERROR_STATE;
+    } else if (props.message.id) {
+      currentState = this.isUnread() ? SENT_STATE : READ_STATE;
+    } else {
+      currentState = SENDING_STATE;
+    }
+    return {
+      messageInfo: MessagesStore.getMessageInfo(props.message, props.message.conversation_id),
+      currentState: currentState
+    };
+  },
+  handleMessageListScroll: function(scrollerNode) {
+    var messageNode;
+    messageNode = this.getDOMNode();
+    if (isElementInViewport(messageNode, scrollerNode)) {
+      this.readMessage();
+      return TastyEvents.off(TastyEvents.keys.message_list_scrolled(), this.handleMessageListScroll);
+    }
+>>>>>>> Editor store and services [#89871770]
+  }
+});
+
+
+
+<<<<<<< HEAD
 },{}],122:[function(require,module,exports){
 var cx;
 
@@ -24556,11 +33808,45 @@ window.PersonsPopup_MenuItem = React.createClass({
     }, this.props.title, React.createElement("span", {
       "className": "tabs-nav__count"
     }, " ", this.props.totalCount)));
+=======
+},{}],249:[function(require,module,exports){
+window.MessagesPopup_Thread = React.createClass({
+  displayName: 'MessagesPopup_Thread',
+  propTypes: {
+    conversationId: React.PropTypes.number.isRequired
+  },
+  getInitialState: function() {
+    return {
+      conversation: ConversationsStore.getConversation(this.props.conversationId)
+    };
+  },
+  render: function() {
+    var backgroundUrl, threadStyles;
+    backgroundUrl = this.state.conversation.recipient.design.background_url;
+    threadStyles = {
+      backgroundImage: "url(" + backgroundUrl + ")"
+    };
+    return React.createElement("div", {
+      "className": "messages__section messages__section--thread"
+    }, React.createElement("div", {
+      "className": "messages__body",
+      "style": threadStyles
+    }, React.createElement("div", {
+      "className": "messages__thread-overlay"
+    }), React.createElement(MessagesPopup_ThreadMessageList, {
+      "conversationId": this.props.conversationId
+    })), React.createElement("footer", {
+      "className": "messages__footer"
+    }, React.createElement(MessagesPopup_ThreadMessageForm, {
+      "conversationId": this.props.conversationId
+    })));
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],123:[function(require,module,exports){
 var ERROR_STATE, LOADED_STATE, LOADING_STATE, cx;
 
@@ -24758,6 +34044,41 @@ window.PersonsPopup_FollowersPanel = React.createClass({
   }
 });
 
+=======
+},{}],250:[function(require,module,exports){
+window.MessagesPopup_UIBackButton = React.createClass({
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "onClick": this.props.onClick,
+      "className": "messages__back js-messages-back"
+    }, React.createElement("div", {
+      "className": "icon icon--arrow-left"
+    }));
+  }
+});
+
+
+
+},{}],251:[function(require,module,exports){
+window.MessagesPopup_UICreateNewConversationButton = React.createClass({
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("span", {
+      "className": "button button--green",
+      "onClick": this.props.onClick
+    }, React.createElement("span", {
+      "className": "button__inner"
+    }, React.createElement("span", {
+      "className": "button__text"
+    }, i18n.t('new_thread_button'))));
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 
 },{}],125:[function(require,module,exports){
@@ -24778,6 +34099,7 @@ window.PersonsPopup_FollowingsPanel = React.createClass({
   }
 });
 
+<<<<<<< HEAD
 
 
 },{}],126:[function(require,module,exports){
@@ -24835,11 +34157,20 @@ window.PersonsPopup_RequestedPanel = React.createClass({
       relationships: RelationshipsStore.getRequested(),
       totalCount: RelationshipsStore.getRequestedTotalCount()
     };
+=======
+},{}],252:[function(require,module,exports){
+window.NotificationsPopup_NotificationsEmpty = React.createClass({
+  render: function() {
+    return React.createElement("div", {
+      "className": "notifications__empty"
+    }, i18n.t('notifications_empty_list'));
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],129:[function(require,module,exports){
 var FacebookSignIn, FacebookSuggestions, SocialNetworkPanelMixin;
 
@@ -24919,12 +34250,105 @@ VkontakteSignIn = React.createClass({
   },
   handleClick: function() {
     return window.location = ApiRoutes.omniauth_url('facebook');
+=======
+},{}],253:[function(require,module,exports){
+var IMAGE_SIZE, cx;
+
+cx = require('react/lib/cx');
+
+IMAGE_SIZE = 50;
+
+window.NotificationsPopup_Notification = React.createClass({
+  propTypes: {
+    notification: React.PropTypes.object.isRequired
+  },
+  componentWillUnmount: function() {
+    if (this.isUnread()) {
+      return NotificationActions.readNotification(this.props.notification.id);
+    }
+  },
+  render: function() {
+    var actionText, entityUrl, image, notificationClasses, text, userSlug;
+    notificationClasses = cx({
+      'notification': true,
+      'state--unread': this.isUnread()
+    });
+    userSlug = this.props.notification.sender.slug;
+    actionText = this.props.notification.action_text;
+    text = this.props.notification.text;
+    entityUrl = this.props.notification.entity_url;
+    if (this.props.notification.image) {
+      image = this._getNotificationImage();
+    }
+    return React.createElement("li", {
+      "className": notificationClasses,
+      "onClick": this.handleClick
+    }, React.createElement("a", {
+      "href": entityUrl,
+      "target": "_blank",
+      "className": "notification__link"
+    }, React.createElement("div", {
+      "className": "notification__inner"
+    }, React.createElement("div", {
+      "className": "notification__read-state"
+    }), React.createElement("div", {
+      "className": "notification__user-avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.notification.sender,
+      "size": 35.
+    })), image, React.createElement("div", {
+      "className": "notification__desc"
+    }, React.createElement("span", {
+      "className": "notification__user"
+    }, userSlug), React.createElement("span", {
+      "className": "notification__action-text"
+    }, " ", actionText, " "), React.createElement("span", {
+      "className": "notification__text"
+    }, text)))));
+  },
+  isUnread: function() {
+    return this.props.notification.read_at === null;
+  },
+  _getNotificationImage: function() {
+    var aspectRatio, geometry, imageStyles, url;
+    url = ThumborService.imageUrl({
+      url: this.props.notification.image.url,
+      path: this.props.notification.image.path,
+      size: IMAGE_SIZE + 'x' + IMAGE_SIZE
+    });
+    geometry = this.props.notification.image.geometry;
+    aspectRatio = this.calculateAspectRatioFit(geometry.width, geometry.height, IMAGE_SIZE, IMAGE_SIZE);
+    imageStyles = {
+      height: aspectRatio.height + 'px',
+      width: aspectRatio.width + 'px'
+    };
+    return React.createElement("figure", {
+      "className": "notification__image",
+      "style": imageStyles
+    }, React.createElement("img", {
+      "src": url
+    }));
+  },
+  calculateAspectRatioFit: function(srcWidth, srcHeight, maxWidth, maxHeight) {
+    var ratio;
+    ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+    return {
+      width: srcWidth * ratio,
+      height: srcHeight * ratio
+    };
+  },
+  handleClick: function() {
+    if (this.isUnread()) {
+      return NotificationActions.readNotification(this.props.notification.id);
+    }
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 module.exports = VkontakteSignIn;
 
 
+<<<<<<< HEAD
 
 },{}],131:[function(require,module,exports){
 var FacebookSuggestions, FacebookSuggestionsEmpty, FacebookSuggestionsList, PropTypes, SuggestionsMixin;
@@ -25048,18 +34472,281 @@ FacebookSuggestionsItem = React.createClass({
     }, React.createElement(FollowButton, {
       "relationship": this.props.suggestion
     }));
+=======
+},{"react/lib/cx":568}],254:[function(require,module,exports){
+window.NotificationsPopup_Notifications = React.createClass({
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentDidMount: function() {
+    return NotificationsStore.addChangeListener(this._onStoreChange);
+  },
+  componentWillUnmount: function() {
+    return NotificationsStore.removeChangeListener(this._onStoreChange);
+  },
+  render: function() {
+    var notifications;
+    if (this.isEmpty()) {
+      notifications = React.createElement(NotificationsPopup_NotificationsEmpty, null);
+    } else {
+      notifications = this.state.notifications.map(function(notification, i) {
+        return React.createElement(NotificationsPopup_Notification, {
+          "notification": notification,
+          "key": notification.id
+        });
+      });
+      notifications = React.createElement("ul", {
+        "className": "notifications__list"
+      }, notifications);
+    }
+    return notifications;
+  },
+  isEmpty: function() {
+    return this.state.notifications.length === 0;
+  },
+  getStateFromStore: function() {
+    return {
+      notifications: NotificationsStore.getNotifications()
+    };
+  },
+  _onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
+  }
+});
+
+
+
+},{}],255:[function(require,module,exports){
+window.NotificationsPopup = React.createClass({
+  mixins: [ScrollerMixin],
+  render: function() {
+    return React.createElement("div", {
+      "className": "popup popup--notifications popup--dark"
+    }, React.createElement("div", {
+      "className": "popup__arrow popup__arrow--left"
+    }), React.createElement("div", {
+      "className": "popup__content"
+    }, React.createElement("div", {
+      "className": "popup__body"
+    }, React.createElement("div", {
+      "className": "notifications"
+    }, React.createElement("div", {
+      "ref": "scroller",
+      "className": "scroller scroller--dark scroller--notifications"
+    }, React.createElement("div", {
+      "ref": "scrollerPane",
+      "className": "scroller__pane js-scroller-pane"
+    }, React.createElement(NotificationsPopup_Notifications, null)), React.createElement("div", {
+      "className": "scroller__track js-scroller-track"
+    }, React.createElement("div", {
+      "className": "scroller__bar js-scroller-bar"
+    })))))));
+  }
+});
+
+
+
+},{}],256:[function(require,module,exports){
+var ADVANCED_STATE, BASIC_STATE, MOUSE_LEAVE_TIMEOUT, cx;
+
+cx = require('react/lib/cx');
+
+MOUSE_LEAVE_TIMEOUT = 800;
+
+BASIC_STATE = 'basic';
+
+ADVANCED_STATE = 'advanced';
+
+window.IndicatorsToolbar = React.createClass({
+  mixins: [ComponentManipulationsMixin],
+  getInitialState: function() {
+    return _.extend(this.getStateFromStore(), {
+      currentState: BASIC_STATE
+    });
+  },
+  componentDidMount: function() {
+    ConnectionStateStore.addUpdateListener(this._onStoreChange);
+    $(document).on('click', this._onDocumentClick);
+    TastyEvents.on(TastyEvents.keys.user_toolbar_closed(), this._onUserToolbarClose);
+    return TastyEvents.on(TastyEvents.keys.user_toolbar_opened(), this._onUserToolbarOpen);
+  },
+  componentWillUnmount: function() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+    ConnectionStateStore.removeUpdateListener(this._onStoreChange);
+    $(document).off('click', this._onDocumentClick);
+    TastyEvents.off(TastyEvents.keys.user_toolbar_closed(), this._onUserToolbarClose);
+    return TastyEvents.off(TastyEvents.keys.user_toolbar_opened(), this._onUserToolbarOpen);
+  },
+  render: function() {
+    var indicators, indicatorsClasses;
+    indicatorsClasses = cx({
+      'toolbar__indicators': true,
+      'state--advanced': this.isAdvancedState(),
+      'state--basic': this.isBasicState()
+    });
+    if (ConnectionStateStore.CONNECTED_STATE) {
+      indicators = React.createElement("div", {
+        "className": indicatorsClasses,
+        "onMouseEnter": this.handleMouseEnter,
+        "onMouseLeave": this.handleMouseLeave
+      }, React.createElement(IndicatorsToolbar_Messages, {
+        "onClick": this.handleMessagesClick
+      }), React.createElement(IndicatorsToolbar_Notifications, {
+        "onClick": this.handleNotificationsClick
+      }));
+    }
+    return indicators;
+  },
+  isBasicState: function() {
+    return this.state.currentState === BASIC_STATE;
+  },
+  isAdvancedState: function() {
+    return this.state.currentState === ADVANCED_STATE;
+  },
+  activateBasicState: function() {
+    return this.setState({
+      currentState: BASIC_STATE
+    });
+  },
+  activateAdvancedState: function() {
+    return this.setState({
+      currentState: ADVANCED_STATE
+    });
+  },
+  getStateFromStore: function() {
+    return {
+      connectionState: ConnectionStateStore.getConnectionState()
+    };
+  },
+  handleMessagesClick: function() {
+    if (this.isAdvancedState()) {
+      return PopupActions.toggleMessagesPopup();
+    }
+  },
+  handleNotificationsClick: function() {
+    if (this.isAdvancedState()) {
+      return PopupActions.toggleNotificationsPopup();
+    }
+  },
+  handleMouseEnter: function() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+    return this.setState({
+      isHovered: true,
+      currentState: ADVANCED_STATE
+    });
+  },
+  handleMouseLeave: function() {
+    this.safeUpdateState({
+      isHovered: false
+    });
+    if (!messagingService.isNotificationsPopupShown()) {
+      return this.timeout = setTimeout(((function(_this) {
+        return function() {
+          return _this.safeUpdateState({
+            currentState: BASIC_STATE
+          });
+        };
+      })(this)), MOUSE_LEAVE_TIMEOUT);
+    }
+  },
+  _onUserToolbarOpen: function() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+    if (CurrentUserStore.isLogged()) {
+      if (messagingService.isNotificationsPopupShown()) {
+        PopupActions.closeNotificationsPopup();
+      }
+    }
+    return this.activateAdvancedState();
+  },
+  _onUserToolbarClose: function() {
+    if (!this.state.isHovered) {
+      return this.activateBasicState();
+    }
+  },
+  _onDocumentClick: function(e) {
+    if (CurrentUserStore.isLogged()) {
+      if (!($(e.target).closest('.toolbar__indicators').length && this.isAdvancedState())) {
+        PopupActions.closeNotificationsPopup();
+        return this.activateBasicState();
+      }
+    }
+  },
+  _onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 module.exports = FacebookSuggestionsItem;
 
 
+<<<<<<< HEAD
 
 },{}],136:[function(require,module,exports){
 var ConnectStoreMixin, ERROR_STATE, LOADED_STATE, LOADING_STATE, SocialNetworkPanelMixin;
+=======
+},{"react/lib/cx":568}],257:[function(require,module,exports){
+var cx;
+
+cx = require('react/lib/cx');
+
+window.IndicatorsToolbar_Messages = React.createClass({
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentDidMount: function() {
+    return MessagingStatusStore.addChangeListener(this._onStoreChange);
+  },
+  componentWillUnmount: function() {
+    return MessagingStatusStore.removeChangeListener(this._onStoreChange);
+  },
+  render: function() {
+    var indicatorClasses;
+    indicatorClasses = cx({
+      'toolbar__indicator': true,
+      'toolbar__indicator--messages': true,
+      'state--empty': this.state.unreadConversationsCount === 0
+    });
+    if (this.hasUnreadConversations()) {
+      return React.createElement("div", {
+        "className": indicatorClasses,
+        "onClick": this.props.onClick
+      }, React.createElement("span", {
+        "className": "messages-badge"
+      }, this.state.unreadConversationsCount), React.createElement("i", {
+        "className": "icon icon--messages"
+      }));
+    } else {
+      return null;
+    }
+  },
+  hasUnreadConversations: function() {
+    return this.state.unreadConversationsCount != null;
+  },
+  getStateFromStore: function() {
+    return {
+      unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount(),
+      activeConversationsCount: MessagingStatusStore.getActiveConversationsCount()
+    };
+  },
+  _onStoreChange: function() {
+    return this.setState(this.getStateFromStore());
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 ConnectStoreMixin = require('../../../../../../../shared/react/mixins/connectStore');
 
+<<<<<<< HEAD
 ERROR_STATE = 'error';
 
 LOADED_STATE = 'loaded';
@@ -25175,6 +34862,59 @@ SuggestionListMixin = {
         "className": "persons-headline__right"
       }, React.createElement(SubscribeAllButton, null));
     }
+=======
+
+},{"react/lib/cx":568}],258:[function(require,module,exports){
+var cx;
+
+cx = require('react/lib/cx');
+
+window.IndicatorsToolbar_Notifications = React.createClass({
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentDidMount: function() {
+    return MessagingStatusStore.addChangeListener(this._onStoreChange);
+  },
+  componentDidUpdate: function(prevProps, prevState) {
+    if (prevState.unreadNotificationsCount > 0 && !this.hasUnreadNotifications()) {
+      return PopupActions.closeNotificationsPopup();
+    }
+  },
+  componentWillUnmount: function() {
+    return MessagingStatusStore.removeChangeListener(this._onStoreChange);
+  },
+  render: function() {
+    var indicatorClasses;
+    indicatorClasses = cx({
+      'toolbar__indicator': true,
+      'toolbar__indicator--notifications': true,
+      'state--empty': this.state.unreadNotificationsCount === 0
+    });
+    if (this.hasUnreadNotifications()) {
+      return React.createElement("div", {
+        "className": indicatorClasses,
+        "onClick": this.props.onClick
+      }, React.createElement("span", {
+        "className": "notifications-badge"
+      }, this.state.unreadNotificationsCount), React.createElement("i", {
+        "className": "icon icon--bell"
+      }));
+    } else {
+      return null;
+    }
+  },
+  hasUnreadNotifications: function() {
+    return this.state.unreadNotificationsCount != null;
+  },
+  getStateFromStore: function() {
+    return {
+      unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount()
+    };
+>>>>>>> Editor store and services [#89871770]
   },
   getSuggestionsCountMessage: function() {
     return i18n.t('suggestions_found', {
@@ -25186,6 +34926,7 @@ SuggestionListMixin = {
 module.exports = SuggestionListMixin;
 
 
+<<<<<<< HEAD
 
 },{}],138:[function(require,module,exports){
 var PropTypes, SuggestionsMixin;
@@ -25208,16 +34949,110 @@ SuggestionsMixin = {
       });
     } else {
       return React.createElement(EmptyComponent, null);
-    }
+=======
+},{"react/lib/cx":568}],259:[function(require,module,exports){
+window.MessagingDispatcher = _.extend(new Dispatcher(), {
+  handleViewAction: function(action) {
+    return this.dispatch({
+      source: 'VIEW_ACTION',
+      action: action
+    });
   },
+  handleServerAction: function(action) {
+    return this.dispatch({
+      source: 'SERVER_ACTION',
+      action: action
+    });
+  },
+  updateMessagingStatus: function(messagingStatus) {
+    return MessagingDispatcher.handleServerAction({
+      type: 'updateMessagingStatus',
+      messagingStatus: messagingStatus
+    });
+  },
+  updateActiveConversations: function(activeConversations) {
+    console.log('Receive activeConversations', activeConversations);
+    return MessagingDispatcher.handleServerAction({
+      type: 'updateActiveConversations',
+      activeConversations: activeConversations
+    });
+  },
+  updateConversation: function(conversation) {
+    return MessagingDispatcher.handleServerAction({
+      type: 'updateConversation',
+      conversation: conversation
+    });
+  },
+  changeConnectionState: function(state) {
+    return MessagingDispatcher.handleServerAction({
+      type: 'connectionState',
+      state: state
+    });
+  },
+  messageReceived: function(message) {
+    console.info('Получено сообщение', message);
+    if (message.user_id !== CurrentUserStore.getUser().id) {
+      TastySoundController.incomingMessage();
+>>>>>>> Editor store and services [#89871770]
+    }
+    return MessagingDispatcher.handleServerAction({
+      type: 'messageReceived',
+      conversationId: message.conversation_id,
+      message: message
+    });
+  },
+<<<<<<< HEAD
   hasSuggestions: function() {
     return this.props.suggestionsCount > 0;
+=======
+  notificationReceived: function(notification) {
+    console.info('Получено уведомление', notification);
+    TastySoundController.incomingNotification();
+    return MessagingDispatcher.handleServerAction({
+      type: 'notificationReceived',
+      notification: notification
+    });
+  },
+  messagesUpdated: function(data) {
+    return MessagingDispatcher.handleServerAction({
+      type: 'messagesUpdated',
+      conversationId: data.conversation_id,
+      messages: data.messages
+    });
+  },
+  notificationsUpdated: function(data) {
+    return MessagingDispatcher.handleServerAction({
+      type: 'notificationsUpdated',
+      notifications: data.notifications
+    });
+  },
+  messageSubmitted: function(_arg) {
+    var content, conversation, conversationId, currentUser, message, recipient, uuid;
+    conversationId = _arg.conversationId, content = _arg.content, uuid = _arg.uuid;
+    conversation = ConversationsStore.getConversation(conversationId);
+    currentUser = CurrentUserStore.getUser();
+    recipient = conversation.recipient;
+    message = {
+      content: content,
+      content_html: _.escape(content),
+      conversation_id: conversationId,
+      recipient_id: recipient.id,
+      user_id: currentUser.id,
+      uuid: uuid
+    };
+    return MessagingDispatcher.handleViewAction({
+      type: 'messageSubmitted',
+      conversationId: conversationId,
+      message: message
+    });
+>>>>>>> Editor store and services [#89871770]
   }
 };
 
 module.exports = SuggestionsMixin;
 
 
+<<<<<<< HEAD
 
 },{}],139:[function(require,module,exports){
 var SocialNetworkPanelMixin, VkontakteSignIn, VkontakteSuggestions;
@@ -25277,9 +35112,98 @@ window.PersonsPopup_VkontaktePanel = React.createClass({
     };
   }
 });
+=======
+},{}],260:[function(require,module,exports){
+window.MessagingRequester = (function() {
+  function MessagingRequester(_arg) {
+    this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
+  }
 
+  MessagingRequester.prototype.notifyReady = function(_arg) {
+    var error, success;
+    success = _arg.success, error = _arg.error;
+    return $.ajax({
+      url: ApiRoutes.messenger_ready_url(),
+      data: {
+        socket_id: this.socket_id
+      },
+      method: 'POST',
+      success: success,
+      error: error
+    });
+  };
 
+  MessagingRequester.prototype.postNewConversation = function(recipientId, content) {
+    return $.ajax({
+      url: ApiRoutes.messengerConversationsByUserId(recipientId),
+      method: 'POST',
+      data: {
+        socket_id: this.socket_id,
+        content: content
+      }
+    });
+  };
 
+  MessagingRequester.prototype.loadMessages = function(conversationId) {
+    return $.ajax({
+      url: ApiRoutes.messenger_load_messages_url(conversationId),
+      data: {
+        socket_id: this.socket_id
+      }
+    });
+  };
+
+  MessagingRequester.prototype.loadMoreMessages = function(conversationId, toMessageId) {
+    return $.ajax({
+      url: ApiRoutes.messenger_load_messages_url(conversationId),
+      data: {
+        socket_id: this.socket_id,
+        to_message_id: toMessageId,
+        limit: 10
+      }
+    });
+  };
+
+  MessagingRequester.prototype.postMessage = function(conversationId, content, uuid) {
+    return $.ajax({
+      url: ApiRoutes.messenger_new_message_url(conversationId),
+      method: 'POST',
+      data: {
+        socket_id: this.socket_id,
+        content: content,
+        uuid: uuid
+      }
+    });
+  };
+
+  MessagingRequester.prototype.markAsReadMessage = function(conversationId, messageId) {
+    return $.ajax({
+      url: ApiRoutes.messenger_read_messages_url(conversationId),
+      method: 'POST',
+      data: {
+        _method: 'PUT',
+        socket_id: this.socket_id,
+        ids: messageId
+      }
+    });
+  };
+>>>>>>> Editor store and services [#89871770]
+
+  MessagingRequester.prototype.markAsReadNotification = function(notificationId) {
+    return $.ajax({
+      url: ApiRoutes.notifications_read_url(notificationId),
+      method: 'POST',
+      data: {
+        _method: 'PUT',
+        socket_id: this.socket_id,
+        id: notificationId
+      }
+    });
+  };
+
+  return MessagingRequester;
+
+<<<<<<< HEAD
 },{"./mixins/socialNetwork":136,"./vkontakte/signIn":140,"./vkontakte/suggestions":141}],140:[function(require,module,exports){
 var VkontakteSignIn;
 
@@ -25300,10 +35224,14 @@ VkontakteSignIn = React.createClass({
     return window.location = ApiRoutes.omniauth_url('vkontakte');
   }
 });
+=======
+})();
+>>>>>>> Editor store and services [#89871770]
 
 module.exports = VkontakteSignIn;
 
 
+<<<<<<< HEAD
 
 },{}],141:[function(require,module,exports){
 var PropTypes, SuggestionsMixin, VkontakteSuggestions, VkontakteSuggestionsEmpty, VkontakteSuggestionsList;
@@ -25363,8 +35291,21 @@ VkontakteSubscribeAllButton = React.createClass({
 });
 
 module.exports = VkontakteSubscribeAllButton;
+=======
+},{}],261:[function(require,module,exports){
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
+window.MessagingService = (function() {
+  MessagingService.prototype.EVENT_STATUS = 'status';
 
+  MessagingService.prototype.EVENT_ACTIVE_CONVERSATIONS = 'active_conversations';
+
+  MessagingService.prototype.EVENT_UPDATE_CONVERSATION = 'update_conversation';
+>>>>>>> Editor store and services [#89871770]
+
+  MessagingService.prototype.EVENT_PUSH_MESSAGE = 'push_message';
+
+<<<<<<< HEAD
 
 },{}],143:[function(require,module,exports){
 var PropTypes, VkontakteSuggestionsEmpty;
@@ -25518,14 +35459,134 @@ window.PersonsPopup = React.createClass({
     return this.setState(this.getStateFromStores());
   }
 });
+=======
+  MessagingService.prototype.EVENT_PUSH_NOTIFICATION = 'push_notification';
 
+  MessagingService.prototype.EVENT_UPDATE_MESSAGES = 'update_messages';
 
+  MessagingService.prototype.EVENT_UPDATE_NOTIFICATIONS = 'update_notifications';
 
+  MessagingService.prototype.RECONNECT_EVENT = 'reconnected';
+
+  MessagingService.prototype.CHANNEL_MAIN = function(userId) {
+    return "private-" + userId + "-messaging";
+  };
+
+  function MessagingService(_arg) {
+    this.user = _arg.user;
+    this.emitReconnect = __bind(this.emitReconnect, this);
+    this._connected = __bind(this._connected, this);
+    MessagingDispatcher.changeConnectionState(ConnectionStateStore.PROCESS_STATE);
+    _.extend(this, EventEmitter.prototype);
+    this.pusher = new Pusher(gon.pusher.key, {
+      authEndpoint: ApiRoutes.pusher_auth_url(),
+      pong_timeout: 6000,
+      unavailable_timeout: 2000,
+      auth: {
+        headers: {
+          'X-User-Token': this.user.api_key.access_token
+        }
+      }
+    });
+    this.channel = this.pusher.subscribe(this.CHANNEL_MAIN(this.user.id));
+    this.channel.bind('pusher:subscription_succeeded', this._connected);
+    this.channel.bind('pusher:subscription_error', function(error) {
+      TastyNotifyController.notify('error', i18n.t('pusher_subscription_error'));
+      return MessagingDispatcher.changeConnectionState(ConnectionStateStore.ERROR_STATE);
+    });
+    this.channel.bind(this.EVENT_STATUS, MessagingDispatcher.updateMessagingStatus);
+    this.channel.bind(this.EVENT_UPDATE_CONVERSATION, MessagingDispatcher.updateConversation);
+    this.bindPushMessages();
+    this.bindUpdateMessages();
+    this.bindPushNotifications();
+    this.bindUpdateNotifications();
+    this.messagesContainer = $('<\div>', {
+      'popup-messages-container': ''
+    }).appendTo('body')[0];
+    this.notificationsContainer = $('<\div>', {
+      'popup-notifications-container': ''
+    }).appendTo('body')[0];
+  }
+
+  MessagingService.prototype.reconnect = function() {
+    MessagingDispatcher.changeConnectionState(ConnectionStateStore.PROCESS_STATE);
+    return this.channel = this.pusher.subscribe(this.CHANNEL_MAIN(this.user.id));
+  };
+
+  MessagingService.prototype._connected = function() {
+    MessagingDispatcher.changeConnectionState(ConnectionStateStore.CONNECTED_STATE);
+    this.requester = new MessagingRequester({
+      access_token: this.user.api_key.access_token,
+      socket_id: this.pusher.connection.socket_id
+    });
+    this.requester.notifyReady({
+      success: function(data) {
+        console.log('Server is notified');
+        MessagingDispatcher.handleServerAction({
+          type: 'conversationsLoaded',
+          conversations: data.conversations
+        });
+        return MessagingDispatcher.handleServerAction({
+          type: 'notificationsLoaded',
+          notifications: data.notifications
+        });
+      },
+      error: function(error) {
+        return typeof console.error === "function" ? console.error("Error", error) : void 0;
+      }
+    });
+    this.pusher.connection.bind('unavailable', function(error) {
+      return console.log("pusher unavailable", error);
+    });
+    this.pusher.connection.bind('failed', function(error) {
+      return console.log("pusher failer", error);
+    });
+    return this.pusher.connection.bind('connected', this.emitReconnect);
+  };
+>>>>>>> Editor store and services [#89871770]
+
+  MessagingService.prototype.emitReconnect = function() {
+    return this.emit(this.RECONNECT_EVENT);
+  };
+
+  MessagingService.prototype.postNewConversation = function(_arg) {
+    var error, recipientId;
+    recipientId = _arg.recipientId, error = _arg.error;
+    return this.requester.postNewConversation(recipientId).done(function(conversation) {
+      return MessagingDispatcher.handleServerAction({
+        type: 'postNewConversation',
+        conversation: conversation
+      });
+    }).fail(function(errMsg) {
+      if (typeof error === "function") {
+        error();
+      }
+      return TastyNotifyController.errorResponse(errMsg);
+    });
+  };
+
+<<<<<<< HEAD
 },{}],147:[function(require,module,exports){
 var cx;
+=======
+  MessagingService.prototype.openConversation = function(conversationId) {
+    return this.loadMessages(conversationId);
+  };
+>>>>>>> Editor store and services [#89871770]
 
-cx = require('react/lib/cx');
+  MessagingService.prototype.loadMessages = function(conversationId) {
+    return this.requester.loadMessages(conversationId).done(function(data) {
+      return MessagingDispatcher.handleServerAction({
+        type: 'messagesLoaded',
+        conversationId: conversationId,
+        messages: data.messages
+      });
+    }).fail(function(error) {
+      return console.error('Проблема при загрузке сообщений для переписки', error);
+    });
+  };
 
+<<<<<<< HEAD
 window.PopupHeader = React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
@@ -25594,9 +35655,49 @@ window.PopupLayout = React.createClass({
     }, this.props.children)));
   }
 });
+=======
+  MessagingService.prototype.loadMoreMessages = function(conversationId, toMessageId) {
+    return this.requester.loadMoreMessages(conversationId, toMessageId).done(function(data) {
+      return MessagingDispatcher.handleServerAction({
+        type: 'moreMessagesLoaded',
+        conversationId: conversationId,
+        messages: data.messages,
+        allMessagesLoaded: data.scope_count < 10
+      });
+    }).fail(function(error) {
+      return console.error('Проблема при загрузке сообщений для переписки', error);
+    });
+  };
 
+  MessagingService.prototype.postMessage = function(_arg) {
+    var content, conversationId, uuid;
+    conversationId = _arg.conversationId, content = _arg.content, uuid = _arg.uuid;
+    return this.requester.postMessage(conversationId, content, uuid).done(function(message) {
+      return MessagingDispatcher.messageReceived(message);
+    }).fail(function(errMsg) {
+      MessagingDispatcher.handleServerAction({
+        type: 'messageSendingError',
+        conversationId: conversationId,
+        uuid: uuid
+      });
+      return TastyNotifyController.errorResponse(errMsg);
+    });
+  };
+>>>>>>> Editor store and services [#89871770]
 
+  MessagingService.prototype.markAsReadMessage = function(conversationId, messageId) {
+    return this.requester.markAsReadMessage(conversationId, messageId).fail(function(errMsg) {
+      return console.error('Проблема при прочтении сообщения', errMsg);
+    });
+  };
 
+  MessagingService.prototype.markAsReadNotification = function(notificationId) {
+    return this.requester.markAsReadNotification(notificationId).fail(function(errMsg) {
+      return console.error('Проблема при прочтении уведомления', errMsg);
+    });
+  };
+
+<<<<<<< HEAD
 },{}],149:[function(require,module,exports){
 var NO_TRANSITION_CLASS, cx;
 
@@ -25704,11 +35805,145 @@ window.PopupSpinner = React.createClass({
     } else {
       return null;
     }
+=======
+  MessagingService.prototype.isMessagesPopupShown = function() {
+    var _ref;
+    return ((_ref = this.messagesPopup) != null ? _ref._lifeCycleState : void 0) === 'MOUNTED';
+  };
+
+  MessagingService.prototype.isNotificationsPopupShown = function() {
+    var _ref;
+    return ((_ref = this.notificationsPopup) != null ? _ref._lifeCycleState : void 0) === 'MOUNTED';
+  };
+
+  MessagingService.prototype.closeMessagesPopup = function() {
+    if (this.isMessagesPopupShown()) {
+      return React.unmountComponentAtNode(this.messagesContainer);
+    }
+  };
+
+  MessagingService.prototype.closeNotificationsPopup = function() {
+    if (this.isNotificationsPopupShown()) {
+      return React.unmountComponentAtNode(this.notificationsContainer);
+    }
+  };
+
+  MessagingService.prototype.openMessagesPopup = function() {
+    if (!this.isMessagesPopupShown()) {
+      return this.messagesPopup = React.render(React.createElement(MessagesPopup, null), this.messagesContainer);
+    }
+  };
+
+  MessagingService.prototype.openNotificationsPopup = function() {
+    if (!this.isNotificationsPopupShown()) {
+      return this.notificationsPopup = React.render(React.createElement(NotificationsPopup, null), this.notificationsContainer);
+    }
+  };
+
+  MessagingService.prototype.toggleMessagesPopup = function() {
+    if (this.isMessagesPopupShown()) {
+      return this.closeMessagesPopup();
+    } else {
+      return this.openMessagesPopup();
+    }
+  };
+
+  MessagingService.prototype.toggleNotificationsPopup = function() {
+    if (this.isNotificationsPopupShown()) {
+      return this.closeNotificationsPopup();
+    } else {
+      return this.openNotificationsPopup();
+    }
+  };
+
+  MessagingService.prototype.addReconnectListener = function(callback) {
+    return this.on(this.RECONNECT_EVENT, callback);
+  };
+
+  MessagingService.prototype.removeReconnectListener = function(callback) {
+    return this.off(this.RECONNECT_EVENT, callback);
+  };
+
+  MessagingService.prototype.bindPushMessages = function() {
+    return this.channel.bind(this.EVENT_PUSH_MESSAGE, MessagingDispatcher.messageReceived);
+  };
+
+  MessagingService.prototype.unbindPushMessages = function() {
+    return this.channel.unbind(this.EVENT_PUSH_MESSAGE, MessagingDispatcher.messageReceived);
+  };
+
+  MessagingService.prototype.bindUpdateMessages = function() {
+    return this.channel.bind(this.EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated);
+  };
+
+  MessagingService.prototype.unbindUpdateMessages = function() {
+    return this.channel.unbind(this.EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated);
+  };
+
+  MessagingService.prototype.bindPushNotifications = function() {
+    return this.channel.bind(this.EVENT_PUSH_NOTIFICATION, MessagingDispatcher.notificationReceived);
+  };
+
+  MessagingService.prototype.unbindPushNotifications = function() {
+    return this.channel.unbind(this.EVENT_PUSH_NOTIFICATION, MessagingDispatcher.notificationReceived);
+  };
+
+  MessagingService.prototype.bindUpdateNotifications = function() {
+    return this.channel.bind(this.EVENT_UPDATE_NOTIFICATIONS, MessagingDispatcher.notificationsUpdated);
+  };
+
+  MessagingService.prototype.unbindUpdateNotifications = function() {
+    return this.channel.unbind(this.EVENT_UPDATE_NOTIFICATIONS, MessagingDispatcher.notificationsUpdated);
+  };
+
+  return MessagingService;
+
+})();
+
+
+
+},{}],262:[function(require,module,exports){
+window.MessagingMock = {
+  message: function() {
+    var conversation, recipient, sender;
+    sender = new Sender({
+      id: 1,
+      name: 'Вася'
+    });
+    recipient = new Recipient({
+      id: 1,
+      name: 'Петя'
+    });
+    conversation = new Conversation({
+      id: 123,
+      participants: [sender, recipient]
+    });
+    return new Message({
+      conversation_id: 123,
+      sender_id: sender.id,
+      recipient_id: recipient.id,
+      content: 'Сообщение',
+      content_html: 'Сообщение'
+    });
+  },
+  emulateMessage: function(_arg) {
+    var message;
+    message = _arg.message;
+    message || (message = this.message());
+    return messaging.emitEvent("" + message.conversation_id + ":message:" + message.id);
+  },
+  emulateRead: function(_arg) {
+    var message;
+    message = _arg.message;
+    message || (message = this.message());
+    return messaging.emitEvent("" + message.conversation_id + ":read:" + message.id);
+>>>>>>> Editor store and services [#89871770]
   }
-});
+};
 
 
 
+<<<<<<< HEAD
 },{}],151:[function(require,module,exports){
 var LinkedStateMixin;
 
@@ -25760,11 +35995,31 @@ window.PopupBox = React.createClass({
     } else {
       return this.unmount();
     }
+=======
+},{}],263:[function(require,module,exports){
+var BaseStore, CHANGE_EVENT,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+CHANGE_EVENT = 'change';
+
+BaseStore = (function(_super) {
+  __extends(BaseStore, _super);
+
+  function BaseStore() {
+    return BaseStore.__super__.constructor.apply(this, arguments);
+>>>>>>> Editor store and services [#89871770]
   }
-});
 
+  BaseStore.prototype.emitChange = function() {
+    return this.emit(CHANGE_EVENT);
+  };
 
+  BaseStore.prototype.addChangeListener = function(cb) {
+    return this.on(CHANGE_EVENT, cb);
+  };
 
+<<<<<<< HEAD
 },{"react/lib/LinkedStateMixin":510}],152:[function(require,module,exports){
 var ENTRY_PRIVACY_ANONYMOUS, ENTRY_PRIVACY_LIVE, ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, PREVIEW_BODY_CLASSES, TLOG_TYPE_ANONYMOUS, TLOG_TYPE_PRIVATE, TLOG_TYPE_PUBLIC, cx;
 
@@ -25890,11 +36145,65 @@ window.PostActions = React.createClass({
     var newEntryPrivacy;
     newEntryPrivacy = value ? ENTRY_PRIVACY_PRIVATE : ENTRY_PRIVACY_PUBLIC;
     return this.props.onChangePrivacy(newEntryPrivacy);
+=======
+  BaseStore.prototype.removeChangeListener = function(cb) {
+    return this.off(CHANGE_EVENT, cb);
+  };
+
+  return BaseStore;
+
+})(EventEmitter);
+
+module.exports = BaseStore;
+
+
+
+},{}],264:[function(require,module,exports){
+var CONNECTION_EVENT, _connectionState;
+
+CONNECTION_EVENT = 'connectionStateUpdated';
+
+_connectionState = null;
+
+window.ConnectionStateStore = _.extend({}, EventEmitter.prototype, {
+  PROCESS_STATE: 'process',
+  ERROR_STATE: 'error',
+  CONNECTED_STATE: 'connected',
+  NOT_CONNECTED_STATE: 'notconnected',
+  emitUpdate: function() {
+    return this.emit(CONNECTION_EVENT);
+  },
+  addUpdateListener: function(callback) {
+    return this.on(CONNECTION_EVENT, callback);
+  },
+  removeUpdateListener: function(callback) {
+    return this.off(CONNECTION_EVENT, callback);
+  },
+  getConnectionState: function() {
+    return _connectionState;
+  },
+  _update: function(state) {
+    return _connectionState = state;
+  }
+});
+
+_connectionState = ConnectionStateStore.NOT_CONNECTED_STATE;
+
+ConnectionStateStore.dispatchToken = MessagingDispatcher.register(function(payload) {
+  var action;
+  action = payload.action;
+  switch (action.type) {
+    case 'connectionState':
+      ConnectionStateStore._update(action.state);
+      ConnectionStateStore.emitUpdate();
+      break;
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],153:[function(require,module,exports){
 var cx;
 
@@ -25990,11 +36299,127 @@ window.PostActions_VoteButton = React.createClass({
   onClick: function() {
     this.props.onChange(!this.props.enabled);
     return this.$button.tooltip('hide');
+=======
+},{}],265:[function(require,module,exports){
+var CHANGE_EVENT, _conversations;
+
+CHANGE_EVENT = 'change';
+
+_conversations = [];
+
+window.ConversationsStore = _.extend({}, EventEmitter.prototype, {
+  emitChange: function() {
+    return this.emit(CHANGE_EVENT);
+  },
+  addChangeListener: function(callback) {
+    return this.on(CHANGE_EVENT, callback);
+  },
+  removeChangeListener: function(callback) {
+    return this.off(CHANGE_EVENT, callback);
+  },
+  unshiftConversations: function(conversations) {
+    var clonedConversations, conversation, _i, _len;
+    clonedConversations = _conversations.slice(0);
+    for (_i = 0, _len = conversations.length; _i < _len; _i++) {
+      conversation = conversations[_i];
+      if (!this.isConversationExists(conversation)) {
+        clonedConversations.unshift(conversation);
+      }
+    }
+    return _conversations = clonedConversations;
+  },
+  updateConversation: function(data) {
+    var clonedConversations, conversation, i, _i, _len;
+    clonedConversations = _conversations.slice(0);
+    for (i = _i = 0, _len = clonedConversations.length; _i < _len; i = ++_i) {
+      conversation = clonedConversations[i];
+      if (conversation.id === data.id) {
+        clonedConversations[i] = data;
+        break;
+      }
+    }
+    return _conversations = clonedConversations;
+  },
+  preloadConversationsImages: function(conversations) {
+    var conversation, image, _i, _len, _results;
+    _results = [];
+    for (_i = 0, _len = conversations.length; _i < _len; _i++) {
+      conversation = conversations[_i];
+      image = new Image();
+      _results.push(image.src = conversation.recipient.design.background_url);
+    }
+    return _results;
+  },
+  getConversation: function(conversationId) {
+    var conversation, _i, _len;
+    for (_i = 0, _len = _conversations.length; _i < _len; _i++) {
+      conversation = _conversations[_i];
+      if (conversation.id === conversationId) {
+        return conversation;
+      }
+    }
+  },
+  getConversationByUserId: function(recipientId) {
+    var conversation, _i, _len;
+    for (_i = 0, _len = _conversations.length; _i < _len; _i++) {
+      conversation = _conversations[_i];
+      if (conversation.recipient.id === recipientId) {
+        return conversation;
+      }
+    }
+  },
+  getActiveConversations: function() {
+    return _conversations;
+  },
+  sortByDesc: function() {
+    var clonedConversations;
+    clonedConversations = _conversations.slice(0);
+    clonedConversations.sort(function(a, b) {
+      return new Date(b.updated_at) - new Date(a.updated_at);
+    });
+    return _conversations = clonedConversations;
+  },
+  isConversationExists: function(conversation) {
+    var cnv, _i, _len;
+    for (_i = 0, _len = _conversations.length; _i < _len; _i++) {
+      cnv = _conversations[_i];
+      if (cnv.id === conversation.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+});
+
+ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload) {
+  var action;
+  action = payload.action;
+  switch (action.type) {
+    case 'postNewConversation':
+      ConversationsStore.unshiftConversations([action.conversation]);
+      ConversationsStore.emitChange();
+      break;
+    case 'conversationsLoaded':
+      ConversationsStore.unshiftConversations(action.conversations);
+      ConversationsStore.sortByDesc();
+      ConversationsStore.emitChange();
+      break;
+    case 'updateConversation':
+      if (ConversationsStore.isConversationExists(action.conversation)) {
+        ConversationsStore.updateConversation(action.conversation);
+      } else {
+        ConversationsStore.unshiftConversations([action.conversation]);
+      }
+      ConversationsStore.sortByDesc();
+      ConversationsStore.emitChange();
+      break;
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],155:[function(require,module,exports){
 var CHOICER_ITEMS, CHOICER_TYPES, cx;
 
@@ -26128,11 +36553,163 @@ window.PostEditor_ChoicerItem = React.createClass({
     if (!this.props.isLoading) {
       return this.props.onClick();
     }
+=======
+},{}],266:[function(require,module,exports){
+var CHANGE_EVENT, _allMessagesLoaded, _messages;
+
+CHANGE_EVENT = 'change';
+
+_messages = {};
+
+_allMessagesLoaded = {};
+
+window.MessagesStore = _.extend({}, EventEmitter.prototype, {
+  emitChange: function() {
+    return this.emit(CHANGE_EVENT);
+  },
+  addChangeListener: function(callback) {
+    return this.on(CHANGE_EVENT, callback);
+  },
+  removeChangeListener: function(callback) {
+    return this.off(CHANGE_EVENT, callback);
+  },
+  pushMessages: function(conversationId, messages) {
+    var clonedMessages, message, _i, _len;
+    _messages[conversationId] || (_messages[conversationId] = []);
+    clonedMessages = _messages[conversationId].slice(0);
+    for (_i = 0, _len = messages.length; _i < _len; _i++) {
+      message = messages[_i];
+      if (!this.isMessageExists(conversationId, message)) {
+        clonedMessages.push(message);
+      }
+    }
+    return _messages[conversationId] = clonedMessages;
+  },
+  unshiftMessages: function(conversationId, messages) {
+    var clonedMessages, loadedMessage, loadedMessages, _i, _len;
+    loadedMessages = messages.reverse();
+    clonedMessages = _messages[conversationId].slice(0);
+    for (_i = 0, _len = loadedMessages.length; _i < _len; _i++) {
+      loadedMessage = loadedMessages[_i];
+      clonedMessages.unshift(loadedMessage);
+    }
+    return _messages[conversationId] = clonedMessages;
+  },
+  updateMessage: function(conversationId, data) {
+    var message, messages, _i, _len, _results;
+    _messages[conversationId] || (_messages[conversationId] = []);
+    messages = _messages[conversationId];
+    _results = [];
+    for (_i = 0, _len = messages.length; _i < _len; _i++) {
+      message = messages[_i];
+      if (message.uuid === data.uuid) {
+        _.extend(message, data);
+        break;
+      } else {
+        _results.push(void 0);
+      }
+    }
+    return _results;
+  },
+  getMessages: function(conversationId) {
+    var _ref;
+    return (_ref = _messages[conversationId]) != null ? _ref : [];
+  },
+  getMessageInfo: function(message, conversationId) {
+    var conversation, currentUser, messageInfo, recipient;
+    conversation = ConversationsStore.getConversation(conversationId);
+    currentUser = CurrentUserStore.getUser();
+    recipient = conversation.recipient;
+    if (recipient.id === message.recipient_id) {
+      messageInfo = {
+        type: 'outgoing',
+        user: currentUser
+      };
+    } else {
+      messageInfo = {
+        type: 'incoming',
+        user: recipient
+      };
+    }
+    return messageInfo;
+  },
+  isMessageExists: function(conversationId, message) {
+    var messages, msg, _i, _len;
+    _messages[conversationId] || (_messages[conversationId] = []);
+    messages = _messages[conversationId];
+    for (_i = 0, _len = messages.length; _i < _len; _i++) {
+      msg = messages[_i];
+      if (msg.uuid === message.uuid) {
+        return true;
+      }
+    }
+    return false;
+  },
+  isAllMessagesLoaded: function(conversationId) {
+    return _allMessagesLoaded[conversationId];
+  },
+  sortByAsc: function(conversationId) {
+    var clonedMessages;
+    clonedMessages = _messages[conversationId].slice(0);
+    clonedMessages.sort(function(a, b) {
+      return a.id - b.id;
+    });
+    return _messages[conversationId] = clonedMessages;
+  }
+});
+
+MessagesStore.dispatchToken = MessagingDispatcher.register(function(payload) {
+  var action, message, _i, _len, _ref;
+  action = payload.action;
+  switch (action.type) {
+    case 'messagesLoaded':
+      MessagesStore.pushMessages(action.conversationId, action.messages);
+      MessagesStore.sortByAsc(action.conversationId);
+      MessagesStore.emitChange();
+      break;
+    case 'moreMessagesLoaded':
+      _allMessagesLoaded[action.conversationId] = action.allMessagesLoaded;
+      MessagesStore.unshiftMessages(action.conversationId, action.messages);
+      MessagesStore.emitChange();
+      break;
+    case 'messagesUpdated':
+      _ref = action.messages;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        message = _ref[_i];
+        MessagesStore.updateMessage(action.conversationId, message);
+      }
+      MessagesStore.emitChange();
+      break;
+    case 'messageReceived':
+      message = _.extend(action.message, {
+        sendingState: null
+      });
+      if (MessagesStore.isMessageExists(action.conversationId, message)) {
+        MessagesStore.updateMessage(action.conversationId, message);
+      } else {
+        MessagesStore.pushMessages(action.conversationId, [message]);
+        MessagesStore.sortByAsc(action.conversationId);
+      }
+      MessagesStore.emitChange();
+      break;
+    case 'messageSubmitted':
+      MessagesStore.pushMessages(action.conversationId, [action.message]);
+      MessagesStore.emitChange();
+      break;
+    case 'messageSendingError':
+      MessagesStore.updateMessage(action.conversationId, {
+        uuid: action.uuid,
+        sendingState: 'error'
+      });
+      MessagesStore.emitChange();
+      break;
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],156:[function(require,module,exports){
 var DEMO_IDS;
 
@@ -26214,11 +36791,85 @@ window.PostEditor_Demo = React.createClass({
         "currentType": this.state.entryType
       }));
     }
+=======
+},{}],267:[function(require,module,exports){
+var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
+
+CHANGE_EVENT = 'change';
+
+CONVERSATIONS_STATE = 'conversations';
+
+CREATE_NEW_CONVERSATION_STATE = 'createNewConversation';
+
+THREAD_STATE = 'thread';
+
+currentState = CONVERSATIONS_STATE;
+
+conversationId = null;
+
+window.MessagesPopupStateStore = _.extend({}, EventEmitter.prototype, {
+  emitChange: function() {
+    return this.emit(CHANGE_EVENT);
+  },
+  addChangeListener: function(callback) {
+    return this.on(CHANGE_EVENT, callback);
+  },
+  removeChangeListener: function(callback) {
+    return this.off(CHANGE_EVENT, callback);
+  },
+  getCurrentState: function() {
+    return currentState;
+  },
+  getCurrentConversationId: function() {
+    return conversationId;
+  },
+  setCurrentConversationId: function(id) {
+    return conversationId = id;
+  },
+  setThreadState: function() {
+    return currentState = THREAD_STATE;
+  },
+  setCreateNewConversationState: function() {
+    return currentState = CREATE_NEW_CONVERSATION_STATE;
+  },
+  setConversationsState: function() {
+    return currentState = CONVERSATIONS_STATE;
+>>>>>>> Editor store and services [#89871770]
+  }
+});
+
+MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(payload) {
+  var action;
+  action = payload.action;
+  switch (action.type) {
+    case 'postNewConversation':
+      MessagingDispatcher.waitFor([ConversationsStore.dispatchToken]);
+      MessagesPopupStateStore.setCurrentConversationId(action.conversation.id);
+      MessagesPopupStateStore.setThreadState();
+      MessagesPopupStateStore.emitChange();
+      break;
+    case 'clickNewConversation':
+      MessagesPopupStateStore.setCreateNewConversationState();
+      MessagesPopupStateStore.emitChange();
+      break;
+    case 'clickBackButton':
+      MessagesPopupStateStore.setConversationsState();
+      MessagesPopupStateStore.emitChange();
+      break;
+    case 'openConversation':
+      MessagesPopupStateStore.setCurrentConversationId(action.conversationId);
+      MessagesPopupStateStore.setThreadState();
+      MessagesPopupStateStore.emitChange();
+      break;
+    case 'closeMessagesPopup':
+      MessagesPopupStateStore.setConversationsState();
+      MessagesPopupStateStore.emitChange();
+      break;
   }
 });
 
 
-
+<<<<<<< HEAD
 },{}],157:[function(require,module,exports){
 window.PostEditor_EditPost = React.createClass({
   mixins: ['ReactActivitiesMixin', PostEditor_LayoutMixin],
@@ -26355,8 +37006,118 @@ window.PostEditor_EditorContainer = React.createClass({
       "activitiesHandler": this.activitiesHandler,
       "storeCallback": this.storeCallback,
       "doneCallback": this.redirectToEntryPage
-    });
+=======
+
+},{}],268:[function(require,module,exports){
+var BaseStore, MessagingStatusStore, _, _messagingStatus;
+
+_ = require('lodash');
+
+BaseStore = require('./_base');
+
+_messagingStatus = {
+  activeConversationsCount: 0,
+  unreadConversationsCount: 0,
+  unreadNotificationsCount: 0
+};
+
+MessagingStatusStore = _.extend(new BaseStore(), {
+  getUnreadConversationsCount: function() {
+    return _messagingStatus.unreadConversationsCount;
   },
+  getActiveConversationsCount: function() {
+    return _messagingStatus.activeConversationsCount;
+  },
+  getUnreadNotificationsCount: function() {
+    return _messagingStatus.unreadNotificationsCount;
+  },
+  _update: function(messagingStatus) {
+    return _messagingStatus = messagingStatus;
+  }
+});
+
+module.exports = MessagingStatusStore;
+
+MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(payload) {
+  var action;
+  action = payload.action;
+  switch (action.type) {
+    case 'updateMessagingStatus':
+      _messagingStatus = action.messagingStatus;
+      return MessagingStatusStore.emitChange();
+  }
+});
+
+
+
+},{"./_base":263,"lodash":456}],269:[function(require,module,exports){
+var CHANGE_EVENT, _notifications;
+
+CHANGE_EVENT = 'change';
+
+_notifications = [];
+
+window.NotificationsStore = _.extend({}, EventEmitter.prototype, {
+  emitChange: function() {
+    return this.emit(CHANGE_EVENT);
+  },
+  addChangeListener: function(callback) {
+    return this.on(CHANGE_EVENT, callback);
+  },
+  removeChangeListener: function(callback) {
+    return this.off(CHANGE_EVENT, callback);
+  },
+  getNotifications: function() {
+    return _notifications;
+  },
+  unshiftNotifications: function(notifications) {
+    var clonedNotifications, notification, _i, _len;
+    clonedNotifications = _notifications.slice(0);
+    for (_i = 0, _len = notifications.length; _i < _len; _i++) {
+      notification = notifications[_i];
+      if (!this.isNotificationExists(notification)) {
+        clonedNotifications.unshift(notification);
+      }
+    }
+    return _notifications = clonedNotifications;
+  },
+  pushNotifications: function(notifications) {
+    var clonedNotifications, notification, _i, _len;
+    if (!_.isArray(notifications)) {
+      return console.error('Error in pushNotifications method. Argument should be array');
+    }
+    clonedNotifications = _notifications.slice(0);
+    for (_i = 0, _len = notifications.length; _i < _len; _i++) {
+      notification = notifications[_i];
+      if (!this.isNotificationExists(notification)) {
+        clonedNotifications.push(notification);
+      }
+    }
+    return _notifications = clonedNotifications;
+  },
+  updateNotification: function(data) {
+    var notification, _i, _len, _results;
+    _results = [];
+    for (_i = 0, _len = _notifications.length; _i < _len; _i++) {
+      notification = _notifications[_i];
+      if (!(notification.id === data.id)) {
+        continue;
+      }
+      _.extend(notification, data);
+      break;
+    }
+    return _results;
+  },
+  sortByDesc: function() {
+    var clonedNotifications;
+    clonedNotifications = _notifications.slice(0);
+    clonedNotifications.sort(function(a, b) {
+      return b.id - a.id;
+>>>>>>> Editor store and services [#89871770]
+    });
+    return _notifications = clonedNotifications;
+  },
+<<<<<<< HEAD
   _getMusicEditor: function() {
     return React.createElement(PostEditor_MusicEditor, {
       "ref": "editor",
@@ -26383,11 +37144,47 @@ window.PostEditor_EditorContainer = React.createClass({
       "storeCallback": this.storeCallback,
       "doneCallback": this.redirectToEntryPage
     });
+=======
+  isNotificationExists: function(notification) {
+    var ntf, _i, _len;
+    for (_i = 0, _len = _notifications.length; _i < _len; _i++) {
+      ntf = _notifications[_i];
+      if (ntf.id === notification.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+});
+
+NotificationsStore.dispatchToken = MessagingDispatcher.register(function(payload) {
+  var action, notification, _i, _len, _ref;
+  action = payload.action;
+  switch (action.type) {
+    case 'notificationsLoaded':
+      NotificationsStore.pushNotifications(action.notifications);
+      NotificationsStore.emitChange();
+      break;
+    case 'notificationsUpdated':
+      _ref = action.notifications;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        notification = _ref[_i];
+        NotificationsStore.updateNotification(notification);
+      }
+      NotificationsStore.emitChange();
+      break;
+    case 'notificationReceived':
+      NotificationsStore.unshiftNotifications([action.notification]);
+      NotificationsStore.sortByDesc();
+      NotificationsStore.emitChange();
+      break;
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],159:[function(require,module,exports){
 var EDITOR_MODES, EDITOR_OPTIONS;
 
@@ -26510,14 +37307,143 @@ window.TastyEditor = React.createClass({
     }
   }
 });
+=======
+},{}],270:[function(require,module,exports){
+var BaseMixin, ERROR_TIMEOUT, ram, rau;
+
+ERROR_TIMEOUT = 1000;
+
+BaseMixin = {
+  setActivitiesHandler: function(handler) {
+    this.activitiesHandler = handler;
+    this.hasActivities = handler.hasActivities;
+    this.incrementActivities = handler.increment;
+    return this.decrementActivities = handler.decrement;
+  }
+};
+
+ram = {
+  componentWillMount: function() {
+    return this.setActivitiesHandler(this.createActivitiesHandler());
+  },
+  getInitialState: function() {
+    return {
+      activities: 0
+    };
+  },
+  incrementActivities: function() {
+    return this.activitiesHandler.incrementActivities;
+  },
+  decrementActivities: function() {
+    return this.activitiesHandler.decrementActivities;
+  },
+  createActivitiesHandler: function() {
+    var activities, decrement, hasActivities, increment;
+    increment = (function() {
+      return _.defer((function(_this) {
+        return function() {
+          return _this.setState({
+            activities: ++_this.state.activities
+          });
+        };
+      })(this));
+    }).bind(this);
+    decrement = (function() {
+      return _.defer((function(_this) {
+        return function() {
+          return _this.setState({
+            activities: --_this.state.activities
+          });
+        };
+      })(this));
+    }).bind(this);
+    hasActivities = (function() {
+      return this.state.activities > 0;
+    }).bind(this);
+    activities = (function() {
+      return this.state.activities;
+    }).bind(this);
+    return {
+      increment: increment,
+      decrement: decrement,
+      hasActivities: hasActivities,
+      activities: activities
+    };
+  }
+};
+
+rau = {
+  propTypes: {
+    activitiesHandler: React.PropTypes.object.isRequired
+  },
+  componentWillMount: function() {
+    return this.setActivitiesHandler(this.props.activitiesHandler);
+  },
+  componentWillReceiveProps: function(nextProps) {
+    return this.setActivitiesHandler(nextProps.activitiesHandler);
+  }
+};
+
+React.mixins.add('ReactActivitiesMixin', [ram, BaseMixin]);
+
+React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
 
 
+},{}],271:[function(require,module,exports){
+window.ComponentManipulationsMixin = {
+  safeUpdate: function(func) {
+    if (!this._isUnmounted()) {
+      func();
+    }
+  },
+  safeUpdateState: function(newStates) {
+    if (!this._isUnmounted()) {
+      this.setState(newStates);
+    }
+  },
+  _isUnmounted: function() {
+    return this._compositeLifeCycleState === 'UNMOUNTING' || this._compositeLifeCycleState === 'UNMOUNTED' || this._lifeCycleState === 'UNMOUNTING' || this._lifeCycleState === 'UNMOUNTED';
+  }
+};
+
+
+
+},{}],272:[function(require,module,exports){
+var ENTRY_DELETE_ANIMATION_SPEED;
+
+ENTRY_DELETE_ANIMATION_SPEED = 300;
+>>>>>>> Editor store and services [#89871770]
+
+window.DOMManipulationsMixin = {
+  removeEntryFromDOM: function(entryId, speed) {
+    var $entryNode;
+    if (speed == null) {
+      speed = ENTRY_DELETE_ANIMATION_SPEED;
+    }
+    $entryNode = $("[data-id='" + entryId + "']");
+    return $entryNode.slideUp(speed, (function(_this) {
+      return function() {
+        if (_this.props.onDelete != null) {
+          _this.props.onDelete();
+        }
+        return $entryNode.remove();
+      };
+    })(this));
+  }
+};
+
+
+<<<<<<< HEAD
 },{}],160:[function(require,module,exports){
 var cx;
+=======
+>>>>>>> Editor store and services [#89871770]
 
-cx = require('react/lib/cx');
+},{}],273:[function(require,module,exports){
+var ERROR_TIMEOUT;
 
+<<<<<<< HEAD
 window.PostEditor_AnonymousEditor = React.createClass({
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin],
   propTypes: {
@@ -26572,16 +37498,77 @@ window.PostEditor_AnonymousEditor = React.createClass({
       title: this.refs.titleEditor.content(),
       text: this.refs.textEditor.content()
     };
+=======
+ERROR_TIMEOUT = 1000;
+
+window.ErrorTimerMixin = {
+  componentWillUnmount: function() {
+    return this.clearErrorTimer();
+  },
+  clearErrorTimer: function() {
+    if (this.errorTimer) {
+      return clearTimeout(this.errorTimer);
+    }
+  },
+  startErrorTimer: function() {
+    if (!this.state.isError) {
+      this.setState({
+        isError: true
+      });
+    }
+    return this.errorTimer = setTimeout(this.closeError, 1000);
+  },
+  closeError: function() {
+    return this.setState({
+      isError: false
+    });
   }
-});
+};
 
 
 
+},{}],274:[function(require,module,exports){
+window.ReactGrammarMixin = {
+  declension: function(number, titles) {
+    var cases;
+    cases = [2, 0, 1, 1, 1, 2];
+    if (number % 100 > 4 && number % 100 < 20) {
+      return titles[2];
+    }
+    if (number % 10 < 5) {
+      return titles[cases[number % 10]];
+    } else {
+      return titles[cases[5]];
+    }
+  },
+  timeAgo: function(date) {
+    var createdAt, now;
+    now = moment();
+    createdAt = moment(date);
+    if (now.diff(createdAt, 'minutes') < 180) {
+      date = createdAt.fromNow();
+    } else if (now.diff(createdAt, 'days') < 1) {
+      date = createdAt.calendar();
+    } else {
+      if (now.year() !== createdAt.year()) {
+        date = createdAt.format('D MMMM YYYY');
+      } else {
+        date = createdAt.format('D MMMM');
+      }
+    }
+    return date;
+>>>>>>> Editor store and services [#89871770]
+  }
+};
+
+<<<<<<< HEAD
 },{"react/lib/cx":599}],161:[function(require,module,exports){
 var INSERT_MODE, LOADED_MODE, PureRenderMixin, WELCOME_MODE, cx;
+=======
+>>>>>>> Editor store and services [#89871770]
 
-cx = require('react/lib/cx');
 
+<<<<<<< HEAD
 PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
 
 WELCOME_MODE = 'welcome';
@@ -26709,8 +37696,124 @@ window.PostEditor_ImageEditor = React.createClass({
         image.src = imageAttachment.image.url;
         return image;
       });
+=======
+},{}],275:[function(require,module,exports){
+var COMPONENT_WIDTH, REPOSITION_TIMEOUT;
+
+REPOSITION_TIMEOUT = 500;
+
+COMPONENT_WIDTH = 400;
+
+window.ReactPositionsMixin = {
+  propTypes: {
+    position: React.PropTypes.object
+  },
+  positionKey: function() {
+    return this.props.type || this.props.title;
+  },
+  componentDidMount: function() {
+    this.restorePosition();
+    return $(window).on('resize', this.checkPosition);
+  },
+  componentWillUnmount: function() {
+    return $(window).off('resize', this.checkPosition);
+  },
+  checkPosition: function() {
+    var currentPosition, reposition, smartPosition;
+    currentPosition = this.currentPosition();
+    smartPosition = PositionsService.smartPosition(currentPosition);
+    if ((smartPosition != null) && smartPosition !== currentPosition) {
+      reposition = (function(_this) {
+        return function() {
+          return _this.setPosition(smartPosition);
+        };
+      })(this);
+      clearTimeout(this._repositionTimeout);
+      return this._repositionTimeout = setTimeout(reposition, REPOSITION_TIMEOUT);
     }
   },
+  currentPosition: function() {
+    return $(this.getDOMNode()).position();
+  },
+  defaultPosition: function() {
+    return this.props.position || {
+      top: 100,
+      left: Math.round($(window).width() / 2 - COMPONENT_WIDTH / 2)
+    };
+  },
+  restorePosition: function() {
+    return this.setPosition(this.initialPosition());
+  },
+  initialPosition: function() {
+    return PositionsService.smartPosition(PositionsService.restorePosition(this.positionKey()) || this.defaultPosition());
+  },
+  initialPositionStyle: function() {
+    return this.initialPosition();
+  },
+  savePosition: function(position) {
+    return PositionsService.savePosition(this.positionKey(), position);
+  },
+  setPosition: function(position) {
+    var $node;
+    if (position != null) {
+      $node = $(this.getDOMNode());
+      return $node.css(position);
+    }
+  }
+};
+
+
+
+},{}],276:[function(require,module,exports){
+var Nanobar, nanobar, oldXHR;
+
+Nanobar = require('nanobar');
+
+nanobar = new Nanobar({
+  bg: '#24df88'
+});
+
+oldXHR = $.ajaxSettings.xhr;
+
+$.ajaxSettings.xhr = function() {
+  var xhr;
+  xhr = oldXHR();
+  if (xhr instanceof window.XMLHttpRequest) {
+    xhr.addEventListener('progress', this.progress, false);
+  }
+  if (xhr.upload) {
+    xhr.upload.addEventListener('progress', this.progress, false);
+  }
+  return xhr;
+};
+
+window.RequesterMixin = {
+  createRequest: function(settings, options) {
+    var jqXHR;
+    if (options == null) {
+      options = {};
+    }
+    if (options.progressBar != null) {
+      settings.progress = function(e) {
+        var percentComplete, progress;
+        if (e.lengthComputable) {
+          progress = e.loaded / e.total;
+          percentComplete = Math.round(progress * 100);
+          return nanobar.go(percentComplete);
+        }
+      };
+>>>>>>> Editor store and services [#89871770]
+    }
+    jqXHR = $.ajax(settings);
+    jqXHR.always((function(_this) {
+      return function() {
+        return _this.removeActiveRequest(jqXHR);
+      };
+    })(this));
+    this.addActiveRequest(jqXHR);
+    return jqXHR;
+  },
+<<<<<<< HEAD
   _getMediaBoxState: function() {
     if (this.state.isDragging) {
       return 'drag-hover';
@@ -26766,16 +37869,46 @@ window.PostEditor_ImageEditor = React.createClass({
       };
     })(this);
     return image.src = imageUrl;
+=======
+  activeRequests: function() {
+    var _ref;
+    return (_ref = this._activeRequests) != null ? _ref : [];
+  },
+  addActiveRequest: function(jqXHR) {
+    var _ref;
+    this._activeRequests = (_ref = this._activeRequests) != null ? _ref : [];
+    return this._activeRequests.push(jqXHR);
+  },
+  removeActiveRequest: function(jqXHR) {
+    var index;
+    index = this._activeRequests.indexOf(jqXHR);
+    if (index > -1) {
+      return this._activeRequests.splice(index, 1);
+    }
+  },
+  abortActiveRequests: function() {
+    if (!this._activeRequests) {
+      return;
+    }
+    this._activeRequests.map(function(jqXHR) {
+      return jqXHR.abort();
+    });
+    return this._activeRequests = [];
+  },
+  componentWillUnmount: function() {
+    return this.abortActiveRequests();
+>>>>>>> Editor store and services [#89871770]
   }
-});
+};
 
-
-
+<<<<<<< HEAD
 },{"react/lib/ReactComponentWithPureRenderMixin":522,"react/lib/cx":599}],162:[function(require,module,exports){
 var cx;
+=======
+>>>>>>> Editor store and services [#89871770]
 
-cx = require('react/lib/cx');
 
+<<<<<<< HEAD
 window.PostEditor_InstagramEditor = React.createClass({
   mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin, PostEditor_VideoMixin],
   render: function() {
@@ -26804,11 +37937,59 @@ window.PostEditor_InstagramEditor = React.createClass({
       "isLoading": this.hasActivities(),
       "onChange": this.startAutosave
     })));
+=======
+},{"nanobar":undefined}],277:[function(require,module,exports){
+window.ScrollerMixin = {
+  componentDidMount: function() {
+    $(document).on('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
+    return this.initScroll();
+  },
+  componentDidUpdate: function() {
+    return this.scroller.update();
+  },
+  componentWillUnmount: function() {
+    $(document).off('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
+    this.scroller.dispose();
+    return this.$scroller = this.scroller = null;
+  },
+  initScroll: function() {
+    this.$scroller = $(this.refs.scroller.getDOMNode());
+    return this.scroller = this.$scroller.baron({
+      scroller: '.js-scroller-pane',
+      bar: '.js-scroller-bar',
+      track: '.js-scroller-track',
+      barOnCls: 'scroller--tracked',
+      pause: 0
+    });
+  },
+  handleMouseWheel: function(ev) {
+    var delta, el, height, prevent, scrollHeight, scrollTop, up;
+    el = ev.currentTarget;
+    scrollTop = el.scrollTop;
+    scrollHeight = el.scrollHeight;
+    height = $(el).height();
+    delta = (ev.type === 'DOMMouseScroll' ? ev.originalEvent.detail * -40 : ev.originalEvent.wheelDelta);
+    up = delta > 0;
+    prevent = function() {
+      ev.stopPropagation();
+      ev.preventDefault();
+      ev.returnValue = false;
+      return false;
+    };
+    if (!up && -delta > scrollHeight - height - scrollTop) {
+      $(el).scrollTop(scrollHeight);
+      return prevent();
+    } else if (up && delta > scrollTop) {
+      $(el).scrollTop(0);
+      return prevent();
+    }
+>>>>>>> Editor store and services [#89871770]
   }
-});
+};
 
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],163:[function(require,module,exports){
 var AUTOSAVE_TIME;
 
@@ -26930,11 +38111,35 @@ window.PostEditor_QuoteEditor = React.createClass({
       text: this.refs.textEditor.content(),
       source: this.refs.sourceEditor.content()
     };
+=======
+},{}],278:[function(require,module,exports){
+window.ReactShakeMixin = {
+  shake: function() {
+    var animationEnd, form;
+    form = $(this.getDOMNode());
+    animationEnd = "webkitAnimationEnd oanimationend msAnimationEnd animationend";
+    return form.addClass("shake animated").one(animationEnd, function() {
+      return form.removeClass("shake animated");
+    });
   }
-});
+};
 
 
 
+},{}],279:[function(require,module,exports){
+window.TouchMixin = {
+  componentWillMount: function() {
+    if (isMobile()) {
+      this.onMouseEnter = function() {};
+      return this.onMouseLeave = function() {};
+    }
+>>>>>>> Editor store and services [#89871770]
+  }
+};
+
+
+
+<<<<<<< HEAD
 },{}],166:[function(require,module,exports){
 var cx;
 
@@ -26995,11 +38200,22 @@ window.PostEditor_TextEditor = React.createClass({
       title: this.refs.titleEditor.content(),
       text: this.refs.textEditor.content()
     };
+=======
+},{}],280:[function(require,module,exports){
+window.ReactUnmountMixin = {
+  unmount: function() {
+    return _.defer((function(_this) {
+      return function() {
+        return React.unmountComponentAtNode(_this.getDOMNode().parentNode);
+      };
+    })(this));
+>>>>>>> Editor store and services [#89871770]
   }
-});
+};
 
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],167:[function(require,module,exports){
 var cx;
 
@@ -27036,8 +38252,321 @@ window.PostEditor_VideoEditor = React.createClass({
   }
 });
 
+=======
+},{}],281:[function(require,module,exports){
+var CurrentUserResource;
+
+CurrentUserResource = {
+  update: function(_arg) {
+    var beforeSend, complete, data, error, success;
+    data = _arg.data, beforeSend = _arg.beforeSend, success = _arg.success, error = _arg.error, complete = _arg.complete;
+    data._method = 'PUT';
+    return $.ajax({
+      url: ApiRoutes.update_profile_url(),
+      method: 'POST',
+      data: data,
+      beforeSend: beforeSend,
+      success: success,
+      error: error,
+      complete: complete
+    });
+  },
+  cancelEmailConfirmation: function(_arg) {
+    var beforeSend, complete, error, success;
+    beforeSend = _arg.beforeSend, success = _arg.success, error = _arg.error, complete = _arg.complete;
+    return $.ajax({
+      url: ApiRoutes.request_confirm_url(),
+      method: 'POST',
+      data: {
+        _method: 'DELETE'
+      },
+      beforeSend: beforeSend,
+      success: success,
+      error: error,
+      complete: complete
+    });
+  },
+  resendEmailConfirmation: function(_arg) {
+    var beforeSend, complete, error, success;
+    beforeSend = _arg.beforeSend, success = _arg.success, error = _arg.error, complete = _arg.complete;
+    return $.ajax({
+      url: ApiRoutes.request_confirm_url(),
+      method: 'POST',
+      beforeSend: beforeSend,
+      success: success,
+      error: error,
+      complete: complete
+    });
+  }
+};
+
+module.exports = CurrentUserResource;
 
 
+
+},{}],282:[function(require,module,exports){
+var DesignPresenterService;
+>>>>>>> Editor store and services [#89871770]
+
+DesignPresenterService = {
+  options: {
+    headerFont: [
+      {
+        value: 'proximanova',
+        title: 'Proxima Nova',
+        text: 'Aa'
+      }, {
+        value: 'notoserif',
+        title: 'Noto Serif',
+        text: 'Aa'
+      }, {
+        value: 'comfortaa',
+        title: 'Comfortaa',
+        text: 'Aa'
+      }, {
+        value: 'airbornepilot',
+        title: 'Airborne Pilot',
+        text: 'Aa'
+      }, {
+        value: 'amaranth',
+        title: 'Amaranth',
+        text: 'Aa'
+      }, {
+        value: 'beermoney',
+        title: 'Beer Money',
+        text: 'Aa'
+      }, {
+        value: 'dancingscript',
+        title: 'Dancing Script',
+        text: 'Aa'
+      }, {
+        value: 'greatvibes',
+        title: 'Great Vibes',
+        text: 'Aa'
+      }, {
+        value: 'veles',
+        title: 'Veles',
+        text: 'Aa'
+      }, {
+        value: 'zion',
+        title: 'ZionTrain',
+        text: 'Aa'
+      }, {
+        value: 'nautilus',
+        title: 'Nautilus Pompilius',
+        text: 'Aa'
+      }, {
+        value: 'ospdin',
+        title: 'OSP-DIN',
+        text: 'Aa'
+      }, {
+        value: 'pecita',
+        title: 'Pecita',
+        text: 'Aa'
+      }, {
+        value: 'poetsen',
+        title: 'PoetsenOne',
+        text: 'Aa'
+      }, {
+        value: 'yessireebob',
+        title: 'Yes Siree Bob',
+        text: 'Aa'
+      }
+    ],
+    headerSize: [
+      {
+        value: 'small',
+        text: 'маленький'
+      }, {
+        value: 'middle',
+        text: 'средний'
+      }, {
+        value: 'large',
+        text: 'большой'
+      }
+    ],
+    headerColor: [
+      {
+        value: '#ffffff',
+        title: 'Белый'
+      }, {
+        value: '#000000',
+        title: 'Чёрный'
+      }, {
+        value: ':ANY:',
+        title: 'Любой'
+      }, {
+        value: '#2ac67e',
+        title: 'Трилистник'
+      }, {
+        value: '#e74c3c',
+        title: 'Синнобар'
+      }, {
+        value: '#6c7a89',
+        title: 'Серо-голубой'
+      }, {
+        value: '#38434e',
+        title: 'Мэдисон'
+      }
+    ],
+    backgroundColor: [
+      {
+        value: '#ffffff',
+        title: 'Белый'
+      }, {
+        value: '#000000',
+        title: 'Чёрный'
+      }, {
+        value: ':ANY:',
+        title: 'Любой'
+      }, {
+        value: '#e74c3c',
+        title: 'Синнобар'
+      }, {
+        value: '#c6c9cc',
+        title: 'Серебряный песок'
+      }, {
+        value: '#6c7a89',
+        title: 'Серо-голубой'
+      }
+    ],
+    backgroundAlignment: [
+      {
+        value: 'justify',
+        text: 'по ширине'
+      }, {
+        value: 'center',
+        text: 'по центру'
+      }
+    ],
+    feedBackgroundColor: [
+      {
+        value: '#ffffff',
+        title: 'Белый'
+      }, {
+        value: '#000000',
+        title: 'Чёрный'
+      }, {
+        value: ':ANY:',
+        title: 'Любой'
+      }, {
+        value: '#e74c3c',
+        title: 'Синнобар'
+      }, {
+        value: '#c6c9cc',
+        title: 'Серебряный песок'
+      }, {
+        value: '#6c7a89',
+        title: 'Серо-голубой'
+      }
+    ],
+    feedFont: [
+      {
+        value: 'ptsans',
+        title: 'PT Sans',
+        text: 'Aa'
+      }, {
+        value: 'ptserif',
+        title: 'PT Serif',
+        text: 'Aa'
+      }, {
+        value: 'roboto',
+        title: 'Roboto',
+        text: 'Aa'
+      }, {
+        value: 'lora',
+        title: 'Lora',
+        text: 'Aa'
+      }, {
+        value: 'philosopher',
+        title: 'Philosopher',
+        text: 'Aa'
+      }, {
+        value: 'ptmono',
+        title: 'PT Mono',
+        text: 'Aa'
+      }, {
+        value: 'berenisadfpro',
+        title: 'Berenis ADF Pro',
+        text: 'Aa'
+      }, {
+        value: 'djserif',
+        title: 'DejaVu Serif Condensed',
+        text: 'Aa'
+      }, {
+        value: 'heuristica',
+        title: 'Heuristica',
+        text: 'Aa'
+      }, {
+        value: 'permian',
+        title: 'Permian Slab Serif',
+        text: 'Aa'
+      }, {
+        value: 'robotoslab',
+        title: 'Roboto Slab',
+        text: 'Aa'
+      }, {
+        value: 'clearsans',
+        title: 'Clear Sans',
+        text: 'Aa'
+      }
+    ],
+    feedFontColor: [
+      {
+        value: '#ffffff',
+        title: 'Белый'
+      }, {
+        value: '#000000',
+        title: 'Чёрный'
+      }, {
+        value: '#c6c9cc',
+        title: 'Серебряный песок'
+      }, {
+        value: '#6c7a89',
+        title: 'Серо-голубой'
+      }, {
+        value: '#38434e',
+        title: 'Мэдисон'
+      }
+    ]
+  },
+  getTitle: function(option, value) {
+    var property;
+    property = this.getProperty(option, value);
+    if (property != null ? property.title : void 0) {
+      return property.title;
+    }
+  },
+  getText: function(option, value) {
+    var property, text;
+    property = this.getProperty(option, value);
+    text = (property != null ? property.text : void 0) || (property != null ? property.title : void 0);
+    return text;
+  },
+  getProperty: function(option, value) {
+    var property, propertyAny, _i, _len, _ref;
+    propertyAny = null;
+    if (!this.options[option]) {
+      throw new Error("Неизвестная опция " + option);
+    }
+    _ref = this.options[option];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      property = _ref[_i];
+      if (property.value === ':ANY:') {
+        propertyAny = property;
+      }
+      if (property.value === value) {
+        return property;
+      }
+    }
+    if (propertyAny != null) {
+      return propertyAny;
+    }
+    return null;
+  }
+};
+
+<<<<<<< HEAD
 },{"react/lib/cx":599}],168:[function(require,module,exports){
 window.ImagesMediaBox_Loaded = React.createClass({
   propTypes: {
@@ -27173,11 +38702,531 @@ window.MediaBox_Actions = React.createClass({
 
 },{"react/lib/ReactComponentWithPureRenderMixin":522}],172:[function(require,module,exports){
 var PureRenderMixin, cx;
+=======
+module.exports = DesignPresenterService;
+
+
+
+},{}],283:[function(require,module,exports){
+var DesignSettingsService;
+
+DesignSettingsService = {
+  hasPaidValues: function(design, freeDesign) {
+    var key, val;
+    for (key in design) {
+      val = design[key];
+      if (!freeDesign[key]) {
+        continue;
+      }
+      if (freeDesign[key] === ':ANY:') {
+        continue;
+      }
+      if (freeDesign[key].indexOf(val) === -1) {
+        return true;
+      }
+    }
+    return false;
+  },
+  isPaidValue: function(option, value, freeDesign) {
+    var val, _i, _len, _ref;
+    if (!freeDesign[option]) {
+      throw new Error("Неизвестная опция " + option);
+    }
+    if (freeDesign[option] === ':ANY:') {
+      return true;
+    }
+    _ref = freeDesign[option];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      val = _ref[_i];
+      if (val === value) {
+        return true;
+      }
+    }
+    return false;
+  }
+};
+
+module.exports = DesignSettingsService;
+
+
+
+},{}],284:[function(require,module,exports){
+var DesignStatesService, _;
+
+_ = require('lodash');
+
+DesignStatesService = {
+  page: document.body,
+  pageCover: document.querySelector('.page-cover'),
+  feed: document.querySelector('.content-area__bg'),
+  states: {
+    headerFont: 'designtlog-headerfont',
+    headerSize: 'designtlog-headersize',
+    headerColor: 'designtlog-headercolor',
+    backgroundColor: 'designtlog-bgcolor',
+    backgroundAlignment: 'designtlog-bgalignment',
+    feedBackgroundColor: 'designtlog-feedbgcolor',
+    feedFont: 'designtlog-feedfont',
+    feedFontColor: 'designtlog-feedcolor'
+  },
+  switchableStates: {
+    backgroundImageEnabled: 'designtlog-bgimage-none'
+  },
+  classNames: {
+    headerFont: [
+      {
+        value: 'proximanova',
+        className: 'proximanova'
+      }, {
+        value: 'notoserif',
+        className: 'notoserif'
+      }, {
+        value: 'comfortaa',
+        className: 'comfortaa'
+      }, {
+        value: 'airbornepilot',
+        className: 'airbornepilot'
+      }, {
+        value: 'amaranth',
+        className: 'amaranth'
+      }, {
+        value: 'beermoney',
+        className: 'beermoney'
+      }, {
+        value: 'dancingscript',
+        className: 'dancingscript'
+      }, {
+        value: 'greatvibes',
+        className: 'greatvibes'
+      }, {
+        value: 'veles',
+        className: 'veles'
+      }, {
+        value: 'zion',
+        className: 'zion'
+      }, {
+        value: 'nautilus',
+        className: 'nautilus'
+      }, {
+        value: 'ospdin',
+        className: 'ospdin'
+      }, {
+        value: 'pecita',
+        className: 'pecita'
+      }, {
+        value: 'poetsen',
+        className: 'poetsen'
+      }, {
+        value: 'yessireebob',
+        className: 'yessireebob'
+      }
+    ],
+    headerSize: [
+      {
+        value: 'small',
+        className: 'small'
+      }, {
+        value: 'middle',
+        className: 'middle'
+      }, {
+        value: 'large',
+        className: 'large'
+      }
+    ],
+    headerColor: [
+      {
+        value: '#ffffff',
+        className: 'white'
+      }, {
+        value: '#000000',
+        className: 'black'
+      }, {
+        value: ':ANY:',
+        className: 'custom'
+      }, {
+        value: '#2ac67e',
+        className: 'shamrock'
+      }, {
+        value: '#e74c3c',
+        className: 'cinnabar'
+      }, {
+        value: '#6c7a89',
+        className: 'bluegray'
+      }, {
+        value: '#38434e',
+        className: 'madison'
+      }
+    ],
+    backgroundColor: [
+      {
+        value: '#ffffff',
+        className: 'white'
+      }, {
+        value: '#000000',
+        className: 'black'
+      }, {
+        value: ':ANY:',
+        className: 'custom'
+      }, {
+        value: '#e74c3c',
+        className: 'cinnabar'
+      }, {
+        value: '#c6c9cc',
+        className: 'silversand'
+      }, {
+        value: '#6c7a89',
+        className: 'bluegray'
+      }
+    ],
+    backgroundAlignment: [
+      {
+        value: 'justify',
+        className: 'justify'
+      }, {
+        value: 'center',
+        className: 'center'
+      }
+    ],
+    feedBackgroundColor: [
+      {
+        value: '#ffffff',
+        className: 'white'
+      }, {
+        value: '#000000',
+        className: 'black'
+      }, {
+        value: ':ANY:',
+        className: 'custom'
+      }, {
+        value: '#e74c3c',
+        className: 'cinnabar'
+      }, {
+        value: '#c6c9cc',
+        className: 'silversand'
+      }, {
+        value: '#6c7a89',
+        className: 'bluegray'
+      }
+    ],
+    feedFont: [
+      {
+        value: 'ptsans',
+        className: 'ptsans'
+      }, {
+        value: 'ptserif',
+        className: 'ptserif'
+      }, {
+        value: 'roboto',
+        className: 'roboto'
+      }, {
+        value: 'lora',
+        className: 'lora'
+      }, {
+        value: 'philosopher',
+        className: 'philosopher'
+      }, {
+        value: 'ptmono',
+        className: 'ptmono'
+      }, {
+        value: 'berenisadfpro',
+        className: 'berenisadfpro'
+      }, {
+        value: 'djserif',
+        className: 'djserif'
+      }, {
+        value: 'heuristica',
+        className: 'heuristica'
+      }, {
+        value: 'permian',
+        className: 'permian'
+      }, {
+        value: 'robotoslab',
+        className: 'robotoslab'
+      }, {
+        value: 'clearsans',
+        className: 'clearsans'
+      }
+    ],
+    feedFontColor: [
+      {
+        value: '#ffffff',
+        className: 'white'
+      }, {
+        value: '#000000',
+        className: 'black'
+      }, {
+        value: '#c6c9cc',
+        className: 'silversand'
+      }, {
+        value: '#6c7a89',
+        className: 'bluegray'
+      }, {
+        value: '#38434e',
+        className: 'madison'
+      }
+    ]
+  },
+  apply: function(design) {
+    var classes, states, switchableStates;
+    states = {};
+    switchableStates = {};
+    _.forEach(design, (function(_this) {
+      return function(val, state) {
+        switch (false) {
+          case !_this.states[state]:
+            return states[state] = val;
+          case !_this.switchableStates[state]:
+            return switchableStates[state] = val;
+        }
+      };
+    })(this));
+    classes = this.page.className.split(' ').filter((function(_this) {
+      return function(className) {
+        var k, m;
+        for (k in states) {
+          if (className.indexOf(_this.states[k]) === 0) {
+            return false;
+          }
+        }
+        for (m in switchableStates) {
+          if (_this.switchableStates[m] === className) {
+            return false;
+          }
+        }
+        return true;
+      };
+    })(this));
+    _.forEach(states, (function(_this) {
+      return function(value, state) {
+        var newClass, propertyClassName;
+        propertyClassName = _this.getPropertyClassName(state, value);
+        newClass = _this.states[state] + '-' + propertyClassName;
+        return classes.push(newClass);
+      };
+    })(this));
+    _.forEach(switchableStates, (function(_this) {
+      return function(value, state) {
+        var newClass;
+        if (!value) {
+          newClass = _this.switchableStates[state];
+          return classes.push(newClass);
+        }
+      };
+    })(this));
+    if (design.backgroundImageUrl) {
+      this.pageCover.style.backgroundImage = 'url("' + design.backgroundImageUrl + '")';
+    }
+    if (_.isNumber(design.feedTransparency)) {
+      this.feed.style.opacity = design.feedTransparency;
+    }
+    return this.page.className = _.trim(classes.join(' '));
+  },
+  getPropertyClassName: function(option, value) {
+    var property, propertyAny, _i, _len, _ref;
+    propertyAny = null;
+    if (!this.classNames[option]) {
+      throw new Error("Неизвестная опция " + option);
+    }
+    _ref = this.classNames[option];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      property = _ref[_i];
+      if (property.value === ':ANY:') {
+        propertyAny = property;
+      }
+      if (property.value === value) {
+        return property.className;
+      }
+    }
+    if (propertyAny != null ? propertyAny.className : void 0) {
+      return propertyAny.className;
+    }
+    return null;
+  }
+};
+
+module.exports = DesignStatesService;
+
+
+
+},{"lodash":456}],285:[function(require,module,exports){
+var EntryKeeper, NormalizedEntry, STORAGE_PREFIX, keyAnonymous, keyExisting, keyNew, storage;
+
+NormalizedEntry = require('../entities/normalizedEntry');
+
+STORAGE_PREFIX = 'entries';
+
+storage = localStorage;
+
+({
+  key: function(normalizedEntry) {
+    switch (false) {
+      case !normalizedEntry.id:
+        return keyExisting(normalizedEntry.id, normalizedEntry.updatedAt);
+      case normalizedEntry.tlogType !== 'anonymous':
+        return keyAnonymous();
+      default:
+        return keyNew();
+    }
+  }
+});
+
+keyNew = function() {
+  return STORAGE_PREFIX + ':new';
+};
+
+keyAnonymous = function() {
+  return STORAGE_PREFIX + ':anonymous';
+};
+
+keyExisting = function(entryID, entryUpdatedAt) {
+  var time;
+  time = new Date(entryUpdatedAt).getTime();
+  return STORAGE_PREFIX + ':' + entryID + ':' + time;
+};
+
+EntryKeeper = {
+  restore: function(storageKey) {
+    var entryData;
+    entryData = JSON.parse(storage.getItem(storageKey));
+    if (entryData != null) {
+      return new NormalizedEntry(entryData);
+    } else {
+      return null;
+    }
+  },
+  restoreExistingEntry: function(entryID, entryUpdatedAt) {
+    return this.restore(keyExisting(entryID, entryUpdatedAt));
+  },
+  restoreExistingNewEntry: function() {
+    return this.restore(keyNew());
+  },
+  restoreAnonymousEntry: function() {
+    return this.restore(keyAnonymous());
+  },
+  store: function(normalizedEntry) {
+    var storageKey;
+    storageKey = key(normalizedEntry);
+    return storage.setItem(storageKey, JSON.stringify(normalizedEntry));
+  },
+  remove: function(normalizedEntry) {
+    var storageKey;
+    storageKey = key(normalizedEntry);
+    return storage.removeItem(storageKey);
+  }
+};
+
+module.exports = EntryKeeper;
+
+
+
+},{"../entities/normalizedEntry":224}],286:[function(require,module,exports){
+var EntryNormalizationService, NormalizedEntry, _;
+
+_ = require('lodash');
+
+NormalizedEntry = require('../entities/normalizedEntry');
+
+EntryNormalizationService = {
+  normalize: function(entry) {
+    var attrs;
+    attrs = {
+      id: entry.id,
+      type: entry.type,
+      privacy: entry.privacy,
+      updatedAt: new Date(entry.updated_at).getTime()
+    };
+    switch (entry.type) {
+      case 'text':
+        _.extend(attrs, {
+          data1: entry.title,
+          data2: entry.text
+        });
+        break;
+      case 'image':
+        _.extend(attrs, {
+          data2: entry.title,
+          embedUrl: entry.image_url,
+          imageAttachments: entry.image_attachments
+        });
+        break;
+      case 'instagram':
+      case 'music':
+      case 'video':
+        _.extend(attrs, {
+          data2: entry.title,
+          embedUrl: entry.iframely.url,
+          embedHtml: entry.iframely.html
+        });
+        break;
+      case 'quote':
+        _.extend(attrs, {
+          data1: entry.source,
+          data2: entry.text
+        });
+        break;
+      default:
+        if (typeof console.error === "function") {
+          console.error("Unknown entry type " + entry.type);
+        }
+    }
+    return new NormalizedEntry(attrs);
+  }
+};
+
+module.exports = EntryNormalizationService;
+
+
+
+},{"../entities/normalizedEntry":224,"lodash":456}],287:[function(require,module,exports){
+var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
+
+MOVE_OFFSET = 100;
+
+MIN_OFFSET = 50;
+
+STORAGE_PREFIX = 'positions:';
+
+window.PositionsService = {
+  storage: window.localStorage,
+  savePosition: function(key, position) {
+    return this.storage.setItem(this._positionKey(key), JSON.stringify(position));
+  },
+  restorePosition: function(key) {
+    return JSON.parse(this.storage.getItem(this._positionKey(key)));
+  },
+  smartPosition: function(position) {
+    var windowHeight, windowWidth;
+    if (position == null) {
+      return;
+    }
+    position = _.clone(position);
+    windowWidth = $(window).width();
+    windowHeight = $(window).height();
+    if (position.top > (windowHeight - MIN_OFFSET)) {
+      position.top = windowHeight - MOVE_OFFSET;
+    }
+    if (position.top < 0) {
+      position.top = 0;
+    }
+    if (position.left > (windowWidth - MIN_OFFSET)) {
+      position.left = windowWidth - MOVE_OFFSET;
+    }
+    if (position.left < 0) {
+      position.left = 0;
+    }
+    return position;
+  },
+  _positionKey: function(key) {
+    return STORAGE_PREFIX + ':' + key;
+  }
+};
+>>>>>>> Editor store and services [#89871770]
 
 cx = require('react/lib/cx');
 
 PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
 
+<<<<<<< HEAD
 window.MediaBox_Layout = React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {
@@ -27207,6 +39256,25 @@ window.MediaBox_Layout = React.createClass({
     }, this.props.children));
   }
 });
+=======
+},{}],288:[function(require,module,exports){
+window.UuidService = {
+  generate: function() {
+    var s4;
+    s4 = function() {
+      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    };
+    return "" + (s4() + s4()) + "-" + (s4()) + "-" + (s4()) + "-" + (s4()) + "-" + (s4() + s4() + s4());
+  }
+};
+
+
+
+},{}],289:[function(require,module,exports){
+var BaseStore, CHANGE_EVENT,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+>>>>>>> Editor store and services [#89871770]
 
 
 
@@ -27231,6 +39299,7 @@ window.MediaBox_LoadingProgress = React.createClass({
 
 
 
+<<<<<<< HEAD
 },{}],174:[function(require,module,exports){
 var DRAGOFF_TIMEOUT, DRAG_HOVER_CLASS;
 
@@ -27294,16 +39363,98 @@ window.PostEditor_Dragging = {
   },
   dropZoneNode: function() {
     return this.refs.layout.refs.dropZone.getDOMNode();
+=======
+},{}],290:[function(require,module,exports){
+var BaseStore, CurrentUserStore, currentUser;
+
+BaseStore = require('./_base');
+
+currentUser = null;
+
+CurrentUserStore = _.extend(new BaseStore(), {
+  isLogged: function() {
+    return currentUser != null;
+  },
+  hasVkontakteAuth: function() {
+    var authentication, authentications, _i, _len;
+    authentications = currentUser != null ? currentUser.authentications : void 0;
+    if (authentications != null) {
+      for (_i = 0, _len = authentications.length; _i < _len; _i++) {
+        authentication = authentications[_i];
+        if (authentication.provider === 'vkontakte') {
+          return true;
+        }
+      }
+    }
+    return false;
+  },
+  hasFacebookAuth: function() {
+    var authentication, authentications, _i, _len;
+    authentications = currentUser != null ? currentUser.authentications : void 0;
+    if (authentications != null) {
+      for (_i = 0, _len = authentications.length; _i < _len; _i++) {
+        authentication = authentications[_i];
+        if (authentication.provider === 'facebook') {
+          return true;
+        }
+      }
+    }
+    return false;
+  },
+  getUser: function() {
+    return currentUser;
+  },
+  getAccessToken: function() {
+    return currentUser.api_key.access_token;
+  },
+  getUserpic: function() {
+    return currentUser.userpic;
+  },
+  updateUser: function(data) {
+    return _.extend(currentUser, data);
+  },
+  _setupUser: function(user) {
+    currentUser = user;
+    return typeof console.debug === "function" ? console.debug('Залогинен пользователь:', user.slug) : void 0;
+>>>>>>> Editor store and services [#89871770]
   }
 };
 
+<<<<<<< HEAD
 
+=======
+module.exports = CurrentUserStore;
+
+CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload) {
+  var action;
+  action = payload.action;
+  switch (action.type) {
+    case 'setup':
+      CurrentUserStore._setupUser(action.user);
+      return CurrentUserStore.emitChange();
+    case 'userUpdated':
+      CurrentUserStore.updateUser(action.user);
+      return CurrentUserStore.emitChange();
+    case 'userpicUpdated':
+      CurrentUserStore.updateUser({
+        userpic: action.userpic
+      });
+      return CurrentUserStore.emitChange();
+    case 'confirmationEmailCanceled':
+      CurrentUserStore.updateUser({
+        confirmation_email: null
+      });
+      return CurrentUserStore.emitChange();
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 },{}],175:[function(require,module,exports){
 var ACCEPT_FILE_TYPES, MAX_FILE_SIZE, MAX_NUMBER_OF_FILES, assign;
 
 assign = require('react/lib/Object.assign');
 
+<<<<<<< HEAD
 ACCEPT_FILE_TYPES = /(\.|\/)(gif|jpe?g|png)$/i;
 
 MAX_FILE_SIZE = 10 * 1000 * 1000;
@@ -27773,6 +39924,322 @@ window.VideoMediaBox_UrlInsert = React.createClass({
   }
 });
 
+=======
+},{"./_base":289}],291:[function(require,module,exports){
+(function (global){
+var AppDispatcher, BaseStore, Constants, EntryKeeperService, EntryNormalizationService, NormalizedEntry, _, _entry;
+
+_ = require('lodash');
+
+Constants = require('../constants/constants');
+
+BaseStore = require('./_base');
+
+EntryNormalizationService = require('../services/entryNormalization');
+
+EntryKeeperService = require('../services/entryKeeper');
+
+NormalizedEntry = require('../entities/normalizedEntry');
+
+AppDispatcher = require('../dispatchers/dispatcher');
+
+_entry = new NormalizedEntry({
+  type: 'text',
+  privacy: 'public'
+});
+
+global.EditorStore = _.extend(new BaseStore(), {
+  getEntry: function() {
+    return _entry;
+  },
+  getEntryType: function() {
+    return _entry.type;
+  },
+  getEntryPrivacy: function() {
+    return _entry.privacy;
+  }
+});
+
+module.exports = EditorStore;
+
+EditorStore.dispatchToken = AppDispatcher.register(function(payload) {
+  var action, entry, id, tlogType, updated_at;
+  action = payload.action;
+  switch (action.type) {
+    case Constants.editor.INIT:
+      entry = action.entry, tlogType = action.tlogType;
+      if (entry != null) {
+        id = entry.id, updated_at = entry.updated_at;
+        _entry = EntryKeeperService.restoreExistingEntry(id, updated_at) || EntryNormalizationService.normalize(entry);
+      } else {
+        _entry = EntryKeeperService.restoreExistingNewEntry() || new NormalizedEntry({
+          type: 'text',
+          privacy: tlogType === 'public' ? 'live' : 'public'
+        });
+      }
+      return EditorStore.emitChange();
+  }
+});
+
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../constants/constants":206,"../dispatchers/dispatcher":222,"../entities/normalizedEntry":224,"../services/entryKeeper":285,"../services/entryNormalization":286,"./_base":289,"lodash":456}],292:[function(require,module,exports){
+var CHANGE_EVENT, SUMMARY_CHANGE_EVENT, _relationships;
+
+CHANGE_EVENT = 'changed';
+
+SUMMARY_CHANGE_EVENT = 'summary:changed';
+
+_relationships = {
+  followings: {
+    items: null,
+    totalCount: null
+  },
+  followers: {
+    items: null,
+    totalCount: null
+  },
+  guessed: {
+    items: null,
+    totalCount: null
+  },
+  requested: {
+    items: null,
+    totalCount: null
+  },
+  ignored: {
+    items: null,
+    totalCount: null
+  },
+  vkontakte: {
+    suggestions: {
+      items: null,
+      totalCount: null
+    }
+  },
+  facebook: {
+    suggestions: {
+      items: null,
+      totalCount: null
+    }
+  }
+};
+
+window.RelationshipsStore = _.extend({}, EventEmitter.prototype, {
+  emitChange: function() {
+    return this.emit(CHANGE_EVENT);
+  },
+  addChangeListener: function(cb) {
+    return this.on(CHANGE_EVENT, cb);
+  },
+  removeChangeListener: function(cb) {
+    return this.off(CHANGE_EVENT, cb);
+  },
+  emitSummaryChange: function() {
+    return this.emit(SUMMARY_CHANGE_EVENT);
+  },
+  addSummaryChangeListener: function(cb) {
+    return this.on(SUMMARY_CHANGE_EVENT, cb);
+  },
+  removeSummaryChangeListener: function(cb) {
+    return this.off(SUMMARY_CHANGE_EVENT, cb);
+  },
+  getRelationships: function() {
+    return _relationships;
+  },
+  getFollowers: function() {
+    return _relationships.followers.items;
+  },
+  getFollowings: function() {
+    return _relationships.followings.items;
+  },
+  getGuessed: function() {
+    return _relationships.guessed.items;
+  },
+  getIgnored: function() {
+    return _relationships.ignored.items;
+  },
+  getRequested: function() {
+    return _relationships.requested.items;
+  },
+  getFollowersTotalCount: function() {
+    return _relationships.followers.totalCount;
+  },
+  getFollowingsTotalCount: function() {
+    return _relationships.followings.totalCount;
+  },
+  getGuessedTotalCount: function() {
+    return _relationships.guessed.totalCount;
+  },
+  getIgnoredTotalCount: function() {
+    return _relationships.ignored.totalCount;
+  },
+  getRequestedTotalCount: function() {
+    return _relationships.requested.totalCount;
+  },
+  getVkontakteSuggestions: function() {
+    return _relationships.vkontakte.suggestions.items;
+  },
+  getVkontakteSuggestionsTotalCount: function() {
+    return _relationships.vkontakte.suggestions.totalCount;
+  },
+  getFacebookSuggestions: function() {
+    return _relationships.facebook.suggestions.items;
+  },
+  getFacebookSuggestionsTotalCount: function() {
+    return _relationships.facebook.suggestions.totalCount;
+  },
+  isSummaryLoaded: function() {
+    var relationship, value;
+    for (relationship in _relationships) {
+      value = _relationships[relationship];
+      if (value.totalCount === null) {
+        return false;
+      }
+    }
+    return true;
+  },
+  isRelationshipExists: function(relationship) {
+    var item, rel, value, _i, _len, _ref;
+    for (rel in _relationships) {
+      value = _relationships[rel];
+      if (value.items == null) {
+        continue;
+      }
+      _ref = value.items;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        if (item.id === relationship.id || item.reader_id === relationship.reader_id) {
+          return true;
+        }
+      }
+    }
+    return false;
+  },
+  updateSummary: function(summary) {
+    var relationship, value, _results;
+    _results = [];
+    for (relationship in _relationships) {
+      value = _relationships[relationship];
+      _results.push(value.totalCount = summary[relationship + '_count']);
+    }
+    return _results;
+  },
+  unshiftRelationships: function(type, relationships) {
+    var newRelationships, relationship, _base, _i, _len;
+    if (!_relationships[type]) {
+      return console.warn('Unknown type of relationship', type);
+    }
+    (_base = _relationships[type]).items || (_base.items = []);
+    newRelationships = _relationships[type].items.slice(0);
+    for (_i = 0, _len = relationships.length; _i < _len; _i++) {
+      relationship = relationships[_i];
+      if (!this.isRelationshipExists(relationship)) {
+        newRelationships.unshift(relationship);
+      }
+    }
+    return _relationships[type].items = newRelationships;
+  },
+  pushRelationships: function(type, relationships) {
+    var newRelationships, relationship, _base, _i, _len;
+    if (!_relationships[type]) {
+      return console.warn('Unknown type of relationship', type);
+    }
+    (_base = _relationships[type]).items || (_base.items = []);
+    newRelationships = _relationships[type].items.slice(0);
+    for (_i = 0, _len = relationships.length; _i < _len; _i++) {
+      relationship = relationships[_i];
+      if (!this.isRelationshipExists(relationship)) {
+        newRelationships.push(relationship);
+      }
+    }
+    return _relationships[type].items = newRelationships;
+  },
+  pushSuggestions: function(type, suggestions) {
+    if (!_relationships[type]) {
+      return console.warn('Unknown type of relationship', type);
+    }
+    _relationships[type].suggestions.items = suggestions;
+    return _relationships[type].suggestions.totalCount = suggestions.length;
+  },
+  cleanSuggestions: function(type) {
+    if (!_relationships[type]) {
+      return console.warn('Unknown type of relationship', type);
+    }
+    _relationships[type].suggestions.items = [];
+    return _relationships[type].suggestions.totalCount = 0;
+  },
+  approveRequest: function(relationship) {
+    var relationships;
+    relationships = _relationships['requested'].items;
+    if (this.isRelationshipExists(relationship)) {
+      this._removeRelationship('requested', relationship);
+    }
+    return this.unshiftRelationships('followers', [relationship]);
+  },
+  disapproveRequest: function(relationship) {
+    if (this.isRelationshipExists(relationship)) {
+      return this._removeRelationship('requested', relationship);
+    }
+  },
+  unfollowFromYourself: function(relationship) {
+    if (this.isRelationshipExists(relationship)) {
+      return this._removeRelationship('followers', relationship);
+    }
+  },
+  _removeRelationship: function(type, relationship) {
+    var i, newRelationships, newRelationshipsTotalCount, rel, _i, _len;
+    newRelationships = _relationships[type].items.slice(0);
+    newRelationshipsTotalCount = _relationships[type].totalCount;
+    for (i = _i = 0, _len = newRelationships.length; _i < _len; i = ++_i) {
+      rel = newRelationships[i];
+      if (rel.id === relationship.id || rel.reader_id === relationship.user_id || rel.reader_id === relationship.reader_id) {
+        newRelationships.splice(i, 1);
+        newRelationshipsTotalCount--;
+        break;
+      }
+    }
+    _relationships[type].items = newRelationships;
+    return _relationships[type].totalCount = newRelationshipsTotalCount;
+  }
+});
+
+RelationshipsStore.dispatchToken = RelationshipsDispatcher.register(function(payload) {
+  var action;
+  action = payload.action;
+  switch (action.type) {
+    case 'summaryLoaded':
+      RelationshipsStore.updateSummary(action.summary);
+      return RelationshipsStore.emitSummaryChange();
+    case 'relationshipsLoaded':
+      _relationships[action.relationship].items = [];
+      RelationshipsStore.pushRelationships(action.relationship, action.items);
+      return RelationshipsStore.emitChange();
+    case 'suggestionsLoaded':
+      RelationshipsStore.pushSuggestions(action.source, action.suggestions);
+      return RelationshipsStore.emitChange();
+    case 'suggestionsSubscribed':
+      RelationshipsStore.cleanSuggestions(action.source);
+      return RelationshipsStore.emitChange();
+    case 'moreRelationshipsLoaded':
+      RelationshipsStore.pushRelationships(action.relationship, action.items);
+      return RelationshipsStore.emitChange();
+    case 'requestedRelationshipApproved':
+      RelationshipsStore.approveRequest(action.relationship);
+      RelationshipsStore.emitSummaryChange();
+      return RelationshipsStore.emitChange();
+    case 'requestedRelationshipDisapproved':
+      RelationshipsStore.disapproveRequest(action.relationship);
+      RelationshipsStore.emitSummaryChange();
+      return RelationshipsStore.emitChange();
+    case 'relationshipUnfollowedFromYourself':
+      RelationshipsStore.unfollowFromYourself(action.relationship);
+      RelationshipsStore.emitSummaryChange();
+      return RelationshipsStore.emitChange();
+  }
+});
+>>>>>>> Editor store and services [#89871770]
 
 
 },{}],184:[function(require,module,exports){
@@ -27782,6 +40249,7 @@ cloneWithProps = require('react/lib/cloneWithProps');
 
 WELCOME_MODE = 'welcome';
 
+<<<<<<< HEAD
 EMBEDED_MODE = 'embeded';
 
 INSERT_MODE = 'insert';
@@ -27924,9 +40392,144 @@ window.VideoMediaBox = React.createClass({
     return this.props.onDeleteEmbeded();
   }
 });
+=======
+},{}],293:[function(require,module,exports){
+var defaults,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
+defaults = {
+  hoverClass: "_hover",
+  onStart: function() {},
+  onProgress: function() {},
+  onSuccess: function() {},
+  onReady: function() {},
+  onReaderLoad: function() {},
+  dropables: null,
+  inputs: null
+};
 
+window.FileReceiver = (function() {
+  function FileReceiver(options) {
+    this.changeInput = __bind(this.changeInput, this);
+    this.drop = __bind(this.drop, this);
+    this.dragleave = __bind(this.dragleave, this);
+    this.dragenter = __bind(this.dragenter, this);
+    this.noPropagation = __bind(this.noPropagation, this);
+    this.url = null;
+    this.dragging = 0;
+    this.tests = {
+      fileReader: typeof FileReader !== "undefined",
+      dnd: "draggable" in document.createElement("span"),
+      formData: !!window.FormData,
+      progress: "upload" in new XMLHttpRequest
+    };
+    this.settings = $.extend({}, defaults, options);
+    this.errors = [];
+    this.accept = ["image/png", "image/jpeg", "image/gif"];
+    if (this.tests.fileReader || this.tests.dnd) {
+      this.settings.dropables.forEach((function(_this) {
+        return function(dropable) {
+          return $(dropable).on("dragenter", _this.dragenter).on("dragleave", _this.dragleave).on("dragover", _this.noPropagation).on("dragend", _this.noPropagation).on("drop", _this.drop);
+        };
+      })(this));
+      this.settings.inputs.forEach((function(_this) {
+        return function(input) {
+          return $(input).on("change", _this.changeInput);
+        };
+      })(this));
+    }
+  }
 
+  FileReceiver.prototype._error = function(msg) {
+    return this.errors.push(msg);
+  };
+
+  FileReceiver.prototype.noPropagation = function(e) {
+    e.stopPropagation();
+    if (e.preventDefault) {
+      return e.preventDefault();
+    } else {
+      return e.returnValue = false;
+    }
+  };
+
+  FileReceiver.prototype.dragenter = function(event) {
+    var target;
+    this.dragging++;
+    target = event.currentTarget;
+    $(target).addClass(this.settings.hoverClass);
+  };
+
+  FileReceiver.prototype.dragleave = function(event) {
+    var target;
+    this.dragging--;
+    target = event.currentTarget;
+    if (this.dragging === 0) {
+      $(target).removeClass(this.settings.hoverClass);
+    }
+  };
+
+  FileReceiver.prototype.drop = function(event) {
+    var files, target;
+    this.dragging = 0;
+    event.preventDefault();
+    target = event.currentTarget;
+    $(target).removeClass(this.settings.hoverClass);
+    files = event.originalEvent.dataTransfer.files;
+    if (files.length > 0) {
+      this.readFile(files[0]);
+    }
+  };
+
+  FileReceiver.prototype.changeInput = function(event) {
+    var files;
+    files = event.target.files;
+    if (files.length > 0) {
+      this.readFile(files[0]);
+    }
+  };
+
+  FileReceiver.prototype.readFile = function(file) {
+    var $cover, formData, reader, tests;
+    $cover = $(this.settings.cover);
+    tests = this.tests;
+    formData = (tests.formData ? new FormData() : null);
+    if (this.accept.indexOf(file.type) === -1) {
+      this._error("загрузить можно только изображения");
+    } else {
+      if (tests.formData) {
+        formData.append("file", file);
+      }
+      reader = new FileReader();
+      this.settings.onStart();
+      reader.onload = (function(_this) {
+        return function(e) {
+          var url;
+          url = e.target.result;
+          $cover.css("background-image", "url(" + url + ")");
+          $cover.data("file", file);
+          _this.settings.onReaderLoad(url);
+        };
+      })(this);
+      reader.readAsDataURL(file);
+      this.settings.onReady(file);
+    }
+  };
+>>>>>>> Editor store and services [#89871770]
+
+  FileReceiver.prototype.toggleInput = function(input, state) {
+    this.coverInput.forEach(function(input) {
+      if (state) {
+        $(input).removeAttr("disabled");
+      } else {
+        $(input).attr("disabled", "disabled");
+      }
+    });
+  };
+
+  return FileReceiver;
+
+<<<<<<< HEAD
 },{"react/lib/cloneWithProps":594}],185:[function(require,module,exports){
 var PureRenderMixin;
 
@@ -28001,9 +40604,34 @@ window.MediaBox_MusicWelcome = React.createClass({
     }, i18n.t('editor_welcome_music_insert')), React.createElement("span", null, " ", i18n.t('editor_welcome_music_link')), React.createElement("br", null), React.createElement("span", null, " ", i18n.t('editor_welcome_music_supported_services')))));
   }
 });
+=======
+})();
 
 
 
+},{}],294:[function(require,module,exports){
+window.isMobile = function() {
+  var userAgent;
+  userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  return /iPhone|iPod|iPad|Android|BlackBerry|Opera Mini|IEMobile/.test(userAgent);
+};
+
+
+
+},{}],295:[function(require,module,exports){
+(function (global){
+global._ = require('lodash');
+
+global.$ = global.jQuery = require('jquery');
+
+global.MouseTrap = require('mousetrap');
+>>>>>>> Editor store and services [#89871770]
+
+global.React = require('react');
+
+global.Dispatcher = require('flux').Dispatcher;
+
+<<<<<<< HEAD
 },{}],188:[function(require,module,exports){
 window.MediaBox_VideoWelcome = React.createClass({
   propTypes: {
@@ -28022,9 +40650,15 @@ window.MediaBox_VideoWelcome = React.createClass({
     }, i18n.t('editor_welcome_video_insert')), React.createElement("span", null, " ", i18n.t('editor_welcome_video_link')), React.createElement("br", null), React.createElement("span", null, " ", i18n.t('editor_welcome_video_supported_services')))));
   }
 });
+=======
+global.EventEmitter = require('eventEmitter');
+>>>>>>> Editor store and services [#89871770]
 
+global.bowser = require('bowser');
 
+global.moment = require('../../../bower_components/momentjs/moment');
 
+<<<<<<< HEAD
 },{}],189:[function(require,module,exports){
 var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
 
@@ -28223,11 +40857,114 @@ window.RelationshipFollowerButton = React.createClass({
   },
   onStoreChange: function() {
     return this.setState(this.getStateFromStore());
+=======
+global.Pusher = require('pusher');
+
+global.Modernizr = require('Modernizr');
+
+global.imagesLoaded = require('imagesloaded');
+
+global.MediumEditor = require('medium-editor');
+
+global.Undo = require('undo');
+
+global.introJs = require('introJs');
+
+global.VendorColorPicker = require('react-color-picker');
+
+require('aviator');
+
+require('swfobject');
+
+require('es5-shim');
+
+require('jquery.mousewheel')(global.jQuery);
+
+require('jquery.scrollto');
+
+require('screenviewer');
+
+require('baron');
+
+require('react-mixin-manager')(global.React);
+
+require('bootstrap.tooltip');
+
+require('jquery.ui.core');
+
+require('jquery.ui.widget');
+
+require('jquery.ui.mouse');
+
+require('jquery.ui.slider');
+
+require('jquery.ui.draggable');
+
+require('jquery.autosize');
+
+require('jquery.autosize.input');
+
+require('jquery.collage');
+
+require('jquery.waypoints');
+
+require('jquery.fileupload');
+
+require('jquery.shapeshift');
+
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../../../bower_components/momentjs/moment":8,"Modernizr":undefined,"aviator":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":450,"imagesloaded":453,"introJs":undefined,"jquery":6,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"lodash":456,"medium-editor":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-color-picker":undefined,"react-mixin-manager":undefined,"screenviewer":undefined,"swfobject":undefined,"undo":undefined}],296:[function(require,module,exports){
+var momentLocales;
+
+momentLocales = {
+  'ru': require('../../../bower_components/momentjs/locale/ru')
+};
+
+window.moment.locale('ru', momentLocales.ru);
+
+
+
+},{"../../../bower_components/momentjs/locale/ru":7}],297:[function(require,module,exports){
+window.Tasty = {
+  start: function(options) {
+    var flashes, headers, locale, user;
+    if (options == null) {
+      options = {};
+    }
+    user = options.user, locale = options.locale, flashes = options.flashes;
+    headers = {};
+    if (user != null) {
+      headers['X-User-Token'] = user.api_key.access_token;
+    }
+    headers['X-Requested-With'] = 'XMLHttpRequest';
+    headers['X-Tasty-Client-Name'] = 'web_desktop';
+    headers['X-Tasty-Client-Version'] = TastySettings.version;
+    if (flashes != null) {
+      TastyUtils.showFlashes(flashes);
+    }
+    $.ajaxSetup({
+      headers: headers,
+      cache: true,
+      xhrFields: {
+        withCredentials: true
+      },
+      error: function(e) {
+        return TastyNotifyController.errorResponse(e);
+      }
+    });
+    return ReactApp.start({
+      user: user,
+      locale: locale
+    });
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
 
 
+<<<<<<< HEAD
 },{}],191:[function(require,module,exports){
 window.RelationshipGuessButton = React.createClass({
   mixins: ['RelationshipMixin'],
@@ -28259,14 +40996,119 @@ window.RelationshipGuessButton = React.createClass({
         };
       })(this)
     });
+=======
+},{}],298:[function(require,module,exports){
+window.TastyUtils = {
+  showFlashes: function(flashes) {
+    if (flashes == null) {
+      flashes = [];
+    }
+    return _.each(flashes, function(flash) {
+      return TastyNotifyController.notify(flash[0], flash[1]);
+    });
+  },
+  centerHorizontally: function(element) {
+    $(element).each(function() {
+      var e;
+      e = $(this);
+      e.css("margin-left", -(e.width() / 2));
+    });
+  },
+  scrollFade: function(container, element) {
+    var height, scrollTop;
+    height = container.outerHeight() - element.outerHeight() / 2;
+    scrollTop = $(window).scrollTop();
+    return element.css({
+      "margin-top": scrollTop,
+      "opacity": Math.max(1 - scrollTop / height, 0)
+    });
+  },
+  onMousewheel: function(e, d) {
+    e.stopPropagation();
+    e.preventDefault();
+    if ((this.scrollTop === (this.scrollHeight - this.offsetHeight) && d < 0) || (this.scrollTop === 0 && d > 0)) {
+
+    }
+  },
+  scrollToElement: function(el) {
+    return setTimeout((function() {
+      return scrollTo(0, $(el).offset().top);
+    }), 0);
+  },
+  formatNumber: function(rawNumber, round, delimiter) {
+    var number;
+    if (delimiter == null) {
+      delimiter = " ";
+    }
+    number = parseInt(rawNumber);
+    if (round != null) {
+      number = Math.ceil(number / round) * round;
+    }
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
+  },
+  isImagesEqual: function(nextImages, currentImages) {
+    var currentUrls, nextUrls;
+    if (nextImages.length !== currentImages.length) {
+      return false;
+    }
+    currentUrls = currentImages.map(function(i) {
+      return i.src;
+    });
+    nextUrls = nextImages.map(function(i) {
+      return i.src;
+    });
+    return _.isEqual(currentUrls, nextUrls);
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
+<<<<<<< HEAD
+=======
+},{}],299:[function(require,module,exports){
+var ConnectStoreMixin, _;
 
+_ = require('lodash');
+
+ConnectStoreMixin = function(listenableStore) {
+  return {
+    getInitialState: function() {
+      return this.getStateFromStore();
+    },
+    componentWillMount: function() {
+      if (_.isArray(listenableStore)) {
+        return _.forEach(listenableStore, (function(_this) {
+          return function(store) {
+            return store.addChangeListener(_this.onStoreChange);
+          };
+        })(this));
+      } else {
+        return listenableStore.addChangeListener(this.onStoreChange);
+      }
+    },
+    componentWillUnmount: function() {
+      if (_.isArray(listenableStore)) {
+        return _.forEach(listenableStore, (function(_this) {
+          return function(store) {
+            return store.removeChangeListener(_this.onStoreChange);
+          };
+        })(this));
+      } else {
+        return listenableStore.removeChangeListener(this.onStoreChange);
+      }
+    },
+    onStoreChange: function() {
+      return this.setState(this.getStateFromStore());
+    }
+  };
+};
+>>>>>>> Editor store and services [#89871770]
+
+module.exports = ConnectStoreMixin;
 
 },{}],192:[function(require,module,exports){
 var STATE_IGNORED;
 
+<<<<<<< HEAD
 STATE_IGNORED = 'ignored';
 
 window.RelationshipIgnoreButton = React.createClass({
@@ -28871,9 +41713,190 @@ SearchResultsFeed = React.createClass({
       paddingX: 0,
       paddingY: 0
     });
+=======
+
+},{"lodash":456}],300:[function(require,module,exports){
+var ThumborService;
+
+ThumborService = {
+  thumborUrl: 'http://thumbor0.tasty0.ru',
+  imageUrl: function(_arg) {
+    var path, size, url;
+    url = _arg.url, path = _arg.path, size = _arg.size;
+    switch (TastySettings.env) {
+      case 'development':
+        return url;
+      default:
+        return this.thumborUrl + ("/unsafe/" + size + "/filters:no_upscale()/") + path;
+    }
+  }
+};
+
+module.exports = ThumborService;
+
+
+
+},{}],301:[function(require,module,exports){
+var ApiRoutes;
+
+ApiRoutes = {
+  omniauth_url: function(provider) {
+    return TastySettings.host + '/auth/' + provider;
+  },
+  iframely_url: function() {
+    return TastySettings.api_host + '/v1/embeding/iframely.json';
+  },
+  pusher_auth_url: function() {
+    return TastySettings.api_host + '/v1/messenger/auth';
+  },
+  calendar_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/calendar';
+  },
+  votes_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/' + entryId + '/votes';
+  },
+  embed_url: function() {
+    return TastySettings.api_host + '/v1/embed';
+  },
+  design_settings_url: function(slug) {
+    return TastySettings.api_host + '/v1/design_settings/' + slug;
+  },
+  design_settings_cover_url: function(slug) {
+    return TastySettings.api_host + '/v1/design_settings/' + slug + '/cover';
+  },
+  signin_url: function() {
+    return TastySettings.api_host + '/v1/sessions';
+  },
+  signup_url: function() {
+    return TastySettings.api_host + '/v1/users';
+  },
+  update_profile_url: function() {
+    return TastySettings.api_host + '/v1/users';
+  },
+  recovery_url: function() {
+    return TastySettings.api_host + '/v1/users/password/recovery';
+  },
+  request_confirm_url: function() {
+    return TastySettings.api_host + '/v1/users/confirmation';
+  },
+  userpic_url: function() {
+    return TastySettings.api_host + '/v1/users/userpic';
+  },
+  users_predict: function() {
+    return TastySettings.api_host + '/v1/users/predict';
+  },
+  create_entry_url: function(type) {
+    return TastySettings.api_host + '/v1/entries/' + type;
+  },
+  update_entry_url: function(entryId, entryType) {
+    return TastySettings.api_host + '/v1/entries/' + entryType + '/' + entryId;
+  },
+  update_images_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/image/' + entryId + '/images';
+  },
+  entry_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/' + entryId;
+  },
+  favorites_url: function() {
+    return TastySettings.api_host + '/v1/favorites';
+  },
+  watching_url: function() {
+    return TastySettings.api_host + '/v1/watching';
+  },
+  report_url: function(entryId) {
+    return TastySettings.api_host + '/v1/entries/' + entryId + '/report';
+  },
+  relationships_summary_url: function() {
+    return TastySettings.api_host + '/v1/relationships/summary';
+  },
+  relationships_to_url: function(state) {
+    return TastySettings.api_host + '/v1/relationships/to/' + state;
+  },
+  relationships_by_url: function(state) {
+    return TastySettings.api_host + '/v1/relationships/by/' + state;
+  },
+  relationships_by_id_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/' + tlogId;
+  },
+  unfollow_from_yourself_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId;
+  },
+  relationships_by_tlog_approve_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/approve';
+  },
+  relationships_by_tlog_disapprove_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/by/tlog/' + tlogId + '/disapprove';
+  },
+  tlog_followers: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followers';
+  },
+  tlog_followings: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/followings';
+  },
+  tlog_tags: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/tags';
+  },
+  tlog_report: function(tlogId) {
+    return TastySettings.api_host + '/v1/tlog/' + tlogId + '/report';
+  },
+  get_my_relationship_url: function(tlogId) {
+    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId;
+  },
+  comments_url: function(entryId) {
+    return TastySettings.api_host + '/v1/comments';
+  },
+  comments_edit_delete_url: function(commentId) {
+    return TastySettings.api_host + '/v1/comments/' + commentId;
+  },
+  comments_report_url: function(commentId) {
+    return TastySettings.api_host + '/v1/comments/' + commentId + '/report';
+  },
+  change_my_relationship_url: function(tlogId, state) {
+    return TastySettings.api_host + '/v1/relationships/to/tlog/' + tlogId + '/' + state;
+  },
+  messenger_ready_url: function() {
+    return TastySettings.api_host + '/v1/messenger/ready';
+  },
+  messengerConversationsByUserId: function(userId) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_user_id/' + userId;
+  },
+  messenger_new_message_url: function(conversationId) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
+  },
+  messenger_load_messages_url: function(conversationId) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
+  },
+  messenger_read_messages_url: function(conversationId) {
+    return TastySettings.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages/read';
+  },
+  notificationsUrl: function() {
+    return TastySettings.api_host + '/v1/messenger/notifications';
+  },
+  notificationsReadAllUrl: function() {
+    return TastySettings.api_host + '/v1/messenger/notifications/read';
+  },
+  notifications_read_url: function(id) {
+    return TastySettings.api_host + '/v1/messenger/notifications/' + id + '/read';
+  },
+  suggestions_vkontakte: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/vkontakte';
+  },
+  suggestions_facebook: function() {
+    return TastySettings.api_host + '/v1/relationships/suggestions/facebook';
+  },
+  feedLive: function() {
+    return TastySettings.api_host + '/v1/feeds/live';
+  },
+  feedBest: function() {
+    return TastySettings.api_host + '/v1/feeds/best';
+  },
+  feedFriends: function() {
+    return TastySettings.api_host + '/v1/my_feeds/friends';
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
+<<<<<<< HEAD
 module.exports = SearchResultsFeed;
 
 
@@ -29213,13 +42236,130 @@ Searchbox = React.createClass({
   handleKeyDown: function(e) {
     if (e.key === 'Escape') {
       return this.close();
+=======
+module.exports = ApiRoutes;
+
+
+
+},{}],302:[function(require,module,exports){
+var Routes;
+
+Routes = {
+  logout_path: function() {
+    return '/logout';
+  },
+  tlog_favorite_entries_path: function(slug) {
+    return '/~' + slug + '/favorites';
+  },
+  tag_path: function(tag) {
+    return '/tags/' + tag;
+  },
+  friends_feed_path: function() {
+    return '/friends';
+  },
+  live_feed_path: function() {
+    return '/live';
+  },
+  best_feed_path: function() {
+    return '/best';
+  },
+  anonymous_feed_path: function() {
+    return '/anonymous';
+  },
+  people_path: function() {
+    return '/people';
+  },
+  new_entry_url: function(userSlug) {
+    return '/~' + userSlug + '/new';
+  },
+  new_anonymous_entry_url: function(userSlug) {
+    return '/~' + userSlug + '/anonymous/new';
+  },
+  my_tlog_url: function(userSlug) {
+    return '/~' + userSlug;
+  },
+  favorites_url: function(userSlug) {
+    return '/~' + userSlug + '/favorites';
+  },
+  private_entries_url: function(userSlug) {
+    return '/~' + userSlug + '/privates';
+  },
+  entry_edit_url: function(userSlug, entryId) {
+    return '/~' + userSlug + '/edit' + '/' + entryId;
+  },
+  messagesUrl: function(userSlug) {
+    return '/~' + userSlug + '/conversations';
+  },
+  notificationsUrl: function(userSlug) {
+    return '/~' + userSlug + '/notifications';
+  },
+  userProfile: function(userSlug) {
+    return '/~' + userSlug + '/profile';
+  },
+  userSettings: function(userSlug) {
+    return '/~' + userSlug + '/settings';
+  },
+  userDesignSettings: function(userSlug) {
+    return '/~' + userSlug + '/design_settings';
+  },
+  tlogPagination: function(userSlug, page) {
+    return '/~' + userSlug + '/page/' + page;
+  },
+  daylogPagination: function(userSlug, page) {
+    return '/~' + userSlug + '/' + page;
+  }
+};
+
+module.exports = Routes;
+
+
+
+},{}],303:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule AutoFocusMixin
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var focusNode = require("./focusNode");
+
+var AutoFocusMixin = {
+  componentDidMount: function() {
+    if (this.props.autoFocus) {
+      focusNode(this.getDOMNode());
+>>>>>>> Editor store and services [#89871770]
     }
   }
 });
 
+<<<<<<< HEAD
 module.exports = Searchbox;
+=======
+module.exports = AutoFocusMixin;
+>>>>>>> Editor store and services [#89871770]
 
+},{"./focusNode":413}],304:[function(require,module,exports){
+/**
+ * Copyright 2013 Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule BeforeInputEventPlugin
+ * @typechecks static-only
+ */
 
+<<<<<<< HEAD
 
 },{}],203:[function(require,module,exports){
 var SettingsAccounts;
@@ -29419,12 +42559,234 @@ SettingsEmailConfirmation = React.createClass({
         };
       })(this)
     });
+=======
+"use strict";
+
+var EventConstants = require("./EventConstants");
+var EventPropagators = require("./EventPropagators");
+var ExecutionEnvironment = require("./ExecutionEnvironment");
+var SyntheticInputEvent = require("./SyntheticInputEvent");
+
+var keyOf = require("./keyOf");
+
+var canUseTextInputEvent = (
+  ExecutionEnvironment.canUseDOM &&
+  'TextEvent' in window &&
+  !('documentMode' in document || isPresto())
+);
+
+/**
+ * Opera <= 12 includes TextEvent in window, but does not fire
+ * text input events. Rely on keypress instead.
+ */
+function isPresto() {
+  var opera = window.opera;
+  return (
+    typeof opera === 'object' &&
+    typeof opera.version === 'function' &&
+    parseInt(opera.version(), 10) <= 12
+  );
+}
+
+var SPACEBAR_CODE = 32;
+var SPACEBAR_CHAR = String.fromCharCode(SPACEBAR_CODE);
+
+var topLevelTypes = EventConstants.topLevelTypes;
+
+// Events and their corresponding property names.
+var eventTypes = {
+  beforeInput: {
+    phasedRegistrationNames: {
+      bubbled: keyOf({onBeforeInput: null}),
+      captured: keyOf({onBeforeInputCapture: null})
+    },
+    dependencies: [
+      topLevelTypes.topCompositionEnd,
+      topLevelTypes.topKeyPress,
+      topLevelTypes.topTextInput,
+      topLevelTypes.topPaste
+    ]
   }
-});
+};
 
+// Track characters inserted via keypress and composition events.
+var fallbackChars = null;
+
+// Track whether we've ever handled a keypress on the space key.
+var hasSpaceKeypress = false;
+
+/**
+ * Return whether a native keypress event is assumed to be a command.
+ * This is required because Firefox fires `keypress` events for key commands
+ * (cut, copy, select-all, etc.) even though no character is inserted.
+ */
+function isKeypressCommand(nativeEvent) {
+  return (
+    (nativeEvent.ctrlKey || nativeEvent.altKey || nativeEvent.metaKey) &&
+    // ctrlKey && altKey is equivalent to AltGr, and is not a command.
+    !(nativeEvent.ctrlKey && nativeEvent.altKey)
+  );
+}
+
+/**
+ * Create an `onBeforeInput` event to match
+ * http://www.w3.org/TR/2013/WD-DOM-Level-3-Events-20131105/#events-inputevents.
+ *
+ * This event plugin is based on the native `textInput` event
+ * available in Chrome, Safari, Opera, and IE. This event fires after
+ * `onKeyPress` and `onCompositionEnd`, but before `onInput`.
+ *
+ * `beforeInput` is spec'd but not implemented in any browsers, and
+ * the `input` event does not provide any useful information about what has
+ * actually been added, contrary to the spec. Thus, `textInput` is the best
+ * available event to identify the characters that have actually been inserted
+ * into the target node.
+ */
+var BeforeInputEventPlugin = {
+
+  eventTypes: eventTypes,
+
+  /**
+   * @param {string} topLevelType Record from `EventConstants`.
+   * @param {DOMEventTarget} topLevelTarget The listening component root node.
+   * @param {string} topLevelTargetID ID of `topLevelTarget`.
+   * @param {object} nativeEvent Native browser event.
+   * @return {*} An accumulation of synthetic events.
+   * @see {EventPluginHub.extractEvents}
+   */
+  extractEvents: function(
+      topLevelType,
+      topLevelTarget,
+      topLevelTargetID,
+      nativeEvent) {
+
+    var chars;
+
+    if (canUseTextInputEvent) {
+      switch (topLevelType) {
+        case topLevelTypes.topKeyPress:
+          /**
+           * If native `textInput` events are available, our goal is to make
+           * use of them. However, there is a special case: the spacebar key.
+           * In Webkit, preventing default on a spacebar `textInput` event
+           * cancels character insertion, but it *also* causes the browser
+           * to fall back to its default spacebar behavior of scrolling the
+           * page.
+           *
+           * Tracking at:
+           * https://code.google.com/p/chromium/issues/detail?id=355103
+           *
+           * To avoid this issue, use the keypress event as if no `textInput`
+           * event is available.
+           */
+          var which = nativeEvent.which;
+          if (which !== SPACEBAR_CODE) {
+            return;
+          }
+
+          hasSpaceKeypress = true;
+          chars = SPACEBAR_CHAR;
+          break;
+
+        case topLevelTypes.topTextInput:
+          // Record the characters to be added to the DOM.
+          chars = nativeEvent.data;
+
+          // If it's a spacebar character, assume that we have already handled
+          // it at the keypress level and bail immediately. Android Chrome
+          // doesn't give us keycodes, so we need to blacklist it.
+          if (chars === SPACEBAR_CHAR && hasSpaceKeypress) {
+            return;
+          }
+
+          // Otherwise, carry on.
+          break;
+
+        default:
+          // For other native event types, do nothing.
+          return;
+      }
+    } else {
+      switch (topLevelType) {
+        case topLevelTypes.topPaste:
+          // If a paste event occurs after a keypress, throw out the input
+          // chars. Paste events should not lead to BeforeInput events.
+          fallbackChars = null;
+          break;
+        case topLevelTypes.topKeyPress:
+          /**
+           * As of v27, Firefox may fire keypress events even when no character
+           * will be inserted. A few possibilities:
+           *
+           * - `which` is `0`. Arrow keys, Esc key, etc.
+           *
+           * - `which` is the pressed key code, but no char is available.
+           *   Ex: 'AltGr + d` in Polish. There is no modified character for
+           *   this key combination and no character is inserted into the
+           *   document, but FF fires the keypress for char code `100` anyway.
+           *   No `input` event will occur.
+           *
+           * - `which` is the pressed key code, but a command combination is
+           *   being used. Ex: `Cmd+C`. No character is inserted, and no
+           *   `input` event will occur.
+           */
+          if (nativeEvent.which && !isKeypressCommand(nativeEvent)) {
+            fallbackChars = String.fromCharCode(nativeEvent.which);
+          }
+          break;
+        case topLevelTypes.topCompositionEnd:
+          fallbackChars = nativeEvent.data;
+          break;
+      }
+
+      // If no changes have occurred to the fallback string, no relevant
+      // event has fired and we're done.
+      if (fallbackChars === null) {
+        return;
+      }
+
+      chars = fallbackChars;
+    }
+
+    // If no characters are being inserted, no BeforeInput event should
+    // be fired.
+    if (!chars) {
+      return;
+    }
+
+    var event = SyntheticInputEvent.getPooled(
+      eventTypes.beforeInput,
+      topLevelTargetID,
+      nativeEvent
+    );
+
+    event.data = chars;
+    fallbackChars = null;
+    EventPropagators.accumulateTwoPhaseDispatches(event);
+    return event;
+>>>>>>> Editor store and services [#89871770]
+  }
+};
+
+<<<<<<< HEAD
 module.exports = SettingsEmailConfirmation;
+=======
+module.exports = BeforeInputEventPlugin;
+>>>>>>> Editor store and services [#89871770]
 
+},{"./EventConstants":317,"./EventPropagators":322,"./ExecutionEnvironment":323,"./SyntheticInputEvent":391,"./keyOf":435}],305:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule CSSProperty
+ */
 
+<<<<<<< HEAD
 
 },{}],206:[function(require,module,exports){
 var SettingsEmailEdit, cx;
@@ -29773,9 +43135,344 @@ SettingsEmailEstablish = React.createClass({
 });
 
 module.exports = SettingsEmailEstablish;
+=======
+"use strict";
 
+/**
+ * CSS properties which accept numbers but are not in units of "px".
+ */
+var isUnitlessNumber = {
+  columnCount: true,
+  flex: true,
+  flexGrow: true,
+  flexShrink: true,
+  fontWeight: true,
+  lineClamp: true,
+  lineHeight: true,
+  opacity: true,
+  order: true,
+  orphans: true,
+  widows: true,
+  zIndex: true,
+  zoom: true,
 
+  // SVG-related properties
+  fillOpacity: true,
+  strokeOpacity: true
+};
 
+/**
+ * @param {string} prefix vendor-specific prefix, eg: Webkit
+ * @param {string} key style name, eg: transitionDuration
+ * @return {string} style name prefixed with `prefix`, properly camelCased, eg:
+ * WebkitTransitionDuration
+ */
+function prefixKey(prefix, key) {
+  return prefix + key.charAt(0).toUpperCase() + key.substring(1);
+}
+
+/**
+ * Support style names that may come passed in prefixed by adding permutations
+ * of vendor prefixes.
+ */
+var prefixes = ['Webkit', 'ms', 'Moz', 'O'];
+
+// Using Object.keys here, or else the vanilla for-in loop makes IE8 go into an
+// infinite loop, because it iterates over the newly added props too.
+Object.keys(isUnitlessNumber).forEach(function(prop) {
+  prefixes.forEach(function(prefix) {
+    isUnitlessNumber[prefixKey(prefix, prop)] = isUnitlessNumber[prop];
+  });
+});
+
+/**
+ * Most style properties can be unset by doing .style[prop] = '' but IE8
+ * doesn't like doing that with shorthand properties so for the properties that
+ * IE8 breaks on, which are listed here, we instead unset each of the
+ * individual properties. See http://bugs.jquery.com/ticket/12385.
+ * The 4-value 'clock' properties like margin, padding, border-width seem to
+ * behave without any problems. Curiously, list-style works too without any
+ * special prodding.
+ */
+var shorthandPropertyExpansions = {
+  background: {
+    backgroundImage: true,
+    backgroundPosition: true,
+    backgroundRepeat: true,
+    backgroundColor: true
+  },
+  border: {
+    borderWidth: true,
+    borderStyle: true,
+    borderColor: true
+  },
+  borderBottom: {
+    borderBottomWidth: true,
+    borderBottomStyle: true,
+    borderBottomColor: true
+  },
+  borderLeft: {
+    borderLeftWidth: true,
+    borderLeftStyle: true,
+    borderLeftColor: true
+  },
+  borderRight: {
+    borderRightWidth: true,
+    borderRightStyle: true,
+    borderRightColor: true
+  },
+  borderTop: {
+    borderTopWidth: true,
+    borderTopStyle: true,
+    borderTopColor: true
+  },
+  font: {
+    fontStyle: true,
+    fontVariant: true,
+    fontWeight: true,
+    fontSize: true,
+    lineHeight: true,
+    fontFamily: true
+  }
+};
+
+var CSSProperty = {
+  isUnitlessNumber: isUnitlessNumber,
+  shorthandPropertyExpansions: shorthandPropertyExpansions
+};
+
+module.exports = CSSProperty;
+
+},{}],306:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule CSSPropertyOperations
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var CSSProperty = require("./CSSProperty");
+var ExecutionEnvironment = require("./ExecutionEnvironment");
+
+var camelizeStyleName = require("./camelizeStyleName");
+var dangerousStyleValue = require("./dangerousStyleValue");
+var hyphenateStyleName = require("./hyphenateStyleName");
+var memoizeStringOnly = require("./memoizeStringOnly");
+var warning = require("./warning");
+
+var processStyleName = memoizeStringOnly(function(styleName) {
+  return hyphenateStyleName(styleName);
+});
+
+var styleFloatAccessor = 'cssFloat';
+if (ExecutionEnvironment.canUseDOM) {
+  // IE8 only supports accessing cssFloat (standard) as styleFloat
+  if (document.documentElement.style.cssFloat === undefined) {
+    styleFloatAccessor = 'styleFloat';
+  }
+}
+
+if ("production" !== process.env.NODE_ENV) {
+  var warnedStyleNames = {};
+
+  var warnHyphenatedStyleName = function(name) {
+    if (warnedStyleNames.hasOwnProperty(name) && warnedStyleNames[name]) {
+      return;
+    }
+
+    warnedStyleNames[name] = true;
+    ("production" !== process.env.NODE_ENV ? warning(
+      false,
+      'Unsupported style property ' + name + '. Did you mean ' +
+      camelizeStyleName(name) + '?'
+    ) : null);
+  };
+}
+
+/**
+ * Operations for dealing with CSS properties.
+ */
+var CSSPropertyOperations = {
+
+  /**
+   * Serializes a mapping of style properties for use as inline styles:
+   *
+   *   > createMarkupForStyles({width: '200px', height: 0})
+   *   "width:200px;height:0;"
+   *
+   * Undefined values are ignored so that declarative programming is easier.
+   * The result should be HTML-escaped before insertion into the DOM.
+   *
+   * @param {object} styles
+   * @return {?string}
+   */
+  createMarkupForStyles: function(styles) {
+    var serialized = '';
+    for (var styleName in styles) {
+      if (!styles.hasOwnProperty(styleName)) {
+        continue;
+      }
+      if ("production" !== process.env.NODE_ENV) {
+        if (styleName.indexOf('-') > -1) {
+          warnHyphenatedStyleName(styleName);
+        }
+      }
+      var styleValue = styles[styleName];
+      if (styleValue != null) {
+        serialized += processStyleName(styleName) + ':';
+        serialized += dangerousStyleValue(styleName, styleValue) + ';';
+      }
+    }
+    return serialized || null;
+  },
+
+  /**
+   * Sets the value for multiple styles on a node.  If a value is specified as
+   * '' (empty string), the corresponding style property will be unset.
+   *
+   * @param {DOMElement} node
+   * @param {object} styles
+   */
+  setValueForStyles: function(node, styles) {
+    var style = node.style;
+    for (var styleName in styles) {
+      if (!styles.hasOwnProperty(styleName)) {
+        continue;
+      }
+      if ("production" !== process.env.NODE_ENV) {
+        if (styleName.indexOf('-') > -1) {
+          warnHyphenatedStyleName(styleName);
+        }
+      }
+      var styleValue = dangerousStyleValue(styleName, styles[styleName]);
+      if (styleName === 'float') {
+        styleName = styleFloatAccessor;
+      }
+      if (styleValue) {
+        style[styleName] = styleValue;
+      } else {
+        var expansion = CSSProperty.shorthandPropertyExpansions[styleName];
+        if (expansion) {
+          // Shorthand property that IE8 won't like unsetting, so unset each
+          // component to placate it
+          for (var individualStyleName in expansion) {
+            style[individualStyleName] = '';
+          }
+        } else {
+          style[styleName] = '';
+        }
+      }
+    }
+  }
+
+};
+
+module.exports = CSSPropertyOperations;
+
+}).call(this,require('_process'))
+},{"./CSSProperty":305,"./ExecutionEnvironment":323,"./camelizeStyleName":402,"./dangerousStyleValue":407,"./hyphenateStyleName":426,"./memoizeStringOnly":437,"./warning":447,"_process":449}],307:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule CallbackQueue
+ */
+
+"use strict";
+
+var PooledClass = require("./PooledClass");
+
+var assign = require("./Object.assign");
+var invariant = require("./invariant");
+
+/**
+ * A specialized pseudo-event module to help keep track of components waiting to
+ * be notified when their DOM representations are available for use.
+ *
+ * This implements `PooledClass`, so you should never need to instantiate this.
+ * Instead, use `CallbackQueue.getPooled()`.
+ *
+ * @class ReactMountReady
+ * @implements PooledClass
+ * @internal
+ */
+function CallbackQueue() {
+  this._callbacks = null;
+  this._contexts = null;
+}
+
+assign(CallbackQueue.prototype, {
+
+  /**
+   * Enqueues a callback to be invoked when `notifyAll` is invoked.
+   *
+   * @param {function} callback Invoked when `notifyAll` is invoked.
+   * @param {?object} context Context to call `callback` with.
+   * @internal
+   */
+  enqueue: function(callback, context) {
+    this._callbacks = this._callbacks || [];
+    this._contexts = this._contexts || [];
+    this._callbacks.push(callback);
+    this._contexts.push(context);
+  },
+
+  /**
+   * Invokes all enqueued callbacks and clears the queue. This is invoked after
+   * the DOM representation of a component has been created or updated.
+   *
+   * @internal
+   */
+  notifyAll: function() {
+    var callbacks = this._callbacks;
+    var contexts = this._contexts;
+    if (callbacks) {
+      ("production" !== process.env.NODE_ENV ? invariant(
+        callbacks.length === contexts.length,
+        "Mismatched list of contexts in callback queue"
+      ) : invariant(callbacks.length === contexts.length));
+      this._callbacks = null;
+      this._contexts = null;
+      for (var i = 0, l = callbacks.length; i < l; i++) {
+        callbacks[i].call(contexts[i]);
+      }
+      callbacks.length = 0;
+      contexts.length = 0;
+    }
+  },
+>>>>>>> Editor store and services [#89871770]
+
+  /**
+   * Resets the internal queue.
+   *
+   * @internal
+   */
+  reset: function() {
+    this._callbacks = null;
+    this._contexts = null;
+  },
+
+  /**
+   * `PooledClass` looks for this.
+   */
+  destructor: function() {
+    this.reset();
+  }
+
+<<<<<<< HEAD
 },{"./edit":208,"./show":210}],210:[function(require,module,exports){
 var SettingsEmailEstablishShow;
 
@@ -29882,6 +43579,297 @@ SettingsAvatar = require('./avatar');
 SettingsSlug = require('./slug');
 
 SettingsTitle = require('./title');
+=======
+});
+
+PooledClass.addPoolingTo(CallbackQueue);
+
+module.exports = CallbackQueue;
+
+}).call(this,require('_process'))
+},{"./Object.assign":328,"./PooledClass":329,"./invariant":428,"_process":449}],308:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ChangeEventPlugin
+ */
+
+"use strict";
+
+var EventConstants = require("./EventConstants");
+var EventPluginHub = require("./EventPluginHub");
+var EventPropagators = require("./EventPropagators");
+var ExecutionEnvironment = require("./ExecutionEnvironment");
+var ReactUpdates = require("./ReactUpdates");
+var SyntheticEvent = require("./SyntheticEvent");
+
+var isEventSupported = require("./isEventSupported");
+var isTextInputElement = require("./isTextInputElement");
+var keyOf = require("./keyOf");
+
+var topLevelTypes = EventConstants.topLevelTypes;
+
+var eventTypes = {
+  change: {
+    phasedRegistrationNames: {
+      bubbled: keyOf({onChange: null}),
+      captured: keyOf({onChangeCapture: null})
+    },
+    dependencies: [
+      topLevelTypes.topBlur,
+      topLevelTypes.topChange,
+      topLevelTypes.topClick,
+      topLevelTypes.topFocus,
+      topLevelTypes.topInput,
+      topLevelTypes.topKeyDown,
+      topLevelTypes.topKeyUp,
+      topLevelTypes.topSelectionChange
+    ]
+  }
+};
+
+/**
+ * For IE shims
+ */
+var activeElement = null;
+var activeElementID = null;
+var activeElementValue = null;
+var activeElementValueProp = null;
+
+/**
+ * SECTION: handle `change` event
+ */
+function shouldUseChangeEvent(elem) {
+  return (
+    elem.nodeName === 'SELECT' ||
+    (elem.nodeName === 'INPUT' && elem.type === 'file')
+  );
+}
+
+var doesChangeEventBubble = false;
+if (ExecutionEnvironment.canUseDOM) {
+  // See `handleChange` comment below
+  doesChangeEventBubble = isEventSupported('change') && (
+    !('documentMode' in document) || document.documentMode > 8
+  );
+}
+
+function manualDispatchChangeEvent(nativeEvent) {
+  var event = SyntheticEvent.getPooled(
+    eventTypes.change,
+    activeElementID,
+    nativeEvent
+  );
+  EventPropagators.accumulateTwoPhaseDispatches(event);
+
+  // If change and propertychange bubbled, we'd just bind to it like all the
+  // other events and have it go through ReactBrowserEventEmitter. Since it
+  // doesn't, we manually listen for the events and so we have to enqueue and
+  // process the abstract event manually.
+  //
+  // Batching is necessary here in order to ensure that all event handlers run
+  // before the next rerender (including event handlers attached to ancestor
+  // elements instead of directly on the input). Without this, controlled
+  // components don't work properly in conjunction with event bubbling because
+  // the component is rerendered and the value reverted before all the event
+  // handlers can run. See https://github.com/facebook/react/issues/708.
+  ReactUpdates.batchedUpdates(runEventInBatch, event);
+}
+
+function runEventInBatch(event) {
+  EventPluginHub.enqueueEvents(event);
+  EventPluginHub.processEventQueue();
+}
+
+function startWatchingForChangeEventIE8(target, targetID) {
+  activeElement = target;
+  activeElementID = targetID;
+  activeElement.attachEvent('onchange', manualDispatchChangeEvent);
+}
+
+function stopWatchingForChangeEventIE8() {
+  if (!activeElement) {
+    return;
+  }
+  activeElement.detachEvent('onchange', manualDispatchChangeEvent);
+  activeElement = null;
+  activeElementID = null;
+}
+
+function getTargetIDForChangeEvent(
+    topLevelType,
+    topLevelTarget,
+    topLevelTargetID) {
+  if (topLevelType === topLevelTypes.topChange) {
+    return topLevelTargetID;
+  }
+}
+function handleEventsForChangeEventIE8(
+    topLevelType,
+    topLevelTarget,
+    topLevelTargetID) {
+  if (topLevelType === topLevelTypes.topFocus) {
+    // stopWatching() should be a noop here but we call it just in case we
+    // missed a blur event somehow.
+    stopWatchingForChangeEventIE8();
+    startWatchingForChangeEventIE8(topLevelTarget, topLevelTargetID);
+  } else if (topLevelType === topLevelTypes.topBlur) {
+    stopWatchingForChangeEventIE8();
+  }
+}
+
+
+/**
+ * SECTION: handle `input` event
+ */
+var isInputEventSupported = false;
+if (ExecutionEnvironment.canUseDOM) {
+  // IE9 claims to support the input event but fails to trigger it when
+  // deleting text, so we ignore its input events
+  isInputEventSupported = isEventSupported('input') && (
+    !('documentMode' in document) || document.documentMode > 9
+  );
+}
+
+/**
+ * (For old IE.) Replacement getter/setter for the `value` property that gets
+ * set on the active element.
+ */
+var newValueProp =  {
+  get: function() {
+    return activeElementValueProp.get.call(this);
+  },
+  set: function(val) {
+    // Cast to a string so we can do equality checks.
+    activeElementValue = '' + val;
+    activeElementValueProp.set.call(this, val);
+  }
+};
+
+/**
+ * (For old IE.) Starts tracking propertychange events on the passed-in element
+ * and override the value property so that we can distinguish user events from
+ * value changes in JS.
+ */
+function startWatchingForValueChange(target, targetID) {
+  activeElement = target;
+  activeElementID = targetID;
+  activeElementValue = target.value;
+  activeElementValueProp = Object.getOwnPropertyDescriptor(
+    target.constructor.prototype,
+    'value'
+  );
+
+  Object.defineProperty(activeElement, 'value', newValueProp);
+  activeElement.attachEvent('onpropertychange', handlePropertyChange);
+}
+
+/**
+ * (For old IE.) Removes the event listeners from the currently-tracked element,
+ * if any exists.
+ */
+function stopWatchingForValueChange() {
+  if (!activeElement) {
+    return;
+  }
+
+  // delete restores the original property definition
+  delete activeElement.value;
+  activeElement.detachEvent('onpropertychange', handlePropertyChange);
+
+  activeElement = null;
+  activeElementID = null;
+  activeElementValue = null;
+  activeElementValueProp = null;
+}
+
+/**
+ * (For old IE.) Handles a propertychange event, sending a `change` event if
+ * the value of the active element has changed.
+ */
+function handlePropertyChange(nativeEvent) {
+  if (nativeEvent.propertyName !== 'value') {
+    return;
+  }
+  var value = nativeEvent.srcElement.value;
+  if (value === activeElementValue) {
+    return;
+  }
+  activeElementValue = value;
+
+  manualDispatchChangeEvent(nativeEvent);
+}
+
+/**
+ * If a `change` event should be fired, returns the target's ID.
+ */
+function getTargetIDForInputEvent(
+    topLevelType,
+    topLevelTarget,
+    topLevelTargetID) {
+  if (topLevelType === topLevelTypes.topInput) {
+    // In modern browsers (i.e., not IE8 or IE9), the input event is exactly
+    // what we want so fall through here and trigger an abstract event
+    return topLevelTargetID;
+  }
+}
+
+// For IE8 and IE9.
+function handleEventsForInputEventIE(
+    topLevelType,
+    topLevelTarget,
+    topLevelTargetID) {
+  if (topLevelType === topLevelTypes.topFocus) {
+    // In IE8, we can capture almost all .value changes by adding a
+    // propertychange handler and looking for events with propertyName
+    // equal to 'value'
+    // In IE9, propertychange fires for most input events but is buggy and
+    // doesn't fire when text is deleted, but conveniently, selectionchange
+    // appears to fire in all of the remaining cases so we catch those and
+    // forward the event if the value has changed
+    // In either case, we don't want to call the event handler if the value
+    // is changed from JS so we redefine a setter for `.value` that updates
+    // our activeElementValue variable, allowing us to ignore those changes
+    //
+    // stopWatching() should be a noop here but we call it just in case we
+    // missed a blur event somehow.
+    stopWatchingForValueChange();
+    startWatchingForValueChange(topLevelTarget, topLevelTargetID);
+  } else if (topLevelType === topLevelTypes.topBlur) {
+    stopWatchingForValueChange();
+  }
+}
+
+// For IE8 and IE9.
+function getTargetIDForInputEventIE(
+    topLevelType,
+    topLevelTarget,
+    topLevelTargetID) {
+  if (topLevelType === topLevelTypes.topSelectionChange ||
+      topLevelType === topLevelTypes.topKeyUp ||
+      topLevelType === topLevelTypes.topKeyDown) {
+    // On the selectionchange event, the target is just document which isn't
+    // helpful for us so just check activeElement instead.
+    //
+    // 99% of the time, keydown and keyup aren't necessary. IE8 fails to fire
+    // propertychange on the first input event after setting `value` from a
+    // script and fires only keydown, keypress, keyup. Catching keyup usually
+    // gets it and catching keydown lets us fire an event for the first
+    // keystroke if user does a key repeat (it'll be a little delayed: right
+    // before the second keystroke). Other input methods (e.g., paste) seem to
+    // fire selectionchange normally.
+    if (activeElement && activeElement.value !== activeElementValue) {
+      activeElementValue = activeElement.value;
+      return activeElementID;
+    }
+  }
+}
+>>>>>>> Editor store and services [#89871770]
 
 SettingsHeader = React.createClass({
   displayName: 'SettingsHeader',
@@ -29926,6 +43914,7 @@ SettingsHeader = React.createClass({
   }
 });
 
+<<<<<<< HEAD
 module.exports = SettingsHeader;
 
 
@@ -30154,9 +44143,179 @@ SettingsMixin = {
 };
 
 module.exports = SettingsMixin;
+=======
+/**
+ * SECTION: handle `click` event
+ */
+function shouldUseClickEvent(elem) {
+  // Use the `click` event to detect changes to checkbox and radio inputs.
+  // This approach works across all browsers, whereas `change` does not fire
+  // until `blur` in IE8.
+  return (
+    elem.nodeName === 'INPUT' &&
+    (elem.type === 'checkbox' || elem.type === 'radio')
+  );
+}
 
+function getTargetIDForClickEvent(
+    topLevelType,
+    topLevelTarget,
+    topLevelTargetID) {
+  if (topLevelType === topLevelTypes.topClick) {
+    return topLevelTargetID;
+  }
+}
 
+/**
+ * This plugin creates an `onChange` event that normalizes change events
+ * across form elements. This event fires at a time when it's possible to
+ * change the element's value without seeing a flicker.
+ *
+ * Supported elements are:
+ * - input (see `isTextInputElement`)
+ * - textarea
+ * - select
+ */
+var ChangeEventPlugin = {
 
+  eventTypes: eventTypes,
+
+  /**
+   * @param {string} topLevelType Record from `EventConstants`.
+   * @param {DOMEventTarget} topLevelTarget The listening component root node.
+   * @param {string} topLevelTargetID ID of `topLevelTarget`.
+   * @param {object} nativeEvent Native browser event.
+   * @return {*} An accumulation of synthetic events.
+   * @see {EventPluginHub.extractEvents}
+   */
+  extractEvents: function(
+      topLevelType,
+      topLevelTarget,
+      topLevelTargetID,
+      nativeEvent) {
+
+    var getTargetIDFunc, handleEventFunc;
+    if (shouldUseChangeEvent(topLevelTarget)) {
+      if (doesChangeEventBubble) {
+        getTargetIDFunc = getTargetIDForChangeEvent;
+      } else {
+        handleEventFunc = handleEventsForChangeEventIE8;
+      }
+    } else if (isTextInputElement(topLevelTarget)) {
+      if (isInputEventSupported) {
+        getTargetIDFunc = getTargetIDForInputEvent;
+      } else {
+        getTargetIDFunc = getTargetIDForInputEventIE;
+        handleEventFunc = handleEventsForInputEventIE;
+      }
+    } else if (shouldUseClickEvent(topLevelTarget)) {
+      getTargetIDFunc = getTargetIDForClickEvent;
+    }
+
+    if (getTargetIDFunc) {
+      var targetID = getTargetIDFunc(
+        topLevelType,
+        topLevelTarget,
+        topLevelTargetID
+      );
+      if (targetID) {
+        var event = SyntheticEvent.getPooled(
+          eventTypes.change,
+          targetID,
+          nativeEvent
+        );
+        EventPropagators.accumulateTwoPhaseDispatches(event);
+        return event;
+      }
+    }
+
+    if (handleEventFunc) {
+      handleEventFunc(
+        topLevelType,
+        topLevelTarget,
+        topLevelTargetID
+      );
+    }
+  }
+
+};
+
+module.exports = ChangeEventPlugin;
+
+},{"./EventConstants":317,"./EventPluginHub":319,"./EventPropagators":322,"./ExecutionEnvironment":323,"./ReactUpdates":381,"./SyntheticEvent":389,"./isEventSupported":429,"./isTextInputElement":431,"./keyOf":435}],309:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ClientReactRootIndex
+ * @typechecks
+ */
+
+"use strict";
+
+var nextReactRootIndex = 0;
+
+var ClientReactRootIndex = {
+  createReactRootIndex: function() {
+    return nextReactRootIndex++;
+  }
+};
+
+module.exports = ClientReactRootIndex;
+
+},{}],310:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule CompositionEventPlugin
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var EventConstants = require("./EventConstants");
+var EventPropagators = require("./EventPropagators");
+var ExecutionEnvironment = require("./ExecutionEnvironment");
+var ReactInputSelection = require("./ReactInputSelection");
+var SyntheticCompositionEvent = require("./SyntheticCompositionEvent");
+
+var getTextContentAccessor = require("./getTextContentAccessor");
+var keyOf = require("./keyOf");
+
+var END_KEYCODES = [9, 13, 27, 32]; // Tab, Return, Esc, Space
+var START_KEYCODE = 229;
+>>>>>>> Editor store and services [#89871770]
+
+var useCompositionEvent = (
+  ExecutionEnvironment.canUseDOM &&
+  'CompositionEvent' in window
+);
+
+// In IE9+, we have access to composition events, but the data supplied
+// by the native compositionend event may be incorrect. In Korean, for example,
+// the compositionend event contains only one character regardless of
+// how many characters have been composed since compositionstart.
+// We therefore use the fallback data while still using the native
+// events as triggers.
+var useFallbackData = (
+  !useCompositionEvent ||
+  (
+    'documentMode' in document &&
+    document.documentMode > 8 &&
+    document.documentMode <= 11
+  )
+);
+
+<<<<<<< HEAD
 },{"../../../actions/view/current_user":14}],214:[function(require,module,exports){
 var CANCEL_TIMEOUT, SettingsPasswordEdit, cx;
 
@@ -30541,6 +44700,158 @@ window.Settings = React.createClass({
 var PropTypes, SettingsSlug;
 
 PropTypes = React.PropTypes;
+=======
+var topLevelTypes = EventConstants.topLevelTypes;
+var currentComposition = null;
+
+// Events and their corresponding property names.
+var eventTypes = {
+  compositionEnd: {
+    phasedRegistrationNames: {
+      bubbled: keyOf({onCompositionEnd: null}),
+      captured: keyOf({onCompositionEndCapture: null})
+    },
+    dependencies: [
+      topLevelTypes.topBlur,
+      topLevelTypes.topCompositionEnd,
+      topLevelTypes.topKeyDown,
+      topLevelTypes.topKeyPress,
+      topLevelTypes.topKeyUp,
+      topLevelTypes.topMouseDown
+    ]
+  },
+  compositionStart: {
+    phasedRegistrationNames: {
+      bubbled: keyOf({onCompositionStart: null}),
+      captured: keyOf({onCompositionStartCapture: null})
+    },
+    dependencies: [
+      topLevelTypes.topBlur,
+      topLevelTypes.topCompositionStart,
+      topLevelTypes.topKeyDown,
+      topLevelTypes.topKeyPress,
+      topLevelTypes.topKeyUp,
+      topLevelTypes.topMouseDown
+    ]
+  },
+  compositionUpdate: {
+    phasedRegistrationNames: {
+      bubbled: keyOf({onCompositionUpdate: null}),
+      captured: keyOf({onCompositionUpdateCapture: null})
+    },
+    dependencies: [
+      topLevelTypes.topBlur,
+      topLevelTypes.topCompositionUpdate,
+      topLevelTypes.topKeyDown,
+      topLevelTypes.topKeyPress,
+      topLevelTypes.topKeyUp,
+      topLevelTypes.topMouseDown
+    ]
+  }
+};
+
+/**
+ * Translate native top level events into event types.
+ *
+ * @param {string} topLevelType
+ * @return {object}
+ */
+function getCompositionEventType(topLevelType) {
+  switch (topLevelType) {
+    case topLevelTypes.topCompositionStart:
+      return eventTypes.compositionStart;
+    case topLevelTypes.topCompositionEnd:
+      return eventTypes.compositionEnd;
+    case topLevelTypes.topCompositionUpdate:
+      return eventTypes.compositionUpdate;
+  }
+}
+
+/**
+ * Does our fallback best-guess model think this event signifies that
+ * composition has begun?
+ *
+ * @param {string} topLevelType
+ * @param {object} nativeEvent
+ * @return {boolean}
+ */
+function isFallbackStart(topLevelType, nativeEvent) {
+  return (
+    topLevelType === topLevelTypes.topKeyDown &&
+    nativeEvent.keyCode === START_KEYCODE
+  );
+}
+
+/**
+ * Does our fallback mode think that this event is the end of composition?
+ *
+ * @param {string} topLevelType
+ * @param {object} nativeEvent
+ * @return {boolean}
+ */
+function isFallbackEnd(topLevelType, nativeEvent) {
+  switch (topLevelType) {
+    case topLevelTypes.topKeyUp:
+      // Command keys insert or clear IME input.
+      return (END_KEYCODES.indexOf(nativeEvent.keyCode) !== -1);
+    case topLevelTypes.topKeyDown:
+      // Expect IME keyCode on each keydown. If we get any other
+      // code we must have exited earlier.
+      return (nativeEvent.keyCode !== START_KEYCODE);
+    case topLevelTypes.topKeyPress:
+    case topLevelTypes.topMouseDown:
+    case topLevelTypes.topBlur:
+      // Events are not possible without cancelling IME.
+      return true;
+    default:
+      return false;
+  }
+}
+
+/**
+ * Helper class stores information about selection and document state
+ * so we can figure out what changed at a later date.
+ *
+ * @param {DOMEventTarget} root
+ */
+function FallbackCompositionState(root) {
+  this.root = root;
+  this.startSelection = ReactInputSelection.getSelection(root);
+  this.startValue = this.getText();
+}
+
+/**
+ * Get current text of input.
+ *
+ * @return {string}
+ */
+FallbackCompositionState.prototype.getText = function() {
+  return this.root.value || this.root[getTextContentAccessor()];
+};
+
+/**
+ * Text that has changed since the start of composition.
+ *
+ * @return {string}
+ */
+FallbackCompositionState.prototype.getData = function() {
+  var endValue = this.getText();
+  var prefixLength = this.startSelection.start;
+  var suffixLength = this.startValue.length - this.startSelection.end;
+
+  return endValue.substr(
+    prefixLength,
+    endValue.length - suffixLength - prefixLength
+  );
+};
+
+/**
+ * This plugin creates `onCompositionStart`, `onCompositionUpdate` and
+ * `onCompositionEnd` events on inputs, textareas and contentEditable
+ * nodes.
+ */
+var CompositionEventPlugin = {
+>>>>>>> Editor store and services [#89871770]
 
 SettingsSlug = React.createClass({
   displayName: 'SettingsSlug',
@@ -30577,6 +44888,7 @@ SettingsSlug = React.createClass({
 
 module.exports = SettingsSlug;
 
+<<<<<<< HEAD
 
 
 },{}],220:[function(require,module,exports){
@@ -30693,9 +45005,70 @@ window.ShellBox = React.createClass({
 var EmailConfirmRegistration, SocialNetworksConfirmRegistration;
 
 EmailConfirmRegistration = require('../auth/email/confirm_registration');
+=======
+    var eventType;
+    var data;
+
+    if (useCompositionEvent) {
+      eventType = getCompositionEventType(topLevelType);
+    } else if (!currentComposition) {
+      if (isFallbackStart(topLevelType, nativeEvent)) {
+        eventType = eventTypes.compositionStart;
+      }
+    } else if (isFallbackEnd(topLevelType, nativeEvent)) {
+      eventType = eventTypes.compositionEnd;
+    }
+
+    if (useFallbackData) {
+      // The current composition is stored statically and must not be
+      // overwritten while composition continues.
+      if (!currentComposition && eventType === eventTypes.compositionStart) {
+        currentComposition = new FallbackCompositionState(topLevelTarget);
+      } else if (eventType === eventTypes.compositionEnd) {
+        if (currentComposition) {
+          data = currentComposition.getData();
+          currentComposition = null;
+        }
+      }
+    }
+
+    if (eventType) {
+      var event = SyntheticCompositionEvent.getPooled(
+        eventType,
+        topLevelTargetID,
+        nativeEvent
+      );
+      if (data) {
+        // Inject data generated from fallback path into the synthetic event.
+        // This matches the property of native CompositionEventInterface.
+        event.data = data;
+      }
+      EventPropagators.accumulateTwoPhaseDispatches(event);
+      return event;
+    }
+  }
+};
+
+module.exports = CompositionEventPlugin;
+
+},{"./EventConstants":317,"./EventPropagators":322,"./ExecutionEnvironment":323,"./ReactInputSelection":361,"./SyntheticCompositionEvent":387,"./getTextContentAccessor":423,"./keyOf":435}],311:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule DOMChildrenOperations
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
 SocialNetworksConfirmRegistration = require('../auth/social_networks/confirm_registration');
 
+<<<<<<< HEAD
 window.ConfirmRegistrationShellbox = React.createClass({
   propTypes: {
     type: React.PropTypes.oneOf(['email', 'socialNetwork']).isRequired,
@@ -30852,10 +45225,164 @@ module.experts = window.TlogAlert = React.createClass({
       }), closeElement);
     } else {
       return null;
+=======
+var Danger = require("./Danger");
+var ReactMultiChildUpdateTypes = require("./ReactMultiChildUpdateTypes");
+
+var getTextContentAccessor = require("./getTextContentAccessor");
+var invariant = require("./invariant");
+
+/**
+ * The DOM property to use when setting text content.
+ *
+ * @type {string}
+ * @private
+ */
+var textContentAccessor = getTextContentAccessor();
+
+/**
+ * Inserts `childNode` as a child of `parentNode` at the `index`.
+ *
+ * @param {DOMElement} parentNode Parent node in which to insert.
+ * @param {DOMElement} childNode Child node to insert.
+ * @param {number} index Index at which to insert the child.
+ * @internal
+ */
+function insertChildAt(parentNode, childNode, index) {
+  // By exploiting arrays returning `undefined` for an undefined index, we can
+  // rely exclusively on `insertBefore(node, null)` instead of also using
+  // `appendChild(node)`. However, using `undefined` is not allowed by all
+  // browsers so we must replace it with `null`.
+  parentNode.insertBefore(
+    childNode,
+    parentNode.childNodes[index] || null
+  );
+}
+
+var updateTextContent;
+if (textContentAccessor === 'textContent') {
+  /**
+   * Sets the text content of `node` to `text`.
+   *
+   * @param {DOMElement} node Node to change
+   * @param {string} text New text content
+   */
+  updateTextContent = function(node, text) {
+    node.textContent = text;
+  };
+} else {
+  /**
+   * Sets the text content of `node` to `text`.
+   *
+   * @param {DOMElement} node Node to change
+   * @param {string} text New text content
+   */
+  updateTextContent = function(node, text) {
+    // In order to preserve newlines correctly, we can't use .innerText to set
+    // the contents (see #1080), so we empty the element then append a text node
+    while (node.firstChild) {
+      node.removeChild(node.firstChild);
+    }
+    if (text) {
+      var doc = node.ownerDocument || document;
+      node.appendChild(doc.createTextNode(text));
+    }
+  };
+}
+
+/**
+ * Operations for updating with DOM children.
+ */
+var DOMChildrenOperations = {
+
+  dangerouslyReplaceNodeWithMarkup: Danger.dangerouslyReplaceNodeWithMarkup,
+
+  updateTextContent: updateTextContent,
+
+  /**
+   * Updates a component's children by processing a series of updates. The
+   * update configurations are each expected to have a `parentNode` property.
+   *
+   * @param {array<object>} updates List of update configurations.
+   * @param {array<string>} markupList List of markup strings.
+   * @internal
+   */
+  processUpdates: function(updates, markupList) {
+    var update;
+    // Mapping from parent IDs to initial child orderings.
+    var initialChildren = null;
+    // List of children that will be moved or removed.
+    var updatedChildren = null;
+
+    for (var i = 0; update = updates[i]; i++) {
+      if (update.type === ReactMultiChildUpdateTypes.MOVE_EXISTING ||
+          update.type === ReactMultiChildUpdateTypes.REMOVE_NODE) {
+        var updatedIndex = update.fromIndex;
+        var updatedChild = update.parentNode.childNodes[updatedIndex];
+        var parentID = update.parentID;
+
+        ("production" !== process.env.NODE_ENV ? invariant(
+          updatedChild,
+          'processUpdates(): Unable to find child %s of element. This ' +
+          'probably means the DOM was unexpectedly mutated (e.g., by the ' +
+          'browser), usually due to forgetting a <tbody> when using tables, ' +
+          'nesting tags like <form>, <p>, or <a>, or using non-SVG elements '+
+          'in an <svg> parent. Try inspecting the child nodes of the element ' +
+          'with React ID `%s`.',
+          updatedIndex,
+          parentID
+        ) : invariant(updatedChild));
+
+        initialChildren = initialChildren || {};
+        initialChildren[parentID] = initialChildren[parentID] || [];
+        initialChildren[parentID][updatedIndex] = updatedChild;
+
+        updatedChildren = updatedChildren || [];
+        updatedChildren.push(updatedChild);
+      }
+    }
+
+    var renderedMarkup = Danger.dangerouslyRenderMarkup(markupList);
+
+    // Remove updated children first so that `toIndex` is consistent.
+    if (updatedChildren) {
+      for (var j = 0; j < updatedChildren.length; j++) {
+        updatedChildren[j].parentNode.removeChild(updatedChildren[j]);
+      }
+    }
+
+    for (var k = 0; update = updates[k]; k++) {
+      switch (update.type) {
+        case ReactMultiChildUpdateTypes.INSERT_MARKUP:
+          insertChildAt(
+            update.parentNode,
+            renderedMarkup[update.markupIndex],
+            update.toIndex
+          );
+          break;
+        case ReactMultiChildUpdateTypes.MOVE_EXISTING:
+          insertChildAt(
+            update.parentNode,
+            initialChildren[update.parentID][update.fromIndex],
+            update.toIndex
+          );
+          break;
+        case ReactMultiChildUpdateTypes.TEXT_CONTENT:
+          updateTextContent(
+            update.parentNode,
+            update.textContent
+          );
+          break;
+        case ReactMultiChildUpdateTypes.REMOVE_NODE:
+          // Already removed by the for-loop above.
+          break;
+      }
+>>>>>>> Editor store and services [#89871770]
     }
   }
 });
 
+<<<<<<< HEAD
 
 
 },{}],226:[function(require,module,exports){
@@ -31153,9 +45680,329 @@ var PropTypes, UserToolbarList, UserToolbarListItem, UserToolbarListSubList, Use
 UserToolbarListItem = require('./list/item');
 
 UserToolbarListSubList = require('./list/subList');
+=======
+};
+
+module.exports = DOMChildrenOperations;
+
+}).call(this,require('_process'))
+},{"./Danger":314,"./ReactMultiChildUpdateTypes":367,"./getTextContentAccessor":423,"./invariant":428,"_process":449}],312:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule DOMProperty
+ * @typechecks static-only
+ */
+
+/*jslint bitwise: true */
+
+"use strict";
+
+var invariant = require("./invariant");
+
+function checkMask(value, bitmask) {
+  return (value & bitmask) === bitmask;
+}
+
+var DOMPropertyInjection = {
+  /**
+   * Mapping from normalized, camelcased property names to a configuration that
+   * specifies how the associated DOM property should be accessed or rendered.
+   */
+  MUST_USE_ATTRIBUTE: 0x1,
+  MUST_USE_PROPERTY: 0x2,
+  HAS_SIDE_EFFECTS: 0x4,
+  HAS_BOOLEAN_VALUE: 0x8,
+  HAS_NUMERIC_VALUE: 0x10,
+  HAS_POSITIVE_NUMERIC_VALUE: 0x20 | 0x10,
+  HAS_OVERLOADED_BOOLEAN_VALUE: 0x40,
+
+  /**
+   * Inject some specialized knowledge about the DOM. This takes a config object
+   * with the following properties:
+   *
+   * isCustomAttribute: function that given an attribute name will return true
+   * if it can be inserted into the DOM verbatim. Useful for data-* or aria-*
+   * attributes where it's impossible to enumerate all of the possible
+   * attribute names,
+   *
+   * Properties: object mapping DOM property name to one of the
+   * DOMPropertyInjection constants or null. If your attribute isn't in here,
+   * it won't get written to the DOM.
+   *
+   * DOMAttributeNames: object mapping React attribute name to the DOM
+   * attribute name. Attribute names not specified use the **lowercase**
+   * normalized name.
+   *
+   * DOMPropertyNames: similar to DOMAttributeNames but for DOM properties.
+   * Property names not specified use the normalized name.
+   *
+   * DOMMutationMethods: Properties that require special mutation methods. If
+   * `value` is undefined, the mutation method should unset the property.
+   *
+   * @param {object} domPropertyConfig the config as described above.
+   */
+  injectDOMPropertyConfig: function(domPropertyConfig) {
+    var Properties = domPropertyConfig.Properties || {};
+    var DOMAttributeNames = domPropertyConfig.DOMAttributeNames || {};
+    var DOMPropertyNames = domPropertyConfig.DOMPropertyNames || {};
+    var DOMMutationMethods = domPropertyConfig.DOMMutationMethods || {};
+
+    if (domPropertyConfig.isCustomAttribute) {
+      DOMProperty._isCustomAttributeFunctions.push(
+        domPropertyConfig.isCustomAttribute
+      );
+    }
+
+    for (var propName in Properties) {
+      ("production" !== process.env.NODE_ENV ? invariant(
+        !DOMProperty.isStandardName.hasOwnProperty(propName),
+        'injectDOMPropertyConfig(...): You\'re trying to inject DOM property ' +
+        '\'%s\' which has already been injected. You may be accidentally ' +
+        'injecting the same DOM property config twice, or you may be ' +
+        'injecting two configs that have conflicting property names.',
+        propName
+      ) : invariant(!DOMProperty.isStandardName.hasOwnProperty(propName)));
+
+      DOMProperty.isStandardName[propName] = true;
+
+      var lowerCased = propName.toLowerCase();
+      DOMProperty.getPossibleStandardName[lowerCased] = propName;
+
+      if (DOMAttributeNames.hasOwnProperty(propName)) {
+        var attributeName = DOMAttributeNames[propName];
+        DOMProperty.getPossibleStandardName[attributeName] = propName;
+        DOMProperty.getAttributeName[propName] = attributeName;
+      } else {
+        DOMProperty.getAttributeName[propName] = lowerCased;
+      }
+
+      DOMProperty.getPropertyName[propName] =
+        DOMPropertyNames.hasOwnProperty(propName) ?
+          DOMPropertyNames[propName] :
+          propName;
+
+      if (DOMMutationMethods.hasOwnProperty(propName)) {
+        DOMProperty.getMutationMethod[propName] = DOMMutationMethods[propName];
+      } else {
+        DOMProperty.getMutationMethod[propName] = null;
+      }
+
+      var propConfig = Properties[propName];
+      DOMProperty.mustUseAttribute[propName] =
+        checkMask(propConfig, DOMPropertyInjection.MUST_USE_ATTRIBUTE);
+      DOMProperty.mustUseProperty[propName] =
+        checkMask(propConfig, DOMPropertyInjection.MUST_USE_PROPERTY);
+      DOMProperty.hasSideEffects[propName] =
+        checkMask(propConfig, DOMPropertyInjection.HAS_SIDE_EFFECTS);
+      DOMProperty.hasBooleanValue[propName] =
+        checkMask(propConfig, DOMPropertyInjection.HAS_BOOLEAN_VALUE);
+      DOMProperty.hasNumericValue[propName] =
+        checkMask(propConfig, DOMPropertyInjection.HAS_NUMERIC_VALUE);
+      DOMProperty.hasPositiveNumericValue[propName] =
+        checkMask(propConfig, DOMPropertyInjection.HAS_POSITIVE_NUMERIC_VALUE);
+      DOMProperty.hasOverloadedBooleanValue[propName] =
+        checkMask(propConfig, DOMPropertyInjection.HAS_OVERLOADED_BOOLEAN_VALUE);
+
+      ("production" !== process.env.NODE_ENV ? invariant(
+        !DOMProperty.mustUseAttribute[propName] ||
+          !DOMProperty.mustUseProperty[propName],
+        'DOMProperty: Cannot require using both attribute and property: %s',
+        propName
+      ) : invariant(!DOMProperty.mustUseAttribute[propName] ||
+        !DOMProperty.mustUseProperty[propName]));
+      ("production" !== process.env.NODE_ENV ? invariant(
+        DOMProperty.mustUseProperty[propName] ||
+          !DOMProperty.hasSideEffects[propName],
+        'DOMProperty: Properties that have side effects must use property: %s',
+        propName
+      ) : invariant(DOMProperty.mustUseProperty[propName] ||
+        !DOMProperty.hasSideEffects[propName]));
+      ("production" !== process.env.NODE_ENV ? invariant(
+        !!DOMProperty.hasBooleanValue[propName] +
+          !!DOMProperty.hasNumericValue[propName] +
+          !!DOMProperty.hasOverloadedBooleanValue[propName] <= 1,
+        'DOMProperty: Value can be one of boolean, overloaded boolean, or ' +
+        'numeric value, but not a combination: %s',
+        propName
+      ) : invariant(!!DOMProperty.hasBooleanValue[propName] +
+        !!DOMProperty.hasNumericValue[propName] +
+        !!DOMProperty.hasOverloadedBooleanValue[propName] <= 1));
+    }
+  }
+};
+var defaultValueCache = {};
+
+/**
+ * DOMProperty exports lookup objects that can be used like functions:
+ *
+ *   > DOMProperty.isValid['id']
+ *   true
+ *   > DOMProperty.isValid['foobar']
+ *   undefined
+ *
+ * Although this may be confusing, it performs better in general.
+ *
+ * @see http://jsperf.com/key-exists
+ * @see http://jsperf.com/key-missing
+ */
+var DOMProperty = {
+
+  ID_ATTRIBUTE_NAME: 'data-reactid',
+
+  /**
+   * Checks whether a property name is a standard property.
+   * @type {Object}
+   */
+  isStandardName: {},
+
+  /**
+   * Mapping from lowercase property names to the properly cased version, used
+   * to warn in the case of missing properties.
+   * @type {Object}
+   */
+  getPossibleStandardName: {},
+
+  /**
+   * Mapping from normalized names to attribute names that differ. Attribute
+   * names are used when rendering markup or with `*Attribute()`.
+   * @type {Object}
+   */
+  getAttributeName: {},
+
+  /**
+   * Mapping from normalized names to properties on DOM node instances.
+   * (This includes properties that mutate due to external factors.)
+   * @type {Object}
+   */
+  getPropertyName: {},
+
+  /**
+   * Mapping from normalized names to mutation methods. This will only exist if
+   * mutation cannot be set simply by the property or `setAttribute()`.
+   * @type {Object}
+   */
+  getMutationMethod: {},
+
+  /**
+   * Whether the property must be accessed and mutated as an object property.
+   * @type {Object}
+   */
+  mustUseAttribute: {},
+
+  /**
+   * Whether the property must be accessed and mutated using `*Attribute()`.
+   * (This includes anything that fails `<propName> in <element>`.)
+   * @type {Object}
+   */
+  mustUseProperty: {},
+
+  /**
+   * Whether or not setting a value causes side effects such as triggering
+   * resources to be loaded or text selection changes. We must ensure that
+   * the value is only set if it has changed.
+   * @type {Object}
+   */
+  hasSideEffects: {},
+
+  /**
+   * Whether the property should be removed when set to a falsey value.
+   * @type {Object}
+   */
+  hasBooleanValue: {},
+
+  /**
+   * Whether the property must be numeric or parse as a
+   * numeric and should be removed when set to a falsey value.
+   * @type {Object}
+   */
+  hasNumericValue: {},
+
+  /**
+   * Whether the property must be positive numeric or parse as a positive
+   * numeric and should be removed when set to a falsey value.
+   * @type {Object}
+   */
+  hasPositiveNumericValue: {},
+
+  /**
+   * Whether the property can be used as a flag as well as with a value. Removed
+   * when strictly equal to false; present without a value when strictly equal
+   * to true; present with a value otherwise.
+   * @type {Object}
+   */
+  hasOverloadedBooleanValue: {},
+
+  /**
+   * All of the isCustomAttribute() functions that have been injected.
+   */
+  _isCustomAttributeFunctions: [],
+
+  /**
+   * Checks whether a property name is a custom attribute.
+   * @method
+   */
+  isCustomAttribute: function(attributeName) {
+    for (var i = 0; i < DOMProperty._isCustomAttributeFunctions.length; i++) {
+      var isCustomAttributeFn = DOMProperty._isCustomAttributeFunctions[i];
+      if (isCustomAttributeFn(attributeName)) {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  /**
+   * Returns the default property value for a DOM property (i.e., not an
+   * attribute). Most default values are '' or false, but not all. Worse yet,
+   * some (in particular, `type`) vary depending on the type of element.
+   *
+   * TODO: Is it better to grab all the possible properties when creating an
+   * element to avoid having to create the same element twice?
+   */
+  getDefaultValueForProperty: function(nodeName, prop) {
+    var nodeDefaults = defaultValueCache[nodeName];
+    var testElement;
+    if (!nodeDefaults) {
+      defaultValueCache[nodeName] = nodeDefaults = {};
+    }
+    if (!(prop in nodeDefaults)) {
+      testElement = document.createElement(nodeName);
+      nodeDefaults[prop] = testElement[prop];
+    }
+    return nodeDefaults[prop];
+  },
+
+  injection: DOMPropertyInjection
+};
+
+module.exports = DOMProperty;
+
+}).call(this,require('_process'))
+},{"./invariant":428,"_process":449}],313:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule DOMPropertyOperations
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
 UserToolbarListSubListItem = require('./list/subList/item');
 
+<<<<<<< HEAD
 PropTypes = React.PropTypes;
 
 UserToolbarList = React.createClass({
@@ -31508,6 +46355,368 @@ endEvents = [];
         }
       }
     }
+=======
+var DOMProperty = require("./DOMProperty");
+
+var escapeTextForBrowser = require("./escapeTextForBrowser");
+var memoizeStringOnly = require("./memoizeStringOnly");
+var warning = require("./warning");
+
+function shouldIgnoreValue(name, value) {
+  return value == null ||
+    (DOMProperty.hasBooleanValue[name] && !value) ||
+    (DOMProperty.hasNumericValue[name] && isNaN(value)) ||
+    (DOMProperty.hasPositiveNumericValue[name] && (value < 1)) ||
+    (DOMProperty.hasOverloadedBooleanValue[name] && value === false);
+}
+
+var processAttributeNameAndPrefix = memoizeStringOnly(function(name) {
+  return escapeTextForBrowser(name) + '="';
+});
+
+if ("production" !== process.env.NODE_ENV) {
+  var reactProps = {
+    children: true,
+    dangerouslySetInnerHTML: true,
+    key: true,
+    ref: true
+  };
+  var warnedProperties = {};
+
+  var warnUnknownProperty = function(name) {
+    if (reactProps.hasOwnProperty(name) && reactProps[name] ||
+        warnedProperties.hasOwnProperty(name) && warnedProperties[name]) {
+      return;
+    }
+
+    warnedProperties[name] = true;
+    var lowerCasedName = name.toLowerCase();
+
+    // data-* attributes should be lowercase; suggest the lowercase version
+    var standardName = (
+      DOMProperty.isCustomAttribute(lowerCasedName) ?
+        lowerCasedName :
+      DOMProperty.getPossibleStandardName.hasOwnProperty(lowerCasedName) ?
+        DOMProperty.getPossibleStandardName[lowerCasedName] :
+        null
+    );
+
+    // For now, only warn when we have a suggested correction. This prevents
+    // logging too much when using transferPropsTo.
+    ("production" !== process.env.NODE_ENV ? warning(
+      standardName == null,
+      'Unknown DOM property ' + name + '. Did you mean ' + standardName + '?'
+    ) : null);
+
+  };
+}
+
+/**
+ * Operations for dealing with DOM properties.
+ */
+var DOMPropertyOperations = {
+
+  /**
+   * Creates markup for the ID property.
+   *
+   * @param {string} id Unescaped ID.
+   * @return {string} Markup string.
+   */
+  createMarkupForID: function(id) {
+    return processAttributeNameAndPrefix(DOMProperty.ID_ATTRIBUTE_NAME) +
+      escapeTextForBrowser(id) + '"';
+  },
+
+  /**
+   * Creates markup for a property.
+   *
+   * @param {string} name
+   * @param {*} value
+   * @return {?string} Markup string, or null if the property was invalid.
+   */
+  createMarkupForProperty: function(name, value) {
+    if (DOMProperty.isStandardName.hasOwnProperty(name) &&
+        DOMProperty.isStandardName[name]) {
+      if (shouldIgnoreValue(name, value)) {
+        return '';
+      }
+      var attributeName = DOMProperty.getAttributeName[name];
+      if (DOMProperty.hasBooleanValue[name] ||
+          (DOMProperty.hasOverloadedBooleanValue[name] && value === true)) {
+        return escapeTextForBrowser(attributeName);
+      }
+      return processAttributeNameAndPrefix(attributeName) +
+        escapeTextForBrowser(value) + '"';
+    } else if (DOMProperty.isCustomAttribute(name)) {
+      if (value == null) {
+        return '';
+      }
+      return processAttributeNameAndPrefix(name) +
+        escapeTextForBrowser(value) + '"';
+    } else if ("production" !== process.env.NODE_ENV) {
+      warnUnknownProperty(name);
+    }
+    return null;
+  },
+
+  /**
+   * Sets the value for a property on a node.
+   *
+   * @param {DOMElement} node
+   * @param {string} name
+   * @param {*} value
+   */
+  setValueForProperty: function(node, name, value) {
+    if (DOMProperty.isStandardName.hasOwnProperty(name) &&
+        DOMProperty.isStandardName[name]) {
+      var mutationMethod = DOMProperty.getMutationMethod[name];
+      if (mutationMethod) {
+        mutationMethod(node, value);
+      } else if (shouldIgnoreValue(name, value)) {
+        this.deleteValueForProperty(node, name);
+      } else if (DOMProperty.mustUseAttribute[name]) {
+        // `setAttribute` with objects becomes only `[object]` in IE8/9,
+        // ('' + value) makes it output the correct toString()-value.
+        node.setAttribute(DOMProperty.getAttributeName[name], '' + value);
+      } else {
+        var propName = DOMProperty.getPropertyName[name];
+        // Must explicitly cast values for HAS_SIDE_EFFECTS-properties to the
+        // property type before comparing; only `value` does and is string.
+        if (!DOMProperty.hasSideEffects[name] ||
+            ('' + node[propName]) !== ('' + value)) {
+          // Contrary to `setAttribute`, object properties are properly
+          // `toString`ed by IE8/9.
+          node[propName] = value;
+        }
+      }
+    } else if (DOMProperty.isCustomAttribute(name)) {
+      if (value == null) {
+        node.removeAttribute(name);
+      } else {
+        node.setAttribute(name, '' + value);
+      }
+    } else if ("production" !== process.env.NODE_ENV) {
+      warnUnknownProperty(name);
+    }
+  },
+
+  /**
+   * Deletes the value for a property on a node.
+   *
+   * @param {DOMElement} node
+   * @param {string} name
+   */
+  deleteValueForProperty: function(node, name) {
+    if (DOMProperty.isStandardName.hasOwnProperty(name) &&
+        DOMProperty.isStandardName[name]) {
+      var mutationMethod = DOMProperty.getMutationMethod[name];
+      if (mutationMethod) {
+        mutationMethod(node, undefined);
+      } else if (DOMProperty.mustUseAttribute[name]) {
+        node.removeAttribute(DOMProperty.getAttributeName[name]);
+      } else {
+        var propName = DOMProperty.getPropertyName[name];
+        var defaultValue = DOMProperty.getDefaultValueForProperty(
+          node.nodeName,
+          propName
+        );
+        if (!DOMProperty.hasSideEffects[name] ||
+            ('' + node[propName]) !== defaultValue) {
+          node[propName] = defaultValue;
+        }
+      }
+    } else if (DOMProperty.isCustomAttribute(name)) {
+      node.removeAttribute(name);
+    } else if ("production" !== process.env.NODE_ENV) {
+      warnUnknownProperty(name);
+    }
+  }
+
+};
+
+module.exports = DOMPropertyOperations;
+
+}).call(this,require('_process'))
+},{"./DOMProperty":312,"./escapeTextForBrowser":411,"./memoizeStringOnly":437,"./warning":447,"_process":449}],314:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule Danger
+ * @typechecks static-only
+ */
+
+/*jslint evil: true, sub: true */
+
+"use strict";
+
+var ExecutionEnvironment = require("./ExecutionEnvironment");
+
+var createNodesFromMarkup = require("./createNodesFromMarkup");
+var emptyFunction = require("./emptyFunction");
+var getMarkupWrap = require("./getMarkupWrap");
+var invariant = require("./invariant");
+
+var OPEN_TAG_NAME_EXP = /^(<[^ \/>]+)/;
+var RESULT_INDEX_ATTR = 'data-danger-index';
+
+/**
+ * Extracts the `nodeName` from a string of markup.
+ *
+ * NOTE: Extracting the `nodeName` does not require a regular expression match
+ * because we make assumptions about React-generated markup (i.e. there are no
+ * spaces surrounding the opening tag and there is at least one attribute).
+ *
+ * @param {string} markup String of markup.
+ * @return {string} Node name of the supplied markup.
+ * @see http://jsperf.com/extract-nodename
+ */
+function getNodeName(markup) {
+  return markup.substring(1, markup.indexOf(' '));
+}
+
+var Danger = {
+
+  /**
+   * Renders markup into an array of nodes. The markup is expected to render
+   * into a list of root nodes. Also, the length of `resultList` and
+   * `markupList` should be the same.
+   *
+   * @param {array<string>} markupList List of markup strings to render.
+   * @return {array<DOMElement>} List of rendered nodes.
+   * @internal
+   */
+  dangerouslyRenderMarkup: function(markupList) {
+    ("production" !== process.env.NODE_ENV ? invariant(
+      ExecutionEnvironment.canUseDOM,
+      'dangerouslyRenderMarkup(...): Cannot render markup in a worker ' +
+      'thread. Make sure `window` and `document` are available globally ' +
+      'before requiring React when unit testing or use ' +
+      'React.renderToString for server rendering.'
+    ) : invariant(ExecutionEnvironment.canUseDOM));
+    var nodeName;
+    var markupByNodeName = {};
+    // Group markup by `nodeName` if a wrap is necessary, else by '*'.
+    for (var i = 0; i < markupList.length; i++) {
+      ("production" !== process.env.NODE_ENV ? invariant(
+        markupList[i],
+        'dangerouslyRenderMarkup(...): Missing markup.'
+      ) : invariant(markupList[i]));
+      nodeName = getNodeName(markupList[i]);
+      nodeName = getMarkupWrap(nodeName) ? nodeName : '*';
+      markupByNodeName[nodeName] = markupByNodeName[nodeName] || [];
+      markupByNodeName[nodeName][i] = markupList[i];
+    }
+    var resultList = [];
+    var resultListAssignmentCount = 0;
+    for (nodeName in markupByNodeName) {
+      if (!markupByNodeName.hasOwnProperty(nodeName)) {
+        continue;
+      }
+      var markupListByNodeName = markupByNodeName[nodeName];
+
+      // This for-in loop skips the holes of the sparse array. The order of
+      // iteration should follow the order of assignment, which happens to match
+      // numerical index order, but we don't rely on that.
+      for (var resultIndex in markupListByNodeName) {
+        if (markupListByNodeName.hasOwnProperty(resultIndex)) {
+          var markup = markupListByNodeName[resultIndex];
+
+          // Push the requested markup with an additional RESULT_INDEX_ATTR
+          // attribute.  If the markup does not start with a < character, it
+          // will be discarded below (with an appropriate console.error).
+          markupListByNodeName[resultIndex] = markup.replace(
+            OPEN_TAG_NAME_EXP,
+            // This index will be parsed back out below.
+            '$1 ' + RESULT_INDEX_ATTR + '="' + resultIndex + '" '
+          );
+        }
+      }
+
+      // Render each group of markup with similar wrapping `nodeName`.
+      var renderNodes = createNodesFromMarkup(
+        markupListByNodeName.join(''),
+        emptyFunction // Do nothing special with <script> tags.
+      );
+
+      for (i = 0; i < renderNodes.length; ++i) {
+        var renderNode = renderNodes[i];
+        if (renderNode.hasAttribute &&
+            renderNode.hasAttribute(RESULT_INDEX_ATTR)) {
+
+          resultIndex = +renderNode.getAttribute(RESULT_INDEX_ATTR);
+          renderNode.removeAttribute(RESULT_INDEX_ATTR);
+
+          ("production" !== process.env.NODE_ENV ? invariant(
+            !resultList.hasOwnProperty(resultIndex),
+            'Danger: Assigning to an already-occupied result index.'
+          ) : invariant(!resultList.hasOwnProperty(resultIndex)));
+
+          resultList[resultIndex] = renderNode;
+
+          // This should match resultList.length and markupList.length when
+          // we're done.
+          resultListAssignmentCount += 1;
+
+        } else if ("production" !== process.env.NODE_ENV) {
+          console.error(
+            "Danger: Discarding unexpected node:",
+            renderNode
+          );
+        }
+      }
+    }
+
+    // Although resultList was populated out of order, it should now be a dense
+    // array.
+    ("production" !== process.env.NODE_ENV ? invariant(
+      resultListAssignmentCount === resultList.length,
+      'Danger: Did not assign to every index of resultList.'
+    ) : invariant(resultListAssignmentCount === resultList.length));
+
+    ("production" !== process.env.NODE_ENV ? invariant(
+      resultList.length === markupList.length,
+      'Danger: Expected markup to render %s nodes, but rendered %s.',
+      markupList.length,
+      resultList.length
+    ) : invariant(resultList.length === markupList.length));
+
+    return resultList;
+  },
+
+  /**
+   * Replaces a node with a string of markup at its current position within its
+   * parent. The markup must render into a single root node.
+   *
+   * @param {DOMElement} oldChild Child node to replace.
+   * @param {string} markup Markup to render in place of the child node.
+   * @internal
+   */
+  dangerouslyReplaceNodeWithMarkup: function(oldChild, markup) {
+    ("production" !== process.env.NODE_ENV ? invariant(
+      ExecutionEnvironment.canUseDOM,
+      'dangerouslyReplaceNodeWithMarkup(...): Cannot render markup in a ' +
+      'worker thread. Make sure `window` and `document` are available ' +
+      'globally before requiring React when unit testing or use ' +
+      'React.renderToString for server rendering.'
+    ) : invariant(ExecutionEnvironment.canUseDOM));
+    ("production" !== process.env.NODE_ENV ? invariant(markup, 'dangerouslyReplaceNodeWithMarkup(...): Missing markup.') : invariant(markup));
+    ("production" !== process.env.NODE_ENV ? invariant(
+      oldChild.tagName.toLowerCase() !== 'html',
+      'dangerouslyReplaceNodeWithMarkup(...): Cannot replace markup of the ' +
+      '<html> node. This is because browser quirks make this unreliable ' +
+      'and/or slow. If you want to render to the root you must use ' +
+      'server rendering. See renderComponentToString().'
+    ) : invariant(oldChild.tagName.toLowerCase() !== 'html'));
+
+    var newChild = createNodesFromMarkup(markup, emptyFunction)[0];
+    oldChild.parentNode.replaceChild(newChild, oldChild);
+>>>>>>> Editor store and services [#89871770]
   }
 })();
 
@@ -31515,6 +46724,7 @@ animationSupported = function() {
   return endEvents.length !== 0;
 };
 
+<<<<<<< HEAD
 animationAllowed = function() {
   var browser, browserName, browserVersion;
   browser = bowser.browser || bowser;
@@ -31834,8 +47044,205 @@ GuideController = {
 };
 
 module.exports = GuideController;
+=======
+module.exports = Danger;
+
+}).call(this,require('_process'))
+},{"./ExecutionEnvironment":323,"./createNodesFromMarkup":406,"./emptyFunction":409,"./getMarkupWrap":420,"./invariant":428,"_process":449}],315:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule DefaultEventPluginOrder
+ */
+
+"use strict";
+
+ var keyOf = require("./keyOf");
+
+/**
+ * Module that is injectable into `EventPluginHub`, that specifies a
+ * deterministic ordering of `EventPlugin`s. A convenient way to reason about
+ * plugins, without having to package every one of them. This is better than
+ * having plugins be ordered in the same order that they are injected because
+ * that ordering would be influenced by the packaging order.
+ * `ResponderEventPlugin` must occur before `SimpleEventPlugin` so that
+ * preventing default on events is convenient in `SimpleEventPlugin` handlers.
+ */
+var DefaultEventPluginOrder = [
+  keyOf({ResponderEventPlugin: null}),
+  keyOf({SimpleEventPlugin: null}),
+  keyOf({TapEventPlugin: null}),
+  keyOf({EnterLeaveEventPlugin: null}),
+  keyOf({ChangeEventPlugin: null}),
+  keyOf({SelectEventPlugin: null}),
+  keyOf({CompositionEventPlugin: null}),
+  keyOf({BeforeInputEventPlugin: null}),
+  keyOf({AnalyticsEventPlugin: null}),
+  keyOf({MobileSafariClickEventPlugin: null})
+];
+
+module.exports = DefaultEventPluginOrder;
+
+},{"./keyOf":435}],316:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule EnterLeaveEventPlugin
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var EventConstants = require("./EventConstants");
+var EventPropagators = require("./EventPropagators");
+var SyntheticMouseEvent = require("./SyntheticMouseEvent");
+
+var ReactMount = require("./ReactMount");
+var keyOf = require("./keyOf");
+
+var topLevelTypes = EventConstants.topLevelTypes;
+var getFirstReactDOM = ReactMount.getFirstReactDOM;
+
+var eventTypes = {
+  mouseEnter: {
+    registrationName: keyOf({onMouseEnter: null}),
+    dependencies: [
+      topLevelTypes.topMouseOut,
+      topLevelTypes.topMouseOver
+    ]
+  },
+  mouseLeave: {
+    registrationName: keyOf({onMouseLeave: null}),
+    dependencies: [
+      topLevelTypes.topMouseOut,
+      topLevelTypes.topMouseOver
+    ]
+  }
+};
+
+var extractedEvents = [null, null];
+
+var EnterLeaveEventPlugin = {
+
+  eventTypes: eventTypes,
+
+  /**
+   * For almost every interaction we care about, there will be both a top-level
+   * `mouseover` and `mouseout` event that occurs. Only use `mouseout` so that
+   * we do not extract duplicate events. However, moving the mouse into the
+   * browser from outside will not fire a `mouseout` event. In this case, we use
+   * the `mouseover` top-level event.
+   *
+   * @param {string} topLevelType Record from `EventConstants`.
+   * @param {DOMEventTarget} topLevelTarget The listening component root node.
+   * @param {string} topLevelTargetID ID of `topLevelTarget`.
+   * @param {object} nativeEvent Native browser event.
+   * @return {*} An accumulation of synthetic events.
+   * @see {EventPluginHub.extractEvents}
+   */
+  extractEvents: function(
+      topLevelType,
+      topLevelTarget,
+      topLevelTargetID,
+      nativeEvent) {
+    if (topLevelType === topLevelTypes.topMouseOver &&
+        (nativeEvent.relatedTarget || nativeEvent.fromElement)) {
+      return null;
+    }
+    if (topLevelType !== topLevelTypes.topMouseOut &&
+        topLevelType !== topLevelTypes.topMouseOver) {
+      // Must not be a mouse in or mouse out - ignoring.
+      return null;
+    }
+
+    var win;
+    if (topLevelTarget.window === topLevelTarget) {
+      // `topLevelTarget` is probably a window object.
+      win = topLevelTarget;
+    } else {
+      // TODO: Figure out why `ownerDocument` is sometimes undefined in IE8.
+      var doc = topLevelTarget.ownerDocument;
+      if (doc) {
+        win = doc.defaultView || doc.parentWindow;
+      } else {
+        win = window;
+      }
+    }
+
+    var from, to;
+    if (topLevelType === topLevelTypes.topMouseOut) {
+      from = topLevelTarget;
+      to =
+        getFirstReactDOM(nativeEvent.relatedTarget || nativeEvent.toElement) ||
+        win;
+    } else {
+      from = win;
+      to = topLevelTarget;
+    }
+
+    if (from === to) {
+      // Nothing pertains to our managed components.
+      return null;
+    }
+
+    var fromID = from ? ReactMount.getID(from) : '';
+    var toID = to ? ReactMount.getID(to) : '';
+
+    var leave = SyntheticMouseEvent.getPooled(
+      eventTypes.mouseLeave,
+      fromID,
+      nativeEvent
+    );
+    leave.type = 'mouseleave';
+    leave.target = from;
+    leave.relatedTarget = to;
+
+    var enter = SyntheticMouseEvent.getPooled(
+      eventTypes.mouseEnter,
+      toID,
+      nativeEvent
+    );
+    enter.type = 'mouseenter';
+    enter.target = to;
+    enter.relatedTarget = from;
+
+    EventPropagators.accumulateEnterLeaveDispatches(leave, enter, fromID, toID);
+
+    extractedEvents[0] = leave;
+    extractedEvents[1] = enter;
+
+    return extractedEvents;
+  }
+
+};
+
+module.exports = EnterLeaveEventPlugin;
+
+},{"./EventConstants":317,"./EventPropagators":322,"./ReactMount":365,"./SyntheticMouseEvent":393,"./keyOf":435}],317:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule EventConstants
+ */
+>>>>>>> Editor store and services [#89871770]
 
 
+<<<<<<< HEAD
 
 },{}],242:[function(require,module,exports){
 var Constants, LayoutStatesController;
@@ -32037,6 +47444,425 @@ window.TastyAlertController = {
         "onAccept": onAccept
       }), container);
     }
+=======
+var keyMirror = require("./keyMirror");
+
+var PropagationPhases = keyMirror({bubbled: null, captured: null});
+
+/**
+ * Types of raw signals from the browser caught at the top level.
+ */
+var topLevelTypes = keyMirror({
+  topBlur: null,
+  topChange: null,
+  topClick: null,
+  topCompositionEnd: null,
+  topCompositionStart: null,
+  topCompositionUpdate: null,
+  topContextMenu: null,
+  topCopy: null,
+  topCut: null,
+  topDoubleClick: null,
+  topDrag: null,
+  topDragEnd: null,
+  topDragEnter: null,
+  topDragExit: null,
+  topDragLeave: null,
+  topDragOver: null,
+  topDragStart: null,
+  topDrop: null,
+  topError: null,
+  topFocus: null,
+  topInput: null,
+  topKeyDown: null,
+  topKeyPress: null,
+  topKeyUp: null,
+  topLoad: null,
+  topMouseDown: null,
+  topMouseMove: null,
+  topMouseOut: null,
+  topMouseOver: null,
+  topMouseUp: null,
+  topPaste: null,
+  topReset: null,
+  topScroll: null,
+  topSelectionChange: null,
+  topSubmit: null,
+  topTextInput: null,
+  topTouchCancel: null,
+  topTouchEnd: null,
+  topTouchMove: null,
+  topTouchStart: null,
+  topWheel: null
+});
+
+var EventConstants = {
+  topLevelTypes: topLevelTypes,
+  PropagationPhases: PropagationPhases
+};
+
+module.exports = EventConstants;
+
+},{"./keyMirror":434}],318:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014 Facebook, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @providesModule EventListener
+ * @typechecks
+ */
+
+var emptyFunction = require("./emptyFunction");
+
+/**
+ * Upstream version of event listener. Does not take into account specific
+ * nature of platform.
+ */
+var EventListener = {
+  /**
+   * Listen to DOM events during the bubble phase.
+   *
+   * @param {DOMEventTarget} target DOM element to register listener on.
+   * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
+   * @param {function} callback Callback function.
+   * @return {object} Object with a `remove` method.
+   */
+  listen: function(target, eventType, callback) {
+    if (target.addEventListener) {
+      target.addEventListener(eventType, callback, false);
+      return {
+        remove: function() {
+          target.removeEventListener(eventType, callback, false);
+        }
+      };
+    } else if (target.attachEvent) {
+      target.attachEvent('on' + eventType, callback);
+      return {
+        remove: function() {
+          target.detachEvent('on' + eventType, callback);
+        }
+      };
+    }
+  },
+
+  /**
+   * Listen to DOM events during the capture phase.
+   *
+   * @param {DOMEventTarget} target DOM element to register listener on.
+   * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
+   * @param {function} callback Callback function.
+   * @return {object} Object with a `remove` method.
+   */
+  capture: function(target, eventType, callback) {
+    if (!target.addEventListener) {
+      if ("production" !== process.env.NODE_ENV) {
+        console.error(
+          'Attempted to listen to events during the capture phase on a ' +
+          'browser that does not support the capture phase. Your application ' +
+          'will not receive some events.'
+        );
+      }
+      return {
+        remove: emptyFunction
+      };
+    } else {
+      target.addEventListener(eventType, callback, true);
+      return {
+        remove: function() {
+          target.removeEventListener(eventType, callback, true);
+        }
+      };
+    }
+  },
+
+  registerDefault: function() {}
+};
+
+module.exports = EventListener;
+
+}).call(this,require('_process'))
+},{"./emptyFunction":409,"_process":449}],319:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule EventPluginHub
+ */
+
+"use strict";
+
+var EventPluginRegistry = require("./EventPluginRegistry");
+var EventPluginUtils = require("./EventPluginUtils");
+
+var accumulateInto = require("./accumulateInto");
+var forEachAccumulated = require("./forEachAccumulated");
+var invariant = require("./invariant");
+
+/**
+ * Internal store for event listeners
+ */
+var listenerBank = {};
+
+/**
+ * Internal queue of events that have accumulated their dispatches and are
+ * waiting to have their dispatches executed.
+ */
+var eventQueue = null;
+
+/**
+ * Dispatches an event and releases it back into the pool, unless persistent.
+ *
+ * @param {?object} event Synthetic event to be dispatched.
+ * @private
+ */
+var executeDispatchesAndRelease = function(event) {
+  if (event) {
+    var executeDispatch = EventPluginUtils.executeDispatch;
+    // Plugins can provide custom behavior when dispatching events.
+    var PluginModule = EventPluginRegistry.getPluginModuleForEvent(event);
+    if (PluginModule && PluginModule.executeDispatch) {
+      executeDispatch = PluginModule.executeDispatch;
+    }
+    EventPluginUtils.executeDispatchesInOrder(event, executeDispatch);
+
+    if (!event.isPersistent()) {
+      event.constructor.release(event);
+    }
+  }
+};
+
+/**
+ * - `InstanceHandle`: [required] Module that performs logical traversals of DOM
+ *   hierarchy given ids of the logical DOM elements involved.
+ */
+var InstanceHandle = null;
+
+function validateInstanceHandle() {
+  var invalid = !InstanceHandle||
+    !InstanceHandle.traverseTwoPhase ||
+    !InstanceHandle.traverseEnterLeave;
+  if (invalid) {
+    throw new Error('InstanceHandle not injected before use!');
+  }
+}
+
+/**
+ * This is a unified interface for event plugins to be installed and configured.
+ *
+ * Event plugins can implement the following properties:
+ *
+ *   `extractEvents` {function(string, DOMEventTarget, string, object): *}
+ *     Required. When a top-level event is fired, this method is expected to
+ *     extract synthetic events that will in turn be queued and dispatched.
+ *
+ *   `eventTypes` {object}
+ *     Optional, plugins that fire events must publish a mapping of registration
+ *     names that are used to register listeners. Values of this mapping must
+ *     be objects that contain `registrationName` or `phasedRegistrationNames`.
+ *
+ *   `executeDispatch` {function(object, function, string)}
+ *     Optional, allows plugins to override how an event gets dispatched. By
+ *     default, the listener is simply invoked.
+ *
+ * Each plugin that is injected into `EventsPluginHub` is immediately operable.
+ *
+ * @public
+ */
+var EventPluginHub = {
+
+  /**
+   * Methods for injecting dependencies.
+   */
+  injection: {
+
+    /**
+     * @param {object} InjectedMount
+     * @public
+     */
+    injectMount: EventPluginUtils.injection.injectMount,
+
+    /**
+     * @param {object} InjectedInstanceHandle
+     * @public
+     */
+    injectInstanceHandle: function(InjectedInstanceHandle) {
+      InstanceHandle = InjectedInstanceHandle;
+      if ("production" !== process.env.NODE_ENV) {
+        validateInstanceHandle();
+      }
+    },
+
+    getInstanceHandle: function() {
+      if ("production" !== process.env.NODE_ENV) {
+        validateInstanceHandle();
+      }
+      return InstanceHandle;
+    },
+
+    /**
+     * @param {array} InjectedEventPluginOrder
+     * @public
+     */
+    injectEventPluginOrder: EventPluginRegistry.injectEventPluginOrder,
+
+    /**
+     * @param {object} injectedNamesToPlugins Map from names to plugin modules.
+     */
+    injectEventPluginsByName: EventPluginRegistry.injectEventPluginsByName
+
+  },
+
+  eventNameDispatchConfigs: EventPluginRegistry.eventNameDispatchConfigs,
+
+  registrationNameModules: EventPluginRegistry.registrationNameModules,
+
+  /**
+   * Stores `listener` at `listenerBank[registrationName][id]`. Is idempotent.
+   *
+   * @param {string} id ID of the DOM element.
+   * @param {string} registrationName Name of listener (e.g. `onClick`).
+   * @param {?function} listener The callback to store.
+   */
+  putListener: function(id, registrationName, listener) {
+    ("production" !== process.env.NODE_ENV ? invariant(
+      !listener || typeof listener === 'function',
+      'Expected %s listener to be a function, instead got type %s',
+      registrationName, typeof listener
+    ) : invariant(!listener || typeof listener === 'function'));
+
+    var bankForRegistrationName =
+      listenerBank[registrationName] || (listenerBank[registrationName] = {});
+    bankForRegistrationName[id] = listener;
+  },
+
+  /**
+   * @param {string} id ID of the DOM element.
+   * @param {string} registrationName Name of listener (e.g. `onClick`).
+   * @return {?function} The stored callback.
+   */
+  getListener: function(id, registrationName) {
+    var bankForRegistrationName = listenerBank[registrationName];
+    return bankForRegistrationName && bankForRegistrationName[id];
+  },
+
+  /**
+   * Deletes a listener from the registration bank.
+   *
+   * @param {string} id ID of the DOM element.
+   * @param {string} registrationName Name of listener (e.g. `onClick`).
+   */
+  deleteListener: function(id, registrationName) {
+    var bankForRegistrationName = listenerBank[registrationName];
+    if (bankForRegistrationName) {
+      delete bankForRegistrationName[id];
+    }
+  },
+
+  /**
+   * Deletes all listeners for the DOM element with the supplied ID.
+   *
+   * @param {string} id ID of the DOM element.
+   */
+  deleteAllListeners: function(id) {
+    for (var registrationName in listenerBank) {
+      delete listenerBank[registrationName][id];
+    }
+  },
+
+  /**
+   * Allows registered plugins an opportunity to extract events from top-level
+   * native browser events.
+   *
+   * @param {string} topLevelType Record from `EventConstants`.
+   * @param {DOMEventTarget} topLevelTarget The listening component root node.
+   * @param {string} topLevelTargetID ID of `topLevelTarget`.
+   * @param {object} nativeEvent Native browser event.
+   * @return {*} An accumulation of synthetic events.
+   * @internal
+   */
+  extractEvents: function(
+      topLevelType,
+      topLevelTarget,
+      topLevelTargetID,
+      nativeEvent) {
+    var events;
+    var plugins = EventPluginRegistry.plugins;
+    for (var i = 0, l = plugins.length; i < l; i++) {
+      // Not every plugin in the ordering may be loaded at runtime.
+      var possiblePlugin = plugins[i];
+      if (possiblePlugin) {
+        var extractedEvents = possiblePlugin.extractEvents(
+          topLevelType,
+          topLevelTarget,
+          topLevelTargetID,
+          nativeEvent
+        );
+        if (extractedEvents) {
+          events = accumulateInto(events, extractedEvents);
+        }
+      }
+    }
+    return events;
+  },
+
+  /**
+   * Enqueues a synthetic event that should be dispatched when
+   * `processEventQueue` is invoked.
+   *
+   * @param {*} events An accumulation of synthetic events.
+   * @internal
+   */
+  enqueueEvents: function(events) {
+    if (events) {
+      eventQueue = accumulateInto(eventQueue, events);
+    }
+  },
+
+  /**
+   * Dispatches all synthetic events on the event queue.
+   *
+   * @internal
+   */
+  processEventQueue: function() {
+    // Set `eventQueue` to null before processing it so that we can tell if more
+    // events get enqueued while processing.
+    var processingEventQueue = eventQueue;
+    eventQueue = null;
+    forEachAccumulated(processingEventQueue, executeDispatchesAndRelease);
+    ("production" !== process.env.NODE_ENV ? invariant(
+      !eventQueue,
+      'processEventQueue(): Additional events were enqueued while processing ' +
+      'an event queue. Support for this has not yet been implemented.'
+    ) : invariant(!eventQueue));
+  },
+
+  /**
+   * These are needed for tests only. Do not use!
+   */
+  __purge: function() {
+    listenerBank = {};
+  },
+
+  __getListenerBank: function() {
+    return listenerBank;
+>>>>>>> Editor store and services [#89871770]
   }
 };
 
@@ -32073,11 +47899,31 @@ window.TastyConfirmController = {
   }
 };
 
+<<<<<<< HEAD
 
+=======
+module.exports = EventPluginHub;
+
+}).call(this,require('_process'))
+},{"./EventPluginRegistry":320,"./EventPluginUtils":321,"./accumulateInto":399,"./forEachAccumulated":414,"./invariant":428,"_process":449}],320:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule EventPluginRegistry
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
 },{}],248:[function(require,module,exports){
 window.TastyEvents = new EventEmitter();
 
+<<<<<<< HEAD
 TastyEvents.keys = {
   follow_status_changed: function(tlogId) {
     return "follow_status:" + tlogId + ":changed";
@@ -32299,12 +48145,290 @@ BaseDispatcher = (function(_super) {
 
 module.exports = BaseDispatcher;
 
+=======
+var invariant = require("./invariant");
+
+/**
+ * Injectable ordering of event plugins.
+ */
+var EventPluginOrder = null;
+
+/**
+ * Injectable mapping from names to event plugin modules.
+ */
+var namesToPlugins = {};
+
+/**
+ * Recomputes the plugin list using the injected plugins and plugin ordering.
+ *
+ * @private
+ */
+function recomputePluginOrdering() {
+  if (!EventPluginOrder) {
+    // Wait until an `EventPluginOrder` is injected.
+    return;
+  }
+  for (var pluginName in namesToPlugins) {
+    var PluginModule = namesToPlugins[pluginName];
+    var pluginIndex = EventPluginOrder.indexOf(pluginName);
+    ("production" !== process.env.NODE_ENV ? invariant(
+      pluginIndex > -1,
+      'EventPluginRegistry: Cannot inject event plugins that do not exist in ' +
+      'the plugin ordering, `%s`.',
+      pluginName
+    ) : invariant(pluginIndex > -1));
+    if (EventPluginRegistry.plugins[pluginIndex]) {
+      continue;
+    }
+    ("production" !== process.env.NODE_ENV ? invariant(
+      PluginModule.extractEvents,
+      'EventPluginRegistry: Event plugins must implement an `extractEvents` ' +
+      'method, but `%s` does not.',
+      pluginName
+    ) : invariant(PluginModule.extractEvents));
+    EventPluginRegistry.plugins[pluginIndex] = PluginModule;
+    var publishedEvents = PluginModule.eventTypes;
+    for (var eventName in publishedEvents) {
+      ("production" !== process.env.NODE_ENV ? invariant(
+        publishEventForPlugin(
+          publishedEvents[eventName],
+          PluginModule,
+          eventName
+        ),
+        'EventPluginRegistry: Failed to publish event `%s` for plugin `%s`.',
+        eventName,
+        pluginName
+      ) : invariant(publishEventForPlugin(
+        publishedEvents[eventName],
+        PluginModule,
+        eventName
+      )));
+    }
+  }
+}
+
+/**
+ * Publishes an event so that it can be dispatched by the supplied plugin.
+ *
+ * @param {object} dispatchConfig Dispatch configuration for the event.
+ * @param {object} PluginModule Plugin publishing the event.
+ * @return {boolean} True if the event was successfully published.
+ * @private
+ */
+function publishEventForPlugin(dispatchConfig, PluginModule, eventName) {
+  ("production" !== process.env.NODE_ENV ? invariant(
+    !EventPluginRegistry.eventNameDispatchConfigs.hasOwnProperty(eventName),
+    'EventPluginHub: More than one plugin attempted to publish the same ' +
+    'event name, `%s`.',
+    eventName
+  ) : invariant(!EventPluginRegistry.eventNameDispatchConfigs.hasOwnProperty(eventName)));
+  EventPluginRegistry.eventNameDispatchConfigs[eventName] = dispatchConfig;
+
+  var phasedRegistrationNames = dispatchConfig.phasedRegistrationNames;
+  if (phasedRegistrationNames) {
+    for (var phaseName in phasedRegistrationNames) {
+      if (phasedRegistrationNames.hasOwnProperty(phaseName)) {
+        var phasedRegistrationName = phasedRegistrationNames[phaseName];
+        publishRegistrationName(
+          phasedRegistrationName,
+          PluginModule,
+          eventName
+        );
+      }
+    }
+    return true;
+  } else if (dispatchConfig.registrationName) {
+    publishRegistrationName(
+      dispatchConfig.registrationName,
+      PluginModule,
+      eventName
+    );
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Publishes a registration name that is used to identify dispatched events and
+ * can be used with `EventPluginHub.putListener` to register listeners.
+ *
+ * @param {string} registrationName Registration name to add.
+ * @param {object} PluginModule Plugin publishing the event.
+ * @private
+ */
+function publishRegistrationName(registrationName, PluginModule, eventName) {
+  ("production" !== process.env.NODE_ENV ? invariant(
+    !EventPluginRegistry.registrationNameModules[registrationName],
+    'EventPluginHub: More than one plugin attempted to publish the same ' +
+    'registration name, `%s`.',
+    registrationName
+  ) : invariant(!EventPluginRegistry.registrationNameModules[registrationName]));
+  EventPluginRegistry.registrationNameModules[registrationName] = PluginModule;
+  EventPluginRegistry.registrationNameDependencies[registrationName] =
+    PluginModule.eventTypes[eventName].dependencies;
+}
+
+/**
+ * Registers plugins so that they can extract and dispatch events.
+ *
+ * @see {EventPluginHub}
+ */
+var EventPluginRegistry = {
+
+  /**
+   * Ordered list of injected plugins.
+   */
+  plugins: [],
+
+  /**
+   * Mapping from event name to dispatch config
+   */
+  eventNameDispatchConfigs: {},
+
+  /**
+   * Mapping from registration name to plugin module
+   */
+  registrationNameModules: {},
+
+  /**
+   * Mapping from registration name to event name
+   */
+  registrationNameDependencies: {},
+
+  /**
+   * Injects an ordering of plugins (by plugin name). This allows the ordering
+   * to be decoupled from injection of the actual plugins so that ordering is
+   * always deterministic regardless of packaging, on-the-fly injection, etc.
+   *
+   * @param {array} InjectedEventPluginOrder
+   * @internal
+   * @see {EventPluginHub.injection.injectEventPluginOrder}
+   */
+  injectEventPluginOrder: function(InjectedEventPluginOrder) {
+    ("production" !== process.env.NODE_ENV ? invariant(
+      !EventPluginOrder,
+      'EventPluginRegistry: Cannot inject event plugin ordering more than ' +
+      'once. You are likely trying to load more than one copy of React.'
+    ) : invariant(!EventPluginOrder));
+    // Clone the ordering so it cannot be dynamically mutated.
+    EventPluginOrder = Array.prototype.slice.call(InjectedEventPluginOrder);
+    recomputePluginOrdering();
+  },
+
+  /**
+   * Injects plugins to be used by `EventPluginHub`. The plugin names must be
+   * in the ordering injected by `injectEventPluginOrder`.
+   *
+   * Plugins can be injected as part of page initialization or on-the-fly.
+   *
+   * @param {object} injectedNamesToPlugins Map from names to plugin modules.
+   * @internal
+   * @see {EventPluginHub.injection.injectEventPluginsByName}
+   */
+  injectEventPluginsByName: function(injectedNamesToPlugins) {
+    var isOrderingDirty = false;
+    for (var pluginName in injectedNamesToPlugins) {
+      if (!injectedNamesToPlugins.hasOwnProperty(pluginName)) {
+        continue;
+      }
+      var PluginModule = injectedNamesToPlugins[pluginName];
+      if (!namesToPlugins.hasOwnProperty(pluginName) ||
+          namesToPlugins[pluginName] !== PluginModule) {
+        ("production" !== process.env.NODE_ENV ? invariant(
+          !namesToPlugins[pluginName],
+          'EventPluginRegistry: Cannot inject two different event plugins ' +
+          'using the same name, `%s`.',
+          pluginName
+        ) : invariant(!namesToPlugins[pluginName]));
+        namesToPlugins[pluginName] = PluginModule;
+        isOrderingDirty = true;
+      }
+    }
+    if (isOrderingDirty) {
+      recomputePluginOrdering();
+    }
+  },
+
+  /**
+   * Looks up the plugin for the supplied event.
+   *
+   * @param {object} event A synthetic event.
+   * @return {?object} The plugin that created the supplied event.
+   * @internal
+   */
+  getPluginModuleForEvent: function(event) {
+    var dispatchConfig = event.dispatchConfig;
+    if (dispatchConfig.registrationName) {
+      return EventPluginRegistry.registrationNameModules[
+        dispatchConfig.registrationName
+      ] || null;
+    }
+    for (var phase in dispatchConfig.phasedRegistrationNames) {
+      if (!dispatchConfig.phasedRegistrationNames.hasOwnProperty(phase)) {
+        continue;
+      }
+      var PluginModule = EventPluginRegistry.registrationNameModules[
+        dispatchConfig.phasedRegistrationNames[phase]
+      ];
+      if (PluginModule) {
+        return PluginModule;
+      }
+    }
+    return null;
+  },
+
+  /**
+   * Exposed for unit testing.
+   * @private
+   */
+  _resetEventPlugins: function() {
+    EventPluginOrder = null;
+    for (var pluginName in namesToPlugins) {
+      if (namesToPlugins.hasOwnProperty(pluginName)) {
+        delete namesToPlugins[pluginName];
+      }
+    }
+    EventPluginRegistry.plugins.length = 0;
+
+    var eventNameDispatchConfigs = EventPluginRegistry.eventNameDispatchConfigs;
+    for (var eventName in eventNameDispatchConfigs) {
+      if (eventNameDispatchConfigs.hasOwnProperty(eventName)) {
+        delete eventNameDispatchConfigs[eventName];
+      }
+    }
+
+    var registrationNameModules = EventPluginRegistry.registrationNameModules;
+    for (var registrationName in registrationNameModules) {
+      if (registrationNameModules.hasOwnProperty(registrationName)) {
+        delete registrationNameModules[registrationName];
+      }
+    }
+  }
+>>>>>>> Editor store and services [#89871770]
 
 
+<<<<<<< HEAD
 },{}],253:[function(require,module,exports){
 var BaseDispatcher;
 
 BaseDispatcher = require('./_base');
+=======
+module.exports = EventPluginRegistry;
+
+}).call(this,require('_process'))
+},{"./invariant":428,"_process":449}],321:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule EventPluginUtils
+ */
+>>>>>>> Editor store and services [#89871770]
 
 window.CurrentUserDispatcher = _.extend(new BaseDispatcher(), {
   setupUser: function(user) {
@@ -32315,6 +48439,7 @@ window.CurrentUserDispatcher = _.extend(new BaseDispatcher(), {
   }
 });
 
+<<<<<<< HEAD
 
 
 },{"./_base":252}],254:[function(require,module,exports){
@@ -32362,8 +48487,229 @@ window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
     return this.dispatch(payload);
   }
 });
+=======
+var EventConstants = require("./EventConstants");
+
+var invariant = require("./invariant");
+
+/**
+ * Injected dependencies:
+ */
+
+/**
+ * - `Mount`: [required] Module that can convert between React dom IDs and
+ *   actual node references.
+ */
+var injection = {
+  Mount: null,
+  injectMount: function(InjectedMount) {
+    injection.Mount = InjectedMount;
+    if ("production" !== process.env.NODE_ENV) {
+      ("production" !== process.env.NODE_ENV ? invariant(
+        InjectedMount && InjectedMount.getNode,
+        'EventPluginUtils.injection.injectMount(...): Injected Mount module ' +
+        'is missing getNode.'
+      ) : invariant(InjectedMount && InjectedMount.getNode));
+    }
+  }
+};
+
+var topLevelTypes = EventConstants.topLevelTypes;
+
+function isEndish(topLevelType) {
+  return topLevelType === topLevelTypes.topMouseUp ||
+         topLevelType === topLevelTypes.topTouchEnd ||
+         topLevelType === topLevelTypes.topTouchCancel;
+}
+
+function isMoveish(topLevelType) {
+  return topLevelType === topLevelTypes.topMouseMove ||
+         topLevelType === topLevelTypes.topTouchMove;
+}
+function isStartish(topLevelType) {
+  return topLevelType === topLevelTypes.topMouseDown ||
+         topLevelType === topLevelTypes.topTouchStart;
+}
 
 
+var validateEventDispatches;
+if ("production" !== process.env.NODE_ENV) {
+  validateEventDispatches = function(event) {
+    var dispatchListeners = event._dispatchListeners;
+    var dispatchIDs = event._dispatchIDs;
+
+    var listenersIsArr = Array.isArray(dispatchListeners);
+    var idsIsArr = Array.isArray(dispatchIDs);
+    var IDsLen = idsIsArr ? dispatchIDs.length : dispatchIDs ? 1 : 0;
+    var listenersLen = listenersIsArr ?
+      dispatchListeners.length :
+      dispatchListeners ? 1 : 0;
+
+    ("production" !== process.env.NODE_ENV ? invariant(
+      idsIsArr === listenersIsArr && IDsLen === listenersLen,
+      'EventPluginUtils: Invalid `event`.'
+    ) : invariant(idsIsArr === listenersIsArr && IDsLen === listenersLen));
+  };
+}
+
+/**
+ * Invokes `cb(event, listener, id)`. Avoids using call if no scope is
+ * provided. The `(listener,id)` pair effectively forms the "dispatch" but are
+ * kept separate to conserve memory.
+ */
+function forEachEventDispatch(event, cb) {
+  var dispatchListeners = event._dispatchListeners;
+  var dispatchIDs = event._dispatchIDs;
+  if ("production" !== process.env.NODE_ENV) {
+    validateEventDispatches(event);
+  }
+  if (Array.isArray(dispatchListeners)) {
+    for (var i = 0; i < dispatchListeners.length; i++) {
+      if (event.isPropagationStopped()) {
+        break;
+      }
+      // Listeners and IDs are two parallel arrays that are always in sync.
+      cb(event, dispatchListeners[i], dispatchIDs[i]);
+    }
+  } else if (dispatchListeners) {
+    cb(event, dispatchListeners, dispatchIDs);
+  }
+}
+
+/**
+ * Default implementation of PluginModule.executeDispatch().
+ * @param {SyntheticEvent} SyntheticEvent to handle
+ * @param {function} Application-level callback
+ * @param {string} domID DOM id to pass to the callback.
+ */
+function executeDispatch(event, listener, domID) {
+  event.currentTarget = injection.Mount.getNode(domID);
+  var returnValue = listener(event, domID);
+  event.currentTarget = null;
+  return returnValue;
+}
+
+/**
+ * Standard/simple iteration through an event's collected dispatches.
+ */
+function executeDispatchesInOrder(event, executeDispatch) {
+  forEachEventDispatch(event, executeDispatch);
+  event._dispatchListeners = null;
+  event._dispatchIDs = null;
+}
+
+/**
+ * Standard/simple iteration through an event's collected dispatches, but stops
+ * at the first dispatch execution returning true, and returns that id.
+ *
+ * @return id of the first dispatch execution who's listener returns true, or
+ * null if no listener returned true.
+ */
+function executeDispatchesInOrderStopAtTrueImpl(event) {
+  var dispatchListeners = event._dispatchListeners;
+  var dispatchIDs = event._dispatchIDs;
+  if ("production" !== process.env.NODE_ENV) {
+    validateEventDispatches(event);
+  }
+  if (Array.isArray(dispatchListeners)) {
+    for (var i = 0; i < dispatchListeners.length; i++) {
+      if (event.isPropagationStopped()) {
+        break;
+      }
+      // Listeners and IDs are two parallel arrays that are always in sync.
+      if (dispatchListeners[i](event, dispatchIDs[i])) {
+        return dispatchIDs[i];
+      }
+    }
+  } else if (dispatchListeners) {
+    if (dispatchListeners(event, dispatchIDs)) {
+      return dispatchIDs;
+    }
+  }
+  return null;
+}
+
+/**
+ * @see executeDispatchesInOrderStopAtTrueImpl
+ */
+function executeDispatchesInOrderStopAtTrue(event) {
+  var ret = executeDispatchesInOrderStopAtTrueImpl(event);
+  event._dispatchIDs = null;
+  event._dispatchListeners = null;
+  return ret;
+}
+
+/**
+ * Execution of a "direct" dispatch - there must be at most one dispatch
+ * accumulated on the event or it is considered an error. It doesn't really make
+ * sense for an event with multiple dispatches (bubbled) to keep track of the
+ * return values at each dispatch execution, but it does tend to make sense when
+ * dealing with "direct" dispatches.
+ *
+ * @return The return value of executing the single dispatch.
+ */
+function executeDirectDispatch(event) {
+  if ("production" !== process.env.NODE_ENV) {
+    validateEventDispatches(event);
+  }
+  var dispatchListener = event._dispatchListeners;
+  var dispatchID = event._dispatchIDs;
+  ("production" !== process.env.NODE_ENV ? invariant(
+    !Array.isArray(dispatchListener),
+    'executeDirectDispatch(...): Invalid `event`.'
+  ) : invariant(!Array.isArray(dispatchListener)));
+  var res = dispatchListener ?
+    dispatchListener(event, dispatchID) :
+    null;
+  event._dispatchListeners = null;
+  event._dispatchIDs = null;
+  return res;
+}
+
+/**
+ * @param {SyntheticEvent} event
+ * @return {bool} True iff number of dispatches accumulated is greater than 0.
+ */
+function hasDispatches(event) {
+  return !!event._dispatchListeners;
+}
+
+/**
+ * General utilities that are useful in creating custom Event Plugins.
+ */
+var EventPluginUtils = {
+  isEndish: isEndish,
+  isMoveish: isMoveish,
+  isStartish: isStartish,
+
+  executeDirectDispatch: executeDirectDispatch,
+  executeDispatch: executeDispatch,
+  executeDispatchesInOrder: executeDispatchesInOrder,
+  executeDispatchesInOrderStopAtTrue: executeDispatchesInOrderStopAtTrue,
+  hasDispatches: hasDispatches,
+  injection: injection,
+  useTouchEvents: false
+};
+
+module.exports = EventPluginUtils;
+
+}).call(this,require('_process'))
+},{"./EventConstants":317,"./invariant":428,"_process":449}],322:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule EventPropagators
+ */
+>>>>>>> Editor store and services [#89871770]
+
+
+<<<<<<< HEAD
 
 },{}],256:[function(require,module,exports){
 window.NormalizedEntry = (function() {
@@ -32391,10 +48737,84 @@ window.AppHelpers = {
       return node.setSelectionRange(0, valueLength);
     } else {
       return node.value = value;
+=======
+var EventConstants = require("./EventConstants");
+var EventPluginHub = require("./EventPluginHub");
+
+var accumulateInto = require("./accumulateInto");
+var forEachAccumulated = require("./forEachAccumulated");
+
+var PropagationPhases = EventConstants.PropagationPhases;
+var getListener = EventPluginHub.getListener;
+
+/**
+ * Some event types have a notion of different registration names for different
+ * "phases" of propagation. This finds listeners by a given phase.
+ */
+function listenerAtPhase(id, event, propagationPhase) {
+  var registrationName =
+    event.dispatchConfig.phasedRegistrationNames[propagationPhase];
+  return getListener(id, registrationName);
+}
+
+/**
+ * Tags a `SyntheticEvent` with dispatched listeners. Creating this function
+ * here, allows us to not have to bind or create functions for each event.
+ * Mutating the event's members allows us to not have to create a wrapping
+ * "dispatch" object that pairs the event with the listener.
+ */
+function accumulateDirectionalDispatches(domID, upwards, event) {
+  if ("production" !== process.env.NODE_ENV) {
+    if (!domID) {
+      throw new Error('Dispatching id must not be null');
     }
   }
-};
+  var phase = upwards ? PropagationPhases.bubbled : PropagationPhases.captured;
+  var listener = listenerAtPhase(domID, event, phase);
+  if (listener) {
+    event._dispatchListeners =
+      accumulateInto(event._dispatchListeners, listener);
+    event._dispatchIDs = accumulateInto(event._dispatchIDs, domID);
+  }
+}
 
+/**
+ * Collect dispatches (must be entirely collected before dispatching - see unit
+ * tests). Lazily allocate the array to conserve memory.  We must loop through
+ * each event and perform the traversal for each one. We can not perform a
+ * single traversal for the entire collection of events because each event may
+ * have a different target.
+ */
+function accumulateTwoPhaseDispatchesSingle(event) {
+  if (event && event.dispatchConfig.phasedRegistrationNames) {
+    EventPluginHub.injection.getInstanceHandle().traverseTwoPhase(
+      event.dispatchMarker,
+      accumulateDirectionalDispatches,
+      event
+    );
+  }
+}
+
+
+/**
+ * Accumulates without regard to direction, does not look for phased
+ * registration names. Same as `accumulateDirectDispatchesSingle` but without
+ * requiring that the `dispatchMarker` be the same as the dispatched ID.
+ */
+function accumulateDispatches(id, ignoredDirection, event) {
+  if (event && event.dispatchConfig.registrationName) {
+    var registrationName = event.dispatchConfig.registrationName;
+    var listener = getListener(id, registrationName);
+    if (listener) {
+      event._dispatchListeners =
+        accumulateInto(event._dispatchListeners, listener);
+      event._dispatchIDs = accumulateInto(event._dispatchIDs, id);
+>>>>>>> Editor store and services [#89871770]
+    }
+  }
+}
+
+<<<<<<< HEAD
 
 
 },{}],258:[function(require,module,exports){
@@ -32526,9 +48946,314 @@ window.CommentsMediator = (function() {
   };
 
   return CommentsMediator;
+=======
+/**
+ * Accumulates dispatches on an `SyntheticEvent`, but only for the
+ * `dispatchMarker`.
+ * @param {SyntheticEvent} event
+ */
+function accumulateDirectDispatchesSingle(event) {
+  if (event && event.dispatchConfig.registrationName) {
+    accumulateDispatches(event.dispatchMarker, null, event);
+  }
+}
+
+function accumulateTwoPhaseDispatches(events) {
+  forEachAccumulated(events, accumulateTwoPhaseDispatchesSingle);
+}
+
+function accumulateEnterLeaveDispatches(leave, enter, fromID, toID) {
+  EventPluginHub.injection.getInstanceHandle().traverseEnterLeave(
+    fromID,
+    toID,
+    accumulateDispatches,
+    leave,
+    enter
+  );
+}
+
+
+function accumulateDirectDispatches(events) {
+  forEachAccumulated(events, accumulateDirectDispatchesSingle);
+}
+
+
+
+/**
+ * A small set of propagation patterns, each of which will accept a small amount
+ * of information, and generate a set of "dispatch ready event objects" - which
+ * are sets of events that have already been annotated with a set of dispatched
+ * listener functions/ids. The API is designed this way to discourage these
+ * propagation strategies from actually executing the dispatches, since we
+ * always want to collect the entire set of dispatches before executing event a
+ * single one.
+ *
+ * @constructor EventPropagators
+ */
+var EventPropagators = {
+  accumulateTwoPhaseDispatches: accumulateTwoPhaseDispatches,
+  accumulateDirectDispatches: accumulateDirectDispatches,
+  accumulateEnterLeaveDispatches: accumulateEnterLeaveDispatches
+};
+
+module.exports = EventPropagators;
+
+}).call(this,require('_process'))
+},{"./EventConstants":317,"./EventPluginHub":319,"./accumulateInto":399,"./forEachAccumulated":414,"_process":449}],323:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ExecutionEnvironment
+ */
+
+/*jslint evil: true */
+
+"use strict";
+
+var canUseDOM = !!(
+  typeof window !== 'undefined' &&
+  window.document &&
+  window.document.createElement
+);
+
+/**
+ * Simple, lightweight module assisting with the detection and context of
+ * Worker. Helps avoid circular dependencies and allows code to reason about
+ * whether or not they are in a Worker, even if they never include the main
+ * `ReactWorker` dependency.
+ */
+var ExecutionEnvironment = {
+
+  canUseDOM: canUseDOM,
+
+  canUseWorkers: typeof Worker !== 'undefined',
+
+  canUseEventListeners:
+    canUseDOM && !!(window.addEventListener || window.attachEvent),
+
+  canUseViewport: canUseDOM && !!window.screen,
+
+  isInWorker: !canUseDOM // For now, this is true - might change in the future.
+
+};
+
+module.exports = ExecutionEnvironment;
+
+},{}],324:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule HTMLDOMPropertyConfig
+ */
+
+/*jslint bitwise: true*/
+
+"use strict";
+
+var DOMProperty = require("./DOMProperty");
+var ExecutionEnvironment = require("./ExecutionEnvironment");
+
+var MUST_USE_ATTRIBUTE = DOMProperty.injection.MUST_USE_ATTRIBUTE;
+var MUST_USE_PROPERTY = DOMProperty.injection.MUST_USE_PROPERTY;
+var HAS_BOOLEAN_VALUE = DOMProperty.injection.HAS_BOOLEAN_VALUE;
+var HAS_SIDE_EFFECTS = DOMProperty.injection.HAS_SIDE_EFFECTS;
+var HAS_NUMERIC_VALUE = DOMProperty.injection.HAS_NUMERIC_VALUE;
+var HAS_POSITIVE_NUMERIC_VALUE =
+  DOMProperty.injection.HAS_POSITIVE_NUMERIC_VALUE;
+var HAS_OVERLOADED_BOOLEAN_VALUE =
+  DOMProperty.injection.HAS_OVERLOADED_BOOLEAN_VALUE;
+
+var hasSVG;
+if (ExecutionEnvironment.canUseDOM) {
+  var implementation = document.implementation;
+  hasSVG = (
+    implementation &&
+    implementation.hasFeature &&
+    implementation.hasFeature(
+      'http://www.w3.org/TR/SVG11/feature#BasicStructure',
+      '1.1'
+    )
+  );
+}
+
+
+var HTMLDOMPropertyConfig = {
+  isCustomAttribute: RegExp.prototype.test.bind(
+    /^(data|aria)-[a-z_][a-z\d_.\-]*$/
+  ),
+  Properties: {
+    /**
+     * Standard Properties
+     */
+    accept: null,
+    acceptCharset: null,
+    accessKey: null,
+    action: null,
+    allowFullScreen: MUST_USE_ATTRIBUTE | HAS_BOOLEAN_VALUE,
+    allowTransparency: MUST_USE_ATTRIBUTE,
+    alt: null,
+    async: HAS_BOOLEAN_VALUE,
+    autoComplete: null,
+    // autoFocus is polyfilled/normalized by AutoFocusMixin
+    // autoFocus: HAS_BOOLEAN_VALUE,
+    autoPlay: HAS_BOOLEAN_VALUE,
+    cellPadding: null,
+    cellSpacing: null,
+    charSet: MUST_USE_ATTRIBUTE,
+    checked: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
+    classID: MUST_USE_ATTRIBUTE,
+    // To set className on SVG elements, it's necessary to use .setAttribute;
+    // this works on HTML elements too in all browsers except IE8. Conveniently,
+    // IE8 doesn't support SVG and so we can simply use the attribute in
+    // browsers that support SVG and the property in browsers that don't,
+    // regardless of whether the element is HTML or SVG.
+    className: hasSVG ? MUST_USE_ATTRIBUTE : MUST_USE_PROPERTY,
+    cols: MUST_USE_ATTRIBUTE | HAS_POSITIVE_NUMERIC_VALUE,
+    colSpan: null,
+    content: null,
+    contentEditable: null,
+    contextMenu: MUST_USE_ATTRIBUTE,
+    controls: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
+    coords: null,
+    crossOrigin: null,
+    data: null, // For `<object />` acts as `src`.
+    dateTime: MUST_USE_ATTRIBUTE,
+    defer: HAS_BOOLEAN_VALUE,
+    dir: null,
+    disabled: MUST_USE_ATTRIBUTE | HAS_BOOLEAN_VALUE,
+    download: HAS_OVERLOADED_BOOLEAN_VALUE,
+    draggable: null,
+    encType: null,
+    form: MUST_USE_ATTRIBUTE,
+    formAction: MUST_USE_ATTRIBUTE,
+    formEncType: MUST_USE_ATTRIBUTE,
+    formMethod: MUST_USE_ATTRIBUTE,
+    formNoValidate: HAS_BOOLEAN_VALUE,
+    formTarget: MUST_USE_ATTRIBUTE,
+    frameBorder: MUST_USE_ATTRIBUTE,
+    height: MUST_USE_ATTRIBUTE,
+    hidden: MUST_USE_ATTRIBUTE | HAS_BOOLEAN_VALUE,
+    href: null,
+    hrefLang: null,
+    htmlFor: null,
+    httpEquiv: null,
+    icon: null,
+    id: MUST_USE_PROPERTY,
+    label: null,
+    lang: null,
+    list: MUST_USE_ATTRIBUTE,
+    loop: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
+    manifest: MUST_USE_ATTRIBUTE,
+    marginHeight: null,
+    marginWidth: null,
+    max: null,
+    maxLength: MUST_USE_ATTRIBUTE,
+    media: MUST_USE_ATTRIBUTE,
+    mediaGroup: null,
+    method: null,
+    min: null,
+    multiple: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
+    muted: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
+    name: null,
+    noValidate: HAS_BOOLEAN_VALUE,
+    open: null,
+    pattern: null,
+    placeholder: null,
+    poster: null,
+    preload: null,
+    radioGroup: null,
+    readOnly: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
+    rel: null,
+    required: HAS_BOOLEAN_VALUE,
+    role: MUST_USE_ATTRIBUTE,
+    rows: MUST_USE_ATTRIBUTE | HAS_POSITIVE_NUMERIC_VALUE,
+    rowSpan: null,
+    sandbox: null,
+    scope: null,
+    scrolling: null,
+    seamless: MUST_USE_ATTRIBUTE | HAS_BOOLEAN_VALUE,
+    selected: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
+    shape: null,
+    size: MUST_USE_ATTRIBUTE | HAS_POSITIVE_NUMERIC_VALUE,
+    sizes: MUST_USE_ATTRIBUTE,
+    span: HAS_POSITIVE_NUMERIC_VALUE,
+    spellCheck: null,
+    src: null,
+    srcDoc: MUST_USE_PROPERTY,
+    srcSet: MUST_USE_ATTRIBUTE,
+    start: HAS_NUMERIC_VALUE,
+    step: null,
+    style: null,
+    tabIndex: null,
+    target: null,
+    title: null,
+    type: null,
+    useMap: null,
+    value: MUST_USE_PROPERTY | HAS_SIDE_EFFECTS,
+    width: MUST_USE_ATTRIBUTE,
+    wmode: MUST_USE_ATTRIBUTE,
+
+    /**
+     * Non-standard Properties
+     */
+    autoCapitalize: null, // Supported in Mobile Safari for keyboard hints
+    autoCorrect: null, // Supported in Mobile Safari for keyboard hints
+    itemProp: MUST_USE_ATTRIBUTE, // Microdata: http://schema.org/docs/gs.html
+    itemScope: MUST_USE_ATTRIBUTE | HAS_BOOLEAN_VALUE, // Microdata: http://schema.org/docs/gs.html
+    itemType: MUST_USE_ATTRIBUTE, // Microdata: http://schema.org/docs/gs.html
+    property: null // Supports OG in meta tags
+  },
+  DOMAttributeNames: {
+    acceptCharset: 'accept-charset',
+    className: 'class',
+    htmlFor: 'for',
+    httpEquiv: 'http-equiv'
+  },
+  DOMPropertyNames: {
+    autoCapitalize: 'autocapitalize',
+    autoComplete: 'autocomplete',
+    autoCorrect: 'autocorrect',
+    autoFocus: 'autofocus',
+    autoPlay: 'autoplay',
+    encType: 'enctype',
+    hrefLang: 'hreflang',
+    radioGroup: 'radiogroup',
+    spellCheck: 'spellcheck',
+    srcDoc: 'srcdoc',
+    srcSet: 'srcset'
+  }
+};
+
+module.exports = HTMLDOMPropertyConfig;
+
+},{"./DOMProperty":312,"./ExecutionEnvironment":323}],325:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule LinkedValueUtils
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
 })();
 
+<<<<<<< HEAD
 window.commentsMediator = new CommentsMediator();
 
 
@@ -32681,9 +49406,214 @@ window.MessagesPopup_Conversations = React.createClass({
     });
   }
 });
+=======
+var ReactPropTypes = require("./ReactPropTypes");
+
+var invariant = require("./invariant");
+
+var hasReadOnlyValue = {
+  'button': true,
+  'checkbox': true,
+  'image': true,
+  'hidden': true,
+  'radio': true,
+  'reset': true,
+  'submit': true
+};
+
+function _assertSingleLink(input) {
+  ("production" !== process.env.NODE_ENV ? invariant(
+    input.props.checkedLink == null || input.props.valueLink == null,
+    'Cannot provide a checkedLink and a valueLink. If you want to use ' +
+    'checkedLink, you probably don\'t want to use valueLink and vice versa.'
+  ) : invariant(input.props.checkedLink == null || input.props.valueLink == null));
+}
+function _assertValueLink(input) {
+  _assertSingleLink(input);
+  ("production" !== process.env.NODE_ENV ? invariant(
+    input.props.value == null && input.props.onChange == null,
+    'Cannot provide a valueLink and a value or onChange event. If you want ' +
+    'to use value or onChange, you probably don\'t want to use valueLink.'
+  ) : invariant(input.props.value == null && input.props.onChange == null));
+}
+
+function _assertCheckedLink(input) {
+  _assertSingleLink(input);
+  ("production" !== process.env.NODE_ENV ? invariant(
+    input.props.checked == null && input.props.onChange == null,
+    'Cannot provide a checkedLink and a checked property or onChange event. ' +
+    'If you want to use checked or onChange, you probably don\'t want to ' +
+    'use checkedLink'
+  ) : invariant(input.props.checked == null && input.props.onChange == null));
+}
+
+/**
+ * @param {SyntheticEvent} e change event to handle
+ */
+function _handleLinkedValueChange(e) {
+  /*jshint validthis:true */
+  this.props.valueLink.requestChange(e.target.value);
+}
+
+/**
+  * @param {SyntheticEvent} e change event to handle
+  */
+function _handleLinkedCheckChange(e) {
+  /*jshint validthis:true */
+  this.props.checkedLink.requestChange(e.target.checked);
+}
+
+/**
+ * Provide a linked `value` attribute for controlled forms. You should not use
+ * this outside of the ReactDOM controlled form components.
+ */
+var LinkedValueUtils = {
+  Mixin: {
+    propTypes: {
+      value: function(props, propName, componentName) {
+        if (!props[propName] ||
+            hasReadOnlyValue[props.type] ||
+            props.onChange ||
+            props.readOnly ||
+            props.disabled) {
+          return;
+        }
+        return new Error(
+          'You provided a `value` prop to a form field without an ' +
+          '`onChange` handler. This will render a read-only field. If ' +
+          'the field should be mutable use `defaultValue`. Otherwise, ' +
+          'set either `onChange` or `readOnly`.'
+        );
+      },
+      checked: function(props, propName, componentName) {
+        if (!props[propName] ||
+            props.onChange ||
+            props.readOnly ||
+            props.disabled) {
+          return;
+        }
+        return new Error(
+          'You provided a `checked` prop to a form field without an ' +
+          '`onChange` handler. This will render a read-only field. If ' +
+          'the field should be mutable use `defaultChecked`. Otherwise, ' +
+          'set either `onChange` or `readOnly`.'
+        );
+      },
+      onChange: ReactPropTypes.func
+    }
+  },
+
+  /**
+   * @param {ReactComponent} input Form component
+   * @return {*} current value of the input either from value prop or link.
+   */
+  getValue: function(input) {
+    if (input.props.valueLink) {
+      _assertValueLink(input);
+      return input.props.valueLink.value;
+    }
+    return input.props.value;
+  },
+
+  /**
+   * @param {ReactComponent} input Form component
+   * @return {*} current checked status of the input either from checked prop
+   *             or link.
+   */
+  getChecked: function(input) {
+    if (input.props.checkedLink) {
+      _assertCheckedLink(input);
+      return input.props.checkedLink.value;
+    }
+    return input.props.checked;
+  },
+
+  /**
+   * @param {ReactComponent} input Form component
+   * @return {function} change callback either from onChange prop or link.
+   */
+  getOnChange: function(input) {
+    if (input.props.valueLink) {
+      _assertValueLink(input);
+      return _handleLinkedValueChange;
+    } else if (input.props.checkedLink) {
+      _assertCheckedLink(input);
+      return _handleLinkedCheckChange;
+    }
+    return input.props.onChange;
+  }
+};
+
+module.exports = LinkedValueUtils;
+
+}).call(this,require('_process'))
+},{"./ReactPropTypes":374,"./invariant":428,"_process":449}],326:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule LocalEventTrapMixin
+ */
+
+"use strict";
+
+var ReactBrowserEventEmitter = require("./ReactBrowserEventEmitter");
+
+var accumulateInto = require("./accumulateInto");
+var forEachAccumulated = require("./forEachAccumulated");
+var invariant = require("./invariant");
+
+function remove(event) {
+  event.remove();
+}
+
+var LocalEventTrapMixin = {
+  trapBubbledEvent:function(topLevelType, handlerBaseName) {
+    ("production" !== process.env.NODE_ENV ? invariant(this.isMounted(), 'Must be mounted to trap events') : invariant(this.isMounted()));
+    var listener = ReactBrowserEventEmitter.trapBubbledEvent(
+      topLevelType,
+      handlerBaseName,
+      this.getDOMNode()
+    );
+    this._localEventListeners =
+      accumulateInto(this._localEventListeners, listener);
+  },
+
+  // trapCapturedEvent would look nearly identical. We don't implement that
+  // method because it isn't currently needed.
+
+  componentWillUnmount:function() {
+    if (this._localEventListeners) {
+      forEachAccumulated(this._localEventListeners, remove);
+    }
+  }
+};
+
+module.exports = LocalEventTrapMixin;
+
+}).call(this,require('_process'))
+},{"./ReactBrowserEventEmitter":332,"./accumulateInto":399,"./forEachAccumulated":414,"./invariant":428,"_process":449}],327:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule MobileSafariClickEventPlugin
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
 
 
+<<<<<<< HEAD
 },{}],265:[function(require,module,exports){
 window.MessagesPopup_ConversationsListEmpty = React.createClass({
   render: function() {
@@ -32722,6 +49652,42 @@ window.MessagesPopup_ConversationsList = React.createClass({
           "key": conversation.id
         });
       });
+=======
+var emptyFunction = require("./emptyFunction");
+
+var topLevelTypes = EventConstants.topLevelTypes;
+
+/**
+ * Mobile Safari does not fire properly bubble click events on non-interactive
+ * elements, which means delegated click listeners do not fire. The workaround
+ * for this bug involves attaching an empty click listener on the target node.
+ *
+ * This particular plugin works around the bug by attaching an empty click
+ * listener on `touchstart` (which does fire on every element).
+ */
+var MobileSafariClickEventPlugin = {
+
+  eventTypes: null,
+
+  /**
+   * @param {string} topLevelType Record from `EventConstants`.
+   * @param {DOMEventTarget} topLevelTarget The listening component root node.
+   * @param {string} topLevelTargetID ID of `topLevelTarget`.
+   * @param {object} nativeEvent Native browser event.
+   * @return {*} An accumulation of synthetic events.
+   * @see {EventPluginHub.extractEvents}
+   */
+  extractEvents: function(
+      topLevelType,
+      topLevelTarget,
+      topLevelTargetID,
+      nativeEvent) {
+    if (topLevelType === topLevelTypes.topTouchStart) {
+      var target = nativeEvent.target;
+      if (target && !target.onclick) {
+        target.onclick = emptyFunction;
+      }
+>>>>>>> Editor store and services [#89871770]
     }
     return React.createElement("div", {
       "className": "messages__body"
@@ -32749,6 +49715,7 @@ window.MessagesPopup_ConversationsList = React.createClass({
   _onStoreChange: function() {
     return this.setState(this.getStateFromStore());
   }
+<<<<<<< HEAD
 });
 
 
@@ -32838,8 +49805,191 @@ window.MessagesPopup_ConversationsListItem = React.createClass({
   }
 });
 
+=======
+
+};
+
+module.exports = MobileSafariClickEventPlugin;
+
+},{"./EventConstants":317,"./emptyFunction":409}],328:[function(require,module,exports){
+/**
+ * Copyright 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule Object.assign
+ */
+
+// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign
+
+function assign(target, sources) {
+  if (target == null) {
+    throw new TypeError('Object.assign target cannot be null or undefined');
+  }
+
+  var to = Object(target);
+  var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+  for (var nextIndex = 1; nextIndex < arguments.length; nextIndex++) {
+    var nextSource = arguments[nextIndex];
+    if (nextSource == null) {
+      continue;
+    }
+
+    var from = Object(nextSource);
+
+    // We don't currently support accessors nor proxies. Therefore this
+    // copy cannot throw. If we ever supported this then we must handle
+    // exceptions and side-effects. We don't support symbols so they won't
+    // be transferred.
+
+    for (var key in from) {
+      if (hasOwnProperty.call(from, key)) {
+        to[key] = from[key];
+      }
+    }
+  }
+
+  return to;
+};
+
+module.exports = assign;
+
+},{}],329:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule PooledClass
+ */
+
+"use strict";
+
+var invariant = require("./invariant");
+
+/**
+ * Static poolers. Several custom versions for each potential number of
+ * arguments. A completely generic pooler is easy to implement, but would
+ * require accessing the `arguments` object. In each of these, `this` refers to
+ * the Class itself, not an instance. If any others are needed, simply add them
+ * here, or in their own files.
+ */
+var oneArgumentPooler = function(copyFieldsFrom) {
+  var Klass = this;
+  if (Klass.instancePool.length) {
+    var instance = Klass.instancePool.pop();
+    Klass.call(instance, copyFieldsFrom);
+    return instance;
+  } else {
+    return new Klass(copyFieldsFrom);
+  }
+};
+
+var twoArgumentPooler = function(a1, a2) {
+  var Klass = this;
+  if (Klass.instancePool.length) {
+    var instance = Klass.instancePool.pop();
+    Klass.call(instance, a1, a2);
+    return instance;
+  } else {
+    return new Klass(a1, a2);
+  }
+};
+
+var threeArgumentPooler = function(a1, a2, a3) {
+  var Klass = this;
+  if (Klass.instancePool.length) {
+    var instance = Klass.instancePool.pop();
+    Klass.call(instance, a1, a2, a3);
+    return instance;
+  } else {
+    return new Klass(a1, a2, a3);
+  }
+};
+
+var fiveArgumentPooler = function(a1, a2, a3, a4, a5) {
+  var Klass = this;
+  if (Klass.instancePool.length) {
+    var instance = Klass.instancePool.pop();
+    Klass.call(instance, a1, a2, a3, a4, a5);
+    return instance;
+  } else {
+    return new Klass(a1, a2, a3, a4, a5);
+  }
+};
+
+var standardReleaser = function(instance) {
+  var Klass = this;
+  ("production" !== process.env.NODE_ENV ? invariant(
+    instance instanceof Klass,
+    'Trying to release an instance into a pool of a different type.'
+  ) : invariant(instance instanceof Klass));
+  if (instance.destructor) {
+    instance.destructor();
+  }
+  if (Klass.instancePool.length < Klass.poolSize) {
+    Klass.instancePool.push(instance);
+  }
+};
+
+var DEFAULT_POOL_SIZE = 10;
+var DEFAULT_POOLER = oneArgumentPooler;
+
+/**
+ * Augments `CopyConstructor` to be a poolable class, augmenting only the class
+ * itself (statically) not adding any prototypical fields. Any CopyConstructor
+ * you give this may have a `poolSize` property, and will look for a
+ * prototypical `destructor` on instances (optional).
+ *
+ * @param {Function} CopyConstructor Constructor that can be used to reset.
+ * @param {Function} pooler Customizable pooler.
+ */
+var addPoolingTo = function(CopyConstructor, pooler) {
+  var NewKlass = CopyConstructor;
+  NewKlass.instancePool = [];
+  NewKlass.getPooled = pooler || DEFAULT_POOLER;
+  if (!NewKlass.poolSize) {
+    NewKlass.poolSize = DEFAULT_POOL_SIZE;
+  }
+  NewKlass.release = standardReleaser;
+  return NewKlass;
+};
+
+var PooledClass = {
+  addPoolingTo: addPoolingTo,
+  oneArgumentPooler: oneArgumentPooler,
+  twoArgumentPooler: twoArgumentPooler,
+  threeArgumentPooler: threeArgumentPooler,
+  fiveArgumentPooler: fiveArgumentPooler
+};
+
+module.exports = PooledClass;
+
+}).call(this,require('_process'))
+},{"./invariant":428,"_process":449}],330:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule React
+ */
+>>>>>>> Editor store and services [#89871770]
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],268:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, cx;
 
@@ -32992,9 +50142,82 @@ window.MessagesPopup_ChooserDropdown = React.createClass({
     }
   }
 });
+=======
+var DOMPropertyOperations = require("./DOMPropertyOperations");
+var EventPluginUtils = require("./EventPluginUtils");
+var ReactChildren = require("./ReactChildren");
+var ReactComponent = require("./ReactComponent");
+var ReactCompositeComponent = require("./ReactCompositeComponent");
+var ReactContext = require("./ReactContext");
+var ReactCurrentOwner = require("./ReactCurrentOwner");
+var ReactElement = require("./ReactElement");
+var ReactElementValidator = require("./ReactElementValidator");
+var ReactDOM = require("./ReactDOM");
+var ReactDOMComponent = require("./ReactDOMComponent");
+var ReactDefaultInjection = require("./ReactDefaultInjection");
+var ReactInstanceHandles = require("./ReactInstanceHandles");
+var ReactLegacyElement = require("./ReactLegacyElement");
+var ReactMount = require("./ReactMount");
+var ReactMultiChild = require("./ReactMultiChild");
+var ReactPerf = require("./ReactPerf");
+var ReactPropTypes = require("./ReactPropTypes");
+var ReactServerRendering = require("./ReactServerRendering");
+var ReactTextComponent = require("./ReactTextComponent");
 
+var assign = require("./Object.assign");
+var deprecated = require("./deprecated");
+var onlyChild = require("./onlyChild");
 
+ReactDefaultInjection.inject();
 
+var createElement = ReactElement.createElement;
+var createFactory = ReactElement.createFactory;
+
+if ("production" !== process.env.NODE_ENV) {
+  createElement = ReactElementValidator.createElement;
+  createFactory = ReactElementValidator.createFactory;
+}
+
+// TODO: Drop legacy elements once classes no longer export these factories
+createElement = ReactLegacyElement.wrapCreateElement(
+  createElement
+);
+createFactory = ReactLegacyElement.wrapCreateFactory(
+  createFactory
+);
+
+var render = ReactPerf.measure('React', 'render', ReactMount.render);
+>>>>>>> Editor store and services [#89871770]
+
+var React = {
+  Children: {
+    map: ReactChildren.map,
+    forEach: ReactChildren.forEach,
+    count: ReactChildren.count,
+    only: onlyChild
+  },
+  DOM: ReactDOM,
+  PropTypes: ReactPropTypes,
+  initializeTouchEvents: function(shouldUseTouch) {
+    EventPluginUtils.useTouchEvents = shouldUseTouch;
+  },
+  createClass: ReactCompositeComponent.createClass,
+  createElement: createElement,
+  createFactory: createFactory,
+  constructAndRenderComponent: ReactMount.constructAndRenderComponent,
+  constructAndRenderComponentByID: ReactMount.constructAndRenderComponentByID,
+  render: render,
+  renderToString: ReactServerRendering.renderToString,
+  renderToStaticMarkup: ReactServerRendering.renderToStaticMarkup,
+  unmountComponentAtNode: ReactMount.unmountComponentAtNode,
+  isValidClass: ReactLegacyElement.isValidClass,
+  isValidElement: ReactElement.isValidElement,
+  withContext: ReactContext.withContext,
+
+  // Hook for JSX spread, don't use this for anything else.
+  __spread: assign,
+
+<<<<<<< HEAD
 },{"react/lib/LinkedStateMixin":510}],271:[function(require,module,exports){
 var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
 
@@ -33198,10 +50421,167 @@ window.MessagesPopup_CreateNewConversation = React.createClass({
       recipientId: recipientId,
       error: this.activateChooserState
     });
+=======
+  // Deprecations (remove for 0.13)
+  renderComponent: deprecated(
+    'React',
+    'renderComponent',
+    'render',
+    this,
+    render
+  ),
+  renderComponentToString: deprecated(
+    'React',
+    'renderComponentToString',
+    'renderToString',
+    this,
+    ReactServerRendering.renderToString
+  ),
+  renderComponentToStaticMarkup: deprecated(
+    'React',
+    'renderComponentToStaticMarkup',
+    'renderToStaticMarkup',
+    this,
+    ReactServerRendering.renderToStaticMarkup
+  ),
+  isValidComponent: deprecated(
+    'React',
+    'isValidComponent',
+    'isValidElement',
+    this,
+    ReactElement.isValidElement
+  )
+};
+
+// Inject the runtime into a devtools global hook regardless of browser.
+// Allows for debugging when the hook is injected on the page.
+if (
+  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' &&
+  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.inject === 'function') {
+  __REACT_DEVTOOLS_GLOBAL_HOOK__.inject({
+    Component: ReactComponent,
+    CurrentOwner: ReactCurrentOwner,
+    DOMComponent: ReactDOMComponent,
+    DOMPropertyOperations: DOMPropertyOperations,
+    InstanceHandles: ReactInstanceHandles,
+    Mount: ReactMount,
+    MultiChild: ReactMultiChild,
+    TextComponent: ReactTextComponent
+  });
+}
+
+if ("production" !== process.env.NODE_ENV) {
+  var ExecutionEnvironment = require("./ExecutionEnvironment");
+  if (ExecutionEnvironment.canUseDOM && window.top === window.self) {
+
+    // If we're in Chrome, look for the devtools marker and provide a download
+    // link if not installed.
+    if (navigator.userAgent.indexOf('Chrome') > -1) {
+      if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined') {
+        console.debug(
+          'Download the React DevTools for a better development experience: ' +
+          'http://fb.me/react-devtools'
+        );
+      }
+    }
+
+    var expectedFeatures = [
+      // shims
+      Array.isArray,
+      Array.prototype.every,
+      Array.prototype.forEach,
+      Array.prototype.indexOf,
+      Array.prototype.map,
+      Date.now,
+      Function.prototype.bind,
+      Object.keys,
+      String.prototype.split,
+      String.prototype.trim,
+
+      // shams
+      Object.create,
+      Object.freeze
+    ];
+
+    for (var i = 0; i < expectedFeatures.length; i++) {
+      if (!expectedFeatures[i]) {
+        console.error(
+          'One or more ES5 shim/shams expected by React are not available: ' +
+          'http://fb.me/react-warning-polyfills'
+        );
+        break;
+      }
+    }
+  }
+}
+
+// Version exists only in the open-source version of React, not in Facebook's
+// internal version.
+React.version = '0.12.2';
+
+module.exports = React;
+
+}).call(this,require('_process'))
+},{"./DOMPropertyOperations":313,"./EventPluginUtils":321,"./ExecutionEnvironment":323,"./Object.assign":328,"./ReactChildren":333,"./ReactComponent":334,"./ReactCompositeComponent":336,"./ReactContext":337,"./ReactCurrentOwner":338,"./ReactDOM":339,"./ReactDOMComponent":341,"./ReactDefaultInjection":351,"./ReactElement":354,"./ReactElementValidator":355,"./ReactInstanceHandles":362,"./ReactLegacyElement":363,"./ReactMount":365,"./ReactMultiChild":366,"./ReactPerf":370,"./ReactPropTypes":374,"./ReactServerRendering":378,"./ReactTextComponent":380,"./deprecated":408,"./onlyChild":439,"_process":449}],331:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactBrowserComponentMixin
+ */
+
+"use strict";
+
+var ReactEmptyComponent = require("./ReactEmptyComponent");
+var ReactMount = require("./ReactMount");
+
+var invariant = require("./invariant");
+
+var ReactBrowserComponentMixin = {
+  /**
+   * Returns the DOM node rendered by this component.
+   *
+   * @return {DOMElement} The root node of this component.
+   * @final
+   * @protected
+   */
+  getDOMNode: function() {
+    ("production" !== process.env.NODE_ENV ? invariant(
+      this.isMounted(),
+      'getDOMNode(): A component must be mounted to have a DOM node.'
+    ) : invariant(this.isMounted()));
+    if (ReactEmptyComponent.isNullComponentID(this._rootNodeID)) {
+      return null;
+    }
+    return ReactMount.getNode(this._rootNodeID);
+>>>>>>> Editor store and services [#89871770]
   }
 });
 
+<<<<<<< HEAD
 
+=======
+module.exports = ReactBrowserComponentMixin;
+
+}).call(this,require('_process'))
+},{"./ReactEmptyComponent":356,"./ReactMount":365,"./invariant":428,"_process":449}],332:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactBrowserEventEmitter
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
 },{}],274:[function(require,module,exports){
 window.MessagesPopup_LoadingMessage = React.createClass({
@@ -33225,6 +50605,7 @@ window.MessagesPopup_LoadingMessage = React.createClass({
   }
 });
 
+<<<<<<< HEAD
 
 
 },{}],275:[function(require,module,exports){
@@ -33322,6 +50703,161 @@ window.MessagesPopup = React.createClass({
       popupTitle = i18n.t('messages_popup_title');
     }
     return popupTitle;
+=======
+var EventConstants = require("./EventConstants");
+var EventPluginHub = require("./EventPluginHub");
+var EventPluginRegistry = require("./EventPluginRegistry");
+var ReactEventEmitterMixin = require("./ReactEventEmitterMixin");
+var ViewportMetrics = require("./ViewportMetrics");
+
+var assign = require("./Object.assign");
+var isEventSupported = require("./isEventSupported");
+
+/**
+ * Summary of `ReactBrowserEventEmitter` event handling:
+ *
+ *  - Top-level delegation is used to trap most native browser events. This
+ *    may only occur in the main thread and is the responsibility of
+ *    ReactEventListener, which is injected and can therefore support pluggable
+ *    event sources. This is the only work that occurs in the main thread.
+ *
+ *  - We normalize and de-duplicate events to account for browser quirks. This
+ *    may be done in the worker thread.
+ *
+ *  - Forward these native events (with the associated top-level type used to
+ *    trap it) to `EventPluginHub`, which in turn will ask plugins if they want
+ *    to extract any synthetic events.
+ *
+ *  - The `EventPluginHub` will then process each event by annotating them with
+ *    "dispatches", a sequence of listeners and IDs that care about that event.
+ *
+ *  - The `EventPluginHub` then dispatches the events.
+ *
+ * Overview of React and the event system:
+ *
+ * +------------+    .
+ * |    DOM     |    .
+ * +------------+    .
+ *       |           .
+ *       v           .
+ * +------------+    .
+ * | ReactEvent |    .
+ * |  Listener  |    .
+ * +------------+    .                         +-----------+
+ *       |           .               +--------+|SimpleEvent|
+ *       |           .               |         |Plugin     |
+ * +-----|------+    .               v         +-----------+
+ * |     |      |    .    +--------------+                    +------------+
+ * |     +-----------.--->|EventPluginHub|                    |    Event   |
+ * |            |    .    |              |     +-----------+  | Propagators|
+ * | ReactEvent |    .    |              |     |TapEvent   |  |------------|
+ * |  Emitter   |    .    |              |<---+|Plugin     |  |other plugin|
+ * |            |    .    |              |     +-----------+  |  utilities |
+ * |     +-----------.--->|              |                    +------------+
+ * |     |      |    .    +--------------+
+ * +-----|------+    .                ^        +-----------+
+ *       |           .                |        |Enter/Leave|
+ *       +           .                +-------+|Plugin     |
+ * +-------------+   .                         +-----------+
+ * | application |   .
+ * |-------------|   .
+ * |             |   .
+ * |             |   .
+ * +-------------+   .
+ *                   .
+ *    React Core     .  General Purpose Event Plugin System
+ */
+
+var alreadyListeningTo = {};
+var isMonitoringScrollValue = false;
+var reactTopListenersCounter = 0;
+
+// For events like 'submit' which don't consistently bubble (which we trap at a
+// lower node than `document`), binding at `document` would cause duplicate
+// events so we don't include them here
+var topEventMapping = {
+  topBlur: 'blur',
+  topChange: 'change',
+  topClick: 'click',
+  topCompositionEnd: 'compositionend',
+  topCompositionStart: 'compositionstart',
+  topCompositionUpdate: 'compositionupdate',
+  topContextMenu: 'contextmenu',
+  topCopy: 'copy',
+  topCut: 'cut',
+  topDoubleClick: 'dblclick',
+  topDrag: 'drag',
+  topDragEnd: 'dragend',
+  topDragEnter: 'dragenter',
+  topDragExit: 'dragexit',
+  topDragLeave: 'dragleave',
+  topDragOver: 'dragover',
+  topDragStart: 'dragstart',
+  topDrop: 'drop',
+  topFocus: 'focus',
+  topInput: 'input',
+  topKeyDown: 'keydown',
+  topKeyPress: 'keypress',
+  topKeyUp: 'keyup',
+  topMouseDown: 'mousedown',
+  topMouseMove: 'mousemove',
+  topMouseOut: 'mouseout',
+  topMouseOver: 'mouseover',
+  topMouseUp: 'mouseup',
+  topPaste: 'paste',
+  topScroll: 'scroll',
+  topSelectionChange: 'selectionchange',
+  topTextInput: 'textInput',
+  topTouchCancel: 'touchcancel',
+  topTouchEnd: 'touchend',
+  topTouchMove: 'touchmove',
+  topTouchStart: 'touchstart',
+  topWheel: 'wheel'
+};
+
+/**
+ * To ensure no conflicts with other potential React instances on the page
+ */
+var topListenersIDKey = "_reactListenersID" + String(Math.random()).slice(2);
+
+function getListeningForDocument(mountAt) {
+  // In IE8, `mountAt` is a host object and doesn't have `hasOwnProperty`
+  // directly.
+  if (!Object.prototype.hasOwnProperty.call(mountAt, topListenersIDKey)) {
+    mountAt[topListenersIDKey] = reactTopListenersCounter++;
+    alreadyListeningTo[mountAt[topListenersIDKey]] = {};
+  }
+  return alreadyListeningTo[mountAt[topListenersIDKey]];
+}
+
+/**
+ * `ReactBrowserEventEmitter` is used to attach top-level event listeners. For
+ * example:
+ *
+ *   ReactBrowserEventEmitter.putListener('myID', 'onClick', myFunction);
+ *
+ * This would allocate a "registration" of `('onClick', myFunction)` on 'myID'.
+ *
+ * @internal
+ */
+var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
+
+  /**
+   * Injectable event backend
+   */
+  ReactEventListener: null,
+
+  injection: {
+    /**
+     * @param {object} ReactEventListener
+     */
+    injectReactEventListener: function(ReactEventListener) {
+      ReactEventListener.setHandleTopLevel(
+        ReactBrowserEventEmitter.handleTopLevel
+      );
+      ReactBrowserEventEmitter.ReactEventListener = ReactEventListener;
+    }
+>>>>>>> Editor store and services [#89871770]
   },
   handleBackButtonClick: function() {
     return MessagingDispatcher.handleViewAction({
@@ -33333,6 +50869,7 @@ window.MessagesPopup = React.createClass({
   }
 });
 
+<<<<<<< HEAD
 
 
 },{}],276:[function(require,module,exports){
@@ -33523,10 +51060,210 @@ window.MessagesPopup_ThreadMessageList = React.createClass({
 });
 
 
+=======
+  /**
+   * Sets whether or not any created callbacks should be enabled.
+   *
+   * @param {boolean} enabled True if callbacks should be enabled.
+   */
+  setEnabled: function(enabled) {
+    if (ReactBrowserEventEmitter.ReactEventListener) {
+      ReactBrowserEventEmitter.ReactEventListener.setEnabled(enabled);
+    }
+  },
+
+  /**
+   * @return {boolean} True if callbacks are enabled.
+   */
+  isEnabled: function() {
+    return !!(
+      ReactBrowserEventEmitter.ReactEventListener &&
+      ReactBrowserEventEmitter.ReactEventListener.isEnabled()
+    );
+  },
+
+  /**
+   * We listen for bubbled touch events on the document object.
+   *
+   * Firefox v8.01 (and possibly others) exhibited strange behavior when
+   * mounting `onmousemove` events at some node that was not the document
+   * element. The symptoms were that if your mouse is not moving over something
+   * contained within that mount point (for example on the background) the
+   * top-level listeners for `onmousemove` won't be called. However, if you
+   * register the `mousemove` on the document object, then it will of course
+   * catch all `mousemove`s. This along with iOS quirks, justifies restricting
+   * top-level listeners to the document object only, at least for these
+   * movement types of events and possibly all events.
+   *
+   * @see http://www.quirksmode.org/blog/archives/2010/09/click_event_del.html
+   *
+   * Also, `keyup`/`keypress`/`keydown` do not bubble to the window on IE, but
+   * they bubble to document.
+   *
+   * @param {string} registrationName Name of listener (e.g. `onClick`).
+   * @param {object} contentDocumentHandle Document which owns the container
+   */
+  listenTo: function(registrationName, contentDocumentHandle) {
+    var mountAt = contentDocumentHandle;
+    var isListening = getListeningForDocument(mountAt);
+    var dependencies = EventPluginRegistry.
+      registrationNameDependencies[registrationName];
+
+    var topLevelTypes = EventConstants.topLevelTypes;
+    for (var i = 0, l = dependencies.length; i < l; i++) {
+      var dependency = dependencies[i];
+      if (!(
+            isListening.hasOwnProperty(dependency) &&
+            isListening[dependency]
+          )) {
+        if (dependency === topLevelTypes.topWheel) {
+          if (isEventSupported('wheel')) {
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(
+              topLevelTypes.topWheel,
+              'wheel',
+              mountAt
+            );
+          } else if (isEventSupported('mousewheel')) {
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(
+              topLevelTypes.topWheel,
+              'mousewheel',
+              mountAt
+            );
+          } else {
+            // Firefox needs to capture a different mouse scroll event.
+            // @see http://www.quirksmode.org/dom/events/tests/scroll.html
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(
+              topLevelTypes.topWheel,
+              'DOMMouseScroll',
+              mountAt
+            );
+          }
+        } else if (dependency === topLevelTypes.topScroll) {
+
+          if (isEventSupported('scroll', true)) {
+            ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent(
+              topLevelTypes.topScroll,
+              'scroll',
+              mountAt
+            );
+          } else {
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(
+              topLevelTypes.topScroll,
+              'scroll',
+              ReactBrowserEventEmitter.ReactEventListener.WINDOW_HANDLE
+            );
+          }
+        } else if (dependency === topLevelTypes.topFocus ||
+            dependency === topLevelTypes.topBlur) {
+
+          if (isEventSupported('focus', true)) {
+            ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent(
+              topLevelTypes.topFocus,
+              'focus',
+              mountAt
+            );
+            ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent(
+              topLevelTypes.topBlur,
+              'blur',
+              mountAt
+            );
+          } else if (isEventSupported('focusin')) {
+            // IE has `focusin` and `focusout` events which bubble.
+            // @see http://www.quirksmode.org/blog/archives/2008/04/delegating_the.html
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(
+              topLevelTypes.topFocus,
+              'focusin',
+              mountAt
+            );
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(
+              topLevelTypes.topBlur,
+              'focusout',
+              mountAt
+            );
+          }
+
+          // to make sure blur and focus event listeners are only attached once
+          isListening[topLevelTypes.topBlur] = true;
+          isListening[topLevelTypes.topFocus] = true;
+        } else if (topEventMapping.hasOwnProperty(dependency)) {
+          ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(
+            dependency,
+            topEventMapping[dependency],
+            mountAt
+          );
+        }
+
+        isListening[dependency] = true;
+      }
+    }
+  },
+
+  trapBubbledEvent: function(topLevelType, handlerBaseName, handle) {
+    return ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(
+      topLevelType,
+      handlerBaseName,
+      handle
+    );
+  },
+
+  trapCapturedEvent: function(topLevelType, handlerBaseName, handle) {
+    return ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent(
+      topLevelType,
+      handlerBaseName,
+      handle
+    );
+  },
+
+  /**
+   * Listens to window scroll and resize events. We cache scroll values so that
+   * application code can access them without triggering reflows.
+   *
+   * NOTE: Scroll events do not bubble.
+   *
+   * @see http://www.quirksmode.org/dom/events/scroll.html
+   */
+  ensureScrollValueMonitoring: function(){
+    if (!isMonitoringScrollValue) {
+      var refresh = ViewportMetrics.refreshScrollValues;
+      ReactBrowserEventEmitter.ReactEventListener.monitorScrollValue(refresh);
+      isMonitoringScrollValue = true;
+    }
+  },
+
+  eventNameDispatchConfigs: EventPluginHub.eventNameDispatchConfigs,
+
+  registrationNameModules: EventPluginHub.registrationNameModules,
+
+  putListener: EventPluginHub.putListener,
+
+  getListener: EventPluginHub.getListener,
+
+  deleteListener: EventPluginHub.deleteListener,
+
+  deleteAllListeners: EventPluginHub.deleteAllListeners
+
+});
+
+module.exports = ReactBrowserEventEmitter;
+
+},{"./EventConstants":317,"./EventPluginHub":319,"./EventPluginRegistry":320,"./Object.assign":328,"./ReactEventEmitterMixin":358,"./ViewportMetrics":398,"./isEventSupported":429}],333:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactChildren
+ */
+>>>>>>> Editor store and services [#89871770]
 
 },{}],279:[function(require,module,exports){
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, cx;
 
+<<<<<<< HEAD
 cx = require('react/lib/cx');
 
 ERROR_STATE = 'error';
@@ -34138,8 +51875,158 @@ window.IndicatorsToolbar = React.createClass({
   }
 });
 
+=======
+var PooledClass = require("./PooledClass");
+
+var traverseAllChildren = require("./traverseAllChildren");
+var warning = require("./warning");
+
+var twoArgumentPooler = PooledClass.twoArgumentPooler;
+var threeArgumentPooler = PooledClass.threeArgumentPooler;
+
+/**
+ * PooledClass representing the bookkeeping associated with performing a child
+ * traversal. Allows avoiding binding callbacks.
+ *
+ * @constructor ForEachBookKeeping
+ * @param {!function} forEachFunction Function to perform traversal with.
+ * @param {?*} forEachContext Context to perform context with.
+ */
+function ForEachBookKeeping(forEachFunction, forEachContext) {
+  this.forEachFunction = forEachFunction;
+  this.forEachContext = forEachContext;
+}
+PooledClass.addPoolingTo(ForEachBookKeeping, twoArgumentPooler);
+
+function forEachSingleChild(traverseContext, child, name, i) {
+  var forEachBookKeeping = traverseContext;
+  forEachBookKeeping.forEachFunction.call(
+    forEachBookKeeping.forEachContext, child, i);
+}
+
+/**
+ * Iterates through children that are typically specified as `props.children`.
+ *
+ * The provided forEachFunc(child, index) will be called for each
+ * leaf child.
+ *
+ * @param {?*} children Children tree container.
+ * @param {function(*, int)} forEachFunc.
+ * @param {*} forEachContext Context for forEachContext.
+ */
+function forEachChildren(children, forEachFunc, forEachContext) {
+  if (children == null) {
+    return children;
+  }
+
+  var traverseContext =
+    ForEachBookKeeping.getPooled(forEachFunc, forEachContext);
+  traverseAllChildren(children, forEachSingleChild, traverseContext);
+  ForEachBookKeeping.release(traverseContext);
+}
+
+/**
+ * PooledClass representing the bookkeeping associated with performing a child
+ * mapping. Allows avoiding binding callbacks.
+ *
+ * @constructor MapBookKeeping
+ * @param {!*} mapResult Object containing the ordered map of results.
+ * @param {!function} mapFunction Function to perform mapping with.
+ * @param {?*} mapContext Context to perform mapping with.
+ */
+function MapBookKeeping(mapResult, mapFunction, mapContext) {
+  this.mapResult = mapResult;
+  this.mapFunction = mapFunction;
+  this.mapContext = mapContext;
+}
+PooledClass.addPoolingTo(MapBookKeeping, threeArgumentPooler);
+
+function mapSingleChildIntoContext(traverseContext, child, name, i) {
+  var mapBookKeeping = traverseContext;
+  var mapResult = mapBookKeeping.mapResult;
+
+  var keyUnique = !mapResult.hasOwnProperty(name);
+  ("production" !== process.env.NODE_ENV ? warning(
+    keyUnique,
+    'ReactChildren.map(...): Encountered two children with the same key, ' +
+    '`%s`. Child keys must be unique; when two children share a key, only ' +
+    'the first child will be used.',
+    name
+  ) : null);
+
+  if (keyUnique) {
+    var mappedChild =
+      mapBookKeeping.mapFunction.call(mapBookKeeping.mapContext, child, i);
+    mapResult[name] = mappedChild;
+  }
+}
+
+/**
+ * Maps children that are typically specified as `props.children`.
+ *
+ * The provided mapFunction(child, key, index) will be called for each
+ * leaf child.
+ *
+ * TODO: This may likely break any calls to `ReactChildren.map` that were
+ * previously relying on the fact that we guarded against null children.
+ *
+ * @param {?*} children Children tree container.
+ * @param {function(*, int)} mapFunction.
+ * @param {*} mapContext Context for mapFunction.
+ * @return {object} Object containing the ordered map of results.
+ */
+function mapChildren(children, func, context) {
+  if (children == null) {
+    return children;
+  }
+
+  var mapResult = {};
+  var traverseContext = MapBookKeeping.getPooled(mapResult, func, context);
+  traverseAllChildren(children, mapSingleChildIntoContext, traverseContext);
+  MapBookKeeping.release(traverseContext);
+  return mapResult;
+}
+
+function forEachSingleChildDummy(traverseContext, child, name, i) {
+  return null;
+}
+
+/**
+ * Count the number of children that are typically specified as
+ * `props.children`.
+ *
+ * @param {?*} children Children tree container.
+ * @return {number} The number of children.
+ */
+function countChildren(children, context) {
+  return traverseAllChildren(children, forEachSingleChildDummy, null);
+}
+
+var ReactChildren = {
+  forEach: forEachChildren,
+  map: mapChildren,
+  count: countChildren
+};
+
+module.exports = ReactChildren;
+
+}).call(this,require('_process'))
+},{"./PooledClass":329,"./traverseAllChildren":446,"./warning":447,"_process":449}],334:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactComponent
+ */
+>>>>>>> Editor store and services [#89871770]
 
 
+<<<<<<< HEAD
 },{"react/lib/cx":599}],289:[function(require,module,exports){
 var cx;
 
@@ -34555,6 +52442,79 @@ window.MessagingService = (function() {
       return TastyNotifyController.errorResponse(errMsg);
     });
   };
+=======
+var ReactElement = require("./ReactElement");
+var ReactOwner = require("./ReactOwner");
+var ReactUpdates = require("./ReactUpdates");
+
+var assign = require("./Object.assign");
+var invariant = require("./invariant");
+var keyMirror = require("./keyMirror");
+
+/**
+ * Every React component is in one of these life cycles.
+ */
+var ComponentLifeCycle = keyMirror({
+  /**
+   * Mounted components have a DOM node representation and are capable of
+   * receiving new props.
+   */
+  MOUNTED: null,
+  /**
+   * Unmounted components are inactive and cannot receive new props.
+   */
+  UNMOUNTED: null
+});
+
+var injected = false;
+
+/**
+ * Optionally injectable environment dependent cleanup hook. (server vs.
+ * browser etc). Example: A browser system caches DOM nodes based on component
+ * ID and must remove that cache entry when this instance is unmounted.
+ *
+ * @private
+ */
+var unmountIDFromEnvironment = null;
+
+/**
+ * The "image" of a component tree, is the platform specific (typically
+ * serialized) data that represents a tree of lower level UI building blocks.
+ * On the web, this "image" is HTML markup which describes a construction of
+ * low level `div` and `span` nodes. Other platforms may have different
+ * encoding of this "image". This must be injected.
+ *
+ * @private
+ */
+var mountImageIntoNode = null;
+
+/**
+ * Components are the basic units of composition in React.
+ *
+ * Every component accepts a set of keyed input parameters known as "props" that
+ * are initialized by the constructor. Once a component is mounted, the props
+ * can be mutated using `setProps` or `replaceProps`.
+ *
+ * Every component is capable of the following operations:
+ *
+ *   `mountComponent`
+ *     Initializes the component, renders markup, and registers event listeners.
+ *
+ *   `receiveComponent`
+ *     Updates the rendered DOM nodes to match the given component.
+ *
+ *   `unmountComponent`
+ *     Releases any resources allocated by this component.
+ *
+ * Components can also be "owned" by other components. Being owned by another
+ * component means being constructed by that component. This is different from
+ * being the child of a component, which means having a DOM representation that
+ * is a child of the DOM representation of that component.
+ *
+ * @class ReactComponent
+ */
+var ReactComponent = {
+>>>>>>> Editor store and services [#89871770]
 
   MessagingService.prototype.openConversation = function(conversationId) {
     return this.loadMessages(conversationId);
@@ -34747,6 +52707,22 @@ window.MessagingMock = {
 };
 
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./Object.assign":328,"./ReactElement":354,"./ReactOwner":369,"./ReactUpdates":381,"./invariant":428,"./keyMirror":434,"_process":449}],335:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactComponentBrowserEnvironment
+ */
+>>>>>>> Editor store and services [#89871770]
 
 },{}],295:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
@@ -34811,7 +52787,23 @@ window.ConnectionStateStore = _.extend({}, EventEmitter.prototype, {
   }
 });
 
+<<<<<<< HEAD
 _connectionState = ConnectionStateStore.NOT_CONNECTED_STATE;
+=======
+}).call(this,require('_process'))
+},{"./ReactDOMIDOperations":343,"./ReactMarkupChecksum":364,"./ReactMount":365,"./ReactPerf":370,"./ReactReconcileTransaction":376,"./getReactRootElementInContainer":422,"./invariant":428,"./setInnerHTML":442,"_process":449}],336:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactCompositeComponent
+ */
+>>>>>>> Editor store and services [#89871770]
 
 ConnectionStateStore.dispatchToken = MessagingDispatcher.register(function(payload) {
   var action;
@@ -35747,6 +53739,27 @@ window.ReactUnmountMixin = {
   }
 };
 
+<<<<<<< HEAD
+=======
+module.exports = ReactCompositeComponent;
+
+}).call(this,require('_process'))
+},{"./Object.assign":328,"./ReactComponent":334,"./ReactContext":337,"./ReactCurrentOwner":338,"./ReactElement":354,"./ReactElementValidator":355,"./ReactEmptyComponent":356,"./ReactErrorUtils":357,"./ReactLegacyElement":363,"./ReactOwner":369,"./ReactPerf":370,"./ReactPropTransferer":371,"./ReactPropTypeLocationNames":372,"./ReactPropTypeLocations":373,"./ReactUpdates":381,"./instantiateReactComponent":427,"./invariant":428,"./keyMirror":434,"./keyOf":435,"./mapObject":436,"./monitorCodeUse":438,"./shouldUpdateReactComponent":444,"./warning":447,"_process":449}],337:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactContext
+ */
+
+"use strict";
+
+var assign = require("./Object.assign");
+>>>>>>> Editor store and services [#89871770]
 
 
 },{}],313:[function(require,module,exports){
@@ -35796,13 +53809,42 @@ CurrentUserResource = {
   }
 };
 
+<<<<<<< HEAD
 module.exports = CurrentUserResource;
+=======
+module.exports = ReactContext;
+
+},{"./Object.assign":328}],338:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactCurrentOwner
+ */
+
+"use strict";
+
+/**
+ * Keeps track of the current owner.
+ *
+ * The current owner is the component who should own any components that are
+ * currently being constructed.
+ *
+ * The depth indicate how many composite components are above this render level.
+ */
+var ReactCurrentOwner = {
+>>>>>>> Editor store and services [#89871770]
 
 
 
 },{}],314:[function(require,module,exports){
 var DesignPresenterService;
 
+<<<<<<< HEAD
 DesignPresenterService = {
   options: {
     headerFont: [
@@ -36058,11 +54100,61 @@ DesignPresenterService = {
       return propertyAny;
     }
     return null;
+=======
+},{}],339:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOM
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var ReactElement = require("./ReactElement");
+var ReactElementValidator = require("./ReactElementValidator");
+var ReactLegacyElement = require("./ReactLegacyElement");
+
+var mapObject = require("./mapObject");
+
+/**
+ * Create a factory that creates HTML tag elements.
+ *
+ * @param {string} tag Tag name (e.g. `div`).
+ * @private
+ */
+function createDOMFactory(tag) {
+  if ("production" !== process.env.NODE_ENV) {
+    return ReactLegacyElement.markNonLegacyFactory(
+      ReactElementValidator.createFactory(tag)
+    );
+>>>>>>> Editor store and services [#89871770]
   }
 };
 
 module.exports = DesignPresenterService;
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./ReactElement":354,"./ReactElementValidator":355,"./ReactLegacyElement":363,"./mapObject":436,"_process":449}],340:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOMButton
+ */
+>>>>>>> Editor store and services [#89871770]
 
 
 },{}],315:[function(require,module,exports){
@@ -36402,7 +54494,27 @@ DesignStatesService = {
   }
 };
 
+<<<<<<< HEAD
 module.exports = DesignStatesService;
+=======
+});
+
+module.exports = ReactDOMButton;
+
+},{"./AutoFocusMixin":303,"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354,"./keyMirror":434}],341:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOMComponent
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
 
 
@@ -36599,7 +54711,22 @@ BaseStore = (function(_super) {
     return this.off(CHANGE_EVENT, cb);
   };
 
+<<<<<<< HEAD
   return BaseStore;
+=======
+}).call(this,require('_process'))
+},{"./CSSPropertyOperations":306,"./DOMProperty":312,"./DOMPropertyOperations":313,"./Object.assign":328,"./ReactBrowserComponentMixin":331,"./ReactBrowserEventEmitter":332,"./ReactComponent":334,"./ReactMount":365,"./ReactMultiChild":366,"./ReactPerf":370,"./escapeTextForBrowser":411,"./invariant":428,"./isEventSupported":429,"./keyOf":435,"./monitorCodeUse":438,"_process":449}],342:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOMForm
+ */
+>>>>>>> Editor store and services [#89871770]
 
 })(EventEmitter);
 
@@ -36688,6 +54815,24 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 });
 
 
+<<<<<<< HEAD
+=======
+},{"./EventConstants":317,"./LocalEventTrapMixin":326,"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354}],343:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOMIDOperations
+ * @typechecks static-only
+ */
+
+/*jslint evil: true */
+>>>>>>> Editor store and services [#89871770]
 
 },{"./_base":321}],323:[function(require,module,exports){
 var CHANGE_EVENT, SUMMARY_CHANGE_EVENT, _relationships;
@@ -36859,6 +55004,7 @@ window.RelationshipsStore = _.extend({}, EventEmitter.prototype, {
         newRelationships.push(relationship);
       }
     }
+<<<<<<< HEAD
     return _relationships[type].items = newRelationships;
   },
   pushSuggestions: function(type, suggestions) {
@@ -36892,6 +55038,52 @@ window.RelationshipsStore = _.extend({}, EventEmitter.prototype, {
     if (this.isRelationshipExists(relationship)) {
       return this._removeRelationship('followers', relationship);
     }
+=======
+  )
+};
+
+module.exports = ReactDOMIDOperations;
+
+}).call(this,require('_process'))
+},{"./CSSPropertyOperations":306,"./DOMChildrenOperations":311,"./DOMPropertyOperations":313,"./ReactMount":365,"./ReactPerf":370,"./invariant":428,"./setInnerHTML":442,"_process":449}],344:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOMImg
+ */
+
+"use strict";
+
+var EventConstants = require("./EventConstants");
+var LocalEventTrapMixin = require("./LocalEventTrapMixin");
+var ReactBrowserComponentMixin = require("./ReactBrowserComponentMixin");
+var ReactCompositeComponent = require("./ReactCompositeComponent");
+var ReactElement = require("./ReactElement");
+var ReactDOM = require("./ReactDOM");
+
+// Store a reference to the <img> `ReactDOMComponent`. TODO: use string
+var img = ReactElement.createFactory(ReactDOM.img.type);
+
+/**
+ * Since onLoad doesn't bubble OR capture on the top level in IE8, we need to
+ * capture it on the <img> element itself. There are lots of hacks we could do
+ * to accomplish this, but the most reliable is to make <img> a composite
+ * component and use `componentDidMount` to attach the event handlers.
+ */
+var ReactDOMImg = ReactCompositeComponent.createClass({
+  displayName: 'ReactDOMImg',
+  tagName: 'IMG',
+
+  mixins: [ReactBrowserComponentMixin, LocalEventTrapMixin],
+
+  render: function() {
+    return img(this.props);
+>>>>>>> Editor store and services [#89871770]
   },
   _removeRelationship: function(type, relationship) {
     var i, newRelationships, newRelationshipsTotalCount, rel, _i, _len;
@@ -36946,6 +55138,21 @@ RelationshipsStore.dispatchToken = RelationshipsDispatcher.register(function(pay
 });
 
 
+<<<<<<< HEAD
+=======
+},{"./EventConstants":317,"./LocalEventTrapMixin":326,"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354}],345:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOMInput
+ */
+>>>>>>> Editor store and services [#89871770]
 
 },{}],324:[function(require,module,exports){
 var defaults,
@@ -37085,6 +55292,22 @@ window.FileReceiver = (function() {
 })();
 
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./AutoFocusMixin":303,"./DOMPropertyOperations":313,"./LinkedValueUtils":325,"./Object.assign":328,"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354,"./ReactMount":365,"./ReactUpdates":381,"./invariant":428,"_process":449}],346:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOMOption
+ */
+>>>>>>> Editor store and services [#89871770]
 
 },{}],325:[function(require,module,exports){
 window.isMobile = function() {
@@ -37111,7 +55334,22 @@ global.EventEmitter = require('eventEmitter');
 
 global.bowser = require('bowser');
 
+<<<<<<< HEAD
 global.moment = require('../../../bower_components/momentjs/moment');
+=======
+}).call(this,require('_process'))
+},{"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354,"./warning":447,"_process":449}],347:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOMSelect
+ */
+>>>>>>> Editor store and services [#89871770]
 
 global.Pusher = require('pusher');
 
@@ -37161,7 +55399,21 @@ require('jquery.autosize.input');
 
 require('jquery.collage');
 
+<<<<<<< HEAD
 require('jquery.waypoints');
+=======
+},{"./AutoFocusMixin":303,"./LinkedValueUtils":325,"./Object.assign":328,"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354,"./ReactUpdates":381}],348:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactDOMSelection
+ */
+>>>>>>> Editor store and services [#89871770]
 
 require('jquery.fileupload');
 
@@ -37581,9 +55833,14 @@ Routes = {
 
 module.exports = Routes;
 
+<<<<<<< HEAD
 
 
 },{}],334:[function(require,module,exports){
+=======
+},{"./ExecutionEnvironment":323,"./getNodeForCharacterOffset":421,"./getTextContentAccessor":423}],349:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -37830,9 +56087,14 @@ var BeforeInputEventPlugin = {
   }
 };
 
+<<<<<<< HEAD
 module.exports = BeforeInputEventPlugin;
 
 },{"./EventConstants":348,"./EventPropagators":353,"./ExecutionEnvironment":354,"./SyntheticInputEvent":422,"./keyOf":466}],336:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"./AutoFocusMixin":303,"./DOMPropertyOperations":313,"./LinkedValueUtils":325,"./Object.assign":328,"./ReactBrowserComponentMixin":331,"./ReactCompositeComponent":336,"./ReactDOM":339,"./ReactElement":354,"./ReactUpdates":381,"./invariant":428,"./warning":447,"_process":449}],350:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -37949,9 +56211,13 @@ var CSSProperty = {
   shorthandPropertyExpansions: shorthandPropertyExpansions
 };
 
+<<<<<<< HEAD
 module.exports = CSSProperty;
 
 },{}],337:[function(require,module,exports){
+=======
+},{"./Object.assign":328,"./ReactUpdates":381,"./Transaction":397,"./emptyFunction":409}],351:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -38086,8 +56352,12 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./CSSProperty":336,"./ExecutionEnvironment":354,"./camelizeStyleName":433,"./dangerousStyleValue":438,"./hyphenateStyleName":457,"./memoizeStringOnly":468,"./warning":478,"_process":480}],338:[function(require,module,exports){
 (function (process){
+=======
+},{"./BeforeInputEventPlugin":304,"./ChangeEventPlugin":308,"./ClientReactRootIndex":309,"./CompositionEventPlugin":310,"./DefaultEventPluginOrder":315,"./EnterLeaveEventPlugin":316,"./ExecutionEnvironment":323,"./HTMLDOMPropertyConfig":324,"./MobileSafariClickEventPlugin":327,"./ReactBrowserComponentMixin":331,"./ReactComponentBrowserEnvironment":335,"./ReactDOMButton":340,"./ReactDOMComponent":341,"./ReactDOMForm":342,"./ReactDOMImg":344,"./ReactDOMInput":345,"./ReactDOMOption":346,"./ReactDOMSelect":347,"./ReactDOMTextarea":349,"./ReactDefaultBatchingStrategy":350,"./ReactDefaultPerf":352,"./ReactEventListener":359,"./ReactInjection":360,"./ReactInstanceHandles":362,"./ReactMount":365,"./SVGDOMPropertyConfig":382,"./SelectEventPlugin":383,"./ServerReactRootIndex":384,"./SimpleEventPlugin":385,"./createFullPageComponent":405,"_process":449}],352:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -38185,8 +56455,12 @@ PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./Object.assign":359,"./PooledClass":360,"./invariant":459,"_process":480}],339:[function(require,module,exports){
+=======
+},{"./DOMProperty":312,"./ReactDefaultPerfAnalysis":353,"./ReactMount":365,"./ReactPerf":370,"./performanceNow":441}],353:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -38568,7 +56842,12 @@ var ChangeEventPlugin = {
 
 module.exports = ChangeEventPlugin;
 
+<<<<<<< HEAD
 },{"./EventConstants":348,"./EventPluginHub":350,"./EventPropagators":353,"./ExecutionEnvironment":354,"./ReactUpdates":412,"./SyntheticEvent":420,"./isEventSupported":460,"./isTextInputElement":462,"./keyOf":466}],340:[function(require,module,exports){
+=======
+},{"./Object.assign":328}],354:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -38852,7 +57131,12 @@ var CompositionEventPlugin = {
 
 module.exports = CompositionEventPlugin;
 
+<<<<<<< HEAD
 },{"./EventConstants":348,"./EventPropagators":353,"./ExecutionEnvironment":354,"./ReactInputSelection":392,"./SyntheticCompositionEvent":418,"./getTextContentAccessor":454,"./keyOf":466}],342:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"./ReactContext":337,"./ReactCurrentOwner":338,"./warning":447,"_process":449}],355:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -39027,7 +57311,11 @@ var DOMChildrenOperations = {
 module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./Danger":345,"./ReactMultiChildUpdateTypes":398,"./getTextContentAccessor":454,"./invariant":459,"_process":480}],343:[function(require,module,exports){
+=======
+},{"./ReactCurrentOwner":338,"./ReactElement":354,"./ReactPropTypeLocations":373,"./monitorCodeUse":438,"./warning":447,"_process":449}],356:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -39124,10 +57412,26 @@ var DOMPropertyInjection = {
         DOMProperty.getAttributeName[propName] = lowerCased;
       }
 
+<<<<<<< HEAD
       DOMProperty.getPropertyName[propName] =
         DOMPropertyNames.hasOwnProperty(propName) ?
           DOMPropertyNames[propName] :
           propName;
+=======
+}).call(this,require('_process'))
+},{"./ReactElement":354,"./invariant":428,"_process":449}],357:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactErrorUtils
+ * @typechecks
+ */
+>>>>>>> Editor store and services [#89871770]
 
       if (DOMMutationMethods.hasOwnProperty(propName)) {
         DOMProperty.getMutationMethod[propName] = DOMMutationMethods[propName];
@@ -39180,6 +57484,12 @@ var DOMPropertyInjection = {
 };
 var defaultValueCache = {};
 
+<<<<<<< HEAD
+=======
+module.exports = ReactErrorUtils;
+
+},{}],358:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * DOMProperty exports lookup objects that can be used like functions:
  *
@@ -39237,12 +57547,27 @@ var DOMProperty = {
    */
   mustUseAttribute: {},
 
+<<<<<<< HEAD
   /**
    * Whether the property must be accessed and mutated using `*Attribute()`.
    * (This includes anything that fails `<propName> in <element>`.)
    * @type {Object}
    */
   mustUseProperty: {},
+=======
+},{"./EventPluginHub":319}],359:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactEventListener
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
   /**
    * Whether or not setting a value causes side effects such as triggering
@@ -39325,9 +57650,13 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./invariant":459,"_process":480}],344:[function(require,module,exports){
 (function (process){
+=======
+},{"./EventListener":318,"./ExecutionEnvironment":323,"./Object.assign":328,"./PooledClass":329,"./ReactInstanceHandles":362,"./ReactMount":365,"./ReactUpdates":381,"./getEventTarget":419,"./getUnboundedScrollPosition":424}],360:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -39356,9 +57685,23 @@ function shouldIgnoreValue(name, value) {
     (DOMProperty.hasOverloadedBooleanValue[name] && value === false);
 }
 
+<<<<<<< HEAD
 var processAttributeNameAndPrefix = memoizeStringOnly(function(name) {
   return escapeTextForBrowser(name) + '="';
 });
+=======
+},{"./DOMProperty":312,"./EventPluginHub":319,"./ReactBrowserEventEmitter":332,"./ReactComponent":334,"./ReactCompositeComponent":336,"./ReactEmptyComponent":356,"./ReactNativeComponent":368,"./ReactPerf":370,"./ReactRootIndex":377,"./ReactUpdates":381}],361:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactInputSelection
+ */
+>>>>>>> Editor store and services [#89871770]
 
 if ("production" !== process.env.NODE_ENV) {
   var reactProps = {
@@ -39522,8 +57865,12 @@ var DOMPropertyOperations = {
 
 module.exports = DOMPropertyOperations;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./DOMProperty":343,"./escapeTextForBrowser":442,"./memoizeStringOnly":468,"./warning":478,"_process":480}],345:[function(require,module,exports){
+=======
+},{"./ReactDOMSelection":348,"./containsNode":403,"./focusNode":413,"./getActiveElement":415}],362:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -39725,6 +58072,12 @@ module.exports = Danger;
 
  var keyOf = require("./keyOf");
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./ReactRootIndex":377,"./invariant":428,"_process":449}],363:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Module that is injectable into `EventPluginHub`, that specifies a
  * deterministic ordering of `EventPlugin`s. A convenient way to reason about
@@ -39889,7 +58242,12 @@ var EnterLeaveEventPlugin = {
 
 module.exports = EnterLeaveEventPlugin;
 
+<<<<<<< HEAD
 },{"./EventConstants":348,"./EventPropagators":353,"./ReactMount":396,"./SyntheticMouseEvent":424,"./keyOf":466}],348:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"./ReactCurrentOwner":338,"./invariant":428,"./monitorCodeUse":438,"./warning":447,"_process":449}],364:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -40050,8 +58408,12 @@ var EventListener = {
 
 module.exports = EventListener;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./emptyFunction":440,"_process":480}],350:[function(require,module,exports){
+=======
+},{"./adler32":400}],365:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -40607,8 +58969,12 @@ var EventPluginRegistry = {
 module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./invariant":459,"_process":480}],352:[function(require,module,exports){
 (function (process){
+=======
+},{"./DOMProperty":312,"./ReactBrowserEventEmitter":332,"./ReactCurrentOwner":338,"./ReactElement":354,"./ReactInstanceHandles":362,"./ReactLegacyElement":363,"./ReactPerf":370,"./containsNode":403,"./deprecated":408,"./getReactRootElementInContainer":422,"./instantiateReactComponent":427,"./invariant":428,"./shouldUpdateReactComponent":444,"./warning":447,"_process":449}],366:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -40969,8 +59335,12 @@ var EventPropagators = {
 
 module.exports = EventPropagators;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./EventConstants":348,"./EventPluginHub":350,"./accumulateInto":430,"./forEachAccumulated":445,"_process":480}],354:[function(require,module,exports){
+=======
+},{"./ReactComponent":334,"./ReactMultiChildUpdateTypes":367,"./flattenChildren":412,"./instantiateReactComponent":427,"./shouldUpdateReactComponent":444}],367:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -41002,6 +59372,7 @@ var ExecutionEnvironment = {
 
   canUseDOM: canUseDOM,
 
+<<<<<<< HEAD
   canUseWorkers: typeof Worker !== 'undefined',
 
   canUseEventListeners:
@@ -41016,6 +59387,10 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 },{}],355:[function(require,module,exports){
+=======
+},{"./keyMirror":434}],368:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -41207,7 +59582,12 @@ var HTMLDOMPropertyConfig = {
 
 module.exports = HTMLDOMPropertyConfig;
 
+<<<<<<< HEAD
 },{"./DOMProperty":343,"./ExecutionEnvironment":354}],356:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"./Object.assign":328,"./invariant":428,"_process":449}],369:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -41363,7 +59743,11 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ReactPropTypes":405,"./invariant":459,"_process":480}],357:[function(require,module,exports){
+=======
+},{"./emptyObject":410,"./invariant":428,"_process":449}],370:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -41413,7 +59797,12 @@ var LocalEventTrapMixin = {
 module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ReactBrowserEventEmitter":363,"./accumulateInto":430,"./forEachAccumulated":445,"./invariant":459,"_process":480}],358:[function(require,module,exports){
+=======
+},{"_process":449}],371:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -41518,7 +59907,12 @@ function assign(target, sources) {
 
 module.exports = assign;
 
+<<<<<<< HEAD
 },{}],360:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"./Object.assign":328,"./emptyFunction":409,"./invariant":428,"./joinClasses":433,"./warning":447,"_process":449}],372:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -41603,6 +59997,11 @@ var standardReleaser = function(instance) {
 var DEFAULT_POOL_SIZE = 10;
 var DEFAULT_POOLER = oneArgumentPooler;
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"_process":449}],373:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Augments `CopyConstructor` to be a poolable class, augmenting only the class
  * itself (statically) not adding any prototypical fields. Any CopyConstructor
@@ -41633,9 +60032,13 @@ var PooledClass = {
 
 module.exports = PooledClass;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./invariant":459,"_process":480}],361:[function(require,module,exports){
 (function (process){
+=======
+},{"./keyMirror":434}],374:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -41821,9 +60224,13 @@ React.version = '0.12.2';
 
 module.exports = React;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./DOMPropertyOperations":344,"./EventPluginUtils":352,"./ExecutionEnvironment":354,"./Object.assign":359,"./ReactChildren":364,"./ReactComponent":365,"./ReactCompositeComponent":367,"./ReactContext":368,"./ReactCurrentOwner":369,"./ReactDOM":370,"./ReactDOMComponent":372,"./ReactDefaultInjection":382,"./ReactElement":385,"./ReactElementValidator":386,"./ReactInstanceHandles":393,"./ReactLegacyElement":394,"./ReactMount":396,"./ReactMultiChild":397,"./ReactPerf":401,"./ReactPropTypes":405,"./ReactServerRendering":409,"./ReactTextComponent":411,"./deprecated":439,"./onlyChild":470,"_process":480}],362:[function(require,module,exports){
 (function (process){
+=======
+},{"./ReactElement":354,"./ReactPropTypeLocationNames":372,"./deprecated":408,"./emptyFunction":409}],375:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -41864,8 +60271,12 @@ var ReactBrowserComponentMixin = {
 
 module.exports = ReactBrowserComponentMixin;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./ReactEmptyComponent":387,"./ReactMount":396,"./invariant":459,"_process":480}],363:[function(require,module,exports){
+=======
+},{"./Object.assign":328,"./PooledClass":329,"./ReactBrowserEventEmitter":332}],376:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -42172,6 +60583,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
     }
   },
 
+<<<<<<< HEAD
   trapBubbledEvent: function(topLevelType, handlerBaseName, handle) {
     return ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(
       topLevelType,
@@ -42179,6 +60591,20 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
       handle
     );
   },
+=======
+},{"./CallbackQueue":307,"./Object.assign":328,"./PooledClass":329,"./ReactBrowserEventEmitter":332,"./ReactInputSelection":361,"./ReactPutListenerQueue":375,"./Transaction":397}],377:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactRootIndex
+ * @typechecks
+ */
+>>>>>>> Editor store and services [#89871770]
 
   trapCapturedEvent: function(topLevelType, handlerBaseName, handle) {
     return ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent(
@@ -42208,6 +60634,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
 
   registrationNameModules: EventPluginHub.registrationNameModules,
 
+<<<<<<< HEAD
   putListener: EventPluginHub.putListener,
 
   getListener: EventPluginHub.getListener,
@@ -42221,6 +60648,9 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
 module.exports = ReactBrowserEventEmitter;
 
 },{"./EventConstants":348,"./EventPluginHub":350,"./EventPluginRegistry":351,"./Object.assign":359,"./ReactEventEmitterMixin":389,"./ViewportMetrics":429,"./isEventSupported":460}],364:[function(require,module,exports){
+=======
+},{}],378:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -42320,6 +60750,16 @@ function mapSingleChildIntoContext(traverseContext, child, name, i) {
   }
 }
 
+<<<<<<< HEAD
+=======
+module.exports = {
+  renderToString: renderToString,
+  renderToStaticMarkup: renderToStaticMarkup
+};
+
+}).call(this,require('_process'))
+},{"./ReactElement":354,"./ReactInstanceHandles":362,"./ReactMarkupChecksum":364,"./ReactServerRenderingTransaction":379,"./instantiateReactComponent":427,"./invariant":428,"_process":449}],379:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Maps children that are typically specified as `props.children`.
  *
@@ -42369,9 +60809,23 @@ var ReactChildren = {
 
 module.exports = ReactChildren;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./PooledClass":360,"./traverseAllChildren":477,"./warning":478,"_process":480}],365:[function(require,module,exports){
 (function (process){
+=======
+assign(
+  ReactServerRenderingTransaction.prototype,
+  Transaction.Mixin,
+  Mixin
+);
+
+PooledClass.addPoolingTo(ReactServerRenderingTransaction);
+
+module.exports = ReactServerRenderingTransaction;
+
+},{"./CallbackQueue":307,"./Object.assign":328,"./PooledClass":329,"./ReactPutListenerQueue":375,"./Transaction":397,"./emptyFunction":409}],380:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -42553,6 +61007,7 @@ var ReactComponent = {
       ReactUpdates.enqueueUpdate(this, callback);
     },
 
+<<<<<<< HEAD
     /**
      * Schedule a partial update to the props. Only used for internal testing.
      *
@@ -42571,6 +61026,20 @@ var ReactComponent = {
       );
       ReactUpdates.enqueueUpdate(this, callback);
     },
+=======
+},{"./DOMPropertyOperations":313,"./Object.assign":328,"./ReactComponent":334,"./ReactElement":354,"./escapeTextForBrowser":411}],381:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactUpdates
+ */
+>>>>>>> Editor store and services [#89871770]
 
     /**
      * Base constructor for all React components.
@@ -42813,8 +61282,12 @@ var ReactComponent = {
 module.exports = ReactComponent;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./Object.assign":359,"./ReactElement":385,"./ReactOwner":400,"./ReactUpdates":412,"./invariant":459,"./keyMirror":465,"_process":480}],366:[function(require,module,exports){
 (function (process){
+=======
+},{"./CallbackQueue":307,"./Object.assign":328,"./PooledClass":329,"./ReactCurrentOwner":338,"./ReactPerf":370,"./Transaction":397,"./invariant":428,"./warning":447,"_process":449}],382:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -42934,9 +61407,13 @@ var ReactComponentBrowserEnvironment = {
 
 module.exports = ReactComponentBrowserEnvironment;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./ReactDOMIDOperations":374,"./ReactMarkupChecksum":395,"./ReactMount":396,"./ReactPerf":401,"./ReactReconcileTransaction":407,"./getReactRootElementInContainer":453,"./invariant":459,"./setInnerHTML":473,"_process":480}],367:[function(require,module,exports){
 (function (process){
+=======
+},{"./DOMProperty":312}],383:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -43126,7 +61603,22 @@ var ReactCompositeComponentInterface = {
 
 
 
+<<<<<<< HEAD
   // ==== Delegate methods ====
+=======
+},{"./EventConstants":317,"./EventPropagators":322,"./ReactInputSelection":361,"./SyntheticEvent":389,"./getActiveElement":415,"./isTextInputElement":431,"./keyOf":435,"./shallowEqual":443}],384:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ServerReactRootIndex
+ * @typechecks
+ */
+>>>>>>> Editor store and services [#89871770]
 
   /**
    * Invoked when the component is initially created and about to be mounted.
@@ -43192,6 +61684,7 @@ var ReactCompositeComponentInterface = {
    */
   shouldComponentUpdate: SpecPolicy.DEFINE_ONCE,
 
+<<<<<<< HEAD
   /**
    * Invoked when the component is about to update due to a transition from
    * `this.props`, `this.state` and `this.context` to `nextProps`, `nextState`
@@ -43208,6 +61701,20 @@ var ReactCompositeComponentInterface = {
    * @optional
    */
   componentWillUpdate: SpecPolicy.DEFINE_MANY,
+=======
+},{}],385:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule SimpleEventPlugin
+ */
+>>>>>>> Editor store and services [#89871770]
 
   /**
    * Invoked when the component's DOM representation has been updated.
@@ -43358,6 +61865,7 @@ function validateMethodOverride(proto, name) {
     ReactCompositeComponentInterface[name] :
     null;
 
+<<<<<<< HEAD
   // Disallow overriding of base class methods unless explicitly allowed.
   if (ReactCompositeComponentMixin.hasOwnProperty(name)) {
     ("production" !== process.env.NODE_ENV ? invariant(
@@ -43368,6 +61876,21 @@ function validateMethodOverride(proto, name) {
       name
     ) : invariant(specPolicy === SpecPolicy.OVERRIDE_BASE));
   }
+=======
+}).call(this,require('_process'))
+},{"./EventConstants":317,"./EventPluginUtils":321,"./EventPropagators":322,"./SyntheticClipboardEvent":386,"./SyntheticDragEvent":388,"./SyntheticEvent":389,"./SyntheticFocusEvent":390,"./SyntheticKeyboardEvent":392,"./SyntheticMouseEvent":393,"./SyntheticTouchEvent":394,"./SyntheticUIEvent":395,"./SyntheticWheelEvent":396,"./getEventCharCode":416,"./invariant":428,"./keyOf":435,"./warning":447,"_process":449}],386:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule SyntheticClipboardEvent
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
   // Disallow defining methods more than once unless explicitly allowed.
   if (proto.hasOwnProperty(name)) {
@@ -43437,10 +61960,25 @@ function mixSpecIntoComponent(Constructor, spec) {
       continue;
     }
 
+<<<<<<< HEAD
     if (name === MIXINS_KEY) {
       // We have already handled mixins in a special case above
       continue;
     }
+=======
+},{"./SyntheticEvent":389}],387:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule SyntheticCompositionEvent
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
     var property = spec[name];
     validateMethodOverride(proto, name);
@@ -43542,6 +62080,10 @@ function mixStaticSpecIntoComponent(Constructor, statics) {
   }
 }
 
+<<<<<<< HEAD
+=======
+},{"./SyntheticEvent":389}],388:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Merge two objects, but throw if both contain the same key.
  *
@@ -43570,6 +62112,14 @@ function mergeObjectsWithNoDuplicateKeys(one, two) {
   return one;
 }
 
+<<<<<<< HEAD
+=======
+SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
+
+module.exports = SyntheticDragEvent;
+
+},{"./SyntheticMouseEvent":393}],389:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Creates a function that invokes two functions and merges their return values.
  *
@@ -43772,7 +62322,22 @@ var ReactCompositeComponentMixin = {
     this._renderedComponent.unmountComponent();
     this._renderedComponent = null;
 
+<<<<<<< HEAD
     ReactComponent.Mixin.unmountComponent.call(this);
+=======
+},{"./Object.assign":328,"./PooledClass":329,"./emptyFunction":409,"./getEventTarget":419}],390:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule SyntheticFocusEvent
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
     // Some existing components rely on this.props even after they've been
     // destroyed (in event handlers).
@@ -43816,6 +62381,7 @@ var ReactCompositeComponentMixin = {
     );
   },
 
+<<<<<<< HEAD
   /**
    * Replaces all of the state. Always use this or `setState` to mutate state.
    * You should treat `this.state` as immutable.
@@ -43841,6 +62407,93 @@ var ReactCompositeComponentMixin = {
       ReactUpdates.enqueueUpdate(this, callback);
     }
   },
+=======
+/**
+ * @interface FocusEvent
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ */
+var FocusEventInterface = {
+  relatedTarget: null
+};
+
+/**
+ * @param {object} dispatchConfig Configuration used to dispatch this event.
+ * @param {string} dispatchMarker Marker identifying the event target.
+ * @param {object} nativeEvent Native browser event.
+ * @extends {SyntheticUIEvent}
+ */
+function SyntheticFocusEvent(dispatchConfig, dispatchMarker, nativeEvent) {
+  SyntheticUIEvent.call(this, dispatchConfig, dispatchMarker, nativeEvent);
+}
+
+SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
+
+module.exports = SyntheticFocusEvent;
+
+},{"./SyntheticUIEvent":395}],391:[function(require,module,exports){
+/**
+ * Copyright 2013 Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule SyntheticInputEvent
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var SyntheticEvent = require("./SyntheticEvent");
+
+/**
+ * @interface Event
+ * @see http://www.w3.org/TR/2013/WD-DOM-Level-3-Events-20131105
+ *      /#events-inputevents
+ */
+var InputEventInterface = {
+  data: null
+};
+
+/**
+ * @param {object} dispatchConfig Configuration used to dispatch this event.
+ * @param {string} dispatchMarker Marker identifying the event target.
+ * @param {object} nativeEvent Native browser event.
+ * @extends {SyntheticUIEvent}
+ */
+function SyntheticInputEvent(
+  dispatchConfig,
+  dispatchMarker,
+  nativeEvent) {
+  SyntheticEvent.call(this, dispatchConfig, dispatchMarker, nativeEvent);
+}
+
+SyntheticEvent.augmentClass(
+  SyntheticInputEvent,
+  InputEventInterface
+);
+
+module.exports = SyntheticInputEvent;
+
+
+},{"./SyntheticEvent":389}],392:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule SyntheticKeyboardEvent
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var SyntheticUIEvent = require("./SyntheticUIEvent");
+>>>>>>> Editor store and services [#89871770]
 
   /**
    * Filters the context object to only contain keys specified in
@@ -43989,8 +62642,23 @@ var ReactCompositeComponentMixin = {
 
     this._compositeLifeCycleState = null;
 
+<<<<<<< HEAD
     var nextState = this._pendingState || this.state;
     this._pendingState = null;
+=======
+},{"./SyntheticUIEvent":395,"./getEventCharCode":416,"./getEventKey":417,"./getEventModifierState":418}],393:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule SyntheticMouseEvent
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
     var shouldUpdate =
       this._pendingForceUpdate ||
@@ -44054,9 +62722,24 @@ var ReactCompositeComponentMixin = {
     var prevState = this.state;
     var prevContext = this.context;
 
+<<<<<<< HEAD
     if (this.componentWillUpdate) {
       this.componentWillUpdate(nextProps, nextState, nextContext);
     }
+=======
+},{"./SyntheticUIEvent":395,"./ViewportMetrics":398,"./getEventModifierState":418}],394:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule SyntheticTouchEvent
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
     this._currentElement = nextElement;
     this.props = nextProps;
@@ -44287,6 +62970,10 @@ assign(
   ReactCompositeComponentMixin
 );
 
+<<<<<<< HEAD
+=======
+},{"./SyntheticUIEvent":395,"./getEventModifierState":418}],395:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Module for creating composite components.
  *
@@ -44374,8 +63061,12 @@ var ReactCompositeComponent = {
 
 module.exports = ReactCompositeComponent;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./Object.assign":359,"./ReactComponent":365,"./ReactContext":368,"./ReactCurrentOwner":369,"./ReactElement":385,"./ReactElementValidator":386,"./ReactEmptyComponent":387,"./ReactErrorUtils":388,"./ReactLegacyElement":394,"./ReactOwner":400,"./ReactPerf":401,"./ReactPropTransferer":402,"./ReactPropTypeLocationNames":403,"./ReactPropTypeLocations":404,"./ReactUpdates":412,"./instantiateReactComponent":458,"./invariant":459,"./keyMirror":465,"./keyOf":466,"./mapObject":467,"./monitorCodeUse":469,"./shouldUpdateReactComponent":475,"./warning":478,"_process":480}],368:[function(require,module,exports){
+=======
+},{"./SyntheticEvent":389,"./getEventTarget":419}],396:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44437,7 +63128,12 @@ var ReactContext = {
 
 module.exports = ReactContext;
 
+<<<<<<< HEAD
 },{"./Object.assign":359}],369:[function(require,module,exports){
+=======
+},{"./SyntheticMouseEvent":393}],397:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44654,7 +63350,11 @@ var ReactDOM = mapObject({
 module.exports = ReactDOM;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ReactElement":385,"./ReactElementValidator":386,"./ReactLegacyElement":394,"./mapObject":467,"_process":480}],371:[function(require,module,exports){
+=======
+},{"./invariant":428,"_process":449}],398:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44719,7 +63419,11 @@ var ReactDOMButton = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMButton;
 
+<<<<<<< HEAD
 },{"./AutoFocusMixin":334,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./keyMirror":465}],372:[function(require,module,exports){
+=======
+},{"./getUnboundedScrollPosition":424}],399:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -44816,8 +63520,23 @@ function putListener(id, registrationName, listener, transaction) {
   );
 }
 
+<<<<<<< HEAD
 // For HTML, certain tags should omit their close tag. We keep a whitelist for
 // those special cased tags.
+=======
+}).call(this,require('_process'))
+},{"./invariant":428,"_process":449}],400:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule adler32
+ */
+>>>>>>> Editor store and services [#89871770]
 
 var omittedCloseTags = {
   'area': true,
@@ -44853,6 +63572,12 @@ function validateDangerousTag(tag) {
   }
 }
 
+<<<<<<< HEAD
+=======
+module.exports = adler32;
+
+},{}],401:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Creates a new React class that is idempotent and capable of containing other
  * React components. It accepts event listeners and DOM properties that are
@@ -44876,7 +63601,22 @@ function ReactDOMComponent(tag) {
 
 ReactDOMComponent.displayName = 'ReactDOMComponent';
 
+<<<<<<< HEAD
 ReactDOMComponent.Mixin = {
+=======
+},{}],402:[function(require,module,exports){
+/**
+ * Copyright 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule camelizeStyleName
+ * @typechecks
+ */
+>>>>>>> Editor store and services [#89871770]
 
   /**
    * Generates root tag markup then recurses. This method has side effects and
@@ -44959,6 +63699,7 @@ ReactDOMComponent.Mixin = {
     return ret + ' ' + markupForID + '>';
   },
 
+<<<<<<< HEAD
   /**
    * Creates markup for the content between the tags.
    *
@@ -45207,6 +63948,9 @@ module.exports = ReactDOMComponent;
 
 }).call(this,require('_process'))
 },{"./CSSPropertyOperations":337,"./DOMProperty":343,"./DOMPropertyOperations":344,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactBrowserEventEmitter":363,"./ReactComponent":365,"./ReactMount":396,"./ReactMultiChild":397,"./ReactPerf":401,"./escapeTextForBrowser":442,"./invariant":459,"./isEventSupported":460,"./keyOf":466,"./monitorCodeUse":469,"_process":480}],373:[function(require,module,exports){
+=======
+},{"./camelize":401}],403:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45256,8 +64000,12 @@ var ReactDOMForm = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMForm;
 
+<<<<<<< HEAD
 },{"./EventConstants":348,"./LocalEventTrapMixin":357,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385}],374:[function(require,module,exports){
 (function (process){
+=======
+},{"./isTextNode":432}],404:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45321,6 +64069,7 @@ var ReactDOMIDOperations = {
         INVALID_PROPERTY_ERRORS[name]
       ) : invariant(!INVALID_PROPERTY_ERRORS.hasOwnProperty(name)));
 
+<<<<<<< HEAD
       // If we're updating to null or undefined, we should remove the property
       // from the DOM node instead of inadvertantly setting to a string. This
       // brings us in line with the same behavior we have on initial render.
@@ -45443,6 +64192,10 @@ module.exports = ReactDOMIDOperations;
 
 }).call(this,require('_process'))
 },{"./CSSPropertyOperations":337,"./DOMChildrenOperations":342,"./DOMPropertyOperations":344,"./ReactMount":396,"./ReactPerf":401,"./invariant":459,"./setInnerHTML":473,"_process":480}],375:[function(require,module,exports){
+=======
+},{"./toArray":445}],405:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45490,7 +64243,12 @@ var ReactDOMImg = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMImg;
 
+<<<<<<< HEAD
 },{"./EventConstants":348,"./LocalEventTrapMixin":357,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385}],376:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"./ReactCompositeComponent":336,"./ReactElement":354,"./invariant":428,"_process":449}],406:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -45668,8 +64426,12 @@ var ReactDOMInput = ReactCompositeComponent.createClass({
 module.exports = ReactDOMInput;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./AutoFocusMixin":334,"./DOMPropertyOperations":344,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactMount":396,"./ReactUpdates":412,"./invariant":459,"_process":480}],377:[function(require,module,exports){
 (function (process){
+=======
+},{"./ExecutionEnvironment":323,"./createArrayFrom":404,"./getMarkupWrap":420,"./invariant":428,"_process":449}],407:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45718,10 +64480,15 @@ var ReactDOMOption = ReactCompositeComponent.createClass({
 
 });
 
+<<<<<<< HEAD
 module.exports = ReactDOMOption;
 
 }).call(this,require('_process'))
 },{"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./warning":478,"_process":480}],378:[function(require,module,exports){
+=======
+},{"./CSSProperty":305}],408:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45756,6 +64523,11 @@ function updateWithPendingValueIfMounted() {
   }
 }
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./Object.assign":328,"./warning":447,"_process":449}],409:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Validation function for `value` and `defaultValue`.
  * @private
@@ -45812,6 +64584,11 @@ function updateOptions(component, propValue) {
   }
 }
 
+<<<<<<< HEAD
+=======
+},{}],410:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Implements a <select> native component that allows optionally setting the
  * props `value` and `defaultValue`. If `multiple` is false, the prop must be a
@@ -45845,6 +64622,7 @@ var ReactDOMSelect = ReactCompositeComponent.createClass({
     this._pendingValue = null;
   },
 
+<<<<<<< HEAD
   componentWillReceiveProps: function(nextProps) {
     if (!this.props.multiple && nextProps.multiple) {
       this.setState({value: [this.state.value]});
@@ -45906,6 +64684,10 @@ var ReactDOMSelect = ReactCompositeComponent.createClass({
 module.exports = ReactDOMSelect;
 
 },{"./AutoFocusMixin":334,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactUpdates":412}],379:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"_process":449}],411:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45933,6 +64715,13 @@ function isCollapsed(anchorNode, anchorOffset, focusNode, focusOffset) {
   return anchorNode === focusNode && anchorOffset === focusOffset;
 }
 
+<<<<<<< HEAD
+=======
+module.exports = escapeTextForBrowser;
+
+},{}],412:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Get the appropriate anchor and focus node/offset pairs for IE.
  *
@@ -46048,6 +64837,11 @@ function setIEOffsets(node, offsets) {
   range.select();
 }
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./ReactTextComponent":380,"./traverseAllChildren":446,"./warning":447,"_process":449}],413:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * In modern non-IE browsers, we can support both forward and backward
  * selections.
@@ -46079,8 +64873,22 @@ function setModernOffsets(node, offsets) {
     start = temp;
   }
 
+<<<<<<< HEAD
   var startMarker = getNodeForCharacterOffset(node, start);
   var endMarker = getNodeForCharacterOffset(node, end);
+=======
+},{}],414:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule forEachAccumulated
+ */
+>>>>>>> Editor store and services [#89871770]
 
   if (startMarker && endMarker) {
     var range = document.createRange();
@@ -46114,8 +64922,12 @@ var ReactDOMSelection = {
 
 module.exports = ReactDOMSelection;
 
+<<<<<<< HEAD
 },{"./ExecutionEnvironment":354,"./getNodeForCharacterOffset":452,"./getTextContentAccessor":454}],380:[function(require,module,exports){
 (function (process){
+=======
+},{}],415:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46153,6 +64965,12 @@ function forceUpdateIfMounted() {
   }
 }
 
+<<<<<<< HEAD
+=======
+module.exports = getActiveElement;
+
+},{}],416:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Implements a <textarea> native component that allows setting `value`, and
  * `defaultValue`. This differs from the traditional DOM API because value is
@@ -46254,8 +65072,12 @@ var ReactDOMTextarea = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMTextarea;
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./AutoFocusMixin":334,"./DOMPropertyOperations":344,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactUpdates":412,"./invariant":459,"./warning":478,"_process":480}],381:[function(require,module,exports){
+=======
+},{}],417:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46328,8 +65150,12 @@ var ReactDefaultBatchingStrategy = {
 
 module.exports = ReactDefaultBatchingStrategy;
 
+<<<<<<< HEAD
 },{"./Object.assign":359,"./ReactUpdates":412,"./Transaction":428,"./emptyFunction":440}],382:[function(require,module,exports){
 (function (process){
+=======
+},{"./getEventCharCode":416}],418:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46401,9 +65227,24 @@ function inject() {
     BeforeInputEventPlugin: BeforeInputEventPlugin
   });
 
+<<<<<<< HEAD
   ReactInjection.NativeComponent.injectGenericComponentClass(
     ReactDOMComponent
   );
+=======
+},{}],419:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule getEventTarget
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
   ReactInjection.NativeComponent.injectComponentClasses({
     'button': ReactDOMButton,
@@ -46456,8 +65297,13 @@ module.exports = {
   inject: inject
 };
 
+<<<<<<< HEAD
 }).call(this,require('_process'))
 },{"./BeforeInputEventPlugin":335,"./ChangeEventPlugin":339,"./ClientReactRootIndex":340,"./CompositionEventPlugin":341,"./DefaultEventPluginOrder":346,"./EnterLeaveEventPlugin":347,"./ExecutionEnvironment":354,"./HTMLDOMPropertyConfig":355,"./MobileSafariClickEventPlugin":358,"./ReactBrowserComponentMixin":362,"./ReactComponentBrowserEnvironment":366,"./ReactDOMButton":371,"./ReactDOMComponent":372,"./ReactDOMForm":373,"./ReactDOMImg":375,"./ReactDOMInput":376,"./ReactDOMOption":377,"./ReactDOMSelect":378,"./ReactDOMTextarea":380,"./ReactDefaultBatchingStrategy":381,"./ReactDefaultPerf":383,"./ReactEventListener":390,"./ReactInjection":391,"./ReactInstanceHandles":393,"./ReactMount":396,"./SVGDOMPropertyConfig":413,"./SelectEventPlugin":414,"./ServerReactRootIndex":415,"./SimpleEventPlugin":416,"./createFullPageComponent":436,"_process":480}],383:[function(require,module,exports){
+=======
+},{}],420:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46582,6 +65428,7 @@ var ReactDefaultPerf = {
     );
   },
 
+<<<<<<< HEAD
   _recordWrite: function(id, fnName, totalTime, args) {
     // TODO: totalTime isn't that useful since it doesn't count paints/reflows
     var writes =
@@ -46718,6 +65565,10 @@ var ReactDefaultPerf = {
 module.exports = ReactDefaultPerf;
 
 },{"./DOMProperty":343,"./ReactDefaultPerfAnalysis":384,"./ReactMount":396,"./ReactPerf":401,"./performanceNow":472}],384:[function(require,module,exports){
+=======
+}).call(this,require('_process'))
+},{"./ExecutionEnvironment":323,"./invariant":428,"_process":449}],421:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46897,6 +65748,7 @@ function getUnchangedComponents(measurement) {
   var dirtyLeafIDs = Object.keys(measurement.writes);
   var allIDs = assign({}, measurement.exclusive, measurement.inclusive);
 
+<<<<<<< HEAD
   for (var id in allIDs) {
     var isDirty = false;
     // For each component that rendered, see if a component that triggered
@@ -46925,6 +65777,9 @@ module.exports = ReactDefaultPerfAnalysis;
 
 },{"./Object.assign":359}],385:[function(require,module,exports){
 (function (process){
+=======
+},{}],422:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -46948,6 +65803,10 @@ var RESERVED_PROPS = {
   ref: true
 };
 
+<<<<<<< HEAD
+=======
+},{}],423:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Warn for mutations.
  *
@@ -46980,6 +65839,12 @@ function defineWarningProperty(object, key) {
   });
 }
 
+<<<<<<< HEAD
+=======
+module.exports = getTextContentAccessor;
+
+},{"./ExecutionEnvironment":323}],424:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * This is updated to true if the membrane is successfully created.
  */
@@ -47005,6 +65870,12 @@ function defineMutationMembrane(prototype) {
   }
 }
 
+<<<<<<< HEAD
+=======
+module.exports = getUnboundedScrollPosition;
+
+},{}],425:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Base constructor for all React elements. This is only used to make this
  * work with a dynamic instanceof check. Nothing should live on this prototype.
@@ -47028,12 +65899,27 @@ var ReactElement = function(type, key, ref, owner, context, props) {
   // through the owner.
   this._context = context;
 
+<<<<<<< HEAD
   if ("production" !== process.env.NODE_ENV) {
     // The validation flag and props are currently mutative. We put them on
     // an external backing store so that we can freeze the whole object.
     // This can be replaced with a WeakMap once they are implemented in
     // commonly used development environments.
     this._store = { validated: false, props: props };
+=======
+},{}],426:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule hyphenateStyleName
+ * @typechecks
+ */
+>>>>>>> Editor store and services [#89871770]
 
     // We're not allowed to set props directly on the object so we early
     // return and rely on the prototype membrane to forward to the backing
@@ -47057,8 +65943,35 @@ if ("production" !== process.env.NODE_ENV) {
   defineMutationMembrane(ReactElement.prototype);
 }
 
+<<<<<<< HEAD
 ReactElement.createElement = function(type, config, children) {
   var propName;
+=======
+module.exports = hyphenateStyleName;
+
+},{"./hyphenate":425}],427:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule instantiateReactComponent
+ * @typechecks static-only
+ */
+
+"use strict";
+
+var warning = require("./warning");
+
+var ReactElement = require("./ReactElement");
+var ReactLegacyElement = require("./ReactLegacyElement");
+var ReactNativeComponent = require("./ReactNativeComponent");
+var ReactEmptyComponent = require("./ReactEmptyComponent");
+>>>>>>> Editor store and services [#89871770]
 
   // Reserved names are extracted
   var props = {};
@@ -47169,7 +66082,11 @@ ReactElement.isValidElement = function(object) {
 module.exports = ReactElement;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ReactContext":368,"./ReactCurrentOwner":369,"./warning":478,"_process":480}],386:[function(require,module,exports){
+=======
+},{"./ReactElement":354,"./ReactEmptyComponent":356,"./ReactLegacyElement":363,"./ReactNativeComponent":368,"./warning":447,"_process":449}],428:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -47198,6 +66115,11 @@ var ReactCurrentOwner = require("./ReactCurrentOwner");
 var monitorCodeUse = require("./monitorCodeUse");
 var warning = require("./warning");
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"_process":449}],429:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Warn if there's no key explicitly set on dynamic arrays of children or
  * object keys are not valid. This allows us to keep track of children between
@@ -47248,6 +66170,12 @@ function validateExplicitKey(component, parentType) {
   );
 }
 
+<<<<<<< HEAD
+=======
+module.exports = isEventSupported;
+
+},{"./ExecutionEnvironment":323}],430:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Warn if the key is being defined as an object property but has an incorrect
  * value.
@@ -47269,6 +66197,12 @@ function validatePropertyKey(name, component, parentType) {
   );
 }
 
+<<<<<<< HEAD
+=======
+module.exports = isNode;
+
+},{}],431:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Shared warning and monitoring code for the key warnings.
  *
@@ -47301,8 +66235,23 @@ function warnAndMonitorForKeyUse(warningID, message, component, parentType) {
     // Name of the component that originally created this child.
     childOwnerName = component._owner.constructor.displayName;
 
+<<<<<<< HEAD
     message += (" It was passed a child from " + childOwnerName + ".");
   }
+=======
+},{}],432:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule isTextNode
+ * @typechecks
+ */
+>>>>>>> Editor store and services [#89871770]
 
   message += ' See http://fb.me/react-warning-keys for more information.';
   monitorCodeUse(warningID, {
@@ -47327,6 +66276,12 @@ function monitorUseOfObjectMap() {
   monitorCodeUse('react_object_map_children');
 }
 
+<<<<<<< HEAD
+=======
+module.exports = isTextNode;
+
+},{"./isNode":430}],433:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Ensure that every component either is passed in a static location, in an
  * array with an explicit keys property defined, or in an object literal
@@ -47393,6 +66348,7 @@ function checkPropTypes(componentName, propTypes, props, location) {
 
 var ReactElementValidator = {
 
+<<<<<<< HEAD
   createElement: function(type, props, children) {
     // We warn in this case but don't throw. We expect the element creation to
     // succeed and there will likely be errors in render.
@@ -47452,6 +66408,9 @@ module.exports = ReactElementValidator;
 
 }).call(this,require('_process'))
 },{"./ReactCurrentOwner":369,"./ReactElement":385,"./ReactPropTypeLocations":404,"./monitorCodeUse":469,"./warning":478,"_process":480}],387:[function(require,module,exports){
+=======
+},{}],434:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -47528,7 +66487,11 @@ var ReactEmptyComponent = {
 module.exports = ReactEmptyComponent;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ReactElement":385,"./invariant":459,"_process":480}],388:[function(require,module,exports){
+=======
+},{"./invariant":428,"_process":449}],435:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47560,7 +66523,13 @@ var ReactErrorUtils = {
 
 module.exports = ReactErrorUtils;
 
+<<<<<<< HEAD
 },{}],389:[function(require,module,exports){
+=======
+module.exports = keyOf;
+
+},{}],436:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47583,6 +66552,7 @@ function runEventQueueInBatch(events) {
 
 var ReactEventEmitterMixin = {
 
+<<<<<<< HEAD
   /**
    * Streams a fired top-level event to `EventPluginHub` where plugins have the
    * opportunity to create `ReactEvent`s to be dispatched.
@@ -47611,6 +66581,9 @@ var ReactEventEmitterMixin = {
 module.exports = ReactEventEmitterMixin;
 
 },{"./EventPluginHub":350}],390:[function(require,module,exports){
+=======
+},{}],437:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47636,6 +66609,11 @@ var assign = require("./Object.assign");
 var getEventTarget = require("./getEventTarget");
 var getUnboundedScrollPosition = require("./getUnboundedScrollPosition");
 
+<<<<<<< HEAD
+=======
+},{}],438:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Finds the parent React component of `node`.
  *
@@ -47704,9 +66682,26 @@ function scrollValueMonitor(cb) {
   cb(scrollPosition);
 }
 
+<<<<<<< HEAD
 var ReactEventListener = {
   _enabled: true,
   _handleTopLevel: null,
+=======
+}).call(this,require('_process'))
+},{"./invariant":428,"_process":449}],439:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule onlyChild
+ */
+"use strict";
+>>>>>>> Editor store and services [#89871770]
 
   WINDOW_HANDLE: ExecutionEnvironment.canUseDOM ? window : null,
 
@@ -47722,6 +66717,22 @@ var ReactEventListener = {
     return ReactEventListener._enabled;
   },
 
+<<<<<<< HEAD
+=======
+}).call(this,require('_process'))
+},{"./ReactElement":354,"./invariant":428,"_process":449}],440:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule performance
+ * @typechecks
+ */
+>>>>>>> Editor store and services [#89871770]
 
   /**
    * Traps top-level events by using event bubbling.
@@ -47792,9 +66803,13 @@ var ReactEventListener = {
   }
 };
 
+<<<<<<< HEAD
 module.exports = ReactEventListener;
 
 },{"./EventListener":349,"./ExecutionEnvironment":354,"./Object.assign":359,"./PooledClass":360,"./ReactInstanceHandles":393,"./ReactMount":396,"./ReactUpdates":412,"./getEventTarget":450,"./getUnboundedScrollPosition":455}],391:[function(require,module,exports){
+=======
+},{"./ExecutionEnvironment":323}],441:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47834,7 +66849,11 @@ var ReactInjection = {
 
 module.exports = ReactInjection;
 
+<<<<<<< HEAD
 },{"./DOMProperty":343,"./EventPluginHub":350,"./ReactBrowserEventEmitter":363,"./ReactComponent":365,"./ReactCompositeComponent":367,"./ReactEmptyComponent":387,"./ReactNativeComponent":399,"./ReactPerf":401,"./ReactRootIndex":408,"./ReactUpdates":412}],392:[function(require,module,exports){
+=======
+},{"./performance":440}],442:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47970,8 +66989,12 @@ var ReactInputSelection = {
 
 module.exports = ReactInputSelection;
 
+<<<<<<< HEAD
 },{"./ReactDOMSelection":379,"./containsNode":434,"./focusNode":444,"./getActiveElement":446}],393:[function(require,module,exports){
 (function (process){
+=======
+},{"./ExecutionEnvironment":323}],443:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47998,6 +67021,10 @@ var SEPARATOR_LENGTH = SEPARATOR.length;
  */
 var MAX_TREE_DEPTH = 100;
 
+<<<<<<< HEAD
+=======
+},{}],444:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Creates a DOM ID prefix to use when mounting React components.
  *
@@ -48021,6 +67048,13 @@ function isBoundary(id, index) {
   return id.charAt(index) === SEPARATOR || index === id.length;
 }
 
+<<<<<<< HEAD
+=======
+module.exports = shouldUpdateReactComponent;
+
+},{}],445:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Checks if the supplied string is a valid React DOM ID.
  *
@@ -48049,6 +67083,14 @@ function isAncestorIDOf(ancestorID, descendantID) {
   );
 }
 
+<<<<<<< HEAD
+=======
+module.exports = toArray;
+
+}).call(this,require('_process'))
+},{"./invariant":428,"_process":449}],446:[function(require,module,exports){
+(function (process){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Gets the parent ID of the supplied React DOM ID, `id`.
  *
@@ -48305,7 +67347,11 @@ var ReactInstanceHandles = {
 module.exports = ReactInstanceHandles;
 
 }).call(this,require('_process'))
+<<<<<<< HEAD
 },{"./ReactRootIndex":408,"./invariant":459,"_process":480}],394:[function(require,module,exports){
+=======
+},{"./ReactElement":354,"./ReactInstanceHandles":362,"./invariant":428,"_process":449}],447:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -48387,6 +67433,7 @@ function warnForNonLegacyFactory(type) {
   ) : null);
 }
 
+<<<<<<< HEAD
 /**
  * Transfer static properties from the source to the target. Functions are
  * rebound to have this reflect the original source.
@@ -48419,6 +67466,14 @@ function proxyStaticMethods(target, source) {
 // mocking libraries when these factories gets mocked.
 var LEGACY_MARKER = {};
 var NON_LEGACY_MARKER = {};
+=======
+}).call(this,require('_process'))
+},{"./emptyFunction":409,"_process":449}],448:[function(require,module,exports){
+module.exports = require('./lib/React');
+
+},{"./lib/React":330}],449:[function(require,module,exports){
+// shim for using process in browser
+>>>>>>> Editor store and services [#89871770]
 
 var ReactLegacyElementFactory = {};
 
@@ -48536,6 +67591,7 @@ ReactLegacyElementFactory.isValidFactory = function(factory) {
     factory.isReactLegacyFactory === LEGACY_MARKER;
 };
 
+<<<<<<< HEAD
 ReactLegacyElementFactory.isValidClass = function(factory) {
   if ("production" !== process.env.NODE_ENV) {
     ("production" !== process.env.NODE_ENV ? warning(
@@ -48553,6 +67609,9 @@ module.exports = ReactLegacyElementFactory;
 
 }).call(this,require('_process'))
 },{"./ReactCurrentOwner":369,"./invariant":459,"./monitorCodeUse":469,"./warning":478,"_process":480}],395:[function(require,module,exports){
+=======
+},{}],450:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -48566,6 +67625,7 @@ module.exports = ReactLegacyElementFactory;
 
 "use strict";
 
+<<<<<<< HEAD
 var adler32 = require("./adler32");
 
 var ReactMarkupChecksum = {
@@ -48604,6 +67664,11 @@ module.exports = ReactMarkupChecksum;
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
+=======
+},{"./lib/Dispatcher":451}],451:[function(require,module,exports){
+/*
+ * Copyright (c) 2014, Facebook, Inc.
+>>>>>>> Editor store and services [#89871770]
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -48705,6 +67770,10 @@ function internalGetID(node) {
   return node && node.getAttribute && node.getAttribute(ATTR_NAME) || '';
 }
 
+<<<<<<< HEAD
+=======
+},{"./invariant":452}],452:[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 /**
  * Sets the React-specific ID of the given node.
  *
@@ -48761,10 +67830,18 @@ function isValid(node, id) {
   return false;
 }
 
+<<<<<<< HEAD
 /**
  * Causes the cache to forget about one React-specific ID.
  *
  * @param {string} id The ID to forget.
+=======
+},{}],453:[function(require,module,exports){
+/*!
+ * imagesLoaded v3.1.8
+ * JavaScript is all like "You images are done yet or what?"
+ * MIT License
+>>>>>>> Editor store and services [#89871770]
  */
 function purgeID(id) {
   delete nodeCache[id];
@@ -49245,11 +68322,22 @@ var ReactMount = {
         child = child.nextSibling;
       }
 
+<<<<<<< HEAD
       if (targetChild) {
         // Emptying firstChildren/findComponentRootReusableArray is
         // not necessary for correctness, but it helps the GC reclaim
         // any nodes that were left at the end of the search.
         firstChildren.length = 0;
+=======
+},{"eventie":454,"wolfy87-eventemitter":455}],454:[function(require,module,exports){
+/*!
+ * eventie v1.0.6
+ * event binding helper
+ *   eventie.bind( elem, 'click', myFn )
+ *   eventie.unbind( elem, 'click', myFn )
+ * MIT license
+ */
+>>>>>>> Editor store and services [#89871770]
 
         return targetChild;
       }
@@ -49286,6 +68374,7 @@ var ReactMount = {
   purgeID: purgeID
 };
 
+<<<<<<< HEAD
 // Deprecations (remove for 0.13)
 ReactMount.renderComponent = deprecated(
   'ReactMount',
@@ -49294,6 +68383,30 @@ ReactMount.renderComponent = deprecated(
   this,
   ReactMount.render
 );
+=======
+// ----- module definition ----- //
+
+if ( typeof define === 'function' && define.amd ) {
+  // AMD
+  define( eventie );
+} else if ( typeof exports === 'object' ) {
+  // CommonJS
+  module.exports = eventie;
+} else {
+  // browser global
+  window.eventie = eventie;
+}
+
+})( window );
+
+},{}],455:[function(require,module,exports){
+/*!
+ * EventEmitter v4.2.11 - git.io/ee
+ * Unlicense - http://unlicense.org/
+ * Oliver Caldwell - http://oli.me.uk/
+ * @preserve
+ */
+>>>>>>> Editor store and services [#89871770]
 
 module.exports = ReactMount;
 
@@ -49981,7 +69094,22 @@ var ReactOwner = {
       delete this.refs[ref];
     }
 
+<<<<<<< HEAD
   }
+=======
+},{}],456:[function(require,module,exports){
+(function (global){
+/**
+ * @license
+ * lodash 3.3.1 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern -d -o ./index.js`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+;(function() {
+>>>>>>> Editor store and services [#89871770]
 
 };
 
@@ -59266,6 +78394,7 @@ if ( typeof define === 'function' && define.amd ) {
       return result;
     }
 
+<<<<<<< HEAD
     /**
      * The base implementation of `_.isEqual` without support for `this` binding
      * `customizer` functions.
@@ -59287,6 +78416,65 @@ if ( typeof define === 'function' && define.amd ) {
       }
       var valType = typeof value,
           othType = typeof other;
+=======
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],457:[function(require,module,exports){
+module.exports=require(303)
+},{"./focusNode":575,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/AutoFocusMixin.js":303}],458:[function(require,module,exports){
+module.exports=require(304)
+},{"./EventConstants":471,"./EventPropagators":476,"./ExecutionEnvironment":477,"./SyntheticInputEvent":551,"./keyOf":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/BeforeInputEventPlugin.js":304}],459:[function(require,module,exports){
+module.exports=require(305)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSProperty.js":305}],460:[function(require,module,exports){
+module.exports=require(306)
+},{"./CSSProperty":459,"./ExecutionEnvironment":477,"./camelizeStyleName":562,"./dangerousStyleValue":569,"./hyphenateStyleName":588,"./memoizeStringOnly":599,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSPropertyOperations.js":306,"_process":449}],461:[function(require,module,exports){
+module.exports=require(307)
+},{"./Object.assign":483,"./PooledClass":484,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CallbackQueue.js":307,"_process":449}],462:[function(require,module,exports){
+module.exports=require(308)
+},{"./EventConstants":471,"./EventPluginHub":473,"./EventPropagators":476,"./ExecutionEnvironment":477,"./ReactUpdates":541,"./SyntheticEvent":549,"./isEventSupported":591,"./isTextInputElement":593,"./keyOf":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ChangeEventPlugin.js":308}],463:[function(require,module,exports){
+module.exports=require(309)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ClientReactRootIndex.js":309}],464:[function(require,module,exports){
+module.exports=require(310)
+},{"./EventConstants":471,"./EventPropagators":476,"./ExecutionEnvironment":477,"./ReactInputSelection":517,"./SyntheticCompositionEvent":547,"./getTextContentAccessor":585,"./keyOf":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CompositionEventPlugin.js":310}],465:[function(require,module,exports){
+module.exports=require(311)
+},{"./Danger":468,"./ReactMultiChildUpdateTypes":524,"./getTextContentAccessor":585,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMChildrenOperations.js":311,"_process":449}],466:[function(require,module,exports){
+module.exports=require(312)
+},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMProperty.js":312,"_process":449}],467:[function(require,module,exports){
+module.exports=require(313)
+},{"./DOMProperty":466,"./escapeTextForBrowser":573,"./memoizeStringOnly":599,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMPropertyOperations.js":313,"_process":449}],468:[function(require,module,exports){
+module.exports=require(314)
+},{"./ExecutionEnvironment":477,"./createNodesFromMarkup":567,"./emptyFunction":571,"./getMarkupWrap":582,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Danger.js":314,"_process":449}],469:[function(require,module,exports){
+module.exports=require(315)
+},{"./keyOf":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DefaultEventPluginOrder.js":315}],470:[function(require,module,exports){
+module.exports=require(316)
+},{"./EventConstants":471,"./EventPropagators":476,"./ReactMount":522,"./SyntheticMouseEvent":553,"./keyOf":597,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EnterLeaveEventPlugin.js":316}],471:[function(require,module,exports){
+module.exports=require(317)
+},{"./keyMirror":596,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventConstants.js":317}],472:[function(require,module,exports){
+module.exports=require(318)
+},{"./emptyFunction":571,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventListener.js":318,"_process":449}],473:[function(require,module,exports){
+module.exports=require(319)
+},{"./EventPluginRegistry":474,"./EventPluginUtils":475,"./accumulateInto":559,"./forEachAccumulated":576,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginHub.js":319,"_process":449}],474:[function(require,module,exports){
+module.exports=require(320)
+},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginRegistry.js":320,"_process":449}],475:[function(require,module,exports){
+module.exports=require(321)
+},{"./EventConstants":471,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginUtils.js":321,"_process":449}],476:[function(require,module,exports){
+module.exports=require(322)
+},{"./EventConstants":471,"./EventPluginHub":473,"./accumulateInto":559,"./forEachAccumulated":576,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPropagators.js":322,"_process":449}],477:[function(require,module,exports){
+module.exports=require(323)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ExecutionEnvironment.js":323}],478:[function(require,module,exports){
+module.exports=require(324)
+},{"./DOMProperty":466,"./ExecutionEnvironment":477,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/HTMLDOMPropertyConfig.js":324}],479:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule LinkedStateMixin
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
       // Exit early for unlike primitive values.
       if ((valType != 'function' && valType != 'object' && othType != 'function' && othType != 'object') ||
@@ -59344,6 +78532,7 @@ if ( typeof define === 'function' && define.amd ) {
       var valWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
           othWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
 
+<<<<<<< HEAD
       if (valWrapped || othWrapped) {
         return equalFunc(valWrapped ? object.value() : object, othWrapped ? other.value() : other, customizer, isWhere, stackA, stackB);
       }
@@ -59354,6 +78543,41 @@ if ( typeof define === 'function' && define.amd ) {
       // For more information on detecting circular references see https://es5.github.io/#JO.
       stackA || (stackA = []);
       stackB || (stackB = []);
+=======
+},{"./ReactLink":520,"./ReactStateSetters":537}],480:[function(require,module,exports){
+module.exports=require(325)
+},{"./ReactPropTypes":531,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/LinkedValueUtils.js":325,"_process":449}],481:[function(require,module,exports){
+module.exports=require(326)
+},{"./ReactBrowserEventEmitter":487,"./accumulateInto":559,"./forEachAccumulated":576,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/LocalEventTrapMixin.js":326,"_process":449}],482:[function(require,module,exports){
+module.exports=require(327)
+},{"./EventConstants":471,"./emptyFunction":571,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/MobileSafariClickEventPlugin.js":327}],483:[function(require,module,exports){
+module.exports=require(328)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Object.assign.js":328}],484:[function(require,module,exports){
+module.exports=require(329)
+},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/PooledClass.js":329,"_process":449}],485:[function(require,module,exports){
+module.exports=require(330)
+},{"./DOMPropertyOperations":467,"./EventPluginUtils":475,"./ExecutionEnvironment":477,"./Object.assign":483,"./ReactChildren":488,"./ReactComponent":489,"./ReactCompositeComponent":492,"./ReactContext":493,"./ReactCurrentOwner":494,"./ReactDOM":495,"./ReactDOMComponent":497,"./ReactDefaultInjection":507,"./ReactElement":510,"./ReactElementValidator":511,"./ReactInstanceHandles":518,"./ReactLegacyElement":519,"./ReactMount":522,"./ReactMultiChild":523,"./ReactPerf":527,"./ReactPropTypes":531,"./ReactServerRendering":535,"./ReactTextComponent":538,"./deprecated":570,"./onlyChild":601,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/React.js":330,"_process":449}],486:[function(require,module,exports){
+module.exports=require(331)
+},{"./ReactEmptyComponent":512,"./ReactMount":522,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserComponentMixin.js":331,"_process":449}],487:[function(require,module,exports){
+module.exports=require(332)
+},{"./EventConstants":471,"./EventPluginHub":473,"./EventPluginRegistry":474,"./Object.assign":483,"./ReactEventEmitterMixin":514,"./ViewportMetrics":558,"./isEventSupported":591,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserEventEmitter.js":332}],488:[function(require,module,exports){
+module.exports=require(333)
+},{"./PooledClass":484,"./traverseAllChildren":608,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactChildren.js":333,"_process":449}],489:[function(require,module,exports){
+module.exports=require(334)
+},{"./Object.assign":483,"./ReactElement":510,"./ReactOwner":526,"./ReactUpdates":541,"./invariant":590,"./keyMirror":596,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponent.js":334,"_process":449}],490:[function(require,module,exports){
+module.exports=require(335)
+},{"./ReactDOMIDOperations":499,"./ReactMarkupChecksum":521,"./ReactMount":522,"./ReactPerf":527,"./ReactReconcileTransaction":533,"./getReactRootElementInContainer":584,"./invariant":590,"./setInnerHTML":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponentBrowserEnvironment.js":335,"_process":449}],491:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+* @providesModule ReactComponentWithPureRenderMixin
+*/
+>>>>>>> Editor store and services [#89871770]
 
       var length = stackA.length;
       while (length--) {
@@ -59373,6 +78597,7 @@ if ( typeof define === 'function' && define.amd ) {
       return result;
     }
 
+<<<<<<< HEAD
     /**
      * The base implementation of `_.isMatch` without support for callback
      * shorthands or `this` binding.
@@ -59392,6 +78617,76 @@ if ( typeof define === 'function' && define.amd ) {
       }
       var index = -1,
           noCustomizer = !customizer;
+=======
+},{"./shallowEqual":605}],492:[function(require,module,exports){
+module.exports=require(336)
+},{"./Object.assign":483,"./ReactComponent":489,"./ReactContext":493,"./ReactCurrentOwner":494,"./ReactElement":510,"./ReactElementValidator":511,"./ReactEmptyComponent":512,"./ReactErrorUtils":513,"./ReactLegacyElement":519,"./ReactOwner":526,"./ReactPerf":527,"./ReactPropTransferer":528,"./ReactPropTypeLocationNames":529,"./ReactPropTypeLocations":530,"./ReactUpdates":541,"./instantiateReactComponent":589,"./invariant":590,"./keyMirror":596,"./keyOf":597,"./mapObject":598,"./monitorCodeUse":600,"./shouldUpdateReactComponent":606,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactCompositeComponent.js":336,"_process":449}],493:[function(require,module,exports){
+module.exports=require(337)
+},{"./Object.assign":483,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactContext.js":337}],494:[function(require,module,exports){
+module.exports=require(338)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactCurrentOwner.js":338}],495:[function(require,module,exports){
+module.exports=require(339)
+},{"./ReactElement":510,"./ReactElementValidator":511,"./ReactLegacyElement":519,"./mapObject":598,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOM.js":339,"_process":449}],496:[function(require,module,exports){
+module.exports=require(340)
+},{"./AutoFocusMixin":457,"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"./keyMirror":596,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMButton.js":340}],497:[function(require,module,exports){
+module.exports=require(341)
+},{"./CSSPropertyOperations":460,"./DOMProperty":466,"./DOMPropertyOperations":467,"./Object.assign":483,"./ReactBrowserComponentMixin":486,"./ReactBrowserEventEmitter":487,"./ReactComponent":489,"./ReactMount":522,"./ReactMultiChild":523,"./ReactPerf":527,"./escapeTextForBrowser":573,"./invariant":590,"./isEventSupported":591,"./keyOf":597,"./monitorCodeUse":600,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMComponent.js":341,"_process":449}],498:[function(require,module,exports){
+module.exports=require(342)
+},{"./EventConstants":471,"./LocalEventTrapMixin":481,"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMForm.js":342}],499:[function(require,module,exports){
+module.exports=require(343)
+},{"./CSSPropertyOperations":460,"./DOMChildrenOperations":465,"./DOMPropertyOperations":467,"./ReactMount":522,"./ReactPerf":527,"./invariant":590,"./setInnerHTML":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMIDOperations.js":343,"_process":449}],500:[function(require,module,exports){
+module.exports=require(344)
+},{"./EventConstants":471,"./LocalEventTrapMixin":481,"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMImg.js":344}],501:[function(require,module,exports){
+module.exports=require(345)
+},{"./AutoFocusMixin":457,"./DOMPropertyOperations":467,"./LinkedValueUtils":480,"./Object.assign":483,"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"./ReactMount":522,"./ReactUpdates":541,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMInput.js":345,"_process":449}],502:[function(require,module,exports){
+module.exports=require(346)
+},{"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMOption.js":346,"_process":449}],503:[function(require,module,exports){
+module.exports=require(347)
+},{"./AutoFocusMixin":457,"./LinkedValueUtils":480,"./Object.assign":483,"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"./ReactUpdates":541,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelect.js":347}],504:[function(require,module,exports){
+module.exports=require(348)
+},{"./ExecutionEnvironment":477,"./getNodeForCharacterOffset":583,"./getTextContentAccessor":585,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelection.js":348}],505:[function(require,module,exports){
+module.exports=require(349)
+},{"./AutoFocusMixin":457,"./DOMPropertyOperations":467,"./LinkedValueUtils":480,"./Object.assign":483,"./ReactBrowserComponentMixin":486,"./ReactCompositeComponent":492,"./ReactDOM":495,"./ReactElement":510,"./ReactUpdates":541,"./invariant":590,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMTextarea.js":349,"_process":449}],506:[function(require,module,exports){
+module.exports=require(350)
+},{"./Object.assign":483,"./ReactUpdates":541,"./Transaction":557,"./emptyFunction":571,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultBatchingStrategy.js":350}],507:[function(require,module,exports){
+module.exports=require(351)
+},{"./BeforeInputEventPlugin":458,"./ChangeEventPlugin":462,"./ClientReactRootIndex":463,"./CompositionEventPlugin":464,"./DefaultEventPluginOrder":469,"./EnterLeaveEventPlugin":470,"./ExecutionEnvironment":477,"./HTMLDOMPropertyConfig":478,"./MobileSafariClickEventPlugin":482,"./ReactBrowserComponentMixin":486,"./ReactComponentBrowserEnvironment":490,"./ReactDOMButton":496,"./ReactDOMComponent":497,"./ReactDOMForm":498,"./ReactDOMImg":500,"./ReactDOMInput":501,"./ReactDOMOption":502,"./ReactDOMSelect":503,"./ReactDOMTextarea":505,"./ReactDefaultBatchingStrategy":506,"./ReactDefaultPerf":508,"./ReactEventListener":515,"./ReactInjection":516,"./ReactInstanceHandles":518,"./ReactMount":522,"./SVGDOMPropertyConfig":542,"./SelectEventPlugin":543,"./ServerReactRootIndex":544,"./SimpleEventPlugin":545,"./createFullPageComponent":566,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultInjection.js":351,"_process":449}],508:[function(require,module,exports){
+module.exports=require(352)
+},{"./DOMProperty":466,"./ReactDefaultPerfAnalysis":509,"./ReactMount":522,"./ReactPerf":527,"./performanceNow":603,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerf.js":352}],509:[function(require,module,exports){
+module.exports=require(353)
+},{"./Object.assign":483,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerfAnalysis.js":353}],510:[function(require,module,exports){
+module.exports=require(354)
+},{"./ReactContext":493,"./ReactCurrentOwner":494,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElement.js":354,"_process":449}],511:[function(require,module,exports){
+module.exports=require(355)
+},{"./ReactCurrentOwner":494,"./ReactElement":510,"./ReactPropTypeLocations":530,"./monitorCodeUse":600,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElementValidator.js":355,"_process":449}],512:[function(require,module,exports){
+module.exports=require(356)
+},{"./ReactElement":510,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEmptyComponent.js":356,"_process":449}],513:[function(require,module,exports){
+module.exports=require(357)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactErrorUtils.js":357}],514:[function(require,module,exports){
+module.exports=require(358)
+},{"./EventPluginHub":473,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventEmitterMixin.js":358}],515:[function(require,module,exports){
+module.exports=require(359)
+},{"./EventListener":472,"./ExecutionEnvironment":477,"./Object.assign":483,"./PooledClass":484,"./ReactInstanceHandles":518,"./ReactMount":522,"./ReactUpdates":541,"./getEventTarget":581,"./getUnboundedScrollPosition":586,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventListener.js":359}],516:[function(require,module,exports){
+module.exports=require(360)
+},{"./DOMProperty":466,"./EventPluginHub":473,"./ReactBrowserEventEmitter":487,"./ReactComponent":489,"./ReactCompositeComponent":492,"./ReactEmptyComponent":512,"./ReactNativeComponent":525,"./ReactPerf":527,"./ReactRootIndex":534,"./ReactUpdates":541,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInjection.js":360}],517:[function(require,module,exports){
+module.exports=require(361)
+},{"./ReactDOMSelection":504,"./containsNode":564,"./focusNode":575,"./getActiveElement":577,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInputSelection.js":361}],518:[function(require,module,exports){
+module.exports=require(362)
+},{"./ReactRootIndex":534,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInstanceHandles.js":362,"_process":449}],519:[function(require,module,exports){
+module.exports=require(363)
+},{"./ReactCurrentOwner":494,"./invariant":590,"./monitorCodeUse":600,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactLegacyElement.js":363,"_process":449}],520:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactLink
+ * @typechecks static-only
+ */
+>>>>>>> Editor store and services [#89871770]
 
       while (++index < length) {
         if ((noCustomizer && strictCompareFlags[index])
@@ -59473,6 +78768,7 @@ if ( typeof define === 'function' && define.amd ) {
       };
     }
 
+<<<<<<< HEAD
     /**
      * The base implementation of `_.matchesProperty` which does not coerce `key`
      * to a string.
@@ -59492,6 +78788,51 @@ if ( typeof define === 'function' && define.amd ) {
         return object != null && baseIsEqual(value, object[key], null, true);
       };
     }
+=======
+},{"./React":485}],521:[function(require,module,exports){
+module.exports=require(364)
+},{"./adler32":560,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMarkupChecksum.js":364}],522:[function(require,module,exports){
+module.exports=require(365)
+},{"./DOMProperty":466,"./ReactBrowserEventEmitter":487,"./ReactCurrentOwner":494,"./ReactElement":510,"./ReactInstanceHandles":518,"./ReactLegacyElement":519,"./ReactPerf":527,"./containsNode":564,"./deprecated":570,"./getReactRootElementInContainer":584,"./instantiateReactComponent":589,"./invariant":590,"./shouldUpdateReactComponent":606,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMount.js":365,"_process":449}],523:[function(require,module,exports){
+module.exports=require(366)
+},{"./ReactComponent":489,"./ReactMultiChildUpdateTypes":524,"./flattenChildren":574,"./instantiateReactComponent":589,"./shouldUpdateReactComponent":606,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMultiChild.js":366}],524:[function(require,module,exports){
+module.exports=require(367)
+},{"./keyMirror":596,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMultiChildUpdateTypes.js":367}],525:[function(require,module,exports){
+module.exports=require(368)
+},{"./Object.assign":483,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactNativeComponent.js":368,"_process":449}],526:[function(require,module,exports){
+module.exports=require(369)
+},{"./emptyObject":572,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactOwner.js":369,"_process":449}],527:[function(require,module,exports){
+module.exports=require(370)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPerf.js":370,"_process":449}],528:[function(require,module,exports){
+module.exports=require(371)
+},{"./Object.assign":483,"./emptyFunction":571,"./invariant":590,"./joinClasses":595,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTransferer.js":371,"_process":449}],529:[function(require,module,exports){
+module.exports=require(372)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocationNames.js":372,"_process":449}],530:[function(require,module,exports){
+module.exports=require(373)
+},{"./keyMirror":596,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocations.js":373}],531:[function(require,module,exports){
+module.exports=require(374)
+},{"./ReactElement":510,"./ReactPropTypeLocationNames":529,"./deprecated":570,"./emptyFunction":571,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypes.js":374}],532:[function(require,module,exports){
+module.exports=require(375)
+},{"./Object.assign":483,"./PooledClass":484,"./ReactBrowserEventEmitter":487,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPutListenerQueue.js":375}],533:[function(require,module,exports){
+module.exports=require(376)
+},{"./CallbackQueue":461,"./Object.assign":483,"./PooledClass":484,"./ReactBrowserEventEmitter":487,"./ReactInputSelection":517,"./ReactPutListenerQueue":532,"./Transaction":557,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactReconcileTransaction.js":376}],534:[function(require,module,exports){
+module.exports=require(377)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactRootIndex.js":377}],535:[function(require,module,exports){
+module.exports=require(378)
+},{"./ReactElement":510,"./ReactInstanceHandles":518,"./ReactMarkupChecksum":521,"./ReactServerRenderingTransaction":536,"./instantiateReactComponent":589,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRendering.js":378,"_process":449}],536:[function(require,module,exports){
+module.exports=require(379)
+},{"./CallbackQueue":461,"./Object.assign":483,"./PooledClass":484,"./ReactPutListenerQueue":532,"./Transaction":557,"./emptyFunction":571,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRenderingTransaction.js":379}],537:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactStateSetters
+ */
+>>>>>>> Editor store and services [#89871770]
 
     /**
      * The base implementation of `_.merge` without support for argument juggling,
@@ -59626,6 +78967,7 @@ if ( typeof define === 'function' && define.amd ) {
       return result;
     }
 
+<<<<<<< HEAD
     /**
      * The base implementation of `_.random` without support for argument juggling
      * and returning floating-point numbers.
@@ -59638,6 +78980,22 @@ if ( typeof define === 'function' && define.amd ) {
     function baseRandom(min, max) {
       return min + floor(nativeRandom() * (max - min + 1));
     }
+=======
+},{}],538:[function(require,module,exports){
+module.exports=require(380)
+},{"./DOMPropertyOperations":467,"./Object.assign":483,"./ReactComponent":489,"./ReactElement":510,"./escapeTextForBrowser":573,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactTextComponent.js":380}],539:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks static-only
+ * @providesModule ReactTransitionChildMapping
+ */
+>>>>>>> Editor store and services [#89871770]
 
     /**
      * The base implementation of `_.reduce` and `_.reduceRight` without support
@@ -59793,11 +79151,25 @@ if ( typeof define === 'function' && define.amd ) {
           length = props.length,
           result = Array(length);
 
+<<<<<<< HEAD
       while (++index < length) {
         result[index] = object[props[index]];
       }
       return result;
     }
+=======
+},{"./ReactChildren":488}],540:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactTransitionGroup
+ */
+>>>>>>> Editor store and services [#89871770]
 
     /**
      * The base implementation of `wrapperValue` which returns the result of
@@ -60148,6 +79520,7 @@ if ( typeof define === 'function' && define.amd ) {
         return result;
       };
     }
+<<<<<<< HEAD
 
     /**
      * Creates a function that produces an instance of `Ctor` regardless of
@@ -60306,6 +79679,260 @@ if ( typeof define === 'function' && define.amd ) {
       chars = chars == null ? ' ' : (chars + '');
       return repeat(chars, ceil(padLength / chars.length)).slice(0, padLength);
     }
+=======
+    return React.createElement(
+      this.props.component,
+      this.props,
+      childrenToRender
+    );
+  }
+});
+
+module.exports = ReactTransitionGroup;
+
+},{"./Object.assign":483,"./React":485,"./ReactTransitionChildMapping":539,"./cloneWithProps":563,"./emptyFunction":571}],541:[function(require,module,exports){
+module.exports=require(381)
+},{"./CallbackQueue":461,"./Object.assign":483,"./PooledClass":484,"./ReactCurrentOwner":494,"./ReactPerf":527,"./Transaction":557,"./invariant":590,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactUpdates.js":381,"_process":449}],542:[function(require,module,exports){
+module.exports=require(382)
+},{"./DOMProperty":466,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SVGDOMPropertyConfig.js":382}],543:[function(require,module,exports){
+module.exports=require(383)
+},{"./EventConstants":471,"./EventPropagators":476,"./ReactInputSelection":517,"./SyntheticEvent":549,"./getActiveElement":577,"./isTextInputElement":593,"./keyOf":597,"./shallowEqual":605,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SelectEventPlugin.js":383}],544:[function(require,module,exports){
+module.exports=require(384)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ServerReactRootIndex.js":384}],545:[function(require,module,exports){
+module.exports=require(385)
+},{"./EventConstants":471,"./EventPluginUtils":475,"./EventPropagators":476,"./SyntheticClipboardEvent":546,"./SyntheticDragEvent":548,"./SyntheticEvent":549,"./SyntheticFocusEvent":550,"./SyntheticKeyboardEvent":552,"./SyntheticMouseEvent":553,"./SyntheticTouchEvent":554,"./SyntheticUIEvent":555,"./SyntheticWheelEvent":556,"./getEventCharCode":578,"./invariant":590,"./keyOf":597,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SimpleEventPlugin.js":385,"_process":449}],546:[function(require,module,exports){
+module.exports=require(386)
+},{"./SyntheticEvent":549,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticClipboardEvent.js":386}],547:[function(require,module,exports){
+module.exports=require(387)
+},{"./SyntheticEvent":549,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticCompositionEvent.js":387}],548:[function(require,module,exports){
+module.exports=require(388)
+},{"./SyntheticMouseEvent":553,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticDragEvent.js":388}],549:[function(require,module,exports){
+module.exports=require(389)
+},{"./Object.assign":483,"./PooledClass":484,"./emptyFunction":571,"./getEventTarget":581,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticEvent.js":389}],550:[function(require,module,exports){
+module.exports=require(390)
+},{"./SyntheticUIEvent":555,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticFocusEvent.js":390}],551:[function(require,module,exports){
+module.exports=require(391)
+},{"./SyntheticEvent":549,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticInputEvent.js":391}],552:[function(require,module,exports){
+module.exports=require(392)
+},{"./SyntheticUIEvent":555,"./getEventCharCode":578,"./getEventKey":579,"./getEventModifierState":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticKeyboardEvent.js":392}],553:[function(require,module,exports){
+module.exports=require(393)
+},{"./SyntheticUIEvent":555,"./ViewportMetrics":558,"./getEventModifierState":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticMouseEvent.js":393}],554:[function(require,module,exports){
+module.exports=require(394)
+},{"./SyntheticUIEvent":555,"./getEventModifierState":580,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticTouchEvent.js":394}],555:[function(require,module,exports){
+module.exports=require(395)
+},{"./SyntheticEvent":549,"./getEventTarget":581,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticUIEvent.js":395}],556:[function(require,module,exports){
+module.exports=require(396)
+},{"./SyntheticMouseEvent":553,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticWheelEvent.js":396}],557:[function(require,module,exports){
+module.exports=require(397)
+},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Transaction.js":397,"_process":449}],558:[function(require,module,exports){
+module.exports=require(398)
+},{"./getUnboundedScrollPosition":586,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ViewportMetrics.js":398}],559:[function(require,module,exports){
+module.exports=require(399)
+},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/accumulateInto.js":399,"_process":449}],560:[function(require,module,exports){
+module.exports=require(400)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/adler32.js":400}],561:[function(require,module,exports){
+module.exports=require(401)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelize.js":401}],562:[function(require,module,exports){
+module.exports=require(402)
+},{"./camelize":561,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelizeStyleName.js":402}],563:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ * @providesModule cloneWithProps
+ */
+
+"use strict";
+
+var ReactElement = require("./ReactElement");
+var ReactPropTransferer = require("./ReactPropTransferer");
+
+var keyOf = require("./keyOf");
+var warning = require("./warning");
+
+var CHILDREN_PROP = keyOf({children: null});
+
+/**
+ * Sometimes you want to change the props of a child passed to you. Usually
+ * this is to add a CSS class.
+ *
+ * @param {object} child child component you'd like to clone
+ * @param {object} props props you'd like to modify. They will be merged
+ * as if you used `transferPropsTo()`.
+ * @return {object} a clone of child with props merged in.
+ */
+function cloneWithProps(child, props) {
+  if ("production" !== process.env.NODE_ENV) {
+    ("production" !== process.env.NODE_ENV ? warning(
+      !child.ref,
+      'You are calling cloneWithProps() on a child with a ref. This is ' +
+      'dangerous because you\'re creating a new child which will not be ' +
+      'added as a ref to its parent.'
+    ) : null);
+  }
+
+  var newProps = ReactPropTransferer.mergeProps(props, child.props);
+
+  // Use `child.props.children` if it is provided.
+  if (!newProps.hasOwnProperty(CHILDREN_PROP) &&
+      child.props.hasOwnProperty(CHILDREN_PROP)) {
+    newProps.children = child.props.children;
+  }
+
+  // The current API doesn't retain _owner and _context, which is why this
+  // doesn't use ReactElement.cloneAndReplaceProps.
+  return ReactElement.createElement(child.type, newProps);
+}
+
+module.exports = cloneWithProps;
+
+}).call(this,require('_process'))
+},{"./ReactElement":510,"./ReactPropTransferer":528,"./keyOf":597,"./warning":610,"_process":449}],564:[function(require,module,exports){
+module.exports=require(403)
+},{"./isTextNode":594,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/containsNode.js":403}],565:[function(require,module,exports){
+module.exports=require(404)
+},{"./toArray":607,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createArrayFrom.js":404}],566:[function(require,module,exports){
+module.exports=require(405)
+},{"./ReactCompositeComponent":492,"./ReactElement":510,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createFullPageComponent.js":405,"_process":449}],567:[function(require,module,exports){
+module.exports=require(406)
+},{"./ExecutionEnvironment":477,"./createArrayFrom":565,"./getMarkupWrap":582,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createNodesFromMarkup.js":406,"_process":449}],568:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule cx
+ */
+
+/**
+ * This function is used to mark string literals representing CSS class names
+ * so that they can be transformed statically. This allows for modularization
+ * and minification of CSS class names.
+ *
+ * In static_upstream, this function is actually implemented, but it should
+ * eventually be replaced with something more descriptive, and the transform
+ * that is used in the main stack should be ported for use elsewhere.
+ *
+ * @param string|object className to modularize, or an object of key/values.
+ *                      In the object case, the values are conditions that
+ *                      determine if the className keys should be included.
+ * @param [string ...]  Variable list of classNames in the string case.
+ * @return string       Renderable space-separated CSS className.
+ */
+function cx(classNames) {
+  if (typeof classNames == 'object') {
+    return Object.keys(classNames).filter(function(className) {
+      return classNames[className];
+    }).join(' ');
+  } else {
+    return Array.prototype.join.call(arguments, ' ');
+  }
+}
+
+module.exports = cx;
+
+},{}],569:[function(require,module,exports){
+module.exports=require(407)
+},{"./CSSProperty":459,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/dangerousStyleValue.js":407}],570:[function(require,module,exports){
+module.exports=require(408)
+},{"./Object.assign":483,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/deprecated.js":408,"_process":449}],571:[function(require,module,exports){
+module.exports=require(409)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyFunction.js":409}],572:[function(require,module,exports){
+module.exports=require(410)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyObject.js":410,"_process":449}],573:[function(require,module,exports){
+module.exports=require(411)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/escapeTextForBrowser.js":411}],574:[function(require,module,exports){
+module.exports=require(412)
+},{"./ReactTextComponent":538,"./traverseAllChildren":608,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/flattenChildren.js":412,"_process":449}],575:[function(require,module,exports){
+module.exports=require(413)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/focusNode.js":413}],576:[function(require,module,exports){
+module.exports=require(414)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/forEachAccumulated.js":414}],577:[function(require,module,exports){
+module.exports=require(415)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getActiveElement.js":415}],578:[function(require,module,exports){
+module.exports=require(416)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventCharCode.js":416}],579:[function(require,module,exports){
+module.exports=require(417)
+},{"./getEventCharCode":578,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventKey.js":417}],580:[function(require,module,exports){
+module.exports=require(418)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventModifierState.js":418}],581:[function(require,module,exports){
+module.exports=require(419)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventTarget.js":419}],582:[function(require,module,exports){
+module.exports=require(420)
+},{"./ExecutionEnvironment":477,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getMarkupWrap.js":420,"_process":449}],583:[function(require,module,exports){
+module.exports=require(421)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getNodeForCharacterOffset.js":421}],584:[function(require,module,exports){
+module.exports=require(422)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getReactRootElementInContainer.js":422}],585:[function(require,module,exports){
+module.exports=require(423)
+},{"./ExecutionEnvironment":477,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getTextContentAccessor.js":423}],586:[function(require,module,exports){
+module.exports=require(424)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getUnboundedScrollPosition.js":424}],587:[function(require,module,exports){
+module.exports=require(425)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenate.js":425}],588:[function(require,module,exports){
+module.exports=require(426)
+},{"./hyphenate":587,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenateStyleName.js":426}],589:[function(require,module,exports){
+module.exports=require(427)
+},{"./ReactElement":510,"./ReactEmptyComponent":512,"./ReactLegacyElement":519,"./ReactNativeComponent":525,"./warning":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/instantiateReactComponent.js":427,"_process":449}],590:[function(require,module,exports){
+module.exports=require(428)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/invariant.js":428,"_process":449}],591:[function(require,module,exports){
+module.exports=require(429)
+},{"./ExecutionEnvironment":477,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isEventSupported.js":429}],592:[function(require,module,exports){
+module.exports=require(430)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isNode.js":430}],593:[function(require,module,exports){
+module.exports=require(431)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextInputElement.js":431}],594:[function(require,module,exports){
+module.exports=require(432)
+},{"./isNode":592,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextNode.js":432}],595:[function(require,module,exports){
+module.exports=require(433)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/joinClasses.js":433}],596:[function(require,module,exports){
+module.exports=require(434)
+},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyMirror.js":434,"_process":449}],597:[function(require,module,exports){
+module.exports=require(435)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyOf.js":435}],598:[function(require,module,exports){
+module.exports=require(436)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/mapObject.js":436}],599:[function(require,module,exports){
+module.exports=require(437)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/memoizeStringOnly.js":437}],600:[function(require,module,exports){
+module.exports=require(438)
+},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/monitorCodeUse.js":438,"_process":449}],601:[function(require,module,exports){
+module.exports=require(439)
+},{"./ReactElement":510,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/onlyChild.js":439,"_process":449}],602:[function(require,module,exports){
+module.exports=require(440)
+},{"./ExecutionEnvironment":477,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performance.js":440}],603:[function(require,module,exports){
+module.exports=require(441)
+},{"./performance":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performanceNow.js":441}],604:[function(require,module,exports){
+module.exports=require(442)
+},{"./ExecutionEnvironment":477,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/setInnerHTML.js":442}],605:[function(require,module,exports){
+module.exports=require(443)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shallowEqual.js":443}],606:[function(require,module,exports){
+module.exports=require(444)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shouldUpdateReactComponent.js":444}],607:[function(require,module,exports){
+module.exports=require(445)
+},{"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/toArray.js":445,"_process":449}],608:[function(require,module,exports){
+module.exports=require(446)
+},{"./ReactElement":510,"./ReactInstanceHandles":518,"./invariant":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/traverseAllChildren.js":446,"_process":449}],609:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule update
+ */
+>>>>>>> Editor store and services [#89871770]
 
     /**
      * Creates a function that wraps `func` and invokes it with the optional `this`
@@ -60564,6 +80191,7 @@ if ( typeof define === 'function' && define.amd ) {
       return true;
     }
 
+<<<<<<< HEAD
     /**
      * Gets the extremum value of `collection` invoking `iteratee` for each value
      * in `collection` to generate the criterion by which the value is ranked.
@@ -60580,6 +80208,19 @@ if ( typeof define === 'function' && define.amd ) {
       var exValue = isMin ? POSITIVE_INFINITY : NEGATIVE_INFINITY,
           computed = exValue,
           result = computed;
+=======
+}).call(this,require('_process'))
+},{"./Object.assign":483,"./invariant":590,"./keyOf":597,"_process":449}],610:[function(require,module,exports){
+module.exports=require(447)
+},{"./emptyFunction":571,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/warning.js":447,"_process":449}],"Modernizr":[function(require,module,exports){
+/*!
+ * Modernizr v2.8.3
+ * www.modernizr.com
+ *
+ * Copyright (c) Faruk Ates, Paul Irish, Alex Sexton
+ * Available under the BSD and MIT licenses: www.modernizr.com/license/
+ */
+>>>>>>> Editor store and services [#89871770]
 
       baseEach(collection, function(value, index, collection) {
         var current = iteratee(value, index, collection);
@@ -71091,8 +90732,13 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 }));
 
 },{}],"eventEmitter":[function(require,module,exports){
+<<<<<<< HEAD
 module.exports=require(486)
 },{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\imagesloaded\\node_modules\\wolfy87-eventemitter\\EventEmitter.js":486}],"i18next":[function(require,module,exports){
+=======
+module.exports=require(455)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":455}],"i18next":[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 // i18next, v1.7.7
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
@@ -77742,7 +97388,7 @@ var Plugins;
 
 },{}],"jquery.ui.core":[function(require,module,exports){
 /*!
- * jQuery UI Core 1.11.3
+ * jQuery UI Core 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -77767,7 +97413,7 @@ var Plugins;
 $.ui = $.ui || {};
 
 $.extend( $.ui, {
-	version: "1.11.3",
+	version: "1.11.4",
 
 	keyCode: {
 		BACKSPACE: 8,
@@ -78048,7 +97694,7 @@ $.ui.plugin = {
 
 },{}],"jquery.ui.draggable":[function(require,module,exports){
 /*!
- * jQuery UI Draggable 1.11.3
+ * jQuery UI Draggable 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -78075,7 +97721,7 @@ $.ui.plugin = {
 }(function( $ ) {
 
 $.widget("ui.draggable", $.ui.mouse, {
-	version: "1.11.3",
+	version: "1.11.4",
 	widgetEventPrefix: "drag",
 	options: {
 		addClasses: true,
@@ -78849,6 +98495,9 @@ $.ui.plugin.add( "draggable", "connectToSortable", {
 				if ( !sortable.isOver ) {
 					sortable.isOver = 1;
 
+					// Store draggable's parent in case we need to reappend to it later.
+					draggable._parent = ui.helper.parent();
+
 					sortable.currentItem = ui.helper
 						.appendTo( sortable.element )
 						.data( "ui-sortable-item", true );
@@ -78925,8 +98574,9 @@ $.ui.plugin.add( "draggable", "connectToSortable", {
 						sortable.placeholder.remove();
 					}
 
-					// Recalculate the draggable's offset considering the sortable
-					// may have modified them in unexpected ways (#8809)
+					// Restore and recalculate the draggable's offset considering the sortable
+					// may have modified them in unexpected ways. (#8809, #10669)
+					ui.helper.appendTo( draggable._parent );
 					draggable._refreshOffsets( event );
 					ui.position = draggable._generatePosition( event, true );
 
@@ -79178,7 +98828,11 @@ return $.ui.draggable;
 
 },{}],"jquery.ui.mouse":[function(require,module,exports){
 /*!
- * jQuery UI Mouse 1.11.3
+<<<<<<< HEAD
+ * jQuery UI Core 1.11.3
+=======
+ * jQuery UI Mouse 1.11.4
+>>>>>>> Editor store and services [#89871770]
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -79202,13 +98856,40 @@ return $.ui.draggable;
 	}
 }(function( $ ) {
 
+<<<<<<< HEAD
+// $.ui might exist from components with no dependencies, e.g., $.ui.position
+$.ui = $.ui || {};
+
+$.extend( $.ui, {
+	version: "1.11.3",
+
+	keyCode: {
+		BACKSPACE: 8,
+		COMMA: 188,
+		DELETE: 46,
+		DOWN: 40,
+		END: 35,
+		ENTER: 13,
+		ESCAPE: 27,
+		HOME: 36,
+		LEFT: 37,
+		PAGE_DOWN: 34,
+		PAGE_UP: 33,
+		PERIOD: 190,
+		RIGHT: 39,
+		SPACE: 32,
+		TAB: 9,
+		UP: 38
+	}
+=======
 var mouseHandled = false;
 $( document ).mouseup( function() {
 	mouseHandled = false;
+>>>>>>> Editor store and services [#89871770]
 });
 
 return $.widget("ui.mouse", {
-	version: "1.11.3",
+	version: "1.11.4",
 	options: {
 		cancel: "input,textarea,button,select,option",
 		distance: 1,
@@ -79379,7 +99060,11 @@ return $.widget("ui.mouse", {
 
 },{}],"jquery.ui.slider":[function(require,module,exports){
 /*!
- * jQuery UI Slider 1.11.3
+<<<<<<< HEAD
+ * jQuery UI Draggable 1.11.3
+=======
+ * jQuery UI Slider 1.11.4
+>>>>>>> Editor store and services [#89871770]
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -79405,10 +99090,16 @@ return $.widget("ui.mouse", {
 	}
 }(function( $ ) {
 
-return $.widget( "ui.slider", $.ui.mouse, {
+<<<<<<< HEAD
+$.widget("ui.draggable", $.ui.mouse, {
 	version: "1.11.3",
+	widgetEventPrefix: "drag",
+=======
+return $.widget( "ui.slider", $.ui.mouse, {
+	version: "1.11.4",
 	widgetEventPrefix: "slide",
 
+>>>>>>> Editor store and services [#89871770]
 	options: {
 		animate: false,
 		distance: 0,
@@ -79930,7 +99621,7 @@ return $.widget( "ui.slider", $.ui.mouse, {
 		var max = this.options.max,
 			min = this._valueMin(),
 			step = this.options.step,
-			aboveMin = Math.floor( ( max - min ) / step ) * step;
+			aboveMin = Math.floor( ( +( max - min ).toFixed( this._precision() ) ) / step ) * step;
 		max = aboveMin + min;
 		this.max = parseFloat( max.toFixed( this._precision() ) );
 	},
@@ -80098,7 +99789,7 @@ return $.widget( "ui.slider", $.ui.mouse, {
 
 },{}],"jquery.ui.widget":[function(require,module,exports){
 /*!
- * jQuery UI Widget 1.11.3
+ * jQuery UI Widget 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -80616,6 +100307,11 @@ $.Widget.prototype = {
 	}
 };
 
+<<<<<<< HEAD
+					sortable.currentItem = ui.helper
+						.appendTo( sortable.element )
+						.data( "ui-sortable-item", true );
+=======
 $.each( { show: "fadeIn", hide: "fadeOut" }, function( method, defaultEffect ) {
 	$.Widget.prototype[ "_" + method ] = function( element, options, callback ) {
 		if ( typeof options === "string" ) {
@@ -80653,6 +100349,7 @@ $.each( { show: "fadeIn", hide: "fadeOut" }, function( method, defaultEffect ) {
 });
 
 return $.widget;
+>>>>>>> Editor store and services [#89871770]
 
 }));
 
@@ -80799,6 +100496,12 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
         var axes, cOffset, isWin,
           _this = this;
 
+<<<<<<< HEAD
+					// Recalculate the draggable's offset considering the sortable
+					// may have modified them in unexpected ways (#8809)
+					draggable._refreshOffsets( event );
+					ui.position = draggable._generatePosition( event, true );
+=======
         isWin = $.isWindow(this.element);
         cOffset = this.$element.offset();
         this.doScroll();
@@ -80825,6 +100528,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
         return $.each(axes, function(aKey, axis) {
           return $.each(_this.waypoints[aKey], function(i, waypoint) {
             var adjustment, elementOffset, oldOffset, _ref, _ref1;
+>>>>>>> Editor store and services [#89871770]
 
             adjustment = waypoint.options.offset;
             oldOffset = waypoint.offset;
@@ -81233,13 +100937,41 @@ var indexOf = arr.indexOf;
 
 var class2type = {};
 
+<<<<<<< HEAD
+},{}],"jquery.ui.mouse":[function(require,module,exports){
+/*!
+ * jQuery UI Mouse 1.11.3
+ * http://jqueryui.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ *
+ * http://api.jqueryui.com/mouse/
+ */
+(function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+=======
 var toString = class2type.toString;
+>>>>>>> Editor store and services [#89871770]
 
 var hasOwn = class2type.hasOwnProperty;
 
 var support = {};
 
 
+<<<<<<< HEAD
+return $.widget("ui.mouse", {
+	version: "1.11.3",
+	options: {
+		cancel: "input,textarea,button,select,option",
+		distance: 1,
+		delay: 0
+	},
+	_mouseInit: function() {
+		var that = this;
+=======
+>>>>>>> Editor store and services [#89871770]
 
 var
 	// Use the correct document accordingly with window argument (sandbox)
@@ -81359,9 +101091,25 @@ jQuery.extend = jQuery.fn.extend = function() {
 		length = arguments.length,
 		deep = false;
 
+<<<<<<< HEAD
+},{}],"jquery.ui.slider":[function(require,module,exports){
+/*!
+ * jQuery UI Slider 1.11.3
+ * http://jqueryui.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ *
+ * http://api.jqueryui.com/slider/
+ */
+(function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+=======
 	// Handle a deep copy situation
 	if ( typeof target === "boolean" ) {
 		deep = target;
+>>>>>>> Editor store and services [#89871770]
 
 		// Skip the boolean and the target
 		target = arguments[ i ] || {};
@@ -81373,11 +101121,17 @@ jQuery.extend = jQuery.fn.extend = function() {
 		target = {};
 	}
 
+<<<<<<< HEAD
+return $.widget( "ui.slider", $.ui.mouse, {
+	version: "1.11.3",
+	widgetEventPrefix: "slide",
+=======
 	// Extend jQuery itself if only one argument is passed
 	if ( i === length ) {
 		target = this;
 		i--;
 	}
+>>>>>>> Editor store and services [#89871770]
 
 	for ( ; i < length; i++ ) {
 		// Only deal with non-null/undefined values
@@ -81864,6 +101618,15 @@ var i,
 	// Easily-parseable/retrievable ID or TAG or CLASS selectors
 	rquickExpr = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
 
+<<<<<<< HEAD
+	_calculateNewMax: function() {
+		var max = this.options.max,
+			min = this._valueMin(),
+			step = this.options.step,
+			aboveMin = Math.floor( ( max - min ) / step ) * step;
+		max = aboveMin + min;
+		this.max = parseFloat( max.toFixed( this._precision() ) );
+=======
 	rsibling = /[+~]/,
 	rescape = /'|\\/g,
 
@@ -81881,6 +101644,7 @@ var i,
 				String.fromCharCode( high + 0x10000 ) :
 				// Supplemental Plane codepoint (surrogate pair)
 				String.fromCharCode( high >> 10 | 0xD800, high & 0x3FF | 0xDC00 );
+>>>>>>> Editor store and services [#89871770]
 	},
 
 	// Used for iframes
@@ -82048,9 +101812,22 @@ function createCache() {
 	return cache;
 }
 
+<<<<<<< HEAD
+},{}],"jquery.ui.widget":[function(require,module,exports){
+/*!
+ * jQuery UI Widget 1.11.3
+ * http://jqueryui.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ *
+ * http://api.jqueryui.com/jQuery.widget/
+=======
 /**
  * Mark a function for special use by Sizzle
  * @param {Function} fn The function to mark
+>>>>>>> Editor store and services [#89871770]
  */
 function markFunction( fn ) {
 	fn[ expando ] = true;
@@ -90383,96 +110160,702 @@ return jQuery;
 }));
 
 },{}],"medium-editor":[function(require,module,exports){
-function MediumEditor(elements, options) {
-    'use strict';
-    return this.init(elements, options);
+/*global self, document, DOMException */
+
+/*! @source http://purl.eligrey.com/github/classList.js/blob/master/classList.js */
+
+// Full polyfill for browsers with no classList support
+if (!("classList" in document.createElement("_"))) {
+  (function (view) {
+
+  "use strict";
+
+  if (!('Element' in view)) return;
+
+  var
+      classListProp = "classList"
+    , protoProp = "prototype"
+    , elemCtrProto = view.Element[protoProp]
+    , objCtr = Object
+    , strTrim = String[protoProp].trim || function () {
+      return this.replace(/^\s+|\s+$/g, "");
+    }
+    , arrIndexOf = Array[protoProp].indexOf || function (item) {
+      var
+          i = 0
+        , len = this.length
+      ;
+      for (; i < len; i++) {
+        if (i in this && this[i] === item) {
+          return i;
+        }
+      }
+      return -1;
+    }
+    // Vendors: please allow content code to instantiate DOMExceptions
+    , DOMEx = function (type, message) {
+      this.name = type;
+      this.code = DOMException[type];
+      this.message = message;
+    }
+    , checkTokenAndGetIndex = function (classList, token) {
+      if (token === "") {
+        throw new DOMEx(
+            "SYNTAX_ERR"
+          , "An invalid or illegal string was specified"
+        );
+      }
+      if (/\s/.test(token)) {
+        throw new DOMEx(
+            "INVALID_CHARACTER_ERR"
+          , "String contains an invalid character"
+        );
+      }
+      return arrIndexOf.call(classList, token);
+    }
+    , ClassList = function (elem) {
+      var
+          trimmedClasses = strTrim.call(elem.getAttribute("class") || "")
+        , classes = trimmedClasses ? trimmedClasses.split(/\s+/) : []
+        , i = 0
+        , len = classes.length
+      ;
+      for (; i < len; i++) {
+        this.push(classes[i]);
+      }
+      this._updateClassName = function () {
+        elem.setAttribute("class", this.toString());
+      };
+    }
+    , classListProto = ClassList[protoProp] = []
+    , classListGetter = function () {
+      return new ClassList(this);
+    }
+  ;
+  // Most DOMException implementations don't allow calling DOMException's toString()
+  // on non-DOMExceptions. Error's toString() is sufficient here.
+  DOMEx[protoProp] = Error[protoProp];
+  classListProto.item = function (i) {
+    return this[i] || null;
+  };
+  classListProto.contains = function (token) {
+    token += "";
+    return checkTokenAndGetIndex(this, token) !== -1;
+  };
+  classListProto.add = function () {
+    var
+        tokens = arguments
+      , i = 0
+      , l = tokens.length
+      , token
+      , updated = false
+    ;
+    do {
+      token = tokens[i] + "";
+      if (checkTokenAndGetIndex(this, token) === -1) {
+        this.push(token);
+        updated = true;
+      }
+    }
+    while (++i < l);
+
+    if (updated) {
+      this._updateClassName();
+    }
+  };
+  classListProto.remove = function () {
+    var
+        tokens = arguments
+      , i = 0
+      , l = tokens.length
+      , token
+      , updated = false
+      , index
+    ;
+    do {
+      token = tokens[i] + "";
+      index = checkTokenAndGetIndex(this, token);
+      while (index !== -1) {
+        this.splice(index, 1);
+        updated = true;
+        index = checkTokenAndGetIndex(this, token);
+      }
+    }
+    while (++i < l);
+
+    if (updated) {
+      this._updateClassName();
+    }
+  };
+  classListProto.toggle = function (token, force) {
+    token += "";
+
+    var
+        result = this.contains(token)
+      , method = result ?
+        force !== true && "remove"
+      :
+        force !== false && "add"
+    ;
+
+    if (method) {
+      this[method](token);
+    }
+
+    if (force === true || force === false) {
+      return force;
+    } else {
+      return !result;
+    }
+  };
+  classListProto.toString = function () {
+    return this.join(" ");
+  };
+
+  if (objCtr.defineProperty) {
+    var classListPropDesc = {
+        get: classListGetter
+      , enumerable: true
+      , configurable: true
+    };
+    try {
+      objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+    } catch (ex) { // IE 8 doesn't support enumerable:true
+      if (ex.number === -0x7FF5EC54) {
+        classListPropDesc.enumerable = false;
+        objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+      }
+    }
+  } else if (objCtr[protoProp].__defineGetter__) {
+    elemCtrProto.__defineGetter__(classListProp, classListGetter);
+  }
+
+  }(self));
 }
 
-if (typeof module === 'object') {
-    module.exports = MediumEditor;
-}
-// AMD support
-else if (typeof define === 'function' && define.amd) {
-    define(function () {
-        'use strict';
-        return MediumEditor;
-    });
-}
+/* Blob.js
+ * A Blob implementation.
+ * 2014-07-24
+ *
+ * By Eli Grey, http://eligrey.com
+ * By Devin Samarin, https://github.com/dsamarin
+ * License: X11/MIT
+ *   See https://github.com/eligrey/Blob.js/blob/master/LICENSE.md
+ */
+
+/*global self, unescape */
+/*jslint bitwise: true, regexp: true, confusion: true, es5: true, vars: true, white: true,
+  plusplus: true */
+
+/*! @source http://purl.eligrey.com/github/Blob.js/blob/master/Blob.js */
+
+(function (view) {
+  "use strict";
+
+  view.URL = view.URL || view.webkitURL;
+
+  if (view.Blob && view.URL) {
+    try {
+      new Blob;
+      return;
+    } catch (e) {}
+  }
+
+  // Internally we use a BlobBuilder implementation to base Blob off of
+  // in order to support older browsers that only have BlobBuilder
+  var BlobBuilder = view.BlobBuilder || view.WebKitBlobBuilder || view.MozBlobBuilder || (function(view) {
+    var
+        get_class = function(object) {
+        return Object.prototype.toString.call(object).match(/^\[object\s(.*)\]$/)[1];
+      }
+      , FakeBlobBuilder = function BlobBuilder() {
+        this.data = [];
+      }
+      , FakeBlob = function Blob(data, type, encoding) {
+        this.data = data;
+        this.size = data.length;
+        this.type = type;
+        this.encoding = encoding;
+      }
+      , FBB_proto = FakeBlobBuilder.prototype
+      , FB_proto = FakeBlob.prototype
+      , FileReaderSync = view.FileReaderSync
+      , FileException = function(type) {
+        this.code = this[this.name = type];
+      }
+      , file_ex_codes = (
+          "NOT_FOUND_ERR SECURITY_ERR ABORT_ERR NOT_READABLE_ERR ENCODING_ERR "
+        + "NO_MODIFICATION_ALLOWED_ERR INVALID_STATE_ERR SYNTAX_ERR"
+      ).split(" ")
+      , file_ex_code = file_ex_codes.length
+      , real_URL = view.URL || view.webkitURL || view
+      , real_create_object_URL = real_URL.createObjectURL
+      , real_revoke_object_URL = real_URL.revokeObjectURL
+      , URL = real_URL
+      , btoa = view.btoa
+      , atob = view.atob
+
+      , ArrayBuffer = view.ArrayBuffer
+      , Uint8Array = view.Uint8Array
+
+      , origin = /^[\w-]+:\/*\[?[\w\.:-]+\]?(?::[0-9]+)?/
+    ;
+    FakeBlob.fake = FB_proto.fake = true;
+    while (file_ex_code--) {
+      FileException.prototype[file_ex_codes[file_ex_code]] = file_ex_code + 1;
+    }
+    // Polyfill URL
+    if (!real_URL.createObjectURL) {
+      URL = view.URL = function(uri) {
+        var
+            uri_info = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+          , uri_origin
+        ;
+        uri_info.href = uri;
+        if (!("origin" in uri_info)) {
+          if (uri_info.protocol.toLowerCase() === "data:") {
+            uri_info.origin = null;
+          } else {
+            uri_origin = uri.match(origin);
+            uri_info.origin = uri_origin && uri_origin[1];
+          }
+        }
+        return uri_info;
+      };
+    }
+    URL.createObjectURL = function(blob) {
+      var
+          type = blob.type
+        , data_URI_header
+      ;
+      if (type === null) {
+        type = "application/octet-stream";
+      }
+      if (blob instanceof FakeBlob) {
+        data_URI_header = "data:" + type;
+        if (blob.encoding === "base64") {
+          return data_URI_header + ";base64," + blob.data;
+        } else if (blob.encoding === "URI") {
+          return data_URI_header + "," + decodeURIComponent(blob.data);
+        } if (btoa) {
+          return data_URI_header + ";base64," + btoa(blob.data);
+        } else {
+          return data_URI_header + "," + encodeURIComponent(blob.data);
+        }
+      } else if (real_create_object_URL) {
+        return real_create_object_URL.call(real_URL, blob);
+      }
+    };
+    URL.revokeObjectURL = function(object_URL) {
+      if (object_URL.substring(0, 5) !== "data:" && real_revoke_object_URL) {
+        real_revoke_object_URL.call(real_URL, object_URL);
+      }
+    };
+    FBB_proto.append = function(data/*, endings*/) {
+      var bb = this.data;
+      // decode data to a binary string
+      if (Uint8Array && (data instanceof ArrayBuffer || data instanceof Uint8Array)) {
+        var
+            str = ""
+          , buf = new Uint8Array(data)
+          , i = 0
+          , buf_len = buf.length
+        ;
+        for (; i < buf_len; i++) {
+          str += String.fromCharCode(buf[i]);
+        }
+        bb.push(str);
+      } else if (get_class(data) === "Blob" || get_class(data) === "File") {
+        if (FileReaderSync) {
+          var fr = new FileReaderSync;
+          bb.push(fr.readAsBinaryString(data));
+        } else {
+          // async FileReader won't work as BlobBuilder is sync
+          throw new FileException("NOT_READABLE_ERR");
+        }
+      } else if (data instanceof FakeBlob) {
+        if (data.encoding === "base64" && atob) {
+          bb.push(atob(data.data));
+        } else if (data.encoding === "URI") {
+          bb.push(decodeURIComponent(data.data));
+        } else if (data.encoding === "raw") {
+          bb.push(data.data);
+        }
+      } else {
+        if (typeof data !== "string") {
+          data += ""; // convert unsupported types to strings
+        }
+        // decode UTF-16 to binary string
+        bb.push(unescape(encodeURIComponent(data)));
+      }
+    };
+    FBB_proto.getBlob = function(type) {
+      if (!arguments.length) {
+        type = null;
+      }
+      return new FakeBlob(this.data.join(""), type, "raw");
+    };
+    FBB_proto.toString = function() {
+      return "[object BlobBuilder]";
+    };
+    FB_proto.slice = function(start, end, type) {
+      var args = arguments.length;
+      if (args < 3) {
+        type = null;
+      }
+      return new FakeBlob(
+          this.data.slice(start, args > 1 ? end : this.data.length)
+        , type
+        , this.encoding
+      );
+    };
+    FB_proto.toString = function() {
+      return "[object Blob]";
+    };
+    FB_proto.close = function() {
+      this.size = 0;
+      delete this.data;
+    };
+    return FakeBlobBuilder;
+  }(view));
+
+  view.Blob = function(blobParts, options) {
+    var type = options ? (options.type || "") : "";
+    var builder = new BlobBuilder();
+    if (blobParts) {
+      for (var i = 0, len = blobParts.length; i < len; i++) {
+        if (Uint8Array && blobParts[i] instanceof Uint8Array) {
+          builder.append(blobParts[i].buffer);
+        }
+        else {
+          builder.append(blobParts[i]);
+        }
+      }
+    }
+    var blob = builder.getBlob(type);
+    if (!blob.slice && blob.webkitSlice) {
+      blob.slice = blob.webkitSlice;
+    }
+    return blob;
+  };
+
+  var getPrototypeOf = Object.getPrototypeOf || function(object) {
+    return object.__proto__;
+  };
+  view.Blob.prototype = getPrototypeOf(new view.Blob());
+}(typeof self !== "undefined" && self || typeof window !== "undefined" && window || this.content || this));
+
+(function (root, factory) {
+    'use strict';
+    if (typeof module === 'object') {
+        module.exports = factory;
+    } else if (typeof define === 'function' && define.amd) {
+        define(function () {
+            return factory;
+        });
+    } else {
+        root.MediumEditor = factory;
+    }
+}(this, function () {
+
+    'use strict';
+
+var Util;
 
 (function (window, document) {
     'use strict';
 
-    function extend(b, a) {
+    function copyInto(dest, source, overwrite) {
         var prop;
-        if (b === undefined) {
-            return a;
-        }
-        for (prop in a) {
-            if (a.hasOwnProperty(prop) && b.hasOwnProperty(prop) === false) {
-                b[prop] = a[prop];
+        dest = dest || {};
+        for (prop in source) {
+            if (source.hasOwnProperty(prop) && (overwrite || dest.hasOwnProperty(prop) === false)) {
+                dest[prop] = source[prop];
             }
         }
-        return b;
+        return dest;
     }
 
-    function isDescendant(parent, child) {
-         var node = child.parentNode;
-         while (node !== null) {
-             if (node === parent) {
-                 return true;
-             }
-             node = node.parentNode;
-         }
-         return false;
-    }
+    Util = {
 
-    // http://stackoverflow.com/questions/5605401/insert-link-in-contenteditable-element
-    // by Tim Down
-    function saveSelection() {
-        var i,
-            len,
-            ranges,
-            sel = this.options.contentWindow.getSelection();
-        if (sel.getRangeAt && sel.rangeCount) {
-            ranges = [];
-            for (i = 0, len = sel.rangeCount; i < len; i += 1) {
-                ranges.push(sel.getRangeAt(i));
+        // http://stackoverflow.com/questions/17907445/how-to-detect-ie11#comment30165888_17907562
+        // by rg89
+        isIE: ((navigator.appName === 'Microsoft Internet Explorer') || ((navigator.appName === 'Netscape') && (new RegExp('Trident/.*rv:([0-9]{1,}[.0-9]{0,})').exec(navigator.userAgent) !== null))),
+
+        // https://github.com/jashkenas/underscore
+        keyCode: {
+            BACKSPACE: 8,
+            TAB: 9,
+            ENTER: 13,
+            ESCAPE: 27,
+            SPACE: 32,
+            DELETE: 46
+        },
+
+        parentElements: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'],
+
+        defaults: function defaults(dest, source) {
+            return copyInto(dest, source);
+        },
+
+        derives: function derives(base, derived) {
+            var origPrototype = derived.prototype;
+            function Proto() { }
+            Proto.prototype = base.prototype;
+            derived.prototype = new Proto();
+            derived.prototype.constructor = base;
+            derived.prototype = copyInto(derived.prototype, origPrototype);
+            return derived;
+        },
+
+        // Find the next node in the DOM tree that represents any text that is being
+        // displayed directly next to the targetNode (passed as an argument)
+        // Text that appears directly next to the current node can be:
+        //  - A sibling text node
+        //  - A descendant of a sibling element
+        //  - A sibling text node of an ancestor
+        //  - A descendant of a sibling element of an ancestor
+        findAdjacentTextNodeWithContent: function findAdjacentTextNodeWithContent(rootNode, targetNode, ownerDocument) {
+            var pastTarget = false,
+                nextNode,
+                nodeIterator = ownerDocument.createNodeIterator(rootNode, NodeFilter.SHOW_TEXT, null, false);
+
+            // Use a native NodeIterator to iterate over all the text nodes that are descendants
+            // of the rootNode.  Once past the targetNode, choose the first non-empty text node
+            nextNode = nodeIterator.nextNode();
+            while (nextNode) {
+                if (nextNode === targetNode) {
+                    pastTarget = true;
+                } else if (pastTarget) {
+                    if (nextNode.nodeType === 3 && nextNode.nodeValue && nextNode.nodeValue.trim().length > 0) {
+                        break;
+                    }
+                }
+                nextNode = nodeIterator.nextNode();
             }
-            return ranges;
-        }
-        return null;
-    }
 
-    function restoreSelection(savedSel) {
-        var i,
-            len,
-            sel = this.options.contentWindow.getSelection();
-        if (savedSel) {
-            sel.removeAllRanges();
-            for (i = 0, len = savedSel.length; i < len; i += 1) {
-                sel.addRange(savedSel[i]);
+            return nextNode;
+        },
+
+        isDescendant: function isDescendant(parent, child) {
+            if (!parent || !child) {
+                return false;
             }
+            var node = child.parentNode;
+            while (node !== null) {
+                if (node === parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        },
+
+        // https://github.com/jashkenas/underscore
+        isElement: function isElement(obj) {
+            return !!(obj && obj.nodeType === 1);
+        },
+
+        now: function now() {
+            return Date.now || new Date().getTime();
+        },
+
+        // https://github.com/jashkenas/underscore
+        throttle: function throttle(func, wait) {
+            var THROTTLE_INTERVAL = 50,
+                context,
+                args,
+                result,
+                timeout = null,
+                previous = 0,
+                later;
+
+            if (!wait && wait !== 0) {
+                wait = THROTTLE_INTERVAL;
+            }
+
+            later = function () {
+                previous = Util.now();
+                timeout = null;
+                result = func.apply(context, args);
+                if (!timeout) {
+                    context = args = null;
+                }
+            };
+
+            return function () {
+                var currNow = Util.now(),
+                    remaining = wait - (currNow - previous);
+                context = this;
+                args = arguments;
+                if (remaining <= 0 || remaining > wait) {
+                    clearTimeout(timeout);
+                    timeout = null;
+                    previous = currNow;
+                    result = func.apply(context, args);
+                    if (!timeout) {
+                        context = args = null;
+                    }
+                } else if (!timeout) {
+                    timeout = setTimeout(later, remaining);
+                }
+                return result;
+            };
+        },
+
+        traverseUp: function (current, testElementFunction) {
+
+            do {
+                if (current.nodeType === 1) {
+                    if (testElementFunction(current)) {
+                        return current;
+                    }
+                    // do not traverse upwards past the nearest containing editor
+                    if (current.getAttribute('data-medium-element')) {
+                        return false;
+                    }
+                }
+
+                current = current.parentNode;
+            } while (current);
+
+            return false;
+
+        },
+
+        htmlEntities: function (str) {
+            // converts special characters (like <) into their escaped/encoded values (like &lt;).
+            // This allows you to show to display the string without the browser reading it as HTML.
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        },
+
+        // http://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div
+        insertHTMLCommand: function (doc, html) {
+            var selection, range, el, fragment, node, lastNode, toReplace;
+
+            if (doc.queryCommandSupported('insertHTML')) {
+                try {
+                    return doc.execCommand('insertHTML', false, html);
+                } catch (ignore) {}
+            }
+
+            selection = doc.defaultView.getSelection();
+            if (selection.getRangeAt && selection.rangeCount) {
+                range = selection.getRangeAt(0);
+                toReplace = range.commonAncestorContainer;
+                // Ensure range covers maximum amount of nodes as possible
+                // By moving up the DOM and selecting ancestors whose only child is the range
+                if ((toReplace.nodeType === 3 && toReplace.nodeValue === range.toString()) ||
+                        (toReplace.nodeType !== 3 && toReplace.innerHTML === range.toString())) {
+                    while (toReplace.parentNode &&
+                            toReplace.parentNode.childNodes.length === 1 &&
+                            !toReplace.parentNode.getAttribute('data-medium-element')) {
+                        toReplace = toReplace.parentNode;
+                    }
+                    range.selectNode(toReplace);
+                }
+                range.deleteContents();
+
+                el = doc.createElement("div");
+                el.innerHTML = html;
+                fragment = doc.createDocumentFragment();
+                while (el.firstChild) {
+                    node = el.firstChild;
+                    lastNode = fragment.appendChild(node);
+                }
+                range.insertNode(fragment);
+
+                // Preserve the selection:
+                if (lastNode) {
+                    range = range.cloneRange();
+                    range.setStartAfter(lastNode);
+                    range.collapse(true);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+            }
+        },
+
+        // TODO: not sure if this should be here
+        setTargetBlank: function (el) {
+            var i;
+            if (el.tagName.toLowerCase() === 'a') {
+                el.target = '_blank';
+            } else {
+                el = el.getElementsByTagName('a');
+
+                for (i = 0; i < el.length; i += 1) {
+                    el[i].target = '_blank';
+                }
+            }
+        },
+
+        isListItemChild: function (node) {
+            var parentNode = node.parentNode,
+                tagName = parentNode.tagName.toLowerCase();
+            while (this.parentElements.indexOf(tagName) === -1 && tagName !== 'div') {
+                if (tagName === 'li') {
+                    return true;
+                }
+                parentNode = parentNode.parentNode;
+                if (parentNode && parentNode.tagName) {
+                    tagName = parentNode.tagName.toLowerCase();
+                } else {
+                    return false;
+                }
+            }
+            return false;
         }
-    }
+    };
+}(window, document));
 
-    // http://stackoverflow.com/questions/1197401/how-can-i-get-the-element-the-caret-is-in-with-javascript-when-using-contentedi
-    // by You
-    function getSelectionStart() {
-        var node = this.options.ownerDocument.getSelection().anchorNode,
-            startNode = (node && node.nodeType === 3 ? node.parentNode : node);
-        return startNode;
-    }
+var Selection;
 
-    // http://stackoverflow.com/questions/4176923/html-of-selected-text
-    // by Tim Down
-    function getSelectionHtml() {
-        var i,
-            html = '',
-            sel,
-            len,
-            container;
-        if (this.options.contentWindow.getSelection !== undefined) {
-            sel = this.options.contentWindow.getSelection();
+(function (window, document) {
+    'use strict';
+
+    Selection = {
+        // http://stackoverflow.com/questions/1197401/how-can-i-get-the-element-the-caret-is-in-with-javascript-when-using-contentedi
+        // by You
+        getSelectionStart: function (ownerDocument) {
+            var node = ownerDocument.getSelection().anchorNode,
+                startNode = (node && node.nodeType === 3 ? node.parentNode : node);
+            return startNode;
+        },
+
+        findMatchingSelectionParent: function (testElementFunction, contentWindow) {
+            var selection = contentWindow.getSelection(), range, current;
+
+            if (selection.rangeCount === 0) {
+                return false;
+            }
+
+            range = selection.getRangeAt(0);
+            current = range.commonAncestorContainer;
+
+            return Util.traverseUp(current, testElementFunction);
+        },
+
+        getSelectionElement: function (contentWindow) {
+            return this.findMatchingSelectionParent(function (el) {
+                return el.getAttribute('data-medium-element');
+            }, contentWindow);
+        },
+
+        selectionInContentEditableFalse: function (contentWindow) {
+            return this.findMatchingSelectionParent(function (el) {
+                return (el && el.nodeName !== '#text' && el.getAttribute('contenteditable') === 'false');
+            }, contentWindow);
+        },
+
+        // http://stackoverflow.com/questions/4176923/html-of-selected-text
+        // by Tim Down
+        getSelectionHtml: function getSelectionHtml() {
+            var i,
+                html = '',
+                sel = this.options.contentWindow.getSelection(),
+                len,
+                container;
             if (sel.rangeCount) {
                 container = this.options.ownerDocument.createElement('div');
                 for (i = 0, len = sel.rangeCount; i < len; i += 1) {
@@ -90480,23 +110863,1691 @@ else if (typeof define === 'function' && define.amd) {
                 }
                 html = container.innerHTML;
             }
-        } else if (this.options.ownerDocument.selection !== undefined) {
-            if (this.options.ownerDocument.selection.type === 'Text') {
-                html = this.options.ownerDocument.selection.createRange().htmlText;
+            return html;
+        },
+
+        /**
+         *  Find the caret position within an element irrespective of any inline tags it may contain.
+         *
+         *  @param {DOMElement} An element containing the cursor to find offsets relative to.
+         *  @param {Range} A Range representing cursor position. Will window.getSelection if none is passed.
+         *  @return {Object} 'left' and 'right' attributes contain offsets from begining and end of Element
+         */
+        getCaretOffsets: function getCaretOffsets(element, range) {
+            var preCaretRange, postCaretRange;
+
+            if (!range) {
+                range = window.getSelection().getRangeAt(0);
+            }
+
+            preCaretRange = range.cloneRange();
+            postCaretRange = range.cloneRange();
+
+            preCaretRange.selectNodeContents(element);
+            preCaretRange.setEnd(range.endContainer, range.endOffset);
+
+            postCaretRange.selectNodeContents(element);
+            postCaretRange.setStart(range.endContainer, range.endOffset);
+
+            return {
+                left: preCaretRange.toString().length,
+                right: postCaretRange.toString().length
+            };
+        },
+
+        // http://stackoverflow.com/questions/15867542/range-object-get-selection-parent-node-chrome-vs-firefox
+        rangeSelectsSingleNode: function (range) {
+            var startNode = range.startContainer;
+            return startNode === range.endContainer &&
+                startNode.hasChildNodes() &&
+                range.endOffset === range.startOffset + 1;
+        },
+
+        getSelectedParentElement: function (range) {
+            var selectedParentElement = null;
+            if (this.rangeSelectsSingleNode(range) && range.startContainer.childNodes[range.startOffset].nodeType !== 3) {
+                selectedParentElement = range.startContainer.childNodes[range.startOffset];
+            } else if (range.startContainer.nodeType === 3) {
+                selectedParentElement = range.startContainer.parentNode;
+            } else {
+                selectedParentElement = range.startContainer;
+            }
+            return selectedParentElement;
+        },
+
+        getSelectionData: function (el) {
+            var tagName;
+
+            if (el && el.tagName) {
+                tagName = el.tagName.toLowerCase();
+            }
+
+            while (el && Util.parentElements.indexOf(tagName) === -1) {
+                el = el.parentNode;
+                if (el && el.tagName) {
+                    tagName = el.tagName.toLowerCase();
+                }
+            }
+
+            return {
+                el: el,
+                tagName: tagName
+            };
+        }
+    };
+}(document, window));
+
+var DefaultButton,
+    ButtonsData;
+
+(function (window, document) {
+    'use strict';
+
+    ButtonsData = {
+        'bold': {
+            name: 'bold',
+            action: 'bold',
+            aria: 'bold',
+            tagNames: ['b', 'strong'],
+            style: {
+                prop: 'font-weight',
+                value: '700|bold'
+            },
+            useQueryState: true,
+            contentDefault: '<b>B</b>',
+            contentFA: '<i class="fa fa-bold"></i>',
+            key: 'b'
+        },
+        'italic': {
+            name: 'italic',
+            action: 'italic',
+            aria: 'italic',
+            tagNames: ['i', 'em'],
+            style: {
+                prop: 'font-style',
+                value: 'italic'
+            },
+            useQueryState: true,
+            contentDefault: '<b><i>I</i></b>',
+            contentFA: '<i class="fa fa-italic"></i>',
+            key: 'i'
+        },
+        'underline': {
+            name: 'underline',
+            action: 'underline',
+            aria: 'underline',
+            tagNames: ['u'],
+            style: {
+                prop: 'text-decoration',
+                value: 'underline'
+            },
+            useQueryState: true,
+            contentDefault: '<b><u>U</u></b>',
+            contentFA: '<i class="fa fa-underline"></i>',
+            key: 'u'
+        },
+        'strikethrough': {
+            name: 'strikethrough',
+            action: 'strikethrough',
+            aria: 'strike through',
+            tagNames: ['strike'],
+            style: {
+                prop: 'text-decoration',
+                value: 'line-through'
+            },
+            useQueryState: true,
+            contentDefault: '<s>A</s>',
+            contentFA: '<i class="fa fa-strikethrough"></i>'
+        },
+        'superscript': {
+            name: 'superscript',
+            action: 'superscript',
+            aria: 'superscript',
+            tagNames: ['sup'],
+            /* firefox doesn't behave the way we want it to, so we CAN'T use queryCommandState for superscript
+               https://github.com/guardian/scribe/blob/master/BROWSERINCONSISTENCIES.md#documentquerycommandstate */
+            // useQueryState: true
+            contentDefault: '<b>x<sup>1</sup></b>',
+            contentFA: '<i class="fa fa-superscript"></i>'
+        },
+        'subscript': {
+            name: 'subscript',
+            action: 'subscript',
+            aria: 'subscript',
+            tagNames: ['sub'],
+            /* firefox doesn't behave the way we want it to, so we CAN'T use queryCommandState for subscript
+               https://github.com/guardian/scribe/blob/master/BROWSERINCONSISTENCIES.md#documentquerycommandstate */
+            // useQueryState: true
+            contentDefault: '<b>x<sub>1</sub></b>',
+            contentFA: '<i class="fa fa-subscript"></i>'
+        },
+        'image': {
+            name: 'image',
+            action: 'image',
+            aria: 'image',
+            tagNames: ['img'],
+            contentDefault: '<b>image</b>',
+            contentFA: '<i class="fa fa-picture-o"></i>'
+        },
+        'quote': {
+            name: 'quote',
+            action: 'append-blockquote',
+            aria: 'blockquote',
+            tagNames: ['blockquote'],
+            contentDefault: '<b>&ldquo;</b>',
+            contentFA: '<i class="fa fa-quote-right"></i>'
+        },
+        'orderedlist': {
+            name: 'orderedlist',
+            action: 'insertorderedlist',
+            aria: 'ordered list',
+            tagNames: ['ol'],
+            useQueryState: true,
+            contentDefault: '<b>1.</b>',
+            contentFA: '<i class="fa fa-list-ol"></i>'
+        },
+        'unorderedlist': {
+            name: 'unorderedlist',
+            action: 'insertunorderedlist',
+            aria: 'unordered list',
+            tagNames: ['ul'],
+            useQueryState: true,
+            contentDefault: '<b>&bull;</b>',
+            contentFA: '<i class="fa fa-list-ul"></i>'
+        },
+        'pre': {
+            name: 'pre',
+            action: 'append-pre',
+            aria: 'preformatted text',
+            tagNames: ['pre'],
+            contentDefault: '<b>0101</b>',
+            contentFA: '<i class="fa fa-code fa-lg"></i>'
+        },
+        'indent': {
+            name: 'indent',
+            action: 'indent',
+            aria: 'indent',
+            tagNames: [],
+            contentDefault: '<b>&rarr;</b>',
+            contentFA: '<i class="fa fa-indent"></i>'
+        },
+        'outdent': {
+            name: 'outdent',
+            action: 'outdent',
+            aria: 'outdent',
+            tagNames: [],
+            contentDefault: '<b>&larr;</b>',
+            contentFA: '<i class="fa fa-outdent"></i>'
+        },
+        'justifyCenter': {
+            name: 'justifyCenter',
+            action: 'justifyCenter',
+            aria: 'center justify',
+            tagNames: [],
+            style: {
+                prop: 'text-align',
+                value: 'center'
+            },
+            useQueryState: true,
+            contentDefault: '<b>C</b>',
+            contentFA: '<i class="fa fa-align-center"></i>'
+        },
+        'justifyFull': {
+            name: 'justifyFull',
+            action: 'justifyFull',
+            aria: 'full justify',
+            tagNames: [],
+            style: {
+                prop: 'text-align',
+                value: 'justify'
+            },
+            useQueryState: true,
+            contentDefault: '<b>J</b>',
+            contentFA: '<i class="fa fa-align-justify"></i>'
+        },
+        'justifyLeft': {
+            name: 'justifyLeft',
+            action: 'justifyLeft',
+            aria: 'left justify',
+            tagNames: [],
+            style: {
+                prop: 'text-align',
+                value: 'left'
+            },
+            useQueryState: true,
+            contentDefault: '<b>L</b>',
+            contentFA: '<i class="fa fa-align-left"></i>'
+        },
+        'justifyRight': {
+            name: 'justifyRight',
+            action: 'justifyRight',
+            aria: 'right justify',
+            tagNames: [],
+            style: {
+                prop: 'text-align',
+                value: 'right'
+            },
+            useQueryState: true,
+            contentDefault: '<b>R</b>',
+            contentFA: '<i class="fa fa-align-right"></i>'
+        },
+        'header1': {
+            name: 'header1',
+            action: function (options) {
+                return 'append-' + options.firstHeader;
+            },
+            aria: function (options) {
+                return options.firstHeader;
+            },
+            tagNames: function (options) {
+                return [options.firstHeader];
+            },
+            contentDefault: '<b>H1</b>'
+        },
+        'header2': {
+            name: 'header2',
+            action: function (options) {
+                return 'append-' + options.secondHeader;
+            },
+            aria: function (options) {
+                return options.secondHeader;
+            },
+            tagNames: function (options) {
+                return [options.secondHeader];
+            },
+            contentDefault: '<b>H2</b>'
+        }
+    };
+
+    DefaultButton = function (options, instance) {
+        this.options = options;
+        this.name = options.name;
+        this.init(instance);
+    };
+
+    DefaultButton.prototype = {
+        init: function (instance) {
+            this.base = instance;
+
+            this.button = this.createButton();
+            this.base.on(this.button, 'click', this.handleClick.bind(this));
+        },
+        getButton: function () {
+            return this.button;
+        },
+        getAction: function () {
+            return (typeof this.options.action === 'function') ? this.options.action(this.base.options) : this.options.action;
+        },
+        getAria: function () {
+            return (typeof this.options.aria === 'function') ? this.options.aria(this.base.options) : this.options.aria;
+        },
+        getTagNames: function () {
+            return (typeof this.options.tagNames === 'function') ? this.options.tagNames(this.base.options) : this.options.tagNames;
+        },
+        createButton: function () {
+            var button = this.base.options.ownerDocument.createElement('button'),
+                content = this.options.contentDefault;
+            button.classList.add('medium-editor-action');
+            button.classList.add('medium-editor-action-' + this.name);
+            button.setAttribute('data-action', this.getAction());
+            button.setAttribute('aria-label', this.getAria());
+            if (this.base.options.buttonLabels) {
+                if (this.base.options.buttonLabels === 'fontawesome' && this.options.contentFA) {
+                    content = this.options.contentFA;
+                } else if (typeof this.base.options.buttonLabels === 'object' && this.base.options.buttonLabels[this.name]) {
+                    content = this.base.options.buttonLabels[this.options.name];
+                }
+            }
+            button.innerHTML = content;
+            return button;
+        },
+        handleClick: function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+
+            var action = this.getAction();
+
+            if (action) {
+                this.base.execAction(action);
+            }
+        },
+        isActive: function () {
+            return this.button.classList.contains(this.base.options.activeButtonClass);
+        },
+        setInactive: function () {
+            this.button.classList.remove(this.base.options.activeButtonClass);
+            delete this.knownState;
+        },
+        setActive: function () {
+            this.button.classList.add(this.base.options.activeButtonClass);
+            delete this.knownState;
+        },
+        queryCommandState: function () {
+            var queryState = null;
+            if (this.options.useQueryState) {
+                queryState = this.base.queryCommandState(this.getAction());
+            }
+            return queryState;
+        },
+        isAlreadyApplied: function (node) {
+            var isMatch = false,
+                tagNames = this.getTagNames(),
+                styleVals,
+                computedStyle;
+
+            if (this.knownState === false || this.knownState === true) {
+                return this.knownState;
+            }
+
+            if (tagNames && tagNames.length > 0 && node.tagName) {
+                isMatch = tagNames.indexOf(node.tagName.toLowerCase()) !== -1;
+            }
+
+            if (!isMatch && this.options.style) {
+                styleVals = this.options.style.value.split('|');
+                computedStyle = this.base.options.contentWindow.getComputedStyle(node, null).getPropertyValue(this.options.style.prop);
+                styleVals.forEach(function (val) {
+                    if (!this.knownState) {
+                        isMatch = (computedStyle.indexOf(val) !== -1);
+                        // text-decoration is not inherited by default
+                        // so if the computed style for text-decoration doesn't match
+                        // don't write to knownState so we can fallback to other checks
+                        if (isMatch || this.options.style.prop !== 'text-decoration') {
+                            this.knownState = isMatch;
+                        }
+                    }
+                }.bind(this));
+            }
+
+            return isMatch;
+        }
+    };
+}(window, document));
+
+var pasteHandler;
+
+(function (window, document) {
+    'use strict';
+    /*jslint regexp: true*/
+    /*
+        jslint does not allow character negation, because the negation
+        will not match any unicode characters. In the regexes in this
+        block, negation is used specifically to match the end of an html
+        tag, and in fact unicode characters *should* be allowed.
+    */
+    function createReplacements() {
+        return [
+
+            // replace two bogus tags that begin pastes from google docs
+            [new RegExp(/<[^>]*docs-internal-guid[^>]*>/gi), ""],
+            [new RegExp(/<\/b>(<br[^>]*>)?$/gi), ""],
+
+             // un-html spaces and newlines inserted by OS X
+            [new RegExp(/<span class="Apple-converted-space">\s+<\/span>/g), ' '],
+            [new RegExp(/<br class="Apple-interchange-newline">/g), '<br>'],
+
+            // replace google docs italics+bold with a span to be replaced once the html is inserted
+            [new RegExp(/<span[^>]*(font-style:italic;font-weight:bold|font-weight:bold;font-style:italic)[^>]*>/gi), '<span class="replace-with italic bold">'],
+
+            // replace google docs italics with a span to be replaced once the html is inserted
+            [new RegExp(/<span[^>]*font-style:italic[^>]*>/gi), '<span class="replace-with italic">'],
+
+            //[replace google docs bolds with a span to be replaced once the html is inserted
+            [new RegExp(/<span[^>]*font-weight:bold[^>]*>/gi), '<span class="replace-with bold">'],
+
+             // replace manually entered b/i/a tags with real ones
+            [new RegExp(/&lt;(\/?)(i|b|a)&gt;/gi), '<$1$2>'],
+
+             // replace manually a tags with real ones, converting smart-quotes from google docs
+            [new RegExp(/&lt;a\s+href=(&quot;|&rdquo;|&ldquo;|“|”)([^&]+)(&quot;|&rdquo;|&ldquo;|“|”)&gt;/gi), '<a href="$2">']
+
+        ];
+    }
+    /*jslint regexp: false*/
+
+    pasteHandler = {
+        handlePaste: function (element, evt, options) {
+            var paragraphs,
+                html = '',
+                p,
+                dataFormatHTML = 'text/html',
+                dataFormatPlain = 'text/plain';
+
+            element.classList.remove('medium-editor-placeholder');
+            if (!options.forcePlainText && !options.cleanPastedHTML) {
+                return element;
+            }
+
+            if (options.contentWindow.clipboardData && evt.clipboardData === undefined) {
+                evt.clipboardData = options.contentWindow.clipboardData;
+                // If window.clipboardData exists, but e.clipboardData doesn't exist,
+                // we're probably in IE. IE only has two possibilities for clipboard
+                // data format: 'Text' and 'URL'.
+                //
+                // Of the two, we want 'Text':
+                dataFormatHTML = 'Text';
+                dataFormatPlain = 'Text';
+            }
+
+            if (evt.clipboardData && evt.clipboardData.getData && !evt.defaultPrevented) {
+                evt.preventDefault();
+
+                if (options.cleanPastedHTML && evt.clipboardData.getData(dataFormatHTML)) {
+                    return this.cleanPaste(evt.clipboardData.getData(dataFormatHTML), options);
+                }
+                if (!(options.disableReturn || element.getAttribute('data-disable-return'))) {
+                    paragraphs = evt.clipboardData.getData(dataFormatPlain).split(/[\r\n]/g);
+                    for (p = 0; p < paragraphs.length; p += 1) {
+                        if (paragraphs[p] !== '') {
+                            html += '<p>' + Util.htmlEntities(paragraphs[p]) + '</p>';
+                        }
+                    }
+                    Util.insertHTMLCommand(options.ownerDocument, html);
+                } else {
+                    html = Util.htmlEntities(evt.clipboardData.getData(dataFormatPlain));
+                    Util.insertHTMLCommand(options.ownerDocument, html);
+                }
+            }
+        },
+
+        cleanPaste: function (text, options) {
+            var i, elList, workEl,
+                el = Selection.getSelectionElement(options.contentWindow),
+                multiline = /<p|<br|<div/.test(text),
+                replacements = createReplacements();
+
+            for (i = 0; i < replacements.length; i += 1) {
+                text = text.replace(replacements[i][0], replacements[i][1]);
+            }
+
+            if (multiline) {
+                // double br's aren't converted to p tags, but we want paragraphs.
+                elList = text.split('<br><br>');
+
+                this.pasteHTML('<p>' + elList.join('</p><p>') + '</p>', options.ownerDocument);
+
+                try {
+                    options.ownerDocument.execCommand('insertText', false, "\n");
+                } catch (ignore) { }
+
+                // block element cleanup
+                elList = el.querySelectorAll('a,p,div,br');
+                for (i = 0; i < elList.length; i += 1) {
+                    workEl = elList[i];
+
+                    switch (workEl.tagName.toLowerCase()) {
+                    case 'a':
+                        if (options.targetBlank) {
+                            Util.setTargetBlank(workEl);
+                        }
+                        break;
+                    case 'p':
+                    case 'div':
+                        this.filterCommonBlocks(workEl);
+                        break;
+                    case 'br':
+                        this.filterLineBreak(workEl);
+                        break;
+                    }
+                }
+            } else {
+                this.pasteHTML(text, options.ownerDocument);
+            }
+        },
+
+        pasteHTML: function (html, ownerDocument) {
+            var elList, workEl, i, fragmentBody, pasteBlock = ownerDocument.createDocumentFragment();
+
+            pasteBlock.appendChild(ownerDocument.createElement('body'));
+
+            fragmentBody = pasteBlock.querySelector('body');
+            fragmentBody.innerHTML = html;
+
+            this.cleanupSpans(fragmentBody, ownerDocument);
+
+            elList = fragmentBody.querySelectorAll('*');
+            for (i = 0; i < elList.length; i += 1) {
+                workEl = elList[i];
+
+                // delete ugly attributes
+                workEl.removeAttribute('class');
+                workEl.removeAttribute('style');
+                workEl.removeAttribute('dir');
+
+                if (workEl.tagName.toLowerCase() === 'meta') {
+                    workEl.parentNode.removeChild(workEl);
+                }
+            }
+            Util.insertHTMLCommand(ownerDocument, fragmentBody.innerHTML.replace(/&nbsp;/g, ' '));
+        },
+        isCommonBlock: function (el) {
+            return (el && (el.tagName.toLowerCase() === 'p' || el.tagName.toLowerCase() === 'div'));
+        },
+        filterCommonBlocks: function (el) {
+            if (/^\s*$/.test(el.textContent)) {
+                el.parentNode.removeChild(el);
+            }
+        },
+        filterLineBreak: function (el) {
+            if (this.isCommonBlock(el.previousElementSibling)) {
+                // remove stray br's following common block elements
+                this.removeWithParent(el);
+            } else if (this.isCommonBlock(el.parentNode) && (el.parentNode.firstChild === el || el.parentNode.lastChild === el)) {
+                // remove br's just inside open or close tags of a div/p
+                this.removeWithParent(el);
+            } else if (el.parentNode.childElementCount === 1 && el.parentNode.textContent === '') {
+                // and br's that are the only child of elements other than div/p
+                this.removeWithParent(el);
+            }
+        },
+
+        // remove an element, including its parent, if it is the only element within its parent
+        removeWithParent: function (el) {
+            if (el && el.parentNode) {
+                if (el.parentNode.parentNode && el.parentNode.childElementCount === 1) {
+                    el.parentNode.parentNode.removeChild(el.parentNode);
+                } else {
+                    el.parentNode.removeChild(el);
+                }
+            }
+        },
+
+        cleanupSpans: function (container_el, ownerDocument) {
+            var i,
+                el,
+                new_el,
+                spans = container_el.querySelectorAll('.replace-with'),
+                isCEF = function (el) {
+                    return (el && el.nodeName !== '#text' && el.getAttribute('contenteditable') === 'false');
+                };
+
+            for (i = 0; i < spans.length; i += 1) {
+                el = spans[i];
+                new_el = ownerDocument.createElement(el.classList.contains('bold') ? 'b' : 'i');
+
+                if (el.classList.contains('bold') && el.classList.contains('italic')) {
+                    // add an i tag as well if this has both italics and bold
+                    new_el.innerHTML = '<i>' + el.innerHTML + '</i>';
+                } else {
+                    new_el.innerHTML = el.innerHTML;
+                }
+                el.parentNode.replaceChild(new_el, el);
+            }
+
+            spans = container_el.querySelectorAll('span');
+            for (i = 0; i < spans.length; i += 1) {
+                el = spans[i];
+
+                // bail if span is in contenteditable = false
+                if (Util.traverseUp(el, isCEF)) {
+                    return false;
+                }
+
+                // remove empty spans, replace others with their contents
+                if (/^\s*$/.test()) {
+                    el.parentNode.removeChild(el);
+                } else {
+                    el.parentNode.replaceChild(ownerDocument.createTextNode(el.textContent), el);
+                }
             }
         }
-        return html;
+    };
+}(window, document));
+
+var AnchorExtension;
+
+(function (window, document) {
+    'use strict';
+
+    function AnchorDerived() {
+        this.parent = true;
+        this.options = {
+            name: 'anchor',
+            action: 'createLink',
+            aria: 'link',
+            tagNames: ['a'],
+            contentDefault: '<b>#</b>',
+            contentFA: '<i class="fa fa-link"></i>'
+        };
+        this.name = 'anchor';
+        this.hasForm = true;
     }
 
-    // https://github.com/jashkenas/underscore
-    function isElement(obj) {
-        return !!(obj && obj.nodeType === 1);
-    }
+    AnchorDerived.prototype = {
+
+        // Button and Extension handling
+
+        // Called when the button the toolbar is clicked
+        // Overrides DefaultButton.handleClick
+        handleClick: function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+
+            if (!this.base.selection) {
+                this.base.checkSelection();
+            }
+
+            var selectedParentElement = Selection.getSelectedParentElement(this.base.selectionRange);
+            if (selectedParentElement.tagName &&
+                    selectedParentElement.tagName.toLowerCase() === 'a') {
+                return this.base.execAction('unlink');
+            }
+
+            if (!this.isDisplayed()) {
+                this.showForm();
+            }
+
+            return false;
+        },
+
+        // Called by medium-editor to append form to the toolbar
+        getForm: function () {
+            if (!this.form) {
+                this.form = this.createForm();
+            }
+            return this.form;
+        },
+
+        // Used by medium-editor when the default toolbar is to be displayed
+        isDisplayed: function () {
+            return this.getForm().style.display === 'block';
+        },
+
+        hideForm: function () {
+            this.getForm().style.display = 'none';
+            this.getInput().value = '';
+        },
+
+        showForm: function (link_value) {
+            var input = this.getInput();
+
+            this.base.saveSelection();
+            this.base.hideToolbarDefaultActions();
+            this.getForm().style.display = 'block';
+            this.base.setToolbarPosition();
+
+            input.value = link_value || '';
+            input.focus();
+        },
+
+        // Called by core when tearing down medium-editor (deactivate)
+        deactivate: function () {
+            if (!this.form) {
+                return false;
+            }
+
+            if (this.form.parentNode) {
+                this.form.parentNode.removeChild(this.form);
+            }
+
+            delete this.form;
+        },
+
+        // core methods
+
+        doFormSave: function () {
+            var targetCheckbox = this.getForm().querySelector('.medium-editor-toolbar-anchor-target'),
+                buttonCheckbox = this.getForm().querySelector('.medium-editor-toolbar-anchor-button'),
+                opts = {
+                    url: this.getInput().value
+                };
+
+            this.base.restoreSelection();
+
+            if (this.base.options.checkLinkFormat) {
+                opts.url = this.checkLinkFormat(opts.url);
+            }
+
+            if (targetCheckbox && targetCheckbox.checked) {
+                opts.target = "_blank";
+            } else {
+                opts.target = "_self";
+            }
+
+            if (buttonCheckbox && buttonCheckbox.checked) {
+                opts.buttonClass = this.base.options.anchorButtonClass;
+            }
+
+            this.base.createLink(opts);
+            this.base.checkSelection();
+        },
+
+        checkLinkFormat: function (value) {
+            var re = /^(https?|ftps?|rtmpt?):\/\/|mailto:/;
+            return (re.test(value) ? '' : 'http://') + value;
+        },
+
+        doFormCancel: function () {
+            this.base.restoreSelection();
+            this.base.checkSelection();
+        },
+
+        // form creation and event handling
+
+        createForm: function () {
+            var doc = this.base.options.ownerDocument,
+                form = doc.createElement('div'),
+                input = doc.createElement('input'),
+                close = doc.createElement('a'),
+                save = doc.createElement('a'),
+                target,
+                target_label,
+                button,
+                button_label;
+
+            // Anchor Form (div)
+            form.className = 'medium-editor-toolbar-form';
+            form.id = 'medium-editor-toolbar-form-anchor-' + this.base.id;
+
+            // Handle clicks on the form itself
+            this.base.on(form, 'click', this.handleFormClick.bind(this));
+
+            // Add url textbox
+            input.setAttribute('type', 'text');
+            input.className = 'medium-editor-toolbar-input';
+            input.setAttribute('placeholder', this.base.options.anchorInputPlaceholder);
+            form.appendChild(input);
+
+            // Handle typing in the textbox
+            this.base.on(input, 'keyup', this.handleTextboxKeyup.bind(this));
+
+            // Add save buton
+            save.setAttribute('href', '#');
+            save.className = 'medium-editor-toobar-save';
+            save.innerHTML = this.base.options.buttonLabels === 'fontawesome' ?
+                             '<i class="fa fa-check"></i>' :
+                             '&#10003;';
+            form.appendChild(save);
+
+            // Handle save button clicks (capture)
+            this.base.on(save, 'click', this.handleSaveClick.bind(this), true);
+
+            // Add close button
+            close.setAttribute('href', '#');
+            close.className = 'medium-editor-toobar-close';
+            close.innerHTML = this.base.options.buttonLabels === 'fontawesome' ?
+                              '<i class="fa fa-times"></i>' :
+                              '&times;';
+            form.appendChild(close);
+
+            // Handle close button clicks
+            this.base.on(close, 'click', this.handleCloseClick.bind(this));
+
+            // (Optional) Add 'open in new window' checkbox
+            if (this.base.options.anchorTarget) {
+                target = doc.createElement('input');
+                target.setAttribute('type', 'checkbox');
+                target.className = 'medium-editor-toolbar-anchor-target';
+
+                target_label = doc.createElement('label');
+                target_label.innerHTML = this.base.options.anchorInputCheckboxLabel;
+                target_label.insertBefore(target, target_label.firstChild);
+
+                form.appendChild(target_label);
+            }
+
+            // (Optional) Add 'add button class to anchor' checkbox
+            if (this.base.options.anchorButton) {
+                button = doc.createElement('input');
+                button.setAttribute('type', 'checkbox');
+                button.className = 'medium-editor-toolbar-anchor-button';
+
+                button_label = doc.createElement('label');
+                button_label.innerHTML = "Button";
+                button_label.insertBefore(button, button_label.firstChild);
+
+                form.appendChild(button_label);
+            }
+
+            return form;
+        },
+
+        getInput: function () {
+            return this.getForm().querySelector('input.medium-editor-toolbar-input');
+        },
+
+        handleTextboxKeyup: function (event) {
+            // For ENTER -> create the anchor
+            if (event.keyCode === Util.keyCode.ENTER) {
+                event.preventDefault();
+                this.doFormSave();
+                return;
+            }
+
+            // For ESCAPE -> close the form
+            if (event.keyCode === Util.keyCode.ESCAPE) {
+                event.preventDefault();
+                this.doFormCancel();
+            }
+        },
+
+        handleFormClick: function (event) {
+            // make sure not to hide form when clicking inside the form
+            event.stopPropagation();
+        },
+
+        handleSaveClick: function (event) {
+            // Clicking Save -> create the anchor
+            event.preventDefault();
+            this.doFormSave();
+        },
+
+        handleCloseClick: function (event) {
+            // Click Close -> close the form
+            event.preventDefault();
+            this.doFormCancel();
+        }
+    };
+
+    AnchorExtension = Util.derives(DefaultButton, AnchorDerived);
+}(window, document));
+
+var AnchorPreview;
+
+(function (window, document) {
+    'use strict';
+
+    AnchorPreview = function () {
+        this.parent = true;
+        this.name = 'anchor-preview';
+    };
+
+    AnchorPreview.prototype = {
+
+        init: function (instance) {
+            this.base = instance;
+            this.anchorPreview = this.createPreview();
+            this.base.options.elementsContainer.appendChild(this.anchorPreview);
+
+            this.attachToEditables();
+        },
+
+        getPreviewElement: function () {
+            return this.anchorPreview;
+        },
+
+        createPreview: function () {
+            var el = this.base.options.ownerDocument.createElement('div');
+
+            el.id = 'medium-editor-anchor-preview-' + this.base.id;
+            el.className = 'medium-editor-anchor-preview';
+            el.innerHTML = this.getTemplate();
+
+            this.base.on(el, 'click', this.handleClick.bind(this));
+
+            return el;
+        },
+
+        getTemplate: function () {
+            return '<div class="medium-editor-toolbar-anchor-preview" id="medium-editor-toolbar-anchor-preview">' +
+                '    <i class="medium-editor-toolbar-anchor-preview-inner"></i>' +
+                '</div>';
+        },
+
+        deactivate: function () {
+            if (this.anchorPreview) {
+                if (this.anchorPreview.parentNode) {
+                    this.anchorPreview.parentNode.removeChild(this.anchorPreview);
+                }
+                delete this.anchorPreview;
+            }
+        },
+
+        hidePreview: function () {
+            this.anchorPreview.classList.remove('medium-editor-anchor-preview-active');
+            this.activeAnchor = null;
+        },
+
+        showPreview: function (anchorEl) {
+            if (this.anchorPreview.classList.contains('medium-editor-anchor-preview-active')
+                    || anchorEl.getAttribute('data-disable-preview')) {
+                return true;
+            }
+
+            this.anchorPreview.querySelector('i').textContent = anchorEl.attributes.href.value;
+
+            this.anchorPreview.classList.add('medium-toolbar-arrow-over');
+            this.anchorPreview.classList.remove('medium-toolbar-arrow-under');
+
+            if (!this.anchorPreview.classList.contains('medium-editor-anchor-preview-active')) {
+                this.anchorPreview.classList.add('medium-editor-anchor-preview-active');
+            }
+
+            this.activeAnchor = anchorEl;
+
+            this.positionPreview();
+            this.attachPreviewHandlers();
+
+            return this;
+        },
+
+        positionPreview: function () {
+            var buttonHeight = 40,
+                boundary = this.activeAnchor.getBoundingClientRect(),
+                middleBoundary = (boundary.left + boundary.right) / 2,
+                halfOffsetWidth,
+                defaultLeft;
+
+            halfOffsetWidth = this.anchorPreview.offsetWidth / 2;
+            defaultLeft = this.base.options.diffLeft - halfOffsetWidth;
+
+            this.anchorPreview.style.top = Math.round(buttonHeight + boundary.bottom - this.base.options.diffTop + this.base.options.contentWindow.pageYOffset - this.anchorPreview.offsetHeight) + 'px';
+            if (middleBoundary < halfOffsetWidth) {
+                this.anchorPreview.style.left = defaultLeft + halfOffsetWidth + 'px';
+            } else if ((this.base.options.contentWindow.innerWidth - middleBoundary) < halfOffsetWidth) {
+                this.anchorPreview.style.left = this.base.options.contentWindow.innerWidth + defaultLeft - halfOffsetWidth + 'px';
+            } else {
+                this.anchorPreview.style.left = defaultLeft + middleBoundary + 'px';
+            }
+        },
+
+        attachToEditables: function () {
+            this.base.elements.forEach(function (element) {
+                this.base.on(element, 'mouseover', this.handleEditableMouseover.bind(this));
+            }.bind(this));
+        },
+
+        handleClick: function (event) {
+            var range,
+                sel,
+                anchorExtension = this.base.getExtensionByName('anchor'),
+                activeAnchor = this.activeAnchor;
+
+            if (anchorExtension && activeAnchor) {
+                range = this.base.options.ownerDocument.createRange();
+                range.selectNodeContents(this.activeAnchor);
+
+                sel = this.base.options.contentWindow.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+                // Using setTimeout + options.delay because:
+                // We may actually be displaying the anchor form, which should be controlled by options.delay
+                this.base.delay(function () {
+                    if (activeAnchor) {
+                        anchorExtension.showForm(activeAnchor.attributes.href.value);
+                        activeAnchor = null;
+                    }
+                }.bind(this));
+            }
+
+            this.hidePreview();
+        },
+
+        handleAnchorMouseout: function (event) {
+            this.anchorToPreview = null;
+            this.base.off(this.activeAnchor, 'mouseout', this.instance_handleAnchorMouseout);
+            this.instance_handleAnchorMouseout = null;
+        },
+
+        handleEditableMouseover: function (event) {
+            /*var overAnchor = true,
+                leaveAnchor = function () {
+                    // mark the anchor as no longer hovered, and stop listening
+                    overAnchor = false;
+                    this.base.off(this.activeAnchor, 'mouseout', leaveAnchor);
+                }.bind(this);*/
+
+            if (event.target && event.target.tagName.toLowerCase() === 'a') {
+
+                // Detect empty href attributes
+                // The browser will make href="" or href="#top"
+                // into absolute urls when accessed as event.targed.href, so check the html
+                if (!/href=["']\S+["']/.test(event.target.outerHTML) || /href=["']#\S+["']/.test(event.target.outerHTML)) {
+                    return true;
+                }
+
+                // only show when hovering on anchors
+                if (this.base.toolbar && this.base.toolbar.isDisplayed()) {
+                    // only show when toolbar is not present
+                    return true;
+                }
+
+                // detach handler for other anchor in case we hovered multiple anchors quickly
+                if (this.activeAnchor && this.activeAnchor !== event.target) {
+                    this.detachPreviewHandlers();
+                }
+
+                this.anchorToPreview = event.target;
+
+                this.instance_handleAnchorMouseout = this.handleAnchorMouseout.bind(this);
+                this.base.on(this.anchorToPreview, 'mouseout', this.instance_handleAnchorMouseout);
+                // Using setTimeout + options.delay because:
+                // - We're going to show the anchor preview according to the configured delay
+                //   if the mouse has not left the anchor tag in that time
+                this.base.delay(function () {
+                    if (this.anchorToPreview) {
+                        //this.activeAnchor = this.anchorToPreview;
+                        this.showPreview(this.anchorToPreview);
+                    }
+                }.bind(this));
+            }
+        },
+
+        handlePreviewMouseover: function (event) {
+            this.lastOver = (new Date()).getTime();
+            this.hovering = true;
+        },
+
+        handlePreviewMouseout: function (event) {
+            if (!event.relatedTarget || !/anchor-preview/.test(event.relatedTarget.className)) {
+                this.hovering = false;
+            }
+        },
+
+        updatePreview: function () {
+            if (this.hovering) {
+                return true;
+            }
+            var durr = (new Date()).getTime() - this.lastOver;
+            if (durr > this.base.options.anchorPreviewHideDelay) {
+                // hide the preview 1/2 second after mouse leaves the link
+                this.detachPreviewHandlers();
+            }
+        },
+
+        detachPreviewHandlers: function () {
+            // cleanup
+            clearInterval(this.interval_timer);
+            if (this.instance_handlePreviewMouseover) {
+                this.base.off(this.anchorPreview, 'mouseover', this.instance_handlePreviewMouseover);
+                this.base.off(this.anchorPreview, 'mouseout', this.instance_handlePreviewMouseout);
+                if (this.activeAnchor) {
+                    this.base.off(this.activeAnchor, 'mouseover', this.instance_handlePreviewMouseover);
+                    this.base.off(this.activeAnchor, 'mouseout', this.instance_handlePreviewMouseout);
+                }
+            }
+
+            this.hidePreview();
+
+            this.hovering = this.instance_handlePreviewMouseover = this.instance_handlePreviewMouseout = null;
+        },
+
+        // TODO: break up method and extract out handlers
+        attachPreviewHandlers: function () {
+            this.lastOver = (new Date()).getTime();
+            this.hovering = true;
+
+            this.instance_handlePreviewMouseover = this.handlePreviewMouseover.bind(this);
+            this.instance_handlePreviewMouseout = this.handlePreviewMouseout.bind(this);
+
+            this.interval_timer = setInterval(this.updatePreview.bind(this), 200);
+
+            this.base.on(this.anchorPreview, 'mouseover', this.instance_handlePreviewMouseover);
+            this.base.on(this.anchorPreview, 'mouseout', this.instance_handlePreviewMouseout);
+            this.base.on(this.activeAnchor, 'mouseover', this.instance_handlePreviewMouseover);
+            this.base.on(this.activeAnchor, 'mouseout', this.instance_handlePreviewMouseout);
+        }
+    };
+}(window, document));
+
+var Toolbar;
+
+(function (window, document) {
+    'use strict';
+
+    Toolbar = function Toolbar(instance) {
+        this.base = instance;
+        this.options = instance.options;
+        this.initThrottledMethods();
+    };
+
+    Toolbar.prototype = {
+
+        // Toolbar creation/deletion
+
+        createToolbar: function () {
+            var toolbar = this.base.options.ownerDocument.createElement('div');
+
+            toolbar.id = 'medium-editor-toolbar-' + this.base.id;
+            toolbar.className = 'medium-editor-toolbar';
+
+            if (this.options.staticToolbar) {
+                toolbar.className += " static-toolbar";
+            } else {
+                toolbar.className += " stalker-toolbar";
+            }
+
+            toolbar.appendChild(this.createToolbarButtons());
+
+            // Add any forms that extensions may have
+            this.base.commands.forEach(function (extension) {
+                if (extension.hasForm) {
+                    toolbar.appendChild(extension.getForm());
+                }
+            });
+
+            this.attachEventHandlers();
+
+            return toolbar;
+        },
+
+        createToolbarButtons: function () {
+            var ul = this.base.options.ownerDocument.createElement('ul'),
+                li,
+                btn,
+                buttons;
+
+            ul.id = 'medium-editor-toolbar-actions' + this.base.id;
+            ul.className = 'medium-editor-toolbar-actions clearfix';
+            ul.style.display = 'block';
+
+            this.base.commands.forEach(function (extension) {
+                if (typeof extension.getButton === 'function') {
+                    btn = extension.getButton(this.base);
+                    li = this.base.options.ownerDocument.createElement('li');
+                    if (Util.isElement(btn)) {
+                        li.appendChild(btn);
+                    } else {
+                        li.innerHTML = btn;
+                    }
+                    ul.appendChild(li);
+                }
+            }.bind(this));
+
+            buttons = ul.querySelectorAll('button');
+            if (buttons.length > 0) {
+                buttons[0].classList.add(this.options.firstButtonClass);
+                buttons[buttons.length - 1].classList.add(this.options.lastButtonClass);
+            }
+
+            return ul;
+        },
+
+        deactivate: function () {
+            if (this.toolbar) {
+                if (this.toolbar.parentNode) {
+                    this.toolbar.parentNode.removeChild(this.toolbar);
+                }
+                delete this.toolbar;
+            }
+        },
+
+        // Toolbar accessors
+
+        getToolbarElement: function () {
+            if (!this.toolbar) {
+                this.toolbar = this.createToolbar();
+            }
+
+            return this.toolbar;
+        },
+
+        getToolbarActionsElement: function () {
+            return this.getToolbarElement().querySelector('.medium-editor-toolbar-actions');
+        },
+
+        // Toolbar event handlers
+
+        initThrottledMethods: function () {
+            // throttledPositionToolbar is throttled because:
+            // - It will be called when the browser is resizing, which can fire many times very quickly
+            // - For some event (like resize) a slight lag in UI responsiveness is OK and provides performance benefits
+            this.throttledPositionToolbar = Util.throttle(function (event) {
+                if (this.base.isActive) {
+                    this.positionToolbarIfShown();
+                }
+            }.bind(this));
+
+            // throttledHideToolbarActions is throttled because:
+            // - This method could be called many times due to the type of event handlers that are calling it
+            // - We want a slight delay so that other events in the stack can run, some of which may
+            //   prevent the toolbar from being hidden
+            this.throttledHideToolbarActions = Util.throttle(function (event) {
+                if (this.base.isActive) {
+                    this.hideToolbarActions();
+                }
+            }.bind(this));
+        },
+
+        attachEventHandlers: function () {
+            // Handle mouseup on document for updating the selection in the toolbar
+            this.base.on(this.options.ownerDocument.documentElement, 'mouseup', this.handleDocumentMouseup.bind(this));
+
+            // Add a scroll event for sticky toolbar
+            if (this.options.staticToolbar && this.options.stickyToolbar) {
+                // On scroll (capture), re-position the toolbar
+                this.base.on(this.options.contentWindow, 'scroll', this.handleWindowScroll.bind(this), true);
+            }
+
+            // On resize, re-position the toolbar
+            this.base.on(this.options.contentWindow, 'resize', this.handleWindowResize.bind(this));
+
+            // Handlers for each contentedtiable element
+            this.base.elements.forEach(function (element) {
+                // Attach click handler to each contenteditable element
+                this.base.on(element, 'click', this.handleEditableClick.bind(this));
+
+                // Attach keyup handler to each contenteditable element
+                this.base.on(element, 'keyup', this.handleEditableKeyup.bind(this));
+
+                // Attach blur handler to each contenteditable element
+                this.base.on(element, 'blur', this.handleEditableBlur.bind(this));
+            }.bind(this));
+        },
+
+        handleWindowScroll: function (event) {
+            this.positionToolbarIfShown();
+        },
+
+        handleWindowResize: function (event) {
+            this.throttledPositionToolbar();
+        },
+
+        handleDocumentMouseup: function (event) {
+            // Do not trigger checkState when mouseup fires over the toolbar
+            if (event &&
+                    event.target &&
+                    Util.isDescendant(this.getToolbarElement(), event.target)) {
+                return false;
+            }
+            this.checkState();
+        },
+
+        handleEditableClick: function (event) {
+            // Delay the call to checkState to handle bug where selection is empty
+            // immediately after clicking inside a pre-existing selection
+            setTimeout(function () {
+                this.checkState();
+            }.bind(this), 0);
+        },
+
+        handleEditableKeyup: function (event) {
+            this.checkState();
+        },
+
+        handleEditableBlur: function (event) {
+            // Do not trigger checkState when bluring the editable area and clicking into the toolbar
+            if (event &&
+                    event.relatedTarget &&
+                    Util.isDescendant(this.getToolbarElement(), event.relatedTarget)) {
+                return false;
+            }
+            this.checkState();
+        },
+
+        handleBlur: function (event) {
+            // Hide the toolbar after a small delay so we can prevent this on toolbar click
+            this.throttledHideToolbarActions();
+        },
+
+        // Hiding/showing toolbar
+
+        isDisplayed: function () {
+            return this.getToolbarElement().classList.contains('medium-editor-toolbar-active');
+        },
+
+        showToolbar: function () {
+            if (!this.isDisplayed()) {
+                this.getToolbarElement().classList.add('medium-editor-toolbar-active');
+                if (typeof this.options.onShowToolbar === 'function') {
+                    this.options.onShowToolbar();
+                }
+            }
+        },
+
+        hideToolbar: function () {
+            if (this.isDisplayed()) {
+                this.getToolbarElement().classList.remove('medium-editor-toolbar-active');
+                if (typeof this.options.onHideToolbar === 'function') {
+                    this.options.onHideToolbar();
+                }
+            }
+        },
+
+        hideToolbarActions: function () {
+            this.base.commands.forEach(function (extension) {
+                if (extension.onHide && typeof extension.onHide === 'function') {
+                    extension.onHide();
+                }
+            });
+            this.hideToolbar();
+        },
+
+        isToolbarDefaultActionsDisplayed: function () {
+            return this.getToolbarActionsElement().style.display === 'block';
+        },
+
+        hideToolbarDefaultActions: function () {
+            if (this.isToolbarDefaultActionsDisplayed()) {
+                this.getToolbarActionsElement().style.display = 'none';
+            }
+        },
+
+        showToolbarDefaultActions: function () {
+            this.hideExtensionForms();
+
+            if (!this.isToolbarDefaultActionsDisplayed()) {
+                this.getToolbarActionsElement().style.display = 'block';
+            }
+
+            // Using setTimeout + options.delay because:
+            // We will actually be displaying the toolbar, which should be controlled by options.delay
+            this.base.delay(function () {
+                this.showToolbar();
+            }.bind(this));
+        },
+
+        hideExtensionForms: function () {
+            // Hide all extension forms
+            this.base.commands.forEach(function (extension) {
+                if (extension.hasForm && extension.isDisplayed()) {
+                    extension.hideForm();
+                }
+            });
+        },
+
+        // Responding to changes in user selection
+
+        // Checks for existance of multiple block elements in the current selection
+        multipleBlockElementsSelected: function () {
+            /*jslint regexp: true*/
+            var selectionHtml = Selection.getSelectionHtml.call(this).replace(/<[\S]+><\/[\S]+>/gim, ''),
+                hasMultiParagraphs = selectionHtml.match(/<(p|h[1-6]|blockquote)[^>]*>/g);
+            /*jslint regexp: false*/
+
+            return !!hasMultiParagraphs && hasMultiParagraphs.length > 1;
+        },
+
+        // TODO: selection and selectionRange should be properties of the
+        //       Selection object
+        checkSelectionElement: function (newSelection, selectionElement) {
+            var i,
+                adjacentNode,
+                offset = 0,
+                newRange;
+            this.base.selection = newSelection;
+            this.base.selectionRange = this.base.selection.getRangeAt(0);
+
+            /*
+            * In firefox, there are cases (ie doubleclick of a word) where the selectionRange start
+            * will be at the very end of an element.  In other browsers, the selectionRange start
+            * would instead be at the very beginning of an element that actually has content.
+            * example:
+            *   <span>foo</span><span>bar</span>
+            *
+            * If the text 'bar' is selected, most browsers will have the selectionRange start at the beginning
+            * of the 'bar' span.  However, there are cases where firefox will have the selectionRange start
+            * at the end of the 'foo' span.  The contenteditable behavior will be ok, but if there are any
+            * properties on the 'bar' span, they won't be reflected accurately in the toolbar
+            * (ie 'Bold' button wouldn't be active)
+            *
+            * So, for cases where the selectionRange start is at the end of an element/node, find the next
+            * adjacent text node that actually has content in it, and move the selectionRange start there.
+            */
+            if (this.options.standardizeSelectionStart &&
+                    this.base.selectionRange.startContainer.nodeValue &&
+                    (this.base.selectionRange.startOffset === this.base.selectionRange.startContainer.nodeValue.length)) {
+                adjacentNode = Util.findAdjacentTextNodeWithContent(Selection.getSelectionElement(this.options.contentWindow), this.base.selectionRange.startContainer, this.options.ownerDocument);
+                if (adjacentNode) {
+                    offset = 0;
+                    while (adjacentNode.nodeValue.substr(offset, 1).trim().length === 0) {
+                        offset = offset + 1;
+                    }
+                    newRange = this.options.ownerDocument.createRange();
+                    newRange.setStart(adjacentNode, offset);
+                    newRange.setEnd(this.base.selectionRange.endContainer, this.base.selectionRange.endOffset);
+                    this.base.selection.removeAllRanges();
+                    this.base.selection.addRange(newRange);
+                    this.base.selectionRange = newRange;
+                }
+            }
+
+            for (i = 0; i < this.base.elements.length; i += 1) {
+                if (this.base.elements[i] === selectionElement) {
+                    this.showAndUpdateToolbar();
+                    return;
+                }
+            }
+
+            if (!this.options.staticToolbar) {
+                this.hideToolbarActions();
+            }
+        },
+
+        checkState: function () {
+            var newSelection,
+                selectionElement;
+
+            if (!this.base.preventSelectionUpdates) {
+                newSelection = this.options.contentWindow.getSelection();
+                if ((!this.options.updateOnEmptySelection && newSelection.toString().trim() === '') ||
+                        (this.options.allowMultiParagraphSelection === false && this.multipleBlockElementsSelected()) ||
+                        Selection.selectionInContentEditableFalse(this.options.contentWindow)) {
+                    if (!this.options.staticToolbar) {
+                        this.hideToolbarActions();
+                    } else {
+                        this.showAndUpdateToolbar();
+                    }
+
+                } else {
+                    selectionElement = Selection.getSelectionElement(this.options.contentWindow);
+                    if (!selectionElement || selectionElement.getAttribute('data-disable-toolbar')) {
+                        if (!this.options.staticToolbar) {
+                            this.hideToolbarActions();
+                        }
+                    } else {
+                        this.checkSelectionElement(newSelection, selectionElement);
+                    }
+                }
+            }
+        },
+
+        // Updating the toolbar
+
+        showAndUpdateToolbar: function () {
+            this.setToolbarButtonStates();
+            this.showToolbarDefaultActions();
+            this.setToolbarPosition();
+        },
+
+        setToolbarButtonStates: function () {
+            this.base.commands.forEach(function (extension) {
+                if (typeof extension.isActive === 'function') {
+                    extension.setInactive();
+                }
+            }.bind(this));
+            this.checkActiveButtons();
+        },
+
+        checkActiveButtons: function () {
+            var manualStateChecks = [],
+                queryState = null,
+                parentNode,
+                updateExtensionState = function (extension) {
+                    if (typeof extension.checkState === 'function') {
+                        extension.checkState(parentNode);
+                    } else if (typeof extension.isActive === 'function' &&
+                               typeof extension.isAlreadyApplied === 'function') {
+                        if (!extension.isActive() && extension.isAlreadyApplied(parentNode)) {
+                            extension.setActive();
+                        }
+                    }
+                };
+
+            if (!this.base.selectionRange) {
+                return;
+            }
+
+            parentNode = Selection.getSelectedParentElement(this.base.selectionRange);
+
+            // Loop through all commands
+            this.base.commands.forEach(function (command) {
+                // For those commands where we can use document.queryCommandState(), do so
+                if (typeof command.queryCommandState === 'function') {
+                    queryState = command.queryCommandState();
+                    // If queryCommandState returns a valid value, we can trust the browser
+                    // and don't need to do our manual checks
+                    if (queryState !== null) {
+                        if (queryState) {
+                            command.setActive();
+                        }
+                        return;
+                    }
+                }
+                // We can't use queryCommandState for this command, so add to manualStateChecks
+                manualStateChecks.push(command);
+            });
+
+            // Climb up the DOM and do manual checks for whether a certain command is currently enabled for this node
+            while (parentNode.tagName !== undefined && Util.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
+                manualStateChecks.forEach(updateExtensionState);
+
+                // we can abort the search upwards if we leave the contentEditable element
+                if (this.base.elements.indexOf(parentNode) !== -1) {
+                    break;
+                }
+                parentNode = parentNode.parentNode;
+            }
+        },
+
+        // Positioning toolbar
+
+        positionToolbarIfShown: function () {
+            if (this.isDisplayed()) {
+                this.setToolbarPosition();
+            }
+        },
+
+        setToolbarPosition: function () {
+            var container = Selection.getSelectionElement(this.options.contentWindow),
+                selection = this.options.contentWindow.getSelection(),
+                anchorPreview;
+
+            // If there isn't a valid selection, bail
+            if (!container || !this.options.contentWindow.getSelection().focusNode) {
+                return this;
+            }
+
+            // If the container isn't part of this medium-editor instance, bail
+            if (this.base.elements.indexOf(container) === -1) {
+                return this;
+            }
+
+            if (this.options.staticToolbar) {
+                this.showToolbar();
+                this.positionStaticToolbar(container);
+
+            } else if (!selection.isCollapsed) {
+                this.showToolbar();
+                this.positionToolbar(selection);
+            }
+
+            anchorPreview = this.base.getExtensionByName('anchor-preview');
+
+            if (anchorPreview && typeof anchorPreview.hidePreview === 'function') {
+                anchorPreview.hidePreview();
+            }
+        },
+
+        positionStaticToolbar: function (container) {
+            // position the toolbar at left 0, so we can get the real width of the toolbar
+            this.getToolbarElement().style.left = '0';
+
+            // document.documentElement for IE 9
+            var scrollTop = (this.options.ownerDocument.documentElement && this.options.ownerDocument.documentElement.scrollTop) || this.options.ownerDocument.body.scrollTop,
+                windowWidth = this.options.contentWindow.innerWidth,
+                toolbarElement = this.getToolbarElement(),
+                containerRect = container.getBoundingClientRect(),
+                containerTop = containerRect.top + scrollTop,
+                containerCenter = (containerRect.left + (containerRect.width / 2)),
+                toolbarHeight = toolbarElement.offsetHeight,
+                toolbarWidth = toolbarElement.offsetWidth,
+                halfOffsetWidth = toolbarWidth / 2,
+                targetLeft;
+
+            if (this.options.stickyToolbar) {
+                // If it's beyond the height of the editor, position it at the bottom of the editor
+                if (scrollTop > (containerTop + container.offsetHeight - toolbarHeight)) {
+                    toolbarElement.style.top = (containerTop + container.offsetHeight - toolbarHeight) + 'px';
+                    toolbarElement.classList.remove('sticky-toolbar');
+
+                // Stick the toolbar to the top of the window
+                } else if (scrollTop > (containerTop - toolbarHeight)) {
+                    toolbarElement.classList.add('sticky-toolbar');
+                    toolbarElement.style.top = "0px";
+
+                // Normal static toolbar position
+                } else {
+                    toolbarElement.classList.remove('sticky-toolbar');
+                    toolbarElement.style.top = containerTop - toolbarHeight + "px";
+                }
+            } else {
+                toolbarElement.style.top = containerTop - toolbarHeight + "px";
+            }
+
+            if (this.options.toolbarAlign === 'left') {
+                targetLeft = containerRect.left;
+            } else if (this.options.toolbarAlign === 'center') {
+                targetLeft = containerCenter - halfOffsetWidth;
+            } else if (this.options.toolbarAlign === 'right') {
+                targetLeft = containerRect.right - toolbarWidth;
+            }
+
+            if (targetLeft < 0) {
+                targetLeft = 0;
+            } else if ((targetLeft + toolbarWidth) > windowWidth) {
+                targetLeft = windowWidth - toolbarWidth;
+            }
+
+            toolbarElement.style.left = targetLeft + 'px';
+        },
+
+        positionToolbar: function (selection) {
+            // position the toolbar at left 0, so we can get the real width of the toolbar
+            this.getToolbarElement().style.left = '0';
+
+            var windowWidth = this.options.contentWindow.innerWidth,
+                range = selection.getRangeAt(0),
+                boundary = range.getBoundingClientRect(),
+                middleBoundary = (boundary.left + boundary.right) / 2,
+                toolbarElement = this.getToolbarElement(),
+                toolbarHeight = toolbarElement.offsetHeight,
+                toolbarWidth = toolbarElement.offsetWidth,
+                halfOffsetWidth = toolbarWidth / 2,
+                buttonHeight = 50,
+                defaultLeft = this.options.diffLeft - halfOffsetWidth;
+
+            if (boundary.top < buttonHeight) {
+                toolbarElement.classList.add('medium-toolbar-arrow-over');
+                toolbarElement.classList.remove('medium-toolbar-arrow-under');
+                toolbarElement.style.top = buttonHeight + boundary.bottom - this.options.diffTop + this.options.contentWindow.pageYOffset - toolbarHeight + 'px';
+            } else {
+                toolbarElement.classList.add('medium-toolbar-arrow-under');
+                toolbarElement.classList.remove('medium-toolbar-arrow-over');
+                toolbarElement.style.top = boundary.top + this.options.diffTop + this.options.contentWindow.pageYOffset - toolbarHeight + 'px';
+            }
+            if (middleBoundary < halfOffsetWidth) {
+                toolbarElement.style.left = defaultLeft + halfOffsetWidth + 'px';
+            } else if ((windowWidth - middleBoundary) < halfOffsetWidth) {
+                toolbarElement.style.left = windowWidth + defaultLeft - halfOffsetWidth + 'px';
+            } else {
+                toolbarElement.style.left = defaultLeft + middleBoundary + 'px';
+            }
+        }
+    };
+}(window, document));
+
+function MediumEditor(elements, options) {
+    'use strict';
+    return this.init(elements, options);
+}
+
+(function () {
+    'use strict';
+
+    MediumEditor.statics = {
+        ButtonsData: ButtonsData,
+        DefaultButton: DefaultButton,
+        AnchorExtension: AnchorExtension,
+        Toolbar: Toolbar,
+        AnchorPreview: AnchorPreview
+    };
 
     MediumEditor.prototype = {
         defaults: {
             allowMultiParagraphSelection: true,
             anchorInputPlaceholder: 'Paste or type a link',
+            anchorInputCheckboxLabel: 'Open in new window',
             anchorPreviewHideDelay: 500,
             buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote'],
             buttonLabels: false,
@@ -90508,8 +112559,13 @@ else if (typeof define === 'function' && define.amd) {
             disableReturn: false,
             disableDoubleReturn: false,
             disableToolbar: false,
+            disableAnchorPreview: false,
             disableEditing: false,
+            disablePlaceholders: false,
+            toolbarAlign: 'center',
             elementsContainer: false,
+            imageDragging: true,
+            standardizeSelectionStart: false,
             contentWindow: window,
             ownerDocument: document,
             firstHeader: 'h3',
@@ -90526,59 +112582,83 @@ else if (typeof define === 'function' && define.amd) {
             lastButtonClass: 'medium-editor-button-last'
         },
 
-        // http://stackoverflow.com/questions/17907445/how-to-detect-ie11#comment30165888_17907562
-        // by rg89
-        isIE: ((navigator.appName === 'Microsoft Internet Explorer') || ((navigator.appName === 'Netscape') && (new RegExp('Trident/.*rv:([0-9]{1,}[.0-9]{0,})').exec(navigator.userAgent) !== null))),
-
         init: function (elements, options) {
-            this.options = extend(options, this.defaults);
+            var uniqueId = 1;
+
+            this.options = Util.defaults(options, this.defaults);
             this.setElementSelection(elements);
             if (this.elements.length === 0) {
                 return;
             }
-            this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
+
             if (!this.options.elementsContainer) {
-                this.options.elementsContainer = document.body;
+                this.options.elementsContainer = this.options.ownerDocument.body;
             }
-            this.id = this.options.elementsContainer.querySelectorAll('.medium-editor-toolbar').length + 1;
+
+            while (this.options.elementsContainer.querySelector('#medium-editor-toolbar-' + uniqueId)) {
+                uniqueId = uniqueId + 1;
+            }
+
+            this.id = uniqueId;
+
             return this.setup();
         },
 
         setup: function () {
             this.events = [];
             this.isActive = true;
-            this.initElements()
-                .bindSelect()
+            this.initCommands()
+                .initElements()
+                .bindDragDrop()
                 .bindPaste()
                 .setPlaceholders()
-                .bindWindowActions()
-                .passInstance();
+                .bindElementActions()
+                .bindBlur();
         },
 
-        on: function(target, event, listener, useCapture) {
+        on: function (target, event, listener, useCapture) {
             target.addEventListener(event, listener, useCapture);
             this.events.push([target, event, listener, useCapture]);
         },
 
-        off: function(target, event, listener, useCapture) {
-            var index = this.events.indexOf([target, event, listener, useCapture]),
+        off: function (target, event, listener, useCapture) {
+            var index = this.indexOfListener(target, event, listener, useCapture),
                 e;
-            if(index !== -1) {
-                e = this.events.splice(index, 1);
+            if (index !== -1) {
+                e = this.events.splice(index, 1)[0];
                 e[0].removeEventListener(e[1], e[2], e[3]);
             }
         },
 
-        removeAllEvents: function() {
+        indexOfListener: function (target, event, listener, useCapture) {
+            var i, n, item;
+            for (i = 0, n = this.events.length; i < n; i = i + 1) {
+                item = this.events[i];
+                if (item[0] === target && item[1] === event && item[2] === listener && item[3] === useCapture) {
+                    return i;
+                }
+            }
+            return -1;
+        },
+
+        delay: function (fn) {
+            var self = this;
+            setTimeout(function () {
+                if (self.isActive) {
+                    fn();
+                }
+            }, this.options.delay);
+        },
+
+        removeAllEvents: function () {
             var e = this.events.pop();
-            while(e) {
+            while (e) {
                 e[0].removeEventListener(e[1], e[2], e[3]);
                 e = this.events.pop();
             }
         },
 
         initElements: function () {
-            this.updateElementList();
             var i,
                 addToolbar = false;
             for (i = 0; i < this.elements.length; i += 1) {
@@ -90589,30 +112669,132 @@ else if (typeof define === 'function' && define.amd) {
                     this.elements[i].setAttribute('data-placeholder', this.options.placeholder);
                 }
                 this.elements[i].setAttribute('data-medium-element', true);
-                this.bindParagraphCreation(i).bindReturn(i).bindTab(i);
+                this.elements[i].setAttribute('role', 'textbox');
+                this.elements[i].setAttribute('aria-multiline', true);
+                this.bindParagraphCreation(i);
                 if (!this.options.disableToolbar && !this.elements[i].getAttribute('data-disable-toolbar')) {
                     addToolbar = true;
                 }
             }
             // Init toolbar
             if (addToolbar) {
-                this.initToolbar()
-                    .bindButtons()
-                    .bindAnchorForm()
-                    .bindAnchorPreview();
+                this.initToolbar();
             }
             return this;
         },
 
         setElementSelection: function (selector) {
-            this.elementSelection = selector;
-            this.updateElementList();
+            if (!selector) {
+                selector = [];
+            }
+            // If string, use as query selector
+            if (typeof selector === 'string') {
+                selector = this.options.ownerDocument.querySelectorAll(selector);
+            }
+            // If element, put into array
+            if (Util.isElement(selector)) {
+                selector = [selector];
+            }
+            // Convert NodeList (or other array like object) into an array
+            this.elements = Array.prototype.slice.apply(selector);
         },
 
-        updateElementList: function () {
-            this.elements = typeof this.elementSelection === 'string' ? this.options.ownerDocument.querySelectorAll(this.elementSelection) : this.elementSelection;
-            if (this.elements.nodeType === 1) {
-                this.elements = [this.elements];
+        bindBlur: function () {
+            var self = this,
+                blurFunction = function (e) {
+                    var isDescendantOfEditorElements = false,
+                        selection = self.options.contentWindow.getSelection(),
+                        toolbarEl = (self.toolbar) ? self.toolbar.getToolbarElement() : null,
+                        anchorPreview = self.getExtensionByName('anchor-preview'),
+                        previewEl = (anchorPreview && anchorPreview.getPreviewElement) ? anchorPreview.getPreviewElement() : null,
+                        selRange = selection.isCollapsed ?
+                                   null :
+                                   Selection.getSelectedParentElement(selection.getRangeAt(0)),
+                        i;
+
+                    // This control was introduced also to avoid the toolbar
+                    // to disapper when selecting from right to left and
+                    // the selection ends at the beginning of the text.
+                    for (i = 0; i < self.elements.length; i += 1) {
+                        if (self.elements[i] === e.target
+                                || Util.isDescendant(self.elements[i], e.target)
+                                || Util.isDescendant(self.elements[i], selRange)) {
+                            isDescendantOfEditorElements = true;
+                            break;
+                        }
+                    }
+                    // If it's not part of the editor, toolbar, or anchor preview
+                    if (!isDescendantOfEditorElements
+                            && (!toolbarEl || (toolbarEl !== e.target && !Util.isDescendant(toolbarEl, e.target)))
+                            && (!previewEl || (previewEl !== e.target && !Util.isDescendant(previewEl, e.target)))) {
+
+                        // Activate the placeholder
+                        if (!self.options.disablePlaceholders) {
+                            self.placeholderWrapper(e, self.elements[0]);
+                        }
+
+                        // Let the toolbar know that we've detected a blur
+                        if (self.toolbar) {
+                            self.toolbar.handleBlur(e);
+                        }
+                    }
+                };
+
+            // Hide the toolbar when focusing outside of the editor.
+            this.on(this.options.ownerDocument.body, 'click', blurFunction, true);
+            this.on(this.options.ownerDocument.body, 'focus', blurFunction, true);
+
+            return this;
+        },
+
+        bindClick: function (i) {
+            if (!this.options.disablePlaceholders) {
+                this.on(this.elements[i], 'click', function () {
+                    // Remove placeholder
+                    this.classList.remove('medium-editor-placeholder');
+                });
+            }
+
+            return this;
+        },
+
+        /**
+         * This handles blur and keypress events on elements
+         * Including Placeholders, and tooldbar hiding on blur
+         */
+        bindElementActions: function () {
+            var i;
+
+            for (i = 0; i < this.elements.length; i += 1) {
+
+                if (!this.options.disablePlaceholders) {
+                    // Active all of the placeholders
+                    this.activatePlaceholder(this.elements[i]);
+                }
+
+                // Bind the return and tab keypress events
+                this.bindReturn(i)
+                    .bindKeydown(i)
+                    .bindClick(i);
+            }
+
+            return this;
+        },
+
+        // Two functions to handle placeholders
+        activatePlaceholder:  function (el) {
+            if (!(el.querySelector('img')) &&
+                    !(el.querySelector('blockquote')) &&
+                    el.textContent.replace(/^\s+|\s+$/g, '') === '') {
+
+                el.classList.add('medium-editor-placeholder');
+            }
+        },
+        placeholderWrapper: function (evt, el) {
+            el = el || evt.target;
+            el.classList.remove('medium-editor-placeholder');
+            if (evt.type !== 'keypress') {
+                this.activatePlaceholder(el);
             }
         },
 
@@ -90627,6 +112809,91 @@ else if (typeof define === 'function' && define.amd) {
                 };
             }
             return content;
+        },
+
+        initExtension: function (extension, name) {
+            if (extension.parent) {
+                extension.base = this;
+            }
+            if (typeof extension.init === 'function') {
+                extension.init(this);
+            }
+            if (!extension.name) {
+                extension.name = name;
+            }
+            return extension;
+        },
+
+        shouldAddDefaultAnchorPreview: function () {
+            var i,
+                shouldAdd = false;
+
+            // If anchor-preview is disabled, don't add
+            if (this.options.disableAnchorPreview) {
+                return false;
+            }
+            // If anchor-preview extension has been overriden, don't add
+            if (this.options.extensions['anchor-preview']) {
+                return false;
+            }
+            // If toolbar is disabled, don't add
+            if (this.options.disableToolbar) {
+                return false;
+            }
+            // If all elements have 'data-disable-toolbar' attribute, don't add
+            for (i = 0; i < this.elements.length; i += 1) {
+                if (!this.elements[i].getAttribute('data-disable-toolbar')) {
+                    shouldAdd = true;
+                }
+            }
+
+            return shouldAdd;
+        },
+
+        initCommands: function () {
+            var buttons = this.options.buttons,
+                extensions = this.options.extensions,
+                ext,
+                name;
+            this.commands = [];
+
+            buttons.forEach(function (buttonName) {
+                if (extensions[buttonName]) {
+                    ext = this.initExtension(extensions[buttonName], buttonName);
+                    this.commands.push(ext);
+                } else if (buttonName === 'anchor') {
+                    ext = this.initExtension(new AnchorExtension(), buttonName);
+                    this.commands.push(ext);
+                } else if (ButtonsData.hasOwnProperty(buttonName)) {
+                    ext = new DefaultButton(ButtonsData[buttonName], this);
+                    this.commands.push(ext);
+                }
+            }.bind(this));
+
+            for (name in extensions) {
+                if (extensions.hasOwnProperty(name) && buttons.indexOf(name) === -1) {
+                    ext = this.initExtension(extensions[name], name);
+                }
+            }
+
+            // Add AnchorPreview as extension if needed
+            if (this.shouldAddDefaultAnchorPreview()) {
+                this.commands.push(this.initExtension(new AnchorPreview(), 'anchor-preview'));
+            }
+
+            return this;
+        },
+
+        getExtensionByName: function (name) {
+            var extension;
+            if (this.commands && this.commands.length) {
+                this.commands.forEach(function (ext) {
+                    if (ext.name === name) {
+                        extension = ext;
+                    }
+                });
+            }
+            return extension;
         },
 
         /**
@@ -90653,64 +112920,49 @@ else if (typeof define === 'function' && define.amd) {
                     }
                 }
             }
-        },
-
-        /**
-         * Pass current Medium Editor instance to all extensions
-         * if extension constructor has 'parent' attribute set to 'true'
-         *
-         */
-        passInstance: function () {
-            var self = this,
-                ext,
-                name;
-
-            for (name in self.options.extensions) {
-                if (self.options.extensions.hasOwnProperty(name)) {
-                    ext = self.options.extensions[name];
-
-                    if (ext.parent) {
-                        ext.base = self;
-                    }
-                }
-            }
-
-            return self;
+            return this;
         },
 
         bindParagraphCreation: function (index) {
             var self = this;
             this.on(this.elements[index], 'keypress', function (e) {
-                var node = getSelectionStart.call(self),
+                var node,
                     tagName;
-                if (e.which === 32) {
+                if (e.which === Util.keyCode.SPACE) {
+                    node = Selection.getSelectionStart(self.options.ownerDocument);
                     tagName = node.tagName.toLowerCase();
                     if (tagName === 'a') {
-                        document.execCommand('unlink', false, null);
+                        self.options.ownerDocument.execCommand('unlink', false, null);
                     }
                 }
             });
 
             this.on(this.elements[index], 'keyup', function (e) {
-                var node = getSelectionStart.call(self),
+                var node = Selection.getSelectionStart(self.options.ownerDocument),
                     tagName,
                     editorElement;
 
-                if (node && node.getAttribute('data-medium-element') && node.children.length === 0 && !(self.options.disableReturn || node.getAttribute('data-disable-return'))) {
-                    document.execCommand('formatBlock', false, 'p');
+                if (node
+                        && node.getAttribute('data-medium-element')
+                        && node.children.length === 0
+                        && !(self.options.disableReturn || node.getAttribute('data-disable-return'))) {
+                    self.options.ownerDocument.execCommand('formatBlock', false, 'p');
                 }
-                if (e.which === 13) {
-                    node = getSelectionStart.call(self);
+                if (e.which === Util.keyCode.ENTER) {
+                    node = Selection.getSelectionStart(self.options.ownerDocument);
                     tagName = node.tagName.toLowerCase();
-                    editorElement = self.getSelectionElement();
+                    editorElement = Selection.getSelectionElement(self.options.contentWindow);
 
                     if (!(self.options.disableReturn || editorElement.getAttribute('data-disable-return')) &&
-                        tagName !== 'li' && !self.isListItemChild(node)) {
-                        if (!e.shiftKey) {
-                            document.execCommand('formatBlock', false, 'p');
-                        }
+                            tagName !== 'li' && !Util.isListItemChild(node)) {
+                        // For anchor tags, unlink
                         if (tagName === 'a') {
-                            document.execCommand('unlink', false, null);
+                            self.options.ownerDocument.execCommand('unlink', false, null);
+                        } else if (!e.shiftKey) {
+                            // only format block if this is not a header tag
+                            if (!/h\d/.test(tagName)) {
+                                self.options.ownerDocument.execCommand('formatBlock', false, 'p');
+                            }
                         }
                     }
                 }
@@ -90718,32 +112970,15 @@ else if (typeof define === 'function' && define.amd) {
             return this;
         },
 
-        isListItemChild: function (node) {
-            var parentNode = node.parentNode,
-                tagName = parentNode.tagName.toLowerCase();
-            while (this.parentElements.indexOf(tagName) === -1 && tagName !== 'div') {
-                if (tagName === 'li') {
-                    return true;
-                }
-                parentNode = parentNode.parentNode;
-                if (parentNode && parentNode.tagName) {
-                    tagName = parentNode.tagName.toLowerCase();
-                } else {
-                    return false;
-                }
-            }
-            return false;
-        },
-
         bindReturn: function (index) {
             var self = this;
             this.on(this.elements[index], 'keypress', function (e) {
-                if (e.which === 13) {
+                if (e.which === Util.keyCode.ENTER) {
                     if (self.options.disableReturn || this.getAttribute('data-disable-return')) {
                         e.preventDefault();
                     } else if (self.options.disableDoubleReturn || this.getAttribute('data-disable-double-return')) {
-                        var node = getSelectionStart.call(self);
-                        if (node && node.innerText === '\n') {
+                        var node = Selection.getSelectionStart(self.options.contentWindow);
+                        if (node && node.textContent.trim() === '') {
                             e.preventDefault();
                         }
                     }
@@ -90752,508 +112987,277 @@ else if (typeof define === 'function' && define.amd) {
             return this;
         },
 
-        bindTab: function (index) {
+        bindKeydown: function (index) {
             var self = this;
             this.on(this.elements[index], 'keydown', function (e) {
-                if (e.which === 9) {
+                var node, tag, key;
+
+                if (e.which === Util.keyCode.TAB) {
                     // Override tab only for pre nodes
-                    var tag = getSelectionStart.call(self).tagName.toLowerCase();
+                    node = Selection.getSelectionStart(self.options.ownerDocument);
+                    tag = node && node.tagName.toLowerCase();
+
                     if (tag === 'pre') {
                         e.preventDefault();
-                        document.execCommand('insertHtml', null, '    ');
+                        Util.insertHTMLCommand(self.options.ownerDocument, '    ');
                     }
 
                     // Tab to indent list structures!
-                    if (tag === 'li') {
+                    if (tag === 'li' || Util.isListItemChild(node)) {
                         e.preventDefault();
 
                         // If Shift is down, outdent, otherwise indent
                         if (e.shiftKey) {
-                            document.execCommand('outdent', e);
+                            self.options.ownerDocument.execCommand('outdent', false, null);
                         } else {
-                            document.execCommand('indent', e);
+                            self.options.ownerDocument.execCommand('indent', false, null);
                         }
                     }
+                } else if (e.which === Util.keyCode.BACKSPACE || e.which === Util.keyCode.DELETE || e.which === Util.keyCode.ENTER) {
+
+                    // Bind keys which can create or destroy a block element: backspace, delete, return
+                    self.onBlockModifier(e);
+
+                } else if (e.ctrlKey || e.metaKey) {
+                    key = String.fromCharCode(e.which || e.keyCode).toLowerCase();
+                    self.commands.forEach(function (extension) {
+                        if (extension.options && extension.options.key && extension.options.key === key) {
+                            extension.handleClick(e);
+                        }
+                    });
                 }
             });
             return this;
         },
 
-        buttonTemplate: function (btnType) {
-            var buttonLabels = this.getButtonLabels(this.options.buttonLabels),
-                buttonTemplates = {
-                    'bold': '<button class="medium-editor-action medium-editor-action-bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
-                    'italic': '<button class="medium-editor-action medium-editor-action-italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
-                    'underline': '<button class="medium-editor-action medium-editor-action-underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-                    'strikethrough': '<button class="medium-editor-action medium-editor-action-strikethrough" data-action="strikethrough" data-element="strike">' + buttonLabels.strikethrough +'</button>',
-                    'superscript': '<button class="medium-editor-action medium-editor-action-superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
-                    'subscript': '<button class="medium-editor-action medium-editor-action-subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
-                    'anchor': '<button class="medium-editor-action medium-editor-action-anchor" data-action="anchor" data-element="a">' + buttonLabels.anchor + '</button>',
-                    'image': '<button class="medium-editor-action medium-editor-action-image" data-action="image" data-element="img">' + buttonLabels.image + '</button>',
-                    'header1': '<button class="medium-editor-action medium-editor-action-header1" data-action="append-' + this.options.firstHeader + '" data-element="' + this.options.firstHeader + '">' + buttonLabels.header1 + '</button>',
-                    'header2': '<button class="medium-editor-action medium-editor-action-header2" data-action="append-' + this.options.secondHeader + '" data-element="' + this.options.secondHeader + '">' + buttonLabels.header2 + '</button>',
-                    'quote': '<button class="medium-editor-action medium-editor-action-quote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
-                    'orderedlist': '<button class="medium-editor-action medium-editor-action-orderedlist" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
-                    'unorderedlist': '<button class="medium-editor-action medium-editor-action-unorderedlist" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
-                    'pre': '<button class="medium-editor-action medium-editor-action-pre" data-action="append-pre" data-element="pre">' + buttonLabels.pre + '</button>',
-                    'indent': '<button class="medium-editor-action medium-editor-action-indent" data-action="indent" data-element="ul">' + buttonLabels.indent + '</button>',
-                    'outdent': '<button class="medium-editor-action medium-editor-action-outdent" data-action="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
-                    'justifyCenter': '<button class="medium-editor-action medium-editor-action-justifyCenter" data-action="justifyCenter" data-element="">' + buttonLabels.justifyCenter + '</button>',
-                    'justifyFull': '<button class="medium-editor-action medium-editor-action-justifyFull" data-action="justifyFull" data-element="">' + buttonLabels.justifyFull + '</button>',
-                    'justifyLeft': '<button class="medium-editor-action medium-editor-action-justifyLeft" data-action="justifyLeft" data-element="">' + buttonLabels.justifyLeft + '</button>',
-                    'justifyRight': '<button class="medium-editor-action medium-editor-action-justifyRight" data-action="justifyRight" data-element="">' + buttonLabels.justifyRight + '</button>'
-                };
-            return buttonTemplates[btnType] || false;
-        },
+        onBlockModifier: function (e) {
+            var range, sel, p, node = Selection.getSelectionStart(this.options.ownerDocument),
+                tagName = node.tagName.toLowerCase(),
+                isEmpty = /^(\s+|<br\/?>)?$/i,
+                isHeader = /h\d/i;
 
-        // TODO: break method
-        getButtonLabels: function (buttonLabelType) {
-            var customButtonLabels,
-                attrname,
-                buttonLabels = {
-                    'bold': '<b>B</b>',
-                    'italic': '<b><i>I</i></b>',
-                    'underline': '<b><u>U</u></b>',
-                    'strikethrough': '<s>A</s>',
-                    'superscript': '<b>x<sup>1</sup></b>',
-                    'subscript': '<b>x<sub>1</sub></b>',
-                    'anchor': '<b>#</b>',
-                    'image': '<b>image</b>',
-                    'header1': '<b>H1</b>',
-                    'header2': '<b>H2</b>',
-                    'quote': '<b>&ldquo;</b>',
-                    'orderedlist': '<b>1.</b>',
-                    'unorderedlist': '<b>&bull;</b>',
-                    'pre': '<b>0101</b>',
-                    'indent': '<b>&rarr;</b>',
-                    'outdent': '<b>&larr;</b>',
-                    'justifyCenter': '<b>C</b>',
-                    'justifyFull': '<b>J</b>',
-                    'justifyLeft': '<b>L</b>',
-                    'justifyRight': '<b>R</b>'
-                };
-            if (buttonLabelType === 'fontawesome') {
-                customButtonLabels = {
-                    'bold': '<i class="fa fa-bold"></i>',
-                    'italic': '<i class="fa fa-italic"></i>',
-                    'underline': '<i class="fa fa-underline"></i>',
-                    'strikethrough': '<i class="fa fa-strikethrough"></i>',
-                    'superscript': '<i class="fa fa-superscript"></i>',
-                    'subscript': '<i class="fa fa-subscript"></i>',
-                    'anchor': '<i class="fa fa-link"></i>',
-                    'image': '<i class="fa fa-picture-o"></i>',
-                    'quote': '<i class="fa fa-quote-right"></i>',
-                    'orderedlist': '<i class="fa fa-list-ol"></i>',
-                    'unorderedlist': '<i class="fa fa-list-ul"></i>',
-                    'pre': '<i class="fa fa-code fa-lg"></i>',
-                    'indent': '<i class="fa fa-indent"></i>',
-                    'outdent': '<i class="fa fa-outdent"></i>',
-                    'justifyCenter': '<i class="fa fa-align-center"></i>',
-                    'justifyFull': '<i class="fa fa-align-justify"></i>',
-                    'justifyLeft': '<i class="fa fa-align-left"></i>',
-                    'justifyRight': '<i class="fa fa-align-right"></i>'
-                };
-            } else if (typeof buttonLabelType === 'object') {
-                customButtonLabels = buttonLabelType;
-            }
-            if (typeof customButtonLabels === 'object') {
-                for (attrname in customButtonLabels) {
-                    if (customButtonLabels.hasOwnProperty(attrname)) {
-                        buttonLabels[attrname] = customButtonLabels[attrname];
-                    }
+            if ((e.which === Util.keyCode.BACKSPACE || e.which === Util.keyCode.ENTER)
+                    && node.previousElementSibling
+                    // in a header
+                    && isHeader.test(tagName)
+                    // at the very end of the block
+                    && Selection.getCaretOffsets(node).left === 0) {
+                if (e.which === Util.keyCode.BACKSPACE && isEmpty.test(node.previousElementSibling.innerHTML)) {
+                    // backspacing the begining of a header into an empty previous element will
+                    // change the tagName of the current node to prevent one
+                    // instead delete previous node and cancel the event.
+                    node.previousElementSibling.parentNode.removeChild(node.previousElementSibling);
+                    e.preventDefault();
+                } else if (e.which === Util.keyCode.ENTER) {
+                    // hitting return in the begining of a header will create empty header elements before the current one
+                    // instead, make "<p><br></p>" element, which are what happens if you hit return in an empty paragraph
+                    p = this.options.ownerDocument.createElement('p');
+                    p.innerHTML = '<br>';
+                    node.previousElementSibling.parentNode.insertBefore(p, node);
+                    e.preventDefault();
                 }
+            } else if (e.which === Util.keyCode.DELETE
+                        && node.nextElementSibling
+                        && node.previousElementSibling
+                        // not in a header
+                        && !isHeader.test(tagName)
+                        // in an empty tag
+                        && isEmpty.test(node.innerHTML)
+                        // when the next tag *is* a header
+                        && isHeader.test(node.nextElementSibling.tagName)) {
+                // hitting delete in an empty element preceding a header, ex:
+                //  <p>[CURSOR]</p><h1>Header</h1>
+                // Will cause the h1 to become a paragraph.
+                // Instead, delete the paragraph node and move the cursor to the begining of the h1
+
+                // remove node and move cursor to start of header
+                range = document.createRange();
+                sel = this.options.contentWindow.getSelection();
+
+                range.setStart(node.nextElementSibling, 0);
+                range.collapse(true);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                node.previousElementSibling.parentNode.removeChild(node);
+
+                e.preventDefault();
             }
-            return buttonLabels;
         },
 
         initToolbar: function () {
             if (this.toolbar) {
                 return this;
             }
-            this.toolbar = this.createToolbar();
-            this.keepToolbarAlive = false;
-            this.anchorForm = this.toolbar.querySelector('.medium-editor-toolbar-form-anchor');
-            this.anchorInput = this.anchorForm.querySelector('input.medium-editor-toolbar-anchor-input');
-            this.anchorTarget = this.anchorForm.querySelector('input.medium-editor-toolbar-anchor-target');
-            this.anchorButton = this.anchorForm.querySelector('input.medium-editor-toolbar-anchor-button');
-            this.toolbarActions = this.toolbar.querySelector('.medium-editor-toolbar-actions');
-            this.anchorPreview = this.createAnchorPreview();
+            this.toolbar = new Toolbar(this);
+            this.options.elementsContainer.appendChild(this.toolbar.getToolbarElement());
 
             return this;
         },
 
-        createToolbar: function () {
-            var toolbar = document.createElement('div');
-            toolbar.id = 'medium-editor-toolbar-' + this.id;
-            toolbar.className = 'medium-editor-toolbar';
-            toolbar.appendChild(this.toolbarButtons());
-            toolbar.appendChild(this.toolbarFormAnchor());
-            this.options.elementsContainer.appendChild(toolbar);
-            return toolbar;
-        },
+        bindDragDrop: function () {
+            var self = this, i, className, onDrag, onDrop, element;
 
-        //TODO: actionTemplate
-        toolbarButtons: function () {
-            var btns = this.options.buttons,
-                ul = document.createElement('ul'),
-                li,
-                i,
-                btn,
-                ext;
+            if (!self.options.imageDragging) {
+                return this;
+            }
 
-            ul.id = 'medium-editor-toolbar-actions';
-            ul.className = 'medium-editor-toolbar-actions clearfix';
+            className = 'medium-editor-dragover';
 
-            for (i = 0; i < btns.length; i += 1) {
-                if (this.options.extensions.hasOwnProperty(btns[i])) {
-                    ext = this.options.extensions[btns[i]];
-                    btn = ext.getButton !== undefined ? ext.getButton() : null;
+            onDrag = function (e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = "copy";
+
+                if (e.type === "dragover") {
+                    this.classList.add(className);
                 } else {
-                    btn = this.buttonTemplate(btns[i]);
+                    this.classList.remove(className);
                 }
-
-                if (btn) {
-                    li = document.createElement('li');
-                    if (isElement(btn)) {
-                        li.appendChild(btn);
-                    } else {
-                        li.innerHTML = btn;
-                    }
-                    ul.appendChild(li);
-                }
-            }
-
-            return ul;
-        },
-
-        toolbarFormAnchor: function () {
-            var anchor = document.createElement('div'),
-                input = document.createElement('input'),
-                target_label = document.createElement('label'),
-                target = document.createElement('input'),
-                button_label = document.createElement('label'),
-                button = document.createElement('input'),
-                close = document.createElement('a'),
-                save = document.createElement('a');
-
-            close.setAttribute('href', '#');
-            close.className = 'medium-editor-toobar-anchor-close';
-            close.innerHTML = '&times;';
-
-            save.setAttribute('href', '#');
-            save.className = 'medium-editor-toobar-anchor-save';
-            save.innerHTML = '&#10003;';
-
-            input.setAttribute('type', 'text');
-            input.className = 'medium-editor-toolbar-anchor-input';
-            input.setAttribute('placeholder', this.options.anchorInputPlaceholder);
-
-
-            target.setAttribute('type', 'checkbox');
-            target.className = 'medium-editor-toolbar-anchor-target';
-            target_label.innerHTML = "Open in New Window?";
-            target_label.insertBefore(target, target_label.firstChild);
-
-            button.setAttribute('type', 'checkbox');
-            button.className = 'medium-editor-toolbar-anchor-button';
-            button_label.innerHTML = "Button";
-            button_label.insertBefore(button, button_label.firstChild);
-
-
-            anchor.className = 'medium-editor-toolbar-form-anchor';
-            anchor.id = 'medium-editor-toolbar-form-anchor';
-            anchor.appendChild(input);
-
-            anchor.appendChild(save);
-            anchor.appendChild(close);
-
-            if (this.options.anchorTarget) {
-                anchor.appendChild(target_label);
-            }
-
-            if (this.options.anchorButton) {
-                anchor.appendChild(button_label);
-            }
-
-            return anchor;
-        },
-
-        bindSelect: function () {
-            var self = this,
-                timer = '',
-                i;
-
-            this.checkSelectionWrapper = function (e) {
-
-                // Do not close the toolbar when bluring the editable area and clicking into the anchor form
-                if (e && self.clickingIntoArchorForm(e)) {
-                    return false;
-                }
-
-                clearTimeout(timer);
-                timer = setTimeout(function () {
-                    self.checkSelection();
-                }, self.options.delay);
             };
 
-            this.on(document.documentElement, 'mouseup', this.checkSelectionWrapper);
+            onDrop = function (e) {
+                var files;
+                e.preventDefault();
+                e.stopPropagation();
+                // IE9 does not support the File API, so prevent file from opening in a new window
+                // but also don't try to actually get the file
+                if (e.dataTransfer.files) {
+                    files = Array.prototype.slice.call(e.dataTransfer.files, 0);
+                    files.some(function (file) {
+                        if (file.type.match("image")) {
+                            var fileReader, id;
+                            fileReader = new FileReader();
+                            fileReader.readAsDataURL(file);
+
+                            id = 'medium-img-' + (+new Date());
+                            Util.insertHTMLCommand(self.options.ownerDocument, '<img class="medium-image-loading" id="' + id + '" />');
+
+                            fileReader.onload = function () {
+                                var img = document.getElementById(id);
+                                if (img) {
+                                    img.removeAttribute('id');
+                                    img.removeAttribute('class');
+                                    img.src = fileReader.result;
+                                }
+                            };
+                        }
+                    });
+                }
+                this.classList.remove(className);
+            };
 
             for (i = 0; i < this.elements.length; i += 1) {
-                this.on(this.elements[i], 'keyup', this.checkSelectionWrapper);
-                this.on(this.elements[i], 'blur', this.checkSelectionWrapper);
+                element = this.elements[i];
+
+                this.on(element, 'dragover', onDrag);
+                this.on(element, 'dragleave', onDrag);
+                this.on(element, 'drop', onDrop);
             }
             return this;
+        },
+
+        stopSelectionUpdates: function () {
+            this.preventSelectionUpdates = true;
+        },
+
+        startSelectionUpdates: function () {
+            this.preventSelectionUpdates = false;
         },
 
         checkSelection: function () {
-            var newSelection,
-                selectionElement;
-
-            if (this.keepToolbarAlive !== true && !this.options.disableToolbar) {
-
-                newSelection = this.options.contentWindow.getSelection();
-                if (newSelection.toString().trim() === '' ||
-                    (this.options.allowMultiParagraphSelection === false && this.hasMultiParagraphs()) ||
-                    this.selectionInContentEditableFalse()) {
-                    this.hideToolbarActions();
-                } else {
-                    selectionElement = this.getSelectionElement();
-                    if (!selectionElement || selectionElement.getAttribute('data-disable-toolbar')) {
-                        this.hideToolbarActions();
-                    } else {
-                        this.checkSelectionElement(newSelection, selectionElement);
-                    }
-                }
+            if (this.toolbar) {
+                this.toolbar.checkState();
             }
             return this;
         },
 
-        clickingIntoArchorForm: function (e) {
-            var self = this;
+        // Wrapper around document.queryCommandState for checking whether an action has already
+        // been applied to the current selection
+        queryCommandState: function (action) {
+            var fullAction = /^full-(.+)$/gi,
+                match,
+                queryState = null;
 
-            if (e.type && e.type.toLowerCase() === 'blur' && e.relatedTarget && e.relatedTarget === self.anchorInput) {
-                return true;
+            // Actions starting with 'full-' need to be modified since this is a medium-editor concept
+            match = fullAction.exec(action);
+            if (match) {
+                action = match[1];
             }
 
-            return false;
-        },
-
-        hasMultiParagraphs: function () {
-            var selectionHtml = getSelectionHtml.call(this).replace(/<[\S]+><\/[\S]+>/gim, ''),
-                hasMultiParagraphs = selectionHtml.match(/<(p|h[0-6]|blockquote)>([\s\S]*?)<\/(p|h[0-6]|blockquote)>/g);
-
-            return (hasMultiParagraphs ? hasMultiParagraphs.length : 0);
-        },
-
-        checkSelectionElement: function (newSelection, selectionElement) {
-            var i;
-            this.selection = newSelection;
-            this.selectionRange = this.selection.getRangeAt(0);
-            for (i = 0; i < this.elements.length; i += 1) {
-                if (this.elements[i] === selectionElement) {
-                    this.setToolbarButtonStates()
-                        .setToolbarPosition()
-                        .showToolbarActions();
-                    return;
-                }
-            }
-            this.hideToolbarActions();
-        },
-
-        findMatchingSelectionParent: function(testElementFunction) {
-            var selection = this.options.contentWindow.getSelection(), range, current;
-
-            if (selection.rangeCount === 0) {
-                return false;
+            try {
+                queryState = this.options.ownerDocument.queryCommandState(action);
+            } catch (exc) {
+                queryState = null;
             }
 
-            range = selection.getRangeAt(0);
-            current = range.commonAncestorContainer;
-
-            do {
-              if (current.nodeType === 1){
-                if ( testElementFunction(current) )
-                {
-                    return current;
-                }
-                // do not traverse upwards past the nearest containing editor
-                if (current.getAttribute('data-medium-element')) {
-                    return false;
-                }
-              }
-
-              current = current.parentNode;
-            } while (current);
-
-            return false;
+            return queryState;
         },
 
-        getSelectionElement: function () {
-            return this.findMatchingSelectionParent(function(el) {
-                return el.getAttribute('data-medium-element');
-            });
-        },
+        execAction: function (action, opts) {
+            /*jslint regexp: true*/
+            var fullAction = /^full-(.+)$/gi,
+                match,
+                result;
+            /*jslint regexp: false*/
 
-        selectionInContentEditableFalse: function () {
-            return this.findMatchingSelectionParent(function(el) {
-                return (el && el.nodeName !== '#text' && el.getAttribute('contenteditable') === 'false');
-            });
-        },
-
-        setToolbarPosition: function () {
-            var buttonHeight = 50,
-                selection = this.options.contentWindow.getSelection(),
-                range = selection.getRangeAt(0),
-                boundary = range.getBoundingClientRect(),
-                defaultLeft = (this.options.diffLeft) - (this.toolbar.offsetWidth / 2),
-                middleBoundary = (boundary.left + boundary.right) / 2,
-                halfOffsetWidth = this.toolbar.offsetWidth / 2;
-            if (boundary.top < buttonHeight) {
-                this.toolbar.classList.add('medium-toolbar-arrow-over');
-                this.toolbar.classList.remove('medium-toolbar-arrow-under');
-                this.toolbar.style.top = buttonHeight + boundary.bottom - this.options.diffTop + this.options.contentWindow.pageYOffset - this.toolbar.offsetHeight + 'px';
+            // Actions starting with 'full-' should be applied to to the entire contents of the editable element
+            // (ie full-bold, full-append-pre, etc.)
+            match = fullAction.exec(action);
+            if (match) {
+                // Store the current selection to be restored after applying the action
+                this.saveSelection();
+                // Select all of the contents before calling the action
+                this.selectAllContents();
+                result = this.execActionInternal(match[1], opts);
+                // Restore the previous selection
+                this.restoreSelection();
             } else {
-                this.toolbar.classList.add('medium-toolbar-arrow-under');
-                this.toolbar.classList.remove('medium-toolbar-arrow-over');
-                this.toolbar.style.top = boundary.top + this.options.diffTop + this.options.contentWindow.pageYOffset - this.toolbar.offsetHeight + 'px';
-            }
-            if (middleBoundary < halfOffsetWidth) {
-                this.toolbar.style.left = defaultLeft + halfOffsetWidth + 'px';
-            } else if ((this.options.contentWindow.innerWidth - middleBoundary) < halfOffsetWidth) {
-                this.toolbar.style.left = this.options.contentWindow.innerWidth + defaultLeft - halfOffsetWidth + 'px';
-            } else {
-                this.toolbar.style.left = defaultLeft + middleBoundary + 'px';
+                result = this.execActionInternal(action, opts);
             }
 
-            this.hideAnchorPreview();
-
-            return this;
+            this.checkSelection();
+            return result;
         },
 
-        setToolbarButtonStates: function () {
-            var buttons = this.toolbarActions.querySelectorAll('button'),
-                i;
-            for (i = 0; i < buttons.length; i += 1) {
-                buttons[i].classList.remove(this.options.activeButtonClass);
+        execActionInternal: function (action, opts) {
+            /*jslint regexp: true*/
+            var appendAction = /^append-(.+)$/gi,
+                match;
+            /*jslint regexp: false*/
+
+            // Actions starting with 'append-' should attempt to format a block of text ('formatBlock') using a specific
+            // type of block element (ie append-blockquote, append-h1, append-pre, etc.)
+            match = appendAction.exec(action);
+            if (match) {
+                return this.execFormatBlock(match[1]);
             }
-            this.checkActiveButtons();
-            return this;
+
+            if (action === 'createLink') {
+                return this.createLink(opts);
+            }
+
+            if (action === 'image') {
+                return this.options.ownerDocument.execCommand('insertImage', false, this.options.contentWindow.getSelection());
+            }
+
+            return this.options.ownerDocument.execCommand(action, false, null);
         },
 
-        checkActiveButtons: function () {
-            var elements = Array.prototype.slice.call(this.elements),
-                parentNode = this.getSelectedParentElement();
-            while (parentNode.tagName !== undefined && this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
-                this.activateButton(parentNode.tagName.toLowerCase());
-                this.callExtensions('checkState', parentNode);
-
-                // we can abort the search upwards if we leave the contentEditable element
-                if (elements.indexOf(parentNode) !== -1) {
-                    break;
-                }
-                parentNode = parentNode.parentNode;
+        getSelectedParentElement: function (range) {
+            if (range === undefined) {
+                range = this.options.contentWindow.getSelection().getRangeAt(0);
             }
-        },
-
-        activateButton: function (tag) {
-            var el = this.toolbar.querySelector('[data-element="' + tag + '"]');
-            if (el !== null && el.className.indexOf(this.options.activeButtonClass) === -1) {
-                el.className += ' ' + this.options.activeButtonClass;
-            }
-        },
-
-        bindButtons: function () {
-            var buttons = this.toolbar.querySelectorAll('button'),
-                i,
-                self = this,
-                triggerAction = function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (self.selection === undefined) {
-                        self.checkSelection();
-                    }
-                    if (this.className.indexOf(self.options.activeButtonClass) > -1) {
-                        this.classList.remove(self.options.activeButtonClass);
-                    } else {
-                        this.className += ' ' + self.options.activeButtonClass;
-                    }
-                    if (this.hasAttribute('data-action')) {
-                        self.execAction(this.getAttribute('data-action'), e);
-                    }
-                };
-            for (i = 0; i < buttons.length; i += 1) {
-                this.on(buttons[i], 'click', triggerAction);
-            }
-            this.setFirstAndLastItems(buttons);
-            return this;
-        },
-
-        setFirstAndLastItems: function (buttons) {
-            if (buttons.length > 0) {
-                buttons[0].className += ' ' + this.options.firstButtonClass;
-                buttons[buttons.length - 1].className += ' ' + this.options.lastButtonClass;
-            }
-            return this;
-        },
-
-        execAction: function (action, e) {
-            if (action.indexOf('append-') > -1) {
-                this.execFormatBlock(action.replace('append-', ''));
-                this.setToolbarPosition();
-                this.setToolbarButtonStates();
-            } else if (action === 'anchor') {
-                this.triggerAnchorAction(e);
-            } else if (action === 'image') {
-                this.options.ownerDocument.execCommand('insertImage', false, this.options.contentWindow.getSelection());
-            } else {
-                this.options.ownerDocument.execCommand(action, false, null);
-                this.setToolbarPosition();
-            }
-        },
-
-        // http://stackoverflow.com/questions/15867542/range-object-get-selection-parent-node-chrome-vs-firefox
-        rangeSelectsSingleNode: function (range) {
-            var startNode = range.startContainer;
-            return startNode === range.endContainer &&
-                startNode.hasChildNodes() &&
-                range.endOffset === range.startOffset + 1;
-        },
-
-        getSelectedParentElement: function () {
-            var selectedParentElement = null,
-                range = this.selectionRange;
-            if (this.rangeSelectsSingleNode(range)) {
-                selectedParentElement = range.startContainer.childNodes[range.startOffset];
-            } else if (range.startContainer.nodeType === 3) {
-                selectedParentElement = range.startContainer.parentNode;
-            } else {
-                selectedParentElement = range.startContainer;
-            }
-            return selectedParentElement;
-        },
-
-        triggerAnchorAction: function () {
-            var selectedParentElement = this.getSelectedParentElement();
-            if (selectedParentElement.tagName &&
-                    selectedParentElement.tagName.toLowerCase() === 'a') {
-                this.options.ownerDocument.execCommand('unlink', false, null);
-            } else {
-                if (this.anchorForm.style.display === 'block') {
-                    this.showToolbarActions();
-                } else {
-                    this.showAnchorForm();
-                }
-            }
-            return this;
+            return Selection.getSelectedParentElement(range);
         },
 
         execFormatBlock: function (el) {
-            var selectionData = this.getSelectionData(this.selection.anchorNode);
+            var selectionData = Selection.getSelectionData(this.selection.anchorNode);
             // FF handles blockquote differently on formatBlock
             // allowing nesting, we need to use outdent
             // https://developer.mozilla.org/en-US/docs/Rich-Text_Editing_in_Mozilla
             if (el === 'blockquote' && selectionData.el &&
-                selectionData.el.parentNode.tagName.toLowerCase() === 'blockquote') {
+                    selectionData.el.parentNode.tagName.toLowerCase() === 'blockquote') {
                 return this.options.ownerDocument.execCommand('outdent', false, null);
             }
             if (selectionData.tagName === el) {
@@ -91263,7 +113267,7 @@ else if (typeof define === 'function' && define.amd) {
             //  blockquote needs to be called as indent
             // http://stackoverflow.com/questions/10741831/execcommand-formatblock-headings-in-ie
             // http://stackoverflow.com/questions/1816223/rich-text-editor-with-blockquote-function/1821777#1821777
-            if (this.isIE) {
+            if (Util.isIE) {
                 if (el === 'blockquote') {
                     return this.options.ownerDocument.execCommand('indent', false, el);
                 }
@@ -91272,351 +113276,156 @@ else if (typeof define === 'function' && define.amd) {
             return this.options.ownerDocument.execCommand('formatBlock', false, el);
         },
 
-        getSelectionData: function (el) {
-            var tagName;
-
-            if (el && el.tagName) {
-                tagName = el.tagName.toLowerCase();
+        hideToolbarDefaultActions: function () {
+            if (this.toolbar) {
+                this.toolbar.hideToolbarDefaultActions();
             }
-
-            while (el && this.parentElements.indexOf(tagName) === -1) {
-                el = el.parentNode;
-                if (el && el.tagName) {
-                    tagName = el.tagName.toLowerCase();
-                }
-            }
-
-            return {
-                el: el,
-                tagName: tagName
-            };
-        },
-
-        getFirstChild: function (el) {
-            var firstChild = el.firstChild;
-            while (firstChild !== null && firstChild.nodeType !== 1) {
-                firstChild = firstChild.nextSibling;
-            }
-            return firstChild;
-        },
-
-        hideToolbarActions: function () {
-            this.keepToolbarAlive = false;
-            if (this.toolbar !== undefined) {
-                this.toolbar.classList.remove('medium-editor-toolbar-active');
-            }
-        },
-
-        showToolbarActions: function () {
-            var self = this,
-                timer;
-            this.anchorForm.style.display = 'none';
-            this.toolbarActions.style.display = 'block';
-            this.keepToolbarAlive = false;
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-                if (self.toolbar && !self.toolbar.classList.contains('medium-editor-toolbar-active')) {
-                    self.toolbar.classList.add('medium-editor-toolbar-active');
-                }
-            }, 100);
-        },
-
-        saveSelection: function() {
-            this.savedSelection = saveSelection.call(this);
-        },
-
-        restoreSelection: function() {
-            restoreSelection.call(this, this.savedSelection);
-        },
-
-        showAnchorForm: function (link_value) {
-            this.toolbarActions.style.display = 'none';
-            this.saveSelection();
-            this.anchorForm.style.display = 'block';
-            this.setToolbarPosition();
-            this.keepToolbarAlive = true;
-            this.anchorInput.focus();
-            this.anchorInput.value = link_value || '';
-        },
-
-        bindAnchorForm: function () {
-            var linkCancel = this.anchorForm.querySelector('a.medium-editor-toobar-anchor-close'),
-                linkSave = this.anchorForm.querySelector('a.medium-editor-toobar-anchor-save'),
-                self = this;
-
-            this.on(this.anchorForm, 'click', function (e) {
-                e.stopPropagation();
-                self.keepToolbarAlive = true;
-            });
-
-            this.on(this.anchorInput, 'keyup', function (e) {
-                var button = null,
-                    target;
-
-                if (e.keyCode === 13) {
-                    e.preventDefault();
-                    if (self.options.anchorTarget && self.anchorTarget.checked) {
-                        target = "_blank";
-                    }
-                    else {
-                        target = "_self";
-                    }
-
-                    if (self.options.anchorButton && self.anchorButton.checked) {
-                        button = self.options.anchorButtonClass;
-                    }
-
-                    self.createLink(this, target, button);
-                }
-            });
-
-            this.on(linkSave, 'click', function(e) {
-                var button = null,
-                    target;
-                e.preventDefault();
-                if ( self.options.anchorTarget && self.anchorTarget.checked) {
-                    target = "_blank";
-                }
-                else {
-                    target = "_self";
-                }
-
-                if (self.options.anchorButton && self.anchorButton.checked) {
-                    button = self.options.anchorButtonClass;
-                }
-
-                self.createLink(self.anchorInput, target, button);
-            }, true);
-
-            this.on(this.anchorInput, 'click', function (e) {
-                // make sure not to hide form when cliking into the input
-                e.stopPropagation();
-                self.keepToolbarAlive = true;
-            });
-
-            // Hide the anchor form when focusing outside of it.
-            this.on(this.options.ownerDocument.body, 'click', function (e) {
-                if (e.target !== self.anchorForm && !isDescendant(self.anchorForm, e.target) && !isDescendant(self.toolbarActions, e.target)) {
-                    self.keepToolbarAlive = false;
-                    self.checkSelection();
-                }
-            }, true);
-            this.on(this.options.ownerDocument.body, 'focus', function (e) {
-                if (e.target !== self.anchorForm && !isDescendant(self.anchorForm, e.target) && !isDescendant(self.toolbarActions, e.target)) {
-                    self.keepToolbarAlive = false;
-                    self.checkSelection();
-                }
-            }, true);
-
-            this.on(linkCancel, 'click', function (e) {
-                e.preventDefault();
-                self.showToolbarActions();
-                restoreSelection.call(self, self.savedSelection);
-            });
             return this;
         },
 
-
-        hideAnchorPreview: function () {
-            this.anchorPreview.classList.remove('medium-editor-anchor-preview-active');
+        setToolbarPosition: function () {
+            if (this.toolbar) {
+                this.toolbar.setToolbarPosition();
+            }
         },
 
-        // TODO: break method
-        showAnchorPreview: function (anchorEl) {
-            if (this.anchorPreview.classList.contains('medium-editor-anchor-preview-active')
-                || anchorEl.getAttribute('data-disable-preview')) {
-                return true;
-            }
+        selectAllContents: function () {
+            var range = this.options.ownerDocument.createRange(),
+                sel = this.options.contentWindow.getSelection(),
+                currNode = Selection.getSelectionElement(this.options.contentWindow);
 
-            var self = this,
-                buttonHeight = 40,
-                boundary = anchorEl.getBoundingClientRect(),
-                middleBoundary = (boundary.left + boundary.right) / 2,
-                halfOffsetWidth,
-                defaultLeft,
-                timer;
-
-            self.anchorPreview.querySelector('i').textContent = anchorEl.href;
-            halfOffsetWidth = self.anchorPreview.offsetWidth / 2;
-            defaultLeft = self.options.diffLeft - halfOffsetWidth;
-
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-                if (self.anchorPreview && !self.anchorPreview.classList.contains('medium-editor-anchor-preview-active')) {
-                    self.anchorPreview.classList.add('medium-editor-anchor-preview-active');
+            if (currNode) {
+                // Move to the lowest descendant node that still selects all of the contents
+                while (currNode.children.length === 1) {
+                    currNode = currNode.children[0];
                 }
-            }, 100);
 
-            self.observeAnchorPreview(anchorEl);
-
-            self.anchorPreview.classList.add('medium-toolbar-arrow-over');
-            self.anchorPreview.classList.remove('medium-toolbar-arrow-under');
-            self.anchorPreview.style.top = Math.round(buttonHeight + boundary.bottom - self.options.diffTop + this.options.contentWindow.pageYOffset - self.anchorPreview.offsetHeight) + 'px';
-            if (middleBoundary < halfOffsetWidth) {
-                self.anchorPreview.style.left = defaultLeft + halfOffsetWidth + 'px';
-            } else if ((this.options.contentWindow.innerWidth - middleBoundary) < halfOffsetWidth) {
-                self.anchorPreview.style.left = this.options.contentWindow.innerWidth + defaultLeft - halfOffsetWidth + 'px';
-            } else {
-                self.anchorPreview.style.left = defaultLeft + middleBoundary + 'px';
-            }
-
-            return this;
-        },
-
-        // TODO: break method
-        observeAnchorPreview: function (anchorEl) {
-            var self = this,
-                lastOver = (new Date()).getTime(),
-                over = true,
-                stamp = function () {
-                    lastOver = (new Date()).getTime();
-                    over = true;
-                },
-                unstamp = function (e) {
-                    if (!e.relatedTarget || !/anchor-preview/.test(e.relatedTarget.className)) {
-                        over = false;
-                    }
-                },
-                interval_timer = setInterval(function () {
-                    if (over) {
-                        return true;
-                    }
-                    var durr = (new Date()).getTime() - lastOver;
-                    if (durr > self.options.anchorPreviewHideDelay) {
-                        // hide the preview 1/2 second after mouse leaves the link
-                        self.hideAnchorPreview();
-
-                        // cleanup
-                        clearInterval(interval_timer);
-                        self.off(self.anchorPreview, 'mouseover', stamp);
-                        self.off(self.anchorPreview, 'mouseout', unstamp);
-                        self.off(anchorEl, 'mouseover', stamp);
-                        self.off(anchorEl, 'mouseout', unstamp);
-
-                    }
-                }, 200);
-
-            this.on(self.anchorPreview, 'mouseover', stamp);
-            this.on(self.anchorPreview, 'mouseout', unstamp);
-            this.on(anchorEl, 'mouseover', stamp);
-            this.on(anchorEl, 'mouseout', unstamp);
-        },
-
-        createAnchorPreview: function () {
-            var self = this,
-                anchorPreview = this.options.ownerDocument.createElement('div');
-
-            anchorPreview.id = 'medium-editor-anchor-preview-' + this.id;
-            anchorPreview.className = 'medium-editor-anchor-preview';
-            anchorPreview.innerHTML = this.anchorPreviewTemplate();
-            this.options.elementsContainer.appendChild(anchorPreview);
-
-            this.on(anchorPreview, 'click', function () {
-                self.anchorPreviewClickHandler();
-            });
-
-            return anchorPreview;
-        },
-
-        anchorPreviewTemplate: function () {
-            return '<div class="medium-editor-toolbar-anchor-preview" id="medium-editor-toolbar-anchor-preview">' +
-                '    <i class="medium-editor-toolbar-anchor-preview-inner"></i>' +
-                '</div>';
-        },
-
-        anchorPreviewClickHandler: function (e) {
-            if (this.activeAnchor) {
-
-                var self = this,
-                    range = this.options.ownerDocument.createRange(),
-                    sel = this.options.contentWindow.getSelection();
-
-                range.selectNodeContents(self.activeAnchor);
+                range.selectNodeContents(currNode);
                 sel.removeAllRanges();
                 sel.addRange(range);
-                setTimeout(function () {
-                    if (self.activeAnchor) {
-                        self.showAnchorForm(self.activeAnchor.href);
-                    }
-                    self.keepToolbarAlive = false;
-                }, 100 + self.options.delay);
-
             }
-
-            this.hideAnchorPreview();
         },
 
-        editorAnchorObserver: function (e) {
-            var self = this,
-                overAnchor = true,
-                leaveAnchor = function () {
-                    // mark the anchor as no longer hovered, and stop listening
-                    overAnchor = false;
-                    self.off(self.activeAnchor, 'mouseout', leaveAnchor);
-                };
+        // http://stackoverflow.com/questions/17678843/cant-restore-selection-after-html-modify-even-if-its-the-same-html
+        // Tim Down
+        // TODO: move to selection.js and clean up old methods there
+        saveSelection: function () {
+            this.selectionState = null;
 
-            if (e.target && e.target.tagName.toLowerCase() === 'a') {
+            var selection = this.options.contentWindow.getSelection(),
+                range,
+                preSelectionRange,
+                start,
+                editableElementIndex = -1;
 
-                // Detect empty href attributes
-                // The browser will make href="" or href="#top"
-                // into absolute urls when accessed as e.targed.href, so check the html
-                if (!/href=["']\S+["']/.test(e.target.outerHTML) || /href=["']#\S+["']/.test(e.target.outerHTML)) {
-                    return true;
+            if (selection.rangeCount > 0) {
+                range = selection.getRangeAt(0);
+                preSelectionRange = range.cloneRange();
+
+                // Find element current selection is inside
+                this.elements.forEach(function (el, index) {
+                    if (el === range.startContainer || Util.isDescendant(el, range.startContainer)) {
+                        editableElementIndex = index;
+                        return false;
+                    }
+                });
+
+                if (editableElementIndex > -1) {
+                    preSelectionRange.selectNodeContents(this.elements[editableElementIndex]);
+                    preSelectionRange.setEnd(range.startContainer, range.startOffset);
+                    start = preSelectionRange.toString().length;
+
+                    this.selectionState = {
+                        start: start,
+                        end: start + range.toString().length,
+                        editableElementIndex: editableElementIndex
+                    };
+                }
+            }
+        },
+
+        // http://stackoverflow.com/questions/17678843/cant-restore-selection-after-html-modify-even-if-its-the-same-html
+        // Tim Down
+        // TODO: move to selection.js and clean up old methods there
+        restoreSelection: function () {
+            if (!this.selectionState) {
+                return;
+            }
+
+            var editableElement = this.elements[this.selectionState.editableElementIndex],
+                charIndex = 0,
+                range = this.options.ownerDocument.createRange(),
+                nodeStack = [editableElement],
+                node,
+                foundStart = false,
+                stop = false,
+                i,
+                sel,
+                nextCharIndex;
+
+            range.setStart(editableElement, 0);
+            range.collapse(true);
+
+            node = nodeStack.pop();
+            while (!stop && node) {
+                if (node.nodeType === 3) {
+                    nextCharIndex = charIndex + node.length;
+                    if (!foundStart && this.selectionState.start >= charIndex && this.selectionState.start <= nextCharIndex) {
+                        range.setStart(node, this.selectionState.start - charIndex);
+                        foundStart = true;
+                    }
+                    if (foundStart && this.selectionState.end >= charIndex && this.selectionState.end <= nextCharIndex) {
+                        range.setEnd(node, this.selectionState.end - charIndex);
+                        stop = true;
+                    }
+                    charIndex = nextCharIndex;
+                } else {
+                    i = node.childNodes.length - 1;
+                    while (i >= 0) {
+                        nodeStack.push(node.childNodes[i]);
+                        i -= 1;
+                    }
+                }
+                if (!stop) {
+                    node = nodeStack.pop();
+                }
+            }
+
+            sel = this.options.contentWindow.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        },
+
+        createLink: function (opts) {
+            var customEvent,
+                i;
+
+            if (opts.url && opts.url.trim().length > 0) {
+                this.options.ownerDocument.execCommand('createLink', false, opts.url);
+
+                if (this.options.targetBlank || opts.target === '_blank') {
+                    Util.setTargetBlank(Selection.getSelectionStart(this.options.ownerDocument));
                 }
 
-                // only show when hovering on anchors
-                if (this.toolbar.classList.contains('medium-editor-toolbar-active')) {
-                    // only show when toolbar is not present
-                    return true;
+                if (opts.buttonClass) {
+                    this.setButtonClass(opts.buttonClass);
                 }
-                this.activeAnchor = e.target;
-                this.on(this.activeAnchor, 'mouseout', leaveAnchor);
-                // show the anchor preview according to the configured delay
-                // if the mouse has not left the anchor tag in that time
-                setTimeout(function () {
-                    if (overAnchor) {
-                        self.showAnchorPreview(e.target);
-                    }
-                }, self.options.delay);
-
-
             }
-        },
 
-        bindAnchorPreview: function (index) {
-            var i, self = this;
-            this.editorAnchorObserverWrapper = function (e) {
-                self.editorAnchorObserver(e);
-            };
-            for (i = 0; i < this.elements.length; i += 1) {
-                this.on(this.elements[i], 'mouseover', this.editorAnchorObserverWrapper);
-            }
-            return this;
-        },
-
-        checkLinkFormat: function (value) {
-            var re = /^(https?|ftps?|rtmpt?):\/\/|mailto:/;
-            return (re.test(value) ? '' : 'http://') + value;
-        },
-
-        setTargetBlank: function (el) {
-            var i;
-            el = el || getSelectionStart.call(this);
-            if (el.tagName.toLowerCase() === 'a') {
-                el.target = '_blank';
-            } else {
-                el = el.getElementsByTagName('a');
-
-                for (i = 0; i < el.length; i += 1) {
-                    el[i].target = '_blank';
+            if (this.options.targetBlank || opts.target === "_blank" || opts.buttonClass) {
+                customEvent = this.options.ownerDocument.createEvent("HTMLEvents");
+                customEvent.initEvent("input", true, true, this.options.contentWindow);
+                for (i = 0; i < this.elements.length; i += 1) {
+                    this.elements[i].dispatchEvent(customEvent);
                 }
             }
         },
 
         setButtonClass: function (buttonClass) {
-            var el = getSelectionStart.call(this),
+            var el = Selection.getSelectionStart(this.options.ownerDocument),
                 classes = buttonClass.split(' '),
-                i, j;
+                i,
+                j;
             if (el.tagName.toLowerCase() === 'a') {
                 for (j = 0; j < classes.length; j += 1) {
                     el.classList.add(classes[j]);
@@ -91629,58 +113438,6 @@ else if (typeof define === 'function' && define.amd) {
                     }
                 }
             }
-        },
-
-        createLink: function (input, target, buttonClass) {
-            var i, event;
-
-            if (input.value.trim().length === 0) {
-                this.hideToolbarActions();
-                return;
-            }
-
-            restoreSelection.call(this, this.savedSelection);
-
-            if (this.options.checkLinkFormat) {
-                input.value = this.checkLinkFormat(input.value);
-            }
-
-            this.options.ownerDocument.execCommand('createLink', false, input.value);
-
-            if (this.options.targetBlank || target === "_blank") {
-                this.setTargetBlank();
-            }
-
-            if (buttonClass) {
-                this.setButtonClass(buttonClass);
-            }
-
-            if (this.options.targetBlank || target === "_blank" || buttonClass) {
-                event = this.options.ownerDocument.createEvent("HTMLEvents");
-                event.initEvent("input", true, true, this.options.contentWindow);
-                for (i = 0; i < this.elements.length; i += 1) {
-                    this.elements[i].dispatchEvent(event);
-                }
-            }
-
-            this.checkSelection();
-            this.showToolbarActions();
-            input.value = '';
-        },
-
-        bindWindowActions: function () {
-            var timerResize,
-                self = this;
-            this.windowResizeHandler = function () {
-                clearTimeout(timerResize);
-                timerResize = setTimeout(function () {
-                    if (self.toolbar && self.toolbar.classList.contains('medium-editor-toolbar-active')) {
-                        self.setToolbarPosition();
-                    }
-                }, 100);
-            };
-            this.on(this.options.contentWindow, 'resize', this.windowResizeHandler);
-            return this;
         },
 
         activate: function () {
@@ -91700,10 +113457,8 @@ else if (typeof define === 'function' && define.amd) {
             this.isActive = false;
 
             if (this.toolbar !== undefined) {
-                this.options.elementsContainer.removeChild(this.anchorPreview);
-                this.options.elementsContainer.removeChild(this.toolbar);
+                this.toolbar.deactivate();
                 delete this.toolbar;
-                delete this.anchorPreview;
             }
 
             for (i = 0; i < this.elements.length; i += 1) {
@@ -91711,50 +113466,19 @@ else if (typeof define === 'function' && define.amd) {
                 this.elements[i].removeAttribute('data-medium-element');
             }
 
-            this.removeAllEvents();
-        },
+            this.commands.forEach(function (extension) {
+                if (typeof extension.deactivate === 'function') {
+                    extension.deactivate();
+                }
+            }.bind(this));
 
-        htmlEntities: function (str) {
-            // converts special characters (like <) into their escaped/encoded values (like &lt;).
-            // This allows you to show to display the string without the browser reading it as HTML.
-            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            this.removeAllEvents();
         },
 
         bindPaste: function () {
             var i, self = this;
             this.pasteWrapper = function (e) {
-                var paragraphs,
-                    html = '',
-                    p;
-
-                this.classList.remove('medium-editor-placeholder');
-                if (!self.options.forcePlainText && !self.options.cleanPastedHTML) {
-                    return this;
-                }
-
-                if (e.clipboardData && e.clipboardData.getData && !e.defaultPrevented) {
-                    e.preventDefault();
-
-                    if (self.options.cleanPastedHTML && e.clipboardData.getData('text/html')) {
-                        return self.cleanPaste(e.clipboardData.getData('text/html'));
-                    }
-                    if (!(self.options.disableReturn || this.getAttribute('data-disable-return'))) {
-                        paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g);
-                        for (p = 0; p < paragraphs.length; p += 1) {
-                            if (paragraphs[p] !== '') {
-                                if (navigator.userAgent.match(/firefox/i) && p === 0) {
-                                    html += self.htmlEntities(paragraphs[p]);
-                                } else {
-                                    html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
-                                }
-                            }
-                        }
-                        self.options.ownerDocument.execCommand('insertHTML', false, html);
-                    } else {
-                        html = self.htmlEntities(e.clipboardData.getData('text/plain'));
-                        self.options.ownerDocument.execCommand('insertHTML', false, html);
-                    }
-                }
+                pasteHandler.handlePaste(this, e, self.options);
             };
             for (i = 0; i < this.elements.length; i += 1) {
                 this.on(this.elements[i], 'paste', this.pasteWrapper);
@@ -91763,223 +113487,30 @@ else if (typeof define === 'function' && define.amd) {
         },
 
         setPlaceholders: function () {
-            var i,
-                activatePlaceholder = function (el) {
-                    if (!(el.querySelector('img')) &&
-                            !(el.querySelector('blockquote')) &&
-                            el.textContent.replace(/^\s+|\s+$/g, '') === '') {
-                        el.classList.add('medium-editor-placeholder');
-                    }
-                },
-                placeholderWrapper = function (e) {
-                    this.classList.remove('medium-editor-placeholder');
-                    if (e.type !== 'keypress') {
-                        activatePlaceholder(this);
-                    }
-                };
-            for (i = 0; i < this.elements.length; i += 1) {
-                activatePlaceholder(this.elements[i]);
-                this.on(this.elements[i], 'blur', placeholderWrapper);
-                this.on(this.elements[i], 'keypress', placeholderWrapper);
+            if (!this.options.disablePlaceholders && this.elements && this.elements.length) {
+                this.elements.forEach(function (el) {
+                    this.activatePlaceholder(el);
+                    this.on(el, 'blur', this.placeholderWrapper.bind(this));
+                    this.on(el, 'keypress', this.placeholderWrapper.bind(this));
+                }.bind(this));
             }
+
             return this;
         },
 
         cleanPaste: function (text) {
-
-            /*jslint regexp: true*/
-            /*
-                jslint does not allow character negation, because the negation
-                will not match any unicode characters. In the regexes in this
-                block, negation is used specifically to match the end of an html
-                tag, and in fact unicode characters *should* be allowed.
-            */
-            var i, elList, workEl,
-                el = this.getSelectionElement(),
-                multiline = /<p|<br|<div/.test(text),
-                replacements = [
-
-                    // replace two bogus tags that begin pastes from google docs
-                    [new RegExp(/<[^>]*docs-internal-guid[^>]*>/gi), ""],
-                    [new RegExp(/<\/b>(<br[^>]*>)?$/gi), ""],
-
-                     // un-html spaces and newlines inserted by OS X
-                    [new RegExp(/<span class="Apple-converted-space">\s+<\/span>/g), ' '],
-                    [new RegExp(/<br class="Apple-interchange-newline">/g), '<br>'],
-
-                    // replace google docs italics+bold with a span to be replaced once the html is inserted
-                    [new RegExp(/<span[^>]*(font-style:italic;font-weight:bold|font-weight:bold;font-style:italic)[^>]*>/gi), '<span class="replace-with italic bold">'],
-
-                    // replace google docs italics with a span to be replaced once the html is inserted
-                    [new RegExp(/<span[^>]*font-style:italic[^>]*>/gi), '<span class="replace-with italic">'],
-
-                    //[replace google docs bolds with a span to be replaced once the html is inserted
-                    [new RegExp(/<span[^>]*font-weight:bold[^>]*>/gi), '<span class="replace-with bold">'],
-
-                     // replace manually entered b/i/a tags with real ones
-                    [new RegExp(/&lt;(\/?)(i|b|a)&gt;/gi), '<$1$2>'],
-
-                     // replace manually a tags with real ones, converting smart-quotes from google docs
-                    [new RegExp(/&lt;a\s+href=(&quot;|&rdquo;|&ldquo;|“|”)([^&]+)(&quot;|&rdquo;|&ldquo;|“|”)&gt;/gi), '<a href="$2">']
-
-                ];
-            /*jslint regexp: false*/
-
-            for (i = 0; i < replacements.length; i += 1) {
-                text = text.replace(replacements[i][0], replacements[i][1]);
-            }
-
-            if (multiline) {
-
-                // double br's aren't converted to p tags, but we want paragraphs.
-                elList = text.split('<br><br>');
-
-                this.pasteHTML('<p>' + elList.join('</p><p>') + '</p>');
-                this.options.ownerDocument.execCommand('insertText', false, "\n");
-
-                // block element cleanup
-                elList = el.querySelectorAll('a,p,div,br');
-                for (i = 0; i < elList.length; i += 1) {
-
-                    workEl = elList[i];
-
-                    switch (workEl.tagName.toLowerCase()) {
-                    case 'a':
-                        if (this.options.targetBlank){
-                          this.setTargetBlank(workEl);
-                        }
-                        break;
-                    case 'p':
-                    case 'div':
-                        this.filterCommonBlocks(workEl);
-                        break;
-                    case 'br':
-                        this.filterLineBreak(workEl);
-                        break;
-                    }
-
-                }
-
-
-            } else {
-
-                this.pasteHTML(text);
-
-            }
-
+            pasteHandler.cleanPaste(text, this.options);
         },
 
         pasteHTML: function (html) {
-            var elList, workEl, i, fragmentBody, pasteBlock = this.options.ownerDocument.createDocumentFragment();
-
-            pasteBlock.appendChild(this.options.ownerDocument.createElement('body'));
-
-            fragmentBody = pasteBlock.querySelector('body');
-            fragmentBody.innerHTML = html;
-
-            this.cleanupSpans(fragmentBody);
-
-            elList = fragmentBody.querySelectorAll('*');
-            for (i = 0; i < elList.length; i += 1) {
-
-                workEl = elList[i];
-
-                // delete ugly attributes
-                workEl.removeAttribute('class');
-                workEl.removeAttribute('style');
-                workEl.removeAttribute('dir');
-
-                if (workEl.tagName.toLowerCase() === 'meta') {
-                    workEl.parentNode.removeChild(workEl);
-                }
-
-            }
-            this.options.ownerDocument.execCommand('insertHTML', false, fragmentBody.innerHTML.replace(/&nbsp;/g, ' '));
-        },
-        isCommonBlock: function (el) {
-            return (el && (el.tagName.toLowerCase() === 'p' || el.tagName.toLowerCase() === 'div'));
-        },
-        filterCommonBlocks: function (el) {
-            if (/^\s*$/.test(el.innerText)) {
-                el.parentNode.removeChild(el);
-            }
-        },
-        filterLineBreak: function (el) {
-            if (this.isCommonBlock(el.previousElementSibling)) {
-
-                // remove stray br's following common block elements
-                el.parentNode.removeChild(el);
-
-            } else if (this.isCommonBlock(el.parentNode) && (el.parentNode.firstChild === el || el.parentNode.lastChild === el)) {
-
-                // remove br's just inside open or close tags of a div/p
-                el.parentNode.removeChild(el);
-
-            } else if (el.parentNode.childElementCount === 1) {
-
-                // and br's that are the only child of a div/p
-                this.removeWithParent(el);
-
-            }
-
-        },
-
-        // remove an element, including its parent, if it is the only element within its parent
-        removeWithParent: function (el) {
-            if (el && el.parentNode) {
-                if (el.parentNode.parentNode && el.parentNode.childElementCount === 1) {
-                    el.parentNode.parentNode.removeChild(el.parentNode);
-                } else {
-                    el.parentNode.removeChild(el.parentNode);
-                }
-            }
-        },
-
-        cleanupSpans: function (container_el) {
-
-            var i,
-                el,
-                new_el,
-                spans = container_el.querySelectorAll('.replace-with');
-
-            for (i = 0; i < spans.length; i += 1) {
-
-                el = spans[i];
-                new_el = this.options.ownerDocument.createElement(el.classList.contains('bold') ? 'b' : 'i');
-
-                if (el.classList.contains('bold') && el.classList.contains('italic')) {
-
-                    // add an i tag as well if this has both italics and bold
-                    new_el.innerHTML = '<i>' + el.innerHTML + '</i>';
-
-                } else {
-
-                    new_el.innerHTML = el.innerHTML;
-
-                }
-                el.parentNode.replaceChild(new_el, el);
-
-            }
-
-            spans = container_el.querySelectorAll('span');
-            for (i = 0; i < spans.length; i += 1) {
-
-                el = spans[i];
-
-                // remove empty spans, replace others with their contents
-                if (/^\s*$/.test()) {
-                    el.parentNode.removeChild(el);
-                } else {
-                    el.parentNode.replaceChild(this.options.ownerDocument.createTextNode(el.innerText), el);
-                }
-
-            }
-
+            pasteHandler.pasteHTML(html, this.options.ownerDocument);
         }
-
     };
 
-}(window, document));
+}());
+
+    return MediumEditor;
+}()));
 
 },{}],"mousetrap":[function(require,module,exports){
 /*global define:false */
@@ -103565,7 +125096,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 
-},{"React":479}],"react-mixin-manager":[function(require,module,exports){
+},{"React":448}],"react-mixin-manager":[function(require,module,exports){
 /*!
  * react-mixin-manager v0.7.0
  * https://github.com/jhudson8/react-mixin-manager
@@ -103899,8 +125430,13 @@ module.exports = {
 
 
 },{}],"react":[function(require,module,exports){
+<<<<<<< HEAD
 module.exports=require(479)
 },{"./lib/React":516,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\react.js":479}],"screenviewer":[function(require,module,exports){
+=======
+module.exports=require(448)
+},{"./lib/React":485,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/react.js":448}],"screenviewer":[function(require,module,exports){
+>>>>>>> Editor store and services [#89871770]
 (function($){
   ScreenViewer = function(container, options){
     this.$viewer = $(container);

@@ -7,11 +7,7 @@ require './resources/tasty_utils'
 window.Routes    = require '../shared/routes/routes'
 window.ApiRoutes = require '../shared/routes/api'
 
-require './react/entities/normalized_entry'
-
 require './react/services/positions'
-require './react/services/entry_store'
-require './react/services/entry_normalizer'
 global.DesignSettingsService = require './react/services/designSettings'
 global.DesignStatesService = require './react/services/designStates'
 global.DesignPresenterService = require './react/services/designPresenter'
@@ -47,6 +43,7 @@ require './react/mixins/touch'
 require './react/dispatchers/current_user'
 require './react/dispatchers/relationships'
 global.CurrentUserStore = require './react/stores/current_user'
+require './react/stores/editor'
 require './react/stores/relationships'
 
 require './react/components/transition/timeout_transition_group'
@@ -222,29 +219,6 @@ require './react/components/persons_popup/panels/socialNetwork/facebook'
 
 require './react/components/people/item'
 
-require './react/components/post_editor/mixins/dragging'
-require './react/components/post_editor/mixins/persistence'
-require './react/components/post_editor/mixins/images_form'
-require './react/components/post_editor/mixins/layout'
-require './react/components/post_editor/mixins/video'
-
-require './react/components/post_editor/welcome_messages/instagram'
-require './react/components/post_editor/welcome_messages/image'
-require './react/components/post_editor/welcome_messages/music'
-require './react/components/post_editor/welcome_messages/video'
-
-require './react/components/post_editor/video_mediabox/video_mediabox'
-require './react/components/post_editor/video_mediabox/loading'
-require './react/components/post_editor/video_mediabox/url_insert'
-require './react/components/post_editor/video_mediabox/embeded'
-
-require './react/components/post_editor/images_mediabox/loaded'
-require './react/components/post_editor/images_mediabox/url_insert'
-
-require './react/components/post_editor/mediabox/actions'
-require './react/components/post_editor/mediabox/layout'
-require './react/components/post_editor/mediabox/loading_progress'
-
 require './react/components/entry_metabar/entry_metabar'
 require './react/components/entry_metabar/author'
 require './react/components/entry_metabar/comment'
@@ -277,28 +251,6 @@ require './react/components/entry_comment_box/comment_form/comment_edit_form_man
 require './react/components/entry_comment_box/comment_form/buttons/submit'
 require './react/components/entry_comment_box/load_more'
 
-require './react/components/post_editor/actions/actions'
-require './react/components/post_editor/actions/buttons/vote'
-require './react/components/post_editor/actions/buttons/privacy'
-
-require './react/components/post_editor/editors/mixins/autosave'
-require './react/components/post_editor/editors/_tasty'
-require './react/components/post_editor/editors/anonymous'
-require './react/components/post_editor/editors/text'
-require './react/components/post_editor/editors/image'
-require './react/components/post_editor/editors/instagram'
-require './react/components/post_editor/editors/music'
-require './react/components/post_editor/editors/video'
-require './react/components/post_editor/editors/quote'
-
-require './react/components/post_editor/choicer'
-require './react/components/post_editor/layout'
-require './react/components/post_editor/new_post'
-require './react/components/post_editor/new_anonymous_post'
-require './react/components/post_editor/edit_post'
-require './react/components/post_editor/editor_container'
-require './react/components/post_editor/demo'
-
 require './react/components/hero/profile/profile'
 require './react/components/hero/profile/profile_avatar'
 require './react/components/hero/profile/profile_head'
@@ -315,6 +267,9 @@ require './react/components/hero/profile/popup/tags_popup'
 require './react/components/hero/profile/popup/items/follower_item'
 require './react/components/hero/profile/popup/items/following_item'
 require './react/components/hero/profile/popup/items/tag_item'
+
+global.EditorNew = require './react/components/Editor/EditorNew'
+global.EditorEdit = require './react/components/Editor/EditorEdit'
 
 require './react/components/images_collage'
 
