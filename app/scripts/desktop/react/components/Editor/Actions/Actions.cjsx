@@ -1,4 +1,5 @@
 classSet = require 'react/lib/cx'
+EditorActionCreators = require '../../../actions/editor'
 EditorVoteButton = require '../buttons/Vote'
 EditorPrivacyButton = require '../buttons/Privacy'
 EditorPreviewButton = require '../buttons/Preview'
@@ -40,7 +41,7 @@ EditorActions = React.createClass
     </div>
 
   renderVoteButton: ->
-    unless @isEntryPrivate() or @isTlogPrivate()
+    unless @isEntryAnonymous() or @isEntryPrivate() or @isTlogPrivate()
       <div className="post-action post-action--button">
         <EditorVoteButton
             enabled={ @isEntryLive() }
@@ -48,12 +49,13 @@ EditorActions = React.createClass
       </div>
 
   renderPrivacyButton: ->
-    <div className="post-action post-action--button">
-      <EditorPrivacyButton
-          live={ @isEntryLive() }
-          private={ @isEntryPrivate() }
-          onClick={ @handlePrivacyButtonClick } />
-    </div>
+    unless @isEntryAnonymous()
+      <div className="post-action post-action--button">
+        <EditorPrivacyButton
+            live={ @isEntryLive() }
+            private={ @isEntryPrivate() }
+            onClick={ @handlePrivacyButtonClick } />
+      </div>
 
   renderSpinner: ->
     if @props.loading
@@ -75,7 +77,7 @@ EditorActions = React.createClass
     console.log 'toggle preview action'
 
   changePrivacy: (privacy) ->
-    console.log 'change privacy action', privacy
+    EditorActionCreators.changeEntryPrivacy privacy
 
   saveEntry: ->
     console.log 'save entry action'

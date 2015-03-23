@@ -27,10 +27,10 @@ request = (_method, url, data = {}) ->
     else 'GET'
 
   if data instanceof FormData
-    dataType    = 'multipart/form-data'
+    contentType = false
     processData = false
   else
-    dataType    = 'json'
+    contentType = 'application/x-www-form-urlencoded'
     processData = true
     _.extend data, {_method}
 
@@ -38,6 +38,8 @@ request = (_method, url, data = {}) ->
     url: url
     method: method
     data: data
+    contentType: contentType
+    processData: processData
     headers: headers
     timeout: TIMEOUT
     xhrFields:
@@ -57,5 +59,21 @@ Api =
 
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
+
+  editor:
+    createImageAttachments: (formData) ->
+      url = ApiRoutes.imageAttachments()
+      key = Constants.api.EDITOR_CREATE_IMAGE_ATTACHMENTS
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, formData
+
+    createEmbed: (embedUrl) ->
+      url  = ApiRoutes.iframely_url()
+      key  = Constants.api.EDITOR_CREATE_EMBED
+      data = url: embedUrl
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
 
 module.exports = Api

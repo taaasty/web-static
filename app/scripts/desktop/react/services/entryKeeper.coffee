@@ -3,10 +3,10 @@ NormalizedEntry = require '../entities/normalizedEntry'
 STORAGE_PREFIX = 'entries'
 storage = localStorage
 
-key: (normalizedEntry) ->
+key = (normalizedEntry) ->
   switch
     when normalizedEntry.id then keyExisting(normalizedEntry.id, normalizedEntry.updatedAt)
-    when normalizedEntry.tlogType is 'anonymous' then keyAnonymous()
+    when normalizedEntry.type is 'anonymous' then keyAnonymous()
     else keyNew()
 
 keyNew = ->
@@ -30,7 +30,7 @@ EntryKeeper =
   restoreExistingNewEntry: ->
     @restore keyNew()
 
-  restoreAnonymousEntry: ->
+  restoreExistingAnonymousEntry: ->
     @restore keyAnonymous()
 
   store: (normalizedEntry) ->

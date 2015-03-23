@@ -21,6 +21,9 @@ global.EditorStore = _.extend new BaseStore(),
   getEntryPrivacy: ->
     _entry.privacy
 
+  getEntryValue: (key) ->
+    EntryNormalizationService.getNormalizedEntryValue _entry, key
+
 module.exports = EditorStore
 
 EditorStore.dispatchToken = AppDispatcher.register (payload) ->
@@ -38,11 +41,41 @@ EditorStore.dispatchToken = AppDispatcher.register (payload) ->
           EntryNormalizationService.normalize(entry)
         )
       else
-        _entry = (
-          EntryKeeperService.restoreExistingNewEntry() ||
-          new NormalizedEntry
-            type: 'text'
-            privacy: if tlogType is 'public' then 'live' else 'public'
-        )
+        if tlogType is 'anonymous'
+          _entry = (
+            EntryKeeperService.restoreExistingAnonymousEntry() ||
+            new NormalizedEntry
+              type: 'anonymous'
+              privacy: 'anonymous'
+          )
+        else
+          _entry = (
+            EntryKeeperService.restoreExistingNewEntry() ||
+            new NormalizedEntry
+              type: 'text'
+              privacy: if tlogType is 'public' then 'live' else 'public'
+          )
+
+      EditorStore.emitChange()
+
+    when Constants.editor.UPDATE_FIELD
+      { key, value } = action
+
+      normalizedKey = EntryNormalizationService.getNormalizedKey _entry, key
+
+      if normalizedKey?
+        _entry[normalizedKey] = value
+        EntryKeeperService.store _entry
+
+      EditorStore.emitChange()
+
+    when Constants.editor.CHANGE_TYPE
+      _entry.type = action.entryType
+
+      EditorStore.emitChange()
+
+    when Constants.editor.CHANGE_PRIVACY
+      _entry.privacy = action.entryPrivacy
+      EntryKeeperService.store _entry
 
       EditorStore.emitChange()

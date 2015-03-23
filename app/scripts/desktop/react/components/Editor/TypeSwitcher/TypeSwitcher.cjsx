@@ -1,5 +1,6 @@
 _ = require 'lodash'
 classSet = require 'react/lib/cx'
+EditorActionCreators = require '../../../actions/editor'
 EditorTypeSwitcherItem = require './TypeSwitcherItem'
 { PropTypes } = React
 
@@ -61,7 +62,7 @@ EditorTypeSwitcher = React.createClass
           active={ true }
           loading={ @props.loading } />
 
-  changeType: (name) ->
-    console.log 'change entry type action', name
+  changeType: (type) ->
+    EditorActionCreators.changeEntryType type
 
 module.exports = EditorTypeSwitcher

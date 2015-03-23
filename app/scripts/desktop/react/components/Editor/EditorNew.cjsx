@@ -1,5 +1,5 @@
 EditorStore = require '../../stores/editor'
-EditorActions = require '../../actions/editor'
+EditorActionCreators = require '../../actions/editor'
 ConnectStoreMixin = require '../../../../shared/react/mixins/connectStore'
 Editor = require './Editor'
 { PropTypes } = React
@@ -13,7 +13,7 @@ EditorNew = React.createClass
     backUrl: PropTypes.string
 
   componentWillMount: ->
-    EditorActions.init
+    EditorActionCreators.init
       entry: null
       tlogType: @props.tlogType
 
