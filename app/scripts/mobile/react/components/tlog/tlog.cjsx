@@ -9,14 +9,13 @@ Tlog = React.createClass
     entries: PropTypes.array.isRequired
 
   render: ->
-    <div className="posts">
-      { @renderEntryList() }
-    </div>
-
-  renderEntryList: ->
     if @props.entries.length
-      @props.entries.map (entry) ->
+      entryList = @props.entries.map (entry) ->
         <EntryTlog entry={ entry } key={ entry.id } />
+
+      <div className="posts">
+        { entryList }
+      </div>
     else
       <TlogEmptyPageMessage />
 
