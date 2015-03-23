@@ -3123,6 +3123,12 @@ a.toolbar__popup-link:active {
 .post__content .media-object > a {
   border-bottom: none;
 }
+.text-content--main {
+  padding: 12px;
+}
+.text-content--main a {
+  color: inherit;
+}
 .meta-item-icon,
 .meta-voting:before,
 .meta-comments:before,

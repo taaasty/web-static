@@ -21302,14 +21302,14 @@ TlogEmptyPageMessage = React.createClass({
   displayName: 'TlogEmptyPageMessage',
   render: function() {
     return React.createElement("div", {
-      "className": "content-info"
+      "className": "post"
     }, React.createElement("div", {
-      "className": "content-info__icon"
-    }, React.createElement("i", {
-      "className": "icon icon--paper-corner"
-    })), React.createElement("p", {
-      "className": "content-info__text"
-    }, i18n.t('tlog.tlog_empty_page')));
+      "className": "post__content"
+    }, React.createElement("div", {
+      "className": "post__header"
+    }, React.createElement("h1", {
+      "className": "post__title"
+    }, i18n.t('tlog.tlog_empty_page')))));
   }
 });
 
@@ -21332,17 +21332,18 @@ Tlog = React.createClass({
     entries: PropTypes.array.isRequired
   },
   render: function() {
-    var entryList;
+    return React.createElement("div", {
+      "className": "posts"
+    }, this.renderEntryList());
+  },
+  renderEntryList: function() {
     if (this.props.entries.length) {
-      entryList = this.props.entries.map(function(entry) {
+      return this.props.entries.map(function(entry) {
         return React.createElement(EntryTlog, {
           "entry": entry,
           "key": entry.id
         });
       });
-      return React.createElement("div", {
-        "className": "posts"
-      }, entryList);
     } else {
       return React.createElement(TlogEmptyPageMessage, null);
     }
