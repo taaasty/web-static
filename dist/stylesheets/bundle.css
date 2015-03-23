@@ -11106,11 +11106,13 @@ a.types-posts__item:hover .types-posts__text {
   transition: padding-top 0.2s ease 0.2s;
 }
 .social-share {
-  margin-top: -68px;
   position: fixed;
   top: 50%;
   right: 20px;
   z-index: 150;
+  -webkit-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+          transform: translate(0, -50%);
 }
 .social-share button {
   margin: 8px 0;
