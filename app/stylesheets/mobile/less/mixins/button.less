@@ -1,0 +1,65 @@
+.button-size(@height, @padding-horizontal, @font-size) {
+  height: @height;
+  padding-right: @padding-horizontal;
+  padding-left: @padding-horizontal;
+  font-size: @font-size;
+  line-height: @height + 1;
+}
+
+.button-common-style(@background) {
+  background-color: @background;
+
+  &:active {
+    background-color: darken(@background, 6%);
+  }
+}
+
+.button-hero-style() {
+  &:extend(.button all, .button--extra-small all);
+  color: @hero-button-color;
+
+  &:after {
+    border: 1px solid @hero-button-border-color;
+  }
+
+  &:active {
+    &:after {
+      border-color: @hero-button-border-color-hover;
+      color: @hero-button-color-hover;
+    }
+  }
+}
+
+.button-hero-icon-style() {
+  .button-hero-style();
+  width: 3em;
+  padding: 0;
+  color: rgba(255, 255, 255, .6);
+
+  &:active {
+    color: @white;
+  }
+}
+
+.button-share-style(@background) {
+  width: @share-button-size;
+  height: @share-button-size;
+  padding: 0;
+  background-color: @background;
+  font-size: @share-button-font-size;
+  line-height: @share-button-size;
+  letter-spacing: 0;
+  text-transform: none;
+  color: @share-button-color;
+  border-radius: 50%;
+  transition: box-shadow .3s ease, background .3s ease, color .3s ease;
+
+  &:active {
+    background: lighten(@background, 5%);
+  }
+}
+
+.button-group-style() {
+  .inline-block();
+  position: relative;
+}
