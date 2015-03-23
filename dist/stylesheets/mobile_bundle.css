@@ -1363,6 +1363,9 @@ button {
 .manage-subscriptions-button,
 .auth-button,
 .load-more-button,
+.share-facebook-button,
+.share-vkontakte-button,
+.share-twitter-button,
 .follow-button,
 .account__logout,
 .settings__submit-button,
@@ -1411,6 +1414,9 @@ a.reg-auth-button,
 a.manage-subscriptions-button,
 a.auth-button,
 a.load-more-button,
+a.share-facebook-button,
+a.share-vkontakte-button,
+a.share-twitter-button,
 a.follow-button,
 a.account__logout,
 a.settings__submit-button,
@@ -1435,6 +1441,9 @@ a.outline-auth-button {
 .manage-subscriptions-button:after,
 .auth-button:after,
 .load-more-button:after,
+.share-facebook-button:after,
+.share-vkontakte-button:after,
+.share-twitter-button:after,
 .follow-button:after,
 .account__logout:after,
 .settings__submit-button:after,
@@ -1466,6 +1475,9 @@ a.outline-auth-button {
 .manage-subscriptions-button .icon,
 .auth-button .icon,
 .load-more-button .icon,
+.share-facebook-button .icon,
+.share-vkontakte-button .icon,
+.share-twitter-button .icon,
 .follow-button .icon,
 .account__logout .icon,
 .settings__submit-button .icon,
@@ -1494,6 +1506,9 @@ a.outline-auth-button {
 .manage-subscriptions-button .icon--cross,
 .auth-button .icon--cross,
 .load-more-button .icon--cross,
+.share-facebook-button .icon--cross,
+.share-vkontakte-button .icon--cross,
+.share-twitter-button .icon--cross,
 .follow-button .icon--cross,
 .account__logout .icon--cross,
 .settings__submit-button .icon--cross,
@@ -1518,6 +1533,9 @@ a.outline-auth-button {
 .manage-subscriptions-button .spinner,
 .auth-button .spinner,
 .load-more-button .spinner,
+.share-facebook-button .spinner,
+.share-vkontakte-button .spinner,
+.share-twitter-button .spinner,
 .follow-button .spinner,
 .account__logout .spinner,
 .settings__submit-button .spinner,
@@ -1547,6 +1565,9 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:first-of-type),
 .button-group > .auth-button:not(:first-of-type),
 .button-group > .load-more-button:not(:first-of-type),
+.button-group > .share-facebook-button:not(:first-of-type),
+.button-group > .share-vkontakte-button:not(:first-of-type),
+.button-group > .share-twitter-button:not(:first-of-type),
 .button-group > .follow-button:not(:first-of-type),
 .button-group > .account__logout:not(:first-of-type),
 .button-group > .settings__submit-button:not(:first-of-type),
@@ -1573,6 +1594,9 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:last-of-type),
 .button-group > .auth-button:not(:last-of-type),
 .button-group > .load-more-button:not(:last-of-type),
+.button-group > .share-facebook-button:not(:last-of-type),
+.button-group > .share-vkontakte-button:not(:last-of-type),
+.button-group > .share-twitter-button:not(:last-of-type),
 .button-group > .follow-button:not(:last-of-type),
 .button-group > .account__logout:not(:last-of-type),
 .button-group > .settings__submit-button:not(:last-of-type),
@@ -1598,6 +1622,9 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:first-of-type):not(:last-of-type),
 .button-group > .auth-button:not(:first-of-type):not(:last-of-type),
 .button-group > .load-more-button:not(:first-of-type):not(:last-of-type),
+.button-group > .share-facebook-button:not(:first-of-type):not(:last-of-type),
+.button-group > .share-vkontakte-button:not(:first-of-type):not(:last-of-type),
+.button-group > .share-twitter-button:not(:first-of-type):not(:last-of-type),
 .button-group > .follow-button:not(:first-of-type):not(:last-of-type),
 .button-group > .account__logout:not(:first-of-type):not(:last-of-type),
 .button-group > .settings__submit-button:not(:first-of-type):not(:last-of-type),
@@ -1622,6 +1649,9 @@ a.outline-auth-button {
 .button-group.__expanded > .manage-subscriptions-button,
 .button-group.__expanded > .auth-button,
 .button-group.__expanded > .load-more-button,
+.button-group.__expanded > .share-facebook-button,
+.button-group.__expanded > .share-vkontakte-button,
+.button-group.__expanded > .share-twitter-button,
 .button-group.__expanded > .follow-button,
 .button-group.__expanded > .account__logout,
 .button-group.__expanded > .settings__submit-button,
@@ -1659,6 +1689,9 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:first-child) .auth-button,
 .button-group-dropdown:not(:first-child) .load-more-button,
+.button-group-dropdown:not(:first-child) .share-facebook-button,
+.button-group-dropdown:not(:first-child) .share-vkontakte-button,
+.button-group-dropdown:not(:first-child) .share-twitter-button,
 .button-group-dropdown:not(:first-child) .follow-button,
 .button-group-dropdown:not(:first-child) .account__logout,
 .button-group-dropdown:not(:first-child) .settings__submit-button,
@@ -1684,6 +1717,9 @@ a.outline-auth-button {
 .button-group-dropdown:not(:last-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:last-child) .auth-button,
 .button-group-dropdown:not(:last-child) .load-more-button,
+.button-group-dropdown:not(:last-child) .share-facebook-button,
+.button-group-dropdown:not(:last-child) .share-vkontakte-button,
+.button-group-dropdown:not(:last-child) .share-twitter-button,
 .button-group-dropdown:not(:last-child) .follow-button,
 .button-group-dropdown:not(:last-child) .account__logout,
 .button-group-dropdown:not(:last-child) .settings__submit-button,
@@ -1709,6 +1745,9 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child):not(:last-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .auth-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .load-more-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .share-facebook-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .share-vkontakte-button,
+.button-group-dropdown:not(:first-child):not(:last-child) .share-twitter-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .follow-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .account__logout,
 .button-group-dropdown:not(:first-child):not(:last-child) .settings__submit-button,
@@ -1981,6 +2020,54 @@ a.outline-auth-button {
 }
 .load-more-button:active {
   background-color: #363636;
+}
+.share-facebook-button {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  background-color: #44619d;
+  font-size: 18px;
+  line-height: 42px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #ffffff;
+  border-radius: 50%;
+  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+.share-facebook-button:active {
+  background: #4c6caf;
+}
+.share-vkontakte-button {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  background-color: #5c82ab;
+  font-size: 18px;
+  line-height: 42px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #ffffff;
+  border-radius: 50%;
+  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+.share-vkontakte-button:active {
+  background: #6d8fb4;
+}
+.share-twitter-button {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  background-color: #55acee;
+  font-size: 18px;
+  line-height: 42px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #ffffff;
+  border-radius: 50%;
+  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+.share-twitter-button:active {
+  background: #6cb7f0;
 }
 .spinner {
   position: relative;
@@ -3421,6 +3508,12 @@ a.toolbar__popup-link:active {
 .post__meta .meta-actions {
   margin-right: 0;
   float: right;
+}
+.post__share {
+  margin-top: 8px;
+}
+.post__share button {
+  margin: 8px 8px 0 0;
 }
 .post__comments {
   margin-top: 16px;

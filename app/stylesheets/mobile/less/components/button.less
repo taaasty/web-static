@@ -1,53 +1,4 @@
 // Mixins
-.button-size(@height, @padding-horizontal, @font-size) {
-  height: @height;
-  padding-right: @padding-horizontal;
-  padding-left: @padding-horizontal;
-  font-size: @font-size;
-  line-height: @height + 1;
-}
-
-.button-common-style(@background) {
-  background-color: @background;
-
-  &:active {
-    background-color: darken(@background, 6%);
-  }
-}
-
-.button-hero-style() {
-  &:extend(.button all, .button--extra-small all);
-  color: @hero-button-color;
-
-  &:after {
-    border: 1px solid @hero-button-border-color;
-  }
-
-  &:active {
-    &:after {
-      border-color: @hero-button-border-color-hover;
-      color: @hero-button-color-hover;
-    }
-  }
-}
-
-.button-hero-icon-style() {
-  .button-hero-style();
-  width: 3em;
-  padding: 0;
-  color: rgba(255, 255, 255, .6);
-
-  &:active {
-    color: @white;
-  }
-}
-
-.button-group-style() {
-  .inline-block();
-  position: relative;
-}
-
-// Styles
 button {
   outline: 0;
 }
@@ -376,4 +327,20 @@ button {
   &:active {
     background-color: lighten(@load-more-button-bg, 6%);
   }
+}
+
+// Share Buttons
+.share-facebook-button {
+  &:extend(.button all);
+  .button-share-style(@share-button-fb-bg);
+}
+
+.share-vkontakte-button {
+  &:extend(.button all);
+  .button-share-style(@share-button-vk-bg);
+}
+
+.share-twitter-button {
+  &:extend(.button all);
+  .button-share-style(@share-button-tw-bg);
 }
