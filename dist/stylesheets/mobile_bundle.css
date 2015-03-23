@@ -2030,7 +2030,7 @@ a.outline-auth-button {
   line-height: 42px;
   letter-spacing: 0;
   text-transform: none;
-  color: #ffffff;
+  color: #ffffff !important;
   border-radius: 50%;
   transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
@@ -2046,7 +2046,7 @@ a.outline-auth-button {
   line-height: 42px;
   letter-spacing: 0;
   text-transform: none;
-  color: #ffffff;
+  color: #ffffff !important;
   border-radius: 50%;
   transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
@@ -2062,7 +2062,7 @@ a.outline-auth-button {
   line-height: 42px;
   letter-spacing: 0;
   text-transform: none;
-  color: #ffffff;
+  color: #ffffff !important;
   border-radius: 50%;
   transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
@@ -3512,7 +3512,8 @@ a.toolbar__popup-link:active {
 .post__share {
   margin-top: 8px;
 }
-.post__share button {
+.post__share button,
+.post__share a {
   margin: 8px 8px 0 0;
 }
 .post__comments {
