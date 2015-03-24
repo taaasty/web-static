@@ -1,3 +1,4 @@
+_ = require 'lodash'
 classSet = require 'react/lib/cx'
 EditorStore = require '../../../stores/editor'
 EditorActionCreators = require '../../../actions/editor'
@@ -24,6 +25,7 @@ EditorTypeImage = React.createClass
 
   getInitialState: ->
     currentState: @getInitialCurrentState()
+    dragging: false
 
   render: ->
     editorClasses = classSet
@@ -53,7 +55,10 @@ EditorTypeImage = React.createClass
       when WELCOME_STATE
         <EditorTypeImageWelcome
             onClickInsertState={ @activateInsertState }
-            onSelectFiles={ @handleSelectFiles } />
+            onSelectFiles={ @handleSelectFiles }
+            onDragOver={ @draggingOn }
+            onDragLeave={ @draggingOff }
+            onDrop={ @draggingOff } />
       when INSERT_STATE
         <EditorTypeImageUrlInsert
             onInsertImageUrl={ @handleChangeImageUrl }
@@ -71,9 +76,12 @@ EditorTypeImage = React.createClass
   activateLoadedState: -> @setState(currentState: LOADED_STATE)
   activateWelcomeState: -> @setState(currentState: WELCOME_STATE)
 
+  draggingOn: -> @setState(dragging: true)
+  draggingOff: -> @setState(dragging: false)
+
   getMediaBoxState: ->
     switch
-      # when @state.dragging then 'drag-hover'
+      when @state.dragging then 'drag-hover'
       when @isInsertState() then 'insert'
       when @state.imageAttachments.length || @state.imageUrl then 'loaded'
       else null
@@ -102,10 +110,16 @@ EditorTypeImage = React.createClass
     image.src = imageUrl
 
   handleSelectFiles: (files) ->
-    #FIXME: Отправлять на точку больше одной картинки
+    imageFiles = _.filter files, (file) ->
+      file.type.match /(\.|\/)(gif|jpe?g|png)$/i
+
+    unless imageFiles.length
+      return TastyNotifyController.notifyError i18n.t 'editor_files_without_images'
 
     formData = new FormData()
-    formData.append 'image', files[0]
+
+    _.forEach imageFiles, (file) ->
+      formData.append 'images[]', file
 
     EditorActionCreators.createImageAttachments formData
       .then (imageAttachments) =>
