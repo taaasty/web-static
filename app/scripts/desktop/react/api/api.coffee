@@ -76,4 +76,16 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = postRequest url, data
 
+    createEntry: (url, data) ->
+      key = Constants.api.EDITOR_CREATE_ENTRY
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
+
+    updateEntry: (url, data) ->
+      key = Constants.api.EDITOR_UPDATE_ENTRY
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest url, data
+
 module.exports = Api

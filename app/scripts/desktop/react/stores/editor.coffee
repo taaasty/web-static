@@ -15,6 +15,9 @@ global.EditorStore = _.extend new BaseStore(),
   getEntry: ->
     _entry
 
+  getEntryID: ->
+    _entry.id
+
   getEntryType: ->
     _entry.type
 
@@ -36,17 +39,23 @@ EditorStore.dispatchToken = AppDispatcher.register (payload) ->
       if entry?
         { id, updated_at } = entry
 
-        _entry = (
-          EntryKeeperService.restoreExistingEntry(id, updated_at) ||
-          EntryNormalizationService.normalize(entry)
-        )
+        if tlogType is 'anonymous'
+          _entry = (
+            EntryKeeperService.restoreExistingAnonymousEntry() ||
+            EntryNormalizationService.normalize(entry)
+          )
+        else
+          _entry = (
+            EntryKeeperService.restoreExistingEntry(id, updated_at) ||
+            EntryNormalizationService.normalize(entry)
+          )
       else
         if tlogType is 'anonymous'
           _entry = (
             EntryKeeperService.restoreExistingAnonymousEntry() ||
             new NormalizedEntry
               type: 'anonymous'
-              privacy: 'anonymous'
+              privacy: 'public'
           )
         else
           _entry = (
@@ -78,4 +87,8 @@ EditorStore.dispatchToken = AppDispatcher.register (payload) ->
       _entry.privacy = action.entryPrivacy
       EntryKeeperService.store _entry
 
+      EditorStore.emitChange()
+
+    when Constants.editor.ENTRY_SAVED
+      EntryKeeperService.remove _entry
       EditorStore.emitChange()

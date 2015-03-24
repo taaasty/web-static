@@ -113,7 +113,7 @@
   "persons_popup_header": "Управление подписками",
   "editor_private_entry": "Закрытая запись",
   "editor_public_entry": "Открытая запись",
-  "editor_live_entry": "Открытая запись с голосованием",
+  "editor_public_with_voting_entry": "Открытая запись с голосованием",
   "editor_enable_voting": "Добавить голосование",
   "editor_disable_voting": "Убрать голосование",
   "editor_publish_button": "Опубликовать",

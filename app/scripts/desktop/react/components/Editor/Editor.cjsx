@@ -36,7 +36,7 @@ Editor = React.createClass
     </EditorLayout>
 
   renderTypeSwitcher: ->
-    unless @props.entryType is 'anonymous'
+    unless @props.tlogType is 'anonymous'
       <EditorTypeSwitcher
           entryType={ @props.entryType }
           canChangeType={ @props.canChangeType }

@@ -31,7 +31,7 @@ EditorPrivacyButton = React.createClass
 
   getTitle: ->
     title = if @props.private then i18n.t 'editor_private_entry' else i18n.t 'editor_public_entry'
-    title = i18n.t 'editor_live_entry' if @props.live
+    title = i18n.t 'editor_public_with_voting_entry' if @props.live
     title
 
   handleClick: ->

@@ -5,8 +5,8 @@ storage = localStorage
 
 key = (normalizedEntry) ->
   switch
-    when normalizedEntry.id then keyExisting(normalizedEntry.id, normalizedEntry.updatedAt)
     when normalizedEntry.type is 'anonymous' then keyAnonymous()
+    when normalizedEntry.id then keyExisting(normalizedEntry.id, normalizedEntry.updatedAt)
     else keyNew()
 
 keyNew = ->

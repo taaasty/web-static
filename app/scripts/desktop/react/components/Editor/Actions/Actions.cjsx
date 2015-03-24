@@ -19,6 +19,21 @@ EditorActions = React.createClass
     tlogType: PropTypes.string.isRequired
     loading: PropTypes.bool.isRequired
 
+  getInitialState: ->
+    preview: false
+
+  componentWillUpdate: (nextProps, nextState) ->
+    #TODO: Применятор для показа превью
+    if @state.preview isnt nextState.preview
+      if nextState.preview
+        $("body")
+          .removeClass 'tlog-mode-minimal'
+          .addClass 'tlog-mode-full'
+      else
+        $("body")
+          .removeClass 'tlog-mode-full'
+          .addClass 'tlog-mode-minimal'
+
   render: ->
     actionsClasses = classSet
       'post-actions': true
@@ -41,7 +56,7 @@ EditorActions = React.createClass
     </div>
 
   renderVoteButton: ->
-    unless @isEntryAnonymous() or @isEntryPrivate() or @isTlogPrivate()
+    unless @isTlogAnonymous() or @isEntryPrivate() or @isTlogPrivate()
       <div className="post-action post-action--button">
         <EditorVoteButton
             enabled={ @isEntryLive() }
@@ -49,7 +64,7 @@ EditorActions = React.createClass
       </div>
 
   renderPrivacyButton: ->
-    unless @isEntryAnonymous()
+    unless @isTlogAnonymous()
       <div className="post-action post-action--button">
         <EditorPrivacyButton
             live={ @isEntryLive() }
@@ -66,21 +81,19 @@ EditorActions = React.createClass
   isEntryLive: -> @props.entryPrivacy is ENTRY_PRIVACY_LIVE
   isEntryPublic: -> @props.entryPrivacy is ENTRY_PRIVACY_PUBLIC
   isEntryPrivate: -> @props.entryPrivacy is ENTRY_PRIVACY_PRIVATE
-  isEntryAnonymous: -> @props.entryPrivacy is ENTRY_PRIVACY_ANONYMOUS
 
   isTlogPublic: -> @props.tlogType is TLOG_TYPE_PUBLIC
   isTlogPrivate: -> @props.tlogType is TLOG_TYPE_PRIVATE
   isTlogAnonymous: -> @props.tlogType is TLOG_TYPE_ANONYMOUS
 
   togglePreview: ->
-    #TODO: Применятор для показа превью
-    console.log 'toggle preview action'
+    @setState(preview: !@state.preview)
 
   changePrivacy: (privacy) ->
     EditorActionCreators.changeEntryPrivacy privacy
 
   saveEntry: ->
-    console.log 'save entry action'
+    EditorActionCreators.saveEntry()
 
   handleVoteButtonClick: ->
     newEntryPrivacy = if @isEntryLive() then ENTRY_PRIVACY_PUBLIC else ENTRY_PRIVACY_LIVE

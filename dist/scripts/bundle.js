@@ -13620,11 +13620,13 @@ require('./react/application');
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"../shared/react/services/thumbor":328,"../shared/routes/api":329,"../shared/routes/routes":330,"./react/application":17,"./react/components/Editor/EditorEdit":21,"./react/components/Editor/EditorNew":22,"./react/components/auth/auth":49,"./react/components/auth/authorization/authorization":50,"./react/components/auth/authorization/facebook":51,"./react/components/auth/authorization/vk":52,"./react/components/auth/buttons/facebook_auth_button":53,"./react/components/auth/buttons/vk_auth_button":54,"./react/components/auth/email/email":58,"./react/components/auth/recovery":63,"./react/components/avatars/avatar":65,"./react/components/avatars/user_avatar":66,"./react/components/buttons/load_more":67,"./react/components/calendar/calendar":68,"./react/components/calendar/calendar_header":69,"./react/components/calendar/calendar_marker":70,"./react/components/calendar/calendar_period":71,"./react/components/calendar/calendar_timeline":72,"./react/components/common/adaptive_input":73,"./react/components/design_settings_popup/color_picker":76,"./react/components/design_settings_popup/color_picker_popup":77,"./react/components/design_settings_popup/controls":78,"./react/components/design_settings_popup/controls_items/_progressbar":79,"./react/components/design_settings_popup/controls_items/_radiobutton":80,"./react/components/design_settings_popup/controls_items/align_item":81,"./react/components/design_settings_popup/controls_items/background_item":82,"./react/components/design_settings_popup/controls_items/feed_color_item":83,"./react/components/design_settings_popup/controls_items/font_type_item":84,"./react/components/design_settings_popup/controls_items/header_color_item":85,"./react/components/design_settings_popup/controls_items/opacity_item":86,"./react/components/design_settings_popup/design_settings_popup":87,"./react/components/editable_field":88,"./react/components/embed":89,"./react/components/entry_comment_box/comment_form/buttons/submit":90,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":91,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":92,"./react/components/entry_comment_box/comment_form/comment_form":93,"./react/components/entry_comment_box/comment_list/comment":94,"./react/components/entry_comment_box/comment_list/comment_list":95,"./react/components/entry_comment_box/comment_list/comment_manager":96,"./react/components/entry_comment_box/comment_metabar/comment_metabar":97,"./react/components/entry_comment_box/comment_metabar/date":98,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":99,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":100,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":101,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":102,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":103,"./react/components/entry_comment_box/comment_metabar/reply":104,"./react/components/entry_comment_box/entry_comment_box":105,"./react/components/entry_comment_box/load_more":106,"./react/components/entry_comment_box/mixins/comments":107,"./react/components/entry_metabar/author":108,"./react/components/entry_metabar/comment":109,"./react/components/entry_metabar/date":110,"./react/components/entry_metabar/dropdown_menu":111,"./react/components/entry_metabar/dropdown_menu_items/delete_item":112,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":113,"./react/components/entry_metabar/dropdown_menu_items/item":114,"./react/components/entry_metabar/dropdown_menu_items/report_item":115,"./react/components/entry_metabar/dropdown_menu_items/watch_item":116,"./react/components/entry_metabar/entry_metabar":117,"./react/components/entry_metabar/tag":118,"./react/components/entry_metabar/tags":119,"./react/components/feed/bricks":120,"./react/components/feed/feed":121,"./react/components/feed/mixins/base":122,"./react/components/feed/tlog":123,"./react/components/follow_status":124,"./react/components/hero/profile/dropdown_menu":126,"./react/components/hero/profile/dropdown_menu_items/ignore":127,"./react/components/hero/profile/dropdown_menu_items/report":128,"./react/components/hero/profile/popup/followers_popup":129,"./react/components/hero/profile/popup/followings_popup":130,"./react/components/hero/profile/popup/items/follower_item":131,"./react/components/hero/profile/popup/items/following_item":132,"./react/components/hero/profile/popup/items/tag_item":133,"./react/components/hero/profile/popup/popup":134,"./react/components/hero/profile/popup/tags_popup":135,"./react/components/hero/profile/profile":136,"./react/components/hero/profile/profile_avatar":137,"./react/components/hero/profile/profile_head":138,"./react/components/hero/profile/profile_stats":139,"./react/components/hero/profile/profile_stats_item":140,"./react/components/images_collage":141,"./react/components/notifications/tasty_alert":142,"./react/components/notifications/tasty_confirm":143,"./react/components/notifications/tasty_locking_alert":144,"./react/components/notifications/tasty_notify":145,"./react/components/people/item":146,"./react/components/persons_popup/items/follower_relationship":147,"./react/components/persons_popup/items/following_relationship":148,"./react/components/persons_popup/items/guess_relationship":149,"./react/components/persons_popup/items/ignored_relationship":150,"./react/components/persons_popup/items/item":151,"./react/components/persons_popup/items/requested_relationship":152,"./react/components/persons_popup/menu":153,"./react/components/persons_popup/menu_item":154,"./react/components/persons_popup/mixins/panel_mixin":155,"./react/components/persons_popup/panels/followers_panel":156,"./react/components/persons_popup/panels/followings_panel":157,"./react/components/persons_popup/panels/guessed_panel":158,"./react/components/persons_popup/panels/ignored_panel":159,"./react/components/persons_popup/panels/requested_panel":160,"./react/components/persons_popup/panels/socialNetwork/facebook":161,"./react/components/persons_popup/panels/socialNetwork/vkontakte":171,"./react/components/persons_popup/persons_popup":178,"./react/components/popup/header":179,"./react/components/popup/layout":180,"./react/components/popup/popup":181,"./react/components/popup/spinner":182,"./react/components/popup_box":183,"./react/components/relationship_buttons/follow_button":184,"./react/components/relationship_buttons/follower_button":185,"./react/components/relationship_buttons/guess_button":186,"./react/components/relationship_buttons/ignore_button":187,"./react/components/relationship_buttons/mixins/relationship":188,"./react/components/relationship_buttons/request_button":189,"./react/components/screen_viewer/screen_viewer":190,"./react/components/search/button":191,"./react/components/search/field":192,"./react/components/search/search":193,"./react/components/searchResults/index":195,"./react/components/settings/settings":213,"./react/components/shellbox_layer":216,"./react/components/shellboxes/confirm_registration":217,"./react/components/smart_follow_status":218,"./react/components/spinner":219,"./react/components/tlog_alert":220,"./react/components/toolbars/avatar":221,"./react/components/toolbars/close/close":222,"./react/components/toolbars/user":223,"./react/components/transition/timeout_transition_group":231,"./react/components/voting":232,"./react/controllers/popup":239,"./react/controllers/shellbox":241,"./react/controllers/tasty_alert":242,"./react/controllers/tasty_confirm":243,"./react/controllers/tasty_events":244,"./react/controllers/tasty_locking_alert":245,"./react/controllers/tasty_notify":246,"./react/controllers/tasty_sound":247,"./react/dispatchers/current_user":249,"./react/dispatchers/relationships":251,"./react/helpers/app":253,"./react/mediators/comments":254,"./react/messaging/actions/conversation":255,"./react/messaging/actions/message":256,"./react/messaging/actions/notification":257,"./react/messaging/actions/popup":258,"./react/messaging/components/buttons/write_message":259,"./react/messaging/components/messages_popup/conversations/conversations":260,"./react/messaging/components/messages_popup/conversations/list/empty":261,"./react/messaging/components/messages_popup/conversations/list/list":262,"./react/messaging/components/messages_popup/conversations/list/list_item":263,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":264,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":265,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":266,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":267,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":268,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":269,"./react/messaging/components/messages_popup/loading_message":270,"./react/messaging/components/messages_popup/messages_popup":271,"./react/messaging/components/messages_popup/thread/message_form/message_form":272,"./react/messaging/components/messages_popup/thread/message_list/empty":273,"./react/messaging/components/messages_popup/thread/message_list/message_list":274,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":275,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":276,"./react/messaging/components/messages_popup/thread/thread":277,"./react/messaging/components/messages_popup/ui/back_button":278,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":279,"./react/messaging/components/notifications_popup/notifications/empty":280,"./react/messaging/components/notifications_popup/notifications/notification":281,"./react/messaging/components/notifications_popup/notifications/notifications":282,"./react/messaging/components/notifications_popup/notifications_popup":283,"./react/messaging/components/toolbars/indicators/indicators":284,"./react/messaging/components/toolbars/indicators/messages":285,"./react/messaging/components/toolbars/indicators/notifications":286,"./react/messaging/dispatchers/messaging":287,"./react/messaging/messaging_requester":288,"./react/messaging/messaging_service":289,"./react/messaging/messaging_testing":290,"./react/messaging/stores/connection_state":292,"./react/messaging/stores/conversations":293,"./react/messaging/stores/messages":294,"./react/messaging/stores/messages_popup_state":295,"./react/messaging/stores/messaging_status":296,"./react/messaging/stores/notifications":297,"./react/mixins/activities":298,"./react/mixins/component_manipulations":299,"./react/mixins/dom_manipulations":300,"./react/mixins/error_timer":301,"./react/mixins/grammar":302,"./react/mixins/positions":303,"./react/mixins/requester":304,"./react/mixins/scroller":305,"./react/mixins/shake":306,"./react/mixins/touch":307,"./react/mixins/unmount":308,"./react/services/designPresenter":310,"./react/services/designSettings":311,"./react/services/designStates":312,"./react/services/positions":315,"./react/services/uuid":316,"./react/stores/current_user":318,"./react/stores/editor":319,"./react/stores/relationships":320,"./resources/fileReceiver":321,"./resources/is_mobile":322,"./resources/libs":323,"./resources/locales":324,"./resources/tasty":325,"./resources/tasty_utils":326}],10:[function(require,module,exports){
-var Api, AppDispatcher, EditorActionCreators, EditorConstants;
+var Api, AppDispatcher, EditorActionCreators, EditorConstants, EditorStore;
 
 Api = require('../api/api');
 
 EditorConstants = require('../constants/constants').editor;
+
+EditorStore = require('../stores/editor');
 
 AppDispatcher = require('../dispatchers/dispatcher');
 
@@ -13664,6 +13666,60 @@ EditorActionCreators = {
   },
   createEmbed: function(embedUrl) {
     return Api.editor.createEmbed(embedUrl);
+  },
+  saveEntry: function() {
+    var data, entryID, entryType, onSuccess, url;
+    data = {};
+    entryID = EditorStore.getEntryID();
+    entryType = EditorStore.getEntryType();
+    if (entryType === 'music' || entryType === 'instagram') {
+      entryType = 'video';
+    }
+    onSuccess = function(entry) {
+      if (TastySettings.env === 'static-development') {
+        alert("Статья " + entry.id + " успешно сохранена");
+      } else {
+        TastyNotifyController.notifySuccess(i18n.t('editor_create_success'));
+        window.location.href = entry.entry_url;
+      }
+      return AppDispatcher.handleServerAction({
+        type: EditorConstants.ENTRY_SAVED
+      });
+    };
+    switch (entryType) {
+      case 'text':
+        data.title = EditorStore.getEntryValue('title');
+        data.text = EditorStore.getEntryValue('text');
+        data.privacy = EditorStore.getEntryPrivacy();
+        break;
+      case 'anonymous':
+        data.title = EditorStore.getEntryValue('title');
+        data.text = EditorStore.getEntryValue('text');
+        break;
+      case 'image':
+        data.title = EditorStore.getEntryValue('title');
+        data.image_url = EditorStore.getEntryValue('imageUrl');
+        data.privacy = EditorStore.getEntryPrivacy();
+        break;
+      case 'instagram':
+      case 'music':
+      case 'video':
+        data.title = EditorStore.getEntryValue('title');
+        data.video_url = EditorStore.getEntryValue('embedUrl');
+        data.privacy = EditorStore.getEntryPrivacy();
+        break;
+      case 'quote':
+        data.text = EditorStore.getEntryValue('text');
+        data.source = EditorStore.getEntryValue('source');
+        data.privacy = EditorStore.getEntryPrivacy();
+    }
+    if (entryID) {
+      url = ApiRoutes.update_entry_url(entryID, entryType);
+      return Api.editor.updateEntry(url, data).then(onSuccess);
+    } else {
+      url = ApiRoutes.create_entry_url(entryType);
+      return Api.editor.createEntry(url, data).then(onSuccess);
+    }
   }
 };
 
@@ -13671,7 +13727,7 @@ module.exports = EditorActionCreators;
 
 
 
-},{"../api/api":16,"../constants/constants":234,"../dispatchers/dispatcher":250}],11:[function(require,module,exports){
+},{"../api/api":16,"../constants/constants":234,"../dispatchers/dispatcher":250,"../stores/editor":319}],11:[function(require,module,exports){
 var CurrentUserStore, PopupActions, Searchbox;
 
 CurrentUserStore = require('../stores/current_user');
@@ -14074,6 +14130,18 @@ Api = {
       };
       abortPendingRequests(key);
       return _pendingRequests[key] = postRequest(url, data);
+    },
+    createEntry: function(url, data) {
+      var key;
+      key = Constants.api.EDITOR_CREATE_ENTRY;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, data);
+    },
+    updateEntry: function(url, data) {
+      var key;
+      key = Constants.api.EDITOR_UPDATE_ENTRY;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = putRequest(url, data);
     }
   }
 };
@@ -14208,6 +14276,20 @@ EditorActions = React.createClass({
     tlogType: PropTypes.string.isRequired,
     loading: PropTypes.bool.isRequired
   },
+  getInitialState: function() {
+    return {
+      preview: false
+    };
+  },
+  componentWillUpdate: function(nextProps, nextState) {
+    if (this.state.preview !== nextState.preview) {
+      if (nextState.preview) {
+        return $("body").removeClass('tlog-mode-minimal').addClass('tlog-mode-full');
+      } else {
+        return $("body").removeClass('tlog-mode-full').addClass('tlog-mode-minimal');
+      }
+    }
+  },
   render: function() {
     var actionsClasses;
     actionsClasses = classSet({
@@ -14230,7 +14312,7 @@ EditorActions = React.createClass({
     }))));
   },
   renderVoteButton: function() {
-    if (!(this.isEntryAnonymous() || this.isEntryPrivate() || this.isTlogPrivate())) {
+    if (!(this.isTlogAnonymous() || this.isEntryPrivate() || this.isTlogPrivate())) {
       return React.createElement("div", {
         "className": "post-action post-action--button"
       }, React.createElement(EditorVoteButton, {
@@ -14240,7 +14322,7 @@ EditorActions = React.createClass({
     }
   },
   renderPrivacyButton: function() {
-    if (!this.isEntryAnonymous()) {
+    if (!this.isTlogAnonymous()) {
       return React.createElement("div", {
         "className": "post-action post-action--button"
       }, React.createElement(EditorPrivacyButton, {
@@ -14268,9 +14350,6 @@ EditorActions = React.createClass({
   isEntryPrivate: function() {
     return this.props.entryPrivacy === ENTRY_PRIVACY_PRIVATE;
   },
-  isEntryAnonymous: function() {
-    return this.props.entryPrivacy === ENTRY_PRIVACY_ANONYMOUS;
-  },
   isTlogPublic: function() {
     return this.props.tlogType === TLOG_TYPE_PUBLIC;
   },
@@ -14281,13 +14360,15 @@ EditorActions = React.createClass({
     return this.props.tlogType === TLOG_TYPE_ANONYMOUS;
   },
   togglePreview: function() {
-    return console.log('toggle preview action');
+    return this.setState({
+      preview: !this.state.preview
+    });
   },
   changePrivacy: function(privacy) {
     return EditorActionCreators.changeEntryPrivacy(privacy);
   },
   saveEntry: function() {
-    return console.log('save entry action');
+    return EditorActionCreators.saveEntry();
   },
   handleVoteButtonClick: function() {
     var newEntryPrivacy;
@@ -14421,7 +14502,7 @@ Editor = React.createClass({
     }), this.renderTypeSwitcher());
   },
   renderTypeSwitcher: function() {
-    if (this.props.entryType !== 'anonymous') {
+    if (this.props.tlogType !== 'anonymous') {
       return React.createElement(EditorTypeSwitcher, {
         "entryType": this.props.entryType,
         "canChangeType": this.props.canChangeType,
@@ -15093,7 +15174,7 @@ EditorPrivacyButton = React.createClass({
     var title;
     title = this.props["private"] ? i18n.t('editor_private_entry') : i18n.t('editor_public_entry');
     if (this.props.live) {
-      title = i18n.t('editor_live_entry');
+      title = i18n.t('editor_public_with_voting_entry');
     }
     return title;
   },
@@ -21828,7 +21909,7 @@ window.HeroProfile = React.createClass({
       Mousetrap.unbind('esc', this.close);
       $(window).off('scroll.hero');
       this.restoreInitialHeroHeight();
-      this.unsetHeroHeight();
+      setTimeout(this.unsetHeroHeight, 1500);
       $('body').removeClass(HERO_OPENED_CLASS);
       return TastyEvents.trigger(TastyEvents.keys.hero_closed());
     }
@@ -27808,7 +27889,9 @@ keyMirror = require('react/lib/keyMirror');
 ApiConstants = keyMirror({
   SEARCH_LOAD_NEXT_PAGE: null,
   EDITOR_CREATE_IMAGE_ATTACHMENTS: null,
-  EDITOR_CREATE_EMBED: null
+  EDITOR_CREATE_EMBED: null,
+  EDITOR_CREATE_ENTRY: null,
+  EDITOR_UPDATE_ENTRY: null
 });
 
 module.exports = ApiConstants;
@@ -32516,10 +32599,10 @@ storage = localStorage;
 
 key = function(normalizedEntry) {
   switch (false) {
-    case !normalizedEntry.id:
-      return keyExisting(normalizedEntry.id, normalizedEntry.updatedAt);
     case normalizedEntry.type !== 'anonymous':
       return keyAnonymous();
+    case !normalizedEntry.id:
+      return keyExisting(normalizedEntry.id, normalizedEntry.updatedAt);
     default:
       return keyNew();
   }
@@ -32880,6 +32963,9 @@ global.EditorStore = _.extend(new BaseStore(), {
   getEntry: function() {
     return _entry;
   },
+  getEntryID: function() {
+    return _entry.id;
+  },
   getEntryType: function() {
     return _entry.type;
   },
@@ -32901,12 +32987,16 @@ EditorStore.dispatchToken = AppDispatcher.register(function(payload) {
       entry = action.entry, tlogType = action.tlogType;
       if (entry != null) {
         id = entry.id, updated_at = entry.updated_at;
-        _entry = EntryKeeperService.restoreExistingEntry(id, updated_at) || EntryNormalizationService.normalize(entry);
+        if (tlogType === 'anonymous') {
+          _entry = EntryKeeperService.restoreExistingAnonymousEntry() || EntryNormalizationService.normalize(entry);
+        } else {
+          _entry = EntryKeeperService.restoreExistingEntry(id, updated_at) || EntryNormalizationService.normalize(entry);
+        }
       } else {
         if (tlogType === 'anonymous') {
           _entry = EntryKeeperService.restoreExistingAnonymousEntry() || new NormalizedEntry({
             type: 'anonymous',
-            privacy: 'anonymous'
+            privacy: 'public'
           });
         } else {
           _entry = EntryKeeperService.restoreExistingNewEntry() || new NormalizedEntry({
@@ -32930,6 +33020,9 @@ EditorStore.dispatchToken = AppDispatcher.register(function(payload) {
     case Constants.editor.CHANGE_PRIVACY:
       _entry.privacy = action.entryPrivacy;
       EntryKeeperService.store(_entry);
+      return EditorStore.emitChange();
+    case Constants.editor.ENTRY_SAVED:
+      EntryKeeperService.remove(_entry);
       return EditorStore.emitChange();
   }
 });

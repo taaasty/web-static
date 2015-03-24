@@ -91,7 +91,7 @@ window.HeroProfile = React.createClass
       $(window).off 'scroll.hero'
 
       @restoreInitialHeroHeight()
-      @unsetHeroHeight()
+      setTimeout @unsetHeroHeight, 1500
       $('body').removeClass HERO_OPENED_CLASS
       TastyEvents.trigger TastyEvents.keys.hero_closed()
 

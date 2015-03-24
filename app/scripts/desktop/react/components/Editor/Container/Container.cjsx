@@ -40,21 +40,4 @@ EditorContainer = React.createClass
   updateField: (key, value) ->
     EditorActionCreators.updateField {key, value}
 
-#   saveEntry: ({ entryPrivacy }) ->
-#     @refs.editor.saveEntry { entryPrivacy }
-
-#   storeCallback: (normalizedEntry) ->
-#     EntryStore.storeEntry normalizedEntry
-
-#   redirectToEntryPage: (entry) ->
-#     if TastySettings.env is 'static-development'
-#       alert "Статья #{ entry.id } успешно сохранена"
-#       window.location.reload()
-#     else
-#       _.defer =>
-#         # TODO Выводить модалку
-#         TastyNotifyController.notifySuccess i18n.t 'editor_create_success'
-#         console.log 'goto', entry.entry_url
-#         window.location.href = entry.entry_url
-
 module.exports = EditorContainer
